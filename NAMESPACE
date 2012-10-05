@@ -1,0 +1,6 @@
+export(gather.spectra)
+import(ggplot2)
+import(geom)
+import(ggplot2)
+import(geom)
+import(hyperspec)
