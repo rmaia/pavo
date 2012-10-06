@@ -1,14 +1,16 @@
 # function to get all specs from a given folder
 # currently works with USB2000 & USB4000 & jaz
 
-getspec<-function(where, format='ProcSpec', decimal=".")
+#clumsy: if subdir=T, column name includes subdir name (desired?)
+
+getspec<-function(where, format='ProcSpec', decimal=".", subdir=F)
 {
 
 #final<-data.frame(wl=300:700)
 
 extension <- paste('.', format, sep='')
 
-file_names <- list.files(where, pattern=extension)
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
 files <- paste(where,'/',file_names,sep='')
 
 if(length(file_names)==0){
