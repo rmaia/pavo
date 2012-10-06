@@ -9,7 +9,6 @@ getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=F)
 
 separ=ifelse(ext=='ttt',';','\t')
 
-
 extension <- paste('.', ext, sep='')
 
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
@@ -19,14 +18,11 @@ if(length(file_names)==0){
 	stop('No files found. Try a different ext')
 	} 
 
-#ToDo change this part if we want to make it wavelength-flexible:
-
 range <- lim[1]:lim[2]
 
 final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
 final[,1] <- range
 
-#until here
 
 for(i in 1:length(files))
 {
@@ -54,7 +50,6 @@ if(extension=='.jaz'){
 tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start-1))		
 	}
 
-#ToDo make wavelength-flexible
 interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
