@@ -1,5 +1,5 @@
 # function to get all specs from a given folder
-# currently works with USB2000 & USB4000 & jaz
+# currently works with USB2000, USB4000, jaz & CRAIC (exported)
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
@@ -30,13 +30,13 @@ for(i in 1:length(files))
 raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
 #ToDo we can actually use this raw string to import metadata if we want
 
-start <- grep('Begin', raw)
-end <- grep('End', raw)
+start <- grep('\t',raw)[1] - 1
+end <- length(grep('\t',raw))
 
 #jaz output file is weird. has 5 columns and an extra line in bottom
 
 if(extension=='.jaz'){
-	tempframe <- read.table(files[i], dec=decimal, skip=start, nrows=(end-start-2), header=T)
+	tempframe <- read.table(files[i], dec=decimal, skip=start, nrows=end-1, header=T)
 	tempframe <- tempframe[c('W','P')]
 	}else{
 tempframe <- read.table(files[i], dec=decimal, skip=start, nrows=(end-start-1))		
