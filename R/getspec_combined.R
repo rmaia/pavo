@@ -4,8 +4,11 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-getspec<-function(where, ext='txt', decimal=".", separ='\t', subdir=F)
+getspec<-function(where, ext='txt', decimal=".", subdir=F)
 {
+
+separ=ifelse(ext=='ttt',';','\t')
+
 
 extension <- paste('.', ext, sep='')
 
