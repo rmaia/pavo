@@ -1,4 +1,5 @@
 # function to get all specs from a given folder
+# allows for getting specs from subdir - but the column name will include the subdir (fix)
 # currently works with USB2000, USB4000, jaz & CRAIC (exported)
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
@@ -36,7 +37,7 @@ end <- length(grep(separ,raw))
 
 if(extension=='.ttt'){
 	start <- grep(separ,raw)[3] -1
-	end <- length(grep(separ,raw)) -2
+	end <- length(grep(separ,raw)) + start -1
 }
 
 #jaz output file is weird. has 5 columns and an extra line in bottom
@@ -53,8 +54,7 @@ interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=300:700))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
-#NOT WORKING WITH TTT - find out why
-#if(min(interp[,2]) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2]))}
+if(min(interp[,2]) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2]))}
 
 final[,i+1] <- interp[,2]
 
