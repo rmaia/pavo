@@ -4,7 +4,7 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-getspec<-function(where, ext='txt', decimal=".", subdir=F)
+getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=F)
 {
 
 separ=ifelse(ext=='ttt',';','\t')
@@ -21,8 +21,10 @@ if(length(file_names)==0){
 
 #ToDo change this part if we want to make it wavelength-flexible:
 
-final <- data.frame(matrix(nrow=401, ncol=length(file_names)+1))
-final[,1] <- 300:700
+range <- lim[1]:lim[2]
+
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
+final[,1] <- range
 
 #until here
 
@@ -53,11 +55,11 @@ tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end
 	}
 
 #ToDo make wavelength-flexible
-interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=300:700))
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
-if(min(interp[,2]) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2]))}
+if(min(interp[,2], na.rm=T) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2], na.rm=T))}
 
 final[,i+1] <- interp[,2]
 
