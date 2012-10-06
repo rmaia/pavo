@@ -3,7 +3,7 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-getspec<-function(where, ext='txt', decimal=".", subdir=F)
+getspec<-function(where, ext='txt', decimal=".", separ='\t', subdir=F)
 {
 
 extension <- paste('.', ext, sep='')
@@ -28,16 +28,24 @@ for(i in 1:length(files))
 raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
 #ToDo we can actually use this raw string to import metadata if we want
 
-start <- grep('\t',raw)[1] - 1
-end <- length(grep('\t',raw))
+start <- grep(separ,raw)[1] - 1
+end <- length(grep(separ,raw))
+
+#Avantes ttt files don't use tab-delimiting, but semicolon-delimiting
+#also has two lines with semicolon that are not data
+
+if(extension=='.ttt'){
+	start <- grep(separ,raw)[3] -1
+	end <- length(grep(separ,raw)) -2
+}
 
 #jaz output file is weird. has 5 columns and an extra line in bottom
 
 if(extension=='.jaz'){
-	tempframe <- read.table(files[i], dec=decimal, skip=start, nrows=end-1, header=T)
+	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end-1, header=T)
 	tempframe <- tempframe[c('W','P')]
 	}else{
-tempframe <- read.table(files[i], dec=decimal, skip=start, nrows=(end-start-1))		
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start-1))		
 	}
 
 #ToDo make wavelength-flexible
@@ -45,7 +53,8 @@ interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=300:700))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
-if(min(interp[,2]) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2]))}
+#NOT WORKING WITH TTT - find out why
+#if(min(interp[,2]) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2]))}
 
 final[,i+1] <- interp[,2]
 
