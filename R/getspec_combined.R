@@ -3,18 +3,16 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-getspec<-function(where, format='ProcSpec', decimal=".", subdir=F)
+getspec<-function(where, ext='txt', decimal=".", subdir=F)
 {
 
-#final<-data.frame(wl=300:700)
-
-extension <- paste('.', format, sep='')
+extension <- paste('.', ext, sep='')
 
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
 files <- paste(where,'/',file_names,sep='')
 
 if(length(file_names)==0){
-	stop('No files found. Try a different format')
+	stop('No files found. Try a different ext')
 	} 
 
 #ToDo change this part if we want to make it wavelength-flexible:
