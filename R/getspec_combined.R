@@ -3,7 +3,7 @@
 # currently works with USB2000, USB4000, jaz & CRAIC (exported)
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
-
+#ToDo - can we have this automatically set the lower and upper limits based on the spec files? These files are usually a pain to view in a text editor to see what wl range was used.
 getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=F)
 {
 
@@ -54,6 +54,9 @@ interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
+
+# I don't know if this is the right way to go about this. If some specs have neg values while others don't their relative brightnesses will be meaningless. Maybe replace with NAs or zeros?
+
 if(min(interp[,2], na.rm=T) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2], na.rm=T))}
 
 final[,i+1] <- interp[,2]
