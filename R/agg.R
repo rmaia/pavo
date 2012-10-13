@@ -21,6 +21,20 @@ if(length(wl_index>0)){
 		y <- x
 		}
 
+# retain original values
+by0 <- by
+
+#BEGIN RM EDIT
+# Allow for means of every "by" specs, if "by" is a single number
+# i.e. if by=3, average every 3 consecutive specs of "x"
+
+if(length(by)==1){
+	by0 <- names(y)[seq(1,length(names(y)),by=by)]
+	by <- rep(1:(length(y)/by),each=by)
+}
+#END RM EDIT
+
+#BEGIN RM EDIT
 # check: does x have the same number of columns as the by vector?
 
 if(dim(y)[2]!=length(by)) 
@@ -28,38 +42,10 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 #END RM EDIT
 
-# retain original values
-by0 <- by
-
-#BEGIN RM EDIT
-#(unvectorized backup version is below)
-
 by <- factor(by)
 
 dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))
 
-#END RM EDIT
-
 colnames(dat) <- unique(by0)
 data.frame(cbind(wl=wl, dat))
 }
-
-
-
-
-
-
-#BACKUP
-# allow for numeric, character data
-# by <- as.numeric(factor(by))  
-
-# dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))
-
-# for (i in seq(along = unique(by))) {
-# # apply can't avg single columns
-	# if (is.null(dim(y[,by==i]))) {
-	   # dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)
-	# }else{
-		# dat[,i] <- apply(y[,by==i], 1, FUN)
-		# }
-# }
