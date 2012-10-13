@@ -6,7 +6,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-agg <- function(x, by, FUN = mean) {
+agg <- function(x, by, FXN = mean) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -30,21 +30,36 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 # retain original values
 by0 <- by
-# allow for numeric, character data
-by <- as.numeric(factor(by))  
 
-dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))
+#BEGIN RM EDIT
+#(unvectorized backup version is below)
 
-for (i in seq(along = unique(by))) {
-# apply can't avg single columns
-	if (is.null(dim(y[,by==i]))) {
-	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)
-	}else{
-		dat[,i] <- apply(y[,by==i], 1, FUN)
-		}
-}
+by <- factor(by)
+
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))
+
+#END RM EDIT
 
 colnames(dat) <- unique(by0)
 data.frame(cbind(wl=wl, dat))
 }
 
+
+
+
+
+
+#BACKUP
+# allow for numeric, character data
+# by <- as.numeric(factor(by))  
+
+# dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))
+
+# for (i in seq(along = unique(by))) {
+# # apply can't avg single columns
+	# if (is.null(dim(y[,by==i]))) {
+	   # dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)
+	# }else{
+		# dat[,i] <- apply(y[,by==i], 1, FUN)
+		# }
+# }
