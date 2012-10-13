@@ -4,14 +4,15 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-# CME: can we have this automatically set the lower and upper limits based on the spec files? 
-#      These files are usually a pain to view in a text editor to see what wl range was used.
-# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different ranges
-#     they can't be added to the same matrix without adding NAs; (2) If saved spec includes
-#     a range that the spec can't actually read, it will be very noisy and may mess corrections
-#     (depending on how these are handled).
-#   suggested solution: a secondary function that examines files and returns recorded WL range
-#     (in a dataframe or table)
+# CME: can we have this automatically set the lower and upper limits based on the spec 
+#      files? These files are usually a pain to view in a text editor to see what wl 
+#      range was used.
+# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different 
+#     ranges they can't be added to the same matrix without adding NAs; (2) If saved spec
+#     includes a range that the spec can't actually read, it will be very noisy and may 
+#     mess corrections (depending on how these are handled).
+#   suggested solution: a secondary function that examines files and returns recorded WL 
+#     range (in a dataframe or table)
 
 getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=F)
 {
@@ -53,7 +54,8 @@ if(extension=='.ttt'){
 #jaz output file is weird. has 5 columns and an extra line in bottom
 
 if(extension=='.jaz'){
-	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end-1, header=T)
+	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end-1, 
+							header=T)
 	tempframe <- tempframe[c('W','P')]
 	}else{
 tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start-1))		
@@ -64,8 +66,9 @@ names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
 
-# CME: I don't know if this is the right way to go about this. If some specs have neg values while 
-#      others don't their relative brightnesses will be meaningless. Maybe replace with NAs or zeros?
+# CME: I don't know if this is the right way to go about this. If some specs have neg 
+#      values while others don't their relative brightnesses will be meaningless. 
+#      Maybe replace with NAs or zeros?
 # RM: ToDo: include switch for option as to how to change this
 #     (add min or zero; not NA - trickles down other functions that can't handle)
 
