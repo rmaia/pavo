@@ -11,11 +11,14 @@ A set of functions and tools for the analysis of color data in a unified framewo
 
 For now, you can:
 * use Hadley Wickham's [devtools](https://github.com/hadley/devtools):
+
 ```r     
 library(devtools)
 install_github("rebird", "ropensci")
 ```
-* download files from github and install using `$R CMD INSTALL` or, from within R, `install.packages(path,type='source', repos=NULL)'
+
+* download files from github and install using `$R CMD INSTALL` or, from within R, `install.packages(path,type='source', repos=NULL)` 
+
 
 ## Working framework
 
