@@ -7,14 +7,15 @@ A set of functions and tools for the analysis of color data in a unified framewo
 
 ## Install
 
-ToDo
+`pavo` is still UNDER DEVELOPMENT, and only has few capabilities implemented.
 
-a code chunk example
-
-```R
-install.packages("ggplot2")
-require(ggplot2)
+For now, you can:
+* use Hadley Wickham's [devtools](https://github.com/hadley/devtools):
+```r     
+library(devtools)
+install_github("rebird", "ropensci")
 ```
+* download files from github and install using `$R CMD INSTALL` or, from within R, `install.packages(path,type='source', repos=NULL)'
 
 ## Working framework
 
