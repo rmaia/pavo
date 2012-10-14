@@ -20,4 +20,4 @@ Collate:
     'getspec.R'
     'pavo-package.R'
     'data-vissyst.R'
-    'Vorobyev.R'
+    'vismodel.R'

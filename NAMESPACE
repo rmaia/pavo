@@ -1,2 +1,4 @@
 export(agg)
 export(getspec)
+export(vismodel)
+export(vissyst)
