@@ -19,8 +19,10 @@
 #' (not recommended). \code{zero} is recommended when negative values are a product 
 #' ofnoise, whereas \code{min} is recommended when negative values are a product
 #' of bad reference calibration. (defaults to \code{zero})
-#' @param subdir should subdirectories within the \code{where} folder be
-#' included in the search? (defaults to \code{FALSE}.)
+#' @param subdir Should subdirectories within the \code{where} folder be
+#' included in the search? (defaults to \code{FALSE})
+#' @param subdir.names Should subdirectory path be included in the name of the
+#' spectra? (defaults to \code{FALSE})
 #' @return a data frame containing individual imported spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
 #' @export
@@ -45,7 +47,7 @@
 #     range (in a dataframe or table)
 
 getspec <- function(where, ext='txt', lim=c(300,700), decimal=".", 
-           negative=c('zero','min', 'raw'), subdir=FALSE)
+           negative=c('zero','min', 'raw'), subdir=FALSE, subdir.names=FALSE)
 {
 
 negative <- match.arg(negative)
@@ -57,6 +59,11 @@ extension <- paste('.', ext, sep='')
 
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
 files <- paste(where,'/',file_names,sep='')
+
+if(subdir.names){
+	file_names <- gsub(extension,'',file_names)}else{
+	file_names <- gsub(extension,'',basename(file_names))
+	 }
 
 if(length(file_names)==0){
 	stop('No files found. Try a different ext')
@@ -117,5 +124,6 @@ final[,i+1] <- interp[,2]
 }
 
 names(final) <- c('wl',gsub(extension,'',file_names))
+	
 final
 }

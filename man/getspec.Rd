@@ -4,7 +4,7 @@
 \usage{
   getspec(where, ext = "txt", lim = c(300, 700),
     decimal = ".", negative = c("zero", "min", "raw"),
-    subdir = FALSE)
+    subdir = FALSE, subdir.names = FALSE)
 }
 \arguments{
   \item{ext}{file extension to be searched for, without the
@@ -28,9 +28,12 @@
   recommended when negative values are a product of bad
   reference calibration. (defaults to \code{zero})}
 
-  \item{subdir}{should subdirectories within the
+  \item{subdir}{Should subdirectories within the
   \code{where} folder be included in the search? (defaults
-  to \code{FALSE}.)}
+  to \code{FALSE})}
+
+  \item{subdir.names}{Should subdirectory path be included
+  in the name of the spectra? (defaults to \code{FALSE})}
 }
 \value{
   a data frame containing individual imported spectral
