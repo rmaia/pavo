@@ -2,8 +2,8 @@ Package: pavo
 Description: A cohesive framework for organizing, parsing, analyzing color 
 	from spectral data
 Title: Perceptual analysis, visualization and organization of color data
-Version: 0.0.1
-License: CC0
+Version: 0.0-1
+License: BSD
 Date: 2012-10-05
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
@@ -11,9 +11,9 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
-Imports:
+Depends:
     ggplot2,
-	geom,
-	hyperspec
+    geom,
+    hyperspec
 Collate:
     'gather.spectra.R'
