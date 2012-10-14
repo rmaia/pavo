@@ -26,8 +26,8 @@
   aggregating function.
 }
 \description{
-  Combines spectra (by taking the average, for example) of
-  spectra according to an index or a vector of identities.
+  Combines spectra (by taking the average, for example)
+  according to an index or a vector of identities.
 }
 \examples{
 \dontrun{

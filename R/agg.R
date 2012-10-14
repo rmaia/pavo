@@ -1,6 +1,6 @@
 #' Aggregate reflectance spectra
 #' 
-#' Combines spectra (by taking the average, for example) of spectra according to 
+#' Combines spectra (by taking the average, for example) according to 
 #' an index or a vector of identities.
 #' 
 #' @param data (required) data frame containing the spectra to be manipulated. If
