@@ -55,6 +55,6 @@ getspec('/examplespec', ext='ttt')}
 \references{
   Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw
   K (eds) Bird coloration. Harvard University Press,
-  Cambridge, pp 90–147.
+  Cambridge, pp 90-147.
 }
 
