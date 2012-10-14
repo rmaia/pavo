@@ -24,7 +24,8 @@ require(pavo)
 * download files from github and install using `$R CMD INSTALL` or, from within R:
 
 ```r
-install.packages(path,type='source', repos=NULL)```
+install.packages(path,type='source', repos=NULL)
+```
 
 
 ## Working framework
