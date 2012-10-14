@@ -12,6 +12,13 @@
 #' considered (defaults to 300 and 700).
 #' @param decimal character to be used to identify decimal plates 
 #' (defaults to ".")
+#' @param negative how to hangle negative reflectance. \code{zero}}, transforms 
+#'negative by rounding them up to 0; \code{min} transforms by adding the lowest 
+#' negative reflectance value for that spectrum to the reflectance at remaining 
+#' wavelengths; \code{raw} does not transform and leaves negative values as is
+#' (not recommended). \code{zero} is recommended when negative values are a product 
+#' ofnoise, whereas \code{min} is recommended when negative values are a product
+#' of bad reference calibration. (defaults to \code{zero})
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}.)
 #' @return a data frame containing individual imported spectral files as columns.
@@ -37,8 +44,12 @@
 #   suggested solution: a secondary function that examines files and returns recorded WL 
 #     range (in a dataframe or table)
 
-getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=FALSE)
+getspec <- function(where, ext='txt', lim=c(300,700), decimal=".", 
+           negative=c('zero','min', 'raw'), subdir=FALSE)
 {
+
+negative <- match.arg(negative)
+makenegzero<-function(x) {x[x[,2]<0,2] = 0; x}
 
 separ=ifelse(ext=='ttt',';','\t')
 
@@ -88,14 +99,18 @@ interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
 
 #SpectraSuite sometimes allows negative values. Remove those:
-
 # CME: I don't know if this is the right way to go about this. If some specs have neg 
 #      values while others don't their relative brightnesses will be meaningless. 
 #      Maybe replace with NAs or zeros?
-# RM: ToDo: include switch for option as to how to change this
-#     (add min or zero; not NA - trickles down other functions that can't handle)
+# RM: Done: include with for option as to how to change this (zero, min or raw)
 
-if(min(interp[,2], na.rm=T) < 0) {interp[,2]<-interp[,2] + abs(min(interp[,2], na.rm=T))}
+if(min(interp[,2], na.rm=T) < 0) {
+	interp[,2] <- switch(negative,
+	raw = interp[,2],
+	zero = makenegzero(interp)[,2],
+	min = interp[,2] + abs(min(interp[,2], na.rm=T)),
+	)
+}
 
 final[,i+1] <- interp[,2]
 
