@@ -1,6 +1,29 @@
-# function to get all specs from a given folder
-# allows for getting specs from subdir - but the column name will include the subdir (fix)
-# currently works with USB2000, USB4000, jaz, CRAIC (exported) & Avantes (exported)
+#' Import spectra files
+#' 
+#' Finds and imports spectra files from a folder. Currently tested and working
+#' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
+#' USB4000 and Jaz spectrometers), CRAIC software (after exporting) and 
+#' Avantes (after exporting).
+#' 
+#" @param where (required) folder in which files are located.
+#' @param ext file extension to be searched for, without the "." 
+#' (defaults to "txt").
+#' @param lim a vector with two numbers determining the wavelength limits to be
+#' considered (defaults to 300 and 700).
+#' @param decimal character to be used to identify decimal plates 
+#' (defaults to ".")
+#' @param subdir should subdirectories within the \code{where} folder be
+#' included in the search? (defaults to \code{FALSE}.)
+#' @return a data frame containing individual imported spectral files as columns.
+#' Reflectance values are interpolated to the nearest wavelength integer.
+#' @export
+#' @examples \dontrun{
+#' getspec('/examplespec', lim=c(400,900))	
+#' getspec('/examplespec', ext='ttt')}
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
+#' Bird coloration. Harvard University Press, Cambridge, pp 90–147.
+
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
@@ -14,7 +37,7 @@
 #   suggested solution: a secondary function that examines files and returns recorded WL 
 #     range (in a dataframe or table)
 
-getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=F)
+getspec<-function(where, ext='txt', lim=c(300,700), decimal=".", subdir=FALSE)
 {
 
 separ=ifelse(ext=='ttt',';','\t')
@@ -81,28 +104,3 @@ final[,i+1] <- interp[,2]
 names(final) <- c('wl',gsub(extension,'',file_names))
 final
 }
-
-
-
-
-mean.spectra<-function(gatherspectra,BY)
-{
-dup<-seq(2,length(names(gatherspectra)),by=BY)
-
-samplenames<-names(gatherspectra[dup])
-
-avgZ.i<-NULL
-avgZ<-NULL
-
-for(i in dup)
-	{
-	
-	avgZ.i<-apply(gatherspectra[i:(i+BY-1)],1,mean)
-	avgZ<-cbind(avgZ,avgZ.i)
-	
-	}
-
-avgZ<-data.frame(avgZ)
-names(avgZ)<-samplenames
-avgZ
-}	

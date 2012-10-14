@@ -1,0 +1,1306 @@
+sQuote(x)
+sQuote('alfred')
+paste(sQuote('alfred'))
+paste(sQuote('alfred'),'is dead')
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- x[,-wl_index]#
+	}#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(by),'is not of same length as the #
+	number of columns in',sQuote(x)))#
+#
+# check: does x have the same number of columns as the by vector#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+agg(sptest,rep(vecnames,2))
+?deparse
+deparse(sptest)
+deparse(substitute(sptest))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- x[,-wl_index]#
+	}#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',sQuote(deparse(substitute(x)))))#
+#
+# check: does x have the same number of columns as the by vector#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- x[,-wl_index]#
+	}#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+#
+# check: does x have the same number of columns as the by vector#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+deparse(substitute(sptest))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- x[,-wl_index]#
+	}#
+# check: does x have the same number of columns as the by vector#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+agg(sptest,vecnames)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	x <- data.frame(x[,-wl_index])#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(x)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+agg(sptest,vecnames)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(y)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not of same length as the number of columns in',deparse(substitute(x))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(y)[2]!=length(by)) stop(paste(sQuote(deparse(substitute(by))),'is not #
+of same length as columns in',sQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(y)[2]!=length(by)) stop(paste('\n',sQuote(deparse(substitute(by))),'is not #
+of same length as columns in',sQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(y)[2]!=length(by)) stop(paste('\n',sQuote(deparse(substitute(by))),'is not of same length as columns in',sQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(x), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(x[,by==i]))) {#
+	   dat[,i] <- apply(cbind(x[,by==i], x[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(x[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+agg(sptest,vecnames)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector#
+#
+if(dim(y)[2]!=length(by)) stop(paste('\n',sQuote(deparse(substitute(by))),'is not of same length as columns in',sQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(y[,by==i]))) {#
+	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(y[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error, and message is#
+#     informative:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}#
+#
+# check: does x have the same number of columns as the by vector?#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',sQuote(deparse(substitute(by))),'is not of same length as columns in',sQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(y[,by==i]))) {#
+	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(y[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+agg(sptest,rep(vecnames,2))
+agg(sptest)
+agg(x=sptest)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM: Always provide useful defaults. If you don't want to provide one (i.e. there is no#
+#     meaningful default), leave arg empty. Default is to return error; message is#
+#     informative and readily recognizeable to most R users:#
+##
+#          "Error in agg(specs) : argument "by" is missing, with no default"#
+##
+#     But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+# end edit#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(y[,by==i]))) {#
+	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(y[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+missing()
+missing(agg(sptest))
+missing(agg)
+missing(agg())
+?missing
+?match.arg
+?missing
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(y[,by==i]))) {#
+	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(y[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+as.data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,rep(vecnames,2))
+agg(sptest,vecnames)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+# allow for numeric, character data#
+by <- as.numeric(factor(by))  #
+#
+dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+for (i in seq(along = unique(by))) {#
+# apply can't avg single columns#
+	if (is.null(dim(y[,by==i]))) {#
+	   dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	}else{#
+		dat[,i] <- apply(y[,by==i], 1, FUN)#
+		}#
+}#
+#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vecnames)
+tapply(sptest,vecnames,mean)
+tapply(sptest[,-1],vecnames,mean)
+rowMeans()
+mapply(function(x,y) seq_len(x) + y,#
+       c(a =  1, b = 2, c = 3),  # names from first#
+       c(A = 10, B = 0, C = -10))
+mapply(mean,#
+       c(a =  1, b = 2, c = 3),  # names from first#
+       c(A = 10, B = 0, C = -10))
+sptest <- getspec('~/github/coloRtools/examplespec',lim=c(300,310))
+sptest
+testlist=list(sptest,sptest2=sptest)
+testlist
+mapply(mean,testlist)
+lapply(testlist,mean)
+lapply(testlist,rowMean)
+lapply(testlist,rowMeans)
+unlist(lapply(testlist,rowMeans))
+seq(along = unique(vecnames))
+vecnames
+seq(along = unique(vecnames))
+split(sptest)
+sptest
+split(sptest,c('1','1','2'))
+split(sptest,c('1','1','2','2'))
+split(sptest,c('1','1','2','2'))
+?split
+sptest
+require(plyr)
+dapply()
+daply(sptest,.c('1','1','2','2'))
+vec1=c('1','1','2','2')
+vec1
+names(sptest)
+vec1=c('1','1','2')
+daply(sptest,.vec1)
+daply(sptest,vec1)
+daply(sptest,vec1,function(x)return(x))
+ddply(sptest,vec1,function(x)return(x))
+?subset
+?daply
+ddply(sptest,vec1,rowMeans)
+daply(sptest,vec1,rowMeans)
+vec1
+daply(sptest,vec1,mean)
+aggregate(sptest,vec1,mean)
+aggregate(sptest,vec1,mean)
+help(package='plyr')
+dlply(sptest,vec1,mean)
+dlply(sptest,vec1,rowMeans)
+rowMeans(sptest)
+daply(sptest,vec1)
+daply(sptest,vec1,mean)
+daply(sptest,vec1,colMeans)
+colMeans(sptest)
+as.list(as.numeric(levels(grp)))
+as.list(as.numeric(levels(vec1)))
+as.list(as.numeric(levels(factor(vec1))))
+lapply(#
+as.list(as.numeric(levels(vec1))), #
+FUN = function(x, cn, data) {#
+            rowMeans(data[grp %in% x])#
+        }, #
+cn = vec1, data = sptest)
+sapply(levels(vec1),function(x)rowMeans(sptest[which(vec1==x)]))
+sapply(levels(factor(vec1)),function(x)rowMeans(sptest[which(vec1==x)]))
+vec1
+apply(sptest,c(1,2),1,mean)
+apply(sptest[,c(1,2)],1,mean)
+apply(sptest[,3],1,mean)
+sptest
+sptest=cbind(sptest,sptest[,-1],,sptest[,-1],,sptest[,-c(1,2)])
+sptest=cbind(sptest,sptest[,-1],,sptest[,-1],sptest[,-c(1,2)])
+sptest=cbind(sptest,sptest[,-1],sptest[,-1],sptest[,-c(1,2)])
+sptest
+sptest=data.frame(sptest)
+sptest
+names(sptest)
+names(sptest)[8]
+names(sptest)[8]='OOusb4000.3'
+sptest
+vec1
+vec1=c('0','1','2','1','2','1','2','2')
+vec1
+sapply(levels(factor(vec1)),function(x)rowMeans(sptest[which(vec1==x)]))
+sapply(levels(factor(vec1)),function(x)apply(sptest[which(vec1==x)],1,mean))
+vec1
+factor(vec1)
+vec1=factor(vec1)
+sapply(levels(vec1),function(x)apply(sptest[which(vec1==x)],1,mean))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+#
+by <- factor(by)#
+#
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,mean))#
+#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}
+vec1
+vec1[-1]
+factor(vec1[-1])
+vec2=factor(vec1[-1])
+agg(sptest)
+agg(sptest,vec2)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FUN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+#
+by <- factor(by)#
+#
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FUN))#
+#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}
+agg(sptest,vec2)
+agg(sptest,vec2,median)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FXN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+#
+#BEGIN RM EDIT#
+#(unvectorized backup version is below)#
+#
+by <- factor(by)#
+#
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))#
+#
+#END RM EDIT#
+#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}#
+#BACKUP#
+# allow for numeric, character data#
+# by <- as.numeric(factor(by))  #
+#
+# dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+# for (i in seq(along = unique(by))) {#
+# # apply can't avg single columns#
+	# if (is.null(dim(y[,by==i]))) {#
+	   # dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	# }else{#
+		# dat[,i] <- apply(y[,by==i], 1, FUN)#
+		# }#
+# }
+agg(sptest,vec2,median)
+agg(sptest,vec2,mean)
+vec2=factor(vec1,labels=c('a','b'))
+vec2=factor(vec1[-1],labels=c('a','b'))
+vec2
+agg(sptest,vec2,mean)
+proc.time(replicate(10, agg(sptest,vec2,mean)))
+proc.time(replicate(10, agg(sptest,vec2,mean)))
+system.time(replicate(10, agg(sptest,vec2,mean)))
+system.time(replicate(100000, agg(sptest,vec2,mean)))
+system.time(replicate(1000, agg(sptest,vec2,mean)))
+system.time(replicate(5000, agg(sptest,vec2,mean)))
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FXN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#
+# retain original values#
+by0 <- by#
+#
+#BEGIN RM EDIT#
+#(unvectorized backup version is below)#
+#
+#by <- factor(by)#
+#
+#dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))#
+#
+#END RM EDIT#
+#
+ allow for numeric, character data#
+ by <- as.numeric(factor(by))  #
+#
+ dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+ for (i in seq(along = unique(by))) {#
+#  apply can't avg single columns#
+	 if (is.null(dim(y[,by==i]))) {#
+	    dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	 }else{#
+		 dat[,i] <- apply(y[,by==i], 1, FUN)#
+		 }#
+ }#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}#
+#BACKUP#
+# allow for numeric, character data#
+# by <- as.numeric(factor(by))  #
+#
+# dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+# for (i in seq(along = unique(by))) {#
+# # apply can't avg single columns#
+	# if (is.null(dim(y[,by==i]))) {#
+	   # dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	# }else{#
+		# dat[,i] <- apply(y[,by==i], 1, FUN)#
+		# }#
+# }
+system.time(replicate(5000, agg(sptest,vec2,mean)))
+?sapply
+paste(vec2)
+paste(vec2,vec1)
+paste(sptest)
+apply(sptest,1,paste)
+data.frame(species=c('a','b'),sex=c('m','f'))
+testframe=data.frame(species=c('a','b'),sex=c('m','f'))
+paste(testframe)
+expand.grid(testframe)
+testframe=expand.grid(testframe)
+testframe
+apply(testframe,1,paste)
+apply(testframe,2,paste)
+apply(testframe,1,function(x)paste(x,sep='.'))
+apply(testframe,1,function(x)paste(x,sep='.'))
+aggregate(testframe)
+formatC(testframe)
+paste(testframe[,1],testframe[,2])
+sapply(testframe,paste)
+?paste
+unlist(testframe)
+paste(unlist(testframe))
+do.call('paste',testframe)
+paste(testframe)
+do.call('paste',testframe,sep='.')
+do.call('paste',args=list(x=testframe,sep='.'))
+?do.call
+paste(testframe,collapse='.')
+paste(testframe,collapse=' ')
+apply(testframe,1,paste,collapse='.')
+apply(vec1,1,paste,collapse='.')
+apply(testframe,1,paste,collapse='.')
+sapply(testframe,paste,collapse='.')
+apply(testframe,1,paste,collapse='.')
+30/3
+integer(30/2)
+integer(30/3)
+is.integer(30)
+?is.integer
+30
+30/3
+seq(1:30/3)
+seq(1:30/3,each=3)
+seq(1:30/3,each=3)
+rep(1:30/3,each=3)
+rep(1:30/3,each=3)
+1/30
+1:30/3
+1:(30/3)
+rep(1:(30/3),each=3)
+length(30)==1
+1:30
+seq(1,30,by=3)
+names(sptest)[seq(1,length(names(sptest)),by=2)]
+names)sptest
+names(sptest)
+Function to calculate average of columns given a column index (by)#
+# Returns a matrix with column names as the by's and rows as averaged values for each wl#
+# Input column 1 should be wavelengths#
+#
+# RM tip: Always provide useful defaults. If you don't want to provide one #
+#     (i.e. there is no meaningful default), leave arg empty. Default is to return #
+#     error. But if there's an implemented default (i.e. for FUN), use it.#
+#
+agg <- function(x, by, FXN = mean) {#
+#
+#BEGIN RM EDIT#
+# check: user may have removed 'wl' function already.#
+# (data.frame doesn't allow duplicate names anymore, so this should work)#
+#
+wl_index <- which(names(x)=='wl')#
+#
+if(length(wl_index>0)){#
+	wl <- x[,wl_index]#
+	y <- x[,-wl_index]#
+	}else{#
+		y <- x#
+		}#
+#
+# retain original values#
+by0 <- by#
+#
+if(length(by)==1){#
+	by0 <- names(y)[seq(1,length(names(y)),by=by)]#
+	by <- rep(1:(length(y)/by),each=by)#
+}#
+#
+# check: does x have the same number of columns as the by vector?#
+#
+if(dim(y)[2]!=length(by)) #
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(x)))))#
+#
+#END RM EDIT#
+#BEGIN RM EDIT#
+#(unvectorized backup version is below)#
+#
+by <- factor(by)#
+#
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))#
+#
+#END RM EDIT#
+#
+colnames(dat) <- unique(by0)#
+data.frame(cbind(wl=wl, dat))#
+}#
+#BACKUP#
+# allow for numeric, character data#
+# by <- as.numeric(factor(by))  #
+#
+# dat <- matrix(data = NA, nrow = nrow(y), ncol = length(unique(by)))#
+#
+# for (i in seq(along = unique(by))) {#
+# # apply can't avg single columns#
+	# if (is.null(dim(y[,by==i]))) {#
+	   # dat[,i] <- apply(cbind(y[,by==i], y[,by==i]), 1, FUN)#
+	# }else{#
+		# dat[,i] <- apply(y[,by==i], 1, FUN)#
+		# }#
+# }
+names(sptest)
+agg(sptest[,-8],2)
+agg(sptest[,-8],c(1,2,1,2,1,2))
+agg(sptest[,-8],3)
+agg(sptest[,-8],4)
+agg(sptest[,-8],3)
+names(sptest[,-8])
+agg(sptest,3)
+agg(sptest,2)
+install.packages('roxygen2'')
+install.packages('roxygen2')
+require(roxygen2)
+roxygenize('~/github/rebird')
+install.packages('wordcloud')
+install.packages('XML')
+source('~/github/rebird/R/geo_recent.R')
+?geo_recent
+?ebird_geo
+install.packages('~/github/rebird',type='source',repos=NULL)
+require(rebird)
+?geo_recent
+?geo_recent
+?geo_recent
+?mean
+roxygenize('~/github/rebird')
+install.packages('~/github/rebird',type='source',repos=NULL)
+?geo_recent
+?geo_recent
