@@ -19,3 +19,5 @@ Collate:
     'agg.R'
     'getspec.R'
     'pavo-package.R'
+    'data-vissyst.R'
+    'Vorobyev.R'
