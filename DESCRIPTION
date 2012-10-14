@@ -17,4 +17,4 @@ Depends:
     hyperSpec
 Collate:
     'agg.R'
-    'getspec_combined.R'
+    'getspec.R'
