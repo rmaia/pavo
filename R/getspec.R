@@ -12,8 +12,8 @@
 #' considered (defaults to 300 and 700).
 #' @param decimal character to be used to identify decimal plates 
 #' (defaults to ".")
-#' @param negative how to hangle negative reflectance. \code{zero}}, transforms 
-#'negative by rounding them up to 0; \code{min} transforms by adding the lowest 
+#' @param negative how to hangle negative reflectance. \code{zero}, transforms 
+#' negative values by rounding them up to 0; \code{min} transforms by adding the lowest 
 #' negative reflectance value for that spectrum to the reflectance at remaining 
 #' wavelengths; \code{raw} does not transform and leaves negative values as is
 #' (not recommended). \code{zero} is recommended when negative values are a product 

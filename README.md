@@ -13,11 +13,18 @@ For now, you can:
 * use Hadley Wickham's [devtools](https://github.com/hadley/devtools):
 
 ```r     
-library(devtools)
-install_github("rebird", "ropensci")
+install.packages('devtools')
+require(devtools)
+install_github('coloRtools', 'rmaia')
+require(pavo)
 ```
 
-* download files from github and install using `$R CMD INSTALL` or, from within R, `install.packages(path,type='source', repos=NULL)` 
+(note that repository name and package name don't match)
+
+* download files from github and install using `$R CMD INSTALL` or, from within R:
+
+```r
+install.packages(path,type='source', repos=NULL)```
 
 
 ## Working framework
