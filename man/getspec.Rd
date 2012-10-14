@@ -17,7 +17,7 @@
   \item{decimal}{character to be used to identify decimal
   plates (defaults to ".")}
 
-  \item{negative}{how to hangle negative reflectance.
+  \item{negative}{how to handle negative reflectance.
   \code{zero}, transforms negative values by rounding them
   up to 0; \code{min} transforms by adding the lowest
   negative reflectance value for that spectrum to the

@@ -18,3 +18,4 @@ Depends:
 Collate:
     'agg.R'
     'getspec.R'
+    'pavo-package.R'

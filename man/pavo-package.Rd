@@ -1,0 +1,27 @@
+\docType{package}
+\name{pavo-package}
+\alias{pavo}
+\alias{pavo-package}
+\title{pavo: analyzing color data in R}
+\description{
+  An R package for the perceptual analysis, visualization
+  and organization of color data
+}
+\details{
+  \tabular{ll}{ Package: \tab pavo\cr Type: \tab Package\cr
+  Version: \tab 0.0-1\cr Date: \tab 2012-10-13\cr License:
+  \tab BSD\cr LazyLoad: \tab yes\cr}
+
+  A cohesive framework for parsing, analyzing and
+  organizing color from spectral data
+}
+\examples{
+#see functions.
+}
+\author{
+  Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
+  \email{cme16@zips.uakron.edu}, Pierre-Paul Bitton
+  \email{bittonp@uwindsor.ca}
+}
+\keyword{package}
+
