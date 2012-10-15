@@ -13,11 +13,11 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "bittonp@uwindsor.ca"))
 Depends:
     ggplot2,
-    geometry,
-    hyperSpec
+    geometry
 Collate:
     'agg.R'
     'getspec.R'
     'pavo-package.R'
     'data-vissyst.R'
     'vismodel.R'
+    'data-ttvertex.R'

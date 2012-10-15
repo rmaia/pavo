@@ -28,7 +28,6 @@
 #' @return \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)
 #' @export
-#' @export vissyst
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
