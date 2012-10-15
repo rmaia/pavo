@@ -8,9 +8,6 @@
 #' License: \tab BSD\cr
 #' LazyLoad: \tab yes\cr}
 #'
-#' A cohesive framework for parsing, analyzing and organizing color
-#' from spectral data
-#'
 #' @name pavo-package
 #' @aliases pavo
 #' @docType package

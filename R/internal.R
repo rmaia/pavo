@@ -1,3 +1,5 @@
+#' @export summary.vismodel
+
 huedisp <- function(tcsres){
 ind=t(combn(nrow(tcsres),2))
 apply(ind,1, function(x)	
@@ -43,4 +45,9 @@ names(res.c) <- c('centroid.u', 'centroid.s' ,'centroid.m' ,'centroid.l' ,
                 'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
 
 res.c
+}
+
+
+summary.vismodel<-function(x){
+	lapply(x,colMeans)
 }
