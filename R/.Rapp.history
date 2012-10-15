@@ -860,7 +860,6 @@ split(sptest)
 sptest
 split(sptest,c('1','1','2'))
 split(sptest,c('1','1','2','2'))
-split(sptest,c('1','1','2','2'))
 ?split
 sptest
 require(plyr)
@@ -880,7 +879,6 @@ ddply(sptest,vec1,rowMeans)
 daply(sptest,vec1,rowMeans)
 vec1
 daply(sptest,vec1,mean)
-aggregate(sptest,vec1,mean)
 aggregate(sptest,vec1,mean)
 help(package='plyr')
 dlply(sptest,vec1,mean)
@@ -1079,7 +1077,6 @@ vec2=factor(vec1[-1],labels=c('a','b'))
 vec2
 agg(sptest,vec2,mean)
 proc.time(replicate(10, agg(sptest,vec2,mean)))
-proc.time(replicate(10, agg(sptest,vec2,mean)))
 system.time(replicate(10, agg(sptest,vec2,mean)))
 system.time(replicate(100000, agg(sptest,vec2,mean)))
 system.time(replicate(1000, agg(sptest,vec2,mean)))
@@ -1171,7 +1168,6 @@ testframe
 apply(testframe,1,paste)
 apply(testframe,2,paste)
 apply(testframe,1,function(x)paste(x,sep='.'))
-apply(testframe,1,function(x)paste(x,sep='.'))
 aggregate(testframe)
 formatC(testframe)
 paste(testframe[,1],testframe[,2])
@@ -1200,8 +1196,6 @@ is.integer(30)
 30/3
 seq(1:30/3)
 seq(1:30/3,each=3)
-seq(1:30/3,each=3)
-rep(1:30/3,each=3)
 rep(1:30/3,each=3)
 1/30
 1:30/3
@@ -1297,10 +1291,24 @@ source('~/github/rebird/R/geo_recent.R')
 install.packages('~/github/rebird',type='source',repos=NULL)
 require(rebird)
 ?geo_recent
-?geo_recent
-?geo_recent
 ?mean
 roxygenize('~/github/rebird')
 install.packages('~/github/rebird',type='source',repos=NULL)
 ?geo_recent
-?geo_recent
+a=NULL
+length(a)
+require(pavo)#
+#
+a=getspec('~/github/pavo/examplespec')#
+b=getspec('~/github/pavo/examplespec','ttt')#
+a=data.frame(cbind(a,b))#
+rm(b)#
+vis.a=vismodel(a)#
+tcs.a=tcs(vis.a)#
+testdf=vis.a$Qi
+testdf
+dim(tesdfg)
+dim(tesdf)
+dim(testdf)
+testdf=rbind(testdf,testdf,testdf)
+dim(testdf)
