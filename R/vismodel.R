@@ -115,6 +115,7 @@ fi <- log(qi)
 
 
 #OUTPUT
-
-return(list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi))
+res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
+class(res) <- 'vismodel'
+res
 }

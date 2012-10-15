@@ -6,6 +6,7 @@
 #' @param vismodeldata (required) Quantum catch color data. Can be either the result
 #' from \code{vismodel} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
+#' @param by INCLUDE
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
 #' 
@@ -30,13 +31,15 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
 
-tcs<- function(vismodeldata, qcatch=c('Qi','qi','fi'))
+tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 {
 
-if(is.list(vismodeldata)){
+if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
 	dat <- data.frame(vismodeldata[qcatch])
-  }
+  }else{
+  	dat <- vismodeldata
+  	}
   
 # make relative (in case not inherited relative)
 
@@ -104,37 +107,17 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 #SUMMARY VARIABLES#
 ###################
 
-# centroid
-centroid <- colMeans(res.p[c('u','s','m','l')])
-
-# color span
-colspan.m <- mean(dist(res.p[,c('x','y','z')]))
-colspan.v <- var(dist(res.p[,c('x','y','z')]))
-
-# color volume
-
-#if(nrow(res.p)>3)
-#     {
-     c.vol <- convhulln(res.p[,c('x','y','z')],"FA")$vol
-#     }else{
-#     	warning('Not enough color points to calculate volume (min 4)', call.=FALSE)
-#     	Color.vol<-NA}
-
-# hue disparity
-
-hdisp.m <- mean(huedisp(res.p))
-hdisp.v <- var(huedisp(res.p))
-
-# summary of achieved chroma
-
-mean.ra <- mean(res.p$r.achieved)
-max.ra  <-  max(res.p$r.achieved)
-
-res.c <- c(centroid,colspan.m,colspan.v,mean.ra,max.ra)
-names(res.c) <- c('centroid.u', 'centroid.s' ,'centroid.m' ,'centroid.l' ,
-                'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
+if(!is.null(by)){
+  by <- factor(by)
+  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
+  row.names(res.c) <- levels(by)
+	
+}else{
+	res.c <- data.frame(t(tcssum(res.p)))
+	row.names(res.c) <- 'all.points'
+}
 
 
 res<-list(tcs=res.p,summary=res.c)
-
+res
 }
