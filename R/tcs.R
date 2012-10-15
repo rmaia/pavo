@@ -6,7 +6,14 @@
 #' @param vismodeldata (required) Quantum catch color data. Can be either the result
 #' from \code{vismodel} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
-#' @param by INCLUDE
+#' @param by Either a single value specifying the range of color points for which
+#' summary colorspace variables should be calculated (for example, \code{by} = 3 
+#' indicates summary will be calculated for groups of 3 consecutive color points (rows)
+#' in the quantum catch color data frame) or a vector containing identifications for 
+#' the rows in the quantum catch color data frame (in which case summaries will be 
+#' calculated for each group of points sharing the same identification). If \code{by} 
+#' is left blank, the summary statistics are calculated accross all color points in the
+#' data. 
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
 #' 
@@ -108,6 +115,13 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 ###################
 
 if(!is.null(by)){
+	
+	if(length(by)==1){
+	by.many <- by
+	by <- rep(1:(dim(res.p)[1]/by),each=by)
+	by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
+    }
+
   by <- factor(by)
   res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
   row.names(res.c) <- levels(by)
