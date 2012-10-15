@@ -11,6 +11,9 @@
   \tabular{ll}{ Package: \tab pavo\cr Type: \tab Package\cr
   Version: \tab 0.0-1\cr Date: \tab 2012-10-13\cr License:
   \tab BSD\cr LazyLoad: \tab yes\cr}
+
+  A cohesive framework for parsing, analyzing and
+  organizing color from spectral data
 }
 \examples{
 #see functions.
