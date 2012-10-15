@@ -73,7 +73,5 @@ by <- factor(by)
 dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))
 
 colnames(dat) <- unique(by0)
-res <- data.frame(cbind(wl=wl, dat))
-class(res) <- 'speclist'
-res
+data.frame(cbind(wl=wl, dat))
 }
