@@ -94,11 +94,47 @@ s.r<-r.vec*cosalpha.s
 m.r<-r.vec*cosalpha.m
 l.r<-r.vec*cosalpha.l
 
-res <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r, 
+res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r, 
                   x, y, z, h.theta, h.phi, 
                   r.vec, r.max, r.achieved,
                   row.names=rownames(dat))
 #names(res)[1:4] <- names(dat)
 
-res
+###################
+#SUMMARY VARIABLES#
+###################
+
+# centroid
+centroid <- colMeans(res.p[c('u','s','m','l')])
+
+# color span
+colspan.m <- mean(dist(res.p[,c('x','y','z')]))
+colspan.v <- var(dist(res.p[,c('x','y','z')]))
+
+# color volume
+
+#if(nrow(res.p)>3)
+#     {
+     c.vol <- convhulln(res.p[,c('x','y','z')],"FA")$vol
+#     }else{
+#     	warning('Not enough color points to calculate volume (min 4)', call.=FALSE)
+#     	Color.vol<-NA}
+
+# hue disparity
+
+hdisp.m <- mean(huedisp(res.p))
+hdisp.v <- var(huedisp(res.p))
+
+# summary of achieved chroma
+
+mean.ra <- mean(res.p$r.achieved)
+max.ra  <-  max(res.p$r.achieved)
+
+res.c <- c(centroid,colspan.m,colspan.v,mean.ra,max.ra)
+names(res.c) <- c('centroid.u', 'centroid.s' ,'centroid.m' ,'centroid.l' ,
+                'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
+
+
+res<-list(tcs=res.p,summary=res.c)
+
 }
