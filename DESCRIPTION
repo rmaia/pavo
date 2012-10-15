@@ -21,3 +21,4 @@ Collate:
     'data-vissyst.R'
     'vismodel.R'
     'data-ttvertex.R'
+    'tcs.R'
