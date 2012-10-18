@@ -124,6 +124,7 @@ final[,i+1] <- interp[,2]
 }
 
 names(final) <- c('wl',gsub(extension,'',file_names))
+class(final) <- c('spec','data.frame')
 	
 final
 }
