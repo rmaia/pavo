@@ -66,13 +66,31 @@ require(rgl)
 
 
 
-tetraplot(tcs.a, new=T,hspin=T)
 
-#voltest<-t(convhulln(tcs.a$tcs[,c('x','y','z')]))
+ttvol = function(tcsres){
 
-#coord <- tcs.a$tcs[,c('x','y','z')]
+vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)
 
-#rgl.triangles(coord[voltest,1],coord[voltest,2],coord[voltest,3],alpha=.2)
+coords <- tcsres$tcs[,c('x','y','z')]
+
+ind <- t(combn(unique(c(vol)),2))
+
+
+for(i in 1:nrow(ind)){
+segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])
+	}
+
+rgl.triangles(coord[vol,1],coord[vol,2],coord[vol,3], alpha=0.1)
+
+}
+
+tetraplot(tcs.a, new=F,hspin=F, size=0.00001)
+
+ttvol(tcs.a)
+
+
+
+
 
 #saving options seem very limited
 rgl.postscript('testplot.pdf',fmt='pdf')
