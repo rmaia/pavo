@@ -73,22 +73,25 @@ vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)
 
 coords <- tcsres$tcs[,c('x','y','z')]
 
-ind <- t(combn(unique(c(vol)),2))
+listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
 
-for(i in 1:nrow(ind)){
-segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])
-	}
+ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
 
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)
-#rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], color='lightgrey')
+for(i in 1:nrow(ppairs)){
+segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])
+}
 
 }
 
-tetraplot(tcs.a, new=T,hspin=F, size=0.01)
+tetraplot(tcs.a$tcs, new=T,hspin=F, size=0.02)
 
-ttvol(tcs.a)
+ttvol(tcs.a$tcs)
 
+a <- data.frame(matrix(rnorm(60,0,0.1),ncol=3))
+names(a) <- c('x','y','z')
 
+tetraplot(a, new=T,hspin=F, size=0.02)
+ttvol(a)
 
 
 
