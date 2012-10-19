@@ -1,8 +1,8 @@
 
-tetraplot<- function(tcsres, size=0.025, col='black', new=T, hspin=T, vspin=F, floor=T) {
+tetraplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
 if(new)
-   open3d()
+   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
 # can't figure out how to change the character type
 
