@@ -8,11 +8,17 @@ if(new)
 
 ttv=pavo::ttvertex
 
+cu=t(col2rgb('#984EA3'))/255
+cs=t(col2rgb('#377EB8'))/255
+cm=t(col2rgb('#4DAF4A'))/255
+cl=t(col2rgb('#E41A1C'))/255
+
 plot3d(unlist(ttv[c('xu','xs','xm','xl')]),
 		unlist(ttv[c('yu','ys','ym','yl')]),
 		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,
 		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',
-		col=c('purple','blue','green','red'))
+		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), 
+		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))
 
 
 segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')
@@ -60,7 +66,7 @@ require(rgl)
 
 
 
-tetraplot(tcs.a, new=T,hspin=F)
+tetraplot(tcs.a, new=T,hspin=T)
 
 #voltest<-t(convhulln(tcs.a$tcs[,c('x','y','z')]))
 
