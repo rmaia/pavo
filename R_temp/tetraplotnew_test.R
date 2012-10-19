@@ -2,7 +2,7 @@
 tetraplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
 if(new)
-   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+   open3d(FOV=1, mouseMode=c('zAxis','yAxis','zoom'))
 
 # can't figure out how to change the character type
 
@@ -79,12 +79,12 @@ for(i in 1:nrow(ind)){
 segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])
 	}
 
-rgl.triangles(coord[vol,1],coord[vol,2],coord[vol,3], alpha=0.1)
-#rgl.triangles(coord[vol,1],coord[vol,2],coord[vol,3], color='lightgrey')
+rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)
+#rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], color='lightgrey')
 
 }
 
-tetraplot(tcs.a, new=F,hspin=F, size=0.00001)
+tetraplot(tcs.a, new=T,hspin=F, size=0.01)
 
 ttvol(tcs.a)
 
