@@ -67,7 +67,7 @@ require(rgl)
 
 
 
-ttvol = function(tcsres){
+ttvol <- function(tcsres){
 
 vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)
 
@@ -75,12 +75,12 @@ coords <- tcsres$tcs[,c('x','y','z')]
 
 ind <- t(combn(unique(c(vol)),2))
 
-
 for(i in 1:nrow(ind)){
 segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])
 	}
 
 rgl.triangles(coord[vol,1],coord[vol,2],coord[vol,3], alpha=0.1)
+#rgl.triangles(coord[vol,1],coord[vol,2],coord[vol,3], color='lightgrey')
 
 }
 
