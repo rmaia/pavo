@@ -87,8 +87,8 @@ tetraplot(tcs.a$tcs, new=T,hspin=F, size=0.02)
 
 ttvol(tcs.a$tcs)
 
-a <- data.frame(matrix(rnorm(60,0,0.1),ncol=3))
-names(a) <- c('x','y','z')
+a <- list(tcs=data.frame(matrix(rnorm(60,0,0.1),ncol=3)))
+names(a[[1]]) <- c('x','y','z')
 
 tetraplot(a, new=T,hspin=F, size=0.02)
 ttvol(a)
