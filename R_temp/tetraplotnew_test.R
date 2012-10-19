@@ -81,11 +81,13 @@ for(i in 1:nrow(ppairs)){
 segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])
 }
 
+rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2)
+
 }
 
-tetraplot(tcs.a$tcs, new=T,hspin=F, size=0.02)
+tetraplot(tcs.a, new=T,hspin=F, size=0.02)
 
-ttvol(tcs.a$tcs)
+ttvol(tcs.a)
 
 a <- list(tcs=data.frame(matrix(rnorm(60,0,0.1),ncol=3)))
 names(a[[1]]) <- c('x','y','z')
