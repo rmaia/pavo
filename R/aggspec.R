@@ -32,7 +32,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-agg <- function(data, by, FXN = mean) {
+aggspec <- function(data, by, FXN = mean) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
