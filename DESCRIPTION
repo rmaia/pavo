@@ -13,7 +13,7 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "bittonp@uwindsor.ca"))
 LazyLoad: yes
 Depends:
-    geometry, rgl
+    geometry
 Collate:
     'getspec.R'
     'pavo-package.R'
