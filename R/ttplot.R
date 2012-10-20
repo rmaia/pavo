@@ -38,9 +38,6 @@
 
 ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
-if(!'package:rgl' %in% search())
-  stop(paste('package',dQuote('rgl'),'must be installed manually before running this function'))
-
 if(new)
    open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
