@@ -1,163 +1,3 @@
-tetraplot(tcs.a, new=T,hspin=F, size=0.01)
-ttvol(tcs.a)
-tetraplot(tcs.a, new=T,hspin=F, size=0)
-ttvol(tcs.a)
-ind
-t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)
-t(convhulln(tcs.a$tcs[,c('x','y','z')],options='FA')$hull)
-v=t(convhulln(tcs.a$tcs[,c('x','y','z')],options='FA')$hull)
-v
-apply(v,1,unique)
-apply(v,2,unique)
-a=data.frame(matrix(rnorm(30),ncol=3))
-a
-names(a)=c('x','y','z')
-tetraplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {#
-#
-if(new)#
-   open3d(FOV=1, mouseMode=c('zAxis','yAxis','zoom'))#
-#
-# can't figure out how to change the character type#
-#
-ttv=pavo::ttvertex#
-#
-cu=t(col2rgb('#984EA3'))/255#
-cs=t(col2rgb('#377EB8'))/255#
-cm=t(col2rgb('#4DAF4A'))/255#
-cl=t(col2rgb('#E41A1C'))/255#
-#
-plot3d(unlist(ttv[c('xu','xs','xm','xl')]),#
-		unlist(ttv[c('yu','ys','ym','yl')]),#
-		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,#
-		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',#
-		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), #
-		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))#
-segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')#
-segments3d(ttv[c('xu','xm')], ttv[c('yu','ym')], ttv[c('zu','zm')], color='lightgrey')#
-segments3d(ttv[c('xu','xl')], ttv[c('yu','yl')], ttv[c('zu','zl')], color='lightgrey')#
-segments3d(ttv[c('xs','xm')], ttv[c('ys','ym')], ttv[c('zs','zm')], color='lightgrey')#
-segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], color='lightgrey')#
-segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='lightgrey')#
-#
-spheres3d(0,0,0,col='grey', radius=0.01, lit=F)#
-#
-spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)#
-#
-if(floor){#
-  vertices <- c( #
-      -0.7, -0.5, -0.3, 1.0,#
-       0.7, -0.5, -0.3, 1.0,#
-       0.7,  1, -0.3, 1.0,#
-      -0.7,  1, -0.3, 1.0#
-  				)#
-  indices <- c( 1, 2, 3, 4 )#
- wire3d( qmesh3d(vertices,indices), lit=F )#
-	}#
-if(hspin)#
-   play3d(spin3d(axis=c(0,0,1), rpm=20), duration=3)#
-#
-if(vspin)#
-   play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)#
-#
-}
-tetraplot(v)
-v
-a
-tetraplot(a)
-a=data.frame(matrix(rnorm(30,0,0.1),ncol=3))
-names(a)=c('x','y','z')
-tetraplot(a)
-ttvol <- function(tcsres){#
-#
-vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)#
-#
-coords <- tcsres[,c('x','y','z')]#
-#
-ind <- t(combn(unique(c(vol)),2))#
-#
-for(i in 1:nrow(ind)){#
-segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])#
-	}
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)#
-#rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], color='lightgrey')#
-#
-}
-ttvol(a)
-a=data.frame(matrix(rnorm(30,0,0.1),ncol=3))
-names(a)=c('x','y','z')
-tetraplot(a,new=F)
-ttvol(a)
-ttvol <- function(tcsres){#
-#
-vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)#
-#
-coords <- tcsres[,c('x','y','z')]#
-#
-ind <- t(combn(unique(c(vol)),2))#
-#
-for(i in 1:nrow(ind)){#
-segments3d(coords[ind[i,],'x'],coords[ind[i,],'y'],coords[ind[i,],'z'])#
-	}#
-#
-#rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)#
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], color='lightgrey')#
-#
-}
-tetraplot(a,new=F)
-ttvol(a)
-rgl.postscript('testplot.pdf',fmt='pdf')
-t(convhulln(a[,c('x','y','z')],options='FA')$hull)
-t(combn(unique(c(t(convhulln(a[,c('x','y','z')],options='FA')$hull))),2))
-vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)
-vol <- t(convhulln(tcs.a[,c('x','y','z')],options='FA')$hull)
-vol <- t(convhulln(tcs.a$tcs[,c('x','y','z')],options='FA')$hull)
-vol
-rbind(vol,vol[1,])
-combn(vol[,1],2)
-combn(vol[,2],2)
-apply(vol,1,function(x)combn(x,2))
-apply(vol,2,function(x)combn(x,2))
-apply(vol,1,function(x)combn(x,3))
-apply(vol,2,function(x)combn(x,3))
-apply(vol,2,function(x)combn(x,1))
-apply(vol,2,function(x)combn(x,2))
-list(vol)
-split(vol, rep(1:ncol(vol), each = nrow(vol)))
-vol
-listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
-lapply(listvol,function(x)combn(c,2))
-lapply(listvol,function(x)combn(x,2))
-sapply(listvol,function(x)combn(x,2))
-sapply(listvol,function(x)t(combn(x,2)))
-lapply(listvol,function(x)combn(x,2))
-?par3d()
-rbind(lapply(listvol,function(x)combn(x,2)))
-rbind(unlist(lapply(listvol,function(x)combn(x,2))))
-unlist(lapply(listvol,function(x)combn(x,2)))
-lapply(listvol,function(x)combn(x,2))
-lapply(listvol,function(x)t(combn(x,2)))
-sapply(listvol,function(x)t(combn(x,2)))
-rbind(lapply(listvol,function(x)t(combn(x,2))))
-unlist(lapply(listvol,function(x)t(combn(x,2))))
-lapply(listvol,function(x)t(combn(x,2)))
-require(plyr)
-ldply(lapply(listvol,function(x)t(combn(x,2))))
-ldply(lapply(listvol,function(x)combn(x,2)))
-lapply(listvol,function(x)combn(x,2))
-lapply(listvol,function(x)t(combn(x,2)))
-lapply(listvol,function(x)t(combn(x,2)))
-matrix(lapply(listvol,function(x)t(combn(x,2))))
-unlist(lapply(listvol,function(x)t(combn(x,2))))
-unlist(lapply(listvol,function(x)t(combn(x,2)))[[1]])
-unlist(lapply(listvol,function(x)t(combn(x,2)))[1])
-?ldply
-unlist(lapply(listvol,function(x)t(combn(x,2))))
-(lapply(listvol,function(x)t(combn(x,2))))
-ldply(lapply(listvol,function(x)t(combn(x,2))))
-ldply(lapply(listvol,function(x)t(combn(x,2))))
-dlply(lapply(listvol,function(x)t(combn(x,2))))
-?ldply
-dlply(lapply(listvol,function(x)t(combn(x,2))),rbind)
 lapply(listvol,function(x)t(combn(x,2)))
 do.call(lapply(listvol,function(x)t(combn(x,2))),matrix)
 do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
@@ -172,7 +12,6 @@ pointpairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
 coords[pointpairs[1,]]
 coords[pointpairs[1,],1]
 head(pointpairs)
-coords[pointpairs[1,],1]
 coords[pointpairs[1,],1]
 coords[pointpairs[2,],1]
 coords[pointpairs[3,],1]
@@ -252,57 +91,6 @@ a <- list(tcs=data.frame(matrix(rnorm(60,0,0.1),ncol=3)))
 a
 names(a[[1]]) <- c('x','y','z')
 a
-ttvol <- function(tcsres){#
-#
-vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)#
-#
-coords <- tcsres$tcs[,c('x','y','z')]#
-#
-listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
-#
-ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
-#
-for(i in 1:nrow(ppairs)){#
-segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])#
-}#
-#
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)#
-#
-}
-ttvol <- function(tcsres){#
-#
-vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)#
-#
-coords <- tcsres$tcs[,c('x','y','z')]#
-#
-listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
-#
-ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
-#
-for(i in 1:nrow(ppairs)){#
-segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])#
-}#
-#
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)#
-#
-}
-ttvol <- function(tcsres){#
-#
-vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)#
-#
-coords <- tcsres$tcs[,c('x','y','z')]#
-#
-listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
-#
-ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
-#
-for(i in 1:nrow(ppairs)){#
-segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])#
-}#
-#
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.1)#
-#
-}
 ttvol <- function(tcsres){#
 #
 vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)#
@@ -615,7 +403,6 @@ save(sicalis,file='sicalis.rda')
 require(roxygen)
 require(roxygen2)
 roxygenize('~/github/pavo')
-roxygenize('~/github/pavo')
 install.packages('~/github/pavo',repos=NULL,type='source')
 roxygenize('~/github/pavo')
 install.packages('~/github/pavo',repos=NULL,type='source')
@@ -624,3 +411,281 @@ detach('packages:pavo')
 detach('packages::pavo')
 detach('package:pavo')
 require(pavo)
+require(pavo)
+require(rgl)
+ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {#
+#
+if(new)#
+   open3d(FOV=1, mouseMode=c('zAxis','yAxis','zoom'))#
+#
+# can't figure out how to change the character type#
+#
+ttv=pavo::ttvertex#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+plot3d(unlist(ttv[c('xu','xs','xm','xl')]),#
+		unlist(ttv[c('yu','ys','ym','yl')]),#
+		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,#
+		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',#
+		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), #
+		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))#
+segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')#
+segments3d(ttv[c('xu','xm')], ttv[c('yu','ym')], ttv[c('zu','zm')], color='lightgrey')#
+segments3d(ttv[c('xu','xl')], ttv[c('yu','yl')], ttv[c('zu','zl')], color='lightgrey')#
+segments3d(ttv[c('xs','xm')], ttv[c('ys','ym')], ttv[c('zs','zm')], color='lightgrey')#
+segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], color='lightgrey')#
+segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='lightgrey')#
+#
+spheres3d(0,0,0,col='grey', radius=0.01, lit=F)#
+#
+spheres3d(tcsres$tcs[,c('x','y','z')], radius=size, color=col, lit=F)#
+#
+if(floor){#
+  vertices <- c( #
+      -0.7, -0.5, -0.3, 1.0,#
+       0.7, -0.5, -0.3, 1.0,#
+       0.7,  1, -0.3, 1.0,#
+      -0.7,  1, -0.3, 1.0#
+  				)#
+  indices <- c( 1, 2, 3, 4 )#
+ wire3d( qmesh3d(vertices,indices), lit=F )#
+	}#
+if(hspin)#
+   play3d(spin3d(axis=c(0,0,1), rpm=20), duration=3)#
+#
+if(vspin)#
+   play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)#
+#
+}#
+# require(pavo)#
+# require(rgl)#
+#
+ # a=getspec('~/github/pavo/examplespec')#
+ # b=getspec('~/github/pavo/examplespec','ttt')#
+ # a=data.frame(cbind(a,b))#
+ # rm(b)#
+ # vis.a=vismodel(a)#
+ # tcs.a=tcs(vis.a)#
+ttvol <- function(tcsres){#
+#
+vol <- t(convhulln(tcsres$tcs[,c('x','y','z')],options='FA')$hull)#
+#
+coords <- tcsres$tcs[,c('x','y','z')]#
+#
+listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
+#
+ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
+#
+for(i in 1:nrow(ppairs)){#
+segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'])#
+}#
+#
+rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2)#
+#
+}
+data(sicalis)#
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
+ttplot(tcs.sicalis)
+ttplot(tcs.sicalis,new=F,size=0)
+ttplot(tcs.sicalis,new=F,size=0)
+ttplot(tcs.sicalis,new=F,size=0,hspin=F)
+tcs.sicalis
+tcs.sicalis$tcs
+tcs.sicalis$tcs[grep(names(tcs.sicalis$tcs)]
+tcs.sicalis$tcs[grep('C',names(tcs.sicalis$tcs)]
+tcs.sicalis$tcs[grep('C',names(tcs.sicalis$tcs)),]
+tcs.sicalis$tcs[grep('C',names(tcs.sicalis$tcs))]
+tcs.sicalis$tcs[grep('C$',names(tcs.sicalis$tcs))]
+grep('C$',names(tcs.sicalis$tcs))
+grep('C$',row.names(tcs.sicalis$tcs))
+tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs))]
+tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),]
+ttvol <- function(tcsres, col='black'){#
+#
+vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)#
+#
+coords <- tcsres[,c('x','y','z')]#
+#
+listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
+#
+ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
+#
+for(i in 1:nrow(ppairs)){#
+segments3d(coords[ppairs[i,],'x'], coords[ppairs[i,],'y'],coords[ppairs[i,],'z'], color=col)#
+}#
+#
+rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2, color=col)#
+#
+}
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
+ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='yellow')
+ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {#
+#
+if(new)#
+	open3d(FOV=1)#
+#   open3d(FOV=1, mouseMode=c('zAxis','yAxis','zoom'))#
+#
+# can't figure out how to change the character type#
+#
+ttv=pavo::ttvertex#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+plot3d(unlist(ttv[c('xu','xs','xm','xl')]),#
+		unlist(ttv[c('yu','ys','ym','yl')]),#
+		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,#
+		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',#
+		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), #
+		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))#
+segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')#
+segments3d(ttv[c('xu','xm')], ttv[c('yu','ym')], ttv[c('zu','zm')], color='lightgrey')#
+segments3d(ttv[c('xu','xl')], ttv[c('yu','yl')], ttv[c('zu','zl')], color='lightgrey')#
+segments3d(ttv[c('xs','xm')], ttv[c('ys','ym')], ttv[c('zs','zm')], color='lightgrey')#
+segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], color='lightgrey')#
+segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='lightgrey')#
+#
+spheres3d(0,0,0,col='grey', radius=0.01, lit=F)#
+#
+spheres3d(tcsres$tcs[,c('x','y','z')], radius=size, color=col, lit=F)#
+#
+if(floor){#
+  vertices <- c( #
+      -0.7, -0.5, -0.3, 1.0,#
+       0.7, -0.5, -0.3, 1.0,#
+       0.7,  1, -0.3, 1.0,#
+      -0.7,  1, -0.3, 1.0#
+  				)#
+  indices <- c( 1, 2, 3, 4 )#
+ wire3d( qmesh3d(vertices,indices), lit=F )#
+	}#
+if(hspin)#
+   play3d(spin3d(axis=c(0,0,1), rpm=20), duration=3)#
+#
+if(vspin)#
+   play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)#
+#
+}
+ttplot(tcs.sicalis,new=F,size=0,hspin=F)
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')#
+ ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='yellow')#
+ ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+par3d()
+?par3d()
+?par3d('modelMatrix')
+par3d('modelMatrix')
+par3d(modelMatrix[1])
+par3d('modelMatrix'[1])
+par3d(modelMatrix[1,1])
+par3d('modelMatrix'[1,1])
+modelMatrix
+par3d('modelMatrix')
+mm=par3d('modelMatrix')
+mm[1,1]
+mm[1,1]=-0.155844
+par3d(modelMatrix=mm)
+mm[1,1]=-0.15844
+?par3d()
+par3d('userMatrix')
+mm=par3d('userMatrix')
+mm[1,1]=-0.155844
+par3d(userMatrix=mm)
+mm[1,1]=-0.255844
+par3d(userMatrix=mm)
+mm[1,2]=-0.7
+par3d(userMatrix=mm)
+mm[1,2]=-0.9
+par3d(userMatrix=mm)
+par3d(userMatrix=mm)
+mm[2,2]=0.5
+par3d(userMatrix=mm)
+mm[2,2]=0.3
+par3d(userMatrix=mm)
+mm[2,1]=0.3
+par3d(userMatrix=mm)
+mm[3,1]=0.3
+par3d(userMatrix=mm)
+par3d(userMatrix=mm)
+mm[3,1]=0.5
+par3d(userMatrix=mm)
+mm[3,1]=1
+par3d(userMatrix=mm)
+ttplot(tcs.sicalis,new=F,size=0,hspin=F)
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
+ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='darkyellow')
+ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='violet')
+ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {#
+#
+if(new)#
+   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))#
+#
+# can't figure out how to change the character type#
+#
+ttv=pavo::ttvertex#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+plot3d(unlist(ttv[c('xu','xs','xm','xl')]),#
+		unlist(ttv[c('yu','ys','ym','yl')]),#
+		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,#
+		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',#
+		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), #
+		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))#
+segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')#
+segments3d(ttv[c('xu','xm')], ttv[c('yu','ym')], ttv[c('zu','zm')], color='lightgrey')#
+segments3d(ttv[c('xu','xl')], ttv[c('yu','yl')], ttv[c('zu','zl')], color='lightgrey')#
+segments3d(ttv[c('xs','xm')], ttv[c('ys','ym')], ttv[c('zs','zm')], color='lightgrey')#
+segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], color='lightgrey')#
+segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='lightgrey')#
+#
+spheres3d(0,0,0,col='grey', radius=0.01, lit=F)#
+#
+spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)#
+#
+if(floor){#
+  vertices <- c( #
+      -0.7, -0.5, -0.3, 1.0,#
+       0.7, -0.5, -0.3, 1.0,#
+       0.7,  1, -0.3, 1.0,#
+      -0.7,  1, -0.3, 1.0#
+  				)#
+  indices <- c( 1, 2, 3, 4 )#
+ wire3d( qmesh3d(vertices,indices), lit=F )#
+	}#
+if(hspin)#
+   play3d(spin3d(axis=c(0,0,1), rpm=20), duration=3)#
+#
+if(vspin)#
+   play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)#
+#
+}
+ttplot(tcs.sicalis$tcs)
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
+' ttplot(tcs.sicalis$tcs, size=0.01)
+ttplot(tcs.sicalis$tcs, size=0.01)
+ttplot(tcs.sicalis$tcs, size=0.005)
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
+ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='yellow')
+ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+ttplot(tcs.sicalis$tcs, size=0.005)
+ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
+ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='violet')
+ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+roxygenize()
+require(roxygen2)
+roxygenize('~/github/pavo')
+roxygenize('~/github/pavo')
+roxygenize('~/github/pavo')
+roxygenize('~/github/pavo')
