@@ -29,7 +29,9 @@
 #' channel is proportional to the logarithm of the quantum catch)
 #' @export
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(sicalis)
+#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
