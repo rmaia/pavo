@@ -12,7 +12,7 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
 Depends:
-    ggplot2,
+    rgl,
     geometry
 Collate:
     'getspec.R'
