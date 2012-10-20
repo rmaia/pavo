@@ -15,7 +15,6 @@ Depends:
     ggplot2,
     geometry
 Collate:
-    'agg.R'
     'getspec.R'
     'pavo-package.R'
     'data-vissyst.R'
@@ -23,3 +22,5 @@ Collate:
     'data-ttvertex.R'
     'tcs.R'
     'internal.R'
+    'aggspec.R'
+    'data-sicalis.R'

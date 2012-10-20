@@ -1,4 +1,4 @@
-export(agg)
+export(aggspec)
 export(getspec)
 export(summary.vismodel)
 export(tcs)
