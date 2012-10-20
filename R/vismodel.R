@@ -48,8 +48,7 @@ y <- specdata[,-wl_index]
 sens<- pavo::vissyst
 
 # check if wavelength range matches
-
-  if(!identical(wl,sens$wl))
+  if(!isTRUE(all.equal(wl,sens$wl, check.attributes=FALSE)))
     stop('wavelength in spectra table and visual system chosen do not match')
 
 # get visual system to use
