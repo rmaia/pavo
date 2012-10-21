@@ -15,7 +15,7 @@ For now, you can:
 ```r     
 install.packages('devtools')
 require(devtools)
-install_github('coloRtools', 'rmaia')
+install_github('pavo', 'rmaia')
 require(pavo)
 ```
 
