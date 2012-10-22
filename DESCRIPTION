@@ -27,3 +27,4 @@ Collate:
     'data-sicalis.R'
     'ttplot.R'
     'ttdist.R'
+    'data-bgandilum.R'
