@@ -38,6 +38,12 @@
 
 ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
+if(class(tcsres)=='tcs'){
+  dat <- tcsres$tcs	
+  }else{
+    dat <- tcsres
+    }
+
 if(new)
    open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
@@ -67,7 +73,7 @@ segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='light
 
 spheres3d(0,0,0,col='grey', radius=0.01, lit=F)
 
-spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(dat[,c('x','y','z')], radius=size, color=col, lit=F)
 
 if(floor){
   vertices <- c( 
