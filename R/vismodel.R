@@ -80,7 +80,7 @@ yscale <- apply(y,2,function(x) x/max(x))
 
 #Qi
 # at the moment this will only work for avian type visual systems. 
-# could not figure out yet a way of automating without using loopso if more or
+# could not figure out yet a way of automating without using loop so if more or
 # les than the 4 columns of the avian system.
 
 Qi <- matrix(NA,nrow=dim(y)[2], ncol=4)
@@ -118,5 +118,7 @@ fi <- log(qi)
 #OUTPUT
 res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 class(res) <- 'vismodel'
+attr(res,'visualsystem') <-visual
+attr(res,'relative') <- relative
 res
 }
