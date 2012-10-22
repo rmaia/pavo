@@ -25,6 +25,28 @@ apply(ind,1, function(x)
 }
 
 
+ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
+		dq1<-log(f1['u']/f2['u'],base=10)
+		dq2<-log(f1['s']/f2['s'],base=10)
+		dq3<-log(f1['m']/f2['m'],base=10)
+		dq4<-log(f1['l']/f2['l'],base=10)
+		
+		numer<-	((w1*w2)^2)*((dq4-dq3)^2) + 
+				((w1*w3)^2)*((dq4-dq2)^2) +
+				((w1*w4)^2)*((dq3-dq2)^2) +
+				((w2*w3)^2)*((dq4-dq1)^2) +
+				((w2*w4)^2)*((dq3-dq1)^2) +
+				((w3*w4)^2)*((dq2-dq1)^2)
+		
+		denom<- ((w1*w2*w3)^2) +
+				((w1*w2*w4)^2) + 
+				((w1*w3*w4)^2) +
+				((w2*w3*w4)^2)	
+			
+		as.numeric(sqrt(numer/denom))
+		}
+
+
 ###################
 #SUMMARY VARIABLES#
 ###################

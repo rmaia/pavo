@@ -26,3 +26,4 @@ Collate:
     'aggspec.R'
     'data-sicalis.R'
     'ttplot.R'
+    'ttdist.R'
