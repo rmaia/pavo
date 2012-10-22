@@ -85,16 +85,20 @@ bgil<- pavo::bgandilum
 
 ilum2 <- try(match.arg(ilum), silent=T)
 if(!inherits(ilum2,'try-error')){
-  ilum <- bgil[,grep(ilum2,names(bgil))]	
-  }
+  ilum <- bgil[,grep(ilum2,names(bgil))]
+  }else{
+    ilum2 <- 'user-defined'
+    }
 
 if(ilum2=='ideal')
   ilum <- rep(1,dim(specdata)[1])
 
 bg2 <- try(match.arg(bkg), silent=T)
 if(!inherits(bg2,'try-error')){
-  bkg <- bgil[,grep(bg2,names(bgil))]	
-  }
+  bkg <- bgil[,grep(bg2,names(bgil))]
+  }else{
+    bg2 <- 'user-defined'
+    }
 
 if(bg2=='ideal')
   bkg <- rep(1,dim(specdata)[1])
@@ -146,7 +150,9 @@ fi <- log(qi)
 #OUTPUT
 res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 class(res) <- 'vismodel'
-attr(res,'visualsystem') <-visual
+attr(res,'visualsystem') <- visual
+attr(res,'iluminant') <- ilum2
+attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 res
 }
