@@ -1,5 +1,6 @@
 export(aggspec)
 export(getspec)
+export(summary.spec)
 export(summary.vismodel)
 export(tcs)
 export(ttplot)
