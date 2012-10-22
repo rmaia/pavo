@@ -97,13 +97,27 @@ if(vspin)
 
 
 ttpoints<- function(tcsres, size=0.02, col='black'){
-spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
+
+if(class(tcsres)=='tcs'){
+  dat <- tcsres$tcs	
+  }else{
+    dat <- tcsres
+    }
+
+
+spheres3d(dat[,c('x','y','z')], radius=size, color=col, lit=F)
 }
 
 ttvol <- function(tcsres, col='black', grid=T, fill=T){
 
-vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)
-coords <- tcsres[,c('x','y','z')]
+if(class(tcsres)=='tcs'){
+  dat <- tcsres$tcs	
+  }else{
+    dat <- tcsres
+    }
+
+vol <- t(convhulln(dat[,c('x','y','z')],options='FA')$hull)
+coords <- dat[,c('x','y','z')]
 listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
 ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
 
