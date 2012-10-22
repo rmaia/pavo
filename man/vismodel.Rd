@@ -2,7 +2,7 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-  vismodel(specdata,
+  vismodel(specdata, sens = NULL,
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
     relative = TRUE, ilum = ideal, bkg = ideal)
 }
@@ -11,6 +11,13 @@
   reflectance spectra at each column. must contain a
   \code{wl} column identifying the wavelengths for the
   reflectance values.}
+
+  \item{sens}{Data frame containing sensitivity for the
+  user-defined visual system. The data frame must contain a
+  'wl' column with the range of wavelengths included, and
+  the sensitivity for each other cone as a column. If not
+  specified, the visual system will be chosen according to
+  one of the choices from the argument \code{visual}.}
 
   \item{visual}{The visual system to be used. Currently
   implemented system are: \code{avg.uv}: average avian UV

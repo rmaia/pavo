@@ -7,6 +7,10 @@
 #' 
 #' @param specdata (required) Data frame containing reflectance spectra at each column.
 #' must contain a \code{wl} column identifying the wavelengths for the reflectance values.
+#' @param sens Data frame containing sensitivity for the user-defined visual system. The
+#' data frame must contain a 'wl' column with the range of wavelengths included, and the
+#' sensitivity for each other cone as a column. If not specified, the visual system will
+#' be chosen according to one of the choices from the argument \code{visual}.
 #' @param visual The visual system to be used. Currently implemented system are: 
 #' \code{avg.uv}: average avian UV system; \code{avg.v}: average avian V system; 
 #' \code{bt}: Blue tit \emph{Cyanistes caeruleus} (REF); \code{star}: Starling
@@ -38,7 +42,8 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
 
-vismodel<-function(specdata, visual=c("avg.uv", "avg.v", "bt", "star", "pfowl"), relative=TRUE, ilum=ideal, bkg=ideal)
+vismodel <- function(specdata, sens=NULL, 
+  visual=c("avg.uv", "avg.v", "bt", "star", "pfowl"), relative=TRUE, ilum=ideal, bkg=ideal)
 {
 
 # remove & save colum with wavelengths
@@ -47,23 +52,30 @@ wl_index <- which(names(specdata)=='wl')
 wl <- specdata[,wl_index]
 y <- specdata[,-wl_index]
 
-sens<- pavo::vissyst
+# get visual system to use
 
+if(is.null(sens)){
+  sens<- pavo::vissyst
+
+  visual <- match.arg(visual)
+
+  S <- sens[,grep(visual,names(sens))]
+  names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
+  }else{
+    S <- sens[,-which(names(sens)=='wl')]
+    visual <- 'user-defined'
+    }
+
+sens_wl <- sens[,'wl']
 # if relative=F, convert to proportions
 
 if(!relative)
   y <- y/100
 
 # check if wavelength range matches
-  if(!isTRUE(all.equal(wl,sens$wl, check.attributes=FALSE)))
+  if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)))
     stop('wavelength in spectra table and visual system chosen do not match')
 
-# get visual system to use
-
-visual <- match.arg(visual)
-
-S <- sens[,grep(visual,names(sens))]
-names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
 
 #DEFINING ILUMINANT & BACKGROUND
 ideal <- rep(1,dim(specdata)[1])
