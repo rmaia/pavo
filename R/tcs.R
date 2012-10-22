@@ -49,6 +49,7 @@ tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
 	dat <- data.frame(vismodeldata[qcatch])
+	names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
 	
   }else{
   	dat <- vismodeldata
@@ -58,10 +59,10 @@ if(class(vismodeldata)=='vismodel'){
 
 dat <- dat/rowSums(dat)
 
-u <- dat[,1]
-s <- dat[,2]
-m <- dat[,3]
-l <- dat[,4]
+u <- dat[,'u']
+s <- dat[,'s']
+m <- dat[,'m']
+l <- dat[,'l']
 
 # cartesian coordinates
 
