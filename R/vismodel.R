@@ -49,6 +49,11 @@ y <- specdata[,-wl_index]
 
 sens<- pavo::vissyst
 
+# if relative=F, convert to proportions
+
+if(!relative)
+  y <- y/100
+
 # check if wavelength range matches
   if(!isTRUE(all.equal(wl,sens$wl, check.attributes=FALSE)))
     stop('wavelength in spectra table and visual system chosen do not match')
@@ -74,9 +79,6 @@ descriptive <- data.frame(lambdamax,norm.B,max.B)
 
 # scale to maximum reflectance = 1
 yscale <- apply(y,2,function(x) x/max(x))
-
-#SEM NORMALIZAR
-#x<-y/100 #só transformando em proporção, ao invés de porcentabem (assim 100% reflectance = 1.0 )
 
 #Qi
 # at the moment this will only work for avian type visual systems. 
