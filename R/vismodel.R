@@ -82,17 +82,11 @@ yscale <- apply(y,2,function(x) x/max(x))
 
 #Qi
 # at the moment this will only work for avian type visual systems. 
-# could not figure out yet a way of automating without using loop so if more or
-# les than the 4 columns of the avian system.
+# UPDATE: can now handle different lengths of sensory systems.
 
-Qi <- matrix(NA,nrow=dim(y)[2], ncol=4)
+indices = 1:dim(S)[2]
 
-Qi[,1] <- colSums(y*S[,1]*ilum)
-Qi[,2] <- colSums(y*S[,2]*ilum)
-Qi[,3] <- colSums(y*S[,3]*ilum)
-Qi[,4] <- colSums(y*S[,4]*ilum)
-
-Qi <- as.data.frame(Qi, row.names=names(y))
+Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*ilum)))
 names(Qi) <- names(S)
 
 if(relative){
