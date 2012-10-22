@@ -1,5 +1,3 @@
-sQuote(x)
-sQuote('alfred')
 paste(sQuote('alfred'))
 paste(sQuote('alfred'),'is dead')
 agg <- function(x, by, FUN = mean) {#
@@ -1312,3 +1310,5 @@ dim(tesdf)
 dim(testdf)
 testdf=rbind(testdf,testdf,testdf)
 dim(testdf)
+load("/Users/rmaia/github/pavo/R/sysdata.rda")
+ls()

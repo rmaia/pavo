@@ -48,9 +48,8 @@
   \code{Qi}: Quantum catch for each photoreceptor (which
   sum to 1 if \code{relative = TRUE})
 
-  \code{qi}: Quantum catch normalized to the
-  adaptingbackground according to the von Kries
-  transformation.
+  \code{qi}: Quantum catch normalized to the adapting
+  background according to the von Kries transformation.
 
   \code{fi}: Quantum catch according to Fechner law (the
   signal of the receptor channel is proportional to the

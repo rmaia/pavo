@@ -1,6 +1,6 @@
 export(aggspec)
 export(getspec)
-export(summary.spec)
+export(summary.rspec)
 export(summary.vismodel)
 export(tcs)
 export(ttdist)

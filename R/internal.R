@@ -1,5 +1,5 @@
 #' @export summary.vismodel
-#' @export summary.spec
+#' @export summary.rspec
 
 summary.vismodel<-function(x){
 	lapply(x,colMeans)
