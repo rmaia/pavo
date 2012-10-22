@@ -18,9 +18,10 @@
 #' \emph{Pavo cristatus} (REF).
 #' @param relative Should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE})
-#' @param ilum A vector containing the iluminant. Must be the same length as the columns
-#' in \code{specdata}. (Default assumes an idealized iluminant of 1)
-#' @param bkg A vector containing the background. Must be the same length as the columns
+#' @param ilum either a vector containing the iluminant, or one of the options: 
+#' 'ideal' (total homogeneous iluminance accross wavelengths), 'bluesky', 'd65' (daylight),
+#' or 'forestshade' (Default assumes an idealized iluminant of 1)
+#' @param bkg either a vector containing the background, or an ideal background is used.
 #' in \code{specdata}. (Default assumes an idealized background of 1)
 #' @return A list containing the following data frames:
 #' @return \code{descriptive}: descriptive statistics of maximum and normalized 
@@ -43,7 +44,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
 
 vismodel <- function(specdata, sens=NULL, 
-  visual=c("avg.uv", "avg.v", "bt", "star", "pfowl"), relative=TRUE, ilum=ideal, bkg=ideal)
+  visual=c("avg.uv", "avg.v", "bt", "star", "pfowl"), relative=TRUE, ilum=c('ideal','bluesky','D65','forestshade'), bkg='ideal')
 {
 
 # remove & save colum with wavelengths
@@ -67,6 +68,7 @@ if(is.null(sens)){
     }
 
 sens_wl <- sens[,'wl']
+
 # if relative=F, convert to proportions
 
 if(!relative)
@@ -78,7 +80,25 @@ if(!relative)
 
 
 #DEFINING ILUMINANT & BACKGROUND
-ideal <- rep(1,dim(specdata)[1])
+
+bgil<- pavo::bgandilum
+
+ilum2 <- try(match.arg(ilum), silent=T)
+if(!inherits(ilum2,'try-error')){
+  ilum <- bgil[,grep(ilum2,names(bgil))]	
+  }
+
+if(ilum2=='ideal')
+  ilum <- rep(1,dim(specdata)[1])
+
+bg2 <- try(match.arg(bkg), silent=T)
+if(!inherits(bg2,'try-error')){
+  bkg <- bgil[,grep(bg2,names(bgil))]	
+  }
+
+if(bg2=='ideal')
+  bkg <- rep(1,dim(specdata)[1])
+
 
 # brightness
 norm.B <- colSums(y)/(dim(y)[1]*100)

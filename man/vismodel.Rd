@@ -4,7 +4,9 @@
 \usage{
   vismodel(specdata, sens = NULL,
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
-    relative = TRUE, ilum = ideal, bkg = ideal)
+    relative = TRUE,
+    ilum = c("ideal", "bluesky", "D65", "forestshade"),
+    bkg = "ideal")
 }
 \arguments{
   \item{specdata}{(required) Data frame containing
@@ -30,13 +32,15 @@
   returned (i.e. is it a color space model? Defaults to
   \code{TRUE})}
 
-  \item{ilum}{A vector containing the iluminant. Must be
-  the same length as the columns in \code{specdata}.
-  (Default assumes an idealized iluminant of 1)}
+  \item{ilum}{either a vector containing the iluminant, or
+  one of the options: 'ideal' (total homogeneous iluminance
+  accross wavelengths), 'bluesky', 'd65' (daylight), or
+  'forestshade' (Default assumes an idealized iluminant of
+  1)}
 
-  \item{bkg}{A vector containing the background. Must be
-  the same length as the columns in \code{specdata}.
-  (Default assumes an idealized background of 1)}
+  \item{bkg}{either a vector containing the background, or
+  an ideal background is used. in \code{specdata}. (Default
+  assumes an idealized background of 1)}
 }
 \value{
   A list containing the following data frames:
