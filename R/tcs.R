@@ -43,14 +43,18 @@
 tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 {
 
+# check class, import selected sensitivity
+# make relative (in case not inherited relative)
+
 if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
 	dat <- data.frame(vismodeldata[qcatch])
+	
   }else{
   	dat <- vismodeldata
   	}
   
-# make relative (in case not inherited relative)
+
 
 dat <- dat/rowSums(dat)
 
@@ -134,6 +138,7 @@ if(!is.null(by)){
 }
 
 
-res<-list(tcs=res.p,summary=res.c)
+res <- list(tcs=res.p,summary=res.c)
+class(res) <- 'tcs'
 res
 }
