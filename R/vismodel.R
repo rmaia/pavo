@@ -27,7 +27,7 @@
 #' reflectance, and wavelength of maximum reflectance (hue)
 #' @return \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
 #' \code{relative = TRUE})
-#' @return \code{qi}: Quantum catch normalized to the adaptingbackground according 
+#' @return \code{qi}: Quantum catch normalized to the adapting background according 
 #' to the von Kries transformation.
 #' @return \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)

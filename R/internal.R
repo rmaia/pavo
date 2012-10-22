@@ -5,7 +5,7 @@ summary.vismodel<-function(x){
 	lapply(x,colMeans)
 }
 
-summary.spec <- function(spcs){
+summary.rspec <- function(spcs){
 	cat('\nSpectra data frame\n')
 	cat('Number of spectra:',dim(spcs)[2]-1,'\n')
 	cat('Wavelength range:',min(spcs$wl),'to',max(spcs$wl),'nm\n\n')
