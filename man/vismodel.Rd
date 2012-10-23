@@ -2,9 +2,9 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-  vismodel(specdata, sens = NULL,
+  vismodel(specdata, sens = NULL, relative = TRUE,
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
-    relative = TRUE,
+    luminance = c("bt.dc", "ch.dc", "ml", "none"),
     ilum = c("ideal", "bluesky", "D65", "forestshade"),
     bkg = "ideal")
 }
@@ -27,6 +27,13 @@
   Blue tit \emph{Cyanistes caeruleus} (REF); \code{star}:
   Starling \emph{Sturnus vulgaris} (REF); and \code{pfowl}:
   the peafowl \emph{Pavo cristatus} (REF).}
+
+  \item{luminance}{The sensitivity data to be used to
+  calculate luminance (achromatic) cone stimulation.
+  Currently implemented system are: \code{bt.dc}: Blue tit
+  \emph{Cyanistes caeruleus} double cone, \code{ch.dc}:
+  Chicken \emph{Gallus gallus} double cone, \code{ml}: sum
+  of the longest-wavelength cones, or \code{none}}
 
   \item{relative}{Should relative quantum catches be
   returned (i.e. is it a color space model? Defaults to

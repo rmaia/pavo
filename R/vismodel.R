@@ -16,6 +16,10 @@
 #' \code{bt}: Blue tit \emph{Cyanistes caeruleus} (REF); \code{star}: Starling
 #' \emph{Sturnus vulgaris} (REF); and \code{pfowl}: the peafowl 
 #' \emph{Pavo cristatus} (REF).
+#' @param luminance The sensitivity data to be used to calculate luminance (achromatic)
+#' cone stimulation. Currently implemented system are: \code{bt.dc}: Blue tit 
+#' \emph{Cyanistes caeruleus} double cone, \code{ch.dc}: Chicken \emph{Gallus gallus}
+#' double cone, \code{ml}: sum of the longest-wavelength cones, or \code{none}
 #' @param relative Should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE})
 #' @param ilum either a vector containing the iluminant, or one of the options: 
@@ -43,8 +47,10 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
 
-vismodel <- function(specdata, sens=NULL, 
-  visual=c("avg.uv", "avg.v", "bt", "star", "pfowl"), relative=TRUE, ilum=c('ideal','bluesky','D65','forestshade'), bkg='ideal')
+vismodel <- function(specdata, sens=NULL, relative=TRUE, 
+  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
+  luminance = c("bt.dc","ch.dc","ml","none"),
+  ilum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal')
 {
 
 # remove & save colum with wavelengths
@@ -125,6 +131,7 @@ indices = 1:dim(S)[2]
 Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*ilum)))
 names(Qi) <- names(S)
 
+
 if(relative){
   Qi <- Qi/rowSums(Qi)
 
@@ -133,8 +140,28 @@ if(relative){
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
 
+# calculate luminance contrast
+
+luminance <- match.arg(luminance)
+
+if(luminance=='bt.dc' | luminance=='ch.dc'){
+   L <- sens[,grep(luminance,names(sens))]
+  dL <- colSums(y*L*ilum)
+  Qi <- data.frame(cbind(Qi,dL))
+}
+
+if(luminance=='ml'){
+   L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
+  dL <- colSums(y*L*ilum)
+  Qi <- data.frame(cbind(Qi,dL))
+}
+
+
 #qi 
 # von Kries correction (constant adapting background)
+
+if(!is.null(dL))
+  S <- data.frame(cbind(S,L))
 
 k <- 1/colSums(S*bkg*ilum)
 
@@ -148,9 +175,9 @@ fi <- log(qi)
 
 
 #OUTPUT
-res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
+res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi, L=dL)
 class(res) <- 'vismodel'
-attr(res,'visualsystem') <- visual
+attr(res,'visualsystem') <- c(visual,luminance)
 attr(res,'iluminant') <- ilum2
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
