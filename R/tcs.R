@@ -57,7 +57,7 @@ if(class(vismodeldata)=='vismodel'){
   
 
 
-dat <- dat/rowSums(dat)
+dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
 
 u <- dat[,'u']
 s <- dat[,'s']
