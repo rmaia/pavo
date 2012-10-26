@@ -1,4 +1,4 @@
-# TODO(Pierre): Finish coding S3, S4, S10, H2, H5 variables
+# TODO(Pierre): Finish coding S4, S10, H2, H5 variables
 # TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Change order to group B, S, and H 
 # TODO(Pierre): Error handling
@@ -9,7 +9,7 @@ colorvar <- function (filename) {
 
 all.specs <- read.csv(filename, header=T)
 
-output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=20)
+output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=21)
 
 
 B1 <- sapply(all.specs[, 2:dim(all.specs)[2]], sum)  # B1
@@ -109,22 +109,37 @@ lambdaRmin <- all.specs[apply(all.specs, 2, which.min)[2:dim(all.specs)[2]], 1] 
 
 # S7
 
-s7row <- 1
+
 S7 <- vector("numeric",dim(all.specs)[2]-1)
 for (i in 2:dim(all.specs)[2]){
   mid <- as.integer ((which.max(all.specs[, i])+(which.min(all.specs[, i])))/2)
   sum_min_mid <- sum(all.specs[which.min(all.specs[, i]):mid, i])
   sum_mid_max <- sum(all.specs[mid:which.max(all.specs[, i]), i])
-  S7[s7row] <- (sum_min_mid - sum_mid_max)/(B1[s7row][[1]])
-  s7row <- s7row +1
+  S7[i-1] <- (sum_min_mid - sum_mid_max)/(B1[i-1][[1]])
+  
 }
 
 output.mat[, 20] <- S7
 
+# S3
+
+rowmax <- apply(all.specs[, 2:dim(all.specs)[2]], 2, which.max)
+plus50 <- rowmax+50
+plus50[plus50 > 401] <- 401
+minus50 <- rowmax-50
+minus50[minus50 < 1] <- 1
+S3 <- vector("numeric",dim(all.specs)[2]-1)
+
+for (i in 2:dim(all.specs)[2]) {
+  S3[i-1] <- sum(all.specs[minus50[i-1]:plus50[i-1], i])/B1[i-1]
+}
+
+output.mat[, 21] <- S3
+
 color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
 names(color.var) <- c("B1", "B2", "B3", "H1", "S1 Red", "S1 Green", "S1 Blue", "S1 UV", "S2",
-			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7")
+			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7", "S3")
 return(color.var)
 }
 
