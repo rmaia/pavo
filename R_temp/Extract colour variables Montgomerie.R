@@ -1,4 +1,4 @@
-# TODO(Pierre): Finish coding S4, S10, H2, H5 variables
+# TODO(Pierre): Finish coding S4, S10 variables
 # TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Change order to group B, S, and H 
 # TODO(Pierre): Error handling
@@ -9,7 +9,7 @@ colorvar <- function (filename) {
 
 all.specs <- read.csv(filename, header=T)
 
-output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=21)
+output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=23)
 
 
 B1 <- sapply(all.specs[, 2:dim(all.specs)[2]], sum)  # B1
@@ -136,10 +136,33 @@ for (i in 2:dim(all.specs)[2]) {
 
 output.mat[, 21] <- S3
 
-color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
+#Calculating bmaxneg and bmax
+
+data <- all.specs[ ,2:dim(all.specs)[2]]
+for (i in 1:dim(data)[2]){
+  data[, i] <- lowess(data[ ,i], f=0.15)$y
+}
+diff.data <- apply(data,2,diff)
+lambdabmaxneg <- vector("integer",dim(data)[2]) #H2
+lambdabmax <- vector("integer",dim(data)[2]) #H5
+
+for (i in 1:dim(diff.data)[2]){
+  lambdabmaxneg[i] <- all.specs[which.min(diff.data[, i]), 1]
+  if (min(diff.data[, i]) > 0) 
+	lambdabmaxneg[i] <- NA
+  lambdabmax[i] <- all.specs[which.max(diff.data[, i]), 1]
+  if (max(diff.data[, i]) < 0)
+	lambdabmax[i] <- NA
+}
+
+output.mat[, 22] <- lambdabmaxneg
+output.mat[, 23] <- lambdabmax
+
+ color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
 names(color.var) <- c("B1", "B2", "B3", "H1", "S1 Red", "S1 Green", "S1 Blue", "S1 UV", "S2",
-			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7", "S3")
+			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7",
+			    "S3", "H2", "H5")
 return(color.var)
 }
 
