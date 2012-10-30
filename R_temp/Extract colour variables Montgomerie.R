@@ -1,9 +1,10 @@
+# TODO(Pierre): Option for lambda min = 300 or 320
 # TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Error handling
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
 
-colorvar <- function (all.specs,smooth=FALSE) {
+colorvar <- function (all.specs,lambdamin = 300, smooth=FALSE) {
 
 output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
 
@@ -132,7 +133,7 @@ output.mat[, 9] <- S3
 #Metrics that involve bmax with or without smoothing
 data <- all.specs[ ,2:dim(all.specs)[2]]
 
-if (smooth=TRUE){
+if (smooth == TRUE){
   for (i in 1:dim(data)[2]){
     data[, i] <- lowess(data[ ,i], f=0.15)$y
   }
@@ -151,7 +152,7 @@ for (i in 1:dim(diff.data)[2]){
   bmaxneg[i] <- abs(min(diff.data[, i]))
   if (min(diff.data[, i]) > 0)
 	bmaxneg[i] <- NA
-  S10[i] <- S8[i]\abs(min(diff.data[, i]))
+  S10[i] <- S8[i]/abs(min(diff.data[, i]))
   if (min(diff.data[, i]) > 0)
 	S10[i] <- NA
   lambdabmax[i] <- all.specs[which.max(diff.data[, i]), 1]
@@ -171,7 +172,7 @@ names(color.var) <- c("Total Brightness (B1)", "Mean Brightness (B2)", "Intensit
 			    "Blue chroma (S1 Blue)", "UV chroma (S1 UV)", "Spectral saturation (S2)",
 			    "Chroma (S3)", "Spectral purity (S4)", "Chroma (S5a)",
 			    "Chroma (S5b)", "Chroma (S5c)", "Contrat (S6)",
-			    "Spectral saturation (S7), "Chroma (S8)", "Carotenoid chroma (S9)", 
+			    "Spectral saturation (S7)", "Chroma (S8)", "Carotenoid chroma (S9)", 
 			    "Peaky chroma (S10)", "Hue (H1)", "Hue (H2)", "Hue (H3)",
  			    "Hue (H4a)", "Hue (H4b)", "Hue (H4c)", "Hue (H5)")
 return(color.var)
@@ -180,7 +181,7 @@ return(color.var)
 # Speed test DO NOT RUN
 
 #ptm <- proc.time()
-#colorvar("colorvar.csv")
+#colorvar(color, smooth=TRUE)
 #proc.time() - ptm
 
 
