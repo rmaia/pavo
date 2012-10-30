@@ -1,22 +1,22 @@
-# TODO(Pierre): Finish coding S4, S10 variables
+# TODO(Pierre): Add if statement for smoothing
 # TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Change order to group B, S, and H 
 # TODO(Pierre): Error handling
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
 
-colorvar <- function (filename) {
+colorvar <- function (filename,smooth=FALSE) {
 
 all.specs <- read.csv(filename, header=T)
 
-output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=23)
+output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
 
 
 B1 <- sapply(all.specs[, 2:dim(all.specs)[2]], sum)  # B1
   output.mat[, 1] <- B1
 
-output.mat[, 2] <- sapply(all.specs[, 2:dim(all.specs)[2]], mean)  # B2
-
+B2 <- sapply(all.specs[, 2:dim(all.specs)[2]], mean)  # B2
+  output.mat[, 2] <- B2
 B3 <- sapply(all.specs[, 2:dim(all.specs)[2]], max)  # B3
   output.mat[, 3] <- B3
 
@@ -95,8 +95,8 @@ H4c <- atan(((S5cY-S5cB)/B1)/((S5cR-S5cG)/B1))
 # S6, S8, Carotenoid chroma
 
 output.mat [, 16] <- B3-Rmin # S6
-output.mat [, 17] <- (B3-Rmin)/B1 # S8
-
+S8  <- (B3-Rmin)/B2 # S8
+output.mat [, 17]<- S8
 Carotchromamat <- as.matrix(all.specs[151:401, 2:dim(all.specs)[2]])
   Carotchroma <- (apply(Carotchromamat,2,sum))/B1 # S9 Carotenoid chroma
   output.mat [, 18] <- Carotchroma
@@ -136,7 +136,7 @@ for (i in 2:dim(all.specs)[2]) {
 
 output.mat[, 21] <- S3
 
-#Calculating bmaxneg and bmax
+#Metrics that involve bmax
 
 data <- all.specs[ ,2:dim(all.specs)[2]]
 for (i in 1:dim(data)[2]){
@@ -145,11 +145,19 @@ for (i in 1:dim(data)[2]){
 diff.data <- apply(data,2,diff)
 lambdabmaxneg <- vector("integer",dim(data)[2]) #H2
 lambdabmax <- vector("integer",dim(data)[2]) #H5
+bmaxneg <- vector("integer",dim(data)[2]) #S4
+S10 <- vector("integer",dim(data)[2]) #S10
 
 for (i in 1:dim(diff.data)[2]){
   lambdabmaxneg[i] <- all.specs[which.min(diff.data[, i]), 1]
   if (min(diff.data[, i]) > 0) 
 	lambdabmaxneg[i] <- NA
+  bmaxneg[i] <- abs(min(diff.data[, i]))
+  if (min(diff.data[, i]) > 0)
+	bmaxneg[i] <- NA
+  S10[i] <- S8[i]\abs(min(diff.data[, i]))
+  if (min(diff.data[, i]) > 0)
+	S10[i] <- NA
   lambdabmax[i] <- all.specs[which.max(diff.data[, i]), 1]
   if (max(diff.data[, i]) < 0)
 	lambdabmax[i] <- NA
@@ -157,12 +165,14 @@ for (i in 1:dim(diff.data)[2]){
 
 output.mat[, 22] <- lambdabmaxneg
 output.mat[, 23] <- lambdabmax
+output.mat[, 24] <- bmaxneg
+output.mat[, 25] <- S10
 
  color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
 names(color.var) <- c("B1", "B2", "B3", "H1", "S1 Red", "S1 Green", "S1 Blue", "S1 UV", "S2",
 			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7",
-			    "S3", "H2", "H5")
+			    "S3", "H2", "H5", "S4", "S10")
 return(color.var)
 }
 
