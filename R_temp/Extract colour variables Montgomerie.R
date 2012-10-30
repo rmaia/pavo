@@ -1,13 +1,10 @@
-# TODO(Pierre): Add if statement for smoothing
 # TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Change order to group B, S, and H 
 # TODO(Pierre): Error handling
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
 
-colorvar <- function (filename,smooth=FALSE) {
-
-all.specs <- read.csv(filename, header=T)
+colorvar <- function (all.specs,smooth=FALSE) {
 
 output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
 
@@ -136,12 +133,16 @@ for (i in 2:dim(all.specs)[2]) {
 
 output.mat[, 21] <- S3
 
-#Metrics that involve bmax
+#Metrics that involve bmax with or without smoothing
 
 data <- all.specs[ ,2:dim(all.specs)[2]]
-for (i in 1:dim(data)[2]){
-  data[, i] <- lowess(data[ ,i], f=0.15)$y
+
+if (smooth=TRUE){
+  for (i in 1:dim(data)[2]){
+    data[, i] <- lowess(data[ ,i], f=0.15)$y
+  }
 }
+
 diff.data <- apply(data,2,diff)
 lambdabmaxneg <- vector("integer",dim(data)[2]) #H2
 lambdabmax <- vector("integer",dim(data)[2]) #H5
@@ -168,7 +169,7 @@ output.mat[, 23] <- lambdabmax
 output.mat[, 24] <- bmaxneg
 output.mat[, 25] <- S10
 
- color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
+color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
 names(color.var) <- c("B1", "B2", "B3", "H1", "S1 Red", "S1 Green", "S1 Blue", "S1 UV", "S2",
 			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7",
