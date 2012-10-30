@@ -1,5 +1,4 @@
 ## TODO (Pierre): Fix the small color bug (first plot different)
-## TODO (Pierre): Arg to change number of figures per plot
 ## TODO (Pierre): Test
 ## TODO (Pierre): Error handling
 ## TODO (Pierre): Documentation
@@ -10,18 +9,21 @@ if (specreps <= 0) stop ("Need to include number of spectral curves per figure")
 
 nplots <- ((ncol(specdata)-1)/specreps)
 par(mfrow=c(3,4),ask=TRUE)
+if (specreps > 4) par(mfrow=c(2,3))
+if (specreps > 7) par(mfrow=c(2,2))
+if (specreps > 9) par(mfrow=c(1,2))
+if (specreps > 12) par(mfrow=c(1,1))
 
 for (i in 1:nplots){
-	
+	leg <- names(specdata[,2:dim(specdata)[2]])
 	if (specreps == 1) bloc <- specdata[, i+1]
 	if (specreps > 1) bloc <-specdata[,(((i-1)*specreps)+2):((i*specreps)+1)]
-	leg <- names(specdata[,2:dim(specdata)[2]])
 	yaxismin <-min(bloc)
 	yaxismax <-max(bloc)
 	
 	if (specreps == 1){
 	plot(specdata[,1],bloc,cex=0.1,ylim=c(yaxismin,yaxismax+5),col=1,xlab="Wavelength (nm)",ylab="% Reflectance")
-	legend (280,yaxismax+6,legend=leg[i],cex=0.7,bty="n", xjust=0)	
+	legend (280,yaxismax+6,legend=leg[i],cex=0.7,bty="n", xjust=0, text.col=1)	
 	}
 	
 	if (specreps > 1){
