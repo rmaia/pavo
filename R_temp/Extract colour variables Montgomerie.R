@@ -166,10 +166,14 @@ output.mat[, 18] <- S10 #S10
 
 color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
-names(color.var) <- c("B1", "B2", "B3", "S1 Red", "S1 Green", "S1 Blue", 
-			    "S1 UV", "S2", "S3", "S4", "S5a", "S5b", "S5c", "S6"
-			    "S7, "S8", "S9 Carotenoid chroma", "S10", "H1", "H2" 
-			    "H3", "H4a", "H4b", "H4c", "H5")
+names(color.var) <- c("Total Brightness (B1)", "Mean Brightness (B2)", "Intensity (B3)",
+			    "Red chroma (S1 Red)", "Green chroma (S1 Green)", 
+			    "Blue chroma (S1 Blue)", "UV chroma (S1 UV)", "Spectral saturation (S2)",
+			    "Chroma (S3)", "Spectral purity (S4)", "Chroma (S5a)",
+			    "Chroma (S5b)", "Chroma (S5c)", "Contrat (S6)",
+			    "Spectral saturation (S7), "Chroma (S8)", "Carotenoid chroma (S9)", 
+			    "Peaky chroma (S10)", "Hue (H1)", "Hue (H2)", "Hue (H3)",
+ 			    "Hue (H4a)", "Hue (H4b)", "Hue (H4c)", "Hue (H5)")
 return(color.var)
 }
 
