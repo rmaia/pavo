@@ -1,5 +1,4 @@
 # TODO(Pierre): Vectorize loops ?
-# TODO(Pierre): Change order to group B, S, and H 
 # TODO(Pierre): Error handling
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
@@ -8,40 +7,42 @@ colorvar <- function (all.specs,smooth=FALSE) {
 
 output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
 
-
+# Three measures of brightness
 B1 <- sapply(all.specs[, 2:dim(all.specs)[2]], sum)  # B1
   output.mat[, 1] <- B1
 
 B2 <- sapply(all.specs[, 2:dim(all.specs)[2]], mean)  # B2
   output.mat[, 2] <- B2
+
 B3 <- sapply(all.specs[, 2:dim(all.specs)[2]], max)  # B3
   output.mat[, 3] <- B3
 
+# lambda Rmax hue
 H1 <- all.specs[apply(all.specs, 2, which.max)[2:dim(all.specs)[2]], 1]  # H1
-  output.mat[, 4] <- H1
+  output.mat[, 19] <- H1
 
+# Regularly used chroma scores
 Redchromamat <- as.matrix(all.specs[306:401, 2:dim(all.specs)[2]]) # red 605-700nm inclusive
   Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
-  output.mat [, 5] <- Redchroma
+  output.mat [, 4] <- Redchroma
 
 Greenchromamat <- as.matrix(all.specs[211:306, 2:dim(all.specs)[2]]) # green 510-605nm inlusive
   Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
-  output.mat [, 6] <- Greenchroma
+  output.mat [, 5] <- Greenchroma
 
 Bluechromamat <- as.matrix(all.specs[101:211, 2:dim(all.specs)[2]]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
-  output.mat [, 7] <- Bluechroma
+  output.mat [, 6] <- Bluechroma
 
 UVchromamat <- as.matrix(all.specs[1:101, 2:dim(all.specs)[2]]) # UV 300-400nm inclusive
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
-  output.mat [, 8] <- UVchroma
+  output.mat [, 7] <- UVchroma
 
+# Spectral saturation
 Rmin <- sapply (all.specs[, 2:dim(all.specs)[2]], min)
-  output.mat[, 9] <- B3/Rmin # S2
+  output.mat[, 8] <- B3/Rmin # S2
 
-#  Following are matrices for S5 a,b,c which all use different wl ranges
-#  These ranges do not overlap with S1
-
+#  Matrices and calculations for S5a,b,c which all use different wl ranges
 S5aRmat <- as.matrix(all.specs[326:401, 2:dim(all.specs)[2]])
   S5aR <- apply(S5aRmat,2,sum)
 S5aYmat <- as.matrix(all.specs[251:326, 2:dim(all.specs)[2]])
@@ -52,7 +53,7 @@ S5aBmat <- as.matrix(all.specs[101:176, 2:dim(all.specs)[2]])
   S5aB <- apply(S5aBmat,2,sum)
 
 S5a <- ((S5aR-S5aG)^2+(S5aY-S5aB)^2)^0.5
-  output.mat[, 10] <- S5a
+  output.mat[, 11] <- S5a
 
 S5bRmat <- as.matrix(all.specs[306:401, 2:dim(all.specs)[2]])
   S5bR <- apply(S5bRmat,2,sum)
@@ -64,7 +65,7 @@ S5bBmat <- as.matrix(all.specs[21:116, 2:dim(all.specs)[2]])
   S5bB <- apply(S5bBmat,2,sum)
 
 S5b <- ((S5bR-S5bG)^2+(S5bY-S5bB)^2)^0.5
-  output.mat[, 11] <- S5b
+  output.mat[, 12] <- S5b
 
 S5cRmat <- as.matrix(all.specs[301:401, 2:dim(all.specs)[2]])
   S5cR <- apply(S5cRmat,2,sum)
@@ -76,65 +77,59 @@ S5cBmat <- as.matrix(all.specs[1:101, 2:dim(all.specs)[2]])
   S5cB <- apply(S5cBmat,2,sum)
 
 S5c <- ((S5cR-S5cG)^2+(S5cY-S5cB)^2)^0.5
-  output.mat[, 12] <- S5b
+  output.mat[, 13] <- S5b
 
 # Similarly calculated H4a, b, c
-
 H4a <- atan(((S5aY-S5aB)/B1)/((S5aR-S5aG)/B1))
-  output.mat[, 13] <- H4a
+  output.mat[, 22] <- H4a
 
 H4b <- atan(((S5bY-S5bB)/B1)/((S5bR-S5bG)/B1))
-  output.mat[, 14] <- H4b
+  output.mat[, 23] <- H4b
 
 H4c <- atan(((S5cY-S5cB)/B1)/((S5cR-S5cG)/B1))
-  output.mat[, 15] <- H4c
+  output.mat[, 24] <- H4c
 
 # S6, S8, Carotenoid chroma
+output.mat [, 14] <- B3-Rmin # S6
 
-output.mat [, 16] <- B3-Rmin # S6
 S8  <- (B3-Rmin)/B2 # S8
-output.mat [, 17]<- S8
+  output.mat [, 16]<- S8
+
 Carotchromamat <- as.matrix(all.specs[151:401, 2:dim(all.specs)[2]])
   Carotchroma <- (apply(Carotchromamat,2,sum))/B1 # S9 Carotenoid chroma
-  output.mat [, 18] <- Carotchroma
+  output.mat [, 17] <- Carotchroma
 
 # H3 
-
 lambdaRmin <- all.specs[apply(all.specs, 2, which.min)[2:dim(all.specs)[2]], 1]  # H1
   Rmid <- as.integer((H1+lambdaRmin)/2)
-  output.mat [, 19] <- Rmid
+  output.mat [, 21] <- Rmid
 
 # S7
-
-
 S7 <- vector("numeric",dim(all.specs)[2]-1)
 for (i in 2:dim(all.specs)[2]){
   mid <- as.integer ((which.max(all.specs[, i])+(which.min(all.specs[, i])))/2)
   sum_min_mid <- sum(all.specs[which.min(all.specs[, i]):mid, i])
   sum_mid_max <- sum(all.specs[mid:which.max(all.specs[, i]), i])
   S7[i-1] <- (sum_min_mid - sum_mid_max)/(B1[i-1][[1]])
-  
 }
 
-output.mat[, 20] <- S7
+output.mat[, 15] <- S7
 
 # S3
-
 rowmax <- apply(all.specs[, 2:dim(all.specs)[2]], 2, which.max)
 plus50 <- rowmax+50
-plus50[plus50 > 401] <- 401
+  plus50[plus50 > 401] <- 401
 minus50 <- rowmax-50
-minus50[minus50 < 1] <- 1
+  minus50[minus50 < 1] <- 1
 S3 <- vector("numeric",dim(all.specs)[2]-1)
 
 for (i in 2:dim(all.specs)[2]) {
   S3[i-1] <- sum(all.specs[minus50[i-1]:plus50[i-1], i])/B1[i-1]
 }
 
-output.mat[, 21] <- S3
+output.mat[, 9] <- S3
 
 #Metrics that involve bmax with or without smoothing
-
 data <- all.specs[ ,2:dim(all.specs)[2]]
 
 if (smooth=TRUE){
@@ -164,16 +159,17 @@ for (i in 1:dim(diff.data)[2]){
 	lambdabmax[i] <- NA
 }
 
-output.mat[, 22] <- lambdabmaxneg
-output.mat[, 23] <- lambdabmax
-output.mat[, 24] <- bmaxneg
-output.mat[, 25] <- S10
+output.mat[, 20] <- lambdabmaxneg #H2
+output.mat[, 25] <- lambdabmax #H5
+output.mat[, 10] <- bmaxneg #S4
+output.mat[, 18] <- S10 #S10
 
 color.var <- as.data.frame(output.mat, row.names=names(all.specs[, 2:dim(all.specs)[2]]))
 
-names(color.var) <- c("B1", "B2", "B3", "H1", "S1 Red", "S1 Green", "S1 Blue", "S1 UV", "S2",
-			    "S5a", "S5b", "S5c", "H4a", "H4b", "H4c", "S6", "S8", "S9", "H3", "S7",
-			    "S3", "H2", "H5", "S4", "S10")
+names(color.var) <- c("B1", "B2", "B3", "S1 Red", "S1 Green", "S1 Blue", 
+			    "S1 UV", "S2", "S3", "S4", "S5a", "S5b", "S5c", "S6"
+			    "S7, "S8", "S9 Carotenoid chroma", "S10", "H1", "H2" 
+			    "H3", "H4a", "H4b", "H4c", "H5")
 return(color.var)
 }
 
