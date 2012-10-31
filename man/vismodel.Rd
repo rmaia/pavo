@@ -100,6 +100,6 @@ tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 
   Endler, J. A., & Mielke, P. (2005). Comparing entire
   colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405–431.
+  The Linnean Society, 86(4), 405-431.
 }
 
