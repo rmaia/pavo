@@ -47,6 +47,6 @@ projplot(tcs.sicalis) }
   Endler, J. A., Westcott, D., Madden, J., & Robson, T.
   (2005). Animal visual systems and the evolution of color
   patterns: Sensory processing illuminates signal
-  evolution. Evolution, 59(8), 1795–1818.
+  evolution. Evolution, 59(8), 1795-1818.
 }
 
