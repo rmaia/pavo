@@ -3,6 +3,7 @@
 #' calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the avian tetrahedral color space.
 #'
+#' @import geometry
 #' @param vismodeldata (required) Quantum catch color data. Can be either the result
 #' from \code{vismodel} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
