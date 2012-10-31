@@ -28,3 +28,4 @@ Collate:
     'ttplot.R'
     'ttdist.R'
     'data-bgandilum.R'
+    'projplot.R'
