@@ -62,7 +62,7 @@ y <- specdata[,-wl_index]
 # get visual system to use
 
 if(is.null(sens)){
-  sens<- pavo::vissyst
+  sens <- pavo::vissyst
 
   visual <- match.arg(visual)
 
@@ -71,6 +71,7 @@ if(is.null(sens)){
   }else{
     S <- sens[,-which(names(sens)=='wl')]
     visual <- 'user-defined'
+    sens <- pavo::vissyst
     }
 
 sens_wl <- sens[,'wl']
@@ -175,7 +176,7 @@ fi <- log(qi)
 
 
 #OUTPUT
-res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi, L=dL)
+res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 class(res) <- 'vismodel'
 attr(res,'visualsystem') <- c(visual,luminance)
 attr(res,'iluminant') <- ilum2
