@@ -24,8 +24,15 @@
 projplot=function(tcsres, ...)
 {
 
-points.theta=tcsres$tcs[,'h.theta']
-points.phi=tcsres$tcs[,'h.phi']
+if(class(tcsres)=='tcs'){
+  dat <- tcsres$tcs	
+  }else{
+    dat <- tcsres
+    }
+
+
+points.theta=dat[,'h.theta']
+points.phi=dat[,'h.phi']
 
 n=length(points.theta)
 
