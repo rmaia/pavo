@@ -6,9 +6,10 @@
     hspin = T, vspin = F, floor = T)
 }
 \arguments{
-  \item{tcres}{a data frame, possibly a result from the
-  \code{tcs} function, containing values for the 'x', 'y'
-  and 'z' coordinates as columns (labeled as such)}
+  \item{tcsres}{a (required) data frame, possibly a result
+  from the \code{tcs} function, containing values for the
+  'x', 'y' and 'z' coordinates as columns (labeled as
+  such)}
 
   \item{size}{size of the points in the plot}
 
