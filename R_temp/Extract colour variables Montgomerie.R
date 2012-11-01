@@ -4,6 +4,26 @@
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
 
+#' Extract standard color variables from spectra
+#'
+#' Extracts all 25 spectral curve variables described in 
+#' Montgomerie (REF). (Will) Works with "rspec" class objects generated 
+#' from the "getspec" function or data frames that contain wavelength in
+#' the first column and spectra values in subsequent columns
+#'
+#' @param all.specs (required) Data frame with spectral data. Will accept 
+#' only data ranging from 300-700nm or 320-700nm in 1nm bins.
+#' @param lambdamin The value of the first wavelength, accepts only 300 or 320
+#' (defaults to 300).
+#' @param smooth Logical argument to determine if data should be smoothed 
+#' before extracting some of the values. When TRUE, uses the "lowess" function
+#' (f=0.15), to reduce spectra noise and extracts variables for which bmax and
+#' bmaxneg are required. This includes only S4, S10, H2, and H5.
+#'
+#' @return A data frame containing 25 variables described in Montgomerie (REF).
+
+
+ 
 colorvar <- function (all.specs,lambdamin = 300, smooth=FALSE) {
 
 output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
@@ -175,7 +195,9 @@ names(color.var) <- c("Total Brightness (B1)", "Mean Brightness (B2)", "Intensit
 			    "Spectral saturation (S7)", "Chroma (S8)", "Carotenoid chroma (S9)", 
 			    "Peaky chroma (S10)", "Hue (H1)", "Hue (H2)", "Hue (H3)",
  			    "Hue (H4a)", "Hue (H4b)", "Hue (H4c)", "Hue (H5)")
+
 return(color.var)
+
 }
 
 # Speed test DO NOT RUN
