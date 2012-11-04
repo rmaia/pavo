@@ -1,26 +1,31 @@
-# TODO(Pierre): Error handling
-# TODO(Pierre): Test
-# TODO(Pierre): Add documentation
-
 #' Tristimulus color variables
 #'
 #' Extracts all 25 tristimulus color variables described in 
 #' Montgomerie (2006). Works with \code{rspec} class objects generated 
-#' from the "getspec" function or data frames that contain wavelength in
-#' the first column and spectra values in subsequent columns
+#' from the \code{getspec} function or data frames that contain wavelength in
+#' the first column and spectra values in subsequent columns.
 #'
 #' @param all.specs (required) Data frame with spectral data. Will accept 
 #' only data ranging from 300-700nm or 320-700nm in 1nm bins.
 #' @param smooth Logical argument to determine if data should be smoothed 
 #' before extracting some of the values. When TRUE, uses the "lowess" function
 #' (f=0.15), to reduce spectra noise and extracts variables for which bmax and
-#' bmaxneg are required. This includes only S4, S10, H2, and H5. All other 
-#' variables are extracted using non-smoothed data.
-#'
+#' bmaxneg are required. See note.
 #' @return A data frame containing 25 variables described in Montgomerie (2006)
 #' with spectra name as row names. 
-
-
+#' @note If data range is 320-700nm, S5c, and H4c are not computed.
+#' @note Variables which compute bmax and bmaxneg should be used with caution.
+#' For example, S4 was designed to evaluate the steepest negative slope of a
+#' UV peak. 
+#' Therefore, it is not relevant for other spectral curves. See Montgomerie
+#' (2006) for details.
+#' @note Smoothing affects only S4, S10, H2, and H5 calculation. All other 
+#' variables are extracted using non-smoothed data. Effects of this option can be
+#' checked by comparing two outputs using \code{match}.
+#' @export
+#' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}
+#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
+#' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
  
 colorvar <- function (all.specs, smooth=FALSE) {
 
@@ -158,6 +163,7 @@ H4b <- atan(((S5bY-S5bB)/B1)/((S5bR-S5bG)/B1))
   output.mat[, 23] <- H4b
 
 H4c <- atan(((S5cY-S5cB)/B1)/((S5cR-S5cG)/B1))
+  if (lambdamin == 320) H4c <- NA
   output.mat[, 24] <- H4c
 
 # S6, S8, Carotenoid chroma
@@ -190,9 +196,11 @@ for (i in 2:dim(all.specs)[2]){
 output.mat[, 15] <- S7
 
 # S3
+if (lambdamin == 300) S3max <- 401
+if (lambdamin == 320) S3max <- 381
 rowmax <- apply(all.specs[, 2:dim(all.specs)[2]], 2, which.max)
 plus50 <- rowmax+50
-  plus50[plus50 > 401] <- 401
+  plus50[plus50 > S3max] <- S3max
 minus50 <- rowmax-50
   minus50[minus50 < 1] <- 1
 S3 <- vector("numeric",dim(all.specs)[2]-1)
@@ -220,17 +228,16 @@ S10 <- vector("integer",dim(data)[2]) #S10
 
 for (i in 1:dim(diff.data)[2]){
   lambdabmaxneg[i] <- all.specs[which.min(diff.data[, i]), 1]
-  if (min(diff.data[, i]) > 0) 
-	lambdabmaxneg[i] <- NA
+  if (min(diff.data[, i]) > 0) lambdabmaxneg[i] <- NA
+  
   bmaxneg[i] <- abs(min(diff.data[, i]))
-  if (min(diff.data[, i]) > 0)
-	bmaxneg[i] <- NA
+  if (min(diff.data[, i]) > 0) bmaxneg[i] <- NA
+  
   S10[i] <- S8[i]/abs(min(diff.data[, i]))
-  if (min(diff.data[, i]) > 0)
-	S10[i] <- NA
+  if (min(diff.data[, i]) > 0)S10[i] <- NA
+  
   lambdabmax[i] <- all.specs[which.max(diff.data[, i]), 1]
-  if (max(diff.data[, i]) < 0)
-	lambdabmax[i] <- NA
+  if (max(diff.data[, i]) < 0)lambdabmax[i] <- NA
 }
 
 output.mat[, 20] <- lambdabmaxneg #H2
@@ -252,15 +259,6 @@ names(color.var) <- c("Total Brightness (B1)", "Mean Brightness (B2)", "Intensit
 return(color.var)
 
 }
-
-###################################################################
-						# Test area
-
-# Speed test DO NOT RUN
-
-#ptm <- proc.time()
-#colorvar(color, smooth=TRUE)
-#proc.time() - ptm
 
 
 
