@@ -1,30 +1,38 @@
-# TODO(Pierre): Option for lambda min = 300 or 320
-# TODO(Pierre): Vectorize loops ?
 # TODO(Pierre): Error handling
 # TODO(Pierre): Test
 # TODO(Pierre): Add documentation
 
-#' Extract standard color variables from spectra
+#' Tristimulus color variables
 #'
-#' Extracts all 25 spectral curve variables described in 
-#' Montgomerie (REF). (Will) Works with "rspec" class objects generated 
+#' Extracts all 25 tristimulus color variables described in 
+#' Montgomerie (2006). Works with \code{rspec} class objects generated 
 #' from the "getspec" function or data frames that contain wavelength in
 #' the first column and spectra values in subsequent columns
 #'
 #' @param all.specs (required) Data frame with spectral data. Will accept 
 #' only data ranging from 300-700nm or 320-700nm in 1nm bins.
-#' @param lambdamin The value of the first wavelength, accepts only 300 or 320
-#' (defaults to 300).
 #' @param smooth Logical argument to determine if data should be smoothed 
 #' before extracting some of the values. When TRUE, uses the "lowess" function
 #' (f=0.15), to reduce spectra noise and extracts variables for which bmax and
-#' bmaxneg are required. This includes only S4, S10, H2, and H5.
+#' bmaxneg are required. This includes only S4, S10, H2, and H5. All other 
+#' variables are extracted using non-smoothed data.
 #'
-#' @return A data frame containing 25 variables described in Montgomerie (REF).
+#' @return A data frame containing 25 variables described in Montgomerie (2006)
+#' with spectra name as row names. 
 
 
  
-colorvar <- function (all.specs,lambdamin = 300, smooth=FALSE) {
+colorvar <- function (all.specs, smooth=FALSE) {
+
+lambdamin <- all.specs[1, 1]
+
+if (lambdamin != 300 & lambdamin != 320) {
+  stop ("Minimum wavelength must be 300nm or 320nm")
+  }
+
+if (dim(all.specs)[1] != 401 & dim(all.specs)[1] != 381) {
+  stop ("Wavelength length must be 401 or 381")
+  }
 
 output.mat <- matrix (nrow=(dim(all.specs)[2]-1), ncol=25)
 
@@ -43,19 +51,32 @@ H1 <- all.specs[apply(all.specs, 2, which.max)[2:dim(all.specs)[2]], 1]  # H1
   output.mat[, 19] <- H1
 
 # Regularly used chroma scores
-Redchromamat <- as.matrix(all.specs[306:401, 2:dim(all.specs)[2]]) # red 605-700nm inclusive
+if (lambdamin == 300){
+  S1Red <- c(306:401)
+  S1Green <- c(211:306)
+  S1Blue <- c(101:211)
+  S1UV <- c(1:101)
+}
+if (lambdamin == 320) {
+S1Red <- c(286:381)
+S1Green <- c(191:286)
+S1Blue <- c(81:191)
+S1UV <- c(1:81)
+}
+
+Redchromamat <- as.matrix(all.specs[S1Red, 2:dim(all.specs)[2]]) # red 605-700nm inclusive
   Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
   output.mat [, 4] <- Redchroma
 
-Greenchromamat <- as.matrix(all.specs[211:306, 2:dim(all.specs)[2]]) # green 510-605nm inlusive
+Greenchromamat <- as.matrix(all.specs[S1Green, 2:dim(all.specs)[2]]) # green 510-605nm inlusive
   Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
   output.mat [, 5] <- Greenchroma
 
-Bluechromamat <- as.matrix(all.specs[101:211, 2:dim(all.specs)[2]]) # blue 400-510nm inclusive
+Bluechromamat <- as.matrix(all.specs[S1Blue, 2:dim(all.specs)[2]]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
   output.mat [, 6] <- Bluechroma
 
-UVchromamat <- as.matrix(all.specs[1:101, 2:dim(all.specs)[2]]) # UV 300-400nm inclusive
+UVchromamat <- as.matrix(all.specs[S1UV, 2:dim(all.specs)[2]]) # UV 300-400nm inclusive
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 7] <- UVchroma
 
@@ -63,26 +84,54 @@ UVchromamat <- as.matrix(all.specs[1:101, 2:dim(all.specs)[2]]) # UV 300-400nm i
 Rmin <- sapply (all.specs[, 2:dim(all.specs)[2]], min)
   output.mat[, 8] <- B3/Rmin # S2
 
+if (lambdamin == 300){
+  S5aRed <- c(326:401)
+  S5aYellow <- c(251:326)
+  S5aGreen <- c(176:251)
+  S5aBlue <- c(101:176)
+}
+
+if (lambdamin == 320){
+  S5aRed <- c(306:381)
+  S5aYellow <- c(231:306)
+  S5aGreen <- c(156:231)
+  S5aBlue <- c(81:156)
+}
+
 #  Matrices and calculations for S5a,b,c which all use different wl ranges
-S5aRmat <- as.matrix(all.specs[326:401, 2:dim(all.specs)[2]])
+S5aRmat <- as.matrix(all.specs[S5aRed, 2:dim(all.specs)[2]])
   S5aR <- apply(S5aRmat,2,sum)
-S5aYmat <- as.matrix(all.specs[251:326, 2:dim(all.specs)[2]])
+S5aYmat <- as.matrix(all.specs[S5aYellow, 2:dim(all.specs)[2]])
   S5aY <- apply(S5aYmat,2,sum)
-S5aGmat <- as.matrix(all.specs[176:251, 2:dim(all.specs)[2]])
+S5aGmat <- as.matrix(all.specs[S5aGreen, 2:dim(all.specs)[2]])
   S5aG <- apply(S5aGmat,2,sum)
-S5aBmat <- as.matrix(all.specs[101:176, 2:dim(all.specs)[2]])
+S5aBmat <- as.matrix(all.specs[S5aBlue, 2:dim(all.specs)[2]])
   S5aB <- apply(S5aBmat,2,sum)
 
 S5a <- ((S5aR-S5aG)^2+(S5aY-S5aB)^2)^0.5
   output.mat[, 11] <- S5a
 
-S5bRmat <- as.matrix(all.specs[306:401, 2:dim(all.specs)[2]])
+if (lambdamin == 300){
+  S5bRed <- c(306:401)
+  S5bYellow <- c(211:306)
+  S5bGreen <- c(116:211)
+  S5bBlue <- c(21:116)
+}
+
+if (lambdamin == 320){
+  S5bRed <- c(286:381)
+  S5bYellow <- c(191:286)
+  S5bGreen <- c(96:191)
+  S5bBlue <- c(1:96)
+}
+
+S5bRmat <- as.matrix(all.specs[S5bRed, 2:dim(all.specs)[2]])
   S5bR <- apply(S5bRmat,2,sum)
-S5bYmat <- as.matrix(all.specs[211:306, 2:dim(all.specs)[2]])
+S5bYmat <- as.matrix(all.specs[S5bYellow, 2:dim(all.specs)[2]])
   S5bY <- apply(S5bYmat,2,sum)
-S5bGmat <- as.matrix(all.specs[116:211, 2:dim(all.specs)[2]])
+S5bGmat <- as.matrix(all.specs[S5bGreen, 2:dim(all.specs)[2]])
   S5bG <- apply(S5bGmat,2,sum)
-S5bBmat <- as.matrix(all.specs[21:116, 2:dim(all.specs)[2]])
+S5bBmat <- as.matrix(all.specs[S5bBlue, 2:dim(all.specs)[2]])
   S5bB <- apply(S5bBmat,2,sum)
 
 S5b <- ((S5bR-S5bG)^2+(S5bY-S5bB)^2)^0.5
@@ -98,7 +147,8 @@ S5cBmat <- as.matrix(all.specs[1:101, 2:dim(all.specs)[2]])
   S5cB <- apply(S5cBmat,2,sum)
 
 S5c <- ((S5cR-S5cG)^2+(S5cY-S5cB)^2)^0.5
-  output.mat[, 13] <- S5b
+if (lambdamin == 320) S5c <- NA 
+ output.mat[, 13] <- S5c
 
 # Similarly calculated H4a, b, c
 H4a <- atan(((S5aY-S5aB)/B1)/((S5aR-S5aG)/B1))
@@ -116,7 +166,10 @@ output.mat [, 14] <- B3-Rmin # S6
 S8  <- (B3-Rmin)/B2 # S8
   output.mat [, 16]<- S8
 
-Carotchromamat <- as.matrix(all.specs[151:401, 2:dim(all.specs)[2]])
+if (lambdamin == 300) Carot <- c(151:401)
+if (lambdamin == 320) Carot <- c(131:381)
+
+Carotchromamat <- as.matrix(all.specs[Carot, 2:dim(all.specs)[2]])
   Carotchroma <- (apply(Carotchromamat,2,sum))/B1 # S9 Carotenoid chroma
   output.mat [, 17] <- Carotchroma
 
@@ -200,11 +253,21 @@ return(color.var)
 
 }
 
+###################################################################
+						# Test area
+
 # Speed test DO NOT RUN
 
 #ptm <- proc.time()
 #colorvar(color, smooth=TRUE)
 #proc.time() - ptm
+
+
+
+
+
+
+
 
 
 
