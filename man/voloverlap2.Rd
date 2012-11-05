@@ -1,17 +1,27 @@
-\name{voloverlap}
-\alias{voloverlap}
+\name{voloverlap2}
+\alias{voloverlap2}
 \title{Color volume overlap}
 \usage{
-  voloverlap(tcsres1, tcsres2, plot = FALSE)
+  voloverlap2(tcsres1, tcsres2, plot = FALSE)
 }
 \arguments{
-  \item{tcsres1,tcsres2}{(required) data frame, possibly a
-  result from the \code{tcs} function, containing values
-  for the 'x', 'y' and 'z' coordinates as columns (labeled
-  as such)}
+  \item{tcsres1}{(required) data frame, possibly a result
+  from the \code{tcs} function, containing values for the
+  'x', 'y' and 'z' coordinates as columns (labeled as
+  such)}
+
+  \item{tcsres2}{(required) data frame, possibly a result
+  from the \code{tcs} function, containing values for the
+  'x', 'y' and 'z' coordinates as columns (labeled as
+  such)}
+
+  \item{nsamp}{number of simulated points}
 
   \item{plot}{Should the volumes and points be plotted?
   (defaults to \code{FALSE}.)}
+
+  \item{size}{Size of the spheres in the 3D volume plot (if
+  called)}
 }
 \value{
   Calculates the overlap between the volumes defined by two

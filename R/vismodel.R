@@ -78,7 +78,7 @@ sens_wl <- sens[,'wl']
 
 # if relative=F, convert to proportions
 
-if(!relative)
+# if(!relative)
   y <- y/100
 
 # check if wavelength range matches
@@ -133,35 +133,27 @@ Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*ilum)))
 names(Qi) <- names(S)
 
 
-if(relative){
-  Qi <- Qi/rowSums(Qi)
-
-# Place dark specs in achromatic center?
-# blacks <- which(norm.B < 0.05) #find dark specs
-# Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
-}
-
 # calculate luminance contrast
 
 luminance <- match.arg(luminance)
 
 if(luminance=='bt.dc' | luminance=='ch.dc'){
    L <- sens[,grep(luminance,names(sens))]
-  dL <- colSums(y*L*ilum)
-  Qi <- data.frame(cbind(Qi,dL))
+  lum <- colSums(y*L*ilum)
+  Qi <- data.frame(cbind(Qi,lum))
 }
 
 if(luminance=='ml'){
    L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
-  dL <- colSums(y*L*ilum)
-  Qi <- data.frame(cbind(Qi,dL))
+  lum <- colSums(y*L*ilum)
+  Qi <- data.frame(cbind(Qi,lum))
 }
 
 
 #qi 
 # von Kries correction (constant adapting background)
 
-if(!is.null(dL))
+if(!is.null(lum))
   S <- data.frame(cbind(S,L))
 
 k <- 1/colSums(S*bkg*ilum)
@@ -173,6 +165,18 @@ qi <- t(t(Qi)*k)
 # fechner law (signal ~ log quantum catch)
 
 fi <- log(qi)
+
+
+if(relative){
+  Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
+  qi[,-dim(qi)[2]] <- qi[,-dim(qi)[2]]/rowSums(qi[,-dim(qi)[2]])
+  fi[,-dim(fi)[2]] <- 1/fi[,-dim(fi)[2]]/rowSums(1/fi[,-dim(fi)[2]])
+
+# Place dark specs in achromatic center?
+# blacks <- which(norm.B < 0.05) #find dark specs
+# Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
+}
+
 
 
 #OUTPUT

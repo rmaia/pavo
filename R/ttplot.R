@@ -134,4 +134,5 @@ if(grid==T){
 
 if(fill==T)
 rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2, color=col)
+material3d(alpha=1)
 }

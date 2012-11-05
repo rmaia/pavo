@@ -122,25 +122,25 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 #SUMMARY VARIABLES#
 ###################
 
-if(!is.null(by)){
+# # if(!is.null(by)){
 	
-	if(length(by)==1){
-	by.many <- by
-	by <- rep(1:(dim(res.p)[1]/by),each=by)
-	by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
-    }
+	# if(length(by)==1){
+	# by.many <- by
+	# by <- rep(1:(dim(res.p)[1]/by),each=by)
+	# by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
+    # }
 
-  by <- factor(by)
-  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
-  row.names(res.c) <- levels(by)
+  # by <- factor(by)
+  # res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
+  # row.names(res.c) <- levels(by)
 	
-}else{
-	res.c <- data.frame(t(tcssum(res.p)))
-	row.names(res.c) <- 'all.points'
-}
+# }else{
+	# res.c <- data.frame(t(tcssum(res.p)))
+	# row.names(res.c) <- 'all.points'
+# }
+#res <- list(tcs=res.p,summary=res.c)
 
-
-res <- list(tcs=res.p,summary=res.c)
-class(res) <- 'tcs'
+res <- res.p
+class(res) <- c('tcs', 'data.frame')
 res
 }

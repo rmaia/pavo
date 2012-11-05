@@ -43,8 +43,14 @@ if(class(vismodeldata)=='vismodel'){
 	  warning('Quantum catch are relative, distances may not be meaningful')
 	
   }else{
-  	dat <- vismodeldata
+	qcatch <- match.arg(qcatch)
+  	dat <- vismodeldata[,c('u','s','m','l','lum')]
   	}
+
+dat <- switch(qcatch,
+              Qi = log(dat),
+              qi = log(dat),
+              fi = dat)
 
 w1e=v/sqrt(n1)
 w2e=v/sqrt(n2)
@@ -57,11 +63,16 @@ pairsid <- t(combn(nrow(dat),2))
 dS <- apply(pairsid,1,function(x) 
   ttdistcalc(dat[x[1],], dat[x[2],], 
   w1=w1e, w2=w2e, w3=w3e, w4=w4e) )
+  
+dL <- apply(pairsid,1,function(x) 
+  ttdistcalcachro(dat[x[1],], dat[x[2],], 
+  w=w4e) )
+
 
 patch1 <- row.names(dat)[pairsid[,1]]
 patch2 <- row.names(dat)[pairsid[,2]]
 
-res <- data.frame(patch1,patch2,dS)
+res <- data.frame(patch1, patch2, dS, dL)
 
 nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
 

@@ -1,5 +1,6 @@
 #' @export summary.vismodel
 #' @export summary.rspec
+#' @export summary.tcs
 
 summary.vismodel<-function(x){
 	lapply(x,colMeans)
@@ -15,6 +16,36 @@ summary.rspec <- function(spcs){
 }
 
 
+summary.tcs <- function(tcsres, by=NULL){
+if(!is.null(by)){
+	
+	if(length(by)==1){
+	by.many <- by
+	by <- rep(1:(dim(tcsres)[1]/by),each=by)
+	by <- factor(by,labels=row.names(tcsres)[seq(1,length(row.names(tcsres)),by=by.many)])
+    }
+
+  by <- factor(by)
+  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(tcsres[which(by==z),]))))
+  row.names(res.c) <- levels(by)
+	
+  }else{
+	res.c <- data.frame(t(tcssum(tcsres)))
+	row.names(res.c) <- 'all.points'
+    }
+
+if(NA %in% res.c$cvol)
+  warning('Not enough points to calculate volume', call.=FALSE)
+
+res.c
+}
+
+
+
+
+
+
+
 
 huedisp <- function(tcsres){
 ind=t(combn(nrow(tcsres),2))
@@ -26,10 +57,14 @@ apply(ind,1, function(x)
 
 
 ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
-		dq1<-log(f1['u']/f2['u'],base=10)
-		dq2<-log(f1['s']/f2['s'],base=10)
-		dq3<-log(f1['m']/f2['m'],base=10)
-		dq4<-log(f1['l']/f2['l'],base=10)
+#		dq1<-log(f1['u']/f2['u'],base=10)
+#		dq2<-log(f1['s']/f2['s'],base=10)
+#		dq3<-log(f1['m']/f2['m'],base=10)
+#		dq4<-log(f1['l']/f2['l'],base=10)
+        dq1 <- f1['u']-f2['u']
+        dq2 <- f1['s']-f2['s']
+        dq3 <- f1['m']-f2['m']
+        dq4 <- f1['l']-f2['l']
 		
 		numer<-	((w1*w2)^2)*((dq4-dq3)^2) + 
 				((w1*w3)^2)*((dq4-dq2)^2) +
@@ -47,6 +82,12 @@ ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 		}
 
 
+ttdistcalcachro <- function(f1,f2,w){
+        dq1 <- f1['lum']-f2['lum']
+        dq1 <- as.numeric(dq1)
+        round(abs(dq1/w),7)
+		}
+
 ###################
 #SUMMARY VARIABLES#
 ###################
@@ -61,12 +102,11 @@ colspan.v <- var(dist(tcsres[,c('x','y','z')]))
 
 # color volume
 
-#if(nrow(tcsres)>3)
-#     {
+if(nrow(tcsres)>3)
+     {
      c.vol <- convhulln(tcsres[,c('x','y','z')],"FA")$vol
-#     }else{
-#     	warning('Not enough color points to calculate volume (min 4)', call.=FALSE)
-#     	Color.vol<-NA}
+     }else{
+       c.vol<-NA}
 
 # hue disparity
 
@@ -78,9 +118,9 @@ hdisp.v <- var(huedisp(tcsres))
 mean.ra <- mean(tcsres$r.achieved)
 max.ra  <-  max(tcsres$r.achieved)
 
-res.c <- c(centroid,colspan.m,colspan.v,mean.ra,max.ra)
-names(res.c) <- c('centroid.u', 'centroid.s' ,'centroid.m' ,'centroid.l' ,
-                'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
+res.c <- c(centroid,c.vol, colspan.m,colspan.v,mean.ra,max.ra)
+names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
+                'c.vol', 'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
 
 res.c
 }
