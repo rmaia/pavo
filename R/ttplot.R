@@ -2,7 +2,9 @@
 #'
 #' Produces a 3D plot of a tetrahedral color space using OpenGL capabilities
 #'
-#' @param tcres a data frame, possibly a result from the \code{tcs} function, containing
+#' @import rgl
+#' @param tcsres a (required) data frame, possibly a result from the \code{tcs} 
+#' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param size size of the points in the plot
 #' @param col color of the points in the plot
@@ -35,7 +37,7 @@
 #' \code{\link{rgl.snapshot}},\code{\link{rgl.par3d}} 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
@@ -132,4 +134,5 @@ if(grid==T){
 
 if(fill==T)
 rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2, color=col)
+material3d(alpha=1)
 }

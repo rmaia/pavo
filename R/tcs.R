@@ -3,6 +3,7 @@
 #' calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the avian tetrahedral color space.
 #'
+#' @import geometry
 #' @param vismodeldata (required) Quantum catch color data. Can be either the result
 #' from \code{vismodel} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
@@ -38,7 +39,7 @@
 #' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 {
@@ -49,6 +50,7 @@ tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
 	dat <- data.frame(vismodeldata[qcatch])
+	names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
 	
   }else{
   	dat <- vismodeldata
@@ -56,12 +58,12 @@ if(class(vismodeldata)=='vismodel'){
   
 
 
-dat <- dat/rowSums(dat)
+dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
 
-u <- dat[,1]
-s <- dat[,2]
-m <- dat[,3]
-l <- dat[,4]
+u <- dat[,'u']
+s <- dat[,'s']
+m <- dat[,'m']
+l <- dat[,'l']
 
 # cartesian coordinates
 
@@ -120,25 +122,25 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 #SUMMARY VARIABLES#
 ###################
 
-if(!is.null(by)){
+# # if(!is.null(by)){
 	
-	if(length(by)==1){
-	by.many <- by
-	by <- rep(1:(dim(res.p)[1]/by),each=by)
-	by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
-    }
+	# if(length(by)==1){
+	# by.many <- by
+	# by <- rep(1:(dim(res.p)[1]/by),each=by)
+	# by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
+    # }
 
-  by <- factor(by)
-  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
-  row.names(res.c) <- levels(by)
+  # by <- factor(by)
+  # res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
+  # row.names(res.c) <- levels(by)
 	
-}else{
-	res.c <- data.frame(t(tcssum(res.p)))
-	row.names(res.c) <- 'all.points'
-}
+# }else{
+	# res.c <- data.frame(t(tcssum(res.p)))
+	# row.names(res.c) <- 'all.points'
+# }
+#res <- list(tcs=res.p,summary=res.c)
 
-
-res <- list(tcs=res.p,summary=res.c)
-class(res) <- 'tcs'
+res <- res.p
+class(res) <- c('tcs', 'data.frame')
 res
 }
