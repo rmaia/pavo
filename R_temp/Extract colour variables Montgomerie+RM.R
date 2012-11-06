@@ -27,14 +27,31 @@
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
  
-colorvar2 <- function (all.specs, smooth=TRUE) {
+colorvar2 <- function (all.specs, smooth=TRUE, smooth.f=0.15) {
 
 wl_index <- which(names(all.specs)=='wl')
 wl <- all.specs[,wl_index]
 lambdamin <- min(wl)
 all.specs <- all.specs[,-wl_index]
 
+if(lambdamin <= 300){
+  lminuv <- 300
+  lminuv320 <- 320
+  }
+  
+if(lambdamin > 300){
+  warning('Minimum wavelength is greater than 300 - some UV-related variables are not meaningful')
+  lminuv <- lambdamin
+  lminuv320 <- 320
+  }
 
+if(lambdamin > 320){
+  warning('Minimum wavelength is greater than 320 - some UV-related variables are not meaningful')
+  lminuv320 <- lambdamin
+  }
+ 
+
+  
 output.mat <- matrix (nrow=(dim(all.specs)[2]), ncol=25)
 
 # Three measures of brightness
@@ -65,7 +82,7 @@ Bluechromamat <- as.matrix(all.specs[which(wl==400):which(wl==510),]) # blue 400
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
   output.mat [, 6] <- Bluechroma
 
-UVchromamat <- as.matrix(all.specs[which(wl==300):which(wl==400),]) # UV 300-400nm inclusive
+UVchromamat <- as.matrix(all.specs[which(wl==lminuv):which(wl==400),]) # UV 300-400nm inclusive
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 7] <- UVchroma
 
@@ -86,7 +103,7 @@ S5a <- sqrt((S5aR-S5aG)^2+(S5aY-S5aB)^2)
 S5bR <- apply(all.specs[which(wl==605):which(wl==700),],2,sum)
 S5bY <- apply(all.specs[which(wl==510):which(wl==605),],2,sum)
 S5bG <- apply(all.specs[which(wl==415):which(wl==510),],2,sum)
-S5bB <- apply(all.specs[which(wl==320):which(wl==415),],2,sum)
+S5bB <- apply(all.specs[which(wl==lminuv320):which(wl==415),],2,sum)
 
 S5b <- ((S5bR-S5bG)^2+(S5bY-S5bB)^2)^0.5
   output.mat[, 12] <- S5b
@@ -94,7 +111,7 @@ S5b <- ((S5bR-S5bG)^2+(S5bY-S5bB)^2)^0.5
 S5cR <- apply(all.specs[which(wl==600):which(wl==700),],2,sum)
 S5cY <- apply(all.specs[which(wl==500):which(wl==600),],2,sum)
 S5cG <- apply(all.specs[which(wl==400):which(wl==500),],2,sum)
-S5cB <- apply(all.specs[which(wl==300):which(wl==400),],2,sum)
+S5cB <- apply(all.specs[which(wl==lminuv):which(wl==400),],2,sum)
 
 S5c <- ((S5cR-S5cG)^2+(S5cY-S5cB)^2)^0.5
  output.mat[, 13] <- S5c
@@ -146,7 +163,8 @@ S3 <- sapply(pmindex, function(x) sum(all.specs[minus50[x]:plus50[x],x]))/B1
 data <- all.specs[ ,1:dim(all.specs)[2]]
 
 if(smooth){
-  smoothspecs <- apply(all.specs,2, function(x) lowess(x, f=0.15)$y)
+  smoothspecs <- apply(all.specs,2, function(x) loess.smooth(wl, x, 
+                                    span=0.2, degree=1, evaluation=length(wl))$y)
   }else{
     smoothspecs <- all.specs
     warning('Spectral curves not smoothened - 
@@ -165,6 +183,11 @@ output.mat[, 25] <- lambdabmax #H5
 output.mat[, 10] <- bmaxneg #S4
 output.mat[, 18] <- S10 #S10
 
+if(lambdamin > 320){
+  output.mat[, 7] <- NA
+  output.mat[, 12] <- NA
+  output.mat[, 13] <- NA
+}
 
 color.var <- data.frame(output.mat, row.names=names(all.specs))
 
