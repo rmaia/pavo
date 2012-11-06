@@ -73,13 +73,6 @@ UVchromamat <- as.matrix(all.specs[which(wl==300):which(wl==400),]) # UV 300-400
 Rmin <- sapply(all.specs, min)
   output.mat[, 8] <- B3/Rmin # S2
 
-if (lambdamin == 300){
-  S5aRed <- c(326:401) # 625-700
-  S5aYellow <- c(251:326) # 550-625
-  S5aGreen <- c(176:251) # 475-550
-  S5aBlue <- c(101:176) # 400
-}
-
 #  Matrices and calculations for S5a,b,c which all use different wl ranges
 S5aR <- apply(all.specs[which(wl==625):which(wl==700),],2,sum)
 S5aY <- apply(all.specs[which(wl==550):which(wl==625),],2,sum)
@@ -89,13 +82,6 @@ S5aB <- apply(all.specs[which(wl==400):which(wl==475),],2,sum)
 
 S5a <- sqrt((S5aR-S5aG)^2+(S5aY-S5aB)^2)
   output.mat[, 11] <- S5a
-
-if (lambdamin == 300){
-  S5bRed <- c(306:401) #605-700
-  S5bYellow <- c(211:306) #510
-  S5bGreen <- c(116:211) #415
-  S5bBlue <- c(21:116) #320
-}
 
 S5bR <- apply(all.specs[which(wl==605):which(wl==700),],2,sum)
 S5bY <- apply(all.specs[which(wl==510):which(wl==605),],2,sum)
