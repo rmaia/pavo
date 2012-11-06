@@ -51,38 +51,21 @@ B3 <- sapply(all.specs, max)
 H1 <- wl[max.col(t(all.specs), ties.method='first')]
   output.mat[, 19] <- H1
 
-# Regularly used chroma scores
-if (lambdamin == 300){
-  S1Red <- c(306:401) #605 - 700
-  S1Green <- c(211:306) # 510 - 605
-  S1Blue <- c(101:211) # 400 - 510
-  S1UV <- c(1:101) # 300 - 400
-}
-if (lambdamin == 320) {
-S1Red <- c(286:381)
-S1Green <- c(191:286)
-S1Blue <- c(81:191)
-S1UV <- c(1:81)
-}
 
-Redchromamat <- as.matrix(all.specs[which(wl==605):which(wl==700), 
-                          1:dim(all.specs)[2]]) # red 605-700nm inclusive
+Redchromamat <- as.matrix(all.specs[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
 Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
   output.mat [, 4] <- Redchroma
 
 
-Greenchromamat <- as.matrix(all.specs[which(wl==510):which(wl==605), 
-                            1:dim(all.specs)[2]]) # green 510-605nm inlusive
+Greenchromamat <- as.matrix(all.specs[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
 Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
   output.mat [, 5] <- Greenchroma
 
-Bluechromamat <- as.matrix(all.specs[which(wl==400):which(wl==510), 
-                            1:dim(all.specs)[2]]) # blue 400-510nm inclusive
+Bluechromamat <- as.matrix(all.specs[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
   output.mat [, 6] <- Bluechroma
 
-UVchromamat <- as.matrix(all.specs[which(wl==300):which(wl==400), 
-                         1:dim(all.specs)[2]]) # UV 300-400nm inclusive
+UVchromamat <- as.matrix(all.specs[which(wl==300):which(wl==400),]) # UV 300-400nm inclusive
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 7] <- UVchroma
 
@@ -180,8 +163,8 @@ if(smooth){
   smoothspecs <- apply(all.specs,2, function(x) lowess(x, f=0.15)$y)
   }else{
     smoothspecs <- all.specs
-    warning('Spectral curves not smoothened - variables that rely on derivatives
-    (S4, S10, H2 and H5) are not meaningful', call.=FALSE)
+    warning('Spectral curves not smoothened - 
+    variables that rely on derivatives (S4, S10, H2 and H5) are not meaningful', call.=FALSE)
     }
 
 diffsmooth <- apply(smoothspecs,2,diff)
