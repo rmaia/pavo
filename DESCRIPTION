@@ -11,10 +11,10 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
-LazyLoad: yes
 Depends:
     geometry,
-    rgl
+    rgl,
+    mapproj
 Collate:
     'getspec.R'
     'pavo-package.R'
@@ -26,3 +26,7 @@ Collate:
     'aggspec.R'
     'data-sicalis.R'
     'ttplot.R'
+    'ttdist.R'
+    'data-bgandilum.R'
+    'projplot.R'
+    'voloverlap.R'
