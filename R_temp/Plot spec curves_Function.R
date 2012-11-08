@@ -18,45 +18,69 @@
 
 
 
-plot.spec.curves <- function (specdata, specreps=1) {
+plot.spec.curves <- function (specdata, specreps=1, lwd=2) {
 
 
-if (specreps == 0) stop ("Number of spectral curves cannot be 0")
-if (specreps < 0) stop ("Number of spectral curves cannot be negative")
+if (specreps <= 0) stop ("Invalid specreps value")
 
-nplots <- ((ncol(specdata)-1)/specreps)
-par(mfrow=c(3,4),ask=TRUE)
-if (specreps > 4) par(mfrow=c(2,3))
-if (specreps > 7) par(mfrow=c(2,2))
-if (specreps > 9) par(mfrow=c(1,2))
-if (specreps > 12) par(mfrow=c(1,1))
+wl_index <- which(names(specdata)=='wl')
+wl <- specdata[,wl_index]
+specdata <- specdata[,-wl_index]
+
+
+nplots <- dim(specdata)[1]/specreps
+
+if(specreps <=4){
+  par(mfrow=c(3,4),ask=TRUE)
+  yaxismult <- c(0,1.4)
+  }
+
+if (specreps > 4) {
+  par(mfrow=c(2,3),ask=TRUE)
+  yaxismult <- c(0.9,1.4)
+  }
+  	
+if (specreps > 7) {
+  par(mfrow=c(2,2),ask=TRUE)
+  yaxismult <- c(0.9,1.8)
+  }
+
+if (specreps > 9) {
+  par(mfrow=c(1,2),ask=TRUE)
+  yaxismult <- c(0.9,1.4)
+  }
+
+if (specreps > 12){
+  par(mfrow=c(1,1),ask=TRUE)
+  yaxismult <- c(0.9,1.8)
+  }
+
+col_list=brewer.pal(8,'Set1')
+#col_list = c("#666666", "#1B9E77", "#D95F02", "#7570B3", 
+#             "#E7298A", "#66A61E", "#E6AB02", "#A6761D")
 
 for (i in 1:nplots){
-	leg <- names(specdata[,2:dim(specdata)[2]])
-	if (specreps == 1) bloc <- specdata[, i+1]
+  if (specreps == 1) {
+  	bloc <- data.frame(specdata[i])
+  	col_list <- 'black' }else{
+      bloc <- specdata[,(((i-1)*specreps)+1):(i*specreps)]
+  	  }
+
+  yaxislims = c(min(bloc),max(bloc))*yaxismult
+  
+  leg <- names(bloc)
+  legcolor <- rep(col_list, length=dim(bloc)[2])
+
 	
-	if (specreps > 1) {
-	bloc <-specdata[,(((i-1)*specreps)+2):((i*specreps)+1)]
-	legcolor <- palette(rainbow(n=ncol(bloc), start = 0.7, end = 0.1))
-	}
-	yaxismin <-min(bloc)
-	yaxismax <-max(bloc)
+	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
+	     xlab="Wavelength (nm)",ylab="% Reflectance")
+
+  if(dim(bloc)[2] > 1)
+    for(j in 2:dim(bloc)[2])
+      lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
 	
-	if (specreps == 1){
-	plot(specdata[,1],bloc,cex=0.1,ylim=c(yaxismin,yaxismax+5),col=1,xlab="Wavelength (nm)",ylab="% Reflectance")
-	legend (specdata[1, 1]-20,yaxismax+6,legend=leg[i],cex=0.7,bty="n", xjust=0, text.col=1)	
-	}
-	
-	if (specreps > 1){
-	plot(specdata[,1],bloc[,1],cex=0.1,ylim=c(yaxismin,yaxismax+5),col=legcolor[1],xlab="Wavelength (nm)",ylab="% Reflectance")
-	legend (specdata[1, 1]-20,yaxismax+6,legend=names(bloc),cex=0.7,bty="n", xjust=0, text.col = legcolor)
-	
-	nextplot = 2
-		while (nextplot < ncol(bloc)+1) { 						
-			lines (specdata[,1],bloc[,nextplot],cex=0.1, col = legcolor[nextplot])
-			nextplot<- nextplot+1}
-			
-		}
+  legend('topright', legend=names(bloc), cex=0.7, bty="n", 
+         text.col=legcolor)	
 	}
 }
 
