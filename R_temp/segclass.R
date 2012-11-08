@@ -11,39 +11,26 @@
 #' color in studies of animal color patterns. Biological Journal of the Linnean 
 #' Society, 41, 315-352.
 
-segclass <- function (specdata) {
+segclass <- function (specdata, range=c(300,700)) {
 
-lambdamin <- all.specs[1, 1]
+wl_index <- which(names(specdata)=='wl')
+wl <- specdata[,wl_index]
+lambdamin <- min(wl)
+specdata <- specdata[,-wl_index]
 
-if (lambdamin != 300 & lambdamin != 320) {
-  stop ("Minimum wavelength must be 300nm or 320nm")
-  }
+segmts <- trunc(as.numeric(quantile(range[1]:range[2])))
 
-if (dim(all.specs)[1] != 401 & dim(all.specs)[1] != 381) {
-  stop ("Wavelength length must be 401 or 381")
-  }
+    UV <- which(wl==segmts[1]):which(wl==segmts[2])
+  Blue <- which(wl==segmts[2]):which(wl==segmts[3])
+ Green <- which(wl==segmts[3]):which(wl==segmts[4])
+   Red <- which(wl==segmts[4]):which(wl==segmts[5])
 
-if (lambdamin == 300){
-UV <- c(1:101)
-Blue <- c(101:201)
-Green <- c(201:301)
-Red <- c(301:401)
-}
+   UVmat <- specdata[UV, ]
+ Bluemat <- specdata[Blue,]
+Greenmat <- specdata[Green, ]
+  Redmat <- specdata[Red, ]
 
-if (lambdamin == 320) {
-UV <- c(1:96)
-Blue <- c(96:191)
-Green <- c(191:286)
-Red <- c(286:381)
-}
-
-alldat <- specdata[, 2:dim(specdata)[2]]
-UVmat <- specdata[UV, 2:dim(specdata)[2]]
-Bluemat <- specdata[Blue, 2:dim(specdata)[2]]
-Greenmat <- specdata[Green, 2:dim(specdata)[2]]
-Redmat <- specdata[Red, 2:dim(specdata)[2]]
-
-B1 <- apply(alldat,2,sum)
+B1 <- apply(specdata,2,sum)
 UVscore <- apply(UVmat,2,sum)/B1
 Bluescore <- apply(Bluemat,2,sum)/B1
 Greenscore <- apply(Greenmat,2,sum)/B1
@@ -52,9 +39,8 @@ Redscore <- apply(Redmat,2,sum)/B1
 LM <- Redscore-Bluescore
 MS <- Greenscore-UVscore
 
-segclassdata <- as.data.frame(matrix(c(LM,MS),nrow=dim(specdata)[2]-1,ncol=2),
-  row.names = names(specdata)[2:dim(specdata)[2]])
-names(segclassdata) <- c("LM","MS")
+segclassdata <- data.frame(LM,MS, row.names = names(specdata))
 
-return(segclassdata)
+segclassdata
+
 }
