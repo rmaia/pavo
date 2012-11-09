@@ -1,8 +1,3 @@
-## TODO (Pierre): Fix the colors
-## 2 Problems: 1) Colors in the first graph is different than the other graphs
-## This problem occurs in the first run only, or when changing the number of curves per plots
-## 2) Colours are terrible. Tried using RColorBrewer but keep getting error message even using example
-
 #' Plot spectral curves
 #'
 #' Plots multiple spectral curves in the same graph to rapidly compare groups of spectra.
