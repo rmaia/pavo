@@ -1,10 +1,4 @@
-#' @export summary.vismodel
-#' @export summary.rspec
 #' @export summary.tcs
-
-summary.vismodel<-function(x){
-	lapply(x,colMeans)
-}
 
 summary.rspec <- function(spcs){
 	cat('\nSpectra data frame\n')
