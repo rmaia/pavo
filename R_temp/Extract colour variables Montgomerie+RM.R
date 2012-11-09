@@ -27,7 +27,8 @@
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
  
-colorvar2 <- function (all.specs, range=c(300,700), smooth=TRUE, smooth.f=0.15) {
+colorvar2 <- function (all.specs, range=c(300,700), 
+                smooth=TRUE, span=0.2, plot=FALSE) {
 
 wl_index <- which(names(all.specs)=='wl')
 wl <- all.specs[,wl_index]
@@ -56,10 +57,9 @@ Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
 Bluechromamat <- as.matrix(all.specs[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
 
-S2 <- B3/Rmin #S2
-
 # Spectral saturation
 Rmin <- sapply(all.specs, min)
+S2 <- B3/Rmin #S2
 
 # RM: removed 5a,b,c; replaced for a quantile function
 #  Matrices and calculations for S5a,b,c which all use different wl ranges
@@ -116,7 +116,7 @@ data <- all.specs[ ,1:dim(all.specs)[2]]
 
 if(smooth){
   smoothspecs <- apply(all.specs,2, function(x) loess.smooth(wl, x, 
-                                    span=0.2, degree=1, evaluation=length(wl))$y)
+                                    span=span, degree=1, evaluation=length(wl))$y)
   }else{
     smoothspecs <- all.specs
     warning('Spectral curves not smoothened - 
@@ -172,6 +172,10 @@ color.var <- data.frame(output.mat, row.names=names(all.specs))
 names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.blue", "S1.green", 
                       "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
+
+if(plot)
+  plot.spec.curves(cbind(data.frame(wl,smoothspecs)))
+
 
 color.var
 }
