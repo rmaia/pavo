@@ -18,7 +18,7 @@
 
 
 
-plot.spec.curves <- function (specdata, specreps=1, lwd=2) {
+explorespec <- function (specdata, specreps=1, lwd=2) {
 
 
 if (specreps <= 0) stop ("Invalid specreps value")
