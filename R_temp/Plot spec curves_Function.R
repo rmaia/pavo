@@ -28,7 +28,7 @@ wl <- specdata[,wl_index]
 specdata <- specdata[,-wl_index]
 
 
-nplots <- dim(specdata)[1]/specreps
+nplots <- ceiling(dim(specdata)[2]/specreps)
 
 if(specreps <=4){
   par(mfrow=c(3,4),ask=TRUE)
@@ -55,30 +55,27 @@ if (specreps > 12){
   yaxismult <- c(0.9,1.8)
   }
 
-col_list=brewer.pal(8,'Set1')
-#col_list = c("#666666", "#1B9E77", "#D95F02", "#7570B3", 
-#             "#E7298A", "#66A61E", "#E6AB02", "#A6761D")
+
+col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+              "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
 
 for (i in 1:nplots){
   if (specreps == 1) {
   	bloc <- data.frame(specdata[i])
   	col_list <- 'black' }else{
-      bloc <- specdata[,(((i-1)*specreps)+1):(i*specreps)]
+      bloc <- specdata[,(((i-1)*specreps)+1):min(i*specreps,dim(specdata)[2])]
   	  }
 
   yaxislims = c(min(bloc),max(bloc))*yaxismult
-  
   leg <- names(bloc)
   legcolor <- rep(col_list, length=dim(bloc)[2])
 
-	
 	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
 	     xlab="Wavelength (nm)",ylab="% Reflectance")
 
   if(dim(bloc)[2] > 1)
     for(j in 2:dim(bloc)[2])
       lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
-	
   legend('topright', legend=names(bloc), cex=0.7, bty="n", 
          text.col=legcolor)	
 	}

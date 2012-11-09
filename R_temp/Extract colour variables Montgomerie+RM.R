@@ -27,118 +27,71 @@
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
  
-colorvar2 <- function (all.specs, smooth=TRUE, smooth.f=0.15) {
+colorvar2 <- function (all.specs, range=c(300,700), 
+                smooth=TRUE, span=0.2, plot=FALSE) {
 
 wl_index <- which(names(all.specs)=='wl')
 wl <- all.specs[,wl_index]
 lambdamin <- min(wl)
 all.specs <- all.specs[,-wl_index]
 
-if(lambdamin <= 300){
-  lminuv <- 300
-  lminuv320 <- 320
-  }
-  
-if(lambdamin > 300){
-  warning('Minimum wavelength is greater than 300 - some UV-related variables are not meaningful')
-  lminuv <- lambdamin
-  lminuv320 <- 320
-  }
-
-if(lambdamin > 320){
-  warning('Minimum wavelength is greater than 320 - some UV-related variables are not meaningful')
-  lminuv320 <- lambdamin
-  }
- 
-
-  
-output.mat <- matrix (nrow=(dim(all.specs)[2]), ncol=25)
+output.mat <- matrix (nrow=(dim(all.specs)[2]), ncol=21)
 
 # Three measures of brightness
 B1 <- sapply(all.specs, sum)
-  output.mat[, 1] <- B1
 
 B2 <- sapply(all.specs, mean)
-  output.mat[, 2] <- B2
 
 B3 <- sapply(all.specs, max)
-  output.mat[, 3] <- B3
 
 # lambda Rmax hue
 H1 <- wl[max.col(t(all.specs), ties.method='first')]
-  output.mat[, 19] <- H1
-
 
 Redchromamat <- as.matrix(all.specs[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
 Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
-  output.mat [, 4] <- Redchroma
 
 
 Greenchromamat <- as.matrix(all.specs[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
 Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
-  output.mat [, 5] <- Greenchroma
 
 Bluechromamat <- as.matrix(all.specs[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
-  output.mat [, 6] <- Bluechroma
-
-UVchromamat <- as.matrix(all.specs[which(wl==lminuv):which(wl==400),]) # UV 300-400nm inclusive
-  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
-  output.mat [, 7] <- UVchroma
 
 # Spectral saturation
 Rmin <- sapply(all.specs, min)
-  output.mat[, 8] <- B3/Rmin # S2
+S2 <- B3/Rmin #S2
 
+# RM: removed 5a,b,c; replaced for a quantile function
 #  Matrices and calculations for S5a,b,c which all use different wl ranges
-S5aR <- apply(all.specs[which(wl==625):which(wl==700),],2,sum)
-S5aY <- apply(all.specs[which(wl==550):which(wl==625),],2,sum)
-S5aG <- apply(all.specs[which(wl==475):which(wl==550),],2,sum)
-S5aB <- apply(all.specs[which(wl==400):which(wl==475),],2,sum)
+
+segmts <- trunc(as.numeric(quantile(range[1]:range[2])))
+
+Q1 <- which(wl==segmts[1]):which(wl==segmts[2])
+Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
+Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
+Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
+
+S5R <- apply(all.specs[Q4, ],2,sum)
+S5Y <- apply(all.specs[Q3, ],2,sum)
+S5G <- apply(all.specs[Q2, ],2,sum)
+S5B <- apply(all.specs[Q1, ],2,sum)
 
 
-S5a <- sqrt((S5aR-S5aG)^2+(S5aY-S5aB)^2)
-  output.mat[, 11] <- S5a
-
-S5bR <- apply(all.specs[which(wl==605):which(wl==700),],2,sum)
-S5bY <- apply(all.specs[which(wl==510):which(wl==605),],2,sum)
-S5bG <- apply(all.specs[which(wl==415):which(wl==510),],2,sum)
-S5bB <- apply(all.specs[which(wl==lminuv320):which(wl==415),],2,sum)
-
-S5b <- ((S5bR-S5bG)^2+(S5bY-S5bB)^2)^0.5
-  output.mat[, 12] <- S5b
-
-S5cR <- apply(all.specs[which(wl==600):which(wl==700),],2,sum)
-S5cY <- apply(all.specs[which(wl==500):which(wl==600),],2,sum)
-S5cG <- apply(all.specs[which(wl==400):which(wl==500),],2,sum)
-S5cB <- apply(all.specs[which(wl==lminuv):which(wl==400),],2,sum)
-
-S5c <- ((S5cR-S5cG)^2+(S5cY-S5cB)^2)^0.5
- output.mat[, 13] <- S5c
+S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
 # Similarly calculated H4a, b, c
-H4a <- atan(((S5aY-S5aB)/B1)/((S5aR-S5aG)/B1))
-  output.mat[, 22] <- H4a
-
-H4b <- atan(((S5bY-S5bB)/B1)/((S5bR-S5bG)/B1))
-  output.mat[, 23] <- H4b
-
-H4c <- atan(((S5cY-S5cB)/B1)/((S5cR-S5cG)/B1))
-  output.mat[, 24] <- H4c
+H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
 
 # S6, S8, Carotenoid chroma
-output.mat [, 14] <- B3-Rmin # S6
+S6 <- B3-Rmin # S6
 
 S8  <- (B3-Rmin)/B2 # S8
-  output.mat [, 16]<- S8
 
 Carotchroma <- colSums(all.specs[which(wl==450):which(wl==700),])/B1 # S9 Carotenoid chroma
-  output.mat [, 17] <- Carotchroma
 
 # H3 
-lambdaRmin <- wl[apply(all.specs, 2, which.min)]  # H1
+lambdaRmin <- wl[apply(all.specs, 2, which.min)]  # H3
   Rmid <- round((H1+lambdaRmin)/2)
-  output.mat [, 21] <- Rmid
 
 # S7
 sum_min_mid <- apply(all.specs, 2, function(x) 
@@ -148,7 +101,6 @@ sum_mid_max <- apply(all.specs, 2, function(x)
 
 S7 <- (sum_min_mid - sum_mid_max)/(B1)
 
-output.mat[, 15] <- S7
 
 # S3
 
@@ -157,14 +109,14 @@ minus50 <- apply(all.specs,2,function(x) max(c(which.max(x)-50,which.min(wl))))
 pmindex <- 1:dim(all.specs)[2]
 
 S3 <- sapply(pmindex, function(x) sum(all.specs[minus50[x]:plus50[x],x]))/B1
-  output.mat[, 9] <- S3
+
 
 #Metrics that involve bmax with or without smoothing
 data <- all.specs[ ,1:dim(all.specs)[2]]
 
 if(smooth){
   smoothspecs <- apply(all.specs,2, function(x) loess.smooth(wl, x, 
-                                    span=0.2, degree=1, evaluation=length(wl))$y)
+                                    span=span, degree=1, evaluation=length(wl))$y)
   }else{
     smoothspecs <- all.specs
     warning('Spectral curves not smoothened - 
@@ -172,29 +124,58 @@ if(smooth){
     }
 
 diffsmooth <- apply(smoothspecs,2,diff)
-lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)]
-bmaxneg <- abs(apply(diffsmooth,2,min))
-S10 <- S8/bmaxneg
-lambdabmax <- wl[apply(diffsmooth,2,which.max)]
+
+lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
+bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
+S10 <- S8/bmaxneg #S10
+lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
+
+  output.mat[, 1] <- B1
+  output.mat[, 2] <- B2
+  output.mat[, 3] <- B3
+  output.mat[, 5] <- Bluechroma
+  output.mat[, 6] <- Greenchroma
+  output.mat[, 7] <- Redchroma
+  output.mat[, 8] <- S2
+  output.mat[, 9] <- S3
+  output.mat[, 10] <- bmaxneg
+  output.mat[, 11] <- S5
+  output.mat[, 12] <- S6
+  output.mat[, 13] <- S7
+  output.mat[, 14] <- S8
+  output.mat[, 15] <- Carotchroma
+  output.mat[, 16] <- S10 
+  output.mat[, 17] <- H1
+  output.mat[, 18] <- lambdabmaxneg 
+  output.mat[, 19] <- Rmid
+  output.mat[, 20] <- H4
+  output.mat[, 21] <- lambdabmax
 
 
-output.mat[, 20] <- lambdabmaxneg #H2
-output.mat[, 25] <- lambdabmax #H5
-output.mat[, 10] <- bmaxneg #S4
-output.mat[, 18] <- S10 #S10
-
-if(lambdamin > 320){
-  output.mat[, 7] <- NA
-  output.mat[, 12] <- NA
-  output.mat[, 13] <- NA
-}
+if(lambdamin <= 300){
+  lminuv <- 300
+  UVchromamat <- as.matrix(all.specs[which(wl==lminuv):which(wl==400),])
+  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
+  output.mat [, 4] <- UVchroma
+  }
+  
+if(lambdamin > 300 & lambdamin < 400){
+  warning(paste('Minimum wavelength is', lambdamin,'UV-related variables may not be meaningful'), call.=FALSE)
+  lminuv <- lambdamin
+  UVchromamat <- as.matrix(all.specs[which(wl==lminuv):which(wl==400),]) 
+  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
+  output.mat [, 4] <- UVchroma
+  }
 
 color.var <- data.frame(output.mat, row.names=names(all.specs))
 
-names(color.var) <- c("B1", "B2", "B3", "S1.red", "S1.green", "S1.blue", 
-                      "S1.UV", "S2", "S3", "S4", "S5a", "S5b", "S5c", 
-                      "S6", "S7", "S8", "S9", "S10", "H1", "H2", "H3",
-                      "H4a", "H4b", "H4c", "H5")
+names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.blue", "S1.green", 
+                      "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
+                      "S9", "S10", "H1", "H2", "H3", "H4", "H5")
+
+if(plot)
+  plot.spec.curves(cbind(data.frame(wl,smoothspecs)))
+
 
 color.var
 }
