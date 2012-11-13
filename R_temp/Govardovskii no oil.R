@@ -8,7 +8,7 @@
 #' 
 
 
-govardovskii <- function(peaksense,range) {
+govardovskii <- function(peaksense,range,beta=TRUE) {
 
 sensecurves <- matrix(ncol = length(peaksense)+1,nrow = (range[2]-range[1]+1))
 sensecurves[,1] <- c(range[1]:range[2])
@@ -22,7 +22,7 @@ peak <- 1/(exp(69.7*(.8795+.0459*exp(-(peaksense[i]-range[1])^2/11940)-(peaksens
 betaband <- 0.26*exp(-(((range[1]:range[2])
   -(189+0.315*peaksense[i]))/(-40.5+0.195*peaksense[i]))^2)
 
-peak <- peak + betaband
+if (beta==TRUE)peak <- peak + betaband
 peak <- peak/max(peak)
 
 sensecurves[, (i+1)] <- peak
