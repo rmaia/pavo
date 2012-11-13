@@ -23,4 +23,9 @@ lines(spec2[2,]+6~c(300:700), col=rgb(spec2rgb(spec2[2,]+6)), type='l', lwd=3)
 spec2rgb(spec2[2,]+7)
 
 
-# TEST HEATPLOT FUNCTION
+# testing zone for new plotting function
+plot(rspecs, p=c(2,14,9), type="h", by=c(10,20,30))
+plot(witu, p=2:7, type="h", by=seq(10,60,by=10))
+plot(rspecs, p=c(2,14,9,12,13,19), type="o", by=c(10,20,30))
+plot(rspecs, p=2:4, type='s')
+plot(rspecs, p=dat$spp=="gallus", type='o')
