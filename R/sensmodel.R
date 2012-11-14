@@ -73,6 +73,10 @@ peak <- peak*T.oil
 
 sensecurves[, (i+1)] <- peak
   }
+
+sensecurves <- data.frame(sensecurves)
+names(sensecurves) <- c('wl',paste('lmax',peaksense,sep=''))
+
 sensecurves
 }
 
