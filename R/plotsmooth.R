@@ -11,6 +11,7 @@
 #' (defaults to ALL).
 #' @return Series of plots with curves processed with varying level of loess smoothing.
 #' @export
+#' @examples \dontrun{}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 

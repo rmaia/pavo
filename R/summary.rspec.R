@@ -101,7 +101,7 @@
 #' variables are extracted using non-smoothed data. Effects of this option can be
 #' checked by comparing two outputs using \code{match}.
 #' @export
-#' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}
+#' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 #' @references References describing variables:
@@ -154,7 +154,7 @@
 #' 14- Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
  
-summary.rspec <- function (specdata, range=c(300,700), 
+summary.rspec <- function (specdata, wlrange=c(300,700), 
                 smooth=TRUE, span=0.2, plot=FALSE) {
 
 wl_index <- which(names(specdata)=='wl')
@@ -183,7 +183,7 @@ Bluechromamat <- as.matrix(specdata[which(wl==400):which(wl==510),]) # blue 400-
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
 
 
-segmts <- trunc(as.numeric(quantile(range[1]:range[2])))
+segmts <- trunc(as.numeric(quantile(wlrange[1]:wlrange[2])))
 
 Q1 <- which(wl==segmts[1]):which(wl==segmts[2])
 Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
@@ -200,17 +200,10 @@ S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
 H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
 
-
-S8  <- (B3-Rmin)/B2 # S8
-
-
-R450 <- specdata[which(wl==450), ]
-R700 <- specdata[which(wl==700), ]
+#carotchroma
+R450 <- as.numeric(specdata[which(wl==450), ])
+R700 <- as.numeric(specdata[which(wl==700), ])
 Carotchroma <- (R450-R700)/R700
-
-# H3 
-lambdaRmin <- wl[apply(specdata, 2, which.min)]  # H3
-  Rmid <- round((H1+lambdaRmin)/2)
 
 # S7
 sum_min_mid <- apply(specdata, 2, function(x) 
@@ -231,11 +224,11 @@ S3 <- sapply(pmindex, function(x) sum(specdata[minus50[x]:plus50[x],x]))/B1
 
 
 #Metrics that involve bmax with or without smoothing
-data <- specdata[ ,1:dim(specdata)[2]]
+data <- specdata
 
 if(smooth){
-  smoothspecs <- apply(specdata,2, function(x) loess.smooth(wl, x, 
-                                    span=span, degree=1, evaluation=length(wl))$y)
+  smoothspecs <- data.frame(apply(specdata,2, function(x) loess.smooth(wl, x, 
+                                    span=span, degree=1, evaluation=length(wl))$y) )
   }else{
     smoothspecs <- specdata
     warning('Spectral curves not smoothened - 
@@ -250,10 +243,17 @@ B3 <- sapply(smoothspecs, max)
 Rmin <- sapply(smoothspecs, min)
 S2 <- B3/Rmin #S2
 
+S8  <- (B3-Rmin)/B2 # S8
+
 S6 <- B3-Rmin # S6
 
 # lambda Rmax hue
 H1 <- wl[max.col(t(smoothspecs), ties.method='first')]
+
+# H3 
+lambdaRmin <- wl[apply(specdata, 2, which.min)]  # H3
+  Rmid <- round((H1+lambdaRmin)/2)
+
 
 
 diffsmooth <- apply(smoothspecs,2,diff)
@@ -317,8 +317,7 @@ names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.gre
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
 
 if(plot)
-  plot.spec.curves(cbind(data.frame(wl,smoothspecs)))
-
+  explorespec(cbind(data.frame(wl,smoothspecs)))
 
 color.var
 }

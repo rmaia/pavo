@@ -154,7 +154,8 @@
   by comparing two outputs using \code{match}.
 }
 \author{
-  Pierre-Paul Bitton \email{bittonp@windsor.ca}
+  Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael
+  Maia \email{rm72@zips.uakron.edu}
 }
 \references{
   Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and
