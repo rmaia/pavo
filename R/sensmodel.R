@@ -18,9 +18,9 @@
 #' @return a data frame containing each cone model as a column.
 #' @export
 #' @examples \dontrun{}
-#' @author Pierre-Paul Bitton \email{}, Chad Eliason \email{}
-#' @reference Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. In search of the visual pigment template. Visual Neuroscience 17:509-528
-#' @reference Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
+#' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @references Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. In search of the visual pigment template. Visual Neuroscience 17:509-528
+#' @references Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
 #' spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 #' Comparative Physiology A. 191: 381-392
 

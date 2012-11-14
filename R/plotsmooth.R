@@ -9,9 +9,9 @@
 #' @param gap The number of curves to display on the same plot (defaults to 5).
 #' @param specnum The number of spectral curves, from the data frame, to visualize 
 #' (defaults to ALL).
-#' @return Series of plots with curves processed with varying level of loess smoothing
-#' export.
-#' author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+#' @return Series of plots with curves processed with varying level of loess smoothing.
+#' @export
+#' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
 plotsmooth <- function(all.specs, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){

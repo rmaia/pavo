@@ -30,3 +30,8 @@ Collate:
     'data-bgandilum.R'
     'projplot.R'
     'voloverlap.R'
+    'explorespec.R'
+    'plotsmooth.R'
+    'segclass.R'
+    'sensmodel.R'
+    'summary.rspec.R'
