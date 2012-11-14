@@ -42,8 +42,8 @@ plotdata <- matrix(nrow = dim(all.specs)[1], ncol = nplots*curves)
 
 legnames <- as.character(seq(minsmooth,maxsmooth,by = (maxsmooth-minsmooth)/(curves-2)))
 legnames <- sprintf("%.4s",legnames)
-legnames <- paste("Loess span = ",legnames, sep="")
-legnames <- rev(c("No smoothing",legnames))
+legnames <- paste("span = ",legnames, sep="")
+legnames <- rev(c("raw",legnames))
 
 # Creates the smooth data matrix
 
