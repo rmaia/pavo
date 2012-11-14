@@ -44,8 +44,6 @@ B1 <- sapply(specdata, sum)
 
 B2 <- sapply(specdata, mean)
 
-# lambda Rmax hue
-H1 <- wl[max.col(t(specdata), ties.method='first')]
 
 Redchromamat <- as.matrix(specdata[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
 Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
@@ -59,9 +57,6 @@ Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
 Bluechromamat <- as.matrix(specdata[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
 
-
-# RM: removed 5a,b,c; replaced for a quantile function
-#  Matrices and calculations for S5a,b,c which all use different wl ranges
 
 segmts <- trunc(as.numeric(quantile(range[1]:range[2])))
 
@@ -78,16 +73,14 @@ S5B <- apply(specdata[Q1, ],2,sum)
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
-# Similarly calculated H4a, b, c
 H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
 
-# S8, Carotenoid chroma
 
 S8  <- (B3-Rmin)/B2 # S8
 
-# PPB corrected formula S9 Carotenoid chroma
-R450 <- specdata[which(wl==450), 2:dim(specdata)[2]]
-R700 <- specdata[which(wl==700), 2:dim(specdata)[2]]
+
+R450 <- specdata[which(wl==450), ]
+R700 <- specdata[which(wl==700), ]
 Carotchroma <- (R450-R700)/R700
 
 # H3 
@@ -125,6 +118,7 @@ if(smooth){
     }
 
 # PPB B3, S2, S6 are now smoothed 
+# RM H1 as well
 B3 <- sapply(smoothspecs, max)
 
 # Spectral saturation
@@ -132,6 +126,10 @@ Rmin <- sapply(smoothspecs, min)
 S2 <- B3/Rmin #S2
 
 S6 <- B3-Rmin # S6
+
+# lambda Rmax hue
+H1 <- wl[max.col(t(smoothspecs), ties.method='first')]
+
 
 diffsmooth <- apply(smoothspecs,2,diff)
 
