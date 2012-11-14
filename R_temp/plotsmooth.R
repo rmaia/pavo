@@ -52,6 +52,7 @@ for (i in 1:nplots){
   plotdata[, ((i-1)*curves)+1] <- all.specs[, i+1]
   
   plotdata[, ((i-1)*curves)+2] <- 
+
   loess.smooth(wl ,all.specs [, i+1], span = minsmooth, 
   evaluation = length(wl), degree = 1)$y + 5
   
