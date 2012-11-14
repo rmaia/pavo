@@ -1,15 +1,16 @@
 #' Plot loess smoothed curves 
 #'
 #' Plots curves with various levels of loess smoothing to help determine what
-#' loess parameters are best for the data
+#' smoothing parameters are best for the data.
 #'
 #' @param all.specs(required) A data frame of format \code{rspec}
-#' @param minsmooth The minimum f value of the loess function to visualize (defaults to 0.02)
-#' @param maxsmooth The maximum f value of the loess function to visualize (defaults to 0.20)
-#' @param gap The number of curves to display on the same plot (defaults to 5)
-#' @param specnum The number of spectral curves, from the data frame, to visualize (defaults to ALL)
-#' @return Series of plot with curves processed with varying level of loess smoothing
-#' export
+#' @param minsmooth The minimum f value of the loess function to visualize (defaults to 0.02).
+#' @param maxsmooth The maximum f value of the loess function to visualize (defaults to 0.20).
+#' @param gap The number of curves to display on the same plot (defaults to 5).
+#' @param specnum The number of spectral curves, from the data frame, to visualize 
+#' (defaults to ALL).
+#' @return Series of plots with curves processed with varying level of loess smoothing
+#' export.
 #' author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
   
 
