@@ -36,7 +36,7 @@
 #ToDo: Add Neural Noise model
 #ToDo: Add luminance contrast calculation
 
-ttdist <-function(vismodeldata, qcatch=c('Qi','qi','fi'), n1=1, n2=2, n3=2, n4=4, v=0.1, asdist=FALSE)
+ttdist <-function(vismodeldata, qcatch=c('Qi','qi','fi'), n1=1, n2=2, n3=2, n4=4, v=0.1)
 {
 
 if(class(vismodeldata)=='vismodel'){
@@ -80,15 +80,6 @@ patch2 <- row.names(dat)[pairsid[,2]]
 res <- data.frame(patch1, patch2, dS, dL)
 
 nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
-
-if(asdist)
-  res <- with(res, structure(dS, 
-                            Size = length(nams2),
-                            Labels = nams2,
-                            Diag = FALSE,
-                            Upper = FALSE,
-                            method = "user", 
-                            class = "dist"))
 
 res
 }
