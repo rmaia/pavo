@@ -1,11 +1,11 @@
 #' Segment classification
 #'
 #' Calculates segment classification measures as defined in Endler (1990)
-#' @param specdata (requiQ4) a data frame, such as objects of class 
-#' \code{rspec} generated from the \code{getspec} function. First column must be 
-#' wavelength values with spectral data in subsequent columns. 
-#' @param range vector of length=2 indicating the lower and upper wavelength bounds used
-#' to calculate segments (defaults to c(300,700).
+#' @param specdata (required) a data frame, such as objects of class 
+#' \code{rspec}, with a column containing wavelength range, named 'wl'
+#' and spectra data in remaining columns. 
+#' @param range vector of length 2 indicating the lower and upper wavelength bounds used
+#' to calculate segments (defaults to 300nm to 700nm).
 #' @return a data frame with LM and MS segment classification scores.
 #' @export
 #' @author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
