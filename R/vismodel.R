@@ -7,8 +7,9 @@
 #' 
 #' @param specdata (required) Data frame containing reflectance spectra at each column.
 #' must contain a \code{wl} column identifying the wavelengths for the reflectance values.
-#' @param sens Data frame containing sensitivity for the user-defined visual system. The
-#' data frame must contain a 'wl' column with the range of wavelengths included, and the
+#' @param sens Data frame, such as one produced by \code{sensmodel} containing
+#' sensitivity for the user-defined visual system. The data frame must contain
+#' a 'wl' column with the range of wavelengths included, and the
 #' sensitivity for each other cone as a column. If not specified, the visual system will
 #' be chosen according to one of the choices from the argument \code{visual}.
 #' @param visual The visual system to be used. Currently implemented system are: 
@@ -22,7 +23,7 @@
 #' double cone, \code{ml}: sum of the longest-wavelength cones, or \code{none}
 #' @param relative Should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE})
-#' @param ilum either a vector containing the iluminant, or one of the options: 
+#' @param ilum either a vector containing the illuminant, or one of the options: 
 #' 'ideal' (total homogeneous iluminance accross wavelengths), 'bluesky', 'd65' (daylight),
 #' or 'forestshade' (Default assumes an idealized iluminant of 1)
 #' @param bkg either a vector containing the background, or an ideal background is used.
