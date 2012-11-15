@@ -5,15 +5,17 @@
 #' from the \code{getspec} function or data frames that contain wavelength in
 #' the first column (named '\code{wl}') and spectra in subsequent columns.
 #'
-#' @param specdata (required) Data frame with spectral data. 
-#' @param smooth Logical argument to determine if data should be smoothed 
+#' @param specdata (required) Data frame, possibly of class \code{rspec},
+#' with a column with wavelength, named 'wl', and spectra data in remaining columns. 
+#' @param smooth Logical. Determine if data should be smoothed 
 #' before extracting some of the values. When TRUE, uses the loess smoothing to 
 #' reduce spectral noise when extracting variables for which bmax and
-#' bmaxneg are required (defaults to TRUE). See note. 
-#' @param span the degree of smoothing if \code{smooth} is TRUE. Smaller values result
+#' bmaxneg are required, and for which Rmax and Rmin are required (defaults to TRUE).
+#' See notes. 
+#' @param span the degree of smoothing if \code{smooth} is TRUE. Larger values result
 #' in greater smoothing (defaults to 0.2).
-#' @param range vector of length=2 indicating the lower and upper wavelength bounds used
-#' to calculate variables that refer to a color wheel (S5 and H4) (defaults to c(300,700).
+#' @param range vector of length 2 indicating the lower and upper wavelength bounds used
+#' to calculate variables that refer to a color wheel (S5 and H4) (defaults to 300nm to 700nm).
 #' @param plot Logical. If TRUE, smooth spectra are plotted for verification of the
 #' smoothing parameter.
 #' @return A data frame containing 23 variables described in Montgomerie (2006)
