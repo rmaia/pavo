@@ -14,7 +14,8 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
 Depends:
     geometry,
     rgl,
-    mapproj
+    mapproj,
+    rcdd
 Collate:
     'getspec.R'
     'pavo-package.R'
