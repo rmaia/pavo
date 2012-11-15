@@ -9,8 +9,8 @@
 #' @param size size of the points in the plot
 #' @param col color of the points in the plot
 #' @param new should a new 3D plot be called?
-#' @param hspin if \code{TRUE}, the grapihic will spin horizontally (around the 'z' axis)
-#' @param vspin if \code{TRUE}, the grapihic will spin vertically (around the 'x' axis)
+#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)
+#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)
 #' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron
 #' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points
 #' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
