@@ -1,9 +1,9 @@
 #' Hue projection plot
 #'
-#' Produces a projection plot of points in a color space
+#' Produces a 2D projection plot of points in a color space
 #' 
 #' @import mapproj
-#' @param tcres Color space coordinates, possibly a result from the \code{tcs} function,
+#' @param tcres (required) Color space coordinates, possibly a result from the \code{tcs} function,
 #' containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).
 #' @param ... additonal parameters to be passed to the plotting of data points
 #' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron 
