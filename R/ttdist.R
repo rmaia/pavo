@@ -8,8 +8,7 @@
 #' with four columns, representing the avian cones).
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
-#' \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
-#' \code{relative = TRUE})
+#' \code{Qi}: Quantum catch for each photoreceptor 
 #' \code{qi}: Quantum catch normalized to the adapting background according 
 #' to the von Kries transformation.
 #' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor

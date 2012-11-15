@@ -17,6 +17,11 @@
 #' data. 
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
+#' \code{Qi}: Quantum catch for each photoreceptor 
+#' \code{qi}: Quantum catch normalized to the adapting background according 
+#' to the von Kries transformation.
+#' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+#' channel is proportional to the logarithm of the quantum catch)
 #' 
 #' @return a data frame consisting of the following rows:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
