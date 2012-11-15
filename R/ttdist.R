@@ -8,11 +8,17 @@
 #' with four columns, representing the avian cones).
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
+#' \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
+#' \code{relative = TRUE})
+#' \code{qi}: Quantum catch normalized to the adapting background according 
+#' to the von Kries transformation.
+#' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+#' channel is proportional to the logarithm of the quantum catch)
 #' @param n1,n2,n3,n4 Photoreceptor densities for u, s, m & l (default to 
 #' blue tit densities: 1,2,2,4)
 #' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
 #' the default densities, the Weber fraction for the large cone will be 0.05, as
-#' estimated from beharioal experiment with the Perkin robin, \emph{Leiothrix lutea})
+#' estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})
 #' @param asdist if \code{TRUE}, returns result in the form of a distance matrix; if
 #' \code{FALSE} returns as a data frame (see below; defaults to \code{FALSE})
 #' @return Either a symmetrical distance matrix based on pairs of patches, or a data frame
