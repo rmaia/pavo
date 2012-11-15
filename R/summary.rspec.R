@@ -22,7 +22,7 @@
 #' with spectra name as row names. 
 #' @return The tristimulus color variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
-#' file from the May 2008 distribution of the CLR sofware. Auhtors should reference 
+#' file from the May 2008 distribution of the CLR sofware. Authors should reference 
 #' both this package and Montgomerie (2006).
 #' @return Description and notes on the measures
 #'
@@ -50,15 +50,15 @@
 #'
 #' S3 (Chroma): Reflectance over the Rmax +- 50nm range divided by B1. Values for peaks 
 #' within 50nm of either the minimum or maximum range of the data will not be comparable 
-#' since the area under the curve calculated for the area of interest will not always 
-#' be based on the same number of wavelength. Therefore, S3 should be interpreted 
+#' since the area under the curve for the area of interest will not always 
+#' be based on the same wavelength range. Therefore, S3 should be interpreted 
 #' with caution for peaks in the UV or Red range. REF 13
 #'
 #' S4 (Spectral purity): |bmaxneg| , calculated by approximating the derivative
 #' of the spectral curve. As such, it is very sensitive to noise and should only
 #' be considered when data is adequately smoothed. NAs are returned for curves which
 #' do not, at any range of wavelength, decrease in intensity. Therefore, reflectance 
-#' curves for brwn and red surfaces, for example, should not generate a values. REF 1
+#' curves for brown and red surfaces, for example, should not generate a values. REF 1
 #'
 #' S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006)
 #' for details. REF 8
@@ -90,7 +90,7 @@
 #' H3 (Hue): Wavelength at Rmid. Sensitive to noisy spectra and may be variable if there are
 #' more than one maxima and minima. REF 2, 6, 10
 #'
-#' H4 (Hue): Similar in design to segment classification measures see Montgomerie \
+#' H4 (Hue): Similar in design to segment classification measures see Montgomerie
 #' (2006) for details. REF 8
 #' 
 #' H5 (Hue): Wavelength at bmax. Sensitive to noise and may be variable if there is
@@ -152,9 +152,7 @@
 #'
 #' 13- Smiseth, P., J. Örnborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
-#'
-#' 14- Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
-#' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
+
  
 summary.rspec <- function (specdata, wlrange=c(300,700), 
                 smooth=TRUE, span=0.2, plot=FALSE) {
