@@ -1,9 +1,0 @@
-require(roxygen2)
-roxygenize('~/github/pavo')
-require(pavo)
-?ttplot
-roxygenize('~/github/pavo')
-roxygenize('~/github/pavo')
-install.packages('~/github/pavo',repos=NULL,type='source')
-require(pavo)
-?pavo
