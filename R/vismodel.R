@@ -26,7 +26,8 @@
 #' @param ilum either a vector containing the illuminant, or one of the options: 
 #' 'ideal' (total homogeneous iluminance accross wavelengths), 'bluesky', 'd65' (daylight),
 #' or 'forestshade' (Default assumes an idealized iluminant of 1)
-#' @param bkg either a vector containing the background, or an ideal background is used.
+#' @param bkg either a vector containing the background spectra, or an ideal (white) 
+#' background is used.
 #' in \code{specdata}. (Default assumes an idealized background of 1)
 #' @return A list containing the following data frames:
 #' @return \code{descriptive}: descriptive statistics of maximum and normalized 
@@ -47,6 +48,8 @@
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+
+#ToDo: fix log adjustment when relative=T
 
 vismodel <- function(specdata, sens=NULL, relative=TRUE, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 

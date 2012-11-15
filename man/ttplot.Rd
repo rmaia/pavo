@@ -17,10 +17,10 @@
 
   \item{new}{should a new 3D plot be called?}
 
-  \item{hspin}{if \code{TRUE}, the grapihic will spin
+  \item{hspin}{if \code{TRUE}, the graphic will spin
   horizontally (around the 'z' axis)}
 
-  \item{vspin}{if \code{TRUE}, the grapihic will spin
+  \item{vspin}{if \code{TRUE}, the graphic will spin
   vertically (around the 'x' axis)}
 
   \item{floor}{if \code{TRUE}, a reference xy plane is
@@ -55,9 +55,9 @@ vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
 ttplot(tcs.sicalis, size=0.005)
 ttvol(tcs.sicalis)
-ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
-ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='violet')
-ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+ttvol(tcs.sicalis[grep('C$',row.names(tcs.sicalis)),],col='red')
+ttvol(tcs.sicalis[grep('B$',row.names(tcs.sicalis)),],col='violet')
+ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis)),],col='orange')
 rgl.postscript('testplot.pdf',fmt='pdf')
 rgl.snapshot('testplot.png')}
 }

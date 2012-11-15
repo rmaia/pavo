@@ -2,27 +2,29 @@
 \alias{summary.rspec}
 \title{Tristimulus color variables}
 \usage{
-  summary.rspec(specdata, range = c(300, 700),
+  summary.rspec(specdata, wlrange = c(300, 700),
     smooth = TRUE, span = 0.2, plot = FALSE)
 }
 \arguments{
-  \item{specdata}{(required) Data frame with spectral
-  data.}
+  \item{specdata}{(required) Data frame, possibly of class
+  \code{rspec}, with a column with wavelength, named 'wl',
+  and spectra data in remaining columns.}
 
-  \item{smooth}{Logical argument to determine if data
-  should be smoothed before extracting some of the values.
-  When TRUE, uses the loess smoothing to reduce spectral
-  noise when extracting variables for which bmax and
-  bmaxneg are required (defaults to TRUE). See note.}
+  \item{smooth}{Logical. Determine if data should be
+  smoothed before extracting some of the values. When TRUE,
+  uses the loess smoothing to reduce spectral noise when
+  extracting variables for which bmax and bmaxneg are
+  required, and for which Rmax and Rmin are required
+  (defaults to TRUE). See notes.}
 
   \item{span}{the degree of smoothing if \code{smooth} is
-  TRUE. Smaller values result in greater smoothing
-  (defaults to 0.2).}
+  TRUE. Larger values result in greater smoothing (defaults
+  to 0.2).}
 
-  \item{range}{vector of length=2 indicating the lower and
+  \item{range}{vector of length 2 indicating the lower and
   upper wavelength bounds used to calculate variables that
-  refer to a color wheel (S5 and H4) (defaults to
-  c(300,700).}
+  refer to a color wheel (S5 and H4) (defaults to 300nm to
+  700nm).}
 
   \item{plot}{Logical. If TRUE, smooth spectra are plotted
   for verification of the smoothing parameter.}
@@ -34,7 +36,7 @@
   The tristimulus color variables calculated by this
   function are described in Montgomerie (2006) with
   corrections included in the README CLR file from the May
-  2008 distribution of the CLR sofware. Auhtors should
+  2008 distribution of the CLR sofware. Authors should
   reference both this package and Montgomerie (2006).
 
   Description and notes on the measures
@@ -71,10 +73,10 @@
   S3 (Chroma): Reflectance over the Rmax +- 50nm range
   divided by B1. Values for peaks within 50nm of either the
   minimum or maximum range of the data will not be
-  comparable since the area under the curve calculated for
-  the area of interest will not always be based on the same
-  number of wavelength. Therefore, S3 should be interpreted
-  with caution for peaks in the UV or Red range. REF 13
+  comparable since the area under the curve for the area of
+  interest will not always be based on the same wavelength
+  range. Therefore, S3 should be interpreted with caution
+  for peaks in the UV or Red range. REF 13
 
   S4 (Spectral purity): |bmaxneg| , calculated by
   approximating the derivative of the spectral curve. As
@@ -82,8 +84,8 @@
   considered when data is adequately smoothed. NAs are
   returned for curves which do not, at any range of
   wavelength, decrease in intensity. Therefore, reflectance
-  curves for brwn and red surfaces, for example, should not
-  generate a values. REF 1
+  curves for brown and red surfaces, for example, should
+  not generate a values. REF 1
 
   S5 (Chroma): Similar in design to segment classification
   measures (see Montgomerie 2006) for details. REF 8
@@ -125,7 +127,7 @@
   minima. REF 2, 6, 10
 
   H4 (Hue): Similar in design to segment classification
-  measures see Montgomerie \ (2006) for details. REF 8
+  measures see Montgomerie (2006) for details. REF 8
 
   H5 (Hue): Wavelength at bmax. Sensitive to noise and may
   be variable if there is more than one maxima and minima.
@@ -228,10 +230,5 @@
   Amundsen. 2001. Is male plumage reflectance correlated
   with paternal care in bluethroats? Behavioural Ecology
   12:164-170.
-
-  14- Montgomerie R. 2006. Analyzing colors. In Hill, G.E,
-  and McGraw, K.J., eds. Bird Coloration. Volume 1
-  Mechanisms and measuremements. Harvard University Press,
-  Cambridge, Massachusetts.
 }
 

@@ -5,10 +5,10 @@
   projplot(tcsres, ...)
 }
 \arguments{
-  \item{tcres}{Color space coordinates, possibly a result
-  from the \code{tcs} function, containing values for the
-  'x', 'y' and 'z' coordinates as columns (labeled as
-  such).}
+  \item{tcres}{(required) Color space coordinates, possibly
+  a result from the \code{tcs} function, containing values
+  for the 'x', 'y' and 'z' coordinates as columns (labeled
+  as such).}
 
   \item{...}{additonal parameters to be passed to the
   plotting of data points}
@@ -19,7 +19,7 @@
   sphere, and is ideal to visualize differences in hue.
 }
 \description{
-  Produces a projection plot of points in a color space
+  Produces a 2D projection plot of points in a color space
 }
 \note{
   \code{projplot} uses the Mollweide projection, and not
