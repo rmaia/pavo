@@ -47,7 +47,7 @@
 #   suggested solution: a secondary function that examines files and returns recorded WL 
 #     range (in a dataframe or table)
 
-getspec <- function(where, ext='txt', lim=c(300,700), decimal=".", 
+getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
            negative=c('zero','min', 'raw'), subdir=FALSE, subdir.names=FALSE)
 {
 
