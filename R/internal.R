@@ -1,13 +1,13 @@
 #' @export summary.tcs
 
-summary.rspec <- function(spcs){
-	cat('\nSpectra data frame\n')
-	cat('Number of spectra:',dim(spcs)[2]-1,'\n')
-	cat('Wavelength range:',min(spcs$wl),'to',max(spcs$wl),'nm\n\n')
-	cat('Spectra names (showing first 10):\n')
-	cat(head(names(spcs[,-which(names(spcs)=='wl')]),10),'\n')
-	cat('\n')
-}
+# summary.rspec <- function(spcs){
+	# cat('\nSpectra data frame\n')
+	# cat('Number of spectra:',dim(spcs)[2]-1,'\n')
+	# cat('Wavelength range:',min(spcs$wl),'to',max(spcs$wl),'nm\n\n')
+	# cat('Spectra names (showing first 10):\n')
+	# cat(head(names(spcs[,-which(names(spcs)=='wl')]),10),'\n')
+	# cat('\n')
+# }
 
 
 summary.tcs <- function(tcsres, by=NULL){

@@ -8,7 +8,7 @@
 #' to calculate segments (defaults to 300nm to 700nm).
 #' @return a data frame with LM and MS segment classification scores.
 #' @export
-#' @author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+#' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @references Endler, J. A. (1990) On the measurement and classification of 
 #' color in studies of animal color patterns. Biological Journal of the Linnean 
 #' Society, 41, 315-352.

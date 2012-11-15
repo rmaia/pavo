@@ -1,8 +1,9 @@
 #' Plot loess smoothed curves 
 #'
 #' Plots curves with various levels of loess smoothing to help determine what
-#' loess parameters are best for the data
+#' loess parameters are best for the data.
 #'
+<<<<<<< HEAD:R_temp/plotsmooth.R
 #' @param all.specs(required) A data frame, possibly of class \code{rspec}, which
 #' contains a column containing a wavelength range , named 'wl', and spectra data in 
 #' remaining columns.
@@ -13,6 +14,18 @@
 #' @return Series of plot with curves processed with varying level of loess smoothing
 #' export
 #' author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+=======
+#' @param all.specs(required) A data frame of format \code{rspec}
+#' @param minsmooth The minimum f value of the loess function to visualize (defaults to 0.02).
+#' @param maxsmooth The maximum f value of the loess function to visualize (defaults to 0.20).
+#' @param gap The number of curves to display on the same plot (defaults to 5).
+#' @param specnum The number of spectral curves, from the data frame, to visualize 
+#' (defaults to ALL).
+#' @return Series of plots with curves processed with varying level of loess smoothing.
+#' @export
+#' @examples \dontrun{}
+#' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
+>>>>>>> ec74367c4ad41dc8bca3e2ad953811c2d865c66b:R/plotsmooth.R
   
 
 plotsmooth <- function(all.specs, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){
@@ -42,8 +55,8 @@ plotdata <- matrix(nrow = dim(all.specs)[1], ncol = nplots*curves)
 
 legnames <- as.character(seq(minsmooth,maxsmooth,by = (maxsmooth-minsmooth)/(curves-2)))
 legnames <- sprintf("%.4s",legnames)
-legnames <- paste("Loess span = ",legnames, sep="")
-legnames <- rev(c("No smoothing",legnames))
+legnames <- paste("span = ",legnames, sep="")
+legnames <- rev(c("raw",legnames))
 
 # Creates the smooth data matrix
 
