@@ -28,9 +28,9 @@
 #' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
 #' ttplot(tcs.sicalis, size=0.005)
 #' ttvol(tcs.sicalis)
-#' ttvol(tcs.sicalis$tcs[grep('C$',row.names(tcs.sicalis$tcs)),],col='red')
-#' ttvol(tcs.sicalis$tcs[grep('B$',row.names(tcs.sicalis$tcs)),],col='violet')
-#' ttvol(tcs.sicalis$tcs[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+#' ttvol(tcs.sicalis[grep('C$',row.names(tcs.sicalis)),],col='red')
+#' ttvol(tcs.sicalis[grep('B$',row.names(tcs.sicalis)),],col='violet')
+#' ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis)),],col='orange')
 #' rgl.postscript('testplot.pdf',fmt='pdf') 
 #' rgl.snapshot('testplot.png')}
 #' @seealso \code{\link{spheres3d}},\code{\link{rgl.postscript}}, 
@@ -39,13 +39,15 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
+#ToDo: Add option to not plot tetrahedron
+
 ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
 
-if(class(tcsres)=='tcs'){
-  dat <- tcsres$tcs	
-  }else{
-    dat <- tcsres
-    }
+# if(class(tcsres)=='tcs'){
+  # dat <- tcsres$tcs	
+  # }else{
+    # dat <- tcsres
+    # }
 
 if(new)
    open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
@@ -76,7 +78,7 @@ segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='light
 
 spheres3d(0,0,0,col='grey', radius=0.01, lit=F)
 
-spheres3d(dat[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
 
 if(floor){
   vertices <- c( 
@@ -101,26 +103,26 @@ if(vspin)
 
 ttpoints<- function(tcsres, size=0.02, col='black'){
 
-if(class(tcsres)=='tcs'){
-  dat <- tcsres$tcs	
-  }else{
-    dat <- tcsres
-    }
+# if(class(tcsres)=='tcs'){
+  # dat <- tcsres$tcs	
+  # }else{
+    # dat <- tcsres
+    # }
 
 
-spheres3d(dat[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
 }
 
 ttvol <- function(tcsres, col='black', grid=T, fill=T){
 
-if(class(tcsres)=='tcs'){
-  dat <- tcsres$tcs	
-  }else{
-    dat <- tcsres
-    }
+# if(class(tcsres)=='tcs'){
+  # dat <- tcsres$tcs	
+  # }else{
+    # dat <- tcsres
+    # }
 
-vol <- t(convhulln(dat[,c('x','y','z')],options='FA')$hull)
-coords <- dat[,c('x','y','z')]
+vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)
+coords <- tcsres[,c('x','y','z')]
 listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
 ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
 
