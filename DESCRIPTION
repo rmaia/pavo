@@ -12,14 +12,29 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
 Depends:
-    ggplot2,
-    geometry
+    geometry,
+    rgl,
+    mapproj,
+    rcdd
 Collate:
-    'agg.R'
-    'getspec.R'
-    'pavo-package.R'
-    'data-vissyst.R'
-    'vismodel.R'
+    'aggspec.R'
+    'data-bgandilum.R'
+    'data-sicalis.R'
     'data-ttvertex.R'
-    'tcs.R'
+    'data-vissyst.R'
+    'explorespec.R'
+    'getspec.R'
     'internal.R'
+    'pavo-package.R'
+    'plotsmooth.R'
+    'projplot.R'
+    'segclass.R'
+    'sensmodel.R'
+    'summary.rspec.R'
+    'tcs.R'
+    'ttdist.R'
+    'ttplot.R'
+    'vismodel.R'
+    'voloverlap.R'
+    'plot.rspec.r'
+    'spec2rgb.R'

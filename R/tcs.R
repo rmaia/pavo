@@ -3,6 +3,7 @@
 #' calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the avian tetrahedral color space.
 #'
+#' @import geometry
 #' @param vismodeldata (required) Quantum catch color data. Can be either the result
 #' from \code{vismodel} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
@@ -16,6 +17,11 @@
 #' data. 
 #' @param qcatch Quantum catch values to use in the model. Can be either \code{Qi}, 
 #' \code{qi} or \code{fi} (defaults to \code{Qi}).
+#' \code{Qi}: Quantum catch for each photoreceptor 
+#' \code{qi}: Quantum catch normalized to the adapting background according 
+#' to the von Kries transformation.
+#' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+#' channel is proportional to the logarithm of the quantum catch)
 #' 
 #' @return a data frame consisting of the following rows:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
@@ -33,29 +39,36 @@
 #' relation to the maximum distance achievable (\code{r.vec/r.max})
 #' @export
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(sicalis)
+#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405–431.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tcs<- function(vismodeldata, by=NULL, qcatch=c('Qi','qi','fi'))
 {
 
+# check class, import selected sensitivity
+# make relative (in case not inherited relative)
+
 if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
 	dat <- data.frame(vismodeldata[qcatch])
+	names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
+	
   }else{
   	dat <- vismodeldata
   	}
   
-# make relative (in case not inherited relative)
 
-dat <- dat/rowSums(dat)
 
-u <- dat[,1]
-s <- dat[,2]
-m <- dat[,3]
-l <- dat[,4]
+dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+
+u <- dat[,'u']
+s <- dat[,'s']
+m <- dat[,'m']
+l <- dat[,'l']
 
 # cartesian coordinates
 
@@ -114,24 +127,25 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 #SUMMARY VARIABLES#
 ###################
 
-if(!is.null(by)){
+# # if(!is.null(by)){
 	
-	if(length(by)==1){
-	by.many <- by
-	by <- rep(1:(dim(res.p)[1]/by),each=by)
-	by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
-    }
+	# if(length(by)==1){
+	# by.many <- by
+	# by <- rep(1:(dim(res.p)[1]/by),each=by)
+	# by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
+    # }
 
-  by <- factor(by)
-  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
-  row.names(res.c) <- levels(by)
+  # by <- factor(by)
+  # res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
+  # row.names(res.c) <- levels(by)
 	
-}else{
-	res.c <- data.frame(t(tcssum(res.p)))
-	row.names(res.c) <- 'all.points'
-}
+# }else{
+	# res.c <- data.frame(t(tcssum(res.p)))
+	# row.names(res.c) <- 'all.points'
+# }
+#res <- list(tcs=res.p,summary=res.c)
 
-
-res<-list(tcs=res.p,summary=res.c)
+res <- res.p
+class(res) <- c('tcs', 'data.frame')
 res
 }
