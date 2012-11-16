@@ -22,39 +22,41 @@
   specified, the visual system will be chosen according to
   one of the choices from the argument \code{visual}.}
 
-  \item{visual}{The visual system to be used. either (a)
-  one of implemented systems: \code{avg.uv}: average avian
-  UV system; \code{avg.v}: average avian V system;
-  \code{bt}: Blue tit \emph{Cyanistes caeruleus} (REF);
-  \code{star}: Starling \emph{Sturnus vulgaris} (REF); and
-  \code{pfowl}: the peafowl \emph{Pavo cristatus} (REF); or
-  (b) a user specified data frame, such as one produced by
-  \code{sensmodel}, containing sensitivity for the
-  user-defined visual system. The data frame must contain a
-  'wl' column with the range of wavelengths included, and
-  the sensitivity for each other cone as a column.}
+  \item{visual}{The visual system to be used. Options are:
+  \itemize{ \item a data frame such as one produced
+  containing by \code{sensmodel}, containing sensitivity
+  for the user-defined visual system. The data frame must
+  contain a \code{'wl'} column with the range of
+  wavelengths included, and the sensitivity for each other
+  cone as a column \itemize \code{avg.uv}: average avian UV
+  system \itemize \code{avg.v}: average avian V system
+  \itemize \code{bt}: Blue tit \emph{Cyanistes caeruleus}
+  visual system \itemize \code{star}: Starling
+  \emph{Sturnus vulgaris} visual system \itemize
+  \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+  }}
 
   \item{achromatic}{The sensitivity data to be used to
   calculate luminance (achromatic) cone stimulation.
-  Currently implemented system are: \code{bt.dc}: Blue tit
-  \emph{Cyanistes caeruleus} double cone, \code{ch.dc}:
-  Chicken \emph{Gallus gallus} double cone, \code{ml}: sum
-  of the longest-wavelength cones, or \code{none}}
+  Currently implemented options are: \itemize{ \item
+  \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double
+  cone \item \code{ch.dc}: Chicken \emph{Gallus gallus}
+  double cone \item \code{ml}: sum of the two
+  longest-wavelength cones \item \code{none} }}
+
+  \item{illum}{either a vector containing the illuminant,
+  or one of the options: \itemize{ \item \code{ideal}:
+  homogeneous illuminance of 1 accross wavelengths
+  (default) \item \code{'bluesky'} \item \code{'d65'}:
+  standard daylight \item \code{'forestshade'} }}
+
+  \item{bkg}{either a vector containing the background
+  spectra, or an ideal (white) background is used (Default
+  assumes an idealized homogeneous background).}
 
   \item{relative}{Should relative quantum catches be
   returned (i.e. is it a color space model? Defaults to
   \code{TRUE})}
-
-  \item{illum}{either a vector containing the illuminant,
-  or one of the options: 'ideal' (total homogeneous
-  illuminance accross wavelengths), 'bluesky', 'd65'
-  (daylight), or 'forestshade' (Default assumes an
-  idealized illuminant of 1)}
-
-  \item{bkg}{either a vector containing the background
-  spectra, or an ideal (white) background is used. in
-  \code{specdata}. (Default assumes an idealized background
-  of 1)}
 }
 \value{
   A list containing the following data frames:
