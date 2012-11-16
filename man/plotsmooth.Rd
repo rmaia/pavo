@@ -25,12 +25,14 @@
 }
 \value{
   Series of plot with curves processed with varying level
-  of loess smoothing export author Pierre-Paul Bitton
-  \email{bittonp@uwindsor.ca}
+  of loess smoothing
 }
 \description{
   Plots curves with various levels of loess smoothing to
   help determine what loess parameters are best for the
   data.
+}
+\author{
+  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
 

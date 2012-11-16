@@ -1,15 +1,16 @@
 \docType{data}
 \name{bgandilum}
 \alias{bgandilum}
-\title{Default backgound and iluminant data}
+\title{Default backgound and illuminant data}
 \description{
-  Default backgound and iluminant data
+  Default backgound and illuminant data
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-  \url{data_blah.com}
+  Endler, J. (1993). The Color of Light in Forests and Its
+  Implications. Ecological Monographs, 63, 1-27.
 }
 \keyword{data}
 \keyword{datasets}
