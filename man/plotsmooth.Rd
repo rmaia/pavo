@@ -1,0 +1,36 @@
+\name{plotsmooth}
+\alias{plotsmooth}
+\title{Plot loess smoothed curves}
+\usage{
+  plotsmooth(all.specs, minsmooth = 0.05, maxsmooth = 0.2,
+    curves = 5, specnum = 0)
+}
+\arguments{
+  \item{all.specs(required)}{A data frame, possibly of
+  class \code{rspec}, which contains a column containing a
+  wavelength range , named 'wl', and spectra data in
+  remaining columns.}
+
+  \item{minsmooth}{The minimum f value of the loess
+  function to visualize (defaults to 0.05)}
+
+  \item{maxsmooth}{The maximum f value of the loess
+  function to visualize (defaults to 0.20)}
+
+  \item{curves}{The number of curves to display on the same
+  plot (defaults to 5)}
+
+  \item{specnum}{The number of spectral curves, from the
+  data frame, to visualize (defaults to ALL)}
+}
+\value{
+  Series of plot with curves processed with varying level
+  of loess smoothing export author Pierre-Paul Bitton
+  \email{bittonp@uwindsor.ca}
+}
+\description{
+  Plots curves with various levels of loess smoothing to
+  help determine what loess parameters are best for the
+  data.
+}
+

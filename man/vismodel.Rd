@@ -2,15 +2,25 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-  vismodel(specdata,
+  vismodel(specdata, sens = NULL, relative = TRUE,
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
-    relative = TRUE, ilum = ideal, bkg = ideal)
+    luminance = c("bt.dc", "ch.dc", "ml", "none"),
+    ilum = c("ideal", "bluesky", "D65", "forestshade"),
+    bkg = "ideal")
 }
 \arguments{
   \item{specdata}{(required) Data frame containing
   reflectance spectra at each column. must contain a
   \code{wl} column identifying the wavelengths for the
   reflectance values.}
+
+  \item{sens}{Data frame, such as one produced by
+  \code{sensmodel} containing sensitivity for the
+  user-defined visual system. The data frame must contain a
+  'wl' column with the range of wavelengths included, and
+  the sensitivity for each other cone as a column. If not
+  specified, the visual system will be chosen according to
+  one of the choices from the argument \code{visual}.}
 
   \item{visual}{The visual system to be used. Currently
   implemented system are: \code{avg.uv}: average avian UV
@@ -19,17 +29,27 @@
   Starling \emph{Sturnus vulgaris} (REF); and \code{pfowl}:
   the peafowl \emph{Pavo cristatus} (REF).}
 
+  \item{luminance}{The sensitivity data to be used to
+  calculate luminance (achromatic) cone stimulation.
+  Currently implemented system are: \code{bt.dc}: Blue tit
+  \emph{Cyanistes caeruleus} double cone, \code{ch.dc}:
+  Chicken \emph{Gallus gallus} double cone, \code{ml}: sum
+  of the longest-wavelength cones, or \code{none}}
+
   \item{relative}{Should relative quantum catches be
   returned (i.e. is it a color space model? Defaults to
   \code{TRUE})}
 
-  \item{ilum}{A vector containing the iluminant. Must be
-  the same length as the columns in \code{specdata}.
-  (Default assumes an idealized iluminant of 1)}
+  \item{ilum}{either a vector containing the illuminant, or
+  one of the options: 'ideal' (total homogeneous iluminance
+  accross wavelengths), 'bluesky', 'd65' (daylight), or
+  'forestshade' (Default assumes an idealized iluminant of
+  1)}
 
-  \item{bkg}{A vector containing the background. Must be
-  the same length as the columns in \code{specdata}.
-  (Default assumes an idealized background of 1)}
+  \item{bkg}{either a vector containing the background
+  spectra, or an ideal (white) background is used. in
+  \code{specdata}. (Default assumes an idealized background
+  of 1)}
 }
 \value{
   A list containing the following data frames:
@@ -41,9 +61,8 @@
   \code{Qi}: Quantum catch for each photoreceptor (which
   sum to 1 if \code{relative = TRUE})
 
-  \code{qi}: Quantum catch normalized to the
-  adaptingbackground according to the von Kries
-  transformation.
+  \code{qi}: Quantum catch normalized to the adapting
+  background according to the von Kries transformation.
 
   \code{fi}: Quantum catch according to Fechner law (the
   signal of the receptor channel is proportional to the
@@ -58,7 +77,9 @@
 }
 \examples{
 \dontrun{
-#INCLUDE EXAMPLE}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
@@ -81,6 +102,6 @@
 
   Endler, J. A., & Mielke, P. (2005). Comparing entire
   colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405–431.
+  The Linnean Society, 86(4), 405-431.
 }
 

@@ -15,10 +15,10 @@
 #' @return a data frame containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
-#' specs = getspec('/examplespec')
-#' specs=data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
-#' agg(specs,by=2)
-#' agg(specs,by=c('a','b','a','b','a','b','a','b')) }
+#' specs <- getspec('/examplespec')
+#' specs <- data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
+#' aggspec(specs,by=2)
+#' aggspec(specs,by=c('a','b','a','b','a','b','a','b')) }
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
@@ -32,7 +32,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-agg <- function(data, by, FXN = mean) {
+aggspec <- function(data, by, FXN = mean) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -47,10 +47,20 @@ if(length(wl_index>0)){
 		y <- data
 		}
 
+#BEGIN RM EDIT 2
+# check if the by argument has a 'wl' entry (e.g. if names were obtained through
+# regex conditions on the original spec names) and remove it
+
+if(length(which(by=='wl'))!=0)
+  by<- by[-which(by=='wl')]
+
+#END RM EDIT 2
+
+
 # retain original values
 by0 <- by
 
-#BEGIN RM EDIT
+#BEGIN RM EDIT 1
 # Allow for means of every "by" data, if "by" is a single number
 # i.e. if by=3, average every 3 consecutive data of "data"
 
@@ -58,15 +68,15 @@ if(length(by)==1){
 	by0 <- names(y)[seq(1,length(names(y)),by=by)]
 	by <- rep(1:(length(y)/by),each=by)
 }
-#END RM EDIT
+#END RM EDIT 1
 
-#BEGIN RM EDIT
+#BEGIN RM EDIT 3
 # check: does data have the same number of columns as the by vector?
 
 if(dim(y)[2]!=length(by)) 
 stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(data)))))
 
-#END RM EDIT
+#END RM EDIT 3
 
 by <- factor(by)
 
@@ -74,5 +84,6 @@ dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))
 
 colnames(dat) <- unique(by0)
 res<- data.frame(cbind(wl=wl, dat))
-class(res) <- c('spec','data.frame')
+class(res) <- c('rspec','data.frame')
+res
 }

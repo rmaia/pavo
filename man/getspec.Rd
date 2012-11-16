@@ -2,11 +2,14 @@
 \alias{getspec}
 \title{Import spectra files}
 \usage{
-  getspec(where, ext = "txt", lim = c(300, 700),
+  getspec(where = getwd(), ext = "txt", lim = c(300, 700),
     decimal = ".", negative = c("zero", "min", "raw"),
     subdir = FALSE, subdir.names = FALSE)
 }
 \arguments{
+  \item{where}{(required) folder in which files are
+  located.}
+
   \item{ext}{file extension to be searched for, without the
   "." (defaults to "txt").}
 
@@ -24,7 +27,7 @@
   reflectance at remaining wavelengths; \code{raw} does not
   transform and leaves negative values as is (not
   recommended). \code{zero} is recommended when negative
-  values are a product ofnoise, whereas \code{min} is
+  values are a product of noise, whereas \code{min} is
   recommended when negative values are a product of bad
   reference calibration. (defaults to \code{zero})}
 
@@ -36,16 +39,17 @@
   in the name of the spectra? (defaults to \code{FALSE})}
 }
 \value{
-  a data frame containing individual imported spectral
-  files as columns. Reflectance values are interpolated to
-  the nearest wavelength integer.
+  a data frame, of class \code{rspec}, containing
+  individual imported spectral files as columns.
+  Reflectance values are interpolated to the nearest
+  wavelength integer.
 }
 \description{
   Finds and imports spectra files from a folder. Currently
-  tested and working for reflectance files generated in
-  Ocean Optics SpectraSuite (USB2000, USB4000 and Jaz
-  spectrometers), CRAIC software (after exporting) and
-  Avantes (after exporting).
+  works for reflectance files generated in Ocean Optics
+  SpectraSuite (USB2000, USB4000 and Jaz spectrometers),
+  CRAIC software (after exporting) and Avantes (after
+  exporting).
 }
 \examples{
 \dontrun{

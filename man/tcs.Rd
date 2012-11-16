@@ -25,7 +25,12 @@
 
   \item{qcatch}{Quantum catch values to use in the model.
   Can be either \code{Qi}, \code{qi} or \code{fi} (defaults
-  to \code{Qi}).}
+  to \code{Qi}). \code{Qi}: Quantum catch for each
+  photoreceptor \code{qi}: Quantum catch normalized to the
+  adapting background according to the von Kries
+  transformation. \code{fi}: Quantum catch according to
+  Fechner law (the signal of the receptor channel is
+  proportional to the logarithm of the quantum catch)}
 }
 \value{
   a data frame consisting of the following rows:
@@ -62,7 +67,9 @@
 }
 \examples{
 \dontrun{
-#INCLUDE EXAMPLE}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
@@ -75,6 +82,6 @@
 
   Endler, J. A., & Mielke, P. (2005). Comparing entire
   colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405–431.
+  The Linnean Society, 86(4), 405-431.
 }
 

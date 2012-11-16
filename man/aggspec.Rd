@@ -1,8 +1,8 @@
-\name{agg}
-\alias{agg}
+\name{aggspec}
+\alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-  agg(data, by, FXN = mean)
+  aggspec(data, by, FXN = mean)
 }
 \arguments{
   \item{data}{(required) data frame containing the spectra
