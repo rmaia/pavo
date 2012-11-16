@@ -6,7 +6,7 @@
 #' and Stoddard & Prum (2008).
 #' 
 #' @param specdata (required) Data frame containing reflectance spectra at each column.
-#' must contain a \code{wl} column identifying the wavelengths for the reflectance values.
+#' Must contain a \code{wl} column identifying the wavelengths for the reflectance values.
 #' @param sens Data frame, such as one produced by \code{sensmodel} containing
 #' sensitivity for the user-defined visual system. The data frame must contain
 #' a 'wl' column with the range of wavelengths included, and the
@@ -24,8 +24,8 @@
 #' @param relative Should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE})
 #' @param ilum either a vector containing the illuminant, or one of the options: 
-#' 'ideal' (total homogeneous iluminance accross wavelengths), 'bluesky', 'd65' (daylight),
-#' or 'forestshade' (Default assumes an idealized iluminant of 1)
+#' 'ideal' (total homogeneous illuminance accross wavelengths), 'bluesky', 'D65' (daylight),
+#' or 'forestshade' (Default assumes an idealized illuminant of 1)
 #' @param bkg either a vector containing the background spectra, or an ideal (white) 
 #' background is used.
 #' in \code{specdata}. (Default assumes an idealized background of 1)
