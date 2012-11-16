@@ -8,6 +8,8 @@
 #' remaining columns. 
 #' @param specreps number of spectra to include in each graph (defaults to 1)
 #' @param lwd Width of the lines displayed on the plots (defaults to 2)
+#' @param scale defines how the y-axis should be scaled. \code{'free'}: panels can vary in
+#' the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.
 #' @return Spectral curve plots
 #' @note Number of plots presented per page depends on the number of curves per graph.
 #' @export
@@ -15,7 +17,7 @@
 
 
 
-explorespec <- function (specdata, specreps=1, lwd=2) {
+explorespec <- function (specdata, specreps=1, lwd=2, scale=c('free','equal')) {
 
 
 if (specreps <= 0) stop ("Invalid specreps value")
@@ -27,6 +29,8 @@ leg2 <- names(specdata)
 if ((dim(specdata)[2]/specreps) != round((dim(specdata)[2]/specreps))){
   warning("specreps is not a factor of the number of column in specdata")
 }
+
+scale <- match.arg(scale)
 
 nplots <- ceiling(dim(specdata)[2]/specreps)
 
@@ -66,7 +70,12 @@ for (i in 1:nplots){
       bloc <- specdata[,(((i-1)*specreps)+1):min(i*specreps,dim(specdata)[2])]
   	  }
 
-  yaxislims = c(min(bloc),max(bloc))*yaxismult
+  if(scale=='free')
+    yaxislims <- c(min(bloc), max(bloc))*yaxismult
+
+  if(scale=='equal')
+    yaxislims <- c(min(specdata), max(specdata))*yaxismult
+
   leg <- names(bloc)
   
   if (!is.null(dim(bloc))){
