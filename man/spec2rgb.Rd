@@ -25,7 +25,7 @@
   Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \references{
-  CIE. (1932). Commission Internationale de l’Éclairage
+  CIE. (1932). Commission Internationale de l'Éclairage
   Proceedings, 1931. Cambridge: Cambridge University Press.
 
   Color matching functions obtained from Colour and Vision
