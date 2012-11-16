@@ -36,3 +36,5 @@ Collate:
     'ttplot.R'
     'vismodel.R'
     'voloverlap.R'
+    'plot.rspec.r'
+    'spec2rgb.R'

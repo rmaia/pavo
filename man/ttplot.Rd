@@ -3,7 +3,7 @@
 \title{Plot a Tetrahedral Color Space}
 \usage{
   ttplot(tcsres, size = 0.02, col = "black", new = T,
-    hspin = T, vspin = F, floor = T)
+    hspin = T, vspin = F, floor = T, grid = T, fill = T)
 }
 \arguments{
   \item{tcsres}{a (required) data frame, possibly a result

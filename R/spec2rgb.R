@@ -25,24 +25,22 @@ if (length(wl_index > 0)){
     stop('No wavelengths supplied; no default')
     }
 
+specs <- specs[which(wl==400):which(wl==700),]
 specs <- as.matrix(specs)
 
-#sens <- read.csv("/Users/chad/Documents/pavo/R_temp/spec.csv", row.names=1)  
-sens <- read.csv("/Users/chad/Documents/pavo/R_temp/ciexyz31.csv", head=F)
-sens <- sapply(2:4, function(x) approx(x=sens[,1], y=sens[,x], xout=c(300:700))$y)
-sens[is.na(sens)] <- 0  # convert NAs to zeroes for UV wavelengths
+sens <- pavo:::ciexyz
 
 P2 <- sapply(1:ncol(specs), function(x) specs[, x] / sum(specs[, x]))  # normalize to sum of 1
 
 # Convolute
-X <- apply(sens[, 1] * P2, 2, sum)
-Y <- apply(sens[, 2] * P2, 2, sum)
-Z <- apply(sens[, 3] * P2, 2, sum)
+X <- apply(sens[, 'x'] * P2, 2, sum)
+Y <- apply(sens[, 'y'] * P2, 2, sum)
+Z <- apply(sens[, 'z'] * P2, 2, sum)
 XYZ <- rbind(X, Y, Z)
 
 xyzmat <- rbind(c(3.240479, -1.537150, -0.498535),
-								c(-0.969256, 1.875992, 0.041556),
-								c(0.055648, -0.204043, 1.057311))
+                c(-0.969256, 1.875992, 0.041556),
+                c(0.055648, -0.204043, 1.057311))
 
 XYZ <- sapply(1:ncol(XYZ), function(x) XYZ[, x] / sum(XYZ[, x]))
 

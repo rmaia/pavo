@@ -4,7 +4,7 @@
 \usage{
   sensmodel(peaksense, range = c(300, 700),
     lambdacut = NULL, Bmid = NULL, oiltype = NULL,
-    beta = TRUE)
+    beta = TRUE, integrate = TRUE)
 }
 \arguments{
   \item{peaksense}{(required) A vector with peak
@@ -29,6 +29,10 @@
   "Y", "R", "P") when Bmid is not known. Calculates Bmid
   based on the regression equations found in Hart ad
   Vorobyev (2005).}
+
+  \item{integrate}{logical. if \code{TRUE}, each curve is
+  transformed to have a total area under the curve of 1
+  (best for visual models).}
 }
 \value{
   a data frame containing each cone model as a column.

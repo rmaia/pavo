@@ -1,9 +1,9 @@
 \docType{data}
 \name{bgandilum}
 \alias{bgandilum}
-\title{Default backgound and iluminant data}
+\title{Default backgound and illuminant data}
 \description{
-  Default backgound and iluminant data
+  Default backgound and illuminant data
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}

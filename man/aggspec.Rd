@@ -31,10 +31,10 @@
 }
 \examples{
 \dontrun{
-specs = getspec('/examplespec')
-specs=data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
-agg(specs,by=2)
-agg(specs,by=c('a','b','a','b','a','b','a','b')) }
+specs <- getspec('/examplespec')
+specs <- data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
+aggspec(specs,by=2)
+aggspec(specs,by=c('a','b','a','b','a','b','a','b')) }
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}
