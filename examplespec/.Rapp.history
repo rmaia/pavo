@@ -1,0 +1,730 @@
+?make.musse.multitrait
+?make.musse.multitrait.t
+?make.musse.t.multitrait
+lik0 = make.musse.multitrait(tree,matmel, depth=0)
+ls()
+head(matmel)
+lik0 = make.musse.multitrait(tree,matmel[,-1], depth=0)
+matmel=matmel[,-1]
+matmel
+lik0 = make.musse.multitrait(tree,matmel, depth=0)
+head(matmel)
+matmel$mel2==1
+matmel$mel2=matmel$mel2==1
+matmel$matsys=matmel$matsys==1
+head(matmel)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)
+names(matmel)
+names(matmel)=c("M","C")
+lik0 = make.musse.multitrait(tree,matmel, depth=0)
+dim(matmel)
+require(geiger)
+name.check(matmel,tree)
+x=matmel$mel2
+x=matmel$M
+x
+names(x)=row.names(matmel)
+x
+name.check(tree,x)
+matmel[47,]
+matmel[47,]=c(T,T)
+matmel
+matmel[48,]=c(F,F)
+names(matmel)[47]
+names(matmel)[47]='lair'
+row.names(matmel)[47]='lair'
+row.names(matmel)[48]='onne'
+lik0 = make.musse.multitrait(tree,matmel, depth=0)
+fit0 = find.mle(lik0)
+fit0 = find.mle(lik0,runif(6, 0, 10))
+fit0
+round(coef(fit0),4)
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))
+fit0 = find.mle(lik0,runif(8, 0, 10))
+argnames(fit1)
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))
+argnames(lik1)
+fit0 = find.mle(lik1,runif(9, 0, 10))
+fit0 = find.mle(lik1,runif(10, 0, 10))
+fit1=fit0
+fit0 = find.mle(lik0,runif(6, 0, 10))
+anova(fit0,fit1)
+anova(fit1,fit0)
+round(coef(fit1),4)
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))
+fit2 = find.mle(lik1,runif(10, 0, 10))
+fit2 = find.mle(lik2,runif(10, 0, 10))
+fit2 = find.mle(lik2,runif(12, 0, 10))
+anova(fit2,fit1,fit0)
+fit2 = find.mle(lik2,runif(12, 0, 1))
+anova(fit2,fit1,fit0)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+fit0 = find.mle(lik0,runif(6, 0, 1))#
+#
+round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+fit1 = find.mle(lik1,runif(10, 0, 1))#
+#
+round(coef(fit1),4)#
+#
+anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+fit2 = find.mle(lik2,runif(12, 0, 1))#
+#
+anova(fit2,fit1,fit0)
+anova(MCint=fit2,MC=fit1,null=fit0)
+anova(fit2,noint=fit1,null=fit0)
+round(coef(fit2),4)
+matmel$M
+head(matmel)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+fit0 = find.mle(lik0,runif(6, 0, 1))#
+#
+round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+fit1 = find.mle(lik1,runif(10, 0, 1))#
+#
+round(coef(fit1),4)#
+#
+anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+fit2 = find.mle(lik2,runif(12, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+round(coef(fit2),4)
+lik0 = constrain(lik0, formulae=list(mu0~0))
+argnames(lik0)
+argnames(lik1)
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0))
+argnames(lik2)
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0))
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+lik0 = constrain(lik0, formulae=list(mu0~0))#
+fit0 = find.mle(lik0,runif(6, 0, 1))#
+#
+#round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0))#
+fit1 = find.mle(lik1,runif(10, 0, 1))#
+#
+#round(coef(fit1),4)#
+#
+#anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0))#
+fit2 = find.mle(lik2,runif(12, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+argnames(lik0)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+lik0 = constrain(lik0, formulae=list(mu0~0, qM10.0~0))#
+fit0 = find.mle(lik0,runif(6, 0, 1))#
+#
+#round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0, qM10.0~0))#
+fit1 = find.mle(lik1,runif(10, 0, 1))#
+#
+#round(coef(fit1),4)#
+#
+#anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0, qM10.0~0))#
+fit2 = find.mle(lik2,runif(12, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+lik0 = constrain(lik0, formulae=list(mu0~0, qM10.0~0))#
+fit0 = find.mle(lik0,runif(4, 0, 1))
+round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0, qM10.0~0))#
+fit1 = find.mle(lik1,runif(6, 0, 1))#
+#
+#round(coef(fit1),4)#
+#
+#anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0, qM10.0~0))#
+fit2 = find.mle(lik2,runif(7, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+lik0 = constrain(lik0, formulae=list(mu0~0, qM10.0~0))#
+fit0 = find.mle(lik0,runif(4, 0, 1))#
+#
+#round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0, qM10.0~0))#
+fit1 = find.mle(lik1,runif(6, 0, 1))#
+#
+#round(coef(fit1),4)#
+#
+#anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0, qM10.0~0))#
+fit2 = find.mle(lik2,runif(7, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0, qM10.0~0))#
+fit1 = find.mle(lik1,runif(6, 0, 1))
+fit2
+anova(fit2,noint=fit1,null=fit0)
+lik0 = make.musse.multitrait(tree,matmel, depth=0)#
+lik0 = constrain(lik0, formulae=list(mu0~0, qM10.0~0))#
+fit0 = find.mle(lik0,runif(4, 0, 1))#
+#
+#round(coef(fit0),4)#
+#
+lik1 = make.musse.multitrait(tree,matmel, depth=c(1,1,0))#
+lik1 = constrain(lik1, formulae=list(mu0~0, muM~0, muC~0, qM10.0~0))#
+fit1 = find.mle(lik1,runif(6, 0, 1))#
+#
+#round(coef(fit1),4)#
+#
+#anova(fit1,fit0)#
+#
+lik2 = make.musse.multitrait(tree,matmel, depth=c(2,2,0))#
+lik2 = constrain(lik2, formulae=list(mu0~0, muM~0, muC~0, muMC~0, qM10.0~0))#
+fit2 = find.mle(lik2,runif(7, 0, 1))#
+#
+anova(fit2,noint=fit1,null=fit0)#
+#
+round(coef(fit2),4)
+mema = rep(NA,48)
+mema[which(matmel$M==F & matmel$C==F)] = 'AA'
+mema
+mema[which(matmel$M==T & matmel$C==F)] = 'BA'
+mema
+mema[which(matmel$M==F & matmel$C==T)] = 'AB'
+mema[which(matmel$M==T & matmel$C==T)] = 'BB'
+mema
+mema = as.factor(mema)
+names(mema) = row.names(matmel)
+mema
+?make.musse.t
+mmt = make.musse.t(tree,mema,4)
+mmt = make.musse.t(tree,mema,4, functions=rep('linear.t',4))
+mema = rep(NA,48)
+mema[which(matmel$M==F & matmel$C==F)] = 1#
+mema[which(matmel$M==T & matmel$C==F)] = 2#
+mema[which(matmel$M==F & matmel$C==T)] = 3#
+mema[which(matmel$M==T & matmel$C==T)] = 4
+mmt = make.musse.t(tree,mema,4, functions=rep('linear.t',4))
+names(mema) = row.names(matmel)
+mmt = make.musse.t(tree,mema,4, functions=rep('linear.t',4))
+?make.musse.r
+?make.musse.t
+?make.musse.td
+?make.bisse.t
+mmt = make.musse.t(tree,mema,4, functions=c(rep('linear.t',4), rep('constant.t',16)))
+argnames(mmt)
+?linear.t
+constrain(mmt, formulae=list(mu1~0, mu2~0, mu3~0, mu4~0, lambda2.m~lambda1.m, lambda3.m~lambda1.m, lambda4.m~lambda1.m))
+mmt = constrain(mmt, formulae=list(mu1~0, mu2~0, mu3~0, mu4~0, lambda2.m~lambda1.m, lambda3.m~lambda1.m, lambda4.m~lambda1.m))
+fitmmt = find.mle(mmt,runif(13,0,1))
+fitmmt = find.mle(mmt,runif(20,0,1))
+length(argnames(mmt))
+argnames(mmt)
+fitmmt = find.mle(mmt,runif(17,0,1))
+fitmmt
+coef(fitmmt)
+round(coef(fitmmt),4)
+fitmmt = find.mle(mmt,runif(17,0,1))
+round(coef(fitmmt),4)
+logLik(fitmmt)
+fitmmt = find.mle(mmt,runif(17,0,1))#
+#
+round(coef(fitmmt),4)#
+logLik(fitmmt)
+matmel
+round(coef(fitmmt),4)
+mmt = make.musse.t(tree,mema,4, functions=c(rep('linear.t',4), rep('constant.t',16)))
+mmt.2 = constrain(mmt1, formulae=list(lambda4.c~lambda2.c, lambda3.c~lambda1.c))
+mmt.2 = constrain(mmt.1, formulae=list(lambda4.c~lambda2.c, lambda3.c~lambda1.c))
+mmt.1 = constrain(mmt, formulae=list(mu1~0, mu2~0, mu3~0, mu4~0, lambda2.m~lambda1.m, lambda3.m~lambda1.m, lambda4.m~lambda1.m))
+mmt.2 = constrain(mmt.1, formulae=list(lambda4.c~lambda2.c, lambda3.c~lambda1.c))
+mmt.3 = constrain(mmt.1, formulae=list(lambda4.c~lambda3.c, lambda2.c~lambda1.c))
+mmt.4 = constrain(mmt.1, formulae=list(lambda4.c~lambda1.c, lambda3.c~lambda1.c, lambda2.c~lambda1.c))
+fitmmt.1 = find.mle(mmt.1,runif(17,0,1))#
+fitmmt.2 = find.mle(mmt.2,runif(15,0,1))#
+fitmmt.3 = find.mle(mmt.3,runif(15,0,1))#
+fitmmt.4 = find.mle(mmt.4,runif(14,0,1))
+anova(fitmmt.1, fitmmt.2, fitmmt.3, fitmmt.4)
+fitmmt.1 = find.mle(mmt.1,runif(17,0,1))#
+fitmmt.2 = find.mle(mmt.2,runif(15,0,1))#
+fitmmt.3 = find.mle(mmt.3,runif(15,0,1))#
+fitmmt.4 = find.mle(mmt.4,runif(14,0,1))#
+round(coef(fitmmt),4)#
+logLik(fitmmt)#
+#
+anova(fitmmt.1, fitmmt.2, fitmmt.3, fitmmt.4)
+fitmmt.1 = find.mle(mmt.1,runif(17,0,1))
+anova(fitmmt.1, fitmmt.2, fitmmt.3, fitmmt.4)
+fitmmt.1 = find.mle(mmt.1,runif(17,0,5))
+anova(fitmmt.1, fitmmt.2, fitmmt.3, fitmmt.4)
+require(multicore)
+multicore:::detectCores
+multicore:::detectCores()
+?mcLapply
+?mclapply
+a = mclapply(rep(14,8), function(x)find.mle(mmt.4,runif(x,0,1)))
+a
+summary(a)
+unlist(a)
+lapply(a,function(x) logLik(x))
+which.min(lapply(a,function(x) logLik(x)))
+which.max(lapply(a,function(x) logLik(x)))
+50/8
+48/8
+a = mclapply(rep(14,48), function(x)find.mle(mmt.4,runif(x,0,1)))
+which.max(lapply(a,function(x) logLik(x)))
+a[[38]]
+anova(fitmmt.1, fitmmt.2, fitmmt.3, fitmmt.4)
+m4a
+m4a=a
+m4a
+m1a = mclapply(rep(17,48), function(x)find.mle(mmt.1,runif(x,0,1)))
+which.max(lapply(m1a,function(x) logLik(x)))
+plot(lapply(m1a,function(x) logLik(x)),type='l')
+plot(unlist(lapply(m1a,function(x) logLik(x))),type='l')
+plot(unlist(lapply(m1a,function(x) logLik(x))))
+max(lapply(m1a,function(x) logLik(x)))
+m3a = mclapply(rep(15,48), function(x)find.mle(mmt.3,runif(x,0,1)))
+m4a
+m1a
+m3a
+m2a = mclapply(rep(15,48), function(x)find.mle(mmt.2,runif(x,0,1)))
+b1 = m1a[[which.max(lapply(m1a,function(x) logLik(x)))]]
+b1
+b2 = m2a[[which.max(lapply(m2a,function(x) logLik(x)))]]#
+b3 = m3a[[which.max(lapply(m3a,function(x) logLik(x)))]]#
+b4 = m4a[[which.max(lapply(m4a,function(x) logLik(x)))]]
+anova(b1,b2,b3,b4)
+-2*-36.875+(2*15)
+AIC
+?AIC
+b1
+ls()
+save(tree,mema,matmel,file='diversitry_melamatsys.RData')
+load('~/matmeltry.RData')
+ls()
+summary(res4)
+res4[[1]]
+load('~/Desktop/matmeltry.RData')
+ls()
+dim(res4)
+summary(res4)
+res4[[500]]
+require(pavo)
+?aggspec
+specs = getspec('/examplespec')
+setwd('~/github/pavo')
+specs = getspec('/examplespec')
+specs = getspec('~github/pavo/examplespec')
+specs = getspec('~/github/pavo/examplespec')
+agg(specs,by=2)
+aggspecs(specs,by=2)
+aggspec(specs,by=2)
+class(aggspec(specs,by=2))
+?projplot
+data(sicalis)#
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))#
+projplot(tcs.sicalis)
+tcs.sicalis
+' Hue projection plot#
+#'#
+#' Produces a 2D projection plot of points in a color space#
+#' #
+#' @import mapproj#
+#' @param tcres (required) Color space coordinates, possibly a result from the \code{tcs} function,#
+#' containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).#
+#' @param ... additonal parameters to be passed to the plotting of data points#
+#' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron #
+#' to its encapsulating sphere, and is ideal to visualize differences in hue. #
+#' @note \code{projplot} uses the Mollweide projection, and not the Robinson projection, which#
+#' has been used in the past. Among other advantages, the Mollweide projection preserves area#
+#' relationships within latitudes without distortion.#
+#' @export#
+#' @examples \dontrun{#
+#' data(sicalis)#
+#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))#
+#' projplot(tcs.sicalis) }#
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}#
+#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.#
+#' @references Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal visual systems and the evolution of color patterns: Sensory processing illuminates signal evolution. Evolution, 59(8), 1795-1818.#
+#
+projplot=function(tcsres, ...)#
+{#
+#
+# no longer tcs object#
+# if(class(tcsres)=='tcs'){#
+  # dat <- tcsres$tcs	#
+  # }else{#
+    # dat <- tcsres#
+    # }#
+points.theta=dat[,'h.theta']#
+points.phi=dat[,'h.phi']#
+#
+n=length(points.theta)#
+#
+#Edges of the tetrahedron, adjusted#
+vert.theta=c(-3.1415, 3.1415, -1.047198, 1.047198, -2.617994)#
+vert.phi=c(-0.3398369, -0.3398369, -0.3398369, -0.3398369,  1.5707963)#
+#
+#Edges of the figure#
+edge.theta=c(-pi,-pi,pi,pi)#
+edge.phi=c(-pi/2,pi/2,-pi/2,pi/2)#
+#
+#adjust points#
+#
+points.theta <- ifelse(points.theta>= -0.5235988,#
+                       points.theta-(150/180*pi),#
+                       points.theta+(210/180*pi))#
+# radians to degrees#
+coords.theta = c(edge.theta,vert.theta,points.theta)*180/pi#
+coords.phi = c(edge.phi,vert.phi,points.phi)*180/pi#
+#
+#map projection coordinates#
+#
+mp=mapproject(coords.theta, coords.phi, projection="mollweide")#
+#
+mp.v.theta=mp$x[1:9]#
+mp.v.phi=mp$y[1:9]#
+#
+mp.p.theta=mp$x[-c(1:9)]#
+mp.p.phi=mp$y[-c(1:9)]#
+#
+#plot#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+par(mar=c(0,0,0,0))#
+plot(0,0,axes=F,xlab='',ylab='', type='n',frame.plot=F, xlim=c(-2,2), ylim=c(-1,1))#
+#
+map.grid(c(-180,180,-90,90),labels=F,col='grey')#
+#
+points(mp.v.phi~mp.v.theta,pch=20,cex=1.5,col=c(rep('grey',4),rgb(cl),rgb(cl),rgb(cm),rgb(cs),rgb(cu)))#
+#
+points(mp.p.phi~mp.p.theta,pch=20, ...)#
+}
+data(sicalis)#
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))#
+projplot(tcs.sicalis)
+' Hue projection plot#
+#'#
+#' Produces a 2D projection plot of points in a color space#
+#' #
+#' @import mapproj#
+#' @param tcres (required) Color space coordinates, possibly a result from the \code{tcs} function,#
+#' containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).#
+#' @param ... additonal parameters to be passed to the plotting of data points#
+#' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron #
+#' to its encapsulating sphere, and is ideal to visualize differences in hue. #
+#' @note \code{projplot} uses the Mollweide projection, and not the Robinson projection, which#
+#' has been used in the past. Among other advantages, the Mollweide projection preserves area#
+#' relationships within latitudes without distortion.#
+#' @export#
+#' @examples \dontrun{#
+#' data(sicalis)#
+#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))#
+#' projplot(tcs.sicalis) }#
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}#
+#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.#
+#' @references Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal visual systems and the evolution of color patterns: Sensory processing illuminates signal evolution. Evolution, 59(8), 1795-1818.#
+#
+projplot=function(tcsres, ...)#
+{#
+#
+# no longer tcs object#
+# if(class(tcsres)=='tcs'){#
+  # dat <- tcsres$tcs	#
+  # }else{#
+    # dat <- tcsres#
+    # }#
+points.theta=tcsres[,'h.theta']#
+points.phi=tcsres[,'h.phi']#
+#
+n=length(points.theta)#
+#
+#Edges of the tetrahedron, adjusted#
+vert.theta=c(-3.1415, 3.1415, -1.047198, 1.047198, -2.617994)#
+vert.phi=c(-0.3398369, -0.3398369, -0.3398369, -0.3398369,  1.5707963)#
+#
+#Edges of the figure#
+edge.theta=c(-pi,-pi,pi,pi)#
+edge.phi=c(-pi/2,pi/2,-pi/2,pi/2)#
+#
+#adjust points#
+#
+points.theta <- ifelse(points.theta>= -0.5235988,#
+                       points.theta-(150/180*pi),#
+                       points.theta+(210/180*pi))#
+# radians to degrees#
+coords.theta = c(edge.theta,vert.theta,points.theta)*180/pi#
+coords.phi = c(edge.phi,vert.phi,points.phi)*180/pi#
+#
+#map projection coordinates#
+#
+mp=mapproject(coords.theta, coords.phi, projection="mollweide")#
+#
+mp.v.theta=mp$x[1:9]#
+mp.v.phi=mp$y[1:9]#
+#
+mp.p.theta=mp$x[-c(1:9)]#
+mp.p.phi=mp$y[-c(1:9)]#
+#
+#plot#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+par(mar=c(0,0,0,0))#
+plot(0,0,axes=F,xlab='',ylab='', type='n',frame.plot=F, xlim=c(-2,2), ylim=c(-1,1))#
+#
+map.grid(c(-180,180,-90,90),labels=F,col='grey')#
+#
+points(mp.v.phi~mp.v.theta,pch=20,cex=1.5,col=c(rep('grey',4),rgb(cl),rgb(cl),rgb(cm),rgb(cs),rgb(cu)))#
+#
+points(mp.p.phi~mp.p.theta,pch=20, ...)#
+}
+data(sicalis)#
+vis.sicalis <- vismodel(sicalis, visual='avg.uv')#
+tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))#
+projplot(tcs.sicalis)
+getwd()
+?getspec
+ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {#
+#
+# if(class(tcsres)=='tcs'){#
+  # dat <- tcsres$tcs	#
+  # }else{#
+    # dat <- tcsres#
+    # }#
+#
+if(new)#
+   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))#
+#
+# can't figure out how to change the character type#
+#
+ttv=pavo::ttvertex#
+#
+cu=t(col2rgb('#984EA3'))/255#
+cs=t(col2rgb('#377EB8'))/255#
+cm=t(col2rgb('#4DAF4A'))/255#
+cl=t(col2rgb('#E41A1C'))/255#
+#
+plot3d(unlist(ttv[c('xu','xs','xm','xl')]),#
+		unlist(ttv[c('yu','ys','ym','yl')]),#
+		unlist(ttv[c('zu','zs','zm','zl')]), type='s', lit=F,#
+		radius=0.02, box=F, axes=F, xlab='',ylab='',zlab='',#
+		col=c(rgb(cu[1],cu[2],cu[3]), rgb(cs[1],cs[2],cs[3]), #
+		rgb(cm[1],cm[2],cm[3]), rgb(cl[1],cl[2],cl[3])))#
+segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], color='lightgrey')#
+segments3d(ttv[c('xu','xm')], ttv[c('yu','ym')], ttv[c('zu','zm')], color='lightgrey')#
+segments3d(ttv[c('xu','xl')], ttv[c('yu','yl')], ttv[c('zu','zl')], color='lightgrey')#
+segments3d(ttv[c('xs','xm')], ttv[c('ys','ym')], ttv[c('zs','zm')], color='lightgrey')#
+segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], color='lightgrey')#
+segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='lightgrey')#
+#
+spheres3d(0,0,0,col='grey', radius=0.01, lit=F)#
+#
+spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)#
+#
+if(floor){#
+  vertices <- c( #
+      -0.7, -0.5, -0.3, 1.0,#
+       0.7, -0.5, -0.3, 1.0,#
+       0.7,  1, -0.3, 1.0,#
+      -0.7,  1, -0.3, 1.0#
+  				)#
+  indices <- c( 1, 2, 3, 4 )#
+ wire3d( qmesh3d(vertices,indices), lit=F )#
+	}#
+if(hspin)#
+   play3d(spin3d(axis=c(0,0,1), rpm=20), duration=3)#
+#
+if(vspin)#
+   play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)#
+#
+}
+ttplot(tcs.sicalis, size=0.005)
+ttvol(tcs.sicalis)
+ttplot(tcs.sicalis, size=0.005)
+ttvol(tcs.sicalis)
+ttvol <- function(tcsres, col='black', grid=T, fill=T){#
+#
+# if(class(tcsres)=='tcs'){#
+  # dat <- tcsres$tcs	#
+  # }else{#
+    # dat <- tcsres#
+    # }#
+#
+vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)#
+coords <- tcsres[,c('x','y','z')]#
+listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))#
+ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))#
+#
+if(grid==T){#
+  for(i in 1:nrow(ppairs)){#
+      segments3d(coords[ppairs[i,],'x'], #
+                 coords[ppairs[i,],'y'],#
+                 coords[ppairs[i,],'z'], color=col)#
+  }#
+}#
+#
+if(fill==T)#
+rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2, color=col)#
+material3d(alpha=1)#
+}
+ttvol(tcs.sicalis)
+ttpoints<- function(tcsres, size=0.02, col='black'){#
+#
+# if(class(tcsres)=='tcs'){#
+  # dat <- tcsres$tcs	#
+  # }else{#
+    # dat <- tcsres#
+    # }#
+spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)#
+}
+ttplot(tcs.sicalis, size=0.005)
+' ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis$tcs)),],col='orange')
+tcs.sicalis[grep('T$',row.names(tcs.sicalis$tcs)),]
+ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis)),],col='orange')
+require(roxygen2)
+roxygenize(getwd())
+getwd()
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+roxygenize("/Users/rmaia/github/pavo")
+dev_mode()
+require(devtools)
+dev_mode()
+install.packages('~/github/pavo',repos=NULL,type='source')
+dev_mode()
+dev_mode()
+require(pavo)
+?voloverlap
+?getspec
+getspec
+getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", #
+           negative=c('zero','min', 'raw'), subdir=FALSE, subdir.names=FALSE)#
+{#
+#
+negative <- match.arg(negative)#
+makenegzero<-function(x) {x[x[,2]<0,2] = 0; x}#
+#
+separ=ifelse(ext=='ttt',';','\t')#
+#
+extension <- paste('.', ext, sep='')#
+#
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)#
+files <- paste(where,'/',file_names,sep='')#
+#
+if(subdir.names){#
+	file_names <- gsub(extension,'',file_names)}else{#
+	file_names <- gsub(extension,'',basename(file_names))#
+	 }#
+#
+if(length(file_names)==0){#
+	stop('No files found. Try a different ext')#
+	} #
+#
+range <- lim[1]:lim[2]#
+#
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))#
+final[,1] <- range#
+for(i in 1:length(files))#
+{#
+#
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')#
+#ToDo we can actually use this raw string to import metadata if we want#
+#
+start <- grep(separ,raw)[1] - 1#
+end <- length(grep(separ,raw))#
+#
+#Avantes ttt files don't use tab-delimiting, but semicolon-delimiting#
+#also has two lines with semicolon that are not data#
+#
+if(extension=='.ttt'){#
+	start <- grep(separ,raw)[3] -1#
+	end <- length(grep(separ,raw)) + start -1#
+}#
+#
+#jaz output file is weird. has 5 columns and an extra line in bottom#
+#
+if(extension=='.jaz'){#
+	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end-1, #
+							header=T)#
+	tempframe <- tempframe[c('W','P')]#
+	}else{#
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start-1))		#
+	}#
+#
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))#
+names(interp) <- c("wavelength", strsplit(file_names[i], extension) )#
+#
+#SpectraSuite sometimes allows negative values. Remove those:#
+# CME: I don't know if this is the right way to go about this. If some specs have neg #
+#      values while others don't their relative brightnesses will be meaningless. #
+#      Maybe replace with NAs or zeros?#
+# RM: Done: include with for option as to how to change this (zero, min or raw)#
+#
+if(min(interp[,2], na.rm=T) < 0) {#
+	interp[,2] <- switch(negative,#
+	raw = interp[,2],#
+	zero = makenegzero(interp)[,2],#
+	min = interp[,2] + abs(min(interp[,2], na.rm=T)),#
+	)#
+}#
+#
+final[,i+1] <- interp[,2]#
+#
+}#
+#
+names(final) <- c('wl',gsub(extension,'',file_names))#
+class(final) <- c('rspec','data.frame')#
+final#
+}
+getspec()
+setwd('~/github/pavo/examplespec')
+getspec()

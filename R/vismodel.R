@@ -12,20 +12,23 @@
 #' a 'wl' column with the range of wavelengths included, and the
 #' sensitivity for each other cone as a column. If not specified, the visual system will
 #' be chosen according to one of the choices from the argument \code{visual}.
-#' @param visual The visual system to be used. Currently implemented system are: 
+#' @param visual The visual system to be used. either (a) one of implemented systems: 
 #' \code{avg.uv}: average avian UV system; \code{avg.v}: average avian V system; 
 #' \code{bt}: Blue tit \emph{Cyanistes caeruleus} (REF); \code{star}: Starling
 #' \emph{Sturnus vulgaris} (REF); and \code{pfowl}: the peafowl 
-#' \emph{Pavo cristatus} (REF).
-#' @param luminance The sensitivity data to be used to calculate luminance (achromatic)
+#' \emph{Pavo cristatus} (REF); or (b) a user specified data frame, such as one produced 
+#' by \code{sensmodel}, containing sensitivity for the user-defined visual system. 
+#' The data frame must contain a 'wl' column with the range of wavelengths included, and the
+#' sensitivity for each other cone as a column. 
+#' @param achromatic The sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Currently implemented system are: \code{bt.dc}: Blue tit 
 #' \emph{Cyanistes caeruleus} double cone, \code{ch.dc}: Chicken \emph{Gallus gallus}
 #' double cone, \code{ml}: sum of the longest-wavelength cones, or \code{none}
 #' @param relative Should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE})
-#' @param ilum either a vector containing the illuminant, or one of the options: 
-#' 'ideal' (total homogeneous iluminance accross wavelengths), 'bluesky', 'd65' (daylight),
-#' or 'forestshade' (Default assumes an idealized iluminant of 1)
+#' @param illum either a vector containing the illuminant, or one of the options: 
+#' 'ideal' (total homogeneous illuminance accross wavelengths), 'bluesky', 'd65' (daylight),
+#' or 'forestshade' (Default assumes an idealized illuminant of 1)
 #' @param bkg either a vector containing the background spectra, or an ideal (white) 
 #' background is used.
 #' in \code{specdata}. (Default assumes an idealized background of 1)
@@ -51,10 +54,10 @@
 
 #ToDo: fix log adjustment when relative=T
 
-vismodel <- function(specdata, sens=NULL, relative=TRUE, 
+vismodel2 <- function(specdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
-  luminance = c("bt.dc","ch.dc","ml","none"),
-  ilum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal')
+  achromatic = c("bt.dc","ch.dc","ml","none"),
+  illum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal', relative=TRUE)
 {
 
 # remove & save colum with wavelengths
@@ -63,22 +66,22 @@ wl_index <- which(names(specdata)=='wl')
 wl <- specdata[,wl_index]
 y <- specdata[,-wl_index]
 
-# get visual system to use
+visual2 <- try(match.arg(visual), silent=T)
+sens <- pavo::vissyst
 
-if(is.null(sens)){
-  sens <- pavo::vissyst
-
+if(!inherits(visual2,'try-error')){
+  
   visual <- match.arg(visual)
-
   S <- sens[,grep(visual,names(sens))]
   names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
-  }else{
-    S <- sens[,-which(names(sens)=='wl')]
+  sens_wl <- sens[,'wl']
+  
+}else{
+    S <- visual[,-which(names(visual)=='wl')]
+    sens_wl <- visual[,'wl']
     visual <- 'user-defined'
-    sens <- pavo::vissyst
     }
 
-sens_wl <- sens[,'wl']
 
 # if relative=F, convert to proportions
 
@@ -90,19 +93,19 @@ sens_wl <- sens[,'wl']
     stop('wavelength in spectra table and visual system chosen do not match')
 
 
-#DEFINING ILUMINANT & BACKGROUND
+#DEFINING illumINANT & BACKGROUND
 
 bgil<- pavo::bgandilum
 
-ilum2 <- try(match.arg(ilum), silent=T)
-if(!inherits(ilum2,'try-error')){
-  ilum <- bgil[,grep(ilum2,names(bgil))]
+illum2 <- try(match.arg(illum), silent=T)
+if(!inherits(illum2,'try-error')){
+  illum <- bgil[,grep(illum2,names(bgil))]
   }else{
-    ilum2 <- 'user-defined'
+    illum2 <- 'user-defined'
     }
 
-if(ilum2=='ideal')
-  ilum <- rep(1,dim(specdata)[1])
+if(illum2=='ideal')
+  illum <- rep(1,dim(specdata)[1])
 
 bg2 <- try(match.arg(bkg), silent=T)
 if(!inherits(bg2,'try-error')){
@@ -133,23 +136,23 @@ yscale <- apply(y,2,function(x) x/max(x))
 
 indices = 1:dim(S)[2]
 
-Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*ilum)))
+Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*illum)))
 names(Qi) <- names(S)
 
 
-# calculate luminance contrast
+# calculate achromatic contrast
 
-luminance <- match.arg(luminance)
+achromatic <- match.arg(achromatic)
 
-if(luminance=='bt.dc' | luminance=='ch.dc'){
-   L <- sens[,grep(luminance,names(sens))]
-  lum <- colSums(y*L*ilum)
+if(achromatic=='bt.dc' | achromatic=='ch.dc'){
+   L <- sens[,grep(achromatic,names(sens))]
+  lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }
 
-if(luminance=='ml'){
+if(achromatic=='ml'){
    L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
-  lum <- colSums(y*L*ilum)
+  lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }
 
@@ -160,7 +163,7 @@ if(luminance=='ml'){
 if(!is.null(lum))
   S <- data.frame(cbind(S,L))
 
-k <- 1/colSums(S*bkg*ilum)
+k <- 1/colSums(S*bkg*illum)
 
 # quantum catch normalized to the background (qi = k*Qi)
 
@@ -186,8 +189,8 @@ if(relative){
 #OUTPUT
 res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 class(res) <- 'vismodel'
-attr(res,'visualsystem') <- c(visual,luminance)
-attr(res,'iluminant') <- ilum2
+attr(res,'visualsystem') <- c(visual,achromatic)
+attr(res,'illuminant') <- illum2
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 res
