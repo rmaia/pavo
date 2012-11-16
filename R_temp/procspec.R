@@ -1,59 +1,89 @@
-# input an rspec object or data frame w/spectra in columns and wavelengths in rows
-# options = min, max, stretch, sum, bin, center (subtract avg. from all specs)
+#' Process spectra
+#'
+#' Applies normalization and/or smoothing to spectra for further analysis or plotting
+#'
+#' @param specs (required) an \code{rspec} object containing spectra to process
+#' @param select specification of which spectra to plot. Can be a numeric vector or 
+#' factor (e.g., \code{sex=='male'})
+#' @param opt what type of processing options to apply. User can select multiple options
+#'            by providing a vector. Possibilites are:
+#' \itemize{
+#'	\item @param smooth applies LOESS smoothing to each spectrum using 
+#'                      \code{\link{loess.smooth}}
+#' 	\item @param minimum subtracts the minimum from each individual spectra
+#' 	\item @param maxmimum divides each spectrum by its maximum value
+#' 	\item @param sum divides each spectrum by summed values
+#' 	\item @param bin bins each spectrum into specified wavelength ranges. User should
+#'									 specify
+#'  \item @param center centers individual spectra by subtracting mean reflectance from 
+#'                      all values
+#' @param fixneg handles negatives either by setting them to zero (\code{zero} option) or
+#'               adding the absolute value of the maximally negative value (resulting in
+#'               a new minimum of zero)
+#' }
+#' @param span sets the smoothing parameter used by \code{\link{loess.smooth}} 
+#' @param bins sets the number of equally sized wavelength bins for \code{opt=bin}
+#' @export
+#' @examples \dontrun{
+#' #INCLUDE EXAMPLE}
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @references? Cuthill 1999
 
 # TODO
-# 1. add way to handle negatives
+# * inputting only one spec gave output of wavelengths only-how do we want to handle it
+#   when users don't supply wavelengths?
+# * supplied data frame must be an rspec object--put relevant warnings in place if not
 
 procspec <- function(specs, opt = c('none', 'smooth', 'maximum', 'minimum', 'stretch', 
-										 'bin', 'sum', 'center'), 
-										 fixneg = c('none', 'addmin', 'zero'),
-										 # method = c('loess', 'spline'), spar = .65, 
+										 'bin', 'sum', 'center'), fixneg = c('none', 'addmin', 'zero'),
 										 span = .15, bins = 20) {
 
-opt <- match.arg(opt, several.ok = TRUE)  	# 'fix' = how to handle negative values
-# method <- match.arg(method)
+opt <- match.arg(opt, several.ok = TRUE)
 
 fixneg <- match.arg(fixneg)
 
 applied <- 'processing options applied:\n'
 
 if (any(opt=='none')) {
-  cat('No relevant processing option entered. Returning raw values\n') 
+  cat('No relevant processing option entered; returning raw values\n') 
   specs <- specs
+  class(specs) <- c('rspec', 'data.frame')
+	return(specs)
   }
-
 
 wl_index <- which(names(specs)=='wl')
+
 if (length(wl_index > 0)){
   wl <- specs[, wl_index]
-  specs <- specs[, -wl_index]
+  specs <- as.data.frame(specs[, -wl_index])
     } else {
-    specs <- specs
+    warning('No wavelengths supplied; using arbitrary values')
+    specs <- as.data.frame(specs)
+    wl <- 1:nrow(specs)
     }
 
-if(fixneg=='addmin'){
+if (fixneg=='addmin'){
   adm = function(x){
-    if(min(x) < 0){ x + abs(min(x))
+    if (min(x) < 0){ x + abs(min(x))
     }else{
-    x 
+    x
     }
   }
-  tempspc <- data.frame( sapply(1:ncol(specs), function(z) adm(specs[, z]) ) )
+  tempspc <- data.frame(sapply(1:ncol(specs), function(z) adm(specs[, z]) ) )
   names(tempspc) <- names(specs)
   specs <- round(tempspc,6)
   applied <- c(applied, 'Negative value correction: added min to all reflectance\n')
- }
+}
 
-if(fixneg=='zero'){
+if (fixneg=='zero'){
   specs[specs < 0 ] <- 0
   applied <- c(applied, 'Negative value correction: added min to all reflectance\n')
- }
-
+}
 
 if (any(opt=='smooth')){
-  specs <- sapply(names(specs), function(z){loess.smooth(x = wl, y = specs[, z], 
-           span = span, degree = 2, family = "gaussian", 
-           evaluation = length(wl))$y})
+  specs <- sapply(names(specs), function(z){loess.smooth(x = wl, 
+                  y = as.data.frame(specs[, z]), span = span, degree = 2, 
+                  family = "gaussian", evaluation = length(wl))$y})
   applied <- c(applied, paste('smoothing spectra with a span of',span,'\n'))
   }
 
@@ -86,14 +116,8 @@ if (any(opt=='center')){
    applied <- c(applied, 'Centering spectra to a mean of zero\n')
   }
 
-#	if (any(opt=='fix'))
-#		specs <- ...
-		# option 1 = set all negatives to zero
-		# option 2 = add absolute val of most neg value to all spectra
-		# option 3 = set negatives to NAs, then smooth?
-
-	# Calculate medians according to # of bins specified for use in PCA
-	# Method follows Cuthill et al. (1999)
+# Calculate medians according to # of bins specified for use in PCA
+# Method follows Cuthill et al. (1999)
 if (any(opt=='bin')) {
   bw <- floor(length(wl)/bins)
   wl_bin <- seq(head(wl,1), tail(wl,1), by=bw)
@@ -110,10 +134,7 @@ if (any(opt=='bin')) {
 class(specs) <- c('rspec', 'data.frame')
 
 cat(applied)
-specs
-}
 
-# testing zone
-#tmp <- procspec(rspecs)
-#tmp <- procspec(rspecs, f="stretch")
-#plot(tmp, p=8:15, type='h')
+specs
+
+}
