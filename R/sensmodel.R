@@ -15,6 +15,8 @@
 #' @param oiltype A list of same length as peaksense that lists the oil droplet types
 #' (currently accepts only "C", "Y", "R", "P") when Bmid is not known. Calculates
 #' Bmid based on the regression equations found in Hart ad Vorobyev (2005).
+#' @param integrate logical. if \code{TRUE}, each curve is transformed to have a total area
+#' under the curve of 1 (best for visual models).
 #' @return a data frame containing each cone model as a column.
 #' @export
 #' @examples \dontrun{}
@@ -26,7 +28,7 @@
 
 
 sensmodel <- function(peaksense, range = c(300,700), lambdacut = NULL, Bmid = NULL, 
-		             oiltype = NULL, beta = TRUE) {
+		             oiltype = NULL, beta = TRUE, integrate = TRUE) {
 
 if (!is.null(lambdacut)){
  if (is.null(Bmid) & is.null(oiltype)) stop ("Bmid or oiltype must be included when including a lambdacut vector", call.=FALSE)
@@ -75,6 +77,12 @@ sensecurves[, (i+1)] <- peak
   }
 
 sensecurves <- data.frame(sensecurves)
+
+if(integrate==TRUE){
+  sensecurves <- apply(sensecurves, 2, function(z) z/sum(z))
+  sensecurves[,1] <- c(range[1]:range[2])
+}
+
 names(sensecurves) <- c('wl',paste('lmax',peaksense,sep=''))
 
 sensecurves
