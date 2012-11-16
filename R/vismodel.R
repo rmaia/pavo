@@ -54,7 +54,7 @@
 
 #ToDo: fix log adjustment when relative=T
 
-vismodel2 <- function(specdata, 
+vismodel <- function(specdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc","ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal', relative=TRUE)
