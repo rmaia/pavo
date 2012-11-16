@@ -6,7 +6,7 @@
 #' and Stoddard & Prum (2008).
 #' 
 #' @param specdata (required) Data frame containing reflectance spectra at each column.
-#' must contain a \code{wl} column identifying the wavelengths for the reflectance values.
+#' Must contain a \code{wl} column identifying the wavelengths for the reflectance values.
 #' @param sens Data frame, such as one produced by \code{sensmodel} containing
 #' sensitivity for the user-defined visual system. The data frame must contain
 #' a 'wl' column with the range of wavelengths included, and the

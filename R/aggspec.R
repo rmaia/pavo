@@ -15,10 +15,10 @@
 #' @return a data frame containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
-#' specs = getspec('/examplespec')
-#' specs=data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
-#' agg(specs,by=2)
-#' agg(specs,by=c('a','b','a','b','a','b','a','b')) }
+#' specs <- getspec('/examplespec')
+#' specs <- data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
+#' aggspec(specs,by=2)
+#' aggspec(specs,by=c('a','b','a','b','a','b','a','b')) }
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.

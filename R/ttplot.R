@@ -41,7 +41,7 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T) {
+ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T, grid=T, fill=T) {
 
 # if(class(tcsres)=='tcs'){
   # dat <- tcsres$tcs	
