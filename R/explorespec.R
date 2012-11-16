@@ -23,7 +23,10 @@ if (specreps <= 0) stop ("Invalid specreps value")
 wl_index <- which(names(specdata)=='wl')
 wl <- specdata[,wl_index]
 specdata <- specdata[,-wl_index]
-
+leg2 <- names(specdata)
+if ((dim(specdata)[2]/specreps) != round((dim(specdata)[2]/specreps))){
+  warning("specreps is not a factor of the number of column in specdata")
+}
 
 nplots <- ceiling(dim(specdata)[2]/specreps)
 
@@ -65,16 +68,30 @@ for (i in 1:nplots){
 
   yaxislims = c(min(bloc),max(bloc))*yaxismult
   leg <- names(bloc)
-  legcolor <- rep(col_list, length=dim(bloc)[2])
+  
+  if (!is.null(dim(bloc))){
+  legcolor <- rep(col_list, length=dim(bloc)[2])} else {
+  legcolor <- col_list
+  }
 
+  if (!is.null(dim(bloc))){
 	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
+	     xlab="Wavelength (nm)",ylab="% Reflectance")}else{
+      plot(wl, bloc, col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
 	     xlab="Wavelength (nm)",ylab="% Reflectance")
-
-  if(dim(bloc)[2] > 1)
-    for(j in 2:dim(bloc)[2])
+      legend('topright', legend=leg2[length(leg2)], cex=0.9, bty="n", 
+         text.col=legcolor)
+      }
+ if (specreps == 1){
+     legend('topright', legend=leg2[i], cex=0.9, bty="n", 
+         text.col=legcolor)}
+  if(!is.null(dim(bloc))){
+    if (dim(bloc)[2] > 1){
+    for(j in 2:dim(bloc)[2]){
       lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
   legend('topright', legend=names(bloc), cex=0.9, bty="n", 
-         text.col=legcolor)	
+         text.col=legcolor)	}}}
+   
 	}
 }
 
