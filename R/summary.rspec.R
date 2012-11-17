@@ -198,7 +198,8 @@ S5B <- apply(specdata[Q1, ],2,sum)
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
-H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
+#H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
+H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
 
 #carotchroma
 R450 <- as.numeric(specdata[which(wl==450), ])
