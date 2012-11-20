@@ -9,13 +9,15 @@
 #' factor (e.g., \code{sex=='male'})
 #' @param bounds a vector specifying the wavelength range to analyze
 #' @return a data frame containing peak height (max value), location (hue) and full width
-#' at half maximum
+#' at half maximum, as well as half widths on left and right side of peak. Status column
+#' indicates whether user-defined bounds incorporate the actual minima of the spectra.
+#' Function will return a warning if not.
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
 #' sicalis.sm <- procspec(sicalis, opt='smooth', span=.25)
 #' FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
-#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @authors Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
 peakshape <- function(specs, select = NULL, bounds = c(300, 700), plot = T, ...) {
 
@@ -50,6 +52,7 @@ if (ncol(specs)==1) {
   specs2 <- specs[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
   Yi <- max(specs2)  # max refls
   Yj <- min(specs2)  # min refls
+  Yk <- min(specs)  # min refls, whole spectrum
   Xi <- which(specs2==Yi)  # lambda_max index
   fsthalf <- specs2[1:Xi]
   sndhalf <- specs2[Xi:length(specs2)]
@@ -70,9 +73,9 @@ if (ncol(specs)==1) {
 }
 
 
-#if (any(Yj>Yk)) {
-#warning(paste('Please fix bounds in spectrum', which(Yj>Yk), 'to incorporate all minima in spectral curves'))
-#}
+if (any(Yj>Yk)) {
+warning(paste('Please fix bounds in spectra marked "check" to incorporate all minima in spectral curves'))
+}
 
 Xa <- wlrange[fstHM]
 Xb <- wlrange[Xi+sndHM]
@@ -86,10 +89,12 @@ if (plot==TRUE) {
     abline(h = halfmax[i], col = "red")
     abline(v = Xa[i], col = "red", lty = 2)
     abline(v = Xb[i], col = "red", lty = 2)
+    abline(v = bounds, col = "lightgrey")
   }
 }
 
-out <- data.frame(B3 = as.numeric(Yi), H1 = hue, FWHM = Xb - Xa)
+out <- data.frame(B3 = as.numeric(Yi), H1 = hue, FWHM = Xb - Xa, HWHM.l = hue - Xa,
+                  HWHM.r = Xb - hue, status = c("OK", "check")[as.numeric(Yj>Yk)+1])
 
 row.names(out) <- nms[select]
 

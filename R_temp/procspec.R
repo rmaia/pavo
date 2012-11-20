@@ -27,7 +27,7 @@
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
-#' @references? Cuthill 1999
+#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183–200.
 
 # TODO
 # * inputting only one spec gave output of wavelengths only-how do we want to handle it
