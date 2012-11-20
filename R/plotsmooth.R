@@ -12,6 +12,9 @@
 #' @param specnum The number of spectral curves, from the data frame, to visualize (defaults to ALL)
 #' @return Series of plot with curves processed with varying level of loess smoothing
 #' @export
+#' @examples \dontrun{
+#' data(sicalis)
+#' plotsmooth(sicalis,0.05,0.1,7,6)}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
