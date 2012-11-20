@@ -42,21 +42,24 @@ type <- match.arg(type)
 
 # make wavelength vector
 wl_index <- which(names(specs)=='wl')
-if (length(wl_index > 0)) {
+if (length(wl_index) > 0) {
+  haswl <- TRUE
   wl <- specs[, wl_index]
-  specs <- as.data.frame(specs[, -wl_index])
-} else if (length(wl_index==0)) {
+} else {
+  haswl <- FALSE
   wl <- 1:nrow(specs)
-  specs <- as.data.frame(specs)
   warning('No wavelengths provided; using arbitrary index values')
 }
 
 # subset based on indexing vector
 if (is.logical(select))
   select <- which(select=='TRUE')
-else if (is.null(select))
+if (is.null(select)&haswl==TRUE)
+  select <- (1:ncol(specs))[-wl_index]
+if (is.null(select)&haswl==FALSE)
   select <- 1:ncol(specs)
-specs <- as.data.frame(specs[, (select-1)])
+
+specs <- as.data.frame(specs[, select])
 
 # set limits
 if (is.null(xlim))
@@ -65,7 +68,6 @@ if (is.null(xlim))
 if (is.null(ylim))
   ylim <- range(specs)
 
-
 # heat plot
 if (type=='heatmap') {
   if (is.null(varying)) { 
@@ -73,10 +75,10 @@ if (type=='heatmap') {
     print("No varying vector supplied; using arbitrary values")
   }
   
-  if (length(col)==1){
+  if (length(col)==1) {
     jc <- colorRampPalette( rev(c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")))
     col <- jc(n)
-  }else{
+  } else {
   	jc <- colorRampPalette(col)
   	col <- jc(n)
   	}
@@ -93,8 +95,6 @@ if (length(col) < ncol(specs))
   col <- rep(col, ncol(specs))
 if (any(class(col)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
   col <- col[select-1]
-
-
 
 # overlay different spec curves
 if (type=='overlay') {
