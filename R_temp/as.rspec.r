@@ -15,24 +15,21 @@ as.rspec <- function(specs, whichwl = NULL) {
 
 if (is.matrix(specs)) {
   name <- colnames(specs)
-}
+} else
 if (is.data.frame(specs)) {
   name <- names(specs)
 } else {
-stop('object must be a data frame or matrix')
+  stop('object must be a data frame or matrix')
 }
 
-# make wavelength vector
-wl_index <- which(colnames(specs)=='wl'||names(specs)=='wl')
 
-if (length(wl_index) > 0) {
+ind <- sapply(1:ncol(specs), function(x) {sd(diff(specs[,x]))})
+
+if (any(ind==0)) {
+  wl_index <- which(ind==0)
   wl <- specs[, wl_index]
   specs <- specs[, -wl_index]
   name <- name[-wl_index]
-} else if (!is.null(whichwl)) {
-  wl <- specs[, whichwl]
-  specs <- specs[, -whichwl]
-  name <- name[-whichwl]
 } else {
   wl <- 1:nrow(specs)
   specs <- specs
