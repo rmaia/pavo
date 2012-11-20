@@ -46,7 +46,7 @@
 procspec <- function(specs, opt = c('none', 'smooth', 'maximum', 'minimum', 'stretch', 
 										 'bin', 'sum', 'center'), 
 										 fixneg = c('none', 'addmin', 'zero'),
-										 span = .15, bins = 20) {
+										 span = .25, bins = 20) {
 
 opt <- match.arg(opt, several.ok = TRUE)
 
