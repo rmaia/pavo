@@ -23,23 +23,26 @@ old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
 nms <- names(specs)
 
-# make wavelength vector
 wl_index <- which(names(specs)=='wl')
 if (length(wl_index) > 0) {
+  haswl <- TRUE
   wl <- specs[, wl_index]
-  specs <- as.matrix(specs[, -wl_index])
 } else {
+  haswl <- FALSE
   wl <- 1:nrow(specs)
-  specs <- as.matrix(specs)
   warning('No wavelengths provided; using arbitrary index values')
 }
 
 # subset based on indexing vector
 if (is.logical(select))
   select <- which(select=='TRUE')
-if (is.null(select))
+if (is.null(select)&haswl==TRUE)
+  select <- (1:ncol(specs))[-wl_index]
+if (is.null(select)&haswl==FALSE)
   select <- 1:ncol(specs)
-specs <- as.matrix(specs[, (select-1)])
+
+specs <- as.data.frame(specs[, select])
+
 
 wlrange <- bounds[1]:bounds[2]
 
