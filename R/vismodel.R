@@ -18,11 +18,11 @@
 #' sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
 #' column with the range of wavelengths included, and the sensitivity for each other 
 #' cone as a column
-#' \itemize \code{avg.uv}: average avian UV system
-#' \itemize \code{avg.v}: average avian V system
-#' \itemize \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
-#' \itemize \code{star}: Starling \emph{Sturnus vulgaris} visual system  
-#' \itemize \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+#' \item \code{avg.uv}: average avian UV system
+#' \item \code{avg.v}: average avian V system
+#' \item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
+#' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
+#' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
 #' }
 #' @param achromatic The sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Currently implemented options are: 

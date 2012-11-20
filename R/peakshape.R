@@ -12,6 +12,7 @@
 #' at half maximum, as well as half widths on left and right side of peak. Status column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.
 #' Function will return a warning if not.
+#' @seealso \code{\link{procspec}}
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)

@@ -40,4 +40,7 @@ FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
   Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia
   \email{rm72@zips.uakron.edu}
 }
+\seealso{
+  \code{\link{procspec}}
+}
 
