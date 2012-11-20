@@ -64,8 +64,6 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-#ToDo: fix log adjustment when relative=T
-
 vismodel <- function(specdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc","ml","none"),
@@ -189,7 +187,8 @@ fi <- log(qi)
 if(relative){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   qi[,-dim(qi)[2]] <- qi[,-dim(qi)[2]]/rowSums(qi[,-dim(qi)[2]])
-  fi[,-dim(fi)[2]] <- 1/fi[,-dim(fi)[2]]/rowSums(1/fi[,-dim(fi)[2]])
+  fi[,-dim(fi)[2]] <- (fi[,-dim(fi)[2]]-rowSums(fi[,-dim(fi)[2]]))/rowSums((fi[,-dim(fi)[2]])-rowSums(fi[,-dim(fi)[2]]))
+
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
