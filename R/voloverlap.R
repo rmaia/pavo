@@ -16,7 +16,7 @@
 #' contained within the other, this overlap will be \code{vsmallest = 1}.
 #'  \item \code{vboth} the volume of the overlap divided by the combined volume of both 
 #' imput sets of color points.
-#'
+#' }
 #' @note Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 #' simulations of points within the range of the volumes, and obtaining the frequency of 
 #' simulated values that fall inside the volumes defeined by both sets of color points.

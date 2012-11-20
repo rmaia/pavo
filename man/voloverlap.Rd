@@ -11,44 +11,43 @@
   as such)}
 
   \item{plot}{Should the volumes and points be plotted?
-  (defaults to \code{FALSE}.)}
+  (defaults to \code{FALSE})}
 }
 \value{
   Calculates the overlap between the volumes defined by two
-  set of points in colorspace. This is done by simulating
-  points from a uniform distribution defined by the
-  combined values of the points, and obtaining the
-  frequency of simulated values that fall inside the
-  volumes defeined by both sets of color points. This
-  frequency is then compared to (1) the frequency of values
-  that fall within the smallest volume (Stoddard & Stevens
-  2011), and (2) the combined volume of both sets of color
-  points.
+  set of points in colorspace. The volume from the overlap
+  is then is given relative to: \itemize{ \item
+  \code{vsmallest} the volume of the overlap divided by the
+  smallest of that defined by the the two imput sets of
+  color points. Thus, if one of the volumes is entirely
+  contained within the other, this overlap will be
+  \code{vsmallest = 1}.  \item \code{vboth} the volume of
+  the overlap divided by the combined volume of both imput
+  sets of color points. }
 }
 \description{
   calculates the overlap between the volumes defined by two
   sets of points in cartesian space
 }
 \note{
-  Stoddard & Stevens (2011) calculate the volume overlap
-  relative to one of the volumes compared (i.e. how many of
-  the simulated points that fall in volume 1 also fall in
-  volume 2), and we return this value (which is always
-  relative to the smallest volume). However, this value may
-  not be what one expects to obtain if (1) the two volumes
-  differ considerably in size, or (2) one of the volumes is
-  entirely contained within the other. For this reason, we
-  also report p(both)/(p(vol1)+p(vol2)), which may be more
-  adequate in those cases.
+  Stoddard & Stevens (2011) originally obtained the volume
+  overlap through Monte Carlo simulations of points within
+  the range of the volumes, and obtaining the frequency of
+  simulated values that fall inside the volumes defeined by
+  both sets of color points.
 
-  The simulation process requires the calculation of many
-  convex hulls, and therefore may be computationally
-  intensive and take considerably long if many points are
-  simulated. Given that depending on the shape of the color
-  volumes many of the points simulated may fall outside
-  either volumes, make sure to check the output to see if a
-  decent sample size is falling withing the volumes and
-  being used in calculations.
+  Here we present an exact solution based on finding common
+  vertices to both volumes and calculating its volume.
+
+  Stoddard & Stevens (2011) also return the value of the
+  overlap relative to one of the volumes (in that case, the
+  host species). However, for other applications this value
+  may not be what one expects to obtain if (1) the two
+  volumes differ considerably in size, or (2) one of the
+  volumes is entirely contained within the other. For this
+  reason, we also report the volume relative to the union
+  of the two input volumes, which may be more adequate in
+  most cases.
 }
 \examples{
 \dontrun{
@@ -56,7 +55,7 @@ data(sicalis)
 tcs.sicalis.C <- tcs(vismodel(sicalis[c(1,grep('\\\\.C',names(sicalis)))]))
 tcs.sicalis.T <- tcs(vismodel(sicalis[c(1,grep('\\\\.T',names(sicalis)))]))
 tcs.sicalis.B <- tcs(vismodel(sicalis[c(1,grep('\\\\.B',names(sicalis)))]))
-voloverlap(tcs.sicalis.T,tcs.sicalis.B, nsamp=5000)
+voloverlap(tcs.sicalis.T,tcs.sicalis.B)
 voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) }
 }
 \author{

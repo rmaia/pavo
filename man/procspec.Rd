@@ -4,7 +4,7 @@
 \usage{
   procspec(specs,
     opt = c("none", "smooth", "maximum", "minimum", "stretch", "bin", "sum", "center"),
-    fixneg = c("none", "addmin", "zero"), span = 0.15,
+    fixneg = c("none", "addmin", "zero"), span = 0.25,
     bins = 20)
 }
 \arguments{
