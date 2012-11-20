@@ -17,7 +17,7 @@
 #' data(sicalis)
 #' sicalis.sm <- procspec(sicalis, opt='smooth', span=.25)
 #' FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
-#' @authors Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
 peakshape <- function(specs, select = NULL, bounds = c(300, 700), plot = T, ...) {
 
