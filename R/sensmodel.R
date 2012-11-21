@@ -15,7 +15,9 @@
 #' @param oiltype A list of same length as peaksense that lists the oil droplet types
 #' (currently accepts only "C", "Y", "R", "P") when Bmid is not known. Calculates
 #' Bmid based on the regression equations found in Hart ad Vorobyev (2005).
-#' @param integrate logical. if \code{TRUE}, each curve is transformed to have a total area
+#' @param om Logical. If true cone senssitivity will be corrected for ocular media 
+#' transmission. Values from Hart et al. (2005). (Defaults to FALSE).
+#' @param integrate Logical. if \code{TRUE}, each curve is transformed to have a total area
 #' under the curve of 1 (best for visual models).
 #' @return a data frame containing each cone model as a column.
 #' @export
@@ -28,7 +30,7 @@
 
 
 sensmodel <- function(peaksense, range = c(300,700), lambdacut = NULL, Bmid = NULL, 
-		             oiltype = NULL, beta = TRUE, integrate = TRUE) {
+		             oiltype = NULL, beta = TRUE, om = FALSE, integrate = TRUE) {
 
 if (!is.null(lambdacut)){
  if (is.null(Bmid) & is.null(oiltype)) stop ("Bmid or oiltype must be included when including a lambdacut vector", call.=FALSE)
@@ -37,6 +39,7 @@ if (!is.null(lambdacut)){
 
 sensecurves <- matrix(ncol = length(peaksense)+1,nrow = (range[2]-range[1]+1))
 sensecurves[,1] <- c(range[1]:range[2])
+T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
 
 #Sensitivities w/o oil droplets
 for (i in 1: length(peaksense)){
@@ -71,6 +74,10 @@ if (!is.null(lambdacut) & !is.null(oiltype)){
 T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[1]:range[2]-lambdacut[i])+1.08))
 
 peak <- peak*T.oil
+}
+# Apply ocular media trnasmission correction
+if (om == TRUE){
+  peak <- peak * T.e
 }
 
 sensecurves[, (i+1)] <- peak
