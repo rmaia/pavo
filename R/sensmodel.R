@@ -40,6 +40,7 @@ if (!is.null(lambdacut)){
 sensecurves <- matrix(ncol = length(peaksense)+1,nrow = (range[2]-range[1]+1))
 sensecurves[,1] <- c(range[1]:range[2])
 T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
+T.e[which(T.e < 0)] <- 0
 
 #Sensitivities w/o oil droplets
 for (i in 1: length(peaksense)){
