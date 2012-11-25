@@ -1,9 +1,10 @@
-\name{ttdist}
-\alias{ttdist}
-\title{Tetrachromatic color distances}
+\name{coldist}
+\alias{coldist}
+\title{TColor distances}
 \usage{
-  ttdist(vismodeldata, qcatch = c("Qi", "qi", "fi"),
-    n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.1)
+  coldist(vismodeldata, qcatch = c("Qi", "qi", "fi"),
+    vis = c("tetra", "tri", "di"), achro = TRUE, n1 = 1,
+    n2 = 2, n3 = 2, n4 = 4, v = 0.1)
 }
 \arguments{
   \item{vismodeldata}{(required) Quantum catch color data.
@@ -11,17 +12,32 @@
   independently calculated data (in the form of a data
   frame with four columns, representing the avian cones).}
 
-  \item{qcatch}{Quantum catch values to use in the model.
-  Can be either \code{Qi}, \code{qi} or \code{fi} (defaults
-  to \code{Qi}). \code{Qi}: Quantum catch for each
-  photoreceptor \code{qi}: Quantum catch normalized to the
-  adapting background according to the von Kries
-  transformation. \code{fi}: Quantum catch according to
-  Fechner law (the signal of the receptor channel is
-  proportional to the logarithm of the quantum catch)}
+  \item{qcatch}{Quantum catch values to use in the model:
+  \itemize{ \item \code{Qi}: Quantum catch for each
+  photoreceptor (default) \item \code{qi}: Quantum catch
+  normalized to the adapting background according to the
+  von Kries transformation \item \code{fi}: Quantum catch
+  according to Fechner law (the signal of the receptor
+  channel is proportional to the logarithm of the quantum
+  catch) }}
 
-  \item{n1,n2,n3,n4}{Photoreceptor densities for u, s, m &
-  l (default to blue tit densities: 1,2,2,4)}
+  \item{vis}{visual system phenotype to use in the model:
+  \itemize{ \item \code{tetra}: tetrachromatic color vision
+  (default) \item \code{tri}: trichromatic color vision
+  \item \code{di}: dichromatic color vision }}
+
+  \item{achro}{logical. if \code{TRUE}, last column of the
+  data frame is used to calculate the achromatic contrast,
+  with noise based on the Weber fraction calculated using
+  \code{n4}}
+
+  \item{n1,n2,n3,n4}{Tetrachromatic photoreceptor densities
+  for u, s, m & l (default to blue tit densities: 1:2:2:4).
+  If \code{vis} does not equal \code{'tetra'}, only
+  \code{n1} and \code{n2} (\code{vis='di'}) or \code{n1},
+  \code{n2} and \code{n3} (\code{vis='tri'}) are used for
+  chromatic contrast (NOTE: \code{n4} is still the value
+  used for the achromatic contrast.)}
 
   \item{v}{Noise-to-signal ratio of a single cone (defaults
   to 0.1, so that under the default densities, the Weber
@@ -49,7 +65,7 @@
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-ttd.sicalis <- ttdist(vis.sicalis, qcatch='fi', asdist=T)}
+ttd.sicalis <- ttdist(vis.sicalis, qcatch='fi', vis='tetra')}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
