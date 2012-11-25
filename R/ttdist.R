@@ -27,7 +27,7 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-#' ttd.sicalis <- ttdist(vis.sicalis, qcatch='fi', asdist=T)}
+#' ttd.sicalis <- ttdist(vis.sicalis, qcatch='fi')}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
@@ -35,14 +35,16 @@
 
 
 #ToDo: Add Neural Noise model
-#ToDo: Add luminance contrast calculation
+#ToDo: make luminance contrast calculation optional
+#ToDo: add additional options (di, tri)
 
 ttdist <-function(vismodeldata, qcatch=c('Qi','qi','fi'), n1=1, n2=2, n3=2, n4=4, v=0.1)
 {
 
 if(class(vismodeldata)=='vismodel'){
 	qcatch <- match.arg(qcatch)
-	dat <- data.frame(vismodeldata[qcatch])
+#	dat <- data.frame(vismodeldata[qcatch])
+	dat <- as.matrix(data.frame(vismodeldata[qcatch]))
 	names(dat) <- gsub(paste(qcatch,'.',sep=''),'',names(dat))
 	
 	if(attr(vismodeldata,'relative'))
@@ -50,7 +52,7 @@ if(class(vismodeldata)=='vismodel'){
 	
   }else{
 	qcatch <- match.arg(qcatch)
-  	dat <- vismodeldata[,c('u','s','m','l','lum')]
+  	dat <- vismodeldata
   	}
 
 dat <- switch(qcatch,
