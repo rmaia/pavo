@@ -106,15 +106,38 @@ ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 		as.numeric(sqrt(numer/denom))
 		}
 
+didistcalc <- function(f1,f2,w1,w2){
+        dq1 <- f1[1]-f2[1]
+        dq2 <- f1[2]-f2[2]
+		
+		numer<-	(dq1-dq2)^2
+		
+		denom<- w1+w2
+			
+		as.numeric(sqrt(numer/denom))
+		}
+
+trdistcalc <- function(f1,f2,w1,w2,w3){
+        dq1 <- f1[1]-f2[1]
+        dq2 <- f1[2]-f2[2]
+        dq3 <- f1[3]-f2[3]
+		
+		numer<-	(w1^2*((dq3-dq2)^2)) +
+		        (w2^2*((dq3-dq1)^2)) +
+		        (w3^2*((dq1-dq2)^2))
+		
+		denom<- ((w1*w2)^2) +
+				((w1*w3)^2) +
+				((w2*w3)^2)	
+			
+		as.numeric(sqrt(numer/denom))
+		}
 
 ttdistcalcachro <- function(f1,f2,w){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
         round(abs(dq1/w),7)
 		}
-
-
-
 
 ###################
 #SUMMARY VARIABLES#
