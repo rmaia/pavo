@@ -1,6 +1,6 @@
 \name{coldist}
 \alias{coldist}
-\title{TColor distances}
+\title{Color distances}
 \usage{
   coldist(vismodeldata, qcatch = c("Qi", "qi", "fi"),
     vis = c("tetra", "tri", "di"), achro = TRUE, n1 = 1,

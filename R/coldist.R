@@ -1,4 +1,4 @@
-#' TColor distances
+#' Color distances
 #' 
 #' Applies the visual models of Vorobyev et al. (1998) to calculate color distances
 #' with receptor noise based on relative photoreceptor densities.
