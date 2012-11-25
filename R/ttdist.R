@@ -20,8 +20,13 @@
 #' \item \code{tri}: trichromatic color vision
 #' \item \code{di}: dichromatic color vision
 #' }
-#' @param n1,n2,n3,n4 Photoreceptor densities for u, s, m & l (default to 
-#' blue tit densities: 1,2,2,4)
+#' @param achro logical. if \code{TRUE}, last column of the data frame is used to calculate 
+#' the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}
+#' @param n1,n2,n3,n4 Tetrachromatic photoreceptor densities for u, s, m & l (default to 
+#' blue tit densities: 1:2:2:4). If \code{vis} does not equal \code{'tetra'}, only \code{n1}
+#' and \code{n2} (\code{vis='di'}) or \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
+#' are used for chromatic contrast (NOTE: \code{n4} is still the value used for the achromatic
+#' contrast.)
 #' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
 #' the default densities, the Weber fraction for the large cone will be 0.05, as
 #' estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})
@@ -43,10 +48,10 @@
 
 #ToDo: Add Neural Noise model
 #ToDo: make luminance contrast calculation optional
-#ToDo: add additional options (di, tri)
 
 coldist <-function(vismodeldata, qcatch=c('Qi','qi','fi'), 
-                  vis=c('tetra', 'tri', 'di'), n1=1, n2=2, n3=2, n4=4, v=0.1)
+                  vis=c('tetra', 'tri', 'di'), achro=TRUE,
+                  n1=1, n2=2, n3=2, n4=4, v=0.1)
 {
 
 if(class(vismodeldata)=='vismodel'){
@@ -101,11 +106,11 @@ res$tetra.dS <- apply(pairsid,1,function(x)
   w1=w1e, w2=w2e, w3=w3e, w4=w4e) )
 }
 
-
+if(achro){
 res$dL <- apply(pairsid,1,function(x) 
   ttdistcalcachro(dat[x[1],], dat[x[2],], 
   w=w4e) )
-
+}
 
 
 nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
