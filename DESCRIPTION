@@ -38,3 +38,5 @@ Collate:
     'voloverlap.R'
     'plot.rspec.r'
     'spec2rgb.R'
+    'peakshape.R'
+    'procspec.R'

@@ -8,26 +8,35 @@
 #' @param opt what type of processing options to apply. User can select multiple options
 #'            by providing a vector. Possibilites are:
 #' \itemize{
-#'	\item @param smooth applies LOESS smoothing to each spectrum using 
-#'                      \code{\link{loess.smooth}}
-#' 	\item @param minimum subtracts the minimum from each individual spectra
-#' 	\item @param maxmimum divides each spectrum by its maximum value
-#' 	\item @param sum divides each spectrum by summed values
-#' 	\item @param bin bins each spectrum into specified wavelength ranges. User should
-#'									 specify
-#'  \item @param center centers individual spectra by subtracting mean reflectance from 
-#'                      all values
-#' @param fixneg handles negatives either by setting them to zero (\code{zero} option) or
-#'               adding the absolute value of the maximally negative value (resulting in
-#'               a new minimum of zero)
+#'	\item \code{"none"} does not perform any processing (default).
+#'	\item \code{"smooth"} applies LOESS smoothing to each spectrum using 
+#'                      \code{loess.smooth}.
+#' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
+#' 	\item \code{"maxmimum"} divides each spectrum by its maximum value
+#' 	\item \code{"sum"} divides each spectrum by summed values.
+#' 	\item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
+#'									 specify.
+#'  \item \code{"center"} centers individual spectra by subtracting mean reflectance from 
+#'                      all values.
 #' }
-#' @param span sets the smoothing parameter used by \code{\link{loess.smooth}} 
-#' @param bins sets the number of equally sized wavelength bins for \code{opt=bin}
+#'
+#' @param fixneg how to handle negative values. Possibilities are:
+#' \itemize{ 
+#'	\item \code{"none"} does not perform negative value correction (default).
+#'    \item \code{"zero"} sets all negative values to zero.
+#'    \item \code{"addmin"} adds the absolute value of the maximally negative values of each
+#'                           spectra to the reflectance at all other wavelengths (setting
+#'                           the minimum value to zero, but scaling other values accordingly).
+#' }
+#' @param span sets the smoothing parameter used by \code{loess.smooth}
+#' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
 #' @export
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
-#' @references? Cuthill 1999
+#' @seealso \code{\link{loess.smooth}}
+#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183–200.
+#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 
 # TODO
 # * inputting only one spec gave output of wavelengths only-how do we want to handle it
@@ -35,8 +44,9 @@
 # * supplied data frame must be an rspec object--put relevant warnings in place if not
 
 procspec <- function(specs, opt = c('none', 'smooth', 'maximum', 'minimum', 'stretch', 
-										 'bin', 'sum', 'center'), fixneg = c('none', 'addmin', 'zero'),
-										 span = .15, bins = 20) {
+										 'bin', 'sum', 'center'), 
+										 fixneg = c('none', 'addmin', 'zero'),
+										 span = .25, bins = 20) {
 
 opt <- match.arg(opt, several.ok = TRUE)
 
@@ -45,10 +55,11 @@ fixneg <- match.arg(fixneg)
 applied <- 'processing options applied:\n'
 
 if (any(opt=='none')) {
-  cat('No relevant processing option entered; returning raw values\n') 
-  specs <- specs
-  class(specs) <- c('rspec', 'data.frame')
-	return(specs)
+  opt <- 'none' # remove other opt arguments (so they are not called further on, but still allowing for fixneg to work)
+  applied <- 'No relevant processing option entered; returning raw values\n'
+#  specs <- specs
+#  class(specs) <- c('rspec', 'data.frame')
+#	return(specs)
   }
 
 wl_index <- which(names(specs)=='wl')
@@ -133,6 +144,7 @@ if (any(opt=='bin')) {
 	
 class(specs) <- c('rspec', 'data.frame')
 
+applied <- c(applied, '\n')
 cat(applied)
 
 specs

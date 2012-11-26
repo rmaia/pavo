@@ -2,7 +2,8 @@
 \alias{explorespec}
 \title{Plot spectral curves}
 \usage{
-  explorespec(specdata, specreps = 1, lwd = 2)
+  explorespec(specdata, specreps = 1, lwd = 2,
+    scale = c("free", "equal"))
 }
 \arguments{
   \item{specdata(required)}{a data frame, possibly an
@@ -15,6 +16,11 @@
 
   \item{lwd}{Width of the lines displayed on the plots
   (defaults to 2)}
+
+  \item{scale}{defines how the y-axis should be scaled.
+  \code{'free'}: panels can vary in the range of the
+  y-axis; \code{'equal'}: all panels have the y-axis with
+  the same range.}
 }
 \value{
   Spectral curve plots

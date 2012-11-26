@@ -26,6 +26,7 @@ if (length(wl_index > 0)){
     }
 
 specs <- specs[which(wl==400):which(wl==700),]
+names_specs <- names(specs)
 specs <- as.matrix(specs)
 
 sens <- pavo:::ciexyz
@@ -53,6 +54,9 @@ rgb1[rgb1 > 1] <- 1
 colrs <- rgb(r=rgb1[1,], g=rgb1[2,], b=rgb1[3,])
 
 class(colrs) <- c('spec2rgb', 'character')
+
+names(colrs) <- names_specs
+
 colrs
 
 }

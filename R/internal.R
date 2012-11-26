@@ -50,15 +50,46 @@ apply(ind,1, function(x)
 }
 
 
+# # ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
+# #		dq1<-log(f1['u']/f2['u'],base=10)
+# #		dq2<-log(f1['s']/f2['s'],base=10)
+# #		dq3<-log(f1['m']/f2['m'],base=10)
+# #		dq4<-log(f1['l']/f2['l'],base=10)
+        # dq1 <- f1['u']-f2['u']
+        # dq2 <- f1['s']-f2['s']
+        # dq3 <- f1['m']-f2['m']
+        # dq4 <- f1['l']-f2['l']
+		
+		# numer<-	((w1*w2)^2)*((dq4-dq3)^2) + 
+				# ((w1*w3)^2)*((dq4-dq2)^2) +
+				# ((w1*w4)^2)*((dq3-dq2)^2) +
+				# ((w2*w3)^2)*((dq4-dq1)^2) +
+				# ((w2*w4)^2)*((dq3-dq1)^2) +
+				# ((w3*w4)^2)*((dq2-dq1)^2)
+		
+		# denom<- ((w1*w2*w3)^2) +
+				# ((w1*w2*w4)^2) + 
+				# ((w1*w3*w4)^2) +
+				# ((w2*w3*w4)^2)	
+			
+		# as.numeric(sqrt(numer/denom))
+		# }
+
+# ttdistcalcachro <- function(f1,f2,w){
+        # dq1 <- f1['lum']-f2['lum']
+        # dq1 <- as.numeric(dq1)
+        # round(abs(dq1/w),7)
+		# }
+
 ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 #		dq1<-log(f1['u']/f2['u'],base=10)
 #		dq2<-log(f1['s']/f2['s'],base=10)
 #		dq3<-log(f1['m']/f2['m'],base=10)
 #		dq4<-log(f1['l']/f2['l'],base=10)
-        dq1 <- f1['u']-f2['u']
-        dq2 <- f1['s']-f2['s']
-        dq3 <- f1['m']-f2['m']
-        dq4 <- f1['l']-f2['l']
+        dq1 <- f1[1]-f2[1]
+        dq2 <- f1[2]-f2[2]
+        dq3 <- f1[3]-f2[3]
+        dq4 <- f1[4]-f2[4]
 		
 		numer<-	((w1*w2)^2)*((dq4-dq3)^2) + 
 				((w1*w3)^2)*((dq4-dq2)^2) +
@@ -75,9 +106,35 @@ ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 		as.numeric(sqrt(numer/denom))
 		}
 
+didistcalc <- function(f1,f2,w1,w2){
+        dq1 <- f1[1]-f2[1]
+        dq2 <- f1[2]-f2[2]
+		
+		numer<-	(dq1-dq2)^2
+		
+		denom<- w1+w2
+			
+		as.numeric(sqrt(numer/denom))
+		}
+
+trdistcalc <- function(f1,f2,w1,w2,w3){
+        dq1 <- f1[1]-f2[1]
+        dq2 <- f1[2]-f2[2]
+        dq3 <- f1[3]-f2[3]
+		
+		numer<-	(w1^2*((dq3-dq2)^2)) +
+		        (w2^2*((dq3-dq1)^2)) +
+		        (w3^2*((dq1-dq2)^2))
+		
+		denom<- ((w1*w2)^2) +
+				((w1*w3)^2) +
+				((w2*w3)^2)	
+			
+		as.numeric(sqrt(numer/denom))
+		}
 
 ttdistcalcachro <- function(f1,f2,w){
-        dq1 <- f1['lum']-f2['lum']
+        dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
         round(abs(dq1/w),7)
 		}
