@@ -3,9 +3,9 @@
 #' Produces a 2D projection plot of points in a color space
 #' 
 #' @import mapproj
-#' @param tcres (required) Color space coordinates, possibly a result from the \code{tcs} function,
+#' @param tcsdata (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
 #' containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).
-#' @param ... additonal parameters to be passed to the plotting of data points
+#' @param ... additonal parameters to be passed to the plotting of data points.
 #' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron 
 #' to its encapsulating sphere, and is ideal to visualize differences in hue. 
 #' @note \code{projplot} uses the Mollweide projection, and not the Robinson projection, which
@@ -21,19 +21,19 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal visual systems and the evolution of color patterns: Sensory processing illuminates signal evolution. Evolution, 59(8), 1795-1818.
 
-projplot=function(tcsres, ...)
+projplot=function(tcsdata, ...)
 {
 
 # no longer tcs object
-# if(class(tcsres)=='tcs'){
-  # dat <- tcsres$tcs	
+# if(class(tcsdata)=='tcs'){
+  # dat <- tcsdata$tcs	
   # }else{
-    # dat <- tcsres
+    # dat <- tcsdata
     # }
 
 
-points.theta=tcsres[,'h.theta']
-points.phi=tcsres[,'h.phi']
+points.theta=tcsdata[,'h.theta']
+points.phi=tcsdata[,'h.phi']
 
 n=length(points.theta)
 
