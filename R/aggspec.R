@@ -12,7 +12,7 @@
 #' (in which case the function will be applied to each group of spectra sharing the
 #' same identification).
 #' @param FXN the function to be applied to the groups of spectra. (defaults to \code{mean})
-#' @return a data frame containing the spectra after applying the aggregating function.
+#' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
 #' specs <- getspec('/examplespec')
