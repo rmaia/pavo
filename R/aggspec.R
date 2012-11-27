@@ -12,7 +12,7 @@
 #' a vector containing identifications for the columns in the spectra data frame
 #' (in which case the function will be applied to each group of spectra sharing the
 #' same identification).
-#' @param FUN the function to be applied to the groups of spectra. (defaults to \code{mean})
+#' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
