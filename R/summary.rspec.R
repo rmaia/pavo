@@ -1,30 +1,29 @@
 #' Tristimulus color variables
 #'
 #' Extracts all 23 tristimulus color variables described in 
-#' Montgomerie (2006). Works with \code{rspec} class objects generated 
-#' from the \code{getspec} function or data frames that contain wavelength in
-#' the first column (named '\code{wl}') and spectra in subsequent columns.
+#' Montgomerie (2006).
 #'
-#' @param specdata (required) Data frame, possibly of class \code{rspec},
-#' with a column with wavelength, named 'wl', and spectra data in remaining columns. 
-#' @param smooth Logical. Determine if data should be smoothed 
-#' before extracting some of the values. When TRUE, uses the loess smoothing to 
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' with a column with wavelength data, named 'wl', and the remaining column containing
+#' spectra to process.
+#' @param smooth logical. If \code{TRUE} spectra will be smoothed 
+#' before extracting some of the values. When \code{TRUE}, uses the loess smoothing to 
 #' reduce spectral noise when extracting variables for which bmax and
-#' bmaxneg are required, and for which Rmax and Rmin are required (defaults to TRUE).
+#' bmaxneg are required, and for which Rmax and Rmin are required (defaults to \code{TRUE}).
 #' See notes. 
-#' @param span the degree of smoothing if \code{smooth} is TRUE. Larger values result
+#' @param span the degree of smoothing if \code{smooth} is \code{TRUE}. Larger values result
 #' in greater smoothing (defaults to 0.2).
 #' @param range vector of length 2 indicating the lower and upper wavelength bounds used
 #' to calculate variables that refer to a color wheel (S5 and H4) (defaults to 300nm to 700nm).
-#' @param plot Logical. If TRUE, smooth spectra are plotted for verification of the
-#' smoothing parameter.
+#' @param plot logical. If \code{TRUE}, smooth spectra are plotted for verification of the
+#' smoothing parameter (defaults to \code{FALSE}).
 #' @return A data frame containing 23 variables described in Montgomerie (2006)
 #' with spectra name as row names. 
 #' @return The tristimulus color variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
 #' file from the May 2008 distribution of the CLR sofware. Authors should reference 
 #' both this package and Montgomerie (2006).
-#' @return Description and notes on the measures
+#' @return Description and notes on the measures:
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
 #' range (area under the curve). Frequently used but should be discouraged because
@@ -100,8 +99,7 @@
 #' rely on smoothened curves to remove noise, which would otherwise result in spurious
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
-#' variables are extracted using non-smoothed data. Effects of this option can be
-#' checked by comparing two outputs using \code{match}.
+#' variables are extracted using non-smoothed data. 
 #' @export
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
@@ -154,32 +152,32 @@
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 
  
-summary.rspec <- function (specdata, wlrange=c(300,700), 
+summary.rspec <- function (rspecdata, wlrange=c(300,700), 
                 smooth=TRUE, span=0.2, plot=FALSE) {
 
-wl_index <- which(names(specdata)=='wl')
-wl <- specdata[,wl_index]
+wl_index <- which(names(rspecdata)=='wl')
+wl <- rspecdata[,wl_index]
 lambdamin <- min(wl)
-specdata <- specdata[,-wl_index]
+rspecdata <- rspecdata[,-wl_index]
 
-output.mat <- matrix (nrow=(dim(specdata)[2]), ncol=23)
+output.mat <- matrix (nrow=(dim(rspecdata)[2]), ncol=23)
 
 # Three measures of brightness
-B1 <- sapply(specdata, sum)
+B1 <- sapply(rspecdata, sum)
 
-B2 <- sapply(specdata, mean)
+B2 <- sapply(rspecdata, mean)
 
 
-Redchromamat <- as.matrix(specdata[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
+Redchromamat <- as.matrix(rspecdata[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
 Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
 
-Yellowchromamat <- as.matrix(specdata[which(wl==550):which(wl==625),]) #yellow 550-625nm
+Yellowchromamat <- as.matrix(rspecdata[which(wl==550):which(wl==625),]) #yellow 550-625nm
 Yellowchroma <- as.vector(apply(Yellowchromamat,2,sum))/B1 # S1 yellow
 
-Greenchromamat <- as.matrix(specdata[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
+Greenchromamat <- as.matrix(rspecdata[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
 Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
 
-Bluechromamat <- as.matrix(specdata[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
+Bluechromamat <- as.matrix(rspecdata[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
 
 
@@ -190,25 +188,26 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(specdata[Q4, ],2,sum)
-S5Y <- apply(specdata[Q3, ],2,sum)
-S5G <- apply(specdata[Q2, ],2,sum)
-S5B <- apply(specdata[Q1, ],2,sum)
+S5R <- apply(rspecdata[Q4, ],2,sum)
+S5Y <- apply(rspecdata[Q3, ],2,sum)
+S5G <- apply(rspecdata[Q2, ],2,sum)
+S5B <- apply(rspecdata[Q1, ],2,sum)
 
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
-H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
+#H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
+H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
 
 #carotchroma
-R450 <- as.numeric(specdata[which(wl==450), ])
-R700 <- as.numeric(specdata[which(wl==700), ])
+R450 <- as.numeric(rspecdata[which(wl==450), ])
+R700 <- as.numeric(rspecdata[which(wl==700), ])
 Carotchroma <- (R450-R700)/R700
 
 # S7
-sum_min_mid <- apply(specdata, 2, function(x) 
+sum_min_mid <- apply(rspecdata, 2, function(x) 
                      sum(x[which.min(x):round((which.max(x) + which.min(x))/2)]))
-sum_mid_max <- apply(specdata, 2, function(x) 
+sum_mid_max <- apply(rspecdata, 2, function(x) 
                      sum(x[round((which.max(x) + which.min(x))/2):which.max(x)]))
 
 S7 <- (sum_min_mid - sum_mid_max)/(B1)
@@ -216,21 +215,21 @@ S7 <- (sum_min_mid - sum_mid_max)/(B1)
 
 # S3
 
-plus50 <- apply(specdata,2,function(x) min(c(which.max(x)+50,which.max(wl))))
-minus50 <- apply(specdata,2,function(x) max(c(which.max(x)-50,which.min(wl))))
-pmindex <- 1:dim(specdata)[2]
+plus50 <- apply(rspecdata,2,function(x) min(c(which.max(x)+50,which.max(wl))))
+minus50 <- apply(rspecdata,2,function(x) max(c(which.max(x)-50,which.min(wl))))
+pmindex <- 1:dim(rspecdata)[2]
 
-S3 <- sapply(pmindex, function(x) sum(specdata[minus50[x]:plus50[x],x]))/B1
+S3 <- sapply(pmindex, function(x) sum(rspecdata[minus50[x]:plus50[x],x]))/B1
 
 
 #Metrics that involve bmax with or without smoothing
-data <- specdata
+data <- rspecdata
 
 if(smooth){
-  smoothspecs <- data.frame(apply(specdata,2, function(x) loess.smooth(wl, x, 
+  smoothspecs <- data.frame(apply(rspecdata,2, function(x) loess.smooth(wl, x, 
                                     span=span, degree=1, evaluation=length(wl))$y) )
   }else{
-    smoothspecs <- specdata
+    smoothspecs <- rspecdata
     warning('Spectral curves not smoothened - 
     variables that rely on derivatives (S4, S10, H2 and H5) are not meaningful', call.=FALSE)
     }
@@ -251,7 +250,7 @@ S6 <- B3-Rmin # S6
 H1 <- wl[max.col(t(smoothspecs), ties.method='first')]
 
 # H3 
-lambdaRmin <- wl[apply(specdata, 2, which.min)]  # H3
+lambdaRmin <- wl[apply(rspecdata, 2, which.min)]  # H3
   Rmid <- round((H1+lambdaRmin)/2)
 
 
@@ -289,11 +288,11 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 if(lambdamin <= 300){
   lminuv <- 300
-  UVchromamat <- as.matrix(specdata[which(wl==lminuv):which(wl==400),])
+  UVchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==400),])
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   
-  Vchromamat <- as.matrix(specdata[which(wl==lminuv):which(wl==415),])
+  Vchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==415),])
   Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
   }
@@ -301,16 +300,16 @@ if(lambdamin <= 300){
 if(lambdamin > 300 & lambdamin < 400){
   warning(paste('Minimum wavelength is', lambdamin,'UV-related variables may not be meaningful'), call.=FALSE)
   lminuv <- lambdamin
-  UVchromamat <- as.matrix(specdata[which(wl==lminuv):which(wl==400),]) 
+  UVchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==400),]) 
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 4] <- UVchroma
 
-  Vchromamat <- as.matrix(specdata[which(wl==lminuv):which(wl==415),])
+  Vchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==415),])
   Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
   }
 
-color.var <- data.frame(output.mat, row.names=names(specdata))
+color.var <- data.frame(output.mat, row.names=names(rspecdata))
 
 names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.green", 
                       "S1.yellow", "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
