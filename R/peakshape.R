@@ -3,7 +3,7 @@
 #' Calculates height, location and width of peak at the reflectance midpoint (FWHM).
 #' Note: bounds should be set wide enough to incorporate all minima in spectra. Smoothing
 #' spectra using \code{\link{procspec}} is also recommended.
-#' @param rspecdata (required) a data.frame, possibly an object of class \code{rspec},
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
