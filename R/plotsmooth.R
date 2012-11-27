@@ -3,13 +3,13 @@
 #' Plots curves with various levels of loess smoothing to help determine what
 #' loess parameters are best for the data.
 #'
-#' @param all.specs(required) A data frame, possibly of class \code{rspec}, which
+#' @param rspecdata(required) a data frame, possibly of class \code{rspec}, which
 #' contains a column containing a wavelength range , named 'wl', and spectra data in 
 #' remaining columns.
-#' @param minsmooth The minimum f value of the loess function to visualize (defaults to 0.05)
-#' @param maxsmooth The maximum f value of the loess function to visualize (defaults to 0.20)
-#' @param curves The number of curves to display on the same plot (defaults to 5)
-#' @param specnum The number of spectral curves, from the data frame, to visualize (defaults to ALL)
+#' @param minsmooth the minimum f value of the loess function to visualize (defaults to 0.05)
+#' @param maxsmooth the maximum f value of the loess function to visualize (defaults to 0.20)
+#' @param curves the number of curves to display on the same plot (defaults to 5)
+#' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to ALL)
 #' @return Series of plot with curves processed with varying level of loess smoothing
 #' @export
 #' @examples \dontrun{
@@ -18,28 +18,28 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
-plotsmooth <- function(all.specs, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){
 
 if (curves == 1) stop ("No curves to compare (curves = 1)")
 
-titlenames <- names(all.specs[, 2:dim(all.specs)[2]])
+titlenames <- names(rspecdata[, 2:dim(rspecdata)[2]])
 
 if (specnum == 1) {
   titlenames <- titlenames [2]
-  all.specs <- all.specs[, 1:(specnum+1)]
+  rspecdata <- rspecdata[, 1:(specnum+1)]
 }
 
 if (specnum > 1) {
-  all.specs <- all.specs[, 1:(specnum+1)]
-  titlenames <-titlenames[2:dim(all.specs)[2]]
+  rspecdata <- rspecdata[, 1:(specnum+1)]
+  titlenames <-titlenames[2:dim(rspecdata)[2]]
 }
 
-wl_index <- which(names(all.specs)=='wl')
-wl <- all.specs[,wl_index]
+wl_index <- which(names(rspecdata)=='wl')
+wl <- rspecdata[,wl_index]
 
-nplots <- ncol(all.specs)-1
+nplots <- ncol(rspecdata)-1
 
-plotdata <- matrix(nrow = dim(all.specs)[1], ncol = nplots*curves)
+plotdata <- matrix(nrow = dim(rspecdata)[1], ncol = nplots*curves)
 
 
 
@@ -54,20 +54,20 @@ inc <- (maxsmooth-minsmooth) /(curves-2)
 
 for (i in 1:nplots){
   
-  plotdata[, ((i-1)*curves)+1] <- all.specs[, i+1]
+  plotdata[, ((i-1)*curves)+1] <- rspecdata[, i+1]
   
   plotdata[, ((i-1)*curves)+2] <- 
 
-  loess.smooth(wl ,all.specs [, i+1], span = minsmooth, 
+  loess.smooth(wl ,rspecdata [, i+1], span = minsmooth, 
   evaluation = length(wl), degree = 1)$y + 5
   
   plotdata[, ((i-1)*curves)+curves] <-
-  loess.smooth(wl ,all.specs [, i+1], span = maxsmooth,
+  loess.smooth(wl ,rspecdata [, i+1], span = maxsmooth,
   evaluation = length(wl), degree = 1)$y + ((curves-1)*5)
   
   for (j in 1:(curves-3)){
     plotdata[, ((i-1)*curves)+2+j] <- 
-    loess.smooth(wl ,all.specs [, i+1], span = (minsmooth+(inc*j)),
+    loess.smooth(wl ,rspecdata [, i+1], span = (minsmooth+(inc*j)),
     evaluation = length(wl), degree = 1)$y + (10 + ((j-1)*5))
     }
 }
@@ -92,13 +92,13 @@ yaxismin <-min(bloc)
 yaxismax <-max(bloc)
 
 
-plot(all.specs[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelength (nm)",ylab="% Reflectance")
-	legend (all.specs[1, 1]-20,yaxismax+6,legend=legnames,cex=0.7,bty="n", xjust=0)
+plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelength (nm)",ylab="% Reflectance")
+	legend (rspecdata[1, 1]-20,yaxismax+6,legend=legnames,cex=0.7,bty="n", xjust=0)
 	title(titlenames[i])
 
 	nextplot = 2
 		while (nextplot < ncol(bloc)+1) { 						
-			lines (all.specs[,1],bloc[,nextplot],cex=0.1)
+			lines (rspecdata[,1],bloc[,nextplot],cex=0.1)
 			nextplot<- nextplot+1}
 	}
 }
