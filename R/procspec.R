@@ -35,7 +35,7 @@
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{loess.smooth}}
-#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183–200.
+#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183-200.
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 
 # TODO
