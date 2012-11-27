@@ -16,7 +16,7 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' explorespec(sicalis,3)}
-#' @author Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+#' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
 
 
