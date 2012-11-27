@@ -2,35 +2,38 @@
 #'
 #' Calculates rgb values from spectra based on human color matching functions
 #'
-#' @param specs (required) An rspec object of spectral data with columns as spectra. 
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' with a column with wavelength data, named 'wl', and the remaining column containing
+#' spectra to process.
 #' 
-#' @return a character vector of class \code{spec2rgb} consisting of hexadecimal color values
+#' @return A character vector of class \code{spec2rgb} consisting of hexadecimal color values
 #' for passing to further plotting functions.
 #' @export
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
-#' @references CIE. (1932). Commission Internationale de l'Éclairage Proceedings, 1931. Cambridge: Cambridge University Press.
+#' @references CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 #' @references Color matching functions obtained from Colour and Vision Research Laboratory 
-#' online data respository at http://www.cvrl.org/.
-#' @references http://www.cs.rit.edu/~ncs/color/t_spectr.html
+#' online data respository at \url{http://www.cvrl.org/}.
+#' @references \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 
-spec2rgb <- function(specs) {
+spec2rgb <- function(rspecdata) {
 
-wl_index <- which(names(specs)=='wl')
+wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index > 0)){
-  wl <- specs[, wl_index]
-  specs <- as.data.frame(specs[, -wl_index])
+  wl <- rspecdata[, wl_index]
+  rspecdata <- as.data.frame(rspecdata[, -wl_index])
     } else {
     stop('No wavelengths supplied; no default')
     }
 
-specs <- specs[which(wl==400):which(wl==700),]
-specs <- as.matrix(specs)
+rspecdata <- rspecdata[which(wl==400):which(wl==700),]
+names_rspecdata <- names(rspecdata)
+rspecdata <- as.matrix(rspecdata)
 
 sens <- pavo:::ciexyz
 
-P2 <- sapply(1:ncol(specs), function(x) specs[, x] / sum(specs[, x]))  # normalize to sum of 1
+P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 
 # Convolute
 X <- apply(sens[, 'x'] * P2, 2, sum)
@@ -53,6 +56,9 @@ rgb1[rgb1 > 1] <- 1
 colrs <- rgb(r=rgb1[1,], g=rgb1[2,], b=rgb1[3,])
 
 class(colrs) <- c('spec2rgb', 'character')
+
+names(colrs) <- names_rspecdata
+
 colrs
 
 }
