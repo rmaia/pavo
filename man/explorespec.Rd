@@ -33,6 +33,11 @@
   Number of plots presented per page depends on the number
   of curves per graph.
 }
+\examples{
+\dontrun{
+data(sicalis)
+explorespec(sicalis,3)}
+}
 \author{
   Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }

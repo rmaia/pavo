@@ -4,7 +4,7 @@
 \usage{
   sensmodel(peaksense, range = c(300, 700),
     lambdacut = NULL, Bmid = NULL, oiltype = NULL,
-    beta = TRUE, integrate = TRUE)
+    beta = TRUE, om = FALSE, integrate = TRUE)
 }
 \arguments{
   \item{peaksense}{(required) A vector with peak
@@ -30,7 +30,11 @@
   based on the regression equations found in Hart ad
   Vorobyev (2005).}
 
-  \item{integrate}{logical. if \code{TRUE}, each curve is
+  \item{om}{Logical. If true cone senssitivity will be
+  corrected for ocular media transmission. Values from Hart
+  et al. (2005). (Defaults to FALSE).}
+
+  \item{integrate}{Logical. if \code{TRUE}, each curve is
   transformed to have a total area under the curve of 1
   (best for visual models).}
 }

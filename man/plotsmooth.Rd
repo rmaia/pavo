@@ -32,6 +32,11 @@
   help determine what loess parameters are best for the
   data.
 }
+\examples{
+\dontrun{
+data(sicalis)
+plotsmooth(sicalis,0.05,0.1,7,6)}
+}
 \author{
   Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
