@@ -37,7 +37,6 @@ plot.rspec <- function(rspecdata, select = NULL, type = c('overlay', 'stack', 'h
                        cols = 2, varying = NULL, n = 100, col = 'black', 
                        xlim = NULL, ylim = NULL, ...) {
 
-old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 type <- match.arg(type)
 
 # make wavelength vector
@@ -120,7 +119,5 @@ if (type=='stack') {
       lines((rspecdata2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
     }
 }
-
-par(old.par)  # return settings to previous
 
 }
