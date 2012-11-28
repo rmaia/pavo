@@ -33,8 +33,6 @@ to be applicable for a range of taxa and applications. It provides flexible ways
 spectral data from a variety of equipment manufacturers, process these data, extract variables 
 and produce publication-quality graphics.
 
-This is a random edit by Rafael.
-
 \pavo{} was written with the following workflow in mind:
 
 % numbered list of things
@@ -279,26 +277,31 @@ blah blah blah\footnote{some footnote text here} and also this.
 
 \section{Visualizing Spectral Data}
 
-<<<<<<< HEAD
 \begin{Schunk}
 \begin{Sinput}
 > data(sicalis)
+> par(mfrow=c(1,2))
 > plot(sicalis, type='o', col=spec2rgb(sicalis))
+> plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
+\end{Sinput}
+\begin{Soutput}
+processing options applied:
+ smoothing spectra with a span of 0.25 
+\end{Soutput}
+\begin{Sinput}
+> 
 > #plot(sicalis, type='s', col=spec2rgb(sicalis))
 \end{Sinput}
 \end{Schunk}
 
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=3in]{pavo-fig1}
-\end{center}
-\caption{Sample plot.}
-\label{fig1}
-\end{figure}
+%\begin{figure} % h=here, t=top, b=bottom, p=floating page
+%\begin{center}
+%\includegraphics[width=3in]{pavo-fig1}
+%\end{center}
+%\caption{Sample plot.}
+%\label{fig1}
+%\end{figure}
 
-=======
-This is how you plot something ...
->>>>>>> 410ed83d33665cdb62e17e176f63f0d3ce6a4bae
 
 \begin{figure} % h=here, t=top, b=bottom, p=floating page
 \begin{center}

@@ -222,13 +222,6 @@ plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
 #plot(sicalis, type='s', col=spec2rgb(sicalis))
 @
 
-%\begin{figure} % h=here, t=top, b=bottom, p=floating page
-%\begin{center}
-%\includegraphics[width=3in]{pavo-fig1}
-%\end{center}
-%\caption{Sample plot.}
-%\label{fig1}
-%\end{figure}
 
 
 \begin{figure} % h=here, t=top, b=bottom, p=floating page
@@ -249,16 +242,6 @@ Figure \ref{figure:overlay}.
 hist(rnorm(50))
 @
 
-<<<<<<< HEAD
-=======
-%\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-%\begin{center}
-%\includegraphics[width=5in]{pavo-fig1}
-%\end{center}
-%\caption{Sample plot.}
-%\label{fig1}
-%\end{figure}
->>>>>>> 410ed83d33665cdb62e17e176f63f0d3ce6a4bae
 
 \subsection*{More examples}
 
