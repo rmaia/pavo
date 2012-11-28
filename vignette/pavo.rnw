@@ -42,11 +42,12 @@ and produce publication-quality graphics.
 
 % numbered list of things
 \begin{enumerate}
-\item {\bf O}rganize spectral data by inputting files, processing spectra (e.g., to remove
+\item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc.)
-\item {\bf A}nalyze the resulting files, either using typical tristimulus color variables (hue,
-saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
-\item {\bf V}isualize the output
+\item {\bf Analyze} the resulting files, either using typical tristimulus color variables (hue,
+saturation, brightness) or using visual models based on perceptual data from the taxon of 
+interest.
+\item {\bf Visualize} the output, with multiple options provided for exploratory analyses.
 \end{enumerate}
 
 Below we will show the main functions in the package in an example workflow. 
@@ -54,7 +55,8 @@ Below we will show the main functions in the package in an example workflow.
 \section{Data Description}
 
 The data used in this example is available from 
-\href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}{github by clicking here}. 
+\href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
+{github by clicking here}. 
 You can download and extract it to follow the vignette.
 
 The data consists of reflectance spectra obtained using Avantes equipment and software from 
@@ -167,6 +169,32 @@ explorespec(sppspec, 7)
 \label{fig2}
 \end{figure}
 
+
+\section{Visualizing Spectral Data}
+
+<<label=overlay,fig=TRUE,include=FALSE>>=
+data(sicalis)
+par(mfrow=c(1,2))
+plot(sicalis, type='o', col=spec2rgb(sicalis))
+plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
+
+#plot(sicalis, type='s', col=spec2rgb(sicalis))
+@
+
+
+
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in, height=3in]{pavo-overlay}
+\end{center}
+\caption{Overlay plot with colors calculated from human color matching functions}
+\label{figure:overlay}
+\end{figure}
+
+Colors can be mapped to spectra using \code{spec2rgb} as shown in 
+Figure \ref{figure:overlay}.
+
+
 \section{Analyzing Spectral Data}
 
 \subsection{Overview}
@@ -210,30 +238,6 @@ The complete set of tristimulus variables calculated by \code{summary} in \pavo{
 Color variables described in Table \ref{table:tristim}.
 
 blah blah blah\footnote{some footnote text here} and also this.
-
-\section{Visualizing Spectral Data}
-
-<<label=overlay,fig=TRUE,include=FALSE>>=
-data(sicalis)
-par(mfrow=c(1,2))
-plot(sicalis, type='o', col=spec2rgb(sicalis))
-plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
-
-#plot(sicalis, type='s', col=spec2rgb(sicalis))
-@
-
-
-
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=4in, height=3in]{pavo-overlay}
-\end{center}
-\caption{Overlay plot with colors calculated from human color matching functions}
-\label{figure:overlay}
-\end{figure}
-
-Colors can be mapped to spectra using \code{spec2rgb} as shown in 
-Figure \ref{figure:overlay}.
 
 \section*{Examples}
 
