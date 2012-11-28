@@ -2,10 +2,10 @@
 \alias{segclass}
 \title{Segment classification}
 \usage{
-  segclass(specdata, range = c(300, 700))
+  segclass(rspecdata, range = c(300, 700))
 }
 \arguments{
-  \item{specdata}{(required) a data frame, such as objects
+  \item{rspecdata}{(required) a data frame, such as objects
   of class \code{rspec}, with a column containing
   wavelength range, named 'wl' and spectra data in
   remaining columns.}

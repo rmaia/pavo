@@ -2,11 +2,11 @@
 \alias{summary.rspec}
 \title{Tristimulus color variables}
 \usage{
-  summary.rspec(specdata, wlrange = c(300, 700),
+  summary.rspec(rspecdata, wlrange = c(300, 700),
     smooth = TRUE, span = 0.2, plot = FALSE)
 }
 \arguments{
-  \item{specdata}{(required) Data frame, possibly of class
+  \item{rspecdata}{(required) Data frame, possibly of class
   \code{rspec}, with a column with wavelength, named 'wl',
   and spectra data in remaining columns.}
 

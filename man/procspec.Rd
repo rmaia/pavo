@@ -2,14 +2,14 @@
 \alias{procspec}
 \title{Process spectra}
 \usage{
-  procspec(specs,
+  procspec(rspecdata,
     opt = c("none", "smooth", "maximum", "minimum", "stretch", "bin", "sum", "center"),
     fixneg = c("none", "addmin", "zero"), span = 0.25,
     bins = 20)
 }
 \arguments{
-  \item{specs}{(required) an \code{rspec} object containing
-  spectra to process}
+  \item{rspecdata}{(required) an \code{rspec} object
+  containing spectra to process}
 
   \item{select}{specification of which spectra to plot. Can
   be a numeric vector or factor (e.g., \code{sex=='male'})}

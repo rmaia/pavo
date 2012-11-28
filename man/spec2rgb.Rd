@@ -2,11 +2,11 @@
 \alias{spec2rgb}
 \title{Spectrum to rgb color conversion}
 \usage{
-  spec2rgb(specs)
+  spec2rgb(rspecdata)
 }
 \arguments{
-  \item{specs}{(required) An rspec object of spectral data
-  with columns as spectra.}
+  \item{rspecdata}{(required) An rspec object of spectral
+  data with columns as spectra.}
 }
 \value{
   a character vector of class \code{spec2rgb} consisting of

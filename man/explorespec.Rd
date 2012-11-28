@@ -2,11 +2,11 @@
 \alias{explorespec}
 \title{Plot spectral curves}
 \usage{
-  explorespec(specdata, specreps = 1, lwd = 2,
+  explorespec(rspecdata, specreps = 1, lwd = 2,
     scale = c("free", "equal"))
 }
 \arguments{
-  \item{specdata(required)}{a data frame, possibly an
+  \item{rspecdata}{(required) a data frame, possibly an
   object of class \code{rspec} that has wavelength range in
   the first column, named 'wl', and spectral measurements
   in the remaining columns.}

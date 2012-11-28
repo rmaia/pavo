@@ -2,14 +2,14 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-  vismodel(specdata,
+  vismodel(rspecdata,
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
     achromatic = c("bt.dc", "ch.dc", "ml", "none"),
     illum = c("ideal", "bluesky", "D65", "forestshade"),
     bkg = "ideal", relative = TRUE)
 }
 \arguments{
-  \item{specdata}{(required) Data frame containing
+  \item{rspecdata}{(required) Data frame containing
   reflectance spectra at each column. Must contain a
   \code{wl} column identifying the wavelengths for the
   reflectance values.}
