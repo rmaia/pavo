@@ -199,7 +199,12 @@ Figure \ref{figure:overlay}.
 
 \subsection{Overview}
 
-add description here
+\pavo{} offers two main approaches for spectral data analysis. First, variables can be 
+calculated based on the shape of the reflectance spectra. By using special R classes for spectra 
+data frame objects, this can easily be done using the \code{summary} function in an rspec 
+object (see below). The second function for spectral shape analysis is \code{peakshape}, which returns descriptors for peaks in spectral curves, as outlined below.
+
+Second, reflectance spectra can be analyzed accounting for the visual system receiving the color signal, therefore representing reflectance spectra as preceived colors. We have implemented Endler's (REF) segment analysis model, which approximates visual models but does not directly use sensory information; the model of Osorio & Vorobyev (REF), which provides a flexible framework for visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD) which has been extensively developed to represent colors in the avian vision color space.
 
 \subsection{Variables calculated}
 
