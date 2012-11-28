@@ -132,12 +132,12 @@ repeatability of our measurements is to plot the spectra of each individual sepa
 function \code{explorespec} provides an easy way of doing so. You may specify the number of 
 spectra to be plotted in the same panel using the argument \code{specreps}, and the function 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
-only 10 of the cardinal individuals measured:
+only the 12 cardinal individuals measured:
 
 \begin{Schunk}
 \begin{Sinput}
-> explorespec(specs[,1:40], specreps=3) 
-> # 39 spectra plus the first (wl) column
+> explorespec(specs[,1:37], specreps=3) 
+> # 36 spectra plus the first (wl) column
 \end{Sinput}
 \end{Schunk}
 
@@ -370,14 +370,61 @@ tanager  0.04509807 512
 The complete set of tristimulus variables calculated by \code{summary} in \pavo{}}
 \end{table}
 
-Color variables described in Table \ref{table:tristim}.
-
-blah blah blah\footnote{some footnote text here} and also this.
+\clearpage{}
 
 \textit{\textbf{Peak shape descriptors}}
 
-Particularly in cases of reflectance spectra that have a single, discrete peak, it mmight be useful to obtain variables that describe that peak's properties. 
+Particularly in cases of reflectance spectra that have a single, discrete peak, it might be useful to obtain variables that describe that peak's properties. The \code{peakshape} function identifies the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
 
+If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines is the FWHM:
+
+\begin{Schunk}
+\begin{Sinput}
+> par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
+> peakshape(sppspec, plot=T)
+\end{Sinput}
+\begin{Soutput}
+               B3  H1 FWHM HWHM.l HWHM.r status
+cardinal 52.89508 687  104    100      4     OK
+jacana   53.90258 700   NA     93     NA     OK
+oriole   54.40384 692  148    141      7     OK
+parakeet 30.05703 575  125     66     59     OK
+robin    37.91676 700   NA    107     NA     OK
+tanager  30.71021 555  232    142     90     OK
+\end{Soutput}
+\end{Schunk}
+
+\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=6in, height=5in]{pavo-fwhm}
+\end{center}
+\caption{Plots from \code{peakshape}}
+\label{figure:fwhm}
+\end{figure}
+
+\clearpage{}
+
+As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a \code{select} argument to facilitate subsetting the spectral data frame:
+
+\begin{Schunk}
+\begin{Sinput}
+> peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
+\end{Sinput}
+\begin{Soutput}
+               B3  H1 FWHM HWHM.l HWHM.r status
+cardinal 17.99853 369  100     47     53     OK
+\end{Soutput}
+\end{Schunk}
+
+\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=3in, height=3in]{pavo-fwhm2}
+\end{center}
+\caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
+\label{igure:fwhm2}
+\end{figure}
+
+\clearpage{}
 
 \section*{Examples}
 

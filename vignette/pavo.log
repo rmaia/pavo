@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  28 NOV 2012 15:47
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  28 NOV 2012 16:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -461,25 +461,51 @@ Overfull \hbox (3.27745pt too wide) in paragraph at lines 288--294
 
 LaTeX Warning: `h' float specifier changed to `ht'.
 
+[9] [10] <pavo-fwhm.pdf, id=127, 433.62pt x 433.62pt>
+File: pavo-fwhm.pdf Graphic file (type pdf)
+ <use pavo-fwhm.pdf>
+Package pdftex.def Info: pavo-fwhm.pdf used on input line 399.
+(pdftex.def)             Requested size: 433.63878pt x 361.36676pt.
+
+Overfull \hbox (35.3002pt too wide) in paragraph at lines 399--400
+ [] 
+ []
+
+
+LaTeX Warning: `h' float specifier changed to `ht'.
+
+[11
+
+] [12 <./pavo-fwhm.pdf>] <pavo-fwhm2.pdf, id=144, 433.62pt x 433.62pt>
+File: pavo-fwhm2.pdf Graphic file (type pdf)
+
+<use pavo-fwhm2.pdf>
+Package pdftex.def Info: pavo-fwhm2.pdf used on input line 421.
+(pdftex.def)             Requested size: 216.80946pt x 216.80946pt.
+ [13
+
+ <./pavo-fwhm2.pdf>]
 No file pavo.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 398.
-[9] [10]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 398.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 445.
+[14
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 445.
  (./pavo.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 398.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 398.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 445.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 445.
 Package rerunfilecheck Info: File `pavo.out' has not changed.
 (rerunfilecheck)             Checksum: 1BA8F1230E45FE2B63D3F1A0E71F2361;565.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 398.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 445.
  ) 
 Here is how much of TeX's memory you used:
- 6768 strings out of 493633
- 98290 string characters out of 3143378
- 177382 words of memory out of 3000000
- 9905 multiletter control sequences out of 15000+200000
- 44369 words of font info for 89 fonts, out of 3000000 for 9000
+ 6777 strings out of 493633
+ 98470 string characters out of 3143378
+ 175508 words of memory out of 3000000
+ 9913 multiletter control sequences out of 15000+200000
+ 40066 words of font info for 83 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 35i,11n,28p,252b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 35i,11n,28p,709b,465s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
@@ -490,18 +516,16 @@ usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></us
 r/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
 local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/lo
 cal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
-l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb></usr/local/t
-exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/texl
-ive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texlive
-/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texliv
-e/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texlive
-/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texlive/
-2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive/2
-011/texmf-dist/fonts/type1/public/cm-super/sfst1000.pfb>
-Output written on pavo.pdf (10 pages, 339127 bytes).
+l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
+exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/
+texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/t
+exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
+xlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/tex
+live/2011/texmf-dist/fonts/type1/public/cm-super/sfst1000.pfb>
+Output written on pavo.pdf (14 pages, 354744 bytes).
 PDF statistics:
- 199 PDF objects out of 1000 (max. 8388607)
- 161 compressed objects within 2 object streams
- 31 named destinations out of 1000 (max. 500000)
- 92 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 221 PDF objects out of 1000 (max. 8388607)
+ 177 compressed objects within 2 object streams
+ 36 named destinations out of 1000 (max. 500000)
+ 102 words of extra memory for PDF output out of 10000 (max. 10000000)
 
