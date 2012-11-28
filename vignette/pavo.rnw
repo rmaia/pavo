@@ -9,6 +9,7 @@
 \setlength{\oddsidemargin}{10mm}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{float}
 
 \begin{document}
 
@@ -113,17 +114,15 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE, cache=T>>=
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+<<label=explorespecfig, fig=TRUE, include=TRUE, width=6, height=7>>=
 explorespec(specs[,1:37], specreps=3) 
 # 36 spectra plus the first (wl) column
 @
-
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=5in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
-\label{fig1}
+\label{figure:explorespec}
 \end{figure}
 
 \clearpage{}
@@ -154,18 +153,16 @@ table(spp)
 Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
 function how to average the spectra in \code{mspec}:
 
-<<label=exploresppmeans, fig=TRUE, include=FALSE, cache=TRUE>>=
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+<<label=exploresppmeans, fig=TRUE, include=TRUE>>=
 sppspec <- aggspec(mspecs, by=spp, FXN=mean)
 sppspec[1:5, ]
-explorespec(sppspec, 7)
+explorespec(sppspec, 6)
 @
-
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=4in]{pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
-\label{fig2}
+\label{figure:sppmeans}
 \end{figure}
 
 
@@ -268,20 +265,16 @@ Particularly in cases of reflectance spectra that have a single, discrete peak, 
 
 If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines is the FWHM:
 
-<<label=fwhm, fig=TRUE, include=FALSE>>=
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+<<label=fwhm, fig=TRUE, include=TRUE, width=5, height=3>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
 peakshape(sppspec, plot=T)
 @
-
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=6in, height=5in]{pavo-fwhm}
 \end{center}
 \caption{Plots from \code{peakshape}}
 \label{figure:fwhm}
 \end{figure}
-
-\clearpage{}
 
 As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes
 , such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a 
@@ -291,19 +284,16 @@ Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set
 calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a 
 \code{select} argument to facilitate subsetting the spectra data frame:
 
-<<label=fwhm2, fig=TRUE, include=FALSE>>=
-peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
-@
-
 \begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=3in, height=3in]{pavo-fwhm2}
+<<label=fwhm2, fig=TRUE, include=TRUE, height=3, width=3>>=
+peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
+@
 \end{center}
 \caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
-\label{igure:fwhm2}
+\label{figure:fwhm2}
 \end{figure}
 
-\clearpage{}
 
 \section*{Examples}
 

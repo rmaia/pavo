@@ -9,6 +9,7 @@
 \setlength{\oddsidemargin}{10mm}
 \usepackage{amsmath}
 \usepackage{hyperref}
+\usepackage{float}
 
 \usepackage{Sweave}
 \begin{document}
@@ -134,19 +135,18 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > explorespec(specs[,1:37], specreps=3) 
 > # 36 spectra plus the first (wl) column
 \end{Sinput}
 \end{Schunk}
-
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=5in]{pavo-explorespecfig}
+\includegraphics{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
-\label{fig1}
+\label{figure:explorespec}
 \end{figure}
 
 \clearpage{}
@@ -199,6 +199,8 @@ cardinal   jacana   oriole parakeet    robin  tanager
 Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
 function how to average the spectra in \code{mspec}:
 
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > sppspec <- aggspec(mspecs, by=spp, FXN=mean)
@@ -219,16 +221,13 @@ function how to average the spectra in \code{mspec}:
 5  9.684522
 \end{Soutput}
 \begin{Sinput}
-> explorespec(sppspec, 7)
+> explorespec(sppspec, 6)
 \end{Sinput}
 \end{Schunk}
-
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=4in]{pavo-exploresppmeans}
+\includegraphics{pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
-\label{fig2}
+\label{figure:sppmeans}
 \end{figure}
 
 
@@ -378,6 +377,8 @@ Particularly in cases of reflectance spectra that have a single, discrete peak, 
 
 If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines is the FWHM:
 
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -393,19 +394,22 @@ robin    37.91676 700   NA    107     NA     OK
 tanager  30.71021 555  232    142     90     OK
 \end{Soutput}
 \end{Schunk}
-
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=6in, height=5in]{pavo-fwhm}
+\includegraphics{pavo-fwhm}
 \end{center}
 \caption{Plots from \code{peakshape}}
 \label{figure:fwhm}
 \end{figure}
 
-\clearpage{}
+As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes
+, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a 
+peak which is not the point of maximum reflectance of the entire spectral curve. The half-width 
+can also be erroneously calculated when there are two peaks, as can be seen in the case of the 
+Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when 
+calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a 
+\code{select} argument to facilitate subsetting the spectra data frame:
 
-As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a \code{select} argument to facilitate subsetting the spectral data frame:
-
+\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
@@ -415,16 +419,12 @@ As it can be seen, the variable is meaningless if the curve doesn't have a clear
 cardinal 17.99853 369  100     47     53     OK
 \end{Soutput}
 \end{Schunk}
-
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=3in, height=3in]{pavo-fwhm2}
+\includegraphics{pavo-fwhm2}
 \end{center}
 \caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
-\label{igure:fwhm2}
+\label{figure:fwhm2}
 \end{figure}
 
-\clearpage{}
 
 \section*{Examples}
 
