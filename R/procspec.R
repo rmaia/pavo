@@ -73,6 +73,8 @@ if (length(wl_index > 0)){
     wl <- 1:nrow(specs)
     }
 
+nam <- names(specs)
+
 if (fixneg=='addmin'){
   adm = function(x){
     if (min(x) < 0){ x + abs(min(x))
@@ -141,7 +143,8 @@ if (any(opt=='bin')) {
   }else {
     specs <- as.data.frame(cbind(wl, specs))
     }
-	
+
+names(specs) <- c('wl', nam)
 class(specs) <- c('rspec', 'data.frame')
 
 applied <- c(applied, '\n')

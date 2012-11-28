@@ -1,12 +1,10 @@
-#### TESTING
+#### TESTING #####
 
 install.packages("/Users/chad/Documents/pavo", type='source', repos=NULL)
 require(pavo)
 
 
-specs <- getspec("~/Documents/School/PhD/Projects/Polyplectron/data/2012-05-10/pheasants_200-1000nm", ext="ttt")
-
-plot(specs)
+pheas <- getspec("~/Documents/School/PhD/Projects/Polyplectron/data/2012-05-10/pheasants_200-1000nm", ext="ttt")
 
 
 # tests
@@ -17,13 +15,7 @@ spp <- c(NA, rep('afropavo',10), rep('pavomut', 6), rep('pbicalc', 6), rep('pcha
 
 plot(specs, select=spp=='pbicalc', col='black')
 
-
-
-
-# thoughts
-  # should i give the option to just calculate colors as spec2rgb?
-  # what if people don't subset the colors appropriately?
-  # maybe just give the option of calculating colors with spec2rgb inside of plot.rspec
-  # also provide separate function if people want to use the colors
-
-# change default plotting color (heat colors are bad for specs)
+# visual models
+vm1 <- vismodel(specs, visual="avg.uv")
+tcs1 <- tcs(vm1)
+ttplot(tcs1, col=spec2rgb(specs))
