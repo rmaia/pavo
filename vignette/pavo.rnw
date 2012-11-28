@@ -97,9 +97,34 @@ blah blah blah\footnote{some footnote text here} and also this.
 
 \section{Visualizing Spectral Data}
 
-This is how you plot something ...
+<<label=overlay,fig=TRUE,include=FALSE>>=
+data(sicalis)
+par(mfrow=c(1,2))
+plot(sicalis, type='o', col=spec2rgb(sicalis))
+plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
+
+#plot(sicalis, type='s', col=spec2rgb(sicalis))
+@
+
+%\begin{figure} % h=here, t=top, b=bottom, p=floating page
+%\begin{center}
+%\includegraphics[width=3in]{pavo-fig1}
+%\end{center}
+%\caption{Sample plot.}
+%\label{fig1}
+%\end{figure}
 
 
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in, height=3in]{pavo-overlay}
+\end{center}
+\caption{Overlay plot with colors calculated from human color matching functions}
+\label{figure:overlay}
+\end{figure}
+
+Colors can be mapped to spectra using \code{spec2rgb} as shown in 
+Figure \ref{figure:overlay}.
 
 \section*{Examples}
 
@@ -108,13 +133,6 @@ This is how you plot something ...
 hist(rnorm(50))
 @
 
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=5in]{pavo-fig1}
-\end{center}
-\caption{Sample plot.}
-\label{fig1}
-\end{figure}
 
 \subsection*{More examples}
 
