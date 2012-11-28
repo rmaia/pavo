@@ -27,6 +27,8 @@ Although \pavo{} deals largely with spectral reflectance data from bird feathers
 to be applicable for a range of taxa. It provides flexible ways to input spectral data from a
 variety of equipment manufacturers, process these data and...
 
+This is a random edit by Rafael.
+
 \pavo{} was written with the following workflow in mind:
 
 % numbered list of things
@@ -90,8 +92,33 @@ blah blah blah\footnote{some footnote text here} and also this.
 
 \section{Visualizing Spectral Data}
 
+\begin{Schunk}
+\begin{Sinput}
+> data(sicalis)
+> plot(sicalis, type='o', col=spec2rgb(sicalis))
+> #plot(sicalis, type='s', col=spec2rgb(sicalis))
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=3in]{pavo-fig1}
+\end{center}
+\caption{Sample plot.}
+\label{fig1}
+\end{figure}
 
 
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in, height=3in]{pavo-overlay}
+\end{center}
+\caption{Overlay plot with colors calculated from human color matching functions}
+\label{figure:overlay}
+\end{figure}
+
+Colors can be mapped to spectra using \code{spec2rgb} as shown in 
+Figure \ref{figure:overlay}.
 
 \section*{Examples}
 
@@ -102,13 +129,6 @@ blah blah blah\footnote{some footnote text here} and also this.
 \end{Sinput}
 \end{Schunk}
 
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=5in]{pavo-fig1}
-\end{center}
-\caption{Sample plot.}
-\label{fig1}
-\end{figure}
 
 \subsection*{More examples}
 
