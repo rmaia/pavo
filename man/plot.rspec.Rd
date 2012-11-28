@@ -2,14 +2,14 @@
 \alias{plot.rspec}
 \title{Plot spectra}
 \usage{
-  plot.rspec(specs, select = NULL,
+  plot.rspec(rspecdata, select = NULL,
     type = c("overlay", "stack", "heatmap"), cols = 2,
     varying = NULL, n = 100, col = "black", xlim = NULL,
     ylim = NULL, ...)
 }
 \arguments{
-  \item{specs}{(required) an \code{rspec} object containing
-  spectra to plot}
+  \item{rspecdata}{(required) an \code{rspec} object
+  containing spectra to plot}
 
   \item{select}{specification of which spectra to plot. Can
   be a numeric vector or factor (e.g., \code{sex=='male'})}

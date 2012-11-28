@@ -8,7 +8,7 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 \usepackage{amsmath}
-\usepackage{cite}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -16,7 +16,7 @@
 
 <<echo=FALSE, results=hide>>=
 library(ggplot2)
-#library(pavo)
+library(pavo)
 ps.options(pointsize=12)
 options(width=60)
 @
@@ -28,11 +28,15 @@ options(width=60)
 
 \section*{Introduction}
 
-Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant 
-to be applicable for a range of taxa. It provides flexible ways to input spectral data from a
-variety of equipment manufacturers, process these data and...
+\pavo{} is an R package developed with the goal of establishing a flexible and integrated 
+workflow for working with spectral color data. It includes functions that take advantage of
+new data classes in order to work seamlessly from importing raw data to visualization and 
+analysis.
 
-This is a random edit by Rafael.
+Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant 
+to be applicable for a range of taxa and applications. It provides flexible ways to input
+spectral data from a variety of equipment manufacturers, process these data, extract variables 
+and produce publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
@@ -45,11 +49,82 @@ saturation, brightness) or using visual models based on perceptual data from the
 \item {\bf V}isualize the output
 \end{enumerate}
 
+Below we will show the main functions in the package in an example workflow. 
+
+\section{Data Description}
+
+The data used in this example is available from 
+\href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}{github by clicking here}. 
+You can download and extract it to follow the vignette.
+
+The data consists of reflectance spectra obtained using Avantes equipment and software from 
+seven bird species: Northern Cardinal (\emph{Cardinalis cardinalis}), Wattled Jacana (\emph{Jaca
+na jacana}), Baltimore Oriole (\emph{Icterus galbula}), Peach-fronted Parakeet (\emph{Aratinga 
+aurea}), American Robin (\emph{Turdus migratorius}), Violet-green Swallow (\emph{Tachycineta 
+thalassina}), and Sayaca Tanager (\emph{Thraupis sayaca}). Several individuals were measured 
+(sample size varies by species), and 3 spectra were collected from each individual.
+
+The samples do not have the same sample sizes and have additional peculiarities that should 
+emphasize the flexibility \pavo{} offers, as we'll see below.
 
 \section{Organizing and Processing Spectral Data}
 
-blah blah blah
+\subsection{Importing Data}
 
+The first thing we need to do is import the spectral data into R using the funciton 
+\code{getspec()}. Since the spectra were obtained using Avantes software, we will need to 
+specify that the files have the "\code{.ttt}" extension. Further, the data is organized in 
+subdirectories for each species. \code{getspec} does recursive sampling, and may include the 
+names of the subdirectories in the spectra name if desired. A final issue with the data is that 
+it was collected using a computer with international numbering input, which means it uses commas 
+instead of periods as a decimal separator. We can specify that in the function call.
+
+I have downloaded the file and placed it in a directory called 
+"\nolinkurl{/github/pavo/vignette_data}". By default, \code{getspec} will search for files in 
+the default folder, but a different one can be specified:
+
+<<cache=true>>=
+specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
+                 subdir=T, subdir.names=F)
+specs[1:10,1:4]
+dim(specs) #data has 235 spectra, from 300 to 700 nm
+@
+
+When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits attributes from the \code{data.frame} class:
+<<>>=
+is.rspec(specs)
+@
+
+If you already have multiple spectra in a single data frame that you'd like to use with \pavo{} 
+functions, you can use the command \code{as.rspec} to convert it to an rspec object. The 
+function will attempt to identify the wavelength variable or, if it doesn't have one, it can be 
+specified in the function call.
+
+\subsection{Processing Data}
+
+As previously described, our data constitutes of multiple individuals, and each was measured three times, as is common in order to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function \code{explorespec} provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument \code{specreps}, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only 8 of the cardinal individuals measured:
+
+<<label=explorespecfig, fig=TRUE, include=FALSE>>=
+explorespec(specs[,1:40], specreps=3) #24 spectra plus the first (wl) column
+@
+
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=7in]{pavo-explorespecfig}
+\end{center}
+\caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
+\label{fig1}
+\end{figure}
+
+\clearpage{}
+
+So our first step would be to take the average of each of these three measurements in order to obtain average individual spectra to be used in further analyses. The function \code{aggspec} does this:
+
+<<>>=
+mspecs <- aggspec(specs, by=3, FXN=mean)
+mspecs[1:10,1:4]
+dim(mspecs) #data now has 79 spectra, one for each individual
+@
 
 \section{Analyzing Spectral Data}
 
@@ -108,13 +183,13 @@ This is how you plot something ...
 hist(rnorm(50))
 @
 
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=5in]{pavo-fig1}
-\end{center}
-\caption{Sample plot.}
-\label{fig1}
-\end{figure}
+%\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+%\begin{center}
+%\includegraphics[width=5in]{pavo-fig1}
+%\end{center}
+%\caption{Sample plot.}
+%\label{fig1}
+%\end{figure}
 
 \subsection*{More examples}
 

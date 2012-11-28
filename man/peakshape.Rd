@@ -2,12 +2,12 @@
 \alias{peakshape}
 \title{Peak shape descriptors}
 \usage{
-  peakshape(specs, select = NULL, bounds = c(300, 700),
+  peakshape(rspecdata, select = NULL, bounds = c(300, 700),
     plot = T, ...)
 }
 \arguments{
-  \item{specs}{(required) an \code{rspec} object containing
-  spectra to process}
+  \item{rspecdata}{(required) an \code{rspec} object
+  containing spectra to process}
 
   \item{select}{specification of which spectra to plot. Can
   be a numeric vector or factor (e.g., \code{sex=='male'})}

@@ -2,11 +2,11 @@
 \alias{plotsmooth}
 \title{Plot loess smoothed curves}
 \usage{
-  plotsmooth(all.specs, minsmooth = 0.05, maxsmooth = 0.2,
+  plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2,
     curves = 5, specnum = 0)
 }
 \arguments{
-  \item{all.specs(required)}{A data frame, possibly of
+  \item{rspecdata(required)}{A data frame, possibly of
   class \code{rspec}, which contains a column containing a
   wavelength range , named 'wl', and spectra data in
   remaining columns.}

@@ -38,30 +38,50 @@ scale <- match.arg(scale)
 nplots <- ceiling(dim(rspecdata)[2]/specreps)
 
 if(specreps <=4){
-  par(mfrow=c(3,4),ask=TRUE)
+#  par(mfrow=c(3,4),ask=TRUE)
   yaxismult <- c(0,1.4)
   }
 
 if (specreps > 4) {
-  par(mfrow=c(2,3),ask=TRUE)
+#  par(mfrow=c(2,3),ask=TRUE)
   yaxismult <- c(0.9,1.4)
   }
   	
 if (specreps > 7) {
-  par(mfrow=c(2,2),ask=TRUE)
+#  par(mfrow=c(2,2),ask=TRUE)
   yaxismult <- c(0.9,1.8)
   }
 
 if (specreps > 9) {
-  par(mfrow=c(1,2),ask=TRUE)
+#  par(mfrow=c(1,2),ask=TRUE)
   yaxismult <- c(0.9,1.4)
   }
 
 if (specreps > 12){
-  par(mfrow=c(1,1),ask=TRUE)
+#  par(mfrow=c(1,1),ask=TRUE)
   yaxismult <- c(0.9,1.8)
   }
 
+if (nplots == 1)
+  par(mfrow=c(1,1))
+
+if (nplots == 2)
+  par(mfrow=c(1,2), mar = c(5, 4, 4, 0.5) + 0.1)
+
+if (nplots > 2 & nplots < 5)
+  par(mfrow=c(2,2), mar = c(5, 4, 0.5, 0.5) + 0.1)
+
+if (nplots >= 5 & nplots < 7)
+  par(mfrow=c(2,3), mar = c(5, 4, 0.5, 0.5) + 0.1)
+
+if (nplots >= 7 & nplots < 9)
+  par(mfrow=c(2,4), mar = c(5, 4, 0.5, 0.5) + 0.1)
+
+if (nplots >= 9)
+  par(mfrow=c(3,4), mar = c(5, 4, 0.5, 0.5) + 0.1)
+
+if (nplots > 12)
+  par(ask=T)
 
 col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
               "#FF7F00", "#FFFF33", "#A65628", "#F781BF")

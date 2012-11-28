@@ -6,7 +6,8 @@
 #' @param whichwl specifies which column contains wavelengths. If NULL (default), function
 #' searches for column titled "wl" or else returns arbitrary index values
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
-#' @export
+#' @export as.rspec
+#' @export is.rspec
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
@@ -46,3 +47,7 @@ class(res) <- c('rspec', 'data.frame')
 res
 
 }
+
+
+
+is.rspec <- function(x) inherits(x, "rspec")

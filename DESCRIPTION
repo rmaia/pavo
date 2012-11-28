@@ -40,3 +40,4 @@ Collate:
     'ttplot.R'
     'vismodel.R'
     'voloverlap.R'
+    'as.rspec.r'
