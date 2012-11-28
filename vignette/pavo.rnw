@@ -32,6 +32,8 @@ Although \pavo{} deals largely with spectral reflectance data from bird feathers
 to be applicable for a range of taxa. It provides flexible ways to input spectral data from a
 variety of equipment manufacturers, process these data and...
 
+This is a random edit by Rafael.
+
 \pavo{} was written with the following workflow in mind:
 
 % numbered list of things
