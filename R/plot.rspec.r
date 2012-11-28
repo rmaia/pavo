@@ -2,7 +2,7 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @param specs (required) an \code{rspec} object containing spectra to plot
+#' @param rspecdata (required) an \code{rspec} object containing spectra to plot
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param type what type of plot should be drawn. Possibilities are: 
@@ -29,11 +29,11 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
-# TODO: add argument for padding region between specs in stack plot
+# TODO: add argument for padding region between rspecdata in stack plot
 # TODO: add labels to curves along y-axis for stacked plot (ideas anyone?)
 # TODO: figure out way to label y-axis in heatplot (ideas?)
 
-plot.rspec <- function(specs, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
+plot.rspec <- function(rspecdata, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
                        cols = 2, varying = NULL, n = 100, col = 'black', 
                        xlim = NULL, ylim = NULL, ...) {
 
@@ -41,13 +41,13 @@ old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 type <- match.arg(type)
 
 # make wavelength vector
-wl_index <- which(names(specs)=='wl')
+wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index) > 0) {
   haswl <- TRUE
-  wl <- specs[, wl_index]
+  wl <- rspecdata[, wl_index]
 } else {
   haswl <- FALSE
-  wl <- 1:nrow(specs)
+  wl <- 1:nrow(rspecdata)
   warning('No wavelengths provided; using arbitrary index values')
 }
 
@@ -55,23 +55,23 @@ if (length(wl_index) > 0) {
 if (is.logical(select))
   select <- which(select=='TRUE')
 if (is.null(select)&haswl==TRUE)
-  select <- (1:ncol(specs))[-wl_index]
+  select <- (1:ncol(rspecdata))[-wl_index]
 if (is.null(select)&haswl==FALSE)
-  select <- 1:ncol(specs)
+  select <- 1:ncol(rspecdata)
 
-specs <- as.data.frame(specs[, select])
+rspecdata <- as.data.frame(rspecdata[, select])
 
 # set limits
 if (is.null(xlim))
   xlim <- range(wl)
 
 if (is.null(ylim))
-  ylim <- range(specs)
+  ylim <- range(rspecdata)
 
 # heat plot
 if (type=='heatmap') {
   if (is.null(varying)) { 
-    varying <- 1:ncol(specs)
+    varying <- 1:ncol(rspecdata)
     print("No varying vector supplied; using arbitrary values")
   }
   
@@ -84,40 +84,40 @@ if (type=='heatmap') {
   	}
   	
   Index <- approx(varying, n = n)$y
-  dat <- sapply(1:nrow(specs), function(z){approx(x = varying, y = specs[z, ], 
+  dat <- sapply(1:nrow(rspecdata), function(z){approx(x = varying, y = rspecdata[z, ], 
                 n = n)$y})
   image(x = wl, y = Index, z = t(dat), col = col,
         xlab = 'Wavelength (nm)', xlim = xlim, ...)
 }
 
 # coloring for overlay plot & others
-if (length(col) < ncol(specs))
-  col <- rep(col, ncol(specs))
+if (length(col) < ncol(rspecdata))
+  col <- rep(col, ncol(rspecdata))
 if (any(class(col)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
   col <- col[select-1]
 
 # overlay different spec curves
 if (type=='overlay') {
-  plot(specs[, 1]~wl, type = 'l', # c(min(specs), max(specs)), 
+  plot(rspecdata[, 1]~wl, type = 'l', # c(min(rspecdata), max(rspecdata)), 
        xlab = 'Wavelength (nm)', ylab = 'Reflectance (%)', xlim = xlim, ylim = ylim,
        col = col[1], ...)
-  if (ncol(specs)>1) {
-    for (i in 2:ncol(specs))
-      lines(specs[, i]~wl, col=col[i], ...)
+  if (ncol(rspecdata)>1) {
+    for (i in 2:ncol(rspecdata))
+      lines(rspecdata[, i]~wl, col=col[i], ...)
   }
 }
 
 # stack curves along y-axis
 if (type=='stack') {
-  # specs2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
-  specs2 <- specs
-  ym <- apply(specs2, 2, max)  
-  plot(specs2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
+  # rspecdata2 <- sapply(1:ncol(rspecdata), function(z){rspecdata[, z] - min(rspecdata[, z])})
+  rspecdata2 <- rspecdata
+  ym <- apply(rspecdata2, 2, max)  
+  plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', col = col[1], 
        ...)
-  if (ncol(specs)>1) {
-    for (i in 2:ncol(specs)) 
-      lines((specs2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
+  if (ncol(rspecdata)>1) {
+    for (i in 2:ncol(rspecdata)) 
+      lines((rspecdata2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
     }
 }
 

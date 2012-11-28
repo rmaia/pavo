@@ -8,6 +8,7 @@
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
 \usepackage{amsmath}
+\usepackage{cite}
 
 \begin{document}
 
@@ -27,14 +28,18 @@ options(width=60)
 
 \section*{Introduction}
 
-Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant to be applicable for a range of taxa. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data and...
+Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant 
+to be applicable for a range of taxa. It provides flexible ways to input spectral data from a
+variety of equipment manufacturers, process these data and...
 
 \pavo{} was written with the following workflow in mind:
 
 % numbered list of things
 \begin{enumerate}
-\item {\bf O}rganize spectral data by inputting files, processing spectra (e.g., to remove noise, negative values, smooth curves, etc.)
-\item {\bf A}nalyze the resulting files, either using typical tristimulus color variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
+\item {\bf O}rganize spectral data by inputting files, processing spectra (e.g., to remove
+noise, negative values, smooth curves, etc.)
+\item {\bf A}nalyze the resulting files, either using typical tristimulus color variables (hue,
+saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
 \item {\bf V}isualize the output
 \end{enumerate}
 
@@ -111,5 +116,7 @@ hist(rnorm(50))
 \subsection*{More examples}
 
 Some more examples:
+
+\bibliography{}
 
 \end{document}

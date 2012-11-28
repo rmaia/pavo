@@ -3,7 +3,7 @@
 #' Combines spectra (by taking the average, for example) according to 
 #' an index or a vector of identities.
 #' 
-#' @param data (required) data frame containing the spectra to be manipulated. If
+#' @param rspecdata (required) data frame containing the spectra to be manipulated. If
 #' it contains a wavelength column containing "wl", that column will be ignored.
 #' @param by (required) either a single value specifying the range of spectra within
 #' the data frame to be combined (for example, \code{by} = 3 indicates the function
@@ -32,19 +32,19 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-aggspec <- function(data, by, FXN = mean) {
+aggspec <- function(rspecdata, by, FXN = mean) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
 # (data.frame doesn't allow duplicate names anymore, so this should work)
 
-wl_index <- which(names(data)=='wl')
+wl_index <- which(names(rspecdata)=='wl')
 
 if(length(wl_index>0)){
-	wl <- data[,wl_index]
-	y <- data[,-wl_index]
+	wl <- rspecdata[,wl_index]
+	y <- rspecdata[,-wl_index]
 	}else{
-		y <- data
+		y <- rspecdata
 		}
 
 #BEGIN RM EDIT 2

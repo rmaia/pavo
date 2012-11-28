@@ -5,7 +5,7 @@
 #' case the model reduces to the color space as described in Endler & Mielke (2005)
 #' and Stoddard & Prum (2008).
 #' 
-#' @param specdata (required) Data frame containing reflectance spectra at each column.
+#' @param rspecdata (required) Data frame containing reflectance spectra at each column.
 #' Must contain a \code{wl} column identifying the wavelengths for the reflectance values.
 #' @param sens Data frame, such as one produced by \code{sensmodel} containing
 #' sensitivity for the user-defined visual system. The data frame must contain
@@ -64,7 +64,7 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-vismodel <- function(specdata, 
+vismodel <- function(rspecdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc","ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal', relative=TRUE)
@@ -72,9 +72,9 @@ vismodel <- function(specdata,
 
 # remove & save colum with wavelengths
 
-wl_index <- which(names(specdata)=='wl')
-wl <- specdata[,wl_index]
-y <- specdata[,-wl_index]
+wl_index <- which(names(rspecdata)=='wl')
+wl <- rspecdata[,wl_index]
+y <- rspecdata[,-wl_index]
 
 visual2 <- try(match.arg(visual), silent=T)
 sens <- pavo::vissyst
@@ -115,7 +115,7 @@ if(!inherits(illum2,'try-error')){
     }
 
 if(illum2=='ideal')
-  illum <- rep(1,dim(specdata)[1])
+  illum <- rep(1,dim(rspecdata)[1])
 
 bg2 <- try(match.arg(bkg), silent=T)
 if(!inherits(bg2,'try-error')){
@@ -125,7 +125,7 @@ if(!inherits(bg2,'try-error')){
     }
 
 if(bg2=='ideal')
-  bkg <- rep(1,dim(specdata)[1])
+  bkg <- rep(1,dim(rspecdata)[1])
 
 
 # brightness

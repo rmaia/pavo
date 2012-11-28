@@ -4,7 +4,7 @@
 #' Note: bounds should be set wide enough to incorporate all minima in spectra. Smoothing
 #' spectra using \code{procspec} is also recommended.
 
-#' @param specs (required) an \code{rspec} object containing spectra to process
+#' @param rspecdata (required) an \code{rspec} object containing spectra to process
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param bounds a vector specifying the wavelength range to analyze
@@ -20,19 +20,19 @@
 #' FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(specs, select = NULL, bounds = c(300, 700), plot = T, ...) {
+peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = T, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
-nms <- names(specs)
+nms <- names(rspecdata)
 
-wl_index <- which(names(specs)=='wl')
+wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index) > 0) {
   haswl <- TRUE
-  wl <- specs[, wl_index]
+  wl <- rspecdata[, wl_index]
 } else {
   haswl <- FALSE
-  wl <- 1:nrow(specs)
+  wl <- 1:nrow(rspecdata)
   warning('No wavelengths provided; using arbitrary index values')
 }
 
@@ -40,34 +40,34 @@ if (length(wl_index) > 0) {
 if (is.logical(select))
   select <- which(select=='TRUE')
 if (is.null(select)&haswl==TRUE)
-  select <- (1:ncol(specs))[-wl_index]
+  select <- (1:ncol(rspecdata))[-wl_index]
 if (is.null(select)&haswl==FALSE)
-  select <- 1:ncol(specs)
+  select <- 1:ncol(rspecdata)
 
-specs <- as.data.frame(specs[, select])
+rspecdata <- as.data.frame(rspecdata[, select])
 
 
 wlrange <- bounds[1]:bounds[2]
 
-if (ncol(specs)==1) {
-  specs2 <- specs[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
-  Yi <- max(specs2)  # max refls
-  Yj <- min(specs2)  # min refls
-  Yk <- min(specs)  # min refls, whole spectrum
-  Xi <- which(specs2==Yi)  # lambda_max index
-  fsthalf <- specs2[1:Xi]
-  sndhalf <- specs2[Xi:length(specs2)]
+if (ncol(rspecdata)==1) {
+  rspecdata2 <- rspecdata[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
+  Yi <- max(rspecdata2)  # max refls
+  Yj <- min(rspecdata2)  # min refls
+  Yk <- min(rspecdata)  # min refls, whole spectrum
+  Xi <- which(rspecdata2==Yi)  # lambda_max index
+  fsthalf <- rspecdata2[1:Xi]
+  sndhalf <- rspecdata2[Xi:length(rspecdata2)]
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
   fstHM <- which.min(abs(fsthalf - halfmax))
   sndHM <- which.min(abs(sndhalf - halfmax))
 } else {
-  specs2 <- specs[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
-  Yi <- apply(specs2, 2, max)  # max refls
-  Yj <- apply(specs2, 2, min)  # min refls
-  Yk <- apply(specs, 2, min)  # min refls, whole spectrum
-  Xi <- sapply(1:ncol(specs2), function(x) which(specs2[, x]==Yi[x]))  # lambda_max index
-  fsthalf <- sapply(1:ncol(specs2), function(x) specs2[1:Xi[x], x])
-  sndhalf <- sapply(1:ncol(specs2), function(x) specs2[Xi[x]:nrow(specs2), x])
+  rspecdata2 <- rspecdata[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
+  Yi <- apply(rspecdata2, 2, max)  # max refls
+  Yj <- apply(rspecdata2, 2, min)  # min refls
+  Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
+  Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x]==Yi[x]))  # lambda_max index
+  fsthalf <- sapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
+  sndhalf <- sapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
   fstHM <- sapply(1:length(fsthalf), function(x) which.min(abs(fsthalf[[x]]-halfmax[x])))
   sndHM <- sapply(1:length(fsthalf), function(x) which.min(abs(sndhalf[[x]]-halfmax[x])))
@@ -84,7 +84,7 @@ hue <- wlrange[Xi]
 
 if (plot==TRUE) {
   for (i in seq_along(select)) {
-    plot(specs[, i]~wl, type = 'l', xlab = "Wavelength (nm)", ylab = "Reflectance (%)",
+    plot(rspecdata[, i]~wl, type = 'l', xlab = "Wavelength (nm)", ylab = "Reflectance (%)",
          ...)
     abline(v = hue[i], col = "red")
     abline(h = halfmax[i], col = "red")
