@@ -27,7 +27,7 @@ options(width=60)
 \maketitle
 
 \section*{Introduction}
-
+terminal test
 \pavo{} is an R package developed with the goal of establishing a flexible and integrated 
 workflow for working with spectral color data. It includes functions that take advantage of
 new data classes in order to work seamlessly from importing raw data to visualization and 
