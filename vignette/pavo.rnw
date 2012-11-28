@@ -102,15 +102,22 @@ specified in the function call.
 
 \subsection{Processing Data}
 
-As previously described, our data constitutes of multiple individuals, and each was measured three times, as is common in order to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function \code{explorespec} provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument \code{specreps}, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only 8 of the cardinal individuals measured:
+As previously described, our data constitutes of multiple individuals, and each was measured 
+three times, as is common in order to avoid measurement bias. A good way to visualize the 
+repeatability of our measurements is to plot the spectra of each individual separately. The 
+function \code{explorespec} provides an easy way of doing so. You may specify the number of 
+spectra to be plotted in the same panel using the argument \code{specreps}, and the function 
+will adjust the number of panels per page accordingly. We will exemplify this function using 
+only 10 of the cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE>>=
-explorespec(specs[,1:40], specreps=3) #24 spectra plus the first (wl) column
+<<label=explorespecfig, fig=TRUE, include=FALSE, cache=T>>=
+explorespec(specs[,1:40], specreps=3) 
+# 39 spectra plus the first (wl) column
 @
 
 \begin{figure} % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=7in]{pavo-explorespecfig}
+\includegraphics[width=6in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{fig1}
@@ -118,13 +125,45 @@ explorespec(specs[,1:40], specreps=3) #24 spectra plus the first (wl) column
 
 \clearpage{}
 
-So our first step would be to take the average of each of these three measurements in order to obtain average individual spectra to be used in further analyses. The function \code{aggspec} does this:
+So our first step would be to take the average of each of these three measurements in order to 
+obtain average individual spectra to be used in further analyses. The function \code{aggspec} 
+does this. The \code{by} argument can be either a number (specifying how many specs should be 
+averaged for each new sample) or a vector specifying the identities of the spectra to be 
+combined (see below):
 
 <<>>=
 mspecs <- aggspec(specs, by=3, FXN=mean)
-mspecs[1:10,1:4]
+mspecs[1:5, 1:4]
 dim(mspecs) #data now has 79 spectra, one for each individual
 @
+
+Now we'll use the \code{aggspec} function again, but this time to take the average spectrum for 
+each species. However, each species has a different number of samples, so we can't use the 
+\code{by} argument as before. Instead we will use regular expressions to create a species name 
+vector by removing the numbers that identify individual spectra:
+
+<<>>=
+# create a vector with species identity names
+spp <- gsub('\\.[0-9].*$','',names(mspecs))[-1]
+table(spp)
+@
+
+Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
+function how to average the spectra in \code{mspec}:
+
+<<label=exploresppmeans, fig=TRUE, include=FALSE, cache=TRUE>>=
+sppspec <- aggspec(mspecs, by=spp, FXN=mean)
+sppspec[1:5, ]
+explorespec(sppspec, 7)
+@
+
+\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in]{pavo-exploresppmeans}
+\end{center}
+\caption{Result from \code{explorespec} for species means}
+\label{fig2}
+\end{figure}
 
 \section{Analyzing Spectral Data}
 

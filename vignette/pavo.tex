@@ -122,17 +122,24 @@ specified in the function call.
 
 \subsection{Processing Data}
 
-As previously described, our data constitutes of multiple individuals, and each was measured three times, as is common in order to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function \code{explorespec} provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument \code{specreps}, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only 8 of the cardinal individuals measured:
+As previously described, our data constitutes of multiple individuals, and each was measured 
+three times, as is common in order to avoid measurement bias. A good way to visualize the 
+repeatability of our measurements is to plot the spectra of each individual separately. The 
+function \code{explorespec} provides an easy way of doing so. You may specify the number of 
+spectra to be plotted in the same panel using the argument \code{specreps}, and the function 
+will adjust the number of panels per page accordingly. We will exemplify this function using 
+only 10 of the cardinal individuals measured:
 
 \begin{Schunk}
 \begin{Sinput}
-> explorespec(specs[,1:40], specreps=3) #24 spectra plus the first (wl) column
+> explorespec(specs[,1:40], specreps=3) 
+> # 39 spectra plus the first (wl) column
 \end{Sinput}
 \end{Schunk}
 
 \begin{figure} % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=7in]{pavo-explorespecfig}
+\includegraphics[width=6in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{fig1}
@@ -140,25 +147,24 @@ As previously described, our data constitutes of multiple individuals, and each 
 
 \clearpage{}
 
-So our first step would be to take the average of each of these three measurements in order to obtain average individual spectra to be used in further analyses. The function \code{aggspec} does this:
+So our first step would be to take the average of each of these three measurements in order to 
+obtain average individual spectra to be used in further analyses. The function \code{aggspec} 
+does this. The \code{by} argument can be either a number (specifying how many specs should be 
+averaged for each new sample) or a vector specifying the identities of the spectra to be 
+combined (see below):
 
 \begin{Schunk}
 \begin{Sinput}
 > mspecs <- aggspec(specs, by=3, FXN=mean)
-> mspecs[1:10,1:4]
+> mspecs[1:5, 1:4]
 \end{Sinput}
 \begin{Soutput}
-    wl cardinal.0001 cardinal.0004 cardinal.0007
-1  300      7.292933      5.676700      6.387233
-2  301      7.759200      5.806700      6.698200
-3  302      7.959333      5.858467      6.910500
-4  303      7.947133      6.130267      7.357567
-5  304      8.218200      6.127933      7.195267
-6  305      8.473233      6.660633      7.646000
-7  306      8.414467      6.486467      7.741267
-8  307      8.736433      6.708600      8.174633
-9  308      8.800733      6.899000      8.348567
-10 309      9.456467      7.258267      8.742433
+   wl cardinal.0001 cardinal.0004 cardinal.0007
+1 300      7.292933      5.676700      6.387233
+2 301      7.759200      5.806700      6.698200
+3 302      7.959333      5.858467      6.910500
+4 303      7.947133      6.130267      7.357567
+5 304      8.218200      6.127933      7.195267
 \end{Soutput}
 \begin{Sinput}
 > dim(mspecs) #data now has 79 spectra, one for each individual
@@ -167,6 +173,61 @@ So our first step would be to take the average of each of these three measuremen
 [1] 401  79
 \end{Soutput}
 \end{Schunk}
+
+Now we'll use the \code{aggspec} function again, but this time to take the average spectrum for 
+each species. However, each species has a different number of samples, so we can't use the 
+\code{by} argument as before. Instead we will use regular expressions to create a species name 
+vector by removing the numbers that identify individual spectra:
+
+\begin{Schunk}
+\begin{Sinput}
+> # create a vector with species identity names
+> spp <- gsub('\\.[0-9].*$','',names(mspecs))[-1]
+> table(spp)
+\end{Sinput}
+\begin{Soutput}
+spp
+cardinal   jacana   oriole parakeet    robin  swallow 
+      12        9        9       13       10        7 
+ tanager 
+      18 
+\end{Soutput}
+\end{Schunk}
+
+Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
+function how to average the spectra in \code{mspec}:
+
+\begin{Schunk}
+\begin{Sinput}
+> sppspec <- aggspec(mspecs, by=spp, FXN=mean)
+> sppspec[1:5, ]
+\end{Sinput}
+\begin{Soutput}
+   wl cardinal   jacana   oriole parakeet    robin  swallow
+1 300 7.049397 7.334781 3.889693 7.629954 3.981747 4.035262
+2 301 7.254161 7.354033 3.905322 7.746882 3.914297 4.036576
+3 302 7.444275 7.452556 4.126619 7.886877 4.187073 4.098371
+4 303 7.820686 8.085541 4.390685 8.491367 4.507410 4.132943
+5 304 7.843394 7.714526 4.183637 8.658000 4.068800 4.026381
+    tanager
+1  9.021043
+2  9.525854
+3  9.405980
+4 10.199843
+5  9.684522
+\end{Soutput}
+\begin{Sinput}
+> explorespec(sppspec, 7)
+\end{Sinput}
+\end{Schunk}
+
+\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in]{pavo-exploresppmeans}
+\end{center}
+\caption{Result from \code{explorespec} for species means}
+\label{fig2}
+\end{figure}
 
 \section{Analyzing Spectral Data}
 
