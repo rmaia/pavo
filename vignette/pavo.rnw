@@ -97,6 +97,7 @@ blah blah blah\footnote{some footnote text here} and also this.
 
 \section{Visualizing Spectral Data}
 
+This is how you plot something ...
 
 
 
