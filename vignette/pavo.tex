@@ -37,11 +37,12 @@ and produce publication-quality graphics.
 
 % numbered list of things
 \begin{enumerate}
-\item {\bf O}rganize spectral data by inputting files, processing spectra (e.g., to remove
+\item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc.)
-\item {\bf A}nalyze the resulting files, either using typical tristimulus color variables (hue,
-saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
-\item {\bf V}isualize the output
+\item {\bf Analyze} the resulting files, either using typical tristimulus color variables (hue,
+saturation, brightness) or using visual models based on perceptual data from the taxon of 
+interest.
+\item {\bf Visualize} the output, with multiple options provided for exploratory analyses.
 \end{enumerate}
 
 Below we will show the main functions in the package in an example workflow. 
@@ -49,15 +50,16 @@ Below we will show the main functions in the package in an example workflow.
 \section{Data Description}
 
 The data used in this example is available from 
-\href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}{github by clicking here}. 
+\href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
+{github by clicking here}. 
 You can download and extract it to follow the vignette.
 
 The data consists of reflectance spectra obtained using Avantes equipment and software from 
 seven bird species: Northern Cardinal (\emph{Cardinalis cardinalis}), Wattled Jacana (\emph{Jaca
 na jacana}), Baltimore Oriole (\emph{Icterus galbula}), Peach-fronted Parakeet (\emph{Aratinga 
-aurea}), American Robin (\emph{Turdus migratorius}), Violet-green Swallow (\emph{Tachycineta 
-thalassina}), and Sayaca Tanager (\emph{Thraupis sayaca}). Several individuals were measured 
-(sample size varies by species), and 3 spectra were collected from each individual.
+aurea}), American Robin (\emph{Turdus migratorius}),  and Sayaca Tanager 
+(\emph{Thraupis sayaca}). Several individuals were measured (sample size varies by species), and 
+3 spectra were collected from each individual.
 
 The samples do not have the same sample sizes and have additional peculiarities that should 
 emphasize the flexibility \pavo{} offers, as we'll see below.
@@ -98,10 +100,10 @@ the default folder, but a different one can be specified:
 10 309        7.2126       10.6172       10.5396
 \end{Soutput}
 \begin{Sinput}
-> dim(specs) #data has 235 spectra, from 300 to 700 nm
+> dim(specs) #data has 214 spectra, from 300 to 700 nm
 \end{Sinput}
 \begin{Soutput}
-[1] 401 235
+[1] 401 214
 \end{Soutput}
 \end{Schunk}
 
@@ -141,7 +143,7 @@ only 10 of the cardinal individuals measured:
 
 \begin{figure} % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=6in]{pavo-explorespecfig}
+\includegraphics[width=5in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{fig1}
@@ -169,10 +171,10 @@ combined (see below):
 5 304      8.218200      6.127933      7.195267
 \end{Soutput}
 \begin{Sinput}
-> dim(mspecs) #data now has 79 spectra, one for each individual
+> dim(mspecs) #data now has 72 spectra, one for each individual
 \end{Sinput}
 \begin{Soutput}
-[1] 401  79
+[1] 401  72
 \end{Soutput}
 \end{Schunk}
 
@@ -189,10 +191,8 @@ vector by removing the numbers that identify individual spectra:
 \end{Sinput}
 \begin{Soutput}
 spp
-cardinal   jacana   oriole parakeet    robin  swallow 
-      12        9        9       13       10        7 
- tanager 
-      18 
+cardinal   jacana   oriole parakeet    robin  tanager 
+      12        9        9       13       10       18 
 \end{Soutput}
 \end{Schunk}
 
@@ -205,12 +205,12 @@ function how to average the spectra in \code{mspec}:
 > sppspec[1:5, ]
 \end{Sinput}
 \begin{Soutput}
-   wl cardinal   jacana   oriole parakeet    robin  swallow
-1 300 7.049397 7.334781 3.889693 7.629954 3.981747 4.035262
-2 301 7.254161 7.354033 3.905322 7.746882 3.914297 4.036576
-3 302 7.444275 7.452556 4.126619 7.886877 4.187073 4.098371
-4 303 7.820686 8.085541 4.390685 8.491367 4.507410 4.132943
-5 304 7.843394 7.714526 4.183637 8.658000 4.068800 4.026381
+   wl cardinal   jacana   oriole parakeet    robin
+1 300 7.049397 7.334781 3.889693 7.629954 3.981747
+2 301 7.254161 7.354033 3.905322 7.746882 3.914297
+3 302 7.444275 7.452556 4.126619 7.886877 4.187073
+4 303 7.820686 8.085541 4.390685 8.491367 4.507410
+5 304 7.843394 7.714526 4.183637 8.658000 4.068800
     tanager
 1  9.021043
 2  9.525854
@@ -231,13 +231,112 @@ function how to average the spectra in \code{mspec}:
 \label{fig2}
 \end{figure}
 
+
+\section{Visualizing Spectral Data}
+
+\begin{Schunk}
+\begin{Sinput}
+> data(sicalis)
+> par(mfrow=c(1,2))
+> plot(sicalis, type='o', col=spec2rgb(sicalis))
+> plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
+\end{Sinput}
+\begin{Soutput}
+processing options applied:
+ smoothing spectra with a span of 0.25 
+\end{Soutput}
+\begin{Sinput}
+> 
+> #plot(sicalis, type='s', col=spec2rgb(sicalis))
+\end{Sinput}
+\end{Schunk}
+
+
+
+\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in, height=3in]{pavo-overlay}
+\end{center}
+\caption{Overlay plot with colors calculated from human color matching functions}
+\label{figure:overlay}
+\end{figure}
+
+Colors can be mapped to spectra using \code{spec2rgb} as shown in 
+Figure \ref{figure:overlay}.
+
+
 \section{Analyzing Spectral Data}
 
 \subsection{Overview}
 
-add description here
+\pavo{} offers two main approaches for spectral data analysis. First, variables can be 
+calculated based on the shape of the reflectance spectra. By using special R classes for spectra 
+data frame objects, this can easily be done using the \code{summary} function in an rspec 
+object (see below). The second function for spectral shape analysis is \code{peakshape}, which returns descriptors for peaks in spectral curves, as outlined below.
 
-\subsection{Variables calculated}
+Second, reflectance spectra can be analyzed accounting for the visual system receiving the color 
+signal, therefore representing reflectance spectra as preceived colors. We have implemented 
+Endler's (REF) segment analysis model, which approximates visual models but does not directly 
+use sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible 
+framework for visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD) 
+which has been extensively developed to represent colors in the avian vision color space.
+
+\subsection{Spectral Shape Analysis}
+
+\textit{\textbf{Trichromatic variables}}
+
+Obtaining trichromatic color variables (related to hue, saturation and value) is pretty
+straightforward in \pavo{}. Since reflectance spectra is stored in an object of class 
+\code{rspec}, the \code{summary} function recognizes the object as such and extracts 23 
+variables, as outlined in MONTGOMERIE. Though outlined in a book chapter on bird coloration, 
+these variables are broadly applicable to any reflectance data, particularly if the taxon of 
+interest has color vision within the UV-human visible range.
+
+The description and formulas for these variables can be found in Table \ref{table:tristim}.
+
+\begin{Schunk}
+\begin{Sinput}
+> summary(sppspec)
+\end{Sinput}
+\begin{Soutput}
+               B1       B2       B3      S1.UV  S1.violet
+cardinal 8983.870 22.40367 52.96101 0.16618070 0.19132718
+jacana   9668.442 24.11083 53.48957 0.09623268 0.11048401
+oriole   9107.568 22.71214 54.31982 0.07474281 0.08314578
+parakeet 6022.866 15.01962 28.82353 0.16803871 0.18515359
+robin    5741.033 14.31679 37.96515 0.08500350 0.10012432
+tanager  8516.756 21.23879 29.76561 0.20342675 0.23931496
+            S1.blue  S1.green S1.yellow    S1.red        S2
+cardinal 0.11784952 0.1900225 0.2517886 0.5332009  7.329535
+jacana   0.19475522 0.3082406 0.2479744 0.4079294  6.883918
+oriole   0.05721376 0.3256520 0.3630756 0.5491879 12.992914
+parakeet 0.14334383 0.4252528 0.3397279 0.2717663  4.768352
+robin    0.14429801 0.2675057 0.2668015 0.5099805  9.172749
+tanager  0.26109724 0.3199401 0.2430633 0.2238215  3.120773
+                S3         S4       S5       S6          S7
+cardinal 0.3682957 0.15813546 4004.193 45.73531 -0.38403228
+jacana   0.2469875 0.01690805 3312.697 45.71935 -0.46942827
+oriole   0.3444943 0.06767440 5232.176 50.13910 -0.70982859
+parakeet 0.4467452 0.23727515 1900.192 22.77878 -0.20889035
+robin    0.3031191 0.01271259 2531.901 33.82625 -0.57712488
+tanager  0.3341862 0.15240014 1105.252 20.22771 -0.08198454
+                S8         S9        S10  H1  H2  H3
+cardinal 2.0414210 -0.8373693  12.909318 700 425 596
+jacana   1.8962165 -0.7357544 112.148743 700 388 504
+oriole   2.2075903 -0.9257720  32.620756 700 388 500
+parakeet 1.5166018 -0.5816948   6.391743 568 613 502
+robin    2.3626975 -0.8148189 185.854859 700 349 500
+tanager  0.9523946  0.0359801   6.249303 557 600 428
+                 H4  H5
+cardinal 1.54995089 617
+jacana   0.85480076 463
+oriole   1.15606660 538
+parakeet 0.59271149 500
+robin    1.15020735 637
+tanager  0.04509807 512
+\end{Soutput}
+\end{Schunk}
+
 
 % A table for filling in Montgomerie's color variables
 \begin{table}[h]
@@ -275,44 +374,10 @@ Color variables described in Table \ref{table:tristim}.
 
 blah blah blah\footnote{some footnote text here} and also this.
 
-\section{Visualizing Spectral Data}
+\textit{\textbf{Peak shape descriptors}}
 
-\begin{Schunk}
-\begin{Sinput}
-> data(sicalis)
-> par(mfrow=c(1,2))
-> plot(sicalis, type='o', col=spec2rgb(sicalis))
-> plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
-\end{Sinput}
-\begin{Soutput}
-processing options applied:
- smoothing spectra with a span of 0.25 
-\end{Soutput}
-\begin{Sinput}
-> 
-> #plot(sicalis, type='s', col=spec2rgb(sicalis))
-\end{Sinput}
-\end{Schunk}
+Particularly in cases of reflectance spectra that have a single, discrete peak, it mmight be useful to obtain variables that describe that peak's properties. 
 
-%\begin{figure} % h=here, t=top, b=bottom, p=floating page
-%\begin{center}
-%\includegraphics[width=3in]{pavo-fig1}
-%\end{center}
-%\caption{Sample plot.}
-%\label{fig1}
-%\end{figure}
-
-
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=4in, height=3in]{pavo-overlay}
-\end{center}
-\caption{Overlay plot with colors calculated from human color matching functions}
-\label{figure:overlay}
-\end{figure}
-
-Colors can be mapped to spectra using \code{spec2rgb} as shown in 
-Figure \ref{figure:overlay}.
 
 \section*{Examples}
 
@@ -323,16 +388,6 @@ Figure \ref{figure:overlay}.
 \end{Sinput}
 \end{Schunk}
 
-<<<<<<< HEAD
-=======
-%\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-%\begin{center}
-%\includegraphics[width=5in]{pavo-fig1}
-%\end{center}
-%\caption{Sample plot.}
-%\label{fig1}
-%\end{figure}
->>>>>>> 410ed83d33665cdb62e17e176f63f0d3ce6a4bae
 
 \subsection*{More examples}
 
