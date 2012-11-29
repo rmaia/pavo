@@ -1,8 +1,8 @@
 \documentclass{article}
 
 % Definitions
-\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo as package
-\newcommand{\code}[1]{{\tt #1}}  % way to plot out code
+\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
+\newcommand{\code}[1]{{\tt #1}}  % text formate for code
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
@@ -53,17 +53,16 @@ options(width=60)
 \tableofcontents
 \addtolength{\parskip}{.08in}
 
-\section*{Introduction}
+\section{Introduction}
 
-\pavo{} is an R package developed with the goal of establishing a flexible and integrated 
-workflow for working with spectral color data. It includes functions that take advantage of
-new data classes in order to work seamlessly from importing raw data to visualization and 
-analysis.
+\pavo{} is an R package developed with the goal of establishing a flexible and integrated  workflow
+for working with spectral color data. It includes functions that take advantage of new data classes
+in order to work seamlessly from importing raw data to visualization and  analysis.
 
-Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant 
-to be applicable for a range of taxa and applications. It provides flexible ways to input
-spectral data from a variety of equipment manufacturers, process these data, extract variables 
-and produce publication-quality graphics.
+Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant  to be
+applicable for a range of taxa and applications. It provides flexible ways to input spectral data
+from a variety of equipment manufacturers, process these data, extract variables  and produce
+publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
@@ -88,27 +87,27 @@ The data used in this example is available from
 \url{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}}. 
 You can download and extract it to follow the vignette.
 
-The data consists of reflectance spectra obtained using Avantes equipment and software from 
-seven bird species: Northern Cardinal (\emph{Cardinalis cardinalis}), Wattled Jacana (\emph{Jaca
-na jacana}), Baltimore Oriole (\emph{Icterus galbula}), Peach-fronted Parakeet (\emph{Aratinga 
-aurea}), American Robin (\emph{Turdus migratorius}),  and Sayaca Tanager 
-(\emph{Thraupis sayaca}). Several individuals were measured (sample size varies by species), and 
-3 spectra were collected from each individual.
+The data consists of reflectance spectra obtained using Avantes equipment and software from  seven
+bird species: Northern Cardinal (\emph{Cardinalis cardinalis}), Wattled Jacana (\emph{Jaca na
+jacana}), Baltimore Oriole (\emph{Icterus galbula}), Peach-fronted Parakeet (\emph{Aratinga
+aurea}), American Robin (\emph{Turdus migratorius}),  and Sayaca Tanager  (\emph{Thraupis sayaca}).
+Several individuals were measured (sample size varies by species), and  3 spectra were collected
+from each individual.
 
-The samples do not have the same sample sizes and have additional peculiarities that should 
+The samples do not have the same sample sizes and have additional peculiarities that should
 emphasize the flexibility \pavo{} offers, as we'll see below.
 
 \section{Organizing and Processing Spectral Data}
 
 \subsection{Importing Data}
 
-The first thing we need to do is import the spectral data into R using the funciton 
-\code{getspec()}. Since the spectra were obtained using Avantes software, we will need to 
-specify that the files have the ``\code{.ttt}'' extension. Further, the data is organized in 
-subdirectories for each species. \code{getspec} does recursive sampling, and may include the 
-names of the subdirectories in the spectra name if desired. A final issue with the data is that 
-it was collected using a computer with international numbering input, which means it uses commas 
-instead of periods as a decimal separator. We can specify that in the function call.
+The first thing we need to do is import the spectral data into R using the funciton
+\code{getspec()}. Since the spectra were obtained using Avantes software, we will need to  specify
+that the files have the "\code{.ttt}" extension. Further, the data is organized in  subdirectories
+for each species. \code{getspec} does recursive sampling, and may include the  names of the
+subdirectories in the spectra name if desired. A final issue with the data is that  it was collected
+using a computer with international numbering input, which means it uses commas  instead of periods
+as a decimal separator. We can specify that in the function call.
 
 I have downloaded the file and placed it in a directory called 
 ``\nolinkurl{/github/pavo/vignette_data}''. By default, \code{getspec} will search for files in 
@@ -121,8 +120,9 @@ specs[1:10,1:4]
 dim(specs) #data has 214 spectra, from 300 to 700 nm
 @
 
-When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits 
-attributes from the \code{data.frame} class:
+When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits attributes
+from the \code{data.frame} class:
+
 <<>>=
 is.rspec(specs)
 @
@@ -200,58 +200,143 @@ explorespec(sppspec, 6)
 \end{figure}
 
 
-\section{Visualizing Spectral Data}
+ \subsubsection{Processing Spectral Data}
 
-<<label=overlay,fig=TRUE,include=FALSE>>=
-data(sicalis)
-par(mfrow=c(1,2))
-plot(sicalis, type='o', col=spec2rgb(sicalis))
-plot(procspec(sicalis, opt='smooth'), type='o', col=spec2rgb(sicalis))
+Data obtained from spectrometers often requires further processing before analysis and/or 
+publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The 
+\pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the 
+reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 
+nm) wavelength ranges (Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we can 
+use the \code{opt} argument in \code{procspec} to smooth data using local regression, as implemented 
+by the \code{loess.smooth} function in \code{R} (Figure \ref{figure:specsmooth}, red line).
 
-#plot(sicalis, type='s', col=spec2rgb(sicalis))
+\begin{figure}[H]
+\begin{center}
+<<label=specsmooth,fig=TRUE,include=TRUE,results=hide,width=5,height=5>>=
+spec.sm <- procspec(sppspec, opt='smooth')
+plot(sppspec[, 5]~sppspec[, 1], type='l', xlab="Wavelength (nm)", ylab="Reflectance (%)")
+lines(spec.sm[, 5]~sppspec[, 1], col='red')
+@
+\end{center}
+\caption{Result for raw (black line) and smoothed (red line) reflectance data for the parakeet.}
+\label{figure:specsmooth}
+\end{figure}
+
+We can also try some other normalizations. Note that the user can specify multiple processing 
+options that will be applied sequentially to the spectral data by \code{procspec}.
+
+<<results=hide>>=
+# Run some different normalizations
+specs.max <- procspec(sppspec, opt='max')
+specs.min <- procspec(sppspec, opt='min')
+specs.str <- procspec(sppspec, opt=c('min', 'max'))  # multiple options
 @
 
-
-
-\begin{figure} % h=here, t=top, b=bottom, p=floating page
+\begin{figure}[H]
 \begin{center}
-\includegraphics[width=4in, height=3in]{pavo-overlay}
+<<Label=specnorm,fig=TRUE,include=TRUE,width=8,height=3>>=
+# plot results
+par(mfrow=c(1,3), mar=c(4,4,1,1))
+plot(specs.max, select=5, ylim=c(0,1))
+abline(h=1, lty=2)
+plot(specs.min, select=5)
+abline(h=0, lty=2)
+plot(specs.str, select=5)
+abline(h=c(0,1), lty=2)
+@
+\end{center}
+\caption{Results for max (left), min (center) and both normalizations (right).}
+\label{figure:specnorm}
+\end{figure}
+
+
+Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
+(PCA). Following Cuthill, 1999 we can use \code{opt} = 'center' and 'bin' to center spectra to have
+a mean reflectance of zero (thus removing brightness as a dominant variable? in a PCA) and then bin
+the spectra into user-defined bins (using the \code{bins} argument) and obtain a dataframe suitable
+for a principle component analysis (PCA).
+
+<<results=hide>>=
+# pca analysis
+specs.bin <- procspec(sppspec, opt=c('bin', 'center'))
+specs.bin <- t(specs.bin)  # transpose so specs in rows
+colnames(specs.bin) <- specs.bin[1,]  # names variables as wavelength bins
+specs.bin <- specs.bin[-1, ]  # remove 'wl' column
+# specs.bin[1:6, 1:3]
+pca1 <- prcomp(specs.bin, scale=T)
+@
+
+The flexibility of \code{pavo}'s plotting capabilities allows you to sort spectra by another
+variable (e.g., PC1 loading) and then plot in a stacked format using the \code{plot.rspec} function.
+This function relies on the base plotting capabilities of \code{R} but recognizes \code{rspec}
+objects.
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+<<label=pcaplot,fig=TRUE,include=TRUE,width=6.3,height=3.3>>=
+# generate colors from spectra
+colr <- spec2rgb(sppspec)
+wls <- as.numeric(colnames(specs.bin))
+# rank specs by PC1
+sel <- rank(pca1$x[,1])
+sel <- match(names(sort(sel)), names(sppspec))
+# plot results
+par(mfrow=c(1,2), ps=8, mar=c(4,4,2,2))
+plot(pca1$r[,1]~wls, type='l', xlab="Wavelength (nm)", ylab="PC1 loading")
+abline(h=0, lty=2)
+plot(sppspec, sel, type='s', col=spec2rgb(sppspec))
+@
+\end{center}
+\caption{Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically 
+from lowest to highest PC1 value (right).}
+\label{figure:pcaplot}
+\end{figure}
+
+\section{Visualizing Spectral Data}
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+<<label=overlay,fig=TRUE,include=TRUE,width=4, height=4>>=
+par(mar=c(4,4,2,2))
+plot(sppspec, type='o', col=spec2rgb(sppspec))
+#plot(sppspec, type='s', col=spec2rgb(sppspec))
+#plot(sppspecs, type='h', col=spec2rgb(sicalis))
+@
 \end{center}
 \caption{Overlay plot with colors calculated from human color matching functions}
 \label{figure:overlay}
 \end{figure}
 
-Colors can be mapped to spectra using \code{spec2rgb} as shown in 
-Figure \ref{figure:overlay}.
+Colors can be mapped to spectra using \code{spec2rgb} as shown in Figure \ref{figure:overlay}.
 
 
 \section{Analyzing Spectral Data}
 
 \subsection{Overview}
 
-\pavo{} offers two main approaches for spectral data analysis. First, variables can be 
-calculated based on the shape of the reflectance spectra. By using special R classes for spectra 
-data frame objects, this can easily be done using the \code{summary} function in an rspec 
-object (see below). The second function for spectral shape analysis is \code{peakshape}, which 
-returns descriptors for peaks in spectral curves, as outlined below.
+\pavo{} offers two main approaches for spectral data analysis. First, variables can be  calculated
+based on the shape of the reflectance spectra. By using special R classes for spectra  data frame
+objects, this can easily be done using the \code{summary} function in an rspec  object (see below).
+The second function for spectral shape analysis is \code{peakshape}, which returns descriptors for
+peaks in spectral curves, as outlined below.
 
-Second, reflectance spectra can be analyzed accounting for the visual system receiving the color 
-signal, therefore representing reflectance spectra as preceived colors. We have implemented 
-Endler's (REF) segment analysis model, which approximates visual models but does not directly 
-use sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible 
-framework for visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD) 
-which has been extensively developed to represent colors in the avian vision color space.
+Second, reflectance spectra can be analyzed accounting for the visual system receiving the color
+signal, therefore representing reflectance spectra as preceived colors. We have implemented
+Endler's (REF) segment analysis model, which approximates visual models but does not directly  use
+sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible  framework for
+visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD)  which has been
+extensively developed to represent colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
 
 \subsubsection{Trichromatic variables}
 
 Obtaining trichromatic color variables (related to hue, saturation and value) is pretty
-straightforward in \pavo{}. Since reflectance spectra is stored in an object of class 
-\code{rspec}, the \code{summary} function recognizes the object as such and extracts 23 
-variables, as outlined in MONTGOMERIE. Though outlined in a book chapter on bird coloration, 
-these variables are broadly applicable to any reflectance data, particularly if the taxon of 
-interest has color vision within the UV-human visible range.
+straightforward in \pavo{}. Since reflectance spectra is stored in an object of class  \code{rspec},
+the \code{summary} function recognizes the object as such and extracts 23  variables, as outlined in
+MONTGOMERIE. Though outlined in a book chapter on bird coloration,  these variables are broadly
+applicable to any reflectance data, particularly if the taxon of  interest has color vision within
+the UV-human visible range.
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
 
@@ -261,7 +346,7 @@ summary(sppspec)
 
 
 % A table for filling in Montgomerie's color variables
-\begin{table}[h]
+\begin{table}
 \begin{center}
 \begin{tabular}{l l l} \hline
 {\bf Color} & \\
@@ -296,19 +381,18 @@ The complete set of tristimulus variables calculated by \code{summary} in \pavo{
 
 \subsubsection{Peak shape descriptors}
 
-Particularly in cases of reflectance spectra that have a single, discrete peak, it might be 
-useful to obtain variables that describe that peak's properties. The \code{peakshape} function 
-identifies the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), 
-and identifies the wavelengths at which the reflectance is half that at the peak, calculating 
-the wavelength bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). 
-The function also returns the half widths, which are useful when the peaks are located near the 
-edge of the measurement limit and half maximum reflectance can only be reliably estimated from 
-one of its sides.
+Particularly in cases of reflectance spectra that have a single, discrete peak, it might be useful
+to obtain variables that describe that peak's properties. The \code{peakshape} function identifies
+the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), and identifies
+the wavelengths at which the reflectance is half that at the peak, calculating the wavelength
+bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). The function
+also returns the half widths, which are useful when the peaks are located near the edge of the
+measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
 
-If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots 
-indicating what it's calculating. The vertical continuous red line indicates the peak location, 
-the horizontal continuous red line indicates the half-maximum reflectance, and the distance 
-between the dashed lines is the FWHM:
+If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots
+indicating what it's calculating. The vertical continuous red line indicates the peak location, the
+horizontal continuous red line indicates the half-maximum reflectance, and the distance between the
+dashed lines is the FWHM:
 
 <<label=fwhm, fig=TRUE, include=FALSE>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -323,13 +407,13 @@ peakshape(sppspec, plot=T)
 \label{figure:fwhm}
 \end{figure}
 
-As you can see, the variable is meaningless if the curve doesn't have a clear peak. Sometimes
-, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a 
-peak which is not the point of maximum reflectance of the entire spectral curve. The half-width 
-can also be erroneously calculated when there are two peaks, as can be seen in the case of the 
-Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when 
-calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a 
-\code{select} argument to facilitate subsetting the spectra data frame:
+As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes ,
+such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a  peak
+which is not the point of maximum reflectance of the entire spectral curve. The half-width  can also
+be erroneously calculated when there are two peaks, as can be seen in the case of the  Tanager
+(Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when  calculating
+the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a  \code{select} argument
+to facilitate subsetting the spectra data frame:
 
 <<label=fwhm2, fig=TRUE, include=FALSE>>=
 peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
