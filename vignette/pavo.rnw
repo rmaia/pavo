@@ -191,7 +191,7 @@ sppspec[1:5, ]
 explorespec(sppspec, 6)
 @
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{figure}[H]
 \begin{center}
 \includegraphics{pavo-exploresppmeans}
 \end{center}
@@ -200,7 +200,7 @@ explorespec(sppspec, 6)
 \end{figure}
 
 
- \subsubsection{Processing Spectral Data}
+ \subsubsection{Normalizing and Smoothing Spectra}
 
 Data obtained from spectrometers often requires further processing before analysis and/or 
 publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The 
@@ -272,8 +272,6 @@ pca1 <- prcomp(specs.bin, scale=T)
 
 The flexibility of \code{pavo}'s plotting capabilities allows you to sort spectra by another
 variable (e.g., PC1 loading) and then plot in a stacked format using the \code{plot.rspec} function.
-This function relies on the base plotting capabilities of \code{R} but recognizes \code{rspec}
-objects.
 
 <<label=pcaplot,fig=TRUE,include=FALSE>>=
 # generate colors from spectra
@@ -300,11 +298,59 @@ from lowest to highest PC1 value (right).}
 
 \section{Visualizing Spectral Data}
 
-<<label=overlay, fig=TRUE, include=FALSE>>=
+The function \code{plot.rspec} can be called simply by typing \code{plot(rspecs)}, as it relies on
+the base plotting capabilities. If the object is not of class \code{rspec} the multivariate
+visualization methods will not work as expected.
+
+We have implemented three methods of visualizing spectral data:
+
+\begin{itemize}
+	\item{Overlay - all spectra plotted with same x- and y-axis}
+	\item{Stack - spectra plotted with same x-axis but arranged vertically along y-axis}
+	\item{Heatmap - false color map to show three dimensional data}
+\end{itemize}
+
+We will first load some reflectance data. 
+
+<<>>=
+data(teal)  # TODO add this
+dim(teal)
+@
+
+This dataset consists of reflectance spectra measured from the iridescent wing patch of a green-
+winged teal (\emph{Anas carolinensis}). Reflectance measurements were taken between 300 and 700 nm
+at different incident angles, ranging from 15 to 70 degrees (in 5 degree increments). 
+
+We can start out by visualizing these spectra with \code{overlay} option in plot.rspec.
+
+<<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
-plot(sppspec, type='o', col=spec2rgb(sppspec))
-plot(sppspec, type='s', col=spec2rgb(sppspec))
-#plot(sppspecs, type='h', col=spec2rgb(sicalis))
+teal <- loadRDS(...)[,-14]
+plot(teal[, -14], type='o', col=spec2rgb(teal))
+@
+
+Another option is the \code{stack} plot.
+
+<<label=stack,fig=T,include=F>>=
+teal.norm <- procspec(teal, opt=c('min', 'max'))
+par(mfrow=c(1,2))
+plot(teal[, -14], type='s', col=spec2rgb(teal))
+plot(teal.norm[, -14], type='s', col=spec2rgb(teal))
+@
+
+Since this dataset is three-dimensional (containing wavelengths, reflectance values and incident
+angles) we can also use the \code{heatmap} function. First, it will be necessary to define a vector
+for the incident angles each spectrum was measured at:
+
+<<>>=
+angles <- seq(15,70,by=5)
+@
+
+ Next, we will smooth the data with \code{procspec} and plot as a false color map (heamap):
+ 
+<<label=heatmap,fig=T,include=F>>=
+teal.sm <- procspec(teal, opt=c('smooth'))
+plot(teal.sm[, -14], type='h', varying=angles, ylab="Incident angle (º)", las=1)
 @
 
 \begin{figure}[H]
