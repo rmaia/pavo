@@ -12,6 +12,9 @@
 \usepackage{float}
 \usepackage{authblk}
 \usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
 
 \usepackage{geometry} 
 \geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
@@ -477,6 +480,41 @@ cardinal 17.99853 369  100     47     53     OK
 > hist(rnorm(50))
 \end{Sinput}
 \end{Schunk}
+
+
+\subsection{Segment Classification Model}
+
+\begin{Schunk}
+\begin{Sinput}
+> fakedata1<-  sapply(seq(100,500,by=20), function(x) rowSums(cbind(dnorm(300:700,x,30), dnorm(300:700,x+400,30))))
+> fakedata1<-data.frame(wl=300:700,fakedata1)
+> fakedata1<-as.rspec(fakedata1)
+> fakedata1<- procspec(fakedata1, "max")
+\end{Sinput}
+\begin{Soutput}
+processing options applied:
+ Scaling spectra to a maximum value of 1
+\end{Soutput}
+\begin{Sinput}
+> segfd1 <- segclass(fakedata1)
+> plot(fakedata1, type='stack', col=spec2rgb(fakedata1)) 
+> plot(segfd1, pch=20, cex=2, col=spec2rgb(fakedata1))
+\end{Sinput}
+\end{Schunk}
+
+
+
+\begin{figure}
+\centering
+  \begin{subfigure}[b]{0.2\textwidth}
+    \includegraphics{pavo-segplot}
+  \end{subfigure}
+  \begin{subfigure}[b]{0.6\textwidth}
+    \includegraphics{pavo-segplot2}
+  \end{subfigure}
+\caption{segment plot}\label{fig:segplot}
+\end{figure}
+
 
 
 \subsection*{More examples}
