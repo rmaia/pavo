@@ -329,7 +329,7 @@ We can start out by visualizing these spectra with \code{overlay} option in plot
 
 <<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
-teal <- readRDS('/Users/chad/github/pavo/toydata/teal.rda')
+teal <- readRDS('~/github/pavo/toydata/teal.rda')
 #teal <- loadRDS(...)[,-14]
 plot(teal[, -14], type='o', col=spec2rgb(teal))
 @
@@ -506,35 +506,39 @@ hist(rnorm(50))
 
 \subsection{Segment Classification Model}
 
-<<label=segplot, fig=TRUE, include=FALSE, width=2>>=
-fakedata1<-  sapply(seq(100,500,by=20), function(x) rowSums(cbind(dnorm(300:700,x,30), dnorm(300:700,x+400,30))))
+<<label=segplot, fig=TRUE, include=FALSE, width=6, height=4>>=
+fakedata1 <-  sapply(seq(100,500,by=20), 
+                     function(x) rowSums(cbind(dnorm(300:700,x,30), dnorm(300:700,x+400,30))))
 
-fakedata1<-data.frame(wl=300:700,fakedata1)
-fakedata1<-as.rspec(fakedata1)
-fakedata1<- procspec(fakedata1, "max")
-segfd1 <- segclass(fakedata1)
+fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
+                     function(x) dnorm(300:700,550,x))
 
+fakedata.c <- data.frame(wl=300:700, fakedata1, fakedata2)
+fakedata.c <- as.rspec(fakedata.c)
+fakedata.c <- procspec(fakedata.c, "max")
+seg.fdc <- segclass(fakedata.c)
+
+fakedata1 <- as.rspec(data.frame(wl=300:700,fakedata1))
+fakedata1 <- procspec(fakedata1, "max")
+fakedata2 <- as.rspec(data.frame(wl=300:700,fakedata2))
+fakedata2 <- procspec(fakedata2, "max")
+
+layout(cbind(1,2,3), widths=c(1,1,3))
+par(mar=c(5,4,2,0.5))
 plot(fakedata1, type='stack', col=spec2rgb(fakedata1)) 
-plot(segfd1, pch=20, cex=2, col=spec2rgb(fakedata1))
+par(mar=c(5,2.5,2,1.5))
+plot(fakedata2, type='stack', col=spec2rgb(fakedata2)) 
+par(mar=c(5,4,2,0.5))
+plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 @
 
-<<label=segplot2, echo=FALSE, fig=TRUE, include=FALSE>>=
-plot(segfd1, pch=20, cex=2, col=spec2rgb(fakedata1))
-@
-
-
-\begin{figure}
-\centering
-  \begin{subfigure}[b]{0.2\textwidth}
-    \includegraphics{pavo-segplot}
-  \end{subfigure}
-  \begin{subfigure}[b]{0.6\textwidth}
-    \includegraphics{pavo-segplot2}
-  \end{subfigure}
-\caption{segment plot}\label{fig:segplot}
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=5in]{pavo-segplot}
+\end{center}
+\caption{Idealized reflectance spectra and their projection on the axes of segment classification}
+\label{figure:segplot}
 \end{figure}
-
-
 
 \subsection*{More examples}
 
