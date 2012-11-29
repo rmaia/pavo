@@ -16,11 +16,16 @@
 \usepackage{geometry} 
 \geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
 %\setlength\parindent{0in}
+
+% define colors
 \hypersetup{
   colorlinks,
   citecolor=violet,
   linkcolor=BrickRed,
-  urlcolor=MidnightBlue}
+  urlcolor=MidnightBlue
+  }
+\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
+
 
 \begin{document}
 
@@ -74,7 +79,8 @@ Below we will show the main functions in the package in an example workflow.
 
 The data used in this example is available from 
 \href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
-{github by clicking here}. 
+{github by clicking here}\footnote{in case you can't click the printed version you have:\\ 
+\url{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}}. 
 You can download and extract it to follow the vignette.
 
 The data consists of reflectance spectra obtained using Avantes equipment and software from 
@@ -93,15 +99,15 @@ emphasize the flexibility \pavo{} offers, as we'll see below.
 
 The first thing we need to do is import the spectral data into R using the funciton 
 \code{getspec()}. Since the spectra were obtained using Avantes software, we will need to 
-specify that the files have the "\code{.ttt}" extension. Further, the data is organized in 
+specify that the files have the ``\code{.ttt}'' extension. Further, the data is organized in 
 subdirectories for each species. \code{getspec} does recursive sampling, and may include the 
 names of the subdirectories in the spectra name if desired. A final issue with the data is that 
 it was collected using a computer with international numbering input, which means it uses commas 
 instead of periods as a decimal separator. We can specify that in the function call.
 
 I have downloaded the file and placed it in a directory called 
-"\nolinkurl{/github/pavo/vignette_data}". By default, \code{getspec} will search for files in 
-the default folder, but a different one can be specified:
+``\nolinkurl{/github/pavo/vignette_data}''. By default, \code{getspec} will search for files in 
+the current folder, but a different one can be specified:
 
 <<cache=true>>=
 specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
@@ -110,7 +116,8 @@ specs[1:10,1:4]
 dim(specs) #data has 214 spectra, from 300 to 700 nm
 @
 
-When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits attributes from the \code{data.frame} class:
+When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits 
+attributes from the \code{data.frame} class:
 <<>>=
 is.rspec(specs)
 @
@@ -220,7 +227,8 @@ Figure \ref{figure:overlay}.
 \pavo{} offers two main approaches for spectral data analysis. First, variables can be 
 calculated based on the shape of the reflectance spectra. By using special R classes for spectra 
 data frame objects, this can easily be done using the \code{summary} function in an rspec 
-object (see below). The second function for spectral shape analysis is \code{peakshape}, which returns descriptors for peaks in spectral curves, as outlined below.
+object (see below). The second function for spectral shape analysis is \code{peakshape}, which 
+returns descriptors for peaks in spectral curves, as outlined below.
 
 Second, reflectance spectra can be analyzed accounting for the visual system receiving the color 
 signal, therefore representing reflectance spectra as preceived colors. We have implemented 
@@ -283,9 +291,19 @@ The complete set of tristimulus variables calculated by \code{summary} in \pavo{
 
 \subsubsection{Peak shape descriptors}
 
-Particularly in cases of reflectance spectra that have a single, discrete peak, it might be useful to obtain variables that describe that peak's properties. The \code{peakshape} function identifies the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
+Particularly in cases of reflectance spectra that have a single, discrete peak, it might be 
+useful to obtain variables that describe that peak's properties. The \code{peakshape} function 
+identifies the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), 
+and identifies the wavelengths at which the reflectance is half that at the peak, calculating 
+the wavelength bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). 
+The function also returns the half widths, which are useful when the peaks are located near the 
+edge of the measurement limit and half maximum reflectance can only be reliably estimated from 
+one of its sides.
 
-If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines is the FWHM:
+If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots 
+indicating what it's calculating. The vertical continuous red line indicates the peak location, 
+the horizontal continuous red line indicates the half-maximum reflectance, and the distance 
+between the dashed lines is the FWHM:
 
 <<label=fwhm, fig=TRUE, include=FALSE>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -294,7 +312,7 @@ peakshape(sppspec, plot=T)
 
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=6in]{pavo-fwhm}
+\includegraphics[width=5in]{pavo-fwhm}
 \end{center}
 \caption{Plots from \code{peakshape}}
 \label{figure:fwhm}
