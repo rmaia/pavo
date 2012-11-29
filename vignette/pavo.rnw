@@ -197,7 +197,7 @@ explorespec(sppspec, 6)
 \end{figure}
 
 
-\subsection{Processing Data}
+ \subsubsection{Processing Spectral Data}
 
 Data obtained from spectrometers often requires further processing before analysis and/or 
 publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The 
