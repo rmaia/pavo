@@ -21,13 +21,14 @@
 \hypersetup{
   colorlinks,
   citecolor=violet,
-  linkcolor=BrickRed,
+  linkcolor=black,
   urlcolor=MidnightBlue
   }
 \renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
 
 
 \begin{document}
+
 
 \SweaveOpts{concordance=TRUE, prefix.string=pavo}
 
@@ -73,7 +74,8 @@ interest.
 \item {\bf Visualize} the output, with multiple options provided for exploratory analyses.
 \end{enumerate}
 
-Below we will show the main functions in the package in an example workflow. 
+Below we will show the main functions in the package in an example workflow. The development
+version of \pavo{} can be found on \href{https://github.com/rmaia/pavo}{github}.
 
 \section{Dataset Description}
 
@@ -109,7 +111,7 @@ I have downloaded the file and placed it in a directory called
 ``\nolinkurl{/github/pavo/vignette_data}''. By default, \code{getspec} will search for files in 
 the current folder, but a different one can be specified:
 
-<<cache=true>>=
+<<>>=
 specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
                  subdir=T, subdir.names=F)
 specs[1:10,1:4]
