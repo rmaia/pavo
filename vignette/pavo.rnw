@@ -210,13 +210,15 @@ nm) wavelength ranges (Figure \ref{figure:specsmooth}, black line). To eliminate
 use the \code{opt} argument in \code{procspec} to smooth data using local regression, as implemented 
 by the \code{loess.smooth} function in \code{R} (Figure \ref{figure:specsmooth}, red line).
 
-\begin{figure}[H]
-\begin{center}
-<<label=specsmooth,fig=TRUE,include=TRUE,results=hide,width=5,height=5>>=
+<<label=specsmooth,fig=TRUE,include=FALSE,results=hide>>=
 spec.sm <- procspec(sppspec, opt='smooth')
 plot(sppspec[, 5]~sppspec[, 1], type='l', xlab="Wavelength (nm)", ylab="Reflectance (%)")
 lines(spec.sm[, 5]~sppspec[, 1], col='red')
 @
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=5in]{pavo-specsmooth}
 \end{center}
 \caption{Result for raw (black line) and smoothed (red line) reflectance data for the parakeet.}
 \label{figure:specsmooth}
@@ -232,9 +234,7 @@ specs.min <- procspec(sppspec, opt='min')
 specs.str <- procspec(sppspec, opt=c('min', 'max'))  # multiple options
 @
 
-\begin{figure}[H]
-\begin{center}
-<<Label=specnorm,fig=TRUE,include=TRUE,width=8,height=3>>=
+<<Label=specnorm,fig=TRUE,include=FALSE>>=
 # plot results
 par(mfrow=c(1,3), mar=c(4,4,1,1))
 plot(specs.max, select=5, ylim=c(0,1))
@@ -244,6 +244,10 @@ abline(h=0, lty=2)
 plot(specs.str, select=5)
 abline(h=c(0,1), lty=2)
 @
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=8, height=3]{pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center) and both normalizations (right).}
 \label{figure:specnorm}
@@ -271,9 +275,7 @@ variable (e.g., PC1 loading) and then plot in a stacked format using the \code{p
 This function relies on the base plotting capabilities of \code{R} but recognizes \code{rspec}
 objects.
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-<<label=pcaplot,fig=TRUE,include=TRUE,width=6.3,height=3.3>>=
+<<label=pcaplot,fig=TRUE,include=FALSE>>=
 # generate colors from spectra
 colr <- spec2rgb(sppspec)
 wls <- as.numeric(colnames(specs.bin))
@@ -286,6 +288,10 @@ plot(pca1$r[,1]~wls, type='l', xlab="Wavelength (nm)", ylab="PC1 loading")
 abline(h=0, lty=2)
 plot(sppspec, sel, type='s', col=spec2rgb(sppspec))
 @
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=6.3in, height=3.3in]{pavo-pcaplot}
 \end{center}
 \caption{Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically 
 from lowest to highest PC1 value (right).}
@@ -294,14 +300,16 @@ from lowest to highest PC1 value (right).}
 
 \section{Visualizing Spectral Data}
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-<<label=overlay,fig=TRUE,include=TRUE,width=4, height=4>>=
+<<label=overlay, fig=TRUE, include=FALSE>>=
 par(mar=c(4,4,2,2))
 plot(sppspec, type='o', col=spec2rgb(sppspec))
-#plot(sppspec, type='s', col=spec2rgb(sppspec))
+plot(sppspec, type='s', col=spec2rgb(sppspec))
 #plot(sppspecs, type='h', col=spec2rgb(sicalis))
 @
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=4]{pavo-overlay}
 \end{center}
 \caption{Overlay plot with colors calculated from human color matching functions}
 \label{figure:overlay}
