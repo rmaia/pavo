@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  28 NOV 2012 17:02
+This is pdfTeX, Version 3.1415926-2.3-1.40.12 (TeX Live 2011) (format=pdflatex 2011.7.3)  29 NOV 2012 00:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -211,6 +211,46 @@ Package: float 2001/11/08 v1.3d Float enhancements (AL)
 \@float@everytoks=\toks21
 \@floatcapt=\box29
 )
+(/usr/local/texlive/2011/texmf-dist/tex/latex/preprint/authblk.sty
+Package: authblk 2009/11/18 1.3 (PWD)
+\affilsep=\skip47
+\@affilsep=\skip48
+\c@Maxaffil=\count110
+\c@authors=\count111
+\c@affil=\count112
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/color.sty
+Package: color 2005/11/14 v1.0j Standard LaTeX Color (DPC)
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/latexconfig/color.cfg
+File: color.cfg 2007/01/18 v1.5 color configuration of teTeX/TeXLive
+)
+Package color Info: Driver file: pdftex.def on input line 130.
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
+File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+\Gread@gobject=\count113
+)
+(/usr/local/texlive/2011/texmf-dist/tex/latex/graphics/dvipsnam.def
+File: dvipsnam.def 1999/02/16 v3.0i Driver-dependant file (DPC,SPQR)
+))
+(/usr/local/texlive/2011/texmf-dist/tex/latex/geometry/geometry.sty
+Package: geometry 2010/09/12 v5.6 Page Geometry
+\Gm@cnth=\count114
+\Gm@cntv=\count115
+\c@Gm@tempcnt=\count116
+\Gm@bindingoffset=\dimen115
+\Gm@wd@mp=\dimen116
+\Gm@odd@mp=\dimen117
+\Gm@even@mp=\dimen118
+\Gm@layoutwidth=\dimen119
+\Gm@layoutheight=\dimen120
+\Gm@layouthoffset=\dimen121
+\Gm@layoutvoffset=\dimen122
+\Gm@dimlist=\toks22
+)
+Package hyperref Info: Option `colorlinks' set `true' on input line 23.
+
 (/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/Sweave.sty
 Package: Sweave 
 
@@ -230,24 +270,20 @@ Package: trig 1999/03/16 v1.09 sin cos tan (DPC)
 File: graphics.cfg 2010/04/23 v1.9 graphics configuration of TeX Live
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
-
-(/usr/local/texlive/2011/texmf-dist/tex/latex/pdftex-def/pdftex.def
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
-\Gread@gobject=\count110
-))
-\Gin@req@height=\dimen115
-\Gin@req@width=\dimen116
+)
+\Gin@req@height=\dimen123
+\Gin@req@width=\dimen124
 )
 (/usr/local/texlive/2011/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
 Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count111
+\FV@CodeLineNo=\count117
 \FV@InFile=\read1
 \FV@TabBox=\box30
-\c@FancyVerbLine=\count112
-\FV@StepNumber=\count113
+\c@FancyVerbLine=\count118
+\FV@StepNumber=\count119
 \FV@OutFile=\write3
 )
 (/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/upquote.sty
@@ -345,29 +381,29 @@ File: t1aer.fd 1997/11/16 Font definitions for T1/aer.
 )))) (./pavo.aux)
 \openout1 = `pavo.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 15.
-LaTeX Font Info:    ... okay on input line 15.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 15.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 15.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
+LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 26.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 15.
+LaTeX Font Info:    ... okay on input line 26.
 \AtBeginShipoutBox=\box31
-Package hyperref Info: Link coloring OFF on input line 15.
+Package hyperref Info: Link coloring ON on input line 26.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
@@ -375,11 +411,11 @@ Package: nameref 2010/04/30 v2.40 Cross-referencing by name of section
 (/usr/local/texlive/2011/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count114
+\c@section@level=\count120
 )
-LaTeX Info: Redefining \ref on input line 15.
-LaTeX Info: Redefining \pageref on input line 15.
-LaTeX Info: Redefining \nameref on input line 15.
+LaTeX Info: Redefining \ref on input line 26.
+LaTeX Info: Redefining \pageref on input line 26.
+LaTeX Info: Redefining \nameref on input line 26.
 
 (./pavo.out) (./pavo.out)
 \@outlinefile=\write4
@@ -388,18 +424,53 @@ LaTeX Info: Redefining \nameref on input line 15.
 
 (/usr/local/texlive/2011/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count115
-\scratchdimen=\dimen117
+\scratchcounter=\count121
+\scratchdimen=\dimen125
 \scratchbox=\box32
-\nofMPsegments=\count116
-\nofMParguments=\count117
-\everyMPshowfont=\toks22
-\MPscratchCnt=\count118
-\MPscratchDim=\dimen118
-\MPnumerator=\count119
-\makeMPintoPDFobject=\count120
-\everyMPtoPDFconversion=\toks23
-) (/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
+\nofMPsegments=\count122
+\nofMParguments=\count123
+\everyMPshowfont=\toks23
+\MPscratchCnt=\count124
+\MPscratchDim=\dimen126
+\MPnumerator=\count125
+\makeMPintoPDFobject=\count126
+\everyMPtoPDFconversion=\toks24
+)
+*geometry* driver: auto-detecting
+*geometry* detected driver: pdftex
+*geometry* verbose mode - [ preamble ] result:
+* driver: pdftex
+* paper: letterpaper
+* layout: <same size as paper>
+* layoutoffset:(h,v)=(0.0pt,0.0pt)
+* modes: 
+* h-part:(L,W,R)=(108.405pt, 397.48499pt, 108.40501pt)
+* v-part:(T,H,B)=(72.26999pt, 614.295pt, 108.405pt)
+* \paperwidth=614.295pt
+* \paperheight=794.96999pt
+* \textwidth=397.48499pt
+* \textheight=614.295pt
+* \oddsidemargin=36.13501pt
+* \evensidemargin=36.13501pt
+* \topmargin=-37.0pt
+* \headheight=12.0pt
+* \headsep=25.0pt
+* \topskip=10.0pt
+* \footskip=30.0pt
+* \marginparwidth=43.36243pt
+* \marginparsep=7.0pt
+* \columnsep=10.0pt
+* \skip\footins=9.0pt plus 4.0pt minus 2.0pt
+* \hoffset=0.0pt
+* \voffset=0.0pt
+* \mag=1000
+* \@twocolumnfalse
+* \@twosidefalse
+* \@mparswitchfalse
+* \@reversemarginfalse
+* (1in=72.27pt=25.4mm, 1cm=28.453pt)
+
+(/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/oberdiek/grfext.sty
@@ -415,150 +486,159 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 (./pavo-concordance.tex)
-LaTeX Font Info:    Try loading font information for T1+aett on input line 24.
+LaTeX Font Info:    Try loading font information for T1+aett on input line 37.
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/ae/t1aett.fd
 File: t1aett.fd 1997/11/16 Font definitions for T1/aett.
-) [1
+) (./pavo.toc)
+\tf@toc=\write5
+\openout5 = `pavo.toc'.
 
-{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2]
-<pavo-explorespecfig.pdf, id=64, 433.62pt x 505.89pt>
+
+[1
+
+{/usr/local/texlive/2011/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+[2] <pavo-explorespecfig.pdf, id=85, 433.62pt x 433.62pt>
 File: pavo-explorespecfig.pdf Graphic file (type pdf)
 
 <use pavo-explorespecfig.pdf>
-Package pdftex.def Info: pavo-explorespecfig.pdf used on input line 146.
-(pdftex.def)             Requested size: 318.67207pt x 371.80537pt.
- [3] [4pdfTeX warning (ext4): destination with the same identifier (name{figure
-.1}) has been already used, duplicate ignored
+Package pdftex.def Info: pavo-explorespecfig.pdf used on input line 165.
+(pdftex.def)             Requested size: 433.63878pt x 505.91743pt.
+
+Overfull \hbox (36.1538pt too wide) in paragraph at lines 165--166
+ [] 
+ []
+
+[3] [4pdfTeX warning (ext4): destination with the same identifier (name{figure.
+1}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.152 \clearpage
+l.171 \clearpage
                 {} <./pavo-explorespecfig.pdf>]
-LaTeX Font Info:    Try loading font information for TS1+aett on input line 189
+LaTeX Font Info:    Try loading font information for TS1+aett on input line 208
 .
 
 (/Library/Frameworks/R.framework/Resources/share/texmf/tex/latex/ts1aett.fd
 File: ts1aett.fd 
 )
-LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 189
+LaTeX Font Info:    Try loading font information for TS1+cmtt on input line 208
 .
 
 (/usr/local/texlive/2011/texmf-dist/tex/latex/base/ts1cmtt.fd
 File: ts1cmtt.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `TS1/aett/m/sl' in size <10> not available
-(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 189.
+(Font)              Font shape `TS1/cmtt/m/sl' tried instead on input line 208.
 
-
-<pavo-exploresppmeans.pdf, id=79, 433.62pt x 433.62pt>
-File: pavo-exploresppmeans.pdf Graphic file (type pdf)
-
-<use pavo-exploresppmeans.pdf>
-Package pdftex.def Info: pavo-exploresppmeans.pdf used on input line 227.
-(pdftex.def)             Requested size: 318.67207pt x 318.69032pt.
  [5
 
 ]
-Overfull \vbox (11.0702pt too high) has occurred while \output is active []
+<pavo-exploresppmeans.pdf, id=105, 433.62pt x 433.62pt>
+File: pavo-exploresppmeans.pdf Graphic file (type pdf)
 
-
-[6pdfTeX warning (ext4): destination with the same identifier (name{figure.2}) 
-has been already used, duplicate ignored
+<use pavo-exploresppmeans.pdf>
+Package pdftex.def Info: pavo-exploresppmeans.pdf used on input line 247.
+(pdftex.def)             Requested size: 317.9892pt x 318.00221pt.
+ [6pdfTeX warning (ext4): destination with the same identifier (name{figure.2})
+ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.232 
-       <./pavo-exploresppmeans.pdf>]
-<pavo-overlay.pdf, id=95, 433.62pt x 433.62pt>
+l.270 \end{Sinput}
+                   <./pavo-exploresppmeans.pdf>]
+<pavo-overlay.pdf, id=116, 433.62pt x 433.62pt>
 File: pavo-overlay.pdf Graphic file (type pdf)
  <use pavo-overlay.pdf>
-Package pdftex.def Info: pavo-overlay.pdf used on input line 257.
+Package pdftex.def Info: pavo-overlay.pdf used on input line 277.
 (pdftex.def)             Requested size: 289.09473pt x 216.80946pt.
  [7pdfTeX warning (ext4): destination with the same identifier (name{figure.3})
  has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.275 
+l.313 
        <./pavo-overlay.pdf>]
-Overfull \hbox (3.27745pt too wide) in paragraph at lines 287--293
-[]\T1/aer/m/n/10 Obtaining trichro-matic color vari-ables (re-lated to hue, sat
--u-ra-tion and value) is pretty straight-
- []
+
+LaTeX Warning: `h' float specifier changed to `ht'.
 
 [8] [9pdfTeX warning (ext4): destination with the same identifier (name{table.1
 }) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.372 \clearpage
-                {}] <pavo-fwhm.pdf, id=123, 361.35pt x 216.81pt>
+l.392 \clearpage
+                {}] <pavo-fwhm.pdf, id=143, 433.62pt x 433.62pt>
 File: pavo-fwhm.pdf Graphic file (type pdf)
 
 <use pavo-fwhm.pdf>
-Package pdftex.def Info: pavo-fwhm.pdf used on input line 397.
-(pdftex.def)             Requested size: 318.67207pt x 191.2036pt.
- [10
+Package pdftex.def Info: pavo-fwhm.pdf used on input line 418.
+(pdftex.def)             Requested size: 433.62pt x 433.63878pt.
 
-pdfTeX warning (ext4): destination with the same identifier (name{figure.4}) ha
-s been already used, duplicate ignored
+Overfull \hbox (36.13501pt too wide) in paragraph at lines 418--419
+ [] 
+ []
+
+[10
+
+] [11pdfTeX warning (ext4): destination with the same identifier (name{figure.4
+}) has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.410 
-       <./pavo-fwhm.pdf>] <pavo-fwhm2.pdf, id=136, 216.81pt x 216.81pt>
+l.439 \end{Soutput}
+                    <./pavo-fwhm.pdf>]
+<pavo-fwhm2.pdf, id=161, 433.62pt x 433.62pt>
 File: pavo-fwhm2.pdf Graphic file (type pdf)
+ <use pavo-fwhm2.pdf>
+Package pdftex.def Info: pavo-fwhm2.pdf used on input line 445.
+(pdftex.def)             Requested size: 216.81pt x 216.80946pt.
 
-<use pavo-fwhm2.pdf>
-Package pdftex.def Info: pavo-fwhm2.pdf used on input line 422.
-(pdftex.def)             Requested size: 318.67207pt x 318.71347pt.
- [11pdfTeX warning (ext4): destination with the same identifier (name{figure.5}
-) has been already used, duplicate ignored
+No file pavo.bbl.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 468.
+[12pdfTeX warning (ext4): destination with the same identifier (name{figure.5})
+ has been already used, duplicate ignored
 
 \AtBegShi@Output ...ipout \box \AtBeginShipoutBox 
                                                   \fi \fi 
-l.435 \end{Sinput}
-                   <./pavo-fwhm2.pdf>]
-No file pavo.bbl.
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 445.
-[12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 445.
+l.468 \end{document}
+                     <./pavo-fwhm2.pdf>]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 468.
  (./pavo.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 445.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 445.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 468.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 468.
 Package rerunfilecheck Info: File `pavo.out' has not changed.
-(rerunfilecheck)             Checksum: 1BA8F1230E45FE2B63D3F1A0E71F2361;565.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 445.
+(rerunfilecheck)             Checksum: F87FDD98DE802518806186BD67E153BB;742.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 468.
  ) 
 Here is how much of TeX's memory you used:
- 6833 strings out of 493633
- 99255 string characters out of 3143378
- 178857 words of memory out of 3000000
- 9967 multiletter control sequences out of 15000+200000
- 40066 words of font info for 83 fonts, out of 3000000 for 9000
+ 7600 strings out of 493633
+ 110586 string characters out of 3143378
+ 200482 words of memory out of 3000000
+ 10713 multiletter control sequences out of 15000+200000
+ 40061 words of font info for 84 fonts, out of 3000000 for 9000
  831 hyphenation exceptions out of 8191
- 35i,11n,28p,709b,467s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 35i,12n,28p,709b,480s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/local/texlive/2011/texmf-dist/fonts/enc/dvips/cm-super/cm-super-ts1.enc
 }</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx10.pfb>
 </usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb><
-/usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmbxti10.pfb>
-</usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb><
-/usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></
-usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></us
-r/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/
-local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/lo
-cal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/loca
-l/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/t
-exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/
-texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/t
-exlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/te
-xlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/tex
-live/2011/texmf-dist/fonts/type1/public/cm-super/sfst1000.pfb>
-Output written on pavo.pdf (12 pages, 353728 bytes).
+/usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></
+usr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb></u
+sr/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
+/local/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/l
+ocal/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr/loc
+al/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></usr/local
+/texlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr7.pfb></usr/local/te
+xlive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/local/texli
+ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmsltt10.pfb></usr/local/texl
+ive/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmti10.pfb></usr/local/texli
+ve/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.pfb></usr/local/texliv
+e/2011/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt12.pfb></usr/local/texlive
+/2011/texmf-dist/fonts/type1/public/cm-super/sfst1000.pfb>
+Output written on pavo.pdf (12 pages, 358273 bytes).
 PDF statistics:
- 212 PDF objects out of 1000 (max. 8388607)
- 170 compressed objects within 2 object streams
- 34 named destinations out of 1000 (max. 500000)
- 102 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 235 PDF objects out of 1000 (max. 8388607)
+ 193 compressed objects within 2 object streams
+ 37 named destinations out of 1000 (max. 500000)
+ 118 words of extra memory for PDF output out of 10000 (max. 10000000)
 

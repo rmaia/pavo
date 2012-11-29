@@ -10,6 +10,17 @@
 \usepackage{amsmath}
 \usepackage{hyperref}
 \usepackage{float}
+\usepackage{authblk}
+\usepackage[usenames,dvipsnames]{color}
+
+\usepackage{geometry} 
+\geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
+%\setlength\parindent{0in}
+\hypersetup{
+  colorlinks,
+  citecolor=violet,
+  linkcolor=BrickRed,
+  urlcolor=MidnightBlue}
 
 \usepackage{Sweave}
 \begin{document}
@@ -17,10 +28,17 @@
 \input{pavo-concordance}
 
 
-\title{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Color Data in R}
-\author{Rafael Maia, Paul-Pierre Bitton, Chad Eliason}
-
+\title{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Color Data in R}
+\author[1]{Rafael Maia}
+\author[2]{Paul-Pierre Bitton}
+\author[1]{Chad Eliason}
+\affil[1]{Integrated Bioscience PhD Program, University of Akron, Akron OH}
+\affil[2]{Department of Biological Sciences, University of Windsor, Windsor ON}
 \maketitle
+
+\addtolength{\parskip}{-.08in}
+\tableofcontents
+\addtolength{\parskip}{.08in}
 
 \section*{Introduction}
 
@@ -48,7 +66,7 @@ interest.
 
 Below we will show the main functions in the package in an example workflow. 
 
-\section{Data Description}
+\section{Dataset Description}
 
 The data used in this example is available from 
 \href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
@@ -125,7 +143,7 @@ specified in the function call.
 
 \subsection{Processing Data}
 
-\subsection{Averaging Spectra}
+\subsubsection{Averaging Spectra}
 
 As previously described, our data constitutes of multiple individuals, and each was measured 
 three times, as is common in order to avoid measurement bias. A good way to visualize the 
@@ -135,15 +153,16 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > explorespec(specs[,1:37], specreps=3) 
 > # 36 spectra plus the first (wl) column
 \end{Sinput}
 \end{Schunk}
-\includegraphics{pavo-explorespecfig}
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=6in, height=7in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{figure:explorespec}
@@ -199,8 +218,6 @@ cardinal   jacana   oriole parakeet    robin  tanager
 Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
 function how to average the spectra in \code{mspec}:
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > sppspec <- aggspec(mspecs, by=spp, FXN=mean)
@@ -224,6 +241,9 @@ function how to average the spectra in \code{mspec}:
 > explorespec(sppspec, 6)
 \end{Sinput}
 \end{Schunk}
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
 \includegraphics{pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
@@ -282,7 +302,7 @@ which has been extensively developed to represent colors in the avian vision col
 
 \subsection{Spectral Shape Analysis}
 
-\textit{\textbf{Trichromatic variables}}
+\subsubsection{Trichromatic variables}
 
 Obtaining trichromatic color variables (related to hue, saturation and value) is pretty
 straightforward in \pavo{}. Since reflectance spectra is stored in an object of class 
@@ -371,14 +391,12 @@ The complete set of tristimulus variables calculated by \code{summary} in \pavo{
 
 \clearpage{}
 
-\textit{\textbf{Peak shape descriptors}}
+\subsubsection{Peak shape descriptors}
 
 Particularly in cases of reflectance spectra that have a single, discrete peak, it might be useful to obtain variables that describe that peak's properties. The \code{peakshape} function identifies the peak location (\code{H1}),  returns the reflectance at that point (\code{B3}), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwith of that interval (the \textbf{Full Width at Half Maximum}, or \code{FWHM}). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
 
 If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines is the FWHM:
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -394,13 +412,16 @@ robin    37.91676 700   NA    107     NA     OK
 tanager  30.71021 555  232    142     90     OK
 \end{Soutput}
 \end{Schunk}
-\includegraphics{pavo-fwhm}
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=6in]{pavo-fwhm}
 \end{center}
 \caption{Plots from \code{peakshape}}
 \label{figure:fwhm}
 \end{figure}
 
-As it can be seen, the variable is meaningless if the curve doesn't have a clear peak. Sometimes
+As you can see, the variable is meaningless if the curve doesn't have a clear peak. Sometimes
 , such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might be a 
 peak which is not the point of maximum reflectance of the entire spectral curve. The half-width 
 can also be erroneously calculated when there are two peaks, as can be seen in the case of the 
@@ -408,8 +429,6 @@ Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set
 calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also offers a 
 \code{select} argument to facilitate subsetting the spectra data frame:
 
-\begin{figure}[h] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
 \begin{Schunk}
 \begin{Sinput}
 > peakshape(sppspec, select=2, bounds=c(300,500), plot=T)
@@ -419,7 +438,11 @@ calculating the FWHM, using the \code{bounds} argument. \code{peakshape} also of
 cardinal 17.99853 369  100     47     53     OK
 \end{Soutput}
 \end{Schunk}
-\includegraphics{pavo-fwhm2}
+
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=3in]{pavo-fwhm2}
 \end{center}
 \caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
 \label{figure:fwhm2}
