@@ -44,7 +44,7 @@ options(width=60)
 
 \title{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Color Data in R}
 \author[1]{Rafael Maia}
-\author[2]{Paul-Pierre Bitton}
+\author[2]{Pierre-Paul Bitton}
 \author[1]{Chad Eliason}
 \affil[1]{Integrated Bioscience PhD Program, University of Akron, Akron OH}
 \affil[2]{Department of Biological Sciences, University of Windsor, Windsor ON}
@@ -502,7 +502,9 @@ peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 \label{figure:fwhm2}
 \end{figure}
 
-\subsection{Segment Classification Model}
+\subsection{Visual System Models}
+
+\subsubsection{Segment Classification Analysis}
 
 The segment classification analysis (Endler 1990) does not assume any particular visual system, but 
 instead tries to classify colors in a manner that captures common properties of many vertebrate (and 
@@ -584,10 +586,8 @@ plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 \label{figure:segplot}
 \end{figure}
 
-\subsection*{More examples}
+\subsubsection{Photon Catch Model}
 
-Some more examples:
-
-\bibliography{}
+\subsubsection{Tetrahedral Color Space Model}
 
 \end{document}
