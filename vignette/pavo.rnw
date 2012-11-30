@@ -145,14 +145,14 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE>>=
+<<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
 explorespec(specs[,1:37], specreps=3) 
 # 36 spectra plus the first (wl) column
 @
 
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=6in, height=7in]{pavo-explorespecfig}
+\includegraphics[width=5in]{pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{figure:explorespec}
@@ -257,6 +257,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \label{figure:specnorm}
 \end{figure}
 
+\subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
 (PCA). Following Cuthill, 1999 we can use \code{opt} = 'center' and 'bin' to center spectra to have
@@ -362,7 +363,7 @@ for the incident angles each spectrum was measured at:
 angles <- seq(15,70,by=5)
 @
 
- Next, we will smooth the data with \code{procspec} and plot as a false color map (heamap):
+ Next, we will smooth the data with \code{procspec} and plot as a false color map (heatmap):
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
@@ -546,7 +547,6 @@ where \code{LM} and \code{MS} are the segment differences or ``opponents'' (Eqn 
 
 The example below uses idealized reflectance spectra to illustrate how the avian color space defined 
 from the segment classification maps to the human color wheel:
-
 
 <<label=segplot, results=hide, fig=TRUE, include=FALSE, width=6, height=4>>=
 # creating idealized specs with varying hue
