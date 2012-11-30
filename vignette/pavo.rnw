@@ -433,19 +433,19 @@ round(summary(spec.sm),2)
 {$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{Mean brightness: average reflectance over all wavelengths.} \\
 {$B_3 = R_\text{max}$} & \parbox[t]{3in}{Intensity: Peak reflectance of the spectrum.} \\
 {$S_1 = \sum_{\lambda_a}^{\lambda_b} R_\lambda/B_{1}$} & \parbox[t]{3in}{Chroma: segment-specific chroma calculated by dividing the sum of reflectance values over region of interest (e.g., from $\lambda_a$ to $\lambda_b$) by the total reflectance.} \\
-{$S_2 = R_\text{max}/R_\text{min}$} & \parbox[t]{3in}{Spectral saturation: ratio of maximum and miminmum reflectance values.} \\
+{$S_2 = R_\text{max}/R_\text{min}$} & \parbox[t]{3in}{Spectral saturation: ratio of maximum and minimum reflectance values.} \\
 {$S_3 = \sum_{\lambda_{R\text{max}}-50}^{\lambda_{R\text{max}}+50} R_i/B_{1}$} & \parbox[t]{3in}{Chroma: sum of reflectance values +/- 50 nm from the wavelength of peak reflectance (hue, $\lambda_\text{max}$)} \\
 {$S_4 = |b\text{max}_\text{neg}|$} & \parbox[t]{3in}{Spectral purity: maximum negative slope of spectrum over range of wavelengths.} \\
 {$S_5 = \sqrt{(B_r-B_g)^2+(B_y-B_b)^2}$} & \parbox[t]{3in}{Chroma: Euclidean distance from achromatic origin using segment classification method (see section XX).} \\
 {$S_6 = R_\text{max}-R_\text{min}$} & \parbox[t]{3in}{Contrast/amplitude: difference in reflectance between high and low points in the spectrum.} \\
-{$S_7 = (\sum_{\lambda_1}^{\lambda_R\text{mid}}R_i - \sum_{\lambda_R\text{mid}}^{\lambda_2}R_i)/B_{1}$} & \parbox[t]{3in}{???} \\
+{$S_7 = (\sum_{\lambda_{min}}^{\lambda_R{mid}}R_i - \sum_{\lambda_R{mid}}^{\lambda_{max}}R_i)/B_{1}$} & \parbox[t]{3in}{Spectral saturation: reflectance difference between the minimum wavelength and the half-max reflectance and the maximum wavelength and the half-max reflectance. Analogous to the segment classification method (see section XX)} \\
 {$S_8 = (R_\text{max}-R_\text{min})/B_2$} & \parbox[t]{3in}{Chroma: relative difference between max and min reflectance taking into account the average brightness ($B2$) of the spectrum.} \\
-{$S_9 = (R_{\lambda{450}}-R_{\lambda{700}})/R_{\lambda{700}}$} & \parbox[t]{3in}{Carotenoid chroma: ...} \\
-{$S_10 = [(R_{max}-R_{min})/B_2]\times|b\text{max}_\text{neg}|$} & \parbox[t]{3in}{Peaky chroma: relative contrast (S8) multiplied by the spectral purity (S4). Relatively flat curves will give low vales for this metric, and vice versa.} \\
+{$S_9 = (R_{\lambda{450}}-R_{\lambda{700}})/R_{\lambda{700}}$} & \parbox[t]{3in}{Carotenoid chroma: relative reflectance in the region of greatest reflectance in carotenoid-based colors} \\
+{$S_{10} = [(R_{max}-R_{min})/B_2]\times|b\text{max}_\text{neg}|$} & \parbox[t]{3in}{Peaky chroma: relative contrast (S8) multiplied by the spectral purity (S4). Relatively flat curves will give low vales for this metric, and vice versa.} \\
 {$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{Hue: wavelength of peak reflectance.} \\
 {$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{Hue: wavelength at location of maximum negative slope in the spectrum.} \\
 {$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{Hue: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
-{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{Hue: the angle from 0º (red) calculated by the segment classification method.} \\
+{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{Hue: the angle from 0º (red) calculated by the segment classification method (see section XX).} \\
 {$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{Hue: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
 \hline
 \end{tabular}
@@ -471,7 +471,7 @@ indicating what it's calculating. The vertical continuous red line indicates the
 horizontal continuous red line indicates the half-maximum reflectance, and the distance between the
 dashed lines is the FWHM:
 
-<<label=fwhm, fig=TRUE, include=FALSE>>=
+<<label=fwhm, fig=TRUE, include=FALSE, width=6, height=4>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
 peakshape(spec.sm, plot=T)
 @
