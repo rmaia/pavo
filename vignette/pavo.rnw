@@ -312,11 +312,8 @@ and (2) changing all negative values to zero (\code{fixneg = zero}).
 
 <<results=hide>>=
 # Create a duplicate spectrum and add some negative values
-refl <- sppspec[, 7]
-samp <- sample(1:401, 25)
-refl[samp] <- refl[samp] - 20
+refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))
-plot(testspecs)
 # Apply three different processing options
 testspecs.fix1 <- procspec(testspecs, fixneg='addmin')
 testspecs.fix2 <- procspec(testspecs, fixneg='zero')
