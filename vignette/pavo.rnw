@@ -507,8 +507,9 @@ peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 The segment classification analysis (Endler 1990) does not assume any particular visual system, but 
 instead tries to classify colors in a manner that captures common properties of many vertebrate (and 
 some invertebrate) visual systems. In essence, it breaks down the reflectance spectrum region of 
-interest into four equally-spaced regions, measuring the relative strength along those. This approxima
-tes a trichromatic opponency system with short, medium, and long-wavelength sensitive photoreceptors. 
+interest into four equally-spaced regions, measuring the relative strength along those. This 
+approximates a trichromatic opponency system with short, medium, and long-wavelength sensitive 
+photoreceptors. 
 
 Though somewhat simplistic, this model captures many of the properties of other, more complex ones, 
 but without many of the additional assumptions these make. It also provides results in a fairly 
@@ -529,7 +530,7 @@ MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lam
 \end{align}
 \end{subequations}
 
-Where $Qi$ represent the interquantile distances (e.g. for the human visible range, $Q_1$ = Blue, $Q_2$ = green, $Q_3$ = yellow and $Q_4$ = red)
+Where $Qi$ represent the interquantile distances (e.g. for the human visible range, $Q_1=blue$, $Q_2=green$, $Q_3=yellow$ and $Q_4=red$)
 
 In \pavo{}, the segment classification model is obtained through the function \code{segclass}:
 
