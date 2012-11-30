@@ -364,7 +364,8 @@ angles <- seq(15,70,by=5)
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
-plot(teal.sm[, -14], type='h', varying=angles, ylab="Incident angle (º)", las=1)
+plot(teal.sm[, -14], type='h', varying=angles, 
+     ylab="Incident angle (º)", las=1)
 @
 
 \begin{figure}[H]
@@ -503,23 +504,68 @@ peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 
 \subsection{Segment Classification Model}
 
-<<label=segplot, fig=TRUE, include=FALSE, width=6, height=4>>=
+The segment classification analysis (Endler 1990) does not assume any particular visual system, but 
+instead tries to classify colors in a manner that captures common properties of many vertebrate (and 
+some invertebrate) visual systems. In essence, it breaks down the reflectance spectrum region of 
+interest into four equally-spaced regions, measuring the relative strength along those. This approxima
+tes a trichromatic opponency system with short, medium, and long-wavelength sensitive photoreceptors. 
+
+Though somewhat simplistic, this model captures many of the properties of other, more complex ones, 
+but without many of the additional assumptions these make. It also provides results in a fairly 
+intuitive color space, in which the angle corresponds to hue and the distance from the center 
+corresponds to choma (Figure \ref{figure:segplot}; in fact, variables \code{S5} and \code{H4} from 
+\code{summary.rspec} are calculated from these relative segments, see Table \ref{table:tristim}). Note 
+that, while a segment analysis ranging from 300 or 400nm to 700nm corresponds quite closely to the 
+human visual system color wheel, any wavelength range can be analyzed in this way, returning a 
+360\ensuremath{^\circ} hue space delimited by the range used (\code{segclass} accepts the argument 
+\code{range} for user-specified limits that don't match the data range).
+
+The segment differences or ``opponents'' are calculated as:
+
+\begin{subequations}\label{eqsegment}
+\begin{align}
+LM = \frac{ R_\lambda \sum_{\lambda={Q4}} R_\lambda - \sum_{\lambda={Q2}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda} \\
+MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}
+\end{align}
+\end{subequations}
+
+Where $Qi$ represent the interquantile distances (e.g. for the human visible range, $Q_1$ = Blue, $Q_2$ = green, $Q_3$ = yellow and $Q_4$ = red)
+
+In \pavo{}, the segment classification model is obtained through the function \code{segclass}:
+
+<<>>=
+segclass(spec.sm)
+@
+
+where \code{LM} and \code{MS} are the segment differences or ``opponents'' (Eqn \ref{eqsegment}). 
+
+The example below uses idealized reflectance spectra to illustrate how the avian color space defined 
+from the segment classification maps to the human color wheel:
+
+
+<<label=segplot, results=hide, fig=TRUE, include=FALSE, width=6, height=4>>=
+# creating idealized specs with varying hue
 fakedata1 <-  sapply(seq(100,500,by=20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), dnorm(300:700,x+400,30))))
 
+# creating idealized specs with varying saturation
 fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
                      function(x) dnorm(300:700,550,x))
 
+# combining and converting to rspec
 fakedata.c <- data.frame(wl=300:700, fakedata1, fakedata2)
 fakedata.c <- as.rspec(fakedata.c)
 fakedata.c <- procspec(fakedata.c, "max")
-seg.fdc <- segclass(fakedata.c)
 
 fakedata1 <- as.rspec(data.frame(wl=300:700,fakedata1))
 fakedata1 <- procspec(fakedata1, "max")
 fakedata2 <- as.rspec(data.frame(wl=300:700,fakedata2))
 fakedata2 <- procspec(fakedata2, "max")
 
+# segment classification analysis
+seg.fdc <- segclass(fakedata.c)
+
+# plot results
 layout(cbind(1,2,3), widths=c(1,1,3))
 par(mar=c(5,4,2,0.5))
 plot(fakedata1, type='stack', col=spec2rgb(fakedata1)) 
