@@ -339,9 +339,11 @@ Another option is the \code{stack} plot.
 
 <<label=stack,fig=T,include=F>>=
 teal.norm <- procspec(teal, opt=c('min', 'max'))
-par(mfrow=c(1,2))
+par(mfrow=c(1,2), mar=c(2,2,2,2), oma=c(2,2,0,0))
 plot(teal[, -14], type='s', col=spec2rgb(teal))
 plot(teal.norm[, -14], type='s', col=spec2rgb(teal))
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 @
 
 \begin{figure}[H]
