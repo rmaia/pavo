@@ -5,35 +5,48 @@
 #' case the model reduces to the color space as described in Endler & Mielke (2005)
 #' and Stoddard & Prum (2008).
 #' 
-#' @param specdata (required) Data frame containing reflectance spectra at each column.
-#' Must contain a \code{wl} column identifying the wavelengths for the reflectance values.
-#' @param sens Data frame, such as one produced by \code{sensmodel} containing
+#' @param rspecdata(required) a data frame, possibly an object of class \code{rspec}
+#' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
+#' remaining columns. 
+#' @param sens data frame, such as one produced by \code{sensmodel} containing
 #' sensitivity for the user-defined visual system. The data frame must contain
 #' a 'wl' column with the range of wavelengths included, and the
 #' sensitivity for each other cone as a column. If not specified, the visual system will
 #' be chosen according to one of the choices from the argument \code{visual}.
-#' @param visual The visual system to be used. either (a) one of implemented systems: 
-#' \code{avg.uv}: average avian UV system; \code{avg.v}: average avian V system; 
-#' \code{bt}: Blue tit \emph{Cyanistes caeruleus} (REF); \code{star}: Starling
-#' \emph{Sturnus vulgaris} (REF); and \code{pfowl}: the peafowl 
-#' \emph{Pavo cristatus} (REF); or (b) a user specified data frame, such as one produced 
-#' by \code{sensmodel}, containing sensitivity for the user-defined visual system. 
-#' The data frame must contain a 'wl' column with the range of wavelengths included, and the
-#' sensitivity for each other cone as a column. 
-#' @param achromatic The sensitivity data to be used to calculate luminance (achromatic)
-#' cone stimulation. Currently implemented system are: \code{bt.dc}: Blue tit 
-#' \emph{Cyanistes caeruleus} double cone, \code{ch.dc}: Chicken \emph{Gallus gallus}
-#' double cone, \code{ml}: sum of the longest-wavelength cones, or \code{none}
-#' @param relative Should relative quantum catches be returned (i.e. is it a color
-#' space model? Defaults to \code{TRUE})
-#' @param illum either a vector containing the illuminant, or one of the options: 
-#' 'ideal' (total homogeneous illuminance accross wavelengths), 'bluesky', 'd65' (daylight),
-#' or 'forestshade' (Default assumes an idealized illuminant of 1)
+#' @param visual the visual system to be used. Options are:
+#' \itemize{
+#'	\item a data frame such as one produced containing by \code{sensmodel}, containing 
+#' sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
+#' column with the range of wavelengths included, and the sensitivity for each other 
+#' cone as a column
+#' \item \code{avg.uv}: average avian UV system
+#' \item \code{avg.v}: average avian V system
+#' \item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
+#' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
+#' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+#' }
+#' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
+#' cone stimulation. Currently implemented options are: 
+#' \itemize{
+#'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
+#'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
+#'  \item \code{ml}: sum of the two longest-wavelength cones
+#'  \item \code{none}
+#' }
+#' @param illum either a vector containing the illuminant, or one of the options:
+#' \itemize{ 
+#' \item \code{ideal}: homogeneous illuminance of 1 accross wavelengths (default)
+#' \item \code{'bluesky'}
+#' \item \code{'d65'}: standard daylight
+#' \item \code{'forestshade'}
+#' }
 #' @param bkg either a vector containing the background spectra, or an ideal (white) 
-#' background is used.
-#' in \code{specdata}. (Default assumes an idealized background of 1)
+#' background is used (Default assumes an idealized homogeneous background).
+#' @param relative should relative quantum catches be returned (i.e. is it a color
+#' space model? Defaults to \code{TRUE}).
+#'
 #' @return A list containing the following data frames:
-#' @return \code{descriptive}: descriptive statistics of maximum and normalized 
+#' @return \code{descriptive}: Descriptive statistics of maximum and normalized 
 #' reflectance, and wavelength of maximum reflectance (hue)
 #' @return \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
 #' \code{relative = TRUE})
@@ -52,9 +65,7 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-#ToDo: fix log adjustment when relative=T
-
-vismodel <- function(specdata, 
+vismodel <- function(rspecdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc","ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), bkg = 'ideal', relative=TRUE)
@@ -62,9 +73,9 @@ vismodel <- function(specdata,
 
 # remove & save colum with wavelengths
 
-wl_index <- which(names(specdata)=='wl')
-wl <- specdata[,wl_index]
-y <- specdata[,-wl_index]
+wl_index <- which(names(rspecdata)=='wl')
+wl <- rspecdata[,wl_index]
+y <- rspecdata[,-wl_index]
 
 visual2 <- try(match.arg(visual), silent=T)
 sens <- pavo::vissyst
@@ -105,7 +116,7 @@ if(!inherits(illum2,'try-error')){
     }
 
 if(illum2=='ideal')
-  illum <- rep(1,dim(specdata)[1])
+  illum <- rep(1,dim(rspecdata)[1])
 
 bg2 <- try(match.arg(bkg), silent=T)
 if(!inherits(bg2,'try-error')){
@@ -115,7 +126,7 @@ if(!inherits(bg2,'try-error')){
     }
 
 if(bg2=='ideal')
-  bkg <- rep(1,dim(specdata)[1])
+  bkg <- rep(1,dim(rspecdata)[1])
 
 
 # brightness
@@ -177,7 +188,8 @@ fi <- log(qi)
 if(relative){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   qi[,-dim(qi)[2]] <- qi[,-dim(qi)[2]]/rowSums(qi[,-dim(qi)[2]])
-  fi[,-dim(fi)[2]] <- 1/fi[,-dim(fi)[2]]/rowSums(1/fi[,-dim(fi)[2]])
+  fi[,-dim(fi)[2]] <- (fi[,-dim(fi)[2]]-rowSums(fi[,-dim(fi)[2]]))/rowSums((fi[,-dim(fi)[2]])-rowSums(fi[,-dim(fi)[2]]))
+
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
