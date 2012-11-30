@@ -45,7 +45,6 @@ vignette/pavo.synctex.gz
 
 vignette/pavo.synctex.gz
 
-<<<<<<< HEAD
 .DS_Store
 .DS_Store?
 .DS_Store
@@ -58,8 +57,6 @@ man/.DS_Store
 vignette/.DS_Store
 vignette/.Rhistory
 vignette_data/.DS_Store
-=======
 vignette/Rplots.pdf
 
 vignette/pavo-fixneg.pdf
->>>>>>> vignette add fixneg
