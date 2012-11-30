@@ -106,18 +106,40 @@ if (type=='overlay') {
   }
 }
 
+# # stack curves along y-axis
+# if (type=='stack') {
+#   # rspecdata2 <- sapply(1:ncol(rspecdata), function(z){rspecdata[, z] - min(rspecdata[, z])})
+#   rspecdata2 <- rspecdata
+#   ym <- apply(rspecdata2, 2, max)  
+#   plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
+#        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', col = col[1], 
+#        ...)
+#   if (ncol(rspecdata)>1) {
+#     for (i in 2:ncol(rspecdata)) 
+#       lines((rspecdata2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
+#     }
+# }
+
 # stack curves along y-axis
 if (type=='stack') {
-  # rspecdata2 <- sapply(1:ncol(rspecdata), function(z){rspecdata[, z] - min(rspecdata[, z])})
+  # rspecdata2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
   rspecdata2 <- rspecdata
-  ym <- apply(rspecdata2, 2, max)  
-  plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
-       xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', col = col[1], 
-       ...)
-  if (ncol(rspecdata)>1) {
+  y <- apply(rspecdata2, 2, max) 
+  ym <- cumsum(y)
+  ymins <- c(0, ym[-length(ym)])
+  plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
+       xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', 
+       col = col[1], ...)
+  if (ncol(specs)>1) {
     for (i in 2:ncol(rspecdata)) 
-      lines((rspecdata2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
+      lines((rspecdata2[, i] + ymins[i])~wl, col = col[i], ...)
     }
+#  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(rspecdata2), 1, 5), las=1, cex.axis=.5)
+  yend <- tail(rspecdata2, 1)
+  yloc <- ymins + yend
+  text(x = tail(wl, 1), y = yloc, names(rspecdata2), cex=.5, pos=4)
+#  abline(h=ymins)
 }
+
 
 }
