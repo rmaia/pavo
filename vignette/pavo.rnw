@@ -16,7 +16,7 @@
 \usepackage{caption}
 \usepackage{subcaption}
 \usepackage[utf8]{inputenc}
-
+\usepackage{array}
 \usepackage{geometry} 
 \geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
 %\setlength\parindent{0in}
@@ -351,7 +351,7 @@ mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 \includegraphics[width=4in]{pavo-stack}
 \end{center}
 \caption{Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance}
-\label{figure:overlay}
+\label{figure:stack}
 \end{figure}
 
 Since this dataset is three-dimensional (containing wavelengths, reflectance values and incident
@@ -374,11 +374,11 @@ plot(teal.sm[, -14], type='h', varying=angles,
 \begin{center}
 \includegraphics[width=4in]{pavo-heatmap}
 \end{center}
-\caption{Overlay plot with colors calculated from human color matching functions}
-\label{figure:overlay}
+\caption{Heatmap plot for angle-resolved reflectance measurements of the green-winged teal.}
+\label{figure:heatmap}
 \end{figure}
 
-Colors can be mapped to spectra using \code{spec2rgb} as shown in Figure \ref{figure:overlay}.
+Colors can be mapped to spectra using \code{spec2rgb} as shown in Figure \ref{figure:stack}.
 
 
 \section{Analyzing Spectral Data}
