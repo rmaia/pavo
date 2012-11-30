@@ -427,8 +427,7 @@ round(summary(spec.sm),2)
 \begin{center}
 \setlength{\extrarowheight}{6pt}
 \begin{tabular}{l l} \hline
-{\bf Color} & \\
-{\bf Variable} & {\bf Description} \\ 
+{\bf Color variable} & {\bf Description} \\ 
 \hline
 {$B_1 = \sum_{\lambda_{min}}^{\lambda_{max}} R_\lambda$} & \parbox[t]{3in}{Total reflectance: sum of reflectance values over all wavelengths.}  \\
 {$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{Mean brightness: average reflectance over all wavelengths.} \\
