@@ -44,3 +44,16 @@ vignette/pavo-stack.pdf
 vignette/pavo.synctex.gz
 
 vignette/pavo.synctex.gz
+
+.DS_Store
+.DS_Store?
+.DS_Store
+R/.DS_Store
+R_temp/.DS_Store
+data/.DS_Store
+examplespec/.DS_Store
+examplespec/.Rapp.history
+man/.DS_Store
+vignette/.DS_Store
+vignette/.Rhistory
+vignette_data/.DS_Store
