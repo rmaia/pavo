@@ -67,7 +67,6 @@ publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
-% numbered list of things
 \begin{enumerate}
 \item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc.)
@@ -387,7 +386,6 @@ analysis, as shown in Figure \ref{figure:overlay}.
 
 <<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
-data(teal)
 plot(teal, type='o', col=spec2rgb(teal))
 @
 \begin{figure}[H]
