@@ -94,7 +94,9 @@ if (type=='heatmap') {
 # coloring for overlay plot & others
 if (length(col) < ncol(rspecdata))
   col <- rep(col, ncol(rspecdata))
-if (any(class(col)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+# if (any(class(col)=='spec2rgb'))
+#   col <- col[select-1]
+if (any(names(col)%in%names(rspecdata)))
   col <- col[select-1]
 
 # overlay different spec curves
@@ -125,9 +127,12 @@ if (type=='overlay') {
 # stack curves along y-axis
 if (type=='stack') {
   # rspecdata2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
-  rspecdata2 <- rspecdata[, c(ncol(rspecdata):1)]
+  rspecdata2 <- as.data.frame(rspecdata[, c(ncol(rspecdata):1)])
   col <- rev(col)
-  y <- apply(rspecdata2, 2, max) 
+  if (length(select)==1){
+    y <- max(rspecdata2)} else {
+    y <- apply(rspecdata2, 2, max)
+  }
   ym <- cumsum(y)
   ymins <- c(0, ym[-length(ym)])
   plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
