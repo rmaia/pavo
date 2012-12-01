@@ -123,7 +123,8 @@ if (type=='overlay') {
 # stack curves along y-axis
 if (type=='stack') {
   # rspecdata2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
-  rspecdata2 <- rspecdata
+  rspecdata2 <- rspecdata[, c(ncol(rspecdata):1)]
+  col <- rev(col)
   y <- apply(rspecdata2, 2, max) 
   ym <- cumsum(y)
   ymins <- c(0, ym[-length(ym)])
@@ -137,8 +138,8 @@ if (type=='stack') {
 #  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(rspecdata2), 1, 5), las=1, cex.axis=.5)
   yend <- tail(rspecdata2, 1)
   yloc <- ymins + yend
-  text(x = tail(wl, 1), y = yloc, names(rspecdata2), cex=.5, pos=4)
-#  abline(h=ymins)
+  axis(side=4, at=yloc, labels=rev(select), las=1)
+#  abline(h=ymins, lty=3)
 }
 
 
