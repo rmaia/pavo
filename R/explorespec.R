@@ -20,7 +20,7 @@
 
 
 
-explorespec <- function (rspecdata, specreps=1, lwd=2, scale=c('free','equal')) {
+explorespec <- function (rspecdata, specreps=1, lwd=2, scale=c('free','equal'), ...) {
 
 
 if (specreps <= 0) stop ("Invalid specreps value")
@@ -86,6 +86,8 @@ if (nplots > 12)
 col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
               "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
 
+par(mar=c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
+
 for (i in 1:nplots){
   if (specreps == 1) {
   	bloc <- data.frame(rspecdata[i])
@@ -108,9 +110,9 @@ for (i in 1:nplots){
 
   if (!is.null(dim(bloc))){
 	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
-	     xlab="Wavelength (nm)",ylab="% Reflectance")}else{
+	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)}else{
       plot(wl, bloc, col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
-	     xlab="Wavelength (nm)",ylab="% Reflectance")
+	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)
       legend('topright', legend=leg2[length(leg2)], cex=0.9, bty="n", 
          text.col=legcolor)
       }
@@ -125,7 +127,8 @@ for (i in 1:nplots){
          text.col=legcolor)	}}}
    
 	}
+
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)
+
 }
-
-
-
