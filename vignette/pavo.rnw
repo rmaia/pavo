@@ -210,7 +210,7 @@ plots the resulting curves against the unsmoothed (raw) data in a convenient mul
 <<label=plotsmooth,fig=TRUE,include=FALSE,width=6,height=4>>=
 data(teal)
 dev.new(width=6,height=4)
-plotsmooth(teal, minsmooth = 0.05, maxsmooth = 0.25, curves = 4, specnum = 6)
+plotsmooth(teal, minsmooth = 0.05, maxsmooth = 0.25, curves = 4, specnum = 6, ask = FALSE)
 
 @
 
