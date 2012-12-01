@@ -6,12 +6,12 @@
     qcatch = c("Qi", "qi", "fi"))
 }
 \arguments{
-  \item{vismodeldata}{(required) Quantum catch color data.
-  Can be either the result from \code{vismodel} or
+  \item{vismodeldata}{(required) quantum catch color data.
+  Can be either the result from \code{\link{vismodel}} or
   independently calculated data (in the form of a data
   frame with four columns, representing the avian cones).}
 
-  \item{by}{Either a single value specifying the range of
+  \item{by}{either a single value specifying the range of
   color points for which summary colorspace variables
   should be calculated (for example, \code{by} = 3
   indicates summary will be calculated for groups of 3
@@ -23,7 +23,7 @@
   left blank, the summary statistics are calculated accross
   all color points in the data.}
 
-  \item{qcatch}{Quantum catch values to use in the model.
+  \item{qcatch}{quantum catch values to use in the model.
   Can be either \code{Qi}, \code{qi} or \code{fi} (defaults
   to \code{Qi}). \code{Qi}: Quantum catch for each
   photoreceptor \code{qi}: Quantum catch normalized to the
@@ -33,7 +33,7 @@
   proportional to the logarithm of the quantum catch)}
 }
 \value{
-  a data frame consisting of the following rows:
+  A data frame consisting of the following rows:
 
   \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch
   data used to calculate the remaining variables. NOTE:
@@ -61,7 +61,7 @@
   achievable (\code{r.vec/r.max})
 }
 \description{
-  calculates coordinates and colorimetric variables that
+  Calculates coordinates and colorimetric variables that
   represent reflectance spectra in the avian tetrahedral
   color space.
 }

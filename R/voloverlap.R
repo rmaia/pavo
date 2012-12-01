@@ -1,25 +1,25 @@
 #' Color volume overlap
 #'
-#' calculates the overlap between the volumes defined by two sets of points in cartesian
+#' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space
 #'
 #' @export
 #' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{tcs} 
 #' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
-#' @param plot Should the volumes and points be plotted? (defaults to \code{FALSE})
+#' @param plot should the volumes and points be plotted? (defaults to \code{FALSE})
 #' @return Calculates the overlap between the volumes defined by two set of points in
-#' colorspace. The volume from the overlap is then is given relative to:
+#' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
 #'	\item \code{vsmallest} the volume of the overlap divided by the smallest of that defined 
-#' by the the two imput sets of color points. Thus, if one of the volumes is entirely 
+#' by the the two input sets of color points. Thus, if one of the volumes is entirely 
 #' contained within the other, this overlap will be \code{vsmallest = 1}.
 #'  \item \code{vboth} the volume of the overlap divided by the combined volume of both 
-#' imput sets of color points.
+#' input sets of color points.
 #' }
 #' @note Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 #' simulations of points within the range of the volumes, and obtaining the frequency of 
-#' simulated values that fall inside the volumes defeined by both sets of color points.
+#' simulated values that fall inside the volumes defined by both sets of color points.
 #' @note Here we present an exact solution based on finding common vertices to both volumes
 #' and calculating its volume.
 #'

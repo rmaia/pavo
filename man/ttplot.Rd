@@ -2,36 +2,44 @@
 \alias{ttplot}
 \title{Plot a Tetrahedral Color Space}
 \usage{
-  ttplot(tcsres, size = 0.02, col = "black", new = T,
-    hspin = T, vspin = F, floor = T, grid = T, fill = T)
+  ttplot(tcsdata, size = 0.02, col = "black", new = TRUE,
+    hspin = FALSE, vspin = FALSE, floor = TRUE,
+    grid = TRUE, fill = TRUE)
 }
 \arguments{
-  \item{tcsres}{a (required) data frame, possibly a result
+  \item{tcsdata}{(required) a data frame, possibly a result
   from the \code{tcs} function, containing values for the
   'x', 'y' and 'z' coordinates as columns (labeled as
   such)}
 
-  \item{size}{size of the points in the plot}
+  \item{size}{size of the points in the plot (defaults to
+  0.02)}
 
-  \item{col}{color of the points in the plot}
+  \item{col}{color of the points in the plot (defaults to
+  black)}
 
-  \item{new}{should a new 3D plot be called?}
+  \item{new}{should a new 3D plot be called (defaults to
+  \code{TRUE})?}
 
   \item{hspin}{if \code{TRUE}, the graphic will spin
-  horizontally (around the 'z' axis)}
+  horizontally (around the 'z' axis)(defaults to
+  \code{FALSE}).}
 
   \item{vspin}{if \code{TRUE}, the graphic will spin
-  vertically (around the 'x' axis)}
+  vertically (around the 'x' axis)(defaults to
+  \code{FALSE}).}
 
   \item{floor}{if \code{TRUE}, a reference xy plane is
-  plotted under the tetrahedron}
+  plotted under the tetrahedron (defaults to \code{TRUE}).}
 
   \item{grid}{if \code{TRUE}, connects the polygon
-  outlining the volume occupied by points}
+  outlining the volume occupied by points (defaults to
+  \code{TRUE}).}
 
   \item{fill}{if \code{TRUE}, fills the volume occupied by
   points (WARNING: transparency is not saved properly if
-  exported using \code{rgl.postscript})}
+  exported using \code{rgl.postscript})(defaults to
+  \code{TRUE}).}
 }
 \value{
   \code{ttplot} creates a 3D plot using functions of the

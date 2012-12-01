@@ -7,43 +7,47 @@
     beta = TRUE, om = FALSE, integrate = TRUE)
 }
 \arguments{
-  \item{peaksense}{(required) A vector with peak
+  \item{peaksense}{(required) a vector with peak
   sensitivities for the cones to model}
 
   \item{range}{a vector of length 2 for the range over
   which to calculate the spectral sensitivities (defaults
   to 300nm to 700nm)}
 
-  \item{lambdacut}{A vector of same length as peaksense
-  that lists the cut-oof wavelength value for oil droplets.
+  \item{lambdacut}{a vector of same length as peaksense
+  that lists the cut-off wavelength value for oil droplets.
   Needs either \code{Bmid} or \code{oiltype} to also be
   entered. See Hart and Vorobyev (2005)}
 
-  \item{Bmid}{A vector of same length as peaksense that
+  \item{Bmid}{a vector of same length as peaksense that
   lists the gradient of line tangent to the absorbance
   spectrum of the oil droplets. See Hart and Vorobyev
   (2005)}
 
-  \item{oiltype}{A list of same length as peaksense that
+  \item{oiltype}{a list of same length as peaksense that
   lists the oil droplet types (currently accepts only "C",
   "Y", "R", "P") when Bmid is not known. Calculates Bmid
   based on the regression equations found in Hart ad
   Vorobyev (2005).}
 
-  \item{om}{Logical. If true cone senssitivity will be
-  corrected for ocular media transmission. Values from Hart
-  et al. (2005). (Defaults to FALSE).}
+  \item{beta}{logical. If \code{TRUE} the sensitivities
+  will include the beta peak See Govardovskii et al.(2000)
+  (defaults to \code{TRUE}).}
 
-  \item{integrate}{Logical. if \code{TRUE}, each curve is
+  \item{om}{logical. If \code{TRUE} cone senssitivity will
+  be corrected for ocular media transmission. Values from
+  Hart et al. (2005)(defaults to \code{FALSE}).}
+
+  \item{integrate}{logical. If \code{TRUE}, each curve is
   transformed to have a total area under the curve of 1
-  (best for visual models).}
+  (best for visual models)(defaults to \code{TRUE}).}
 }
 \value{
-  a data frame containing each cone model as a column.
+  A data frame containing each cone model as a column.
 }
 \description{
   Models spectral sensitivity (with oil droplets; optional)
-  based on peak cone sensitivity according to the model of
+  based on peak cone sensitivity according to the models of
   Govardovskii et al. (2000) and Hart & Vorobyev (2005).
 }
 \examples{

@@ -3,18 +3,17 @@
 #' Produces a 3D plot of a tetrahedral color space using OpenGL capabilities
 #'
 #' @import rgl
-#' @param tcsres a (required) data frame, possibly a result from the \code{tcs} 
-#' function, containing
-#' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
-#' @param size size of the points in the plot
-#' @param col color of the points in the plot
-#' @param new should a new 3D plot be called?
-#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)
-#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)
-#' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron
-#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points
+#' @param tcsdata (required) a data frame, possibly a result from the \code{tcs} 
+#' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
+#' @param size size of the points in the plot (defaults to 0.02)
+#' @param col color of the points in the plot (defaults to black)
+#' @param new should a new 3D plot be called (defaults to \code{TRUE})?
+#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE}).
+#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE}).
+#' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE}).
+#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE}).
 #' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
-#' is not saved properly if exported using \code{rgl.postscript})
+#' is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).
 #' @return \code{ttplot} creates a 3D plot using functions of the package \code{rgl}, 
 #' based on openGL capabilities. Plot is interactive and can be manipulated with the mouse 
 #' (left button: rotate along 'z' axis; right button: rotate along 'x' axis; 
@@ -41,12 +40,13 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-ttplot<- function(tcsres, size=0.02, col='black', new=T, hspin=T, vspin=F, floor=T, grid=T, fill=T) {
+ttplot<- function(tcsdata, size=0.02, col='black', new=TRUE, hspin=FALSE, 
+                  vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {
 
-# if(class(tcsres)=='tcs'){
-  # dat <- tcsres$tcs	
+# if(class(tcsdata)=='tcs'){
+  # dat <- tcsdata$tcs	
   # }else{
-    # dat <- tcsres
+    # dat <- tcsdata
     # }
 
 if(new)
@@ -78,7 +78,7 @@ segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], color='light
 
 spheres3d(0,0,0,col='grey', radius=0.01, lit=F)
 
-spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, lit=F)
 
 if(floor){
   vertices <- c( 
@@ -101,28 +101,28 @@ if(vspin)
 }
 
 
-ttpoints<- function(tcsres, size=0.02, col='black'){
+ttpoints<- function(tcsdata, size=0.02, col='black'){
 
-# if(class(tcsres)=='tcs'){
-  # dat <- tcsres$tcs	
+# if(class(tcsdata)=='tcs'){
+  # dat <- tcsdata$tcs	
   # }else{
-    # dat <- tcsres
+    # dat <- tcsdata
     # }
 
 
-spheres3d(tcsres[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, lit=F)
 }
 
-ttvol <- function(tcsres, col='black', grid=T, fill=T){
+ttvol <- function(tcsdata, col='black', grid=T, fill=T){
 
-# if(class(tcsres)=='tcs'){
-  # dat <- tcsres$tcs	
+# if(class(tcsdata)=='tcs'){
+  # dat <- tcsdata$tcs	
   # }else{
-    # dat <- tcsres
+    # dat <- tcsdata
     # }
 
-vol <- t(convhulln(tcsres[,c('x','y','z')],options='FA')$hull)
-coords <- tcsres[,c('x','y','z')]
+vol <- t(convhulln(tcsdata[,c('x','y','z')],options='FA')$hull)
+coords <- tcsdata[,c('x','y','z')]
 listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
 ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
 

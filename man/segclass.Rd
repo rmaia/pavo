@@ -15,7 +15,7 @@
   (defaults to 300nm to 700nm).}
 }
 \value{
-  a data frame with LM and MS segment classification
+  A data frame with LM and MS segment classification
   scores.
 }
 \description{

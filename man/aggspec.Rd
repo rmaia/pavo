@@ -2,12 +2,13 @@
 \alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-  aggspec(rspecdata, by, FXN = mean)
+  aggspec(rspecdata, by, FUN = mean)
 }
 \arguments{
-  \item{rspecdata}{(required) data frame containing the
-  spectra to be manipulated. If it contains a wavelength
-  column containing "wl", that column will be ignored.}
+  \item{rspecdata}{(required) data frame, possibly of class
+  \code{rspec} containing the spectra to be manipulated. If
+  it contains a wavelength column containing "wl", that
+  column will be ignored.}
 
   \item{by}{(required) either a single value specifying the
   range of spectra within the data frame to be combined
@@ -18,8 +19,8 @@
   (in which case the function will be applied to each group
   of spectra sharing the same identification).}
 
-  \item{FXN}{the function to be applied to the groups of
-  spectra. (defaults to \code{mean})}
+  \item{FUN}{the function to be applied to the groups of
+  spectra. (defaults to \code{\link{mean}})}
 }
 \value{
   A data frame of class \code{rspec} containing the spectra

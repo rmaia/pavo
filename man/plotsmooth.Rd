@@ -6,21 +6,21 @@
     curves = 5, specnum = 0)
 }
 \arguments{
-  \item{rspecdata(required)}{A data frame, possibly of
+  \item{rspecdata(required)}{a data frame, possibly of
   class \code{rspec}, which contains a column containing a
   wavelength range , named 'wl', and spectra data in
   remaining columns.}
 
-  \item{minsmooth}{The minimum f value of the loess
+  \item{minsmooth}{the minimum f value of the loess
   function to visualize (defaults to 0.05)}
 
-  \item{maxsmooth}{The maximum f value of the loess
+  \item{maxsmooth}{the maximum f value of the loess
   function to visualize (defaults to 0.20)}
 
-  \item{curves}{The number of curves to display on the same
+  \item{curves}{the number of curves to display on the same
   plot (defaults to 5)}
 
-  \item{specnum}{The number of spectral curves, from the
+  \item{specnum}{the number of spectral curves, from the
   data frame, to visualize (defaults to ALL)}
 }
 \value{

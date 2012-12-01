@@ -6,7 +6,7 @@
     scale = c("free", "equal"))
 }
 \arguments{
-  \item{rspecdata}{(required) a data frame, possibly an
+  \item{rspecdata(required)}{a data frame, possibly an
   object of class \code{rspec} that has wavelength range in
   the first column, named 'wl', and spectral measurements
   in the remaining columns.}
@@ -14,7 +14,7 @@
   \item{specreps}{number of spectra to include in each
   graph (defaults to 1)}
 
-  \item{lwd}{Width of the lines displayed on the plots
+  \item{lwd}{width of the lines displayed on the plots
   (defaults to 2)}
 
   \item{scale}{defines how the y-axis should be scaled.

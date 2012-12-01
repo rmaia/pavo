@@ -3,10 +3,10 @@
 #' Applies the visual models of Vorobyev et al. (1998) to calculate color distances
 #' with receptor noise based on relative photoreceptor densities.
 #' 
-#' @param vismodeldata (required) Quantum catch color data. Can be either the result
-#' from \code{vismodel} or independently calculated data (in the form of a data frame
+#' @param vismodeldata (required) quantum catch color data. Can be either the result
+#' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
-#' @param qcatch Quantum catch values to use in the model:
+#' @param qcatch quantum catch values to use in the model:
 #' \itemize{
 #' \item \code{Qi}: Quantum catch for each photoreceptor (default)
 #' \item \code{qi}: Quantum catch normalized to the adapting background according 
@@ -16,20 +16,22 @@
 #' }
 #' @param vis visual system phenotype to use in the model:
 #' \itemize{
-#' \item \code{tetra}: tetrachromatic color vision (default)
-#' \item \code{tri}: trichromatic color vision
-#' \item \code{di}: dichromatic color vision
+#' \item \code{tetra}: Tetrachromatic color vision (default)
+#' \item \code{tri}: Trichromatic color vision
+#' \item \code{di}: Dichromatic color vision
 #' }
-#' @param achro logical. if \code{TRUE}, last column of the data frame is used to calculate 
+#' @param achro logical. If \code{TRUE}, last column of the data frame is used to calculate 
 #' the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}
-#' @param n1,n2,n3,n4 Tetrachromatic photoreceptor densities for u, s, m & l (default to 
-#' blue tit densities: 1:2:2:4). If \code{vis} does not equal \code{'tetra'}, only \code{n1}
+#' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
+#' blue tit \emph{Cyanistes caeruleus} densities: 1:2:2:4). If \code{vis} does not equal \code{'tetra'}, only \code{n1}
 #' and \code{n2} (\code{vis='di'}) or \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
 #' are used for chromatic contrast (NOTE: \code{n4} is still the value used for the achromatic
 #' contrast.)
 #' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
 #' the default densities, the Weber fraction for the large cone will be 0.05, as
 #' estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})
+#' @param asdist logical. If \code{TRUE}, returns result in the form of a distance matrix; if
+#' \code{FALSE} returns as a data frame (see below; defaults to \code{FALSE})
 #' @return A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S, in JNDs)
 #' and \code{dL} is the achromatic contrast (delta L, in JNDs)
@@ -37,12 +39,11 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-#' ttd.sicalis <- ttdist(vis.sicalis, qcatch='fi', vis='tetra')}
+#' coldist.sicalis <- coldist(vis.sicalis, qcatch='fi', vis='tetra')}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
-
 
 #ToDo: Add Neural Noise model
 #ToDo: make luminance contrast calculation optional

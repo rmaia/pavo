@@ -31,15 +31,15 @@
   recommended when negative values are a product of bad
   reference calibration. (defaults to \code{zero})}
 
-  \item{subdir}{Should subdirectories within the
+  \item{subdir}{should subdirectories within the
   \code{where} folder be included in the search? (defaults
   to \code{FALSE})}
 
-  \item{subdir.names}{Should subdirectory path be included
+  \item{subdir.names}{should subdirectory path be included
   in the name of the spectra? (defaults to \code{FALSE})}
 }
 \value{
-  a data frame, of class \code{rspec}, containing
+  A data frame, of class \code{rspec}, containing
   individual imported spectral files as columns.
   Reflectance values are interpolated to the nearest
   wavelength integer.

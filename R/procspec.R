@@ -2,15 +2,16 @@
 #'
 #' Applies normalization and/or smoothing to spectra for further analysis or plotting
 #'
-#' @param rspecdata (required) an \code{rspec} object containing spectra to process
-#' @param select specification of which spectra to plot. Can be a numeric vector or 
-#' factor (e.g., \code{sex=='male'})
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' with a column with wavelength data, named 'wl', and the remaining column containing
+#' spectra to process.
 #' @param opt what type of processing options to apply. User can select multiple options
 #'            by providing a vector. Possibilites are:
 #' \itemize{
 #'	\item \code{"none"} does not perform any processing (default).
 #'	\item \code{"smooth"} applies LOESS smoothing to each spectrum using 
-#'                      \code{loess.smooth}.
+#'                      \code{\link{loess.smooth}}. Optimal smoothing parameter
+#'                      can be assessed by using \code{\link{plotsmooth}}.
 #' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
 #' 	\item \code{"maxmimum"} divides each spectrum by its maximum value
 #' 	\item \code{"sum"} divides each spectrum by summed values.
@@ -30,6 +31,7 @@
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}
 #' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
+#' @return A data frame of class \code{rspec} with the processed data.
 #' @export
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}

@@ -6,28 +6,30 @@
     smooth = TRUE, span = 0.2, plot = FALSE)
 }
 \arguments{
-  \item{rspecdata}{(required) Data frame, possibly of class
-  \code{rspec}, with a column with wavelength, named 'wl',
-  and spectra data in remaining columns.}
+  \item{rspecdata}{(required) a data frame, possibly an
+  object of class \code{rspec}, with a column with
+  wavelength data, named 'wl', and the remaining column
+  containing spectra to process.}
 
-  \item{smooth}{Logical. Determine if data should be
-  smoothed before extracting some of the values. When TRUE,
-  uses the loess smoothing to reduce spectral noise when
-  extracting variables for which bmax and bmaxneg are
-  required, and for which Rmax and Rmin are required
-  (defaults to TRUE). See notes.}
+  \item{smooth}{logical. If \code{TRUE} spectra will be
+  smoothed before extracting some of the values. When
+  \code{TRUE}, uses the loess smoothing to reduce spectral
+  noise when extracting variables for which bmax and
+  bmaxneg are required, and for which Rmax and Rmin are
+  required (defaults to \code{TRUE}). See notes.}
 
   \item{span}{the degree of smoothing if \code{smooth} is
-  TRUE. Larger values result in greater smoothing (defaults
-  to 0.2).}
+  \code{TRUE}. Larger values result in greater smoothing
+  (defaults to 0.2).}
 
   \item{range}{vector of length 2 indicating the lower and
   upper wavelength bounds used to calculate variables that
   refer to a color wheel (S5 and H4) (defaults to 300nm to
   700nm).}
 
-  \item{plot}{Logical. If TRUE, smooth spectra are plotted
-  for verification of the smoothing parameter.}
+  \item{plot}{logical. If \code{TRUE}, smooth spectra are
+  plotted for verification of the smoothing parameter
+  (defaults to \code{FALSE}).}
 }
 \value{
   A data frame containing 23 variables described in
@@ -39,7 +41,7 @@
   2008 distribution of the CLR sofware. Authors should
   reference both this package and Montgomerie (2006).
 
-  Description and notes on the measures
+  Description and notes on the measures:
 
   B1 (Total brightness): Sum of the relative reflectance
   over the entire spectral range (area under the curve).
@@ -135,25 +137,20 @@
 }
 \description{
   Extracts all 23 tristimulus color variables described in
-  Montgomerie (2006). Works with \code{rspec} class objects
-  generated from the \code{getspec} function or data frames
-  that contain wavelength in the first column (named
-  '\code{wl}') and spectra in subsequent columns.
+  Montgomerie (2006).
 }
 \note{
   If minimum wavelength is over 400, UV chroma is not
   computed.
 
   Variables which compute bmax and bmaxneg should be used
-  with caution, for they rely on smoothened curves to
-  remove noise, which would otherwise result in spurious
-  results. Make sure chosen smoothing parameters are
-  adequate.
+  with caution, for they rely on smoothed curves to remove
+  noise, which would otherwise result in spurious results.
+  Make sure chosen smoothing parameters are adequate.
 
   Smoothing affects only B3, S2, S4, S6, S10, H2, and H5
   calculation. All other variables are extracted using
-  non-smoothed data. Effects of this option can be checked
-  by comparing two outputs using \code{match}.
+  non-smoothed data.
 }
 \author{
   Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael

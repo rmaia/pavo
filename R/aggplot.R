@@ -36,8 +36,8 @@ aggplot <- function(rspecdata, by, FUN.center = mean, FUN.error = sd,
     lty = NULL, xlim = NULL, ylim = NULL, ...){
 
 #take aggregated data
-cntplotspecs <- aggspec(rspecdata,by=by, FXN=FUN.center)
-errplotspecs <- aggspec(rspecdata, by=by, FXN=FUN.error)
+cntplotspecs <- aggspec(rspecdata,by=by, FUN=FUN.center)
+errplotspecs <- aggspec(rspecdata, by=by, FUN=FUN.error)
 
 # make wavelength vector
 wl_index <- which(names(rspecdata)=='wl')

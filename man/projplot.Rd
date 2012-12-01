@@ -2,16 +2,16 @@
 \alias{projplot}
 \title{Hue projection plot}
 \usage{
-  projplot(tcsres, ...)
+  projplot(tcsdata, ...)
 }
 \arguments{
-  \item{tcres}{(required) Color space coordinates, possibly
-  a result from the \code{tcs} function, containing values
-  for the 'x', 'y' and 'z' coordinates as columns (labeled
-  as such).}
+  \item{tcsdata}{(required) color space coordinates,
+  possibly a result from the \code{\link{tcs}} function,
+  containing values for the 'x', 'y' and 'z' coordinates as
+  columns (labeled as such).}
 
   \item{...}{additonal parameters to be passed to the
-  plotting of data points}
+  plotting of data points.}
 }
 \value{
   \code{projplot} creates a 2D plot of color points
