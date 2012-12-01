@@ -384,19 +384,13 @@ We have implemented three methods of visualizing spectral data using \code{plot}
 	\item{\code{Heatmap} - false color map to show three dimensional data}
 \end{itemize}
 
-Which are in addition to the exploratory plotting offered by \code{explorespec}, as seen in Figues 
-\ref{figure:explorespec} and \ref{figure:sppmeans}. To showcase the capabilities of \code{plot.rspec}, 
-we will first load some reflectance data, included as the \code{teal} dataset in \pavo{}. 
-
-<<>>=
-data(teal)  # TODO add this
-dim(teal)
-@
-
-This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal 
-(\emph{Anas carolinensis}). Reflectance measurements were taken between 300 and 700 nm
-at different incident angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} 
-(in 5\ensuremath{^\circ} increments) (CHAD DUCK PAPER REF). 
+Which are in addition to the exploratory plotting offered by \code{explorespec}, as seen in Figues
+\ref{figure:explorespec} and \ref{figure:sppmeans}. To showcase the capabilities of
+\code{plot.rspec},  we will use the \code{teal} dataset included in \pavo{}. This dataset consists of
+reflectance spectra from the iridescent wing patch of a green-winged teal (\emph{Anas
+carolinensis}). Reflectance measurements were taken between 300 and 700 nm at different incident
+angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} (in 5\ensuremath{^\circ}
+increments) (CHAD DUCK PAPER REF).
 
 \subsubsection{The \code{overlay} Option}
 
@@ -404,7 +398,6 @@ We can start out by visualizing these spectra with \code{overlay} option in plot
 option \pavo{} offers is to convert reflectance spectra to their approximate perceived color, by using 
 the function \code{spec2rgb}. This can make for some very interesting plots and even exploratory data 
 analysis, as shown in Figure \ref{figure:overlay}.
-
 
 <<label=overlay,fig=T,include=F,width=7,height=5>>=
 par(mar=c(4,4,2,2))
@@ -453,15 +446,15 @@ angles) we can also use the \code{heatmap} function. First, it will be necessary
 for the incident angles each spectrum was measured at:
 
 <<>>=
-angles <- seq(15,70,by=5)
+angles <- seq(15, 70, by = 5)
 @
 
  Next, we will smooth the data with \code{procspec} and plot as a false color map (heatmap):
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
-plot(teal.sm, type='h', varying=angles, 
-     ylab="Incident angle (º)", las=1, useRaster=TRUE)
+plot(teal.sm, type = 'h', varying = angles, ylab = "Incident angle (º)", 
+     las = 1, useRaster = TRUE)
 @
 \begin{figure}[H]
 \begin{center}
@@ -497,8 +490,6 @@ aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)),
 \caption{Example plots created using \code{aggplot}. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale}
 \label{figure:aggplot}
 \end{figure}
-
-
 
 \section{Analyzing Spectral Data}
 
