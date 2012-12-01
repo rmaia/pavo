@@ -209,14 +209,13 @@ plots the resulting curves against the unsmoothed (raw) data in a convenient mul
 
 <<label=plotsmooth,fig=TRUE,include=FALSE,width=6,height=4>>=
 data(teal)
-dev.new(width=6,height=4)
-plotsmooth(teal, minsmooth = 0.05, maxsmooth = 0.25, curves = 4, specnum = 6, ask = FALSE)
-
+plotsmooth(teal, minsmooth = 0.05, maxsmooth = 0.25, curves = 5, specnum = 6, 
+           ask = FALSE)
 @
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=3in]{fig/pavo-plotsmooth}
+\includegraphics[width=5in]{fig/pavo-plotsmooth}
 \end{center}
 \caption{Diagnostic plots produced with \code{plotsmooth} to determine optimal smoothing parameter. Each panel shows raw spectral data (lower curve) and smoothed curves with sequentially higher smoothing parameters.}
 \label{figure:plotsmooth}
@@ -266,7 +265,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=6in]{fig/pavo-specnorm}
+\includegraphics[width=5in]{fig/pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center), and max and min normalizations (right).}
 \label{figure:specnorm}
@@ -407,7 +406,7 @@ the function \code{spec2rgb}. This can make for some very interesting plots and 
 analysis, as shown in Figure \ref{figure:overlay}.
 
 
-<<label=overlay,fig=T,include=F>>=
+<<label=overlay,fig=T,include=F,width=7,height=5>>=
 par(mar=c(4,4,2,2))
 plot(teal, type='o', col=spec2rgb(teal))
 @
