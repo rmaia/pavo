@@ -6,7 +6,7 @@
 #' and spectra data in remaining columns. 
 #' @param range vector of length 2 indicating the lower and upper wavelength bounds used
 #' to calculate segments (defaults to 300nm to 700nm).
-#' @return a data frame with LM and MS segment classification scores.
+#' @return A data frame with LM and MS segment classification scores.
 #' @export
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @references Endler, J. A. (1990) On the measurement and classification of 

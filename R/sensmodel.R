@@ -1,25 +1,27 @@
 #' Modelling spectral sensitivity
 #'
 #' Models spectral sensitivity (with oil droplets; optional) based on peak cone sensitivity
-#' according to the model of Govardovskii et al. (2000) and Hart & Vorobyev (2005).
+#' according to the models of Govardovskii et al. (2000) and Hart & Vorobyev (2005).
 #'
-#' @param peaksense (required) A vector with peak sensitivities for the cones to
+#' @param peaksense (required) a vector with peak sensitivities for the cones to
 #' model
 #' @param range a vector of length 2 for the range over which to calculate the spectral 
 #' sensitivities (defaults to 300nm to 700nm)
-#' @param lambdacut A vector of same length as peaksense that lists the cut-oof wavelength
+#' @param lambdacut a vector of same length as peaksense that lists the cut-off wavelength
 #' value for oil droplets. Needs either \code{Bmid} or \code{oiltype} to also be entered.
 #' See Hart and Vorobyev (2005)
-#' @param Bmid A vector of same length as peaksense that lists the gradient of line 
+#' @param Bmid a vector of same length as peaksense that lists the gradient of line 
 #' tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005) 
-#' @param oiltype A list of same length as peaksense that lists the oil droplet types
+#' @param oiltype a list of same length as peaksense that lists the oil droplet types
 #' (currently accepts only "C", "Y", "R", "P") when Bmid is not known. Calculates
 #' Bmid based on the regression equations found in Hart ad Vorobyev (2005).
-#' @param om Logical. If true cone senssitivity will be corrected for ocular media 
-#' transmission. Values from Hart et al. (2005). (Defaults to FALSE).
-#' @param integrate Logical. if \code{TRUE}, each curve is transformed to have a total area
-#' under the curve of 1 (best for visual models).
-#' @return a data frame containing each cone model as a column.
+#' @param beta logical. If \code{TRUE} the sensitivities will include the beta peak
+#' See Govardovskii et al.(2000) (defaults to \code{TRUE}).
+#' @param om logical. If \code{TRUE} cone senssitivity will be corrected for ocular media 
+#' transmission. Values from Hart et al. (2005)(defaults to \code{FALSE}).
+#' @param integrate logical. If \code{TRUE}, each curve is transformed to have a total area
+#' under the curve of 1 (best for visual models)(defaults to \code{TRUE}).
+#' @return A data frame containing each cone model as a column.
 #' @export
 #' @examples \dontrun{}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}

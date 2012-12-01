@@ -19,11 +19,11 @@
 #' (not recommended). \code{zero} is recommended when negative values are a product 
 #' of noise, whereas \code{min} is recommended when negative values are a product
 #' of bad reference calibration. (defaults to \code{zero})
-#' @param subdir Should subdirectories within the \code{where} folder be
+#' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE})
-#' @param subdir.names Should subdirectory path be included in the name of the
+#' @param subdir.names should subdirectory path be included in the name of the
 #' spectra? (defaults to \code{FALSE})
-#' @return a data frame, of class \code{rspec}, containing individual imported
+#' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
 #' @export
