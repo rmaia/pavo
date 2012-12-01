@@ -20,7 +20,7 @@
 
 
 
-explorespec2 <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
+explorespec <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
 
 
 if (by <= 0) stop ("Invalid by value")
