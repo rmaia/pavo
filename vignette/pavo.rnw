@@ -67,6 +67,7 @@ publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
+% numbered list of things
 \begin{enumerate}
 \item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc.)
@@ -144,8 +145,8 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
-explorespec(specs[,1:37], specreps=3) 
+<<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
+explorespec(specs[,1:37], by=3) 
 # 36 spectra plus the first (wl) column
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
@@ -240,9 +241,8 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \label{figure:specsmooth}
 \end{figure}
 
-In addition to smoothing, we can also try some other normalizations implemented in \code{procspec}.
-Note that the user can specify multiple processing  options that will be applied sequentially to the
-spectral data by \code{procspec}.
+We can also try some other normalizations. Note that the user can specify multiple processing 
+options that will be applied sequentially to the spectral data by \code{procspec}.
 
 <<results=hide>>=
 # Run some different normalizations
@@ -265,7 +265,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5in]{fig/pavo-specnorm}
+\includegraphics[width=6in]{fig/pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center), and max and min normalizations (right).}
 \label{figure:specnorm}
@@ -401,8 +401,10 @@ analysis, as shown in Figure \ref{figure:overlay}.
 
 <<label=overlay,fig=T,include=F,width=7,height=5>>=
 par(mar=c(4,4,2,2))
+data(teal)
 plot(teal, type='o', col=spec2rgb(teal))
 @
+
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=4in]{fig/pavo-overlay}

@@ -6,7 +6,7 @@
 #' @param rspecdata(required) a data frame, possibly an object of class \code{rspec}
 #' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 #' remaining columns. 
-#' @param specreps number of spectra to include in each graph (defaults to 1)
+#' @param by number of spectra to include in each graph (defaults to 1)
 #' @param lwd width of the lines displayed on the plots (defaults to 2)
 #' @param scale defines how the y-axis should be scaled. \code{'free'}: panels can vary in
 #' the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.
@@ -20,44 +20,41 @@
 
 
 
-explorespec <- function (rspecdata, specreps=1, lwd=2, scale=c('free','equal'), ...) {
+explorespec <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
 
 
-if (specreps <= 0) stop ("Invalid specreps value")
+if (by <= 0) stop ("Invalid by value")
 
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 rspecdata <- rspecdata[,-wl_index]
 leg2 <- names(rspecdata)
-if ((dim(rspecdata)[2]/specreps) != round((dim(rspecdata)[2]/specreps))){
-  warning("specreps is not a factor of the number of column in rspecdata")
-}
 
 scale <- match.arg(scale)
 
-nplots <- ceiling(dim(rspecdata)[2]/specreps)
+nplots <- ceiling(dim(rspecdata)[2]/by)
 
-if(specreps <=4){
+if(by <=4){
 #  par(mfrow=c(3,4),ask=TRUE)
   yaxismult <- c(0,1.4)
   }
 
-if (specreps > 4) {
+if (by > 4) {
 #  par(mfrow=c(2,3),ask=TRUE)
   yaxismult <- c(0.9,1.4)
   }
   	
-if (specreps > 7) {
+if (by > 7) {
 #  par(mfrow=c(2,2),ask=TRUE)
   yaxismult <- c(0.9,1.8)
   }
 
-if (specreps > 9) {
+if (by > 9) {
 #  par(mfrow=c(1,2),ask=TRUE)
   yaxismult <- c(0.9,1.4)
   }
 
-if (specreps > 12){
+if (by > 12){
 #  par(mfrow=c(1,1),ask=TRUE)
   yaxismult <- c(0.9,1.8)
   }
@@ -89,10 +86,10 @@ col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
 par(mar=c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
 
 for (i in 1:nplots){
-  if (specreps == 1) {
+  if (by == 1) {
   	bloc <- data.frame(rspecdata[i])
   	col_list <- 'black' }else{
-      bloc <- rspecdata[,(((i-1)*specreps)+1):min(i*specreps,dim(rspecdata)[2])]
+      bloc <- rspecdata[,(((i-1)*by)+1):min(i*by,dim(rspecdata)[2])]
   	  }
 
   if(scale=='free')
@@ -116,7 +113,7 @@ for (i in 1:nplots){
       legend('topright', legend=leg2[length(leg2)], cex=0.9, bty="n", 
          text.col=legcolor)
       }
- if (specreps == 1){
+ if (by == 1){
      legend('topright', legend=leg2[i], cex=0.9, bty="n", 
          text.col=legcolor)}
   if(!is.null(dim(bloc))){
@@ -125,10 +122,20 @@ for (i in 1:nplots){
       lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
   legend('topright', legend=names(bloc), cex=0.9, bty="n", 
          text.col=legcolor)	}}}
+
+if(i %% 12 == 0){
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)	
+}
    
 	}
 
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
+
+if ((dim(rspecdata)[2]/by) != round((dim(rspecdata)[2]/by))){
+  warning("by is not a factor of the number of column in rspecdata")
+}
+
 
 }
