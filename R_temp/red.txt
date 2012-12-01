@@ -1,2 +1,2 @@
-red
+blue
 is the best color
