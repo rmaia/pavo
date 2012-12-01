@@ -167,7 +167,7 @@ averaged for each new sample) or a vector specifying the identities of the spect
 combined (see below):
 
 <<>>=
-mspecs <- aggspec(specs, by=3, FXN=mean)
+mspecs <- aggspec(specs, by=3, FUN=mean)
 mspecs[1:5, 1:4]
 dim(mspecs) #data now has 72 spectra, one for each individual
 @
@@ -187,7 +187,7 @@ Instead, we are going to use the \code{spp} vector we created to tell the \code{
 function how to average the spectra in \code{mspec}:
 
 <<label=exploresppmeans, fig=TRUE, include=FALSE>>=
-sppspec <- aggspec(mspecs, by=spp, FXN=mean)
+sppspec <- aggspec(mspecs, by=spp, FUN=mean)
 round(sppspec[1:5, ],2)
 explorespec(sppspec, 6)
 @
