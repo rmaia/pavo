@@ -1,0 +1,39 @@
+\name{spec2rgb}
+\alias{spec2rgb}
+\title{Spectrum to rgb color conversion}
+\usage{
+  spec2rgb(rspecdata)
+}
+\arguments{
+  \item{rspecdata}{(required) a data frame, possibly an
+  object of class \code{rspec}, with a column with
+  wavelength data, named 'wl', and the remaining column
+  containing spectra to process.}
+}
+\value{
+  A character vector of class \code{spec2rgb} consisting of
+  hexadecimal color values for passing to further plotting
+  functions.
+}
+\description{
+  Calculates rgb values from spectra based on human color
+  matching functions
+}
+\examples{
+\dontrun{
+#INCLUDE EXAMPLE}
+}
+\author{
+  Chad Eliason \email{cme16@zips.uakron.edu}
+}
+\references{
+  CIE(1932). Commission Internationale de l'Eclairage
+  Proceedings, 1931. Cambridge: Cambridge University Press.
+
+  Color matching functions obtained from Colour and Vision
+  Research Laboratory online data respository at
+  \url{http://www.cvrl.org/}.
+
+  \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
+}
+

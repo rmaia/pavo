@@ -1,0 +1,70 @@
+\name{sensmodel}
+\alias{sensmodel}
+\title{Modelling spectral sensitivity}
+\usage{
+  sensmodel(peaksense, range = c(300, 700),
+    lambdacut = NULL, Bmid = NULL, oiltype = NULL,
+    beta = TRUE, om = FALSE, integrate = TRUE)
+}
+\arguments{
+  \item{peaksense}{(required) a vector with peak
+  sensitivities for the cones to model}
+
+  \item{range}{a vector of length 2 for the range over
+  which to calculate the spectral sensitivities (defaults
+  to 300nm to 700nm)}
+
+  \item{lambdacut}{a vector of same length as peaksense
+  that lists the cut-off wavelength value for oil droplets.
+  Needs either \code{Bmid} or \code{oiltype} to also be
+  entered. See Hart and Vorobyev (2005)}
+
+  \item{Bmid}{a vector of same length as peaksense that
+  lists the gradient of line tangent to the absorbance
+  spectrum of the oil droplets. See Hart and Vorobyev
+  (2005)}
+
+  \item{oiltype}{a list of same length as peaksense that
+  lists the oil droplet types (currently accepts only "C",
+  "Y", "R", "P") when Bmid is not known. Calculates Bmid
+  based on the regression equations found in Hart ad
+  Vorobyev (2005).}
+
+  \item{beta}{logical. If \code{TRUE} the sensitivities
+  will include the beta peak See Govardovskii et al.(2000)
+  (defaults to \code{TRUE}).}
+
+  \item{om}{logical. If \code{TRUE} cone senssitivity will
+  be corrected for ocular media transmission. Values from
+  Hart et al. (2005)(defaults to \code{FALSE}).}
+
+  \item{integrate}{logical. If \code{TRUE}, each curve is
+  transformed to have a total area under the curve of 1
+  (best for visual models)(defaults to \code{TRUE}).}
+}
+\value{
+  A data frame containing each cone model as a column.
+}
+\description{
+  Models spectral sensitivity (with oil droplets; optional)
+  based on peak cone sensitivity according to the models of
+  Govardovskii et al. (2000) and Hart & Vorobyev (2005).
+}
+\examples{
+\dontrun{}
+}
+\author{
+  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad
+  Eliason \email{cme16@zips.uakron.edu}
+}
+\references{
+  Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and
+  Donner K. 2000. In search of the visual pigment template.
+  Visual Neuroscience 17:509-528
+
+  Hart NS, and Vorobyev M. 2005. Modelling oil droplet
+  absorption spectra and spectral sensitivities of bird
+  cone photoreceptors. Journal of Comparative Physiology A.
+  191: 381-392
+}
+
