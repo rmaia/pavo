@@ -34,7 +34,7 @@
 \begin{document}
 
 
-\SweaveOpts{concordance=TRUE, prefix.string=pavo}
+\SweaveOpts{concordance=TRUE, prefix.string=fig/pavo}
 
 <<echo=FALSE, results=hide>>=
 library(pavo)
@@ -151,7 +151,7 @@ explorespec(specs[,1:37], specreps=3)
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=5in]{pavo-explorespecfig}
+\includegraphics[width=5in]{fig/pavo-explorespecfig}
 \end{center}
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{figure:explorespec}
@@ -190,7 +190,7 @@ explorespec(sppspec, 6)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics{pavo-exploresppmeans}
+\includegraphics{fig/pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
 \label{figure:sppmeans}
@@ -214,7 +214,7 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=3in]{pavo-specsmooth}
+\includegraphics[width=3in]{fig/pavo-specsmooth}
 \end{center}
 \caption{Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet.}
 \label{figure:specsmooth}
@@ -244,7 +244,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=6in]{pavo-specnorm}
+\includegraphics[width=6in]{fig/pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center), and max and min normalizations (right).}
 \label{figure:specnorm}
@@ -287,7 +287,7 @@ mtext("Wavelength (nm)", side=1, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5in]{pavo-pcaplot}
+\includegraphics[width=5in]{fig/pavo-pcaplot}
 \end{center}
 \caption{Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically 
 from lowest to highest PC1 value (right).}
@@ -325,7 +325,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5in]{pavo-fixneg}
+\includegraphics[width=5in]{fig/pavo-fixneg}
 \end{center}
 \caption{Plots showing original reflectance curve including negative values (left) and two processed curves using \code{fixneg=addmin} (top) and \code{fixneg=zero} bottom.}
 \label{figure:neg}
@@ -392,7 +392,7 @@ plot(teal, type='o', col=spec2rgb(teal))
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=4in]{pavo-overlay}
+\includegraphics[width=4in]{fig/pavo-overlay}
 \end{center}
 \caption{Overlay plot of the teal angle-dependent reflectance}
 \label{figure:overlay}
@@ -412,7 +412,7 @@ mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=4in]{pavo-stack}
+\includegraphics[width=4in]{fig/pavo-stack}
 \end{center}
 \caption{Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance}
 \label{figure:stack}
@@ -445,7 +445,7 @@ plot(teal.sm, type='h', varying=angles,
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=4in]{pavo-heatmap}
+\includegraphics[width=4in]{fig/pavo-heatmap}
 \end{center}
 \caption{Heatmap plot for angle-resolved reflectance measurements of the green-winged teal.}
 \label{figure:heatmap}
@@ -472,7 +472,7 @@ aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)),
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=6in]{pavo-aggplot}
+\includegraphics[width=6in]{fig/pavo-aggplot}
 \end{center}
 \caption{Example plots created using \code{aggplot}. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale}
 \label{figure:aggplot}
@@ -573,7 +573,7 @@ peakshape(spec.sm, plot=T)
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=5in]{pavo-fwhm}
+\includegraphics[width=5in]{fig/pavo-fwhm}
 \end{center}
 \caption{Plots from \code{peakshape}}
 \label{figure:fwhm}
@@ -592,7 +592,7 @@ peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=3in]{pavo-fwhm2}
+\includegraphics[width=3in]{fig/pavo-fwhm2}
 \end{center}
 \caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
 \label{figure:fwhm2}
@@ -675,7 +675,7 @@ plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=5in]{pavo-segplot}
+\includegraphics[width=5in]{fig/pavo-segplot}
 \end{center}
 \caption{Idealized reflectance spectra and their projection on the axes of segment classification}
 \label{figure:segplot}
