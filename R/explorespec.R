@@ -7,11 +7,11 @@
 #' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 #' remaining columns. 
 #' @param by number of spectra to include in each graph (defaults to 1)
-#' @param lwd width of the lines displayed on the plots (defaults to 2)
 #' @param scale defines how the y-axis should be scaled. \code{'free'}: panels can vary in
 #' the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.
+#' @param ... additional parameters to be passed to plot
 #' @return Spectral curve plots
-#' @note Number of plots presented per page depends on the number of curves per graph.
+#' @note Number of plots presented per page depends on the number of graphs produced.
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
@@ -20,7 +20,7 @@
 
 
 
-explorespec <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
+explorespec <- function (rspecdata, by=1, scale=c('free','equal'), ...) {
 
 
 if (by <= 0) stop ("Invalid by value")
@@ -106,9 +106,9 @@ for (i in 1:nplots){
   }
 
   if (!is.null(dim(bloc))){
-	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
+	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l',
 	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)}else{
-      plot(wl, bloc, col=legcolor[1] , ylim=yaxislims, type='l', lwd=lwd,
+      plot(wl, bloc, col=legcolor[1] , ylim=yaxislims, type='l',
 	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)
       legend('topright', legend=leg2[length(leg2)], cex=0.9, bty="n", 
          text.col=legcolor)
@@ -119,7 +119,7 @@ for (i in 1:nplots){
   if(!is.null(dim(bloc))){
     if (dim(bloc)[2] > 1){
     for(j in 2:dim(bloc)[2]){
-      lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
+      lines(wl, bloc[,j], col=legcolor[j], type='l')
   legend('topright', legend=names(bloc), cex=0.9, bty="n", 
          text.col=legcolor)	}}}
 
