@@ -144,7 +144,7 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
+<<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
 explorespec(specs[,1:37], specreps=3) 
 # 36 spectra plus the first (wl) column
 @
