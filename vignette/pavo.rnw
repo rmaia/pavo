@@ -149,7 +149,6 @@ only the 12 cardinal individuals measured:
 explorespec(specs[,1:37], specreps=3) 
 # 36 spectra plus the first (wl) column
 @
-
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=5in]{pavo-explorespecfig}
@@ -157,8 +156,6 @@ explorespec(specs[,1:37], specreps=3)
 \caption{Result from \code{explorespec}, showing the three measurements for each individual in separate panels}
 \label{figure:explorespec}
 \end{figure}
-
-\clearpage{}
 
 So our first step would be to take the average of each of these three measurements in order to 
 obtain average individual spectra to be used in further analyses. The function \code{aggspec} 
@@ -191,7 +188,6 @@ sppspec <- aggspec(mspecs, by=spp, FUN=mean)
 round(sppspec[1:5, ],2)
 explorespec(sppspec, 6)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics{pavo-exploresppmeans}
@@ -199,7 +195,6 @@ explorespec(sppspec, 6)
 \caption{Result from \code{explorespec} for species means}
 \label{figure:sppmeans}
 \end{figure}
-
 
  \subsubsection{Normalizing and Smoothing Spectra}
 
@@ -217,7 +212,6 @@ plot(sppspec[, 5]~sppspec[, 1], type='l', lwd=10, col='grey',
      xlab="Wavelength (nm)", ylab="Reflectance (%)")
 lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=3in]{pavo-specsmooth}
@@ -248,7 +242,6 @@ abline(h=c(0,1), lty=2)
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=6in]{pavo-specnorm}
@@ -292,7 +285,6 @@ abline(h=0, lty=2)
 plot(sppspec, select=sel, type='s', col=spec2rgb(sppspec))
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=5in]{pavo-pcaplot}
@@ -331,7 +323,6 @@ abline(h=0, lty=3)
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=5in]{pavo-fixneg}
@@ -374,17 +365,17 @@ We have implemented three methods of visualizing spectral data using \code{plot}
 
 Which are in addition to the exploratory plotting offered by \code{explorespec}, as seen in Figues 
 \ref{figure:explorespec} and \ref{figure:sppmeans}. To showcase the capabilities of \code{plot.rspec}, 
-we will first load some reflectance data. 
+we will first load some reflectance data, included as the \code{teal} dataset in \pavo{}. 
 
-% <<>>=
-% data(teal)  # TODO add this
-% dim(teal)
-% @
+<<>>=
+data(teal)  # TODO add this
+dim(teal)
+@
 
 This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal 
 (\emph{Anas carolinensis}). Reflectance measurements were taken between 300 and 700 nm
 at different incident angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} 
-(in 5\ensuremath{^\circ} increments). 
+(in 5\ensuremath{^\circ} increments) (CHAD DUCK PAPER REF). 
 
 \subsubsection{The \code{overlay} Option}
 
@@ -399,7 +390,6 @@ par(mar=c(4,4,2,2))
 data(teal)
 plot(teal, type='o', col=spec2rgb(teal))
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=4in]{pavo-overlay}
@@ -420,7 +410,6 @@ plot(teal.norm, type='s', col=spec2rgb(teal))
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=4in]{pavo-stack}
@@ -428,6 +417,14 @@ mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 \caption{Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance}
 \label{figure:stack}
 \end{figure}
+
+Note that in Figure \ref{figure:stack}, the y axis to the right includes the index of each spectrum. 
+This makes it easier to identify and subset specific spectra or groups of spectra using the 
+\code{select} argument in \code{plot.rspec}. Note also that the first index is actually 2, preserving 
+the sequence in the original dataset (since the first column is wavelength). Though this may seem 
+confusing at first (``why is my first spec number 2?'') this preserves subsetting hierarchy: using 
+\code{plot(teal, select=2)} will show the same spectra that would be selected if you use 
+\code{teal[ ,2]}.
 
 \subsubsection{The \code{heatmap} Option}
 
@@ -446,7 +443,6 @@ teal.sm <- procspec(teal, opt=c('smooth'))
 plot(teal.sm, type='h', varying=angles, 
      ylab="Incident angle (º)", las=1, useRaster=TRUE)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=4in]{pavo-heatmap}
@@ -471,10 +467,9 @@ par(mfrow=c(1,2), mar=c(4,4,2,2), oma=c(2,0,0,0))
 #plot using median and standard deviation, default colors
 aggplot(mspecs, spp, FUN.center=median, lwd=2, alpha=0.3)
 #plot using mean and standard error, in greyscale
-aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)), lwd=2, 
-       lty=1:7, lcol=1, shadecol='grey',  alpha=0.7)
+aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)), 
+        lwd=2, lty=1:7, lcol=1, shadecol='grey',  alpha=0.7)
 @
-
 \begin{figure}[H]
 \begin{center}
 \includegraphics[width=6in]{pavo-aggplot}
@@ -524,8 +519,6 @@ summary(spec.sm)
 round(summary(spec.sm),2)
 @
 
-
-% A table for filling in Montgomerie's color variables
 \begin{table}
 \begin{center}
 \setlength{\extrarowheight}{4pt}
@@ -578,7 +571,6 @@ dashed lines is the FWHM:
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
 peakshape(spec.sm, plot=T)
 @
-
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=5in]{pavo-fwhm}
@@ -598,8 +590,6 @@ to facilitate subsetting the spectra data frame:
 <<label=fwhm2, fig=TRUE, include=FALSE>>=
 peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 @
-
-
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=3in]{pavo-fwhm2}
@@ -683,7 +673,6 @@ plot(fakedata2, type='stack', col=spec2rgb(fakedata2))
 par(mar=c(5,4,2,0.5))
 plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 @
-
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=5in]{pavo-segplot}

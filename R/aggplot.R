@@ -100,18 +100,27 @@ if(is.null(lcol))
  shadecol = rgb(t(col2rgb(shadecol))/255, alpha=alpha)
  lcol = rgb(t(col2rgb(lcol))/255)
 
+# plot polygons first...
+
   plot(cntplotspecs[, 1]~wl, type = 'n', # c(min(rspecdata), max(rspecdata)), 
        xlab = 'Wavelength (nm)', ylab = 'Reflectance (%)', xlim = xlim, ylim = ylim,
        ...)
   polygon(polygon_data[,1]~polygon_wl, col=shadecol[1], border=NA)
-  lines(cntplotspecs[,1]~wl, col=lcol[1], lty=lty[1], ...)
   
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
   polygon(polygon_data[,i]~polygon_wl, col=shadecol[i], border=NA)
+  }
+  }
+  
+# ...then lines (so they are on top)
+
+  lines(cntplotspecs[,1]~wl, col=lcol[1], lty=lty[1], ...)
+  
+  if (ncol(cntplotspecs)>1) {
+    for (i in 2:ncol(cntplotspecs)){
   lines(cntplotspecs[,i]~wl, col=lcol[i], lty=lty[i], ...)
   }
   }
-
 
 }
