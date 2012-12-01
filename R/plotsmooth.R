@@ -18,7 +18,8 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
-plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0,
+                       ask = TRUE){
 
 if (curves == 1) stop ("No curves to compare (curves = 1)")
 
@@ -73,7 +74,7 @@ for (i in 1:nplots){
 }
 
 # Sets plot parameters based on the number of curves on the plots
-par(mfrow=c(3,4),ask=TRUE)
+par(mfrow=c(3,4),ask=ask)
 if (curves > 4) par(mfrow=c(2,3))
 if (curves > 7) par(mfrow=c(2,2))
 if (curves > 9) par(mfrow=c(1,2))
