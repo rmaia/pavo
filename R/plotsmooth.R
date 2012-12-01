@@ -59,16 +59,16 @@ for (i in 1:nplots){
   plotdata[, ((i-1)*curves)+2] <- 
 
   loess.smooth(wl ,rspecdata [, i+1], span = minsmooth, 
-  evaluation = length(wl), degree = 1)$y + 5
+  evaluation = length(wl), degree = 2, family = 'gaussian')$y + 5
   
   plotdata[, ((i-1)*curves)+curves] <-
   loess.smooth(wl ,rspecdata [, i+1], span = maxsmooth,
-  evaluation = length(wl), degree = 1)$y + ((curves-1)*5)
+  evaluation = length(wl), degree = 2, family = 'gaussian')$y + ((curves-1)*5)
   
   for (j in 1:(curves-3)){
     plotdata[, ((i-1)*curves)+2+j] <- 
     loess.smooth(wl ,rspecdata [, i+1], span = (minsmooth+(inc*j)),
-    evaluation = length(wl), degree = 1)$y + (10 + ((j-1)*5))
+    evaluation = length(wl), degree = 2, family = 'gaussian')$y + (10 + ((j-1)*5))
     }
 }
 
