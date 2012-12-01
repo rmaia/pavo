@@ -82,7 +82,7 @@ if (curves > 12) par(mfrow=c(1,1))
 # Plots all curves 
 # all below does not work yet
 
-
+par(mar=c(2,2,2,2), oma = c(3,3,0,0))
 
 for (i in 1:nplots){
 
@@ -101,8 +101,11 @@ plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelengt
 			lines (rspecdata[,1],bloc[,nextplot],cex=0.1)
 			nextplot<- nextplot+1}
 	}
-}
 
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)
+
+}
 
 
 
