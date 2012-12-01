@@ -97,7 +97,7 @@
 #' more than one maxima and minima. REF 9
 #' @note If minimum wavelength is over 400, UV chroma is not computed.
 #' @note Variables which compute bmax and bmaxneg should be used with caution, for they
-#' rely on smoothened curves to remove noise, which would otherwise result in spurious
+#' rely on smoothed curves to remove noise, which would otherwise result in spurious
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
 #' variables are extracted using non-smoothed data. Effects of this option can be
@@ -229,10 +229,11 @@ data <- rspecdata
 
 if(smooth){
   smoothspecs <- data.frame(apply(rspecdata,2, function(x) loess.smooth(wl, x, 
-                                    span=span, degree=1, evaluation=length(wl))$y) )
+                                  span=span, degree=2, family = 'gaussian', 
+                                  evaluation = length(wl))$y) )
   }else{
     smoothspecs <- rspecdata
-    warning('Spectral curves not smoothened - 
+    warning('Spectral curves not smoothed - 
     variables that rely on derivatives (S4, S10, H2 and H5) are not meaningful', call.=FALSE)
     }
 
