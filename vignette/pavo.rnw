@@ -396,7 +396,7 @@ analysis, as shown in Figure \ref{figure:overlay}.
 
 <<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
-teal <- readRDS('~/github/pavo/vignette_data/teal.rda')
+data(teal)
 plot(teal, type='o', col=spec2rgb(teal))
 @
 
