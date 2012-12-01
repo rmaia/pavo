@@ -84,7 +84,7 @@ version of \pavo{} can be found on \href{https://github.com/rmaia/pavo}{github}.
 
 The data used in this example is available from 
 \href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
-{github by clicking here}\footnote{in case you can't click the printed version you have:\\ 
+{github by clicking here}\footnote{in case you printed this out and thus can't click the link:\\ 
 \url{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}}. 
 You can download and extract it to follow the vignette.
 
@@ -97,6 +97,10 @@ from each individual.
 
 The samples do not have the same sample sizes and have additional peculiarities that should
 emphasize the flexibility \pavo{} offers, as we'll see below.
+
+In addition, \pavo{} includes two datasets that can be called with the \code{data} function. 
+\code{data(teal)} will be used in this vignette, but \code{data(sicalis)} is also available. See help 
+for more information.
 
 \section{Organizing and Processing Spectral Data}
 
@@ -242,8 +246,13 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \label{figure:specsmooth}
 \end{figure}
 
-We can also try some other normalizations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, \code{opt="min"}, Figure \ref{figure:specnorm} left panel) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; \code{opt="max"}, Figure \ref{figure:specnorm} center panel). Note that the user can specify multiple processing 
-options that will be applied sequentially to the spectral data by \code{procspec} (Figure \ref{figure:specnorm} right panel).
+We can also try some other normalizations. Options include subtracting the minimum reflectance of a 
+spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, 
+\code{opt="min"}, Figure \ref{figure:specnorm} left panel) and making the reflectance at all 
+wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; 
+\code{opt="max"}, Figure \ref{figure:specnorm} center panel). Note that the user can specify multiple 
+processing options that will be applied sequentially to the spectral data by \code{procspec} (Figure 
+\ref{figure:specnorm} right panel).
 
 <<results=hide>>=
 # Run some different normalizations
