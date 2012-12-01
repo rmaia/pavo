@@ -20,7 +20,7 @@
 
 
 
-explorespec <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
+explorespec2 <- function (rspecdata, by=1, lwd=2, scale=c('free','equal'), ...) {
 
 
 if (by <= 0) stop ("Invalid by value")
@@ -29,9 +29,6 @@ wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 rspecdata <- rspecdata[,-wl_index]
 leg2 <- names(rspecdata)
-if ((dim(rspecdata)[2]/by) != round((dim(rspecdata)[2]/by))){
-  warning("by is not a factor of the number of column in rspecdata")
-}
 
 scale <- match.arg(scale)
 
@@ -125,10 +122,20 @@ for (i in 1:nplots){
       lines(wl, bloc[,j], col=legcolor[j], type='l', lwd=lwd)
   legend('topright', legend=names(bloc), cex=0.9, bty="n", 
          text.col=legcolor)	}}}
+
+if(i %% 12 == 0){
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)	
+}
    
 	}
 
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
+
+if ((dim(rspecdata)[2]/by) != round((dim(rspecdata)[2]/by))){
+  warning("by is not a factor of the number of column in rspecdata")
+}
+
 
 }

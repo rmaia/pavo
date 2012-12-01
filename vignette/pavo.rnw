@@ -146,7 +146,7 @@ will adjust the number of panels per page accordingly. We will exemplify this fu
 only the 12 cardinal individuals measured:
 
 <<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
-explorespec(specs[,1:37], specreps=3) 
+explorespec(specs[,1:37], by=3) 
 # 36 spectra plus the first (wl) column
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
