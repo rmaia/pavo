@@ -2,7 +2,9 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @param rspecdata (required) an \code{rspec} object containing spectra to plot
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' with a column with wavelength data, named 'wl', and the remaining column containing
+#' spectra to plot.
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param type what type of plot should be drawn. Possibilities are: 

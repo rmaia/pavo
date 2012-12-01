@@ -1,30 +1,29 @@
 #' Tristimulus color variables
 #'
 #' Extracts all 23 tristimulus color variables described in 
-#' Montgomerie (2006). Works with \code{rspec} class objects generated 
-#' from the \code{getspec} function or data frames that contain wavelength in
-#' the first column (named '\code{wl}') and spectra in subsequent columns.
+#' Montgomerie (2006).
 #'
-#' @param rspecdata (required) Data frame, possibly of class \code{rspec},
-#' with a column with wavelength, named 'wl', and spectra data in remaining columns. 
-#' @param smooth Logical. Determine if data should be smoothed 
-#' before extracting some of the values. When TRUE, uses the loess smoothing to 
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' with a column with wavelength data, named 'wl', and the remaining column containing
+#' spectra to process.
+#' @param smooth logical. If \code{TRUE} spectra will be smoothed 
+#' before extracting some of the values. When \code{TRUE}, uses the loess smoothing to 
 #' reduce spectral noise when extracting variables for which bmax and
-#' bmaxneg are required, and for which Rmax and Rmin are required (defaults to TRUE).
+#' bmaxneg are required, and for which Rmax and Rmin are required (defaults to \code{TRUE}).
 #' See notes. 
-#' @param span the degree of smoothing if \code{smooth} is TRUE. Larger values result
+#' @param span the degree of smoothing if \code{smooth} is \code{TRUE}. Larger values result
 #' in greater smoothing (defaults to 0.2).
 #' @param range vector of length 2 indicating the lower and upper wavelength bounds used
 #' to calculate variables that refer to a color wheel (S5 and H4) (defaults to 300nm to 700nm).
-#' @param plot Logical. If TRUE, smooth spectra are plotted for verification of the
-#' smoothing parameter.
+#' @param plot logical. If \code{TRUE}, smooth spectra are plotted for verification of the
+#' smoothing parameter (defaults to \code{FALSE}).
 #' @return A data frame containing 23 variables described in Montgomerie (2006)
 #' with spectra name as row names. 
 #' @return The tristimulus color variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
 #' file from the May 2008 distribution of the CLR sofware. Authors should reference 
 #' both this package and Montgomerie (2006).
-#' @return Description and notes on the measures
+#' @return Description and notes on the measures:
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
 #' range (area under the curve). Frequently used but should be discouraged because
@@ -100,8 +99,7 @@
 #' rely on smoothed curves to remove noise, which would otherwise result in spurious
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
-#' variables are extracted using non-smoothed data. Effects of this option can be
-#' checked by comparing two outputs using \code{match}.
+#' variables are extracted using non-smoothed data. 
 #' @export
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
