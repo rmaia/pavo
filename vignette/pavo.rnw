@@ -351,6 +351,14 @@ What is more important, to preserve reflectance values or the total shape of the
 
 \section{Visualizing Spectral Data}
 
+\pavo{} offers three main plotting functions. The main one is \code{plot.rspec}, which combines 
+several different options in a flexible framework for most commonly used purposes. The 
+\code{explorespec} function aims at providing initial exploratory analysis, as demonstrated in Section 
+1, Figures \ref{figure:explorespec} and \ref{figure:sppmeans}. Finally \code{aggplot} provides a 
+simple framework for publication-quality plots of aggregated spectral data.
+
+\subsection{The \code{plot.rspec} Function Options}
+
 Since \pavo{} uses the class \code{rspec} to identify spectral data, the function \code{plot.rspec} 
 can be called simply by calling \code{plot(data)}. If the object is not of class \code{rspec} the 
 multivariate visualization methods will not work as expected, so it might be useful to check the data 
@@ -378,6 +386,8 @@ This dataset consists of reflectance spectra from the iridescent wing patch of a
 at different incident angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} 
 (in 5\ensuremath{^\circ} increments). 
 
+\subsubsection{The \code{overlay} Option}
+
 We can start out by visualizing these spectra with \code{overlay} option in plot.rspec. Another neat 
 option \pavo{} offers is to convert reflectance spectra to their approximate perceived color, by using 
 the function \code{spec2rgb}. This can make for some very interesting plots and even exploratory data 
@@ -398,6 +408,8 @@ plot(teal, type='o', col=spec2rgb(teal))
 \label{figure:overlay}
 \end{figure}
 
+\subsubsection{The \code{stack} Option}
+
 Another option is the \code{stack} plot (again, with human vision approximations of the color produced by the spectra using \code{spec2rgb}).
 
 <<label=stack,fig=T,include=F>>=
@@ -416,6 +428,8 @@ mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 \caption{Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance}
 \label{figure:stack}
 \end{figure}
+
+\subsubsection{The \code{heatmap} Option}
 
 Since this dataset is three-dimensional (containing wavelengths, reflectance values and incident
 angles) we can also use the \code{heatmap} function. First, it will be necessary to define a vector
@@ -443,6 +457,33 @@ plot(teal.sm, type='h', varying=angles,
 
 These plots can be very useful to observe changes over time, for example, or any other type of 
 continuous variation.
+
+\subsection{The \code{aggplot} Function}
+
+\code{aggplot} has a very similar interface to \code{aggspec}, allowing for quick plotting of 
+aggregated spectra combined by a factor, such as species, sex, experimental treatment, and so on. Its 
+main output is a plot with lines of group mean spectra outlined by a shaded area indicating some 
+measure of variability, such as the standard deviation of the group. Note that functions that aren't 
+already implemented in R must be passed like they would be to functions such as \code{apply}.
+
+<<label=aggplot, fig=TRUE, include=FALSE, width=8, height=4>>=
+par(mfrow=c(1,2), mar=c(4,4,2,2), oma=c(2,0,0,0))
+#plot using median and standard deviation, default colors
+aggplot(mspecs, spp, FUN.center=median, lwd=2, alpha=0.3)
+#plot using mean and standard error, in greyscale
+aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)), lwd=2, 
+       lty=1:7, lcol=1, shadecol='grey',  alpha=0.7)
+@
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=6in]{pavo-aggplot}
+\end{center}
+\caption{Example plots created using \code{aggplot}. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale}
+\label{figure:aggplot}
+\end{figure}
+
+
 
 \section{Analyzing Spectral Data}
 
