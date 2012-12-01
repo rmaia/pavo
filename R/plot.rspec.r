@@ -133,8 +133,8 @@ if (type=='stack') {
   plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', 
        col = col[1], ...)
-  if (ncol(specs)>1) {
-    for (i in 2:ncol(rspecdata)) 
+  if (ncol(rspecdata2)>1) {
+    for (i in 2:ncol(rspecdata2)) 
       lines((rspecdata2[, i] + ymins[i])~wl, col = col[i], ...)
     }
 #  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(rspecdata2), 1, 5), las=1, cex.axis=.5)
