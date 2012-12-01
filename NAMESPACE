@@ -1,3 +1,4 @@
+export(aggplot)
 export(aggspec)
 export(as.rspec)
 export(bgandilum)

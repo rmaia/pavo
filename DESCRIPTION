@@ -41,3 +41,4 @@ Collate:
     'vismodel.R'
     'voloverlap.R'
     'as.rspec.r'
+    'aggplot.R'
