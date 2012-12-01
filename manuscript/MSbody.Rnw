@@ -1,0 +1,54 @@
+\documentclass{article}
+
+% Definitions
+\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
+\newcommand{\code}[1]{{\tt #1}}  % text formate for code
+\setlength{\parindent}{0in}
+\setlength{\parskip}{.1in}
+\setlength{\textwidth}{140mm}
+\setlength{\oddsidemargin}{10mm}
+\usepackage{amsmath}
+\usepackage{hyperref}
+\usepackage{float}
+\usepackage{authblk}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{graphicx}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[utf8]{inputenc}
+\usepackage{array}
+\usepackage{geometry} 
+\geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
+%\setlength\parindent{0in}
+
+% define colors
+\hypersetup{
+  colorlinks,
+  citecolor=violet,
+  linkcolor=black,
+  urlcolor=MidnightBlue
+  }
+\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
+
+
+\begin{document}
+
+
+\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
+
+<<echo=FALSE, results=hide>>=
+library(pavo)
+ps.options(pointsize=12)
+options(width=60)
+@
+
+\title[\pavo{}: an R package]{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Color Data in R}
+\author[1]{Rafael Maia}
+\author[2]{Pierre-Paul Bitton}
+\author[1]{Chad Eliason}
+\affil[1]{Integrated Bioscience PhD Program, University of Akron, Akron OH}
+\affil[2]{Department of Biological Sciences, University of Windsor, Windsor ON}
+\maketitle
+
+
+\end{document}
