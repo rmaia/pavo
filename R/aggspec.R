@@ -3,7 +3,8 @@
 #' Combines spectra (by taking the average, for example) according to 
 #' an index or a vector of identities.
 #' 
-#' @param rspecdata (required) data frame containing the spectra to be manipulated. If
+#' @param rspecdata (required) data frame, possibly of class \code{rspec}
+#' containing the spectra to be manipulated. If
 #' it contains a wavelength column containing "wl", that column will be ignored.
 #' @param by (required) either a single value specifying the range of spectra within
 #' the data frame to be combined (for example, \code{by} = 3 indicates the function
@@ -11,7 +12,7 @@
 #' a vector containing identifications for the columns in the spectra data frame
 #' (in which case the function will be applied to each group of spectra sharing the
 #' same identification).
-#' @param FXN the function to be applied to the groups of spectra. (defaults to \code{mean})
+#' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
@@ -32,7 +33,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-aggspec <- function(rspecdata, by, FXN = mean) {
+aggspec <- function(rspecdata, by, FUN = mean) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -80,7 +81,7 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)
 
-dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FXN))
+dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FUN))
 
 colnames(dat) <- unique(by0)
 res<- data.frame(cbind(wl=wl, dat))
