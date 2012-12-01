@@ -203,8 +203,9 @@ publication. For example, electrical noise can produce unwanted "spikes" in refl
 \pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the
 reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700  nm)
 wavelength ranges (see Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we will
-use local regression smooth implemented by the \code{loess.smooth} function in \code{R}. However, we
-will first use the \code{plotsmooth} function to determine a suitable smoothing parameter
+use local regression smooth implemented by the \code{loess.smooth} function in \code{R}, wrapped in the \code{opt="smooth"} argument of \code{procspec}. 
+
+But first, let's use the \code{plotsmooth} function to determine a suitable smoothing parameter
 (\code{span}). This function allows you to set a minimum and maximum smoothing parameter to try and
 plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
 
@@ -241,8 +242,8 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \label{figure:specsmooth}
 \end{figure}
 
-We can also try some other normalizations. Note that the user can specify multiple processing 
-options that will be applied sequentially to the spectral data by \code{procspec}.
+We can also try some other normalizations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, \code{opt="min"}, Figure \ref{figure:specnorm} left panel) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; \code{opt="max"}, Figure \ref{figure:specnorm} center panel). Note that the user can specify multiple processing 
+options that will be applied sequentially to the spectral data by \code{procspec} (Figure \ref{figure:specnorm} right panel).
 
 <<results=hide>>=
 # Run some different normalizations
