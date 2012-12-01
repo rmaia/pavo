@@ -97,20 +97,20 @@ plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelengt
 	legend (rspecdata[1, 1]-20,yaxismax+6,legend=legnames,cex=0.7,bty="n", xjust=0)
 	title(titlenames[i])
 
+if(i %% 6 == 0){
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)	
+}
+
 	nextplot = 2
 		while (nextplot < ncol(bloc)+1) { 						
 			lines (rspecdata[,1],bloc[,nextplot],cex=0.1)
 			nextplot<- nextplot+1}
+
+
 	}
 
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
 
 }
-
-
-
-
-
-
-

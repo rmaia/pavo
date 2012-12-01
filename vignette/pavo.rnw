@@ -146,7 +146,7 @@ will adjust the number of panels per page accordingly. We will exemplify this fu
 only the 12 cardinal individuals measured:
 
 <<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
-explorespec(specs[,1:37], by=3) 
+explorespec(specs[,1:37], by=3, lwd=2) 
 # 36 spectra plus the first (wl) column
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
@@ -186,7 +186,7 @@ function how to average the spectra in \code{mspec}:
 <<label=exploresppmeans, fig=TRUE, include=FALSE>>=
 sppspec <- aggspec(mspecs, by=spp, FUN=mean)
 round(sppspec[1:5, ],2)
-explorespec(sppspec, 6)
+explorespec(sppspec, by=6, lwd=3)
 @
 \begin{figure}[H]
 \begin{center}
@@ -315,7 +315,7 @@ from lowest to highest PC1 value (right).}
 \label{figure:pcaplot}
 \end{figure}
 
-\subsubsection{Dealing with negative values in spectra}
+\subsubsection{Dealing With Negative Values in Spectra}
 
 Negative values in spectra are unwanted, as they can affect estimates of color variables. Nonetheless, 
 certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the
@@ -512,7 +512,7 @@ extensively developed to represent colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
 
-\subsubsection{Trichromatic variables}
+\subsubsection{Trichromatic Variables}
 
 Obtaining trichromatic color variables (related to hue, saturation and value) is pretty
 straightforward in \pavo{}. Since reflectance spectra is stored in an object of class  \code{rspec},
@@ -565,7 +565,7 @@ The complete set of tristimulus variables calculated by \code{summary} in \pavo{
 
 \clearpage{}
 
-\subsubsection{Peak shape descriptors}
+\subsubsection{Peak Shape Descriptors}
 
 Particularly in cases of reflectance spectra that have a single, discrete peak, it might be useful
 to obtain variables that describe that peak's properties. The \code{peakshape} function identifies
@@ -699,7 +699,7 @@ plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 <<label=usmlplot,fig=T,include=F,width=8.5,height=6.5>>=
 #plot(mspecs, col=spec2rgb(mspecs))
 #vismod1 <- vismodel(mspecs, visual = "avg.uv")
-vismod1 <- vismodel(sppspec, visual = "avg.uv")
+vismod1 <- vismodel(sppspec, visual = "avg.uv", relative=FALSE)
 par(mfrow=c(2,6), oma=c(3,3,0,0))
 layout(rbind(c(2,1,4,3,6,5), c(1,1,3,3,5,5), c(8,7,10,9,12,11), c(7,7,9,9,11,11)))
 for (i in 1:6) {
