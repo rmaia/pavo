@@ -302,6 +302,44 @@ from lowest to highest PC1 value (right).}
 \label{figure:pcaplot}
 \end{figure}
 
+\subsubsection{Dealing with negative values in spectra}
+
+Negative values in spectra are unwanted, as they can affect estimates of color variables. Certain
+spectrometer manufacturers allow negative values to be saved. To handle negative values, the
+\code{procspec} function has an option called \code{fixneg}. The two options available are (1)
+adding the absolute value of the most negative value to the whole spectrum (\code{fixneg = addmin})
+and (2) changing all negative values to zero (\code{fixneg = zero}).
+
+<<results=hide>>=
+# Create a duplicate spectrum and add some negative values
+refl <- sppspec[, 7] - 20
+testspecs <- as.rspec(cbind(c(300:700), refl))
+# Apply three different processing options
+testspecs.fix1 <- procspec(testspecs, fixneg='addmin')
+testspecs.fix2 <- procspec(testspecs, fixneg='zero')
+@
+
+<<label=fixneg, fig=T, include=F, width=6, height=4>>=
+par(mar=c(2,2,2,2), oma=c(3,3,0,0))
+layout(cbind(c(1,1),c(2,3)), widths=c(2,1,1))
+plot(testspecs, select = 2, ylim=c(-10,40))
+abline(h=0, lty=3)
+plot(testspecs.fix1, select = 2, ylim=c(-10,40))
+abline(h=0, lty=3)
+plot(testspecs.fix2, select = 2, ylim=c(-10,40))
+abline(h=0, lty=3)
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)
+@
+
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=4in]{pavo-fixneg}
+\end{center}
+\caption{Plots showing original reflectance curve including negative values (left) and two processed curves using \code{fixneg=addmin} (top) and \code{fixneg=zero} bottom.}
+\label{figure:stack}
+\end{figure}
+
 \section{Visualizing Spectral Data}
 
 The function \code{plot.rspec} can be called simply by typing \code{plot(rspecs)}, as it relies on
@@ -368,7 +406,7 @@ angles <- seq(15,70,by=5)
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
 plot(teal.sm[, -14], type='h', varying=angles, 
-     ylab="Incident angle (º)", las=1)
+     ylab="Incident angle (º)", las=1, useRaster=TRUE)
 @
 
 \begin{figure}[H]
