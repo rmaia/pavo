@@ -67,6 +67,7 @@ publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
+% numbered list of things
 \begin{enumerate}
 \item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc.)
@@ -144,7 +145,7 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
+<<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
 explorespec(specs[,1:37], specreps=3) 
 # 36 spectra plus the first (wl) column
 @
@@ -197,34 +198,13 @@ explorespec(sppspec, 6)
 
  \subsubsection{Normalizing and Smoothing Spectra}
 
-Data obtained from spectrometers often requires further processing before analysis and/or
-publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The
-\pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the
-reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700  nm)
-wavelength ranges (see Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we will
-use local regression smooth implemented by the \code{loess.smooth} function in \code{R}. However, we
-will first use the \code{plotsmooth} function to determine a suitable smoothing parameter
-(\code{span}). This function allows you to set a minimum and maximum smoothing parameter to try and
-plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
-
-<<label=plotsmooth,fig=TRUE,include=FALSE,width=6,height=4>>=
-data(teal)
-plotsmooth(teal, minsmooth = 0.05, maxsmooth = 0.25, curves = 5, specnum = 6, 
-           ask = FALSE)
-@
-
-\begin{figure}[H]
-\begin{center}
-\includegraphics[width=5in]{fig/pavo-plotsmooth}
-\end{center}
-\caption{Diagnostic plots produced with \code{plotsmooth} to determine optimal smoothing parameter. Each panel shows raw spectral data (lower curve) and smoothed curves with sequentially higher smoothing parameters.}
-\label{figure:plotsmooth}
-\end{figure}
-
-From the resulting plot, we can see that \code{span}=0.15 is the minimum amount of smoothing to
-remove spectral noise while preserving the original spectral shape (Figure \ref{figure:plotsmooth}).
-Based on this value, we will now use the \code{opt} argument in \code{procspec} to smooth data for
-further plotting and analysis (see Figure \ref{figure:specsmooth}, red line).
+Data obtained from spectrometers often requires further processing before analysis and/or 
+publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The 
+\pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the 
+reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 
+nm) wavelength ranges (Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we can 
+use the \code{opt} argument in \code{procspec} to smooth data using local regression, as implemented 
+by the \code{loess.smooth} function in \code{R} (Figure \ref{figure:specsmooth}, red line).
 
 <<label=specsmooth,fig=TRUE,include=FALSE,results=hide>>=
 spec.sm <- procspec(sppspec, opt='smooth')
@@ -240,9 +220,8 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \label{figure:specsmooth}
 \end{figure}
 
-In addition to smoothing, we can also try some other normalizations implemented in \code{procspec}.
-Note that the user can specify multiple processing  options that will be applied sequentially to the
-spectral data by \code{procspec}.
+We can also try some other normalizations. Note that the user can specify multiple processing 
+options that will be applied sequentially to the spectral data by \code{procspec}.
 
 <<results=hide>>=
 # Run some different normalizations
@@ -265,7 +244,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=5in]{fig/pavo-specnorm}
+\includegraphics[width=6in]{fig/pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center), and max and min normalizations (right).}
 \label{figure:specnorm}
@@ -406,8 +385,9 @@ the function \code{spec2rgb}. This can make for some very interesting plots and 
 analysis, as shown in Figure \ref{figure:overlay}.
 
 
-<<label=overlay,fig=T,include=F,width=7,height=5>>=
+<<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
+data(teal)
 plot(teal, type='o', col=spec2rgb(teal))
 @
 \begin{figure}[H]
