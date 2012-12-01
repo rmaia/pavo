@@ -37,12 +37,7 @@
 \renewcommand{\abstractname}{Summary}
 
 \begin{document}
-\begin{spacing}{1.9}
-\begin{flushleft}
-
-\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
-
-\title{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Color Data in R}
+\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data in R}
 \author[1*]{Rafael Maia}
 \author[2]{Pierre-Paul Bitton}
 \author[1]{Chad Eliason}
@@ -53,13 +48,22 @@
 
 \clearpage{}
 
-\abstract{Summary
-1.  Context and need of the work
-2.  Introduce the package
-3.	We present a demonstration of the packages potential
+\abstract{
+\begin{enumerate}
+\item[]
+\item Context and need of the work
+\item Introduce the package
+\item We present a demonstration of the packages potential
+\end{enumerate}
 }
 
+
 \clearpage{}
+
+\begin{spacing}{1.9}
+\begin{flushleft}
+
+\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
 
 <<echo=FALSE, results=hide>>=
 library(pavo)
