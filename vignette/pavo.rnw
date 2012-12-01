@@ -260,15 +260,15 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
-(PCA). Following Cuthill, 1999 we can use \code{opt} = 'center' and 'bin' to center spectra to have
-a mean reflectance of zero (thus removing brightness as a dominant variable? in a PCA) and then bin
-the spectra into user-defined bins (using the \code{bins} argument) and obtain a dataframe suitable
-for a principle component analysis (PCA).
+(using, for example. Principal Component Analysis, or PCA). Following Cuthill, 1999 we can use 
+\code{opt = 'center'} to center spectra to have a mean reflectance of zero (thus removing brightness 
+as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the 
+\code{opt= 'bins'} argument) to obtain a dataframe suitable for the PCA.
 
 <<results=hide>>=
 # pca analysis
 specs.bin <- procspec(sppspec, opt=c('bin', 'center'))
-specs.bin <- t(specs.bin)  # transpose so specs in rows
+specs.bin <- t(specs.bin)  # transpose so wavelength are variables for the PCA
 colnames(specs.bin) <- specs.bin[1,]  # names variables as wavelength bins
 specs.bin <- specs.bin[-1, ]  # remove 'wl' column
 # specs.bin[1:6, 1:3]
@@ -304,11 +304,11 @@ from lowest to highest PC1 value (right).}
 
 \subsubsection{Dealing with negative values in spectra}
 
-Negative values in spectra are unwanted, as they can affect estimates of color variables. Certain
-spectrometer manufacturers allow negative values to be saved. To handle negative values, the
-\code{procspec} function has an option called \code{fixneg}. The two options available are (1)
-adding the absolute value of the most negative value to the whole spectrum (\code{fixneg = addmin})
-and (2) changing all negative values to zero (\code{fixneg = zero}).
+Negative values in spectra are unwanted, as they can affect estimates of color variables. Nonetheless, 
+certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the
+\code{procspec} function has the \code{fixneg} option for the \code{opt} argument. The two options 
+available are (1) adding the absolute value of the most negative value to the whole spectrum (\code{fi
+xneg = addmin}) and (2) changing all negative values to zero (\code{fixneg = zero}). 
 
 <<results=hide>>=
 # Create a duplicate spectrum and add some negative values
@@ -322,11 +322,11 @@ testspecs.fix2 <- procspec(testspecs, fixneg='zero')
 <<label=fixneg, fig=T, include=F, width=6, height=4>>=
 par(mar=c(2,2,2,2), oma=c(3,3,0,0))
 layout(cbind(c(1,1),c(2,3)), widths=c(2,1,1))
-plot(testspecs, select = 2, ylim=c(-10,40))
+plot(testspecs, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
-plot(testspecs.fix1, select = 2, ylim=c(-10,40))
+plot(testspecs.fix1, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
-plot(testspecs.fix2, select = 2, ylim=c(-10,40))
+plot(testspecs.fix2, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
@@ -334,19 +334,29 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=4in]{pavo-fixneg}
+\includegraphics[width=5in]{pavo-fixneg}
 \end{center}
 \caption{Plots showing original reflectance curve including negative values (left) and two processed curves using \code{fixneg=addmin} (top) and \code{fixneg=zero} bottom.}
-\label{figure:stack}
+\label{figure:neg}
 \end{figure}
+
+These may have different effects on the final spectra, as can be seen in Figure \ref{figure:neg}, 
+which the user should keep in mind and use according to the final goal of the analysis. For example, 
+by adding the minimum reflectance to all other wavelngth, the shape of the curve is preserved, but the 
+maximum reflectance is much higher (Figure \ref{figure:neg}, top). On the other hand, substituting 
+negative values with zero preserves absolute reflectance values, but may cause the spectral shape to 
+be lost (Figure \ref{figure:neg}, bottom). The ``best'' transformation will depend on the severity of 
+the problem of negative values and the goal of the analysis (e.g. will reflectance intensity be used? 
+What is more important, to preserve reflectance values or the total shape of the curve?)
 
 \section{Visualizing Spectral Data}
 
-The function \code{plot.rspec} can be called simply by typing \code{plot(rspecs)}, as it relies on
-the base plotting capabilities. If the object is not of class \code{rspec} the multivariate
-visualization methods will not work as expected.
+Since \pavo{} uses the class \code{rspec} to identify spectral data, the function \code{plot.rspec} 
+can be called simply by calling \code{plot(data)}. If the object is not of class \code{rspec} the 
+multivariate visualization methods will not work as expected, so it might be useful to check the data 
+using \code{is.rspec} and convert with \code{as.rspec} if necessary.
 
-We have implemented three methods of visualizing spectral data:
+We have implemented three methods of visualizing spectral data using \code{plot}:
 
 \begin{itemize}
 	\item{\code{Overlay} - all spectra plotted with same x- and y-axis}
@@ -354,33 +364,49 @@ We have implemented three methods of visualizing spectral data:
 	\item{\code{Heatmap} - false color map to show three dimensional data}
 \end{itemize}
 
-We will first load some reflectance data. 
+Which are in addition to the exploratory plotting offered by \code{explorespec}, as seen in Figues 
+\ref{figure:explorespec} and \ref{figure:sppmeans}. To showcase the capabilities of \code{plot.rspec}, 
+we will first load some reflectance data. 
 
 % <<>>=
 % data(teal)  # TODO add this
 % dim(teal)
 % @
 
-This dataset consists of reflectance spectra measured from the iridescent wing patch of a green-
-winged teal (\emph{Anas carolinensis}). Reflectance measurements were taken between 300 and 700 nm
-at different incident angles, ranging from 15 to 70 degrees (in 5 degree increments). 
+This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal 
+(\emph{Anas carolinensis}). Reflectance measurements were taken between 300 and 700 nm
+at different incident angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} 
+(in 5\ensuremath{^\circ} increments). 
 
-We can start out by visualizing these spectra with \code{overlay} option in plot.rspec.
+We can start out by visualizing these spectra with \code{overlay} option in plot.rspec. Another neat 
+option \pavo{} offers is to convert reflectance spectra to their approximate perceived color, by using 
+the function \code{spec2rgb}. This can make for some very interesting plots and even exploratory data 
+analysis, as shown in Figure \ref{figure:overlay}.
+
 
 <<label=overlay,fig=T,include=F>>=
 par(mar=c(4,4,2,2))
 teal <- readRDS('~/github/pavo/toydata/teal.rda')
+teal <- teal[,-14]
 #teal <- loadRDS(...)[,-14]
-plot(teal[, -14], type='o', col=spec2rgb(teal))
+plot(teal, type='o', col=spec2rgb(teal))
 @
 
-Another option is the \code{stack} plot.
+\begin{figure}[H]
+\begin{center}
+\includegraphics[width=4in]{pavo-overlay}
+\end{center}
+\caption{Overlay plot of the teal angle-dependent reflectance}
+\label{figure:overlay}
+\end{figure}
+
+Another option is the \code{stack} plot (again, with human vision approximations of the color produced by the spectra using \code{spec2rgb}).
 
 <<label=stack,fig=T,include=F>>=
 teal.norm <- procspec(teal, opt=c('min', 'max'))
 par(mfrow=c(1,2), mar=c(2,2,2,2), oma=c(2,2,0,0))
-plot(teal[, -14], type='s', col=spec2rgb(teal))
-plot(teal.norm[, -14], type='s', col=spec2rgb(teal))
+plot(teal, type='s', col=spec2rgb(teal))
+plot(teal.norm, type='s', col=spec2rgb(teal))
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 @
@@ -405,7 +431,7 @@ angles <- seq(15,70,by=5)
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
-plot(teal.sm[, -14], type='h', varying=angles, 
+plot(teal.sm, type='h', varying=angles, 
      ylab="Incident angle (º)", las=1, useRaster=TRUE)
 @
 
@@ -417,8 +443,8 @@ plot(teal.sm[, -14], type='h', varying=angles,
 \label{figure:heatmap}
 \end{figure}
 
-Colors can be mapped to spectra using \code{spec2rgb} as shown in Figure \ref{figure:stack}.
-
+These plots can be very useful to observe changes over time, for example, or any other type of 
+continuous variation.
 
 \section{Analyzing Spectral Data}
 
@@ -589,7 +615,8 @@ from the segment classification maps to the human color wheel:
 <<label=segplot, results=hide, fig=TRUE, include=FALSE, width=6, height=4>>=
 # creating idealized specs with varying hue
 fakedata1 <-  sapply(seq(100,500,by=20), 
-                     function(x) rowSums(cbind(dnorm(300:700,x,30), dnorm(300:700,x+400,30))))
+                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
+                                               dnorm(300:700,x+400,30))))
 
 # creating idealized specs with varying saturation
 fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
