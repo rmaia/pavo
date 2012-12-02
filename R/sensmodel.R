@@ -13,7 +13,7 @@
 #' @param Bmid a vector of same length as peaksense that lists the gradient of line 
 #' tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005) 
 #' @param oiltype a list of same length as peaksense that lists the oil droplet types
-#' (currently accepts only "C", "Y", "R", "P") when Bmid is not known. Calculates
+#' (currently accepts only "T", C", "Y", "R", "P") when Bmid is not known. Calculates
 #' Bmid based on the regression equations found in Hart ad Vorobyev (2005).
 #' @param beta logical. If \code{TRUE} the sensitivities will include the beta peak
 #' See Govardovskii et al.(2000) (defaults to \code{TRUE}).
@@ -68,6 +68,7 @@ if (!is.null(lambdacut) & !is.null(oiltype)){
 
   if (length(lambdacut) != length(oiltype)) stop ("lambdacut and oiltype must be of same length")
 
+  if (oiltype[i] == "T") oil <- c(0.99, 24.38) #Entered as a dummy (see below)
   if (oiltype[i] == "C") oil <- c(0.99, 24.38)
   if (oiltype[i] == "Y") oil <- c(0.9, 70.03)
   if (oiltype[i] == "R") oil <- c(0.99, 28.65)
@@ -76,6 +77,8 @@ if (!is.null(lambdacut) & !is.null(oiltype)){
 # Oil droplet transmission from Hart and Vorobyev (2005)
 T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[1]:range[2]-lambdacut[i])+1.08))
 
+  if(oiltype[i] == "T") T.oil <- rep(1,range[2]-range[1])
+  
 peak <- peak*T.oil
 }
 # Apply ocular media trnasmission correction
