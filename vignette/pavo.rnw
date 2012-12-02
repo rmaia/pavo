@@ -7,7 +7,7 @@
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
-\usepackage{amsmath}
+\usepackage[fleqn]{amsmath}
 \usepackage{hyperref}
 \usepackage{float}
 \usepackage{authblk}
@@ -789,7 +789,12 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \label{figure:usmlplot}
 \end{figure}
 
-As described above, \code{vismodel} also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function \code{sensmodel}, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii et al. (2000) and Hart \& Vorobyev (2005). \code{sensmodel} takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modeled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
+As described above, \code{vismodel} also accepts user-defined visual systems, background and 
+illuminants. We will illustrate this by showcasing the function \code{sensmodel}, which models 
+spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii 
+et al. (2000) and Hart \& Vorobyev (2005). \code{sensmodel} takes several optional arguments, but the 
+main one is a vector containing the peak sensitivities for the cones being modeled. Let's model an 
+idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
 
 <<label=dichro, fig=TRUE, include=FALSE>>=
 idealizeddichromat <- sensmodel(c(350,650))
@@ -800,7 +805,7 @@ plot(idealizeddichromat, col=spec2rgb(idealizeddichromat))
 \includegraphics[width=2in]{fig/pavo-dichro}
 \end{center}
 \caption{Idealized dichromat photoreceptors created using \code{sensmodel}}
-\label{figure:usmlplot}
+\label{figure:dichro}
 \end{figure}
 
 <<results=hide>>=
@@ -811,6 +816,58 @@ vismod.idi
 <<echo=FALSE>>=
 sapply(vismod.idi, function(x) round(x,4))
 @
+
+\textbf{Receptor Noise.} Color distances can be calculated under while considering the inverse of the 
+noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can 
+be calculated from the noise-to-signal ratio of cone $i$  ($v_i$) and the relative number of receptor 
+cells of type $i$ within the recptor field ($n_i$):
+
+\begin{equation}
+w_i = \frac{v_i}{\sqrt{n_i}} 
+\end{equation}
+
+Color distances are obtained by weighting the Euclidean distance of the photoreceptor quantum catches 
+by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just Noticeable 
+Differences (JNDs), where distances over a certain threshold (usually 1) are considered to be 
+discernible under the conditions considered. The equations used in these calculations are:
+
+\tiny
+\begin{subequations}\label{eqsegment}
+\begin{align}
+\text{for dichromats: }
+\Delta S = \sqrt{\frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}} \\
+\text{for trichromats: }
+\Delta S = \sqrt{\frac{
+w_1^2(\Delta f_3 - \Delta f_2)^2 + 
+w_2^2(\Delta f_3 - \Delta f_1)^2 + 
+w_3^2(\Delta f_1 - \Delta f_2)^2}
+{(w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2}}\\
+\text{for tetrachromats: }
+\Delta S = \sqrt{\frac{
+(w_1w_2)^2(\Delta f_4 - \Delta f_3)^2 + 
+(w_1w_3)^2(\Delta f_4 - \Delta f_2)^2 +
+(w_1w_4)^2(\Delta f_3 - \Delta f_2)^2 +
+(w_2w_4)^2(\Delta f_3 - \Delta f_1)^2 +
+(w_3w_4)^2(\Delta f_2 - \Delta f_1)^2 }
+{(w_1w_2w_3)^2 + (w_1w_2w_4)^2 + (w_1w_3w_4)^2 + (w_2w_3w_4)^2} }
+\end{align}
+\end{subequations}
+\normalsize
+
+For the chromatic contrast. The achromatic contrast ($\Delta L$) can be calculated based on the double cone or the receptor (or combination of receptors) responsible for chromatic processing by the equation (SIDDIQUI 2004):
+
+\begin{equation}
+\Delta L =  \frac{\Delta f^2}{w^2}
+\end{equation}
+
+\pavo{} implements these calculations in the function \code{coldist}. For the achromatic contrast, \code{coldist} uses $\frac{v}{\sqrt{n_4}}$ as the value of $w$ for the achromatic contrast:
+
+<<>>=
+coldist(vismod1, vis='tetra', n1=1, n2=2, n3=2, n4=4, v=0.1)
+coldist(vismod.idi, vis='di', n1=1, n2=1,  v=0.05)
+@
+
+Where \code{dS} is the chromatic contrast ($\Delta S$) and \code{dL} is the achromatic contrast ($\Delta L$).
 
 \subsubsection{Tetrahedral Color Space Model}
 
