@@ -55,7 +55,7 @@ rgb1[rgb1 > 1] <- 1
 
 colrs <- rgb(r=rgb1[1,], g=rgb1[2,], b=rgb1[3,])
 
-class(colrs) <- c('spec2rgb', 'character')
+#class(colrs) <- c('spec2rgb', 'character')
 
 names(colrs) <- names_rspecdata
 

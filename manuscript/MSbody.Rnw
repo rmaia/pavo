@@ -1,29 +1,37 @@
-\documentclass[12pt,english]{article}
+\documentclass[11pt,english]{article}
 
-% Definitions
-\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
-\newcommand{\code}[1]{{\tt #1}}  % text formate for code
+% formatting packages
+\usepackage{geometry} 
+\usepackage{lineno}
+\usepackage[utf8]{inputenc}
+\usepackage{setspace}
+\usepackage{hyperref}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{array}
+
+% content packages
+\usepackage{amsmath}
+\usepackage{authblk}
+
+% add-ons
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+
+% formatting page
+%\setlength\parindent{0in}
 \setlength{\parindent}{0in}
 \setlength{\parskip}{.1in}
 \setlength{\textwidth}{140mm}
 \setlength{\oddsidemargin}{10mm}
-\usepackage{amsmath}
-\usepackage{setspace}
-\usepackage{hyperref}
-\usepackage{float}
-\usepackage{authblk}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{graphicx}
-\usepackage{caption}
-\usepackage{subcaption}
-\usepackage[utf8]{inputenc}
-\usepackage{array}
-\usepackage{geometry} 
 \geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
-%\setlength\parindent{0in}
 
-\usepackage{lineno}
-\linenumbers
+% Macros
+\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
+\newcommand{\code}[1]{{\tt #1}}  % text formate for code
+\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
+\renewcommand{\abstractname}{Summary}
 
 % define colors
 \hypersetup{
@@ -32,11 +40,15 @@
   linkcolor=black,
   urlcolor=MidnightBlue
   }
-\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
-
-\renewcommand{\abstractname}{Summary}
 
 \begin{document}
+\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
+\doublespacing
+
+%%%%%%%%%%%%
+%TITLE PAGE%
+%%%%%%%%%%%%
+
 \title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data in R}
 \author[1*]{Rafael Maia}
 \author[2]{Pierre-Paul Bitton}
@@ -45,25 +57,34 @@
 \affil[2]{Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
 \affil[*]{Corresponding author: rm72@zips.uakron.edu}
 \maketitle
+\vfill
+\noindent Running title: \pavo{}: color analysis in R\\
+Word count: approx. XXXXX words.
 
-\clearpage{}
+\pagebreak
+%\SweaveInput{LitReview.Rnw}
 
-\abstract{
+
+%%%%%%%%%%%%%%%
+%ABSTRACT PAGE%
+%%%%%%%%%%%%%%%
+
+\linenumbers
+
+\section*{Summary}
 \begin{enumerate}
-\item[]
 \item Context and need of the work
 \item Introduce the package
 \item We present a demonstration of the packages potential
 \end{enumerate}
-}
 
+
+\section*{Keywords} (alphabetical order, 10 words or short phrases max) tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model
 
 \clearpage{}
 
-\begin{spacing}{1.9}
 \begin{flushleft}
 
-\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
 
 <<echo=FALSE, results=hide>>=
 library(pavo)
@@ -71,8 +92,8 @@ ps.options(pointsize=12)
 options(width=60)
 @
 
-TEXT DUMP
-Introduction
+\section*{Introduction}
+
 - Highlight the current interest in visual modelling in animals
 - Present the current difficulties of producing outputs in this context (maybe even give a usual flow 
 chart of how many people might deal with this data. E.g CLR for getspec, excel to visualize and 
@@ -88,7 +109,7 @@ analytical and visualization capabilities for tetrachromatic, trichromatic and d
 systems. In this paper, we highlight the most important functions and provide an example of a workflow
 , including the relevant R scripts, using spectral measurements obtained from museum bird specimens.
 
-The\pavo{} package
+\section*{The \pavo{} package}
 
 - fxns included in the package and basic functionality, current limits and novelties including exact 
 results for voloverlap and log transform correction for issue mentioned in Stoddard and Prum
@@ -99,19 +120,33 @@ Proof of concept example
 
 Include example with R script included with figures. Make sure we include notes
 
-Citation of\pavo{}
+\section*{Citation of \pavo{}}
 
 Some of the application packages have this section. Should recommend citing this article + some of the 
 other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006) if using the summary
 .rspec fxn(?).
 
-Acknowledgements
+%\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
+
+\section{Acknowledgements}
 
 Probably should include the person who produced most of voloverlap
 
 Sources of funding and the usual
 
-References
+\end{flushleft}
+
+%References
+%\pagebreak
+% BES bibstyle from http://spind.googlecode.com/svn-history/r86/rep/bes/bes.bst
+%\bibliographystyle{bes}
+%\bibliography{PATH}
+%\pagebreak
+
+%\SweaveInput{FILENAME.Rnw}
+
+%\pagebreak
+%\clearpage
 
 Figures
 1-  I recommend a possible workflow chart that would detail a common path to using the main fxns
@@ -122,6 +157,5 @@ Figures
 
 
 
-\end{flushleft}
-\end{spacing}
+
 \end{document}

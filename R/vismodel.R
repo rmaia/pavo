@@ -37,7 +37,7 @@
 #' \itemize{ 
 #' \item \code{ideal}: homogeneous illuminance of 1 accross wavelengths (default)
 #' \item \code{'bluesky'}
-#' \item \code{'d65'}: standard daylight
+#' \item \code{'D65'}: standard daylight
 #' \item \code{'forestshade'}
 #' }
 #' @param bkg either a vector containing the background spectra, or an ideal (white) 
@@ -199,7 +199,8 @@ if(relative){
 
 
 #OUTPUT
-res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
+#res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
+res<-list(Qi=Qi, qi=qi, fi=fi)
 class(res) <- 'vismodel'
 attr(res,'visualsystem') <- c(visual,achromatic)
 attr(res,'illuminant') <- illum2

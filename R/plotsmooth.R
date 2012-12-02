@@ -18,7 +18,8 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
-plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0){
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0,
+                       ask = TRUE){
 
 if (curves == 1) stop ("No curves to compare (curves = 1)")
 
@@ -73,7 +74,7 @@ for (i in 1:nplots){
 }
 
 # Sets plot parameters based on the number of curves on the plots
-par(mfrow=c(3,4),ask=TRUE)
+par(mfrow=c(3,4),ask=ask)
 if (curves > 4) par(mfrow=c(2,3))
 if (curves > 7) par(mfrow=c(2,2))
 if (curves > 9) par(mfrow=c(1,2))
@@ -82,7 +83,7 @@ if (curves > 12) par(mfrow=c(1,1))
 # Plots all curves 
 # all below does not work yet
 
-
+par(mar=c(2,2,2,2), oma = c(3,3,0,0))
 
 for (i in 1:nplots){
 
@@ -96,17 +97,20 @@ plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelengt
 	legend (rspecdata[1, 1]-20,yaxismax+6,legend=legnames,cex=0.7,bty="n", xjust=0)
 	title(titlenames[i])
 
+if(i %% 6 == 0){
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)	
+}
+
 	nextplot = 2
 		while (nextplot < ncol(bloc)+1) { 						
 			lines (rspecdata[,1],bloc[,nextplot],cex=0.1)
 			nextplot<- nextplot+1}
+
+
 	}
+
+mtext("Wavelength (nm)", side=1, outer=T, line=1)
+mtext("Reflectance (%)", side=2, outer=T, line=1)
+
 }
-
-
-
-
-
-
-
-
