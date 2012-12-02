@@ -23,7 +23,11 @@
 #' under the curve of 1 (best for visual models)(defaults to \code{TRUE}).
 #' @return A data frame containing each cone model as a column.
 #' @export
-#' @examples \dontrun{}
+#' @examples \dontrun{
+#' # Blue tit visual system based on Hart et al (2000)
+#' bluesens <- sensmodel(c(371,448,502,563),beta=F,oiltype = c("T", "C", "Y","R"),om= TRUE)
+#' # Danio aequipinnatus based on Govardovskii et al. (2000)
+#' daniosens <- sensmodel(c(357,411,477,569))}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @references Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. In search of the visual pigment template. Visual Neuroscience 17:509-528
 #' @references Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
