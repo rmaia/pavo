@@ -729,13 +729,15 @@ being processed, considering the relative density of different cones and the noi
   \item\code{bkg}: The background being considered. By default, it considers an idealized background (i.e. wavelength-independent influence of the background on color). A vector of same length as the wavelength range being considered can also be used as the input.
 \end{itemize}
 
-For more information, see \code{?vismodel}
+(For more information, see \code{?vismodel})
 
 IMPORTANT: The function also has an additional logical argument, \code{relative}. If \code{TRUE}, it 
-will make the cone stimulations relative to their sum. This will be useful in the following sections, 
-\textit{but for the photon catch and neural noise model, it is important to set} \code{relative=FALSE}.
+will make the cone stimulations relative to their sum. \textit{For the photon catch and neural noise 
+model, it is important to set} \code{relative=FALSE}.
 
-For this example, we will use the average reflectance of the different species to calculate their stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.
+For this example, we will use the average reflectance of the different species to calculate their 
+stimulation of retinal cones, considering the avian average UV visual system, a standard daylight 
+illumination, and an idealized background.
 
 <<results=hide>>=
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum='D65', relative=FALSE)
@@ -771,7 +773,7 @@ par(mfrow=c(2,6), oma=c(3,3,0,0))
 layout(rbind(c(2,1,4,3,6,5), c(1,1,3,3,5,5), c(8,7,10,9,12,11), c(7,7,9,9,11,11)))
 for (i in 1:6) {
   par(mar=c(2,2,2,2))
-  plot(sppspec, select = i + 1, col = spec2rgb(sppspec), lwd = 3, ylim = c(0,100))
+  plot(sppspec, select = i + 1, col = spec2rgb(sppspec)[i], lwd = 3, ylim = c(0,100))
   par(mar=c(4.1,2.5,2.5,2))
   barplot(vismod1$qi[i,1:4], yaxt='n', col='black')
 }
@@ -786,6 +788,29 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \caption{Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets).}
 \label{figure:usmlplot}
 \end{figure}
+
+As described above, \code{vismodel} also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function \code{sensmodel}, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii et al. (2000) and Hart \& Vorobyev (2005). \code{sensmodel} takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modeled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
+
+<<label=dichro, fig=TRUE, include=FALSE>>=
+idealizeddichromat <- sensmodel(c(350,650))
+plot(idealizeddichromat, col=spec2rgb(idealizeddichromat))
+@
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=2in]{fig/pavo-dichro}
+\end{center}
+\caption{Idealized dichromat photoreceptors created using \code{sensmodel}}
+\label{figure:usmlplot}
+\end{figure}
+
+<<results=hide>>=
+vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative=FALSE)
+vismod.idi
+@
+
+<<echo=FALSE>>=
+sapply(vismod.idi, function(x) round(x,4))
+@
 
 \subsubsection{Tetrahedral Color Space Model}
 

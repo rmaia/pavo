@@ -86,14 +86,14 @@ if (om == TRUE){
 sensecurves[, (i+1)] <- peak
   }
 
-sensecurves <- data.frame(sensecurves)
-
 if(integrate==TRUE){
   sensecurves <- apply(sensecurves, 2, function(z) z/sum(z))
   sensecurves[,1] <- c(range[1]:range[2])
 }
 
+sensecurves <- data.frame(sensecurves)
 names(sensecurves) <- c('wl',paste('lmax',peaksense,sep=''))
+sensecurves <- as.rspec(sensecurves)
 
 sensecurves
 }
