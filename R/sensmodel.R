@@ -33,6 +33,10 @@
 #' @references Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
 #' spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 #' Comparative Physiology A. 191: 381-392
+#' @references Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual pigments, oil droplets, ocular media and cone photoreceptor
+#' distribution in two species of passerine bird: the blue tit (Parus caeruleus L) and the blackbird (Turdus merula L). J Comp
+#' Physiol A 186:375-387
+
 
 
 sensmodel <- function(peaksense, range = c(300,700), lambdacut = NULL, Bmid = NULL, 
