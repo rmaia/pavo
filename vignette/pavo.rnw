@@ -294,7 +294,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
-(for example, using Principal Component Analysis, or PCA). Following Cuthill (1999), we can use 
+(for example, using Principal Component Analysis, or PCA). Following Cuthill et al. (1999), we can use 
 \code{opt = 'center'} to center spectra to have a mean reflectance of zero (thus removing brightness 
 as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the 
 \code{opt= 'bins'} argument) to obtain a dataframe suitable for the PCA.
@@ -421,7 +421,7 @@ in Figures
 of reflectance spectra from the iridescent wing patch of a green-winged teal (\emph{Anas
 carolinensis}). Reflectance measurements were taken between 300 and 700 nm at different incident
 angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} (in 5\ensuremath{^\circ}
-increments) (CHAD DUCK PAPER REF).
+increments) (Eliason \& Shawkey, 2012).
 
 \subsubsection{The \code{overlay} Option}
 
@@ -539,9 +539,10 @@ returns descriptors for individual peaks in spectral curves, as outlined below.
 
 Second, reflectance spectra can be analyzed by accounting for the visual system receiving the color
 signal, therefore representing reflectance spectra as perceived colors. We have implemented Endler's
-(REF) segment classification method, which approximates visual models but does not directly  use
-sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible  framework for
-visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD)  which has been
+(1990) segment classification method, which approximates visual models but does not directly  use
+sensory information; the model of Vorobyev \& Osorio (1998), which provides a flexible  framework for
+visual modeling; and the tetrahedral color space (Goldsmith 1990, Endler et al. 2005, Stoddard and 
+Prum 2008)  which has been
 extensively developed to represent colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
@@ -551,7 +552,8 @@ extensively developed to represent colors in the avian vision color space.
 Obtaining trichromatic color variables (peratining to hue, saturation and brightness/value) is
 pretty straightforward in \pavo{}. Since reflectance spectra is stored in an object of class
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
-as outlined in MONTGOMERIE. Though outlined in a book chapter on bird coloration,  these variables
+as outlined in Montgomerie(2006). Though outlined in a book chapter on bird coloration,  
+these variables
 are broadly applicable to any reflectance data, particularly if the taxon of  interest has color
 vision within the UV-human visible range.
 
@@ -735,7 +737,8 @@ plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 \subsubsection{Photon Catch \& Receptor Noise Model}
 
 Several models have been developed to understand how colors are perceived and discriminated by an
-individual's or species' receptor visual system (Described in detail in ENDLER, OSORIO). In essence,
+individual's or species' receptor visual system (Described in detail in Endler 1990, Vorobyev 
+\& Osorio 1998). In essence,
 these models take into  account the receptor sensitivity of the different cones that make the visual
 system in question and  quantify how a given color would stimulate those cones individually and the
 combined effect on the perception of  color. These models also have an important component of
@@ -986,12 +989,13 @@ round(tcs(vismod2), 2)
 @
 
 By default, \code{tcs} will use $Q_i$ for the calculations (that is, \emph{not} log-transformed, as 
-recommended by STODDARD \& PRUM), but $q_i$ or $f_i$ may be specified if desired 
+recommended by Stoddard \& Prum 2008), but $q_i$ or $f_i$ may be specified if desired 
 (e.g. \code{tcs(vismod2\$fi)}).
 
 
 \code{tcs} returns the original photon catch values; the relative cone stimulation for a given hue
-(\code{x.r}; see the supplemental material of STODDARD \& PRUM for more information); the two angles
+(\code{x.r}; see the supplemental material of Stoddard \& Prum 2008 for more information); the 
+two angles
 of  hue (\code{h.theta} and \code{h.phi}) and the distance from the achromatic center
 (\code{r.vec});  along with the maximum distance achievable for that hue (\code{r.max}) and the
 proportion of that  maximum achieved by the color point (\code{r.achieved}).
@@ -1128,6 +1132,38 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
         \end{subfigure}
          \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
+
+\section{References}
+
+Cuthill IC, Bennett ATD, Partridge JC, \& EJ Maier (1999) Plumage reflectance and the objective
+assessment of avian sexual dichromatism. American Naturalist 153:183-200.
+
+Eliason CM \& MD Shawkey (2012) A photonic heterostructure prouces diverse iridescent colours in duck
+wing patches. Journal of the Royal Society Interface 9:2279-2289.
+
+Endler JA (1990) On the measurement and classification of color in studies of animal color patterns.
+Biological Journal of the Linnean Society 41:315-352.
+
+Endler JA, Wescott DA, Madden JR, \& T Tobson (2005) Animal visual systems and the evolution of color
+patterns: sensory processing illuminates signal evolution. Evolution 59:1795-1818.
+
+Goldsmith TH (1990) Optimization, constraint, and history in the evolution of eyes. Quarterly Review of
+Biology 65:281-322.
+
+Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG, \& K Donner (2000) In search of the visual pigment
+template. Visual Neuroscience 17:509-528.
+
+Hart NS, \& M Vorobyev (2005) Modelling oil droplet absorption spectra and spectral sensitivities of
+bird cone photoreceptors. Journal of Comparative Physiology A 191:381-392.
+
+Montgomerie R (2006) Analyzing colors. Pages 90-147 in G. E. Hill and K. J. McGraw, eds. Bird 
+coloration. Vol. 1. Mechanisms and measurements. Harvard University Press, Cambridge, MA.
+
+Stoddard MC \& RO Prum (2008) Evolution of avian plumage color in a tetrahedral color space: 
+A phylogenetic analysis of new world buntings. American Naturalist 171:75-776.
+
+Vorobyev M \& D Osorio (1998) Receptor noise as a determinant of colour thresholds. Proceedings of 
+the Royal Society B: Biological Sciences 265:351-358.
 
 
 \end{document}
