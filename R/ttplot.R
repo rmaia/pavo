@@ -43,7 +43,7 @@
 #' ttvol(tcs.sicalis)}
 #' 
 #' @seealso \code{\link{spheres3d}},\code{\link{rgl.postscript}}, 
-#' \code{\link{rgl.snapshot}},\code{\link{rgl.par3d}} 
+#' \code{\link{rgl.snapshot}},\code{\link{rgl.material}} 
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

@@ -38,6 +38,7 @@
 
 
 \SweaveOpts{concordance=TRUE, prefix.string=fig/pavo}
+%\VignetteIndexEntry{pavo} 
 
 <<echo=FALSE, results=hide>>=
 library(pavo)
@@ -593,7 +594,7 @@ round(summary(spec.sm),2)
 {$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
 {$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
 {$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
-{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\degree (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
+{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\ensuremath{^\circ} (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
 {$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
 \hline
 \end{tabular}
@@ -1133,8 +1134,5 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
         \end{subfigure}
          \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
-
-\bibliographystyle{bes}
-\bibliography{}
 
 \end{document}
