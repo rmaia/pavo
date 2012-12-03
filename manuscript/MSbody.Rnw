@@ -1,90 +1,88 @@
-\documentclass[11pt,english]{article}
+%ScholarOne also provide the following basic guidelines for uploading a LaTeX formatted manuscript:
+%1.  Always upload the main LaTeX file first, selecting the file designation of Main Document.
+%2.  Then, upload each file that is related to the main .TEX file and is needed for processing, selecting the file designation of TeX/LaTeX Suppl File.
+%3.  Be sure to upload all style sheets, reference files, and at least one bibliography file, that are part of the document.
+%4.  All image files must be saved and uploaded in .EPS format in order for the file to properly format and convert.
+%5.  If changes are made to the main LaTeX document after all of the related files have been uploaded, all supplementary LaTeX files will have to be removed and re-uploaded.
+
+
+\documentclass[times,mee,doublespace]{besauth}
+
+\usepackage{hyperref}
 
 % formatting packages
-\usepackage{geometry} 
-\usepackage{lineno}
-\usepackage[utf8]{inputenc}
-\usepackage{setspace}
-\usepackage{hyperref}
-\usepackage[usenames,dvipsnames]{color}
-\usepackage{array}
+%\usepackage{geometry} 
+%\usepackage{lineno}
+%\usepackage[utf8]{inputenc}
+%\usepackage{setspace}
+%\usepackage[usenames,dvipsnames]{color}
+%\usepackage{array}
 
 % content packages
-\usepackage{amsmath}
-\usepackage{authblk}
+%\usepackage{amsmath}
+%\usepackage{authblk}
 
 % add-ons
-\usepackage{graphicx}
-\usepackage{float}
-\usepackage{caption}
-\usepackage{subcaption}
+%\usepackage{graphicx}
+%\usepackage{float}
+%\usepackage{caption}
+%\usepackage{subcaption}
 
 % formatting page
 %\setlength\parindent{0in}
-\setlength{\parindent}{0in}
-\setlength{\parskip}{.1in}
-\setlength{\textwidth}{140mm}
-\setlength{\oddsidemargin}{10mm}
-\geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
+%\setlength{\parindent}{0in}
+%\setlength{\parskip}{.1in}
+%\setlength{\textwidth}{140mm}
+%\setlength{\oddsidemargin}{10mm}
+%\geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
 
 % Macros
 \newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
 \newcommand{\code}[1]{{\tt #1}}  % text formate for code
-\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
-\renewcommand{\abstractname}{Summary}
+%\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
+%\renewcommand{\abstractname}{Summary}
 
 % define colors
-\hypersetup{
-  colorlinks,
-  citecolor=violet,
-  linkcolor=black,
-  urlcolor=MidnightBlue
-  }
+%\hypersetup{
+%  colorlinks,
+%  citecolor=violet,
+%  linkcolor=black,
+%  urlcolor=MidnightBlue
+%  }
 
 \begin{document}
 \SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
-\doublespacing
 
 %%%%%%%%%%%%
 %TITLE PAGE%
 %%%%%%%%%%%%
 
+\runningheads{R. Maia, P.-P. Bitton \& C.M. Eliason}{\pavo{}: R package for color analysis}
+
+\papertype{Application}
+
 \title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data in R}
-\author[1*]{Rafael Maia}
-\author[2]{Pierre-Paul Bitton}
-\author[1]{Chad Eliason}
-\affil[1]{Department of Biology, Integrated Bioscience Program, University of Akron, Akron, OH 44325- 3908, USA.}
-\affil[2]{Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
-\affil[*]{Corresponding author: rm72@zips.uakron.edu}
-\maketitle
-\vfill
-\noindent Running title: \pavo{}: color analysis in R\\
-Word count: approx. XXXXX words.
 
-\pagebreak
-%\SweaveInput{LitReview.Rnw}
+\author{Rafael Maia\affil{1}\corrauth\, Pierre-Paul Bitton\affil{2} and Chad M. Eliason\affil{1}}
 
+\address{\affilnum{1}Department of Biology, Integrated Bioscience Program, University of Akron, Akron, OH 44325- 3908, USA.; and \affilnum{2}Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
 
-%%%%%%%%%%%%%%%
-%ABSTRACT PAGE%
-%%%%%%%%%%%%%%%
+\corraddr{rm72zips.uakron.edu}
 
-\linenumbers
+\cgs{grant sponsor name (no number)}
+\cgsn{grant sponsor name}{number}
 
-\section*{Summary}
+\begin{abstract}
 \begin{enumerate}
 \item Context and need of the work
 \item Introduce the package
 \item We present a demonstration of the packages potential
 \end{enumerate}
+\end{abstract}
 
+\keywords{tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model}
 
-\section*{Keywords} (alphabetical order, 10 words or short phrases max) tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model
-
-\clearpage{}
-
-\begin{flushleft}
-
+\maketitle
 
 <<echo=FALSE, results=hide>>=
 library(pavo)
@@ -92,7 +90,7 @@ ps.options(pointsize=12)
 options(width=60)
 @
 
-\section*{Introduction}
+\section{Introduction}
 
 - Highlight the current interest in visual modelling in animals
 - Present the current difficulties of producing outputs in this context (maybe even give a usual flow 
@@ -109,7 +107,7 @@ analytical and visualization capabilities for tetrachromatic, trichromatic and d
 systems. In this paper, we highlight the most important functions and provide an example of a workflow
 , including the relevant R scripts, using spectral measurements obtained from museum bird specimens.
 
-\section*{The \pavo{} package}
+\section{The \pavo{} package}
 
 - fxns included in the package and basic functionality, current limits and novelties including exact 
 results for voloverlap and log transform correction for issue mentioned in Stoddard and Prum
@@ -120,7 +118,7 @@ Proof of concept example
 
 Include example with R script included with figures. Make sure we include notes
 
-\section*{Citation of \pavo{}}
+\section{Citation of \pavo{}}
 
 Some of the application packages have this section. Should recommend citing this article + some of the 
 other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006) if using the summary
@@ -128,34 +126,48 @@ other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006
 
 %\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
 
-\section{Acknowledgements}
+\acks
 
 Probably should include the person who produced most of voloverlap
 
 Sources of funding and the usual
 
-\end{flushleft}
-
-%References
-%\pagebreak
-% BES bibstyle from http://spind.googlecode.com/svn-history/r86/rep/bes/bes.bst
-%\bibliographystyle{bes}
-%\bibliography{PATH}
-%\pagebreak
-
-%\SweaveInput{FILENAME.Rnw}
-
-%\pagebreak
-%\clearpage
+%\begin{thebibliography}{99}
+%\item <Reference details>
+%.
+%.
+%.
+%\item <Reference details>
+%\end{thebibliography}
 
 Figures
 1-  I recommend a possible workflow chart that would detail a common path to using the main fxns
-2-	A tetrahedral plot
+2-  A tetrahedral plot
 3-	A heat map
 4-	A voloverlap ?
 
+%\begin{figure}
+%\centering
+%\includegraphics{<figure name>}
+%\caption{<Figure caption>}
+%\end{figure}
 
-
+%\begin{table}
+%\caption{<Table caption>}
+%\centering
+%\begin{tabular}{<table alignment>}
+%\toprule
+%<column headings>\\
+%\midrule
+%<table entries
+%(separated by & as usual)>\\
+%<table entries>\\
+%.
+%.
+%.\\
+%\bottomrule
+%\end{tabular}
+%\end{table}
 
 
 \end{document}

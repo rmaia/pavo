@@ -30,7 +30,6 @@
   }
 \renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
 
-
 \begin{document}
 
 
