@@ -1021,7 +1021,7 @@ ttvol(tcs(vismod2))
                 \caption{Tetrahedral plot with convex hull volume}
                 \label{fig:tcs2}
         \end{subfigure}
-         \caption{Example plots obtained using \code{ttplot}. Plot on the left was exported as pdf, while the one on the right was exported as eps.}\label{fig:tcs}
+         \caption{Example plots obtained using \code{ttplot}. Plot on the left was exported as pdf, while the one on the right was exported as png.}\label{fig:tcs}
 \end{figure}
 
 Another plotting option available is \code{projplot}, which projects color points in the surface of a 
