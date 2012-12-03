@@ -96,7 +96,7 @@ options(width=60)
 - Present the current difficulties of producing outputs in this context (maybe even give a usual flow 
 chart of how many people might deal with this data. E.g CLR for getspec, excel to visualize and 
 aggregate, CLR to extract tristimulus scores, matlab for colour distance in tetrahedral space, avicol 
-for JND, stat package for analyses!)
+for JND, stat package for analyses!) (Actually we may not want to go there, AviCol can do many if not all of these things now)
 
 pavo is an R package  (available at \url{http://cran.Rproject.org}) that contains a set of functions 
 and tools for the analysis of color data in a unified framework. It provides an environment in which 
