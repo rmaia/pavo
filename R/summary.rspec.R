@@ -3,7 +3,10 @@
 #' Extracts all 23 tristimulus color variables described in 
 #' Montgomerie (2006).
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' @S3method summary rspec
+#' @method summary rspec
+#'
+#' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
 #' @param smooth logical. If \code{TRUE} spectra will be smoothed 
@@ -13,10 +16,11 @@
 #' See notes. 
 #' @param span the degree of smoothing if \code{smooth} is \code{TRUE}. Larger values result
 #' in greater smoothing (defaults to 0.2).
-#' @param range vector of length 2 indicating the lower and upper wavelength bounds used
+#' @param wlrange vector of length 2 indicating the lower and upper wavelength bounds used
 #' to calculate variables that refer to a color wheel (S5 and H4) (defaults to 300nm to 700nm).
 #' @param plot logical. If \code{TRUE}, smooth spectra are plotted for verification of the
 #' smoothing parameter (defaults to \code{FALSE}).
+#' @param ... class consistency, ignore.
 #' @return A data frame containing 23 variables described in Montgomerie (2006)
 #' with spectra name as row names. 
 #' @return The tristimulus color variables calculated by this function are 
@@ -100,19 +104,18 @@
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
 #' variables are extracted using non-smoothed data. 
-#' @export
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 #' @references References describing variables:
 #'
-#' 1- Andersson, S. 1999. Morphology of uv reflectance in a whistlingthrush: Implications for the study
+#' 1- Andersson, S. 1999. Morphology of uv reflectance in a whistling-thrush: Implications for the study
 #' of structural colour signalling in birds. Journal of Avian Biology 30:193-204.
 #'
-#' 2- Andersson, S., J. Örnborg, and M. Andersson. 1998. Ultraviolet sexual dimorphism and assortative
+#' 2- Andersson, S., J. Ornborg, and M. Andersson. 1998. Ultraviolet sexual dimorphism and assortative
 #' mating in blue tits. Proceedings of the Royal Society B 265:445-450.
 #'
-#' 3- Andersson, S., S. Pryke, J. Örnborg, M. Lawes, and M. Andersson. 2002. Multiple receivers, multiple
+#' 3- Andersson, S., S. Pryke, J. Ornborg, M. Lawes, and M. Andersson. 2002. Multiple receivers, multiple
 #' ornaments, and a trade-off between agonistic and epigamic signaling in a widowbird. American
 #' Naturalist 160:683-691.
 #'
@@ -138,7 +141,7 @@
 #' widowbirds: Aggression related to the colour signal of both the territory owner and model
 #' intruder. Animal Behaviour 62:695-704.
 #'
-#' 10- Saks, L., K. Mcgraw, and P. Hörak. 2003. How feather colour reflects its carotenoid content.
+#' 10- Saks, L., K. Mcgraw, and P. Horak. 2003. How feather colour reflects its carotenoid content.
 #' Functional Ecology 17:555-561.
 #'
 #' 11- Shawkey, M., A. Estes, L. Sieffereman, and G. Hill. 2003. Nanostructure predicts intraspecific
@@ -148,36 +151,38 @@
 #' 12- Siefferman, L. and G. Hill. 2005. Uv-blue structural coloration and competition for nestboxes in male
 #' eastern bluebirds. Animal Behaviour 69:67-72.
 #'
-#' 13- Smiseth, P., J. Örnborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
+#' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 
+#summary.rspec <- function (object, wlrange=c(300,700), 
+#                smooth=TRUE, span=0.2, plot=FALSE) {
+
  
-summary.rspec <- function (rspecdata, wlrange=c(300,700), 
-                smooth=TRUE, span=0.2, plot=FALSE) {
+summary.rspec <- function (object, wlrange=c(300,700), smooth=TRUE, span=0.2, plot=FALSE, ...) {
 
-wl_index <- which(names(rspecdata)=='wl')
-wl <- rspecdata[,wl_index]
+wl_index <- which(names(object)=='wl')
+wl <- object[,wl_index]
 lambdamin <- min(wl)
-rspecdata <- rspecdata[,-wl_index]
+object <- object[,-wl_index]
 
-output.mat <- matrix (nrow=(dim(rspecdata)[2]), ncol=23)
+output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
 # Three measures of brightness
-B1 <- sapply(rspecdata, sum)
+B1 <- sapply(object, sum)
 
-B2 <- sapply(rspecdata, mean)
+B2 <- sapply(object, mean)
 
 
-Redchromamat <- as.matrix(rspecdata[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
+Redchromamat <- as.matrix(object[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
 Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
 
-Yellowchromamat <- as.matrix(rspecdata[which(wl==550):which(wl==625),]) #yellow 550-625nm
+Yellowchromamat <- as.matrix(object[which(wl==550):which(wl==625),]) #yellow 550-625nm
 Yellowchroma <- as.vector(apply(Yellowchromamat,2,sum))/B1 # S1 yellow
 
-Greenchromamat <- as.matrix(rspecdata[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
+Greenchromamat <- as.matrix(object[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
 Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
 
-Bluechromamat <- as.matrix(rspecdata[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
+Bluechromamat <- as.matrix(object[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
 
 
@@ -188,10 +193,10 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(rspecdata[Q4, ],2,sum)
-S5Y <- apply(rspecdata[Q3, ],2,sum)
-S5G <- apply(rspecdata[Q2, ],2,sum)
-S5B <- apply(rspecdata[Q1, ],2,sum)
+S5R <- apply(object[Q4, ],2,sum)
+S5Y <- apply(object[Q3, ],2,sum)
+S5G <- apply(object[Q2, ],2,sum)
+S5B <- apply(object[Q1, ],2,sum)
 
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
@@ -200,14 +205,14 @@ S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
 
 #carotchroma
-R450 <- as.numeric(rspecdata[which(wl==450), ])
-R700 <- as.numeric(rspecdata[which(wl==700), ])
+R450 <- as.numeric(object[which(wl==450), ])
+R700 <- as.numeric(object[which(wl==700), ])
 Carotchroma <- (R450-R700)/R700
 
 # S7
-sum_min_mid <- apply(rspecdata, 2, function(x) 
+sum_min_mid <- apply(object, 2, function(x) 
                      sum(x[which.min(x):round((which.max(x) + which.min(x))/2)]))
-sum_mid_max <- apply(rspecdata, 2, function(x) 
+sum_mid_max <- apply(object, 2, function(x) 
                      sum(x[round((which.max(x) + which.min(x))/2):which.max(x)]))
 
 S7 <- (sum_min_mid - sum_mid_max)/(B1)
@@ -215,22 +220,22 @@ S7 <- (sum_min_mid - sum_mid_max)/(B1)
 
 # S3
 
-plus50 <- apply(rspecdata,2,function(x) min(c(which.max(x)+50,which.max(wl))))
-minus50 <- apply(rspecdata,2,function(x) max(c(which.max(x)-50,which.min(wl))))
-pmindex <- 1:dim(rspecdata)[2]
+plus50 <- apply(object,2,function(x) min(c(which.max(x)+50,which.max(wl))))
+minus50 <- apply(object,2,function(x) max(c(which.max(x)-50,which.min(wl))))
+pmindex <- 1:dim(object)[2]
 
-S3 <- sapply(pmindex, function(x) sum(rspecdata[minus50[x]:plus50[x],x]))/B1
+S3 <- sapply(pmindex, function(x) sum(object[minus50[x]:plus50[x],x]))/B1
 
 
 #Metrics that involve bmax with or without smoothing
-data <- rspecdata
+data <- object
 
 if(smooth){
-  smoothspecs <- data.frame(apply(rspecdata,2, function(x) loess.smooth(wl, x, 
+  smoothspecs <- data.frame(apply(object,2, function(x) loess.smooth(wl, x, 
                                   span=span, degree=2, family = 'gaussian', 
                                   evaluation = length(wl))$y) )
   }else{
-    smoothspecs <- rspecdata
+    smoothspecs <- object
     warning('Spectral curves not smoothed - 
     variables that rely on derivatives (S4, S10, H2 and H5) are not meaningful', call.=FALSE)
     }
@@ -251,7 +256,7 @@ S6 <- B3-Rmin # S6
 H1 <- wl[max.col(t(smoothspecs), ties.method='first')]
 
 # H3 
-lambdaRmin <- wl[apply(rspecdata, 2, which.min)]  # H3
+lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
   Rmid <- round((H1+lambdaRmin)/2)
 
 
@@ -289,11 +294,11 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 if(lambdamin <= 300){
   lminuv <- 300
-  UVchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==400),])
+  UVchromamat <- as.matrix(object[which(wl==lminuv):which(wl==400),])
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   
-  Vchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==415),])
+  Vchromamat <- as.matrix(object[which(wl==lminuv):which(wl==415),])
   Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
   }
@@ -301,16 +306,16 @@ if(lambdamin <= 300){
 if(lambdamin > 300 & lambdamin < 400){
   warning(paste('Minimum wavelength is', lambdamin,'UV-related variables may not be meaningful'), call.=FALSE)
   lminuv <- lambdamin
-  UVchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==400),]) 
+  UVchromamat <- as.matrix(object[which(wl==lminuv):which(wl==400),]) 
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 4] <- UVchroma
 
-  Vchromamat <- as.matrix(rspecdata[which(wl==lminuv):which(wl==415),])
+  Vchromamat <- as.matrix(object[which(wl==lminuv):which(wl==415),])
   Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
   }
 
-color.var <- data.frame(output.mat, row.names=names(rspecdata))
+color.var <- data.frame(output.mat, row.names=names(object))
 
 names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.green", 
                       "S1.yellow", "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 

@@ -18,6 +18,8 @@
 #' @param lcol color of plotted lines indicating central tendency.
 #' @param shadecol color of shaded areas indicating variance measure.
 #' @param alpha transparency of the shaded areas.
+#' @param lty,xlim,ylim graphucal parameters.
+#' @param ... additional graphical parameters to be passed to plot.
 #' @return Plot containing the lines and shaded areas of the groups of spectra.
 #' @export
 #' @examples \dontrun{

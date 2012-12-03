@@ -22,8 +22,8 @@
 #' plot(teal.sset1)
 #' # Create factor and average spectra by levels 'a' and 'b'
 #' ind <- rep(c('a','b'), times=6)
-#' teal.sset2 <- aggspec(teal, by=ind) }
-#' plot(teal.sset2)
+#' teal.sset2 <- aggspec(teal, by=ind)
+#' plot(teal.sset2) }
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.

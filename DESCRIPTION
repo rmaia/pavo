@@ -17,10 +17,13 @@ Depends:
     mapproj,
     rcdd
 Collate:
+    'aggplot.R'
     'aggspec.R'
+    'as.rspec.r'
     'coldist.R'
     'data-bgandilum.R'
     'data-sicalis.R'
+    'data-teal.R'
     'data-ttvertex.R'
     'data-vissyst.R'
     'explorespec.R'
@@ -40,9 +43,3 @@ Collate:
     'ttplot.R'
     'vismodel.R'
     'voloverlap.R'
-    'as.rspec.r'
-    'aggplot.R'
-    'data-teal.R'
-    'summary.tcs.R'
-    'ttpoints.R'
-    'ttvol.R'
