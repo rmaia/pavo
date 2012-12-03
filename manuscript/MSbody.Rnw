@@ -126,12 +126,10 @@ other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006
 
 %\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
 
-\acks
-
+\begin{acks}
 Probably should include the person who produced most of voloverlap
-
 Sources of funding and the usual
-
+\end{acks}
 %\begin{thebibliography}{99}
 %\item <Reference details>
 %.
@@ -140,11 +138,11 @@ Sources of funding and the usual
 %\item <Reference details>
 %\end{thebibliography}
 
-Figures
-1-  I recommend a possible workflow chart that would detail a common path to using the main fxns
-2-  A tetrahedral plot
-3-	A heat map
-4-	A voloverlap ?
+Figures\\
+1-  I recommend a possible workflow chart that would detail a common path to using the main fxns\\
+2-  A tetrahedral plot\\
+3-	A heat map\\
+4-	A voloverlap? \\
 
 %\begin{figure}
 %\centering
