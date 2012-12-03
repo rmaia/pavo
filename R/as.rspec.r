@@ -7,7 +7,7 @@
 #' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
 #' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
-#' @export
+#' @export as.rspec is.rspec
 #' @examples \dontrun{
 #'
 #' # Generate some fake reflectance data
@@ -21,7 +21,7 @@
 #' fakedat2 <- as.rspec(fakedat)
 #' is.rspec(fakedat2)
 #' head(fakedat2)}
-#''
+#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL) {

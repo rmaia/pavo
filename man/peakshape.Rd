@@ -17,8 +17,10 @@
   \item{bounds}{a vector specifying the wavelength range to
   analyze}
 
-  \item{plot}{logical value indicating whether to include
-  plots}
+  \item{plot}{logical. Should plots indicating calculated
+  parameters be returned? (Defaults to \code{TRUE})}
+
+  \item{...}{additional arguments to be passed to plot}
 }
 \value{
   a data frame containing peak height (max value), location

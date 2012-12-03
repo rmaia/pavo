@@ -5,7 +5,7 @@
 \usage{
   as.rspec(object, whichwl = NULL)
 
-  is.rspec(x)
+  is.rspec(object)
 }
 \arguments{
   \item{object}{(required) a data frame or matrix
@@ -31,11 +31,14 @@
 }
 \examples{
 \dontrun{
+
 # Generate some fake reflectance data
 fakedat <- data.frame(refl1 = rnorm(401), refl2 = rnorm(401), wavelength = c(300:700))
 head(fakedat)
+
 # Determine if is rspec object
 is.rspec(fakedat)
+
 # Convert to rspec object
 fakedat2 <- as.rspec(fakedat)
 is.rspec(fakedat2)
