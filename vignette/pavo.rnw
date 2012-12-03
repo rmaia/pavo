@@ -1079,7 +1079,7 @@ the throat and the crown colors (Figure \ref{figure:overlap}).
                 \caption{Throat and Crown overlap}
                 \label{fig:ov2}
         \end{subfigure}
-         \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
+         \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the Overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
 
 
