@@ -897,7 +897,7 @@ cone or the receptor (or combination of receptors) responsible for chromatic pro
 equation (SIDDIQUI 2004):
 
 \begin{equation}
-\Delta L =  \frac{\Delta f^2}{w^2}
+\Delta L =  \left|\frac{\Delta f^2}{w^2}\right|
 \end{equation}
 
 \pavo{} implements these calculations in the function \code{coldist}. For the achromatic contrast, 
@@ -919,5 +919,168 @@ these species are quite different (see Figure \ref{figure:usmlplot}). IMPORTANT:
 \code{coldist} returns $\Delta S$, and \textbf{not} $\Delta S^2$
 
 \subsubsection{Tetrahedral Color Space Model}
+
+Another visual model representation that has become quite popular, especially in avian biology studies, 
+is the color space model. In this model, photon catches are expressed in relative values (so that the 
+the quantum catches of all cones involved in chromatic discrimination sum to 1). The maximum stimulati
+on of each cone $n$ is placed at the vertice of a $(n-1)$-dimensional polygon that encompasses all 
+theoretical colors that can be perceived by that visual system. Therefore, for the avian visual system 
+comprised of 4 cones, all colors can be placed somewhere in the volume of a tetrahedron, in which each 
+of the four vertices represents the maximum stimulation of that particular cone type 
+%(Figure \ref{figure:tcs}). 
+
+Though this model does not account for receptor noise (and thus does not allow an estimate of Just 
+Noticeable Differencces), it presents several advantages. First, it makes for a very intuitive 
+representation of color points accounting for attirbutes of the color vision of the signal receiver. 
+Second, and perhaps most importantly, it allows for the calculation of several interesting variables 
+that represent color. For example, hue can be estimated from the angle of the point relative to the xy 
+plane (blue-green-red) and the yz plane (UV); saturation can be estimated as the distance of the point 
+from the achromatic center.
+
+In \pavo{} the tetrahedral color space is implemented in the function \code{tcs}, after the 
+calculation of relative quantum catches using \code{vismodel} with the (default) option 
+\code{relative=TRUE}.
+
+<<echo=TRUE, results=hide>>=
+vismod2 <- vismodel(sppspec)
+tcs(vismod2)
+@
+
+<<echo=FALSE>>=
+round(tcs(vismod2), 2)
+@
+
+By default, \code{tcs} will use $Q_i$ for the calculations (that is, \emph{not} log-transformed, as 
+recommended by STODDARD \& PRUM), but $q_i$ or $f_i$ may be specified if desired 
+(e.g. \code{tcs(vismod2\$fi)}).
+
+
+\code{tcs} returns the original photon catch values, the relative cone stimulation for a given hue 
+(\code{x.r}; see the supplemental material of STODDARD \& PRUM for more information) the two angles of 
+hue (\code{h.theta} and \code{h.phi}), and the distance from the achromatic center (\code{r.vec}) 
+along with the maximum distance achievable for that hue (\code{r.max}) and the proportion of that 
+maximum achieved by the color point (\code{r.achieved}).
+
+\textbf{Summary variables for groups of points}. Another advantage of the tetrahedral color space 
+model is that it allows for the calculation of useful summary statistics of groups of points, such as 
+the centroid of the points, the total volume occupied, the mean and variance of hue span and the mean 
+saturation. In \pavo{}, the result of a \code{tcs} call is an object of class tcs, and thus these 
+summary statistics can be calculated simply by calling \code{summary}:
+
+<<>>=
+summary(tcs(vismod2))
+@
+
+In addition, the \code{summary} call can take a \code{by} vector of group identities, so that the 
+variables are calculated for each group separately. For example we could use the tetrahedral colorspace 
+model to represent the spectra of all individuals measured, and calculate the summary statistics for 
+these points per species:
+
+<<>>=
+tcs.mspecs <- tcs(vismodel(mspecs))
+summary(tcs.mspecs, by=spp)
+@
+
+\textbf{Plotting options}. There are two useful plots for the tetrahedral colorspace model. The first is 
+a three-dimensional plot of the volume, which is implemented in \pavo{} as an interactive plot, which 
+the user can spin around and zoom, and can be called by the function \code{ttplot}
+
+<<results=hide>>=
+ttplot(tcs.mspecs, col=spec2rgb(mspecs), size=0.01)
+# rgl.postscript('pavo-tcsplot.pdf',fmt='pdf')
+@
+
+the accessory functions \code{ttpoints} and \code{ttvol} can be used, in addition, to plot additional 
+points or the convex hull determining the volume occupied by the points:
+
+<<results=hide>>=
+ttplot(tcs(vismod2), size=0)
+ttvol(tcs(vismod2))
+# rgl.snapshot('pavo-tcsvolplot.png')
+@
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{fig/pavo-tcsplot}
+                \caption{Tetrahedral colorspace plot}
+                \label{fig:tcs1}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{fig/pavo-tcsvolplot}
+                \caption{Tetrahedral colorspace plot with a volume convex hull}
+                \label{fig:tcs2}
+        \end{subfigure}
+         \caption{Example plots obtained using \code{ttplot}. Plot on the left was exported as pdf, while the one on the right was exported as eps.}\label{fig:tcs}
+\end{figure}
+
+Another plotting option available is \code{projplot}, which projects color points in the surface of a 
+sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue. As we 
+can see in Figure \ref{figure:proj}, points are mostly concentrated in the south and west 
+``hemispheres'', indicating colors with low UV content and concentrated in green-red areas of 
+colorspace.
+
+<<label=proj, fig=TRUE, include=FALSE>>=
+projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
+@
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=4in]{fig/pavo-proj}
+\end{center}
+\caption{Projection plot from a tetrahedral colorspace}
+\label{figure:proj}
+\end{figure}
+
+
+\textbf{Color Volume Overlap.} Finally, a useful function available in \pavo{} is \code{voloverlap}, which calculates the overlap in tetrahedral color volume between two sets of points. To show this function, we will use the \code{sicalis} dataset, which includes measurements from the crown (C), throat (T) and belly (B) of seven stripe-tailed yellow finches (textit{Sicalis citrina}). 
+
+<<label=sicalis, fig=TRUE, include=FALSE>>=
+data(sicalis)
+aggplot(sicalis, by=rep(c('C','T','B'), 7))
+@
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=3in]{fig/pavo-sicalis}
+\end{center}
+\caption{\code{aggplot} of the \code{sicalis} data (blue: crown, red: throat, green: belly)}
+\label{figure:sicalis}
+\end{figure}
+
+We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colorspace (note the option \code{plot} for plotting of the volumes:
+
+<<>>=
+tcs.sicalis.C <- tcs(vismodel(sicalis[c(1,grep('\\.C',names(sicalis)))]))
+tcs.sicalis.T <- tcs(vismodel(sicalis[c(1,grep('\\.T',names(sicalis)))]))
+tcs.sicalis.B <- tcs(vismodel(sicalis[c(1,grep('\\.B',names(sicalis)))]))
+#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
+#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
+voloverlap(tcs.sicalis.T,tcs.sicalis.B)
+voloverlap(tcs.sicalis.T,tcs.sicalis.C)
+@
+
+So it can be clearly seen that there is overlap between the throat and breast colors, but not between 
+the throat and the crown colors (Figure \ref{figure:overlap}).
+
+\begin{figure}
+        \centering
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{fig/pavo-overlap1}
+                \caption{Throat and Breast Overlap}
+                \label{fig:ov1}
+        \end{subfigure}%
+        \begin{subfigure}[b]{0.45\textwidth}
+                \centering
+                \includegraphics[width=\textwidth]{fig/pavo-overlap2}
+                \caption{Throat and Crown overlap}
+                \label{fig:ov2}
+        \end{subfigure}
+         \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
+\end{figure}
+
 
 \end{document}
