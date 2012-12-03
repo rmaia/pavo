@@ -63,4 +63,6 @@ res
 #' @rdname as.rspec
 #' @return a logical value indicating whether the object is of class \code{rspec}
 
-is.rspec <- function(object) inherits(object, "rspec")
+is.rspec <- function(object){
+ inherits(object, "rspec")
+}

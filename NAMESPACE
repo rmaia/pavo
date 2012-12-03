@@ -1,3 +1,6 @@
+S3method(plot,rspec)
+S3method(summary,rspec)
+S3method(summary,tcs)
 export(aggplot)
 export(aggspec)
 export(as.rspec)
