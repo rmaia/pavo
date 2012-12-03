@@ -21,7 +21,10 @@
 }
 \examples{
 \dontrun{
-#INCLUDE EXAMPLE}
+data(teal)
+spec2rgb(teal)
+# Plot data using estimated perceived color
+plot(teal, col = spec2rgb(teal), type = 'o')}
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}

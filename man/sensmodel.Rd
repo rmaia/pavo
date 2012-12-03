@@ -25,9 +25,9 @@
   (2005)}
 
   \item{oiltype}{a list of same length as peaksense that
-  lists the oil droplet types (currently accepts only "C",
-  "Y", "R", "P") when Bmid is not known. Calculates Bmid
-  based on the regression equations found in Hart ad
+  lists the oil droplet types (currently accepts only "T",
+  C", "Y", "R", "P") when Bmid is not known. Calculates
+  Bmid based on the regression equations found in Hart ad
   Vorobyev (2005).}
 
   \item{beta}{logical. If \code{TRUE} the sensitivities
@@ -51,7 +51,11 @@
   Govardovskii et al. (2000) and Hart & Vorobyev (2005).
 }
 \examples{
-\dontrun{}
+\dontrun{
+# Blue tit visual system based on Hart et al (2000)
+bluesens <- sensmodel(c(371,448,502,563),beta=F,oiltype = c("T", "C", "Y","R"),om= TRUE)
+# Danio aequipinnatus based on Govardovskii et al. (2000)
+daniosens <- sensmodel(c(357,411,477,569))}
 }
 \author{
   Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad
@@ -66,5 +70,11 @@
   absorption spectra and spectral sensitivities of bird
   cone photoreceptors. Journal of Comparative Physiology A.
   191: 381-392
+
+  Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000)
+  Visual pigments, oil droplets, ocular media and cone
+  photoreceptor distribution in two species of passerine
+  bird: the blue tit (Parus caeruleus L) and the blackbird
+  (Turdus merula L). J Comp Physiol A 186:375-387
 }
 

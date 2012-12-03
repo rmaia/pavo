@@ -34,9 +34,11 @@
 }
 \examples{
 \dontrun{
-data(sicalis)
-sicalis.sm <- procspec(sicalis, opt='smooth', span=.25)
-FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
+data(teal)
+peakshape(teal, select = 3)
+peakshape(teal, select = 10)
+# Use wavelength bounds to narrow in on peak of interest
+peakshape(teal, select = 10, bounds=c(400, 550))}
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia

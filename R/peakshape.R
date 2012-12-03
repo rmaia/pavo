@@ -9,19 +9,22 @@
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param bounds a vector specifying the wavelength range to analyze
+#' @param plot logical value indicating whether to include plots
 #' @return a data frame containing peak height (max value), location (hue) and full width
-#' at half maximum, as well as half widths on left and right side of peak. Status column
+#' at half maximum, as well as half widths on left and right side of peak. Incl.min column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.
 #' Function will return a warning if not.
 #' @seealso \code{\link{procspec}}
 #' @export
 #' @examples \dontrun{
-#' data(sicalis)
-#' sicalis.sm <- procspec(sicalis, opt='smooth', span=.25)
-#' FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
+#' data(teal)
+#' peakshape(teal, select = 3)
+#' peakshape(teal, select = 10)
+#' # Use wavelength bounds to narrow in on peak of interest
+#' peakshape(teal, select = 10, bounds=c(400, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = T, ...) {
+peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = TRUE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
@@ -96,7 +99,7 @@ if (plot==TRUE) {
 }
 
 out <- data.frame(B3 = as.numeric(Yi), H1 = hue, FWHM = Xb - Xa, HWHM.l = hue - Xa,
-                  HWHM.r = Xb - hue, status = c("OK", "check")[as.numeric(Yj>Yk)+1])
+                  HWHM.r = Xb - hue, incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 row.names(out) <- nms[select]
 
