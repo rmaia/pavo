@@ -119,7 +119,7 @@ for (i in 1:nplots){
   if(!is.null(dim(bloc))){
     if (dim(bloc)[2] > 1){
     for(j in 2:dim(bloc)[2]){
-      lines(wl, bloc[,j], col=legcolor[j], type='l')
+      lines(wl, bloc[,j], col=legcolor[j], type='l', ...)
   legend('topright', legend=names(bloc), cex=0.9, bty="n", 
          text.col=legcolor)	}}}
 
