@@ -20,7 +20,7 @@
 #' to calculate variables that refer to a color wheel (S5 and H4) (defaults to 300nm to 700nm).
 #' @param plot logical. If \code{TRUE}, smooth spectra are plotted for verification of the
 #' smoothing parameter (defaults to \code{FALSE}).
-#' @param ... class consistency, ignore.
+#' @param ... class consistency (ignored)
 #' @return A data frame containing 23 variables described in Montgomerie (2006)
 #' with spectra name as row names. 
 #' @return The tristimulus color variables calculated by this function are 
