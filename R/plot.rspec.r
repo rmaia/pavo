@@ -27,13 +27,12 @@
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
 #' @export
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(teal)
+#' plot(teal, type = 'overlay')
+#' plot(teal, type = 'stack')
+#' plot(teal, type = 'heatmap')
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
-
-# TODO: add argument for padding region between rspecdata in stack plot
-# TODO: add labels to curves along y-axis for stacked plot (ideas anyone?)
-# TODO: figure out way to label y-axis in heatplot (ideas?)
 
 plot.rspec <- function(rspecdata, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
                        cols = 2, varying = NULL, n = 100, col = 'black', 

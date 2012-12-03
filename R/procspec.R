@@ -34,16 +34,18 @@
 #' @return A data frame of class \code{rspec} with the processed data.
 #' @export
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(teal)
+#' plot(teal, select = 10)
+#' # Smooth data to remove noise
+#' teal.sm <- procspec(teal, opt = 'smooth', span = 0.25)
+#' plot(teal.sm, select = 10)
+#' # Normalize to max of unity
+#' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
+#' plot(teal.max, select = 10)
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{loess.smooth}}
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183-200.
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
-
-# TODO
-# * inputting only one spec gave output of wavelengths only-how do we want to handle it
-#   when users don't supply wavelengths?
-# * supplied data frame must be an rspec object--put relevant warnings in place if not
 
 procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 'stretch', 
 										 'bin', 'sum', 'center'), 
