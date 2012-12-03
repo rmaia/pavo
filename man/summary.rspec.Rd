@@ -31,7 +31,7 @@
   plotted for verification of the smoothing parameter
   (defaults to \code{FALSE}).}
 
-  \item{...}{class consistency (ignored)}
+  \item{...}{class consistency, ignore.}
 }
 \value{
   A data frame containing 23 variables described in
@@ -230,4 +230,3 @@
   with paternal care in bluethroats? Behavioural Ecology
   12:164-170.
 }
-
