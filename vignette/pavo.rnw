@@ -1070,7 +1070,12 @@ voloverlap(tcs.sicalis.T,tcs.sicalis.B)
 voloverlap(tcs.sicalis.T,tcs.sicalis.C)
 @
 
-So it can be clearly seen that there is overlap between the throat and breast colors, but not between 
+\code{voverlap} gives the volume ($V$) of the convex hull delimited by the overlap between the two 
+original volumes, and two proportions are calculated from that: 
+$V_{smallest} = V_{overlap} / V_{smallest}$ and $V_{both} = V_{overlap} / (V_A + V_B)$. 
+Thus, if one of the volumes is entirely contained in the other, \code{vsmallest} will equal 1. 
+
+So we can clearly see that there is overlap between the throat and breast colors, but not between 
 the throat and the crown colors (Figure \ref{figure:overlap}).
 
 \begin{figure}
