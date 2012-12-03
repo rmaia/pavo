@@ -9,18 +9,10 @@
     bkg = "ideal", relative = TRUE)
 }
 \arguments{
-  \item{rspecdata(required)}{a data frame, possibly an
+  \item{rspecdata}{(required) a data frame, possibly an
   object of class \code{rspec} that has wavelength range in
   the first column, named 'wl', and spectral measurements
   in the remaining columns.}
-
-  \item{sens}{data frame, such as one produced by
-  \code{sensmodel} containing sensitivity for the
-  user-defined visual system. The data frame must contain a
-  'wl' column with the range of wavelengths included, and
-  the sensitivity for each other cone as a column. If not
-  specified, the visual system will be chosen according to
-  one of the choices from the argument \code{visual}.}
 
   \item{visual}{the visual system to be used. Options are:
   \itemize{ \item a data frame such as one produced
@@ -46,7 +38,7 @@
   \item{illum}{either a vector containing the illuminant,
   or one of the options: \itemize{ \item \code{ideal}:
   homogeneous illuminance of 1 accross wavelengths
-  (default) \item \code{'bluesky'} \item \code{'d65'}:
+  (default) \item \code{'bluesky'} \item \code{'D65'}:
   standard daylight \item \code{'forestshade'} }}
 
   \item{bkg}{either a vector containing the background

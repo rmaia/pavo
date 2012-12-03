@@ -21,6 +21,10 @@
 \geometry{letterpaper, textwidth=5.5in, textheight=8.5in, marginparsep=7pt, marginparwidth=.6in}
 %\setlength\parindent{0in}
 
+\usepackage{booktabs}
+\usepackage{natbib}
+
+
 % define colors
 \hypersetup{
   colorlinks,
@@ -418,7 +422,7 @@ Which are in addition to the exploratory plotting offered by \code{explorespec},
 of reflectance spectra from the iridescent wing patch of a green-winged teal (\emph{Anas
 carolinensis}). Reflectance measurements were taken between 300 and 700 nm at different incident
 angles, ranging from 15\ensuremath{^\circ} to 70\ensuremath{^\circ} (in 5\ensuremath{^\circ}
-increments) (CHAD DUCK PAPER REF).
+increments).
 
 \subsubsection{The \code{overlay} Option}
 
@@ -1125,5 +1129,7 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
          \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
 
+\bibliographystyle{bes}
+\bibliography{}
 
 \end{document}

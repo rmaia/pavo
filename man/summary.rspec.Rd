@@ -2,14 +2,14 @@
 \alias{summary.rspec}
 \title{Tristimulus color variables}
 \usage{
-  summary.rspec(rspecdata, wlrange = c(300, 700),
-    smooth = TRUE, span = 0.2, plot = FALSE)
+  \method{summary}{rspec} (object, wlrange = c(300, 700),
+    smooth = TRUE, span = 0.2, plot = FALSE, ...)
 }
 \arguments{
-  \item{rspecdata}{(required) a data frame, possibly an
-  object of class \code{rspec}, with a column with
-  wavelength data, named 'wl', and the remaining column
-  containing spectra to process.}
+  \item{object}{(required) a data frame, possibly an object
+  of class \code{rspec}, with a column with wavelength
+  data, named 'wl', and the remaining column containing
+  spectra to process.}
 
   \item{smooth}{logical. If \code{TRUE} spectra will be
   smoothed before extracting some of the values. When
@@ -22,10 +22,10 @@
   \code{TRUE}. Larger values result in greater smoothing
   (defaults to 0.2).}
 
-  \item{range}{vector of length 2 indicating the lower and
-  upper wavelength bounds used to calculate variables that
-  refer to a color wheel (S5 and H4) (defaults to 300nm to
-  700nm).}
+  \item{wlrange}{vector of length 2 indicating the lower
+  and upper wavelength bounds used to calculate variables
+  that refer to a color wheel (S5 and H4) (defaults to
+  300nm to 700nm).}
 
   \item{plot}{logical. If \code{TRUE}, smooth spectra are
   plotted for verification of the smoothing parameter
@@ -165,16 +165,16 @@
   References describing variables:
 
   1- Andersson, S. 1999. Morphology of uv reflectance in a
-  whistlingthrush: Implications for the study of structural
-  colour signalling in birds. Journal of Avian Biology
-  30:193-204.
+  whistling-thrush: Implications for the study of
+  structural colour signalling in birds. Journal of Avian
+  Biology 30:193-204.
 
-  2- Andersson, S., J. Örnborg, and M. Andersson. 1998.
+  2- Andersson, S., J. Ornborg, and M. Andersson. 1998.
   Ultraviolet sexual dimorphism and assortative mating in
   blue tits. Proceedings of the Royal Society B
   265:445-450.
 
-  3- Andersson, S., S. Pryke, J. Örnborg, M. Lawes, and M.
+  3- Andersson, S., S. Pryke, J. Ornborg, M. Lawes, and M.
   Andersson. 2002. Multiple receivers, multiple ornaments,
   and a trade-off between agonistic and epigamic signaling
   in a widowbird. American Naturalist 160:683-691.
@@ -210,7 +210,7 @@
   territory owner and model intruder. Animal Behaviour
   62:695-704.
 
-  10- Saks, L., K. Mcgraw, and P. Hörak. 2003. How feather
+  10- Saks, L., K. Mcgraw, and P. Horak. 2003. How feather
   colour reflects its carotenoid content. Functional
   Ecology 17:555-561.
 
@@ -223,7 +223,7 @@
   coloration and competition for nestboxes in male eastern
   bluebirds. Animal Behaviour 69:67-72.
 
-  13- Smiseth, P., J. Örnborg, S. Andersson, and T.
+  13- Smiseth, P., J. Ornborg, S. Andersson, and T.
   Amundsen. 2001. Is male plumage reflectance correlated
   with paternal care in bluethroats? Behavioural Ecology
   12:164-170.

@@ -3,7 +3,7 @@
 #' Plots one or multiple spectral curves in the same graph to rapidly 
 #' compare groups of spectra.
 #'
-#' @param rspecdata(required) a data frame, possibly an object of class \code{rspec}
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}
 #' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 #' remaining columns. 
 #' @param by number of spectra to include in each graph (defaults to 1)

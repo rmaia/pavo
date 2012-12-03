@@ -2,16 +2,16 @@
 \alias{plot.rspec}
 \title{Plot spectra}
 \usage{
-  plot.rspec(rspecdata, select = NULL,
-    type = c("overlay", "stack", "heatmap"), cols = 2,
+  \method{plot}{rspec} (x, select = NULL,
+    type = c("overlay", "stack", "heatmap"),
     varying = NULL, n = 100, col = "black", xlim = NULL,
     ylim = NULL, ...)
 }
 \arguments{
-  \item{rspecdata}{(required) a data frame, possibly an
-  object of class \code{rspec}, with a column with
-  wavelength data, named 'wl', and the remaining column
-  containing spectra to plot.}
+  \item{x}{(required) a data frame, possibly an object of
+  class \code{rspec}, with a column with wavelength data,
+  named 'wl', and the remaining column containing spectra
+  to plot.}
 
   \item{select}{specification of which spectra to plot. Can
   be a numeric vector or factor (e.g., \code{sex=='male'})}

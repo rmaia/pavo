@@ -9,6 +9,9 @@
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param bounds a vector specifying the wavelength range to analyze
+#' @param plot logical. Should plots indicating calculated parameters be returned? 
+#' (Defaults to \code{TRUE})
+#' @param ... additional arguments to be passed to plot
 #' @return a data frame containing peak height (max value), location (hue) and full width
 #' at half maximum, as well as half widths on left and right side of peak. Status column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.
@@ -21,7 +24,7 @@
 #' FWHM(sicalis.sm, select=2:5, bounds=c(300, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = T, ...) {
+peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = TRUE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 

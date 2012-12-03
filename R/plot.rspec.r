@@ -2,7 +2,9 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
+#' @S3method plot rspec
+#' @method plot rspec
+#' @param x (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to plot.
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
@@ -25,30 +27,29 @@
 #' @param xlim a numeric vector giving the lower an upper limits for the x-axis
 #' @param ylim a numeric vector giving the lower an upper limits for the y-axis
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
-#' @export
 #' @examples \dontrun{
 #' #INCLUDE EXAMPLE}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
-# TODO: add argument for padding region between rspecdata in stack plot
+# TODO: add argument for padding region between x in stack plot
 # TODO: add labels to curves along y-axis for stacked plot (ideas anyone?)
 # TODO: figure out way to label y-axis in heatplot (ideas?)
 
-plot.rspec <- function(rspecdata, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
-                       cols = 2, varying = NULL, n = 100, col = 'black', 
+plot.rspec <- function(x, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
+                       varying = NULL, n = 100, col = 'black', 
                        xlim = NULL, ylim = NULL, ...) {
 
 type <- match.arg(type)
 
 # make wavelength vector
-wl_index <- which(names(rspecdata)=='wl')
+wl_index <- which(names(x)=='wl')
 if (length(wl_index) > 0) {
   haswl <- TRUE
-  wl <- rspecdata[, wl_index]
+  wl <- x[, wl_index]
 } else {
   haswl <- FALSE
-  wl <- 1:nrow(rspecdata)
+  wl <- 1:nrow(x)
   warning('No wavelengths provided; using arbitrary index values')
 }
 
@@ -56,23 +57,23 @@ if (length(wl_index) > 0) {
 if (is.logical(select))
   select <- which(select=='TRUE')
 if (is.null(select)&haswl==TRUE)
-  select <- (1:ncol(rspecdata))[-wl_index]
+  select <- (1:ncol(x))[-wl_index]
 if (is.null(select)&haswl==FALSE)
-  select <- 1:ncol(rspecdata)
+  select <- 1:ncol(x)
 
-rspecdata <- as.data.frame(rspecdata[, select])
+x <- as.data.frame(x[, select])
 
 # set limits
 if (is.null(xlim))
   xlim <- range(wl)
 
 if (is.null(ylim))
-  ylim <- range(rspecdata)
+  ylim <- range(x)
 
 # heat plot
 if (type=='heatmap') {
   if (is.null(varying)) { 
-    varying <- 1:ncol(rspecdata)
+    varying <- 1:ncol(x)
     print("No varying vector supplied; using arbitrary values")
   }
   
@@ -85,65 +86,65 @@ if (type=='heatmap') {
   	}
   	
   Index <- approx(varying, n = n)$y
-  dat <- sapply(1:nrow(rspecdata), function(z){approx(x = varying, y = rspecdata[z, ], 
+  dat <- sapply(1:nrow(x), function(z){approx(x = varying, y = x[z, ], 
                 n = n)$y})
   image(x = wl, y = Index, z = t(dat), col = col,
         xlab = 'Wavelength (nm)', xlim = xlim, ...)
 }
 
 # coloring for overlay plot & others
-if (length(col) < ncol(rspecdata))
-  col <- rep(col, ncol(rspecdata))
+if (length(col) < ncol(x))
+  col <- rep(col, ncol(x))
 # if (any(class(col)=='spec2rgb'))
 #   col <- col[select-1]
-if (any(names(col)%in%names(rspecdata)))
+if (any(names(col)%in%names(x)))
   col <- col[select-1]
 
 # overlay different spec curves
 if (type=='overlay') {
-  plot(rspecdata[, 1]~wl, type = 'l', # c(min(rspecdata), max(rspecdata)), 
+  plot(x[, 1]~wl, type = 'l', # c(min(x), max(x)), 
        xlab = 'Wavelength (nm)', ylab = 'Reflectance (%)', xlim = xlim, ylim = ylim,
        col = col[1], ...)
-  if (ncol(rspecdata)>1) {
-    for (i in 2:ncol(rspecdata))
-      lines(rspecdata[, i]~wl, col=col[i], ...)
+  if (ncol(x)>1) {
+    for (i in 2:ncol(x))
+      lines(x[, i]~wl, col=col[i], ...)
   }
 }
 
 # # stack curves along y-axis
 # if (type=='stack') {
-#   # rspecdata2 <- sapply(1:ncol(rspecdata), function(z){rspecdata[, z] - min(rspecdata[, z])})
-#   rspecdata2 <- rspecdata
-#   ym <- apply(rspecdata2, 2, max)  
-#   plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
+#   # x2 <- sapply(1:ncol(x), function(z){x[, z] - min(x[, z])})
+#   x2 <- x
+#   ym <- apply(x2, 2, max)  
+#   plot(x2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
 #        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', col = col[1], 
 #        ...)
-#   if (ncol(rspecdata)>1) {
-#     for (i in 2:ncol(rspecdata)) 
-#       lines((rspecdata2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
+#   if (ncol(x)>1) {
+#     for (i in 2:ncol(x)) 
+#       lines((x2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
 #     }
 # }
 
 # stack curves along y-axis
 if (type=='stack') {
-  # rspecdata2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
-  rspecdata2 <- as.data.frame(rspecdata[, c(ncol(rspecdata):1)])
+  # x2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
+  x2 <- as.data.frame(x[, c(ncol(x):1)])
   col <- rev(col)
   if (length(select)==1){
-    y <- max(rspecdata2)} else {
-    y <- apply(rspecdata2, 2, max)
+    y <- max(x2)} else {
+    y <- apply(x2, 2, max)
   }
   ym <- cumsum(y)
   ymins <- c(0, ym[-length(ym)])
-  plot(rspecdata2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
+  plot(x2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', 
        col = col[1], ...)
-  if (ncol(rspecdata2)>1) {
-    for (i in 2:ncol(rspecdata2)) 
-      lines((rspecdata2[, i] + ymins[i])~wl, col = col[i], ...)
+  if (ncol(x2)>1) {
+    for (i in 2:ncol(x2)) 
+      lines((x2[, i] + ymins[i])~wl, col = col[i], ...)
     }
-#  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(rspecdata2), 1, 5), las=1, cex.axis=.5)
-  yend <- tail(rspecdata2, 1)
+#  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(x2), 1, 5), las=1, cex.axis=.5)
+  yend <- tail(x2, 1)
   yloc <- ymins + yend
   axis(side=4, at=yloc, labels=rev(select), las=1)
 #  abline(h=ymins, lty=3)

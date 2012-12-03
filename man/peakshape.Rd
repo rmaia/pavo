@@ -3,7 +3,7 @@
 \title{Peak shape descriptors}
 \usage{
   peakshape(rspecdata, select = NULL, bounds = c(300, 700),
-    plot = T, ...)
+    plot = TRUE, ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -16,6 +16,11 @@
 
   \item{bounds}{a vector specifying the wavelength range to
   analyze}
+
+  \item{plot}{logical. Should plots indicating calculated
+  parameters be returned? (Defaults to \code{TRUE})}
+
+  \item{...}{additional arguments to be passed to plot}
 }
 \value{
   a data frame containing peak height (max value), location

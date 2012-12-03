@@ -53,7 +53,7 @@ rgb1 <- sapply(1:ncol(XYZ), function(x) xyzmat%*%as.matrix(XYZ[, x]))
 rgb1[rgb1 < 0] <- 0
 rgb1[rgb1 > 1] <- 1
 
-colrs <- rgb(r=rgb1[1,], g=rgb1[2,], b=rgb1[3,])
+colrs <- rgb(red=rgb1[1,], green=rgb1[2,], blue=rgb1[3,])
 
 #class(colrs) <- c('spec2rgb', 'character')
 

@@ -30,8 +30,6 @@
 #' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
 #' the default densities, the Weber fraction for the large cone will be 0.05, as
 #' estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})
-#' @param asdist logical. If \code{TRUE}, returns result in the form of a distance matrix; if
-#' \code{FALSE} returns as a data frame (see below; defaults to \code{FALSE})
 #' @return A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S, in JNDs)
 #' and \code{dL} is the achromatic contrast (delta L, in JNDs)

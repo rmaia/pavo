@@ -34,6 +34,11 @@
   measure.}
 
   \item{alpha}{transparency of the shaded areas.}
+
+  \item{lty,xlim,ylim}{graphucal parameters.}
+
+  \item{...}{additional graphical parameters to be passed
+  to plot.}
 }
 \value{
   Plot containing the lines and shaded areas of the groups

@@ -45,10 +45,6 @@
   fraction for the large cone will be 0.05, as estimated
   from behavioral experiment with the Perkin robin,
   \emph{Leiothrix lutea})}
-
-  \item{asdist}{logical. If \code{TRUE}, returns result in
-  the form of a distance matrix; if \code{FALSE} returns as
-  a data frame (see below; defaults to \code{FALSE})}
 }
 \value{
   A data frame containing 4 columns. The first two
