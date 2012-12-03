@@ -98,9 +98,9 @@ from each individual.
 The samples do not have the same sample sizes and have additional peculiarities that should
 emphasize the flexibility \pavo{} offers, as we'll see below.
 
-In addition, \pavo{} includes two datasets that can be called with the \code{data} function. 
-\code{data(teal)} will be used in this vignette, but \code{data(sicalis)} is also available. See help 
-for more information.
+In addition, \pavo{} includes two datasets that can be called with the \code{data} function.
+\code{data(teal)} will be used in this vignette, but \code{data(sicalis)} is also available. See
+help for more information.
 
 \section{Organizing and Processing Spectral Data}
 
