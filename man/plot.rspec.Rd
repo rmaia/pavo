@@ -49,7 +49,10 @@
 }
 \examples{
 \dontrun{
-#INCLUDE EXAMPLE}
+data(teal)
+plot(teal, type = 'overlay')
+plot(teal, type = 'stack')
+plot(teal, type = 'heatmap')
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}

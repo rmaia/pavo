@@ -32,10 +32,14 @@
 }
 \examples{
 \dontrun{
-specs <- getspec('/examplespec')
-specs <- data.frame(cbind(specs, specs[,-1],specs[,-1],specs[,-1]))
-aggspec(specs,by=2)
-aggspec(specs,by=c('a','b','a','b','a','b','a','b')) }
+data(teal)
+# Average every two spectra
+teal.sset1 <- aggspec(teal, by = 2)
+plot(teal.sset1)
+# Create factor and average spectra by levels 'a' and 'b'
+ind <- rep(c('a','b'), times=6)
+teal.sset2 <- aggspec(teal, by=ind) }
+plot(teal.sset2)
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}

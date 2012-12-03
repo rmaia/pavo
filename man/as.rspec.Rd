@@ -23,7 +23,15 @@
 }
 \examples{
 \dontrun{
-#INCLUDE EXAMPLE}
+# Generate some fake reflectance data
+fakedat <- data.frame(refl1 = rnorm(401), refl2 = rnorm(401), wavelength = c(300:700))
+head(fakedat)
+# Determine if is rspec object
+is.rspec(fakedat)
+# Convert to rspec object
+fakedat2 <- as.rspec(fakedat)
+is.rspec(fakedat2)
+head(fakedat2)
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}

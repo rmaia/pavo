@@ -2,8 +2,8 @@
 \alias{explorespec}
 \title{Plot spectral curves}
 \usage{
-  explorespec(rspecdata, specreps = 1, lwd = 2,
-    scale = c("free", "equal"))
+  explorespec(rspecdata, by = 1,
+    scale = c("free", "equal"), ...)
 }
 \arguments{
   \item{rspecdata(required)}{a data frame, possibly an
@@ -11,16 +11,15 @@
   the first column, named 'wl', and spectral measurements
   in the remaining columns.}
 
-  \item{specreps}{number of spectra to include in each
-  graph (defaults to 1)}
-
-  \item{lwd}{width of the lines displayed on the plots
-  (defaults to 2)}
+  \item{by}{number of spectra to include in each graph
+  (defaults to 1)}
 
   \item{scale}{defines how the y-axis should be scaled.
   \code{'free'}: panels can vary in the range of the
   y-axis; \code{'equal'}: all panels have the y-axis with
   the same range.}
+
+  \item{...}{additional parameters to be passed to plot}
 }
 \value{
   Spectral curve plots
@@ -31,7 +30,7 @@
 }
 \note{
   Number of plots presented per page depends on the number
-  of curves per graph.
+  of graphs produced.
 }
 \examples{
 \dontrun{

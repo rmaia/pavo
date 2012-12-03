@@ -46,7 +46,7 @@
   \item{illum}{either a vector containing the illuminant,
   or one of the options: \itemize{ \item \code{ideal}:
   homogeneous illuminance of 1 accross wavelengths
-  (default) \item \code{'bluesky'} \item \code{'d65'}:
+  (default) \item \code{'bluesky'} \item \code{'D65'}:
   standard daylight \item \code{'forestshade'} }}
 
   \item{bkg}{either a vector containing the background
