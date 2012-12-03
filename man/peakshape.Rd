@@ -3,7 +3,7 @@
 \title{Peak shape descriptors}
 \usage{
   peakshape(rspecdata, select = NULL, bounds = c(300, 700),
-    plot = T, ...)
+    plot = TRUE, ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -16,11 +16,14 @@
 
   \item{bounds}{a vector specifying the wavelength range to
   analyze}
+
+  \item{plot}{logical value indicating whether to include
+  plots}
 }
 \value{
   a data frame containing peak height (max value), location
   (hue) and full width at half maximum, as well as half
-  widths on left and right side of peak. Status column
+  widths on left and right side of peak. Incl.min column
   indicates whether user-defined bounds incorporate the
   actual minima of the spectra. Function will return a
   warning if not.

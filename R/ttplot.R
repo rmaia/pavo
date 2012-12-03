@@ -1,13 +1,12 @@
 #' Plot a Tetrahedral Color Space
 #'
-#' Produces a 3D plot of a tetrahedral color space using OpenGL capabilities
+#' \code{ttplot} produces a 3D plot of a tetrahedral color space using OpenGL capabilities
 #'
-#' @import rgl
 #' @param tcsdata (required) a data frame, possibly a result from the \code{tcs} 
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param size size of the points in the plot (defaults to 0.02)
 #' @param col color of the points in the plot (defaults to black)
-#' @param new should a new 3D plot be called (defaults to \code{TRUE})?
+#' @param new should a new 3D plot be called (defaults to \code{FALSE})?
 #' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE}).
 #' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE}).
 #' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE}).
@@ -20,27 +19,40 @@
 #' third button: zoom). \code{ttvol} creates polygon based on points, determining the volume
 #' occupied by them in the colorspace. \code{ttpoints} adds points to the plot. Points are
 #' currently plotted only as spheres to maintain export capabilities.
-#' @export ttplot ttpoints ttvol
+#'
+#' @export
+#'
 #' @examples \dontrun{
+#' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
+#' tcs.sicalis <- tcs(vis.sicalis)
 #' ttplot(tcs.sicalis, size=0.005)
-#' ttvol(tcs.sicalis)
-#' ttvol(tcs.sicalis[grep('C$',row.names(tcs.sicalis)),],col='red')
-#' ttvol(tcs.sicalis[grep('B$',row.names(tcs.sicalis)),],col='violet')
-#' ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis)),],col='orange')
 #' rgl.postscript('testplot.pdf',fmt='pdf') 
-#' rgl.snapshot('testplot.png')}
+#' rgl.snapshot('testplot.png')
+#'
+#' # For adding points
+#' patch <- rep(c('C','T','B'),7)
+#' tcs.crown <- tcs.sicalis[patch=='C', ]
+#' tcs.breast <- tcs.sicalis[patch=='B', ]
+#' ttplot(tcs.crown, col='blue')
+#' ttpoints(tcs.breast, col='red')
+#'
+#' # For plotting convex hull
+#' ttplot(tcs.sicalis, col='blue', size=.005)
+#' ttvol(tcs.sicalis)}
+#' 
 #' @seealso \code{\link{spheres3d}},\code{\link{rgl.postscript}}, 
 #' \code{\link{rgl.snapshot}},\code{\link{rgl.par3d}} 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 #ToDo: Add option to not plot tetrahedron
 
-ttplot<- function(tcsdata, size=0.02, col='black', new=TRUE, hspin=FALSE, 
+ttplot<- function(tcsdata, size=0.02, col='black', new=FALSE, hspin=FALSE, 
                   vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {
 
 # if(class(tcsdata)=='tcs'){
@@ -98,43 +110,4 @@ if(hspin)
 if(vspin)
    play3d(spin3d(axis=c(1,0,0), rpm=20), duration=3)
 
-}
-
-
-ttpoints<- function(tcsdata, size=0.02, col='black'){
-
-# if(class(tcsdata)=='tcs'){
-  # dat <- tcsdata$tcs	
-  # }else{
-    # dat <- tcsdata
-    # }
-
-
-spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, lit=F)
-}
-
-ttvol <- function(tcsdata, col='black', grid=T, fill=T){
-
-# if(class(tcsdata)=='tcs'){
-  # dat <- tcsdata$tcs	
-  # }else{
-    # dat <- tcsdata
-    # }
-
-vol <- t(convhulln(tcsdata[,c('x','y','z')],options='FA')$hull)
-coords <- tcsdata[,c('x','y','z')]
-listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
-ppairs <- do.call(rbind,lapply(listvol,function(x)t(combn(x,2))))
-
-if(grid==T){
-  for(i in 1:nrow(ppairs)){
-      segments3d(coords[ppairs[i,],'x'], 
-                 coords[ppairs[i,],'y'],
-                 coords[ppairs[i,],'z'], color=col)
-  }
-}
-
-if(fill==T)
-rgl.triangles(coords[vol,1],coords[vol,2],coords[vol,3], alpha=0.2, color=col)
-material3d(alpha=1)
 }

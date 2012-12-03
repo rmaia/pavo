@@ -1,10 +1,16 @@
 \name{ttplot}
 \alias{ttplot}
+\alias{ttpoints}
+\alias{ttvol}
 \title{Plot a Tetrahedral Color Space}
 \usage{
-  ttplot(tcsdata, size = 0.02, col = "black", new = TRUE,
+  ttplot(tcsdata, size = 0.02, col = "black", new = FALSE,
     hspin = FALSE, vspin = FALSE, floor = TRUE,
     grid = TRUE, fill = TRUE)
+
+  ttpoints(tcsdata, size = 0.02, col = "black")
+
+  ttvol(tcsdata, col = "black", grid = T, fill = T)
 }
 \arguments{
   \item{tcsdata}{(required) a data frame, possibly a result
@@ -19,7 +25,7 @@
   black)}
 
   \item{new}{should a new 3D plot be called (defaults to
-  \code{TRUE})?}
+  \code{FALSE})?}
 
   \item{hspin}{if \code{TRUE}, the graphic will spin
   horizontally (around the 'z' axis)(defaults to
@@ -51,23 +57,43 @@
   by them in the colorspace. \code{ttpoints} adds points to
   the plot. Points are currently plotted only as spheres to
   maintain export capabilities.
+
+  \code{ttplot} creates 3D points in a tetrahedral color
+  space plot produced by \code{ttplot} using functions of
+  the package \code{rgl}, based on openGL capabilities.
+
+  \code{ttvol} creates a 3D convex hull within a
+  \code{ttplot} object
 }
 \description{
-  Produces a 3D plot of a tetrahedral color space using
-  OpenGL capabilities
+  \code{ttplot} produces a 3D plot of a tetrahedral color
+  space using OpenGL capabilities
+
+  \code{ttpoints} plots points in a tetrahedral color space
+
+  \code{ttvol} produces a 3D convex hull in tetrahedral
+  color space
 }
 \examples{
 \dontrun{
+# For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
+tcs.sicalis <- tcs(vis.sicalis)
 ttplot(tcs.sicalis, size=0.005)
-ttvol(tcs.sicalis)
-ttvol(tcs.sicalis[grep('C$',row.names(tcs.sicalis)),],col='red')
-ttvol(tcs.sicalis[grep('B$',row.names(tcs.sicalis)),],col='violet')
-ttvol(tcs.sicalis[grep('T$',row.names(tcs.sicalis)),],col='orange')
 rgl.postscript('testplot.pdf',fmt='pdf')
-rgl.snapshot('testplot.png')}
+rgl.snapshot('testplot.png')
+
+# For adding points
+patch <- rep(c('C','T','B'),7)
+tcs.crown <- tcs.sicalis[patch=='C', ]
+tcs.breast <- tcs.sicalis[patch=='B', ]
+ttplot(tcs.crown, col='blue')
+ttpoints(tcs.breast, col='red')
+
+# For plotting convex hull
+ttplot(tcs.sicalis, col='blue', size=.005)
+ttvol(tcs.sicalis)}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}

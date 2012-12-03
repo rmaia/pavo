@@ -55,11 +55,11 @@ options(width=60)
 
 \section{Introduction}
 
-\pavo{} is an R package developed with the goal of establishing a flexible and integrated  workflow
+\pavo{} is an \code{R} package developed with the goal of establishing a flexible and integrated workflow
 for working with spectral color data. It includes functions that take advantage of new data classes
-in order to work seamlessly from importing raw data to visualization and  analysis.
+in order to work seamlessly from importing raw data to visualization and analysis.
 
-Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant  to be
+Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant to be
 applicable for a range of taxa and applications. It provides flexible ways to input spectral data
 from a variety of equipment manufacturers, process these data, extract variables  and produce
 publication-quality graphics.
@@ -105,7 +105,7 @@ help for more information.
 
 The first thing we need to do is import the spectral data into R using the function
 \code{getspec()}. Since the spectra were obtained using Avantes software, we will need to  specify
-that the files have the "\code{.ttt}" extension. Further, the data is organized in  subdirectories
+that the files have the ``\code{.ttt}'' extension. Further, the data is organized in  subdirectories
 for each species. \code{getspec} does recursive sampling, and may include the  names of the
 subdirectories in the spectra name if desired. A final issue with the data is that  it was collected
 using a computer with international numbering input, which means it uses commas  instead of periods
@@ -133,7 +133,7 @@ If you already have multiple spectra in a single data frame that you'd like to u
 functions, you can use the command \code{as.rspec} to convert it to an rspec object. The  function
 will attempt to identify the wavelength variable or, if it doesn't have one, it can be  specified in
 the function call. As an example, we will create some fake reflectance data, name the column
-containing wavelengths "wavelength" rather than "wl" (required for \pavo{} functions to work) and
+containing wavelengths ``wavelength'' rather than ``wl'' (required for \pavo{} functions to work) and
 also put the column containing wavelengths third rather than first.
 
 <<>>=
@@ -215,7 +215,7 @@ explorespec(sppspec, by=6, lwd=3)
  \subsubsection{Normalizing and Smoothing Spectra}
 
 Data obtained from spectrometers often requires further processing before analysis and/or
-publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The
+publication. For example, electrical noise can produce unwanted ``spikes'' in reflectance curves. The
 \pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the
 reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700  nm)
 wavelength ranges (see Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we will
@@ -484,7 +484,7 @@ angles <- seq(15, 70, by = 5)
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
-plot(teal.sm, type = 'h', varying = angles, ylab = "Incident angle (º)", 
+plot(teal.sm, type = 'h', varying = angles, ylab = expression(paste("Incident angle (", degree, ")")), 
      las = 1, useRaster = TRUE)
 @
 \begin{figure}[H]
@@ -584,7 +584,7 @@ round(summary(spec.sm),2)
 {$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
 {$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
 {$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
-{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0º (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
+{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\degree (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
 {$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
 \hline
 \end{tabular}
@@ -1070,7 +1070,7 @@ projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
 which calculates the overlap in tetrahedral color volume between two sets of points. This can be
 useful to explore whether different species occupy similar (overlapping) or different (non-
 overlapping) "sensory niches" (REF?). To show this  function, we will use the \code{sicalis}
-dataset, which includes measurements from the crown (C),  throat (T) and belly (B) of seven stripe-
+dataset, which includes measurements from the crown (C),  throat (T) and breast (B) of seven stripe-
 tailed yellow finches (\textit{Sicalis citrina}).
 
 <<label=sicalis, fig=TRUE, include=FALSE>>=
@@ -1082,7 +1082,7 @@ aggplot(sicalis, by=rep(c('C','T','B'), 7))
 \begin{center}
 \includegraphics[width=3in]{fig/pavo-sicalis}
 \end{center}
-\caption{\code{aggplot} of the \code{sicalis} data (blue: crown, red: throat, green: belly)}
+\caption{\code{aggplot} of the \code{sicalis} data (blue: crown, red: throat, green: breast)}
 \label{figure:sicalis}
 \end{figure}
 

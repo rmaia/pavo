@@ -43,3 +43,6 @@ Collate:
     'as.rspec.r'
     'aggplot.R'
     'data-teal.R'
+    'summary.tcs.R'
+    'ttpoints.R'
+    'ttvol.R'

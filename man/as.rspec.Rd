@@ -1,21 +1,29 @@
 \name{as.rspec}
 \alias{as.rspec}
+\alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-  as.rspec(specs, whichwl = NULL)
+  as.rspec(object, whichwl = NULL)
+
+  is.rspec(x)
 }
 \arguments{
-  \item{specs}{(required) an \code{rspec} object containing
-  spectra to process}
+  \item{object}{(required) a data frame or matrix
+  containing spectra to process}
 
   \item{whichwl}{specifies which column contains
   wavelengths. If NULL (default), function searches for
-  column titled "wl" or else returns arbitrary index
+  column containing equally spaced numbers and sets it as
+  wavelengths "wl". If no wavelengths are found or
+  \code{whichwl} is not given, returns arbitrary index
   values}
 }
 \value{
   an object of class \code{rspec} for use in further
   \code{pavo} functions
+
+  a logical value indicating whether the object is of class
+  \code{rspec}
 }
 \description{
   Converts data frames or matrices containing spectral data

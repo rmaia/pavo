@@ -9,38 +9,6 @@
 	# cat('\n')
 # }
 
-
-summary.tcs <- function(tcsres, by=NULL){
-if(!is.null(by)){
-	
-	if(length(by)==1){
-	by.many <- by
-	by <- rep(1:(dim(tcsres)[1]/by),each=by)
-	by <- factor(by,labels=row.names(tcsres)[seq(1,length(row.names(tcsres)),by=by.many)])
-    }
-
-  by <- factor(by)
-  res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(tcsres[which(by==z),]))))
-  row.names(res.c) <- levels(by)
-	
-  }else{
-	res.c <- data.frame(t(tcssum(tcsres)))
-	row.names(res.c) <- 'all.points'
-    }
-
-if(NA %in% res.c$cvol)
-  warning('Not enough points to calculate volume', call.=FALSE)
-
-res.c
-}
-
-
-
-
-
-
-
-
 huedisp <- function(tcsres){
 ind=t(combn(nrow(tcsres),2))
 apply(ind,1, function(x)	
@@ -48,7 +16,6 @@ apply(ind,1, function(x)
 	 tcsres[x[2],'h.theta'])) + (sin(tcsres[x[1],'h.phi'])*sin(tcsres[x[2],'h.phi'])))
      )
 }
-
 
 # # ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 # #		dq1<-log(f1['u']/f2['u'],base=10)
@@ -175,5 +142,3 @@ names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
 
 res.c
 }
-
-
