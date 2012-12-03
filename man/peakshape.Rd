@@ -38,7 +38,7 @@ data(teal)
 peakshape(teal, select = 3)
 peakshape(teal, select = 10)
 # Use wavelength bounds to narrow in on peak of interest
-peakshape(teal, select = 10, bounds=c(400, 550))
+peakshape(teal, select = 10, bounds=c(400, 550))}
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia

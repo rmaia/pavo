@@ -41,7 +41,7 @@
 #' plot(teal.sm, select = 10)
 #' # Normalize to max of unity
 #' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
-#' plot(teal.max, select = 10)
+#' plot(teal.max, select = 10)}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{loess.smooth}}
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183-200.
