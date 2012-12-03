@@ -149,7 +149,7 @@ spectra to be plotted in the same panel using the argument \code{specreps}, and 
 will adjust the number of panels per page accordingly. We will exemplify this function using 
 only the 12 cardinal individuals measured:
 
-<<label=explorespecfig, fig=TRUE, include=FALSE, width=5.5, height=6.5>>=
+<<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
 explorespec(specs[,1:37], by=3, lwd=2) 
 # 36 spectra plus the first (wl) column
 @
@@ -194,7 +194,7 @@ explorespec(sppspec, by=6, lwd=3)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics{fig/pavo-exploresppmeans}
+\includegraphics[width=3in]{fig/pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
 \label{figure:sppmeans}
@@ -1092,7 +1092,7 @@ the throat and the crown colors (Figure \ref{figure:overlap}).
                 \caption{Throat and Crown overlap}
                 \label{fig:ov2}
         \end{subfigure}
-         \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the Overlap between those two sets of points.}\label{figure:overlap}
+         \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
 
 
