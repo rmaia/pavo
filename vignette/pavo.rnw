@@ -60,20 +60,19 @@ options(width=60)
 \section{Introduction}
 
 \pavo{} is an R package developed with the goal of establishing a flexible and integrated  workflow
-for working with spectral color data. It includes functions that take advantage of new data classes
-in order to work seamlessly from importing raw data to visualization and  analysis.
+for working with spectral color data. It includes functions that take advantage of new object classes to work seamlessly from importing raw data to visualization and analysis.
 
-Although \pavo{} deals largely with spectral reflectance data from bird feathers, it is meant  to be
+Although \pavo{} deals largely, in its examples, with spectral reflectance data from bird feathers, it is meant  to be
 applicable for a range of taxa and applications. It provides flexible ways to input spectral data
-from a variety of equipment manufacturers, process these data, extract variables  and produce
+from a variety of equipment manufacturers, process these data, extract variables, and produce
 publication-quality graphics.
 
 \pavo{} was written with the following workflow in mind:
 
 % numbered list of things
 \begin{enumerate}
-\item {\bf Organize} spectral data by inputting files, processing spectra (e.g., to remove
-noise, negative values, smooth curves, etc.)
+\item {\bf Organize} spectral data by inputting files and processing spectra (e.g., to remove
+noise, negative values, smooth curves, etc...).
 \item {\bf Analyze} the resulting files, either using typical tristimulus color variables (hue,
 saturation, brightness) or using visual models based on perceptual data from the taxon of 
 interest.
@@ -85,13 +84,13 @@ version of \pavo{} can be found on \href{https://github.com/rmaia/pavo}{github}.
 
 \section{Dataset Description}
 
-The data used in this example is available from \href{http://github.com}github by clicking 
+The data used in this example are available from \href{http://github.com}github by clicking 
 \href{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}
 {here}\footnote{in case you printed this out and thus can't click the link:\\ 
 \url{https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip}}. 
 You can download and extract it to follow the vignette.
 
-The data consists of reflectance spectra obtained using Avantes equipment and software from seven
+The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven
 bird species: Northern Cardinal (\emph{Cardinalis cardinalis}), Wattled Jacana (\emph{Jacana
 jacana}), Baltimore Oriole (\emph{Icterus galbula}), Peach-fronted Parakeet (\emph{Aratinga aurea}),
 American Robin (\emph{Turdus migratorius}), and Sayaca Tanager (\emph{Thraupis sayaca}). Several
@@ -101,7 +100,7 @@ additional peculiarities that should emphasize the flexibility \pavo{} offers, a
 
 In addition, \pavo{} includes two datasets that can be called with the \code{data} function.
 \code{data(teal)} will be used in this vignette, but \code{data(sicalis)} is also available. See
-help for more information.
+help for more information (\code{help(package="pavo")}).
 
 \section{Organizing and Processing Spectral Data}
 
@@ -115,7 +114,7 @@ subdirectories in the spectra name if desired. A final issue with the data is th
 using a computer with international numbering input, which means it uses commas  instead of periods
 as a decimal separator. We can specify that in the function call.
 
-I have downloaded the file and placed it in a directory called 
+The files were downloaded and placed in a directory called 
 ``\nolinkurl{/github/pavo/vignette_data}''. By default, \code{getspec} will search for files in 
 the current folder, but a different one can be specified:
 
@@ -123,7 +122,7 @@ the current folder, but a different one can be specified:
 specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
                  subdir=T, subdir.names=F)
 specs[1:10,1:4]
-dim(specs) #data has 214 spectra, from 300 to 700 nm
+dim(specs) # the data set has 213 spectra, from 300 to 700 nm, plus a 'wl' column
 @
 
 When \pavo{} imports spectra, it creates an object of class \code{rspec}, which inherits attributes
@@ -158,7 +157,7 @@ As can be seen, \code{as.rspec} renames the column containing wavelengths, place
 \subsubsection{Averaging Spectra}
 
 As previously described, our data constitutes of multiple individuals, and each was measured  three
-times, as is common in order to avoid measurement bias. A good way to visualize the  repeatability
+times, as is common to avoid measurement bias. A good way to visualize the  repeatability
 of our measurements is to plot the spectra of each individual separately. The  function
 \code{explorespec} provides an easy way of doing so. You may specify the number of  spectra to be
 plotted in the same panel using the argument \code{specreps}, and the function  will adjust the
@@ -177,7 +176,7 @@ explorespec(specs[,1:37], by=3, lwd=2)
 \label{figure:explorespec}
 \end{figure}
 
-So our first step would be to take the average of each of these three measurements in order to
+So our first step would be to take the average of each of these three measurements to
 obtain average individual spectra to be used in further analyses. This easily accomplished using the
 \code{aggspec} function. The \code{by} argument can be either a number (specifying how many specs
 should be  averaged for each new sample) or a vector specifying the identities of the spectra to be
@@ -218,7 +217,7 @@ explorespec(sppspec, by=6, lwd=3)
 
  \subsubsection{Normalizing and Smoothing Spectra}
 
-Data obtained from spectrometers often requires further processing before analysis and/or
+Data obtained from spectrometers often require further processing before analysis and/or
 publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The
 \pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the
 reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700  nm)
@@ -261,7 +260,7 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \label{figure:specsmooth}
 \end{figure}
 
-We can also try some different normalizations. Options include subtracting the minimum reflectance
+We can also try different normalizations. Options include subtracting the minimum reflectance
 of a  spectrum at all wavelengths (effectively making the minimum reflectance equal to zero,
 \code{opt="min"}, Figure \ref{figure:specnorm} left panel) and making the reflectance at all
 wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1;
@@ -299,7 +298,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
-(using, for example. Principal Component Analysis, or PCA). Following Cuthill, 1999 we can use 
+(for example, using Principal Component Analysis, or PCA). Following Cuthill (1999), we can use 
 \code{opt = 'center'} to center spectra to have a mean reflectance of zero (thus removing brightness 
 as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the 
 \code{opt= 'bins'} argument) to obtain a dataframe suitable for the PCA.
@@ -340,8 +339,8 @@ mtext("Wavelength (nm)", side=1, outer=T, line=1)
 \begin{center}
 \includegraphics[width=5in]{fig/pavo-pcaplot}
 \end{center}
-\caption{Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically 
-from lowest to highest PC1 value (right).}
+\caption{Plot of PC1 loading versus wavelength (left) and species mean spectra sorted 
+vertically from lowest to highest PC1 value (right; values on right hand axis are column identities).}
 \label{figure:pcaplot}
 \end{figure}
 
@@ -358,7 +357,7 @@ changing all negative values to zero (\code{zero}).
 # Create a duplicate spectrum and add some negative values
 refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))
-# Apply three different processing options
+# Apply two different processing options
 testspecs.fix1 <- procspec(testspecs, fixneg='addmin')
 testspecs.fix2 <- procspec(testspecs, fixneg='zero')
 @
@@ -385,13 +384,16 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 
 These may have different effects on the final spectra, as can be seen in Figure \ref{figure:neg},
 which the user should keep in mind and use according to the final goal of the analysis. For example,
-by adding the minimum reflectance to all other wavelngth, the shape of the curve is preserved, but
+by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but
 the  maximum reflectance is much higher (Figure \ref{figure:neg}, top). On the other hand,
 substituting  negative values with zero preserves absolute reflectance values, but may cause the
 spectral shape to  be lost (Figure \ref{figure:neg}, bottom). The ``best'' transformation will
 depend on the severity of  the problem of negative values and the goal of the analysis (e.g. will
 reflectance intensity be used?  What is more important, to preserve reflectance values or the total
-shape of the curve?)
+shape of the curve?). The decision of which correction to use would also depend on the source of the
+negative values. If they are thought to originate from improper calibration of the spectrophotometer
+using a white diffuse standard, \code{addmin} would be more appropriate. If they are thought to
+originate from electric noise, \code{zero} would be more appropriate.
 
 \section{Visualizing Spectral Data}
 
@@ -413,10 +415,11 @@ We have implemented three methods of visualizing spectral data using \code{plot}
 \begin{itemize}
 	\item{\code{Overlay} - all spectra plotted with same x- and y-axis}
 	\item{\code{Stack} - spectra plotted with same x-axis but arranged vertically along y-axis}
-	\item{\code{Heatmap} - false color map to show three dimensional data}
+	\item{\code{Heatmap} - false color map to illustrate three dimensional data}
 \end{itemize}
 
-Which are in addition to the exploratory plotting offered by \code{explorespec}, as seen in Figues
+These options are in addition to the exploratory plotting offered by \code{explorespec}, as seen 
+in Figures
 \ref{figure:explorespec} and \ref{figure:sppmeans}. To showcase the capabilities of
 \code{plot.rspec},  we will use the \code{teal} dataset included in \pavo{}. This dataset consists
 of reflectance spectra from the iridescent wing patch of a green-winged teal (\emph{Anas
@@ -441,7 +444,8 @@ plot(teal, type='o', col=spec2rgb(teal))
 \begin{center}
 \includegraphics[width=4in]{fig/pavo-overlay}
 \end{center}
-\caption{Overlay plot of the teal angle-dependent reflectance}
+\caption{Overlay plot of the teal angle-dependent reflectance with colors of each curve
+being an approximation of the perceived color.}
 \label{figure:overlay}
 \end{figure}
 
@@ -534,10 +538,10 @@ aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)),
 \pavo{} offers two main approaches for spectral data analysis. First, color variables can be
 calculated based on the shape of the reflectance spectra. By using special \code{R} classes for
 spectra data frame objects, this can easily be done using the \code{summary} function with an rspec
-object (see below). The second function for spectral shape analysis is \code{peakshape}, which
+object (see below). The function \code{peakshape} also
 returns descriptors for individual peaks in spectral curves, as outlined below.
 
-Second, reflectance spectra can be analyzed accounting for the visual system receiving the color
+Second, reflectance spectra can be analyzed by accounting for the visual system receiving the color
 signal, therefore representing reflectance spectra as perceived colors. We have implemented Endler's
 (REF) segment classification method, which approximates visual models but does not directly  use
 sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible  framework for
@@ -614,7 +618,7 @@ from one of its sides.
 If this all sounds too esoteric, fear not: \code{peakshape} has the option of returning plots
 indicating what it's calculating. The vertical continuous red line indicates the peak location, the
 horizontal continuous red line indicates the half-maximum reflectance, and the distance between the
-dashed lines is the FWHM:
+dashed lines (\code{HWHM.l} and \code{HWHM.r}) is the FWHM:
 
 <<label=fwhm, fig=TRUE, include=FALSE, width=6, height=4>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -660,15 +664,15 @@ interest into four equally-spaced regions, measuring the relative signal along t
 approximates a trichromatic opponency system with short, medium, and long-wavelength sensitive
 photoreceptors.
 
-Though somewhat simplistic, this model captures many of the properties of other, more complex ones,
-but without many of the additional assumptions these make. It also provides results in a fairly
+Though somewhat simplistic, this model captures many of the properties of other, more complex visual
+models, but without many of the additional assumptions these make. It also provides results in a fairly
 intuitive color space, in which the angle corresponds to hue and the distance from the center
-corresponds to choma (Figure \ref{figure:segplot}; in fact, variables \code{S5} and \code{H4} from
+corresponds to chroma (Figure \ref{figure:segplot}; in fact, variables \code{S5} and \code{H4} from
 \code{summary.rspec} are calculated from these relative segments, see Table \ref{table:tristim}).
 Note  that, while a segment analysis ranging from 300 or 400nm to 700nm corresponds quite closely to
 the  human visual system color wheel, any wavelength range can be analyzed in this way, returning a
-360\ensuremath{^\circ} hue space delimited by the range used (\code{segclass} accepts the argument
-\code{range} for user-specified limits that don't match the data range).
+360\ensuremath{^\circ} hue space delimited by the range used (\code{segclass} (see below) accepts the
+argument \code{range} for user-specified limits that don't match the data range).
 
 The segment differences or ``opponents'' are calculated as:
 
@@ -750,8 +754,8 @@ being processed, considering the relative density of different cones and the noi
 \textbf{Photon Catch.} To quantify the stimulation of cones by the emitted color, we will use the \pavo{} function \code{vismodel}. This function takes an \code{rspec} dataframe as a minimal input, and the user can either select from the available options or input its own data for the additional arguments in the function:
 
 \begin{itemize}
-  \item\code{Visual}: the visual system to be used. Available options are the avian average UV \& average V visual systems, blue tit, starling and peafowl. Alternatively, the user may include its own dataframe, with the first column being the wavelength range and the following columns being the absorbance at each wavelength for each cone type (see below for an example).
-	\item\code{Achromatic}: Either a cone's sensitivity data (avaiable options are blue tit and chicken double cones), which can also be user-defined as above; or the sum of the two longest-wavelength cones can be used (with the \code{ml} option). Alternatively, \code{none} can be specified for no achromatic stimulation calculation.
+  \item\code{visual}: the visual system to be used. Available options are the avian average UV \& average V visual systems, blue tit, starling and peafowl. Alternatively, the user may include its own dataframe, with the first column being the wavelength range and the following columns being the absorbance at each wavelength for each cone type (see below for an example).
+	\item\code{achromatic}: Either a cone's sensitivity data (avaiable options are blue tit and chicken double cones), which can also be user-defined as above; or the sum of the two longest-wavelength cones can be used (with the \code{ml} option). Alternatively, \code{none} can be specified for no achromatic stimulation calculation.
 	\item\code{illum}: The illuminant being considered. By default, it considers an ideal white iluminant, but implemented options are a blue sky, standard daylight, and forest shade illuminants. A vector of same length as the wavelength range being considered can also be used as the input.   
   \item\code{bkg}: The background being considered. By default, it considers an idealized background (i.e. wavelength-independent influence of the background on color). A vector of same length as the wavelength range being considered can also be used as the input.
 \end{itemize}
@@ -844,10 +848,10 @@ vismod.idi
 sapply(vismod.idi, function(x) round(x,4))
 @
 
-\textbf{Receptor Noise.} Color distances can be calculated under this model considering receptor
+\textbf{Receptor Noise.} Color distances can be calculated under this model while considering receptor
 noise by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each
 cone $i$). The Weber fraction can  be calculated from the noise-to-signal ratio of cone $i$  ($v_i$)
-and the relative number of receptor  cells of type $i$ within the recptor field ($n_i$):
+and the relative number of receptor  cells of type $i$ within the receptor field ($n_i$):
 
 \begin{equation}
 w_i = \frac{v_i}{\sqrt{n_i}} 
@@ -940,8 +944,8 @@ equation (SIDDIQUI 2004):
 \code{coldist} uses \code{n4} to calculate $w$ for the achromatic contrast. The user 
 can also specify if the function should use $Q_i$, $q_i$ or $f_i$ in the equations (that is, if the 
 von Kries correction and Fechner's law transformation should be applied). Note that even if $Q_i$ or 
-$q_i$ are chosen, values are still log-transformed. This option is available mostly for in case the 
-user wants to specify a data.frame of quantum catches that was not generated by \code{vismodel} as an 
+$q_i$ are chosen, values are still log-transformed. This option is available in case the 
+user wants to specify a data frame of quantum catches that was not generated by \code{vismodel} as an 
 input.
 
 <<>>=
@@ -962,10 +966,10 @@ maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimens
 encompasses all theoretical colors that can be perceived by that visual system. Therefore, for the
 avian visual system  comprised of 4 cones, all colors can be placed somewhere in the volume of a
 tetrahedron, in which each  of the four vertices represents the maximum stimulation of that
-particular cone type  %(Figure \ref{figure:tcs}).
+particular cone type.  %(Figure \ref{figure:tcs}).
 
-Though this model does not account for receptor noise (and thus does not allow an estimate of Just
-Noticeable Differencces), it presents several advantages. First, it makes for a very intuitive
+Though this model does not account for receptor noise (and thus does not allow an estimate of JNDs), 
+it presents several advantages. First, it makes for a very intuitive
 representation of color points accounting for attributes of the color vision of the signal receiver.
 Second, and perhaps most importantly, it allows for the calculation of several interesting variables
 that represent color. For example, hue can be estimated from the angle of the point relative to the
@@ -1016,7 +1020,7 @@ tcs.mspecs <- tcs(vismodel(mspecs))
 summary(tcs.mspecs, by=spp)
 @
 
-\textbf{Plotting options}. There are two useful plots for the tetrahedral colorspace model. The
+\textbf{Plotting options}. There are two useful plots for the tetrahedral color space model. The
 first is a three-dimensional plot of the volume, which is implemented in \pavo{} as an interactive
 plot that the user can spin around and zoom, and can be called by the function \code{ttplot}:
 
@@ -1039,7 +1043,7 @@ ttvol(tcs(vismod2))
         \begin{subfigure}[b]{0.45\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{fig/pavo-tcsplot}
-                \caption{Tetrahedral colorspace plot}
+                \caption{Tetrahedral color space plot}
                 \label{fig:tcs1}
         \end{subfigure}%
         \begin{subfigure}[b]{0.45\textwidth}
@@ -1065,7 +1069,7 @@ projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
 \begin{center}
 \includegraphics[width=4in]{fig/pavo-proj}
 \end{center}
-\caption{Projection plot from a tetrahedral colorspace}
+\caption{Projection plot from a tetrahedral color space}
 \label{figure:proj}
 \end{figure}
 

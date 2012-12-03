@@ -10,7 +10,10 @@
 #' for passing to further plotting functions.
 #' @export
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(teal)
+#' spec2rgb(teal)
+#' # Plot data using estimated perceived color
+#' plot(teal, col = spec2rgb(teal), type = 'o')}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @references CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 #' @references Color matching functions obtained from Colour and Vision Research Laboratory 

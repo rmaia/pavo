@@ -1,5 +1,5 @@
 #' Angle-resolved reflectance data for the iridescent wing patch of a male green-winged 
-#' teal (\emph{Anas carolinensis}
+#' teal (Anas carolinensis)
 #'
 #' @name teal
 #' @docType data

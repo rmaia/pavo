@@ -28,7 +28,10 @@
 #' @param ylim a numeric vector giving the lower an upper limits for the y-axis
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
 #' @examples \dontrun{
-#' #INCLUDE EXAMPLE}
+#' data(teal)
+#' plot(teal, type = 'overlay')
+#' plot(teal, type = 'stack')
+#' plot(teal, type = 'heatmap')}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
