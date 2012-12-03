@@ -32,7 +32,7 @@
 #' plot(teal, type = 'overlay')
 #' plot(teal, type = 'stack')
 #' plot(teal, type = 'heatmap')}
-#' @author Chad M Eliason \email{cme16@@zips.uakron.edu}
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
 # TODO: add argument for padding region between x in stack plot
