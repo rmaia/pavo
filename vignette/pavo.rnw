@@ -763,7 +763,7 @@ k_i = \frac{1} { \int_\lambda{R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda }, }
 \end{equation}
 Where $S^b$ denotes the reflectance spectra of the background.
 
-\item\code{fi}: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch \textendash $f_i = ln(Q_i)$
+\item\code{fi}: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch \textendash i.e. $f_i = ln(Q_i)$
 \end{itemize}
 
 We can easily visualize what these models are doing by comparing the reflectance spectra to the quantum catches they are generating:
@@ -1018,7 +1018,7 @@ ttvol(tcs(vismod2))
         \begin{subfigure}[b]{0.45\textwidth}
                 \centering
                 \includegraphics[width=\textwidth]{fig/pavo-tcsvolplot}
-                \caption{Tetrahedral colorspace plot with a volume convex hull}
+                \caption{Tetrahedral plot with convex hull volume}
                 \label{fig:tcs2}
         \end{subfigure}
          \caption{Example plots obtained using \code{ttplot}. Plot on the left was exported as pdf, while the one on the right was exported as eps.}\label{fig:tcs}
