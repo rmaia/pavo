@@ -759,7 +759,7 @@ Where $\lambda$ denotes the wavelength, $R_i(\lambda)$ the spectral sensitivity 
 
 \item\code{qi}: The receptor quantum catches normalized to the background, thus accounting for receptor adaptation, by multiplying $Q_i$ by a constant $k$. The coefficient $k$ describes the von Kries transformation:
 \begin{equation}
-k_i = 1/\int_\lambda{R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda}, 
+k_i = \frac{1} { \int_\lambda{R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda }, }
 \end{equation}
 Where $S^b$ denotes the reflectance spectra of the background.
 
@@ -856,40 +856,48 @@ discernible under the conditions considered. The equations used in these calcula
 
 For dichromats:
 \begin{equation}
+\Delta S = 
+\sqrt{
 \begin{aligned}
-\Delta S^2 = \frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}
+\frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}
 \end{aligned}
+}
 \end{equation}
 
 
 For trichromats:
 \begin{equation}
+\Delta S = 
+\sqrt{
 \begin{aligned}
-\Delta S^2 = 
 \frac{w_1^2(\Delta f_3 - \Delta f_2)^2 + 
 w_2^2(\Delta f_3 - \Delta f_1)^2 + 
-w_3^2(\Delta f_1 - \Delta f_2)^2] }
+w_3^2(\Delta f_1 - \Delta f_2)^2 }
 { (w_1w_2)^2 + 
 (w_1w_3)^2 + 
-(w_2w_3)^2] }
+(w_2w_3)^2 }
 \end{aligned}
+}
 \end{equation}
 
 
 For tetrachromats:
 \begin{equation}
+\Delta S = 
+\sqrt{
 \begin{aligned}
-\Delta S^2 = 
-[(w_1w_2)^2(\Delta f_4 - \Delta f_3)^2 + 
+\Big[(w_1w_2)^2(\Delta f_4 - \Delta f_3)^2 + 
 (w_1w_3)^2(\Delta f_4 - \Delta f_2)^2 + 
 (w_1w_4)^2(\Delta f_3 - \Delta f_2)^2 + \\ 
+(w_2w_3)^2(\Delta f_4 - \Delta f_1)^2 + 
 (w_2w_4)^2(\Delta f_3 - \Delta f_1)^2 + 
-(w_3w_4)^2(\Delta f_2 - \Delta f_1)^2] & / & \\
-[ (w_1w_2w_3)^2 + 
+(w_3w_4)^2(\Delta f_2 - \Delta f_1)^2\Big] & / & \\
+\Big[ (w_1w_2w_3)^2 + 
  (w_1w_2w_4)^2 + 
 (w_1w_3w_4)^2 + 
-(w_2w_3w_4)^2] 
+(w_2w_3w_4)^2\Big]
 \end{aligned}
+}
 \end{equation}
 
 For the chromatic contrast. The achromatic contrast ($\Delta L$) can be calculated based on the double 
