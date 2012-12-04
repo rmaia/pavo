@@ -17,8 +17,7 @@
 #'  \item \code{heatmap} for plotting reflectance values by wavelength and a third variable 
 #'        (\code{varying})
 #' }
-#' @param varying a numeric vector giving values for third variable used in 
-#' \code{heatplot}
+#' @param varying a numeric vector giving values for y-axis in \code{heatplot}
 #' @param n number of bins with which to interpolate colors and \code{varying} for the 
 #' heatplot.
 #' @param col color of the spec curves. User can either provide a single color, a vector 
@@ -36,12 +35,9 @@
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
 # TODO: add argument for padding region between x in stack plot
-# TODO: add labels to curves along y-axis for stacked plot (ideas anyone?)
-# TODO: figure out way to label y-axis in heatplot (ideas?)
 
 plot.rspec <- function(x, select = NULL, type = c('overlay', 'stack', 'heatmap'), 
-                       varying = NULL, n = 100, col = 'black', 
-                       xlim = NULL, ylim = NULL, ...) {
+                       varying = NULL, n = 100, ...) {
 
 type <- match.arg(type)
 
@@ -54,7 +50,7 @@ if (length(wl_index) > 0) {
   haswl <- FALSE
   wl <- 1:nrow(x)
   warning('No wavelengths provided; using arbitrary index values')
-}
+  }
 
 # subset based on indexing vector
 if (is.logical(select))
@@ -66,92 +62,110 @@ if (is.null(select)&haswl==FALSE)
 
 x <- as.data.frame(x[, select])
 
-# set limits
-if (is.null(xlim))
-  xlim <- range(wl)
+arg <- list(...)
 
-if (is.null(ylim))
-  ylim <- range(x)
+# Set defaults
+if (is.null(arg$xlab))
+  arg$xlab <- "Wavelength (nm)"
+if (is.null(arg$xlim))
+  arg$xlim <- range(wl)
 
 # heat plot
 if (type=='heatmap') {
+
+  if (is.null(arg$xlab))
+    arg$xlab <- "Wavelength (nm)"
+  if (is.null(arg$ylab))
+    arg$ylab <- "Index"
   if (is.null(varying)) { 
     varying <- 1:ncol(x)
     print("No varying vector supplied; using arbitrary values")
   }
-  
-  if (length(col)==1) {
+  if (is.null(arg$ylim))
+    arg$ylim <- range(varying)
+  if (is.null(arg$col)==1) {
     jc <- colorRampPalette( rev(c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")))
-    col <- jc(n)
+    arg$col <- jc(n)
   } else {
-  	jc <- colorRampPalette(col)
-  	col <- jc(n)
+  	jc <- colorRampPalette(arg$col)
+  	arg$col <- jc(n)
   	}
-  	
+
   Index <- approx(varying, n = n)$y
   dat <- sapply(1:nrow(x), function(z){approx(x = varying, y = x[z, ], 
                 n = n)$y})
-  image(x = wl, y = Index, z = t(dat), col = col,
-        xlab = 'Wavelength (nm)', xlim = xlim, ...)
+
+  arg$x <- wl
+  arg$y <- Index
+  arg$z <- t(dat)
+
+  do.call(image, arg)
 }
 
 # coloring for overlay plot & others
-if (length(col) < ncol(x))
-  col <- rep(col, ncol(x))
-# if (any(class(col)=='spec2rgb'))
-#   col <- col[select-1]
-if (any(names(col)%in%names(x)))
-  col <- col[select-1]
+if (length(arg$col) < ncol(x))
+  arg$col <- rep(arg$col, ncol(x))
+if (any(names(arg$col)%in%names(x)))
+  arg$col <- arg$col[select-1]
 
 # overlay different spec curves
 if (type=='overlay') {
-  plot(x[, 1]~wl, type = 'l', # c(min(x), max(x)), 
-       xlab = 'Wavelength (nm)', ylab = 'Reflectance (%)', xlim = xlim, ylim = ylim,
-       col = col[1], ...)
-  if (ncol(x)>1) {
-    for (i in 2:ncol(x))
-      lines(x[, i]~wl, col=col[i], ...)
+
+  if (is.null(arg$ylim))
+    arg$ylim <- range(x)
+  if (is.null(arg$ylab))
+    arg$ylab <- "Reflectance (%)"
+  arg$type <- 'l'
+  arg$x <- wl
+  arg$y <- x[, 1]
+  col <- arg$col
+  arg$col <- col[1]
+
+  do.call(plot, arg)
+
+  if (ncol(x) > 1) {
+    for (i in 2:ncol(x)) {
+      arg$col <- col[i]
+      arg$y <- x[, i]
+      do.call(lines, arg)
+    }
   }
 }
 
-# # stack curves along y-axis
-# if (type=='stack') {
-#   # x2 <- sapply(1:ncol(x), function(z){x[, z] - min(x[, z])})
-#   x2 <- x
-#   ym <- apply(x2, 2, max)  
-#   plot(x2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(ym)), 
-#        xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', col = col[1], 
-#        ...)
-#   if (ncol(x)>1) {
-#     for (i in 2:ncol(x)) 
-#       lines((x2[, i] + cumsum(ym)[i - 1])~wl, col = col[i], ...)
-#     }
-# }
-
 # stack curves along y-axis
 if (type=='stack') {
-  # x2 <- sapply(1:ncol(specs), function(z){specs[, z] - min(specs[, z])})
+
+  arg$type <- 'l'
+  if (is.null(arg$ylab))
+    arg$ylab <- "Cumulative reflectance (arb. units)"
+
   x2 <- as.data.frame(x[, c(ncol(x):1)])
-  col <- rev(col)
   if (length(select)==1){
     y <- max(x2)} else {
     y <- apply(x2, 2, max)
   }
   ym <- cumsum(y)
   ymins <- c(0, ym[-length(ym)])
-  plot(x2[, 1]~wl, type='l', xlim = xlim, ylim = c(0, sum(y)), 
-       xlab = 'Wavelength (nm)', ylab = 'Cumulative reflectance (arb. units)', 
-       col = col[1], ...)
+
+  arg$x <- wl
+  arg$y <- x2[, 1]
+  if (is.null(arg$ylim))
+    arg$ylim <- c(0, sum(y))
+
+  col <- rev(arg$col)
+  arg$col <- col[1]
+  do.call(plot, arg)
   if (ncol(x2)>1) {
-    for (i in 2:ncol(x2)) 
-      lines((x2[, i] + ymins[i])~wl, col = col[i], ...)
+    for (i in 2:ncol(x2)) {
+      arg$y <- x2[, i] + ymins[i]
+      arg$col <- col[i]
+      do.call(lines, arg)
     }
-#  axis(2, at=cumsum(ym)-cumsum(ym)[1], substr(names(x2), 1, 5), las=1, cex.axis=.5)
+  }
+
   yend <- tail(x2, 1)
   yloc <- ymins + yend
   axis(side=4, at=yloc, labels=rev(select), las=1)
 #  abline(h=ymins, lty=3)
 }
-
-
 }
