@@ -9,18 +9,20 @@
 #' @param by number of spectra to include in each graph (defaults to 1)
 #' @param scale defines how the y-axis should be scaled. \code{'free'}: panels can vary in
 #' the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.
+#' @param legpos legend position control. Either a vector containing \code{x} and \code{y} coordinates
+#' or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, 
+#' \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} and \code{"center"}.
 #' @param ... additional parameters to be passed to plot
 #' @return Spectral curve plots
 #' @note Number of plots presented per page depends on the number of graphs produced.
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
-#' explorespec(sicalis,3)}
+#' explorespec(sicalis, 3)
+#' explorespec(sicalis, 3, ylim=c(0,100), legpos=c(500,80))}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-
-
-explorespec <- function (rspecdata, by=1, scale=c('free','equal'), ...) {
+explorespec <- function (rspecdata, by=1, scale=c('free','equal'), legpos='topright', ...) {
 
 
 if (by <= 0) stop ("Invalid by value")
@@ -80,23 +82,51 @@ if (nplots >= 9)
 if (nplots > 12)
   par(ask=T)
 
-col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+arg <- list(...)
+arg$x <- wl
+
+if(is.null(arg$col)){
+  col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
               "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
+  }else{
+  col_list <- arg$col
+  }
 
 par(mar=c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
 
 for (i in 1:nplots){
   if (by == 1) {
   	bloc <- data.frame(rspecdata[i])
-  	col_list <- 'black' }else{
+  }else{
       bloc <- rspecdata[,(((i-1)*by)+1):min(i*by,dim(rspecdata)[2])]
   	  }
 
+# SET OPTIONAL ARGUMENTS
+
+if(is.null(arg$ylim)){
   if(scale=='free')
-    yaxislims <- c(min(bloc), max(bloc))*yaxismult
+    arg$ylim <- c(min(bloc), max(bloc))*yaxismult
 
   if(scale=='equal')
-    yaxislims <- c(min(rspecdata), max(rspecdata))*yaxismult
+    arg$ylim <- c(min(rspecdata), max(rspecdata))*yaxismult
+}
+  
+  if(is.null(arg$type))
+    arg$type <- 'l'
+  
+  if(is.null(arg$ylab))
+    arg$ylab <- '% Reflectance'
+  
+  if(is.null(arg$xlab))
+    arg$xlab <- 'Wavelength (nm)'
+  
+  if(length(legpos)>1){
+   legx <- legpos[1]
+   legy <- legpos[2]
+   }else{
+   	legx <- legpos
+   	legy <- NULL
+   }
 
   leg <- names(bloc)
   
@@ -106,32 +136,49 @@ for (i in 1:nplots){
   }
 
   if (!is.null(dim(bloc))){
-	plot(wl, bloc[,1], col=legcolor[1] , ylim=yaxislims, type='l',
-	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)}else{
-      plot(wl, bloc, col=legcolor[1] , ylim=yaxislims, type='l',
-	     xlab="Wavelength (nm)",ylab="% Reflectance", ...)
-      legend('topright', legend=leg2[length(leg2)], cex=0.9, bty="n", 
+	arg$y <- bloc[,1]
+	
+	if(is.null(arg$col))
+	  arg$col <- legcolor
+	
+	do.call(plot,arg)}else{
+      
+      arg$col <- legcolor[1]
+      arg$y <- bloc
+      
+      do.call(plot, arg)
+      
+      legend(x=legx, y=legy, legend=leg2[length(leg2)], cex=0.9, bty="n", 
          text.col=legcolor)
       }
  if (by == 1){
-     legend('topright', legend=leg2[i], cex=0.9, bty="n", 
+     legend(x=legx, y=legy, legend=leg2[i], cex=0.9, bty="n", 
          text.col=legcolor)}
   if(!is.null(dim(bloc))){
     if (dim(bloc)[2] > 1){
     for(j in 2:dim(bloc)[2]){
-      lines(wl, bloc[,j], col=legcolor[j], type='l', ...)
-  legend('topright', legend=names(bloc), cex=0.9, bty="n", 
-         text.col=legcolor)	}}}
+
+      arg$y <- bloc[ ,j]
+      arg$col <- legcolor[j]
+      
+      do.call(lines, arg)
+
+}
+  legend(x=legx, y=legy, legend=names(bloc), cex=0.9, bty="n", 
+         text.col=legcolor)	
+}}
+
+arg$col <- legcolor[1]
 
 if(i %% 12 == 0){
-mtext("Wavelength (nm)", side=1, outer=T, line=1)
-mtext("Reflectance (%)", side=2, outer=T, line=1)	
+mtext(arg$xlab, side=1, outer=T, line=1)
+mtext(arg$ylab, side=2, outer=T, line=1)	
 }
    
 	}
 
-mtext("Wavelength (nm)", side=1, outer=T, line=1)
-mtext("Reflectance (%)", side=2, outer=T, line=1)
+mtext(arg$xlab, side=1, outer=T, line=1)
+mtext(arg$ylab, side=2, outer=T, line=1)
 
 if ((dim(rspecdata)[2]/by) != round((dim(rspecdata)[2]/by))){
   warning("by is not a factor of the number of column in rspecdata")
