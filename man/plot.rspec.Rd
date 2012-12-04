@@ -1,0 +1,52 @@
+\name{plot.rspec}
+\alias{plot.rspec}
+\title{Plot spectra}
+\usage{
+  \method{plot}{rspec} (x, select = NULL,
+    type = c("overlay", "stack", "heatmap"),
+    varying = NULL, n = 100, ...)
+}
+\arguments{
+  \item{x}{(required) a data frame, possibly an object of
+  class \code{rspec}, with a column with wavelength data,
+  named 'wl', and the remaining column containing spectra
+  to plot.}
+
+  \item{select}{specification of which spectra to plot. Can
+  be a numeric vector or factor (e.g., \code{sex=='male'})}
+
+  \item{type}{what type of plot should be drawn.
+  Possibilities are: \itemize{ \item \code{overlay}
+  (default) for plotting multiple spectra in a single panel
+  with a common y-axis \item \code{stack} for plotting
+  multiple spectra in a vertical arrangement \item
+  \code{heatmap} for plotting reflectance values by
+  wavelength and a third variable (\code{varying}) }}
+
+  \item{varying}{a numeric vector giving values for y-axis
+  in \code{heatplot}}
+
+  \item{n}{number of bins with which to interpolate colors
+  and \code{varying} for the heatplot.}
+
+  \item{...}{additional arguments passed to plot (or image
+  for \code{'heatmap'}).}
+}
+\description{
+  Plots reflectance spectra in different arrangements.
+}
+\examples{
+\dontrun{
+data(teal)
+plot(teal, type = 'overlay')
+plot(teal, type = 'stack')
+plot(teal, type = 'heatmap')}
+}
+\author{
+  Chad Eliason \email{cme16@zips.uakron.edu}
+}
+\seealso{
+  \code{\link{spec2rgb}}, \code{\link{image}},
+  \code{\link{plot}}
+}
+
