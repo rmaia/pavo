@@ -26,7 +26,8 @@
 #' peakshape(teal, select = 10, bounds=c(400, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), plot = TRUE, ...) {
+peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), 
+                      plot = TRUE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
@@ -81,7 +82,8 @@ if (ncol(rspecdata)==1) {
 
 
 if (any(Yj>Yk)) {
-warning(paste('Please fix bounds in spectra marked "check" to incorporate all minima in spectral curves'))
+warning(paste('Please fix bounds in spectra with incl.min marked "No" to 
+              incorporate all minima in spectral curves'))
 }
 
 Xa <- wlrange[fstHM]
@@ -90,8 +92,8 @@ hue <- wlrange[Xi]
 
 if (plot==TRUE) {
   for (i in seq_along(select)) {
-    plot(rspecdata[, i]~wl, type = 'l', xlab = "Wavelength (nm)", ylab = "Reflectance (%)",
-         ...)
+    plot(rspecdata[, i]~wl, type = 'l', xlab = "Wavelength (nm)", 
+         ylab = "Reflectance (%)", ...)
     abline(v = hue[i], col = "red")
     abline(h = halfmax[i], col = "red")
     abline(v = Xa[i], col = "red", lty = 2)

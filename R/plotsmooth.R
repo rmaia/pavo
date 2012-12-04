@@ -109,8 +109,10 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 
 
 	}
-
+  
+if (i %%6 != 0){
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
+}
 
 }

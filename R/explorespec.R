@@ -177,8 +177,10 @@ mtext(arg$ylab, side=2, outer=T, line=1)
    
 	}
 
-mtext(arg$xlab, side=1, outer=T, line=1)
-mtext(arg$ylab, side=2, outer=T, line=1)
+if (i %% 12 != 0){
+  mtext(arg$xlab, side=1, outer=T, line=1)
+  mtext(arg$ylab, side=2, outer=T, line=1)
+}
 
 if ((dim(rspecdata)[2]/by) != round((dim(rspecdata)[2]/by))){
   warning("by is not a factor of the number of column in rspecdata")
