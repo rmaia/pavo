@@ -1159,9 +1159,11 @@ capabilities.
 \begin{tabular}{l l} \hline
 {\bf Color variable} & {\bf Description} \\ 
 \hline
-{$B_1 = \sum_{\lambda_{min}}^{\lambda_{max}} R_\lambda$} & \parbox[t]{3in}{\textbf{Total reflectance}: sum of reflectance values over all wavelengths.}  \\
-{$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{\textbf{Mean brightness}: average reflectance over all wavelengths.} \\
-{$B_3 = R_\text{max}$} & \parbox[t]{3in}{\textbf{Intensity}: Peak reflectance of the spectrum.} \\
+{$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
+{$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
+{$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
+{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\ensuremath{^\circ} (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
+{$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
 {$S_1 = \sum_{\lambda_a}^{\lambda_b} R_\lambda/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: segment-specific chroma calculated by dividing the sum of reflectance values over region of interest (e.g., from $\lambda_a$ to $\lambda_b$) by the total reflectance.} \\
 {$S_2 = R_\text{max}/R_\text{min}$} & \parbox[t]{3in}{\textbf{Spectral saturation}: ratio of maximum and minimum reflectance values.} \\
 {$S_3 = \sum_{\lambda_{R\text{max}}-50}^{\lambda_{R\text{max}}+50} R_i/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: sum of reflectance values +/- 50 nm from the wavelength of peak reflectance (hue, $\lambda_\text{max}$).} \\
@@ -1172,11 +1174,9 @@ capabilities.
 {$S_8 = (R_\text{max}-R_\text{min})/B_2$} & \parbox[t]{3in}{\textbf{Chroma}: relative difference between max and min reflectance taking into account the average brightness ($B2$) of the spectrum.} \\
 {$S_9 = (R_{\lambda{450}}-R_{\lambda{700}})/R_{\lambda{700}}$} & \parbox[t]{3in}{\textbf{Carotenoid chroma}: relative reflectance in the region of greatest reflectance in carotenoid-based colors.} \\
 {$S_{10} = [(R_{max}-R_{min})/B_2]\times|b\text{max}_\text{neg}|$} & \parbox[t]{3in}{\textbf{Peaky chroma}: relative contrast (S8) multiplied by the spectral purity (S4). Relatively flat curves will give low values for this metric, and vice versa.} \\
-{$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
-{$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
-{$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
-{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\ensuremath{^\circ} (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
-{$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
+{$B_1 = \sum_{\lambda_{min}}^{\lambda_{max}} R_\lambda$} & \parbox[t]{3in}{\textbf{Total reflectance}: sum of reflectance values over all wavelengths.}  \\
+{$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{\textbf{Mean brightness}: average reflectance over all wavelengths.} \\
+{$B_3 = R_\text{max}$} & \parbox[t]{3in}{\textbf{Intensity}: Peak reflectance of the spectrum.} \\
 \hline
 \end{tabular}
 \end{center}
