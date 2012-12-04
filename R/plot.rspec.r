@@ -20,11 +20,6 @@
 #' @param varying a numeric vector giving values for y-axis in \code{heatplot}
 #' @param n number of bins with which to interpolate colors and \code{varying} for the 
 #' heatplot.
-#' @param col color of the spec curves. User can either provide a single color, a vector 
-#' of colors, or a \code{spec2rgb} object. 
-#' For the latter, picking spectra with \code{select} will also subset the color vector.
-#' @param xlim a numeric vector giving the lower an upper limits for the x-axis
-#' @param ylim a numeric vector giving the lower an upper limits for the y-axis
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
 #' @examples \dontrun{
 #' data(teal)

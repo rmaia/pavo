@@ -3,8 +3,7 @@
 \title{Import spectra files}
 \usage{
   getspec(where = getwd(), ext = "txt", lim = c(300, 700),
-    decimal = ".", negative = c("zero", "min", "raw"),
-    subdir = FALSE, subdir.names = FALSE)
+    decimal = ".", subdir = FALSE, subdir.names = FALSE)
 }
 \arguments{
   \item{where}{(required) folder in which files are
@@ -19,17 +18,6 @@
 
   \item{decimal}{character to be used to identify decimal
   plates (defaults to ".")}
-
-  \item{negative}{how to handle negative reflectance.
-  \code{zero}, transforms negative values by rounding them
-  up to 0; \code{min} transforms by adding the lowest
-  negative reflectance value for that spectrum to the
-  reflectance at remaining wavelengths; \code{raw} does not
-  transform and leaves negative values as is (not
-  recommended). \code{zero} is recommended when negative
-  values are a product of noise, whereas \code{min} is
-  recommended when negative values are a product of bad
-  reference calibration. (defaults to \code{zero})}
 
   \item{subdir}{should subdirectories within the
   \code{where} folder be included in the search? (defaults

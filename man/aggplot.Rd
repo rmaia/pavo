@@ -3,8 +3,7 @@
 \title{Plot aggregated reflectance spectra}
 \usage{
   aggplot(rspecdata, by, FUN.center = mean, FUN.error = sd,
-    lcol = NULL, shadecol = NULL, alpha = 0.2, lty = NULL,
-    xlim = NULL, ylim = NULL, ...)
+    lcol = NULL, shadecol = NULL, alpha = 0.2, ...)
 }
 \arguments{
   \item{rspecdata}{(required) data frame containing the
@@ -34,8 +33,6 @@
   measure.}
 
   \item{alpha}{transparency of the shaded areas.}
-
-  \item{lty,xlim,ylim}{graphucal parameters.}
 
   \item{...}{additional graphical parameters to be passed
   to plot.}

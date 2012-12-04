@@ -76,9 +76,9 @@ vboth <- overlapVol/(sum(c(vol1,vol2))-overlapVol)
 if(plot==T){
   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
   if(dim(Voverlap)[1]>3)
-    ttvol(Voverlap)
-  ttvol(dat1, col='red', fill=F)
-  ttvol(dat2, col='blue', fill=F)
+    tcsvol(Voverlap)
+  tcsvol(dat1, col='red', fill=F)
+  tcsvol(dat2, col='blue', fill=F)
   }
 
 data.frame(vol1, vol2, voverlap = overlapVol, vsmallest, vboth)
