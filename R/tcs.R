@@ -23,7 +23,7 @@
 #' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)
 #' 
-#' @return A data frame consisting of the following rows:
+#' @return A data frame of class \code{tcs} consisting of the following rows:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
 #' calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
 #' the output column will be labeled \code{u}.
