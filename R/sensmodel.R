@@ -21,7 +21,7 @@
 #' transmission. Values from Hart et al. (2005)(defaults to \code{FALSE}).
 #' @param integrate logical. If \code{TRUE}, each curve is transformed to have a total area
 #' under the curve of 1 (best for visual models)(defaults to \code{TRUE}).
-#' @return A data frame containing each cone model as a column.
+#' @return A data frame of class \code{rspec} containing each cone model as a column.
 #' @export
 #' @examples \dontrun{
 #' # Blue tit visual system based on Hart et al (2000)
