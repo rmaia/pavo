@@ -75,10 +75,20 @@ for (i in 1:nplots){
 
 # Sets plot parameters based on the number of curves on the plots
 par(mfrow=c(3,4),ask=ask)
-if (curves > 4) par(mfrow=c(2,3))
-if (curves > 7) par(mfrow=c(2,2))
-if (curves > 9) par(mfrow=c(1,2))
-if (curves > 12) par(mfrow=c(1,1))
+numplots <- 12
+
+if (curves > 4) {
+  par(mfrow=c(2,3))
+  numplots <- 6}
+if (curves > 7) {
+  par(mfrow=c(2,2))
+  numplots <- 4}
+if (curves > 9){
+ par(mfrow=c(1,2))
+ numplots <- 2}
+if (curves > 12){
+ par(mfrow=c(1,1))
+ numplots <- 1}
 
 # Plots all curves 
 # all below does not work yet
@@ -97,7 +107,7 @@ plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelengt
 	legend (rspecdata[1, 1]-20,yaxismax+6,legend=legnames,cex=0.7,bty="n", xjust=0)
 	title(titlenames[i])
 
-if(i %% 6 == 0){
+if(i %% numplots == 0){
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)	
 }
@@ -110,7 +120,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 
 	}
   
-if (i %%6 != 0){
+if (i %% numplots != 0){
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
 }
