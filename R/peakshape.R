@@ -9,7 +9,9 @@
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
 #' @param bounds a vector specifying the wavelength range to analyze
-#' @param plot logical value indicating whether to include plots
+#' @param plot logical. Should plots indicating calculated parameters be returned? 
+#' (Defaults to \code{TRUE})
+#' @param ... additional arguments to be passed to plot
 #' @return a data frame containing peak height (max value), location (hue) and full width
 #' at half maximum, as well as half widths on left and right side of peak. Incl.min column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.

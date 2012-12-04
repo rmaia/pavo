@@ -5,14 +5,9 @@
 #' case the model reduces to the color space as described in Endler & Mielke (2005)
 #' and Stoddard & Prum (2008).
 #' 
-#' @param rspecdata(required) a data frame, possibly an object of class \code{rspec}
+#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}
 #' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 #' remaining columns. 
-#' @param sens data frame, such as one produced by \code{sensmodel} containing
-#' sensitivity for the user-defined visual system. The data frame must contain
-#' a 'wl' column with the range of wavelengths included, and the
-#' sensitivity for each other cone as a column. If not specified, the visual system will
-#' be chosen according to one of the choices from the argument \code{visual}.
 #' @param visual the visual system to be used. Options are:
 #' \itemize{
 #'	\item a data frame such as one produced containing by \code{sensmodel}, containing 

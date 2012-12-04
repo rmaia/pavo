@@ -3,13 +3,14 @@
 #' Plots curves with various levels of loess smoothing to help determine what
 #' loess parameters are best for the data.
 #'
-#' @param rspecdata(required) a data frame, possibly of class \code{rspec}, which
+#' @param rspecdata (required) a data frame, possibly of class \code{rspec}, which
 #' contains a column containing a wavelength range , named 'wl', and spectra data in 
 #' remaining columns.
 #' @param minsmooth the minimum f value of the loess function to visualize (defaults to 0.05)
 #' @param maxsmooth the maximum f value of the loess function to visualize (defaults to 0.20)
 #' @param curves the number of curves to display on the same plot (defaults to 5)
 #' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to ALL)
+#' @param ask logical. if \code{TRUE}, asks for user input before changing plot pages
 #' @return Series of plot with curves processed with varying level of loess smoothing
 #' @export
 #' @examples \dontrun{
@@ -18,8 +19,7 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 
-plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0,
-                       ask = TRUE){
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0, ask = TRUE){
 
 if (curves == 1) stop ("No curves to compare (curves = 1)")
 
