@@ -84,7 +84,9 @@ if (type=='heatmap') {
   if (is.null(arg$ylim))
     arg$ylim <- range(varying)
   if (is.null(arg$col)==1) {
-    jc <- colorRampPalette( rev(c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", "#66C2A5", "#3288BD", "#5E4FA2")))
+    jc <- colorRampPalette( rev(c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", 
+                                  "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", 
+                                  "#66C2A5", "#3288BD", "#5E4FA2")))
     arg$col <- jc(n)
   } else {
   	jc <- colorRampPalette(arg$col)

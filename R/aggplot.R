@@ -34,8 +34,10 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggplot <- function(rspecdata, by, FUN.center = mean, FUN.error = sd, 
-    lcol = NULL, shadecol = NULL, alpha = 0.2,
-    lty = NULL, xlim = NULL, ylim = NULL, ...){
+                    lcol = NULL, shadecol = NULL, alpha = 0.2, ...) {
+
+if (by==1)
+  stop('Cannot group single spectra (use plot instead)')
 
 #take aggregated data
 cntplotspecs <- aggspec(rspecdata,by=by, FUN=FUN.center)
@@ -65,35 +67,43 @@ polygon_data <- sapply(indexsub, function(x)
 
 polygon_wl <- c(wl,rev(wl))
 
-# set limits
-if (is.null(xlim))
-  xlim <- range(wl)
+# Set sensible plotting defaults
+arg <- list(...)
 
-if (is.null(ylim))
-  ylim <- range(polygon_data)
-
+if (is.null(arg$xlab))
+  arg$xlab <- "Wavelength (nm)"
+if (is.null(arg$xlim))
+  arg$xlim <- range(wl)
+if (is.null(arg$ylim))
+  arg$ylim <- range(polygon_data)
+if (is.null(arg$xlab))
+  arg$xlab <- "Wavelength (nm)"
+if (is.null(arg$ylab))
+  arg$ylab <- "Reflectance (%)"
 
 # coloring for overlay plot & others
+if (is.null(arg$lty))
+  lty <- 1
 
-if (length(lty) < ncol(cntplotspecs))
-  lty <- rep(lty, ncol(cntplotspecs))
+# if (length(lty) < ncol(cntplotspecs))
+#   lty <- rep(lty, ncol(cntplotspecs))
 
 if (length(shadecol) < ncol(cntplotspecs))
   shadecol <- rep(shadecol, ncol(cntplotspecs))
-if (any(class(shadecol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
-  shadecol <- spec2rgb(cbind(wl,cntplotspecs))
+# if (any(class(shadecol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+#   shadecol <- spec2rgb(cbind(wl,cntplotspecs))
 
 if (length(lcol) < ncol(cntplotspecs))
   lcol <- rep(lcol, ncol(cntplotspecs))
-if (any(class(lcol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
-  lcol <- spec2rgb(cbind(wl,cntplotspecs))
+# if (any(class(lcol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+#   lcol <- spec2rgb(cbind(wl,cntplotspecs))
    
 col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
               "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
 
 col_list <- rep(col_list, length=dim(cntplotspecs)[2])
 
-if(is.null(shadecol))
+if (is.null(shadecol))
   shadecol <- col_list
 
 if(is.null(lcol))
@@ -104,25 +114,44 @@ if(is.null(lcol))
 
 # plot polygons first...
 
-  plot(cntplotspecs[, 1]~wl, type = 'n', # c(min(rspecdata), max(rspecdata)), 
-       xlab = 'Wavelength (nm)', ylab = 'Reflectance (%)', xlim = xlim, ylim = ylim,
-       ...)
-  polygon(polygon_data[,1]~polygon_wl, col=shadecol[1], border=NA)
+arg$x <- wl
+arg$y <- cntplotspecs[, 1]
+arg$type <- 'n'
+
+  do.call(plot, arg)
+
+arg$type <- NULL
+arg$x <- polygon_wl
+arg$y <- polygon_data[, 1]
+arg$col <- shadecol[1]  
+arg$border <- NA
+
+do.call(polygon, arg)
   
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
-  polygon(polygon_data[,i]~polygon_wl, col=shadecol[i], border=NA)
-  }
+      arg$col <- shadecol[i]
+      arg$y <- polygon_data[, i]
+      do.call(polygon, arg)
+    }
   }
   
 # ...then lines (so they are on top)
+  arg$border <- NULL
+  arg$col <- lcol[1]
+  arg$x <- wl
+  arg$y <- cntplotspecs[, 1]
+  arg$type <- 'l'
 
-  lines(cntplotspecs[,1]~wl, col=lcol[1], lty=lty[1], ...)
-  
+  do.call(lines, arg)
+
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
-  lines(cntplotspecs[,i]~wl, col=lcol[i], lty=lty[i], ...)
-  }
+      arg$y <- cntplotspecs[, i]
+      arg$col <- lcol[i]
+      # arg$lty <- lty[i]
+      do.call(lines, arg)
+    }
   }
 
 }

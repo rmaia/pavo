@@ -52,6 +52,10 @@ if(length(wl_index>0)){
 		y <- rspecdata
 		}
 
+if (is.numeric(by))
+    if (ncol(y) %% by != 0)
+        stop('by not a multiple of number of spectra')
+
 #BEGIN RM EDIT 2
 # check if the by argument has a 'wl' entry (e.g. if names were obtained through
 # regex conditions on the original spec names) and remove it
