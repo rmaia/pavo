@@ -567,8 +567,8 @@ Obtaining trichromatic color variables (peratining to hue, saturation and bright
 pretty straightforward in \pavo{}. Since reflectance spectra is stored in an object of class
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
 as outlined in Montgomerie \cite{Montgomerie:2006}. Though outlined in a book chapter on bird
-coloration,  these variables are broadly applicable to any reflectance data, particularly if the
-taxon of  interest has color vision within the UV-human visible range.
+coloration, these variables are broadly applicable to any reflectance data, particularly if the
+taxon of interest has color vision within the UV-human visible range.
 
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
@@ -1126,11 +1126,11 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
                 \caption{Throat and Crown overlap}
                 \label{fig:ov2}
         \end{subfigure}
-         \caption{Color volume overlaps. Shaded area in panel \ref{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
+         \caption{Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
 
 
-\section*{Final Thoughts}
+\section{Final Thoughts}
 We hope to have demonstrated the flexibility of \pavo{} when it comes to importing, processing, 
 exploring, visualizing and analyzing spectral data. Our aim was to provide a cohesive, start-to-finish 
 workflow of spectral data color analysis \textit{within} \code{R}, without the need for additional 
@@ -1144,6 +1144,11 @@ Finally, we would also like \pavo{} to be, in the future, a repository for anima
 reflectance data. So if you'd like to see your study system's visual phenotype included as an option 
 within our visual model functions, contact us via email 
 (\href{mailto:rm72@zips.uakron.edu}{rm72@zips.uakron.edu}).
+
+\section*{Acknowledgments}
+We would like to thank Matthew D. Shawkey and St\'{e}phanie M. Doucet for insights and support, and 
+Jarrod D. Hadfield and Mary Casswell Stoddard for sharing code that helped us develop some of \pavo{}'s 
+capabilities.
 
 \bibliographystyle{plain}
 \bibliography{refs.bib}
@@ -1176,7 +1181,7 @@ within our visual model functions, contact us via email
 \end{tabular}
 \end{center}
 \caption{\label{table:tristim}
-The complete set of tristimulus variables calculated by \code{summary} in \pavo{}}
+The complete set of tristimulus variables calculated by \code{summary} in \pavo{} (adapted from Montgomerie 2006 \cite{Montgomerie:2006})}
 \end{table}
 
 
