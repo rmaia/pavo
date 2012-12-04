@@ -43,7 +43,8 @@
   (best for visual models)(defaults to \code{TRUE}).}
 }
 \value{
-  A data frame containing each cone model as a column.
+  A data frame of class \code{rspec} containing each cone
+  model as a column.
 }
 \description{
   Models spectral sensitivity (with oil droplets; optional)

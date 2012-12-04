@@ -3,7 +3,7 @@
 \title{Plot spectral curves}
 \usage{
   explorespec(rspecdata, by = 1,
-    scale = c("free", "equal"), ...)
+    scale = c("free", "equal"), legpos = "topright", ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -18,6 +18,13 @@
   \code{'free'}: panels can vary in the range of the
   y-axis; \code{'equal'}: all panels have the y-axis with
   the same range.}
+
+  \item{legpos}{legend position control. Either a vector
+  containing \code{x} and \code{y} coordinates or a single
+  keyword from the list: \code{"bottomright"},
+  \code{"bottom"}, \code{"bottomleft"}, \code{"left"},
+  \code{"topleft"}, \code{"top"}, \code{"topright"},
+  \code{"right"} and \code{"center"}.}
 
   \item{...}{additional parameters to be passed to plot}
 }
@@ -35,7 +42,8 @@
 \examples{
 \dontrun{
 data(sicalis)
-explorespec(sicalis,3)}
+explorespec(sicalis, 3)
+explorespec(sicalis, 3, ylim=c(0,100), legpos=c(500,80))}
 }
 \author{
   Pierre-Paul Bitton \email{bittonp@uwindsor.ca}

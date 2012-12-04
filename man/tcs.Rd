@@ -33,7 +33,8 @@
   proportional to the logarithm of the quantum catch)}
 }
 \value{
-  A data frame consisting of the following rows:
+  A data frame of class \code{tcs} consisting of the
+  following rows:
 
   \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch
   data used to calculate the remaining variables. NOTE:

@@ -50,7 +50,8 @@
   \code{TRUE}).}
 }
 \value{
-  A list containing the following data frames:
+  An object of class \code{vismodel} containing the
+  following data frames:
 
   \code{descriptive}: Descriptive statistics of maximum and
   normalized reflectance, and wavelength of maximum

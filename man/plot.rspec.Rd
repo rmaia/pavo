@@ -4,8 +4,7 @@
 \usage{
   \method{plot}{rspec} (x, select = NULL,
     type = c("overlay", "stack", "heatmap"),
-    varying = NULL, n = 100, col = "black", xlim = NULL,
-    ylim = NULL, ...)
+    varying = NULL, n = 100, ...)
 }
 \arguments{
   \item{x}{(required) a data frame, possibly an object of
@@ -24,8 +23,8 @@
   \code{heatmap} for plotting reflectance values by
   wavelength and a third variable (\code{varying}) }}
 
-  \item{varying}{a numeric vector giving values for third
-  variable used in \code{heatplot}}
+  \item{varying}{a numeric vector giving values for y-axis
+  in \code{heatplot}}
 
   \item{n}{number of bins with which to interpolate colors
   and \code{varying} for the heatplot.}
