@@ -2,26 +2,13 @@
 \alias{tcs}
 \title{Tetracolorspace avian visual model}
 \usage{
-  tcs(vismodeldata, by = NULL,
-    qcatch = c("Qi", "qi", "fi"))
+  tcs(vismodeldata, qcatch = c("Qi", "qi", "fi"))
 }
 \arguments{
   \item{vismodeldata}{(required) quantum catch color data.
   Can be either the result from \code{\link{vismodel}} or
   independently calculated data (in the form of a data
   frame with four columns, representing the avian cones).}
-
-  \item{by}{either a single value specifying the range of
-  color points for which summary colorspace variables
-  should be calculated (for example, \code{by} = 3
-  indicates summary will be calculated for groups of 3
-  consecutive color points (rows) in the quantum catch
-  color data frame) or a vector containing identifications
-  for the rows in the quantum catch color data frame (in
-  which case summaries will be calculated for each group of
-  points sharing the same identification). If \code{by} is
-  left blank, the summary statistics are calculated accross
-  all color points in the data.}
 
   \item{qcatch}{quantum catch values to use in the model.
   Can be either \code{Qi}, \code{qi} or \code{fi} (defaults

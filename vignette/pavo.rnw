@@ -842,7 +842,7 @@ sensitivity at 350 and 650 nm:
 
 <<label=dichro, fig=TRUE, include=FALSE>>=
 idealizeddichromat <- sensmodel(c(350,650))
-plot(idealizeddichromat, col=spec2rgb(idealizeddichromat))
+plot(idealizeddichromat, col=spec2rgb(idealizeddichromat), ylab='Absorbance')
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
@@ -1046,19 +1046,19 @@ summary(tcs.mspecs, by=spp)
 
 \textbf{Plotting options}. There are two useful plots for the tetrahedral color space model. The
 first is a three-dimensional plot of the volume, which is implemented in \pavo{} as an interactive
-plot that the user can spin around and zoom, and can be called by the function \code{ttplot}:
+plot that the user can spin around and zoom, and can be called by the function \code{tcsplot}:
 
 <<results=hide>>=
-ttplot(tcs.mspecs, col=spec2rgb(mspecs), size=0.01)
+tcsplot(tcs.mspecs, col=spec2rgb(mspecs), size=0.01)
 # rgl.postscript('pavo-tcsplot.pdf',fmt='pdf')
 @
 
-The accessory functions \code{ttpoints} and \code{ttvol} can be used, in addition, to plot
+The accessory functions \code{tcspoints} and \code{tcsvol} can be used, in addition, to plot
 additional points or the convex hull determining the volume occupied by the points:
 
 <<results=hide>>=
-ttplot(tcs(vismod2), size=0)
-ttvol(tcs(vismod2))
+tcsplot(tcs(vismod2), size=0)
+tcsvol(tcs(vismod2))
 # rgl.snapshot('pavo-tcsvolplot.png')
 @
 
@@ -1076,7 +1076,7 @@ ttvol(tcs(vismod2))
                 \caption{Tetrahedral plot with convex hull volume}
                 \label{fig:tcs2}
         \end{subfigure}
-         \caption{Example plots obtained using \code{ttplot}. Plot on the left was exported as pdf, while the one on the right was exported as png.}\label{fig:tcs}
+         \caption{Example plots obtained using \code{tcsplot}. Plot on the left was exported as pdf, while the one on the right was exported as png.}\label{fig:tcs}
 \end{figure}
 
 Another plotting option available is \code{projplot}, which projects color points in the surface of
@@ -1157,6 +1157,21 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
          \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
 
+
+\section*{Final Thoughts}
+We hope to have demonstrated the flexibility of \pavo{} when it comes to importing, processing, 
+exploring, visualizing and analyzing spectral data. Our aim was to provide a cohesive, start-to-finish 
+workflow of spectral data color analysis \textit{within} \code{R}, without the need for additional 
+software. Though our examples have focused on bird reflectance data and visual models, \pavo{} should be 
+easily extended to any taxon of interest, including the possibility of modeling sensitivity curves 
+through the \code{sensmodel} function.
+
+Still, users are likely going to find particular needs (or wants!) that have not been incorporated in 
+the package. We encourage users to contact us with suggestions and comments for future improvements. 
+Finally, we would also like \pavo{} to be, in the future, a repository for animal visual system and 
+reflectance data. So if you'd like to see your study sistem's visual phenotype included as an option 
+within our visual model functions, contact us via email 
+(\href{mailto:rm72@zips.uakron.edu}{rm72@zips.uakron.edu}).
 
 \bibliographystyle{plain}
 \bibliography{refs.bib}

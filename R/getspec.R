@@ -44,7 +44,7 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
            subdir=FALSE, subdir.names=FALSE)
 {
 
-negative <- match.arg(negative)
+
 makenegzero<-function(x) {x[x[,2]<0,2] = 0; x}
 
 separ=ifelse(ext=='ttt',';','\t')
