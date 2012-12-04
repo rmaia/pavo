@@ -211,7 +211,7 @@ explorespec(sppspec, by=6, lwd=3)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=3in]{fig/pavo-exploresppmeans}
+\includegraphics[width=2.5in]{fig/pavo-exploresppmeans}
 \end{center}
 \caption{Result from \code{explorespec} for species means}
 \label{figure:sppmeans}
@@ -248,6 +248,8 @@ remove spectral noise while preserving the original spectral shape (Figure \ref{
 Based on this value, we will now use the \code{opt} argument in \code{procspec} to smooth data for
 further plotting and analysis (see Figure \ref{figure:specsmooth}, red line).
 
+\clearpage{}
+
 <<label=specsmooth,fig=TRUE,include=FALSE,results=hide>>=
 spec.sm <- procspec(sppspec, opt='smooth', span = 0.2)
 plot(sppspec[, 5]~sppspec[, 1], type='l', lwd=10, col='grey', 
@@ -256,7 +258,7 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=3in]{fig/pavo-specsmooth}
+\includegraphics[width=2.5in]{fig/pavo-specsmooth}
 \end{center}
 \caption{Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet.}
 \label{figure:specsmooth}
@@ -291,7 +293,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=6in]{fig/pavo-specnorm}
+\includegraphics[width=5in]{fig/pavo-specnorm}
 \end{center}
 \caption{Results for max (left), min (center), and both normalizations (right).}
 \label{figure:specnorm}
@@ -468,7 +470,7 @@ plot(teal.norm, type='s', col=spec2rgb(teal))
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
 @
-\begin{figure}[H]
+\begin{figure}[t]
 \begin{center}
 \includegraphics[width=4in]{fig/pavo-stack}
 \end{center}
@@ -532,7 +534,7 @@ aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)),
 @
 \begin{figure}[H]
 \begin{center}
-\includegraphics[width=6in]{fig/pavo-aggplot}
+\includegraphics[width=5in]{fig/pavo-aggplot}
 \end{center}
 \caption{Example plots created using \code{aggplot}. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale}
 \label{figure:aggplot}
@@ -580,39 +582,6 @@ summary(spec.sm)
 round(summary(spec.sm),2)
 @
 
-\begin{table}
-\begin{center}
-\setlength{\extrarowheight}{4pt}
-\begin{tabular}{l l} \hline
-{\bf Color variable} & {\bf Description} \\ 
-\hline
-{$B_1 = \sum_{\lambda_{min}}^{\lambda_{max}} R_\lambda$} & \parbox[t]{3in}{\textbf{Total reflectance}: sum of reflectance values over all wavelengths.}  \\
-{$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{\textbf{Mean brightness}: average reflectance over all wavelengths.} \\
-{$B_3 = R_\text{max}$} & \parbox[t]{3in}{\textbf{Intensity}: Peak reflectance of the spectrum.} \\
-{$S_1 = \sum_{\lambda_a}^{\lambda_b} R_\lambda/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: segment-specific chroma calculated by dividing the sum of reflectance values over region of interest (e.g., from $\lambda_a$ to $\lambda_b$) by the total reflectance.} \\
-{$S_2 = R_\text{max}/R_\text{min}$} & \parbox[t]{3in}{\textbf{Spectral saturation}: ratio of maximum and minimum reflectance values.} \\
-{$S_3 = \sum_{\lambda_{R\text{max}}-50}^{\lambda_{R\text{max}}+50} R_i/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: sum of reflectance values +/- 50 nm from the wavelength of peak reflectance (hue, $\lambda_\text{max}$).} \\
-{$S_4 = |b\text{max}_\text{neg}|$} & \parbox[t]{3in}{\textbf{Spectral purity}: maximum negative slope of spectrum over range of wavelengths.} \\
-{$S_5 = \sqrt{(B_r-B_g)^2+(B_y-B_b)^2}$} & \parbox[t]{3in}{\textbf{Chroma}: Euclidean distance from achromatic origin using segment classification method (see section \ref{sec:segclass}).} \\
-{$S_6 = R_\text{max}-R_\text{min}$} & \parbox[t]{3in}{\textbf{Contrast/amplitude}: difference in reflectance between high and low points in the spectrum.} \\
-{$S_7 = (\sum_{\lambda_{min}}^{\lambda_R{mid}}R_i - \sum_{\lambda_R{mid}}^{\lambda_{max}}R_i)/B_{1}$} & \parbox[t]{3in}{\textbf{Spectral saturation}: reflectance difference between the minimum wavelength and the half-max reflectance and the maximum wavelength and the half-max reflectance. Analogous to the segment classification method (see section \ref{sec:segclass}).} \\
-{$S_8 = (R_\text{max}-R_\text{min})/B_2$} & \parbox[t]{3in}{\textbf{Chroma}: relative difference between max and min reflectance taking into account the average brightness ($B2$) of the spectrum.} \\
-{$S_9 = (R_{\lambda{450}}-R_{\lambda{700}})/R_{\lambda{700}}$} & \parbox[t]{3in}{\textbf{Carotenoid chroma}: relative reflectance in the region of greatest reflectance in carotenoid-based colors.} \\
-{$S_{10} = [(R_{max}-R_{min})/B_2]\times|b\text{max}_\text{neg}|$} & \parbox[t]{3in}{\textbf{Peaky chroma}: relative contrast (S8) multiplied by the spectral purity (S4). Relatively flat curves will give low values for this metric, and vice versa.} \\
-{$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
-{$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
-{$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
-{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\ensuremath{^\circ} (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
-{$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
-\hline
-\end{tabular}
-\end{center}
-\caption{\label{table:tristim}
-The complete set of tristimulus variables calculated by \code{summary} in \pavo{}}
-\end{table}
-
-\clearpage{}
-
 \subsubsection{Peak Shape Descriptors}
 
 Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the
@@ -629,6 +598,8 @@ If this all sounds too esoteric, fear not: \code{peakshape} has the option of re
 indicating what it's calculating. The vertical continuous red line indicates the peak location, the
 horizontal continuous red line indicates the half-maximum reflectance, and the distance between the
 dashed lines (\code{HWHM.l} and \code{HWHM.r}) is the FWHM:
+
+\clearpage{}
 
 <<label=fwhm, fig=TRUE, include=FALSE, width=6, height=4>>=
 par(mfrow=c(2,3),mar = c(5, 4, 0.5, 0.5) + 0.1)
@@ -824,7 +795,7 @@ mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
 @
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{figure}[t] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=5in]{fig/pavo-usmlplot}
 \end{center}
@@ -844,13 +815,6 @@ sensitivity at 350 and 650 nm:
 idealizeddichromat <- sensmodel(c(350,650))
 plot(idealizeddichromat, col=spec2rgb(idealizeddichromat), ylab='Absorbance')
 @
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
-\begin{center}
-\includegraphics[width=2in]{fig/pavo-dichro}
-\end{center}
-\caption{Idealized dichromat photoreceptors created using \code{sensmodel}}
-\label{figure:dichro}
-\end{figure}
 
 <<results=hide>>=
 vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative=FALSE)
@@ -860,6 +824,14 @@ vismod.idi
 <<echo=FALSE>>=
 sapply(vismod.idi, function(x) round(x,4))
 @
+
+\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{center}
+\includegraphics[width=2in]{fig/pavo-dichro}
+\end{center}
+\caption{Idealized dichromat photoreceptors created using \code{sensmodel}}
+\label{figure:dichro}
+\end{figure}
 
 \textbf{Receptor Noise.} Color distances can be calculated under this model while considering receptor
 noise by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each
@@ -1062,7 +1034,7 @@ tcsvol(tcs(vismod2))
 # rgl.snapshot('pavo-tcsvolplot.png')
 @
 
-\begin{figure}
+\begin{figure}[H]
         \centering
         \begin{subfigure}[b]{0.45\textwidth}
                 \centering
@@ -1091,7 +1063,7 @@ projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
 
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=4in]{fig/pavo-proj}
+\includegraphics[width=3in]{fig/pavo-proj}
 \end{center}
 \caption{Projection plot from a tetrahedral color space}
 \label{figure:proj}
@@ -1110,9 +1082,9 @@ data(sicalis)
 aggplot(sicalis, by=rep(c('C','T','B'), 7))
 @
 
-\begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
+\begin{figure}[b] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
-\includegraphics[width=3in]{fig/pavo-sicalis}
+\includegraphics[width=2in]{fig/pavo-sicalis}
 \end{center}
 \caption{\code{aggplot} of the \code{sicalis} data (blue: crown, red: throat, green: breast)}
 \label{figure:sicalis}
@@ -1140,7 +1112,7 @@ contained in the other, \code{vsmallest} will equal 1.
 So we can clearly see that there is overlap between the throat and breast colors (of about 6\%), but
 not between  the throat and the crown colors (Figure \ref{figure:overlap}).
 
-\begin{figure}
+\begin{figure}[H]
         \centering
         \begin{subfigure}[b]{0.45\textwidth}
                 \centering
@@ -1169,13 +1141,43 @@ through the \code{sensmodel} function.
 Still, users are likely going to find particular needs (or wants!) that have not been incorporated in 
 the package. We encourage users to contact us with suggestions and comments for future improvements. 
 Finally, we would also like \pavo{} to be, in the future, a repository for animal visual system and 
-reflectance data. So if you'd like to see your study sistem's visual phenotype included as an option 
+reflectance data. So if you'd like to see your study system's visual phenotype included as an option 
 within our visual model functions, contact us via email 
 (\href{mailto:rm72@zips.uakron.edu}{rm72@zips.uakron.edu}).
 
 \bibliographystyle{plain}
 \bibliography{refs.bib}
 
+\begin{table}
+\begin{center}
+\setlength{\extrarowheight}{4pt}
+\begin{tabular}{l l} \hline
+{\bf Color variable} & {\bf Description} \\ 
+\hline
+{$B_1 = \sum_{\lambda_{min}}^{\lambda_{max}} R_\lambda$} & \parbox[t]{3in}{\textbf{Total reflectance}: sum of reflectance values over all wavelengths.}  \\
+{$B_2 = B_{1}/n_{wl}$} & \parbox[t]{3in}{\textbf{Mean brightness}: average reflectance over all wavelengths.} \\
+{$B_3 = R_\text{max}$} & \parbox[t]{3in}{\textbf{Intensity}: Peak reflectance of the spectrum.} \\
+{$S_1 = \sum_{\lambda_a}^{\lambda_b} R_\lambda/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: segment-specific chroma calculated by dividing the sum of reflectance values over region of interest (e.g., from $\lambda_a$ to $\lambda_b$) by the total reflectance.} \\
+{$S_2 = R_\text{max}/R_\text{min}$} & \parbox[t]{3in}{\textbf{Spectral saturation}: ratio of maximum and minimum reflectance values.} \\
+{$S_3 = \sum_{\lambda_{R\text{max}}-50}^{\lambda_{R\text{max}}+50} R_i/B_{1}$} & \parbox[t]{3in}{\textbf{Chroma}: sum of reflectance values +/- 50 nm from the wavelength of peak reflectance (hue, $\lambda_\text{max}$).} \\
+{$S_4 = |b\text{max}_\text{neg}|$} & \parbox[t]{3in}{\textbf{Spectral purity}: maximum negative slope of spectrum over range of wavelengths.} \\
+{$S_5 = \sqrt{(B_r-B_g)^2+(B_y-B_b)^2}$} & \parbox[t]{3in}{\textbf{Chroma}: Euclidean distance from achromatic origin using segment classification method (see section \ref{sec:segclass}).} \\
+{$S_6 = R_\text{max}-R_\text{min}$} & \parbox[t]{3in}{\textbf{Contrast/amplitude}: difference in reflectance between high and low points in the spectrum.} \\
+{$S_7 = (\sum_{\lambda_{min}}^{\lambda_R{mid}}R_i - \sum_{\lambda_R{mid}}^{\lambda_{max}}R_i)/B_{1}$} & \parbox[t]{3in}{\textbf{Spectral saturation}: reflectance difference between the minimum wavelength and the half-max reflectance and the maximum wavelength and the half-max reflectance. Analogous to the segment classification method (see section \ref{sec:segclass}).} \\
+{$S_8 = (R_\text{max}-R_\text{min})/B_2$} & \parbox[t]{3in}{\textbf{Chroma}: relative difference between max and min reflectance taking into account the average brightness ($B2$) of the spectrum.} \\
+{$S_9 = (R_{\lambda{450}}-R_{\lambda{700}})/R_{\lambda{700}}$} & \parbox[t]{3in}{\textbf{Carotenoid chroma}: relative reflectance in the region of greatest reflectance in carotenoid-based colors.} \\
+{$S_{10} = [(R_{max}-R_{min})/B_2]\times|b\text{max}_\text{neg}|$} & \parbox[t]{3in}{\textbf{Peaky chroma}: relative contrast (S8) multiplied by the spectral purity (S4). Relatively flat curves will give low values for this metric, and vice versa.} \\
+{$H_1 = \lambda_{R\text{max}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength of peak reflectance.} \\
+{$H_2 = \lambda_{b\text{max}_\text{neg}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at location of maximum negative slope in the spectrum.} \\
+{$H_3 = \lambda_{R\text{mid}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at the midpoint ([$R_\text{max} + R_\text{min}]/2$) in the reflectance spectrum.} \\
+{$H_4 = atan\{[(B_y-B_b)/B_1]/[(B_r-B_g)/B_1]\}$} & \parbox[t]{3in}{\textbf{Hue}: the angle from 0\ensuremath{^\circ} (red) calculated by the segment classification method (see section \ref{sec:segclass}).} \\
+{$H_5 = \lambda_{b\text{max}_\text{pos}}$} & \parbox[t]{3in}{\textbf{Hue}: wavelength at point in spectrum where curve reaches a maximum postitive slope.} \\
+\hline
+\end{tabular}
+\end{center}
+\caption{\label{table:tristim}
+The complete set of tristimulus variables calculated by \code{summary} in \pavo{}}
+\end{table}
 
 
 \end{document}
