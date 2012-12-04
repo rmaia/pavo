@@ -951,7 +951,7 @@ maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimens
 encompasses all theoretical colors that can be perceived by that visual system. Therefore, for the
 avian visual system  comprised of 4 cones, all colors can be placed somewhere in the volume of a
 tetrahedron, in which each  of the four vertices represents the maximum stimulation of that
-particular cone type (Figure \ref{figure:tcs}).
+particular cone type (Figure \ref{fig:tcs}).
 
 Though this model does not account for receptor noise (and thus does not allow an estimate of JNDs), 
 it presents several advantages. First, it makes for a very intuitive representation of color points 
@@ -1048,7 +1048,7 @@ tcsvol(tcs(vismod2))
                 \caption{Tetrahedral plot with convex hull volume}
                 \label{fig:tcs2}
         \end{subfigure}
-         \caption{Example plots obtained using \code{tcsplot}. Plot on the left was exported as pdf, while the one on the right was exported as png.}\label{fig:tcs}
+         \caption{Example plots obtained using \code{tcsplot}. Plot on the left was exported as pdf, while the one on the right was exported as png (\code{tcsplot} uses the \code{rgl} package for interactive 3D plotting capabilities, and \code{rgl} does not currently support transparency when exporting as \code{pdf}).}\label{fig:tcs}
 \end{figure}
 
 Another plotting option available is \code{projplot}, which projects color points in the surface of
