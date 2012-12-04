@@ -971,15 +971,14 @@ maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimens
 encompasses all theoretical colors that can be perceived by that visual system. Therefore, for the
 avian visual system  comprised of 4 cones, all colors can be placed somewhere in the volume of a
 tetrahedron, in which each  of the four vertices represents the maximum stimulation of that
-particular cone type.  %(Figure \ref{figure:tcs}).
+particular cone type (Figure \ref{figure:tcs}).
 
 Though this model does not account for receptor noise (and thus does not allow an estimate of JNDs), 
-it presents several advantages. First, it makes for a very intuitive
-representation of color points accounting for attributes of the color vision of the signal receiver.
-Second, and perhaps most importantly, it allows for the calculation of several interesting variables
-that represent color. For example, hue can be estimated from the angle of the point relative to the
-xy plane (blue-green-red) and the z axis (UV); saturation can be estimated as the distance of the
-point from the achromatic center.
+it presents several advantages. First, it makes for a very intuitive representation of color points 
+accounting for attributes of the color vision of the signal receiver.Second, and perhaps most 
+importantly, it allows for the calculation of several interesting variables that represent color. For 
+example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-red) and 
+the z axis (UV); saturation can be estimated as the distance of the point from the achromatic center.
 
 In \pavo{} the tetrahedral color space is implemented in the function \code{tcs}, after the 
 calculation of relative quantum catches using \code{vismodel} with the (default) option 
@@ -998,12 +997,23 @@ By default, \code{tcs} will use $Q_i$ for the calculations (that is, \emph{not} 
 recommended by Stoddard \& Prum \cite{Stoddard:2008}), but $q_i$ or $f_i$ may be specified if desired 
 (e.g. \code{tcs(vismod2\$fi)}).
 
-
 \code{tcs} returns the original photon catch values; the relative cone stimulation for a given hue
 (\code{x.r}; see the supplemental material of Stoddard \& Prum \cite{Stoddard:2008} for more
 information); the two angles of  hue (\code{h.theta} and \code{h.phi}) and the distance from the
 achromatic center (\code{r.vec});  along with the maximum distance achievable for that hue
 (\code{r.max}) and the proportion of that  maximum achieved by the color point (\code{r.achieved}).
+
+\textbf{Color distances}. Under the colorspace framework, color distances can be calculated simply as 
+Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on 
+how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor 
+noise is incorporated in the model. Euclidean distances can be computed in \code{R} using the 
+\code{dist} function on the \code{vismodel} output (excluding the luminance data) or the \code{tcs} 
+output by selecting the cone stimulation data:
+
+<<>>=
+dist(vismod2$Qi[,1:4])
+dist(tcs(vismod2)[,c('u','s','m','l')])
+@
 
 \textbf{Summary variables for groups of points}. Another advantage of the tetrahedral color space
 model is that it allows for the calculation of useful summary statistics of groups of points, such
