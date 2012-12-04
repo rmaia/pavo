@@ -1092,9 +1092,9 @@ projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
 \textbf{Color Volume Overlap.} Finally, a useful function available in \pavo{} is \code{voloverlap},
 which calculates the overlap in tetrahedral color volume between two sets of points. This can be
 useful to explore whether different species occupy similar (overlapping) or different (non-
-overlapping) "sensory niches" (REF?). To show this  function, we will use the \code{sicalis}
-dataset, which includes measurements from the crown (C),  throat (T) and breast (B) of seven stripe-
-tailed yellow finches (\textit{Sicalis citrina}).
+overlapping) ``sensory niches'', or to test for mimetism, dichromatism, etc. \cite{Stoddard:2011}. To 
+show this  function, we will use the \code{sicalis} dataset, which includes measurements from the crown 
+(C),  throat (T) and breast (B) of seven stripe-tailed yellow finches (\textit{Sicalis citrina}).
 
 <<label=sicalis, fig=TRUE, include=FALSE>>=
 data(sicalis)
