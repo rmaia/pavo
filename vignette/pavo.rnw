@@ -28,8 +28,8 @@
 % define colors
 \hypersetup{
   colorlinks,
-  citecolor=violet,
-  linkcolor=black,
+  citecolor=Violet,
+  linkcolor=Black,
   urlcolor=MidnightBlue
   }
 \renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
@@ -300,7 +300,7 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
-(for example, using Principal Component Analysis, or PCA). Following Cuthill (1999), we can use 
+(for example, using Principal Component Analysis, or PCA). Following Cuthill \cite{Cuthill:1999}, we can use 
 \code{opt = 'center'} to center spectra to have a mean reflectance of zero (thus removing brightness 
 as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the 
 \code{opt= 'bins'} argument) to obtain a dataframe suitable for the PCA.
@@ -545,10 +545,11 @@ returns descriptors for individual peaks in spectral curves, as outlined below.
 
 Second, reflectance spectra can be analyzed by accounting for the visual system receiving the color
 signal, therefore representing reflectance spectra as perceived colors. We have implemented Endler's
-(REF) segment classification method, which approximates visual models but does not directly  use
-sensory information; the model of Osorio \& Vorobyev (REF), which provides a flexible  framework for
-visual modeling; and the tetrahedral color space (GOLDSMITH, ENDLER, STODDARD)  which has been
-extensively developed to represent colors in the avian vision color space.
+\cite{Endler:1990} segment classification method, which approximates visual models but does not
+directly  use sensory information; the model of Osorio \& Vorobyev \cite{Vorobyev:1998}, which
+provides a flexible  framework for visual modeling; and the tetrahedral color space
+\cite{Goldsmith:1990, Endler:1990, Stoddard:2008} which has been extensively developed to represent
+colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
 
@@ -557,9 +558,9 @@ extensively developed to represent colors in the avian vision color space.
 Obtaining trichromatic color variables (peratining to hue, saturation and brightness/value) is
 pretty straightforward in \pavo{}. Since reflectance spectra is stored in an object of class
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
-as outlined in MONTGOMERIE. Though outlined in a book chapter on bird coloration,  these variables
-are broadly applicable to any reflectance data, particularly if the taxon of  interest has color
-vision within the UV-human visible range.
+as outlined in Montgomerie \cite{Montgomerie:2006}. Though outlined in a book chapter on bird
+coloration,  these variables are broadly applicable to any reflectance data, particularly if the
+taxon of  interest has color vision within the UV-human visible range.
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
 
@@ -659,11 +660,11 @@ peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
 \subsubsection{Segment Classification Analysis}
 \label{sec:segclass}
 
-The segment classification analysis (Endler 1990) does not assume any particular visual system, but
-instead tries to classify colors in a manner that captures common properties of many vertebrate (and
-some invertebrate) visual systems. In essence, it breaks down the reflectance spectrum region of
-interest into four equally-spaced regions, measuring the relative signal along those regions. This
-approximates a trichromatic opponency system with short, medium, and long-wavelength sensitive
+The segment classification analysis \cite{Endler:1990} does not assume any particular visual system,
+but instead tries to classify colors in a manner that captures common properties of many vertebrate
+(and some invertebrate) visual systems. In essence, it breaks down the reflectance spectrum region
+of interest into four equally-spaced regions, measuring the relative signal along those regions.
+This approximates a trichromatic opponency system with short, medium, and long-wavelength sensitive
 photoreceptors.
 
 Though somewhat simplistic, this model captures many of the properties of other, more complex visual
@@ -741,14 +742,15 @@ plot(seg.fdc, pch=20, cex=3, col=spec2rgb(fakedata.c))
 \subsubsection{Photon Catch \& Receptor Noise Model}
 
 Several models have been developed to understand how colors are perceived and discriminated by an
-individual's or species' receptor visual system (Described in detail in ENDLER, OSORIO). In essence,
-these models take into  account the receptor sensitivity of the different cones that make the visual
-system in question and  quantify how a given color would stimulate those cones individually and the
-combined effect on the perception of  color. These models also have an important component of
-assuming and interpreting the chromatic  component of color (hue and saturation) to be processed
-independently of the achromatic (brightness,  or luminance) component. It provides a flexible
-framework allowing for a tiered model construction, in  which information on aspects such as
-different illumination sources, backgrounds, and visual systems  can be considered and compared.
+individual's or species' receptor visual system (Described in detail in \cite{Endler:1990,
+Vorobyev:1998}). In essence, these models take into  account the receptor sensitivity of the
+different cones that make the visual system in question and  quantify how a given color would
+stimulate those cones individually and the combined effect on the perception of  color. These models
+also have an important component of assuming and interpreting the chromatic  component of color (hue
+and saturation) to be processed independently of the achromatic (brightness,  or luminance)
+component. It provides a flexible framework allowing for a tiered model construction, in  which
+information on aspects such as different illumination sources, backgrounds, and visual systems  can
+be considered and compared.
 
 To apply these models, first we need to quantify cone excitation and then consider how the signal is
 being processed, considering the relative density of different cones and the noise-to-signal ratio.
@@ -822,12 +824,13 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \label{figure:usmlplot}
 \end{figure}
 
-As described above, \code{vismodel} also accepts user-defined visual systems, background and 
-illuminants. We will illustrate this by showcasing the function \code{sensmodel}, which models 
-spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii 
-et al. (2000) and Hart \& Vorobyev (2005). \code{sensmodel} takes several optional arguments, but the 
-main one is a vector containing the peak sensitivities for the cones being modeled. Let's model an 
-idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
+As described above, \code{vismodel} also accepts user-defined visual systems, background and
+illuminants. We will illustrate this by showcasing the function \code{sensmodel}, which models
+spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii
+et al. \cite{Govardovskii:2000} and Hart \& Vorobyev \cite{Hart:2005}. \code{sensmodel} takes
+several optional arguments, but the  main one is a vector containing the peak sensitivities for the
+cones being modeled. Let's model an  idealized dichromat visual system, with cones peaking in
+sensitivity at 350 and 650 nm:
 
 <<label=dichro, fig=TRUE, include=FALSE>>=
 idealizeddichromat <- sensmodel(c(350,650))
@@ -936,7 +939,7 @@ For tetrachromats:
 
 For the chromatic contrast. The achromatic contrast ($\Delta L$) can be calculated based on the double 
 cone or the receptor (or combination of receptors) responsible for chromatic processing by the 
-equation (SIDDIQUI 2004):
+equation \cite{Siddiqi:2004}:
 
 \begin{equation}
 \Delta L =  \left|\frac{\Delta f^2}{w^2}\right|
@@ -992,15 +995,15 @@ round(tcs(vismod2), 2)
 @
 
 By default, \code{tcs} will use $Q_i$ for the calculations (that is, \emph{not} log-transformed, as 
-recommended by STODDARD \& PRUM), but $q_i$ or $f_i$ may be specified if desired 
+recommended by Stoddard \& Prum \cite{Stoddard:2008}), but $q_i$ or $f_i$ may be specified if desired 
 (e.g. \code{tcs(vismod2\$fi)}).
 
 
 \code{tcs} returns the original photon catch values; the relative cone stimulation for a given hue
-(\code{x.r}; see the supplemental material of STODDARD \& PRUM for more information); the two angles
-of  hue (\code{h.theta} and \code{h.phi}) and the distance from the achromatic center
-(\code{r.vec});  along with the maximum distance achievable for that hue (\code{r.max}) and the
-proportion of that  maximum achieved by the color point (\code{r.achieved}).
+(\code{x.r}; see the supplemental material of Stoddard \& Prum \cite{Stoddard:2008} for more
+information); the two angles of  hue (\code{h.theta} and \code{h.phi}) and the distance from the
+achromatic center (\code{r.vec});  along with the maximum distance achievable for that hue
+(\code{r.max}) and the proportion of that  maximum achieved by the color point (\code{r.achieved}).
 
 \textbf{Summary variables for groups of points}. Another advantage of the tetrahedral color space
 model is that it allows for the calculation of useful summary statistics of groups of points, such
@@ -1134,5 +1137,8 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
         \end{subfigure}
          \caption{Color volume overlaps. Shaded area in panel \label{fig:ov1} represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
+
+\bibliographystyle{plain}
+\bibliography{refs.bib}
 
 \end{document}
