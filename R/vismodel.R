@@ -40,7 +40,7 @@
 #' @param relative should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE}).
 #'
-#' @return A list containing the following data frames:
+#' @return An object of class \code{vismodel} containing the following data frames:
 #' @return \code{descriptive}: Descriptive statistics of maximum and normalized 
 #' reflectance, and wavelength of maximum reflectance (hue)
 #' @return \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
