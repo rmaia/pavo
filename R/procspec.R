@@ -70,7 +70,7 @@ wl_index <- which(names(rspecdata)=='wl')
 
 if (length(wl_index > 0)){
   wl <- rspecdata[, wl_index]
-  rspecdata <- as.data.frame(rspecdata[, -wl_index])
+  rspecdata <- as.data.frame(rspecdata[-wl_index])
     } else {
     warning('No wavelengths supplied; using arbitrary values')
     rspecdata <- as.data.frame(rspecdata)
@@ -140,11 +140,13 @@ if (any(opt=='bin')) {
   wl_bin <- seq(head(wl,1), tail(wl,1), by=bw)
   wl_ind <- match(wl_bin, wl)
   rspecdata <- sapply(1:(length(wl_ind)-1), function(z) 
-                  apply(rspecdata[wl_ind[z]:(wl_ind[z]+bw), ], 2, median))
+                      apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw),,drop=F], 2, median),
+                      simplify=FALSE)
 
-  rspecdata <- as.data.frame(cbind(wl_bin[-length(wl_bin)], t(rspecdata)))
-   applied <- c(applied, paste('binned spectra to ',bw,'-nm intervals\n',sep=''))
-  }else {
+  rspecdata <- data.frame(matrix(unlist(rspecdata), nrow=bins, byrow=T))
+  rspecdata <- as.data.frame(cbind(wl_bin[-length(wl_bin)], rspecdata))
+  applied <- c(applied, paste('binned spectra to ',bw,'-nm intervals\n',sep=''))
+  } else {
     rspecdata <- as.data.frame(cbind(wl, rspecdata))
     }
 
