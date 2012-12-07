@@ -35,14 +35,18 @@ if (is.data.frame(object)) {
   stop('object must be a data frame or matrix')
 }
 
-
 ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
 
-if (any(ind==0)) {
-  wl_index <- which(ind==0)
-  wl <- object[, wl_index]
-  object <- object[, -wl_index]
-  name <- name[-wl_index]
+if (!is.null(whichwl)){
+      wl_index <- whichwl
+      wl <- object[, wl_index]
+      object <- object[, -wl_index]
+      name <- name[-wl_index]
+  } else if (any(ind==0)) {
+      wl_index <- which(ind==0)
+      wl <- object[, wl_index]
+      object <- object[, -wl_index]
+      name <- name[-wl_index]
 } else {
   wl <- 1:nrow(object)
   object <- object
