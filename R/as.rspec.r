@@ -48,10 +48,11 @@ if (!is.null(whichwl)){
       object <- object[, -wl_index]
       name <- name[-wl_index]
   } else if (any(ind > 0.99)) {
-      wl_index <- which(ind > 0.99)
+      wl_index <- which(ind > 0.99)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
+      cat('wavelengths found in column', wl_index,'\n')
 } else {
   wl <- 1:nrow(object)
   object <- object

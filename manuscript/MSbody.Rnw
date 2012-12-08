@@ -101,7 +101,6 @@ proximate mechanisms regulating this expression, physiological processes involve
 signal, and functional aspects resulting in its adaptive value and evolutionary patterns (REFS) 
 
 \citep{Montgomerie:2006}.
-\cite{Endler:1990} \cite{Stoddard:2008} \citep{Govardovskii:2000}
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
@@ -156,14 +155,6 @@ Sources of funding and the usual
 
 \bibliographystyle{bes}
 \bibliography{references}
-
-%\begin{thebibliography}{99}
-%\item <Reference details>
-%.
-%.
-%.
-%\item <Reference details>
-%\end{thebibliography}
 
 Figures\\
 1-  I recommend a possible workflow chart that would detail a common path to using the main fxns\\
