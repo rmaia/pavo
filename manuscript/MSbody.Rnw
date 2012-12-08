@@ -62,7 +62,7 @@
 
 \papertype{Application}
 
-\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data in R}
+\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data}
 
 \author{Rafael Maia\affil{1}\corrauth\, Pierre-Paul Bitton\affil{2} and Chad M. Eliason\affil{1}}
 
