@@ -9,10 +9,10 @@
 \documentclass[times,mee,doublespace]{besauth}
 
 \usepackage{hyperref}
+\usepackage{lineno}
 
 % formatting packages
 %\usepackage{geometry} 
-%\usepackage{lineno}
 %\usepackage[utf8]{inputenc}
 %\usepackage{setspace}
 %\usepackage[usenames,dvipsnames]{color}
@@ -56,6 +56,7 @@
 %%%%%%%%%%%%
 %TITLE PAGE%
 %%%%%%%%%%%%
+\linenumbers
 
 \runningheads{R. Maia, P.-P. Bitton \& C.M. Eliason}{\pavo{}: R package for color analysis}
 
