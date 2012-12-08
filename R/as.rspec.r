@@ -6,6 +6,7 @@
 #' @param whichwl specifies which column contains wavelengths. If NULL (default), function
 #' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
 #' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values
+#' @param interp whether to interpolate wavelengths in 1-nm bins
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
 #' @export as.rspec is.rspec
 #' @examples \dontrun{
@@ -24,7 +25,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-as.rspec <- function(object, whichwl = NULL) {
+as.rspec <- function(object, whichwl = NULL, interp = FALSE) {
 
 if (is.matrix(object)) {
   name <- colnames(object)
@@ -35,15 +36,19 @@ if (is.data.frame(object)) {
   stop('object must be a data frame or matrix')
 }
 
-ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
+# try to automatically find wavelength column
+# ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
+ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})  # for increasing 
+# wavelengths, expect a perfect correlation between lambda values and column 
+# indices
 
 if (!is.null(whichwl)){
       wl_index <- whichwl
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
-  } else if (any(ind==0)) {
-      wl_index <- which(ind==0)
+  } else if (any(ind > 0.99)) {
+      wl_index <- which(ind > 0.99)
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
@@ -51,7 +56,15 @@ if (!is.null(whichwl)){
   wl <- 1:nrow(object)
   object <- object
   name <- name
-  warning('No wavelengths or whichwl provided; using arbitrary index values')
+  warning('No wavelengths found or whichwl not provided; using arbitrary index values')
+}
+
+if (interp==TRUE) {
+  wl[which.min(wl)] <- round(min(wl))
+  wl[which.max(wl)] <- round(max(wl))
+  object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
+                   xout = min(wl):max(wl))$y)
+  wl <- approx(wl, xout = min(wl):max(wl))$x
 }
 
 res <- as.data.frame(cbind(wl, object))
