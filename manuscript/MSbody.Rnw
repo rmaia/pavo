@@ -92,6 +92,29 @@ options(width=60)
 
 \section{Introduction}
 
+The role that coloration and color vision plays in animal communication has been a fundamental
+question in evolutionary biology for centuries (REF). Visual communication has provided an unique
+opportunity to investigate aspects of natural selection, sexual selection, and interactions such as
+mimicry, aposematism and pollination (REFS, Bennet \& Thery 2007). It has also shown to be an ideal
+system for truly integrative biological research, spanning from optical processes generating color,
+proximate mechanisms regulating this expression, physiological processes involved in preceiving the
+signal, and functional aspects resulting in its adaptive value and evolutionary patterns (REFS) 
+
+\citep{Montgomerie:2006}.
+\cite{Endler:1990} \cite{Stoddard:2008} \citep{Govardovskii:2000}
+
+However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
+that animals can vary quite considerably in their visual system and how they process this
+information prompted two important methodological advances. First, it highlighted the need for an
+objective quantification of the color reflected by surface, as a first approximation of an
+``receiver-independent'' objective quantification of an organism or object's color (REF). Over the
+last couple decades, the popularization of portable spectrophotometers that can measure reflectance
+accross wavelengths accross and beyond the human visible range, have opened the possibility of
+quantifying the reflectance from animal and plant integument (REF). Second, advances in the
+understanding of how animals preceive and process color have allowed combining information on
+receiver psychophysiology and reflectance data in visual models to estimate how animals see and
+differentiate these colors (REF).
+
 - Highlight the current interest in visual modelling in animals
 - Present the current difficulties of producing outputs in this context (maybe even give a usual flow 
 chart of how many people might deal with this data. E.g CLR for getspec, excel to visualize and 
@@ -130,6 +153,10 @@ other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006
 Probably should include the person who produced most of voloverlap
 Sources of funding and the usual
 \end{acks}
+
+\bibliographystyle{bes}
+\bibliography{references}
+
 %\begin{thebibliography}{99}
 %\item <Reference details>
 %.
@@ -149,7 +176,6 @@ Figures\\
 %\includegraphics{<figure name>}
 %\caption{<Figure caption>}
 %\end{figure}
-
 %\begin{table}
 %\caption{<Table caption>}
 %\centering
