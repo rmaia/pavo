@@ -59,14 +59,14 @@
 \section{Introduction}
 
 The role that coloration and color vision plays in animal communication has been a fundamental
-question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,Poulton:1890}. Visual
-communication has provided an unique opportunity to investigate aspects of natural selection, sexual
-selection, and interactions such as mimicry, aposematism and pollination
-\citep{Bennett:2007hm,Kemp:2009}(REFS- SUGGESTIONS?). It has also shown to be an ideal system for
-truly integrative biological research, spanning from optical processes generating color, proximate
-mechanisms regulating this expression, physiological processes involved in preceiving the signal,
-and functional aspects resulting in its adaptive value and evolutionary patterns
-\citep{Shawkey:2006,Stoddard:2008}(REFS- SUGGESTIONS?).
+question in evolutionary biology for centuries
+\citep{darwin:1859,darwin:1896,Poulton:1890,Bennett:2007hm}. Visual communication has provided an
+unique opportunity to investigate aspects of natural \citep{Chittka:1992} and sexual selection
+(REF), and how these interact \citep{,Kemp:2009}  (REFS- SUGGESTIONS?). It it also an ideal  system
+for truly integrative biological research, from the optical processes generating color (REF),
+hormonal and genetic mechanisms regulating this expression (REF), physiological processes involved
+in preceiving the signal (REF), and its adaptive and evolutionary patterns
+\citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
@@ -80,7 +80,6 @@ plant integument \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances
 understanding of how animals preceive and process color have allowed combining information on
 receiver psychophysiology and reflectance data in visual models to estimate how animals see and
 differentiate these colors \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
-\textbf{(THIS PARAGRAPH MAY NEED MORE NON-BIRD REFERENCES)}
 
 Despite these advances, a cohesive framework for working with and analyzing color from reflectance
 data is still limited from a practical standpoint. Data collection software from spectrophotometer
