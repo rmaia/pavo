@@ -224,6 +224,8 @@ This function generates an object of class \code{tcs}; a \code{summary} call fro
 object will return summary statistics described in \cite{Stoddard:2008} for sets of points, such as
 the color span and color volume.
 
+\subsection{Volume Overlap and Fechner's law in the Tetrahedral Colorspace Model}
+
 \pavo{} also builds upon previosuly described visual model methods. For example, \cite{Stoddard:2011}
 present the useful approach of calculating the overlap between the volumes defined by two sets of
 points in colorspace. They used this to quantify the mimicry of nest parasite eggs to their hosts,
