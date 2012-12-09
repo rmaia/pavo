@@ -11,44 +11,9 @@
 \usepackage{hyperref}
 \usepackage{lineno}
 
-% formatting packages
-%\usepackage{geometry} 
-%\usepackage[utf8]{inputenc}
-%\usepackage{setspace}
-%\usepackage[usenames,dvipsnames]{color}
-%\usepackage{array}
-
-% content packages
-%\usepackage{amsmath}
-%\usepackage{authblk}
-
-% add-ons
-%\usepackage{graphicx}
-%\usepackage{float}
-%\usepackage{caption}
-%\usepackage{subcaption}
-
-% formatting page
-%\setlength\parindent{0in}
-%\setlength{\parindent}{0in}
-%\setlength{\parskip}{.1in}
-%\setlength{\textwidth}{140mm}
-%\setlength{\oddsidemargin}{10mm}
-%\geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
-
 % Macros
-\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
-\newcommand{\code}[1]{{\tt #1}}  % text formate for code
-%\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
-%\renewcommand{\abstractname}{Summary}
-
-% define colors
-%\hypersetup{
-%  colorlinks,
-%  citecolor=violet,
-%  linkcolor=black,
-%  urlcolor=MidnightBlue
-%  }
+\newcommand{\pavo}{{\tt pavo}}  
+\newcommand{\code}[1]{{\tt #1}}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
