@@ -64,7 +64,7 @@
 
 \title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data}
 
-\author{Rafael Maia\affil{1}\corrauth\, Pierre-Paul Bitton\affil{2}, Chad M. Eliason\affil{1}, St\'{e}phanie M. Doucet\affil{2} and Matthew D. Shawkey\affil{1}} 
+\author{Rafael Maia\affil{1}\corrauth\, Chad M. Eliason\affil{1}, Pierre-Paul Bitton\affil{2}, St\'{e}phanie M. Doucet\affil{2} and Matthew D. Shawkey\affil{1}} 
 
 \address{\affilnum{1}Department of Biology, Integrated Bioscience Program, University of Akron, Akron, OH 44325- 3908, USA.; and \affilnum{2}Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
 
