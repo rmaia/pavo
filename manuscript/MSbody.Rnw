@@ -156,7 +156,9 @@ spectra. Several plotting options for multiple spectra are implemented (FIGURE).
 capabilities that can be combined with data processing and formatting, such as \code{explorespec}
 (for visualizing groups of spectra) and \code{smoothplot} (for choosing smoothening parameters).
 
-Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colorspace model \citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (FIGURE, see below).
+Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colorspace model
+\citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (FIGURE,
+see below).
 
 \subsection{data analysis}
 
