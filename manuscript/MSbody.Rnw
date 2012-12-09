@@ -59,14 +59,13 @@
 \section{Introduction}
 
 The role that coloration and color vision plays in animal communication has been a fundamental
-question in evolutionary biology for centuries
-\citep{darwin:1859,darwin:1896,Poulton:1890,Bennett:2007hm}. Visual communication has provided an
-unique opportunity to investigate aspects of natural \citep{Chittka:1992} and sexual selection
-(REF), and how these interact \citep{,Kemp:2009}  (REFS- SUGGESTIONS?). It it also an ideal  system
-for truly integrative biological research, from the optical processes generating color (REF),
-hormonal and genetic mechanisms regulating this expression (REF), physiological processes involved
-in preceiving the signal (REF), and its adaptive and evolutionary patterns
-\citep{Badyaev:2003,Darst:2006}.
+question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,
+Poulton:1890,Bennett:2007hm}. Visual communication has provided an unique opportunity to investigate
+aspects of natural selection \citep{Chittka:1992} and sexual selection (REF), and how these interact
+\citep{,Kemp:2009}  (REFS- SUGGESTIONS?). It it also an ideal  system for truly integrative
+biological research, from the optical processes generating color (REF), hormonal and genetic
+mechanisms regulating this expression (REF), physiological processes involved in preceiving the
+signal (REF), and its adaptive and evolutionary patterns \citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
