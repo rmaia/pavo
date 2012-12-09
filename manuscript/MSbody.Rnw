@@ -70,8 +70,8 @@
 
 \corraddr{rm72zips.uakron.edu}
 
-\cgs{grant sponsor name (no number)}
-\cgsn{grant sponsor name}{number}
+%\cgs{grant sponsor name (no number)}
+%\cgsn{grant1{1}, grant2{2}}{123, 456}
 
 \begin{abstract}
 \begin{enumerate}
@@ -263,7 +263,7 @@ f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
 
 which preserves measurement scale but still yields hue values that are consistent with original
 values, but with differences that are a linear function of their magnitude as expected from
-Fechner's law.
+Fechner's law (FIGURE?).
 
 \section{Example: NAME OF EXAMPLE}
 .
