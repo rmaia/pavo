@@ -85,11 +85,11 @@
 
 \maketitle
 
-<<echo=FALSE, results=hide>>=
-library(pavo)
-ps.options(pointsize=12)
-options(width=60)
-@
+%<<echo=FALSE, results=hide>>=
+%library(pavo)
+%ps.options(pointsize=12)
+%options(width=60)
+%@
 
 \section{Introduction}
 
@@ -152,7 +152,7 @@ analysis has to go beyond plugging in values and expecting an output, requiring 
 investigation. With this in mind, \pavo{} takes advantage of the object-oriented programming
 environment in R which is ideal for such approach, as outlined below.
 
-\subsection{data format}
+\subsection{Data Format}
 
 Spectral data is stored in \pavo{} and recognized by its function by use of a new object class,
 \code{"rspec"}, which inherits methods from \code{data.frame}. \code{rspec} objects are
@@ -165,17 +165,18 @@ objects using the \code{as.rspec} function.
 
 The use of dedicated R object classes allows generic functions such as \code{plot} and
 \code{summary} to identify the data as a particular type of dataframe and interpret it accordingly
-(see below). An additional class \code{"vismodel"} is used to interpret spectral data that has been
-processed through one of the visual models implemented, and also stores information on how it was
-generated (e.g. the visual phenotype, background and illuminant used, and any transformations
-applied; see below).
+(see below). The class \code{"vismodel"} is used to interpret spectral data that has been processed
+through one of the visual models implemented, and also stores information on how it was generated
+(e.g. the visual phenotype, background and illuminant used, and any transformations applied; see
+below). Additionally, the \code{"tcs"} class refers to tetrahedral colorspace models
+\citep{Endler:2005,Stoddard:2008}.
 
 It is common when collecting spectral data to take multiple measurements from the same sample,
 averaging these to avoid sampling error (REF, POSSIBLY SENAR). \code{pavo} provides the
 \code{aggspec} function for this, as well as the \code{procspec} function for noise removal via
 smoothing, and transformations to standardize or clean spectral data.
 
-\subsection{data visualization}
+\subsection{Visualization}
 
 With \pavo{} installed and loaded, the \code{plot} function recognizes \code{rspec} objects and
 plots them accordingly \textendash \; interpreting the first column as wavelengths (and usually
@@ -186,15 +187,81 @@ spectra. Several plotting options for multiple spectra are implemented (FIGURE).
 capabilities that can be combined with data processing and formatting, such as \code{explorespec}
 (for visualizing groups of spectra) and \code{smoothplot} (for choosing smoothening parameters).
 
-Finally, \pavo{} offers plotting capabilities for visual model-based colorspaces
+Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colorspace model \citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (FIGURE, see below).
 
-- exploreplot, smoothplot, aggplot, plot.rspec. should TCS stuff go here or next?
--PPB THat would be fine, all we will need is a (see below)
 \subsection{data analysis}
-- summary
-- vismodel, tcs
-- color volume and logtransformation issue should go here or have a section of their own?
-- PPB I think they should be in here. We only have 3000 words, lets not waste any on to much explaining(?)
+
+The \code{summary} function can be applied to \code{rspec} objects to produce several trichromatic
+(hue, saturation and brightness) color variables extracted from the spectral shape of the
+reflectance curve. This function calculates several variables from the literature \citep[described
+in]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object (description and
+formulae for the variables can be found in the help file, by typing \code{?summary.rspec}, and in
+the package Vignette \textendash \; see Supporting Information). Additionally, the function
+\code{peakshape} provides descriptors of spectral peaks, such as the wavelenth of maximum
+reflectance and the full width at half maximum (REF), and can be fine-tuned to extract information
+from specific areas of the curve, which can be useful when the spectral curve has multiple peaks or
+a complex shape (e.g. describing the UV peak of carotenoid curves -- FIGURE?)
+
+\pavo{} also includes visual models that incorporate the visual system of the receiver in describing
+colors through the \code{vismodel} function. Models can be calculated incorporating the visual
+phenotype (cone absorbance), background color and ambient illuminant \citep{Vorobyev:1998}. Several
+avian receptor phenotypes \citep{Hart:2001,Endler:2005} are implemented as options, but user-defined
+receptor data from any taxon can be used as model input. Further, the \code{sensmodel} function
+implements the calculation of cone absorbance curves based on peak sensitivity information
+(available from the literature, e.g. REF), and can also include oil droplet and retinal transmission
+information in the calculations \citep{Govardovskii:2000,Hart:2005}.
+
+Visual models can be calculated in terms of absolute photon catches, in which case the receptor
+noise model can be used to infer contrast between colors \citep[implemented in the function
+\code{colordist}]{Vorobyev:1998} or in relative cone stimulation, in which case the model reduces to
+a colorspace model represented in $n-1$ dimensions \citep[where $n$ is the number of different
+receptors involved in color vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. This can be
+selected by the logical argument \code{relative} from the \code{vismodel} function. In the case of
+the avian tetrahedral colorspace, several additional variables can be calculated based on spherical
+coordinates which represent the hue based on the angles (MORE INFO, CHAD) and saturation based on
+the distance from the achromatic center \citep{Stoddard:2008} by calling the \code{tcs} function.
+This function generates an object of class \code{tcs}; a \code{summary} call from a \code{tcs}
+object will return summary statistics described in \cite{Stoddard:2008} for sets of points, such as
+the color span and color volume.
+
+\pavo{} also builds upon previosuly described visual model methods. For example, \cite{Stoddard:2011}
+present the useful approach of calculating the overlap between the volumes defined by two sets of
+points in colorspace. They used this to quantify the mimicry of nest parasite eggs to their hosts,
+such that a greater overlap of these volumes would indicate greater overall color similarity.
+\citeauthor{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the
+volumes, given the complexity of calculating the intersection of three-dimensional convex hulls.
+\pavo{} provides adapts the exact solution for the calculation of the intersection of color volumes,
+originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011}
+through the computational geometry capabilities available from the \code{rcdd} package \citep{rcdd}.
+
+Finally, we have addressed previously identified methodological inconsistencies in adapting visual
+models to the tetrahedral colorspace. For example, \cite{Endler:2005} recommends log-transforming
+photon catches before defining the colorspace (by them relative sum to 1), thus making the
+difference between stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
+also][]{Vorobyev:1998,Endler:1990}. However, \citep{Stoddard:2008} evaluated the consequences of
+this transformation and noted dramatic and unpredictable effects in hue and chroma values. Though
+the decrease in hue variance and an overall decrease in chroma values should be expected by the log-
+transformation, the unpredictable effects on hue noted by \cite{Stoddard:2008} is troublesome. As
+the authors noted \citep[see][Supplemental Information]{Stoddard:2008}, this is largely a result of
+normalizing all input functions (reflectance, sensitivity, background and illuminant) to integrals
+of 1, which yield cone stimulations ($Q_i$ for the cone class $i$) that scale from 0 to 1. Log-
+transforming these $Q_i$ values ($f_i = log(Q_i)$) results in negative numbers, which if made
+relative by dividing by the sum (i.e. $f_{i\;relative} = f_i / \sum{f_i}$) results in the greatest
+\textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being the greatest
+$f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5} <
+\frac{-5}{-5.5}$. \cite{Stoddard:2008} note that this can be dealt with by scaling photon catch
+values by a large value, but this is arbitrary an can result in the loss of relative scale
+differences. Instead, we propose the following transformation for log-transformed photon catches
+($fi$), implemented in \pavo{} when \code{vismodel} is executed with the option
+\code{relative=TRUE}:
+
+\begin{equation}
+f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
+\end{equation}
+
+which preserves measurement scale but still yields hue values that are consistent with original
+values, but with differences that are a linear function of their magnitude as expected from
+Fechner's law.
 
 \section{Example: NAME OF EXAMPLE}
 .
