@@ -240,14 +240,14 @@ Finally, we have addressed previously identified methodological inconsistencies 
 models to the tetrahedral colorspace. For example, \cite{Endler:2005} recommends log-transforming
 photon catches before defining the colorspace (by them relative sum to 1), thus making the
 difference between stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
-also][]{Vorobyev:1998,Endler:1990}. However, \citep{Stoddard:2008} evaluated the consequences of
+also][]{Vorobyev:1998,Endler:1990}. However, \cite{Stoddard:2008} evaluated the consequences of
 this transformation and noted dramatic and unpredictable effects in hue and chroma values. Though
-the decrease in hue variance and an overall decrease in chroma values should be expected by the log-
-transformation, the unpredictable effects on hue noted by \cite{Stoddard:2008} is troublesome. As
+the decrease in hue variance and an overall decrease in chroma values should be expected by the 
+log-transformation, the unpredictable effects on hue noted by \cite{Stoddard:2008} is troublesome. As
 the authors noted \citep[see][Supplemental Information]{Stoddard:2008}, this is largely a result of
 normalizing all input functions (reflectance, sensitivity, background and illuminant) to integrals
-of 1, which yield cone stimulations ($Q_i$ for the cone class $i$) that scale from 0 to 1. Log-
-transforming these $Q_i$ values ($f_i = log(Q_i)$) results in negative numbers, which if made
+of 1, which yield cone stimulations ($Q_i$ for the cone class $i$) that scale from 0 to 1. 
+Log-transforming these $Q_i$ values ($f_i = log(Q_i)$) results in negative numbers, which if made
 relative by dividing by the sum (i.e. $f_{i\;relative} = f_i / \sum{f_i}$) results in the greatest
 \textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being the greatest
 $f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5} <
