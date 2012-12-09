@@ -94,24 +94,28 @@
 \section{Introduction}
 
 The role that coloration and color vision plays in animal communication has been a fundamental
-question in evolutionary biology for centuries (REF). Visual communication has provided an unique
-opportunity to investigate aspects of natural selection, sexual selection, and interactions such as
-mimicry, aposematism and pollination \citep{Bennett:2007hm}(REFS). It has also shown to be an ideal
-system for truly integrative biological research, spanning from optical processes generating color,
-proximate mechanisms regulating this expression, physiological processes involved in preceiving the
-signal, and functional aspects resulting in its adaptive value and evolutionary patterns (REFS).
+question in evolutionary biology for centuries \citep{Poulton:1890} (REF - SUGGESTIONS?). Visual
+communication has provided an unique opportunity to investigate aspects of natural selection, sexual
+selection, and interactions such as mimicry, aposematism and pollination
+\citep{Bennett:2007hm,Kemp:2009}(REFS- SUGGESTIONS?). It has also shown to be an ideal system for
+truly integrative biological research, spanning from optical processes generating color, proximate
+mechanisms regulating this expression, physiological processes involved in preceiving the signal,
+and functional aspects resulting in its adaptive value and evolutionary patterns
+\citep{Shawkey:2006,Stoddard:2008}(REFS- SUGGESTIONS?).
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
 objective quantification of the color reflected by surface, as a first approximation of an
-``receiver-independent'' objective quantification of an organism or object's color (REF, probably
-the bennett et al Am Nat). Over the last couple decades, the popularization of portable
-spectrophotometers that can measure reflectance accross wavelengths accross and beyond the human
-visible range, have opened the possibility of quantifying the reflectance from animal and plant
-integument (REF). Second, advances in the understanding of how animals preceive and process color
-have allowed combining information on receiver psychophysiology and reflectance data in visual
-models to estimate how animals see and differentiate these colors (REF).
+``receiver-independent'' objective quantification of an organism or object's color
+\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last couple decades, the popularization of
+portable spectrophotometers that can measure reflectance accross wavelengths accross and beyond the
+human visible range, have opened the possibility of quantifying the reflectance from animal and
+plant integument \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
+understanding of how animals preceive and process color have allowed combining information on
+receiver psychophysiology and reflectance data in visual models to estimate how animals see and
+differentiate these colors \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
+\textbf{(THIS PARAGRAPH MAY NEED MORE NON-BIRD REFERENCES)}
 
 Despite these advances, a cohesive framework for working with and analyzing color from reflectance
 data is still limited from a practical standpoint. Data collection software from spectrophotometer
@@ -119,22 +123,22 @@ manufacturers are not standardized, producing inconsistent output files, and sof
 are either restricted in the methods implemented, in the capabilities to import and process data, or
 rely on proprietary and/or closed software (REF). Furthermore, published descriptions are often not
 detailed enough or inconsistent, limiting the reproducibility of research and the reimplementation
-of methods (REF). Finally, color data will often require additional converting and exporting into
+of methods. Finally, color data will often require additional converting and exporting into
 statistical software for analyses, thus restricting the standarization of protocols, as well as
-batch processing and automation of workflows. (extracted from a paper, would like to include similar
-message: ``These factors lead to duplicated effort, bespoke solutions that are difficult to apply to
-future analyses and results that are hard, if not impossible, to reproduce exactly.'')
+batch processing and automation of workflows. \textbf{(extracted from a paper, would like to include
+similar message: ``These factors lead to duplicated effort, bespoke solutions that are difficult to
+apply to future analyses and results that are hard, if not impossible, to reproduce exactly.'')}
 
-We introduce \pavo{} \textendash \; a package for R (R REF) that aims at solving these problems by
-providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
-visualize colour data generated by spectrophotometry. R is rapidly becoming the working language for
-scientific programming and data analysis, particularly in ecology and evolution (REFS?). \pavo{}
-incorporates R's flexibility by using object classes that can seamlessly interpret each other,
-providing functions that can intuitively be used to import, explore, process and analyze spectral
-color data under a variety of user defined models. We propose that, by combining these procedures under
-a coherent framework not only streamlines workflows, but also allows data to be explored and
-manipulated in ways that can be used to visualize patterns, obtain information and develop
-hypothesis that may otherwise pass unnoticed (WORKFLOW FIGURE HERE).
+We introduce \pavo{} \textendash \; a package for R \citep{rcore} that aims at solving these
+problems by providing a flexible, yet cohesive, environment in which researchers can organize,
+analyze and visualize colour data generated by spectrophotometry. R is rapidly becoming the working
+language for scientific programming and data analysis, particularly in ecology and evolution
+\citep[e.g.][]{ape,Bolker:2008}. \pavo{} incorporates R's flexibility by using object classes that can seamlessly interpret
+each other, providing functions that can intuitively be used to import, explore, process and analyze
+spectral color data under a variety of user defined models. We propose that, by combining these
+procedures under a coherent framework not only streamlines workflows, but also allows data to be
+explored and manipulated in ways that can be used to visualize patterns, obtain information and
+develop hypothesis that may otherwise pass unnoticed (WORKFLOW FIGURE HERE).
 
 \section{The \pavo{} package}
 
@@ -145,12 +149,12 @@ installation from R, and the development version is available from github
 spectral content; \textbf{visualization} of the output, including exploratory capacities to identify
 further required manipulations and previously unconsidered patterns; and \textbf{analysis} of data
 from the spectral shape of reflectance curves or by incorporating receiver psychophysiology in
-visual models. As noted by \cite{Bennett:2007hm} and others (REF ANDERSSON, MONTGOMERIE, COLOR BOOK
-CHAPTERS), though spectral data has become commonplace in studies of animal coloration, it is
-equally easy to obtain poor-quality or inaccurate data. Therefore a workflow for spectral color data
-analysis has to go beyond plugging in values and expecting an output, requiring thorough exploratory
-investigation. With this in mind, \pavo{} takes advantage of the object-oriented programming
-environment in R which is ideal for such approach, as outlined below.
+visual models. As noted by \cite{Bennett:2007hm} and others \citep{Andersson:2006,
+Montgomerie:2006}, though spectral data has become commonplace in studies of animal coloration, it
+is equally easy to obtain poor-quality or inaccurate data. Therefore a workflow for spectral color
+data analysis has to go beyond plugging in values and expecting an output, requiring thorough
+exploratory investigation. With this in mind, \pavo{} takes advantage of the object-oriented
+programming environment in R which is ideal for such approach, as outlined below.
 
 \subsection{Data Format}
 
