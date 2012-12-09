@@ -230,7 +230,7 @@ the color span and color volume.
 present the useful approach of calculating the overlap between the volumes defined by two sets of
 points in colorspace. They used this to quantify the mimicry of nest parasite eggs to their hosts,
 such that a greater overlap of these volumes would indicate greater overall color similarity.
-\citeauthor{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the
+\cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the
 volumes, given the complexity of calculating the intersection of three-dimensional convex hulls.
 \pavo{} provides adapts the exact solution for the calculation of the intersection of color volumes,
 originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011}
