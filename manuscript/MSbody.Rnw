@@ -141,6 +141,10 @@ Proof of concept example
 
 Include example with R script included with figures. Make sure we include notes
 
+\subsection{Exact determination of color volume overlap}
+
+\section{Colorspace occupation of African starlings (Sturnidae)}
+
 \section{Citation of \pavo{}}
 
 Some of the application packages have this section. Should recommend citing this article + some of the 
