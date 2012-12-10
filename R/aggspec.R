@@ -89,7 +89,7 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)
 
-dat <- sapply(levels(by),function(z)apply(y[which(by==z)],1,FUN))
+dat <- sapply(unique(by),function(z)apply(y[which(by==z)],1,FUN))
 
 colnames(dat) <- unique(by0)
 res<- data.frame(cbind(wl=wl, dat))
