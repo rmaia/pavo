@@ -40,13 +40,24 @@
 
 \begin{abstract}
 \begin{enumerate}
-\item Context and need of the work
-\item Introduce the package
-\item We present a demonstration of the packages potential
+\item Recent advances in portable spectrophotometry and in animal visual psychophysiology has led 
+to an increasing interest in modelling species-specific color perception. Despite this growing 
+interest, a unified framework for analyzing spectral data is still lacking.
+\item We introduce \pavo{}, an R packgage that facilitates the organization, visualization, and analysis
+of spectral data in a cohesive framework. \pavo{} is highly flexible: it can organize and manipulate 
+data from a variety of sources, implements easy to use visualization tools, and allows the modelling 
+of visual systems of any vertebrate and (almost all) invertebrates.
+\item In this paper, we present a summary of the \pavo{} functions that will be of general interest, 
+and suggest a workflow to explore spectral data, and model colors using a user-defined visual systems.
+\item We also present an example, using spectral data obtained from Starling museum skins, of the 
+flexibility of the package.
+\item \pavo{} provides a unique environment capable of tackling complex sensory ecology questions
+which previously required the use of various, sometimes costly and proprietal, software and programs. 
 \end{enumerate}
 \end{abstract}
 
-\keywords{tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model}
+\keywords{tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model, colorspace,
+tristimulus, just noticeable differences, signal, sensory ecology}
 
 \maketitle
 
@@ -62,7 +73,7 @@ The role that coloration and color vision plays in animal communication has been
 question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,
 Poulton:1890,Bennett:2007hm}. Visual communication has provided an unique opportunity to investigate
 aspects of natural selection \citep{Chittka:1992} and sexual selection (REF), and how these interact
-\citep{,Kemp:2009}  (REFS- SUGGESTIONS?). It it also an ideal  system for truly integrative
+\citep{,Kemp:2009}  (REFS- SUGGESTIONS? Endler 1992). It it also an ideal system for truly integrative
 biological research, from the optical processes generating color (REF), hormonal and genetic
 mechanisms regulating this expression (REF), physiological processes involved in preceiving the
 signal (REF), and its adaptive and evolutionary patterns \citep{Badyaev:2003,Darst:2006}.
@@ -72,11 +83,11 @@ that animals can vary quite considerably in their visual system and how they pro
 information prompted two important methodological advances. First, it highlighted the need for an
 objective quantification of the color reflected by surface, as a first approximation of an
 ``receiver-independent'' objective quantification of an organism or object's color
-\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last couple decades, the popularization of
-portable spectrophotometers that can measure reflectance accross wavelengths accross and beyond the
-human visible range, have opened the possibility of quantifying the reflectance from animal and
-plant integument \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
-understanding of how animals preceive and process color have allowed combining information on
+\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last couple of decades, the popularization of
+portable spectrophotometers that can measure reflectance across and beyond the human visible 
+wavelength range, have opened the possibility of quantifying the spectral properties of animal and
+plant integuments \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
+understanding of how animals preceive and process color have allowed the combinination of information on
 receiver psychophysiology and reflectance data in visual models to estimate how animals see and
 differentiate these colors \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
 
@@ -84,10 +95,11 @@ Despite these advances, a cohesive framework for working with and analyzing colo
 data is still limited from a practical standpoint. Data collection software from spectrophotometer
 manufacturers are not standardized, producing inconsistent output files, and software for analyses
 are either restricted in the methods implemented, in the capabilities to import and process data, or
-rely on proprietary and/or closed software \citep[reviewed in][]{Montgomerie:2006}. Color data will
-further require additional converting and exporting into statistical software for analyses, thus
+rely on proprietary and/or closed software \citep[reviewed in][]{Montgomerie:2006}PPB - SHOULD WE 
+ALSO INCLUDE AVICOL AS EXAMPLE??. Color data will further require additional converting and exporting 
+into statistical software for analyses, thus
 restricting the standarization of protocols, as well as batch processing and automation of
-workflows. Combined with published descriptions that are often not detailed or inconsistent, the
+workflows. Combined with published descriptions that are often poorly detailed or inconsistent, the
 current procedures and implementations severely hinder the reproducibility of research and the
 reimplementation of methods. \textbf{(extracted from a paper, would like to include similar message:
 ``These factors lead to duplicated effort, bespoke solutions that are difficult to apply to future
@@ -100,7 +112,7 @@ scientific programming and data analysis, particularly in ecology and evolution
 \citep[e.g.][]{ape,Bolker:2008}. \pavo{} incorporates R's flexibility by using object classes that
 can seamlessly interpret each other, providing functions that can intuitively be used to import,
 explore, process and analyze spectral color data under a variety of user defined models. We propose
-that, by combining these procedures under a coherent framework not only streamlines workflows, but
+that, by combining these procedures under a coherent framework not only streamlines workflow, but
 also allows data to be explored and manipulated in ways that can be used to visualize patterns,
 obtain information and develop hypothesis that may otherwise pass unnoticed (WORKFLOW FIGURE HERE).
 
@@ -125,17 +137,17 @@ environment in R which is ideal for such approach, as outlined below.
 Spectral data is stored in \pavo{} and recognized by its function by use of a new object class,
 \code{"rspec"}, which inherits methods from \code{data.frame}. \code{rspec} objects are
 characterized by having individual reflectance spectra as columns of the dataframe, with a first
-column containing the wavelength identification data. raw spectral data can be imported using the
+column containing the wavelength identification data. Raw spectral data can be imported using the
 function \code{getspec}, which currently supports data from a variety of spectrometer and
-microspectrometer makes (Ocean Optics OOIBase and SpectraSuite files, Avantes AvaSpec, and CRAIC).
-In addition, previously compiled dataframes can be imported to R and converted to \code{rspec}
+microspectrometer models (Ocean Optics OOIBase and SpectraSuite files, Avantes AvaSpec, and CRAIC).
+In addition, previously compiled data frames can be imported to R and converted to \code{rspec}
 objects using the \code{as.rspec} function.
 
 The use of dedicated R object classes allows generic functions such as \code{plot} and
-\code{summary} to identify the data as a particular type of dataframe and interpret it accordingly
-(see below). The class \code{"vismodel"} is used to interpret spectral data that has been processed
-through one of the visual models implemented, and also stores information on how it was generated
-(e.g. the visual phenotype, background and illuminant used, and any transformations applied; see
+\code{summary} to identify the data as a particular type of data frame and interpret it accordingly
+(see below). The class \code{"vismodel"} is used to interpret spectral data that has been
+processed through one of the visual models implemented, and also stores information on how it was
+generated (e.g. the visual phenotype, background and illuminant used, and any transformations applied; see
 below). Additionally, the \code{"tcs"} class refers to tetrahedral colorspace models
 \citep{Endler:2005,Stoddard:2008}.
 
@@ -161,7 +173,7 @@ see below).
 
 \subsection{data analysis}
 
-The \code{summary} function can be applied to \code{rspec} objects to produce several trichromatic
+The \code{summary} function can be applied to \code{rspec} objects to produce several tristimulus
 (hue, saturation and brightness) color variables extracted from the spectral shape of the
 reflectance curve. This function calculates several variables from the literature \citep[described
 in]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object (description and
@@ -172,9 +184,9 @@ reflectance and the full width at half maximum (REF - CHAD?), and can be fine-tu
 information from specific areas of the curve, which can be useful when the spectral curve has
 multiple peaks or a complex shape (e.g. describing the UV peak of carotenoid curves -- FIGURE?)
 
-\pavo{} also includes visual models that incorporate the visual system of the receiver in describing
-colors through the \code{vismodel} function. Models can be calculated incorporating the visual
-phenotype (cone absorbance), background color and ambient illuminant \citep{Vorobyev:1998}. Several
+\pavo{} also allows the easy production of models that incorporate the visual system of the receiver in
+describing colors through the \code{vismodel} function. Models can be calculated incorporating the visual
+phenotype (cone absorbance), background color, and ambient illuminant \citep{Vorobyev:1998}. Several
 avian receptor phenotypes \citep{Hart:2001,Endler:2005} are implemented as options, but user-defined
 receptor data from any taxon can be used as model input. Further, the \code{sensmodel} function
 implements the calculation of cone absorbance curves based on peak sensitivity information
@@ -198,18 +210,20 @@ the color span and color volume.
 
 \pavo{} also builds upon previosuly described visual model methods. For example, \cite{Stoddard:2011}
 present the useful approach of calculating the overlap between the volumes defined by two sets of
-points in colorspace. They used this to quantify the mimicry of nest parasite eggs to their hosts,
-such that a greater overlap of these volumes would indicate greater overall color similarity.
-\cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the
-volumes, given the complexity of calculating the intersection of three-dimensional convex hulls.
-\pavo{} provides adapts the exact solution for the calculation of the intersection of color volumes,
-originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011}
-through the computational geometry capabilities available from the \code{rcdd} package \citep{rcdd}.
+points in colorspace. They used this metric to quantify the mimicry of nest parasite eggs to their hosts,
+such that a greater overlap of the volumes would indicate greater overall color similarity. Given the
+complexity of calculating the intersection of three-dimensional convex hulls
+\cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the volumes.
+\pavo{},instead, provides the exact solution for the calculation of the intersection of color volumes,
+using a method originally implemented to calculate the overlap between multidimensional niche 
+\citep{Villeger:2011} through the computational geometry capabilities available from the \code{rcdd}
+package \citep{rcdd}.
 
 Finally, we have addressed previously identified methodological inconsistencies in adapting visual
 models to the tetrahedral colorspace. For example, \cite{Endler:2005} recommends log-transforming
-photon catches before defining the colorspace (by them relative sum to 1), thus making the
-difference between stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
+photon catches before defining the colorspace (PPB - NOT SURE WHAT THIS MEANS! by them relative sum to 
+1), thus making the difference between stimuli proportional to their magnitude \citep[i.e. following
+Fechner's law; see
 also][]{Vorobyev:1998,Endler:1990}. However, \cite{Stoddard:2008} evaluated the consequences of
 this transformation and noted dramatic and unpredictable effects in hue and chroma values. Though
 the decrease in hue variance and an overall decrease in chroma values should be expected by the 
@@ -222,7 +236,7 @@ relative by dividing by the sum (i.e. $f_{i\;relative} = f_i / \sum{f_i}$) resul
 \textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being the greatest
 $f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5} <
 \frac{-5}{-5.5}$. \cite{Stoddard:2008} note that this can be dealt with by scaling photon catch
-values by a large value, but this is arbitrary an can result in the loss of relative scale
+values by a large value, but this is arbitrary and can result in the loss of relative scale
 differences. Instead, we propose the following transformation for log-transformed photon catches
 ($fi$), implemented in \pavo{} when \code{vismodel} is executed with the option
 \code{relative=TRUE}:
@@ -239,17 +253,14 @@ Fechner's law (FIGURE?).
 .
 ...
 .
-\section{Citation of \pavo{}}
 
-Some of the application packages have this section. Should recommend citing this article + some of the 
-other important papers if specific fxns are used (?) e.g. Cite Montgomerie (2006) if using the summary
-.rspec fxn(?).
 
 %\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
 
 \begin{acks}
-Probably should include the person who produced most of voloverlap
-Sources of funding and the usual
+We would like to thank Jarrod D. Hadfield and Mary Casswell Stoddard for sharing code that helped 
+us develop some of \pavo{}'s capabilities. P.-P.B. is supported by a Canadian Graduate Schorlaship from
+the National Science and Engineering Research Council. 
 \end{acks}
 
 \bibliographystyle{bes}
