@@ -9,46 +9,11 @@
 \documentclass[times,mee,doublespace]{besauth}
 
 \usepackage{hyperref}
-
-% formatting packages
-%\usepackage{geometry} 
-%\usepackage{lineno}
-%\usepackage[utf8]{inputenc}
-%\usepackage{setspace}
-%\usepackage[usenames,dvipsnames]{color}
-%\usepackage{array}
-
-% content packages
-%\usepackage{amsmath}
-%\usepackage{authblk}
-
-% add-ons
-%\usepackage{graphicx}
-%\usepackage{float}
-%\usepackage{caption}
-%\usepackage{subcaption}
-
-% formatting page
-%\setlength\parindent{0in}
-%\setlength{\parindent}{0in}
-%\setlength{\parskip}{.1in}
-%\setlength{\textwidth}{140mm}
-%\setlength{\oddsidemargin}{10mm}
-%\geometry{verbose,letterpaper,tmargin=2.54cm,bmargin=2.54cm,lmargin=2.54cm,rmargin=2.54cm}
+\usepackage{lineno}
 
 % Macros
-\newcommand{\pavo}{{\tt pavo}}  % you can use \pavo{} to print pavo in code text formatting
-\newcommand{\code}[1]{{\tt #1}}  % text formate for code
-%\renewcommand{\thefootnote}{\textcolor{Gray}{\arabic{footnote}}}
-%\renewcommand{\abstractname}{Summary}
-
-% define colors
-%\hypersetup{
-%  colorlinks,
-%  citecolor=violet,
-%  linkcolor=black,
-%  urlcolor=MidnightBlue
-%  }
+\newcommand{\pavo}{{\tt pavo}}  
+\newcommand{\code}[1]{{\tt #1}}
 
 \begin{document}
 \SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
@@ -56,21 +21,22 @@
 %%%%%%%%%%%%
 %TITLE PAGE%
 %%%%%%%%%%%%
+\linenumbers
 
-\runningheads{R. Maia, P.-P. Bitton \& C.M. Eliason}{\pavo{}: R package for color analysis}
+\runningheads{R. Maia \textit{et al.}}{\pavo{}: R package for color analysis}
 
 \papertype{Application}
 
-\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data in R}
+\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data}
 
-\author{Rafael Maia\affil{1}\corrauth\, Pierre-Paul Bitton\affil{2} and Chad M. Eliason\affil{1}}
+\author{Rafael Maia\affil{1}\corrauth\, Chad M. Eliason\affil{1}, Pierre-Paul Bitton\affil{2}, St\'{e}phanie M. Doucet\affil{2} and Matthew D. Shawkey\affil{1}} 
 
 \address{\affilnum{1}Department of Biology, Integrated Bioscience Program, University of Akron, Akron, OH 44325- 3908, USA.; and \affilnum{2}Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
 
 \corraddr{rm72zips.uakron.edu}
 
-\cgs{grant sponsor name (no number)}
-\cgsn{grant sponsor name}{number}
+%\cgs{grant sponsor name (no number)}
+%\cgsn{grant1{1}, grant2{2}}{123, 456}
 
 \begin{abstract}
 \begin{enumerate}
@@ -84,66 +50,195 @@
 
 \maketitle
 
-<<echo=FALSE, results=hide>>=
-library(pavo)
-ps.options(pointsize=12)
-options(width=60)
-@
+%<<echo=FALSE, results=hide>>=
+%library(pavo)
+%ps.options(pointsize=12)
+%options(width=60)
+%@
 
 \section{Introduction}
 
 The role that coloration and color vision plays in animal communication has been a fundamental
-question in evolutionary biology for centuries (REF). Visual communication has provided an unique
-opportunity to investigate aspects of natural selection, sexual selection, and interactions such as
-mimicry, aposematism and pollination (REFS, Bennet \& Thery 2007). It has also shown to be an ideal
-system for truly integrative biological research, spanning from optical processes generating color,
-proximate mechanisms regulating this expression, physiological processes involved in preceiving the
-signal, and functional aspects resulting in its adaptive value and evolutionary patterns (REFS) 
-
-\citep{Montgomerie:2006}.
-\cite{Endler:1990} \cite{Stoddard:2008} \citep{Govardovskii:2000}
+question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,
+Poulton:1890,Bennett:2007hm}. Visual communication has provided an unique opportunity to investigate
+aspects of natural selection \citep{Chittka:1992} and sexual selection (REF), and how these interact
+\citep{,Kemp:2009}  (REFS- SUGGESTIONS?). It it also an ideal  system for truly integrative
+biological research, from the optical processes generating color (REF), hormonal and genetic
+mechanisms regulating this expression (REF), physiological processes involved in preceiving the
+signal (REF), and its adaptive and evolutionary patterns \citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
 objective quantification of the color reflected by surface, as a first approximation of an
-``receiver-independent'' objective quantification of an organism or object's color (REF). Over the
-last couple decades, the popularization of portable spectrophotometers that can measure reflectance
-accross wavelengths accross and beyond the human visible range, have opened the possibility of
-quantifying the reflectance from animal and plant integument (REF). Second, advances in the
+``receiver-independent'' objective quantification of an organism or object's color
+\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last couple decades, the popularization of
+portable spectrophotometers that can measure reflectance accross wavelengths accross and beyond the
+human visible range, have opened the possibility of quantifying the reflectance from animal and
+plant integument \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
 understanding of how animals preceive and process color have allowed combining information on
 receiver psychophysiology and reflectance data in visual models to estimate how animals see and
-differentiate these colors (REF).
+differentiate these colors \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
 
-- Highlight the current interest in visual modelling in animals
-- Present the current difficulties of producing outputs in this context (maybe even give a usual flow 
-chart of how many people might deal with this data. E.g CLR for getspec, excel to visualize and 
-aggregate, CLR to extract tristimulus scores, matlab for colour distance in tetrahedral space, avicol 
-for JND, stat package for analyses!) (Actually we may not want to go there, AviCol can do many if not all of these things now)
+Despite these advances, a cohesive framework for working with and analyzing color from reflectance
+data is still limited from a practical standpoint. Data collection software from spectrophotometer
+manufacturers are not standardized, producing inconsistent output files, and software for analyses
+are either restricted in the methods implemented, in the capabilities to import and process data, or
+rely on proprietary and/or closed software \citep[reviewed in][]{Montgomerie:2006}. Color data will
+further require additional converting and exporting into statistical software for analyses, thus
+restricting the standarization of protocols, as well as batch processing and automation of
+workflows. Combined with published descriptions that are often not detailed or inconsistent, the
+current procedures and implementations severely hinder the reproducibility of research and the
+reimplementation of methods. \textbf{(extracted from a paper, would like to include similar message:
+``These factors lead to duplicated effort, bespoke solutions that are difficult to apply to future
+analyses and results that are hard, if not impossible, to reproduce exactly.'')}
 
-pavo is an R package  (available at \url{http://cran.Rproject.org}) that contains a set of functions 
-and tools for the analysis of color data in a unified framework. It provides an environment in which 
-researchers can organize, analyze and visualize colour data generated by spectrophotometry (usually 
-reflectance data). It is designed to model colours using the visual system of any animal for which 
-visual characteristics are known, or can be assumed. The package is flexible; it currently allows 
-analytical and visualization capabilities for tetrachromatic, trichromatic and dichromatic visual 
-systems. In this paper, we highlight the most important functions and provide an example of a workflow
-, including the relevant R scripts, using spectral measurements obtained from museum bird specimens.
+We introduce \pavo{} \textendash \; a package for R \citep{rcore} that tackles these problems by
+providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
+visualize colour data generated by spectrophotometry. R is rapidly becoming the working language for
+scientific programming and data analysis, particularly in ecology and evolution
+\citep[e.g.][]{ape,Bolker:2008}. \pavo{} incorporates R's flexibility by using object classes that
+can seamlessly interpret each other, providing functions that can intuitively be used to import,
+explore, process and analyze spectral color data under a variety of user defined models. We propose
+that, by combining these procedures under a coherent framework not only streamlines workflows, but
+also allows data to be explored and manipulated in ways that can be used to visualize patterns,
+obtain information and develop hypothesis that may otherwise pass unnoticed (WORKFLOW FIGURE HERE).
 
 \section{The \pavo{} package}
 
-- fxns included in the package and basic functionality, current limits and novelties including exact 
-results for voloverlap and log transform correction for issue mentioned in Stoddard and Prum
+The stable release of \pavo{} is available from CRAN (\url{http://cran.r-project.org/}) for direct
+installation from R, and the development version is available from github
+(\url{https://github.com/rmaia/pavo}). \pavo{} was developed with three main workflow stages in mind
+(FIGURE): \textbf{organization} of spectral data by inputting raw files and processing their
+spectral content; \textbf{visualization} of the output, including exploratory capacities to identify
+further required manipulations and previously unconsidered patterns; and \textbf{analysis} of data
+from the spectral shape of reflectance curves or by incorporating receiver psychophysiology in
+visual models. As noted by \cite{Bennett:2007hm} and others \citep{Andersson:2006,
+Montgomerie:2006}, though spectral data has become commonplace in studies of animal coloration, it
+is easy to obtain poor-quality or inaccurate data. Therefore a workflow for spectral color data
+analysis has to go beyond plugging in values and expecting an output, requiring thorough exploratory
+investigation. With this in mind, \pavo{} takes advantage of the object-oriented programming
+environment in R which is ideal for such approach, as outlined below.
 
-- description of a general suggested workflow with accompanying figure
+\subsection{Data Format}
 
-Proof of concept example 
+Spectral data is stored in \pavo{} and recognized by its function by use of a new object class,
+\code{"rspec"}, which inherits methods from \code{data.frame}. \code{rspec} objects are
+characterized by having individual reflectance spectra as columns of the dataframe, with a first
+column containing the wavelength identification data. raw spectral data can be imported using the
+function \code{getspec}, which currently supports data from a variety of spectrometer and
+microspectrometer makes (Ocean Optics OOIBase and SpectraSuite files, Avantes AvaSpec, and CRAIC).
+In addition, previously compiled dataframes can be imported to R and converted to \code{rspec}
+objects using the \code{as.rspec} function.
 
-Include example with R script included with figures. Make sure we include notes
+The use of dedicated R object classes allows generic functions such as \code{plot} and
+\code{summary} to identify the data as a particular type of dataframe and interpret it accordingly
+(see below). The class \code{"vismodel"} is used to interpret spectral data that has been processed
+through one of the visual models implemented, and also stores information on how it was generated
+(e.g. the visual phenotype, background and illuminant used, and any transformations applied; see
+below). Additionally, the \code{"tcs"} class refers to tetrahedral colorspace models
+\citep{Endler:2005,Stoddard:2008}.
 
-\subsection{Exact determination of color volume overlap}
+It is common when collecting spectral data to take multiple measurements from the same sample,
+averaging these to avoid sampling error \citep{Quesada:2006}. \code{pavo} provides the
+\code{aggspec} function for this, as well as the \code{procspec} function for noise removal via
+smoothing, and transformations to standardize and clean spectral data.
 
-\section{Colorspace occupation of African starlings (Sturnidae)}
+\subsection{Visualization}
+
+With \pavo{} installed and loaded, the \code{plot} function recognizes \code{rspec} objects and
+plots them accordingly \textendash \; interpreting the first column as wavelengths (and usually
+using it as the x axis) and the remaining columns as reflectance values (y values) for individual
+spectra. Several plotting options for multiple spectra are implemented (FIGURE). In addition, the
+\code{aggplot} function provides plotting capabilities for among-spectra summary statistics plotting
+(FIGURE), with a similar syntax to \code{aggspec}. \pavo{} also offers exploratory plotting
+capabilities that can be combined with data processing and formatting, such as \code{explorespec}
+(for visualizing groups of spectra) and \code{smoothplot} (for choosing smoothening parameters).
+
+Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colorspace model
+\citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (FIGURE,
+see below).
+
+\subsection{data analysis}
+
+The \code{summary} function can be applied to \code{rspec} objects to produce several trichromatic
+(hue, saturation and brightness) color variables extracted from the spectral shape of the
+reflectance curve. This function calculates several variables from the literature \citep[described
+in]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object (description and
+formulae for the variables can be found in the help file, by typing \code{?summary.rspec}, and in
+the package Vignette \textendash \; see Supporting Information). Additionally, the function
+\code{peakshape} provides descriptors of spectral peaks, such as the wavelenth of maximum
+reflectance and the full width at half maximum (REF - CHAD?), and can be fine-tuned to extract
+information from specific areas of the curve, which can be useful when the spectral curve has
+multiple peaks or a complex shape (e.g. describing the UV peak of carotenoid curves -- FIGURE?)
+
+\pavo{} also includes visual models that incorporate the visual system of the receiver in describing
+colors through the \code{vismodel} function. Models can be calculated incorporating the visual
+phenotype (cone absorbance), background color and ambient illuminant \citep{Vorobyev:1998}. Several
+avian receptor phenotypes \citep{Hart:2001,Endler:2005} are implemented as options, but user-defined
+receptor data from any taxon can be used as model input. Further, the \code{sensmodel} function
+implements the calculation of cone absorbance curves based on peak sensitivity information
+(available from the literature, e.g. REF), and can also include oil droplet and retinal transmission
+information in the calculations \citep{Govardovskii:2000,Hart:2005}.
+
+Visual models can be calculated in terms of absolute photon catches, in which case the receptor
+noise model can be used to infer contrast between colors \citep[implemented in the function
+\code{colordist}]{Vorobyev:1998} or in relative cone stimulation, in which case the model reduces to
+a colorspace model represented in $n-1$ dimensions \citep[where $n$ is the number of different
+receptors involved in color vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. This can be
+selected by the logical argument \code{relative} from the \code{vismodel} function. In the case of
+the avian tetrahedral colorspace, several additional variables can be calculated based on spherical
+coordinates which represent the hue based on the angles (MORE INFO, CHAD) and saturation based on
+the distance from the achromatic center \citep{Stoddard:2008} by calling the \code{tcs} function.
+This function generates an object of class \code{tcs}; a \code{summary} call from a \code{tcs}
+object will return summary statistics described in \cite{Stoddard:2008} for sets of points, such as
+the color span and color volume.
+
+\subsection{Volume Overlap and Fechner's law in the Tetrahedral Colorspace Model}
+
+\pavo{} also builds upon previosuly described visual model methods. For example, \cite{Stoddard:2011}
+present the useful approach of calculating the overlap between the volumes defined by two sets of
+points in colorspace. They used this to quantify the mimicry of nest parasite eggs to their hosts,
+such that a greater overlap of these volumes would indicate greater overall color similarity.
+\cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of overlap of the
+volumes, given the complexity of calculating the intersection of three-dimensional convex hulls.
+\pavo{} provides adapts the exact solution for the calculation of the intersection of color volumes,
+originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011}
+through the computational geometry capabilities available from the \code{rcdd} package \citep{rcdd}.
+
+Finally, we have addressed previously identified methodological inconsistencies in adapting visual
+models to the tetrahedral colorspace. For example, \cite{Endler:2005} recommends log-transforming
+photon catches before defining the colorspace (by them relative sum to 1), thus making the
+difference between stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
+also][]{Vorobyev:1998,Endler:1990}. However, \cite{Stoddard:2008} evaluated the consequences of
+this transformation and noted dramatic and unpredictable effects in hue and chroma values. Though
+the decrease in hue variance and an overall decrease in chroma values should be expected by the 
+log-transformation, the unpredictable effects on hue noted by \cite{Stoddard:2008} is troublesome. As
+the authors noted \citep[see][Supplemental Information]{Stoddard:2008}, this is largely a result of
+normalizing all input functions (reflectance, sensitivity, background and illuminant) to integrals
+of 1, which yield cone stimulations ($Q_i$ for the cone class $i$) that scale from 0 to 1. 
+Log-transforming these $Q_i$ values ($f_i = log(Q_i)$) results in negative numbers, which if made
+relative by dividing by the sum (i.e. $f_{i\;relative} = f_i / \sum{f_i}$) results in the greatest
+\textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being the greatest
+$f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5} <
+\frac{-5}{-5.5}$. \cite{Stoddard:2008} note that this can be dealt with by scaling photon catch
+values by a large value, but this is arbitrary an can result in the loss of relative scale
+differences. Instead, we propose the following transformation for log-transformed photon catches
+($fi$), implemented in \pavo{} when \code{vismodel} is executed with the option
+\code{relative=TRUE}:
+
+\begin{equation}
+f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
+\end{equation}
+
+which preserves measurement scale but still yields hue values that are consistent with original
+values, but with differences that are a linear function of their magnitude as expected from
+Fechner's law (FIGURE?).
+
+\section{Example: NAME OF EXAMPLE}
+.
+...
+.
 
 \section{Citation of \pavo{}}
 
@@ -160,14 +255,6 @@ Sources of funding and the usual
 
 \bibliographystyle{bes}
 \bibliography{references}
-
-%\begin{thebibliography}{99}
-%\item <Reference details>
-%.
-%.
-%.
-%\item <Reference details>
-%\end{thebibliography}
 
 Figures\\
 1-  I recommend a possible workflow chart that would detail a common path to using the main fxns\\
