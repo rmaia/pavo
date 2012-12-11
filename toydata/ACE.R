@@ -2,7 +2,7 @@ require(RColorBrewer)
 require(pavo)
 pal <- brewer.pal(7, "Dark2")
 
-
+# little change #
 # Load spectra
 eliz <- getspec('~/Documents/Projects/Starlings - RawData/Starling_irid/Lamprotornis_elisabeth', 
                 ext='ttt')
