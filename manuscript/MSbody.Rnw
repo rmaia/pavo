@@ -41,12 +41,12 @@
 \begin{abstract}
 \begin{enumerate}
 \item Recent advances in portable spectrophotometry and in animal visual psychophysiology has led 
-to an increasing interest in modelling species-specific color perception. Despite this growing 
-interest, a unified framework for analyzing spectral data is still lacking.
+to an increasing interest in the studies of colors in general, and in modelling species-specific color
+perception. Despite this growing interest, a unified framework for analyzing spectral data is still lacking.
 \item We introduce \pavo{}, an R packgage that facilitates the organization, visualization, and analysis
 of spectral data in a cohesive framework. \pavo{} is highly flexible: it can organize and manipulate 
-data from a variety of sources, implements easy to use visualization tools, and allows the modelling 
-of visual systems of any vertebrate and (almost all) invertebrates.
+data from a variety of sources, implements easy to use visualization tools, provides many analytical
+capabilities, and allows the modelling of visual systems of any vertebrate and (almost all) invertebrates.
 \item In this paper, we present a summary of the \pavo{} functions that will be of general interest, 
 and suggest a workflow to explore spectral data, and model colors using a user-defined visual systems.
 \item We also present an example, using spectral data obtained from Starling museum skins, of the 
@@ -72,11 +72,12 @@ tristimulus, just noticeable differences, signal, sensory ecology}
 The role that coloration and color vision plays in animal communication has been a fundamental
 question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,
 Poulton:1890,Bennett:2007hm}. Visual communication has provided an unique opportunity to investigate
-aspects of natural selection \citep{Chittka:1992} and sexual selection (REF), and how these interact
-\citep{,Kemp:2009}  (REFS- SUGGESTIONS? Endler 1992). It it also an ideal system for truly integrative
-biological research, from the optical processes generating color (REF), hormonal and genetic
-mechanisms regulating this expression (REF), physiological processes involved in preceiving the
-signal (REF), and its adaptive and evolutionary patterns \citep{Badyaev:2003,Darst:2006}.
+aspects of natural selection \citep{Chittka:1992} and sexual selection \citep{Boughman:2002, Maan:2006, 
+Seehausen:2008}, and how these interact \citep{Kemp:2009}. It it also an
+ideal system for truly integrative biological research, from the optical processes generating color (REF),
+hormonal and genetic mechanisms regulating this expression \citep{Leskinen:2012, Muller:2009}, physiological
+processes involved in preceiving the signal (REF), and its adaptive and evolutionary patterns 
+\citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
