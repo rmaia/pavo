@@ -10,6 +10,8 @@
 
 \usepackage{hyperref}
 \usepackage{lineno}
+\usepackage{float}
+\usepackage{subcaption}
 
 % Macros
 \newcommand{\pavo}{{\tt pavo}}  
@@ -252,211 +254,156 @@ Fechner's law (FIGURE?).
 
 \section{Example: Colourspace divergence in African starlings (Sturnidae)}
 
-<<>>=
+Recent phylogenetic evidence indicates a very recent divergence for \emph{L. chloropterus} and
+\emph{L. elisabeth} compared to the node containing the outgroup \emph{L. acuticaudus}
+(\cite{rubenstein}). Given the lability of iridescent plumages (\cite{}) and potential to produce
+colours across the bird-visible range of wavelengths, plumage colouration may play a role in
+reproductive isolation \cite{Seehausen 1999}. By analyzing plumage patches within an avian
+colourspace (see \cite{}) we can better understand the physisiologically relevant divergence in
+plumage colour among these focal species. Here we demonstrate some of the capabilities of \pavo{} by
+analyzing this example dataset.
+
+<<echo=F,results=hide>>=
 require(RColorBrewer)
 require(pavo)
-pal <- brewer.pal(7, "Dark2")
+source('~/github/pavo/R/aggspec.R')
+pal <- brewer.pal(7, "Set1")
+pal2 <- brewer.pal(11, "Spectral")
 @
 
-\pavo{} was built on a conceptual tripod of (i) organization and processing of spectral data, (ii)
-visualization, and (iii) analysis of the resulting data. The function \code{getspec} handles data
-input from a variety of manufacturers (including Avantes, Ocean Optics, CRAIC). Here we demonstrate
-some of these capabilities. The data analyzed are reflectance spectra taken from museum specimens of
-three species from the monophyletic African starling clade (Sturnidae): \emph{Lamprotornis
-elisabeth}, \emph{Lamprotornis chloropterus} and \emph{Lamprotornis acuticaudus}. We measured three
-reflectance spectra per plumage patch (n=11, see Figure \ref{figure:distplot} for list) per individual male (n=4).
-Recent phylogenetic evidence indicates a very recent divergence for \emph{L. chloropterus} and
-\emph{L. elisabeth} (ca. 25 kYa) compared to the node containing \emph{L. acuticaudus} (~XX mYa?).
-Given the lability of iridescent plumages (\cite{}) and potential to produce colours across the
-bird-visible range of wavelengths, plumage colouration may play a role in reproductive isolation. By
-analyzing plumage patches within an avian colourspace (see \cite{}) we can better understand the
-divergence in plumage colour among these focal species.
+\subsection{Step 1: Organization}
 
-% <<>>=
-% # Load spectra
-% eliz <- getspec('~/Documents/Projects/Starlings - RawData/Starling_irid/Lamprotornis_elisabeth', 
-%                 ext='ttt')
-% eliz <- aggspec(eliz, by=3)
-% chlo <- getspec('~/Documents/Projects/Starlings - RawData/Starling_irid/Lamprotornis_chloropterus', 
-%                 ext='ttt')
-% chlo <- aggspec(chlo, 3)
-% acut <- getspec('~/Documents/Projects/Starlings - RawData/Starling_irid/Lamprotornis_acuticaudus', 
-%                 ext='ttt') 
-% acut <- aggspec(acut, 3)
-% @
+The data consist of reflectance spectra (in Avantes `.ttt' output format) taken from museum
+specimens of three species within the monophyletic African starling clade (Sturnidae):
+\emph{Lamprotornis elisabeth}, \emph{Lamprotornis chloropterus} and \emph{Lamprotornis acuticaudus}.
+We measured three reflectance spectra per plumage patch (n=11, see Figure \ref{figure:distplot} for
+list) per individual (n=4, males only). We loaded and averaged 396 raw spectral data files by
+individual using the following two lines of code in \pavo{}:
 
-% <<include=FALSE>>=
-% # Define metadata
-% bodypart<-c('throat','chest','belly','head','neck','mantle','rump','shoulder', 'wing','tail','cheek')
-% elizsex <- c('FEM','FEM','FEM','MAL','MAL','MAL','FEM','MAL')
-% acutsex<-c('MAL','MAL','MAL','FEM','MAL','FEM','FEM','MAL','MAL','FEM','MAL', 'FEM','FEM','MAL','FEM','MAL','MAL','FEM','FEM','FEM')
-% chlorsex<- c('MAL','MAL','MAL','MAL','FEM','FEM','MAL','FEM','MAL','FEM','FEM', 'FEM','MAL','MAL','FEM','FEM','FEM','MAL','FEM','MAL')
-
-% # Names of specs
-% names(acut)[-1] <- paste(gsub('.....$','',names(acut))[-1],rep(acutsex,each=11), 
-%                          bodypart, sep='.')
-% names(eliz)[-1] <- paste(gsub('.....$','',names(eliz))[-1],rep(elizsex,each=11),
-%                          bodypart, sep='.')
-% names(chlo)[-1] <- paste(gsub('.....$','',names(chlo))[-1],rep(chlorsex,each=11),
-%                          bodypart, sep='.')
-% @
-
-<<include=FALSE>>=
-load('~/github/pavo/toydata/ACE.RData')
+% demo input of raw data
+<<echo=TRUE,results=hide,eval=FALSE>>=
+specs <- getspec(where = '~/Desktop/starlingdata', ext = 'ttt', lim = c(300, 700))
+specs <- aggspec(specs, by = 3, FUN = mean)
 @
 
 <<echo=FALSE, results=hide>>=
-#
+load('~/github/pavo/toydata/ACE.RData')
 specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
+# Create metadata
+spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
 ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
 sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
-spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
-
+patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 # Get equal sample sizes by sampling randomly from L. chloropterus, L. acuticaudus
 set.seed(101)
 p <- sample(unique(ids[spp=="LAAC"&sex=="MAL"]), size = 4)
 acut.sub <- cbind(wl = 300:700, specs[, ids%in%p])
 acut.sub <- as.rspec(acut.sub)
-
 set.seed(101)
 p <- sample(unique(ids[spp=="LACL"&sex=="MAL"]), size=4)
 chlo.sub <- cbind(wl = 300:700, specs[, ids%in%p])
 chlo.sub <- as.rspec(chlo.sub)
-
 # Get only males from L. elisabeth
 eliz.sub <- eliz[, grep('MAL', names(eliz))]  # get only males
 eliz.sub <- as.rspec(cbind(wl = 300:700, eliz.sub))
-@
-
-<<echo=FALSE, results=hide>>=
-# Merge subsetted spectra
-specs <- as.rspec(cbind(acut.sub, chlo.sub[,-1], eliz.sub[,-1]))
+# Combine subsetted rspec objects
+specs <- as.rspec(cbind(eliz.sub, chlo.sub[,-1], acut.sub[,-1]))
 spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
+ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
 sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
 patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 @
 
-% Talk about flexible packages here:
+\subsection{Step 2: Visualization and processing}
 
-<<label=exploreplot, fig=TRUE, include=FALSE>>=
-# Average spectra by species and patch
+Next, we plotted spectra contained in this \code{rspec} object using \code{plot(specs)} and removed the observed electrical noise arising from the spectrometer using \code{procspec(specs, opt='smooth')}. We then used \code{aggplot(specs, by='spp')} to visualize the mean reflectance curves for each species for body patches `belly' and `cheek' (see Figure \ref{figure:specsplot}).
+
+<<label=specsplot,fig=TRUE,include=FALSE,echo=F,results=hide,width=6.5,height=3.1>>=
+# Process spectra (apply smoothing) and average by species and patch
 specs.sm <- procspec(specs, opt='smooth')
 specs.m <- aggspec(specs.sm, by = paste(spp, patch)[-1])
-explorespec(specs.m, by = 11)
+spp.m <- sapply(strsplit(names(specs.m), "\\."), "[", 1)
+sex.m <- sapply(strsplit(names(specs.m), "\\."), "[", 3)
+patch.m <- sapply(strsplit(names(specs.m), "\\."), "[", 4)
+# Plot results using aggplot
+par(mfrow=c(1,2), mar=c(4,4,2,2), ps=10, oma=c(0,0,0,0), lwd=1)
+p <- grep('belly', names(specs))
+aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.05, lwd=2)
+p <- grep('cheek', names(specs.sm))
+aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.05, lwd=2)
 @
 
-\begin{figure}
+\begin{figure}[H]
 \centering
-\includegraphics{fig/ms-exploreplot}
-\caption{Plots of spectra...} % CHANGE THE PLOTTING METHOD, MAYBE USE AGGPLOT
-\label{figure:exploreplot}
+\includegraphics{fig/ms-specsplot}
+\caption{Plots of mean smoothed spectra for different body patches (belly, left; cheek, right). Line 
+colours indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
+elisabeth}).}
+\label{figure:specsplot}
 \end{figure}
 
-\pavo{} incorporates available data on the retinal sensitivies of numerous taxa, including the
-European starling \code{visual = `star'}, which we incorporate here \cite{Hart:1998}. The
-\code{relative} argument indicates whether...
 
-<<>>=
-# Run visual models
-vm1 <- vismodel(specs.m[c(1, grep('LAAC', names(specs.m)))], visual='star', relative=TRUE)
-vm2 <- vismodel(specs.m[c(1, grep('LACL', names(specs.m)))], visual='star', relative=TRUE)
-vm3 <- vismodel(specs.m[c(1, grep('LAEL', names(specs.m)))], visual='star', relative=TRUE)
+\subsection{Step 3: Analysis}
+
+To understand how spectral curves are perceived by birds, we used the \code{vismodel} function to
+map these data to physiological analogues based on visual sensitivies (sensory phenotype). \pavo{}
+incorporates available data on the retinal sensitivies of numerous taxa, including the European
+starling (\emph{Sturnus vulgaris}, code{visual = `star'}), which we incorporated here (see
+\cite{Hart:1998}).
+
+We also used \code{relative = FALSE} to calculate raw \{\emph{usml}\} values, suitable for calculating
+chromatic distances with the function \code{coldist} \cite{}. Data on relative cone abundances and
+XX are easily implemented by passing published values to the \code{coldist} function. Relative UVWS,
+SWS, MWS and LWS cone densities taken from \cite{Hart:1998} and \code{v} was set to 0.1 to give a
+LWS conde Weber fraction of 0.05 (e.g., see \cite{}). The results of \code{coldist} give colour
+distance between all possible combinations of plumage patches in the \code{tcs} object, and can be
+further subsetted to only analyse comparisons of interest (e.g., colour difference between
+\emph{Lamprotornis elisabeth} and \emph{L. chloropterus}). We plot pairwise distances between
+plumage patches for all species combinations in Figure \ref{figure:distplot}.
+
+<<echo=FALSE,results=hide>>=
+# 5. Run visual models using starling visual sensitivies
+# vm1 <- vismodel(specs.m, visual='star', relative=TRUE)
+vm1 <- vismodel(specs, visual = 'star', relative = TRUE)
+vm2 <- vismodel(specs, visual = 'star', relative = FALSE)
 @
 
-<<>>=
-# Calculate tetra colorspace variables
-tcs1 <- tcs(vm1)
-tcs2 <- tcs(vm2)
-tcs3 <- tcs(vm3)
-@
-
-% <<>>=
-% pal2 <- brewer.pal(11, "Spectral")
-% # Plot species in colorspace
-% tcsplot(tcs1, col = 'red', size=.01)
-% tcsvol(tcs1, col='red')
-% tcspoints(tcs2, col = 'blue', size=.01)
-% tcsvol(tcs2, col='blue')
-% tcspoints(tcs3, col = 'green', size=.01)
-% tcsvol(tcs3, col='green')
-% @
-
-<<label=volplot, fig=T, include=F, width=5, height=5>>=
-# Volume overlap calculations
-voloverlap(tcs2, tcs3, plot=T)
-rgl.postscript('volplot.pdf', fmt='pdf')
-@
-
-\begin{figure}
-\centering
-\includegraphics{volplot}
-\caption{Convex hull plot of \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} in avian 
-tetrahedral colourspace. Polyhedrons are delimited by plumage patches at the vertices. Colours 
-indicate \emph{L. chloropterus} (red) and \emph{L. elisabeth} (blue), with the volume overlap 
-(similar colourspace occupied) shown in black.}
-\label{figure:volplot}
-\end{figure}
-
-Using the \code{voloverlap} function gives a graphical representation of the overlap in colourspace
-occupied by each recently diverged species. Moreover, the ability to calculate an exact volume
-(rather than an estimated volume derived from Monte Carlo simulation) represents a substantial
-advance in the ability to analyze colourspace distributions.
-
-% L. elisabeth (blue) is the most spread out in color space. So, what patches 
-% are causing the increased volume?
-
-<<echo=FALSE, results=hide>>=
-# Calculate chromatic distances between patches of different species
-vm1.rel <- vismodel(specs[c(1, grep('LAAC',names(specs)))], visual = 'star', relative = FALSE)
-vm2.rel <- vismodel(specs[c(1, grep('LACL',names(specs)))], visual = 'star', relative = FALSE)
-vm3.rel <- vismodel(specs[c(1, grep('LAEL',names(specs)))], visual = 'star', relative = FALSE)
-
-# All delta S distances
-delta.S <- coldist(rbind(vm1.rel$Qi, vm2.rel$Qi, vm3.rel$Qi), n1 = 1, n2 = 1.38, 
-                   n3 = 3.34, n4 = 3.46, v = 0.1)
-
-# Distances by patch type
+<<echo=FALSE,results=hide>>=
+# Calculate chromatic pairwise distances between patches (delta S)
+delta.S <- coldist(vm2, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
+# Calculate distances by patch type using flexible subsetting options
 res <- list()
-# patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 for (i in unique(patch)[-1]) {
   sel <- grep(i, delta.S$patch1)[grep(i, delta.S$patch1)%in%grep(i, delta.S$patch2)]
   res[[i]] <- delta.S[sel, ]
 }
-res[1]  # check output
+head(res[[1]])  # check output
 @
 
-Note that we use \code{relative = FALSE} here to indicate that raw {usml} values should be used,
-suitable for calculating chromatic distances \cite{}. Relative UVWS, SWS, MWS and LWS cone densities
-taken  from \cite{Hart:1998} and \code{v} was set to 0.085 to give a LWS conde Weber fraction of 0.1
-(e.g., see \cite{}).
-
-<<echo=FALSE>>=
+<<echo=FALSE,results=hide>>=
 # Calculate distance from focal species' patch to those of other species
 d12 <- matrix(ncol = 2, nrow = 11)
-d13 <- matrix(ncol = 2, nrow = 11)
-d23 <- matrix(ncol = 2, nrow = 11)
-
 for (i in 1:11) {
-  x <- res[[i]][grep('LAAC', res[[i]]$patch1)[grep('LAAC', res[[i]]$patch1) %in% 
-                grep('LACL', res[[i]]$patch2)], ]
+  x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
+                grep('LAAC', res[[i]]$patch2)], ]
   d12[i, 1] <- mean(x$tetra.dS)
   d12[i, 2] <- sd(x$tetra.dS)
 }
 rownames(d12) <- names(res)
 colnames(d12) <- c('mean', 'sd')
-
+d13 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  x <- res[[i]][grep('LAAC', res[[i]]$patch1)[grep('LAAC', res[[i]]$patch1) %in% 
-                grep('LAEL', res[[i]]$patch2)], ]
+  x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
+                grep('LAAC', res[[i]]$patch2)], ]
   d13[i, 1] <- mean(x$tetra.dS)
   d13[i, 2] <- sd(x$tetra.dS)
 }
 rownames(d13) <- names(res)
 colnames(d13) <- c('mean', 'sd')
-
+d23 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
-                grep('LAEL', res[[i]]$patch2)], ]
+  x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
+                grep('LACL', res[[i]]$patch2)], ]
   d23[i, 1] <- mean(x$tetra.dS)
   d23[i, 2] <- sd(x$tetra.dS)
 }
@@ -464,43 +411,122 @@ rownames(d23) <- names(res)
 colnames(d23) <- c('mean', 'sd')
 @
 
-<<label=distplot, fig=TRUE, include=FALSE, width=5, height=5>>=
+<<echo=F,results=hide>>=
+rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
+@
+
+<<label=distplot,fig=TRUE,echo=FALSE,results=hide,include=FALSE,width=5,height=5>>=
 # Plot mean +/- SD of color distances by patch
-par(mar=c(4,4,2,2), oma=c(2,0,0,0))
+par(mar=c(4,4,2,2), oma=c(0,2,0,0), xpd=FALSE)
 pad <- .15
-plot(d23[,1]~I(c(1:11)), ylim = c(-16, 16), xlab = "", 
-     ylab = expression(paste(Delta, "S (jnds)")), xaxt = 'n', col = pal[1], 
-     pch = 16, xlim = c(0.5, 11.5))
-segments(1:11, d23[, 1] - d23[, 2], 1:11, d23[, 1] + d23[, 2], col = pal[1])
-points(-d13[, 1]~I(c(1:11) - pad), pch = 16, col = pal[2])
-segments(1:11 - pad, -d13[, 1] - d13[, 2], 1:11 - pad, -d13[, 1] + d13[, 2], 
-         col = pal[2])
-points(-d12[, 1]~I(c(1:11) + pad), pch = 16, col = pal[3])
-segments(1:11 + pad, -d12[, 1] - d12[, 2], 1:11 + pad, -d12[, 1] + d12[, 2], 
-         col = pal[3])
-abline(h=0)
-abline(h = c(1,-1), lty = 3)
-axis(side = 1, at = c(1:11), labels = names(res), las = 2)
-legend('topleft', bty='n', lty = 1, pch = 16, col = pal[1:3], 
-       legend = c("chloropterus-elisabeth", "acuticaudus-elisabeth", "acuticaudus-chloropterus"))
-mtext(side = 1, "Plumage patch", line=4)
+plot(c(1:11)~d23[rs,1], xlim = c(-16, 16), ylab = "", xlab = expression(paste(Delta, "S (JNDs)")), 
+     yaxt = 'n', pch = 21, ylim = c(0.5, 11.5), xaxt='n', type='n')
+segments(d23[rs, 1] - d23[rs, 2], 1:11, d23[rs, 1] + d23[rs, 2], 1:11, col='darkgrey')
+points(c(1:11)~d23[rs,1], pch = 21)
+segments(-d13[rs, 1] - d13[rs, 2], 1:11 - pad, -d13[rs, 1] + d13[rs, 2], 1:11 - pad, col='darkgrey')
+points(c(1:11)-pad~I(-d13[rs, 1]), pch = 22)
+segments(-d12[rs, 1] - d12[rs, 2], 1:11 + pad, -d12[rs, 1] + d12[rs, 2], 1:11 + pad, col='darkgrey')
+points(c(1:11)+pad~I(-d12[rs, 1]), pch = 23)
+abline(v=0)
+abline(v = c(1,-1), lty = 3)
+axis(side = 2, at = c(1:11), labels = rs, las = 2, cex.axis=.75)
+axis(side = 1, at = c(-15,-10,-5,0,5,10,15), labels=c(15,10,5,0,5,10,15))
+mtext(side = 2, "plumage patch", line=4)
+par(xpd=TRUE)
+text(x=c(9,-9), y=rep(par('usr')[4]+.6, 2), c("ingroup\ncomparison", "outgroup\ncomparisons"), cex=.75)
+legend('topright', bty='n', pch = c(21,22,23), legend = c("LACL-LAEL", "LAAC-LAEL", "LAAC-LACL"), 
+       cex=.7)
 @
 
 \begin{figure}
-\centering
-\includegraphics{fig/ms-distplot}
-\caption{Dotplot showing colour distances (in units of just noticeable differences, jnds) by patch 
-(x-axis) between three pairs of African starling species (Sturnidae:\emph{Lamprotornis}. Dotted 
-horizontal lines indicate jnd=1, above which colours are theoretically distinguishable by birds.}
-\label{figure:distplot}
+    \begin{subfigure}[b]{0.5\textwidth}
+      \centering
+      \includegraphics{fig/ms-distplot}
+      \caption{}
+      \label{figure:distplot}
+    \end{subfigure}
+    \begin{subfigure}[b]{0.5\textwidth}
+      \centering
+      \includegraphics{fig/ms-volplot}
+      \caption{}
+      \label{figure:volplot}
+    \end{subfigure}
+  \caption{\textbf{(a)} Dotplot showing colour distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. \textbf{(b)} Tetrahedral colourspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: cheek colour, light grey: belly colour, black: remaining plumage patch colours). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colours).}
 \end{figure}
 
-Figure \ref{figure:distplot} shows that nearly all plumage patches are divergent (jnd > 1, dotted
-lines in Figure \ref{}) within the subclade as well as compared to the outgroup \emph{L.
-acuticaudus}. These data show that the expansion of occupied colourspace for both subspecies (see
-Figure \ref{figure:volplot}) is largely due to divergence in the colour of the belly patch (see
-Figure \ref{distplot}). Interestingly, the cheek plumage patch of L. elisabeth is more similar to L.
-acutacaudus than L. chloropterus (Figure \ref{figure:distplot}).
+<<echo=F,results=hide>>=
+# 7. Calculate tetra colorspace variables
+tcs1 <- tcs(vm1)
+tcs1.m <- tcs(vismodel(specs.m))
+summary(tcs1, by=spp[-1])
+@
+
+% Uncomment to produce plot
+%
+% <<tetracolourspaceplot>>=
+% # ideas:
+% #   highlight volume overlaps as colour shown in distplot
+% pal2 <- brewer.pal(11, "Spectral")
+
+% # Plot species in colorspace
+% tcs1$spp <- sapply(strsplit(rownames(tcs1), "\\."), "[", 1)
+% tcs1$patch <- sapply(strsplit(rownames(tcs1), "\\."), "[", 4)
+
+% tcs1a <- tcs1.m[grep('LAAC', rownames(tcs1.m)),]
+% tcs1b <- tcs1.m[grep('LACL', rownames(tcs1.m)),]
+% tcs1c <- tcs1.m[grep('LAEL', rownames(tcs1.m)),]
+
+% #
+% # red=LAAC, blue=LACL, green=LAEL
+% pal <- brewer.pal(7, "Set1")
+
+% pal3 <- pal2
+% pal3[c(1:2,4:10)] <- 'black'
+% pal3[3] <- grey(.8)
+% pal3[11] <- grey(.4)
+%
+% tcsplot(tcs1a, col=pal3, size=.005)
+% tcsvol(tcs1a, col=pal[1])
+% tcspoints(tcs1b, col=pal3, size=.005)
+% tcsvol(tcs1b, col=pal[2])
+% tcspoints(tcs1c, col=pal3, size=.005)
+% tcsvol(tcs1c, col=pal[3])
+% # rgl.snapshot('ms-volplot.png')
+% @
+
+For producing a tetrahedral colourspace plot, we used \code{tcs(vm1, relative = TRUE)} to indicate
+that \{\emph{usml}\} values should be scaled to sum to unity for each patch. Next, we used the
+\code{voloverlap} function to calculate numerical values for the volumes occupied by each cluster of
+species plumage patches, as well as their overlaps. The \code{plot=TRUE} option provides a useful
+graphical representation of the overlap in colourspace (Figure \ref{figure:overlapplot}). The
+ability to calculate an exact overlap volume in \pavo{} (rather than an estimated volume derived
+from Monte Carlo simulation) represents a significant advance in the ability to analyze colourspace
+distributions, and will be useful in testing hypotheses pertaining to differential `sensory niche'
+occupation by different taxa.
+
+% <<label=overlapplot,echo=F,results=hide,fig=F,include=F>>=
+% # 7. Calculate volume overlap
+% voloverlap(tcs1b, tcs1c, col=pal[2:3], plot=T)
+% # setwd('~/github/pavo/manuscript/fig/')
+% # rgl.snapshot('ms-overlapplot.png')
+% @
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3in]{fig/ms-overlapplot}
+\caption{Convex hulls containing plumage patches for \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} in avian tetrahedral colourspace. Polyhedrons are delimited by plumage patches at the vertices. Colours indicate \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green), with the volume overlap (similar colourspace occupied) shown in grey.}
+\label{figure:overlapplot}
+\end{figure}
+
+\subsection{Results}
+
+Figure \ref{figure:distplot} shows that nearly all plumage patch comparisons are divergent (JNDs >
+1, dotted lines) within the subclade as well as compared to the outgroup \emph{L. acuticaudus}.
+These data show that the expansion of occupied colourspace for both subspecies is largely due to
+divergence in the colour of the belly patch (see light grey circles at edges of green and blue
+polyhedrons in Figure \ref{figure:volplot}). Interestingly, the cheek plumage patch of \emph{L.
+elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus} (see Figures
+\ref{figure:specsplot} and dark grey circles in \ref{figure:volplot}).
 
 \section{Citation of \pavo{}}
 
