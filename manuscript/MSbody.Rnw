@@ -12,7 +12,6 @@
 \usepackage{lineno}
 \usepackage{float}
 \usepackage{subcaption}
-\usepackage{url}
 
 % Macros
 \newcommand{\pavo}{{\tt pavo}}  
@@ -67,7 +66,7 @@ implemented in the package.
 starling species, two of which have diverged very recently. Using spectral data obtained from
 museum specimens and avian visual models, we show that despite recently diverged, these species
 have accumulated levels of color disparity  between each other comparable to that between them and
-their more distantly related sister speices. The flexibility and streamlined workflow of pavo{} is
+their more distantly related sister species. The flexibility and streamlined workflow of pavo{} is
 demonstrated by using different visual models and several plotting capabilities.
 
 \item \pavo{} provides a unique environment capable of tackling complex sensory ecology questions
@@ -209,7 +208,7 @@ in]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object
 formulae for the variables can be found in the help file, by typing \code{?summary.rspec}, and in
 the package Vignette \textendash \; see Supporting Information). Additionally, the function
 \code{peakshape} provides descriptors of spectral peaks, such as the wavelenth of maximum
-reflectance and the full width at half maximum (REF - CHAD?), and can be fine-tuned to extract
+reflectance and the full width at half maximum, and can be fine-tuned to extract
 information from specific areas of the curve, which can be useful when the spectral curve has
 multiple peaks or a complex shape (e.g. describing the UV peak of carotenoid curves, Figure
 \ref{figure:work})
@@ -220,8 +219,8 @@ the visual phenotype (cone absorbance), background color, and ambient illuminant
 \citep{Vorobyev:1998}. Several avian receptor phenotypes \citep{Hart:2001,Endler:2005} are
 implemented as options, but user-defined receptor data from any taxon can be used as model input.
 Further, the \code{sensmodel} function implements the calculation of cone absorbance curves based on
-peak sensitivity information (available from the literature, e.g. REF), and can also include oil
-droplet and retinal transmission information in the calculations
+peak sensitivity information \citep[available from the literature, e.g.][]{Hart:2005}, and can also
+include oil droplet and retinal transmission information in the calculations
 \citep{Govardovskii:2000,Hart:2005}.
 
 Visual models can be calculated in terms of absolute photon catches, in which case the receptor
@@ -417,9 +416,9 @@ We used both the \code{relative=FALSE} and \code{relative=TRUE} options of the \
 function. First, \code{relative = FALSE} was used to calculate raw \{\emph{usml}\} values (quantum
 catches for the four avian cone classes), suitable for calculating chromatic distances
 \citep[$\Delta S$,][]{Vorobyev:1998to}. We sused relative cone abundances for the European starling
-\cite{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
+\citep{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
 \code{v} argument was set to 0.1 to give a \emph{``l''} cone Weber fraction of approximately 0.05
-\cite{Vorobyev:1998,Vorobyev:1998to}.
+\citep{Vorobyev:1998,Vorobyev:1998to}.
 
 The results of \code{coldist} give color distances (chromatic , $\Delta S$, Figure
 \ref{figure:distplot};  and achromatic, $\Delta L$, not shown) between all possible combinations of
