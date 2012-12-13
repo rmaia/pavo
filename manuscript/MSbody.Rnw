@@ -594,8 +594,6 @@ models based on photon catches and receptor noise, see \cite{Vorobyev:1998} and
 and \cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original
 sources along with \pavo{}.
 
-%\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
-
 \begin{acks} We would like to thank Jarrod D. Hadfield and Mary Casswell Stoddard for sharing code
 that helped  us develop some of \pavo{}'s capabilities. This work was supported by the NSF grant
 DEB-1210630, AMNH Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant
