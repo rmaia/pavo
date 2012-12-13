@@ -349,9 +349,15 @@ patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 Next, we plotted spectra contained in this \code{rspec} object using \code{plot(specs)} and removed
 the electrical noise arising from the spectrometer using \code{procspec(specs, opt='smooth')}. We
 then used \code{aggplot(specs, by='spp')} to visualize the mean reflectance curves for each each
-species for body patches ``belly'' and ``cheek'' (see Figure \ref{figure:specsplot}).
+species for body patches ``belly'' and ``cheek'' (see Figure \ref{figure:specsplot}):
 
-\subsubsection{WE NEED TO SHOW SOME CODE HERE, MAYBE JUST SUBSETTING ONE BODY PART AND AGGPLOTTING BY SPECIES}
+% \subsubsection{WE NEED TO SHOW SOME CODE HERE, MAYBE JUST SUBSETTING ONE BODY PART AND AGGPLOTTING BY SPECIES}
+
+<<echo=TRUE,eval=FALSE>>=
+specs.belly <- specs[c(1, grep('belly', names(specs)))]
+spp <- sapply(strsplit(names(specs.belly), '\\.'), "[", 1)[-1]
+aggplot(specs.belly, by = spp)
+@
 
 <<label=specsplot,fig=TRUE,include=FALSE,echo=F,results=hide,width=6.5,height=3.1>>=
 # Process spectra (apply smoothing) and average by species and patch
