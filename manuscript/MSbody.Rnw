@@ -279,8 +279,8 @@ barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log tran
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=3in]{fig/ms-logplot}
-\caption{Reflectance curve of a northern cardinal (\emph{Cardinalis cardinalis}, left) and different transformations of the quantum catch values calculated with \code{vismodel}. Transformations shown are: untransformed but normalized to sum of unity (top right), natural log transformed \emph{then} normalized to sum of unity (middle right) and the transformation suggested here, in which the sum of natural log transformed values are subtracted from the $f_i$ values prior to normalizing to have sum of unity (bottom right).}
+\includegraphics[width=2in]{fig/ms-logplot}
+\caption{Reflectance curve of a northern cardinal (\emph{Cardinalis cardinalis}, left) and different transformations of the quantum catch values calculated with \code{vismodel}. Transformations shown are: untransformed but normalized to sum of unity (top right), natural log transformed \emph{then} normalized to sum of unity (middle right), and the transformation suggested here, in which the sum of natural log transformed values are subtracted from the $f_i$ values prior to normalizing to have sum of unity (bottom right).}
 \label{figure:logplot}
 \end{figure}
 
