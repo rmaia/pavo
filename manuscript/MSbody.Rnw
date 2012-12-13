@@ -408,11 +408,12 @@ starling (\emph{Sturnus vulgaris}, \code{visual='star'}), which we incorporated 
 \citep{Hart:1998}.
 
 We used both the \code{relative=FALSE} and \code{relative=TRUE} options of the \code{vismodel}
-function. First, \code{relative = FALSE} was used to calculate raw \{\emph{usml}\} values, suitable
-for calculating chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}. We sused relative cone
-abundances for the European starling \cite{Hart:1998}, which can be easily passed as arguments to
-the \code{coldist} function. The \code{v} argument was set to 0.1 to give a \emph{``l''} cone
-Weber fraction of approximately 0.05 \cite{Vorobyev:1998,Vorobyev:1998to}. 
+function. First, \code{relative = FALSE} was used to calculate raw \{\emph{usml}\} values (quantum
+catches for the four avian cone classes), suitable for calculating chromatic distances
+\citep[$\Delta S$,][]{Vorobyev:1998to}. We sused relative cone abundances for the European starling
+\cite{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
+\code{v} argument was set to 0.1 to give a \emph{``l''} cone Weber fraction of approximately 0.05
+\cite{Vorobyev:1998,Vorobyev:1998to}.
 
 The results of \code{coldist} give color distances (chromatic , $\Delta S$, Figure
 \ref{figure:distplot};  and achromatic, $\Delta L$, not shown) between all possible combinations of
