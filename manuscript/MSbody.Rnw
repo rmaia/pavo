@@ -45,9 +45,9 @@
 \begin{enumerate} 
 
 \item Animal coloration has been a traditional model for the study of a diverse range of topics in
-biology. Recent technical, methodological and empirical advances have led to dramatic increase in
-studies using spectrophotometry to quantify reflectance properties of biological materials, wich
-coupled with modelling species-specific color perception have provided important insights to
+biology. Recent technical, methodological and empirical advances have led to a dramatic increase in
+studies using spectrophotometry to quantify reflectance properties of biological materials, which
+coupled with modelling species-specific color perception, have provided important insights to
 ecological and evolutionary aspects of animal visual communication.
 
 \item Despite this growing interest, a unified framework for analyzing spectral data is still
@@ -57,7 +57,7 @@ manipulate  data from a variety of sources, implements easy to use visualization
 many analytical capabilities, including visual system modeling for a broad range of taxa.
 
 \item In this paper, we present a summary of the functions implemented in \pavo{}, suggest a
-workflow to explore spectral data, and model colors using a user-defined visual systems. We also
+workflow to explore spectral data, and model colors using user-defined visual systems. We also
 present suggestions for handling psychophysiological data and an exact solution for the calculation
 of color volume overlap, which expands on previously derived methodologies. These suggestions are
 implemented in the package.
@@ -95,19 +95,19 @@ aspects of natural selection \citep{Chittka:1992} and sexual selection \citep{Hi
 these interact \citep{Kemp:2009}. It it also an ideal system for truly integrative biological
 research, spanning from the optical processes generating color \citep{Shawkey:2009}, hormonal and
 genetic mechanisms regulating phenotype \citep{Muller:2009}, physiological processes involved
-in preceiving the signal \citep{Hart:2001}, and its adaptive and evolutionary patterns
+in perceiving the signal \citep{Hart:2001}, and its adaptive and evolutionary patterns
 \citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
-objective quantification of the color reflected by surface, as a first approximation of an
+objective quantification of the color reflected by surfaces, as a first approximation of an
 ``receiver-independent'' measure of an organism or object's color
 \citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last couple of decades, the popularization
 of portable spectrophotometers that can measure reflectance across and beyond the human visible
 wavelength range have opened the possibility of quantifying the spectral properties of animal and
 plant integuments \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
-understanding of how animals preceive and process color have allowed the combinination of
+understanding of how animals perceive and process color have allowed the combinination of
 information on receiver psychophysiology and reflectance data in visual models to estimate how
 animals see and differentiate these colors
 \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
@@ -117,8 +117,8 @@ data is still limited from a practical standpoint. Data collection software from
 manufacturers are not standardized, producing inconsistent output files, and software for analyses
 are either restricted in the methods implemented, in the capabilities to import and process data,
 the platforms in which they are available, or rely on proprietary and/or closed software \citep[for
-a review of available software, see][]{Montgomerie:2006}. Color data will further require additional
-converting and exporting  into statistical software for analyses, thus restricting the
+a review of available software, see][]{Montgomerie:2006}. Color data often requires additional
+converting and exporting into statistical software for analyses, thus restricting the
 standarization of protocols, as well as batch processing and automation of workflows. Combined with
 published descriptions that are often poorly detailed or inconsistent, the current procedures and
 implementations severely hinder the reproducibility of research and the reimplementation of methods.
@@ -159,10 +159,10 @@ workflow for spectral color data analysis has to go beyond a ``plug and chug'' i
 requiring thorough exploratory investigation. With this in mind, \pavo{} takes advantage of the
 object-oriented programming environment in R which is ideal for such approach, as outlined below.
 
-\subsection{Data Format}
+\subsection{Organization}
 
-Spectral data is stored in \pavo{} and recognized by its function by use of a new object class,
-\code{"rspec"}, which inherits methods from \code{data.frame}. \code{rspec} objects are
+Spectral data is stored in \pavo{} and recognized by its functions by use of a new object class,
+\code{"rspec"}, which inherits methods from \code{data.frame}. Objects of class \code{rspec} are
 characterized by having individual reflectance spectra as columns of the data frame, with a first
 column containing the wavelength identification data. Raw spectral data can be imported using the
 function \code{getspec}, which currently supports data from a variety of spectrometer and
@@ -182,7 +182,7 @@ points.
 
 It is common when collecting spectral data to take multiple measurements from the same sample,
 averaging these to avoid sampling error \citep{Quesada:2006}. \code{pavo} provides the
-\code{aggspec} function for this, as well as the \code{procspec} function for noise removal via
+\code{aggspec} function for this purpose, as well as the \code{procspec} function for noise removal via
 smoothing, and transformations to standardize and clean spectral data.
 
 \subsection{Visualization}
@@ -201,7 +201,7 @@ Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic color
 \citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (Figure
 \ref{figure:work}, see below).
 
-\subsection{data analysis}
+\subsection{Analysis}
 
 The \code{summary} function can be applied to \code{rspec} objects to produce several tristimulus
 (hue, saturation and brightness) color variables extracted from the spectral shape of the
@@ -222,16 +222,16 @@ the visual phenotype (cone absorbance), background color, and ambient illuminant
 implemented as options, but user-defined receptor data from any taxon can be used as model input.
 Further, the \code{sensmodel} function implements the calculation of cone absorbance curves based on
 peak sensitivity information \citep[available from the literature, e.g.][]{Hart:2001}, and can also
-include oil droplet and retinal transmission information in the calculations
+include oil droplet and ocular transmission information in the calculations
 \citep{Govardovskii:2000,Hart:2005}.
 
 Visual models can be calculated in terms of absolute photon catches, in which case the receptor
 noise model can be used to infer contrast between colors \citep[implemented in the function
 \code{colordist}][]{Vorobyev:1998} or in relative cone stimulation, in which case the model reduces
 to a colorspace model represented in $n-1$ dimensions \citep[where $n$ is the number of different
-receptors involved in color vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. This can be
-selected by the logical argument \code{relative} from the \code{vismodel} function. In the case of
-the avian tetrahedral colorspace, several additional variables can be calculated based on spherical
+receptors involved in color vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. Absolute or relative cone
+stimulation can be selected by the logical argument \code{relative} from the \code{vismodel} function. In the
+case of the avian tetrahedral colorspace, several additional variables can be calculated based on spherical
 coordinates which represent the hue based on the angles and saturation based on the distance from
 the achromatic center \citep[see][]{Stoddard:2008} by calling the \code{tcs} function. This function
 generates an object of class \code{tcs}; a \code{summary} call from a \code{tcs} object will return
@@ -269,7 +269,7 @@ $f_i$ value (i.e. the ``most negative'' and thus smallest) being the greatest $f
 value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5} < \frac{-5}{-5.5}$. This
 completely reverses the relative ranking of photoreceptor classes, yielding erroneous colorspace
 coordinates (Figure \ref{figure:logplot}, middle). \cite{Stoddard:2008} note that this can be dealt
-with by scaling photon catch values by a large value, but given the objective of this transformation
+with by scaling photon catch values by a large value, but given that the objective of this transformation
 is to make stimuli distances proportional to their scale, arbitrary scale transformations will
 result in undersireable effects. Instead, we propose the following transformation for log-
 transformed photon catches ($fi$), implemented in \pavo{} when \code{vismodel} is executed with the
@@ -281,7 +281,7 @@ f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
 
 which preserves measurement scale but still yields hue values that are consistent with original
 values, but with differences that are a linear function of their magnitude as expected from
-Fechner's law (Figure \ref{figure:logplot}, bottom). Note that this transformation is only valid
+Fechner's law (Figure \ref{figure:logplot}, bottom). This transformation is only valid
 (and only used by \code{vismodel}) when log-transformed quantum catches are negative values; in
 other cases the transformations suggested by \cite{Endler:2005,Stoddard:2008} are valid.
 
@@ -315,8 +315,8 @@ bright and diverse iridescent colors likely used in sexual selection and social 
 southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
 \citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
 species, whereas others have classified as subspecies of \emph{L. chloropterus}
-\citep{Craig:1998,Lovette:2007}. We compared to what extent these two species have diverged in their
-colors, also comparing to their sister species, the sharp-tailed starling (\emph{L. acuticaudus}).
+\citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged in their
+colors, and compared both to their sister species, the sharp-tailed starling (\emph{L. acuticaudus}).
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
@@ -336,9 +336,9 @@ individual using the following lines of code in \pavo{}:
 
 % demo input of raw data
 <<echo=TRUE,results=hide,eval=FALSE>>=
-specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))
-specs <- aggspec(specs, by = 3, FUN = mean)
-specs <- procspec(specs, opt='smooth')
+specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700)) #get raw data
+specs <- aggspec(specs, by = 3, FUN = mean) #average by groups of 3 spectral curves
+specs <- procspec(specs, opt='smooth') #remove electrical noise
 @
 
 <<echo=FALSE, results=hide>>=
@@ -378,8 +378,8 @@ these plots, as well as the results for the ``belly'' and ``cheek'' body patches
 
 <<echo=TRUE,eval=FALSE>>=
 specs.belly <- specs[,1:13]  # subset wavelength column and the 12 spectra from the belly patch
-spp <- substr(names(specs.belly),1,4)[-1]  # get 4 first character form spec names (species labels)
-aggplot(specs.belly, by = spp)  # average specs by species
+spp <- substr(names(specs.belly),1,4)[-1]  # 4 first characters from column names (species labels)
+aggplot(specs.belly, by = spp)  # average spectral data by species
 @
 
 <<label=specsplot,fig=TRUE,include=FALSE,echo=F,results=hide,width=6.5,height=3.1>>=
@@ -400,7 +400,8 @@ aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2,
 \begin{figure}[H]
 \centering
 \includegraphics{fig/ms-specsplot}
-\caption{Plots of mean smoothed spectra for different body patches (belly, left; cheek, right). Line 
+\caption{Plots of mean smoothed spectra for different body patches (belly, left; cheek, right) in three
+species of African starling (Sturnidae). Line 
 colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
 elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
 \label{figure:specsplot}
@@ -420,7 +421,8 @@ models, respectively.
 
 First, \code{relative=FALSE} was used to calculate raw photon catch values for the four avian
 photoreceptor classes (\{\emph{usml}\}), suitable for calculating chromatic distances \citep[$\Delta
-S$,][]{Vorobyev:1998to}. We used relative cone abundances for the European starling
+S$,][]{Vorobyev:1998to}. We used relative cone abundances (arguments \code{n1, n2, n3, and n4})
+for the European starling
 \citep{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
 \code{v} argument was set to 0.1 to give a \{\emph{"l"}\} cone Weber fraction of approximately 0.05
 \citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist} give color distances (chromatic
@@ -565,7 +567,7 @@ pal <- brewer.pal(7, "Set1")
 \subsubsection{Avian tetrahedral colorspace}
 
 Finally, to produce a tetrahedral colorspace plot, we used \code{relative=TRUE} in the
-\code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum to unity for
+\code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum of unity for
 each patch. These results indicate that the expansion of occupied colorspace for both subspecies is
 largely due to divergence in the colour of the belly patch (see light grey circles at edges of green
 and blue polyhedrons in Figure \ref{figure:volplot}). Interestingly, the cheek plumage patch of
@@ -576,7 +578,7 @@ it is more closely related (see Figure \ref{figure:specsplot} and dark grey circ
 We also used the \code{voloverlap} function to calculate the volumes occupied by each
 species' plumage patches, as well as their overlaps. As an example, here is the result for the
 overlap between the two recently diverged species (\code{tcs1b} and \code{tcs1c} are \code{tcs}
-objects containing tetra colourspace data for each species, as output by the \code{tcs} function in
+objects containing tetrahedral colourspace data for each species, as output by the \code{tcs} function in
 \pavo{}):
 
 <<echo=T,eval=FALSE, fig=F,include=F>>=
@@ -623,8 +625,8 @@ sources along with \pavo{}.
 \begin{acks} We would like to thank Jarrod D. Hadfield and Mary Casswell Stoddard for sharing code
 that helped  us develop some of \pavo{}'s capabilities. This work was supported by the NSF grant
 DEB-1210630, AMNH Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant
-FA9550-09-1-0159 (M.D.S.),  the University of Akron (M.D.S., R.M., C.M.E.), and NSERC Graduate
-Scholarship (P.-P.B.)
+FA9550-09-1-0159 (M.D.S.),  the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and 
+Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.).
 \end{acks}
 
 \bibliographystyle{bes}
