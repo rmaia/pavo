@@ -12,7 +12,6 @@
 \usepackage{lineno}
 \usepackage{float}
 \usepackage{subcaption}
-\usepackage{url}
 
 % Macros
 \newcommand{\pavo}{{\tt pavo}}  
@@ -41,26 +40,43 @@
 %\cgs{grant sponsor name (no number)}
 %\cgsn{grant1{1}, grant2{2}}{123, 456}
 
-\begin{abstract}
-\begin{enumerate}
-\item Recent advances in portable spectrophotometry and in animal visual psychophysiology has led 
-to an increasing interest in the studies of colors in general, and in modelling species-specific color
-perception. Despite this growing interest, a unified framework for analyzing spectral data is still lacking.
-\item We introduce \pavo{}, an R packgage that facilitates the organization, visualization, and analysis
-of spectral data in a cohesive framework. \pavo{} is highly flexible: it can organize and manipulate 
-data from a variety of sources, implements easy to use visualization tools, provides many analytical
-capabilities, and allows the modelling of visual systems of any vertebrate and (almost all) invertebrates.
-\item In this paper, we present a summary of the \pavo{} functions that will be of general interest, 
-and suggest a workflow to explore spectral data, and model colors using a user-defined visual systems.
-\item We also present an example, using spectral data obtained from Starling museum skins, of the 
-flexibility of the package.
+\begin{abstract} 
+
+\begin{enumerate} 
+
+\item Animal coloration has been a traditional model for the study of a diverse range of topics in
+biology. Recent technical, methodological and empirical advances have led to dramatic increase in
+studies using spectrophotometry to quantify reflectance properties of biological materials, wich
+coupled with modelling species-specific color perception have provided important insights to
+ecological and evolutionary aspects of animal visual communication.
+
+\item Despite this growing interest, a unified framework for analyzing spectral data is still
+lacking. We introduce \pavo{}, an R packgage that facilitates the organization, visualization, and
+analysis of spectral data in a cohesive framework. \pavo{} is highly flexible: it can organize and
+manipulate  data from a variety of sources, implements easy to use visualization tools, and provides
+many analytical capabilities, including visual system modeling for a broad range of taxa.
+
+\item In this paper, we present a summary of the functions implemented in \pavo{}, suggest a
+workflow to explore spectral data, and model colors using a user-defined visual systems. We also
+present suggestions for handling psychophysiological data and an exact solution for the calculation
+of color volume overlap, which expands on previously derived methodologies. These suggestions are
+implemented in the package.
+
+\item As an example of \pavo{}'s capabilities, we compare the color patterns of three African glossy
+starling species, two of which have diverged very recently. Using spectral data obtained from
+museum specimens and avian visual models, we show that despite recently diverged, these species
+have accumulated levels of color disparity  between each other comparable to that between them and
+their more distantly related sister species. The flexibility and streamlined workflow of pavo{} is
+demonstrated by using different visual models and several plotting capabilities.
+
 \item \pavo{} provides a unique environment capable of tackling complex sensory ecology questions
-which previously required the use of various, sometimes costly and proprietal, software and programs. 
-\end{enumerate}
+which previously required the use of various, sometimes restricted, software and programs.
+
+\end{enumerate} 
+
 \end{abstract}
 
-\keywords{tetrachromatic, trichromatic, dichromatic, spectrophotometry, visual model, colorspace,
-tristimulus, just noticeable differences, signal, sensory ecology}
+\keywords{animal communication, colorspace, just noticeable differences, receptor noise, sensory ecology, spectrophotometry, visual model}
 
 \maketitle
 
@@ -75,11 +91,12 @@ tristimulus, just noticeable differences, signal, sensory ecology}
 The role that coloration and color vision plays in animal communication has been a fundamental
 question in evolutionary biology for centuries \citep{darwin:1859,darwin:1896,
 Poulton:1890,Bennett:2007hm}. Visual communication has provided an unique opportunity to investigate
-aspects of natural selection \citep{Chittka:1992} and sexual selection \citep{Hill:2002}, and how these interact \citep{Kemp:2009}. It it also an ideal system
-for truly integrative biological research, from the optical processes generating color (REF),
-hormonal and genetic mechanisms regulating this expression \citep{Muller:2009},
-physiological processes involved in preceiving the signal (REF), and its adaptive and evolutionary
-patterns  \citep{Badyaev:2003,Darst:2006}.
+aspects of natural selection \citep{Chittka:1992} and sexual selection \citep{Hill:2002}, and how
+these interact \citep{Kemp:2009}. It it also an ideal system for truly integrative biological
+research, spanning from the optical processes generating color \citep{Shawkey:2009}, hormonal and
+genetic mechanisms regulating this expression \citep{Muller:2009}, physiological processes involved
+in preceiving the signal \citep{Hart:2001}, and its adaptive and evolutionary patterns
+\citep{Badyaev:2003,Darst:2006}.
 
 However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
@@ -108,15 +125,15 @@ implementations severely hinder the reproducibility of research and the reimplem
 
 We introduce \pavo{} \textendash \; a package for R \citep{rcore} that tackles these problems by
 providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
-visualize colour data generated by spectrophotometry. R is rapidly becoming the working language for
+visualize color data generated by spectrophotometry. R is rapidly becoming the working language for
 scientific programming and data analysis, particularly in ecology and evolution
-\citep[e.g.][]{ape,Bolker:2008}. \pavo{} incorporates R's flexibility by using object classes that
-can seamlessly interpret each other, providing functions that can intuitively be used to import,
-explore, process and analyze spectral color data under a variety of user defined models. We propose
-that, by combining these procedures under a coherent framework not only streamlines workflow, but
-also allows data to be explored and manipulated in ways that can be used to visualize patterns,
-obtain information and develop hypothesis that may otherwise pass unnoticed (Figure
-\ref{figure:work}).
+\citep[e.g.][]{ape,Bolker:2008}, and is also open source and multi-platform. \pavo{} incorporates
+R's flexibility by using object classes that can seamlessly interpret each other, providing
+functions that can intuitively be used to import, explore, process and analyze spectral color data
+under a variety of user defined models. We propose that, by combining these procedures under a
+coherent framework not only streamlines workflow, but also allows data to be explored and
+manipulated in ways that can be used to visualize patterns, obtain information and develop
+hypothesis that may otherwise pass unnoticed (Figure \ref{figure:work}).
 
 \begin{figure}[H]
 \centering
@@ -191,7 +208,7 @@ in]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object
 formulae for the variables can be found in the help file, by typing \code{?summary.rspec}, and in
 the package Vignette \textendash \; see Supporting Information). Additionally, the function
 \code{peakshape} provides descriptors of spectral peaks, such as the wavelenth of maximum
-reflectance and the full width at half maximum (REF - CHAD?), and can be fine-tuned to extract
+reflectance and the full width at half maximum, and can be fine-tuned to extract
 information from specific areas of the curve, which can be useful when the spectral curve has
 multiple peaks or a complex shape (e.g. describing the UV peak of carotenoid curves, Figure
 \ref{figure:work})
@@ -202,8 +219,8 @@ the visual phenotype (cone absorbance), background color, and ambient illuminant
 \citep{Vorobyev:1998}. Several avian receptor phenotypes \citep{Hart:2001,Endler:2005} are
 implemented as options, but user-defined receptor data from any taxon can be used as model input.
 Further, the \code{sensmodel} function implements the calculation of cone absorbance curves based on
-peak sensitivity information (available from the literature, e.g. REF), and can also include oil
-droplet and retinal transmission information in the calculations
+peak sensitivity information \citep[available from the literature, e.g.][]{Hart:2005}, and can also
+include oil droplet and retinal transmission information in the calculations
 \citep{Govardovskii:2000,Hart:2005}.
 
 Visual models can be calculated in terms of absolute photon catches, in which case the receptor
@@ -261,7 +278,9 @@ f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
 
 which preserves measurement scale but still yields hue values that are consistent with original
 values, but with differences that are a linear function of their magnitude as expected from
-Fechner's law (Figure \ref{figure:logplot}, bottom).
+Fechner's law (Figure \ref{figure:logplot}, bottom). Note that this transformation is only valid
+(and only used by \code{vismodel}) when log-transformed quantum catches are negative values; in
+other cases the transformations suggested by \cite{Endler:2005,Stoddard:2008} are valid.
 
 <<logplot,fig=TRUE,include=FALSE,echo=FALSE,results=hide,width=6,height=4.5>>=
 require(pavo)
@@ -287,13 +306,14 @@ barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log tran
 \section{Example: Colorspace divergence in glossy starlings (Sturnidae)}
 
 Here we exemplify some of \pavo{}'s capabilities and workflow by comparing the color patterns of a
-monophyletic clade of three glossy starling species. The lesser blue-eared starling
-(\emph{Lamprotornis chloropterus}) and the southern blue-eared starling (\emph{L. elisabeth}) form a
-recently diverged clade that some \citep[including the International Ornithological
-Congress,][]{Gill:2012} have considered full species, whereas others have classified as subspecies
-of \emph{L. chloropterus} \citep{Lovette:2007,Craig:1998}. We compared to what extent these two
-species have diverged in their colors, also comparing to their sister species, the sharp-tailed
-starling (\emph{L. acuticaudus}).
+monophyletic clade of three glossy starling species. Glossy starlings from the African clade have
+bright and diverse iridescent colors likely used in sexual selection and social competition
+\citep{Rubenstein:2009}. The lesser blue-eared starling (\emph{Lamprotornis chloropterus}) and the
+southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
+\citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
+species, whereas others have classified as subspecies of \emph{L. chloropterus}
+\citep{Lovette:2007,Craig:1998}. We compared to what extent these two species have diverged in their
+colors, also comparing to their sister species, the sharp-tailed starling (\emph{L. acuticaudus}).
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
@@ -376,7 +396,7 @@ aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.05, lwd=2
 \centering
 \includegraphics{fig/ms-specsplot}
 \caption{Plots of mean smoothed spectra for different body patches (belly, left; cheek, right). Line 
-colours indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
+colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
 elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
 \label{figure:specsplot}
 \end{figure}
@@ -503,6 +523,7 @@ legend('topright', bty='n', pch = c(21,22,23), legend = c("LACL-LAEL", "LAAC-LAE
       \label{figure:volplot}
     \end{subfigure}
   \caption{\textbf{(a)} Dotplot showing colour distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{(b)} Tetrahedral colourspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: cheek colour, light grey: belly colour, black: remaining plumage patch colours). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colours).}
+
 \end{figure}
 
 <<echo=F,results=hide>>=
@@ -570,6 +591,16 @@ The \code{plot=TRUE} option provides a useful graphical representation of the ov
 solution to the geometric problem \citep[i.e. not through Monte Carlo simulation,][]{Stoddard:2011}.
 
 \section{Citation of methods implemented in \pavo{}}
+
+Most of the methods implemented in \pavo{} have been thoroughly described in their original
+publications, to which users should refer for details and interpretation. For summary tristimulus
+variables and spectral shape analysis of reflectance curves, see \cite{Montgomerie:2006}. For visual
+models based on photon catches and receptor noise, see \cite{Vorobyev:1998} and
+\cite{Vorobyev:1998to}. For visual phenotype sensitivity curve estimation, see
+\cite{Govardovskii:2000} and \cite{Hart:2005}. For tetrahedral colorspace models, see
+\cite{Endler:2005} and \cite{Stoddard:2008}, and for color volume overlap see \cite{Stoddard:2011}
+and \cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original
+sources along with \pavo{}.
 
 %\begin{center}\fbox{Figure \ref{fig:REF} about here.}\end{center}
 
