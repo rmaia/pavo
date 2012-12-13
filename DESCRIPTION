@@ -46,3 +46,4 @@ Collate:
     'tcsvol.R'
     'vismodel.R'
     'voloverlap.R'
+    'loadmessage.R'

@@ -1,0 +1,16 @@
+citHeader("To cite package pavo in publications use:")
+
+citEntry(entry="Article",
+    title = "pavo: an R package for the perceptual analysis, visualization and organization of spectral color data",
+    author = personList(as.person("Rafael Maia"),
+    as.person("Chad M. Eliason"),
+    as.person("Pierre-Paul Bitton"),
+    as.person("Stphanie M. Doucet"),
+    as.person("Matthew D. Shawkey")
+    ),
+	journal = "submitted",
+    year = "2012",
+	volume = "",
+	pages = "",
+
+    textVersion = "Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. pavo: an R package for the perceptual analysis, visualization and organization of spectral color data. Submitted.")
