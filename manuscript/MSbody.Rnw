@@ -250,22 +250,49 @@ f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
 
 which preserves measurement scale but still yields hue values that are consistent with original
 values, but with differences that are a linear function of their magnitude as expected from
-Fechner's law (FIGURE?).
+Fechner's law (see Figure \ref{figure:logplot}).
+
+<<logplot,fig=TRUE,include=FALSE,echo=FALSE,results=hide,width=6,height=4.5>>=
+require(pavo)
+specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", subdir=T, subdir.names=F)
+mspecs <- aggspec(specs, by=3, FUN=mean)
+vm1 <- vismodel(mspecs)
+par(mar=c(4,4,1,1), las=1, ps=12)
+layout(matrix(c(1,1,1,2,3,4), ncol=2), widths=c(1,.35))
+plot(mspecs, 2, lwd=3)
+barplot(vm1$qi[1,1:4], col='darkgrey', ylab="untransformed", ylim=c(0,.7))
+barplot(log(vm1$qi[1,1:4])/sum(log(vm1$qi[1,1:4])), col='darkgrey', ylab="log transform A", 
+        ylim=c(0,.7))
+barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log transform B')
+@
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3in]{fig/ms-logplot}
+\caption{Reflectance curve of a northern cardinal (\emph{Cardinalis cardinalis}, left) and different transformations of the quantum catch values calculated with \code{vismodel}. Transformations shown are: untransformed but normalized to sum of unity (top right), natural log transformed \emph{then} normalized to sum of unity (middle right) and the transformation suggested here, in which the sum of natural log transformed values are subtracted from the $f_i$ values prior to normalizing to have sum of unity.}
+\label{figure:logplot}
+\end{figure}
 
 \section{Example: Colourspace divergence in African starlings (Sturnidae)}
 
-Recent phylogenetic evidence indicates a very recent divergence for \emph{L. chloropterus} and
-\emph{L. elisabeth} compared to the node containing the outgroup \emph{L. acuticaudus}
-(\cite{rubenstein}). Given the lability of iridescent plumages (\cite{}) and potential to produce
-colours across the bird-visible range of wavelengths, plumage colouration may play a role in
-reproductive isolation \cite{Seehausen 1999}. By analyzing plumage patches within an avian
-colourspace (see \cite{}) we can better understand the physisiologically relevant divergence in
-plumage colour among these focal species. Here we demonstrate some of the capabilities of \pavo{} by
-analyzing this example dataset.
+% IDEAS ON THIS PARAGRAPH RAFAEL? I KINDA THREW IT TOGETHER..
+
+Body colouration may play an important role in reproductive isolation and, hence, speciation (e.g.,
+see \cite{Seehausen 1999}, \cite{Ritchie?}).  African starlings (Sturnidae) are a speciose clade of
+brilliant iridescent birds whose colours range from ultraviolet to red \cite{REF?}. Recent
+phylogenetic evidence indicates a very recent divergence for two species \emph{Lamprotornis
+chloropterus} and \emph{L. elisabeth} compared to the node containing their sister species \emph{L.
+acuticaudus} (\cite{rubenstein}). Given the lability of iridescent plumages \cite{} and potential to
+produce colours across the bird-visible range of wavelengths \cite{}, one might predict more
+divergent colours between distantly related species. However, these three species have numerous
+discrete plumage patches that vary in colouration both within species as well as within individuals.
+By analyzing these patches within an avian colourspace, we can better understand the physiologically
+relevant divergence in plumage colour among these focal species while also demonstrating some of the 
+capabilities of \pavo{} in analyzing spectral data.
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
-require(pavo)
+# require(pavo)
 source('~/github/pavo/R/aggspec.R')
 pal <- brewer.pal(7, "Set1")
 pal2 <- brewer.pal(11, "Spectral")
