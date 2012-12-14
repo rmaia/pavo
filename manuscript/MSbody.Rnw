@@ -284,7 +284,6 @@ values, but with differences that are a linear function of their magnitude as ex
 Fechner's law (Figure \ref{figure:logplot}, bottom). Note that this transformation is only valid
 (and only used by \code{vismodel}) when log-transformed quantum catches are negative values; in
 other cases the transformations suggested by \cite{Endler:2005,Stoddard:2008} are valid.
-
 <<logplot,fig=TRUE,include=FALSE,echo=FALSE,results=hide,width=6,height=4.5>>=
 require(pavo)
 specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", subdir=T, subdir.names=F)
@@ -298,7 +297,6 @@ barplot(log(vm1$qi[1,1:4])/sum(log(vm1$qi[1,1:4])), col='darkgrey', ylab="log tr
         ylim=c(0,.7))
 barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log transform B')
 @
-
 \begin{figure}[t]
 \centering
 \includegraphics[width=3in]{fig/ms-logplot}
@@ -317,7 +315,6 @@ southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clad
 species, whereas others have classified as subspecies of \emph{L. chloropterus}
 \citep{Craig:1998,Lovette:2007}. We compared to what extent these two species have diverged in their
 colors, also comparing to their sister species, the sharp-tailed starling (\emph{L. acuticaudus}).
-
 <<echo=F,results=hide>>=
 require(RColorBrewer)
 # require(pavo)
@@ -333,14 +330,12 @@ specimens of the three species. We measured three reflectance spectra from 11 pl
 Figure \ref{figure:distplot} for list) of four males per species. We loaded, averaged and  removed
 the electrical noise arising from the spectrometer from these 396 raw spectral data files by
 individual using the following lines of code in \pavo{}:
-
 % demo input of raw data
 <<echo=TRUE,results=hide,eval=FALSE>>=
 specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))
 specs <- aggspec(specs, by = 3, FUN = mean)
 specs <- procspec(specs, opt='smooth')
 @
-
 <<echo=FALSE, results=hide>>=
 load('~/github/pavo/toydata/ACE.RData')
 specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
@@ -375,13 +370,11 @@ Next, we plotted spectra contained in this \code{rspec} object. We used \code{ag
 the mean reflectance curves for each body part from each species. Below we show the code for one of
 these plots, as well as the results for the ``belly'' and ``cheek'' body patches: (Figure
 \ref{figure:specsplot}):
-
 <<echo=TRUE,eval=FALSE>>=
 specs.belly <- specs[,1:13]  # subset wavelength column and the 12 spectra from the belly patch
 spp <- substr(names(specs.belly),1,4)[-1]  # get 4 first character form spec names (species labels)
 aggplot(specs.belly, by = spp)  # average specs by species
 @
-
 <<label=specsplot,fig=TRUE,include=FALSE,echo=F,results=hide,width=6.5,height=3.1>>=
 # Process spectra (apply smoothing) and average by species and patch
 specs.sm <- procspec(specs, opt='smooth')
@@ -428,7 +421,6 @@ S$,][]{Vorobyev:1998to}. We used relative cone abundances for the European starl
 possible combinations of plumage patches in the \code{tcs} object, and can be further subsetted to
 only analyse comparisons of interest (e.g., colour difference between homologous patches of two
 species). For example:
-
 <<>>=
 vm.star1 <- vismodel(specs, visual = 'star', relative = FALSE)
 delta.S <- coldist(vm.star1, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
@@ -448,13 +440,11 @@ iridescent colors, small differences in the spectral shape can yield noticeably 
 This becomes clear when comparing the results for the most and least contrasting body patches
 (``belly'' and ``cheek'', respectively; Figure \ref{figure:distplot}) to their spectral curves
 (Figure \ref{figure:specsplot}).
-
 <<echo=FALSE,results=hide>>=
 # 5. Run visual models using starling visual sensitivies
 vm1 <- vismodel(specs, visual = 'star', relative = TRUE)
 vm2 <- vismodel(specs, visual = 'star', relative = FALSE)
 @
-
 <<echo=FALSE,results=hide>>=
 res <- list()
 for (i in unique(patch)[-1]) {
@@ -491,7 +481,6 @@ for (i in 1:11) {
 rownames(d23) <- names(res)
 colnames(d23) <- c('mean', 'sd')
 @
-
 <<echo=F,results=hide>>=
 rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
 @
@@ -535,12 +524,10 @@ legend('topright', bty='n', pch = c(21,22,23), legend = c("LACL-LAEL", "LAAC-LAE
   \caption{\textbf{(a)} Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{(b)} Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: cheek color, light grey: belly color, black: remaining plumage patch colors). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colors).}
 
 \end{figure}
-
 <<echo=F,results=hide>>=
 # 7. Calculate tetra colorspace variables
 tcs1 <- tcs(vm1)
 @
-
 <<tetracolourspaceplot,echo=F,results=hide>>=
 # Plot species in colorspace
 tcs1$spp <- sapply(strsplit(rownames(tcs1), "\\."), "[", 1)
@@ -578,7 +565,6 @@ species' plumage patches, as well as their overlaps. As an example, here is the 
 overlap between the two recently diverged species (\code{tcs1b} and \code{tcs1c} are \code{tcs}
 objects containing tetra colourspace data for each species, as output by the \code{tcs} function in
 \pavo{}):
-
 <<echo=T,eval=FALSE, fig=F,include=F>>=
 vm.star2 <- vismodel(specs, visual = 'star', relative = TRUE)
 tcs.star <- tcs(vm.star2)
@@ -590,7 +576,6 @@ voloverlap(tcs.lael, tcs.lacl, plot = TRUE)
 <<echo=F,eval=T, fig=F,include=F>>=
 voloverlap(tcs1b, tcs1c, plot = FALSE)
 @
-
 <<echo=F,results=hide>>=  % code to produce plot
 # voloverlap(tcs1b, tcs1c, plot=T)
 # setwd('~/github/pavo/manuscript/fig/')
