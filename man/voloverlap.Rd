@@ -70,7 +70,7 @@ voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T, col=1:3) }
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}, with code from
-  S. Villeger
+  Sebastien Villeger
 }
 \references{
   Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
