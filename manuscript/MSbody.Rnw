@@ -269,11 +269,14 @@ colourspace coordinates (Figure \ref{figure:logplot}, middle). \cite{Stoddard:20
 can be dealt with by scaling photon catch values by a large value, but given that the objective of
 this transformation is to make stimuli distances proportional to their scale, arbitrary scale
 transformations will result in undesirable effects. Instead, we propose the following transformation
-for log- transformed photon catches ($fi$), implemented in \pavo{} when \code{vismodel} is executed
-with the option \code{relative=TRUE}:
+for log-transformed photon catches ($fi$), which is adequate for making negative values relative to
+each other and is implemented in \pavo{} when \code{vismodel} is executed with the option
+\code{relative=TRUE}:
+
 \begin{equation}
 f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
 \end{equation}
+
 This calculation preserves measurement scale and yields hue values that are consistent with original
 values, but with differences that are a linear function of their magnitude, as expected from
 Fechner's law (Figure \ref{figure:logplot}, bottom). This transformation is only valid (and only
