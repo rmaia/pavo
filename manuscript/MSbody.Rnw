@@ -25,11 +25,11 @@
 %%%%%%%%%%%%
 \linenumbers
 
-\runningheads{R. Maia \textit{et al.}}{\pavo{}: R package for color analysis}
+\runningheads{R. Maia \textit{et al.}}{\pavo{}: R package for colour analysis}
 
 \papertype{Application}
 
-\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data}
+\title{\pavo{}: an R package for the perceptual analysis, visualization and organization of spectral colour data}
 
 \author{Rafael Maia\affil{1}\corrauth\, Chad M. Eliason\affil{1}, Pierre-Paul Bitton\affil{2}, St\'{e}phanie M. Doucet\affil{2} and Matthew D. Shawkey\affil{1}} 
 
@@ -44,10 +44,10 @@
 
 \begin{enumerate} 
 
-\item Animal coloration has been a powerful model for the study of a diverse range of topics in
+\item Animal colouration has been a powerful model for the study of a diverse range of topics in
 biology. Recent technical, methodological and empirical advances have led to a dramatic increase in
 the use of spectrophotometry to quantify reflectance properties of biological material and of models
-to determine how these colors are perceived by the animals themselves , providing important
+to determine how these colours are perceived by the animals themselves , providing important
 insights to ecological and evolutionary aspects of animal visual communication.
 
 \item Despite this growing interest, a unified framework for analyzing spectral data has not been
@@ -57,14 +57,14 @@ analysis of spectral data in a cohesive framework. \pavo{} is highly flexible: i
 tools, and (c) analyze data using visual system modeling for a broad range of taxa.
 
 \item In this paper, we present a summary of the functions implemented in \pavo{}, suggest a
-workflow to explore spectral data, and model colors using user-defined visual systems. We also
+workflow to explore spectral data, and model colours using user-defined visual systems. We also
 present suggestions (implemented in the package) for handling psychophysiological data and an exact
-solution for the calculation of color volume overlap, thus expanding previously published
+solution for the calculation of colour volume overlap, thus expanding previously published
 methodologies.
 
-\item As an example of \pavo{}'s capabilities, we compare the color patterns of three African Glossy
+\item As an example of \pavo{}'s capabilities, we compare the colour patterns of three African Glossy
 Starling species, two of which have diverged very recently. Using spectral data and avian visual
-models, we show that color disparity between the recently diverged species is as great as that
+models, we show that colour disparity between the recently diverged species is as great as that
 between them and the more distantly related species. The flexibility and streamlined workflow of
 pavo{} is demonstrated through use of different visual models and several plotting capabilities.
 
@@ -75,7 +75,7 @@ that previously required the use of multiple, sometimes restricted, software and
 
 \end{abstract}
 
-\keywords{animal communication, colorspace, just noticeable differences, receptor noise, sensory ecology, spectrophotometry, visual model}
+\keywords{animal communication, colourspace, just noticeable differences, receptor noise, sensory ecology, spectrophotometry, visual model}
 
 \maketitle
 
@@ -87,34 +87,34 @@ that previously required the use of multiple, sometimes restricted, software and
 
 \section{Introduction}
 
-The role of coloration and color vision in animal communication has been a fundamental question in
+The role of colouration and colour vision in animal communication has been a fundamental question in
 evolutionary biology for centuries \citep{darwin:1859,darwin:1896, Poulton:1890,Bennett:2007hm}.
 Visual communication has provided an unique opportunity to investigate aspects of natural
 \citep{Chittka:1992} and sexual selection \citep{Hill:2002}, and how these interact
 \citep{Kemp:2009}. It is also an ideal system for truly integrative biological research, spanning
-from the optical processes generating color \citep{Shawkey:2009}, hormonal and genetic mechanisms
+from the optical processes generating colour \citep{Shawkey:2009}, hormonal and genetic mechanisms
 regulating phenotype \citep{Muller:2009}, physiological processes involved in perceiving the signal
 \citep{Hart:2001}, and its adaptive and evolutionary patterns \citep{Badyaev:2003,Darst:2006}.
 
-However, ``color'' refers to a sensory experience, not an objective quantity, and the realization
+However, ``colour'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
-objective quantification of the color reflected by surfaces, as a first approximation of an
-``receiver-independent'' measure of an organism or object's color
+objective quantification of the colour reflected by surfaces, as a first approximation of an
+``receiver-independent'' measure of an organism or object's colour
 \citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last 20 years, the falling cost and rising
 popularity of portable spectrophotometers have made objective quantification of the spectral
 properties of animal and plant integuments commonplace
 \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the understanding of perception
-and processing of color have allowed analysis of  reflectance data using visual models that estimate
-how animals see and differentiate these colors
+and processing of colour have allowed analysis of  reflectance data using visual models that estimate
+how animals see and differentiate these colours
 \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
 
-because of these advances, a cohesive framework for working with and analyzing color from
+Because of these advances, a cohesive framework for working with and analyzing colour from
 reflectance data is needed. Output file types from spectrophotometer manufacturers are not
 standardized, and software for analyses are limited either in the methods they implement, the types
 of data they import and process, or the platforms in which they are available. Moreover, many are
 proprietary and/or closed, making customization impossible \citep[for a review of available
-software, see][]{Montgomerie:2006}. Color data often require additional conversion and export into
+software, see][]{Montgomerie:2006}. colour data often require additional conversion and export into
 statistical software for analyses, restricting  protocol standardization across labs, and batch
 processing automation of workflows. Combined with published descriptions that are often poorly
 detailed or inconsistent, the current procedures and implementations severely hinder the
@@ -122,11 +122,11 @@ reproducibility of research and the reimplementation of methods.
 
 We introduce \pavo{} \textendash \; a package for R \citep{rcore} that addresses these problems by
 providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
-visualize color data generated by spectrophotometry. R is also open source and multi-platform, and
+visualize colour data generated by spectrophotometry. R is also open source and multi-platform, and
 is rapidly becoming the working language for scientific programming and data analysis, particularly
 in ecology and evolution \citep[e.g.][]{ape,Bolker:2008}. \pavo{} incorporates R's flexibility by
 using object classes that can seamlessly interpret each other, providing functions that can be used
-to intuitively import, explore, process and analyze spectral color data under a variety of user-
+to intuitively import, explore, process and analyze spectral colour data under a variety of user-
 defined models. We propose that combining these procedures under a coherent framework not only
 streamlines workflow, but also allows data to be explored and manipulated in ways that can be used
 to visualize patterns, obtain information and develop and test hypotheses (Figure
@@ -152,8 +152,8 @@ capacities to identify further required manipulations and previously unconsidere
 \textbf{analysis} of data from the spectral shape of reflectance curves or by incorporating receiver
 psychophysiology in visual models (Figure \ref{figure:work}). As noted by \cite{Bennett:2007hm} and
 others \citep{Andersson:2006, Montgomerie:2006}, though spectral data have become commonplace in
-studies of animal coloration, it is easy to obtain poor-quality or inaccurate data. Therefore a
-workflow for spectral color data analysis has to go beyond a ``plug and chug'' implementation,
+studies of animal colouration, it is easy to obtain poor-quality or inaccurate data. Therefore a
+workflow for spectral colour data analysis has to go beyond a ``plug and chug'' implementation,
 requiring thorough exploratory investigation. With this in mind, \pavo{} takes advantage of R's
 object-oriented programming environment, as outlined below.
 
@@ -174,9 +174,9 @@ to identify the object as a particular type of data frame and interpret it accor
 The class \code{"vismodel"} is used to interpret spectral data that has been processed through one
 of the visual models implemented, and also stores information on how it was generated (e.g. the
 visual phenotype, background and illuminant used, and any transformations applied; see below).
-Additionally, the \code{"tcs"} class refers to tetrahedral colorspace models
+Additionally, the \code{"tcs"} class refers to tetrahedral colourspace models
 \citep{Endler:2005,Stoddard:2008}, and the \code{summary} function can be used to extract summary
-variables, like the color volume or hue span \citep{Stoddard:2008} for groups and subsets of points.
+variables, like the colour volume or hue span \citep{Stoddard:2008} for groups and subsets of points.
 
 It is common when collecting spectral data to take multiple measurements from the same sample,
 averaging these to avoid sampling error \citep{Quesada:2006}. \code{pavo} provides the
@@ -195,14 +195,14 @@ also offers exploratory plotting capabilities that can be combined with data pro
 formatting, such as \code{explorespec} (for visualizing groups of spectra) and \code{smoothplot}
 (for choosing smoothening parameters; Figure \ref{figure:work}).
 
-Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colorspace model
+Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colourspace model
 \citep{Stoddard:2008, Endler:2005} through the \code{tcsplot} and \code{projplot} functions (Figure
 \ref{figure:work}, see below).
 
 \subsection{Analysis}
 
 The \code{summary} function can be applied to \code{rspec} objects to produce several tristimulus
-(hue, saturation and brightness) color variables extracted from the spectral shape of the
+(hue, saturation and brightness) colour variables extracted from the spectral shape of the
 reflectance curve. This function calculates variables previously described in the literature
 \citep[summarized in][]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object
 (description and formulae for the variables can be found in the help file, by typing
@@ -215,7 +215,7 @@ curves, Figure \ref{figure:work}).
 
 \pavo{} also allows the easy production of models that incorporate the visual system of the receiver
 through the \code{vismodel} function. Models can be calculated incorporating the visual phenotype
-(cone absorbance), background color, and ambient illuminant \citep{Vorobyev:1998}. Several avian
+(cone absorbance), background colour, and ambient illuminant \citep{Vorobyev:1998}. Several avian
 receptor phenotypes \citep{Hart:2001,Endler:2005} are implemented as options, but user-defined
 receptor data from any taxon can be used as model input. Further, the \code{sensmodel} function
 implements the calculation of cone absorbance curves based on peak sensitivity information
@@ -223,34 +223,34 @@ implements the calculation of cone absorbance curves based on peak sensitivity i
 ocular transmission information in the calculations \citep{Govardovskii:2000,Hart:2005}.
 
 Visual models can be calculated in terms of absolute photon catches, in which case the receptor
-noise model can be used to infer contrast between colors \citep[implemented in the function
+noise model can be used to infer contrast between colours \citep[implemented in the function
 \code{colordist}][]{Vorobyev:1998} or in relative cone stimulation, in which case the model reduces
-to a colorspace model represented in $n-1$ dimensions \citep[where $n$ is the number of different
-receptors involved in color vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. Absolute or
+to a colourspace model represented in $n-1$ dimensions \citep[where $n$ is the number of different
+receptors involved in colour vision][]{Goldsmith:1990,Endler:2005,Stoddard:2008}. Absolute or
 relative cone stimulation can be selected by the logical argument \code{relative} from the
-\code{vismodel} function. In the case of the avian tetrahedral colorspace, several additional
+\code{vismodel} function. In the case of the avian tetrahedral colourspace, several additional
 variables can be calculated based on spherical coordinates which represent the hue based on the
 angles and saturation based on the distance from the achromatic center \citep[see][]{Stoddard:2008}
 by calling the \code{tcs} function. This function generates an object of class \code{tcs}; a
 \code{summary} call from a \code{tcs} object will return summary statistics described in
 \cite{Stoddard:2008} for sets of points (see below).
 
-\subsection{Volume Overlap and Fechner's law in the Tetrahedral Colorspace Model}
+\subsection{Volume Overlap and Fechner's law in the Tetrahedral colourspace Model}
 
 \pavo{} also builds upon previously described visual model methods. For example,
 \cite{Stoddard:2011} present the useful technique of calculating the overlap between the volumes
-defined by two sets of points in colorspace. They used this metric to quantify mimicry
+defined by two sets of points in colourspace. They used this metric to quantify mimicry
 \citep{Stoddard:2011,Stoddard:2012}, such that a greater volume overlap would indicate greater
-overall color similarity. Given the complexity of calculating the intersection of three-dimensional
+overall colour similarity. Given the complexity of calculating the intersection of three-dimensional
 convex hulls, \cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of volume
 overlap. \pavo{}, instead, provides the exact solution for the calculation of the intersection of
-color volumes, using a method originally implemented to calculate the overlap between
+colour volumes, using a method originally implemented to calculate the overlap between
 multidimensional niches \citep{Villeger:2011} through the computational geometry capabilities
 available from the \code{rcdd} package \citep{rcdd}.
 
 Finally, we have addressed previously identified methodological inconsistencies in adapting visual
-models to the tetrahedral colorspace. For example, \cite{Endler:2005} recommend log-transforming
-photon catches before defining the colorspace (by dividing the photon catch of each receptor by the
+models to the tetrahedral colourspace. For example, \cite{Endler:2005} recommend log-transforming
+photon catches before defining the colourspace (by dividing the photon catch of each receptor by the
 sum of all receptors, Figure \ref{figure:logplot}). This transformation makes the difference between
 stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
 also][]{Vorobyev:1998,Endler:1990}. \cite{Stoddard:2008} evaluated the consequences of this
@@ -265,7 +265,7 @@ numbers, which if made relative by dividing by the sum ($f_{i\;relative} = f_i /
 in the greatest \textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being
 the greatest $f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5}
 < \frac{-5}{-5.5}$. This reverses the relative ranking of photoreceptor classes, yielding erroneous
-colorspace coordinates (Figure \ref{figure:logplot}, middle). \cite{Stoddard:2008} note that this
+colourspace coordinates (Figure \ref{figure:logplot}, middle). \cite{Stoddard:2008} note that this
 can be dealt with by scaling photon catch values by a large value, but given that the objective of
 this transformation is to make stimuli distances proportional to their scale, arbitrary scale
 transformations will result in undesirable effects. Instead, we propose the following transformation
@@ -300,17 +300,17 @@ barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log tran
 \label{figure:logplot}
 \end{figure}
 
-\section{Example: Colorspace divergence in glossy starlings (Sturnidae)}
+\section{Example: colourspace divergence in glossy starlings (Sturnidae)}
 
-Here we exemplify some of \pavo{}'s capabilities and workflow by comparing the color patterns of a
+Here we exemplify some of \pavo{}'s capabilities and workflow by comparing the colour patterns of a
 monophyletic clade of three glossy starling species. Glossy starlings from the African clade have
-bright and diverse iridescent colors likely used in sexual selection and social competition
+bright and diverse iridescent colours likely used in sexual selection and social competition
 \citep{Rubenstein:2009}. The lesser blue-eared starling (\emph{Lamprotornis chloropterus}) and the
 southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
 \citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
 species, whereas others have classified as subspecies of \emph{L. chloropterus}
 \citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged in
-their colors, and compared both to their sister species, the sharp-tailed starling (\emph{L.
+their colours, and compared both to their sister species, the sharp-tailed starling (\emph{L.
 acuticaudus}).
 
 <<echo=F,results=hide>>=
@@ -396,22 +396,22 @@ aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2,
 \includegraphics{fig/ms-specsplot}
 \caption{Plots of mean smoothed spectra for different body patches (belly, left; wing, right) in three
 species of African starling (Sturnidae). Line 
-colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
+colours indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
 elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
 \label{figure:specsplot}
 \end{figure}
 
 \subsection{Step 3: Analysis}
 
-To understand how these colors are perceived by birds, we used the \code{vismodel} function to
-compare colors taking into account avian visual sensitivities (sensory phenotype). \pavo{}
+To understand how these colours are perceived by birds, we used the \code{vismodel} function to
+compare colours taking into account avian visual sensitivities (sensory phenotype). \pavo{}
 incorporates available data on the retinal sensitivities of numerous taxa, including the European
 starling (\emph{Sturnus vulgaris}, \code{visual='star'}), which we incorporated here
 \citep{Hart:1998}. We used both the \code{relative=FALSE} and \code{relative=TRUE} options of the
-\code{vismodel} function, to measure color attributes using the receptor noise and colorspace
+\code{vismodel} function, to measure colour attributes using the receptor noise and colourspace
 models, respectively.
 
-\subsubsection{Color distances}
+\subsubsection{colour distances}
 
 First, \code{relative=FALSE} was used to calculate raw photon catch values for the four avian
 photoreceptor classes (\{\emph{usml}\}), suitable for calculating chromatic distances \citep[$\Delta
@@ -419,7 +419,7 @@ S$,][]{Vorobyev:1998to}. We used relative cone abundances (arguments \code{n1, n
 for the European starling
 \citep{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
 \code{v} argument was set to 0.1 to give a \{\emph{"l"}\} cone Weber fraction of approximately 0.05
-\citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist} give color distances (chromatic
+\citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist} give colour distances (chromatic
 , $\Delta S$, Figure \ref{figure:distplot};  and achromatic, $\Delta L$, not shown) between all
 possible combinations of plumage patches in the \code{tcs} object, and can be further subsetted to
 only analyse comparisons of interest (e.g., colour difference between homologous patches of two
@@ -431,15 +431,15 @@ delta.S <- coldist(vm.star1, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3
 head(delta.S[intersect(grep('belly', delta.S$patch1), grep('belly', delta.S$patch2)),], 3) 
 @
 
-(The calculation of both chromatic and achromatic distances of these 8646 pairs of colors took about
+(The calculation of both chromatic and achromatic distances of these 8646 pairs of colours took about
 0.9 seconds in a MacBook Pro running R version 2.15.2). We can see from Figure \ref{figure:distplot}
-that color disparity between the closely related species is similar to that between them and the
+that colour disparity between the closely related species is similar to that between them and the
 more distantly related sister species  \emph{L. acuticaudus}. Using a value of 1 as a threshold for
 Just Noticeable Differences (JNDs, Figure \ref{figure:distplot} dashed lines) nearly all plumage
-patch comparisons yield colors that are discernible to the starling visual system, both within the
+patch comparisons yield colours that are discernible to the starling visual system, both within the
 \emph{L. chloropterus-L. elisabeth} subclade as well as compared to the \emph{L. acuticaudus}
-outgroup. Given the high satuturation of iridescent colors, small differences in the spectral shape
-can yield noticeably different colors. This becomes clear when comparing the results for the most
+outgroup. Given the high satuturation of iridescent colours, small differences in the spectral shape
+can yield noticeably different colours. This becomes clear when comparing the results for the most
 and least contrasting body patches (``belly'' and ``wing'', respectively; Figure
 \ref{figure:distplot}) to their spectral curves (Figure \ref{figure:specsplot}).
 
@@ -489,7 +489,7 @@ rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
 @
 
 <<label=distplot,fig=TRUE,echo=FALSE,results=hide,include=FALSE,width=5,height=5>>=
-# Plot mean +/- SD of color distances by patch
+# Plot mean +/- SD of colour distances by patch
 par(mar=c(4,4,2,2), oma=c(0,2,0,0), xpd=FALSE)
 pad <- .15
 plot(c(1:11)~d23[rs,1], xlim = c(-16, 16), ylab = "", xlab = expression(paste(Delta, "S (JNDs)")), 
@@ -524,15 +524,15 @@ legend('topright', bty='n', pch = c(21,22,23), legend = c("LACL-LAEL", "LAAC-LAE
       \caption{}
       \label{figure:volplot}
     \end{subfigure}
-  \caption{\textbf{(a)} Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{(b)} Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: wing color, light grey: belly color, black: remaining plumage patch colors). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colors).}
+  \caption{\textbf{(a)} Dotplot showing colour distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{(b)} Tetrahedral colourspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: wing colour, light grey: belly colour, black: remaining plumage patch colours). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colours).}
 
 \end{figure}
 <<echo=F,results=hide>>=
-# 7. Calculate tetra colorspace variables
+# 7. Calculate tetra colourspace variables
 tcs1 <- tcs(vm1)
 @
 <<tetracolourspaceplot,echo=F,results=hide>>=
-# Plot species in colorspace
+# Plot species in colourspace
 tcs1$spp <- sapply(strsplit(rownames(tcs1), "\\."), "[", 1)
 tcs1$patch <- sapply(strsplit(rownames(tcs1), "\\."), "[", 4)
 tcs1$both <- paste(tcs1$spp, tcs1$patch)
@@ -552,11 +552,11 @@ pal <- brewer.pal(7, "Set1")
 # rgl.snapshot('ms-volplot.png')
 @
 
-\subsubsection{Avian tetrahedral colorspace}
+\subsubsection{Avian tetrahedral colourspace}
 
-Finally, to produce a tetrahedral colorspace plot, we used \code{relative=TRUE} in the
+Finally, to produce a tetrahedral colourspace plot, we used \code{relative=TRUE} in the
 \code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum of unity for
-each patch. These results indicate that the expansion of occupied colorspace for both subspecies is
+each patch. These results indicate that the expansion of occupied colourspace for both subspecies is
 largely due to divergence in the colour of the belly patch (see light grey circles at edges of green
 and blue polyhedrons in Figure \ref{figure:volplot}). Interestingly, the wing plumage patch of
 \emph{L. elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus}, to which
@@ -602,8 +602,8 @@ publications, to which users should refer for details and interpretation. For su
 variables and spectral shape analysis of reflectance curves, see \cite{Montgomerie:2006}. For visual
 models based on photon catches and receptor noise, see \cite{Vorobyev:1998} and
 \cite{Vorobyev:1998to}. For visual phenotype sensitivity curve estimation, see
-\cite{Govardovskii:2000} and \cite{Hart:2005}. For tetrahedral colorspace models, see
-\cite{Endler:2005} and \cite{Stoddard:2008}, and for color volume overlap see \cite{Stoddard:2011}
+\cite{Govardovskii:2000} and \cite{Hart:2005}. For tetrahedral colourspace models, see
+\cite{Endler:2005} and \cite{Stoddard:2008}, and for colour volume overlap see \cite{Stoddard:2011}
 and \cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original
 sources along with \pavo{}.
 
