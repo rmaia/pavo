@@ -12,10 +12,10 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
 Depends:
-    geometry,
+    rcdd,
     rgl,
-    mapproj,
-    rcdd
+    geometry,
+    mapproj
 Collate:
     'aggplot.R'
     'aggspec.R'

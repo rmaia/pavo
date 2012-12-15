@@ -3,7 +3,8 @@
 \title{Color volume overlap}
 \usage{
   voloverlap(tcsres1, tcsres2, plot = FALSE,
-    col = c("blue", "red", "darkgrey"), new = TRUE)
+    col = c("blue", "red", "darkgrey"), new = TRUE,
+    montecarlo = FALSE, nsamp = 1000, psize = 0.001)
 }
 \arguments{
   \item{tcsres1,tcsres2}{(required) data frame, possibly a
@@ -21,6 +22,17 @@
   \item{new}{logical. Should a new plot window be called?
   If \code{FALSE}, volumes and their overlap are plotted
   over the current plot (defaults to \code{TRUE}).}
+
+  \item{montecarlo}{logical. If \code{TRUE}, Monte Carlo
+  simulation is used instead of exact solution (not
+  recommended; defaults to \code{FALSE})}
+
+  \item{nsamp}{if \code{montecarlo=TRUE}, determines the
+  number of points to be sampled.}
+
+  \item{psize}{if \code{montecarlo=TRUE} and
+  \code{plot=TRUE}, sets the size to plot the points used
+  in the Monte Carlo simulation.}
 }
 \value{
   Calculates the overlap between the volumes defined by two
@@ -33,6 +45,27 @@
   \code{vsmallest = 1}.  \item \code{vboth} the volume of
   the overlap divided by the combined volume of both input
   sets of color points. }
+
+  The Monte Carlo solution is available mostly for legacy
+  and benchmarking, and is not recommended (see notes). If
+  used, the output will be different: \itemize{ \item
+  \code{s_in1, s_in2} the number of sampled points that
+  fall within each of the volumes individually \item
+  \code{s_inboth} the number of sampled points that fall
+  within both volumes \item \code{s_ineither} the number of
+  points that fall within either of the volumes \item
+  \code{psmallest} the proportion of points that fall
+  within both volumes divided by the number of points that
+  fall within the smallest volume \item \code{pboth} the
+  proportion of points that fall within both volumes
+  divided by the total number of points that fall within
+  both volumes }
+
+  If the Monte Carlo solution is used, a number of points
+  much greater than the default should be considered
+  (Stoddard & Stevens(2011) use around 750,000 points, but
+  more or fewer might be required depending on the degree
+  of overlap.)
 }
 \description{
   Calculates the overlap between the volumes defined by two
@@ -47,6 +80,8 @@
 
   Here we present an exact solution based on finding common
   vertices to both volumes and calculating its volume.
+  However, we also the Monte Carlo solution is available
+  through the \code{montecarlo=TRUE} option.
 
   Stoddard & Stevens (2011) also return the value of the
   overlap relative to one of the volumes (in that case, the
