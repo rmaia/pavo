@@ -7,7 +7,11 @@
 #' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{tcs} 
 #' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
-#' @param plot should the volumes and points be plotted? (defaults to \code{FALSE})
+#' @param plot logical. Should the volumes and points be plotted? (defaults to \code{FALSE})
+#' @param col a vector of length 3 with the colors for (in order) the first volume, 
+#' the second volume, and the overlap.
+#' @param new logical. Should a new plot window be called? If \code{FALSE}, volumes and their
+#' overlap are plotted over the current plot (defaults to \code{TRUE}).
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
@@ -35,14 +39,16 @@
 #' tcs.sicalis.T <- tcs(vismodel(sicalis[c(1,grep('\\.T',names(sicalis)))]))
 #' tcs.sicalis.B <- tcs(vismodel(sicalis[c(1,grep('\\.B',names(sicalis)))]))
 #' voloverlap(tcs.sicalis.T,tcs.sicalis.B)
-#' voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) }
+#' voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T)
+#' voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T, col=1:3) }
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
 
 
 
-voloverlap <- function(tcsres1,tcsres2, plot=FALSE){
+voloverlap <- function(tcsres1,tcsres2, plot=FALSE, 
+              col=c('blue','red','darkgrey'), new=TRUE){
 
 dat1 <- tcsres1[, c('x', 'y', 'z')]
 
@@ -73,14 +79,20 @@ vsmallest <- overlapVol/min(c(vol1,vol2))
 
 vboth <- overlapVol/(sum(c(vol1,vol2))-overlapVol)
 
-if(plot==T){
+if(plot==TRUE){
+  if(length(col)<3)
+    col <- rep(col,3)
+
+if(new==TRUE)
   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+
+  tcsvol(dat1, col=col[1], fill=F)
+  tcsvol(dat2, col=col[2], fill=F)
+
   if(dim(Voverlap)[1]>3)
-    tcsvol(Voverlap)
-  tcsvol(dat1, col='red', fill=F)
-  tcsvol(dat2, col='blue', fill=F)
+    tcsvol(Voverlap, col=col[3])
   }
 
-data.frame(vol1, vol2, voverlap = overlapVol, vsmallest, vboth)
+data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
 
 }
