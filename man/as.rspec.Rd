@@ -3,7 +3,7 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-  as.rspec(object, whichwl = NULL)
+  as.rspec(object, whichwl = NULL, interp = FALSE)
 
   is.rspec(object)
 }
@@ -17,6 +17,9 @@
   wavelengths "wl". If no wavelengths are found or
   \code{whichwl} is not given, returns arbitrary index
   values}
+
+  \item{interp}{whether to interpolate wavelengths in 1-nm
+  bins}
 }
 \value{
   an object of class \code{rspec} for use in further

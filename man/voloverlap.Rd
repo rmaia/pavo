@@ -2,7 +2,8 @@
 \alias{voloverlap}
 \title{Color volume overlap}
 \usage{
-  voloverlap(tcsres1, tcsres2, plot = FALSE)
+  voloverlap(tcsres1, tcsres2, plot = FALSE,
+    col = c("blue", "red", "darkgrey"), new = TRUE)
 }
 \arguments{
   \item{tcsres1,tcsres2}{(required) data frame, possibly a
@@ -10,8 +11,16 @@
   for the 'x', 'y' and 'z' coordinates as columns (labeled
   as such)}
 
-  \item{plot}{should the volumes and points be plotted?
-  (defaults to \code{FALSE})}
+  \item{plot}{logical. Should the volumes and points be
+  plotted? (defaults to \code{FALSE})}
+
+  \item{col}{a vector of length 3 with the colors for (in
+  order) the first volume, the second volume, and the
+  overlap.}
+
+  \item{new}{logical. Should a new plot window be called?
+  If \code{FALSE}, volumes and their overlap are plotted
+  over the current plot (defaults to \code{TRUE}).}
 }
 \value{
   Calculates the overlap between the volumes defined by two
@@ -56,7 +65,8 @@ tcs.sicalis.C <- tcs(vismodel(sicalis[c(1,grep('\\\\.C',names(sicalis)))]))
 tcs.sicalis.T <- tcs(vismodel(sicalis[c(1,grep('\\\\.T',names(sicalis)))]))
 tcs.sicalis.B <- tcs(vismodel(sicalis[c(1,grep('\\\\.B',names(sicalis)))]))
 voloverlap(tcs.sicalis.T,tcs.sicalis.B)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) }
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T)
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T, col=1:3) }
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
