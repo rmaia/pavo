@@ -58,7 +58,7 @@ tools, and (c) analyze data using visual system modeling for a broad range of ta
 
 \item In this paper, we present a summary of the functions implemented in \pavo{}, suggest a
 workflow to explore spectral data, and model colours using user-defined visual systems. We also
-present suggestions (implemented in the package) for handling psychophysiological data and an exact
+present suggestions (implemented in the package) for handling psychophysiological data, and an exact
 solution for the calculation of colour volume overlap, thus expanding previously published
 methodologies.
 
@@ -89,7 +89,7 @@ that previously required the use of multiple, sometimes restricted, software and
 
 The role of colouration and colour vision in animal communication has been a fundamental question in
 evolutionary biology for centuries \citep{darwin:1859,darwin:1896, Poulton:1890,Bennett:2007hm}.
-Visual communication has provided an unique opportunity to investigate aspects of natural
+Visual communication has provided a unique opportunity to investigate aspects of natural
 \citep{Chittka:1992} and sexual selection \citep{Hill:2002}, and how these interact
 \citep{Kemp:2009}. It is also an ideal system for truly integrative biological research, spanning
 from the optical processes generating colour \citep{Shawkey:2009}, hormonal and genetic mechanisms
@@ -99,21 +99,21 @@ regulating phenotype \citep{Muller:2009}, physiological processes involved in pe
 However, ``colour'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
-objective quantification of the colour reflected by surfaces, as a first approximation of an
+objective quantification of the colour reflected by surfaces, as a first approximation of a
 ``receiver-independent'' measure of an organism or object's colour
 \citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last 20 years, the falling cost and rising
 popularity of portable spectrophotometers have made objective quantification of the spectral
 properties of animal and plant integuments commonplace
 \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the understanding of perception
-and processing of colour have allowed analysis of  reflectance data using visual models that estimate
+and processing of colour have allowed analysis of reflectance data using visual models that estimate
 how animals see and differentiate these colours
 \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
 
 Because of these advances, a cohesive framework for working with and analyzing colour from
 reflectance data is needed. Output file types from spectrophotometer manufacturers are not
-standardized, and software for analyses are limited either in the methods they implement, the types
-of data they import and process, or the platforms in which they are available. Moreover, many are
-proprietary and/or closed, making customization impossible \citep[for a review of available
+standardized, and software programsfor analyses are limited either in the methods they implement,
+the types of data they import and process, or the platforms in which they are available. Moreover,
+many are proprietary and/or closed, making customization impossible \citep[for a review of available
 software, see][]{Montgomerie:2006}. colour data often require additional conversion and export into
 statistical software for analyses, restricting  protocol standardization across labs, and batch
 processing automation of workflows. Combined with published descriptions that are often poorly
@@ -165,7 +165,7 @@ characterized by having individual reflectance spectra as columns of the data fr
 column containing the wavelength identification data. Raw spectral data can be imported using the
 function \code{getspec}, which currently supports data from a variety of spectrophotometer and
 microspectrophotometer models (Ocean Optics OOIBase and SpectraSuite files, Avantes AvaSpec, and
-CRAIC). In addition, previously compiled data frames can be imported to R and converted to
+CRAIC). In addition, previously compiled data frames can be imported into R and converted to
 \code{rspec} objects using the \code{as.rspec} function.
 
 
@@ -180,8 +180,8 @@ variables, like the colour volume or hue span \citep{Stoddard:2008} for groups a
 
 It is common when collecting spectral data to take multiple measurements from the same sample,
 averaging these to avoid sampling error \citep{Quesada:2006}. \code{pavo} provides the
-\code{aggspec} function for this purpose, as well as the \code{procspec} function for noise removal via
-smoothing, and transformations to standardize and clean spectral data.
+\code{aggspec} function for this purpose, as well as the \code{procspec} function for noise removal
+via smoothing, and transformations to standardize and clean spectral data.
 
 \subsection{Visualization}
 
@@ -313,8 +313,8 @@ southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clad
 \citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
 species, whereas others have classified as subspecies of \emph{L. chloropterus}
 \citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged in
-their colours, and compared both to their sister species, the sharp-tailed starling (\emph{L.
-acuticaudus}).
+their colours, and compared both to their most recently diverged sister species, the sharp-tailed
+starling (\emph{L. acuticaudus}).
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
@@ -424,7 +424,7 @@ for the European starling
 \code{v} argument was set to 0.1 to give a \{\emph{"l"}\} cone Weber fraction of approximately 0.05
 \citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist} give colour distances (chromatic
 , $\Delta S$, Figure \ref{figure:distplot};  and achromatic, $\Delta L$, not shown) between all
-possible combinations of plumage patches in the \code{tcs} object, and can be further subsetted to
+possible combinations of plumage patches in the \code{tcs} object, and can be further subset to
 only analyse comparisons of interest (e.g., colour difference between homologous patches of two
 species). For example:
 <<>>=
