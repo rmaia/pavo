@@ -38,36 +38,32 @@
 
 \corraddr{rm72zips.uakron.edu}
 
-
 \maketitle
 
 \section{Exact determination of volume overlap}
 
-\subsection{Methods}
+\pavo{} builds upon previously described visual model methods. For example, \cite{Stoddard:2011} present the useful approach of calculating the overlap between two volumes defined by two sets of points (colour patches) in avian colourspace. Given the complexity of calculating the intersection of three-dimensional convex hulls, \cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of volume overlap. \pavo{} instead incorporates a method to calculate the exact geometrical solution for the intersection of color volumes using a method originally implemented to calculate the overlap between multidimensional niches \citep{Villeger:2011}. To do this, \pavo{} employs computational geometry capabilities available in the \code{rcdd} package \citep{rcdd}.
 
-\pavo{} builds upon previously described visual model methods. For example, \cite{Stoddard:2011} present the useful approach of calculating the overlap between two volumes defined by two sets of points (colour patches) in avian colourspace. Given the complexity of calculating the intersection of three-dimensional convex hulls, \cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of volume overlap. While \pavo{} incorporates this method, we also include an exact solution for the calculation of the intersection of color volumes using a method originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011} through the computational geometry capabilities available from the \code{rcdd} package \citep{rcdd}.
+To validate this method, we defined two sets of points in 3D that lie at the vertices of a cube with side lengths of 1.0 and 0.5, respectively. Thus, the volumes of these two cubes are $V_1=1^3=1$ and $V_2=0.5^3=0.125$. We then shifted the x coordinates of the small cube by 0.4 so that the linear overlap along this axis would be $x_{overlap}=0.5 - 0.4 = 0.1$, giving an overlap volume of $V_3=0.1*0.5^2=0.025$. We then calculated the known proportional overlap volume as $p_{overlap} = V_3/(V_2+(V_1-V_3)) = .02272727$ (see Figure \ref{figure:cubes}). Finally, we used the \code{voloverlap} function to estimate the proportional overlap and found that the value calculated by \code{voloverlap} for this set of points matched exactly (dashed line in \ref{figure:overlap}).
 
-First, to validate the latter method, we generated two known sets of points in three-dimensions (see XX). To simplify calculations, we chose points that would lie at the vertices of a cube with side length of one and 0.5. Thus, the volumes of these two cubes are $V_1=1^3=1$ and $V_2=0.5^3=0.125$. We then shifted the x coordinates of the small cube by 0.4 so that the overlap along this axis would be $x_{overlap}=0.1$, giving an overlap volume of $V_3=0.1*0.5^2=0.025$. We finally calculated the proportional overlap volume (as implemented in \code{voloverlap} and \cite{Stoddard:2011}) as $p_{overlap} = V_3/(V_2+(V_1-V_3)) = .02272727$ (see Figure \ref{figure:cubes}). We then used the \code{voloverlap} function for comparison with this geometrical solution and found that the values matched exactly.
-
-\begin{figure}[H]
+\begin{figure}
 \centering
 \includegraphics[width=2in]{fig/si-mc_cubes}
 \caption{Test geometries for validating \code{voloverlap}. Red and blue cubes are convex hulls enclosing all points, with overlap region shaded in grey.}
 \label{figure:cubes}
 \end{figure}
 
-Second, we compared the accuracy of the Monte Carlo method described in \cite{Stoddard:2011} by running simulations over a range of \code{nsamp} values (\code{nsamp} = 100, 1000, 10000, 100000). Each simulation was repeated 10 times for a given \code{nsamp} value to estimate confidence intervals and evaluate the precision of the estimates.
+To further show the benefit of an exact versus approximate solution (i.e. using Monte Carlo simulation), we compared the accuracy and precision of the Monte Carlo method described in \cite{Stoddard:2011} by running simulations over a range of MC sample sizes (\emph{n}): 100, 1000, 10000, and 100000. For each \emph{n}, we repeated the simulation a total of 10 times to estimate confidence intervals and thus evaluate the precision of the estimates. The Monte Carlo method, while eventually converging on the correct solution, requires large sample numbers (and, hence, is more time-intensive) and can overestimate values at low MC sample numbers (see Figure \ref{figure:overlap}). 
 
-\begin{figure}[H]
+\begin{figure}
 \centering
 \includegraphics[width=3in]{fig/si-mc_overlap}
 \caption{Results of Monte Carlo simulations of volume overlap compared to the exact result. Grey polygon shows 95\% confidence interval around estimated mean volume overlap (solid black line). Dashed line indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
 \label{figure:overlap}
 \end{figure}
 
-\subsection{Results}
-
-We found that the exact overlap solution in \pavo{} accurately calculates the overlap volume of a set of 3D points. The Monte Carlo method, while eventually converging on the correct solution, requires large sample numbers (and hence is more time-intensive) and can overestimate values at low MC sample numbers (see Figure \ref{figure:overlap}). 
+\section{R scripts for producing figures}
+% should we include this here? or just as file links?
 
 \bibliographystyle{bes}
 \bibliography{references}

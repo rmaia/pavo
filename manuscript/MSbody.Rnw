@@ -311,9 +311,9 @@ bright and diverse iridescent colours likely used in sexual selection and social
 \citep{Rubenstein:2009}. The lesser blue-eared starling (\emph{Lamprotornis chloropterus}) and the
 southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
 \citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
-species, whereas others have classified as subspecies of \emph{L. chloropterus}
+species, whereas others have classified them as subspecies of \emph{L. chloropterus}
 \citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged in
-their colours, and compared both to their most recently diverged sister species, the sharp-tailed
+their colours and compared each to their most recently diverged sister species, the sharp-tailed
 starling (\emph{L. acuticaudus}).
 
 <<echo=F,results=hide>>=
@@ -371,7 +371,7 @@ patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 
 Next, we plotted spectra contained in this \code{rspec} object. We used \code{aggplot} to visualize
 the mean reflectance curves for each body part from each species. Below we show the code for one of
-these plots, as well as the results for the ``belly'' and ``cheek'' body patches: (Figure
+these plots, as well as the results for the ``belly'' and ``wing'' body patches: (Figure
 \ref{figure:distplot}):
 
 <<echo=TRUE,eval=FALSE>>=
@@ -396,7 +396,7 @@ compare colours taking into account avian visual sensitivities (sensory phenotyp
 incorporates available data on the retinal sensitivities of numerous taxa, including the European
 starling (\emph{Sturnus vulgaris}, \code{visual='star'}), which we incorporated here
 \citep{Hart:1998}. We used both the \code{relative=FALSE} and \code{relative=TRUE} options of the
-\code{vismodel} function, to measure colour attributes using the receptor noise and colourspace
+\code{vismodel} function to measure colour attributes using the receptor noise and colourspace
 models, respectively.
 
 \subsubsection{colour distances}
@@ -535,8 +535,8 @@ par(font=1)
 
 \begin{figure}[H]
 \centering
-\includegraphics{fig/ms-distplot}
-\caption{\textbf{a}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{b,c}: Plots of mean smoothed spectra for different body patches (belly, left; wing, right). Line colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
+\includegraphics[width=4in]{fig/ms-distplot}
+\caption{\textbf{a}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances between different pairs of species: \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} (open circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles); and \emph{L. acuticaudus} and \emph{L. chloropterus} (black circles). Error bars show +/- one standard error. \textbf{b,c}: Plots of mean smoothed spectra for different body patches (b: wing, c: belly). Line colors indicate species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
 \label{figure:distplot}
 \end{figure}
 <<echo=F,results=hide>>=
@@ -574,14 +574,14 @@ tcs1c <- tcs1.m[grep('LAEL', tcs1.m$both),]
 Finally, to produce a tetrahedral colourspace plot, we used \code{relative=TRUE} in the
 \code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum of unity for
 each patch. These results indicate that the expansion of occupied colourspace for both subspecies is
-largely due to divergence in the colour of the belly patch (see light grey circles at edges of green
-and blue polyhedrons in Figure \ref{figure:volplot}). Interestingly, the wing plumage patch of
+largely due to divergence in the colour of the belly patch (see circles labeled `bel' at edges of red
+and blue polyhedrons in Figure \ref{figure:volplot}a). Interestingly, the wing plumage patch of
 \emph{L. elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus}, to which
-it is more closely related (dark grey circles in Figure \ref{figure:volplot}).
+it is more closely related (circles labeled `ch' in Figure \ref{figure:volplot}a).
 
 We also used the \code{voloverlap} function to calculate the volumes occupied by each species'
 plumage patches, as well as their overlaps. As an example, the code below shows the result for the
-overlap between the two recently diverged species (Figure \ref{figure:overlapplot}:
+overlap between the two recently diverged species (see Figure \ref{figure:volplot}b):
 
 <<echo=T,eval=FALSE,fig=F,include=F>>=
 vm.star2 <- vismodel(specs, visual = 'star', relative = TRUE)
@@ -606,13 +606,14 @@ voloverlap(tcs1b, tcs1c, plot = FALSE)
 \begin{figure}[H]
 \centering
 \includegraphics[width=5in]{fig/ms-new_volplot}
-\caption{\textbf{a}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (b) and cheek (c). Tetrahedron in lower right corner shows colour vertices and location of hulls in colourspace (`x'). \textbf{b}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey.}
+\caption{\textbf{a}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (bel) and cheek (ch). \textbf{b}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
 \label{figure:volplot}
 \end{figure}
 
 The \code{plot=TRUE} option provides a useful graphical representation of the overlap in colourspace
-(Figure \ref{figure:volplot}). Again, the calculated volume in \pavo{} represents the exact
-solution to the geometric problem \citep[i.e. not through Monte Carlo simulation,][]{Stoddard:2011}.
+(Figure \ref{figure:volplot}b). Again, the calculated volume in \pavo{} represents the exact
+solution to the geometric problem \citep[i.e. not an approximation obtained through Monte Carlo 
+simulation,][]{Stoddard:2011}.
 
 \section{Citation of methods implemented in \pavo{}}
 
