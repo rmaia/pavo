@@ -2,7 +2,9 @@
 \alias{voloverlap}
 \title{Color volume overlap}
 \usage{
-  voloverlap(tcsres1, tcsres2, plot = FALSE)
+  voloverlap(tcsres1, tcsres2, plot = FALSE,
+    col = c("blue", "red", "darkgrey"), new = TRUE,
+    montecarlo = FALSE, nsamp = 1000, psize = 0.001)
 }
 \arguments{
   \item{tcsres1,tcsres2}{(required) data frame, possibly a
@@ -10,8 +12,27 @@
   for the 'x', 'y' and 'z' coordinates as columns (labeled
   as such)}
 
-  \item{plot}{should the volumes and points be plotted?
-  (defaults to \code{FALSE})}
+  \item{plot}{logical. Should the volumes and points be
+  plotted? (defaults to \code{FALSE})}
+
+  \item{col}{a vector of length 3 with the colors for (in
+  order) the first volume, the second volume, and the
+  overlap.}
+
+  \item{new}{logical. Should a new plot window be called?
+  If \code{FALSE}, volumes and their overlap are plotted
+  over the current plot (defaults to \code{TRUE}).}
+
+  \item{montecarlo}{logical. If \code{TRUE}, Monte Carlo
+  simulation is used instead of exact solution (not
+  recommended; defaults to \code{FALSE})}
+
+  \item{nsamp}{if \code{montecarlo=TRUE}, determines the
+  number of points to be sampled.}
+
+  \item{psize}{if \code{montecarlo=TRUE} and
+  \code{plot=TRUE}, sets the size to plot the points used
+  in the Monte Carlo simulation.}
 }
 \value{
   Calculates the overlap between the volumes defined by two
@@ -24,6 +45,27 @@
   \code{vsmallest = 1}.  \item \code{vboth} the volume of
   the overlap divided by the combined volume of both input
   sets of color points. }
+
+  The Monte Carlo solution is available mostly for legacy
+  and benchmarking, and is not recommended (see notes). If
+  used, the output will be different: \itemize{ \item
+  \code{s_in1, s_in2} the number of sampled points that
+  fall within each of the volumes individually \item
+  \code{s_inboth} the number of sampled points that fall
+  within both volumes \item \code{s_ineither} the number of
+  points that fall within either of the volumes \item
+  \code{psmallest} the proportion of points that fall
+  within both volumes divided by the number of points that
+  fall within the smallest volume \item \code{pboth} the
+  proportion of points that fall within both volumes
+  divided by the total number of points that fall within
+  both volumes }
+
+  If the Monte Carlo solution is used, a number of points
+  much greater than the default should be considered
+  (Stoddard & Stevens(2011) use around 750,000 points, but
+  more or fewer might be required depending on the degree
+  of overlap.)
 }
 \description{
   Calculates the overlap between the volumes defined by two
@@ -38,6 +80,8 @@
 
   Here we present an exact solution based on finding common
   vertices to both volumes and calculating its volume.
+  However, we also the Monte Carlo solution is available
+  through the \code{montecarlo=TRUE} option.
 
   Stoddard & Stevens (2011) also return the value of the
   overlap relative to one of the volumes (in that case, the
@@ -56,10 +100,12 @@ tcs.sicalis.C <- tcs(vismodel(sicalis[c(1,grep('\\\\.C',names(sicalis)))]))
 tcs.sicalis.T <- tcs(vismodel(sicalis[c(1,grep('\\\\.T',names(sicalis)))]))
 tcs.sicalis.B <- tcs(vismodel(sicalis[c(1,grep('\\\\.B',names(sicalis)))]))
 voloverlap(tcs.sicalis.T,tcs.sicalis.B)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) }
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T)
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T, col=1:3) }
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}
+  Rafael Maia \email{rm72@zips.uakron.edu}, with code from
+  Sebastien Villeger
 }
 \references{
   Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
@@ -70,5 +116,10 @@ voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) }
   Stoddard, M. C., & Stevens, M. (2011). Avian vision and
   the evolution of egg color mimicry in the common cuckoo.
   Evolution, 65(7), 2004-2013.
+
+  Villeger, S., Novack-Gottshall, P. M., & Mouillot, D.
+  (2011). The multidimensionality of the niche reveals
+  functional diversity changes in benthic marine biotas
+  across geological time. Ecology Letters, 14(6), 561-568.
 }
 

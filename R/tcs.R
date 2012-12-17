@@ -33,7 +33,7 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
+#' tcs.sicalis <- tcs(vis.sicalis)}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
@@ -52,6 +52,10 @@ if(class(vismodeldata)=='vismodel'){
   }else{
   	dat <- vismodeldata
   	}
+  	
+if(any('v' %in% names(dat)))
+  names(dat) <- gsub('v','u',names(dat))
+  	
 if(!all(c('u','s','m','l') %in% names(dat)))
   stop(paste('Input data must have columns named',
   dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l')))
