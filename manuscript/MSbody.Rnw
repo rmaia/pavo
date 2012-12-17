@@ -374,7 +374,7 @@ patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 Next, we plotted spectra contained in this \code{rspec} object. We used \code{aggplot} to visualize
 the mean reflectance curves for each body part from each species. Below we show the code for one of
 these plots, as well as the results for the ``belly'' and ``cheek'' body patches: (Figure
-\ref{figure:specsplot}):
+\ref{figure:distplot}):
 
 <<echo=TRUE,eval=FALSE>>=
 specs.belly <- specs[,1:13]  # subset wavelength column and the 12 spectra from the belly patch
@@ -382,29 +382,14 @@ spp <- substr(names(specs.belly),1,4)[-1]  # get 4 first character form spec nam
 aggplot(specs.belly, by = spp)  # average specs by species
 @
 
-<<label=specsplot,fig=TRUE,include=FALSE,echo=F,results=hide,width=6.5,height=3.1>>=
+<<echo=F,results=hide>>=
 # Process spectra (apply smoothing) and average by species and patch
 specs.sm <- procspec(specs, opt='smooth')
 specs.m <- aggspec(specs.sm, by = paste(spp, patch)[-1])
 spp.m <- sapply(strsplit(names(specs.m), "\\."), "[", 1)
 sex.m <- sapply(strsplit(names(specs.m), "\\."), "[", 3)
 patch.m <- sapply(strsplit(names(specs.m), "\\."), "[", 4)
-# Plot results using aggplot
-par(mfrow=c(1,2), mar=c(4,4,2,2), ps=10, oma=c(0,0,0,0), lwd=1)
-p <- grep('belly', names(specs))
-aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2, ylim=c(0,35))
-p <- grep('cheek', names(specs.sm))
-aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2, ylim=c(0,35))
 @
-
-\begin{figure}[H]
-\centering
-\includegraphics{fig/ms-specsplot}
-\caption{Plots of mean smoothed spectra for different body patches (belly, left; cheek, right). Line 
-colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L.
-elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
-\label{figure:specsplot}
-\end{figure}
 
 \subsection{Step 3: Analysis}
 
@@ -446,8 +431,7 @@ discernible to the starling visual system, both within the \emph{L. chloropterus
 subclade as well as compared to the \emph{L. acuticaudus} outgroup. Given the high satuturation of
 iridescent colors, small differences in the spectral shape can yield noticeably different colors.
 This becomes clear when comparing the results for the most and least contrasting body patches
-(``belly'' and ``cheek'', respectively; Figure \ref{figure:distplot}) to their spectral curves
-(Figure \ref{figure:specsplot}).
+(``belly'' and ``wing'', respectively) to their spectral curves (see Figure \ref{figure:distplot}).
 
 <<echo=FALSE,results=hide>>=
 # 5. Run visual models using starling visual sensitivies
@@ -463,77 +447,102 @@ for (i in unique(patch)[-1]) {
 }
 # head(res[[1]])  # check output
 # Calculate distance from focal species' patch to those of other species
+se <- function(x){sd(x)/sqrt(length(x))}
+
 d12 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
-                grep('LAAC', res[[i]]$patch2)], ]
+  p <- intersect(grep('LACL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
+  x <- res[[i]][p, ]
+  # x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
+  #               grep('LAAC', res[[i]]$patch2)], ]
   d12[i, 1] <- mean(x$tetra.dS)
-  d12[i, 2] <- sd(x$tetra.dS)
+  d12[i, 2] <- se(x$tetra.dS)
 }
 rownames(d12) <- names(res)
-colnames(d12) <- c('mean', 'sd')
+colnames(d12) <- c('mean', 'se')
+
 d13 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
-                grep('LAAC', res[[i]]$patch2)], ]
+  p <- intersect(grep('LAEL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
+  x <- res[[i]][p, ]
+  # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
+  #               grep('LAAC', res[[i]]$patch2)], ]
   d13[i, 1] <- mean(x$tetra.dS)
-  d13[i, 2] <- sd(x$tetra.dS)
+  d13[i, 2] <- se(x$tetra.dS)
 }
 rownames(d13) <- names(res)
-colnames(d13) <- c('mean', 'sd')
+colnames(d13) <- c('mean', 'se')
+
 d23 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
-                grep('LACL', res[[i]]$patch2)], ]
+  p <- intersect(grep('LAEL', res[[i]]$patch1), grep('LACL', res[[i]]$patch2))
+  x <- res[[i]][p, ]
+  # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
+  #               grep('LACL', res[[i]]$patch2)], ]
   d23[i, 1] <- mean(x$tetra.dS)
-  d23[i, 2] <- sd(x$tetra.dS)
+  d23[i, 2] <- se(x$tetra.dS)
 }
 rownames(d23) <- names(res)
-colnames(d23) <- c('mean', 'sd')
+colnames(d23) <- c('mean', 'se')
 @
 
 <<echo=F,results=hide>>=
 rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
 @
 
-<<label=distplot,fig=TRUE,echo=FALSE,results=hide,include=FALSE,width=5,height=5>>=
-# Plot mean +/- SD of color distances by patch
-par(mar=c(4,4,2,2), oma=c(0,2,0,0), xpd=FALSE)
-pad <- .15
-plot(c(1:11)~d23[rs,1], xlim = c(-16, 16), ylab = "", xlab = expression(paste(Delta, "S (JNDs)")), 
-     yaxt = 'n', pch = 21, ylim = c(0.5, 11.5), xaxt='n', type='n')
-segments(d23[rs, 1] - d23[rs, 2], 1:11, d23[rs, 1] + d23[rs, 2], 1:11, col='darkgrey')
-points(c(1:11)~d23[rs,1], pch = 21)
-segments(-d13[rs, 1] - d13[rs, 2], 1:11 - pad, -d13[rs, 1] + d13[rs, 2], 1:11 - pad, col='darkgrey')
-points(c(1:11)-pad~I(-d13[rs, 1]), pch = 22)
-segments(-d12[rs, 1] - d12[rs, 2], 1:11 + pad, -d12[rs, 1] + d12[rs, 2], 1:11 + pad, col='darkgrey')
-points(c(1:11)+pad~I(-d12[rs, 1]), pch = 23)
-abline(v=0)
-abline(v = c(1,-1), lty = 3)
-axis(side = 2, at = c(1:11), labels = rs, las = 2, cex.axis=.75)
-axis(side = 1, at = c(-15,-10,-5,0,5,10,15), labels=c(15,10,5,0,5,10,15))
-mtext(side = 2, "plumage patch", line=4)
-par(xpd=TRUE)
-text(x=c(9,-9), y=rep(par('usr')[4]+.6, 2), c("ingroup\ncomparison", "outgroup\ncomparisons"), cex=.75)
-legend('topright', bty='n', pch = c(21,22,23), legend = c("LACL-LAEL", "LAAC-LAEL", "LAAC-LACL"), 
-       cex=.7)
+<<label=distplot,fig=TRUE,echo=FALSE,results=hide,include=FALSE,width=7,height=7>>=
+pal <- brewer.pal(7, "Set1")
+# Dotplot
+layout(matrix(c(1,2,1,3), nrow=2))
+pad <- .35
+par(mar=c(4,4,2,2), oma=c(2,0,0,0), xpd=FALSE, ps=12)
+plot(d23[rs,1], ylim = c(0, 11), xlab = "", 
+     ylab = expression(paste(Delta, "S (JNDs)")), xaxt = 'n', 
+     pch = 21, xlim = c(0.5, 22), type='n')
+segments(seq(1,22,by=2)-pad, d12[rs, 1] - d12[rs, 2], seq(1,22,by=2)-pad, 
+         d12[rs, 1] + d12[rs, 2])
+segments(seq(1,22,by=2), d13[rs, 1] - d13[rs, 2], seq(1,22,by=2), d13[rs, 1] + 
+         d13[rs, 2])
+segments(seq(1,22,by=2)+pad, d23[rs, 1] - d23[rs, 2], seq(1,22,by=2)+pad, 
+         d23[rs, 1] + d23[rs, 2])
+points(d12[rs, 1]~I(seq(1,22,by=2)-pad), pch = 21, bg = 'black', cex=1)
+points(d13[rs, 1]~seq(1,22,by=2), pch = 21, bg = 'grey', cex=1)
+points(d23[rs,1]~I(seq(1,22,by=2)+pad), pch = 21, bg = 'white', cex=1)
+abline(h = 1, lty = 3)
+axis(side = 1, at = seq(1,22,by=2), labels = rs, las = 1, cex.axis=.75)
+mtext(side = 1, "plumage patch", line=3)
+par(font=3)
+legend('topleft', bty='n', pch=c(21,21,21), 
+       legend = c("acuticaudus-chloropterus", "acuticaudus-elisabeth",
+        "chloropterus-elisabeth"), pt.bg=c('black','grey','white'))
+par(font=1)
+
+# Plot results using aggplot
+par(mar=c(4,4,2,2))
+p <- grep('wing', names(specs.sm))
+aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2, 
+        ylim=c(0,45), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)])
+# text(300,40,'wing', pos=4)
+par(font=3)
+legend('topleft', lty=1, col=pal[c(2,1,3)], 
+       legend=c('elisabeth', 'chloropterus', 'acuticaudus'), bty='n')
+par(font=1)
+
+p <- grep('belly', names(specs))
+aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2,
+        ylim=c(0,45), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)])
+# text(300,40,'belly', pos=4)
+par(font=3)
+legend('topleft', lty=1, col=pal[c(2,1,3)],
+       legend=c('elisabeth', 'chloropterus', 'acuticaudus'), bty='n')
+par(font=1)
 @
 
-\begin{figure}
-    \begin{subfigure}[b]{0.5\textwidth}
-      \centering
-      \includegraphics{fig/ms-distplot}
-      \caption{}
-      \label{figure:distplot}
-    \end{subfigure}
-    \begin{subfigure}[b]{0.5\textwidth}
-      \centering
-      \includegraphics{fig/ms-volplot}
-      \caption{}
-      \label{figure:volplot}
-    \end{subfigure}
-  \caption{\textbf{(a)} Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{(b)} Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (red), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (green). Points represent individual plumage patches (dark grey: cheek color, light grey: belly color, black: remaining plumage patch colors). The large grey circle (lower right) is the achromatic origin, and the upper right portion of the graph points toward the SWS cone (i.e. blue colors).}
-
+\begin{figure}[H]
+\centering
+\includegraphics{fig/ms-distplot}
+\caption{\textbf{a}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances for \emph{L. chloropterus}-\emph{L. elisabeth} (circles), \emph{L. acuticaudus}-\emph{L. elisabeth} (squares) and \emph{L. acuticaudus}-\emph{L. chloropterus} (diamonds) comparisons. Error bars show +/- one standard deviation. \textbf{b,c}: Plots of mean smoothed spectra for different body patches (belly, left; wing, right). Line colors indicate species (red, \emph{L. acuticaudus}; blue, \emph{L. chloropterus}; green, \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
+\label{figure:distplot}
 \end{figure}
 
 <<echo=F,results=hide>>=
@@ -550,15 +559,20 @@ tcs1.m <- aggregate(.~both, data=tcs1[,-c(17,18)], mean)
 tcs1a <- tcs1.m[grep('LAAC', tcs1.m$both),]
 tcs1b <- tcs1.m[grep('LACL', tcs1.m$both),]
 tcs1c <- tcs1.m[grep('LAEL', tcs1.m$both),]
-# red=LAAC, blue=LACL, green=LAEL
-pal <- brewer.pal(7, "Set1")
-# pal3 <- c('black',grey(.8),grey(.4))[c(1,3,2,2,2,2,2,2,2,2,2)]
-# tcsplot(tcs1a, col=pal[1], size=.005)
-# tcsvol(tcs1a, col=pal[1])
-# tcspoints(tcs1b, col=pal[2], size=.005)
-# tcsvol(tcs1b, col=pal[2])
-# tcspoints(tcs1c, col=pal[3], size=.005)
-# tcsvol(tcs1c, col=pal[3])
+# green=LAAC, blue=LACL, red=LAEL
+# pal <- brewer.pal(3, "Set1")[c(3,1,2)]
+# size <- c(.01,.007,rep(.002,9))
+# pal3 <- c('black', grey(.6), grey(.9))[c(1,2,rep(3,9))]
+# view3d(theta=35,phi=-90,fov=1,zoom=.35)
+# open3d()
+# tcspoints(tcs1a, col=pal[1], size=size)
+# tcsvol(tcs1a, col=pal[1], fill=T)
+# tcspoints(tcs1b, col=pal[2], size=size)
+# tcsvol(tcs1b, col=pal[2],fill=T)
+# tcspoints(tcs1c, col=pal[3], size=size)
+# tcsvol(tcs1c, col=pal[3], fill=TRUE)
+# view <- par3d(no.readonly=TRUE)
+# par3d(view)
 # rgl.snapshot('ms-volplot.png')
 @
 
@@ -570,8 +584,7 @@ each patch. These results indicate that the expansion of occupied colorspace for
 largely due to divergence in the colour of the belly patch (see light grey circles at edges of green
 and blue polyhedrons in Figure \ref{figure:volplot}). Interestingly, the cheek plumage patch of
 \emph{L. elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus}, to which
-it is more closely related (see Figure \ref{figure:specsplot} and dark grey circles in Figure 
-\ref{figure:volplot}).
+it is more closely related (dark grey circles in Figure \ref{figure:volplot}).
 
 We also used the \code{voloverlap} function to calculate the volumes occupied by each
 species' plumage patches, as well as their overlaps. As an example, here is the result for the
@@ -579,7 +592,7 @@ overlap between the two recently diverged species (\code{tcs1b} and \code{tcs1c}
 objects containing tetra colourspace data for each species, as output by the \code{tcs} function in
 \pavo{}):
 
-<<echo=T,eval=FALSE, fig=F,include=F>>=
+<<echo=T,eval=FALSE,fig=F,include=F>>=
 vm.star2 <- vismodel(specs, visual = 'star', relative = TRUE)
 tcs.star <- tcs(vm.star2)
 #subset points from the two species
@@ -591,21 +604,23 @@ voloverlap(tcs.lael, tcs.lacl, plot = TRUE)
 voloverlap(tcs1b, tcs1c, plot = FALSE)
 @
 
-<<echo=F,results=hide>>=  % code to produce plot
-# voloverlap(tcs1b, tcs1c, plot=T)
-# setwd('~/github/pavo/manuscript/fig/')
-# rgl.snapshot('ms-overlapplot.png')
-@
+% code to produce plot
+% <<echo=F,results=hide>>=
+% voloverlap(tcs1b, tcs1c, plot=T)
+% par3d(view)
+% setwd('~/github/pavo/manuscript/fig/')
+% rgl.snapshot('ms-volplot.png')
+% @
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=3in]{fig/ms-overlapplot}
-\caption{Colourspace occupied by \emph{Lamprotornis chloropterus} (blue) and \emph{L. elisabeth} (green). Convex hulls of each species are delimited by plumage patches at the vertices, with their volume overlap (similar colourspace occupied) shown in grey.}
-\label{figure:overlapplot}
+\includegraphics[width=5in]{fig/ms-new_volplot}
+\caption{\textbf{a}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (b) and cheek (c). Tetrahedron in lower right corner shows colour vertices and location of hulls in colourspace (`x'). \textbf{b}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey.}
+\label{figure:volplot}
 \end{figure}
 
 The \code{plot=TRUE} option provides a useful graphical representation of the overlap in colourspace
-(Figure \ref{figure:overlapplot}). Again, the calculated volume in \pavo{} represents the exact
+(Figure \ref{figure:volplot}). Again, the calculated volume in \pavo{} represents the exact
 solution to the geometric problem \citep[i.e. not through Monte Carlo simulation,][]{Stoddard:2011}.
 
 \section{Citation of methods implemented in \pavo{}}
