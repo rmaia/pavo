@@ -17,8 +17,9 @@
 #' Bmid based on the regression equations found in Hart ad Vorobyev (2005).
 #' @param beta logical. If \code{TRUE} the sensitivities will include the beta peak
 #' See Govardovskii et al.(2000) (defaults to \code{TRUE}).
-#' @param om logical. If \code{TRUE} cone senssitivity will be corrected for ocular media 
-#' transmission. Values from Hart et al. (2005)(defaults to \code{FALSE}).
+#' @param om a vector of same length as \code{range1}-\code{range2} that contains ocular media transmission data.
+#' If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using 
+#' values from Hart et al. (2005), or user-defined values.
 #' @param integrate logical. If \code{TRUE}, each curve is transformed to have a total area
 #' under the curve of 1 (best for visual models)(defaults to \code{TRUE}).
 #' @return A data frame of class \code{rspec} containing each cone model as a column.
@@ -40,7 +41,7 @@
 
 
 sensmodel <- function(peaksense, range = c(300,700), lambdacut = NULL, Bmid = NULL, 
-		             oiltype = NULL, beta = TRUE, om = FALSE, integrate = TRUE) {
+		             oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE) {
 
 if (!is.null(lambdacut)){
  if (is.null(Bmid) & is.null(oiltype)) stop ("Bmid or oiltype must be included when including a lambdacut vector", call.=FALSE)
@@ -49,8 +50,7 @@ if (!is.null(lambdacut)){
 
 sensecurves <- matrix(ncol = length(peaksense)+1,nrow = (range[2]-range[1]+1))
 sensecurves[,1] <- c(range[1]:range[2])
-T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
-T.e[which(T.e < 0)] <- 0
+
 
 #Sensitivities w/o oil droplets
 for (i in 1: length(peaksense)){
@@ -89,10 +89,20 @@ T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[
   
 peak <- peak*T.oil
 }
-# Apply ocular media trnasmission correction
-if (om == TRUE){
+# Apply ocular media transmission correction
+
+if (!is.null(om)){
+if (om == "bird"){
+  T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
+  T.e[which(T.e < 0)] <- 0
   peak <- peak * T.e
+  }
+  else {
+    T.e <- om
+    peak <- peak * T.e
+  }
 }
+
 
 sensecurves[, (i+1)] <- peak
   }
