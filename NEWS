@@ -9,3 +9,6 @@ CME - fixed aggspec.R (names of output dataset weren't matching input 'by' vecto
 2012-12-14:
 RM - fixed tcs (allows for "v" names in the cone classes)
 RM - changed voloverlap: allows user to define colors, and if new plot should be called
+
+2012-12-17
+PPB - sensmodel changed to allow user-defined ocular media transmission
