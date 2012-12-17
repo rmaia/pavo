@@ -1,0 +1,75 @@
+%ScholarOne also provide the following basic guidelines for uploading a LaTeX formatted manuscript:
+%1.  Always upload the main LaTeX file first, selecting the file designation of Main Document.
+%2.  Then, upload each file that is related to the main .TEX file and is needed for processing, selecting the file designation of TeX/LaTeX Suppl File.
+%3.  Be sure to upload all style sheets, reference files, and at least one bibliography file, that are part of the document.
+%4.  All image files must be saved and uploaded in .EPS format in order for the file to properly format and convert.
+%5.  If changes are made to the main LaTeX document after all of the related files have been uploaded, all supplementary LaTeX files will have to be removed and re-uploaded.
+
+
+\documentclass[times,mee,doublespace]{besauth}
+
+\usepackage{hyperref}
+\usepackage{lineno}
+\usepackage{float}
+\usepackage{subcaption}
+\usepackage{color}
+
+% Macros
+\newcommand{\pavo}{{\tt pavo}}  
+\newcommand{\code}[1]{{\tt #1}}
+
+\begin{document}
+\SweaveOpts{concordance=TRUE, prefix.string=fig/ms}
+
+%%%%%%%%%%%%
+%TITLE PAGE%
+%%%%%%%%%%%%
+\linenumbers
+
+\runningheads{\textsc{pavo}}{\textsc{Supporting Information}}
+
+\papertype{Application}
+
+\title{Supporting Information for: \pavo{}: an R package for the perceptual analysis, visualization and organization of spectral color data}
+
+\author{Rafael Maia\affil{1}\corrauth\, Chad M. Eliason\affil{1}, Pierre-Paul Bitton\affil{2}, St\'{e}phanie M. Doucet\affil{2} and Matthew D. Shawkey\affil{1}} 
+
+\address{\affilnum{1}Department of Biology, Integrated Bioscience Program, University of Akron, Akron, OH 44325- 3908, USA.; and \affilnum{2}Department of Biological Sciences, 401 Sunset Avenue, Biology Building, University of Windsor, Windsor, Ontario, Canada, N9B 3P4.}
+
+\corraddr{rm72zips.uakron.edu}
+
+
+\maketitle
+
+\section{Exact determination of volume overlap}
+
+\subsection{Methods}
+
+\pavo{} builds upon previously described visual model methods. For example, \cite{Stoddard:2011} present the useful approach of calculating the overlap between two volumes defined by two sets of points (colour patches) in avian colourspace. Given the complexity of calculating the intersection of three-dimensional convex hulls, \cite{Stoddard:2011} used a Monte Carlo approach to estimate the degree of volume overlap. While \pavo{} incorporates this method, we also include an exact solution for the calculation of the intersection of color volumes using a method originally implemented to calculate the overlap between multidimensional niche \citep{Villeger:2011} through the computational geometry capabilities available from the \code{rcdd} package \citep{rcdd}.
+
+First, to validate the latter method, we generated two known sets of points in three-dimensions (see XX). To simplify calculations, we chose points that would lie at the vertices of a cube with side length of one and 0.5. Thus, the volumes of these two cubes are $V_1=1^3=1$ and $V_2=0.5^3=0.125$. We then shifted the x coordinates of the small cube by 0.4 so that the overlap along this axis would be $x_{overlap}=0.1$, giving an overlap volume of $V_3=0.1*0.5^2=0.025$. We finally calculated the proportional overlap volume (as implemented in \code{voloverlap} and \cite{Stoddard:2011}) as $p_{overlap} = V_3/(V_2+(V_1-V_3)) = .02272727$ (see Figure \ref{figure:cubes}). We then used the \code{voloverlap} function for comparison with this geometrical solution and found that the values matched exactly.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=2in]{fig/si-mc_cubes}
+\caption{Test geometries for validating \code{voloverlap}. Red and blue cubes are convex hulls enclosing all points, with overlap region shaded in grey.}
+\label{figure:cubes}
+\end{figure}
+
+Second, we compared the accuracy of the Monte Carlo method described in \cite{Stoddard:2011} by running simulations over a range of \code{nsamp} values (\code{nsamp} = 100, 1000, 10000, 100000). Each simulation was repeated 10 times for a given \code{nsamp} value to estimate confidence intervals and evaluate the precision of the estimates.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=3in]{fig/si-mc_overlap}
+\caption{Results of Monte Carlo simulations of volume overlap compared to the exact result. Grey polygon shows 95\% confidence interval around estimated mean volume overlap (solid black line). Dashed line indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
+\label{figure:overlap}
+\end{figure}
+
+\subsection{Results}
+
+We found that the exact overlap solution in \pavo{} accurately calculates the overlap volume of a set of 3D points. The Monte Carlo method, while eventually converging on the correct solution, requires large sample numbers (and hence is more time-intensive) and can overestimate values at low MC sample numbers (see Figure \ref{figure:overlap}). 
+
+\bibliographystyle{bes}
+\bibliography{references}
+
+\end{document}
