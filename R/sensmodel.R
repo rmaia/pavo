@@ -76,15 +76,15 @@ if (!is.null(lambdacut) & !is.null(oiltype)){
 
   if (length(lambdacut) != length(oiltype)) stop ("lambdacut and oiltype must be of same length")
 
-  if (oiltype[i] == "T") oil <- c(0.99, 24.38) #Entered as a dummy (see below)
   if (oiltype[i] == "C") oil <- c(0.99, 24.38)
   if (oiltype[i] == "Y") oil <- c(0.9, 70.03)
   if (oiltype[i] == "R") oil <- c(0.99, 28.65)
   if (oiltype[i] == "P") oil <- c(0.96, 33.57)
 
 # Oil droplet transmission from Hart and Vorobyev (2005)
-T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[1]:range[2]-lambdacut[i])+1.08))
-
+if (oiltype[i] != "T"){
+  T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[1]:range[2]-lambdacut[i])+1.08))
+}
   if(oiltype[i] == "T") T.oil <- rep(1,range[2]-range[1])
   
 peak <- peak*T.oil
@@ -92,10 +92,10 @@ peak <- peak*T.oil
 # Apply ocular media transmission correction
 
 if (!is.null(om)){
-if (om == "bird"){
-  T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
-  T.e[which(T.e < 0)] <- 0
-  peak <- peak * T.e
+  if (om == "bird"){
+    T.e <- log(8.928*10^-13*(range[1]:range[2])^5-2.595*10^-9*(range[1]:range[2])^4+3.006*10^-6*(range[1]:range[2])^3-.001736*(range[1]:range[2])^2+.5013*(range[1]:range[2])-55.56)
+    T.e[which(T.e < 0)] <- 0
+    peak <- peak * T.e
   }
   else {
     T.e <- om
