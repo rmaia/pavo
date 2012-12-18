@@ -233,14 +233,19 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
   Rmid <- round((H1+lambdaRmin)/2)
 
-
-
 diffsmooth <- apply(object,2,diff)
 
 lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
+  lambdabmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
+
 bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
+  bmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
+
 S10 <- S8/bmaxneg #S10
+ S10[which(apply(diffsmooth,2,min) > 0)] <- NA
+
 lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
+  lambdabmax[which(apply(diffsmooth,2,which.max) < 0)] <- NA
 
   output.mat[, 1] <- B1
   output.mat[, 2] <- B2
