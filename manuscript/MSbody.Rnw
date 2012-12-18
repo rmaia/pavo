@@ -58,9 +58,8 @@ tools, and (c) analyze data using visual system modeling for a broad range of ta
 
 \item In this paper, we present a summary of the functions implemented in \pavo{}, suggest a
 workflow to explore spectral data, and model colours using user-defined visual systems. We also
-present suggestions (implemented in the package) for handling psychophysiological data, and an exact
-solution for the calculation of colour volume overlap, thus expanding previously published
-methodologies.
+present  an exact solution for the calculation of colour volume overlap in colourspace, thus
+expanding previously published methodologies.
 
 \item As an example of \pavo{}'s capabilities, we compare the colour patterns of three African Glossy
 Starling species, two of which have diverged very recently. Using spectral data and avian visual
@@ -132,14 +131,7 @@ streamlines workflow, but also allows data to be explored and manipulated in way
 to visualize patterns, obtain information and develop and test hypotheses (Figure
 \ref{figure:work}).
 
-
-\begin{figure}[H]
-\centering
-\includegraphics{fig/ms-workflow}
-\caption{Example \pavo{} workflow, highlighting its main functions and plotting capabilities}
-\label{figure:work}
-\end{figure}
-
+\begin{center}\fbox{Figure \ref{figure:work} about here}\end{center}
 
 \section{The \pavo{} package}
 
@@ -235,8 +227,6 @@ by calling the \code{tcs} function. This function generates an object of class \
 \code{summary} call from a \code{tcs} object will return summary statistics described in
 \cite{Stoddard:2008} for sets of points (see below).
 
-\subsection{Volume Overlap and Fechner's law in the Tetrahedral colourspace Model}
-
 \pavo{} also builds upon previously described visual model methods. For example,
 \cite{Stoddard:2011} present the useful technique of calculating the overlap between the volumes
 defined by two sets of points in colourspace. They used this metric to quantify mimicry
@@ -246,62 +236,8 @@ convex hulls, \cite{Stoddard:2011} used a Monte Carlo approach to estimate the d
 overlap. \pavo{}, instead, provides the exact solution for the calculation of the intersection of
 colour volumes, using a method originally implemented to calculate the overlap between
 multidimensional niches \citep{Villeger:2011} through the computational geometry capabilities
-available from the \code{rcdd} package \citep{rcdd}.
-
-Finally, we have addressed previously identified methodological inconsistencies in adapting visual
-models to the tetrahedral colourspace. For example, \cite{Endler:2005} recommend log-transforming
-photon catches before defining the colourspace (by dividing the photon catch of each receptor by the
-sum of all receptors, Figure \ref{figure:logplot}). This transformation makes the difference between
-stimuli proportional to their magnitude \citep[i.e. following Fechner's law; see
-also][]{Vorobyev:1998,Endler:1990}. \cite{Stoddard:2008} evaluated the consequences of this
-transformation and noted dramatic and unpredictable effects in hue and chroma values. Though the
-decrease in hue variance and an overall decrease in chroma values should be expected as a result of
-the transformation, the unpredictable effects on hue discussed by \cite{Stoddard:2008} requires
-explanation. As the authors noted \citep[see][Supplemental Information]{Stoddard:2008}, this is
-largely a result of normalizing all input functions (reflectance, sensitivity, background and
-illuminant) to integrals of 1, which yields cone stimulations ($Q_i$ for the cone class $i$) that
-range from 0 to 1. Log-transforming these $Q_i$ values ($f_i = log(Q_i)$) results in negative
-numbers, which if made relative by dividing by the sum ($f_{i\;relative} = f_i / \sum{f_i}$) results
-in the greatest \textit{absolute} $f_i$ value (i.e. the ``most negative'' and thus smallest) being
-the greatest $f_{i\;relative}$ value \textendash \; for example, $-0.5 > -5$, but $\frac{-0.5}{-5.5}
-< \frac{-5}{-5.5}$. This reverses the relative ranking of photoreceptor classes, yielding erroneous
-colourspace coordinates (Figure \ref{figure:logplot}, middle). \cite{Stoddard:2008} note that this
-can be dealt with by scaling photon catch values by a large value, but given that the objective of
-this transformation is to make stimuli distances proportional to their scale, arbitrary scale
-transformations will result in undesirable effects. Instead, we propose the following transformation
-for log-transformed photon catches ($fi$), which is adequate for making negative values relative to
-each other and is implemented in \pavo{} when \code{vismodel} is executed with the option
-\code{relative=TRUE}:
-
-\begin{equation}
-f_{i\;relative} = \frac{(f_i - \sum{f_i})}{\sum{(f_i - \sum{f_i})}}
-\end{equation}
-
-This calculation preserves measurement scale and yields hue values that are consistent with original
-values, but with differences that are a linear function of their magnitude, as expected from
-Fechner's law (Figure \ref{figure:logplot}, bottom). This transformation is only valid (and only
-used by \code{vismodel}) when log-transformed quantum catches are negative values; in other cases
-the transformations suggested by \cite{Endler:2005,Stoddard:2008} are valid.
-
-<<logplot,fig=TRUE,include=FALSE,echo=FALSE,results=hide,width=6,height=4.5>>=
-require(pavo)
-specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", subdir=T, subdir.names=F)
-mspecs <- aggspec(specs, by=3, FUN=mean)
-vm1 <- vismodel(mspecs)
-par(mar=c(4,4,1,1), las=1, ps=12)
-layout(matrix(c(1,1,1,2,3,4), ncol=2), widths=c(1,.35))
-plot(mspecs, 2, lwd=3)
-barplot(vm1$qi[1,1:4], col='darkgrey', ylab="untransformed", ylim=c(0,.7))
-barplot(log(vm1$qi[1,1:4])/sum(log(vm1$qi[1,1:4])), col='darkgrey', ylab="log transform A", 
-        ylim=c(0,.7))
-barplot(vm1$fi[1,1:4], xlab="cone", col='darkgrey', ylim=c(0,.7), ylab='log transform B')
-@
-\begin{figure}[t]
-\centering
-\includegraphics[width=3in]{fig/ms-logplot}
-\caption{Reflectance curve of a northern cardinal (\emph{Cardinalis cardinalis}, left) and different transformations of the quantum catch values calculated with \code{vismodel}. Transformations shown are: untransformed but normalized to sum of unity (top right), natural log transformed \emph{then} normalized to sum of unity (middle right), and the transformation suggested here, in which the sum of natural log transformed values are subtracted from the $f_i$ values prior to normalizing to have sum of unity (bottom right).}
-\label{figure:logplot}
-\end{figure}
+available from the \code{rcdd} package \citep{rcdd} (For performance and precision comparison, see
+Supplemental Information)
 
 \section{Example: colourspace divergence in glossy starlings (Sturnidae)}
 
@@ -318,7 +254,7 @@ starling (\emph{L. acuticaudus}).
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
-# require(pavo)
+require(pavo)
 source('~/github/pavo/R/aggspec.R')
 pal <- brewer.pal(7, "Set1")
 pal2 <- brewer.pal(11, "Spectral")
@@ -424,12 +360,16 @@ The calculation of both chromatic and achromatic distances of these 8646 pairs o
 that the recently divergent \emph{L. chloropterus} and \emph{L. elisabeth} have accumulated similar
 levels of color disparity among them as they have to their sister species, \emph{L. acuticaudus}.
 Considering a value of 1 as a threshold for Just Noticeable Differences (JNDs, Figure
-\ref{figure:distplot} dashed lines) nearly all plumage patch comparisons yield colors that are
+\ref{figure:distplot}A dashed lines) nearly all plumage patch comparisons yield colors that are
 discernible to the starling visual system, both within the \emph{L. chloropterus-L. elisabeth}
 subclade as well as compared to the \emph{L. acuticaudus} outgroup. Given the high satuturation of
 iridescent colors, small differences in the spectral shape can yield noticeably different colors.
 This becomes clear when comparing the results for the most and least contrasting body patches
-(``belly'' and ``wing'', respectively) to their spectral curves (see Figure \ref{figure:distplot}).
+(``belly'' and ``wing'', respectively) to their spectral curves (see Figure
+\ref{figure:distplot}B,C). Even groups of spectra that overlap dramatically in their average
+reflectance, as in the case of the ``wing'' patch (Figure \ref{figure:distplot}B), the pairwise
+comparisons of individual spectra yield values above the threshold of JND=1 (Figure
+\ref{figure:distplot}A)
 
 <<echo=FALSE,results=hide>>=
 # 5. Run visual models using starling visual sensitivies
@@ -493,7 +433,7 @@ layout(matrix(c(1,2,1,3), nrow=2))
 pad <- .35
 par(mar=c(4,4,2,2), oma=c(2,0,0,0), xpd=FALSE, ps=12)
 plot(d23[rs,1], ylim = c(0, 11), xlab = "", 
-     ylab = expression(paste(Delta, "S (JNDs)")), xaxt = 'n', 
+     ylab = '', xaxt = 'n', 
      pch = 21, xlim = c(0.5, 22), type='n')
 segments(seq(1,22,by=2)-pad, d12[rs, 1] - d12[rs, 2], seq(1,22,by=2)-pad, 
          d12[rs, 1] + d12[rs, 2])
@@ -501,44 +441,52 @@ segments(seq(1,22,by=2), d13[rs, 1] - d13[rs, 2], seq(1,22,by=2), d13[rs, 1] +
          d13[rs, 2])
 segments(seq(1,22,by=2)+pad, d23[rs, 1] - d23[rs, 2], seq(1,22,by=2)+pad, 
          d23[rs, 1] + d23[rs, 2])
-points(d12[rs, 1]~I(seq(1,22,by=2)-pad), pch = 21, bg = 'black', cex=1)
-points(d13[rs, 1]~seq(1,22,by=2), pch = 21, bg = 'grey', cex=1)
-points(d23[rs,1]~I(seq(1,22,by=2)+pad), pch = 21, bg = 'white', cex=1)
+points(d12[rs, 1]~I(seq(1,22,by=2)-pad), pch = 21, bg = 'black', cex=1.2)
+points(d13[rs, 1]~seq(1,22,by=2), pch = 21, bg = 'grey', cex=1.2)
+points(d23[rs,1]~I(seq(1,22,by=2)+pad), pch = 21, bg = 'white', cex=1.2)
 abline(h = 1, lty = 3)
-axis(side = 1, at = seq(1,22,by=2), labels = rs, las = 1, cex.axis=.75)
-mtext(side = 1, "plumage patch", line=3)
+#axis(side = 1, at = seq(1,22,by=2), labels = rs, las = 1, cex.axis=0.9)
+axis(side = 1, at = seq(1,22,by=2), labels = rep('',11), las = 1, cex.axis=0.9)
+text(seq(1,22,by=2),par("usr")[3]-0.7,srt=35,adj=1,labels=rs,xpd=T,cex=1.1)
+
+mtext(side = 2, expression(paste(Delta, "S (JNDs)")), line=2.5)
+mtext(side = 1, "plumage patch", line=3.5)
 par(font=3)
-legend('topleft', bty='n', pch=c(21,21,21), 
+legend('topleft', bty='n', pch=c(21,21,21), cex=1.2,
        legend = c("acuticaudus-chloropterus", "acuticaudus-elisabeth",
         "chloropterus-elisabeth"), pt.bg=c('black','grey','white'))
 par(font=1)
+mtext("A", at=-2.5, line=-1.5, cex=1.5, font=2)
 # Plot results using aggplot
 par(mar=c(4,4,2,2))
 p <- grep('wing', names(specs.sm))
 aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2, 
-        ylim=c(0,45), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)])
+        ylim=c(0,50), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)], ylab='',xlab='')
 # text(300,40,'wing', pos=4)
 par(font=3)
-legend('topleft', lty=1, col=pal[c(2,1,3)], 
-       legend=c('elisabeth', 'chloropterus', 'acuticaudus'), bty='n')
+legend('topleft', lty=1, lwd=2, col=pal[c(2,1,3)], 
+       legend=c('L. elisabeth', 'L. chloropterus', 'L. acuticaudus'), bty='n')
 par(font=1)
+mtext(side = 2, 'Reflectance (%)', line=2.7)
+mtext(side = 1, "Wavelength (nm)", line=3)
+mtext("B", at=187, line=-1.5, cex=1.5, font=2)
+
 
 p <- grep('belly', names(specs))
 aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2,
-        ylim=c(0,45), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)])
+        ylim=c(0,50), lcol=pal[c(3,1,2)], shadecol=pal[c(3,1,2)], ylab='',xlab='')
 # text(300,40,'belly', pos=4)
 par(font=3)
-legend('topleft', lty=1, col=pal[c(2,1,3)],
-       legend=c('elisabeth', 'chloropterus', 'acuticaudus'), bty='n')
+legend('topleft', lty=1, lwd=2, col=pal[c(2,1,3)],
+       legend=c('L. elisabeth', 'L. chloropterus', 'L. acuticaudus'), bty='n')
 par(font=1)
+mtext(side = 2, 'Reflectance (%)', line=2.7)
+mtext(side = 1, "Wavelength (nm)", line=3)
+mtext("C", at=187, line=-1.5, cex=1.5, font=2)
 @
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=4in]{fig/ms-distplot}
-\caption{\textbf{a}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is distinguishable by birds. Points indicate chromatic distances between different pairs of species: \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} (open circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles); and \emph{L. acuticaudus} and \emph{L. chloropterus} (black circles). Error bars show +/- one standard error. \textbf{b,c}: Plots of mean smoothed spectra for different body patches (b: wing, c: belly). Line colors indicate species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
-\label{figure:distplot}
-\end{figure}
+\begin{center}\fbox{Figure \ref{figure:distplot} about here}\end{center}
+
 <<echo=F,results=hide>>=
 # 7. Calculate tetra colourspace variables
 tcs1 <- tcs(vm1)
@@ -574,14 +522,14 @@ tcs1c <- tcs1.m[grep('LAEL', tcs1.m$both),]
 Finally, to produce a tetrahedral colourspace plot, we used \code{relative=TRUE} in the
 \code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum of unity for
 each patch. These results indicate that the expansion of occupied colourspace for both subspecies is
-largely due to divergence in the colour of the belly patch (see circles labeled `bel' at edges of red
-and blue polyhedrons in Figure \ref{figure:volplot}a). Interestingly, the wing plumage patch of
-\emph{L. elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus}, to which
-it is more closely related (circles labeled `ch' in Figure \ref{figure:volplot}a).
+largely due to divergence in the colour of the ``belly'' patch (see circles labeled `bel' at edges
+of red and blue polyhedrons in Figure \ref{figure:volplot}a). Interestingly, the ``cheek'' plumage
+patch of \emph{L. elisabeth} is more  similar to \emph{L. acutacaudus} than \emph{L. chloropterus},
+to which it is more closely related (circles labeled `ch' in Figure \ref{figure:volplot}A).
 
 We also used the \code{voloverlap} function to calculate the volumes occupied by each species'
 plumage patches, as well as their overlaps. As an example, the code below shows the result for the
-overlap between the two recently diverged species (see Figure \ref{figure:volplot}b):
+overlap between the two recently diverged species (see Figure \ref{figure:volplot}B):
 
 <<echo=T,eval=FALSE,fig=F,include=F>>=
 vm.star2 <- vismodel(specs, visual = 'star', relative = TRUE)
@@ -603,12 +551,7 @@ voloverlap(tcs1b, tcs1c, plot = FALSE)
 % rgl.snapshot('ms-volplot.png')
 % @
 
-\begin{figure}[H]
-\centering
-\includegraphics[width=5in]{fig/ms-new_volplot}
-\caption{\textbf{a}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (bel) and cheek (ch). \textbf{b}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
-\label{figure:volplot}
-\end{figure}
+\begin{center}\fbox{Figure \ref{figure:volplot} about here}\end{center}
 
 The \code{plot=TRUE} option provides a useful graphical representation of the overlap in colourspace
 (Figure \ref{figure:volplot}b). Again, the calculated volume in \pavo{} represents the exact
@@ -636,5 +579,80 @@ Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.).
 
 \bibliographystyle{bes}
 \bibliography{references}
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics{fig/ms-workflow-3}
+\caption{Example \pavo{} workflow, highlighting its main functions and plotting capabilities}
+\label{figure:work}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics{fig/ms-distplot}
+\caption{\textbf{A}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is considered to be distinguishable by birds. Points indicate chromatic distances between different pairs of species: \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} (open circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles); and \emph{L. acuticaudus} and \emph{L. chloropterus} (black circles). Error bars show +/- one standard error. \textbf{B,C}: Plots of mean smoothed spectra for different body patches (B: wing, C: belly). Line colors indicate species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
+\label{figure:distplot}
+\end{figure}
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics{fig/ms-new_volplot}
+\caption{\textbf{A}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (bel) and cheek (ch). \textbf{B}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
+\label{figure:volplot}
+\end{figure}
+
+\clearpage
+
+\setcounter{figure}{0}
+\makeatletter 
+\renewcommand{\thefigure}{S\@arabic\c@figure} 
+
+\section{Supporting Information}
+
+\subsection{Exact determination of volume overlap}
+
+To validate the exact solution for the multidimensional convex hull overlap used to obtain the color
+volume overlap implemented in \pavo{}, we defined two sets of points in three-dimensional space that
+defined two cubes, with side lengths of 1.0 and 0.5, respectively. Thus, the volumes of these two
+cubes are $V_1=1^3=1$ and $V_2=0.5^3=0.125$. We then shifted the x coordinates of the smaller cube
+by 0.4 to make the linear overlap along this axis $x_{overlap}=0.5 - 0.4 = 0.1$  (Figure
+\ref{figure:cubes}), giving an overlap volume of $V_3=0.1*0.5^2=0.025$. We then calculated the known
+proportional overlap volume based on the exclusion-inclusion principle as  $p_{overlap} =
+V_3/(V_2+(V_1-V_3)) = .02272727$ (see Figure \ref{figure:cubes}). Finally, we used the
+\code{voloverlap} function to estimate the proportional overlap and found that the value calculated
+by \code{voloverlap} for this set of points matched exactly (dashed line in \ref{figure:overlap}).
+
+To further show the benefit of an exact versus approximate solution (i.e. using Monte Carlo
+simulation), we compared the accuracy and precision of the Monte Carlo method described in
+\cite{Stoddard:2011} by running simulations over a range of MC sample sizes (\emph{n}): 100, 1000,
+10000, and 100000. For each \emph{n}, we repeated the simulation a total of 10 times to estimate
+confidence intervals and thus evaluate the precision of the estimates. The Monte Carlo method, while
+eventually converging on the correct solution, requires large sample numbers (and, hence, is more
+time-intensive) and can overestimate values at low MC sample numbers (see Figure
+\ref{figure:overlap}).
+
+\clearpage
+
+\begin{figure}
+\centering
+\includegraphics[width=3in]{fig/si-mc_cubes}
+\caption{Test geometries for validating \code{voloverlap}. Red and blue cubes are convex hulls enclosing all points, with overlap region shaded in grey.}
+\label{figure:cubes}
+\end{figure}
+
+
+\begin{figure}
+\centering
+\includegraphics{fig/si-mc_overlap}
+\caption{Results of Monte Carlo simulations of volume overlap compared to the exact result. Grey polygon shows 95\% confidence interval around estimated mean volume overlap (solid black line). Dashed line indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
+\label{figure:overlap}
+\end{figure}
+
 
 \end{document}
