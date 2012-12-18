@@ -9,8 +9,6 @@
 #' @param qcatch quantum catch values to use in the model:
 #' \itemize{
 #' \item \code{Qi}: Quantum catch for each photoreceptor (default)
-#' \item \code{qi}: Quantum catch normalized to the adapting background according 
-#' to the von Kries transformation
 #' \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)
 #' }
@@ -62,12 +60,13 @@ if(class(vismodeldata)=='vismodel'){
 	
   }else{
 	qcatch <- match.arg(qcatch)
-  	dat <- vismodeldata
+  	dat <- as.matrix(vismodeldata)
+  	rownames(dat) <- rownames(vismodeldata)
+  	colnames(dat) <- colnames(vismodeldata)
   	}
 
 dat <- switch(qcatch,
               Qi = log(dat),
-              qi = log(dat),
               fi = dat)
 
 vis <- match.arg(vis)
