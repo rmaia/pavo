@@ -49,7 +49,7 @@
   \item \code{neural}: noise is proportional to the Weber
   fraction and is independent of the intensity of the
   signal received.  \item \code{quantum}: noise is the sum
-  of the quantum noise and the neural noise, and is thus
+  of the neural noise and receptor noise, and is thus
   proportional to the Weber fraction and inversely
   proportional to the intensity of the signal received (the
   quantum catches). Note that the \code{quantum} option
