@@ -14,9 +14,7 @@
 
   \item{qcatch}{quantum catch values to use in the model:
   \itemize{ \item \code{Qi}: Quantum catch for each
-  photoreceptor (default) \item \code{qi}: Quantum catch
-  normalized to the adapting background according to the
-  von Kries transformation \item \code{fi}: Quantum catch
+  photoreceptor (default) \item \code{fi}: Quantum catch
   according to Fechner law (the signal of the receptor
   channel is proportional to the logarithm of the quantum
   catch) }}
