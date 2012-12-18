@@ -39,18 +39,18 @@
 #' background is used (Default assumes an idealized homogeneous background).
 #' @param relative should relative quantum catches be returned (i.e. is it a color
 #' space model? Defaults to \code{TRUE}).
+#' @param vonkries logical. Should the von Kries color correction transformation be applied?
+#' (defaults to \code{FALSE})
 #' @param scale a value by which the illuminant will be multiplied. Useful for when the 
 #' illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
-#' and does not correspond to quantum flux units (umol*s^-1*m^-2). Useful values
-#' are, for example, 500 (for dim light) and 10000 (for bright illumination).
+#' and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
+#' are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
+#' \code{vonkries=TRUE} this transformation has no effect.
 #'
 #' @return An object of class \code{vismodel} containing the following data frames:
 #' @return \code{descriptive}: Descriptive statistics of maximum and normalized 
 #' reflectance, and wavelength of maximum reflectance (hue)
-#' @return \code{Qi}: Quantum catch for each photoreceptor (which sum to 1 if 
-#' \code{relative = TRUE})
-#' @return \code{qi}: Quantum catch normalized to the adapting background according 
-#' to the von Kries transformation.
+#' @return \code{Qi}: Quantum catch for each photoreceptor 
 #' @return \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)
 #' @export
@@ -67,7 +67,8 @@
 vismodel <- function(rspecdata, 
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc","ml","none"),
-  illum = c('ideal','bluesky','D65','forestshade'), scale=1, bkg = 'ideal', relative=TRUE)
+  illum = c('ideal','bluesky','D65','forestshade'), 
+  vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
 {
 
 # remove & save colum with wavelengths
@@ -176,32 +177,34 @@ k <- 1/colSums(S*bkg*illum)
 
 # quantum catch normalized to the background (qi = k*Qi)
 
-qi <- t(t(Qi)*k)
+if(vonkries)
+  Qi <- t(t(Qi)*k)
 
 # fechner law (signal ~ log quantum catch)
 
-fi <- log(qi)
+fi <- log(Qi)
 
 
 if(relative){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
-  qi[,-dim(qi)[2]] <- qi[,-dim(qi)[2]]/rowSums(qi[,-dim(qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
-
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
 
+vk <- "(von Kries color correction not applied)"
 
+if(vonkries)
+  vk <- "(von Kries color correction applied)"
 
 #OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
-res<-list(Qi=Qi, qi=qi, fi=fi)
+res<-list(Qi=Qi, fi=fi)
 class(res) <- 'vismodel'
 attr(res,'visualsystem') <- c(visual,achromatic)
-attr(res,'illuminant') <- paste(illum2,', scale = ',scale, sep='')
+attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 res

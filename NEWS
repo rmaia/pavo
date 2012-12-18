@@ -16,3 +16,4 @@ PPB - sensmodel changed to allow user-defined ocular media transmission
 2012-12-18
 RM - Updated sensitivity curves
 RM - added scale parameter to vismodel (can now implement photon catch noise)
+RM - changed how vismodel handles von Kries correction - now an option, to allow receptor noise color distance models

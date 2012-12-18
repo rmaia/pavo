@@ -6,7 +6,8 @@
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
     achromatic = c("bt.dc", "ch.dc", "ml", "none"),
     illum = c("ideal", "bluesky", "D65", "forestshade"),
-    bkg = "ideal", relative = TRUE)
+    vonkries = F, scale = 1, bkg = "ideal",
+    relative = TRUE)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -48,6 +49,19 @@
   \item{relative}{should relative quantum catches be
   returned (i.e. is it a color space model? Defaults to
   \code{TRUE}).}
+
+  \item{vonkries}{logical. Should the von Kries color
+  correction transformation be applied? (defaults to
+  \code{FALSE})}
+
+  \item{scale}{a value by which the illuminant will be
+  multiplied. Useful for when the illuminant is a relative
+  value (i.e. transformed to a maximum of 1 or to a
+  percentage), and does not correspond to quantum flux
+  units ($umol*s^-1*m^-2$). Useful values are, for example,
+  500 (for dim light) and 10000 (for bright illumination).
+  Note that if \code{vonkries=TRUE} this transformation has
+  no effect.}
 }
 \value{
   An object of class \code{vismodel} containing the
@@ -57,11 +71,7 @@
   normalized reflectance, and wavelength of maximum
   reflectance (hue)
 
-  \code{Qi}: Quantum catch for each photoreceptor (which
-  sum to 1 if \code{relative = TRUE})
-
-  \code{qi}: Quantum catch normalized to the adapting
-  background according to the von Kries transformation.
+  \code{Qi}: Quantum catch for each photoreceptor
 
   \code{fi}: Quantum catch according to Fechner law (the
   signal of the receptor channel is proportional to the
@@ -78,7 +88,7 @@
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
+tcs.sicalis <- tcs(vis.sicalis)}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
