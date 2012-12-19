@@ -2,34 +2,13 @@
 \alias{summary.rspec}
 \title{Tristimulus color variables}
 \usage{
-  \method{summary}{rspec} (object, wlrange = c(300, 700),
-    smooth = TRUE, span = 0.2, plot = FALSE, ...)
+  \method{summary}{rspec} (object, ...)
 }
 \arguments{
   \item{object}{(required) a data frame, possibly an object
   of class \code{rspec}, with a column with wavelength
   data, named 'wl', and the remaining column containing
   spectra to process.}
-
-  \item{smooth}{logical. If \code{TRUE} spectra will be
-  smoothed before extracting some of the values. When
-  \code{TRUE}, uses the loess smoothing to reduce spectral
-  noise when extracting variables for which bmax and
-  bmaxneg are required, and for which Rmax and Rmin are
-  required (defaults to \code{TRUE}). See notes.}
-
-  \item{span}{the degree of smoothing if \code{smooth} is
-  \code{TRUE}. Larger values result in greater smoothing
-  (defaults to 0.2).}
-
-  \item{wlrange}{vector of length 2 indicating the lower
-  and upper wavelength bounds used to calculate variables
-  that refer to a color wheel (S5 and H4) (defaults to
-  300nm to 700nm).}
-
-  \item{plot}{logical. If \code{TRUE}, smooth spectra are
-  plotted for verification of the smoothing parameter
-  (defaults to \code{FALSE}).}
 
   \item{...}{class consistency (ignored)}
 }

@@ -2,8 +2,9 @@
 \alias{coldist}
 \title{Color distances}
 \usage{
-  coldist(vismodeldata, qcatch = c("Qi", "qi", "fi"),
-    vis = c("tetra", "tri", "di"), achro = TRUE, n1 = 1,
+  coldist(vismodeldata, qcatch = c("fi", "Qi"),
+    vis = c("tetra", "tri", "di"),
+    noise = c("neural", "quantum"), achro = TRUE, n1 = 1,
     n2 = 2, n3 = 2, n4 = 4, v = 0.1)
 }
 \arguments{
@@ -14,9 +15,7 @@
 
   \item{qcatch}{quantum catch values to use in the model:
   \itemize{ \item \code{Qi}: Quantum catch for each
-  photoreceptor (default) \item \code{qi}: Quantum catch
-  normalized to the adapting background according to the
-  von Kries transformation \item \code{fi}: Quantum catch
+  photoreceptor (default) \item \code{fi}: Quantum catch
   according to Fechner law (the signal of the receptor
   channel is proportional to the logarithm of the quantum
   catch) }}
@@ -45,6 +44,16 @@
   fraction for the large cone will be 0.05, as estimated
   from behavioral experiment with the Perkin robin,
   \emph{Leiothrix lutea})}
+
+  \item{noise}{how the noise will be calculated: \itemize{
+  \item \code{neural}: noise is proportional to the Weber
+  fraction and is independent of the intensity of the
+  signal received.  \item \code{quantum}: noise is the sum
+  of the neural noise and receptor noise, and is thus
+  proportional to the Weber fraction and inversely
+  proportional to the intensity of the signal received (the
+  quantum catches). Note that the \code{quantum} option
+  will only work with objects of class \code{vismodel}. }}
 }
 \value{
   A data frame containing 4 columns. The first two

@@ -21,7 +21,7 @@
 #' If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using 
 #' values from Hart et al. (2005), or user-defined values.
 #' @param integrate logical. If \code{TRUE}, each curve is transformed to have a total area
-#' under the curve of 1 (best for visual models)(defaults to \code{TRUE}).
+#' under the curve of 1 (best for visual models; defaults to \code{TRUE}).
 #' @return A data frame of class \code{rspec} containing each cone model as a column.
 #' @export
 #' @examples \dontrun{

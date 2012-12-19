@@ -4,7 +4,7 @@
 \usage{
   sensmodel(peaksense, range = c(300, 700),
     lambdacut = NULL, Bmid = NULL, oiltype = NULL,
-    beta = TRUE, om = FALSE, integrate = TRUE)
+    beta = TRUE, om = NULL, integrate = TRUE)
 }
 \arguments{
   \item{peaksense}{(required) a vector with peak
@@ -34,13 +34,16 @@
   will include the beta peak See Govardovskii et al.(2000)
   (defaults to \code{TRUE}).}
 
-  \item{om}{logical. If \code{TRUE} cone senssitivity will
-  be corrected for ocular media transmission. Values from
-  Hart et al. (2005)(defaults to \code{FALSE}).}
+  \item{om}{a vector of same length as
+  \code{range1}-\code{range2} that contains ocular media
+  transmission data. If included, cone sensitivity will be
+  corrected for ocular media transmission. Currently
+  accepts "bird" using values from Hart et al. (2005), or
+  user-defined values.}
 
   \item{integrate}{logical. If \code{TRUE}, each curve is
   transformed to have a total area under the curve of 1
-  (best for visual models)(defaults to \code{TRUE}).}
+  (best for visual models; defaults to \code{TRUE}).}
 }
 \value{
   A data frame of class \code{rspec} containing each cone
