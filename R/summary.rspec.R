@@ -190,7 +190,8 @@ S5B <- apply(object[Q1, ],2,sum)/B1
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
 #H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
-H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
+# H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
+H4 <- atan2(S5R-S5G, S5Y-S5B)
 
 #carotchroma
 R450 <- as.numeric(object[which(wl==450), ])
