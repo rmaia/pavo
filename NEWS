@@ -20,3 +20,6 @@ RM - changed how vismodel handles von Kries correction - now an option, to allow
 RM - passed changes to vismodel to how coldist handles them. Now ready for receptor noise model
 RM - coldist now accepts receptor noise
 PPB - summary.rspec does not take any arguments and returns NAs for positive bmaxnegs and others
+
+2012-12-19
+RM - explorespec 'free' argument fixed, was not working
