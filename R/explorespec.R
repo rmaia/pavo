@@ -22,7 +22,7 @@
 #' explorespec(sicalis, 3, ylim=c(0,100), legpos=c(500,80))}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-explorespec <- function (rspecdata, by=1, scale=c('free','equal'), legpos='topright', ...) {
+explorespec <- function (rspecdata, by=1, scale=c('equal','free'), legpos='topright', ...) {
 
 
 if (by <= 0) stop ("Invalid by value")
