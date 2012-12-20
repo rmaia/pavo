@@ -94,6 +94,10 @@ if(is.null(arg$col)){
 
 par(mar=c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
 
+if(all(is.null(arg$ylim), scale=='equal')){
+  arg$ylim <- c(min(rspecdata), max(rspecdata))*yaxismult
+}
+
 for (i in 1:nplots){
   if (by == 1) {
   	bloc <- data.frame(rspecdata[i])
@@ -102,15 +106,10 @@ for (i in 1:nplots){
   	  }
 
 # SET OPTIONAL ARGUMENTS
-
-if(is.null(arg$ylim)){
-  if(scale=='free')
+      
+  if(all(is.null(arg$ylim), scale=='free'))
     arg$ylim <- c(min(bloc), max(bloc))*yaxismult
 
-  if(scale=='equal')
-    arg$ylim <- c(min(rspecdata), max(rspecdata))*yaxismult
-}
-  
   if(is.null(arg$type))
     arg$type <- 'l'
   
@@ -169,6 +168,10 @@ if(is.null(arg$ylim)){
 }}
 
 arg$col <- legcolor[1]
+
+if(scale=='free')
+  arg$ylim <- NULL
+
 
 if(i %% 12 == 0){
 mtext(arg$xlab, side=1, outer=T, line=1)
