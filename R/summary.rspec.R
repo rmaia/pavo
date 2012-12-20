@@ -182,16 +182,16 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(object[Q4, ],2,sum)
-S5Y <- apply(object[Q3, ],2,sum)
-S5G <- apply(object[Q2, ],2,sum)
-S5B <- apply(object[Q1, ],2,sum)
-
+S5R <- apply(object[Q4, ],2,sum)/B1
+S5Y <- apply(object[Q3, ],2,sum)/B1
+S5G <- apply(object[Q2, ],2,sum)/B1
+S5B <- apply(object[Q1, ],2,sum)/B1
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
 #H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
-H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
+# H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
+H4 <- atan2(S5R-S5G, S5Y-S5B)
 
 #carotchroma
 R450 <- as.numeric(object[which(wl==450), ])

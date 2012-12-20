@@ -23,3 +23,4 @@ PPB - summary.rspec does not take any arguments and returns NAs for positive bma
 
 2012-12-19
 RM - explorespec 'free' argument fixed, was not working
+CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance (B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness
