@@ -21,3 +21,6 @@ RM - passed changes to vismodel to how coldist handles them. Now ready for recep
 RM - coldist now accepts receptor noise
 PPB - summary.rspec does not take any arguments and returns NAs for positive bmaxnegs and others
 CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance (B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness
+
+2012-12-21
+CME - fixed peakshape bug; in previous version, duplicate column names resulted in an error
