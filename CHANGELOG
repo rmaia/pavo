@@ -1,3 +1,6 @@
+2012-12-21 -------------------------------------------------------------------
+* CME - fixed peakshape bug; in previous version, duplicate column names resulted in an error
+
 2012-12-19 -------------------------------------------------------------------
 * RM - explorespec 'free' argument fixed, was not working
 * CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance (B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness

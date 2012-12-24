@@ -102,10 +102,11 @@ if (plot==TRUE) {
   }
 }
 
-out <- data.frame(B3 = as.numeric(Yi), H1 = hue, FWHM = Xb - Xa, HWHM.l = hue - Xa,
-                  HWHM.r = Xb - hue, incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
+out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue, 
+                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue, 
+                  status = c("OK", "check")[as.numeric(Yj > Yk) + 1])
 
-row.names(out) <- nms[select]
+# row.names(out) <- nms[select]
 
 out
 
