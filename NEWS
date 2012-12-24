@@ -1,26 +1,26 @@
-2012-12-07:
-CME - changed as.rspec to work if user provides a 'whichwl' argument
-CME - changed procspec to work with single reflectance spectrum
-CME - added 'interp' argument to as.rspec and updated automatic search for wavelength column
+pavo 0.1-2
+------------------------------------------------------------------------------
 
-2012-12-10:
-CME - fixed aggspec.R (names of output dataset weren't matching input 'by' vector)
+VISUAL MODEL
 
-2012-12-14:
-RM - fixed tcs (allows for "v" names in the cone classes)
-RM - changed voloverlap: allows user to define colors, and if new plot should be called
+* Changed vismodel() output: von Kries correction is now an optional argument, output includes only Qi and fi
+* vismodel() accepts a scale parameter (multiplies iluminant in order to make it in flux units)
+* coldist() includes option for receptor noise calculation
+* Updated sensitivity curves
 
-2012-12-17
-PPB - sensmodel changed to allow user-defined ocular media transmission
+MINOR FEATURES
 
-2012-12-18
-RM - Updated sensitivity curves
-RM - added scale parameter to vismodel (can now implement photon catch noise)
-RM - changed how vismodel handles von Kries correction - now an option, to allow receptor noise model
-RM - passed changes to vismodel to how coldist handles them. Now ready for receptor noise model
-RM - coldist now accepts receptor noise
-PPB - summary.rspec does not take any arguments and returns NAs for positive bmaxnegs and others
+* sensmodel() accepts user-defined ocular media transmission
+* voloverlap() allows greater user control of plotting options
+* voloverlap() includes Monte Carlo option for overlap calculation
+* as.rspec() accepts "whichwl" argument for user-defined wavelength column selection
+* as.rspec() includes "interp" argument; updated automatic search for wavelength column
 
-2012-12-19
-RM - explorespec 'free' argument fixed, was not working
-CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance (B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness
+BUG FIXES
+
+* explorespec() "free" argument fixed
+* summary.rspec() S5 variable fixed; segments now divided by B1 (brightness-independent measure of saturation)
+* summary.rspec() checks for positive values when bmaxneg is caluclated, returns NA
+* tcs() accepts "v" cone class
+* aggspec() fixed matching of names
+* procspec() works with rspec objects that include a single reflectance spectrum
