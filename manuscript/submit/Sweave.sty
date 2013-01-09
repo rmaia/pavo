@@ -24,10 +24,20 @@
 \DefineVerbatimEnvironment{Soutput}{Verbatim}{}
 \DefineVerbatimEnvironment{Scode}{Verbatim}{fontshape=sl}
 
-\newenvironment{Schunk}{}{}
+\ifdefined\Schunk%
+  \message{\string Environment Schunk is already defined, stay with former definition}%
+\else
+  \newenvironment{Schunk}{}{}%
+\fi
 
 \newcommand{\Sconcordance}[1]{%
   \ifx\pdfoutput\undefined%
   \csname newcount\endcsname\pdfoutput\fi%
   \ifcase\pdfoutput\special{#1}%
-  \else\immediate\pdfobj{#1}\fi}
+  \else%
+   \begingroup%
+     \pdfcompresslevel=0%
+     \immediate\pdfobj stream{#1}%
+     \pdfcatalog{/SweaveConcordance \the\pdflastobj\space 0 R}%
+   \endgroup%
+  \fi}
