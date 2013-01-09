@@ -3,7 +3,7 @@
 \title{Plot spectral curves}
 \usage{
   explorespec(rspecdata, by = 1,
-    scale = c("free", "equal"), legpos = "topright", ...)
+    scale = c("equal", "free"), legpos = "topright", ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
