@@ -12,7 +12,7 @@
 #' @param plot logical. Should plots indicating calculated parameters be returned? 
 #' (Defaults to \code{TRUE})
 #' @param ask logical, specifies whether user input needed to plot multiple plots
-#' when number of spectra to analyze is greater than 1 (defaults to FALSE)
+#' when number of spectra to analyze is greater than 1 (defaults to \code{FALSE})
 #' @param ... additional arguments to be passed to plot
 #' @return a data frame containing column names (id); peak height (max value, B3), location (hue, H1) and full width
 #' at half maximum (FWHM), as well as half widths on left (HWHM.l) and right side of peak (HWHM.r). Incl.min column
