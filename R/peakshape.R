@@ -14,8 +14,8 @@
 #' @param ask logical, specifies whether user input needed to plot multiple plots
 #' when number of spectra to analyze is greater than 1 (defaults to FALSE)
 #' @param ... additional arguments to be passed to plot
-#' @return a data frame containing peak height (max value), location (hue) and full width
-#' at half maximum, as well as half widths on left and right side of peak. Incl.min column
+#' @return a data frame containing column names (id); peak height (max value, B3), location (hue, H1) and full width
+#' at half maximum (FWHM), as well as half widths on left (HWHM.l) and right side of peak (HWHM.r). Incl.min column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.
 #' Function will return a warning if not.
 #' @seealso \code{\link{procspec}}
@@ -35,9 +35,9 @@ old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
 par(ask = ask)
 
-if (length(select) > 1)
-  par(mfrow=c(2,2)) else
-  par(mfrow=c(1,1))
+# if (length(select) > 1)
+#   par(mfrow=c(2,2)) else
+#   par(mfrow=c(1,1))
 
 nms <- names(rspecdata)
 
