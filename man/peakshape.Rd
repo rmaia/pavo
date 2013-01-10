@@ -3,7 +3,7 @@
 \title{Peak shape descriptors}
 \usage{
   peakshape(rspecdata, select = NULL, bounds = c(300, 700),
-    plot = TRUE, ...)
+    plot = TRUE, ask = FALSE, ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -20,12 +20,17 @@
   \item{plot}{logical. Should plots indicating calculated
   parameters be returned? (Defaults to \code{TRUE})}
 
+  \item{ask}{logical, specifies whether user input needed
+  to plot multiple plots when number of spectra to analyze
+  is greater than 1 (defaults to \code{FALSE})}
+
   \item{...}{additional arguments to be passed to plot}
 }
 \value{
-  a data frame containing peak height (max value), location
-  (hue) and full width at half maximum, as well as half
-  widths on left and right side of peak. Incl.min column
+  a data frame containing column names (id); peak height
+  (max value, B3), location (hue, H1) and full width at
+  half maximum (FWHM), as well as half widths on left
+  (HWHM.l) and right side of peak (HWHM.r). Incl.min column
   indicates whether user-defined bounds incorporate the
   actual minima of the spectra. Function will return a
   warning if not.
