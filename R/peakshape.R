@@ -73,11 +73,12 @@ if (ncol(rspecdata)==1) {
   Yj <- apply(rspecdata2, 2, min)  # min refls
   Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
   Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x]==Yi[x]))  # lambda_max index
-  fsthalf <- sapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
-  sndhalf <- sapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
+  fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
+  sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
   fstHM <- sapply(1:length(fsthalf), function(x) which.min(abs(fsthalf[[x]]-halfmax[x])))
-  sndHM <- sapply(1:length(fsthalf), function(x) which.min(abs(sndhalf[[x]]-halfmax[x])))
+  sndHM <- sapply(1:length(sndhalf), function(x) which.min(abs(sndhalf[[x]]-halfmax[x])))
+
 }
 
 
@@ -93,7 +94,7 @@ hue <- wlrange[Xi]
 if (plot==TRUE) {
   for (i in seq_along(select)) {
     plot(rspecdata[, i]~wl, type = 'l', xlab = "Wavelength (nm)", 
-         ylab = "Reflectance (%)", ...)
+         ylab = "Reflectance (%)", main = nms[select[i]], ...)
     abline(v = hue[i], col = "red")
     abline(h = halfmax[i], col = "red")
     abline(v = Xa[i], col = "red", lty = 2)
@@ -104,7 +105,7 @@ if (plot==TRUE) {
 
 out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue, 
                   FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue, 
-                  status = c("OK", "check")[as.numeric(Yj > Yk) + 1])
+                  incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 # row.names(out) <- nms[select]
 
