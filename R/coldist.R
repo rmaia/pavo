@@ -85,9 +85,7 @@ noise <- match.arg(noise)
 
 vis <- match.arg(vis)
 
-dat <- switch(qcatch,
-              Qi = log(dat),
-              fi = dat)
+dat <- switch(qcatch, fi = dat, Qi = log(dat))
 
 #NEURAL NOISE MODEL
 
