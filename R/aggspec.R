@@ -8,10 +8,10 @@
 #' it contains a wavelength column containing "wl", that column will be ignored.
 #' @param by (required) either a single value specifying the range of spectra within
 #' the data frame to be combined (for example, \code{by} = 3 indicates the function
-#' will be applied to groups of 3 consecutive columns in the spectra data frame) or
+#' will be applied to groups of 3 consecutive columns in the spectra data frame); 
 #' a vector containing identifications for the columns in the spectra data frame
 #' (in which case the function will be applied to each group of spectra sharing the
-#' same identification).
+#' same identification); or a list of vectors, e.g., \code{by = list(sex, species)}.
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
@@ -64,7 +64,9 @@ if(length(which(by=='wl'))!=0)
   by<- by[-which(by=='wl')]
 
 #END RM EDIT 2
-
+if (is.list(by)) {
+  by <- do.call('paste', c(by, sep='.'))
+}
 
 # retain original values
 by0 <- by
@@ -74,8 +76,8 @@ by0 <- by
 # i.e. if by=3, average every 3 consecutive data of "data"
 
 if(length(by)==1){
-	by0 <- names(y)[seq(1,length(names(y)),by=by)]
-	by <- rep(1:(length(y)/by),each=by)
+	by0 <- names(y)[seq(1, length(names(y)), by = by)]
+	by <- rep(1:(length(y) / by), each = by)
 }
 #END RM EDIT 1
 
@@ -87,12 +89,24 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 #END RM EDIT 3
 
-by <- factor(by)
+# Add ability to aggregate based on multiple vectors (given a list as input)
+# TODO: add that list can be an input in roxygen doc 
 
-dat <- sapply(unique(by),function(z)apply(y[which(by==z)],1,FUN))
+by <- factor(by)  # is this necessary?
+
+dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
 
 colnames(dat) <- unique(by0)
-res<- data.frame(cbind(wl=wl, dat))
+
+res <- data.frame(cbind(wl=wl, dat))
+
 class(res) <- c('rspec','data.frame')
+
 res
+
+# This would return list of spectral data and data.frame with metadata:
+  # set <- strsplit(names(res), split='\\.')
+  # out <- as.data.frame(do.call("rbind", set))
+  # list(res, out)
+
 }
