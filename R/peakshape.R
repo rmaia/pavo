@@ -11,6 +11,8 @@
 #' @param bounds a vector specifying the wavelength range to analyze
 #' @param plot logical. Should plots indicating calculated parameters be returned? 
 #' (Defaults to \code{TRUE})
+#' @param ask logical, specifies whether user input needed to plot multiple plots
+#' when number of spectra to analyze is greater than 1 (defaults to FALSE)
 #' @param ... additional arguments to be passed to plot
 #' @return a data frame containing peak height (max value), location (hue) and full width
 #' at half maximum, as well as half widths on left and right side of peak. Incl.min column
@@ -27,9 +29,15 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
 peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), 
-                      plot = TRUE, ...) {
+                      plot = TRUE, ask = FALSE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
+
+par(ask = ask)
+
+if (length(select) > 1)
+  par(mfrow=c(2,2)) else
+  par(mfrow=c(1,1))
 
 nms <- names(rspecdata)
 
@@ -108,6 +116,8 @@ out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue,
                   incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 # row.names(out) <- nms[select]
+
+par(old.par)
 
 out
 
