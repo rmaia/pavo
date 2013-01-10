@@ -65,7 +65,8 @@ if(length(which(by=='wl'))!=0)
 
 #END RM EDIT 2
 if (is.list(by)) {
-  by <- do.call('paste', c(by, sep='.'))
+  by <- do.call('paste', c(by, sep='.'))  # WHAT WOULD BE A GOOD SEPARATOR HERE?
+                                          # MIGHT RUN INTO A PROBLEM USING '.'
 }
 
 # retain original values
