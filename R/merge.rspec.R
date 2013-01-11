@@ -20,8 +20,11 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-merge.rspec <- function(x, y, ...) {
-  if (!(is.rspec(x)&&is.rspec(y))) {stop("Invalid rspec objects")}
+merge.rspec <- function(x, y, by='wl', ...) {
+  if (!(is.rspec(x)&&is.rspec(y))) {stop("One ore more invalid rspec objects")}
+  if (!(any(names(x)=='wl')&any(names(y)=='wl'))) {
+    stop("Cannot find valid 'wl' column in one or both input objects")
+  }
   res <- merge.data.frame(x, y, ...)
   class(res) <- c("rspec", "data.frame")
   res
