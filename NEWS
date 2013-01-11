@@ -1,5 +1,8 @@
 pavo 0.1-2
 ------------------------------------------------------------------------------
+NEW FUNCTIONS
+
+* merge.rspec() combines rspec objects in a single object
 
 VISUAL MODEL
 
@@ -15,6 +18,8 @@ MINOR FEATURES
 * voloverlap() includes Monte Carlo option for overlap calculation
 * as.rspec() accepts "whichwl" argument for user-defined wavelength column selection
 * as.rspec() includes "interp" argument; updated automatic search for wavelength column
+* aggspec() aggregates spectra by multiple vectors (e.g. average spectra by species and sex using by=list(species,sex) )
+* peakshape() gives plot titles, allows ask=TRUE and mfrow
 
 BUG FIXES
 
@@ -24,3 +29,4 @@ BUG FIXES
 * tcs() accepts "v" cone class
 * aggspec() fixed matching of names
 * procspec() works with rspec objects that include a single reflectance spectrum
+* peakshape() minor fixes
