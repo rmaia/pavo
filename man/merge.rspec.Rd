@@ -2,11 +2,11 @@
 \alias{merge.rspec}
 \title{Merge two rspec objects}
 \usage{
-  merge.rspec(x, y, ...)
+  merge.rspec(x, y, by = "wl", ...)
 }
 \arguments{
-  \item{x,y}{(required) two data frames (or rspec objects)
-  to merge}
+  \item{x,y}{(required) two data frames (or \code{rspec}
+  objects) to merge}
 
   \item{...}{additional class arguments}
 }
@@ -15,8 +15,8 @@
   functions
 }
 \description{
-  Merges two rspec or data frame objects into a single
-  \code{rspec} object
+  Merges two \code{rspec} or \code{data.frame} objects into
+  a single \code{rspec} object
 }
 \examples{
 \dontrun{
