@@ -17,6 +17,7 @@
 #' par(mfrow=c(1, 2))
 #' plot(teal.mer)
 #' plot(teal)
+#' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
