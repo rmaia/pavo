@@ -8,6 +8,9 @@
   \item{x,y}{(required) two data frames (or \code{rspec}
   objects) to merge}
 
+  \item{by}{wavelength column name (defaults to
+  \code{"wl"})}
+
   \item{...}{additional class arguments}
 }
 \value{

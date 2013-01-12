@@ -5,6 +5,7 @@
 #' @S3method merge rspec
 #' @method merge rspec
 #' @param x,y (required) two data frames (or \code{rspec} objects) to merge
+#' @param by wavelength column name (defaults to \code{"wl"})
 #' @param ... additional class arguments
 #' @return an object of class \code{rspec} for use with \code{pavo} functions
 #'
