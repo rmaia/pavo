@@ -2,10 +2,12 @@
 #'
 #' Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object
 #'
+#' @S3method merge rspec
+#' @method merge rspec
 #' @param x,y (required) two data frames (or \code{rspec} objects) to merge
 #' @param ... additional class arguments
 #' @return an object of class \code{rspec} for use with \code{pavo} functions
-#' @export merge.rspec
+#'
 #' @examples \dontrun{
 #'
 #' # Load and split dataset into 2 sections
@@ -20,6 +22,7 @@
 #' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @seealso \code{\link{as.rspec}}, \code{\link{aggspec}}
 
 merge.rspec <- function(x, y, by='wl', ...) {
   if (!(is.rspec(x)&&is.rspec(y))) {stop("One ore more invalid rspec objects")}

@@ -2,7 +2,7 @@
 \alias{merge.rspec}
 \title{Merge two rspec objects}
 \usage{
-  merge.rspec(x, y, by = "wl", ...)
+  \method{merge}{rspec} (x, y, by = "wl", ...)
 }
 \arguments{
   \item{x,y}{(required) two data frames (or \code{rspec}
@@ -34,5 +34,8 @@ plot(teal)
 }
 \author{
   Chad Eliason \email{cme16@zips.uakron.edu}
+}
+\seealso{
+  \code{\link{as.rspec}}, \code{\link{aggspec}}
 }
 
