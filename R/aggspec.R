@@ -64,9 +64,20 @@ if(length(which(by=='wl'))!=0)
   by<- by[-which(by=='wl')]
 
 #END RM EDIT 2
+
 if (is.list(by)) {
-  by <- do.call('paste', c(by, sep='.'))  # WHAT WOULD BE A GOOD SEPARATOR HERE?
-                                          # MIGHT RUN INTO A PROBLEM USING '.'
+  wl_id <- sapply(1:length(by), function(x) which(by[[x]]=='wl'))  # extract wl columns
+  # remove 'wl' column from each vector in list
+    if (any(sapply(wl_id, length)!=0)) {
+      id <- which(sapply(wl_id, length)!=0)
+      by[id] <- lapply(by[id], "[", -unlist(wl_id)[id])
+    }
+  # check that wl column is the same for all vectors
+    if (length(unique(wl_id))==1) {
+      by <- do.call('paste', c(by, sep='.'))
+    } else {
+          stop("mismatch in column names of input vectors")
+      }
 }
 
 # retain original values
