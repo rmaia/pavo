@@ -1,3 +1,7 @@
+2013-01-16 -------------------------------------------------------------------
+* CME - fixed aggspec to check user input vectors in 'by' argument and to allow for
+input vectors with(out) 'wl' element
+
 2013-01-10 -------------------------------------------------------------------
 * CME - NEW merge.rspec function to combine separate rspec objects
 * CME - added ability to aggregate spectra by multiple vectors. For example, a
@@ -13,7 +17,8 @@ analyses)
 
 2012-12-19 -------------------------------------------------------------------
 * RM - explorespec 'free' argument fixed, was not working
-* CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance (B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness
+* CME - fixed the way S5 is calculated in summary.rspec; segments now divided by total reflectance 
+(B1) prior to determination of chroma (S5) to give a measure of saturation independent of brightness
 
 2012-12-18 -------------------------------------------------------------------
 * RM - Updated sensitivity curves
