@@ -1,3 +1,4 @@
+
 #' Visual Models
 #' 
 #' Applies the visual models of Vorobyev et al. (1998) to calculate quantum 
@@ -166,6 +167,9 @@ if(achromatic=='ml'){
   Qi <- data.frame(cbind(Qi,lum))
 }
 
+if(achromatic=='none'){
+	lum <- NULL
+}
 
 #qi 
 # von Kries correction (constant adapting background)
@@ -185,9 +189,18 @@ if(vonkries)
 fi <- log(Qi)
 
 
-if(relative){
+if(relative & !is.null(lum)){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
+
+# Place dark specs in achromatic center?
+# blacks <- which(norm.B < 0.05) #find dark specs
+# Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
+}
+
+if(relative & is.null(lum)){
+  Qi <- Qi/rowSums(Qi)
+  fi <- fi/rowSums(fi)
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
