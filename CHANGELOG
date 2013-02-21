@@ -1,3 +1,6 @@
+2013-02-21 -------------------------------------------------------------------
+* RM - Fixed vismodel for when achromatic is 'none'
+
 2013-01-16 -------------------------------------------------------------------
 * CME - fixed aggspec to check user input vectors in 'by' argument and to allow for
 input vectors with(out) 'wl' element
