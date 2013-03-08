@@ -30,3 +30,4 @@ BUG FIXES
 * aggspec() fixed matching of names
 * procspec() works with rspec objects that include a single reflectance spectrum
 * peakshape() minor fixes
+* aggplot() allows control for different line types per spectra

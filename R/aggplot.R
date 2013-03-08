@@ -82,11 +82,14 @@ if (is.null(arg$ylab))
   arg$ylab <- "Reflectance (%)"
 
 # coloring for overlay plot & others
+if (!is.null(arg$lty))
+  lty <- arg$lty
+
 if (is.null(arg$lty))
   lty <- 1
 
-# if (length(lty) < ncol(cntplotspecs))
-#   lty <- rep(lty, ncol(cntplotspecs))
+if (length(lty) < ncol(cntplotspecs))
+   lty <- rep(lty, ncol(cntplotspecs))
 
 if (length(shadecol) < ncol(cntplotspecs))
   shadecol <- rep(shadecol, ncol(cntplotspecs))
@@ -142,6 +145,7 @@ do.call(polygon, arg)
   arg$x <- wl
   arg$y <- cntplotspecs[, 1]
   arg$type <- 'l'
+  arg$lty <- lty[1]
 
   do.call(lines, arg)
 
@@ -149,7 +153,7 @@ do.call(polygon, arg)
     for (i in 2:ncol(cntplotspecs)){
       arg$y <- cntplotspecs[, i]
       arg$col <- lcol[i]
-      # arg$lty <- lty[i]
+      arg$lty <- lty[i]
       do.call(lines, arg)
     }
   }
