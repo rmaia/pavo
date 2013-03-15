@@ -7,7 +7,9 @@ A set of functions and tools for the analysis of color data in a unified framewo
 
 ## Install
 
-`pavo` is still under development and does not yet have a stable release. For now, you can:
+this is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
+
+If you want to install the bleeding edge version of `pavo`, you can:
 
 * use Hadley Wickham's [devtools](https://github.com/hadley/devtools):
 
