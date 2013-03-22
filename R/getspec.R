@@ -45,8 +45,6 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
 {
 
 
-makenegzero<-function(x) {x[x[,2]<0,2] = 0; x}
-
 separ=ifelse(ext=='ttt',';','\t')
 
 extension <- paste('.', ext, sep='')
@@ -75,6 +73,7 @@ for(i in 1:length(files))
 raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
 #ToDo we can actually use this raw string to import metadata if we want
 
+
 start <- grep(separ,raw)[1] - 1
 end <- length(grep(separ,raw))
 
@@ -88,13 +87,26 @@ if(extension=='.ttt'){
 
 #jaz output file is weird. has 5 columns and an extra line in bottom
 
+#NEW AVASOFT CONDITION
+newavaheader <- length(grep("Wave   ;Sample   ;Dark     ;Reference;Reflectance", raw))
+
 if(extension=='.jaz'){
 	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end-1, 
 							header=T)
 	tempframe <- tempframe[c('W','P')]
 	}else{
+if(newavaheader > 0){
+	start <- max(grep('[a-z]', raw)) + 1 
+	end <- length(raw)
+	separ=';'
+	tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start+1))[,c(1,5)]
+
+}else{
 tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=(end-start-1))		
 	}
+}
+
+
 
 interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
 names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
