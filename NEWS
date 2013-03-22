@@ -13,6 +13,7 @@ VISUAL MODEL
 
 MINOR FEATURES
 
+* getspec() works with Avasoft 8 output
 * sensmodel() accepts user-defined ocular media transmission
 * voloverlap() allows greater user control of plotting options
 * voloverlap() includes Monte Carlo option for overlap calculation
