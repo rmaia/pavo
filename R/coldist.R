@@ -56,7 +56,8 @@
 
 coldist <-function(vismodeldata, qcatch=c('fi', 'Qi'), 
                   vis=c('tetra', 'tri', 'di'), 
-                  noise=c('neural','quantum'), achro=TRUE,
+                  noise=c('neural','quantum'), subset=NULL,
+                  achro=TRUE,
                   n1=1, n2=2, n3=2, n4=4, v=0.1)
 {
 
@@ -160,6 +161,31 @@ res$dL <- apply(pairsid,1,function(x)
 
 
 nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
+
+# Subsetting samples
+
+if(length(subset)==1){
+  res <- res[intersect(grep(subset, res$patch1), 
+    grep(subset,res$patch2)),]
+}
+  
+if(length(subset)==2){
+  condition1 <- intersect(grep(subset[1], res$patch1), 
+    grep(subset[2],res$patch2) )
+	
+  condition2 <- intersect(grep(subset[2], res$patch1), 
+    grep(subset[1],res$patch2) )
+	
+  subsamp <- unique(c(condition1, condition2))
+  
+  res <- res[subsamp,]	
+}
+
+if(length(subset) > 2){
+  stop('Too many subsetting conditions; one or two allowed.')
+}
+
+row.names(res) <- 1:dim(res)[1]
 
 res
 }
