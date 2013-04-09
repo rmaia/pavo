@@ -1,52 +1,43 @@
-# benchmark pavo overlap
+#----------------------------------------------------------------------------
+# BENCHMARK PAVO OVERLAP ANALYSIS
+#----------------------------------------------------------------------------
+
+# Setup
 library(pavo)
+library(MASS)
+library(plyr)
 load('~/github/pavo/toydata/ACE.RData')
 source('/Users/chad/github/pavo/manuscript/src/voverlap_old.R')
 
-#-------------------------------------------------------------------------------
-# Create volumes
-#-------------------------------------------------------------------------------
+#----------------------------------------------------------------------------
+# Shape analysis (verify pavo's methodology)
+#----------------------------------------------------------------------------
 
-# Cube
-c1 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1),
-            y = c(0, 0, 1, 1, 1, 0, 1, 0),
-            z = c(0, 0, 0, 1, 1, 1, 0, 1))  # sides = 1
-c2 <- cbind(x = c(0, .5, .5, .5, 0, 0, 0, .5),
-            y = c(0, 0, .5, .5, .5, 0, .5, 0),
-            z = c(0, 0, 0, .5, .5, .5, 0, .5))  # inside box 1, sides = .5
+# 1. Cube
+c1 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1), y = c(0, 0, 1, 1, 1, 0, 1, 0), z = c(0, 0, 0, 1, 1, 1, 0, 1))  # sides = 1
+c2 <- cbind(x = c(0, .5, .5, .5, 0, 0, 0, .5), y = c(0, 0, .5, .5, .5, 0, .5, 0), z = c(0, 0, 0, .5, .5, .5, 0, .5))  # inside box 1, sides = .5
 c3 <- c2
 c3[,1] <- c3[,1] - 0.4  # box 2 moved over 0.4 units
 
-# Tetrahedron
-th1 <- cbind(x = c(0, 1, .5, .5),
-             y = c(0, 0, sqrt(3)/2, sqrt(3)/4),
-             z = c(0, 0, 0, sqrt(3)/2))
+# Calculate actual, pavo overlap
+vo_c13_real <- (.1*.5*.5)/(1+(.5^3 - .1*.5*.5))
+vo_c13_pavo <- voloverlap(c1, c3, plot=T)$vboth
+vo_c13_real/vo_c13_pavo
+
+
+# 2. Tetrahedron
+th1 <- cbind(x = c(0, 1, .5, .5), y = c(0, 0, sqrt(3)/2, sqrt(3)/4), z = c(0, 0, 0, sqrt(3)/2))
 th2 <- th1/2
 th3 <- th1
 th3[,3] <- th3[,3] + sqrt(3)/4  # shift up z-axis by 1/2 of height
 
-# Cuboid
-cb1 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1),
-             y = c(0, 0, 1/2, 1/2, 1/2, 0, 1/2, 0),
-             z = c(0, 0, 0, 1/2, 1/2, 1/2, 0, 1/2))  # sides = 1
-
-cb2 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1) - 0.4,
-             y = c(0, 0, 1/2, 1/2, 1/2, 0, 1/2, 0),
-             z = c(0, 0, 0, 1/2, 1/2, 1/2, 0, 1/2))  # sides = 1
-
+# 3. Cuboid
+cb1 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1), y = c(0, 0, 1/2, 1/2, 1/2, 0, 1/2, 0), z = c(0, 0, 0, 1/2, 1/2, 1/2, 0, 1/2))  # sides = 1
+cb2 <- cbind(x = c(0, 1, 1, 1, 0, 0, 0, 1) - 0.4, y = c(0, 0, 1/2, 1/2, 1/2, 0, 1/2, 0), z = c(0, 0, 0, 1/2, 1/2, 1/2, 0, 1/2))  # sides = 1
 cb3 <- cb1 * 0.5
 cb3[,1] <- cb3[,1] - 0.4
 
-#-------------------------------------------------------------------------------
 # Calculate real + pavo overlap
-#-------------------------------------------------------------------------------
-# Cube
-# vo_c12_real <- .5^3  # since box 2 is totally inside box 1
-vo_c13_real <- (.1*.5*.5)/(1+(.5^3 - .1*.5*.5))
-# system.time(voloverlap(v1, v2))  # 0.023 seconds
-# vo_c12_pavo <- voloverlap(v1, v2, plot=T)$vboth
-vo_c13_pavo <- voloverlap(c1, c3, plot=T)$vboth
-vo_c13_real/vo_c13_pavo
 
 # Tetrahedron
 A_0 = .5*(sqrt(3)/2)  # base area
@@ -66,9 +57,7 @@ vo_cb_real <- vo_cb13/(v_cb1+v_cb3-vo_cb13)
 vo_cb_pavo <- voloverlap(cb1, cb3, plot=T)$vboth
 vo_cb_real/vo_cb_pavo
 
-#-------------------------------------------------------------------------------
 # Run monte carlo simulations (takes ~30 minutes for each loop)
-#-------------------------------------------------------------------------------
 
 # Calculate volumes over many nsamps using Monte Carlo method
 # 10^k, where k=2,3,4,5,6
@@ -78,7 +67,6 @@ vo_cb_real/vo_cb_pavo
 # 1e4 = 17 s x 10 = 2.8 min
 # 1e5 = 170s x 10 = 28 min
 # 1e6 = 1700s x 10 = 280 min
-
 
 # Cube
 sim <- 10^c(2:5)
@@ -113,9 +101,8 @@ for (i in seq_along(sim)){
 }
 saveRDS(res3, 'mc_overlap_cuboid.rda')
 
-#-------------------------------------------------------------------------------
+
 # Calculate MC stats
-#-------------------------------------------------------------------------------
 res1 <- readRDS('mc_overlap_cube.rda')
 res2 <- readRDS('mc_overlap_tetrahedron.rda')
 res3 <- readRDS('mc_overlap_cuboid.rda')
@@ -132,9 +119,12 @@ means3 <- unlist(lapply(res3, mean))
 ci.l3 <- sapply(1:4, function(i)quantile(res3[[i]], probs=.025))
 ci.u3 <- sapply(1:4, function(i)quantile(res3[[i]], probs=.975))
 
-#-------------------------------------------------------------------------------
+means4 <- aggregate(pboth~.id, out, mean)[,2]
+ci.l4 <- aggregate(pboth~.id, out, quantile, probs=.025)[,2]
+ci.u4 <- aggregate(pboth~.id, out, quantile, probs=.975)[,2]
+
+
 # Plot results from MC analysis
-#-------------------------------------------------------------------------------
 pdf(width=9, height=3.13, file="mc_results.pdf")
 par(mar=c(1,2,1,2), oma=c(4,4,0,0), mfrow=c(1, 3))
 # Cube
@@ -166,3 +156,71 @@ rgl.snapshot("tetrahedron.png")
 voloverlap(cb1, cb3, plot=T)$vboth
 view3d(theta=-45, phi=30)
 rgl.snapshot("cuboid.png")
+
+#------------------------------------------------------------------------------
+# Sphere-like analysis to benchmark MC method
+#------------------------------------------------------------------------------
+
+# Create random data
+set.seed(101)
+sph1 <- mvrnorm(n=100, mu=c(0,0,0), Sigma=diag(c(1,1,1)))  # random data
+colnames(sph1) <- c('x', 'y', 'z')
+sph2 <- lapply(1:5, function(x) cbind(sph1[, 1:2], z = sph1[, 3] + seq(1.2, 6, length=5)[x]))  # cloud of points shifted along z axis
+
+# Calculate pavo overlap
+vo_sph_pavo <- sapply(1:3, function(x) voloverlap(sph1, sph2[[x]])$vboth)
+
+# Run MC simulations
+nsamp <- 10^(2:5)
+# 38% overlap
+sims_mc_sph2.1 <- list()
+for (i in 1:length(nsamp)) {
+    sims_mc_sph2.1[[i]] <- sapply(1:10, function(x) voloverlap.old(sph1, sph2[[1]], nsamp=nsamp[i])$pboth)
+}
+# 11% overlap
+sims_mc_sph2.2 <- list()
+for (i in 1:length(nsamp)) {
+    sims_mc_sph2.2[[i]] <- sapply(1:10, function(x) voloverlap.old(sph1, sph2[[2]], nsamp=nsamp[i])$pboth)
+}
+# 1% overlap
+sims_mc_sph2.3 <- list()
+for (i in 1:length(nsamp)) {
+    sims_mc_sph2.3[[i]] <- sapply(1:10, function(x) voloverlap.old(sph1, sph2[[3]], nsamp=nsamp[i])$pboth)
+}
+out <- list(sims_mc_sph2.1, sims_mc_sph2.2, sims_mc_sph2.3)
+saveRDS(out, 'mc_overlap_sphere.rda')
+
+# Calculate stats
+m1 <- sapply(out[[1]], mean)
+m2 <- sapply(out[[2]], mean)
+m3 <- sapply(out[[3]], mean)
+cl1 <- sapply(out[[1]], quantile, probs=.025)
+cl2 <- sapply(out[[2]], quantile, probs=.025)
+cl3 <- sapply(out[[3]], quantile, probs=.025)
+cu1 <- sapply(out[[1]], quantile, probs=.975)
+cu2 <- sapply(out[[2]], quantile, probs=.975)
+cu3 <- sapply(out[[3]], quantile, probs=.975)
+
+# Plot results
+pdf(width=8, height=3.3, "spherelike.pdf")
+par(mar=c(2,2,2,2), mfrow=c(1,3), oma=c(3,3,0,0))
+plot(m1~nsamp, ylim=range(cl1, cu1), log='x', type='l', xaxt='n', lty=2, xaxs='i', las=1, xlab="samples", ylab="estimated overlap")
+axis(side=1, at=c(1e2,1e3,1e4,1e5))
+polygon(x=c(nsamp, rev(nsamp)), y=c(cl1, rev(cu1)), border=NA, col=rgb(0,0,0, alpha=.15))
+abline(h = vo_sph_pavo[1], lty=1)
+plot(m2~nsamp, ylim=range(cl2, cu2), log='x', type='l', xaxt='n', lty=2, xaxs='i', las=1, xlab="samples", ylab="estimated overlap")
+axis(side=1, at=c(1e2,1e3,1e4,1e5))
+polygon(x=c(nsamp, rev(nsamp)), y=c(cl2, rev(cu2)), border=NA, col=rgb(0,0,0, alpha=.15))
+abline(h = vo_sph_pavo[2], lty=1)
+plot(m3~nsamp, ylim=range(cl3, cu3), log='x', type='l', xaxt='n', lty=2, xaxs='i', las=1, xlab="samples", ylab="estimated overlap")
+axis(side=1, at=c(1e2,1e3,1e4,1e5))
+polygon(x=c(nsamp, rev(nsamp)), y=c(cl3, rev(cu3)), border=NA, col=rgb(0,0,0, alpha=.15))
+abline(h = vo_sph_pavo[3], lty=1)
+mtext(side=1, "samples", line=1.5, outer=T)
+mtext(side=2, "estimated overlap", line=1.5, outer=T)
+dev.off()
+
+# Visualize shapes
+voloverlap(sph1, sph2[[3]], plot=T)$vboth
+view3d(theta=-45, phi=30)
+rgl.snapshot("spherelike-3.png")
