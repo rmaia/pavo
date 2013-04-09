@@ -18,6 +18,10 @@
 #' \item \code{tri}: Trichromatic color vision
 #' \item \code{di}: Dichromatic color vision
 #' }
+#' @param subset If only some of the comparisons should be returned, a character vector of 
+#' length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
+#' must match the labels of the imput samples, but partial matching (and regular expressions) 
+#' are supported.
 #' @param achro logical. If \code{TRUE}, last column of the data frame is used to calculate 
 #' the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}
 #' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
@@ -51,8 +55,6 @@
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-#ToDo: Add Neural Noise model
-#ToDo: make luminance contrast calculation optional
 
 coldist <-function(vismodeldata, qcatch=c('fi', 'Qi'), 
                   vis=c('tetra', 'tri', 'di'), 

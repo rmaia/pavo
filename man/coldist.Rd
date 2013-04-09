@@ -4,8 +4,8 @@
 \usage{
   coldist(vismodeldata, qcatch = c("fi", "Qi"),
     vis = c("tetra", "tri", "di"),
-    noise = c("neural", "quantum"), achro = TRUE, n1 = 1,
-    n2 = 2, n3 = 2, n4 = 4, v = 0.1)
+    noise = c("neural", "quantum"), subset = NULL,
+    achro = TRUE, n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.1)
 }
 \arguments{
   \item{vismodeldata}{(required) quantum catch color data.
@@ -24,6 +24,13 @@
   \itemize{ \item \code{tetra}: Tetrachromatic color vision
   (default) \item \code{tri}: Trichromatic color vision
   \item \code{di}: Dichromatic color vision }}
+
+  \item{subset}{If only some of the comparisons should be
+  returned, a character vector of length 1 or 2 can be
+  provided, indicating which samples are desired. The
+  subset vector must match the labels of the imput samples,
+  but partial matching (and regular expressions) are
+  supported.}
 
   \item{achro}{logical. If \code{TRUE}, last column of the
   data frame is used to calculate the achromatic contrast,
