@@ -7,14 +7,7 @@
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
-#' @param qcatch quantum catch values to use in the model. Can be either \code{Qi}, 
-#' \code{qi} or \code{fi} (defaults to \code{Qi}).
-#' \code{Qi}: Quantum catch for each photoreceptor 
-#' \code{qi}: Quantum catch normalized to the adapting background according 
-#' to the von Kries transformation.
-#' \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
-#' channel is proportional to the logarithm of the quantum catch)
-#' 
+#'
 #' @return A data frame of class \code{tcs} consisting of the following rows:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
 #' calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
@@ -38,20 +31,22 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tcs<- function(vismodeldata, qcatch=c('Qi','qi','fi'))
+tcs<- function(vismodeldata)
 {
 
 # check class, import selected sensitivity
 # make relative (in case not inherited relative)
 
-if(class(vismodeldata)=='vismodel'){
-	qcatch <- match.arg(qcatch)
-	dat <- data.frame(vismodeldata[qcatch])
-	names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
+# if(class(vismodeldata)=='vismodel'){
+	# qcatch <- match.arg(qcatch)
+	# dat <- data.frame(vismodeldata[qcatch])
+	# names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
 	
-  }else{
-  	dat <- vismodeldata
-  	}
+  # }else{
+  	# dat <- vismodeldata
+  	# }
+
+dat <- vismodeldata
   	
 if(any('v' %in% names(dat)))
   names(dat) <- gsub('v','u',names(dat))

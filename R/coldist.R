@@ -6,7 +6,10 @@
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
-#' @param qcatch quantum catch values to use in the model:
+#' @param qcatch if the object is of class \code{vismodel}, such as one generated using 
+#' \code{pavo}, this argument is ignored. If the object is a data frame of quantal catches 
+#' from another source, this argument is used to specify what type of quantum catch is being 
+#' used, so that the noise can be calculated accordingly: 
 #' \itemize{
 #' \item \code{Qi}: Quantum catch for each photoreceptor (default)
 #' \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
@@ -56,32 +59,36 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 
-coldist <-function(vismodeldata, qcatch=c('fi', 'Qi'), 
+coldist <-function(vismodeldata, qcatch=c('Qi','fi'),
                   vis=c('tetra', 'tri', 'di'), 
                   noise=c('neural','quantum'), subset=NULL,
                   achro=TRUE,
                   n1=1, n2=2, n3=2, n4=4, v=0.1)
 {
 
-if(class(vismodeldata)=='vismodel'){
-	qcatch <- match.arg(qcatch)
-#	dat <- data.frame(vismodeldata[qcatch])
-	dat <- as.matrix(data.frame(vismodeldata[qcatch]))
-	colnames(dat) <- gsub(paste(qcatch,'.',sep=''),'',colnames(dat))
+if('vismodel' %in% class(vismodeldata)){
+	dat <- as.matrix(vismodeldata)
+	qcatch <- attr(vismodeldata, 'qcatch')
+#	colnames(dat) <- gsub(paste(qcatch,'.',sep=''),'',colnames(dat))
 	
-	qndat <- as.matrix(vismodeldata$Qi)
-	
-	if(attr(vismodeldata,'relative'))
-	  warning('Quantum catch are relative, distances may not be meaningful')
+  if(attr(vismodeldata, 'qcatch') == 'Qi')
+    qndat <- as.matrix(vismodeldata)
+
+  if(attr(vismodeldata, 'qcatch') == 'fi')
+    qndat <- as.matrix(exp(vismodeldata))
+
+  if(attr(vismodeldata,'relative'))
+    warning('Quantum catch are relative, distances may not be meaningful')
 	
   }else{
 	qcatch <- match.arg(qcatch)
   	dat <- as.matrix(vismodeldata)
   	rownames(dat) <- rownames(vismodeldata)
   	colnames(dat) <- colnames(vismodeldata)
+  	
   	}
 
-if(class(vismodeldata)!='vismodel' && noise=='quantum')
+if(!'vismodel' %in% class(vismodeldata) && noise=='quantum')
   stop('Object must be of class vismodel to calculate quantum noise model')
 
 noise <- match.arg(noise)
@@ -97,8 +104,6 @@ w2e <- v/sqrt(n2)
 w3e <- v/sqrt(n3)
 w4e <- v/sqrt(n4)
 
-
-# ToDo: this can be later subset if the user doesn't want all comparisons
 pairsid <- t(combn(nrow(dat),2))
 
 patch1 <- row.names(dat)[pairsid[,1]]

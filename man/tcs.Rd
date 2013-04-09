@@ -2,22 +2,13 @@
 \alias{tcs}
 \title{Tetracolorspace avian visual model}
 \usage{
-  tcs(vismodeldata, qcatch = c("Qi", "qi", "fi"))
+  tcs(vismodeldata)
 }
 \arguments{
   \item{vismodeldata}{(required) quantum catch color data.
   Can be either the result from \code{\link{vismodel}} or
   independently calculated data (in the form of a data
   frame with four columns, representing the avian cones).}
-
-  \item{qcatch}{quantum catch values to use in the model.
-  Can be either \code{Qi}, \code{qi} or \code{fi} (defaults
-  to \code{Qi}). \code{Qi}: Quantum catch for each
-  photoreceptor \code{qi}: Quantum catch normalized to the
-  adapting background according to the von Kries
-  transformation. \code{fi}: Quantum catch according to
-  Fechner law (the signal of the receptor channel is
-  proportional to the logarithm of the quantum catch)}
 }
 \value{
   A data frame of class \code{tcs} consisting of the
