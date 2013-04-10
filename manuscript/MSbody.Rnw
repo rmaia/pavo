@@ -241,16 +241,11 @@ Supplemental Information)
 
 \section{Example: colourspace divergence in glossy starlings (Sturnidae)}
 
-Here we exemplify some of \pavo{}'s capabilities and workflow by comparing the colour patterns of a
-monophyletic clade of three glossy starling species. Glossy starlings from the African clade have
-bright and diverse iridescent colours likely used in sexual selection and social competition
-\citep{Rubenstein:2009}. The lesser blue-eared starling (\emph{Lamprotornis chloropterus}) and the
-southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
-\citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
-species, whereas others have classified them as subspecies of \emph{L. chloropterus}
-\citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged in
-their colours and compared each to their most recently diverged sister species, the sharp-tailed
-starling (\emph{L. acuticaudus}).
+
+Glossy starlings from the African clade have bright and diverse iridescent colours likely used in
+sexual selection and social competition \citep{Rubenstein:2009}. Here we exemplify some of \pavo{}'s
+capabilities and workflow by comparing the colours of a monophyletic clade of three glossy starling
+species.
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
@@ -271,9 +266,9 @@ loess) from these 396 raw spectral data files using the following annotated line
 
 % demo input of raw data
 <<echo=TRUE,results=hide,eval=FALSE>>=
-specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700)) #get raw data
-specs <- aggspec(specs, by = 3, FUN = mean) #average by groups of 3 spectral curves
-specs <- procspec(specs, opt='smooth') #remove electrical noise
+specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
+specs <- aggspec(specs, by = 3, FUN = mean)  # average by groups of 3 spectral curves
+specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian smoothing
 @
 <<echo=FALSE, results=hide>>=
 load('~/github/pavo/toydata/ACE.RData')
@@ -312,8 +307,8 @@ these plots, as well as the results for the ``belly'' and ``wing'' body patches:
 
 <<echo=TRUE,eval=FALSE>>=
 specs.belly <- specs[,1:13]  # subset wavelength column and the 12 spectra from the belly patch
-spp <- substr(names(specs.belly),1,4)[-1]  # 4 first characters from column names (species labels)
-aggplot(specs.belly, by = spp)  # average spectral data by species
+spp <- substr(names(specs.belly),1,4)[-1]  # extract 4 characters from column names (species labels)
+aggplot(specs.belly, by = spp)  # average and plot spectral data by species
 @
 
 <<echo=F,results=hide>>=
@@ -339,23 +334,26 @@ models, respectively.
 
 First, \code{relative=FALSE} was used to calculate raw photon catch values for the four avian
 photoreceptor classes (\{\emph{usml}\}), suitable for calculating chromatic distances \citep[$\Delta
-S$,][]{Vorobyev:1998to}. We used relative cone abundances (arguments \code{n1, n2, n3, and n4})
-for the European starling
-\citep{Hart:1998}, which can be easily passed as arguments to the \code{coldist} function. The
-\code{v} argument was set to 0.1 to give a \{\emph{"l"}\} cone Weber fraction of approximately 0.05
-\citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist} give colour distances (chromatic
-, $\Delta S$, Figure \ref{figure:distplot};  and achromatic, $\Delta L$, not shown) between all
-possible combinations of plumage patches in the \code{tcs} object, and can be further subset to
-only analyse comparisons of interest (e.g., colour difference between homologous patches of two
-species). For example:
+S$,][]{Vorobyev:1998to}. We used relative cone abundances (arguments \code{n1, n2, n3, and n4}) for
+the European starling \citep{Hart:1998}, which can be easily passed as arguments to the
+\code{coldist} function. The \code{v} argument was set to 0.1 to give a \{\emph{"l"}\} cone Weber
+fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}. The results of \code{coldist}
+give colour distances (chromatic , $\Delta S$, Figure \ref{figure:distplot};  and achromatic,
+$\Delta L$, not shown) between all possible combinations of plumage patches in the \code{tcs}
+object, and can be further subset (using  the \code{subset} argument) to only analyse comparisons of
+interest (e.g., colour difference between  homologous patches of two species). This argument employs
+\code{R}'s built-in \code{grep}  functionality, and is thus very flexible, as users can input a
+string to match partial column names  within an \code{rspec} object. For example:
+
 <<>>=
-vm.star1 <- vismodel(specs, visual = 'star', relative = FALSE)
-delta.S <- coldist(vm.star1, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
+vm.star <- vismodel(specs, visual = 'star', relative = FALSE)
+deltas <- coldist(vm.star1, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
 # subset only comparisons between belly spectra
-head(delta.S[intersect(grep('belly', delta.S$patch1), grep('belly', delta.S$patch2)),], 3) 
+deltas.wing <- coldist(vm.star, qcatch = 'fi', n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = "wing")
+head(deltas.wing)
 @
 
-The calculation of both chromatic and achromatic distances of these 8646 pairs of colors took about
+The calculation of both chromatic and achromatic distances of these 8,646 pairs of colours took about
 0.9 seconds in a MacBook Pro running R version 2.15.2. We can see from Figure \ref{figure:distplot}
 that the recently divergent \emph{L. chloropterus} and \emph{L. elisabeth} have accumulated similar
 levels of color disparity among them as they have to their sister species, \emph{L. acuticaudus}.
@@ -379,8 +377,8 @@ vm2 <- vismodel(specs, visual = 'star', relative = FALSE)
 <<echo=FALSE,results=hide>>=
 res <- list()
 for (i in unique(patch)[-1]) {
-  sel <- grep(i, delta.S$patch1)[grep(i, delta.S$patch1)%in%grep(i, delta.S$patch2)]
-  res[[i]] <- delta.S[sel, ]
+  sel <- grep(i, deltas$patch1)[grep(i, deltas$patch1)%in%grep(i, deltas$patch2)]
+  res[[i]] <- deltas[sel, ]
 }
 # head(res[[1]])  # check output
 # Calculate distance from focal species' patch to those of other species
@@ -519,6 +517,7 @@ tcs1c <- tcs1.m[grep('LAEL', tcs1.m$both),]
 
 \subsubsection{Avian tetrahedral colourspace}
 
+% CE to fix this paragraph
 Finally, to produce a tetrahedral colourspace plot, we used \code{relative=TRUE} in the
 \code{vismodel} input to indicate that \{\emph{usml}\} values should be scaled to sum of unity for
 each patch. These results indicate that the expansion of occupied colourspace for both subspecies is
@@ -529,16 +528,17 @@ to which it is more closely related (circles labeled `ch' in Figure \ref{figure:
 
 We also used the \code{voloverlap} function to calculate the volumes occupied by each species'
 plumage patches, as well as their overlaps. As an example, the code below shows the result for the
-overlap between the two recently diverged species (see Figure \ref{figure:volplot}B):
+overlap between the two recently diverged species (see Figure \ref{figure:volplot}):
 
 <<echo=T,eval=FALSE,fig=F,include=F>>=
-vm.star2 <- vismodel(specs, visual = 'star', relative = TRUE)
-tcs.star <- tcs(vm.star2)
+vm.star.rel <- vismodel(specs, visual = 'star', relative = TRUE)
+tcs.star <- tcs(vm.star.rel)
 #subset points from the two species
-tcs.lael <- tcs[grep('LAEL',row.names(tcs.star))]
-tcs.lacl <- tcs[grep('LACL',row.names(tcs.star))]
+tcs.lael <- tcs[grep('LAEL', row.names(tcs.star))]
+tcs.lacl <- tcs[grep('LACL', row.names(tcs.star))]
 voloverlap(tcs.lael, tcs.lacl, plot = TRUE)
 @
+
 <<echo=F,eval=T, fig=F,include=F>>=
 voloverlap(tcs1b, tcs1c, plot = FALSE)
 @
@@ -602,8 +602,8 @@ Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.).
 
 \begin{figure}
 \centering
-\includegraphics{fig/ms-new_volplot}
-\caption{\textbf{A}: Tetrahedral colorspace plot showing minimum convex polygons (convex hulls) containing reflectance spectra for plumage patches from \emph{Lamprotornis acuticaudus} (green), \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Labeled points show representative plumage patches belly (bel) and cheek (ch). \textbf{B}: Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
+\includegraphics{fig/ms-new_volplot-2}
+\caption{Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
 \label{figure:volplot}
 \end{figure}
 
