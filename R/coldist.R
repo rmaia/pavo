@@ -112,19 +112,19 @@ patch2 <- row.names(dat)[pairsid[,2]]
 res <- data.frame(patch1, patch2)
 
 if (vis=='di' & noise=='neural'){
-res$di.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   didistcalc(dat[x[1],], dat[x[2],], 
   w1=w1e, w2=w2e) )
 }
 
 if (vis=='tri' & noise=='neural'){
-res$tri.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   trdistcalc(dat[x[1],], dat[x[2],], 
   w1=w1e, w2=w2e, w3=w3e) )
 }
 
 if (vis=='tetra' & noise=='neural'){
-res$tetra.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   ttdistcalc(dat[x[1],], dat[x[2],], 
   w1=w1e, w2=w2e, w3=w3e, w4=w4e) )
 }
@@ -140,21 +140,21 @@ res$dL <- apply(pairsid,1,function(x)
 
 
 if (vis=='di' & noise=='quantum'){
-res$di.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   qn.didistcalc(dat[x[1],], dat[x[2],], 
   qndat[x[1],], qndat[x[2],], 
   n1=n1, n2=n2, v=v) )
 }
 
 if (vis=='tri' & noise=='quantum'){
-res$tri.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   qn.trdistcalc(dat[x[1],], dat[x[2],],
   qndat[x[1],], qndat[x[2],], 
   n1=n1, n2=n2, n3=n3, v=v ) )
 }
 
 if (vis=='tetra' & noise=='quantum'){
-res$tetra.dS <- apply(pairsid,1,function(x) 
+res$dS <- apply(pairsid,1,function(x) 
   qn.ttdistcalc(dat[x[1],], dat[x[2],],
   qndat[x[1],], qndat[x[2],], 
   n1=n1, n2=n2, n3=n3, n4=n4, v=v) )
@@ -172,9 +172,14 @@ nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
 # Subsetting samples
 
 if(length(subset)==1){
-  res <- res[intersect(grep(subset, res$patch1), 
-    grep(subset,res$patch2)),]
-}
+  
+  condition1 <- grep(subset, res$patch1)
+  condition2 <- grep(subset, res$patch2)
+
+  subsamp <- unique(c(condition1, condition2))
+  
+  res <- res[subsamp,]	
+ }
   
 if(length(subset)==2){
   condition1 <- intersect(grep(subset[1], res$patch1), 
