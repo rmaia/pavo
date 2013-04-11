@@ -75,7 +75,7 @@ variables, and produce publication-quality figures.
 \begin{enumerate}
 \item {\bf Organize} spectral data by inputting files and processing spectra (e.g., to remove
 noise, negative values, smooth curves, etc...).
-\item {\bf Analyze} the resulting files, either using typical tristimulus color variables (hue,
+\item {\bf Analyze} the resulting files, either using typical colorimetric variables (hue,
 saturation, brightness) or using visual models based on perceptual data from the taxon of 
 interest.
 \item {\bf Visualize} the output, with multiple options provided for exploratory analyses.
@@ -1181,7 +1181,8 @@ capabilities.
 \end{tabular}
 \end{center}
 \caption{\label{table:tristim}
-The complete set of tristimulus variables calculated by \code{summary} in \pavo{} (adapted from Montgomerie 2006 \cite{Montgomerie:2006})}
+The complete set ofcolorimetric variables calculated by \code{summary} in \pavo{} (adapted from
+Montgomerie 2006 \cite{Montgomerie:2006})}
 \end{table}
 
 

@@ -193,8 +193,8 @@ Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colou
 
 \subsection{Analysis}
 
-The \code{summary} function can be applied to \code{rspec} objects to produce several tristimulus
-(hue, saturation and brightness) colour variables extracted from the spectral shape of the
+The \code{summary} function can be applied to \code{rspec} objects to produce several colorimetric
+(hue, saturation and brightness)  variables extracted from the spectral shape of the
 reflectance curve. This function calculates variables previously described in the literature
 \citep[summarized in][]{Montgomerie:2006} for the spectra contained in the \code{rspec} input object
 (description and formulae for the variables can be found in the help file, by typing
@@ -558,7 +558,7 @@ voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
 \section{Citation of methods implemented in \pavo{}}
 
 Most of the methods implemented in \pavo{} have been thoroughly described in their original
-publications, to which users should refer for details and interpretation. For summary tristimulus
+publications, to which users should refer for details and interpretation. For summary colorimetric
 variables and spectral shape analysis of reflectance curves, see \cite{Montgomerie:2006}. For visual
 models based on photon catches and receptor noise, see \cite{Vorobyev:1998} and
 \cite{Vorobyev:1998to}. For visual phenotype sensitivity curve estimation, see
