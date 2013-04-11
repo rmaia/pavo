@@ -261,7 +261,7 @@ pal2 <- brewer.pal(11, "Spectral")
 The data consist of reflectance spectra (in Avantes ``.ttt'' output format) taken from museum
 specimens of the three species. We measured reflectance spectra from 11 plumage patches (see
 Figure \ref{figure:distplot} for list) of four males per species. Three measurements 
-from different locations within each patches were collected. We loaded these 396 
+from different locations within each patch were collected. We loaded these 396 
 raw spectral data files, averaged the spectra within patches and removed electrical noise arising from 
 the spectrometer (using local polynomial regression fitting, or loess) using the following annotated
 lines of code in \pavo{}:
