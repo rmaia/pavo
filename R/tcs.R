@@ -50,12 +50,36 @@ dat <- vismodeldata
   	
 if(any('v' %in% names(dat)))
   names(dat) <- gsub('v','u',names(dat))
+  
+# if the data frame has 4 columns, treat them as u/s/m/l
+if(any(attr(dat, 'visualsystem')=='none') & ncol(dat) == 4 & !all(c('u','s','m','l') %in% names(dat))){
+
+  names(dat) <- c('u','s','m','l')
+
+  warning(paste('Input data has four columns, but they are not named',
+  dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l'), '; treating them as such'))
+
+}
+
+if(!any(attr(dat, 'visualsystem')=='none') & ncol(dat) > 4 & !all(c('u','s','m','l') %in% names(dat))){
+
+  names(dat)[1:4] <- c('u','s','m','l')
+
+  warning(paste('Input data does not have columns named',
+  dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l'), '; treating first four columns as such'))
+
+}
+
+
   	
 if(!all(c('u','s','m','l') %in% names(dat)))
   stop(paste('Input data must have columns named',
   dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l')))
 
-dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+if(!attr(dat, 'relative')){
+  dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+  warning("Quantum catch are not relative, and have been transformed")
+}
 
 u <- dat[,'u']
 s <- dat[,'s']
