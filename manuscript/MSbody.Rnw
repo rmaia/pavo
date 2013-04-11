@@ -601,57 +601,17 @@ Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.).
 
 \begin{figure}
 \centering
-\includegraphics{fig/ms-new_volplot-2}
+\includegraphics{fig/ms-new_volplot}
 \caption{Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
 \label{figure:volplot}
 \end{figure}
 
-\clearpage
+%\clearpage
 
-\setcounter{figure}{0}
-\makeatletter 
-\renewcommand{\thefigure}{S\@arabic\c@figure} 
+%\setcounter{figure}{0}
+%\makeatletter 
+%\renewcommand{\thefigure}{S\@arabic\c@figure} 
 
-\section{Supporting Information}
-
-\subsection{Exact determination of volume overlap}
-
-To validate the exact solution for the multidimensional convex hull overlap used to obtain the color
-volume overlap implemented in \pavo{}, we defined two sets of points in three-dimensional space that
-defined two cubes, with side lengths of 1.0 and 0.5, respectively. Thus, the volumes of these two
-cubes are $V_1=1^3=1$ and $V_2=0.5^3=0.125$. We then shifted the x coordinates of the smaller cube
-by 0.4 to make the linear overlap along this axis $x_{overlap}=0.5 - 0.4 = 0.1$  (Figure
-\ref{figure:cubes}), giving an overlap volume of $V_3=0.1*0.5^2=0.025$. We then calculated the known
-proportional overlap volume based on the exclusion-inclusion principle as  $p_{overlap} =
-V_3/(V_2+(V_1-V_3)) = .02272727$ (see Figure \ref{figure:cubes}). Finally, we used the
-\code{voloverlap} function to estimate the proportional overlap and found that the value calculated
-by \code{voloverlap} for this set of points matched exactly (dashed line in \ref{figure:overlap}).
-
-To further show the benefit of an exact versus approximate solution (i.e. using Monte Carlo
-simulation), we compared the accuracy and precision of the Monte Carlo method described in
-\cite{Stoddard:2011} by running simulations over a range of MC sample sizes (\emph{n}): 100, 1000,
-10000, and 100000. For each \emph{n}, we repeated the simulation a total of 10 times to estimate
-confidence intervals and thus evaluate the precision of the estimates. The Monte Carlo method, while
-eventually converging on the correct solution, requires large sample numbers (and, hence, is more
-time-intensive) and can overestimate values at low MC sample numbers (see Figure
-\ref{figure:overlap}).
-
-\clearpage
-
-\begin{figure}
-\centering
-\includegraphics[width=3in]{fig/si-mc_cubes}
-\caption{Test geometries for validating \code{voloverlap}. Red and blue cubes are convex hulls enclosing all points, with overlap region shaded in grey.}
-\label{figure:cubes}
-\end{figure}
-
-
-\begin{figure}
-\centering
-\includegraphics{fig/si-mc_overlap}
-\caption{Results of Monte Carlo simulations of volume overlap compared to the exact result. Grey polygon shows 95\% confidence interval around estimated mean volume overlap (solid black line). Dashed line indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
-\label{figure:overlap}
-\end{figure}
-
+%\section{Supporting Information}
 
 \end{document}
