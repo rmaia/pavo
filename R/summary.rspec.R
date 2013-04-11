@@ -1,6 +1,6 @@
-#' Tristimulus color variables
+#' Colorimetric variables
 #'
-#' Extracts all 23 tristimulus color variables described in 
+#' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
 #' @S3method summary rspec
@@ -9,13 +9,15 @@
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
+#' @param simplify logical. If \code{TRUE}, only a subset of the complete ouput
+#' (composed of B2, H1, H3, S8, S9) will be returned (defaults to \code{FALSE}).
 #' @param ... class consistency (ignored)
-#' @return A data frame containing 23 variables described in Montgomerie (2006)
-#' with spectra name as row names. 
-#' @return The tristimulus color variables calculated by this function are 
+#' @return A data frame containing either 23 or 5 (simplify = \code {TRUE}) variables described 
+#' in Montgomerie (2006) with spectra name as row names. 
+#' @return The colorimetric variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
 #' file from the May 2008 distribution of the CLR sofware. Authors should reference 
-#' both this package and Montgomerie (2006).
+#' both this package,Montgomerie (2006), and the original reference(s).
 #' @return Description and notes on the measures:
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
@@ -146,7 +148,7 @@
 #summary.rspec <- function (object, ...) {
 
  
-summary.rspec <- function (object, ...) {
+summary.rspec <- function (object, simplify =FALSE, ...) {
 
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
@@ -299,6 +301,6 @@ color.var <- data.frame(output.mat, row.names=names(object))
 names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.green", 
                       "S1.yellow", "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
-
+if (simplify == TRUE) color.var <- color.var[,c(2,16,17,19,21)]
 color.var
 }
