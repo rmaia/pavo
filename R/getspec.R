@@ -77,7 +77,7 @@ raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
 # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
 
 start <- grep('[A-Za-z]',raw)
-isendline <- length(grep('End Processed Spectral Data', raw)) > 0
+isendline <- length(grep('End.*Spectral Data', raw)) > 0
 
 if(isendline)
   start <- start[-length(start)]
