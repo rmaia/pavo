@@ -32,7 +32,7 @@
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
-aggplot <- function(rspecdata, by, FUN.center = mean, FUN.error = sd, 
+aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
                     lcol = NULL, shadecol = NULL, alpha = 0.2, ...) {
 
 if (is.numeric(by))
@@ -40,8 +40,8 @@ if (is.numeric(by))
     stop('Cannot group single spectra (use plot instead)')
 
 #take aggregated data
-cntplotspecs <- aggspec(rspecdata,by=by, FUN=FUN.center)
-errplotspecs <- aggspec(rspecdata, by=by, FUN=FUN.error)
+cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
+errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
 
 # make wavelength vector
 wl_index <- which(names(rspecdata)=='wl')
