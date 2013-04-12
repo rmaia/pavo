@@ -69,8 +69,9 @@ models, we show that colour disparity between the recently diverged species is a
 between them and the more distantly related species. The flexibility and streamlined workflow of
 pavo{} is demonstrated through use of different visual models and several plotting capabilities.
 
-\item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology questions
-that previously required the use of multiple, sometimes restricted, programs.
+\item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
+questions that previously required the use of multiple, sometimes restricted, programs.
+\textcolor{red}{(RM: SHOULD WE CHANGE THIS CLOSING SENTENCE?)}
 
 \end{enumerate} 
 
