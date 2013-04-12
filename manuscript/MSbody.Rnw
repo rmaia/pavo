@@ -285,6 +285,7 @@ specs <- getspec(where='/Desktop/glossystarlings', ext='ttt', lim=c(300, 700))  
 specs <- aggspec(specs, by=3, FUN=mean)  # average by groups of 3 spectral curves
 specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian smoothing
 @
+
 <<echo=FALSE, results=hide>>=
 load('~/github/pavo/toydata/ACE.RData')
 specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
@@ -326,7 +327,8 @@ spp <- substr(names(specs.belly),1,4)[-1]  # extract 4 characters from column na
 aggplot(specs.belly, by=spp)  # average and plot spectral data by species
 @
 
-<<echo=F,results=hide>>=
+% is this used anywhere (CE)?
+<<echo=FALSE,results=hide>>=
 # Process spectra (apply smoothing) and average by species and patch
 specs.sm <- procspec(specs, opt='smooth')
 specs.m <- aggspec(specs.sm, by = paste(spp, patch)[-1])
@@ -401,6 +403,7 @@ boxplot(hue~spp)  # make boxplots of hue (H1) by species
 vm1 <- vismodel(specs, visual='star', relative=TRUE)
 vm2 <- vismodel(specs, visual='star', relative=FALSE)
 @
+
 <<echo=FALSE,results=hide>>=
 res <- list()
 for (i in unique(patch)[-1]) {
@@ -413,8 +416,8 @@ se <- function(x){sd(x)/sqrt(length(x))}
 
 d12 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  p <- intersect(grep('LACL', res[[1]]$patch1), grep('LAAC', res[[1]]$patch2))
-  x <- res[[1]][p, ]
+  p <- intersect(grep('LACL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
+  x <- res[[i]][p, ]
   # x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
   #               grep('LAAC', res[[i]]$patch2)], ]
   d12[i, 1] <- mean(x$dS)
@@ -447,11 +450,9 @@ for (i in 1:11) {
 rownames(d23) <- names(res)
 colnames(d23) <- c('mean', 'se')
 @
-<<echo=FALSE,results=hide>>=
-rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
-@
 
 <<label=distplot,fig=TRUE,echo=FALSE,results=hide,include=FALSE,width=7,height=7>>=
+rs <- names(sort(rank(rowMeans(cbind(d12[,1], d13[,1], d23[,1])))))
 pal <- brewer.pal(7, "Set1")
 # Dotplot of colour distances
 layout(matrix(c(1,2,1,3), nrow=2))
