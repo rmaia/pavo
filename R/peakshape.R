@@ -8,7 +8,7 @@
 #' spectra to process.
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
-#' @param bounds a vector specifying the wavelength range to analyze
+#' @param lim a vector specifying the wavelength range to analyze
 #' @param plot logical. Should plots indicating calculated parameters be returned? 
 #' (Defaults to \code{TRUE})
 #' @param ask logical, specifies whether user input needed to plot multiple plots
@@ -28,7 +28,7 @@
 #' peakshape(teal, select = 10, bounds=c(400, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, bounds = c(300, 700), 
+peakshape <- function(rspecdata, select = NULL, lim = c(300, 700), 
                       plot = TRUE, ask = FALSE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
@@ -62,10 +62,10 @@ if (is.null(select)&haswl==FALSE)
 rspecdata <- as.data.frame(rspecdata[, select])
 
 
-wlrange <- bounds[1]:bounds[2]
+wlrange <- lim[1]:lim[2]
 
 if (ncol(rspecdata)==1) {
-  rspecdata2 <- rspecdata[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- max(rspecdata2)  # max refls
   Yj <- min(rspecdata2)  # min refls
   Yk <- min(rspecdata)  # min refls, whole spectrum
@@ -76,7 +76,7 @@ if (ncol(rspecdata)==1) {
   fstHM <- which.min(abs(fsthalf - halfmax))
   sndHM <- which.min(abs(sndhalf - halfmax))
 } else {
-  rspecdata2 <- rspecdata[(which(wl==bounds[1])):(which(wl==bounds[2])), ]  # working wl range
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
   Yj <- apply(rspecdata2, 2, min)  # min refls
   Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
@@ -91,7 +91,7 @@ if (ncol(rspecdata)==1) {
 
 
 if (any(Yj>Yk)) {
-warning(paste('Please fix bounds in spectra with incl.min marked "No" to 
+warning(paste('Please fix lim in spectra with incl.min marked "No" to 
               incorporate all minima in spectral curves'))
 }
 
@@ -107,7 +107,7 @@ if (plot==TRUE) {
     abline(h = halfmax[i], col = "red")
     abline(v = Xa[i], col = "red", lty = 2)
     abline(v = Xb[i], col = "red", lty = 2)
-    abline(v = bounds, col = "lightgrey")
+    abline(v = lim, col = "lightgrey")
   }
 }
 
