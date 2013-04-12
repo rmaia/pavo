@@ -94,7 +94,7 @@ if (interp==TRUE) {
       l1 <- lim[1]
       l2 <- lim[2]
       if (l1.dat > lim[1] || l2.dat < lim[2]) {
-        warning("wavelength data outside of specified limits; check 'lim' argument")
+        warning("Specified wavelength limits outside of actual data. Check 'lim' argument.")
       }
   }
   object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
