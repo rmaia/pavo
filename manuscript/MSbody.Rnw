@@ -480,7 +480,7 @@ mtext(side = 1, "plumage patch", line=3.5)
 par(font=3)
 legend('topleft', bty='n', pch=c(21,21,21), cex=1.2,
        legend = c("acuticaudus-chloropterus", "acuticaudus-elisabeth",
-        "chloropterus-elisabeth"), pt.bg=c('black','grey','white'))
+        "chloropterus-elisabeth"), pt.bg=c('black','grey','white'), text.font=3)
 par(font=1)
 mtext("A", at=-2.5, line=-1.5, cex=1.5, font=2)
 
@@ -490,7 +490,7 @@ aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2,
 # text(300,40,'belly', pos=4)
 par(font=3)
 legend('topleft', lty=1, lwd=2, col=pal[c(1:3)],
-       legend=c('L. elisabeth', 'L. chloropterus', 'L. acuticaudus'), bty='n')
+       legend=c('L. elisabeth', 'L. chloropterus', 'L. acuticaudus'), bty='n', text.font=3)
 par(font=1)
 mtext(side = 2, 'Reflectance (%)', line=2.7)
 mtext(side = 1, "Wavelength (nm)", line=3)
@@ -503,8 +503,12 @@ colr <- colr[grep("wing|belly",nm), ]  # just belly, wing patches
 spp2 <- substr(row.names(colr), 1, 4)
 df <- setNames(as.data.frame(do.call(rbind, strsplit(row.names(colr), "\\."))), c("spp", "id", "sex", "patch"))
 df$H1 <- colr$H1
+df$spp <- factor(df$spp, levels=c('LAEL','LACL','LAAC'))
+df$spp <- factor(df$spp, labels=c('elisabeth', 'chloropterus', 'acuticaudus'))
 names(df) <- c("spp", "id", "sex", "patch", "H1")
-boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", cex.lab=1.2)
+boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", xaxt='n', lty=1, lwd=1.5, cex.lab=1.2, col=pal)
+axis(1, 1:3, levels(df$spp), cex.axis= 0.8, font=3, srt=45)
+
 mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
 @
 
