@@ -61,7 +61,7 @@ if (!is.null(whichwl)){
   warning('No wavelengths found or whichwl not provided; using arbitrary index values')
 }
 
-l1.dat <- floor(wl[which.min(wl)])  # lower wavelength limit of given data
+l1.dat <- round(wl[which.min(wl)])  # lower wavelength limit of given data
 l2.dat <- floor(wl[which.max(wl)])  # upper wavelength limit of given data
 
 if (interp==TRUE) {
