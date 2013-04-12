@@ -6,7 +6,8 @@
 #' @param whichwl specifies which column contains wavelengths. If NULL (default), function
 #' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
 #' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values
-#' @param interp whether to interpolate wavelengths in 1-nm bins
+#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to TRUE)
+#' @param lim vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)})
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
 #' @export as.rspec is.rspec
 #' @examples \dontrun{
@@ -25,7 +26,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-as.rspec <- function(object, whichwl = NULL, interp = FALSE) {
+as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
 if (is.matrix(object)) {
   name <- colnames(object)
@@ -36,36 +37,72 @@ if (is.data.frame(object)) {
   stop('object must be a data frame or matrix')
 }
 
-# try to automatically find wavelength column
+
+# How to handle wavelength column.
+# Possible conditions for wavelength column:
+#            |  specified   | not specified
+# -----------------------------------------       
+# given      |      1       |     3
+# not given  |      2       |     4
+# Case 1: wl | col1 | col2... whichwl=... --> use whichwl
+# Case 2:      col1 | col2...; lim=c(300, 700) --> use lim[1]:lim[2]
+# Case 3: wl | col1 | col2... (no whichwl, lim) --> use correlation find
+# Case 4:      col1 | col2... --> use arbitrary numbering
+
+# try to automatically find wavelength column. for increasing wavelengths, 
+# expect a perfect correlation between lambda values and column indices
 # ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
-ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})  # for increasing 
-# wavelengths, expect a perfect correlation between lambda values and column 
-# indices
+ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})  
 
 if (!is.null(whichwl)){
-      wl_index <- whichwl
+  wl_index <- whichwl
+  wl <- object[, wl_index]
+  object <- object[, -wl_index]
+  name <- name[-wl_index]
+} else if (!is.null(lim)) {
+    if (any(ind > 0.999)) {
+      wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
-  } else if (any(ind > 0.99)) {
-      wl_index <- which(ind > 0.99)[1]
+    } else {
+        wl <- seq(lim[1], lim[2], length=nrow(object))
+        object <- object
+        name <- name
+      }
+  } else if (any(ind > 0.999)) {
+      wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
       cat('wavelengths found in column', wl_index,'\n')
-} else {
-  wl <- 1:nrow(object)
-  object <- object
-  name <- name
-  warning('No wavelengths found or whichwl not provided; using arbitrary index values')
+      } else {
+          wl <- 1:nrow(object)
+          object <- object
+          name <- name
+          warning('No wavelengths found or whichwl not provided; using arbitrary index values')
 }
 
+l1.dat <- round(wl[which.min(wl)])  # lower wavelength limit of given data
+l2.dat <- floor(wl[which.max(wl)])  # upper wavelength limit of given data
+
 if (interp==TRUE) {
-  wl[which.min(wl)] <- round(min(wl))
-  wl[which.max(wl)] <- round(max(wl))
+  if (is.null(lim)) {
+    l1 <- l1.dat
+    l2 <- l2.dat
+  } else {
+      l1 <- lim[1]
+      l2 <- lim[2]
+      if (l1.dat > lim[1] || l2.dat < lim[2]) {
+        warning("wavelength data outside of specified limits; check 'lim' argument")
+      }
+  }
   object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
-                   xout = min(wl):max(wl))$y)
-  wl <- approx(wl, xout = min(wl):max(wl))$x
+                   xout = l1:l2, rule = 2)$y)  # rule=2 gives value at nearest
+                                               # point instead of giving NAs
+                                               # in the case of the user inputting
+                                               # wls that start at, say, 300.1nm
+  wl <- approx(wl, xout = l1:l2)$x
 }
 
 res <- as.data.frame(cbind(wl, object))
