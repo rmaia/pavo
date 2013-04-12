@@ -30,8 +30,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
 if (is.matrix(object)) {
   name <- colnames(object)
-} else
-if (is.data.frame(object)) {
+} else if (is.data.frame(object)) {
   name <- names(object)
 } else {
   stop('object must be a data frame or matrix')
@@ -69,6 +68,7 @@ if (!is.null(whichwl)){
         wl <- seq(lim[1], lim[2], length=nrow(object))
         object <- object
         name <- name
+        warning("No wavelengths contained in dataset, using user-specified range. Check output carefully!")
       }
   } else if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
