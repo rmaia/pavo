@@ -37,28 +37,38 @@ if (is.data.frame(object)) {
   stop('object must be a data frame or matrix')
 }
 
-# try to automatically find wavelength column
+# try to automatically find wavelength column. for increasing wavelengths, 
+# expect a perfect correlation between lambda values and column indices
 # ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
-ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})  # for increasing 
-# wavelengths, expect a perfect correlation between lambda values and column 
-# indices
+ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})  
 
 if (!is.null(whichwl)){
-      wl_index <- whichwl
+  wl_index <- whichwl
+  wl <- object[, wl_index]
+  object <- object[, -wl_index]
+  name <- name[-wl_index]
+} else if (!is.null(lim)) {
+    if (any(ind > 0.999)) {
+      wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
+    } else {
+        wl <- seq(lim[1], lim[2], length=nrow(object))
+        object <- object
+        name <- name
+      }
   } else if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
       cat('wavelengths found in column', wl_index,'\n')
-} else {
-  wl <- 1:nrow(object)
-  object <- object
-  name <- name
-  warning('No wavelengths found or whichwl not provided; using arbitrary index values')
+      } else {
+          wl <- 1:nrow(object)
+          object <- object
+          name <- name
+          warning('No wavelengths found or whichwl not provided; using arbitrary index values')
 }
 
 l1.dat <- round(wl[which.min(wl)])  # lower wavelength limit of given data
