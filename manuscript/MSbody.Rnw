@@ -506,8 +506,8 @@ df$H1 <- colr$H1
 df$spp <- factor(df$spp, levels=c('LAEL','LACL','LAAC'))
 df$spp <- factor(df$spp, labels=c('elisabeth', 'chloropterus', 'acuticaudus'))
 names(df) <- c("spp", "id", "sex", "patch", "H1")
-boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", xaxt='n', lty=1, lwd=1.5, cex.lab=1.2, col=pal)
-axis(1, 1:3, levels(df$spp), cex.axis= 0.8, font=3, srt=45)
+boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", xaxt='n', lty=1, lwd=1.5, cex.lab=1.2, col=pal, staplewex=0.2)
+axis(1, 1:3, levels(df$spp), cex.axis= 0.8, font=3)
 
 mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
 @

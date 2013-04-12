@@ -64,7 +64,7 @@ final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
 final[,1] <- range
 
 # Setting a progress bar
-cat(length(files),' files found; importing spectra\n')
+cat('\n',length(files),' files found; importing spectra\n\n')
 progbar <- txtProgressBar(min=0, max=length(files), style=3)
 
 for(i in 1:length(files))
@@ -76,7 +76,7 @@ raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
 # find last line with text
 # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
 
-start <- grep('[A-Za-z]',raw)
+start <- grep('[A-Da-dF-Zf-z]',raw)
 isendline <- length(grep('End.*Spectral Data', raw)) > 0
 
 if(isendline)
