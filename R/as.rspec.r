@@ -6,7 +6,8 @@
 #' @param whichwl specifies which column contains wavelengths. If NULL (default), function
 #' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
 #' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values
-#' @param interp whether to interpolate wavelengths in 1-nm bins
+#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to TRUE)
+#' @param lim vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)})
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
 #' @export as.rspec is.rspec
 #' @examples \dontrun{
@@ -25,7 +26,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-as.rspec <- function(object, whichwl = NULL, interp = FALSE) {
+as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
 if (is.matrix(object)) {
   name <- colnames(object)
@@ -47,8 +48,8 @@ if (!is.null(whichwl)){
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
-  } else if (any(ind > 0.99)) {
-      wl_index <- which(ind > 0.99)[1]
+  } else if (any(ind > 0.999)) {
+      wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
       object <- object[, -wl_index]
       name <- name[-wl_index]
@@ -60,12 +61,26 @@ if (!is.null(whichwl)){
   warning('No wavelengths found or whichwl not provided; using arbitrary index values')
 }
 
+l1.dat <- floor(wl[which.min(wl)])  # lower wavelength limit of given data
+l2.dat <- floor(wl[which.max(wl)])  # upper wavelength limit of given data
+
 if (interp==TRUE) {
-  wl[which.min(wl)] <- round(min(wl))
-  wl[which.max(wl)] <- round(max(wl))
+  if (is.null(lim)) {
+    l1 <- l1.dat
+    l2 <- l2.dat
+  } else {
+      l1 <- lim[1]
+      l2 <- lim[2]
+      if (l1.dat > lim[1] || l2.dat < lim[2]) {
+        warning("wavelength data outside of specified limits; check 'lim' argument")
+      }
+  }
   object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
-                   xout = min(wl):max(wl))$y)
-  wl <- approx(wl, xout = min(wl):max(wl))$x
+                   xout = l1:l2, rule = 2)$y)  # rule=2 gives value at nearest
+                                               # point instead of giving NAs
+                                               # in the case of the user inputting
+                                               # wls that start at, say, 300.1nm
+  wl <- approx(wl, xout = l1:l2)$x
 }
 
 res <- as.data.frame(cbind(wl, object))
