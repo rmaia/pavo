@@ -100,26 +100,27 @@ regulating phenotype \citep{Muller:2009}, physiological processes involved in pe
 However, ``colour'' refers to a sensory experience, not an objective quantity, and the realization
 that animals can vary quite considerably in their visual system and how they process this
 information prompted two important methodological advances. First, it highlighted the need for an
-objective quantification of the colour reflected by surfaces, as a first approximation of a
+objective quantification of the energy reflected by surfaces, as a first approximation of a
 ``receiver-independent'' measure of an organism or object's colour
-\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last 20 years, the rising
-popularity of portable spectrometers have made objective quantification of the spectral
-properties of animal and plant integuments commonplace
-\citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the understanding of perception
-and processing of colour have allowed analysis of reflectance data using visual models that estimate
-how animals see and differentiate these colours
+\citep{Endler:1993wm,Eaton:2003,Bennett:2007hm}. Over the last 20 years, the rising popularity of
+portable spectrometers have made objective quantification of the spectral properties of animal and
+plant integuments commonplace \citep{Endler:1990,Eaton:2003,Andersson:2006}. Second, advances in the
+understanding of perception and processing of colour have allowed analysis of reflectance data using
+visual models that estimate how animals see and differentiate these colours
 \citep{Goldsmith:1990,Tovee:1995vv,Vorobyev:1998,Vorobyev:1998to}.
 
 Because of these advances, a cohesive framework for working with and analyzing colour from
-reflectance data is needed. Output file types from spectrometer manufacturers are not
-standardized, and software programs for analyses are limited either in the methods they implement,
-the types of data they import and process, or the platforms in which they are available. Moreover,
-many are proprietary and/or closed, making customization impossible \citep[for a review of available
-software, see][]{Montgomerie:2006}. colour data often require additional conversion and export into
-statistical software for analyses, restricting  protocol standardization across labs, and batch
-processing automation of workflows. Combined with published descriptions that are often poorly
-detailed or inconsistent, the current procedures and implementations severely hinder the
-reproducibility of research and the reimplementation of methods.
+reflectance data is needed. Output file types from spectrometer manufacturers are not standardized,
+and though existing software programs have provided helpful implementations of several methodoligies
+\textcolor{red}{ADD CITATION TO AVICOL, TETRACOLORSPACE AND REVIEWED IN MONTGOMERIE)}, they are
+often limited in the methodologies implemented, the types of data they can import and process, or
+the platforms in which they are available. Moreover, many are proprietary and/or closed, hindering
+customization \citep[for a review of available software, see][]{Montgomerie:2006}. Furthermore, once
+the relevant colour data are extracted, they often require additional conversion and export into
+statistical software for analysesprotocol standardization across labs, and batch processing
+automation of workflows. Combined with published descriptions that are often poorly detailed or
+inconsistent, the current procedures and implementations severely hinder the reproducibility of
+research and the reimplementation of methods.
 
 We introduce \pavo{} \textendash \; a package for R \citep{rcore} that addresses these problems by
 providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
@@ -157,10 +158,10 @@ Spectral data are stored in \pavo{} and recognized for its functions by use of a
 \code{"rspec"}, which inherits methods from \code{data.frame}. Objects of class \code{rspec} are
 characterized by having individual reflectance spectra as columns of the data frame, with a first
 column containing the associated wavelength values. Raw spectral data can be imported using the
-function \code{getspec}, which currently supports data from a variety of software (Ocean Optics OOIBase 
-and SpectraSuite files, Avantes AvaSpec, and
-CRAIC). In addition, previously compiled spectral data can be imported into R and converted to
-\code{rspec} objects using the \code{as.rspec} function.
+function \code{getspec}, which currently supports data from a variety of software (including Ocean
+Optics OOIBase  and SpectraSuite files, Avantes AvaSpec, and CRAIC). In addition, spectral data that
+has been previously compiled (into a spreadsheet, for example) can be imported into R and converted
+to \code{rspec} objects using the \code{as.rspec} function.
 
 
 The use of dedicated R object classes allows generic functions like \code{plot} and \code{summary}
@@ -261,14 +262,19 @@ pal2 <- brewer.pal(11, "Spectral")
 
 \subsection{Step 1: Organization and Processing}
 
+\textcolor{red}{RM: INCLUDE SOMEWHERE HERE ABOUT FILE NAMING?}
+
 The data consist of reflectance spectra (in avantes ``.ttt'' output format), which in this example
-are located in the folder \code{'/Desktop/glossystarlings'}. We measured reflectance spectra from 11
-plumage patches (see Figure \ref{figure:distplot} for list) of four males from museum specimens of
-each of the three species. Three measurements from different locations within each patch were
-collected. We used \pavo{} to load these 396 \textcolor{red}{(RM: Is this number right?  my math may
-be wrong but i find it should add to 132)} raw spectral data files, average the spectra within
-patches and remove electrical noise arising from the spectrometer (using local polynomial regression
-fitting, or loess) with the following annotated lines of code:
+are located in the folder \code{'/Desktop/glossystarlings'} (by default, the current working
+directory and the ``.txt'' extension are used). We measured reflectance spectra from 11 plumage
+patches (see Figure \ref{figure:distplot} for list) of four males from museum specimens of each of
+the three species. Three measurements from different locations within each patch were collected. We
+used \pavo{} to load these 396 \textcolor{red}{(RM: Is this number right?  my math may be wrong but
+i find it should add to 132)} raw spectral data files (using the \code{getspec} function), then used
+the \code{aggspec} and \code{procspec} functions to average the spectra within patches (as
+determined by the \code{by} argument) and remove electrical noise arising from the spectrometer
+(using local polynomial regression fitting, or loess), respectively, with the following annotated
+lines of code:
 
 \textcolor{red}{RM: There should be an output message after getspec and procspec, should we just add
 these manually?}
@@ -583,11 +589,15 @@ visualmodels based on photon catches and receptor noise, see  \cite{Vorobyev:199
 and \cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original
 sources along with \pavo{}.
 
-\begin{acks} We would like to thank Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code
-that helped  us develop some of \pavo{}'s capabilities. This work was supported by the NSF grant
-DEB-1210630, AMNH Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant
-FA9550-09-1-0159 (M.D.S.), the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant
-and  Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.). 
+\begin{acks} 
+
+We would like to thank two anonymous reviewers for comments to a previous version of
+this manuscript, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us
+develop some of \pavo{}'s capabilities. This work was supported by the NSF grant DEB-1210630, AMNH
+Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant FA9550-09-1-0159
+(M.D.S.), the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and Equipment grant
+(S.M.D), and NSERC Graduate Scholarship (P.-P.B.).  
+
 \end{acks}
 
 \bibliographystyle{bes}
