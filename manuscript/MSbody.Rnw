@@ -413,12 +413,12 @@ se <- function(x){sd(x)/sqrt(length(x))}
 
 d12 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  p <- intersect(grep('LACL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
-  x <- res[[i]][p, ]
+  p <- intersect(grep('LACL', res[[1]]$patch1), grep('LAAC', res[[1]]$patch2))
+  x <- res[[1]][p, ]
   # x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
   #               grep('LAAC', res[[i]]$patch2)], ]
-  d12[i, 1] <- mean(x$tetra.dS)
-  d12[i, 2] <- se(x$tetra.dS)
+  d12[i, 1] <- mean(x$dS)
+  d12[i, 2] <- se(x$dS)
 }
 rownames(d12) <- names(res)
 colnames(d12) <- c('mean', 'se')
@@ -429,8 +429,8 @@ for (i in 1:11) {
   x <- res[[i]][p, ]
   # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
   #               grep('LAAC', res[[i]]$patch2)], ]
-  d13[i, 1] <- mean(x$tetra.dS)
-  d13[i, 2] <- se(x$tetra.dS)
+  d13[i, 1] <- mean(x$dS)
+  d13[i, 2] <- se(x$dS)
 }
 rownames(d13) <- names(res)
 colnames(d13) <- c('mean', 'se')
@@ -441,8 +441,8 @@ for (i in 1:11) {
   x <- res[[i]][p, ]
   # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
   #               grep('LACL', res[[i]]$patch2)], ]
-  d23[i, 1] <- mean(x$tetra.dS)
-  d23[i, 2] <- se(x$tetra.dS)
+  d23[i, 1] <- mean(x$dS)
+  d23[i, 2] <- se(x$dS)
 }
 rownames(d23) <- names(res)
 colnames(d23) <- c('mean', 'se')
