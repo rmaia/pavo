@@ -37,6 +37,18 @@ if (is.data.frame(object)) {
   stop('object must be a data frame or matrix')
 }
 
+
+# How to handle wavelength column.
+# Possible conditions for wavelength column:
+#            |  specified   | not specified
+# -----------------------------------------       
+# given      |      1       |     3
+# not given  |      2       |     4
+# Case 1: wl | col1 | col2... whichwl=... --> use whichwl
+# Case 2:      col1 | col2...; lim=c(300, 700) --> use lim[1]:lim[2]
+# Case 3: wl | col1 | col2... (no whichwl, lim) --> use correlation find
+# Case 4:      col1 | col2... --> use arbitrary numbering
+
 # try to automatically find wavelength column. for increasing wavelengths, 
 # expect a perfect correlation between lambda values and column indices
 # ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
