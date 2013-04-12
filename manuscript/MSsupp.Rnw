@@ -68,7 +68,7 @@ Additionally, because \code{pavo} matched exactly the overlap calculated from kn
 \begin{figure}[H]
 \centering
 \includegraphics[width=6in]{fig/si-mc_overlap_cloud}
-\caption{Results of Monte Carlo simulations of proportional volume overlaps for arbitrary polyhedra with varying overlap volumes (a: 38\%, b: 11\%, c: 1\%) compared to the exact result. Grey polygons shows 95\% confidence interval around estimated mean proportional volume overlap (dashed black line). Solid lines indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
+\caption{Results of Monte Carlo simulations of proportional volume overlaps for arbitrary polyhedra with varying overlap volumes (a: 40\%, b: 16\%, c: 3\%) compared to the exact result. Grey polygons shows 95\% confidence interval around estimated mean proportional volume overlap (dashed black line). Solid lines indicates true overlap and that calculated using \code{voloverlap} in \code{pavo}.}
 \label{figure:overlap2}
 \end{figure}
 

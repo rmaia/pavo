@@ -1,0 +1,11 @@
+all:
+	R CMD Sweave MSsupp.Rnw 
+	R CMD pdflatex MSsupp.tex
+	R CMD bibtex MSsupp.aux
+	R CMD pdflatex MSsupp.tex
+	R CMD pdflatex MSsupp.tex
+	R CMD texcount MSsupp.tex
+	open MSsupp.pdf
+	rm MSsupp.aux
+	rm MSsupp.log
+	rm MSsupp.out
