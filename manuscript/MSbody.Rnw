@@ -69,8 +69,9 @@ models, we show that colour disparity between the recently diverged species is a
 between them and the more distantly related species. The flexibility and streamlined workflow of
 pavo{} is demonstrated through use of different visual models and several plotting capabilities.
 
-\item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology questions
-that previously required the use of multiple, sometimes restricted, programs.
+\item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
+questions that previously required the use of multiple, sometimes restricted, programs.
+\textcolor{red}{(RM: SHOULD WE CHANGE THIS CLOSING SENTENCE?)}
 
 \end{enumerate} 
 
@@ -503,8 +504,8 @@ spp2 <- substr(row.names(colr), 1, 4)
 df <- setNames(as.data.frame(do.call(rbind, strsplit(row.names(colr), "\\."))), c("spp", "id", "sex", "patch"))
 df$H1 <- colr$H1
 names(df) <- c("spp", "id", "sex", "patch", "H1")
-boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)")
-mtext("C", at=187, line=-1.5, cex=1.5, font=2)
+boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", cex.lab=1.2)
+mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
 @
 
 \begin{center}\fbox{Figure \ref{figure:distplot} about here}\end{center}
