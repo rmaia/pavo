@@ -625,7 +625,7 @@ Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant
 
 \begin{figure}
 \centering
-\includegraphics{fig/ms-new_volplot}
+\includegraphics{fig/ms-new_volplot-2}
 \caption{Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as indicated by an `x'.}
 \label{figure:volplot}
 \end{figure}
