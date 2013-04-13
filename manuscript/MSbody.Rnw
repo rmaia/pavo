@@ -580,7 +580,25 @@ voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
 
 \section{Conclusions and future directions}
 
-\textcolor{red}{FILL IN THIS SECTION}
+A few areas of research will find \pavo{} particularly useful. For example, it will now be easier 
+to compare and validate the use of different colorimetrics \cite{Butler:2011} and determine 
+the influence of various assumptions in visual models \cite{Hanley:Inpress}. \pavo{} can also be used 
+to investigate the information content of colour signals using receiver specific visual systems 
+\cite{Pike:2011} and answer questions pertaining to signal production mechanisms (e.g. comparing 
+the relative contribution of pigments and structural colours in various integuments; \cite{D'Alba:2012}).
+While \pavo{} is already fairly comprehensive, many functions and reference data could (and will)
+be implemented in the future. For example, we would like to increase the flexibility of the visual
+modelling functions to allow for any number of photoreceptor to be included. This would allow 
+\pavo{} to model the visual systems of organisms such as butterflies (e.g. six photoreceptors in 
+the genus \emph{Papilio} ; \cite{Arikawa:2003}) and mantis shrimps (Order Stomapoda; 16 photoreceptors;  
+\cite{Cronin:1993}). 
+
+Furthermore, reference data for illuminants, backgrounds, photoreceptors, 
+and other components of visual systems (e.g. ocular media; \cite({Siebeck:2001}) will 
+continue to be added to updated versions of the package to develop a comprehensive yet 
+flexible research tool. Researchers in relevant fields are encouraged to contact the corresponding 
+author if they would like to contribute their data to this effort.
+
 
 \section{Citation of methods implemented in \pavo{}}
 
