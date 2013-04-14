@@ -49,6 +49,8 @@ extension <- paste('.', ext, sep='')
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
 files <- paste(where,'/',file_names,sep='')
 
+cat(length(files),' files found; importing spectra\n')
+
 if(subdir.names){
 	file_names <- gsub(extension,'',file_names)}else{
 	file_names <- gsub(extension,'',basename(file_names))
@@ -64,7 +66,6 @@ final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
 final[,1] <- range
 
 # Setting a progress bar
-cat('\n',length(files),' files found; importing spectra\n\n')
 progbar <- txtProgressBar(min=0, max=length(files), style=3)
 
 for(i in 1:length(files))
