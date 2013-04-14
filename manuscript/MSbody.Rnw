@@ -597,12 +597,12 @@ sources along with \pavo{}.
 
 \begin{acks} 
 
-We would like to thank two anonymous reviewers for comments to a previous version of
-this manuscript, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us
-develop some of \pavo{}'s capabilities. This work was supported by the NSF grant DEB-1210630, AMNH
-Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant FA9550-09-1-0159
-(M.D.S.), the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and Equipment grant
-(S.M.D), and NSERC Graduate Scholarship (P.-P.B.).  
+We would like to thank two anonymous reviewers for comments to a previous version of this
+manuscript, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop
+some of \pavo{}'s capabilities. This work was supported by the NSF grant DEB-1210630, AMNH Chapman
+research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant FA9550-09-1-0159 (M.D.S.),
+the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and Equipment grant (S.M.D),
+and NSERC Graduate Scholarship (P.-P.B.).
 
 \end{acks}
 
@@ -623,7 +623,7 @@ Chapman research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant
 \begin{figure}
 \centering
 \includegraphics{fig/ms-distplot}
-\caption{\textbf{A}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is considered to be distinguishable by birds. Points indicate chromatic distances between different pairs of species: \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} (open circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles); and \emph{L. acuticaudus} and \emph{L. chloropterus} (black circles). Error bars show +/- one standard error. \textbf{B,C}: Plots of mean smoothed spectra for different body patches (B: wing, C: belly). Line colors indicate species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data.}
+\caption{\textbf{A}: Dotplot showing color distances (in units of just noticeable differences, JNDs) by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical lines indicate JND=1, above which the pair of colour patches is considered to be distinguishable by birds. Points indicate chromatic distances between different pairs of species: \emph{Lamprotornis chloropterus} and \emph{L. elisabeth} (open circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles); and \emph{L. acuticaudus} and \emph{L. chloropterus} (black circles). Error bars show +/- one standard error. \textbf{B}: Plots of mean smoothed spectra for the belly patch. Line colors indicate species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and shaded areas indicate the standard deviation of the spectral data. \textbf{C}: Boxplots of the hue (calculated as the wavelength of maximum reflectance) for the three species (colors as in \textbf{B})}
 \label{figure:distplot}
 \end{figure}
 
