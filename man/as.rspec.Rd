@@ -3,7 +3,8 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-  as.rspec(object, whichwl = NULL, interp = FALSE)
+  as.rspec(object, whichwl = NULL, interp = TRUE,
+    lim = NULL)
 
   is.rspec(object)
 }
@@ -19,7 +20,10 @@
   values}
 
   \item{interp}{whether to interpolate wavelengths in 1-nm
-  bins}
+  bins (defaults to TRUE)}
+
+  \item{lim}{vector specifying wavelength range to
+  interpolate over (e.g., \code{c(300, 700)})}
 }
 \value{
   an object of class \code{rspec} for use in further

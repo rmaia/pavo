@@ -66,7 +66,7 @@ final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
 final[,1] <- range
 
 # Setting a progress bar
-progbar <- txtProgressBar(min=0, max=length(files), style=3)
+progbar <- txtProgressBar(min=0, max=length(files), style=2)
 
 for(i in 1:length(files))
 {

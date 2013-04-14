@@ -231,14 +231,3 @@ attr(res,'relative') <- relative
 
 res
 }
-
-summary.vismodel <- function(object,...){
-cat("visual model options:\n",
-  '* Quantal catch:', attr(object, 'qcatch'), '\n',
-  '* Visual system:', attr(object,'visualsystem'), '\n', 
-  '* Illuminant:', attr(object,'illuminant'), '\n',
-  '* Background:', attr(object,'background'), '\n', 
-  '* Relative:', attr(object, 'relative'), '\n'
-  )
-summary.data.frame(object) 
-}

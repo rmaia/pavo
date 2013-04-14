@@ -381,20 +381,31 @@ catch values for the four avian photoreceptor classes (\{\emph{usml}\}), suitabl
 chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}. We used relative cone abundances
 (arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, which are passed
 as arguments to the \code{coldist} function. The \code{v} argument was set to 0.1 to give a
-\{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}. The
-results of \code{coldist} give colour distances (chromatic, $\Delta S$, shwon in Figure
-\ref{figure:distplot}; and achromatic, $\Delta L$) between all possible combinations of
-plumage patches in a \code{vismodel} object, and can be further subset (using the \code{subset}
-argument) to focus on comparisons of interest (e.g., colour difference between homologous patches of
-two species, or between color patches and a given background). This argument employs regular
-expressions functionality, and thus allows for partial string matching of row names to the rule
-specified in the argument. For example:
+\{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
+\code{vismodel} can return either the calculated quantum catches ($Q_i$, the default) or according
+to Fechner's law ($f_i$; the signal being proportional to the logarithm of the quantum catch), as
+determined by the argument \code{qcatch} (not used in the code below, hence the default \textemdash
+$Q_i$ \textemdash is returned). It can also apply the von Kries transformation (normalizing by the
+stimulus' background to account for receptor adaptation) through the \code{vonkries} argument (which
+defaults to \code{FALSE}). All these settings are stored in the \code{vismodel} object and can be called using the \code{summary} function:
 
 <<>>=
-vm.star <- vismodel(specs, visual='star', relative=FALSE)
-deltas <- coldist(vm.star, n1=1, n2=1.38, n3=3.34, n4=3.46, v=0.1)
+vm.star <- vismodel(specs, visual='star', relative = FALSE)
+summary(vm.star)
+@
+
+The results of \code{coldist} give colour distances (chromatic, $\Delta S$, shwon in Figure
+\ref{figure:distplot}; and achromatic, $\Delta L$) between all possible combinations of plumage
+patches in a \code{vismodel} object, and can be further subset (using the \code{subset} argument) to
+focus on comparisons of interest (e.g., colour difference between homologous patches of two species,
+or between color patches and a given background). This argument employs regular expressions
+functionality, and thus allows for partial string matching of row names to the rule specified in the
+argument. For example:
+
+<<>>=
+deltas <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
 # subset only comparisons between belly spectra
-deltas.wing <- coldist(vm.star, n1=1, n2=1.38, n3=3.34, n4=3.46, v=0.1, subset="wing")
+deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = "wing")
 head(deltas.wing)
 @
 

@@ -12,13 +12,13 @@
 #' @param simplify logical. If \code{TRUE}, only a subset of the complete ouput
 #' (composed of B2, H1, H3, S8, S9) will be returned (defaults to \code{FALSE}).
 #' @param ... class consistency (ignored)
-#' @return A data frame containing either 23 or 5 (simplify = \code {TRUE}) variables described 
+#' @return A data frame containing either 23 or 5 (\code{simplify = TRUE}) variables described 
 #' in Montgomerie (2006) with spectra name as row names. 
-#' @return The colorimetric variables calculated by this function are 
+#' The colorimetric variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
 #' file from the May 2008 distribution of the CLR sofware. Authors should reference 
 #' both this package,Montgomerie (2006), and the original reference(s).
-#' @return Description and notes on the measures:
+#' Description and notes on the measures:
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
 #' range (area under the curve). Frequently used but should be discouraged because

@@ -47,3 +47,4 @@ Collate:
     'vismodel.R'
     'voloverlap.R'
     'merge.rspec.R'
+    'summary.vismodel.R'

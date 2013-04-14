@@ -2,7 +2,7 @@
 \alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-  aggspec(rspecdata, by, FUN = mean)
+  aggspec(rspecdata, by = NULL, FUN = mean)
 }
 \arguments{
   \item{rspecdata}{(required) data frame, possibly of class
