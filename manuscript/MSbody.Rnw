@@ -69,7 +69,7 @@ methodologies.
 Glossy Starling species, two of which have diverged very recently. We demonstrate how both colour
 vision models and direct spectral measurement analysis can be used to describe colour attributes and
 differences between these species. Different approaches to visual models and several plotting
-capabilities exemplify the package's versatility and streamlined workflow.
+capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?}
 
 \item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
 questions, \textcolor{red}{as well as comparing different approaches to colour analysis, all while
@@ -679,13 +679,16 @@ and NSERC Graduate Scholarship (P.-P.B.).
 \begin{figure}
 \centering
 \includegraphics{fig/ms-workflow-3}
-\caption{Example \pavo{} workflow, highlighting its main functions and plotting capabilities}
+\caption{Example \pavo{} workflow, highlighting its main functions and plotting capabilities.}
 \label{figure:work}
 \end{figure}
 
 \clearpage
 
-\begin{figure} \centering \includegraphics{fig/ms-distplot} \caption{\textbf{A}: Dotplot showing
+\begin{figure} 
+\centering 
+\includegraphics{fig/ms-distplot} 
+\caption{\textbf{A}: Dotplot showing
 colour distances (in units of just noticeable differences, JNDs)  by patch (y-axis) for three pairs
 of African starling species (Sturnidae). Dotted vertical lines  indicate JND=1, above which the pair
 of colour patches is considered to be distinguishable by birds.  Points indicate chromatic distances
@@ -696,19 +699,20 @@ Plot of mean smoothed spectra for the belly body patch. Line colours indicate  s
 \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and  shaded areas
 indicate the standard deviation of the spectral data. \textbf{C}: Boxplots showing hue (wavelength
 of maximum reflectance)  for the belly patch of each species (\emph{N} = 4 individuals each; colours
-as in \textbf{B}).} \label{figure:distplot} \end{figure}
+as in \textbf{B}).} 
+\label{figure:distplot} \end{figure}
 
 \clearpage
 
-\begin{figure}
-\centering
-\includegraphics{fig/ms-new_volplot-2}
-\caption{Colourspace occupied by \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex 
-hulls volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in 
-lower right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as 
-indicated by an `x'.}
-\label{figure:volplot}
-\end{figure}
+\begin{figure} 
+\centering 
+\includegraphics{fig/ms-new_volplot-2} 
+\caption{Colourspace occupied by
+the recently-diverged \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex  hulls
+volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower
+right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as
+indicated by an `x'.} 
+\label{figure:volplot} \end{figure}
 
 %\clearpage
 
