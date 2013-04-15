@@ -26,9 +26,14 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 subset.rspec <- function (x, subset, ...) {
-  # if (!is.logical(subset)) 
-  #   stop("'subset' must be logical")
-  subsample <- grep(subset, names(x))
+  if (is.logical(subset)) {
+    subsample <- subset
+  } else {
+      subsample <- grep(subset, names(x))
+    }
+  if (length(subsample)==0) {
+    warning("Subset condition not found")
+  }
   res <- cbind(x["wl"], x[subsample]) # & !is.na(subset)])
   class(res) <- c("rspec", "data.frame")
   res
@@ -41,7 +46,14 @@ subset.rspec <- function (x, subset, ...) {
 subset.tcs <- function (x, subset, ...) {
   # if (!is.logical(subset)) 
   #   stop("'subset' must be logical")
-  subsample <- grep(subset, row.names(x))
+  if (is.logical(subset)) {
+    subsample <- subset
+  } else {
+      subsample <- grep(subset, row.names(x))
+    }
+  if (length(subsample)==0) {
+    warning("Subset condition not found")
+  }
   res <- x[subsample, ] # & !is.na(subset)])
   class(res) <- c("tcs", "data.frame")
   res
@@ -52,10 +64,12 @@ subset.tcs <- function (x, subset, ...) {
 #' @rdname subset.rspec
 #'
 subset.vismodel <- function (x, subset, ...) {
-  # if (!is.logical(subset)) 
-  #   stop("'subset' must be logical")
-  attr <- attributes(x)
-  subsample <- grep(subset, row.names(x))
+  if (is.logical(subset)) {
+    subsample <- subset
+  } else {
+      subsample <- grep(subset, row.names(x))
+    }
+  # attr <- attributes(x)
   res <- x[subsample, ]
   res
 }
