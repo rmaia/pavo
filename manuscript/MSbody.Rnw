@@ -70,9 +70,9 @@ between them and the more distantly related species. The flexibility and streaml
 pavo{} is demonstrated through use of different visual models and several plotting capabilities.
 
 \item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
-questions, \textcolor{red}{as well as comparing different approaches to color analysis, all while
-integrating with \code{R}'s modular framework to create reproducible and automated data analysis
-workflows.} \textcolor{red}{(RM: SHOULD WE CHANGE THIS CLOSING SENTENCE?)}
+questions, \textcolor{red}{as well as comparing different approaches to colour analysis, all while
+integrating with \code{R}'s modular framework to enable automated management of spectral data and
+reproducible workflows for colour analysis.}
 
 \end{enumerate} 
 
