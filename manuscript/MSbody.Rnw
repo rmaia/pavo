@@ -76,9 +76,10 @@ questions, \textcolor{red}{as well as comparing different approaches to colour a
 integrating with \code{R}'s modular framework to enable automated management of spectral data and
 reproducible workflows for colour analysis.}
 
-\textcolor{blue}{PPB Not sure I like this for 2 reasons: 1) the 'comparing different approaches' bit seems out of place seeing that the package can do much more and 2) the automated part is perhaps not really warranted. I recommend the following or something in the way}
-
-\item \pavo{} provides a cohesive environment for handling spectral data and addressing complex sensory ecology questions.  It integrates with \code{R}'s modular framework, thus giving the opportunity to further manipulate data using other packages or basic \code{R} functions. Furthermore, in the interest of scientific openess, it facillitates reproducible workflows in the study colour data.
+\item pavo{} provides a cohesive environment for handling spectral data and addressing complex
+sensory ecology questions, while integrating with code{R}'s modular core for a broader and cohesive
+analytical framework, automated management of spectral data and reproducible workflows for colour
+analysis.
 
 \end{enumerate} 
 
@@ -260,39 +261,29 @@ Supplemental Information)
 
 \section{Worked example: colour divergence in glossy starlings (Sturnidae)}
 
-
-% Here we exemplify some of \pavo{}'s capabilities and workflow by comparing the colour patterns of
-% a monophyletic clade of three glossy starling species. Glossy starlings from the African clade
-% have bright and diverse iridescent colours likely used in sexual selection and social competition
-% \citep{Rubenstein:2009}. The lesser blue-eared starling (\emph{Lamprotornis chloropterus}) and the
-% southern blue-eared starling (\emph{L. elisabeth}) form a recently diverged clade that some
-% \citep[including the International Ornithological Committee;][]{Gill:2012} have considered full
-% species, whereas others have classified them as subspecies of \emph{L. chloropterus}
-% \citep{Craig:1998,Lovette:2007}. We compared the extent to which these two species have diverged
-% in their colours and compared each to their most recently diverged sister species, the sharp-
-% tailed starling (\emph{L. acuticaudus}).
-
 Glossy starlings from the African clade have bright and diverse iridescent colours likely used in
 courtship displays and social competition \citep{Rubenstein:2009}. Here we showcase some of
 \pavo{}'s capabilities through a worked example to compare the colours of a monophyletic clade of
 three glossy starling species, two of which (\textit{L. chloropterus} and \textit{L. elisabeth})
-have recently diverged and whose status as full species is debated \citep{Gill:2012,Craig:1998,
-Lovette:2007}. The data used for this example can be found in the Supplemental Information. Further information and a ``how-to'' of \pavo{}'s main functions, including the formulae used for the calculations, can be found in detail in the package vignette \textemdash available online from CRAN or directly from \code{R} using the command \code{vignette("pavo")}.
+have recently diverged and whose status as full species is debated \citep{Gill:2012, Craig:1998,
+Lovette:2007}. The data used for this example can be found in the Supplemental Information. Further
+information and a ``how-to'' of \pavo{}'s main functions, including the formulae used for the
+calculations, can be found in detail in the package vignette \textemdash available online from CRAN
+or directly from \code{R} using the command \code{vignette("pavo")}.
 
 <<echo=F,results=hide>>=
 require(RColorBrewer)
 require(pavo)
-# source('~/github/pavo/R/aggspec.R')  # not needed now that we've fixed it in v. 0.1-2
 pal <- brewer.pal(7, "Set1")
 pal2 <- brewer.pal(11, "Spectral")
 @
 
 \subsection{Step 1: Organization and Processing}
 
-The data consist of reflectance spectra (in avantes ``\code{.ttt}'' output format), which in this
-example are located in a folder ``\code{/Desktop/glossystarlings}'' (by default, the current working
+The data consist of reflectance spectra (in Avantes ``\code{.ttt}'' output format), which in this
+example are located in the folder ``\code{/Desktop/glossystarlings}'' (by default, the current working
 directory and the ``\code{.txt}'' extension are used). The file are named to indicate the species,
-bird ID, plumage patch and measurement ID (for example, ``\code{LAAC.14423.belly-001.ttt}'' would be
+bird ID, plumage patch and measurement ID (for example, ``\code{LAAC.14423.belly.001.ttt}'' would be
 the first measurement taken from the belly of individual 14423, a \textit{Lamprotornis acuticaudus}
 specimen). This is important because \pavo{} uses the file name (minus the file extension) to label
 the columns of the \code{rspec} object with the imported reflectance spectra. We recommend that
@@ -302,16 +293,13 @@ suggestions in this regard). Additionally, we suggest that labels used should ha
 of characters, which simplifies character string manipulation and subsetting based on partial
 matching.
 
-We measured reflectance spectra from 11 plumage patches (see Figure \ref{figure:distplot}
-for list) of four males from museum specimens of each of the three species. Three measurements from
-different locations within each patch were collected. We used \pavo{} to load these 396 raw spectral
-data files (using the \code{getspec} function), then used the \code{aggspec} function to average the
-spectra within patches (as determined by the \code{by} argument) and the \code{procspec} function to
-remove electrical noise arising from the spectrometer (using local polynomial regression fitting, or
-loess) with the following annotated lines of code:
-
-\textcolor{red}{RM: I think we'll just have to edit the
-tex file after sweaving, before submitting.}
+We measured reflectance spectra from 11 plumage patches (see Figure \ref{figure:distplot} for list)
+of four males from museum specimens of each of the three species. Three measurements from different
+locations within each patch were collected. We used the \code{getspec} function to load these 396
+raw spectral data files, then used the \code{aggspec} function to average the spectra within patches
+(as determined by the \code{by} argument) and the \code{procspec} function to remove electrical
+noise arising from the spectrometer (using local polynomial regression fitting, or loess) with the
+following annotated lines of code:
 
 % demo input of raw data
 <<eval=FALSE>>=
@@ -356,15 +344,14 @@ aggplot(specs.belly, by=spp)  # average and plot spectral data by species
 
 \subsubsection{Colour distances}
 
-To explore how these colours may be perceived by birds we first used the \code{vismodel} function, which 
-takes into account avian visual sensitivities (sensory phenotype), to calculate the quantum catches at 
-each photoreceptor. \pavo{} allows for user-defined cone sensitivities, but also incorporates available 
-data on the from several taxa, including the European starling (\emph{Sturnus vulgaris}, 
-\code{visual='star'}, \citealt{Hart:1998}), which we used for our example.
-We used the \code{relative = FALSE} option from the \code{vismodel} function to obtain raw photon
-catch values for the four avian photoreceptor classes (\{\emph{usml}\}), suitable for calculating
-chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}.
-
+To explore how these colours may be perceived by birds we first used the \code{vismodel} function,
+which  takes into account avian visual sensitivities (sensory phenotype), to calculate the quantum
+catches at  each photoreceptor. \pavo{} allows for user-defined cone sensitivities, but also
+incorporates available data from several taxa, including the European starling (\emph{Sturnus
+vulgaris}, \code{visual='star'}, \citealt{Hart:1998}), which we used for our example. We used the
+\code{relative = FALSE} option from the \code{vismodel} function to obtain raw photon catch values
+for the four avian photoreceptor classes (\{\emph{usml}\}), suitable for calculating chromatic
+distances \citep[$\Delta S$,][]{Vorobyev:1998to}.
  
 \code{vismodel} can return either the calculated quantum catches ($Q_i$, the default) or according
 to Fechner's law ($f_i$; the signal being proportional to the logarithm of the quantum catch), as
@@ -380,20 +367,19 @@ vm.star <- vismodel(specs, visual='star', relative = FALSE)
 summary(vm.star)
 @
 
-
-
-Second, we used the \code{coldist} function to calculate colour distances with receptor noise based on the 
-relative photoreceptor densities \citep{Vorobyev}. We used relative cone abundances 
-(arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, and the \code{v} argument was set to 0.1 to give a \{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
-\textcolor {red}{perhaps we should explain why a value of 0.1 is equivallent to a weber-fraction of 0.05.}
-The results of \code{coldist} give colour distances (chromatic, $\Delta S$, shown in Figure
-\ref{figure:distplot}; and achromatic, $\Delta L$) between all possible combinations of plumage
-patches in a \code{vismodel} object, and can be further subset (using the \code{subset} argument) to
-focus on comparisons of interest (e.g. colour difference between homologous patches of two species,
-or between colour patches and a given background). This argument employs regular expressions
-functionality, and thus allows for partial string matching of row names to the rule specified in the
-argument. In this case, if we want comparisons between a single type of patch, the \code{subset}
-argument will have two values, to match both \code{patch1} and \code{patch2} columns:
+Second, we used the \code{coldist} function to calculate colour distances with receptor noise based
+on the relative photoreceptor densities \citep{Vorobyev:1998}. We used relative cone abundances
+(arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, and the \code{v}
+argument was set to 0.1 to give a \{\emph{"l"}\}-cone Weber fraction (calculated as $v/\sqrt{n_i}$)
+of approximately 0.05 \citep{Vorobyev:1998, Vorobyev:1998to}. The results of \code{coldist} give
+colour distances (chromatic, $\Delta S$, shown in Figure \ref{figure:distplot}; and achromatic,
+$\Delta L$) between all possible combinations of plumage patches in a \code{vismodel} object, and
+can be further subset (using the \code{subset} argument) to focus on comparisons of interest (e.g.
+colour difference between homologous patches of two species, or between colour patches and a given
+background). This argument employs regular expressions functionality, and thus allows for partial
+string matching of row names to the rule specified in the argument. In this case, if we want
+comparisons between a single type of patch, the \code{subset} argument will have two values, to
+match both \code{patch1} and \code{patch2} columns:
 
 <<>>=
 deltas <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
@@ -583,7 +569,7 @@ tcs1c <- tcs1.m[grep('LAEL', tcs1.m$both),]
 
 To analyse these spectra in avian tetrahedral colourspace, we used \code{vismodel} again, but now
 specifying \code{relative=TRUE} to indicate that \{\textit{usml}\} values should be scaled to sum of
-unity for each observation. Then we used the \code{voloverlap} function to calculate the volumes
+unity for each observation. We then used the \code{voloverlap} function to calculate the volumes
 occupied by each species' plumage patches, as well as their overlap. The \code{plot=TRUE} option
 provides a useful graphical representation of the overlap in colourspace (Figure
 \ref{figure:volplot}B).
@@ -612,17 +598,17 @@ voloverlap(tcs.lael, tcs.lacl, plot=FALSE)
 \pavo{} implements colour analysis for reflectance data based on both spectral properties and visual
 system receptor stimulation, as well as a modular framework that allows the assumptions and
 parameters of such models to be tuned as necessary. As such, it is particularly suited to compare
-and validate the use of different colourimetrics \citep{Butler:2011ju}, determine the influence
-of various assumptions in visual models, or help choose parameter value that would introduce the least bias
-in visual models \citep{Hanley:Inpress}. \pavo{} can also be used to
-investigate the information content of colour signals using receiver specific visual systems
-\citep{Pike:2011} and answer questions pertaining to signal production mechanisms (e.g. comparing
-the relative contribution of pigments and structural colours in various integuments;
-\citealt{D'Alba:2012}). Currently, the visual modelling functions implemented in \pavo{} already
-allow for any number of photoreceptors to be considered, but colour distances can so far only be
-calculated for di-, tri, and tetrachromats. Implementing extensions of the \cite{Vorobyev:1998} model would allow
-\pavo{} to calculate colour distances for the visual systems of organisms such as butterflies (e.g.
-six photoreceptors in Pierids and \emph{Papilio} butterflies; \citealt{Morehouse:2010ey},
+and validate the use of different colourimetrics \citep{Butler:2011ju}, determine the influence of
+various assumptions in visual models, or help choose parameter value that would introduce the least
+bias in visual models \citep{Hanley:Inpress}. \pavo{} can also be used to investigate the
+information content of colour signals using receiver specific visual systems \citep{Pike:2011} and
+answer questions pertaining to signal production mechanisms (e.g. comparing the relative
+contribution of pigments and structural colours in various integuments; \citealt{D'Alba:2012}).
+Currently, the visual modelling functions implemented in \pavo{} already allow for any number of
+photoreceptors to be considered, but colour distances can so far only be calculated for di-, tri,
+and tetrachromats. Implementing extensions of the \cite{Vorobyev:1998} model will allow \pavo{} to
+calculate colour distances for the visual systems of organisms such as butterflies (e.g. six
+photoreceptors in Pierids and \emph{Papilio} butterflies; \citealt{Morehouse:2010ey},
 \citealt{Arikawa:2003}) and mantis shrimps (Order Stomapoda; 16 photoreceptors;
 \citealt{Cronin:1993}).
 
@@ -676,19 +662,19 @@ and NSERC Graduate Scholarship (P.-P.B.).
 \begin{figure} 
 \centering 
 \includegraphics{fig/ms-distplot} 
-\caption{\textbf{A}: Dotplot showing
-colour distances (in units of just noticeable differences, JNDs)  by patch (y-axis) for three pairs
-of African starling species (Sturnidae). Dotted vertical lines  indicate JND=1, above which the pair
-of colour patches is considered to be distinguishable by birds.  Points indicate chromatic distances
-between different pairs of species: \emph{Lamprotornis chloropterus}  and \emph{L. elisabeth} (open
-circles); \emph{L. acuticaudus} and \emph{L. elisabeth} (grey circles);  and \emph{L. acuticaudus}
-and \emph{L. chloropterus} (black circles). Error bars show +/- one standard  error. \textbf{B}:
-Plot of mean smoothed spectra for the belly body patch. Line colours indicate  species (green:
-\emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue: \emph{L. elisabeth}) and  shaded areas
-indicate the standard deviation of the spectral data. \textbf{C}: Boxplots showing hue (wavelength
-of maximum reflectance)  for the belly patch of each species (\emph{N} = 4 individuals each; colours
-as in \textbf{B}).} 
-\label{figure:distplot} \end{figure}
+\caption{\textbf{A}: Dotplot showing colour distances (in units of just noticeable differences,
+JNDs)  by patch (y-axis) for three pairs of African starling species (Sturnidae). Dotted vertical
+lines  indicate JND=1, above which the pair of colour patches is considered to be distinguishable by
+birds. Points and error bars indicate mean $\pm$ standard error chromatic distances between different
+pairs of species: \emph{Lamprotornis chloropterus}  and \emph{L. elisabeth} (open circles); \emph{L.
+acuticaudus} and \emph{L. elisabeth} (grey circles);  and \emph{L. acuticaudus} and \emph{L.
+chloropterus} (black circles). \textbf{B}: Plot of mean smoothed spectra for the belly body patch.
+Line colours indicate  species (green: \emph{L. acuticaudus}, red: \emph{L. chloropterus}, blue:
+\emph{L. elisabeth}) and  shaded areas indicate the standard deviation of the spectral data.
+\textbf{C}: Boxplots showing hue (wavelength of maximum reflectance)  for the belly patch of each
+species (\emph{N} = 4 individuals each; colours as in \textbf{B}).}
+\label{figure:distplot} 
+\end{figure}
 
 \clearpage
 
