@@ -294,7 +294,9 @@ that users carefully consider and adhere to a rigorous file naming scheme to mak
 data manipulation easier in \code{pavo} (see \citealt{Andersson:2006} for a useful discussion and
 suggestions in this regard). Additionally, we suggest that labels used should have the same number
 of characters, which simplifies character string manipulation and subsetting based on partial
-matching. We measured reflectance spectra from 11 plumage patches (see Figure \ref{figure:distplot}
+matching. 
+
+We measured reflectance spectra from 11 plumage patches (see Figure \ref{figure:distplot}
 for list) of four males from museum specimens of each of the three species. Three measurements from
 different locations within each patch were collected. We used \pavo{} to load these 396 raw spectral
 data files (using the \code{getspec} function), then used the \code{aggspec} function to average the
@@ -309,8 +311,8 @@ tex file after sweaving, before submitting. CHECK BECAUSE PROGRESS BAR HAD TO BE
 doesn't work with additional cat calls (so it doesn't list how many spectra were found)}
 
 % demo input of raw data
-<<echo=TRUE,results=hide,eval=FALSE>>=
-specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
+<<eval=FALSE>>=
+specs <- getspec(where = '~/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
 # 396 files found; importing spectra
 # ===========================================================================
 specs <- aggspec(specs, by = 3, FUN = 'mean')  # average by groups of 3 spectral curves
@@ -320,31 +322,42 @@ specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian
 @
 
 <<echo=FALSE, results=hide>>=
-load('~/github/pavo/toydata/ACE.RData')
-specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
+specs <- getspec(where = '~/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
+# 396 files found; importing spectra
+# ===========================================================================
+specs <- aggspec(specs, by = 3, FUN = 'mean')  # average by groups of 3 spectral curves
+specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian smoothing
+# processing options applied:
+#  smoothing spectra with a span of 0.25 
+@
+
+
+<<echo=FALSE, results=hide, eval=FALSE>>=
+#load('~/github/pavo/toydata/ACE.RData')
+#specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
 # Create metadata
-spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
-ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
-sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
-patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
+#spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
+#ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
+#sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
+#patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 # Get equal sample sizes by sampling randomly from L. chloropterus, L. acuticaudus
-set.seed(101)
-p <- sample(unique(ids[spp=="LAAC"&sex=="MAL"]), size = 4)
-acut.sub <- cbind(wl = 300:700, specs[, ids%in%p])
-acut.sub <- as.rspec(acut.sub)
-set.seed(101)
-p <- sample(unique(ids[spp=="LACL"&sex=="MAL"]), size=4)
-chlo.sub <- cbind(wl = 300:700, specs[, ids%in%p])
-chlo.sub <- as.rspec(chlo.sub)
+#set.seed(101)
+#p <- sample(unique(ids[spp=="LAAC"&sex=="MAL"]), size = 4)
+#acut.sub <- cbind(wl = 300:700, specs[, ids%in%p])
+#acut.sub <- as.rspec(acut.sub)
+#set.seed(101)
+#p <- sample(unique(ids[spp=="LACL"&sex=="MAL"]), size=4)
+#chlo.sub <- cbind(wl = 300:700, specs[, ids%in%p])
+#chlo.sub <- as.rspec(chlo.sub)
 # Get only males from L. elisabeth
-eliz.sub <- eliz[, grep('MAL', names(eliz))]  # get only males
-eliz.sub <- as.rspec(cbind(wl = 300:700, eliz.sub))
+#eliz.sub <- eliz[, grep('MAL', names(eliz))]  # get only males
+#eliz.sub <- as.rspec(cbind(wl = 300:700, eliz.sub))
 # Combine subsetted rspec objects
-specs <- as.rspec(cbind(eliz.sub, chlo.sub[,-1], acut.sub[,-1]))
-spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
-ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
-sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
-patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
+#specs <- as.rspec(cbind(eliz.sub, chlo.sub[,-1], acut.sub[,-1]))
+#spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
+#ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
+#sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
+#patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 @
 
 \subsection{Step 2: Visualization}
@@ -357,20 +370,20 @@ example below for the ``belly'' body patch (Figure \ref{figure:distplot}B):
 don't have it, we should make one!}
 
 % CE - fix this so that the code will actually work w/input spectra
-<<echo=TRUE,eval=FALSE>>=
-specs.belly <- specs[,1:13]  # subset wavelength column and the 12 spectra from the belly patch
-spp <- substr(names(specs.belly),1,4)[-1]  # extract 4 characters from column names (species labels)
+<<echo=TRUE, figure=FALSE>>=
+specs.belly <- subset(specs, 'Belly')  # subset wavelength column and the 12 spectra from the belly patch
+spp <- substr(names(specs.belly),1,4)  # extract 4 characters from column names (species labels)
 aggplot(specs.belly, by=spp)  # average and plot spectral data by species
 @
 
 % is this used anywhere (CE)?
-<<echo=FALSE,results=hide>>=
+<<echo=FALSE, results=hide>>=
 # Process spectra (apply smoothing) and average by species and patch
-specs.sm <- procspec(specs, opt='smooth')
-specs.m <- aggspec(specs.sm, by = paste(spp, patch)[-1])
-spp.m <- sapply(strsplit(names(specs.m), "\\."), "[", 1)
-sex.m <- sapply(strsplit(names(specs.m), "\\."), "[", 3)
-patch.m <- sapply(strsplit(names(specs.m), "\\."), "[", 4)
+#specs.sm <- procspec(specs, opt='smooth')
+#specs.m <- aggspec(specs.sm, by = paste(spp, patch)[-1])
+#spp.m <- sapply(strsplit(names(specs.m), "\\."), "[", 1)
+#sex.m <- sapply(strsplit(names(specs.m), "\\."), "[", 3)
+#patch.m <- sapply(strsplit(names(specs.m), "\\."), "[", 4)
 @
 
 \subsection{Step 3: Analysis}
@@ -410,12 +423,13 @@ patches in a \code{vismodel} object, and can be further subset (using the \code{
 focus on comparisons of interest (e.g. colour difference between homologous patches of two species,
 or between colour patches and a given background). This argument employs regular expressions
 functionality, and thus allows for partial string matching of row names to the rule specified in the
-argument. For example:
+argument. In this case, if we want comparisons between a single type of patch, the \code{subset}
+argument will have two values, to match both \code{patch1} and \code{patch2} columns:
 
 <<>>=
 deltas <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
 # subset only comparisons between belly spectra
-deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = 'wing')
+deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = c('Wing', 'Wing'))
 head(deltas.wing, 3)
 @
 
@@ -448,18 +462,19 @@ vm2 <- vismodel(specs, visual = 'star', relative = FALSE)
 @
 
 <<echo=FALSE,results=hide>>=
+patch <- sapply(strsplit(names(specs), "\\."), "[", 3)
 res <- list()
 for (i in unique(patch)[-1]) {
-  sel <- grep(i, deltas$patch1)[grep(i, deltas$patch1)%in%grep(i, deltas$patch2)]
-  res[[i]] <- deltas[sel, ]
+  res[[i]] <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset=c(i, i))
 }
 # head(res[[1]])  # check output
+
 # Calculate distance from focal species' patch to those of other species
 se <- function(x){sd(x)/sqrt(length(x))}
 
 d12 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  p <- intersect(grep('LACL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
+  p <- intersect(grep('LAAC', res[[i]]$patch1), grep('LACL', res[[i]]$patch2))
   x <- res[[i]][p, ]
   # x <- res[[i]][grep('LACL', res[[i]]$patch1)[grep('LACL', res[[i]]$patch1) %in% 
   #               grep('LAAC', res[[i]]$patch2)], ]
@@ -471,7 +486,7 @@ colnames(d12) <- c('mean', 'se')
 
 d13 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  p <- intersect(grep('LAEL', res[[i]]$patch1), grep('LAAC', res[[i]]$patch2))
+  p <- intersect(grep('LAAC', res[[i]]$patch1), grep('LAEL', res[[i]]$patch2))
   x <- res[[i]][p, ]
   # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
   #               grep('LAAC', res[[i]]$patch2)], ]
@@ -483,7 +498,7 @@ colnames(d13) <- c('mean', 'se')
 
 d23 <- matrix(ncol = 2, nrow = 11)
 for (i in 1:11) {
-  p <- intersect(grep('LAEL', res[[i]]$patch1), grep('LACL', res[[i]]$patch2))
+  p <- intersect(grep('LACL', res[[i]]$patch1), grep('LAEL', res[[i]]$patch2))
   x <- res[[i]][p, ]
   # x <- res[[i]][grep('LAEL', res[[i]]$patch1)[grep('LAEL', res[[i]]$patch1) %in% 
   #               grep('LACL', res[[i]]$patch2)], ]
@@ -527,35 +542,31 @@ par(font=1)
 mtext("A", at=-2.5, line=-1.5, cex=1.5, font=2)
 
 # Belly spectra plotted w/aggplot
-p <- grep('belly', names(specs))
-aggplot(specs.sm[,c(1,p)], by=substr(names(specs.sm)[p], 1, 4), alpha=.3, lwd=2, ylim=c(0,50), ylab='',xlab='')
+p <- grep('Belly', names(specs))
+aggplot(specs[,c(1,p)], by=substr(names(specs)[p], 1, 4), alpha=.3, lwd=2, ylim=c(0,50), ylab='',xlab='')
 # text(300,40,'belly', pos=4)
 par(font=3)
 legend('topleft', lty=1, lwd=2, col=pal[c(1:3)],
-       legend=c('L. elisabeth', 'L. chloropterus', 'L. acuticaudus'), bty='n', text.font=3)
+       legend=c('L. acuticaudus', 'L. chloropterus', 'L. elisabeth'), bty='n', text.font=3)
 par(font=1)
 mtext(side = 2, 'Reflectance (%)', line=2.7)
 mtext(side = 1, "Wavelength (nm)", line=3)
 mtext("B", at=187, line=-1.5, cex=1.5, font=2)
 
 # Boxplot of belly hues calculated w/summary.rspec
-colr <- summary(specs.sm)
+colr <- summary(specs)
 nm <- row.names(colr)
-colr <- colr[grep("wing|belly",nm), ]  # just belly, wing patches
+colr <- colr[grep("Belly",nm), ]  # just belly, wing patches
 spp2 <- substr(row.names(colr), 1, 4)
-df <- setNames(as.data.frame(do.call(rbind, strsplit(row.names(colr), "\\."))), c("spp", "id", "sex", "patch"))
-df$H1 <- colr$H1
-df$spp <- factor(df$spp, levels=c('LAEL','LACL','LAAC'))
-df$spp <- factor(df$spp, labels=c('elisabeth', 'chloropterus', 'acuticaudus'))
-names(df) <- c("spp", "id", "sex", "patch", "H1")
-boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", xaxt='n', lty=1, 
+
+df <- data.frame(H1 = colr$H1)
+df$spp <- spp2
+df$spp <- factor(df$spp, labels=c('acuticaudus', 'chloropterus', 'elisabeth'))
+boxplot(H1~spp, df, xlab="Species", ylab="Hue (nm)", xaxt='n', lty=1, 
         lwd=1.5, cex.lab=1.2, col=pal, staplewex=0.2)
 axis(1, 1:3, levels(df$spp), cex.axis= 0.8, font=3)
 
 mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
-
-specs.belly <- specs.sm[,c(1,p)]
-
 @
 
 <<echo=TRUE, figure=FALSE>>=
@@ -609,12 +620,14 @@ occupied by each species' plumage patches, as well as their overlap. The \code{p
 provides a useful graphical representation of the overlap in colourspace (Figure
 \ref{figure:volplot}B).
 
+\textcolor{red}{RM: VOLOVERLAP RESULT SHOULD SHOW}
+
 <<echo=TRUE,eval=FALSE,fig=F,include=F>>=
 vm.star.rel <- vismodel(specs, visual='star', relative=TRUE)
 tcs.star <- tcs(vm.star.rel)
 #subset points from the two species
-tcs.lael <- tcs[grep('LAEL', row.names(tcs.star))]
-tcs.lacl <- tcs[grep('LACL', row.names(tcs.star))]
+tcs.lael <- subset(tcs.star, 'LAEL')
+tcs.lacl <- subset(tcs.star, 'LACL')
 voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
 @
 
