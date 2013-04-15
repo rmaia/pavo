@@ -45,7 +45,7 @@
 \begin{abstract} 
 
 \textcolor{red}{RM Do we need to change the running title? Also made changes to broaden the summary}
-
+\textcolor{blue}{PPB How about \pavo{}: Spectral data analysis in R}
 \begin{enumerate} 
 
 \item Recent technical, methodological and empirical advances have led to a dramatic increase in
@@ -69,12 +69,15 @@ methodologies.
 Glossy Starling species, two of which have diverged very recently. We demonstrate how both colour
 vision models and direct spectral measurement analysis can be used to describe colour attributes and
 differences between these species. Different approaches to visual models and several plotting
-capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?}
+capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?} \textcolr{blue}{PPB I'm fine with the way it is now}
 
 \item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
 questions, \textcolor{red}{as well as comparing different approaches to colour analysis, all while
 integrating with \code{R}'s modular framework to enable automated management of spectral data and
 reproducible workflows for colour analysis.}
+
+\textcolor{blue}{PPB Not sure I like this for 2 reasons: 1) the 'comparing different approaches' bit seems out of place seeing that the package can do much more and 2) the automated part is perhaps not really warranted. I recommend the following or something in the way}
+\item \pavo{} provides a cohesive environment for handling spectral data and addressing complex sensory ecology questions.  It integrates with \code{R}'s modular framework, thus giving the opportunity to further manipulate data using other packages or basic \code{R} functions. Furthermore, in the interest of scientific openess, it facillitates reproducible workflows in the study colour data.}
 
 \end{enumerate} 
 
@@ -116,8 +119,8 @@ visual models that estimate how animals see and differentiate these colours
 
 Because of these advances, a cohesive framework for working with and analyzing colour from
 reflectance data is needed. Output file types from spectrometer manufacturers are not standardized,
-and though existing software programs have provided helpful implementations of several methodoligies
-\textcolor{red}{ADD CITATION TO AVICOL, TETRAcolourSPACE AND REVIEWED IN MONTGOMERIE)}, they are
+and though existing software programs have provided helpful implementations of several methodologies
+\citep {Avicol,Stoddard:2008,Montgomerie:2006}, they are
 often limited in the methodologies implemented, the types of data they can import and process, or
 the platforms in which they are available. Moreover, many are proprietary and/or closed, hindering
 customization \citep[for a review of available software, see][]{Montgomerie:2006}. Furthermore, once
@@ -140,6 +143,8 @@ to visualize patterns, obtain information and develop and test hypotheses (Figur
 \ref{figure:work}).
 
 \begin{center}\fbox{Figure \ref{figure:work} about here}\end{center}
+\textcolor{red}{A comment by a reviewer for Chad's paper to Proc Roy Soc B implied that the term "heatplot" 
+should be avoided. What do we think about changing this term throughout the package?}
 
 \section{The \pavo{} package}
 
@@ -347,6 +352,7 @@ sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
 patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 @
 
+
 \subsection{Step 2: Visualization}
 
 Next, we plotted spectra contained in the resulting \code{rspec} object. We used \code{aggplot} to
@@ -355,6 +361,10 @@ example below for the ``belly'' body patch (Figure \ref{figure:distplot}B):
 
 \textcolor{red}{RM: isn't there now a subsetting fxn for rspec objects that we could use here? If we
 don't have it, we should make one!}
+\textcolor{blue}{PPB I think this brings us back to the original idea of keeping metadata on each 
+data file when getpspecing. I think in the future thta would be super useful but might be complicated seeing
+how different software store that info differently. For now perhaps the warning about naming files correctly 
+is enough.}
 
 % CE - fix this so that the code will actually work w/input spectra
 <<echo=TRUE,eval=FALSE>>=
@@ -381,8 +391,15 @@ attributes from the shape of reflectance curves, whereas the latter takes into a
 sensitivities (sensory phenotype). \pavo{} allows for user-defined cone sensitivities, but also
 incorporates available data on the from several taxa, including the European starling (\emph{Sturnus
 vulgaris}, \code{visual='star'}), which we incorporated here \citep{Hart:1998}.
+\textcolor{red}{PPB Something is missing here. IS the plan to incorporate the code with an output? Was this an omission?}
 
 \subsubsection{Colour distances}
+
+\textcolor{red}{I have an issue with the flow of this section and I'd like to change it a little if you guys don't 
+mind. The next paragraph explains a bunch of stuff including relative cone abundance and weber fraction. Then we have
+2 lines of code for the vismodel, another paragraph for the rest of the info in coldist and only then the code for the 
+coldist.I think the first paragraph should only discuss coldist in the context of using relative = FALSE in vismodel.
+The rest of the info should be passed on to the next paragraph.}
 
 We used the \code{relative = FALSE} option from the \code{vismodel} function to obtain raw photon
 catch values for the four avian photoreceptor classes (\{\emph{usml}\}), suitable for calculating
@@ -390,6 +407,7 @@ chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}. We used relative con
 (arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, which are passed
 as arguments to the \code{coldist} function. The \code{v} argument was set to 0.1 to give a
 \{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
+\textcolor {red}{perhaps we should explain why a value of 0.1 is equivallent to a weber-fraction of 0.05.}
 \code{vismodel} can return either the calculated quantum catches ($Q_i$, the default) or according
 to Fechner's law ($f_i$; the signal being proportional to the logarithm of the quantum catch), as
 determined by the argument \code{qcatch} (not used in the code below, hence the default, $Q_i$, is
@@ -434,8 +452,8 @@ Another strength of \code{pavo} is its ability to compare different colour metri
 \citep{Andersson:2006} for discussion). As many as 23 objective colourimetric \textcolor{red}{RM
 CHECK WORDING} variables are calculated by the \code{summary} of an \code{rspec} object (for a
 complete description and summary of formulae, see the package vignette and
-\citealt{Montgomerie:2006}), but the \code{simplify} can be used to filter these variables. If
-\code{simplify = TRUE}, the variables described in \cite{Andersson:2006} are returned, but a string
+\citealt{Montgomerie:2006}), but the \code{simplify} argument can be used to filter these variables. If
+\code{simplify = TRUE}, the variables described in \citet{Andersson:2006} are returned, but a string
 of variable names can also be used as a filter \textcolor{red}{RM I WILL EDIT THE FXN SO IT CAN DO
 THIS}. For our example, we extracted and plotted an objective metric of hue (wavelength of peak
 reflectance, Figure \ref{figure:distplot}C) for the most contrasting body patches (``belly'', Figure
@@ -632,7 +650,7 @@ investigate the information content of colour signals using receiver specific vi
 the relative contribution of pigments and structural colours in various integuments;
 \citealt{D'Alba:2012}). Currently, the visual modelling functions implemented in \pavo{} already
 allow for any number of photoreceptors to be considered, but colour distances can so far only be
-calculated for tetrachromats. Implementing extensions of the \cite{Vorobyev:1998} model would allow
+calculated for di-, tri, and tetrachromats. Implementing extensions of the \cite{Vorobyev:1998} model would allow
 \pavo{} to calculate colour distances for the visual systems of organisms such as butterflies (e.g.
 six photoreceptors in Pierids and \emph{Papilio} butterflies; \citealt{Morehouse:2010ey},
 \citealt{Arikawa:2003}) and mantis shrimps (Order Stomapoda; 16 photoreceptors;
