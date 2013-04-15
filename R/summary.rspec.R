@@ -9,8 +9,11 @@
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
-#' @param simplify logical. If \code{TRUE}, only a subset of the complete ouput
-#' (composed of B2, H1, H3, S8, S9) will be returned (defaults to \code{FALSE}).
+#' @param simplify Either \code{FALSE} (the default), \code{TRUE}, or a character vector. 
+#' If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset 
+#' of the complete ouput (composed of B2, H1, H3, S8, S9; the variables described in 
+#' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
+#' names can be used in order to filter and show only those variables.
 #' @param ... class consistency (ignored)
 #' @return A data frame containing either 23 or 5 (\code{simplify = TRUE}) variables described 
 #' in Montgomerie (2006) with spectra name as row names. 
@@ -94,7 +97,12 @@
 #' rely on smoothed curves to remove noise, which would otherwise result in spurious
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
-#' variables are extracted using non-smoothed data. 
+#' variables can be reliably extracted using non-smoothed data. 
+#' @examples \dontrun{
+#' data(sicalis)
+#' summary(sicalis)
+#' summary(sicalis, simplify = TRUE)
+#' summary(sicalis, simplify = c('B1', 'H4')) }
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
@@ -148,7 +156,7 @@
 #summary.rspec <- function (object, ...) {
 
  
-summary.rspec <- function (object, simplify =FALSE, ...) {
+summary.rspec <- function (object, simplify = FALSE, ...) {
 
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
@@ -301,6 +309,21 @@ color.var <- data.frame(output.mat, row.names=names(object))
 names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.green", 
                       "S1.yellow", "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
-if (simplify == TRUE) color.var <- color.var[,c(2,16,17,19,21)]
+
+colvarnames <- names(color.var)
+
+if(is.logical(simplify)){
+  if(simplify){
+    color.var <- color.var[,c('B2','S8', 'S9', 'H1', 'H3')]
+  }
+}else{
+  #check if any color variables selected don't exist
+  if(all(simplify %in% colvarnames)){
+    color.var <- color.var[, simplify]
+  }else{
+    stop(paste('Names in', dQuote('simplify'), 'do not match color variable names'))
+  }
+}
+
 color.var
 }

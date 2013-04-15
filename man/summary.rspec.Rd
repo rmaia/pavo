@@ -10,9 +10,14 @@
   data, named 'wl', and the remaining column containing
   spectra to process.}
 
-  \item{simplify}{logical. If \code{TRUE}, only a subset of
-  the complete ouput (composed of B2, H1, H3, S8, S9) will
-  be returned (defaults to \code{FALSE}).}
+  \item{simplify}{Either \code{FALSE} (the default),
+  \code{TRUE}, or a character vector. If \code{FALSE}, all
+  variables calculated are returned. If \code{TRUE}, only a
+  subset of the complete ouput (composed of B2, H1, H3, S8,
+  S9; the variables described in Andersson and Prager 2006)
+  are returned. Finally, a user-specified string of
+  variable names can be used in order to filter and show
+  only those variables.}
 
   \item{...}{class consistency (ignored)}
 }
@@ -133,8 +138,15 @@
   Make sure chosen smoothing parameters are adequate.
 
   Smoothing affects only B3, S2, S4, S6, S10, H2, and H5
-  calculation. All other variables are extracted using
-  non-smoothed data.
+  calculation. All other variables can be reliably
+  extracted using non-smoothed data.
+}
+\examples{
+\dontrun{
+data(sicalis)
+summary(sicalis)
+summary(sicalis, simplify = TRUE)
+summary(sicalis, simplify = c('B1', 'H4')) }
 }
 \author{
   Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael
