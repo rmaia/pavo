@@ -354,29 +354,18 @@ aggplot(specs.belly, by=spp)  # average and plot spectral data by species
 
 \subsection{Step 3: Analysis}
 
-To quantify spectral properties and explore how these colours may be perceived by birds, we used the
-\code{summary.rspec} and \code{vismodel} functions, respectively. The former characterizes colour
-attributes from the shape of reflectance curves, whereas the latter takes into account avian visual
-sensitivities (sensory phenotype). \pavo{} allows for user-defined cone sensitivities, but also
-incorporates available data on the from several taxa, including the European starling (\emph{Sturnus
-vulgaris}, \code{visual='star'}, \citealt{Hart:1998}), which we used for our example.
-
 \subsubsection{Colour distances}
 
-\textcolor{red}{I have an issue with the flow of this section and I'd like to change it a little if
-you guys don't  mind. The next paragraph explains a bunch of stuff including relative cone abundance
-and weber fraction. Then we have 2 lines of code for the vismodel, another paragraph for the rest of
-the info in coldist and only then the code for the  coldist.I think the first paragraph should only
-discuss coldist in the context of using relative = FALSE in vismodel. The rest of the info should be
-passed on to the next paragraph.}
-
+To explore how these colours may be perceived by birds we first used the \code{vismodel} function, which 
+takes into account avian visual sensitivities (sensory phenotype), to calculate the quantum catches at 
+each photoreceptor. \pavo{} allows for user-defined cone sensitivities, but also incorporates available 
+data on the from several taxa, including the European starling (\emph{Sturnus vulgaris}, 
+\code{visual='star'}, \citealt{Hart:1998}), which we used for our example.
 We used the \code{relative = FALSE} option from the \code{vismodel} function to obtain raw photon
 catch values for the four avian photoreceptor classes (\{\emph{usml}\}), suitable for calculating
-chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}. We used relative cone abundances
-(arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, which are passed
-as arguments to the \code{coldist} function. The \code{v} argument was set to 0.1 to give a
-\{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
-\textcolor {red}{perhaps we should explain why a value of 0.1 is equivallent to a weber-fraction of 0.05.}
+chromatic distances \citep[$\Delta S$,][]{Vorobyev:1998to}.
+
+ 
 \code{vismodel} can return either the calculated quantum catches ($Q_i$, the default) or according
 to Fechner's law ($f_i$; the signal being proportional to the logarithm of the quantum catch), as
 determined by the argument \code{qcatch} (not used in the code below, hence the default, $Q_i$, is
@@ -391,7 +380,13 @@ vm.star <- vismodel(specs, visual='star', relative = FALSE)
 summary(vm.star)
 @
 
-The results of \code{coldist} give colour distances (chromatic, $\Delta S$, shwon in Figure
+
+
+Second, we used the \code{coldist} function to calculate colour distances with receptor noise based on the 
+relative photoreceptor densities \citep{Vorobyev}. We used relative cone abundances 
+(arguments \code{n1, n2, n3, and n4}) for the European starling \citep{Hart:1998}, and the \code{v} argument was set to 0.1 to give a \{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
+\textcolor {red}{perhaps we should explain why a value of 0.1 is equivallent to a weber-fraction of 0.05.}
+The results of \code{coldist} give colour distances (chromatic, $\Delta S$, shown in Figure
 \ref{figure:distplot}; and achromatic, $\Delta L$) between all possible combinations of plumage
 patches in a \code{vismodel} object, and can be further subset (using the \code{subset} argument) to
 focus on comparisons of interest (e.g. colour difference between homologous patches of two species,
