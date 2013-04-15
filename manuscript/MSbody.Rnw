@@ -69,7 +69,7 @@ methodologies.
 Glossy Starling species, two of which have diverged very recently. We demonstrate how both colour
 vision models and direct spectral measurement analysis can be used to describe colour attributes and
 differences between these species. Different approaches to visual models and several plotting
-capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?} \textcolr{blue}{PPB I'm fine with the way it is now}
+capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?} \textcolor{blue}{PPB I'm fine with the way it is now}
 
 \item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
 questions, \textcolor{red}{as well as comparing different approaches to colour analysis, all while
@@ -77,7 +77,8 @@ integrating with \code{R}'s modular framework to enable automated management of 
 reproducible workflows for colour analysis.}
 
 \textcolor{blue}{PPB Not sure I like this for 2 reasons: 1) the 'comparing different approaches' bit seems out of place seeing that the package can do much more and 2) the automated part is perhaps not really warranted. I recommend the following or something in the way}
-\item \pavo{} provides a cohesive environment for handling spectral data and addressing complex sensory ecology questions.  It integrates with \code{R}'s modular framework, thus giving the opportunity to further manipulate data using other packages or basic \code{R} functions. Furthermore, in the interest of scientific openess, it facillitates reproducible workflows in the study colour data.}
+
+\item \pavo{} provides a cohesive environment for handling spectral data and addressing complex sensory ecology questions.  It integrates with \code{R}'s modular framework, thus giving the opportunity to further manipulate data using other packages or basic \code{R} functions. Furthermore, in the interest of scientific openess, it facillitates reproducible workflows in the study colour data.
 
 \end{enumerate} 
 
@@ -120,7 +121,7 @@ visual models that estimate how animals see and differentiate these colours
 Because of these advances, a cohesive framework for working with and analyzing colour from
 reflectance data is needed. Output file types from spectrometer manufacturers are not standardized,
 and though existing software programs have provided helpful implementations of several methodologies
-\citep {Avicol,Stoddard:2008,Montgomerie:2006}, they are
+\citep{Avicol,Stoddard:2008,Montgomerie:2006}, they are
 often limited in the methodologies implemented, the types of data they can import and process, or
 the platforms in which they are available. Moreover, many are proprietary and/or closed, hindering
 customization \citep[for a review of available software, see][]{Montgomerie:2006}. Furthermore, once
@@ -142,9 +143,14 @@ streamlines workflow, but also allows data to be explored and manipulated in way
 to visualize patterns, obtain information and develop and test hypotheses (Figure
 \ref{figure:work}).
 
-\begin{center}\fbox{Figure \ref{figure:work} about here}\end{center}
-\textcolor{red}{A comment by a reviewer for Chad's paper to Proc Roy Soc B implied that the term "heatplot" 
-should be avoided. What do we think about changing this term throughout the package?}
+\begin{center}\fbox{Figure \ref{figure:work} about here}\end{center} 
+
+\textcolor{green}{PPB: A comment by a reviewer for Chad's paper to Proc Roy Soc B implied that the
+term ``heatplot'' should be avoided. What do we think about changing this term throughout the
+package?}
+
+\textcolor{red}{RM: Only if you both agree with him, otherwise it's just his picky personal oppinion. I've seen heatplot/heatmap used a lot...}
+
 
 \section{The \pavo{} package}
 
@@ -273,11 +279,6 @@ three glossy starling species, two of which (\textit{L. chloropterus} and \texti
 have recently diverged and whose status as full species is debated \citep{Gill:2012,Craig:1998,
 Lovette:2007}. The data used for this example can be found in the Supplemental Information. Further information and a ``how-to'' of \pavo{}'s main functions, including the formulae used for the calculations, can be found in detail in the package vignette \textemdash available online from CRAN or directly from \code{R} using the command \code{vignette("pavo")}.
 
-\textcolor{blue}{CE: does this make
-sense?} 
-\textcolor{red}{RM: I like it a *lot*. Straightforward and has all the necessary
-information.} 
-
 <<echo=F,results=hide>>=
 require(RColorBrewer)
 require(pavo)
@@ -288,18 +289,18 @@ pal2 <- brewer.pal(11, "Spectral")
 
 \subsection{Step 1: Organization and Processing}
 
-The data consist of reflectance spectra (in avantes ``\code{.ttt}'' output format), which in this example
-are located in a folder ``\code{/Desktop/glossystarlings}'' (by default, the current working
-directory and the ``\code{.txt}'' extension are used). The file are named to indicate the species, bird ID,
-sex, plumage patch and measurement ID (for example, ``\code{LAAC.14423.MALE.belly-001.ttt}'' would be
-the first measurement taken from the belly of individual 14423, a male \textit{Lamprotornis
-acuticaudus}). This is important because \pavo{} uses the file name (minus the file extension) to
-label the columns of the \code{rspec} object with the imported reflectance spectra. We recommend
-that users carefully consider and adhere to a rigorous file naming scheme to make subsetting and
-data manipulation easier in \code{pavo} (see \citealt{Andersson:2006} for a useful discussion and
+The data consist of reflectance spectra (in avantes ``\code{.ttt}'' output format), which in this
+example are located in a folder ``\code{/Desktop/glossystarlings}'' (by default, the current working
+directory and the ``\code{.txt}'' extension are used). The file are named to indicate the species,
+bird ID, plumage patch and measurement ID (for example, ``\code{LAAC.14423.belly-001.ttt}'' would be
+the first measurement taken from the belly of individual 14423, a \textit{Lamprotornis acuticaudus}
+specimen). This is important because \pavo{} uses the file name (minus the file extension) to label
+the columns of the \code{rspec} object with the imported reflectance spectra. We recommend that
+users carefully consider and adhere to a rigorous file naming scheme to make subsetting and data
+manipulation easier in \code{pavo} (see \citealt{Andersson:2006} for a useful discussion and
 suggestions in this regard). Additionally, we suggest that labels used should have the same number
 of characters, which simplifies character string manipulation and subsetting based on partial
-matching. 
+matching.
 
 We measured reflectance spectra from 11 plumage patches (see Figure \ref{figure:distplot}
 for list) of four males from museum specimens of each of the three species. Three measurements from
@@ -309,11 +310,8 @@ spectra within patches (as determined by the \code{by} argument) and the \code{p
 remove electrical noise arising from the spectrometer (using local polynomial regression fitting, or
 loess) with the following annotated lines of code:
 
-\textcolor{red}{RM: There should be an output message after getspec and procspec, should we just add
-these manually?}  \textcolor{blue}{CE: here is what the output would be, but I'm not sure how we can
-make it look like real output. Thoughts?} \textcolor{red}{RM: I think we'll just have to edit the
-tex file after sweaving, before submitting. CHECK BECAUSE PROGRESS BAR HAD TO BE CHANGED - style 3
-doesn't work with additional cat calls (so it doesn't list how many spectra were found)}
+\textcolor{red}{RM: I think we'll just have to edit the
+tex file after sweaving, before submitting.}
 
 % demo input of raw data
 <<eval=FALSE>>=
@@ -328,43 +326,9 @@ specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian
 
 <<echo=FALSE, results=hide>>=
 specs <- getspec(where = '~/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
-# 396 files found; importing spectra
-# ===========================================================================
 specs <- aggspec(specs, by = 3, FUN = 'mean')  # average by groups of 3 spectral curves
 specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian smoothing
-# processing options applied:
-#  smoothing spectra with a span of 0.25 
 @
-
-
-<<echo=FALSE, results=hide, eval=FALSE>>=
-#load('~/github/pavo/toydata/ACE.RData')
-#specs <- as.rspec(cbind(eliz, chlo[,-1], acut[,-1]))
-# Create metadata
-#spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
-#ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
-#sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
-#patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
-# Get equal sample sizes by sampling randomly from L. chloropterus, L. acuticaudus
-#set.seed(101)
-#p <- sample(unique(ids[spp=="LAAC"&sex=="MAL"]), size = 4)
-#acut.sub <- cbind(wl = 300:700, specs[, ids%in%p])
-#acut.sub <- as.rspec(acut.sub)
-#set.seed(101)
-#p <- sample(unique(ids[spp=="LACL"&sex=="MAL"]), size=4)
-#chlo.sub <- cbind(wl = 300:700, specs[, ids%in%p])
-#chlo.sub <- as.rspec(chlo.sub)
-# Get only males from L. elisabeth
-#eliz.sub <- eliz[, grep('MAL', names(eliz))]  # get only males
-#eliz.sub <- as.rspec(cbind(wl = 300:700, eliz.sub))
-# Combine subsetted rspec objects
-#specs <- as.rspec(cbind(eliz.sub, chlo.sub[,-1], acut.sub[,-1]))
-#spp <- sapply(strsplit(names(specs), "\\."), "[", 1)
-#ids <- sapply(strsplit(names(specs), "\\."), "[", 2)
-#sex <- sapply(strsplit(names(specs), "\\."), "[", 3)
-#patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
-@
-
 
 \subsection{Step 2: Visualization}
 
@@ -372,14 +336,6 @@ Next, we plotted spectra contained in the resulting \code{rspec} object. We used
 visualize the mean reflectance curves for each body part from each species, as can be seen in the
 example below for the ``belly'' body patch (Figure \ref{figure:distplot}B):
 
-\textcolor{red}{RM: isn't there now a subsetting fxn for rspec objects that we could use here? If we
-don't have it, we should make one!}
-\textcolor{blue}{PPB I think this brings us back to the original idea of keeping metadata on each 
-data file when getpspecing. I think in the future thta would be super useful but might be complicated seeing
-how different software store that info differently. For now perhaps the warning about naming files correctly 
-is enough.}
-
-% CE - fix this so that the code will actually work w/input spectra
 <<echo=TRUE, figure=FALSE>>=
 specs.belly <- subset(specs, 'Belly')  # subset wavelength column and the 12 spectra from the belly patch
 spp <- substr(names(specs.belly),1,4)  # extract 4 characters from column names (species labels)
@@ -403,16 +359,16 @@ To quantify spectral properties and explore how these colours may be perceived b
 attributes from the shape of reflectance curves, whereas the latter takes into account avian visual
 sensitivities (sensory phenotype). \pavo{} allows for user-defined cone sensitivities, but also
 incorporates available data on the from several taxa, including the European starling (\emph{Sturnus
-vulgaris}, \code{visual='star'}), which we incorporated here \citep{Hart:1998}.
-\textcolor{red}{PPB Something is missing here. IS the plan to incorporate the code with an output? Was this an omission?}
+vulgaris}, \code{visual='star'}, \citealt{Hart:1998}), which we used for our example.
 
 \subsubsection{Colour distances}
 
-\textcolor{red}{I have an issue with the flow of this section and I'd like to change it a little if you guys don't 
-mind. The next paragraph explains a bunch of stuff including relative cone abundance and weber fraction. Then we have
-2 lines of code for the vismodel, another paragraph for the rest of the info in coldist and only then the code for the 
-coldist.I think the first paragraph should only discuss coldist in the context of using relative = FALSE in vismodel.
-The rest of the info should be passed on to the next paragraph.}
+\textcolor{red}{I have an issue with the flow of this section and I'd like to change it a little if
+you guys don't  mind. The next paragraph explains a bunch of stuff including relative cone abundance
+and weber fraction. Then we have 2 lines of code for the vismodel, another paragraph for the rest of
+the info in coldist and only then the code for the  coldist.I think the first paragraph should only
+discuss coldist in the context of using relative = FALSE in vismodel. The rest of the info should be
+passed on to the next paragraph.}
 
 We used the \code{relative = FALSE} option from the \code{vismodel} function to obtain raw photon
 catch values for the four avian photoreceptor classes (\{\emph{usml}\}), suitable for calculating
@@ -466,12 +422,11 @@ Another strength of \code{pavo} is its ability to compare different colour metri
 \citep{Andersson:2006} for discussion). As many as 23 objective colourimetric \textcolor{red}{RM
 CHECK WORDING} variables are calculated by the \code{summary} of an \code{rspec} object (for a
 complete description and summary of formulae, see the package vignette and
-\citealt{Montgomerie:2006}), but the \code{simplify} argument can be used to filter these variables. If
-\code{simplify = TRUE}, the variables described in \citet{Andersson:2006} are returned, but a string
-of variable names can also be used as a filter \textcolor{red}{RM I WILL EDIT THE FXN SO IT CAN DO
-THIS}. For our example, we extracted and plotted an objective metric of hue (wavelength of peak
-reflectance, Figure \ref{figure:distplot}C) for the most contrasting body patches (``belly'', Figure
-\ref{figure:distplot}A) in the visual model analysis:
+\citealt{Montgomerie:2006}), but the \code{simplify} argument can be used to filter these variables.
+If \code{simplify = TRUE}, the variables described in \citet{Andersson:2006} are returned, but a
+string of variable names can also be used as a filter. For our example, we extracted and plotted an
+objective metric of hue (wavelength of peak reflectance, Figure \ref{figure:distplot}C) for the most
+contrasting body patches (``belly'', Figure \ref{figure:distplot}A) in the visual model analysis:
 
 <<echo=FALSE,results=hide>>=
 # 5. Run visual models using starling visual sensitivies
@@ -638,8 +593,6 @@ occupied by each species' plumage patches, as well as their overlap. The \code{p
 provides a useful graphical representation of the overlap in colourspace (Figure
 \ref{figure:volplot}B).
 
-\textcolor{red}{RM: VOLOVERLAP RESULT SHOULD SHOW}
-
 <<echo=TRUE,eval=FALSE,fig=F,include=F>>=
 vm.star.rel <- vismodel(specs, visual='star', relative=TRUE)
 tcs.star <- tcs(vm.star.rel)
@@ -647,6 +600,14 @@ tcs.star <- tcs(vm.star.rel)
 tcs.lael <- subset(tcs.star, 'LAEL')
 tcs.lacl <- subset(tcs.star, 'LACL')
 voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
+@
+<<echo=FALSE,eval=TRUE,fig=F,include=TRUE>>=
+vm.star.rel <- vismodel(specs, visual='star', relative=TRUE)
+tcs.star <- tcs(vm.star.rel)
+#subset points from the two species
+tcs.lael <- subset(tcs.star, 'LAEL')
+tcs.lacl <- subset(tcs.star, 'LACL')
+voloverlap(tcs.lael, tcs.lacl, plot=FALSE)
 @
 
 \begin{center}\fbox{Figure \ref{figure:volplot} about here}\end{center}
