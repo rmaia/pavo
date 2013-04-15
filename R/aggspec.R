@@ -13,6 +13,8 @@
 #' (in which case the function will be applied to each group of spectra sharing the
 #' same identification); or a list of vectors, e.g., \code{by = list(sex, species)}.
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
+#' @param trim logical. if \code{TRUE} (default), the function will try to identify and 
+#' remove numbers at the end of the names of the columns in the new rspec object.
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
@@ -37,7 +39,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-aggspec <- function(rspecdata, by = NULL, FUN = mean) {
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -116,6 +118,9 @@ by <- factor(by)  # is this necessary?
 dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
 
 colnames(dat) <- unique(by0)
+
+if(trim)
+  colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
 
 res <- data.frame(cbind(wl=wl, dat))
 

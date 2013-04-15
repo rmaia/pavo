@@ -83,7 +83,7 @@ reproducible workflows for colour analysis.}
 
 \end{abstract}
 
-\keywords{animal communication, colourspace, just noticeable differences, receptor noise, sensory
+\keywords{animal communication, colour, colourspace, reflectance, receptor noise, sensory
 ecology, spectrometry, visual model}
 
 \maketitle

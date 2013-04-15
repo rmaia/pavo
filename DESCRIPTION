@@ -48,3 +48,4 @@ Collate:
     'voloverlap.R'
     'merge.rspec.R'
     'summary.vismodel.R'
+    'subset.rspec.R'
