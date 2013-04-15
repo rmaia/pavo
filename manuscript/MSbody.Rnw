@@ -44,6 +44,8 @@
 
 \begin{abstract} 
 
+\textcolor{red}{RM Do we need to change the running title?}
+
 \begin{enumerate} 
 
 \item Recent technical, methodological and empirical advances have led to a dramatic increase in
@@ -78,7 +80,8 @@ reproducible workflows for colour analysis.}
 
 \end{abstract}
 
-\keywords{animal communication, colourspace, just noticeable differences, receptor noise, sensory ecology, spectrometry, visual model}
+\keywords{animal communication, colourspace, just noticeable differences, receptor noise, sensory
+ecology, spectrometry, visual model}
 
 \maketitle
 
@@ -393,7 +396,7 @@ determined by the argument \code{qcatch} (not used in the code below, hence the 
 returned). It can also apply the von Kries transformation (normalizing by the stimulus' background
 to account for receptor adaptation) through the \code{vonkries} argument (which defaults to
 \code{FALSE}). These (and all other) settings are stored in the \code{vismodel} object and are
-referenced by functions downstream in the workflow (e.g. \code{coldist}, below), as well as can be
+referenced by functions downstream in the workflow (e.g. \code{coldist}, below), and can be
 called using the \code{summary} function:
 
 <<>>=
@@ -404,7 +407,7 @@ summary(vm.star)
 The results of \code{coldist} give colour distances (chromatic, $\Delta S$, shwon in Figure
 \ref{figure:distplot}; and achromatic, $\Delta L$) between all possible combinations of plumage
 patches in a \code{vismodel} object, and can be further subset (using the \code{subset} argument) to
-focus on comparisons of interest (e.g., colour difference between homologous patches of two species,
+focus on comparisons of interest (e.g. colour difference between homologous patches of two species,
 or between color patches and a given background). This argument employs regular expressions
 functionality, and thus allows for partial string matching of row names to the rule specified in the
 argument. For example:
@@ -413,7 +416,7 @@ argument. For example:
 deltas <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
 # subset only comparisons between belly spectra
 deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = 'wing')
-head(deltas.wing)
+head(deltas.wing, 3)
 @
 
 We can see from Figure \ref{figure:distplot}A that the recently divergent \emph{L. chloropterus} and
@@ -428,15 +431,15 @@ elisabeth} subclade as well as compared to the \emph{L. acuticaudus} outgroup.
 Another strength of \code{pavo} is its ability to compare different colour metrics
 \citep{Butler:2011ju}, such as those extracted directly from the spectral curves (Figure
 \ref{figure:distplot}B) and thus do not consider receiver visual system phenotype (see
-\citep{Andersson:2006} for discussion). For our example, we extracted and plotted an objective
-metric of hue (wavelength of peak reflectance, Figure \ref{figure:distplot}C) for the most
-contrasting body patches (``belly'', Figure \ref{figure:distplot}A) in the visual model analysis:
-
-<<echo=TRUE,eval=FALSE,results=hide>>=
-colr <- summary(specs.belly)  # extract colour variables
-hue <- colr$H1
-boxplot(hue~spp)  # make boxplots of hue (H1) by species
-@
+\citep{Andersson:2006} for discussion). As many as 23 objective colorimetric \textcolor{red}{RM
+CHECK WORDING} variables are calculated by the \code{summary} of an \code{rspec} object (for a
+complete description and summary of formulae, see the package vignette and
+\citealt{Montgomerie:2006}), but the \code{simplify} can be used to filter these variables. If
+\code{simplify = TRUE}, the variables described in \cite{Andersson:2006} are returned, but a string
+of variable names can also be used as a filter \textcolor{red}{RM I WILL EDIT THE FXN SO IT CAN DO
+THIS}. For our example, we extracted and plotted an objective metric of hue (wavelength of peak
+reflectance, Figure \ref{figure:distplot}C) for the most contrasting body patches (``belly'', Figure
+\ref{figure:distplot}A) in the visual model analysis:
 
 <<echo=FALSE,results=hide>>=
 # 5. Run visual models using starling visual sensitivies
@@ -550,7 +553,19 @@ boxplot(H1~spp, subset(df, patch=="belly"), xlab="Species", ylab="Hue (nm)", xax
 axis(1, 1:3, levels(df$spp), cex.axis= 0.8, font=3)
 
 mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
+
+specs.belly <- specs.sm[,c(1,p)]
+
 @
+
+<<echo=TRUE, figure=FALSE>>=
+colr <- summary(specs.belly, simplify = TRUE)  # extract colour variables
+head(colr, 3) 
+hue <- colr$H1 # extract hue (H1)
+spp <- substr(rownames(colr), 1, 4) # extract species names (first 4 letters from row names)
+boxplot(hue~spp)  # make boxplots of hue (H1) by species
+@
+
 
 \begin{center}\fbox{Figure \ref{figure:distplot} about here}\end{center}
 
