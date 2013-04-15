@@ -643,8 +643,9 @@ voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
 \pavo{} implements colour analysis for reflectance data based on both spectral properties and visual
 system receptor stimulation, as well as a modular framework that allows the assumptions and
 parameters of such models to be tuned as necessary. As such, it is particularly suited to compare
-and validate the use of different colourimetrics \citep{Butler:2011ju} and determine the influence
-of various assumptions in visual models \citep{Hanley:Inpress}. \pavo{} can also be used to
+and validate the use of different colourimetrics \citep{Butler:2011ju}, determine the influence
+of various assumptions in visual models, or help choose parameter value that would introduce the least bias
+in visual models \citep{Hanley:Inpress}. \pavo{} can also be used to
 investigate the information content of colour signals using receiver specific visual systems
 \citep{Pike:2011} and answer questions pertaining to signal production mechanisms (e.g. comparing
 the relative contribution of pigments and structural colours in various integuments;
