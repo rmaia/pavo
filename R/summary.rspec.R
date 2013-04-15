@@ -314,12 +314,12 @@ colvarnames <- names(color.var)
 
 if(is.logical(simplify)){
   if(simplify){
-    color.var <- color.var[,c('B2','S8', 'S9', 'H1', 'H3')]
+    color.var <- color.var[c('B2','S8', 'S9', 'H1', 'H3')]
   }
 }else{
   #check if any color variables selected don't exist
   if(all(simplify %in% colvarnames)){
-    color.var <- color.var[, simplify]
+    color.var <- color.var[simplify]
   }else{
     stop(paste('Names in', dQuote('simplify'), 'do not match color variable names'))
   }
