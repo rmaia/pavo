@@ -299,19 +299,20 @@ remove electrical noise arising from the spectrometer (using local polynomial re
 loess) with the following annotated lines of code:
 
 \textcolor{red}{RM: There should be an output message after getspec and procspec, should we just add
-these manually?} 
-\textcolor{blue}{CE: here is what the output would be, but I'm not sure how we can 
-make it look like real output. Thoughts?}
-\textcolor{red}{RM: I think we'll just have to edit the tex file after sweaving, before submitting.}
+these manually?}  \textcolor{blue}{CE: here is what the output would be, but I'm not sure how we can
+make it look like real output. Thoughts?} \textcolor{red}{RM: I think we'll just have to edit the
+tex file after sweaving, before submitting. CHECK BECAUSE PROGRESS BAR HAD TO BE CHANGED - style 3
+doesn't work with additional cat calls (so it doesn't list how many spectra were found)}
 
 % demo input of raw data
 <<echo=TRUE,results=hide,eval=FALSE>>=
-specs <- getspec(where='/Desktop/glossystarlings', ext='ttt', lim=c(300, 700))  # get raw data
-# |=======================================================================================| 100%
-specs <- aggspec(specs, by=3, FUN=mean)  # average by groups of 3 spectral curves
+specs <- getspec(where = '/Desktop/glossystarlings', ext = 'ttt', lim = c(300, 700))  # get raw data
+# 396 files found; importing spectra
+# ===========================================================================
+specs <- aggspec(specs, by = 3, FUN = 'mean')  # average by groups of 3 spectral curves
 specs <- procspec(specs, opt='smooth')  # remove electrical noise using Gaussian smoothing
 # processing options applied:
- # smoothing spectra with a span of 0.25 
+#  smoothing spectra with a span of 0.25 
 @
 
 <<echo=FALSE, results=hide>>=
@@ -347,6 +348,9 @@ patch <- sapply(strsplit(names(specs), "\\."), "[", 4)
 Next, we plotted spectra contained in the resulting \code{rspec} object. We used \code{aggplot} to
 visualize the mean reflectance curves for each body part from each species, as can be seen in the
 example below for the ``belly'' body patch (Figure \ref{figure:distplot}B):
+
+\textcolor{red}{RM: isn't there now a subsetting fxn for rspec objects that we could use here? If we
+don't have it, we should make one!}
 
 % CE - fix this so that the code will actually work w/input spectra
 <<echo=TRUE,eval=FALSE>>=
@@ -384,10 +388,12 @@ as arguments to the \code{coldist} function. The \code{v} argument was set to 0.
 \{\emph{"l"}\}-cone Weber fraction of approximately 0.05 \citep{Vorobyev:1998,Vorobyev:1998to}.
 \code{vismodel} can return either the calculated quantum catches ($Q_i$, the default) or according
 to Fechner's law ($f_i$; the signal being proportional to the logarithm of the quantum catch), as
-determined by the argument \code{qcatch} (not used in the code below, hence the default \textemdash
-$Q_i$ \textemdash is returned). It can also apply the von Kries transformation (normalizing by the
-stimulus' background to account for receptor adaptation) through the \code{vonkries} argument (which
-defaults to \code{FALSE}). All these settings are stored in the \code{vismodel} object and can be called using the \code{summary} function:
+determined by the argument \code{qcatch} (not used in the code below, hence the default, $Q_i$, is
+returned). It can also apply the von Kries transformation (normalizing by the stimulus' background
+to account for receptor adaptation) through the \code{vonkries} argument (which defaults to
+\code{FALSE}). These (and all other) settings are stored in the \code{vismodel} object and are
+referenced by functions downstream in the workflow (e.g. \code{coldist}, below), as well as can be
+called using the \code{summary} function:
 
 <<>>=
 vm.star <- vismodel(specs, visual='star', relative = FALSE)
@@ -405,7 +411,7 @@ argument. For example:
 <<>>=
 deltas <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1)
 # subset only comparisons between belly spectra
-deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = "wing")
+deltas.wing <- coldist(vm.star, n1 = 1, n2 = 1.38, n3 = 3.34, n4 = 3.46, v = 0.1, subset = 'wing')
 head(deltas.wing)
 @
 
