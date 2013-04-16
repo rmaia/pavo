@@ -152,6 +152,7 @@ package?}
 
 \textcolor{red}{RM: Only if you both agree with him, otherwise it's just his picky personal oppinion. I've seen heatplot/heatmap used a lot...}
 
+\textcolor{blue}{CE: Yeah, I've seen both used as well. I'm not sure what the reviewer's issue was with ``heatplot''. For the PRSB paper, I think we ended up using ``false colour map'', which is kind of cumbersome. Maybe ``heatmap plot''?}
 
 \section{The \pavo{} package}
 
@@ -582,13 +583,9 @@ tcs.lael <- subset(tcs.star, 'LAEL')
 tcs.lacl <- subset(tcs.star, 'LACL')
 voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
 @
-<<echo=FALSE,eval=TRUE,fig=F,include=TRUE>>=
-vm.star.rel <- vismodel(specs, visual='star', relative=TRUE)
-tcs.star <- tcs(vm.star.rel)
-#subset points from the two species
-tcs.lael <- subset(tcs.star, 'LAEL')
-tcs.lacl <- subset(tcs.star, 'LACL')
-voloverlap(tcs.lael, tcs.lacl, plot=FALSE)
+<<echo=FALSE,eval=FALSE,fig=F,include=TRUE>>=
+voloverlap(tcs.lael, tcs.lacl, plot=TRUE)
+rgl.snapshot("lael-lacl_overlap.png")
 @
 
 \begin{center}\fbox{Figure \ref{figure:volplot} about here}\end{center}
@@ -682,7 +679,7 @@ species (\emph{N} = 4 individuals each; colours as in \textbf{B}).}
 \centering 
 \includegraphics{fig/ms-new_volplot-2} 
 \caption{Colourspace occupied by
-the recently-diverged \emph{L. chloropterus} (blue) and \emph{L. elisabeth} (red). Convex  hulls
+the recently-diverged \emph{L. chloropterus} (red) and \emph{L. elisabeth} (blue). Convex  hulls
 volume overlap (similar colourspace occupied) is shown in grey. For reference, tetrahedron in lower
 right corner shows \{\textit{usml}\} colour vertices and location of points in colourspace as
 indicated by an `x'.} 
