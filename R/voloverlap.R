@@ -166,7 +166,7 @@ res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 ############
 if(plot==TRUE){
   if(length(col)<3)
-    col <- rep(col,3)
+    col <- c(rep(col,2)[1:2], 'darkgrey')
 
 if(new==TRUE)
   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
