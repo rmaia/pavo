@@ -46,7 +46,7 @@ ps.options(pointsize=12)
 options(width=60)
 @
 
-\title{\pavo{}: {\bf P}erceptual {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Color Data in R}
+\title{\pavo{}: {\bf P}ackage for the {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Data in R}
 \author[1]{Rafael Maia}
 \author[2]{Pierre-Paul Bitton}
 \author[1]{Chad Eliason}
@@ -561,14 +561,16 @@ colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
 
-\subsubsection{Trichromatic Variables}
+\subsubsection{Colorimetricc Variables}
 
-Obtaining trichromatic color variables (peratining to hue, saturation and brightness/value) is
+Obtaining colorimetric variables (peratining to hue, saturation and brightness/value) is
 pretty straightforward in \pavo{}. Since reflectance spectra is stored in an object of class
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
 as outlined in Montgomerie \cite{Montgomerie:2006}. Though outlined in a book chapter on bird
 coloration, these variables are broadly applicable to any reflectance data, particularly if the
-taxon of interest has color vision within the UV-human visible range.
+taxon of interest has color vision within the UV-human visible range.\code{summary} also takes an additional
+argument \code{simplify} which is changed from the default \code{FALSE} to \code\{TRUE} will return only  
+the most commonly used colorimetrics \cite{Andersson:2006}.
 
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
