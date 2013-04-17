@@ -69,7 +69,7 @@ methodologies.
 Glossy Starling species, two of which have diverged very recently. We demonstrate how both colour
 vision models and direct spectral measurement analysis can be used to describe colour attributes and
 differences between these species. Different approaches to visual models and several plotting
-capabilities exemplify the package's versatility and streamlined workflow. \textcolor{red}{`workflow' used repeatedly in this and last paragraph; better way of saying this?} \textcolor{blue}{PPB I'm fine with the way it is now}
+capabilities exemplify the package's versatility and streamlined workflow.
 
 \item \pavo{} provides a cohesive environment capable of addressing complex sensory ecology
 questions, \textcolor{red}{as well as comparing different approaches to colour analysis, all while
@@ -145,14 +145,6 @@ to visualize patterns, obtain information and develop and test hypotheses (Figur
 \ref{figure:work}).
 
 \begin{center}\fbox{Figure \ref{figure:work} about here}\end{center} 
-
-\textcolor{green}{PPB: A comment by a reviewer for Chad's paper to Proc Roy Soc B implied that the
-term ``heatplot'' should be avoided. What do we think about changing this term throughout the
-package?}
-
-\textcolor{red}{RM: Only if you both agree with him, otherwise it's just his picky personal oppinion. I've seen heatplot/heatmap used a lot...}
-
-\textcolor{blue}{CE: Yeah, I've seen both used as well. I'm not sure what the reviewer's issue was with ``heatplot''. For the PRSB paper, I think we ended up using ``false colour map'', which is kind of cumbersome. Maybe ``heatmap plot''?}
 
 \section{The \pavo{} package}
 
