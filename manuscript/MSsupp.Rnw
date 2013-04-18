@@ -64,7 +64,7 @@ $x_{overlap}=0.5 - 0.4 = 0.1$, giving overlap volumes of $VO_{cube}=0.1\times0.5
 $VO_{cuboid} = 0.1\times0.25^2 = 0.00625$. For the tetrahedron, the new side length of the overlap 
 volume is 0.25 and the height is 1/4 the original height, thus 
 $VO_{tetrahedron}=(1/3)\times(0.25^2)\times\sqrt{3}/4\times\sqrt{3}/8 = 1.95\e{-3}$. 
-Finally, we calculated the known proportional overlap volumes as 
+We calculated the known proportional overlap volumes as 
 $pVO_{cube} = VO_{cube}/[V_{cube} + (V_{cube}/8) - VO_{cube}] = 2.27\e{-3}$, 
 $pVO_{cuboid} = VO_{cuboid}/[V_{cuboid}+(V_{cuboid}/8)-VO_{cuboid}] = 2.27\e{-3}$ and 
 $pVO_{tetrahedron} = VO_{tetrahedron}/[V_{tetrahedron} + (V_{tetrahedron}/8) - VO_{tetrahedron}] = 1.41\e{-3}$ 
@@ -101,8 +101,8 @@ took this as evidence that \code{pavo} is accurate and thus tested the ability o
 simulations to estimate overlaps for sets of more biologically realistic, arbitrary polyhedrons 
 (insets in Figure \ref{figure:overlap2}). To do this, we generated multivariate random points 
 (n=100) using the \code{mvnorm} function from the \code{MASS} package in \code{R}, duplicated the 
-set of points and shifted the new polygons along along the z-axis to give known overlaps of 38\%, 
-11\% and 1\% (calculated with \code{voloverlap}). The Monte Carlo method, while eventually 
+set of points and shifted the new polygons along along the z-axis to give known overlaps of 40\%, 
+16\% and 3\% (calculated with \code{voloverlap}). The Monte Carlo method, while eventually 
 converging on the correct solution, requires large sample numbers (and, hence, is more time-
 intensive) and can overestimate values at low MC sample numbers (see Figures \ref{figure:overlap}, 
 \ref{figure:overlap2}).
