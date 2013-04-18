@@ -56,29 +56,29 @@ ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})
 if (!is.null(whichwl)){
   wl_index <- whichwl
   wl <- object[, wl_index]
-  object <- object[, -wl_index]
+  object <- as.data.frame(object[, -wl_index])
   name <- name[-wl_index]
 } else if (!is.null(lim)) {
     if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
-      object <- object[, -wl_index]
+      object <- as.data.frame(object[, -wl_index])
       name <- name[-wl_index]
     } else {
         wl <- seq(lim[1], lim[2], length=nrow(object))
-        object <- object
+        object <- as.data.frame(object)
         name <- name
         warning("No wavelengths contained in dataset, using user-specified range. Check output carefully!")
       }
   } else if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
-      object <- object[, -wl_index]
+      object <- as.data.frame(object[, -wl_index])
       name <- name[-wl_index]
       cat('wavelengths found in column', wl_index,'\n')
       } else {
           wl <- 1:nrow(object)
-          object <- object
+          object <- as.data.frame(object)
           name <- name
           warning('No wavelengths found or whichwl not provided; using arbitrary index values')
 }
@@ -99,12 +99,12 @@ if (interp==TRUE) {
   }
   
   # RM: This throws an error if the object is just a single vector
-  
-  object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
-                   xout = l1:l2, rule = 2)$y)  # rule=2 gives value at nearest
-                                               # point instead of giving NAs
-                                               # in the case of the user inputting
-                                               # wls that start at, say, 300.1nm
+  if (ncol(object)==1) {
+    object <- approx(x=wl, y=object[,1], xout=l1:l2, rule=2)$y
+  } else {
+        object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], xout = l1:l2, rule = 2)$y)  
+        # rule=2 gives value at nearest point instead of giving NAs in the case of the user inputting wls that start at, say, 300.1nm
+    }
   wl <- approx(wl, xout = l1:l2)$x
 }
 
