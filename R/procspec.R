@@ -60,10 +60,9 @@ applied <- 'processing options applied:\n'
 
 if (any(opt=='none')) {
   opt <- 'none' # remove other opt arguments (so they are not called further on, but still allowing for fixneg to work)
-  applied <- 'No relevant processing option entered; returning raw values\n'
-#  rspecdata <- rspecdata
-#  class(rspecdata) <- c('rspec', 'data.frame')
-#	return(rspecdata)
+  
+  if(fixneg=='none')
+    stop('No processing options selected')
   }
 
 wl_index <- which(names(rspecdata)=='wl')
