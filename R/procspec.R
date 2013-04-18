@@ -94,7 +94,7 @@ if (fixneg=='addmin'){
 
 if (fixneg=='zero'){
   rspecdata[rspecdata < 0 ] <- 0
-  applied <- c(applied, 'Negative value correction: added min to all reflectance\n')
+  applied <- c(applied, 'Negative value correction: converted negative values to zero\n')
 }
 
 if (any(opt=='smooth')){
