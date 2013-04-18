@@ -692,21 +692,19 @@ As it can be seen, the variable FWHM is meaningless if the curve doesn't have a 
 Sometimes, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might
 be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-
 width can also be erroneously calculated when there are two peaks, as can be seen in the case of
-the  Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when
-calculating the FWHM by using the \code{bounds} argument. \code{peakshape} also offers a
+the  Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set wavelength 
+limits when calculating the FWHM by using the \code{lim} argument. \code{peakshape} also offers a
 \code{select} argument to facilitate subsetting the spectra data frame to, for example, focus on a
 single reflectance peak:
 
-\textcolor{red}{RM LOTS OF WARNINGS BEING SPAT OUT HERE}
-
 <<label=fwhm2, fig=TRUE, include=FALSE>>=
-peakshape(spec.sm, select=2, bounds=c(300,500), plot=T)
+peakshape(spec.sm, select=2, lim=c(300,500), plot=T)
 @
 \begin{figure}[H] % h=here, t=top, b=bottom, p=floating page
 \begin{center}
 \includegraphics[width=3in]{fig/pavo-fwhm2}
 \end{center}
-\caption{Plot from \code{peakshape}, setting the bounds to 300-500nm}
+\caption{Plot from \code{peakshape}, setting the wavelength limits to 300 and 500nm}
 \label{figure:fwhm2}
 \end{figure}
 
