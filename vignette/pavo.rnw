@@ -204,6 +204,40 @@ fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 plot(fakedat.new2[, 2]~fakedat.new2[, 1], type = 'l')
 @
 
+\subsection{Subsetting Data}
+
+Once an \code{rspec} object has been created, either by importing raw spectral data or converting
+a dataset with the \code{as.rspec} function, you can subset the spectra based on their names using 
+a modified version of \code{R}'s built-in \code{subset} function. For example, the following code
+illustrates how to create an \code{rspec} object containing only tanagers:
+
+<<>>=
+specs.tanager1 <- subset(specs, "tanager")
+head(specs.tanager1)[1:5]
+@
+
+The \code{subset} function here is using partial matching to find all spectra with the string
+``tanager'' in their name. To fully benefit from this flexible subsetting functionality, it is
+important that you follow a consistent file naming scheme. For example,
+``\code{tanager.14423.belly.001.ttt}'' would indicate the species (``tanager''), individual ID
+(14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used
+should have the same number of characters, which simplifies character string manipulation and
+subsetting based on partial matching. Please see \citealt{Andersson:2006} for a useful discussion
+and suggestions on file naming schemes.
+
+If you prefer not to use partial matching, \code{subset} will also work if you provide a logical 
+condition, similar to the default \code{subset} behavior in \code{R}. For example:
+
+<<>>=
+spp <- do.call(rbind, strsplit(names(specs), "\\."))[,1]  # vector of first component of filenames
+specs.tanager2 <- subset(specs, subset = spp=="tanager")
+all.equal(specs.tanager1, specs.tanager2)
+@
+
+On a final note, \code{subset} will also work with visual model (class \code{vismodel}) and 
+tetracolorspace (class \code{tcs}) objects, as described below.
+
+
 \subsection{Processing Data}
 
 \subsubsection{Averaging Spectra}
