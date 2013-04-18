@@ -397,8 +397,8 @@ certain spectrometer manufacturers allow negative values to be saved. To handle 
 adding the absolute value of the most negative value to the whole spectrum (\code{addmin}) and (2)
 changing all negative values to zero (\code{zero}).
 
-\textcolor{red}{RM: THIS IS THROWING AN ERROR BECAUSE `REFL' IS A VECTOR, NOT A DATA.FRAME, 
-AND THUS DOESN'T  HAVE COLUMNS. AS.RSPEC HAS A 1:NCOL(OBJECT) CALL IN IT. I DID A WORKAROUND
+\textcolor{red}{RM: THIS IS THROWING AN ERROR BECAUSE REFL IS A VECTOR, NOT A DATA.FRAME, 
+AND THUS DOESNT  HAVE COLUMNS. AS.RSPEC HAS A 1:NCOL(OBJECT) CALL IN IT. I DID A WORKAROUND
 BY SELECTING TWO COLUMNS INSTEAD OF ONE, BUT WE SHOULD FIX THIS.}
 
 <<results=hide>>=
@@ -605,16 +605,16 @@ colors in the avian vision color space.
 
 \subsection{Spectral Shape Analysis}
 
-\subsubsection{Colorimetricc Variables}
+\subsubsection{Colorimetric Variables}
 
 Obtaining colorimetric variables (peratining to hue, saturation and brightness/value) is
 pretty straightforward in \pavo{}. Since reflectance spectra is stored in an object of class
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
-as outlined in Montgomerie \cite{Montgomerie:2006}. Though outlined in a book chapter on bird
+as outlined in Montgomerie \citep{Montgomerie:2006}. Though outlined in a book chapter on bird
 coloration, these variables are broadly applicable to any reflectance data, particularly if the
-taxon of interest has color vision within the UV-human visible range.\code{summary} also takes an additional
-argument \code{simplify} which is changed from the default \code{FALSE} to \code\{TRUE} will return only  
-the most commonly used colorimetrics \cite{Andersson:2006}.
+taxon of interest has color vision within the UV-human visible range. \code{summary} also takes 
+an additional argument \code{subset} which if changed from the default \code{FALSE} to 
+\code{TRUE} will return only the most commonly used colorimetrics \citep{Andersson:2006}.
 
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
@@ -803,7 +803,7 @@ For this example, we will use the average reflectance of the different species t
 stimulation of retinal cones, considering the avian average UV visual system, a standard daylight 
 illumination, and an idealized background.
 
-\textcolor{red}{RM ADD INFO ON QI/FI RETURN}
+\textcolor{red}{RM ADD INFO ON QIFI RETURN}
 
 <<results=hide>>=
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum='D65', relative=FALSE)
