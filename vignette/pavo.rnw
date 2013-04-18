@@ -196,7 +196,13 @@ plot(fakedat.new2[, 2]~fakedat.new2[, 1], type = 'l')
 
 \subsubsection{Averaging Spectra}
 
-As previously described, our data (contained in the \code{specs} object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function \code{explorespec} provides an easy way of doing so. You may specify the number of  spectra to be plotted in the same panel using the argument \code{specreps}, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
+As previously described, our data (contained in the \code{specs} object) constitutes of multiple 
+individuals, and each was measured three times, as is common to avoid measurement bias. A good way to 
+visualize the repeatability of our measurements is to plot the spectra of each individual separately. 
+The function \code{explorespec} provides an easy way of doing so. You may specify the number of  
+spectra to be plotted in the same panel using the argument \code{specreps}, and the function will 
+adjust the number of panels per page accordingly. We will exemplify this function using only the 12 
+cardinal individuals measured:
 
 <<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
 explorespec(specs[,1:37], by=3, lwd=2) 
@@ -210,7 +216,11 @@ explorespec(specs[,1:37], by=3, lwd=2)
 \label{figure:explorespec}
 \end{figure}
 
-So our first step would be to take the average of each of these three measurements to obtain average individual spectra to be used in further analyses. This is easily accomplished using the \code{aggspec} function. The \code{by} argument can be either a number (specifying how many specs should be averaged for each new sample) or a vector specifying the identities of the spectra to be combined (see below):
+So our first step would be to take the average of each of these three measurements to obtain average 
+individual spectra to be used in further analyses. This is easily accomplished using the 
+\code{aggspec} function. The \code{by} argument can be either a number (specifying how many specs 
+should be averaged for each new sample) or a vector specifying the identities of the spectra to be 
+combined (see below):
 
 <<>>=
 mspecs <- aggspec(specs, by = 3, FUN = mean)
@@ -250,7 +260,7 @@ explorespec(sppspec, by=6, lwd=3)
 Data obtained from spectrometers often requires further processing before analysis and/or
 publication. For example, electrical noise can produce unwanted ``spikes'' in reflectance curves.
 The \pavo{} function \code{procspec} can handle a variety of processing techniques. For example, the
-reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700  nm)
+reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm)
 wavelength ranges (see Figure \ref{figure:specsmooth}, black line). To eliminate this noise, we will
 use local regression smoothing implemented by the \code{loess.smooth} function in \code{R}, wrapped
 in the \code{opt="smooth"} argument of \code{procspec}.
@@ -260,7 +270,7 @@ But first, let's use the \code{plotsmooth} function to determine a suitable smoo
 plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
 
 <<label=plotsmooth,fig=TRUE,include=FALSE,width=6,height=4>>=
-plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 5, ask = F)
+plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 4, ask = F)
 @
 
 \begin{figure}[H]
@@ -271,7 +281,7 @@ plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 5, ask = F)
 \label{figure:plotsmooth}
 \end{figure}
 
-From the resulting plot, we can see that \code{span}=0.2 is the minimum amount of smoothing to
+From the resulting plot, we can see that \code{span = 0.2} is the minimum amount of smoothing to
 remove spectral noise while preserving the original spectral shape (Figure \ref{figure:plotsmooth}).
 Based on this value, we will now use the \code{opt} argument in \code{procspec} to smooth data for
 further plotting and analysis (see Figure \ref{figure:specsmooth}, red line).
@@ -293,12 +303,12 @@ lines(spec.sm[, 5]~sppspec[, 1], col='red', lwd=2)
 \end{figure}
 
 We can also try different normalizations. Options include subtracting the minimum reflectance
-of a  spectrum at all wavelengths (effectively making the minimum reflectance equal to zero,
+of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero,
 \code{opt="min"}, Figure \ref{figure:specnorm} left panel) and making the reflectance at all
 wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1;
 \code{opt="max"}, Figure \ref{figure:specnorm} center panel). Note that the user can specify
-multiple  processing options that will be applied sequentially to the spectral data by
-\code{procspec} (Figure  \ref{figure:specnorm} right panel).
+multiple processing options that will be applied sequentially to the spectral data by
+\code{procspec} (Figure \ref{figure:specnorm} right panel).
 
 <<results=hide>>=
 # Run some different normalizations
@@ -313,7 +323,7 @@ par(mfrow=c(1,3), mar=c(2,2,2,2), oma=c(3,3,0,0))
 plot(specs.min[,5]~c(300:700), xlab="", ylab="", type='l')
 abline(h=0, lty=2)
 plot(specs.max[, 5]~c(300:700), ylim=c(0,1), xlab="", ylab="", type='l')
-abline(h=1, lty=2)
+abline(h=c(0,1), lty=2)
 plot(specs.str[,5]~c(300:700), type='l', xlab="", ylab="")
 abline(h=c(0,1), lty=2)
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
@@ -330,11 +340,10 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \subsubsection{Binning and PCA Analysis of Spectral Shape}
 
 Another intended usage of \code{procspec} is preparation of spectral data for variable reduction
-(for example, using Principal Component Analysis, or PCA). Following Cuthill et al. \cite{Cuthill:1999}, 
-we can use 
-\code{opt = 'center'} to center spectra to have a mean reflectance of zero (thus removing brightness 
-as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the 
-\code{opt= 'bins'} argument) to obtain a dataframe suitable for the PCA.
+(for example, using Principal Component Analysis, or PCA). Following Cuthill et al. 
+\cite{Cuthill:1999}, we can use \code{opt = `center'} to center spectra to have a mean reflectance of 
+zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user
+-defined bins (using the \code{opt = `bin'} argument) to obtain a dataframe suitable for the PCA.
 
 <<results=hide>>=
 # pca analysis
@@ -353,7 +362,7 @@ As can be seen by the summary, PC1 explains approximately 64\% of the variation 
 and describes the relative amount of long wavelengths reflected (see Figure \ref{figure:pcaplot},
 left). The flexibility of \code{R} and \code{pavo}'s plotting capabilities allows you to sort
 spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the
-\code{plot} function.
+\code{plot} function. % CE: should we delete this part?
 
 <<label=pcaplot,fig=TRUE,include=FALSE,width=8,height=4>>=
 # generate colors from spectra
@@ -395,6 +404,8 @@ testspecs <- as.rspec(cbind(c(300:700), refl))
 testspecs.fix1 <- procspec(testspecs, fixneg='addmin')
 testspecs.fix2 <- procspec(testspecs, fixneg='zero')
 @
+
+% LEFT OFF HERE -- ERROR IN FUNCTION
 
 <<label=fixneg, fig=T, include=F, width=6, height=4>>=
 par(mar=c(2,2,2,2), oma=c(3,3,0,0))
