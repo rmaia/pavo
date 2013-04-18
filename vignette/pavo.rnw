@@ -46,7 +46,7 @@ ps.options(pointsize=12)
 options(width=60)
 @
 
-\title{\pavo{}: {\bf P}ackage for the {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Data in R}
+\title{\pavo{}: An R {\bf P}ackage for the {\bf A}nalysis, {\bf V}isualization and {\bf O}rganization of Spectral Data}
 \author[1]{Rafael Maia}
 \author[2]{Pierre-Paul Bitton}
 \author[1]{Chad Eliason}

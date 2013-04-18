@@ -1,14 +1,18 @@
-pavo 0.1-2
+pavo 0.3
 ------------------------------------------------------------------------------
 NEW FUNCTIONS
 
 * merge.rspec() combines rspec objects in a single object
+* subset() class methods for rspec, vismodel and tcs
+* summary() method for vismodel, returns attributes used in visual model
 
 VISUAL MODEL
 
-* Changed vismodel() output: von Kries correction is now an optional argument, output includes only Qi and fi
+* vismodel() output includes only Qi or fi (as selected by qcatch argument)
 * vismodel() accepts a scale parameter (multiplies iluminant in order to make it in flux units)
+* vismodel() von Kries correction is now an optional argument
 * coldist() includes option for receptor noise calculation
+* coldist() subset argument for partial filtering
 * Updated sensitivity curves
 
 MINOR FEATURES
@@ -16,7 +20,7 @@ MINOR FEATURES
 * getspec() works with Avasoft 8 output
 * sensmodel() accepts user-defined ocular media transmission
 * voloverlap() allows greater user control of plotting options
-* voloverlap() includes Monte Carlo option for overlap calculation
+* voloverlap() includes Monte Carlo option for overlap calculation comparison
 * as.rspec() accepts "whichwl" argument for user-defined wavelength column selection
 * as.rspec() includes "interp" argument; updated automatic search for wavelength column
 * aggspec() aggregates spectra by multiple vectors (e.g. average spectra by species and sex using by=list(species,sex) )
@@ -32,3 +36,4 @@ BUG FIXES
 * procspec() works with rspec objects that include a single reflectance spectrum
 * peakshape() minor fixes
 * aggplot() allows control for different line types per spectra
+* voloverlap() now assigns darkgrey color for overlap if color vector is of length 1 or 2
