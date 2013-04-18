@@ -444,19 +444,18 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 \label{figure:neg}
 \end{figure}
 
-These manipultions may have different effects on the final spectra, as can be seen in Figure 
-\ref{figure:neg},
-which the user should keep in mind and use according to the final goal of the analysis. For example,
-by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but
-the  maximum reflectance is much higher (Figure \ref{figure:neg}, top). On the other hand,
-substituting  negative values with zero preserves absolute reflectance values, but may cause the
-spectral shape to  be lost (Figure \ref{figure:neg}, bottom). The ``best'' transformation will
-depend on the severity of  the problem of negative values and the goal of the analysis (e.g. will
-reflectance intensity be used?  What is more important, to preserve reflectance values or the total
-shape of the curve?). Which correction to use would also depend on the source of the
-negative values. If they are thought to originate from improper calibration of the 
-spectrophotometer, \code{addmin} would be more appropriate. If they are thought to
-originate from electric noise, \code{zero} would be more appropriate.
+These manipultions may have different effects on the final spectra, as can be seen in Figure
+\ref{figure:neg}, which the user should keep in mind and use according to the final goal of the
+analysis. For example, by adding the minimum reflectance to all other wavelength, the shape of the
+curve is preserved, but the maximum reflectance is much higher (Figure \ref{figure:neg}, top). On
+the other hand, substituting negative values with zero preserves absolute reflectance values, but
+may cause the spectral shape to be lost (Figure \ref{figure:neg}, bottom). The ``best''
+transformation will depend on the severity of the problem of negative values and the goal of the
+analysis (e.g. will reflectance intensity be used? What is more important, to preserve reflectance
+values or the total shape of the curve?). Which correction to use would also depend on the source of
+the negative values. If they are thought to originate from improper calibration of the
+spectrophotometer, \code{fixneg = addmin} would be appropriate. However, if they are thought to
+originate from electric noise, \code{fixneg = zero} would be more appropriate.
 
 \section{Visualizing Spectral Data}
 
@@ -539,8 +538,8 @@ This makes it easier to identify and subset specific spectra or groups of spectr
 \code{select} argument in \code{plot.rspec}. Note also that the first index is actually 2,
 preserving  the sequence in the original dataset (since the first column is wavelength). Though this
 may seem  confusing at first (``why is my first spec number 2?'') this preserves subsetting
-hierarchy: using  \code{plot(teal, select=2)} will show the same spectra that would be selected if
-you use  \code{teal[ ,2]}.
+hierarchy: using \code{plot(teal, select=2)} will show the same spectra that would be selected if
+you use \code{teal[ ,2]}.
 
 \subsubsection{The \code{heatmap} Option}
 
@@ -552,7 +551,7 @@ for the incident angles each spectrum was measured at:
 angles <- seq(15, 70, by = 5)
 @
 
- Next, we will smooth the data with \code{procspec} and plot as a false color map (heatmap):
+Next, we will smooth the data with \code{procspec} and plot as a false color map (heatmap):
  
 <<label=heatmap,fig=T,include=F>>=
 teal.sm <- procspec(teal, opt=c('smooth'))
@@ -602,9 +601,9 @@ aggplot(mspecs, spp, FUN.error=function(x)sd(x)/sqrt(length(x)),
 
 \pavo{} offers two main approaches for spectral data analysis. First, color variables can be
 calculated based on the shape of the reflectance spectra. By using special \code{R} classes for
-spectra data frame objects, this can easily be done using the \code{summary} function with an 
-\code{rspec} object (see below). The function \code{peakshape} also
-returns descriptors for individual peaks in spectral curves, as outlined below.
+spectra data frame objects, this can easily be done using the \code{summary} function with an
+\code{rspec} object (see below). The function \code{peakshape} also returns descriptors for
+individual peaks in spectral curves, as outlined below.
 
 Second, reflectance spectra can be analyzed by accounting for the visual system receiving the color
 signal, therefore representing reflectance spectra as perceived colors. We have implemented Endler's
@@ -625,7 +624,6 @@ pretty straightforward in \pavo{}. Since reflectance spectra is stored in an obj
 as outlined in Montgomerie \citep{Montgomerie:2006}. Though outlined in a book chapter on bird
 coloration, these variables are broadly applicable to any reflectance data, particularly if the
 taxon of interest has color vision within the UV-human visible range.
-
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
 
@@ -692,8 +690,8 @@ peakshape(spec.sm, plot=T)
 
 As it can be seen, the variable FWHM is meaningless if the curve doesn't have a clear peak.
 Sometimes, such as in the case of the Cardinal (Figure \ref{figure:fwhm}, first panel), there might
-be a  peak which is not the point of maximum reflectance of the entire spectral curve. The half-
-width  can also be erroneously calculated when there are two peaks, as can be seen in the case of
+be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-
+width can also be erroneously calculated when there are two peaks, as can be seen in the case of
 the  Tanager (Figure \ref{figure:fwhm}, last panel). In this case, it's useful to set bounds when
 calculating the FWHM by using the \code{bounds} argument. \code{peakshape} also offers a
 \code{select} argument to facilitate subsetting the spectra data frame to, for example, focus on a
@@ -802,11 +800,11 @@ Several models have been developed to understand how colors are perceived and di
 individual's or species' receptor visual system (Described in detail in \cite{Endler:1990,
 Vorobyev:1998}). In essence, these models take into  account the receptor sensitivity of the
 different cones that make the visual system in question and  quantify how a given color would
-stimulate those cones individually and the combined effect on the perception of color. These models
+stimulate those cones individually and the combined effect on the perception of  color. These models
 also have an important component of assuming and interpreting the chromatic component of color (hue
 and saturation) to be processed independently of the achromatic (brightness, or luminance)
-component. It provides a flexible framework allowing for a tiered model construction, in  which
-information on aspects such as different illumination sources, backgrounds, and visual systems  can
+component. It provides a flexible framework allowing for a tiered model construction, in which
+information on aspects such as different illumination sources, backgrounds, and visual systems can
 be considered and compared.
 
 To apply these models, first we need to quantify cone excitation and then consider how the signal is
@@ -964,8 +962,8 @@ should yield similar results. Hence, it is important that the quantum catch are 
 appropriate illuminant scale, as described above.
 
 Color distances are obtained by weighting the Euclidean distance of the photoreceptor quantum
-catches  by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just
-Noticeable  Differences (JNDs), where distances over a certain threshold (usually 1) are considered
+catches by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just
+Noticeable Differences (JNDs), where distances over a certain threshold (usually 1) are considered
 to be  discernible under the conditions considered (e.g., backgrounds, illumination). The equations
 used in these calculations are:
 
@@ -1038,9 +1036,10 @@ coldist(vismod1, vis='tetra', noise='neural', n1=1, n2=2, n3=2, n4=4, v=0.1)
 coldist(vismod.idi, vis='di', n1=1, n2=1,  v=0.05)
 @
 
-Where \code{dS} is the chromatic contrast ($\Delta S$) and \code{dL} is the achromatic contrast 
-($\Delta L$). As expected, values are really high under the avian color vision, since the colors of 
-these species are quite different (see Figure \ref{figure:usmlplot}) and because of the enhanced discriminatory ability with four compared to two cones.
+Where \code{dS} is the chromatic contrast ($\Delta S$) and \code{dL} is the achromatic contrast
+($\Delta L$). As expected, values are really high under the avian color vision, since the colors of
+these species are quite different (see Figure \ref{figure:usmlplot}) and because of the enhanced
+discriminatory ability with four compared to two cones.
 
 \code{coldist} also has a \code{subset} argument, which is useful if only certain comparisons are of 
 interest (for example, of color patches against a background, or only comparisons among a species or
@@ -1070,12 +1069,13 @@ avian visual system  comprised of 4 cones, all colors can be placed somewhere in
 tetrahedron, in which each  of the four vertices represents the maximum stimulation of that
 particular cone type (Figure \ref{fig:tcs}).
 
-Though this model does not account for receptor noise (and thus does not allow an estimate of JNDs), 
-it presents several advantages. First, it makes for a very intuitive representation of color points 
-accounting for attributes of the color vision of the signal receiver. Second, and perhaps most 
-importantly, it allows for the calculation of several interesting variables that represent color. For 
-example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-red) and 
-the z axis (UV); saturation can be estimated as the distance of the point from the achromatic center.
+Though this model does not account for receptor noise (and thus does not allow an estimate of JNDs),
+it presents several advantages. First, it makes for a very intuitive representation of color points
+accounting for attributes of the color vision of the signal receiver. Second, and perhaps most
+importantly, it allows for the calculation of several interesting variables that represent color.
+For  example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-
+red) and  the z axis (UV); saturation can be estimated as the distance of the point from the
+achromatic center.
 
 In \pavo{} the tetrahedral color space is implemented in the function \code{tcs}, after the 
 calculation of relative quantum catches using \code{vismodel} with the (default) option 
@@ -1096,12 +1096,12 @@ information); the two angles of  hue (\code{h.theta} and \code{h.phi}) and the d
 achromatic center (\code{r.vec});  along with the maximum distance achievable for that hue
 (\code{r.max}) and the proportion of that  maximum achieved by the color point (\code{r.achieved}).
 
-\textbf{Color distances}. Under the color space framework, color distances can be calculated simply as 
-Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on 
-how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor 
-noise is incorporated in the model. Euclidean distances can be computed in \code{R} using the 
-\code{dist} function on the \code{vismodel} output (excluding the luminance data) or the \code{tcs} 
-output by selecting the cone stimulation data:
+\textbf{Color distances}. Under the color space framework, color distances can be calculated simply
+as  Euclidean distances of the relative cone stimulation data, either log-transformed or not,
+depending on  how it was defined. However, these distances cannot be interpreted in terms of JNDs,
+since no receptor  noise is incorporated in the model. Euclidean distances can be computed in
+\code{R} using the  \code{dist} function on the \code{vismodel} output (excluding the luminance
+data) or the \code{tcs}  output by selecting the cone stimulation data:
 
 <<>>=
 dist(vismod2[,1:4])
@@ -1185,9 +1185,10 @@ projplot(tcs.mspecs, pch=20, col=spec2rgb(mspecs))
 \textbf{Color Volume Overlap.} Finally, a useful function available in \pavo{} is \code{voloverlap},
 which calculates the overlap in tetrahedral color volume between two sets of points. This can be
 useful to explore whether different species occupy similar (overlapping) or different (non-
-overlapping) ``sensory niches'', or to test for mimetism, dichromatism, etc. \cite{Stoddard:2011}. To 
-show this  function, we will use the \code{sicalis} dataset, which includes measurements from the crown 
-(C),  throat (T) and breast (B) of seven stripe-tailed yellow finches (\textit{Sicalis citrina}).
+overlapping) ``sensory niches'', or to test for mimetism, dichromatism, etc. \cite{Stoddard:2011}.
+To show this function, we will use the \code{sicalis} dataset, which includes measurements from
+the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (\textit{Sicalis
+citrina}).
 
 <<label=sicalis, fig=TRUE, include=FALSE>>=
 data(sicalis)
@@ -1240,7 +1241,6 @@ not between  the throat and the crown colors (Figure \ref{figure:overlap}).
         \end{subfigure}
          \caption{Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points.}\label{figure:overlap}
 \end{figure}
-
 
 \section{Final Thoughts}
 We hope to have demonstrated the flexibility of \pavo{} when it comes to importing, processing, 
