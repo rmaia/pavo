@@ -120,9 +120,20 @@ The files were downloaded and placed in a directory called
 ``\nolinkurl{/github/pavo/vignette_data}''. By default, \code{getspec} will search for files in 
 the current folder, but a different one can be specified:
 
-<<>>=
+<<echo=FALSE, eval=TRUE, results=hide, include=FALSE>>=
 specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
                  subdir=T, subdir.names=F)
+
+@
+
+<<echo=TRUE, eval=FALSE, results=hide, include=FALSE>>=
+specs <- getspec("~/github/pavo/vignette_data/", ext="ttt", decimal=",", 
+                 subdir=T, subdir.names=F)
+# 213  files found; importing spectra
+# ============================================================
+@
+
+<<>>=
 specs[1:10,1:4]
 dim(specs) # the data set has 213 spectra, from 300 to 700 nm, plus a 'wl' column
 @
@@ -145,8 +156,9 @@ data, name the column containing wavelengths (in 0.5-nm bins) ``wavelength'' rat
 than first.
 
 <<>>=
-# Create some fake reflectance data with wavelength column arbitrarily titled and not
-# first in the data frame:
+# Create some fake reflectance data with wavelength column arbitrarily titled 
+# and notfirst in the data frame:
+
 fakedat <- data.frame(refl1 = rnorm(n = 801), 
                       refl2 = rnorm(n = 801), 
                       wavelength = seq(300, 700, by = .5))
@@ -612,9 +624,7 @@ pretty straightforward in \pavo{}. Since reflectance spectra is stored in an obj
 \code{rspec}, the \code{summary} function recognizes the object as such and extracts 23  variables,
 as outlined in Montgomerie \citep{Montgomerie:2006}. Though outlined in a book chapter on bird
 coloration, these variables are broadly applicable to any reflectance data, particularly if the
-taxon of interest has color vision within the UV-human visible range. \code{summary} also takes 
-an additional argument \code{subset} which if changed from the default \code{FALSE} to 
-\code{TRUE} will return only the most commonly used colorimetrics \citep{Andersson:2006}.
+taxon of interest has color vision within the UV-human visible range.
 
 
 The description and formulas for these variables can be found in Table \ref{table:tristim}.
@@ -628,7 +638,26 @@ summary(spec.sm)
 round(summary(spec.sm),2)
 @
 
-\textcolor{red}{RM ADD SUBSET}
+\code{summary} also takes an additional argument \code{subset} which if changed from the 
+default \code{FALSE} to \code{TRUE} will return only the most commonly used colorimetrics 
+\citep{Andersson:2006}. \code{summary} can also take a vector of color variable names, which
+can be used to filter the results
+
+<<results=hide>>=
+summary(spec.sm, subset = TRUE)
+@
+<<echo=FALSE>>=
+round(summary(spec.sm, subset = TRUE),2)
+@
+
+<<results=hide>>=
+# Extract only brightness variables
+summary(spec.sm, subset = c('B1', 'B2', 'B3'))
+@
+<<echo=FALSE>>=
+round(summary(spec.sm, subset = c('B1', 'B2', 'B3')),2)
+@
+
 
 \subsubsection{Peak Shape Descriptors}
 
@@ -773,18 +802,19 @@ Several models have been developed to understand how colors are perceived and di
 individual's or species' receptor visual system (Described in detail in \cite{Endler:1990,
 Vorobyev:1998}). In essence, these models take into  account the receptor sensitivity of the
 different cones that make the visual system in question and  quantify how a given color would
-stimulate those cones individually and the combined effect on the perception of  color. These models
-also have an important component of assuming and interpreting the chromatic  component of color (hue
-and saturation) to be processed independently of the achromatic (brightness,  or luminance)
+stimulate those cones individually and the combined effect on the perception of color. These models
+also have an important component of assuming and interpreting the chromatic component of color (hue
+and saturation) to be processed independently of the achromatic (brightness, or luminance)
 component. It provides a flexible framework allowing for a tiered model construction, in  which
 information on aspects such as different illumination sources, backgrounds, and visual systems  can
 be considered and compared.
 
-
 To apply these models, first we need to quantify cone excitation and then consider how the signal is
 being processed, considering the relative density of different cones and the noise-to-signal ratio.
 
-\textbf{Photon Catch.} To quantify the stimulation of cones by the emitted color, we will use the \pavo{} function \code{vismodel}. This function takes an \code{rspec} dataframe as a minimal input, and the user can either select from the available options or input its own data for the additional arguments in the function:
+\textbf{Photon Catch.} To quantify the stimulation of cones by the emitted color, we will use the \pavo{} function \code{vismodel}. This function takes an \code{rspec} dataframe as a minimal input, 
+and the user can either select from the available options or input its own data for the additional
+arguments in the function:
 
 \begin{itemize}
   \item\code{visual}: the visual system to be used. Available options are the avian average UV \& average V visual systems, blue tit, starling and peafowl. Alternatively, the user may include its own dataframe, with the first column being the wavelength range and the following columns being the absorbance at each wavelength for each cone type (see below for an example).
@@ -795,15 +825,52 @@ being processed, considering the relative density of different cones and the noi
 
 (For more information, see \code{?vismodel})
 
-IMPORTANT: The function also has an additional logical argument, \code{relative}. If \code{TRUE}, it 
-will make the cone stimulations relative to their sum. \textit{For the photon catch and neural noise 
-model, it is important to set} \code{relative=FALSE}.
+The \code{vismodel} function also takes additional arguments that can be used to customize the visual
+model being implemented:
+
+\begin{itemize}
+  \item\code{qcatch}: This argument determines what photon catch data should be returned. 
+    \begin{itemize}
+    \item\code{Qi}: The receptor quantum catches, calculated for  receptor $i$ as:
+    \begin{equation}
+    Q_i = \int_\lambda{R_i(\lambda)S(\lambda)I(\lambda)d\lambda} ,
+    \end{equation}
+    Where $\lambda$ denotes the wavelength, $R_i(\lambda)$ the spectral sensitivity of receptor $i$, $S (\lambda)$ the reflectance spectrum of the color, and $I(\lambda)$ the illuminant spectrum.
+    \item\code{fi}: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch \textendash i.e. $f_i = ln(Q_i)$
+    \end{itemize} 
+  \item\code{relative}: If \code{TRUE}, it will make the cone stimulations relative to their sum. 
+  This is appropriate for colorspace models such as the avian tetrahedral colorspace
+  \citep{Goldsmith:1990, Stoddard:2008} \textit{For the photon catch and neural noise 
+  model, it is important to set} \code{relative=FALSE}.
+  \item\code{vonkries}: a logical argument which determines if the von Kries transformation (which
+  normalizes receptor quantum catches to the background, thus accounting for receptor adaptation)
+  is to be applied (defaults to \code{FALSE}). If \code{TRUE}, $Q_i$ is multiplied by a constant $k$,
+  which describes the von Kries transformation:
+  \begin{equation}
+  k_i = \frac{1} { \int_\lambda{R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda }, }
+  \end{equation}
+  Where $S^b$ denotes the reflectance spectra of the background.
+  \item\code{scale}: This argument defines how the illuminant should be scaled. The scale of the
+  illuminant is critical of receptor noise models in which the signal intensity influences the noise
+  (see Receptor noise section, below).Illuminant curves should be in units of $\mu mol.s^{-1}.m^{-2}$ 
+  in order to yield physiologically meaningful results. \footnote{some software return illuminant
+  information values in $\mu Watt.cm^{-2}$, and must be converted to $\mu mol.s^{-1}.m^{-2}$. 
+  This can be done by multiplying the illuminant by 11964.7. For more information, see \cite{Avicol}.} 
+  Therefore, if the user-specified illuminant
+  curves are \textit{not} in these units (i.e. are measured proportional to a white standard, for
+  example), the \code{scale} parameter can be used as a multiplier to yield curves that are at least
+  a reasonable approximation of the illuminant value. Commonly used values are \textbf{500} for dim 
+  conditions and \textbf{10,000} for bright conditions.
+\end{itemize}
 
 For this example, we will use the average reflectance of the different species to calculate their 
 stimulation of retinal cones, considering the avian average UV visual system, a standard daylight 
-illumination, and an idealized background.
-
-\textcolor{red}{RM ADD INFO ON QIFI RETURN}
+illumination, and an idealized background.\footnote{up to version 0.1-2, \code{vismodel} would 
+return a list containing $Q_i$, $q_i$ and $f_i$. Users should note that this has changed in newer
+versions. $Q_i$ is the default value returned, and $f_i$ can be chosen using the \code{qcatch}
+argument. $q_i$ can be returned by using the new argument \code{vonkries = TRUE}.} Following 
+Vorobyev 1998\cite{Vorobyev:1998}, spectra are converted to proportions (instead of percent 
+reflectance) automatically by the function prior to calculations:
 
 <<results=hide>>=
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum='D65', relative=FALSE)
@@ -814,29 +881,14 @@ vismod1
 round(vismod1, 4)
 @
 
-The function returns an object of class \code{vismodel} that lists three components:
+Since there are multiple parameters that can be used to customize the output of \code{vismodel}, 
+for convenience these can be returned by using \code{summary} in a \code{vismodel} object:
 
-\textcolor{red}{CHANGE THIS, ADD FOOTNOTE ABOUT CHANGE}
+<<>>=
+summary(vismod1)
+@
 
-\textcolor{red}{ADD INFO ON VONKRIES, SCALE, AND ALL NEW PARAMETERS}
-
-\begin{itemize}
-\item\code{Qi}: The receptor quantum catches, calculated for  receptor $i$ as:
-\begin{equation}
-Q_i = \int_\lambda{R_i(\lambda)S(\lambda)I(\lambda)d\lambda} ,
-\end{equation}
-Where $\lambda$ denotes the wavelength, $R_i(\lambda)$ the spectral sensitivity of receptor $i$, $S(\lambda)$ the reflectance spectrum of the color, and $I(\lambda)$ the illuminant spectrum.
-
-\item\code{qi}: The receptor quantum catches normalized to the background, thus accounting for receptor adaptation, by multiplying $Q_i$ by a constant $k$. The coefficient $k$ describes the von Kries transformation:
-\begin{equation}
-k_i = \frac{1} { \int_\lambda{R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda }, }
-\end{equation}
-Where $S^b$ denotes the reflectance spectra of the background.
-
-\item\code{fi}: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch \textendash i.e. $f_i = ln(Q_i)$
-\end{itemize}
-
-We can easily visualize what these models are doing by comparing the reflectance spectra to the quantum catches they are generating:
+We can visualize what these models are doing by comparing the reflectance spectra to the quantum catches they are generating:
 
 <<label=usmlplot,fig=T,include=F,width=8.5,height=6.5>>=
 par(mfrow=c(2,6), oma=c(3,3,0,0))
@@ -891,41 +943,31 @@ sapply(vismod.idi, function(x) round(x,4))
 
 \textbf{Receptor Noise.} Color distances can be calculated under this model while considering receptor
 noise by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each
-cone $i$). The Weber fraction can  be calculated from the noise-to-signal ratio of cone $i$  ($v_i$)
-and the relative number of receptor  cells of type $i$ within the receptor field ($n_i$):
+cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$  ($v_i$)
+and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
 
 \begin{equation}
 w_i = \frac{v_i}{\sqrt{n_i}} 
 \end{equation}
+
+$w_i$ is the value used for the noise when considering only neural noise mechanisms. Alternatively,
+the model can consider that the intensity of the color signal itself contributes to the noise 
+(photoreceptor, or quantum, noise). In this case, the noise for a receptor $i$ is calculated as:
+
+\begin{equation}
+w_i = \sqrt{\frac{v_i^2}{\sqrt{n_i}}  + \frac{2}{Q_a+Q_b}}
+\end{equation}
+
+where $a$ and $b$ refer to the two color signals being compared. Note that when the values of $Q_a$
+and $Q_b$ are very high, the second portion of the equation tends to zero, and the both formulas 
+should yield similar results. Hence, it is important that the quantum catch are calculated in the 
+appropriate illuminant scale, as described above.
 
 Color distances are obtained by weighting the Euclidean distance of the photoreceptor quantum
 catches  by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just
 Noticeable  Differences (JNDs), where distances over a certain threshold (usually 1) are considered
 to be  discernible under the conditions considered (e.g., backgrounds, illumination). The equations
 used in these calculations are:
-
-%\tiny
-%\begin{subequations}\label{eqsegment}
-%\begin{align}
-%\text{for dichromats: }
-%\Delta S = \sqrt{\frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}} \\
-%\text{for trichromats: }
-%\Delta S = \sqrt{\frac{
-%w_1^2(\Delta f_3 - \Delta f_2)^2 + 
-%w_2^2(\Delta f_3 - \Delta f_1)^2 + 
-%w_3^2(\Delta f_1 - \Delta f_2)^2}
-%{(w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2}}\\
-%\text{for tetrachromats: }
-%\Delta S = \sqrt{\frac{
-%(w_1w_2)^2(\Delta f_4 - \Delta f_3)^2 + 
-%(w_1w_3)^2(\Delta f_4 - \Delta f_2)^2 +
-%(w_1w_4)^2(\Delta f_3 - \Delta f_2)^2 +
-%(w_2w_4)^2(\Delta f_3 - \Delta f_1)^2 +
-%(w_3w_4)^2(\Delta f_2 - \Delta f_1)^2 }
-%{(w_1w_2w_3)^2 + (w_1w_2w_4)^2 + (w_1w_3w_4)^2 + (w_2w_3w_4)^2} }
-%\end{align}
-%\end{subequations}
-%\normalsize
 
 For dichromats:
 \begin{equation}
@@ -982,23 +1024,40 @@ equation \cite{Siddiqi:2004}:
 \end{equation}
 
 \pavo{} implements these calculations in the function \code{coldist}. For the achromatic contrast, 
-\code{coldist} uses \code{n4} to calculate $w$ for the achromatic contrast. The user 
-can also specify if the function should use $Q_i$, $q_i$ or $f_i$ in the equations (that is, if the 
-von Kries correction and Fechner's law transformation should be applied). Note that even if $Q_i$ or 
-$q_i$ are chosen, values are still log-transformed. This option is available in case the 
-user wants to specify a data frame of quantum catches that was not generated by \code{vismodel} as an 
-input.
-
-\textcolor{red}{RM COLDIST DOESNT NEED QCATCH ANYMORE IF VISMODEL}
+\code{coldist} uses \code{n4} to calculate $w$ for the achromatic contrast. Note that even if $Q_i$ 
+is chosen, values are still log-transformed. This option is available in case the user wants to 
+specify a data frame of quantum catches that was not generated by \code{vismodel} as an 
+input. In this case, the argument \code{qcatch} should be used to inform the function if $Q_i$ or $f_i$
+values are being used (\textit{note that if the imput to \code{coldist} is an object generated using
+the \code{vismodel} function, this argument is ignored.}) The type of noise to be calculated can be
+selected from the \code{coldist} argument \code{noise} (which accepts either \code{"neural"} or
+\code{"quantum"}).
 
 <<>>=
-coldist(vismod1, vis='tetra', qcatch='fi', n1=1, n2=2, n3=2, n4=4, v=0.1)
-coldist(vismod.idi, vis='di', qcatch='fi', n1=1, n2=1,  v=0.05)
+coldist(vismod1, vis='tetra', noise='neural', n1=1, n2=2, n3=2, n4=4, v=0.1)
+coldist(vismod.idi, vis='di', n1=1, n2=1,  v=0.05)
 @
 
 Where \code{dS} is the chromatic contrast ($\Delta S$) and \code{dL} is the achromatic contrast 
 ($\Delta L$). As expected, values are really high under the avian color vision, since the colors of 
 these species are quite different (see Figure \ref{figure:usmlplot}) and because of the enhanced discriminatory ability with four compared to two cones.
+
+\code{coldist} also has a \code{subset} argument, which is useful if only certain comparisons are of 
+interest (for example, of color patches against a background, or only comparisons among a species or
+body patch). \code{subset} can be a vector of length one or two. If only one subsetting option is 
+passed, all comparisons against the matching argument are returned (useful in the case of comparing
+to a background, for example). If two values are passed, comparisons will only be made between samples
+that match that rule (partial string matching and regular expressions are accepted). For example, compare:
+
+<<>>=
+coldist(vismod1, subset='cardinal')
+@
+
+to:
+
+<<>>=
+coldist(vismod1, subset=c('cardinal', 'jacana'))
+@
 
 \subsubsection{Tetrahedral Color Space Model}
 
@@ -1030,11 +1089,6 @@ tcs(vismod2)
 <<echo=FALSE>>=
 round(tcs(vismod2), 2)
 @
-
-By default, \code{tcs} will use $Q_i$ for the calculations (that is, \emph{not} log-transformed, as 
-recommended by Stoddard \& Prum \cite{Stoddard:2008}), but $q_i$ or $f_i$ may be specified if desired 
-
-(e.g. \code{tcs(vismod2\$fi)}).
 
 \code{tcs} returns the original photon catch values; the relative cone stimulation for a given hue
 (\code{x.r}; see the supplemental material of Stoddard \& Prum \cite{Stoddard:2008} for more
@@ -1202,6 +1256,19 @@ Finally, we would also like \pavo{} to be, in the future, a repository for anima
 reflectance data. So if you'd like to see your study system's visual phenotype included as an option 
 within our visual model functions, contact us via email 
 (\href{mailto:rm72@zips.uakron.edu}{rm72@zips.uakron.edu}).
+
+\section{Citation of methods implemented in \pavo{}}
+
+Most of the methods implemented in \pavo{} have been thoroughly described in their original
+publications, to which users should refer for details and interpretation. For reflectance shape
+variables (`objective colourimetrics') and their particular relation to signal production and
+perception, see \cite{Andersson:2006} and \cite{Montgomerie:2006}. Visual models based on photon
+catches and receptor noise are detailed in \cite{Vorobyev:1998} and \cite{Vorobyev:1998to}, and
+photoreceptor sensitivity curve estimation in \cite{Govardovskii:2000} and \cite{Hart:2005}. For
+tetrahedral colourspace model implementations and variable calculations, see \cite{Endler:2005} and
+\cite{Stoddard:2008}, and for colour volume overlap see \cite{Stoddard:2011} and
+\cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original sources
+as appropriate, along with \pavo{}.
 
 \section*{Acknowledgments}
 We would like to thank Matthew D. Shawkey and St\'{e}phanie M. Doucet for insights and support, and 

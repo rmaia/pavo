@@ -97,6 +97,9 @@ if (interp==TRUE) {
         warning("Specified wavelength limits outside of actual data. Check 'lim' argument.")
       }
   }
+  
+  # RM: This throws an error if the object is just a single vector
+  
   object <- sapply(1:ncol(object), function(x) approx(x=wl, y=object[,x], 
                    xout = l1:l2, rule = 2)$y)  # rule=2 gives value at nearest
                                                # point instead of giving NAs
