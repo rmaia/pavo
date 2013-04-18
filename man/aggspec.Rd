@@ -2,7 +2,7 @@
 \alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-  aggspec(rspecdata, by = NULL, FUN = mean)
+  aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
 }
 \arguments{
   \item{rspecdata}{(required) data frame, possibly of class
@@ -22,6 +22,10 @@
 
   \item{FUN}{the function to be applied to the groups of
   spectra. (defaults to \code{\link{mean}})}
+
+  \item{trim}{logical. if \code{TRUE} (default), the
+  function will try to identify and remove numbers at the
+  end of the names of the columns in the new rspec object.}
 }
 \value{
   A data frame of class \code{rspec} containing the spectra

@@ -4,11 +4,11 @@
 \alias{subset.vismodel}
 \title{Subset rspec, tcs and vismodel objects}
 \usage{
-  \method{subset}{rspec} (rspecdata, subset, ...)
+  \method{subset}{rspec} (x, subset, ...)
 
-  \method{subset}{tcs} (tcsdata, subset, ...)
+  \method{subset}{tcs} (x, subset, ...)
 
-  \method{subset}{vismodel} (vismodeldata, subset, ...)
+  \method{subset}{vismodel} (x, subset, ...)
 }
 \arguments{
   \item{object}{(required) an object of class \code{rspec},

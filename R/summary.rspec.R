@@ -293,7 +293,7 @@ if(lambdamin <= 300){
   }
   
 if(lambdamin > 300 & lambdamin < 400){
-  warning(paste('Minimum wavelength is', lambdamin,'UV-related variables may not be meaningful'), call.=FALSE)
+  warning(paste('Minimum wavelength is', lambdamin,'; UV-related variables may not be meaningful'), call.=FALSE)
   lminuv <- lambdamin
   UVchromamat <- as.matrix(object[which(wl==lminuv):which(wl==400),]) 
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
@@ -314,7 +314,7 @@ colvarnames <- names(color.var)
 
 if(is.logical(simplify)){
   if(simplify){
-    color.var <- color.var[c('B2','S8', 'S9', 'H1', 'H3')]
+    color.var <- color.var[c('B2','S8', 'H1')]
   }
 }else{
   #check if any color variables selected don't exist

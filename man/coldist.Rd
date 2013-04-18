@@ -82,7 +82,7 @@
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-coldist.sicalis <- coldist(vis.sicalis, qcatch='fi', vis='tetra')}
+coldist.sicalis <- coldist(vis.sicalis, vis='tetra')}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}

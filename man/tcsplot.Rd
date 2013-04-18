@@ -87,8 +87,8 @@ rgl.snapshot('testplot.png')
 
 # For adding points
 patch <- rep(c('C','T','B'),7)
-tcs.crown <- tcs.sicalis[patch=='C', ]
-tcs.breast <- tcs.sicalis[patch=='B', ]
+tcs.crown <- subset(tcs.sicalis, 'C')
+tcs.breast <- subset(tcs.sicalis, 'B')
 tcsplot(tcs.crown, col='blue')
 tcspoints(tcs.breast, col='red')
 

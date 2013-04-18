@@ -8,6 +8,9 @@
 #' to calculate segments (defaults to 300nm to 700nm).
 #' @return A data frame with LM and MS segment classification scores.
 #' @export
+#' @examples \dontrun{
+#' data(sicalis)
+#' segclass(sicalis) }
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @references Endler, J. A. (1990) On the measurement and classification of 
 #' color in studies of animal color patterns. Biological Journal of the Linnean 

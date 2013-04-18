@@ -22,6 +22,11 @@
   Calculates segment classification measures as defined in
   Endler (1990)
 }
+\examples{
+\dontrun{
+data(sicalis)
+segclass(sicalis) }
+}
 \author{
   Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
