@@ -390,8 +390,8 @@ Another strength of \code{pavo} is its ability to compare different colour metri
 \ref{figure:distplot}B) and thus do not consider receiver visual system phenotype (see
 \citep{Andersson:2006} for discussion). As many as 23 objective colourimetric variables are
 calculated by the \code{summary} of an \code{rspec} object (for a complete description and summary
-of formulae, see the package vignette and \citealt{Montgomerie:2006}), but the \code{simplify}
-argument can be used to filter these variables. If \code{simplify = TRUE}, the variables described
+of formulae, see the package vignette and \citealt{Montgomerie:2006}), but the \code{subset}
+argument can be used to filter these variables. If \code{subset = TRUE}, the variables described
 in \citet{Andersson:2006} are returned, but a string of variable names can also be used as a filter.
 For our example, we extracted and plotted an objective metric of hue (wavelength of peak
 reflectance, Figure \ref{figure:distplot}C) for the most contrasting body patches (``belly'', Figure
@@ -512,7 +512,7 @@ mtext("C", at=-0.4, line=-1.5, cex=1.5, font=2)
 @
 
 <<echo=TRUE, figure=FALSE>>=
-colr <- summary(specs.belly, simplify = TRUE)  # extract colour variables
+colr <- summary(specs.belly, subset = TRUE)  # extract colour variables
 head(colr, 3) 
 hue <- colr$H1 # extract hue (H1)
 spp <- substr(rownames(colr), 1, 4) # extract species names (first 4 letters from row names)
