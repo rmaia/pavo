@@ -135,36 +135,68 @@ is.rspec(specs)
 @
 
 If you already have multiple spectra in a single data frame that you'd like to use with \pavo{}
-functions, you can use the command \code{as.rspec} to convert it to an rspec object. The  function
-will attempt to identify the wavelength variable or, if it doesn't have one, it can be  specified in
-the function call. As an example, we will create some fake reflectance data, name the column
-containing wavelengths ``wavelength'' rather than ``wl'' (required for \pavo{} functions to work) and
-also put the column containing wavelengths third rather than first.
+functions, you can use the command \code{as.rspec} to convert it to an rspec object. The function
+will attempt to identify the wavelength variable or you can specify the column containing wavelengths
+with the \code{whichwl} argument. The default way that \code{as.rspec} handles reflectance data is
+to interpolate the data in 1-nm bins, as is commonly done for spectral analyses. However, this can
+be turned off by using: \code{interp = FALSE}. As an example, we will create some fake reflectance 
+data, name the column containing wavelengths (in 0.5-nm bins) ``wavelength'' rather than ``wl'' 
+(required for \pavo{} functions to work) and also put the column containing wavelengths third rather 
+than first.
 
 <<>>=
 # Create some fake reflectance data with wavelength column arbitrarily titled and not
 # first in the data frame:
-fakedat <- data.frame(refl1=rnorm(n=401), refl2=rnorm(n=401), wavelength=c(300:700))
+fakedat <- data.frame(refl1 = rnorm(n = 801), 
+                      refl2 = rnorm(n = 801), 
+                      wavelength = seq(300, 700, by = .5))
 head(fakedat)
 is.rspec(fakedat)
-fakedat <- as.rspec(fakedat)
-is.rspec(fakedat)
-head(fakedat)
+fakedat.new <- as.rspec(fakedat)
+is.rspec(fakedat.new)
+head(fakedat.new)
 @
 
-As can be seen, \code{as.rspec} renames the column containing wavelengths, places it first and sets the class of the object to \code{rspec}.
+As can be seen, \code{as.rspec} renames the column containing wavelengths, sets it as the first 
+column, interpolates the data in 1-nm bins and converts the data to an \code{rspec} object. Note that
+the same output is returned with specifying \code{whichwl = 3}:
+
+<<>>=
+head(as.rspec(fakedat, whichwl = 3))
+@
+
+Finally, the \code{lim} argument allows you to specify the range of wavelengths contained in the
+input dataset. This is useful either in the case that the dataset doesn't contain this information 
+(and hence you cannot specify the column with \code{whichwl} or automatically find the column with
+\code{as.rspec}). Additionally, it may be useful to focus on a subset of wavelength. In our example, 
+the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of 
+wavelengths with \code{lim}:
+
+<<>>=
+fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
+plot(fakedat.new2[, 2]~fakedat.new2[, 1], type = 'l')
+@
+
+We want to stress that it is important to check the actual wavelengths contained in the data before 
+setting this argument (\code{as.rspec} will warn you when wavelengths in the data are not present in
+the range specified with \code{lim}), otherwise \code{as.rspec} will assume that wavelengths exist 
+when in fact they may not. For example, if we set \code{lim = c(300, 1000)} and plot the results, the 
+reflectance values between 700 and 1000 nm are set to be equal since there is no information at these 
+wavelengths in the original dataset:
+
+% TODO: do we need this plot? if so, i need to set the plot size. also, maybe it would be better
+% to use actual reflectance data?
+
+<<>>=
+fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
+plot(fakedat.new2[, 2]~fakedat.new2[, 1], type = 'l')
+@
 
 \subsection{Processing Data}
 
 \subsubsection{Averaging Spectra}
 
-As previously described, our data constitutes of multiple individuals, and each was measured  three
-times, as is common to avoid measurement bias. A good way to visualize the  repeatability
-of our measurements is to plot the spectra of each individual separately. The  function
-\code{explorespec} provides an easy way of doing so. You may specify the number of  spectra to be
-plotted in the same panel using the argument \code{specreps}, and the function  will adjust the
-number of panels per page accordingly. We will exemplify this function using  only the 12 cardinal
-individuals measured:
+As previously described, our data (contained in the \code{specs} object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function \code{explorespec} provides an easy way of doing so. You may specify the number of  spectra to be plotted in the same panel using the argument \code{specreps}, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
 
 <<label=explorespecfig, fig=TRUE, include=FALSE, width=8, height=6.33>>=
 explorespec(specs[,1:37], by=3, lwd=2) 
@@ -178,14 +210,10 @@ explorespec(specs[,1:37], by=3, lwd=2)
 \label{figure:explorespec}
 \end{figure}
 
-So our first step would be to take the average of each of these three measurements to
-obtain average individual spectra to be used in further analyses. This is easily accomplished using the
-\code{aggspec} function. The \code{by} argument can be either a number (specifying how many specs
-should be  averaged for each new sample) or a vector specifying the identities of the spectra to be
-combined (see below):
+So our first step would be to take the average of each of these three measurements to obtain average individual spectra to be used in further analyses. This is easily accomplished using the \code{aggspec} function. The \code{by} argument can be either a number (specifying how many specs should be averaged for each new sample) or a vector specifying the identities of the spectra to be combined (see below):
 
 <<>>=
-mspecs <- aggspec(specs, by=3, FUN=mean)
+mspecs <- aggspec(specs, by = 3, FUN = mean)
 mspecs[1:5, 1:4]
 dim(mspecs) #data now has 71 spectra, one for each individual, and the 'wl' column
 @
@@ -201,8 +229,8 @@ spp <- gsub('\\.[0-9].*$','',names(mspecs))[-1]
 table(spp)
 @
 
-Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} 
-function how to average the spectra in \code{mspec}:
+Instead, we are going to use the \code{spp} vector we created to tell the \code{aggspec} function how 
+to average the spectra in \code{mspec}:
 
 <<label=exploresppmeans, fig=TRUE, include=FALSE>>=
 sppspec <- aggspec(mspecs, by=spp, FUN=mean)
