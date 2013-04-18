@@ -229,8 +229,11 @@ If you prefer not to use partial matching, \code{subset} will also work if you p
 condition, similar to the default \code{subset} behavior in \code{R}. For example:
 
 <<>>=
-spp <- do.call(rbind, strsplit(names(specs), "\\."))[,1]  # vector of first component of filenames
+# extract first component of filenames containing species names
+spp <- do.call(rbind, strsplit(names(specs), "\\."))[,1]
+# subset
 specs.tanager2 <- subset(specs, subset = spp=="tanager")
+# compare subsetting methods
 all.equal(specs.tanager1, specs.tanager2)
 @
 
@@ -446,6 +449,7 @@ changing all negative values to zero (\code{zero}).
 \textcolor{red}{RM: THIS IS THROWING AN ERROR BECAUSE REFL IS A VECTOR, NOT A DATA.FRAME, 
 AND THUS DOESNT  HAVE COLUMNS. AS.RSPEC HAS A 1:NCOL(OBJECT) CALL IN IT. I DID A WORKAROUND
 BY SELECTING TWO COLUMNS INSTEAD OF ONE, BUT WE SHOULD FIX THIS.}
+\textcolor{blue}{CE: should be fixed. Try to break it and let me know.}
 
 <<results=hide>>=
 # Create a duplicate spectrum and add some negative values
