@@ -97,10 +97,7 @@ if(!inherits(visual2,'try-error')){
     visual <- 'user-defined'
     }
 
-
-# if relative=F, convert to proportions
-
-# if(!relative)
+if(max(y) > 1)
   y <- y/100
 
 # check if wavelength range matches
@@ -132,18 +129,10 @@ if(!inherits(bg2,'try-error')){
 if(bg2=='ideal')
   bkg <- rep(1,dim(rspecdata)[1])
 
+# scale background
+if(max(bkg) > 1)
+  bkg <- bkg/100
 
-# brightness
-norm.B <- colSums(y)/(dim(y)[1]*100)
-max.B <- apply(y,2,max)
-
-# wavelength of maximum reflectance
-lambdamax <- wl[max.col(t(y))]
-
-descriptive <- data.frame(lambdamax,norm.B,max.B)
-
-# scale to maximum reflectance = 1
-yscale <- apply(y,2,function(x) x/max(x))
 
 # scale illuminant
 illum <- illum * scale
