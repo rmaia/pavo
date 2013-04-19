@@ -1,4 +1,9 @@
 %\VignetteIndexEntry{User manual}
 \documentclass{article}
 \begin{document}
-\end{document}
+<<closeConnetions,results=hide>>=
+allCon <- showConnections()
+socketCon <- as.integer(rownames(allCon)[allCon[, "class"] == "sockconn"])
+sapply(socketCon, function(ii) close.connection(getConnection(ii)) )
+ <at> 
+ \end{document}
