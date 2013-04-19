@@ -11,9 +11,11 @@
   \method{subset}{vismodel} (x, subset, ...)
 }
 \arguments{
-  \item{object}{(required) an object of class \code{rspec},
+  \item{x}{(required) an object of class \code{rspec},
   \code{tcs} or \code{vismodel} containing spectra, visual
   model output or colourspace data to subset}
+
+  \item{...}{class consistency (ignored).}
 
   \item{subset}{a string used for partial matching of
   observations}

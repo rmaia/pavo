@@ -446,14 +446,9 @@ certain spectrometer manufacturers allow negative values to be saved. To handle 
 adding the absolute value of the most negative value to the whole spectrum (\code{addmin}) and (2)
 changing all negative values to zero (\code{zero}).
 
-\textcolor{red}{RM: THIS IS THROWING AN ERROR BECAUSE REFL IS A VECTOR, NOT A DATA.FRAME, 
-AND THUS DOESNT  HAVE COLUMNS. AS.RSPEC HAS A 1:NCOL(OBJECT) CALL IN IT. I DID A WORKAROUND
-BY SELECTING TWO COLUMNS INSTEAD OF ONE, BUT WE SHOULD FIX THIS.}
-\textcolor{blue}{CE: should be fixed. Try to break it and let me know.}
-
 <<results=hide>>=
 # Create a duplicate spectrum and add some negative values
-refl <- sppspec[, 6:7] - 20
+refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))
 # Apply two different processing options
 testspecs.fix1 <- procspec(testspecs, fixneg='addmin')
@@ -465,11 +460,11 @@ testspecs.fix2 <- procspec(testspecs, fixneg='zero')
 <<label=fixneg, fig=T, include=F, width=6, height=4>>=
 par(mar=c(2,2,2,2), oma=c(3,3,0,0))
 layout(cbind(c(1,1),c(2,3)), widths=c(2,1,1))
-plot(testspecs, select = 3, ylim=c(-10,30))
+plot(testspecs, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
-plot(testspecs.fix1, select = 3, ylim=c(-10,30))
+plot(testspecs.fix1, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
-plot(testspecs.fix2, select = 3, ylim=c(-10,30))
+plot(testspecs.fix2, select = 2, ylim=c(-10,30))
 abline(h=0, lty=3)
 mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)
