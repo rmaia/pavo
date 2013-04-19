@@ -2,7 +2,7 @@
 \alias{summary.rspec}
 \title{Colorimetric variables}
 \usage{
-  \method{summary}{rspec} (object, simplify = FALSE, ...)
+  \method{summary}{rspec} (object, subset = FALSE, ...)
 }
 \arguments{
   \item{object}{(required) a data frame, possibly an object
@@ -10,7 +10,7 @@
   data, named 'wl', and the remaining column containing
   spectra to process.}
 
-  \item{simplify}{Either \code{FALSE} (the default),
+  \item{subset}{Either \code{FALSE} (the default),
   \code{TRUE}, or a character vector. If \code{FALSE}, all
   variables calculated are returned. If \code{TRUE}, only a
   subset of the complete ouput (composed of B2, H1, H3, S8,
@@ -22,7 +22,7 @@
   \item{...}{class consistency (ignored)}
 }
 \value{
-  A data frame containing either 23 or 5 (\code{simplify =
+  A data frame containing either 23 or 5 (\code{subset =
   TRUE}) variables described in Montgomerie (2006) with
   spectra name as row names. The colorimetric variables
   calculated by this function are described in Montgomerie
@@ -145,8 +145,8 @@
 \dontrun{
 data(sicalis)
 summary(sicalis)
-summary(sicalis, simplify = TRUE)
-summary(sicalis, simplify = c('B1', 'H4')) }
+summary(sicalis, subset = TRUE)
+summary(sicalis, subset = c('B1', 'H4')) }
 }
 \author{
   Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael
