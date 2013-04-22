@@ -115,7 +115,8 @@ if(integrate==TRUE){
 
 sensecurves <- data.frame(sensecurves)
 names(sensecurves) <- c('wl',paste('lmax',peaksense,sep=''))
-sensecurves <- as.rspec(sensecurves)
+#sensecurves <- as.rspec(sensecurves)
+class(sensecurves) <- c('rspec', 'data.frame')
 
 sensecurves
 }
