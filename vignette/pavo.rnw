@@ -204,7 +204,7 @@ fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 plot(fakedat.new2[, 2]~fakedat.new2[, 1], type = 'l')
 @
 
-\subsection{Subsetting Data}
+\subsection{Subsetting and Merging Data}
 
 Once an \code{rspec} object has been created, either by importing raw spectral data or converting
 a dataset with the \code{as.rspec} function, you can subset the spectra based on their names using 
@@ -219,8 +219,8 @@ head(specs.tanager1)[1:5]
 The \code{subset} function here is using partial matching to find all spectra with the string
 ``tanager'' in their name. To fully benefit from this flexible subsetting functionality, it is
 important that you follow a consistent file naming scheme. For example,
-``\code{tanager.14423.belly.001.ttt}'' would indicate the species (``tanager''), individual ID
-(14423), body patch (belly) and measurement number (001). Additionally, we suggest that labels used
+``\code{tanager.14423.belly.001.ttt}'' would indicate the species (tanager), individual ID (14423), 
+body patch (belly) and measurement number (001). Additionally, we suggest that labels used
 should have the same number of characters, which simplifies character string manipulation and
 subsetting based on partial matching. Please see Andersson \& Prager \citep{Andersson:2006} for a 
 useful discussion and suggestions on file naming.
@@ -237,9 +237,22 @@ specs.tanager2 <- subset(specs, subset = spp=="tanager")
 all.equal(specs.tanager1, specs.tanager2)
 @
 
-On a final note, \code{subset} will also work with visual model (class \code{vismodel}) and 
+Note that \code{subset} will also work with visual model (class \code{vismodel}) and 
 tetracolorspace (class \code{tcs}) objects, as described below.
 
+Another useful function is \code{merge}. Let's say that you have subsetted spectra for tanagers and
+parakeets, and you would like to re-combine them for an analysis. The following lines of code show
+how to do this:
+
+<<>>=
+specs.tanager <- subset(specs, "tanager")
+specs.parakeet <- subset(specs, "parakeet")
+specs.new <- merge(specs.tanager, specs.parakeet)
+@
+
+Note that this re-combined file (\code{specs.new}) has only a single `wl' column with the merged
+spectra as columns. Keep in mind that the order of objects in \code{merge} will determine the order
+of columns in the final merged object (i.e. tanagers will be before parakeets).
 
 \subsection{Processing Data}
 

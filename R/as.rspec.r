@@ -112,6 +112,13 @@ res <- as.data.frame(cbind(wl, object))
 
 names(res) <- c('wl', name)
 
+wl_index <- which(names(res)=='wl')
+
+if (length(wl_index)>1) {
+  warning("Multiple columns named 'wl', check column names")
+  names(res)[wl_index] <- c('wl', paste('wl.', wl_index[-1]-1, sep=""))
+}
+
 class(res) <- c('rspec', 'data.frame')
 
 res
