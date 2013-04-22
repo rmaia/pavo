@@ -15,8 +15,8 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
-#' projplot(tcs.sicalis) }
+#' tcs.sicalis <- tcs(vis.sicalis)
+#' projplot(tcs.sicalis, pch=16, col=setNames(rep(1:3, 7), rep(c('C','T','B'),7))) }
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal visual systems and the evolution of color patterns: Sensory processing illuminates signal evolution. Evolution, 59(8), 1795-1818.

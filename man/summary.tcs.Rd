@@ -51,7 +51,8 @@
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))}
+tcs.sicalis <- tcs(vis.sicalis)
+summary(tcs.sicalis, by=rep(c('C','T','B'),7))}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}

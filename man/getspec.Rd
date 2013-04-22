@@ -41,8 +41,8 @@
 }
 \examples{
 \dontrun{
-getspec('/examplespec', lim=c(400,900))
-getspec('/examplespec', ext='ttt')}
+getspec('examplespec/', lim=c(400,900))
+getspec('examplespec/', ext='ttt')}
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}

@@ -32,8 +32,8 @@
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis, by=rep(c('C','T','B'),7))
-projplot(tcs.sicalis) }
+tcs.sicalis <- tcs(vis.sicalis)
+projplot(tcs.sicalis, pch=16, col=setNames(rep(1:3, 7), rep(c('C','T','B'),7))) }
 }
 \author{
   Rafael Maia \email{rm72@zips.uakron.edu}
