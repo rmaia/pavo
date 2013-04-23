@@ -13,8 +13,6 @@
 \usepackage{float}
 \usepackage{subcaption}
 
-\usepackage{color} %REMOVE after editing
-
 % Macros
 \newcommand{\pavo}{{\tt pavo}}  
 \newcommand{\code}[1]{{\tt #1}}
@@ -44,21 +42,19 @@
 
 \begin{abstract} 
 
-\textcolor{red}{RM Do we need to change the running title?}
-
 \begin{enumerate} 
 
-\item Recent technical, methodological and empirical advances have led to a dramatic increase in
-the use of spectrometry to quantify reflectance properties of biological material and of models
-to determine how these colours are perceived by the animals themselves , providing important
+\item Recent technical and methodological advances have led to a dramatic increase in
+the use of spectrometry to quantify reflectance properties of biological material, as well as models
+to determine how these colours are perceived by the animals themselves, providing important
 insights to ecological and evolutionary aspects of animal visual communication.
 
-\item Despite this growing interest, a unified framework for analyzing and visualizing spectral data
-has not been available. We introduce \pavo{}, an R package that facilitates the organization,
-visualization, and analysis of spectral data in a cohesive framework. \pavo{} is highly flexible,
-allowing users to (a) organize and manipulate  data from a variety of sources, (b) visualize
-data  using R's state-of-the-art graphics capabilities, and (c) analyze data using spectral curve
-shape properties and visual system modeling for a broad range of taxa.
+\item Despite this growing interest, a unified cross-platform framework for analyzing and
+visualizing spectral data has not been available. We introduce \pavo{}, an R package that
+facilitates the organization, visualization, and analysis of spectral data in a cohesive framework.
+\pavo{} is highly flexible, allowing users to (a) organize and manipulate  data from a variety of
+sources, (b) visualize data  using R's state-of-the-art graphics capabilities, and (c) analyze data
+using spectral curve shape properties and visual system modeling for a broad range of taxa.
 
 \item In this paper, we present a summary of the functions implemented in \pavo{} and how they
 integrate in a workflow to explore and analyze spectral data. We also present an exact solution for
@@ -117,15 +113,13 @@ visual models that estimate how animals see and differentiate these colours
 Because of these advances, a cohesive framework for working with and analyzing colour from
 reflectance data is needed. Output file types from spectrometer manufacturers are not standardized,
 and though existing software programs have provided helpful implementations of several methodologies
-\citep{Avicol,Stoddard:2008,Montgomerie:2006}, they are
-often limited in the methodologies implemented, the types of data they can import and process, or
-the platforms in which they are available. Moreover, many are proprietary and/or closed, hindering
-customization \citep[for a review of available software, see][]{Montgomerie:2006}. Furthermore, once
-the relevant colour data are extracted, they often require additional conversion and export into
-statistical software for analysesprotocol standardization across labs, and batch processing
-automation of workflows. Combined with published descriptions that are often poorly detailed or
-inconsistent, the current procedures and implementations severely hinder the reproducibility of
-research and the reimplementation of methods.
+\citep{Avicol,Stoddard:2008,Montgomerie:2006}, they are often limited in the methodologies
+implemented, the types of data they can import and process, or the platforms in which they are
+available. Moreover, many are proprietary and/or closed, hindering customization \citep[for a review
+of available software, see][]{Montgomerie:2006}. Furthermore, once the relevant colour data are
+extracted, they often require additional conversion and export into statistical software for
+analyses, which precludes protocol standardization across labs, batch processing and automation of
+workflows.
 
 We introduce \pavo{} \textendash \; a package for R \citep{rcore} that addresses these problems by
 providing a flexible, yet cohesive, environment in which researchers can organize, analyze and
@@ -204,9 +198,8 @@ Finally, \pavo{} offers plotting capabilities for the avian tetrachromatic colou
 The \code{summary} function can be applied to \code{rspec} objects to extract several objective
 ('receiver-independent') reflectance shape variables, relevant to specific or universal mechanisms
 of colour signalling (e.g. pigments, structures) or colour perception (spectral intensity, location
-and purity). For description and dicussion of these variables see \citep{Andersson:2006} and
-\citep{Montgomerie:2006}. Description and formulae for the variables can be also be found in the
-help file, by typing \code{?summary.rspec}, and in the package Vignette. Additionally, the function
+and purity). Description and dicussion of these variables can be found in \cite{Andersson:2006} and
+\cite{Montgomerie:2006}, as well as in the package vignette. Additionally, the function
 \code{peakshape} provides descriptors of spectral peaks, such as the wavelength of maximum
 reflectance and the full width at half maximum, and can be fine-tuned to extract information from
 specific areas of the curve. This implementation can be useful when the spectral curve has multiple
@@ -250,7 +243,7 @@ Supplemental Information)
 \section{Worked example: colour divergence in glossy starlings (Sturnidae)}
 
 Glossy starlings from the African clade have bright and diverse iridescent colours likely used in
-courtship displays and social competition \citep{Rubenstein:2009}. Here we showcase some of
+courtship displays and social competition \citep{Rubenstein:2009}. Here we demonstrate some of
 \pavo{}'s capabilities through a worked example to compare the colours of a monophyletic clade of
 three glossy starling species, two of which (\textit{L. chloropterus} and \textit{L. elisabeth})
 have recently diverged and whose status as full species is debated \citep{Gill:2012, Craig:1998,
@@ -623,9 +616,9 @@ as appropriate, along with \pavo{}.
 We would like to thank two anonymous reviewers for comments to a previous version of this
 manuscript, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop
 some of \pavo{}'s capabilities. This work was supported by the NSF grant DEB-1210630, AMNH Chapman
-research grant and Sigma XI GIAR (R.M.), HFSP grant RGY0083, AFOSR grant FA9550-09-1-0159 (M.D.S.),
-the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and Equipment grant (S.M.D),
-and NSERC Graduate Scholarship (P.-P.B.).
+research grant and Sigma XI GIAR (R.M.), NSF grant EAR-1251895, HFSP grant RGY0083, AFOSR grant
+FA9550-09-1-0159 (M.D.S.), the University of Akron (M.D.S., R.M., C.M.E.), NSERC Discovery grant and
+Equipment grant (S.M.D), and NSERC Graduate Scholarship (P.-P.B.).
 
 \end{acks}
 
