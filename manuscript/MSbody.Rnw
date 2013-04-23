@@ -130,7 +130,7 @@ classes that can seamlessly interpret each other, providing functions that can b
 explore, process, and analyze spectral colour data under a variety of user-defined models. We
 propose that combining these procedures under a coherent framework not only streamlines workflow,
 but also allows data to be explored and manipulated in ways that can be used to visualize patterns,
-obtain information and develop and test hypotheses (Figure \ref{figure:work}).
+obtain information, and develop and test hypotheses (Figure \ref{figure:work}).
 
 \begin{center}\fbox{Figure \ref{figure:work} about here}\end{center} 
 
