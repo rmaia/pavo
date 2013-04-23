@@ -2,7 +2,7 @@
 #'
 #' \code{tcspoints} plots points in a tetrahedral color space
 #'
-#' @return \code{tcsplot} creates 3D points in a tetrahedral color space plot produced by \code{tcsplot}
+#' @return \code{tcspoints} creates 3D points in a tetrahedral color space plot produced by \code{tcsplot}
 #' using functions of the package \code{rgl}, based on openGL capabilities.
 #'
 #' @rdname tcsplot
