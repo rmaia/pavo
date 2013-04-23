@@ -1,9 +1,0 @@
- - Fig 5. panels are mixed in the legend
- - p.10 explain how negative values can be generated
- - p.12 fix reference to Eliason & Shawkey
- - p.15 explain that equation refers to standard error
- - Fig. 14 plot axes are over each other
- - p.26 eqn 8 is not supposed to be squared
- - p.28 remove line break before log example
- 
- - change PEAKSHAPE example to use teal data
