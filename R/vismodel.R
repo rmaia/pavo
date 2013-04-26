@@ -101,8 +101,13 @@ if(max(y) > 1)
   y <- y/100
 
 # check if wavelength range matches
+  if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)) & 
+  !inherits(visual2,'try-error'))
+    stop('wavelength range in spectra and visual system data do not match - spectral data must range between 300 and 700 nm in 1-nm intervals. Consider interpolating using as.rspec().')
+
+
   if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)))
-    stop('wavelength in spectra table and visual system chosen do not match')
+    stop('wavelength range in spectra and visual system data do not match')
 
 
 #DEFINING ILLUMINANT & BACKGROUND
