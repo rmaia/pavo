@@ -64,6 +64,7 @@ if (!is.null(whichwl)){
       wl <- object[, wl_index]
       object <- as.data.frame(object[, -wl_index])
       name <- name[-wl_index]
+      cat('wavelengths found in column', wl_index,'\n')
     } else {
         wl <- seq(lim[1], lim[2], length=nrow(object))
         object <- as.data.frame(object)
