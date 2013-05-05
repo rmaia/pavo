@@ -110,6 +110,9 @@ separ <- ifelse(issem,';','\t')
 
 tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)		
 
+# remove columns where all values are NAs (due to poor tabulation)
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]
+
 # Jaz and Avasoft8 have 5 columns, correct
 tempframe <- tempframe[,c(1,dim(tempframe)[2])]
 
