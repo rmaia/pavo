@@ -5,7 +5,7 @@ citEntry(entry="Article",
     author = personList(as.person("Rafael Maia"),
     as.person("Chad M. Eliason"),
     as.person("Pierre-Paul Bitton"),
-    as.person("Stphanie M. Doucet"),
+    as.person("Stephanie M. Doucet"),
     as.person("Matthew D. Shawkey")
     ),
 	journal = "submitted",

@@ -50,3 +50,4 @@ Collate:
     'merge.rspec.R'
     'summary.vismodel.R'
     'subset.rspec.R'
+    'irrad2flux.R'

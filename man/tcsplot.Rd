@@ -58,7 +58,7 @@
   to the plot. Points are currently plotted only as spheres
   to maintain export capabilities.
 
-  \code{tcsplot} creates 3D points in a tetrahedral color
+  \code{tcspoints} creates 3D points in a tetrahedral color
   space plot produced by \code{tcsplot} using functions of
   the package \code{rgl}, based on openGL capabilities.
 

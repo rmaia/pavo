@@ -897,7 +897,8 @@ model being implemented:
   (see Receptor noise section, below).Illuminant curves should be in units of $\mu mol.s^{-1}.m^{-2}$ 
   in order to yield physiologically meaningful results. \footnote{some software return illuminant
   information values in $\mu Watt.cm^{-2}$, and must be converted to $\mu mol.s^{-1}.m^{-2}$. 
-  This can be done by multiplying the illuminant by 11964.7. For more information, see \cite{Avicol}.} 
+  This can be done by using the \code{irrad2flux} and \code{flux2irrad} functions. For more 
+  information, see \cite{Avicol}.} 
   Therefore, if the user-specified illuminant
   curves are \textit{not} in these units (i.e. are measured proportional to a white standard, for
   example), the \code{scale} parameter can be used as a multiplier to yield curves that are at least
