@@ -102,6 +102,7 @@ if (type=='heatmap') {
 # coloring for overlay plot & others
 if (length(arg$col) < ncol(x))
   arg$col <- rep(arg$col, ncol(x))
+  arg$col <- arg$col[1:ncol(x)]
 if (any(names(arg$col)%in%names(x)))
   arg$col <- arg$col[select-1]
 
