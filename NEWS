@@ -1,3 +1,10 @@
+pavo 1.0
+------------------------------------------------------------------------------
+
+MINOR FEATURES AND BUG FIXES
+* vismodel() vonkries = TRUE does not return a NULL result
+* vismodel() works with a single spectrum object
+
 pavo 0.3-1
 ------------------------------------------------------------------------------
 NEW FUNCTIONS

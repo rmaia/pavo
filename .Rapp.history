@@ -1,0 +1,948 @@
+rugcomp <- cmpfun(rugated)
+rugcomp
+install.packages('microbenchmark')
+require(microbenchmark)
+latthick <- 180#
+#
+pos <- seq(0, platthick, by=10)#
+#
+a <- 0.15*cos(2*pi*1/platthick*pos + 2*pi) + 1.5#
+b <- rep(1.56, 15)#
+b <- NULL#
+#
+pos <- seq(0, platthick*i + length(b)*10, by=10)#
+#
+dat <- data.frame(pos)#
+dat$ri <- c(b, c(rep(a[-length(a)], i), a[length(a)]))#
+#
+dat$ec <- 0.0#
+#
+plot(dat$ri~dat$pos, type='l', xlim=c(0, 2000))#
+HR(dat)
+platthick <- 180#
+#
+pos <- seq(0, platthick, by=10)#
+#
+a <- 0.15*cos(2*pi*1/platthick*pos + 2*pi) + 1.5#
+b <- rep(1.56, 15)#
+b <- NULL#
+#
+pos <- seq(0, platthick*i + length(b)*10, by=10)#
+#
+dat <- data.frame(pos)#
+dat$ri <- c(b, c(rep(a[-length(a)], i), a[length(a)]))#
+#
+dat$ec <- 0.0#
+#
+plot(dat$ri~dat$pos, type='l', xlim=c(0, 2000))#
+HR(dat)
+rugated(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180)
+rugcomp(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180)
+compare <- microbenchmark(f(1000, 1), g(1000, 1), times = 1000)
+compare <- microbenchmark(rugated(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180), rugcomp(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180), times = 10)
+require(ggplot2)
+autoplot(compare)
+compare
+1090.1401/701.9726
+compare <- microbenchmark(rugated(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180), rugcomp(dat$ri-dat$ec*1i,max(dat$pos),ag0=10*pi/180), times = 50)
+autoplot(compare)
+0.02/sqrt(0.0625)
+log10(12649)
+log10(12.649)
+h = 6.626 * 10^-34
+c = 2.998 * 10^8
+(10 * 700 ) / (h*c*10^4)
+equire(pavo)#
+require(plyr)#
+#
+#Abrir tabelas com predadores#
+#
+colo<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-colo.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+irara<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-irara.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='zero')#
+#
+jag<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-jag.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+jaguat<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-jaguat.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+onca<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-onca.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+puma<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-puma.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+tigrinus<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-tigrinus.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='zero')#
+#
+#Abrir background, iluminante e cones#
+#
+galeria<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/bk-galeria.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#galeria<-aggspec(galeria, by=dim(galeria)[2]-1)#
+#names(galeria)[2] <- 'bkg'#
+names(galeria)[-1] <- paste('bkg',1:100, sep='.')
+iluminantes <- getspec('~/Desktop/Ajuz-dados_brutos/iluminantes_lais', decimal=',')
+irrad2flux <- function(rspecdata){#
+#
+if(!is.rspec(rspecdata))#
+  stop('not an object of class rspec')#
+#
+  nam <- names(rspecdata)#
+  wl_index <- which(names(rspecdata)=='wl')#
+  wl <- rspecdata[,wl_index]#
+  #rspecdata <- rspecdata[,-wl_index]	#
+  K <- 0.01/(6.626*2.998*6.02308)#
+  res <- sapply(1:ncol(rspecdata), function(z) rspecdata[,z] * wl * K )#
+  res <- data.frame(res)#
+  names(res) <- nam#
+  class(res) <- c('rspec', 'data.frame')#
+  res[,'wl'] <- wl#
+  res#
+}
+iluminantes <- irrad2flux(iluminantes)
+plot(iluminantes)
+marmoset <- as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/sens.txt", h=T))#
+marmoset <- procspec(marmoset, opt='sum')#
+mm2 <- sensmodel(c(425,543,556,562), beta=T)#
+names(mm2) <- names(marmoset)#
+marmoset <- mm2#
+marmoset[1:100, 2:5] <- 0#
+#
+human <- as.rspec(read.csv('~/Desktop/Analises finais/human_interpolated.csv'))#
+tmp <- matrix(0, nrow=100, ncol=4)#
+colnames(tmp) <- names(human)#
+human <- rbind(tmp, human)#
+rm(tmp)#
+human$wl <- 300:700#
+human <- as.rspec(human)#
+human <- procspec(human, opt='sum')#
+#
+#hm2 <- sensmodel(c(440, 545, 565), beta=F)#
+#names(hm2) <- names(human)#
+#human <- hm2#
+#human[1:100, 2:4] <- 0#
+#
+# VISUAL MODELS#
+#
+viscolo <- vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=1)
+viscolo
+coldist(vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=1)#
+)
+coldist(vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=100)#
+)
+coldist(vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=1), noise='q'#
+)
+coldist(vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=100), noise='q'#
+)
+plot(iluminantes)
+iluminantes <- getspec('~/Desktop/Ajuz-dados_brutos/iluminantes_lais', decimal=',')
+plot(iluminantes)
+colMeans(iluminantes)
+colMeans(irrad2flux(iluminantes))
+?getspec
+getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',')
+ext='txt'
+decimal='.'
+decimal=','
+recursive=F
+rm(recursive)
+subdir=F
+subdir.names=F
+extension <- paste('.', ext, sep='')
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
+where='~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo'
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
+file_names
+files <- paste(where,'/',file_names,sep='')
+files
+range=300:700
+getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',', range=c(400,700))
+getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',', lim=c(400,700))
+range=400:700
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
+final[,1] <- range
+i=2
+i=1
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
+head(raw)
+head(raw,20)
+start <- grep('[A-Da-dF-Zf-z]',raw)
+isendline <- length(grep('End.*Spectral Data', raw)) > 0
+start
+isendline
+start <- start[-length(start)]
+start <- max(start)
+start
+raw[17]
+raw[18]
+end <- length(raw) - start
+if( isendline >0 )#
+  end <- end - 1
+newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
+newavaheader
+issem <- length(grep(';',raw)) > 0#
+istab <- length(grep('\t',raw)) > 0
+separ <- ifelse(issem,';','\t')
+separ
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)
+head(tempframe)
+summary(tempframe)
+colSums(is.na(tempframe))
+nrow(tempframe)
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]
+summary(tempframe)
+?approx
+' Import spectra files#
+#' #
+#' Finds and imports spectra files from a folder. Currently works#
+#' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,#
+#' USB4000 and Jaz spectrometers), CRAIC software (after exporting) and #
+#' Avantes (after exporting).#
+#' #
+#' @param where (required) folder in which files are located.#
+#' @param ext file extension to be searched for, without the "." #
+#' (defaults to "txt").#
+#' @param lim a vector with two numbers determining the wavelength limits to be#
+#' considered (defaults to 300 and 700).#
+#' @param decimal character to be used to identify decimal plates #
+#' (defaults to ".")#
+#' @param subdir should subdirectories within the \code{where} folder be#
+#' included in the search? (defaults to \code{FALSE})#
+#' @param subdir.names should subdirectory path be included in the name of the#
+#' spectra? (defaults to \code{FALSE})#
+#' @return A data frame, of class \code{rspec}, containing individual imported#
+#' spectral files as columns.#
+#' Reflectance values are interpolated to the nearest wavelength integer.#
+#' @export#
+#' @examples \dontrun{#
+#' getspec('examplespec/', lim=c(400,900))	#
+#' getspec('examplespec/', ext='ttt')}#
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}#
+#' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) #
+#' Bird coloration. Harvard University Press, Cambridge, pp 90-147.#
+#clumsy: if subdir=T, column name includes subdir name (desired?)#
+#
+# CME: can we have this automatically set the lower and upper limits based on the spec #
+#      files? These files are usually a pain to view in a text editor to see what wl #
+#      range was used.#
+# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different #
+#     ranges they can't be added to the same matrix without adding NAs; (2) If saved spec#
+#     includes a range that the spec can't actually read, it will be very noisy and may #
+#     mess corrections (depending on how these are handled).#
+#   suggested solution: a secondary function that examines files and returns recorded WL #
+#     range (in a dataframe or table)#
+#
+getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", #
+           subdir=FALSE, subdir.names=FALSE)#
+{#
+#
+extension <- paste('.', ext, sep='')#
+#
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)#
+files <- paste(where,'/',file_names,sep='')#
+#
+cat(length(files),' files found; importing spectra\n')#
+#
+if(subdir.names){#
+	file_names <- gsub(extension,'',file_names)}else{#
+	file_names <- gsub(extension,'',basename(file_names))#
+	 }#
+#
+if(length(file_names)==0){#
+	stop('No files found. Try a different ext')#
+	} #
+#
+range <- lim[1]:lim[2]#
+#
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))#
+final[,1] <- range#
+#
+# Setting a progress bar#
+progbar <- txtProgressBar(min=0, max=length(files), style=2)#
+#
+for(i in 1:length(files))#
+{#
+#
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')#
+#ToDo we can actually use this raw string to import metadata if we want#
+#
+# find last line with text#
+# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end#
+#
+start <- grep('[A-Da-dF-Zf-z]',raw)#
+isendline <- length(grep('End.*Spectral Data', raw)) > 0#
+#
+if(isendline)#
+  start <- start[-length(start)]#
+start <- max(start)#
+#
+end <- length(raw) - start#
+#
+if( isendline >0 )#
+  end <- end - 1#
+#
+# Avantes has an extra skipped line between header and data. Bad Avantes.#
+newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0#
+#
+if(newavaheader)#
+  start <- start+1#
+#
+# find if columns are separated by semicolon or tab#
+issem <- length(grep(';',raw)) > 0#
+istab <- length(grep('\t',raw)) > 0#
+#
+if(issem & istab)#
+  stop('inconsistent column delimitation in source files.')#
+separ <- ifelse(issem,';','\t')#
+#
+# extract data from file#
+#
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)		#
+#
+# remove columns where all values are NAs (due to poor tabulation)#
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]#
+#
+# Jaz and Avasoft8 have 5 columns, correct#
+tempframe <- tempframe[,c(1,dim(tempframe)[2])]#
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))#
+names(interp) <- c("wavelength", strsplit(file_names[i], extension) )#
+#
+final[,i+1] <- interp[,2]#
+#
+setTxtProgressBar(progbar, i)#
+#
+}#
+#
+names(final) <- c('wl',gsub(extension,'',file_names))#
+class(final) <- c('rspec','data.frame')#
+final#
+}
+getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',', lim=c(400,700))
+require(pavo)#
+require(plyr)#
+#
+#Abrir tabelas com predadores#
+#
+colo<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-colo.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+irara<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-irara.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='zero')#
+#
+jag<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-jag.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+jaguat<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-jaguat.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+onca<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-onca.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+puma<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-puma.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#
+tigrinus<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/p-tigrinus.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='zero')#
+#
+#Abrir background, iluminante e cones#
+#
+galeria<- procspec(as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/bk-galeria.txt",h=T), interp=FALSE, lim=c(300,700)), fixneg='addmin')#
+#galeria<-aggspec(galeria, by=dim(galeria)[2]-1)#
+#names(galeria)[2] <- 'bkg'#
+names(galeria)[-1] <- paste('bkg',1:100, sep='.')
+iluminantes <- getspec('~/Desktop/Ajuz-dados_brutos/iluminantes_lais', decimal=',')
+irrad2flux(iluminantes)
+iluminantes <- irrad2flux(iluminantes)
+marmoset <- as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/sens.txt", h=T))#
+marmoset <- procspec(marmoset, opt='sum')#
+mm2 <- sensmodel(c(425,543,556,562), beta=T)#
+names(mm2) <- names(marmoset)#
+marmoset <- mm2#
+marmoset[1:100, 2:5] <- 0#
+#
+human <- as.rspec(read.csv('~/Desktop/Analises finais/human_interpolated.csv'))#
+tmp <- matrix(0, nrow=100, ncol=4)#
+colnames(tmp) <- names(human)#
+human <- rbind(tmp, human)#
+rm(tmp)#
+human$wl <- 300:700#
+human <- as.rspec(human)#
+human <- procspec(human, opt='sum')
+viscolo <- vismodel(merge(colo, galeria), visual=marmoset, achromatic='none', illum=iluminantes$absoluta4, bkg='ideal', relative=F, scale=1)
+viscolo
+0.02/sqrt(0.0625)
+QA = 1.269639e-06
+QB = 1.047724e-02
+v = 0.02
+n1 = 0.0625
+sqrt((v^2/n1) + (2/(qn1[1]+qn2[1])))
+sqrt((v^2/n1) + (2/(QA+QB)))
+QA = 1.269639e-06 * 100
+QB = 1.047724e-02 * 100
+sqrt((v^2/n1) + (2/(QA+QB)))
+(v^2/n1)
+(v^2/n1)^2
+sqrt(v^2/n1)
+o.o8^2
+0.08^2
+(v^2/n1)
+sqrt(v^2/n1)
+0.08^2
+sqrt(0.08^2)
+sqrt(0.08^2 + 2/(QA+QB))
+QA = 1.27e-06
+QB = 1.05e-02
+sqrt((v^2/n1) + (2/(QA+QB)))
+QA = 1.27e-06 *100
+QB = 1.05e-02 *100
+sqrt((v^2/n1) + (2/(QA+QB)))
+K
+K <- 0.01/(6.626*2.998*6.02308)
+10 * K
+10 * K * 300
+10 * K * 700
+QA = 1.27e-06 *1e17
+QB = 1.05e-02 *1e17
+sqrt((v^2/n1) + (2/(QA+QB)))
+plot(colo)
+plot(galeria)
+plot(marmoset)
+colSums(marmoset)
+marmoset <- as.rspec(read.table("/Users/RMaia/Documents/Statistics/Outros/Ajuz/!Testes-Finais/sens.txt", h=T))
+marmoset <- procspec(marmoset, opt='sum')
+colSums(marmoset)
+plot(marmoset)
+vismode
+vismod
+vismodel
+colo[,2]
+plot(colo)
+colo[,3]
+plot.rspec()
+plot(colo, select=2)
+plot(colo, select=3)
+plot(colo, select=5)
+plot(colo, select=10)
+plot(colo, select=16)
+colo[,16]
+plot(colo[,16])
+colo[,16]
+plot(colo[,16]*marmoset[,2])
+plot(colo[,16]*marmoset[,2]*iluminantes[,2])
+sum(colo[,16]*marmoset[,2]*iluminantes[,2])
+plot(colo[,16]*marmoset[,3]*iluminantes[,2])
+sum(colo[,16]*marmoset[,2]*iluminantes[,2])
+viscolo[16,]
+sum(colo[,16]/100*marmoset[,2]*iluminantes[,2])
+sum(colo[,16]/100*marmoset[,2]*iluminantes[,3])
+sum(colo[,16]/100*marmoset[,2]*iluminantes[,2])
+viscolo[15,]
+viscolo[17,]
+names(colo)[16]
+mm2 <- sensmodel(c(425,543,556,562), beta=T)#
+names(mm2) <- names(marmoset)#
+marmoset <- mm2#
+marmoset[1:100, 2:5] <- 0
+sum(colo[,16]/100*marmoset[,2]*iluminantes[,2])
+sum(colo[,16]/100*marmoset[,3]*iluminantes[,2])
+sum(colo[,16]/100*marmoset[,4]*iluminantes[,2])
+sum(colo[,16]/100*marmoset[,5]*iluminantes[,2])
+exp(18)
+10*K
+10*K*700
+require(multicore)
+mclapply(1:10, rnorm(1))
+mclapply(1:10, rnorm)
+mclapply(1:10, function(x) rnorm(1))
+unlist(mclapply(1:10, function(x) rnorm(1)))
+unique(unlist(mclapply(1:100, function(x) rnorm(1))))
+length(unique(unlist(mclapply(1:100, function(x) rnorm(1)))))
+set.seed(1982)
+length(unique(unlist(mclapply(1:100, function(x) rnorm(1)))))
+danilo = getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',')
+plot(danilo)
+head(danilo)
+' Import spectra files#
+#' #
+#' Finds and imports spectra files from a folder. Currently works#
+#' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,#
+#' USB4000 and Jaz spectrometers), CRAIC software (after exporting) and #
+#' Avantes (after exporting).#
+#' #
+#' @param where (required) folder in which files are located.#
+#' @param ext file extension to be searched for, without the "." #
+#' (defaults to "txt").#
+#' @param lim a vector with two numbers determining the wavelength limits to be#
+#' considered (defaults to 300 and 700).#
+#' @param decimal character to be used to identify decimal plates #
+#' (defaults to ".")#
+#' @param subdir should subdirectories within the \code{where} folder be#
+#' included in the search? (defaults to \code{FALSE})#
+#' @param subdir.names should subdirectory path be included in the name of the#
+#' spectra? (defaults to \code{FALSE})#
+#' @return A data frame, of class \code{rspec}, containing individual imported#
+#' spectral files as columns.#
+#' Reflectance values are interpolated to the nearest wavelength integer.#
+#' @export#
+#' @examples \dontrun{#
+#' getspec('examplespec/', lim=c(400,900))	#
+#' getspec('examplespec/', ext='ttt')}#
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}#
+#' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) #
+#' Bird coloration. Harvard University Press, Cambridge, pp 90-147.#
+#clumsy: if subdir=T, column name includes subdir name (desired?)#
+#
+# CME: can we have this automatically set the lower and upper limits based on the spec #
+#      files? These files are usually a pain to view in a text editor to see what wl #
+#      range was used.#
+# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different #
+#     ranges they can't be added to the same matrix without adding NAs; (2) If saved spec#
+#     includes a range that the spec can't actually read, it will be very noisy and may #
+#     mess corrections (depending on how these are handled).#
+#   suggested solution: a secondary function that examines files and returns recorded WL #
+#     range (in a dataframe or table)#
+#
+getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", #
+           subdir=FALSE, subdir.names=FALSE)#
+{#
+#
+extension <- paste('.', ext, sep='')#
+#
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)#
+files <- paste(where,'/',file_names,sep='')#
+#
+cat(length(files),' files found; importing spectra\n')#
+#
+if(subdir.names){#
+	file_names <- gsub(extension,'',file_names)}else{#
+	file_names <- gsub(extension,'',basename(file_names))#
+	 }#
+#
+if(length(file_names)==0){#
+	stop('No files found. Try a different ext')#
+	} #
+#
+range <- lim[1]:lim[2]#
+#
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))#
+final[,1] <- range#
+#
+# Setting a progress bar#
+progbar <- txtProgressBar(min=0, max=length(files), style=2)#
+#
+for(i in 1:length(files))#
+{#
+#
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')#
+#ToDo we can actually use this raw string to import metadata if we want#
+#
+# find last line with text#
+# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end#
+#
+start <- grep('[A-Da-dF-Zf-z]',raw)#
+isendline <- length(grep('End.*Spectral Data', raw)) > 0#
+#
+if(isendline)#
+  start <- start[-length(start)]#
+start <- max(start)#
+#
+end <- length(raw) - start#
+#
+if( isendline >0 )#
+  end <- end - 1#
+#
+# Avantes has an extra skipped line between header and data. Bad Avantes.#
+newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0#
+#
+if(newavaheader)#
+  start <- start+1#
+#
+# find if columns are separated by semicolon or tab#
+issem <- length(grep(';',raw)) > 0#
+istab <- length(grep('\t',raw)) > 0#
+#
+if(issem & istab)#
+  stop('inconsistent column delimitation in source files.')#
+separ <- ifelse(issem,';','\t')#
+#
+# extract data from file#
+#
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)		#
+#
+# remove columns where all values are NAs (due to poor tabulation)#
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]#
+#
+# Jaz and Avasoft8 have 5 columns, correct#
+tempframe <- tempframe[,c(1,dim(tempframe)[2])]#
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))#
+names(interp) <- c("wavelength", strsplit(file_names[i], extension) )#
+#
+final[,i+1] <- interp[,2]#
+#
+setTxtProgressBar(progbar, i)#
+#
+}#
+#
+names(final) <- c('wl',gsub(extension,'',file_names))#
+class(final) <- c('rspec','data.frame')#
+final#
+}
+danilo = getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',')
+head(danilo)
+head(getspec('~/github/pavo/examplespec'))
+plot(getspec('~/github/pavo/examplespec'))
+extension
+files
+head(raw)
+isendline
+separ
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)
+head(tempframe)
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]
+head(tempframe)
+tempframe <- tempframe[,c(1,dim(tempframe)[2])]
+head(tempframe)
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
+head(interp)
+plot(interp)
+names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
+head(interp)
+final[,i+1] <- interp[,2]
+head(final)
+ls()
+rm(list=ls())
+' Import spectra files#
+#' #
+#' Finds and imports spectra files from a folder. Currently works#
+#' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,#
+#' USB4000 and Jaz spectrometers), CRAIC software (after exporting) and #
+#' Avantes (after exporting).#
+#' #
+#' @param where (required) folder in which files are located.#
+#' @param ext file extension to be searched for, without the "." #
+#' (defaults to "txt").#
+#' @param lim a vector with two numbers determining the wavelength limits to be#
+#' considered (defaults to 300 and 700).#
+#' @param decimal character to be used to identify decimal plates #
+#' (defaults to ".")#
+#' @param subdir should subdirectories within the \code{where} folder be#
+#' included in the search? (defaults to \code{FALSE})#
+#' @param subdir.names should subdirectory path be included in the name of the#
+#' spectra? (defaults to \code{FALSE})#
+#' @return A data frame, of class \code{rspec}, containing individual imported#
+#' spectral files as columns.#
+#' Reflectance values are interpolated to the nearest wavelength integer.#
+#' @export#
+#' @examples \dontrun{#
+#' getspec('examplespec/', lim=c(400,900))	#
+#' getspec('examplespec/', ext='ttt')}#
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}#
+#' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) #
+#' Bird coloration. Harvard University Press, Cambridge, pp 90-147.#
+#clumsy: if subdir=T, column name includes subdir name (desired?)#
+#
+# CME: can we have this automatically set the lower and upper limits based on the spec #
+#      files? These files are usually a pain to view in a text editor to see what wl #
+#      range was used.#
+# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different #
+#     ranges they can't be added to the same matrix without adding NAs; (2) If saved spec#
+#     includes a range that the spec can't actually read, it will be very noisy and may #
+#     mess corrections (depending on how these are handled).#
+#   suggested solution: a secondary function that examines files and returns recorded WL #
+#     range (in a dataframe or table)#
+#
+getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", #
+           subdir=FALSE, subdir.names=FALSE)#
+{#
+#
+extension <- paste('.', ext, sep='')#
+#
+file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)#
+files <- paste(where,'/',file_names,sep='')#
+#
+cat(length(files),' files found; importing spectra\n')#
+#
+if(subdir.names){#
+	file_names <- gsub(extension,'',file_names)}else{#
+	file_names <- gsub(extension,'',basename(file_names))#
+	 }#
+#
+if(length(file_names)==0){#
+	stop('No files found. Try a different ext')#
+	} #
+#
+range <- lim[1]:lim[2]#
+#
+final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))#
+final[,1] <- range#
+#
+# Setting a progress bar#
+progbar <- txtProgressBar(min=0, max=length(files), style=2)#
+#
+for(i in 1:length(files))#
+{#
+#
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')#
+#ToDo we can actually use this raw string to import metadata if we want#
+#
+# find last line with text#
+# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end#
+#
+start <- grep('[A-Da-dF-Zf-z]',raw)#
+isendline <- length(grep('End.*Spectral Data', raw)) > 0#
+#
+if(isendline)#
+  start <- start[-length(start)]#
+start <- max(start)#
+#
+end <- length(raw) - start#
+#
+if( isendline >0 )#
+  end <- end - 1#
+#
+# Avantes has an extra skipped line between header and data. Bad Avantes.#
+newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0#
+#
+if(newavaheader)#
+  start <- start+1#
+#
+# find if columns are separated by semicolon or tab#
+issem <- length(grep(';',raw)) > 0#
+istab <- length(grep('\t',raw)) > 0#
+#
+if(issem & istab)#
+  stop('inconsistent column delimitation in source files.')#
+separ <- ifelse(issem,';','\t')#
+#
+# extract data from file#
+#
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)		#
+#
+# remove columns where all values are NAs (due to poor tabulation)#
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]#
+#
+# Jaz and Avasoft8 have 5 columns, correct#
+tempframe <- tempframe[,c(1,dim(tempframe)[2])]#
+interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))#
+names(interp) <- c("wavelength", strsplit(file_names[i], extension) )#
+#
+final[,i+1] <- interp[,2]#
+#
+setTxtProgressBar(progbar, i)#
+#
+}#
+#
+names(final) <- c('wl',gsub(extension,'',file_names))#
+class(final) <- c('rspec','data.frame')#
+final#
+}
+danilo = getspec('~/Downloads/danilo.gustavo@gmail.com - Re: uso do pavo', decimal=',')
+head(danilo)
+tail(danilo)
+plot(danilo)
+plot(danilo, ylim=c(300,700))
+min(danilo)
+data(sicalis)
+plot(sicalis)
+head(sicalis)
+sicalis[1,2] = NA
+head(sicalis)
+plot(sicalis)
+' Plot spectra#
+#'#
+#' Plots reflectance spectra in different arrangements.#
+#'#
+#' @S3method plot rspec#
+#' @method plot rspec#
+#' @param x (required) a data frame, possibly an object of class \code{rspec},#
+#' with a column with wavelength data, named 'wl', and the remaining column containing#
+#' spectra to plot.#
+#' @param select specification of which spectra to plot. Can be a numeric vector or #
+#' factor (e.g., \code{sex=='male'})#
+#' @param type what type of plot should be drawn. Possibilities are: #
+#' \itemize{#
+#'  \item \code{overlay} (default) for plotting multiple spectra in a single panel with #
+#' a common y-axis#
+#'  \item \code{stack} for plotting multiple spectra in a vertical arrangement#
+#'  \item \code{heatmap} for plotting reflectance values by wavelength and a third variable #
+#'        (\code{varying})#
+#' }#
+#' @param varying a numeric vector giving values for y-axis in \code{heatplot}#
+#' @param n number of bins with which to interpolate colors and \code{varying} for the #
+#' heatplot.#
+#' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).#
+#' @examples \dontrun{#
+#' data(teal)#
+#' plot(teal, type = 'overlay')#
+#' plot(teal, type = 'stack')#
+#' plot(teal, type = 'heatmap')}#
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}#
+#' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}#
+#
+# TODO: add argument for padding region between x in stack plot#
+#
+plot.rspec <- function(x, select = NULL, type = c('overlay', 'stack', 'heatmap'), #
+                       varying = NULL, n = 100, ...) {#
+#
+type <- match.arg(type)#
+#
+# make wavelength vector#
+wl_index <- which(names(x)=='wl')#
+if (length(wl_index) > 0) {#
+  haswl <- TRUE#
+  wl <- x[, wl_index]#
+} else {#
+  haswl <- FALSE#
+  wl <- 1:nrow(x)#
+  warning('No wavelengths provided; using arbitrary index values')#
+  }#
+#
+# subset based on indexing vector#
+if (is.logical(select))#
+  select <- which(select=='TRUE')#
+if (is.null(select)&haswl==TRUE)#
+  select <- (1:ncol(x))[-wl_index]#
+if (is.null(select)&haswl==FALSE)#
+  select <- 1:ncol(x)#
+#
+x <- as.data.frame(x[, select])#
+#
+arg <- list(...)#
+#
+# Set defaults#
+if (is.null(arg$xlab))#
+  arg$xlab <- "Wavelength (nm)"#
+if (is.null(arg$xlim))#
+  arg$xlim <- range(wl, na.rm=TRUE)#
+#
+# heat plot#
+if (type=='heatmap') {#
+#
+  if (is.null(arg$xlab))#
+    arg$xlab <- "Wavelength (nm)"#
+  if (is.null(arg$ylab))#
+    arg$ylab <- "Index"#
+  if (is.null(varying)) { #
+    varying <- 1:ncol(x)#
+    print("No varying vector supplied; using arbitrary values")#
+  }#
+  if (is.null(arg$ylim))#
+    arg$ylim <- range(varying, na.rm=TRUE)#
+  if (is.null(arg$col)==1) {#
+    jc <- colorRampPalette( rev(c("#9E0142", "#D53E4F", "#F46D43", "#FDAE61", #
+                                  "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4", #
+                                  "#66C2A5", "#3288BD", "#5E4FA2")))#
+    arg$col <- jc(n)#
+  } else {#
+  	jc <- colorRampPalette(arg$col)#
+  	arg$col <- jc(n)#
+  	}#
+#
+  Index <- approx(varying, n = n)$y#
+  dat <- sapply(1:nrow(x), function(z){approx(x = varying, y = x[z, ], #
+                n = n)$y})#
+#
+  arg$x <- wl#
+  arg$y <- Index#
+  arg$z <- t(dat)#
+#
+  do.call(image, arg)#
+}#
+#
+# coloring for overlay plot & others#
+if (length(arg$col) < ncol(x))#
+  arg$col <- rep(arg$col, ncol(x))#
+  arg$col <- arg$col[1:ncol(x)]#
+if (any(names(arg$col)%in%names(x)))#
+  arg$col <- arg$col[select-1]#
+#
+# overlay different spec curves#
+if (type=='overlay') {#
+#
+  if (is.null(arg$ylim))#
+    arg$ylim <- range(x, na.rm=TRUE)#
+  if (is.null(arg$ylab))#
+    arg$ylab <- "Reflectance (%)"#
+  arg$type <- 'l'#
+  arg$x <- wl#
+  arg$y <- x[, 1]#
+  col <- arg$col#
+  arg$col <- col[1]#
+#
+  do.call(plot, arg)#
+#
+  if (ncol(x) > 1) {#
+    for (i in 2:ncol(x)) {#
+      arg$col <- col[i]#
+      arg$y <- x[, i]#
+      do.call(lines, arg)#
+    }#
+  }#
+}#
+#
+# stack curves along y-axis#
+if (type=='stack') {#
+#
+  arg$type <- 'l'#
+  if (is.null(arg$ylab))#
+    arg$ylab <- "Cumulative reflectance (arb. units)"#
+#
+  x2 <- as.data.frame(x[, c(ncol(x):1)])#
+  if (length(select)==1){#
+    y <- max(x2)} else {#
+    y <- apply(x2, 2, max)#
+  }#
+  ym <- cumsum(y)#
+  ymins <- c(0, ym[-length(ym)])#
+#
+  arg$x <- wl#
+  arg$y <- x2[, 1]#
+  if (is.null(arg$ylim))#
+    arg$ylim <- c(0, sum(y))#
+#
+  col <- rev(arg$col)#
+  arg$col <- col[1]#
+  do.call(plot, arg)#
+  if (ncol(x2)>1) {#
+    for (i in 2:ncol(x2)) {#
+      arg$y <- x2[, i] + ymins[i]#
+      arg$col <- col[i]#
+      do.call(lines, arg)#
+    }#
+  }#
+#
+  yend <- tail(x2, 1)#
+  yloc <- ymins + yend#
+  axis(side=4, at=yloc, labels=rev(select), las=1)#
+#  abline(h=ymins, lty=3)#
+}#
+}
+plot.rspec(sicalis)
+plot.rspec(danilo)
+apply(danilo,2,range)
+apply(danilo,2,function(x) range(x, na.rm=T))
+apply(irrad2flux(danilo),2,function(x) range(x, na.rm=T))
+irrad2flux <- function(rspecdata){#
+#
+if(!is.rspec(rspecdata))#
+  stop('not an object of class rspec')#
+#
+  nam <- names(rspecdata)#
+  wl_index <- which(names(rspecdata)=='wl')#
+  wl <- rspecdata[,wl_index]#
+  #rspecdata <- rspecdata[,-wl_index]	#
+  K <- 0.01/(6.626*2.998*6.02308)#
+  res <- sapply(1:ncol(rspecdata), function(z) rspecdata[,z] * wl * K )#
+  res <- data.frame(res)#
+  names(res) <- nam#
+  class(res) <- c('rspec', 'data.frame')#
+  res[,'wl'] <- wl#
+  res#
+}
+apply(irrad2flux(danilo),2,function(x) range(x, na.rm=T))
+plot(irrad2flux(danilo))
+danilo[1:101,2] =NA
+danilo[1:101,3] =NA
+plot(irrad2flux(danilo))
+danilo[1:150,3] =NA
+danilo[1:150,2] =NA
+apply(irrad2flux(danilo),2,function(x) range(x, na.rm=T))
+plot(irrad2flux(danilo))
+require(devtools)
+run_examples('pavo')
+run_examples('github/pavo')
+run_examples('github/pavo', run=F)
+setwd('github/pavo')
+run_examples('github/pavo', run=F)
+run_examples('~github/pavo', run=F)
+run_examples('~/github/pavo', run=F)
+system.time(run_examples('~/github/pavo', run=F))

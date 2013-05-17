@@ -32,6 +32,7 @@
 #' \itemize{
 #'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
+#'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
 #'  \item \code{ml}: sum of the two longest-wavelength cones
 #'  \item \code{none}
 #' }
@@ -70,7 +71,7 @@
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
-  achromatic = c("bt.dc","ch.dc","ml","none"),
+  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
   vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
 {
@@ -80,6 +81,13 @@ vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 y <- rspecdata[,-wl_index]
+
+# in case rspecdata only has one spectrum
+
+if(is.null(dim(y))){
+  y <- data.frame(rspecdata[,-wl_index])
+  names(y) <- names(rspecdata)[-wl_index]
+  }
 
 visual2 <- try(match.arg(visual), silent=T)
 sens <- pavo::vissyst
@@ -97,6 +105,8 @@ if(!inherits(visual2,'try-error')){
     visual <- 'user-defined'
     }
 
+# transform from percentages to proportions according to Vorobyev 2003
+
 if(max(y) > 1)
   y <- y/100
 
@@ -104,7 +114,6 @@ if(max(y) > 1)
   if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)) & 
   !inherits(visual2,'try-error'))
     stop('wavelength range in spectra and visual system data do not match - spectral data must range between 300 and 700 nm in 1-nm intervals. Consider interpolating using as.rspec().')
-
 
   if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)))
     stop('wavelength range in spectra and visual system data do not match')
@@ -134,7 +143,7 @@ if(!inherits(bg2,'try-error')){
 if(bg2=='ideal')
   bkg <- rep(1,dim(rspecdata)[1])
 
-# scale background
+# scale background from percentage to proportion
 if(max(bkg) > 1)
   bkg <- bkg/100
 
@@ -144,7 +153,17 @@ illum <- illum * scale
 
 indices = 1:dim(S)[2]
 
+# calculate Qi
+
 Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*illum)))
+
+# in case rspecdata only has one spectrum
+
+if(dim(Qi)[2] < 2){
+  Qi <- data.frame(t(Qi))
+  rownames(Qi) <- names(y)
+}
+
 names(Qi) <- names(S)
 
 
@@ -152,7 +171,7 @@ names(Qi) <- names(S)
 
 achromatic <- match.arg(achromatic)
 
-if(achromatic=='bt.dc' | achromatic=='ch.dc'){
+if(achromatic=='bt.dc' | achromatic=='ch.dc' | achromatic=='st.dc'){
    L <- sens[,grep(achromatic,names(sens))]
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
@@ -171,16 +190,20 @@ if(achromatic=='none'){
 #qi 
 # von Kries correction (constant adapting background)
 
-if(!is.null(lum))
-  S <- data.frame(cbind(S,L))
-
-k <- 1/colSums(S*bkg*illum)
+vk <- "(von Kries color correction not applied)"
 
 # quantum catch normalized to the background (qi = k*Qi)
 
-if(vonkries)
-  Qi <- t(t(Qi)*k)
+if(vonkries){
+  if(!is.null(lum))
+    S <- data.frame(cbind(S,L))
 
+  k <- 1/colSums(S*bkg*illum)
+
+  Qi <- data.frame(t(t(Qi)*k))
+
+  vk <- "(von Kries color correction applied)"
+}
 # fechner law (signal ~ log quantum catch)
 
 fi <- log(Qi)
@@ -203,11 +226,6 @@ if(relative & is.null(lum)){
 # blacks <- which(norm.B < 0.05) #find dark specs
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
-
-vk <- "(von Kries color correction not applied)"
-
-if(vonkries)
-  vk <- "(von Kries color correction applied)"
 
 #OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
