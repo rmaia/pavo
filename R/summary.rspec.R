@@ -156,13 +156,33 @@
 #summary.rspec <- function (object, ...) {
 
  
-summary.rspec <- function (object, subset = FALSE, ...) {
+summary.rspec <- function (object, subset = FALSE, wlmin = NULL, ...) {
 
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
-lambdamin <- min(wl)
-lambdamax <- max(wl)
 object <- object[,-wl_index]
+
+# set WL min & max
+
+if(is.null(wlmin)){
+  lambdamin <- min(wl)
+  }else{
+    if(wlmin < min(wl))
+      stop('wlmin is smaller than the range of spectral data')
+      
+    lambdamin <- wlmin
+    }
+
+lambdamax <- max(wl)
+
+# if(is.null(wlmax)){
+  # lambdamax <- max(wl)
+  # }else{
+    # if(wlmax > max(wl))
+      # stop('wlmax is larger than the range of spectral data')
+
+    # lambdamax <- wlmax
+    # }
 
 output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
@@ -281,27 +301,18 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 # PPB added S1v and S1Y
 
-if(lambdamin <= 300){
-  lminuv <- 300
-  UVchromamat <- as.matrix(object[which(wl==lminuv):which(wl==400),])
+if(lambdamin <= 400){
+  UVchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==400),])
   UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   
-  Vchromamat <- as.matrix(object[which(wl==lminuv):which(wl==415),])
+  Vchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==415),])
   Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
   }
   
 if(lambdamin > 300 & lambdamin < 400){
   warning(paste('Minimum wavelength is', lambdamin,'; UV-related variables may not be meaningful'), call.=FALSE)
-  lminuv <- lambdamin
-  UVchromamat <- as.matrix(object[which(wl==lminuv):which(wl==400),]) 
-  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
-  output.mat [, 4] <- UVchroma
-
-  Vchromamat <- as.matrix(object[which(wl==lminuv):which(wl==415),])
-  Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
-  output.mat[, 5] <- Vchroma
   }
 
 color.var <- data.frame(output.mat, row.names=names(object))

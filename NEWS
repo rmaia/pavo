@@ -5,6 +5,7 @@ MINOR FEATURES AND BUG FIXES
 * vismodel() vonkries = TRUE does not return a NULL result
 * vismodel() works with a single spectrum object
 * tcsplot() allows greater control of tetrahedron appearance
+* summary.rspec() allows for user-defined minimum wavelength (for calculation of UV variables)
 
 pavo 0.3-1
 ------------------------------------------------------------------------------
