@@ -30,6 +30,11 @@ if (length(wl_index > 0)){
     stop('No wavelengths supplied; no default')
     }
 
+# this should be changed later (interpolate?)
+
+if(min(wl) > 400 | max(wl) < 700)
+  stop('wavelength range does not capture the full visible range (400 to 700)')
+
 rspecdata <- rspecdata[which(wl==400):which(wl==700),]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
