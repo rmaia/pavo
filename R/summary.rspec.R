@@ -11,9 +11,11 @@
 #' spectra to process.
 #' @param subset Either \code{FALSE} (the default), \code{TRUE}, or a character vector. 
 #' If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset 
-#' of the complete ouput (composed of B2, H1, H3, S8, S9; the variables described in 
+#' of the complete ouput (composed of B2, S8 and H1; the variables described in 
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
 #' names can be used in order to filter and show only those variables.
+#' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
+#' calculations (default is to use entire range in the \code{rspec} object)
 #' @param ... class consistency (ignored)
 #' @return A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described 
 #' in Montgomerie (2006) with spectra name as row names. 
@@ -156,11 +158,11 @@
 #summary.rspec <- function (object, ...) {
 
  
-summary.rspec <- function (object, subset = FALSE, wlmin = NULL, ...) {
+summary.rspec <- function (object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
 
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
-object <- object[,-wl_index]
+# object <- object[,-wl_index]
 
 # set WL min & max
 
@@ -173,16 +175,21 @@ if(is.null(wlmin)){
     lambdamin <- wlmin
     }
 
-lambdamax <- max(wl)
+# lambdamax <- max(wl)
 
-# if(is.null(wlmax)){
-  # lambdamax <- max(wl)
-  # }else{
-    # if(wlmax > max(wl))
-      # stop('wlmax is larger than the range of spectral data')
+ if(is.null(wlmax)){
+   lambdamax <- max(wl)
+   }else{
+     if(wlmax > max(wl))
+       stop('wlmax is larger than the range of spectral data')
 
-    # lambdamax <- wlmax
-    # }
+     lambdamax <- wlmax
+     }
+    
+# restrict to range of wlmin:wlmax
+object <- object[which(wl==lambdamin):which(wl==lambdamax),]
+wl <- object[,wl_index]
+object <- object[,-wl_index]
 
 output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
@@ -191,19 +198,70 @@ B1 <- sapply(object, sum)
 
 B2 <- sapply(object, mean)
 
+B3 <- sapply(object, max)
 
-Redchromamat <- as.matrix(object[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
-Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
+# Chromas
 
-Yellowchromamat <- as.matrix(object[which(wl==550):which(wl==625),]) #yellow 550-625nm
-Yellowchroma <- as.vector(apply(Yellowchromamat,2,sum))/B1 # S1 yellow
+# Red
+if(lambdamin <= 605 & lambdamax >= 700){
+  Redchromamat <- as.matrix(object[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
+  Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
+  output.mat[, 9] <- Redchroma
+}else{
+  warning('cannot calculate red chroma; wavelength range not between 605 and 700 nm', call.=FALSE)
+}	
+  
+# Yellow  
+if(lambdamin <= 550 & lambdamax >= 625){
+  Yellowchromamat <- as.matrix(object[which(wl==550):which(wl==625),]) #yellow 550-625nm
+  Yellowchroma <- as.vector(apply(Yellowchromamat,2,sum))/B1 # S1 yellow
+  output.mat[, 8] <- Yellowchroma
+}else{
+  warning('cannot calculate yellow chroma; wavelength range not between 550 and 625 nm', call.=FALSE)
+}
 
-Greenchromamat <- as.matrix(object[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
-Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
+# Green  
+if(lambdamin <= 510 & lambdamax >= 605){
+  Greenchromamat <- as.matrix(object[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
+  Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
+  output.mat[, 7] <- Greenchroma
+  }else{
+  warning('cannot calculate green chroma; wavelength range not between 510 and 605 nm', call.=FALSE)
+}
 
-Bluechromamat <- as.matrix(object[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
+# Blue 
+if(lambdamin <= 400 & lambdamax >= 510){
+  Bluechromamat <- as.matrix(object[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
   Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
+  output.mat[, 6] <- Bluechroma
+  }else{
+  warning('cannot calculate blue chroma; wavelength range not between 400 and 510 nm', call.=FALSE)
+}
 
+# UV
+if(lambdamin <= 400 & lambdamax >=400){
+  UVchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==400),])
+  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
+  output.mat [, 4] <- UVchroma
+  }else{
+  warning('cannot calculate UV chroma; wavelength range not below 400 nm', call.=FALSE)
+}
+
+if(lambdamin > 300 & lambdamin < 400){
+  warning(paste('Minimum wavelength is', lambdamin,'; UV-related variables may not be meaningful'), call.=FALSE)
+}
+
+# Violet
+if(lambdamin <= 415 & lambdamax >= 415){
+  Vchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==415),])
+  Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
+  output.mat[, 5] <- Vchroma  
+}else{
+  warning('cannot calculate violet chroma; wavelength below 415 nm', call.=FALSE)
+}
+  
+
+# Segment-based variables
 
 segmts <- trunc(as.numeric(quantile(lambdamin:lambdamax)))
 
@@ -223,12 +281,14 @@ S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 # H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
 H4 <- atan2(S5R-S5G, S5Y-S5B)
 
-#carotchroma
+# Carotenoid chroma
+
 R450 <- as.numeric(object[which(wl==450), ])
 R700 <- as.numeric(object[which(wl==700), ])
 Carotchroma <- (R450-R700)/R700
 
 # S7
+
 sum_min_mid <- apply(object, 2, function(x) 
                      sum(x[which.min(x):round((which.max(x) + which.min(x))/2)]))
 sum_mid_max <- apply(object, 2, function(x) 
@@ -246,10 +306,9 @@ pmindex <- 1:dim(object)[2]
 S3 <- sapply(pmindex, function(x) sum(object[minus50[x]:plus50[x],x]))/B1
 
 
-B3 <- sapply(object, max)
-
 # Spectral saturation
 Rmin <- sapply(object, min)
+
 S2 <- B3/Rmin #S2
 
 S8  <- (B3-Rmin)/B2 # S8
@@ -263,27 +322,30 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
   Rmid <- round((H1+lambdaRmin)/2)
 
+# H2
 diffsmooth <- apply(object,2,diff)
 
 lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
   lambdabmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
 
+# S4
 bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
   bmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
 
+# S10
 S10 <- S8/bmaxneg #S10
  S10[which(apply(diffsmooth,2,min) > 0)] <- NA
 
+# H5
 lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
   lambdabmax[which(apply(diffsmooth,2,which.max) < 0)] <- NA
+
+
+# Add remaining variables to output
 
   output.mat[, 1] <- B1
   output.mat[, 2] <- B2
   output.mat[, 3] <- B3
-  output.mat[, 6] <- Bluechroma
-  output.mat[, 7] <- Greenchroma
-  output.mat[, 8] <- Yellowchroma
-  output.mat[, 9] <- Redchroma
   output.mat[, 10] <- S2
   output.mat[, 11] <- S3
   output.mat[, 12] <- bmaxneg
@@ -301,19 +363,6 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 # PPB added S1v and S1Y
 
-if(lambdamin <= 400){
-  UVchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==400),])
-  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
-  output.mat [, 4] <- UVchroma
-  
-  Vchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==415),])
-  Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
-  output.mat[, 5] <- Vchroma
-  }
-  
-if(lambdamin > 300 & lambdamin < 400){
-  warning(paste('Minimum wavelength is', lambdamin,'; UV-related variables may not be meaningful'), call.=FALSE)
-  }
 
 color.var <- data.frame(output.mat, row.names=names(object))
 
