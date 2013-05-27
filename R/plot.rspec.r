@@ -55,7 +55,7 @@ if (is.null(select)&haswl==TRUE)
 if (is.null(select)&haswl==FALSE)
   select <- 1:ncol(x)
 
-x <- as.data.frame(x[, select])
+x <- as.data.frame(x[select])  # CE: removed comma before select
 
 arg <- list(...)
 
@@ -100,11 +100,14 @@ if (type=='heatmap') {
 }
 
 # coloring for overlay plot & others
-if (length(arg$col) < ncol(x))
+if (length(arg$col) < ncol(x)) {
   arg$col <- rep(arg$col, ncol(x))
   arg$col <- arg$col[1:ncol(x)]
-if (any(names(arg$col)%in%names(x)))
+ }
+
+if (any(names(arg$col)%in%names(x))) {
   arg$col <- arg$col[select-1]
+}
 
 # overlay different spec curves
 if (type=='overlay') {
