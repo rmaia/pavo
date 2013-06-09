@@ -20,6 +20,7 @@
 #' \item \code{tetra}: Tetrachromatic color vision (default)
 #' \item \code{tri}: Trichromatic color vision
 #' \item \code{di}: Dichromatic color vision
+# #' \item \code{mono}: Monochromatic vision
 #' }
 #' @param subset If only some of the comparisons should be returned, a character vector of 
 #' length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
@@ -60,6 +61,7 @@
 
 
 coldist <-function(vismodeldata, qcatch=c('Qi','fi'),
+#                  vis=c('tetra', 'tri', 'di', 'mono'), 
                   vis=c('tetra', 'tri', 'di'), 
                   noise=c('neural','quantum'), subset=NULL,
                   achro=TRUE,
@@ -111,6 +113,13 @@ patch2 <- row.names(dat)[pairsid[,2]]
 
 res <- data.frame(patch1, patch2)
 
+# if (vis=='mono' & noise=='neural'){
+# res$dS <- apply(pairsid,1,function(x) 
+  # monodistcalc(dat[x[1],], dat[x[2],], 
+  # w1=w1e) )
+# }
+
+
 if (vis=='di' & noise=='neural'){
 res$dS <- apply(pairsid,1,function(x) 
   didistcalc(dat[x[1],], dat[x[2],], 
@@ -138,6 +147,12 @@ res$dL <- apply(pairsid,1,function(x)
 
 
 
+# if (vis=='mono' & noise=='quantum'){
+# res$dS <- apply(pairsid,1,function(x) 
+  # qn.monodistcalc(dat[x[1],], dat[x[2],], 
+  # qndat[x[1],], qndat[x[2],], 
+  # n1=n1, v=v) )
+# }
 
 if (vis=='di' & noise=='quantum'){
 res$dS <- apply(pairsid,1,function(x) 
@@ -171,6 +186,10 @@ nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
 
 # Subsetting samples
 
+if(length(subset) > 2){
+  stop('Too many subsetting conditions; one or two allowed.')
+}
+
 if(length(subset)==1){
   
   condition1 <- grep(subset, res$patch1)
@@ -191,10 +210,6 @@ if(length(subset)==2){
   subsamp <- unique(c(condition1, condition2))
   
   res <- res[subsamp,]	
-}
-
-if(length(subset) > 2){
-  stop('Too many subsetting conditions; one or two allowed.')
 }
 
 row.names(res) <- 1:dim(res)[1]

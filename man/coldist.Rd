@@ -27,7 +27,8 @@
   \item{vis}{visual system phenotype to use in the model:
   \itemize{ \item \code{tetra}: Tetrachromatic color vision
   (default) \item \code{tri}: Trichromatic color vision
-  \item \code{di}: Dichromatic color vision }}
+  \item \code{di}: Dichromatic color vision #\item
+  \code{mono}: Monochromatic vision }}
 
   \item{subset}{If only some of the comparisons should be
   returned, a character vector of length 1 or 2 can be

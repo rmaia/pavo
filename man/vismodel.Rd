@@ -4,7 +4,7 @@
 \usage{
   vismodel(rspecdata, qcatch = c("Qi", "fi"),
     visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
-    achromatic = c("bt.dc", "ch.dc", "ml", "none"),
+    achromatic = c("bt.dc", "ch.dc", "st.dc", "ml", "none"),
     illum = c("ideal", "bluesky", "D65", "forestshade"),
     vonkries = F, scale = 1, bkg = "ideal",
     relative = TRUE)
@@ -40,7 +40,8 @@
   Currently implemented options are: \itemize{ \item
   \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double
   cone \item \code{ch.dc}: Chicken \emph{Gallus gallus}
-  double cone \item \code{ml}: sum of the two
+  double cone \item \code{st.dc}: Starling \emph{Sturnus
+  vulgaris} double cone \item \code{ml}: sum of the two
   longest-wavelength cones \item \code{none} }}
 
   \item{illum}{either a vector containing the illuminant,

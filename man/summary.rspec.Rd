@@ -2,7 +2,8 @@
 \alias{summary.rspec}
 \title{Colorimetric variables}
 \usage{
-  \method{summary}{rspec} (object, subset = FALSE, ...)
+  \method{summary}{rspec} (object, subset = FALSE,
+    wlmin = NULL, wlmax = NULL, ...)
 }
 \arguments{
   \item{object}{(required) a data frame, possibly an object
@@ -13,11 +14,15 @@
   \item{subset}{Either \code{FALSE} (the default),
   \code{TRUE}, or a character vector. If \code{FALSE}, all
   variables calculated are returned. If \code{TRUE}, only a
-  subset of the complete ouput (composed of B2, H1, H3, S8,
-  S9; the variables described in Andersson and Prager 2006)
-  are returned. Finally, a user-specified string of
-  variable names can be used in order to filter and show
-  only those variables.}
+  subset of the complete ouput (composed of B2, S8 and H1;
+  the variables described in Andersson and Prager 2006) are
+  returned. Finally, a user-specified string of variable
+  names can be used in order to filter and show only those
+  variables.}
+
+  \item{wlmin,wlmax}{minimum and maximum used to define the
+  range of wavelengths used in calculations (default is to
+  use entire range in the \code{rspec} object)}
 
   \item{...}{class consistency (ignored)}
 }
