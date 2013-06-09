@@ -6,7 +6,7 @@
 *.tex
 *.out
 
-manuscript/swpdf
+manuscript/
 
 vignette/fig/
 
