@@ -146,6 +146,25 @@ if(bg2=='ideal')
 # scale background from percentage to proportion
 if(max(bkg) > 1)
   bkg <- bkg/100
+  
+# is the illuminant a matrix, dataframe or rspec?
+
+if('rspec' %in% class(illum)){
+  whichused <- names(illum)[2]
+  illum <- illum[,2]
+  warning(paste('Illuminant is an rspec object; first spectrum (', 
+    dQuote(whichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+}
+
+if( 'data.frame' %in% class(illum) | 'matrix' %in% class(illum) & 
+  !'rspec' %in% class(illum)){
+  whichused <- names(illum)[1]
+  illum <- illum[,1]
+  warning(paste('Illuminant is a matrix or data frame; first column (', 
+    dQuote(whichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+  }
 
 
 # scale illuminant
