@@ -2,6 +2,7 @@ pavo 0.5-1
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
 * vismodel() accepts matrix, data.frame or rspec objects for the illuminant, updated warning messages associated with this use
+* vismodel() accepts user-defined achromatic receptors
 
 pavo 0.5
 ------------------------------------------------------------------------------

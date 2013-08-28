@@ -188,21 +188,55 @@ names(Qi) <- names(S)
 
 # calculate achromatic contrast
 
-achromatic <- match.arg(achromatic)
+achromatic2 <- try(match.arg(achromatic), silent=T)
 
-if(achromatic=='bt.dc' | achromatic=='ch.dc' | achromatic=='st.dc'){
-   L <- sens[,grep(achromatic,names(sens))]
+# user-defined achromatic receptor
+
+if(inherits(achromatic2,'try-error')){
+
+  achromatic2 <- 'user-defined'
+
+  # is achromatic a matrix, dataframe or rspec?
+
+  if('rspec' %in% class(achromatic)){
+    whichused <- names(achromatic)[2]
+    achromatic <- achromatic[,2]
+    warning(paste('achromatic is an rspec object; first spectrum (', 
+      dQuote(whichused),') has been used (remaining columns ignored)', sep='')
+      , call.=FALSE)
+  }
+
+  if( 'data.frame' %in% class(achromatic) | 'matrix' %in% class(achromatic) & 
+    !'rspec' %in% class(achromatic)){
+    whichused <- names(achromatic)[1]
+    achromatic <- achromatic[,1]
+    warning(paste('achromatic is a matrix or data frame; first column (', 
+      dQuote(whichused),') has been used (remaining columns ignored)', sep='')
+      , call.=FALSE)
+    }
+
+  L <- achromatic
+  lum <- colSums(y*L*illum)
+  Qi <- data.frame(cbind(Qi,lum))
+
+
+  }
+  
+# using one of the predefined receptors
+
+if(achromatic2=='bt.dc' | achromatic2=='ch.dc' | achromatic2=='st.dc'){
+   L <- sens[,grep(achromatic2,names(sens))]
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }
 
-if(achromatic=='ml'){
+if(achromatic2=='ml'){
    L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }
 
-if(achromatic=='none'){
+if(achromatic2=='none'){
 	lum <- NULL
 }
 
@@ -255,7 +289,7 @@ res <- switch(qcatch, Qi = Qi, fi = fi)
 
 class(res) <- c('vismodel', 'data.frame')
 attr(res, 'qcatch') <- qcatch
-attr(res,'visualsystem') <- c(visual,achromatic)
+attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
