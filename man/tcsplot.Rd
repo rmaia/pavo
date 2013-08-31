@@ -4,15 +4,16 @@
 \alias{tcsvol}
 \title{Plot a Tetrahedral Color Space}
 \usage{
-  tcsplot(tcsdata, size = 0.02, col = "black",
+  tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
     vertexsize = 0.02, achrosize = 0.01, achrocol = "grey",
     lwd = 1, lcol = "lightgrey", new = FALSE,
     hspin = FALSE, vspin = FALSE, floor = TRUE,
     grid = TRUE, fill = TRUE)
 
-  tcspoints(tcsdata, size = 0.02, col = "black")
+  tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
-  tcsvol(tcsdata, col = "black", grid = T, fill = T)
+  tcsvol(tcsdata, col = "black", alpha = 0.2,
+    grid.alpha = 1, grid = T, fill = T)
 }
 \arguments{
   \item{tcsdata}{(required) a data frame, possibly a result
@@ -25,6 +26,9 @@
 
   \item{col}{color of the points in the plot (defaults to
   black)}
+
+  \item{alpha}{transparency of points (or volume fill in
+  \code{tcsvol})}
 
   \item{vertexsize}{size of the points at the vertices}
 
@@ -43,18 +47,21 @@
 
   \item{hspin}{if \code{TRUE}, the graphic will spin
   horizontally (around the 'z' axis)(defaults to
-  \code{FALSE}).}
+  \code{FALSE})}
 
   \item{vspin}{if \code{TRUE}, the graphic will spin
   vertically (around the 'x' axis)(defaults to
-  \code{FALSE}).}
+  \code{FALSE})}
 
   \item{floor}{if \code{TRUE}, a reference xy plane is
-  plotted under the tetrahedron (defaults to \code{TRUE}).}
+  plotted under the tetrahedron (defaults to \code{TRUE})}
 
   \item{grid}{if \code{TRUE}, connects the polygon
   outlining the volume occupied by points (defaults to
-  \code{TRUE}).}
+  \code{TRUE})}
+
+  \item{grid.alpha}{transparecny of the volume polygon grid
+  lines}
 
   \item{fill}{if \code{TRUE}, fills the volume occupied by
   points (WARNING: transparency is not saved properly if
