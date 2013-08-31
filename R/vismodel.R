@@ -28,7 +28,8 @@
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
-#' cone stimulation. Currently implemented options are: 
+#' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
+#' or one of the options: 
 #' \itemize{
 #'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone

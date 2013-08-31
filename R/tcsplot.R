@@ -6,16 +6,18 @@
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param size size of the points in the plot (defaults to 0.02)
 #' @param col color of the points in the plot (defaults to black)
+#' @param alpha transparency of points (or volume fill in \code{tcsvol})
 #' @param vertexsize size of the points at the vertices
 #' @param achrosize size of the point in the achromatic center
 #' @param achrocol color of the point in the achromatic center
 #' @param lwd line width for the edges of the tetrahedron
 #' @param lcol line color for the edges of the tetrahedron
 #' @param new should a new 3D plot be called (defaults to \code{FALSE})?
-#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE}).
-#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE}).
-#' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE}).
-#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE}).
+#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})
+#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})
+#' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})
+#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})
+#' @param grid.alpha transparecny of the volume polygon grid lines
 #' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
 #' is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).
 #' @return \code{tcsplot} creates a 3D plot using functions of the package \code{rgl}, 
@@ -57,7 +59,7 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-tcsplot<- function(tcsdata, size=0.02, col='black', 
+tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black', 
                   vertexsize=0.02, achrosize=0.01, achrocol='grey', 
                   lwd=1, lcol='lightgrey', new=FALSE, hspin=FALSE, 
                   vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {
@@ -101,9 +103,9 @@ segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')],
 segments3d(ttv[c('xl','xm')], ttv[c('yl','ym')], ttv[c('zl','zm')], 
   color=lcol, lwd=lwd)
 
-spheres3d(0,0,0, col= achrocol, radius=achrosize, lit=F)
+spheres3d(0,0,0, col=achrocol, radius=achrosize, lit=F)
 
-spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, lit=F)
+spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, alpha=alpha, lit=F)
 
 if(floor){
   vertices <- c( 
@@ -112,9 +114,9 @@ if(floor){
        0.7,  1, -0.3, 1.0,
       -0.7,  1, -0.3, 1.0
   				)
-  indices <- c( 1, 2, 3, 4 )
+  indices <- c(1, 2, 3, 4)
   
- wire3d( qmesh3d(vertices,indices), lit=F )
+ wire3d(qmesh3d(vertices,indices), lit=F)
 	}
 	
 if(hspin)
