@@ -3,20 +3,18 @@ Description: A cohesive framework for parsing, analyzing and organizing color
     from spectral data
 Title: Perceptual analysis, visualization and organization of spectral color
     data in R
-Version: 0.5
-License: BSD
-Date: 2013-06-05
+Version: 0.5-1
+License: GPL (>= 2)
+Date: 2013-09-01
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
+URL: www.rafaelmaia.net/r-packages/pavo
 Depends:
-    rcdd,
-    rgl,
-    geometry,
-    mapproj
+    rgl
 Collate:
     'aggplot.R'
     'aggspec.R'

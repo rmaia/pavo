@@ -2,6 +2,7 @@
 #'
 #' \code{tcsplot} produces a 3D plot of a tetrahedral color space using OpenGL capabilities
 #'
+#' @import rgl
 #' @param tcsdata (required) a data frame, possibly a result from the \code{tcs} 
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param size size of the points in the plot (defaults to 0.02)
