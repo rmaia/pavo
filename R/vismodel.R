@@ -91,7 +91,7 @@ if(is.null(dim(y))){
   }
 
 visual2 <- try(match.arg(visual), silent=T)
-sens <- pavo::vissyst
+sens <- vissyst
 
 if(!inherits(visual2,'try-error')){
   
@@ -122,7 +122,7 @@ if(max(y) > 1)
 
 #DEFINING ILLUMINANT & BACKGROUND
 
-bgil<- pavo::bgandilum
+bgil<- bgandilum
 
 illum2 <- try(match.arg(illum), silent=T)
 if(!inherits(illum2,'try-error')){

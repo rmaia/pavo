@@ -94,7 +94,7 @@ z <- u-(1/4)
 
 # vertex cartesian coordinates & their spherical data
 
-ttvx <- pavo::ttvertex
+ttvx <- ttvertex
 
 # spherical coordinates for the data points
 # S&P suggest values with reflectance lower than a treshold (0.05) not have 

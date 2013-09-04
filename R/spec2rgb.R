@@ -39,7 +39,7 @@ rspecdata <- rspecdata[which(wl==400):which(wl==700),]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
-sens <- pavo:::ciexyz
+sens <- ciexyz
 
 P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 
