@@ -12,7 +12,7 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
-URL: www.rafaelmaia.net/r-packages/pavo
+URL: http://www.rafaelmaia.net/r-packages/pavo
 Depends:
     rgl
 Imports:

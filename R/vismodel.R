@@ -74,7 +74,7 @@ vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
-  vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
+  vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
 {
 
 # remove & save colum with wavelengths
