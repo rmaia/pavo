@@ -4,6 +4,14 @@
 
 A set of functions and tools for the analysis of color data in a unified framework
 
+### Citing pavo
+
+The manuscript describing the package has been published and is free to access: 
+
+Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013. 
+**pavo: an R Package for the analysis, visualization and organization of spectral data.** 
+*Methods in Ecology and Evolution* 4(10):609-613. [doi: 10.1111/2041-210X.12069]
+(http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12069/abstract)
 
 ## Install
 
