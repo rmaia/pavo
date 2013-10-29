@@ -26,7 +26,8 @@
 #' @export
 #' @examples \dontrun{
 #' # Blue tit visual system based on Hart et al (2000)
-#' bluesens <- sensmodel(c(371,448,502,563),beta=F,oiltype = c("T", "C", "Y","R"),om= TRUE)
+#' bluesens <- sensmodel(c(371,448,502,563), beta=F, lambdacut = c(330,413,507,572), 
+#' oiltype = c("T", "C", "Y","R"), om= TRUE)
 #' # Danio aequipinnatus based on Govardovskii et al. (2000)
 #' daniosens <- sensmodel(c(357,411,477,569))}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}
@@ -61,10 +62,13 @@ peak <- 1/(exp(69.7*(.8795+.0459*exp(-(peaksense[i]-range[1])^2/11940)-(peaksens
 betaband <- 0.26*exp(-(((range[1]:range[2])
   -(189+0.315*peaksense[i]))/(-40.5+0.195*peaksense[i]))^2)
 
-if (beta==TRUE)peak <- peak + betaband
+if (beta==TRUE) peak <- peak + betaband
 peak <- peak/max(peak)
 
-if (!is.null(lambdacut)& !is.null(Bmid)){
+if(!is.null(Bmid) | !is.null(oiltype) & is.null(lambdacut))
+  stop("lambdacut has to be provided together with Bmid or oiltype")
+
+if (!is.null(lambdacut) & !is.null(Bmid)){
  
  if (length(lambdacut) != length(Bmid)) stop ("lambdacut and Bmid must be of same length")
 
@@ -80,12 +84,14 @@ if (!is.null(lambdacut) & !is.null(oiltype)){
   if (oiltype[i] == "Y") oil <- c(0.9, 70.03)
   if (oiltype[i] == "R") oil <- c(0.99, 28.65)
   if (oiltype[i] == "P") oil <- c(0.96, 33.57)
+  
 
 # Oil droplet transmission from Hart and Vorobyev (2005)
 if (oiltype[i] != "T"){
-  T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*(range[1]:range[2]-lambdacut[i])+1.08))
+  T.oil <- exp(-exp(-2.89*(.5/((oil[1]*lambdacut[i]+oil[2])-lambdacut[i]))*
+    (range[1]:range[2]-lambdacut[i])+1.08))
 }
-  if(oiltype[i] == "T") T.oil <- rep(1,range[2]-range[1])
+  if(oiltype[i] == "T") T.oil <- 1
   
 peak <- peak*T.oil
 }
