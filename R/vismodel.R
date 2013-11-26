@@ -238,6 +238,7 @@ if(achromatic2=='ml'){
 }
 
 if(achromatic2=='none'){
+	L   <- NULL
 	lum <- NULL
 }
 
@@ -281,7 +282,7 @@ if(relative & is.null(lum)){
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
 
-#OUTPUT
+# OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 
 qcatch <- match.arg(qcatch)
@@ -289,11 +290,20 @@ qcatch <- match.arg(qcatch)
 res <- switch(qcatch, Qi = Qi, fi = fi)
 
 class(res) <- c('vismodel', 'data.frame')
+
+# Descriptive attributes
+
 attr(res, 'qcatch') <- qcatch
 attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
+
+# Data attributes
+attr(res, 'data.visualsystem.chromatic') <- S
+attr(res, 'data.visualsystem.achromatic') <- L
+attr(res, 'data.background') <- bkg
+
 
 res
 }
