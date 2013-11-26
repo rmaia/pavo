@@ -52,7 +52,10 @@ if(any('v' %in% names(dat)))
   names(dat) <- gsub('v','u',names(dat))
   
 # if the data frame has 4 columns, treat them as u/s/m/l
-if(any(attr(dat, 'visualsystem')=='none') & ncol(dat) == 4 & !all(c('u','s','m','l') %in% names(dat))){
+
+if(any(attr(dat, 'visualsystem')=='none') & 
+  ncol(dat) == 4 & 
+  !all(c('u','s','m','l') %in% names(dat))){
 
   names(dat) <- c('u','s','m','l')
 
@@ -61,7 +64,9 @@ if(any(attr(dat, 'visualsystem')=='none') & ncol(dat) == 4 & !all(c('u','s','m',
 
 }
 
-if(!any(attr(dat, 'visualsystem')=='none') & ncol(dat) > 4 & !all(c('u','s','m','l') %in% names(dat))){
+if(!any(attr(dat, 'visualsystem')=='none') & 
+  ncol(dat) > 4 & 
+  !all(c('u','s','m','l') %in% names(dat))){
 
   names(dat)[1:4] <- c('u','s','m','l')
 
@@ -69,7 +74,6 @@ if(!any(attr(dat, 'visualsystem')=='none') & ncol(dat) > 4 & !all(c('u','s','m',
   dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l'), '; treating first four columns as such'))
 
 }
-
 
   	
 if(!all(c('u','s','m','l') %in% names(dat)))
@@ -98,7 +102,7 @@ ttvx <- ttvertex
 
 # spherical coordinates for the data points
 # S&P suggest values with reflectance lower than a treshold (0.05) not have 
-# hue & r . not implemented.
+# hue & r. not implemented.
 
 r.vec<- sqrt(x*x + y*y + z*z)
 r.vec[r.vec==0] = NaN
@@ -139,29 +143,11 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
                   row.names=rownames(dat))
 #names(res)[1:4] <- names(dat)
 
-###################
-#SUMMARY VARIABLES#
-###################
-
-# # if(!is.null(by)){
-	
-	# if(length(by)==1){
-	# by.many <- by
-	# by <- rep(1:(dim(res.p)[1]/by),each=by)
-	# by <- factor(by,labels=row.names(res.p)[seq(1,length(row.names(res.p)),by=by.many)])
-    # }
-
-  # by <- factor(by)
-  # res.c <- data.frame(t(sapply(levels(by),function(z)tcssum(res.p[which(by==z),]))))
-  # row.names(res.c) <- levels(by)
-	
-# }else{
-	# res.c <- data.frame(t(tcssum(res.p)))
-	# row.names(res.c) <- 'all.points'
-# }
-#res <- list(tcs=res.p,summary=res.c)
 
 res <- res.p
-class(res) <- c('tcs', 'data.frame')
+class(res) <- c('colorspace', 'data.frame')
+
+attr(res, 'conenumb') <- attr(vismodeldata, 'conenumb')
+
 res
 }
