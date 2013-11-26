@@ -48,6 +48,8 @@ MS <- Q3score-Q1score
 segclassdata <- data.frame(S1=Q1score, S2=Q2score, S3=Q3score, S4=Q4score,
                 LM,MS, row.names = names(rspecdata))
 
+class(segclassdata) <- c('segclass', 'data.frame')
+
 segclassdata
 
 }
