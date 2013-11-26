@@ -20,7 +20,7 @@
 #' online data respository at \url{http://www.cvrl.org/}.
 #' @references \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 
-spec2rgb <- function(rspecdata) {
+spec2rgb <- function(rspecdata, alpha=1) {
 
 wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index > 0)){
@@ -39,7 +39,7 @@ rspecdata <- rspecdata[which(wl==400):which(wl==700),]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
-sens <- ciexyz
+sens <- pavo:::ciexyz
 
 # P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 # P2 <- rspecdata
@@ -79,7 +79,7 @@ rgb1 <- sapply(1:ncol(rgb1), function(x) {
 rgb1[rgb1 < 0] <- 0
 rgb1[rgb1 > 1] <- 1
 
-colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3])
+colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3], alpha=alpha)
 
 #class(colrs) <- c('spec2rgb', 'character')
 

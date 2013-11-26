@@ -13,8 +13,9 @@
 - make `lines.rspec`
 - add ability to produce static 3d plots (scatter3d, add points, add volumes)
 - add ability to produce heatmap plot with `varying` vector in non-ascending order
-- add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
-- add ability to set `alpha` in `spec2rgb`
+OK - add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
+- need to make default color for points (it's transp now)
+OK - add ability to set `alpha` in `spec2rgb`
 
 ## Raf
 OK - deprecate tcs class, have general `colspace` class
