@@ -13,7 +13,8 @@
 - make `lines.rspec`
 - add ability to produce static 3d plots (scatter3d, add points, add volumes)
 - add ability to produce heatmap plot with `varying` vector in non-ascending order
-- add ability to add argugments to `aggspec` (e.g., `na.rm=TRUE`)
+- add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
+- add ability to set `alpha` in `spec2rgb`
 
 ## Raf
 OK - deprecate tcs class, have general `colspace` class
