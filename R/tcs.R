@@ -34,61 +34,45 @@
 tcs<- function(vismodeldata)
 {
 
-# check class, import selected sensitivity
-# make relative (in case not inherited relative)
-
-# if(class(vismodeldata)=='vismodel'){
-	# qcatch <- match.arg(qcatch)
-	# dat <- data.frame(vismodeldata[qcatch])
-	# names(dat) <- gsub(paste(qcatch,'.',sep=''), '', names(dat))
-	
-  # }else{
-  	# dat <- vismodeldata
-  	# }
-
 dat <- vismodeldata
-  	
-if(any('v' %in% names(dat)))
-  names(dat) <- gsub('v','u',names(dat))
+
+# if object is vismodel:
+if('vismodel' %in% attr(dat, 'class')){
+
+# check if tetrachromat
+  if(attr(dat, 'conenumb') < 4)
+    stop('vismodel input is not tetrachromatic')
+
+  if(attr(dat, 'conenumb') > 4)
+    warning('vismodel input is not tetrachromatic, considering first four receptors only')
   
-# if the data frame has 4 columns, treat them as u/s/m/l
-
-if(any(attr(dat, 'visualsystem')=='none') & 
-  ncol(dat) == 4 & 
-  !all(c('u','s','m','l') %in% names(dat))){
-
-  names(dat) <- c('u','s','m','l')
-
-  warning(paste('Input data has four columns, but they are not named',
-  dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l'), '; treating them as such'))
-
+# check if relative
+  if(!attr(dat, 'relative')){
+    dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+    class(dat) <- class(vismodeldata)
+    warning("Quantum catch are not relative, and have been transformed")
+  }
+    
 }
 
-if(!any(attr(dat, 'visualsystem')=='none') & 
-  ncol(dat) > 4 & 
-  !all(c('u','s','m','l') %in% names(dat))){
+# if not, check if it has more (or less) than 4 columns
 
-  names(dat)[1:4] <- c('u','s','m','l')
+if(!('vismodel' %in% attr(dat, 'class'))){
 
-  warning(paste('Input data does not have columns named',
-  dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l'), '; treating first four columns as such'))
+  if(ncol(dat) < 4)
+    stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
+  if(ncol(dat) == 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
 
+  if(ncol(dat) > 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
 }
 
-  	
-if(!all(c('u','s','m','l') %in% names(dat)))
-  stop(paste('Input data must have columns named',
-  dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l')))
 
-if(!attr(dat, 'relative')){
-  dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
-  warning("Quantum catch are not relative, and have been transformed")
-}
-
-u <- dat[,'u']
-s <- dat[,'s']
-m <- dat[,'m']
-l <- dat[,'l']
+u <- dat[, 1]
+s <- dat[, 2]
+m <- dat[, 3]
+l <- dat[, 4]
 
 # cartesian coordinates
 
@@ -141,13 +125,11 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
                   x, y, z, h.theta, h.phi, 
                   r.vec, r.max, r.achieved,
                   row.names=rownames(dat))
-#names(res)[1:4] <- names(dat)
-
 
 res <- res.p
 class(res) <- c('colorspace', 'data.frame')
 
-attr(res, 'conenumb') <- attr(vismodeldata, 'conenumb')
+attr(res, 'conenumb') <- 4
 
 res
 }

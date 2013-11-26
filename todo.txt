@@ -16,7 +16,7 @@
 - add ability to add argugments to `aggspec` (e.g., `na.rm=TRUE`)
 
 ## Raf
-- deprecate tcs class, have general `colspace` class
-- don't load `rgl` automatically
+OK - deprecate tcs class, have general `colspace` class
+OK - don't load `rgl` automatically
 - add dichromatic chromaticity diagrams
 - add hexagon chromaticity diagram

@@ -70,6 +70,15 @@ tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black',
 # load RGL, and attempt install if not found
 loadrgl()
 
+# Check if object is of class colorspace and tetrachromat
+
+if(!('colorspace' %in% attr(tcsdata, 'class')))
+  stop('object is not of class ', dQuote('colorspace'))
+
+if(('colorspace' %in% attr(tcsdata, 'class')) & attr(tcsdata, 'conenumb') != 4)
+  stop(dQuote('colorspace'), ' object is not a tetrachromat visual system')
+
+
 if(new)
    open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
