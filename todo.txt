@@ -1,0 +1,22 @@
+## Stuff to do
+- add ability to use `explorespec` with factors
+- make better labeling of spectra in `type=stack`, giver user control for labeling
+- bug fix
+- add ability to set limits in `summary` and other functions
+- return warnings in `peakshape` if (1) one of the peak boundaries is at either 300 or 700 nm, (2) the ratio of the two halves of the peak is >>1; also, it would be nice to be able to specify unique boundaries in this case.. (how??)
+- maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
+- add couple plotting options for `segclass` objects
+
+## Me
+- add CIE chromaticity diagram
+- make fast `getspec` function
+- make `lines.rspec`
+- add ability to produce static 3d plots (scatter3d, add points, add volumes)
+- add ability to produce heatmap plot with `varying` vector in non-ascending order
+- add ability to add argugments to `aggspec` (e.g., `na.rm=TRUE`)
+
+## Raf
+- deprecate tcs class, have general `colspace` class
+- don't load `rgl` automatically
+- add dichromatic chromaticity diagrams
+- add hexagon chromaticity diagram
