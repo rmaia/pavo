@@ -1,5 +1,17 @@
 #' @export summary.tcs
 
+loadrgl <- function(){
+# load RGL, and attempt install if not found
+if (!require('rgl',character.only = TRUE))
+  {
+  message('package ', dQuote('rgl'), ' not found; attempting install...')
+  install.packages('rgl',dep=TRUE)
+  
+  if(!require('rgl',character.only = TRUE)) 
+    stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
+    }
+}
+
 
 # # ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 # #		dq1<-log(f1['u']/f2['u'],base=10)
@@ -232,3 +244,6 @@ names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
 
 res.c
 }
+
+
+

@@ -13,10 +13,9 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"))
 URL: http://www.rafaelmaia.net/r-packages/pavo
-Depends:
-    rgl
 Imports:
     rcdd,
+    rgl,
     mapproj,
     geometry
 Collate:

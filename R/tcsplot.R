@@ -65,11 +65,10 @@ tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black',
                   lwd=1, lcol='lightgrey', new=FALSE, hspin=FALSE, 
                   vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {
 
-# if(class(tcsdata)=='tcs'){
-  # dat <- tcsdata$tcs	
-  # }else{
-    # dat <- tcsdata
-    # }
+
+
+# load RGL, and attempt install if not found
+loadrgl()
 
 if(new)
    open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
