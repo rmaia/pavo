@@ -41,7 +41,7 @@ subset.rspec <- function (x, subset, ...) {
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[, subsample]) # & !is.na(subset)])
+  res <- cbind(wl, x[subsample]) # & !is.na(subset)])
   class(res) <- c("rspec", "data.frame")
   res
 }
