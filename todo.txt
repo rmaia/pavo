@@ -16,7 +16,8 @@
 OK - add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
 - need to make default color for points (it's transp now)
 OK - add ability to set `alpha` in `spec2rgb`
-- give few options to calculate rgb values from specs (normalize, don't normalize)
+- give few options to calculate rgb values from specs (normalize, don't normalize)?
+OK - `subset.rspec` isn't working right. fix it so that 'wl' column is removed prior to subsetting.
 
 ## Raf
 OK - deprecate tcs class, have general `colspace` class
