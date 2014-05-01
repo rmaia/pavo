@@ -97,7 +97,7 @@ if (fixneg=='zero'){
 }
 
 if (any(opt=='smooth')){
-  rspecdata <- sapply(names(rspecdata), function(z){loess.smooth(x = wl, 
+  rspecdata <- sapply(1:ncol(rspecdata), function(z){loess.smooth(x = wl, 
                   y = as.data.frame(rspecdata[, z]), span = span, degree = 2, 
                   family = "gaussian", evaluation = length(wl))$y})
   applied <- c(applied, paste('smoothing spectra with a span of',span,'\n'))
