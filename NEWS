@@ -1,4 +1,4 @@
-pavo 0.5-2
+
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
 * CE: procspec() fixed error when attempting to smooth rspec object without column names
