@@ -1,4 +1,4 @@
-
+pavo 0.6
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES:
 
@@ -7,10 +7,7 @@ MINOR FEATURES AND BUG FIXES:
 * peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700
 * peakshape() returns warning if a spectrum contains duplicate reflectance values
 * summary.rspec() works with single spectra
-
-NEW FUNCTIONS:
-
-* fgetspec() faster (~5-10X), but less flexible, version of getspec() for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics)
+* getspec() has a default, ~5-10X faster input option for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics).
 
 pavo 0.5-1
 ------------------------------------------------------------------------------
