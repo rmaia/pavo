@@ -134,7 +134,8 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
                   row.names=rownames(dat))
 
 res <- res.p
-class(res) <- c('colorspace', 'data.frame')
+# class(res) <- c('colorspace', 'data.frame')
+class(res) <- c('tcs', 'data.frame')
 
 attr(res, 'conenumb') <- 4
 
