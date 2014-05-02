@@ -66,6 +66,13 @@ if(!('vismodel' %in% attr(dat, 'class'))){
 
   if(ncol(dat) > 4)
     warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+    
+  dat <- dat[, 1:4]
+  
+  if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
+  	dat <- dat/apply(dat, 1, sum)
+  	warning('Quantum catch are not relative, and have been divided by their sum')
+  }
 }
 
 

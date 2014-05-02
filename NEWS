@@ -4,6 +4,7 @@ MINOR FEATURES AND BUG FIXES
 * vismodel() accepts matrix, data.frame or rspec objects for the illuminant, updated warning messages associated with this use
 * vismodel() accepts user-defined achromatic receptors
 * tcsplot(), tcsvol() & tcspoints(): transparency control passed to user
+* getspec() works with OceanView files
 
 pavo 0.5
 ------------------------------------------------------------------------------

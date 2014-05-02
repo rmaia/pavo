@@ -238,9 +238,10 @@ hdisp.v <- var(huedisp(tcsres))
 mean.ra <- mean(tcsres$r.achieved)
 max.ra  <-  max(tcsres$r.achieved)
 
-res.c <- c(centroid,c.vol, colspan.m,colspan.v,mean.ra,max.ra)
+res.c <- c(centroid,c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
 names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
-                'c.vol', 'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
+                'c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
+                'mean.ra', 'max.ra')
 
 res.c
 }

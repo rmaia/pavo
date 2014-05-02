@@ -29,13 +29,14 @@
 #' @param achro logical. If \code{TRUE}, last column of the data frame is used to calculate 
 #' the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}
 #' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
-#' blue tit \emph{Cyanistes caeruleus} densities: 1:2:2:4). If \code{vis} does not equal \code{'tetra'}, only \code{n1}
-#' and \code{n2} (\code{vis='di'}) or \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
+#' the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
+#' \code{'tetra'}, only \code{n1} and \code{n2} (\code{vis='di'}) or 
+#' \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
 #' are used for chromatic contrast (NOTE: \code{n4} is still the value used for the achromatic
 #' contrast.)
 #' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
 #' the default densities, the Weber fraction for the large cone will be 0.05, as
-#' estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})
+#' estimated from behavioral experiment with the Pekin robin, \emph{Leiothrix lutea})
 #' @param noise how the noise will be calculated:
 #' \itemize{
 #' 	\item \code{neural}: noise is proportional to the Weber fraction and is independent of the

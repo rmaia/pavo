@@ -299,6 +299,7 @@ attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 attr(res, 'conenumb') <- dim(S)[2]
+attr(res, 'vonkries') <- vonkries
 
 # Data attributes
 attr(res, 'data.visualsystem.chromatic') <- S
