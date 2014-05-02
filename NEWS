@@ -2,8 +2,8 @@
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
 * procspec() fixed error when attempting to smooth rspec object without column names
-* procspec(), aggspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
-
+* procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
+* peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700
 
 pavo 0.5-1
 ------------------------------------------------------------------------------

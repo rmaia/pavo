@@ -28,7 +28,7 @@
 #' peakshape(teal, select = 10, lim=c(400, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, lim = c(300, 700), 
+peakshape <- function(rspecdata, select = NULL, lim = NULL, 
                       plot = TRUE, ask = FALSE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
@@ -49,6 +49,11 @@ if (length(wl_index) > 0) {
   haswl <- FALSE
   wl <- 1:nrow(rspecdata)
   warning('No wavelengths provided; using arbitrary index values')
+}
+
+# set default wavelength range if not provided
+if (is.null(lim)) {
+  lim <- c(head(wl,1), tail(wl,1))
 }
 
 # subset based on indexing vector
