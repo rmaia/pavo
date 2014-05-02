@@ -39,6 +39,10 @@ par(ask = ask)
 #   par(mfrow=c(2,2)) else
 #   par(mfrow=c(1,1))
 
+# TESTING AREA
+rspecdata <- teal
+#
+
 nms <- names(rspecdata)
 
 wl_index <- which(names(rspecdata)=='wl')
@@ -75,6 +79,11 @@ if (ncol(rspecdata)==1) {
   Yj <- min(rspecdata2)  # min refls
   Yk <- min(rspecdata)  # min refls, whole spectrum
   Xi <- which(rspecdata2==Yi)  # lambda_max index
+  if (length(Xi)>1) {
+    Xi <- Xi[1]
+    warning("Multiple wavelengths have the same reflectance value.
+      Using first peak found. Please check the data or try smoothing.")
+  }
   fsthalf <- rspecdata2[1:Xi]
   sndhalf <- rspecdata2[Xi:length(rspecdata2)]
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
@@ -86,6 +95,17 @@ if (ncol(rspecdata)==1) {
   Yj <- apply(rspecdata2, 2, min)  # min refls
   Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
   Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x]==Yi[x]))  # lambda_max index
+  # CE edit: test if any wls have equal reflectance values
+  dblpeaks <- sapply(Xi, length)
+  dblpeak.nms <- nms[select][dblpeaks>1]
+  if (any(dblpeaks>1)) {
+    # Keep only first peak of each spectrum
+    Xi <- sapply(Xi, "[[", 1)
+    warning(paste("Multiple wavelengths have the same reflectance value (",
+      paste(dblpeak.nms, collapse=", "),
+      "). Using first peak found. Please check the data or try smoothing.", sep=""))
+  }
+  # end CE edit
   fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
   sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
@@ -96,8 +116,8 @@ if (ncol(rspecdata)==1) {
 
 
 if (any(Yj>Yk)) {
-warning(paste('Please fix lim in spectra with incl.min marked "No" to 
-              incorporate all minima in spectral curves'))
+warning(paste("Please fix lim in spectra with incl.min marked 'No' to 
+              incorporate all minima in spectral curves"))
 }
 
 Xa <- wlrange[fstHM]
