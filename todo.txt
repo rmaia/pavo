@@ -8,15 +8,19 @@
 - add couple plotting options for `segclass` objects
 
 ## Me
-- add CIE chromaticity diagram
-- make fast `getspec` function
+- Add CIE chromaticity diagram function
++ Make fast `getspec` function
 - make `lines.rspec`
 - add ability to produce static 3d plots (scatter3d, add points, add volumes)
 - add ability to produce heatmap plot with `varying` vector in non-ascending order
-- add ability to add argugments to `aggspec` (e.g., `na.rm=TRUE`)
++ add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
+- need to make default color for points (it's transp now)
++ add ability to set `alpha` in `spec2rgb`
+- give few options to calculate rgb values from specs (normalize, don't normalize)?
++ `subset.rspec` isn't working right. fix it so that 'wl' column is removed prior to subsetting.
 
 ## Raf
-OK - deprecate tcs class, have general `colspace` class
-OK - don't load `rgl` automatically
++ deprecate tcs class, have general `colspace` class
++ don't load `rgl` automatically
 - add dichromatic chromaticity diagrams
 - add hexagon chromaticity diagram

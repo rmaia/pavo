@@ -2,9 +2,8 @@
 \alias{plot.rspec}
 \title{Plot spectra}
 \usage{
-  \method{plot}{rspec} (x, select = NULL,
-    type = c("overlay", "stack", "heatmap"),
-    varying = NULL, n = 100, ...)
+\method{plot}{rspec}(x, select = NULL, type = c("overlay", "stack",
+  "heatmap"), varying = NULL, n = 100, ...)
 }
 \arguments{
   \item{x}{(required) a data frame, possibly an object of
@@ -33,7 +32,7 @@
   for \code{'heatmap'}).}
 }
 \description{
-  Plots reflectance spectra in different arrangements.
+Plots reflectance spectra in different arrangements.
 }
 \examples{
 \dontrun{
@@ -43,10 +42,10 @@ plot(teal, type = 'stack')
 plot(teal, type = 'heatmap')}
 }
 \author{
-  Chad Eliason \email{cme16@zips.uakron.edu}
+Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \seealso{
-  \code{\link{spec2rgb}}, \code{\link{image}},
-  \code{\link{plot}}
+\code{\link{spec2rgb}}, \code{\link{image}},
+\code{\link{plot}}
 }
 

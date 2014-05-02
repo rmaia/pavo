@@ -5,6 +5,7 @@
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
+#' @param alpha alpha value to use for colors (defaults to 1, opaque)
 #' 
 #' @return A character vector of class \code{spec2rgb} consisting of hexadecimal color values
 #' for passing to further plotting functions.
@@ -20,7 +21,7 @@
 #' online data respository at \url{http://www.cvrl.org/}.
 #' @references \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 
-spec2rgb <- function(rspecdata) {
+spec2rgb <- function(rspecdata, alpha=1) {
 
 wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index > 0)){
@@ -39,7 +40,7 @@ rspecdata <- rspecdata[which(wl==400):which(wl==700),]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
-sens <- ciexyz
+sens <- pavo:::ciexyz
 
 # P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 # P2 <- rspecdata
@@ -79,7 +80,7 @@ rgb1 <- sapply(1:ncol(rgb1), function(x) {
 rgb1[rgb1 < 0] <- 0
 rgb1[rgb1 > 1] <- 1
 
-colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3])
+colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3], alpha=alpha)
 
 #class(colrs) <- c('spec2rgb', 'character')
 

@@ -2,12 +2,10 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-  vismodel(rspecdata, qcatch = c("Qi", "fi"),
-    visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"),
-    achromatic = c("bt.dc", "ch.dc", "st.dc", "ml", "none"),
-    illum = c("ideal", "bluesky", "D65", "forestshade"),
-    vonkries = F, scale = 1, bkg = "ideal",
-    relative = TRUE)
+vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
+  "bt", "star", "pfowl"), achromatic = c("bt.dc", "ch.dc", "st.dc", "ml",
+  "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
+  vonkries = FALSE, scale = 1, bkg = "ideal", relative = TRUE)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -73,18 +71,18 @@
   no effect.}
 }
 \value{
-  An object of class \code{vismodel} containing the photon
-  catches for each of the photoreceptors considered.
-  Information on the parameters used in the calculation are
-  also stored and can be called using the
-  \code{summary.vismodel} function.
+An object of class \code{vismodel} containing the photon
+catches for each of the photoreceptors considered.
+Information on the parameters used in the calculation are
+also stored and can be called using the
+\code{summary.vismodel} function.
 }
 \description{
-  Applies the visual models of Vorobyev et al. (1998) to
-  calculate quantum catches at each photoreceptor. Relative
-  values may also be obtained, in which case the model
-  reduces to the color space as described in Endler &
-  Mielke (2005) and Stoddard & Prum (2008).
+Applies the visual models of Vorobyev et al. (1998) to
+calculate quantum catches at each photoreceptor. Relative
+values may also be obtained, in which case the model
+reduces to the color space as described in Endler & Mielke
+(2005) and Stoddard & Prum (2008).
 }
 \examples{
 \dontrun{
@@ -93,26 +91,26 @@ vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 tcs.sicalis <- tcs(vis.sicalis)}
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-  Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &
-  Cuthill, I. (1998). Tetrachromacy, oil droplets and bird
-  plumage colours. Journal Of Comparative Physiology
-  A-Neuroethology Sensory Neural And Behavioral Physiology,
-  183(5), 621-633.
+Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &
+Cuthill, I. (1998). Tetrachromacy, oil droplets and bird
+plumage colours. Journal Of Comparative Physiology
+A-Neuroethology Sensory Neural And Behavioral Physiology,
+183(5), 621-633.
 
-  Hart, N. S. (2001). The visual ecology of avian
-  photoreceptors. Progress In Retinal And Eye Research,
-  20(5), 675-703.
+Hart, N. S. (2001). The visual ecology of avian
+photoreceptors. Progress In Retinal And Eye Research,
+20(5), 675-703.
 
-  Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
-  plumage color in a tetrahedral color space: A
-  phylogenetic analysis of new world buntings. The American
-  Naturalist, 171(6), 755-776.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
+plumage color in a tetrahedral color space: A phylogenetic
+analysis of new world buntings. The American Naturalist,
+171(6), 755-776.
 
-  Endler, J. A., & Mielke, P. (2005). Comparing entire
-  colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The
+Linnean Society, 86(4), 405-431.
 }
 

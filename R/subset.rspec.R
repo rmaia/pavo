@@ -27,6 +27,12 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 subset.rspec <- function (x, subset, ...) {
+  # remove 'wl' column if present
+  wl_index <- which(names(x)=='wl')
+  if (length(wl_index)==1) {
+    wl <- x[, wl_index]
+    x <- x[, -wl_index]
+  }
   if (is.logical(subset)) {
     subsample <- subset
   } else {
@@ -35,7 +41,7 @@ subset.rspec <- function (x, subset, ...) {
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(x["wl"], x[subsample]) # & !is.na(subset)])
+  res <- cbind(wl, x[subsample]) # & !is.na(subset)])
   class(res) <- c("rspec", "data.frame")
   res
 }

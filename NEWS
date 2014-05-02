@@ -1,3 +1,17 @@
+
+------------------------------------------------------------------------------
+MINOR FEATURES AND BUG FIXES:
+
+* procspec() fixed error when attempting to smooth rspec object without column names
+* procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
+* peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700
+* peakshape() returns warning if a spectrum contains duplicate reflectance values
+* summary.rspec() works with single spectra
+
+NEW FUNCTIONS:
+
+* fgetspec() faster (~5-10X), but less flexible, version of getspec() for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics)
+
 pavo 0.5-1
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES

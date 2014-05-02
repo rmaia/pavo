@@ -1,8 +1,8 @@
-\name{getspec}
-\alias{getspec}
-\title{Import spectra files}
+\name{fgetspec}
+\alias{fgetspec}
+\title{Fast importing of spectral data files}
 \usage{
-getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
+fgetspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
   subdir = FALSE, subdir.names = FALSE)
 }
 \arguments{
