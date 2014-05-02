@@ -1,7 +1,8 @@
 
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
-* CE: procspec() fixed error when attempting to smooth rspec object without column names
+* procspec() fixed error when attempting to smooth rspec object without column names
+* procspec(), aggspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
 
 
 pavo 0.5-1
