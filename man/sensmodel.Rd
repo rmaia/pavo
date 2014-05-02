@@ -2,9 +2,8 @@
 \alias{sensmodel}
 \title{Modelling spectral sensitivity}
 \usage{
-  sensmodel(peaksense, range = c(300, 700),
-    lambdacut = NULL, Bmid = NULL, oiltype = NULL,
-    beta = TRUE, om = NULL, integrate = TRUE)
+sensmodel(peaksense, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
+  oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE)
 }
 \arguments{
   \item{peaksense}{(required) a vector with peak
@@ -46,39 +45,40 @@
   (best for visual models; defaults to \code{TRUE}).}
 }
 \value{
-  A data frame of class \code{rspec} containing each cone
-  model as a column.
+A data frame of class \code{rspec} containing each cone
+model as a column.
 }
 \description{
-  Models spectral sensitivity (with oil droplets; optional)
-  based on peak cone sensitivity according to the models of
-  Govardovskii et al. (2000) and Hart & Vorobyev (2005).
+Models spectral sensitivity (with oil droplets; optional)
+based on peak cone sensitivity according to the models of
+Govardovskii et al. (2000) and Hart & Vorobyev (2005).
 }
 \examples{
 \dontrun{
 # Blue tit visual system based on Hart et al (2000)
-bluesens <- sensmodel(c(371,448,502,563),beta=F,oiltype = c("T", "C", "Y","R"),om= TRUE)
+bluesens <- sensmodel(c(371,448,502,563), beta=F, lambdacut = c(330,413,507,572),
+oiltype = c("T", "C", "Y","R"), om= TRUE)
 # Danio aequipinnatus based on Govardovskii et al. (2000)
 daniosens <- sensmodel(c(357,411,477,569))}
 }
 \author{
-  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad
-  Eliason \email{cme16@zips.uakron.edu}
+Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad
+Eliason \email{cme16@zips.uakron.edu}
 }
 \references{
-  Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and
-  Donner K. 2000. In search of the visual pigment template.
-  Visual Neuroscience 17:509-528
+Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and
+Donner K. 2000. In search of the visual pigment template.
+Visual Neuroscience 17:509-528
 
-  Hart NS, and Vorobyev M. 2005. Modelling oil droplet
-  absorption spectra and spectral sensitivities of bird
-  cone photoreceptors. Journal of Comparative Physiology A.
-  191: 381-392
+Hart NS, and Vorobyev M. 2005. Modelling oil droplet
+absorption spectra and spectral sensitivities of bird cone
+photoreceptors. Journal of Comparative Physiology A. 191:
+381-392
 
-  Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000)
-  Visual pigments, oil droplets, ocular media and cone
-  photoreceptor distribution in two species of passerine
-  bird: the blue tit (Parus caeruleus L) and the blackbird
-  (Turdus merula L). J Comp Physiol A 186:375-387
+Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual
+pigments, oil droplets, ocular media and cone photoreceptor
+distribution in two species of passerine bird: the blue tit
+(Parus caeruleus L) and the blackbird (Turdus merula L). J
+Comp Physiol A 186:375-387
 }
 

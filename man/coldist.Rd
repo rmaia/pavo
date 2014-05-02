@@ -2,10 +2,9 @@
 \alias{coldist}
 \title{Color distances}
 \usage{
-  coldist(vismodeldata, qcatch = c("Qi", "fi"),
-    vis = c("tetra", "tri", "di"),
-    noise = c("neural", "quantum"), subset = NULL,
-    achro = TRUE, n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.1)
+coldist(vismodeldata, qcatch = c("Qi", "fi"), vis = c("tetra", "tri", "di"),
+  noise = c("neural", "quantum"), subset = NULL, achro = TRUE, n1 = 1,
+  n2 = 2, n3 = 2, n4 = 4, v = 0.1)
 }
 \arguments{
   \item{vismodeldata}{(required) quantum catch color data.
@@ -68,16 +67,16 @@
   will only work with objects of class \code{vismodel}. }}
 }
 \value{
-  A data frame containing 4 columns. The first two
-  (\code{patch1, patch2}) refer to the two colors being
-  contrasted; \code{dS} is the chromatic contrast (delta S,
-  in JNDs) and \code{dL} is the achromatic contrast (delta
-  L, in JNDs)
+A data frame containing 4 columns. The first two
+(\code{patch1, patch2}) refer to the two colors being
+contrasted; \code{dS} is the chromatic contrast (delta S,
+in JNDs) and \code{dL} is the achromatic contrast (delta L,
+in JNDs)
 }
 \description{
-  Applies the visual models of Vorobyev et al. (1998) to
-  calculate color distances with receptor noise based on
-  relative photoreceptor densities.
+Applies the visual models of Vorobyev et al. (1998) to
+calculate color distances with receptor noise based on
+relative photoreceptor densities.
 }
 \examples{
 \dontrun{
@@ -86,21 +85,21 @@ vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
 coldist.sicalis <- coldist(vis.sicalis, vis='tetra')}
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-  Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &
-  Cuthill, I. (1998). Tetrachromacy, oil droplets and bird
-  plumage colours. Journal Of Comparative Physiology
-  A-Neuroethology Sensory Neural And Behavioral Physiology,
-  183(5), 621-633.
+Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &
+Cuthill, I. (1998). Tetrachromacy, oil droplets and bird
+plumage colours. Journal Of Comparative Physiology
+A-Neuroethology Sensory Neural And Behavioral Physiology,
+183(5), 621-633.
 
-  Hart, N. S. (2001). The visual ecology of avian
-  photoreceptors. Progress In Retinal And Eye Research,
-  20(5), 675-703.
+Hart, N. S. (2001). The visual ecology of avian
+photoreceptors. Progress In Retinal And Eye Research,
+20(5), 675-703.
 
-  Endler, J. A., & Mielke, P. (2005). Comparing entire
-  colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The
+Linnean Society, 86(4), 405-431.
 }
 

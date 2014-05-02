@@ -5,6 +5,7 @@
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
+#' @param alpha alpha value to use for colors (defaults to 1, opaque)
 #' 
 #' @return A character vector of class \code{spec2rgb} consisting of hexadecimal color values
 #' for passing to further plotting functions.

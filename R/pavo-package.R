@@ -16,4 +16,4 @@
 #' \email{cme16@@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @keywords package
 #' @examples #see functions.
-NA
+NULL

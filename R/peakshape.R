@@ -39,10 +39,6 @@ par(ask = ask)
 #   par(mfrow=c(2,2)) else
 #   par(mfrow=c(1,1))
 
-# TESTING AREA
-rspecdata <- teal
-#
-
 nms <- names(rspecdata)
 
 wl_index <- which(names(rspecdata)=='wl')
