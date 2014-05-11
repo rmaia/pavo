@@ -72,8 +72,8 @@ wlrange <- lim[1]:lim[2]
 if (ncol(rspecdata)==1) {
   rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- max(rspecdata2)  # max refls
-  Yj <- min(rspecdata2)  # min refls
-  Yk <- min(rspecdata)  # min refls, whole spectrum
+  # Yj <- min(rspecdata2)  # min refls
+  Yj <- min(rspecdata)  # min refls, whole spectrum
   Xi <- which(rspecdata2==Yi)  # lambda_max index
   if (length(Xi)>1) {
     Xi <- Xi[1]
@@ -88,8 +88,8 @@ if (ncol(rspecdata)==1) {
 } else {
   rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
-  Yj <- apply(rspecdata2, 2, min)  # min refls
-  Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
+  # Yj <- apply(rspecdata2, 2, min)  # min refls
+  Yj <- apply(rspecdata, 2, min)  # min refls, whole spectrum
   Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x]==Yi[x]))  # lambda_max index
   # CE edit: test if any wls have equal reflectance values
   dblpeaks <- sapply(Xi, length)
@@ -110,15 +110,18 @@ if (ncol(rspecdata)==1) {
 
 }
 
-
-if (any(Yj>Yk)) {
-warning(paste("Please fix lim in spectra with incl.min marked 'No' to 
-              incorporate all minima in spectral curves"))
-}
+# if (any(Yj>Yk)) {
+# warning(paste("Please fix lim in spectra with incl.min marked 'No' to 
+#               incorporate all minima in spectral curves"))
+# }
 
 Xa <- wlrange[fstHM]
 Xb <- wlrange[Xi+sndHM]
 hue <- wlrange[Xi]
+
+if (any(Xa==lim[1]|Xb==lim[2])) {
+  warning("peak edges may be at bounds. check limits.")
+}
 
 if (plot==TRUE) {
   for (i in seq_along(select)) {
@@ -133,8 +136,9 @@ if (plot==TRUE) {
 }
 
 out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue, 
-                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue, 
-                  incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
+                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue)
+
+                  # , incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 # row.names(out) <- nms[select]
 
