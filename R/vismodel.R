@@ -26,6 +26,8 @@
 #' \item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
+#' \item \code{cie1931}: Human CIE 1931 color matching functions
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
