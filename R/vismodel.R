@@ -71,8 +71,8 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
-  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
-  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
+  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl", "apis", "cie1931"), 
+  achromatic = c("none","bt.dc","ch.dc", 'st.dc',"ml"),
   illum = c('ideal','bluesky','D65','forestshade'), 
   vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
 {
