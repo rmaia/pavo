@@ -115,6 +115,11 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)  # is this necessary?
 
+# check if '...' is in argument list of specified FUN
+if (!is.name(formals(FUN)$...)) {
+  formals(FUN) <- c(formals(FUN), alist(... = ))  # if not, add it
+}
+
 dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, na.rm = na.rm)})
 
 colnames(dat) <- unique(by0)

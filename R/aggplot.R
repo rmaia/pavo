@@ -32,6 +32,10 @@
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
+
+#  OK, so we have a little problem here. when a user specifies an error function the na.rm argument returns an error since it isn't found in the user-specified function
+
+
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
                     lcol = NULL, shadecol = NULL, alpha = 0.2, na.rm = FALSE, ...) {
 
