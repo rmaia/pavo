@@ -3,7 +3,7 @@ pavo 0.6
 MINOR FEATURES AND BUG FIXES:
 
 * procspec() fixed error when attempting to smooth rspec object without column names
-* procspec(), aggplot() accept additional arguments via '...' to pass to summary functions (e.g., na.rm=TRUE)
+* procspec(), aggplot() accept 'na.rm' argument
 * peakshape() wavelength limits now taken from rspec object rather than defaulting to 300-700 nm
 * peakshape() returns warning if a spectrum contains duplicate reflectance values
 * summary.rspec() fixed to work with single spectra

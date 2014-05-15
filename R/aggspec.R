@@ -55,7 +55,7 @@ if (length(wl_index>0)){
 		}
 
 if (is.null(by)) {
-  dat <- apply(y, 1, FUN)
+  dat <- apply(y, 1, FUN, na.rm = na.rm)
   res <- data.frame(cbind(wl=wl, dat))
   class(res) <- c('rspec','data.frame')
   return(res)
@@ -116,8 +116,9 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 by <- factor(by)  # is this necessary?
 
 # check if '...' is in argument list of specified FUN
+# if not, add it. otherwise aggplot() options (like lty, lwd) will cause errors
 if (!is.name(formals(FUN)$...)) {
-  formals(FUN) <- c(formals(FUN), alist(... = ))  # if not, add it
+  formals(FUN) <- c(formals(FUN), alist(... = ))
 }
 
 dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, na.rm = na.rm)})
