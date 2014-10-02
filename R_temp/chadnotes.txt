@@ -1,0 +1,20 @@
+library(roxygen2)
+
+roxygenize('~/github/pavo')
+
+install.packages("~/github/pavo", type="source", repos=NULL)
+
+# quit R
+
+library(pavo)
+
+data(teal)
+
+# see if lines.rspec works
+sex <- sample(c('male','female'), 12, replace=TRUE)
+plot(teal, sex=='male', col = 'blue')
+lines(teal, sex=='female', col = 'red')
+
+# see if plot.vismodel works
+vm1 <- vismodel(teal)
+plot.vismodel(vm1)
