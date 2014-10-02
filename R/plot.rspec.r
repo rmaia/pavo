@@ -2,7 +2,6 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @S3method plot rspec
 #' @method plot rspec
 #' @param x (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
@@ -28,6 +27,7 @@
 #' plot(teal, type = 'heatmap')}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
+#' @export plot.rspec
 
 # TODO: add argument for padding region between x in stack plot
 

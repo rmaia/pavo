@@ -70,7 +70,8 @@ rspecdata <- as.data.frame(rspecdata[, select])
 wlrange <- lim[1]:lim[2]
 
 if (ncol(rspecdata)==1) {
-  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
+  # rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
+  rspecdata2 <- rspecdata[wl%in%c(lim[1]:lim[2]), ]
   Yi <- max(rspecdata2)  # max refls
   # Yj <- min(rspecdata2)  # min refls
   Yj <- min(rspecdata)  # min refls, whole spectrum
@@ -86,7 +87,7 @@ if (ncol(rspecdata)==1) {
   fstHM <- which.min(abs(fsthalf - halfmax))
   sndHM <- which.min(abs(sndhalf - halfmax))
 } else {
-  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
+  rspecdata2 <- rspecdata[wl%in%c(lim[1]:lim[2]), ]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
   # Yj <- apply(rspecdata2, 2, min)  # min refls
   Yj <- apply(rspecdata, 2, min)  # min refls, whole spectrum
@@ -116,7 +117,7 @@ if (ncol(rspecdata)==1) {
 # }
 
 Xa <- wlrange[fstHM]
-Xb <- wlrange[Xi+sndHM]
+Xb <- wlrange[Xi+sndHM-1]
 hue <- wlrange[Xi]
 
 if (any(Xa==lim[1]|Xb==lim[2])) {
@@ -136,7 +137,8 @@ if (plot==TRUE) {
 }
 
 out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue, 
-                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue)
+                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
+                  bounds = c("OK", "Check")[as.numeric(Xa==lim[1]|Xb==lim[2])+1])
 
                   # , incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 

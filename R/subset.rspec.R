@@ -2,7 +2,6 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
-#' @S3method subset rspec
 #' @method subset rspec
 #'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}
@@ -46,7 +45,6 @@ subset.rspec <- function (x, subset, ...) {
   res
 }
 
-#' @S3method subset tcs
 #' @method subset tcs
 #' @rdname subset.rspec
 #'
@@ -66,7 +64,6 @@ subset.tcs <- function (x, subset, ...) {
   res
 }
 
-#' @S3method subset vismodel
 #' @method subset vismodel
 #' @rdname subset.rspec
 #'
