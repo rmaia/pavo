@@ -2,7 +2,6 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
-#' @export subset rspec
 #' @method subset rspec
 #'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}
@@ -25,6 +24,7 @@
 #' subset(tcs1, "B")[, 1:5]}
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @export subset.rspec
 
 subset.rspec <- function (x, subset, ...) {
   # remove 'wl' column if present

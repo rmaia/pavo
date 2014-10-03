@@ -2,7 +2,7 @@
 #'
 #' Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object
 #'
-#' @export merge rspec
+#' @export merge.rspec
 #' @method merge rspec
 #' @param x,y (required) two data frames (or \code{rspec} objects) to merge
 #' @param by wavelength column name (defaults to \code{"wl"})
