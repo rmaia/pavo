@@ -2,6 +2,7 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
+#' @export subset rspec
 #' @method subset rspec
 #'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}

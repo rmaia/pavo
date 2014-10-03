@@ -2,6 +2,7 @@
 #'
 #' Calculates characteristics of a cloud of points (spectra) in avian tetrahedral color space
 #'
+#' @export summary tcs
 #' @method summary tcs
 #' @import geometry
 #' @param object (required) Results of \code{tcs} or Can be either the result
