@@ -62,7 +62,7 @@ progbar <- txtProgressBar(min=0, max=length(files), style=2)
 for(i in 1:length(files))
 {
 
-raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
+raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n', skipNul=TRUE)
 #ToDo we can actually use this raw string to import metadata if we want
 
 # find last line with text
@@ -99,7 +99,7 @@ separ <- ifelse(issem,';','\t')
 
 # extract data from file
 
-tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL)		
+tempframe <- suppressWarnings(read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL, skipNul=TRUE))
 
 if(any(c('character','factor') %in% apply(tempframe, 2, class))){
   tempframe <- suppressWarnings(apply(tempframe, 2, 
