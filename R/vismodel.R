@@ -136,6 +136,7 @@ if(illum2=='ideal')
 
 bg2 <- try(match.arg(bkg), silent=T)
 if(!inherits(bg2,'try-error')){
+  if(is.null(bkg)) stop('chosen background is NULL')
   bkg <- bgil[,grep(bg2,names(bgil))]
   }else{
     bg2 <- 'user-defined'
