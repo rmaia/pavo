@@ -30,15 +30,6 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-# CME: can we have this automatically set the lower and upper limits based on the spec 
-#      files? These files are usually a pain to view in a text editor to see what wl 
-#      range was used.
-# RM: hm.. not sure I like this idea very much. two problems: (1) if specs have different 
-#     ranges they can't be added to the same matrix without adding NAs; (2) If saved spec
-#     includes a range that the spec can't actually read, it will be very noisy and may 
-#     mess corrections (depending on how these are handled).
-#   suggested solution: a secondary function that examines files and returns recorded WL 
-#     range (in a dataframe or table)
 
 getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
            subdir=FALSE, subdir.names=FALSE)
@@ -109,6 +100,13 @@ separ <- ifelse(issem,';','\t')
 # extract data from file
 
 tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL)		
+
+if(any(c('character','factor') %in% apply(tempframe, 2, class))){
+  tempframe <- suppressWarnings(apply(tempframe, 2, 
+    function(x) as.numeric(as.character(x))))
+  warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+}
+  
 
 # remove columns where all values are NAs (due to poor tabulation)
 tempframe <- tempframe[ ,colSums(is.na(tempframe))<nrow(tempframe)]

@@ -1063,7 +1063,7 @@ cone or the receptor (or combination of receptors) responsible for chromatic pro
 equation \cite{Siddiqi:2004}:
 
 \begin{equation}
-\Delta L =  \left|\frac{\Delta f^2}{w^2}\right|
+\Delta L =  \left|\frac{\Delta f}{w}\right|
 \end{equation}
 
 \pavo{} implements these calculations in the function \code{coldist}. For the achromatic contrast, 
@@ -1311,8 +1311,8 @@ perception, see \cite{Andersson:2006} and \cite{Montgomerie:2006}. Visual models
 catches and receptor noise are detailed in \cite{Vorobyev:1998} and \cite{Vorobyev:1998to}, and
 photoreceptor sensitivity curve estimation in \cite{Govardovskii:2000} and \cite{Hart:2005}. For
 tetrahedral colourspace model implementations and variable calculations, see \cite{Endler:2005} and
-\cite{Stoddard:2008}, and for colour volume overlap see \cite{Stoddard:2011} and
-\cite{Stoddard:2012}. Users of the functions that apply these methods must cite the original sources
+\cite{Stoddard:2008}, and for colour volume overlap see \cite{Stoddard:2008} and
+\cite{Stoddard:2011}. Users of the functions that apply these methods must cite the original sources
 as appropriate, along with \pavo{}.
 
 \section*{Acknowledgments}
