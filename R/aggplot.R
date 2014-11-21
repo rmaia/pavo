@@ -18,6 +18,7 @@
 #' @param lcol color of plotted lines indicating central tendency.
 #' @param shadecol color of shaded areas indicating variance measure.
 #' @param alpha transparency of the shaded areas.
+#' @param legend automatically add a legend.
 #' @param ... additional graphical parameters to be passed to plot.
 #' @return Plot containing the lines and shaded areas of the groups of spectra.
 #' @export
@@ -33,7 +34,7 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
-                    lcol = NULL, shadecol = NULL, alpha = 0.2, addLegend = FALSE, ...) {
+                    lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...) {
 
 if (is.numeric(by))
   if (by==1)
@@ -93,13 +94,15 @@ if (length(lty) < ncol(cntplotspecs))
 
 if (length(shadecol) < ncol(cntplotspecs))
   shadecol <- rep(shadecol, ncol(cntplotspecs))
-# if (any(class(shadecol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+# if (any(class(shadecol)=='spec2rgb'))  
 #   shadecol <- spec2rgb(cbind(wl,cntplotspecs))
+# this messes up when you give a normal color string; need to look for # or something about hex.
 
 if (length(lcol) < ncol(cntplotspecs))
   lcol <- rep(lcol, ncol(cntplotspecs))
-# if (any(class(lcol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+# if (any(class(lcol)=='spec2rgb'))  
 #   lcol <- spec2rgb(cbind(wl,cntplotspecs))
+# this messes up when you give a normal color string; need to look for # or something about hex.
    
 col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
               "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
@@ -162,7 +165,7 @@ do.call(polygon, arg0)
       do.call(lines, arg0)
     }
   }
-  if (addLegend) {
+  if (legend) {
     legend("topleft", bty="n", legend=names(cntplotspecs), lty=1, col=colourset)
   }
  
