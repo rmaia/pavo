@@ -115,9 +115,9 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)  # is this necessary?
 
-dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
+dat <- sapply(levels(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
 
-colnames(dat) <- unique(by0)
+colnames(dat) <- levels(by0)
 
 if(trim)
   colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
