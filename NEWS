@@ -3,10 +3,15 @@
 MINOR FEATURES AND BUG FIXES:
 
 * procspec() fixed error when attempting to smooth rspec object without column names
+* procspec() handles smoothing before fixing negatives to avoid re-adding negatives when smoothing
 * procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
 * peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700
 * peakshape() returns warning if a spectrum contains duplicate reflectance values
 * summary.rspec() works with single spectra
+* aggplot() and aggspec() fixed bug on ordering of levels when they don't match the sequence in the rspec object
+* aggplot() added logical argument "legend" for automatically adding a legend to the plot
+* vismodel() returns error if bkg=NULL
+
 
 NEW FUNCTIONS:
 
