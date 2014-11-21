@@ -11,6 +11,7 @@ MINOR FEATURES AND BUG FIXES:
 * aggplot() and aggspec() fixed bug on ordering of levels when they don't match the sequence in the rspec object
 * aggplot() added logical argument "legend" for automatically adding a legend to the plot
 * vismodel() returns error if bkg=NULL
+* getspec() patched to stop returning warnigns in Yosemite
 
 
 NEW FUNCTIONS:
