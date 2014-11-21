@@ -33,7 +33,7 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
-                    lcol = NULL, shadecol = NULL, alpha = 0.2, ...) {
+                    lcol = NULL, shadecol = NULL, alpha = 0.2, addLegend = FALSE, ...) {
 
 if (is.numeric(by))
   if (by==1)
@@ -162,5 +162,8 @@ do.call(polygon, arg0)
       do.call(lines, arg0)
     }
   }
-
+  if (addLegend) {
+    legend("topleft", bty="n", legend=names(cntplotspecs), lty=1, col=colourset)
+  }
+ 
 }
