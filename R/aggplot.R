@@ -166,7 +166,8 @@ do.call(polygon, arg0)
     }
   }
   if (legend) {
-    legend("topleft", bty="n", legend=names(cntplotspecs), lty=1, col=colourset)
+    legend("topleft", bty="n", legend=names(cntplotspecs), 
+      lty=lty, col=lcol)
   }
  
 }
