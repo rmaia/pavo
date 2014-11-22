@@ -86,49 +86,49 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, ...) {
     if (length(unique(wl_id))==1) {
       by <- do.call('paste', c(by, sep='.'))
     } else {
-      stop("mismatch in column names of input vectors")
-    }
-  }
-  
-  # retain original 'by' values
-  by0 <- by
-  
-  #BEGIN RM EDIT 1
-  # Allow for means of every "by" data, if "by" is a single number
-  # i.e. if by=3, average every 3 consecutive data of "data"
-  if (length(by)==1){
-    by0 <- names(y)[seq(1, length(names(y)), by = by)]
-    by <- rep(1:(length(y) / by), each = by)
-  }
-  #END RM EDIT 1
-  
-  #BEGIN RM EDIT 3
-  # check: does data have the same number of columns as the by vector?
-  
-  if (dim(y)[2]!=length(by)) 
-    stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(data)))))
-  
-  #END RM EDIT 3
-  
-  # Add ability to aggregate based on multiple vectors (given a list as input)
-  # TODO: add that list can be an input in roxygen doc 
-  
-  by <- factor(by)  # is this necessary?
-  
-  dat <- sapply(levels(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
-  
-  colnames(dat) <- levels(by)
-  
-  if(trim)
-    colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
-  
-  res <- data.frame(cbind(wl=wl, dat))
-  
-  class(res) <- c('rspec','data.frame')
-  
-  res
-  
-  # This would return list of spectral data and data.frame with metadata:
+          stop("mismatch in column names of input vectors")
+      }
+}
+
+# retain original 'by' values
+by0 <- by
+
+#BEGIN RM EDIT 1
+# Allow for means of every "by" data, if "by" is a single number
+# i.e. if by=3, average every 3 consecutive data of "data"
+if (length(by)==1){
+	by0 <- names(y)[seq(1, length(names(y)), by = by)]
+	by <- rep(1:(length(y) / by), each = by)
+}
+#END RM EDIT 1
+
+#BEGIN RM EDIT 3
+# check: does data have the same number of columns as the by vector?
+
+if (dim(y)[2]!=length(by)) 
+stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as columns in',dQuote(deparse(substitute(data)))))
+
+#END RM EDIT 3
+
+# Add ability to aggregate based on multiple vectors (given a list as input)
+# TODO: add that list can be an input in roxygen doc 
+
+by <- factor(by)  # is this necessary?
+
+dat <- sapply(levels(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
+
+colnames(dat) <- levels(by0)
+
+if(trim)
+  colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
+
+res <- data.frame(cbind(wl=wl, dat))
+
+class(res) <- c('rspec','data.frame')
+
+res
+
+# This would return list of spectral data and data.frame with metadata:
   # set <- strsplit(names(res), split='\\.')
   # out <- as.data.frame(do.call("rbind", set))
   # list(res, out)

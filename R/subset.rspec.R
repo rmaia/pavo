@@ -33,10 +33,11 @@ subset.rspec <- function (x, subset, ...) {
     wl <- x[, wl_index]
     x <- x[, -wl_index]
   }
+  
   if (is.logical(subset)) {
+    # test whether 'wl' is in subset condition
     # gets from function call for subset
     subsample <- substitute(subset)
-    # test whether 'wl' is in subset condition
     if ('wl' %in% eval(subsample[[2]])) {
       subsample[[2]] <- eval(subsample[[2]])[-wl_index]
     }
