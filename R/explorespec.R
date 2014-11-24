@@ -74,10 +74,12 @@ if (dim(rspecdata)[2]!=length(by) & !is.integer(by))
 
 by <- factor(by)
 
+# return(by)
+
 # number of 'by' groups
 numby <- length(levels(by))
 
-by <- as.numeric(by)
+# by <- as.numeric(by)
 
 if (numby <= 0) stop("Invalid by value")  # is this needed anymore?
 
@@ -131,13 +133,24 @@ if (all(is.null(arg$ylim), scale=='equal')) {
   arg$ylim <- c(min(rspecdata), max(rspecdata))*yaxismult
 }
 
+
+
+
+# TODO: should be able to deal with this if there are NAs in the by vector
+if (anyNA(by)) {
+  warning("NA values in by vector. please check.")
+}
+
+
+
 # Do the plotting
 for (i in 1:nplots) {
   if (numby == 1) {
   	bloc <- data.frame(rspecdata[i])
     } else {
       # THIS IS WHAT I NEED TO FIX
-      bloc <- rspecdata[, by==unique(by)[i]]
+      bloc <- rspecdata[, which(by==levels(by)[i])]
+#       bloc <- rspecdata[, by==unique(by)[i]]
 #       bloc <- rspecdata[,(((i-1)*numby)+1):min(i*numby,dim(rspecdata)[2])]
     }
 
