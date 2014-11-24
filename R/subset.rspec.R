@@ -41,7 +41,7 @@ subset.rspec <- function (x, subset, ...) {
     if ('wl' %in% eval(subsample[[2]])) {
       subsample[[2]] <- eval(subsample[[2]])[-wl_index]
     }
-    subsample <- eval(subsample)
+    subsample <- which(eval(subsample))
     # check that subset same length as number of spectra
     if (length(subsample)!=ncol(x)){
       warning("look out, subset doesn't match length of spectral data")
@@ -52,7 +52,7 @@ subset.rspec <- function (x, subset, ...) {
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[which(subsample)])
+  res <- cbind(wl, x[subsample])
   class(res) <- c("rspec", "data.frame")
   res
 }
