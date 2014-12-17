@@ -41,18 +41,18 @@ subset.rspec <- function (x, subset, ...) {
     if ('wl' %in% eval(subsample[[2]])) {
       subsample[[2]] <- eval(subsample[[2]])[-wl_index]
     }
-    subsample <- eval(subsample)
+    subsample <- which(eval(subsample))
     # check that subset same length as number of spectra
     if (length(subsample)!=ncol(x)){
       warning("look out, subset doesn't match length of spectral data")
     }
   } else {
-      subsample <- grep(subset, names(x))
-    }
+    subsample <- grep(subset, names(x))
+  }
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[subsample]) # & !is.na(subset)])
+  res <- cbind(wl, x[subsample])
   class(res) <- c("rspec", "data.frame")
   res
 }
@@ -72,7 +72,7 @@ subset.tcs <- function (x, subset, ...) {
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- x[subsample, ] # & !is.na(subset)])
+  res <- x[which(subsample), ] # & !is.na(subset)])
   class(res) <- c("tcs", "data.frame")
   res
 }
@@ -88,6 +88,6 @@ subset.vismodel <- function (x, subset, ...) {
       subsample <- grep(subset, row.names(x))
     }
   # attr <- attributes(x)
-  res <- x[subsample, ]
+  res <- x[which(subsample), ]
   res
 }

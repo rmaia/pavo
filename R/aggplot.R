@@ -145,17 +145,17 @@ do.call(polygon, arg0)
     }
   }
   
-# ...then lines (so they are on top)
+  # ...then lines (so they are on top)
   arg$border <- NULL
   arg$col <- lcol[1]
   arg$x <- wl
   arg$y <- cntplotspecs[, 1]
   arg$type <- 'l'
   arg$lty <- lty[1]
-
+  
   arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
   do.call(lines, arg0)
-
+  
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
       arg$y <- cntplotspecs[, i]
