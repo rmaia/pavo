@@ -2,7 +2,7 @@
 \alias{segclass}
 \title{Segment classification}
 \usage{
-segclass(rspecdata, range = c(300, 700))
+  segclass(rspecdata, range = c(300, 700))
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, such as objects
@@ -15,13 +15,13 @@ segclass(rspecdata, range = c(300, 700))
   (defaults to 300nm to 700nm).}
 }
 \value{
-A data frame with the reflectance proportion at each of the
-four segments, as well as the LM and MS segment
-classification scores.
+  A data frame with the reflectance proportion at each of
+  the four segments, as well as the LM and MS segment
+  classification scores.
 }
 \description{
-Calculates segment classification measures as defined in
-Endler (1990)
+  Calculates segment classification measures as defined in
+  Endler (1990)
 }
 \examples{
 \dontrun{
@@ -29,11 +29,12 @@ data(sicalis)
 segclass(sicalis) }
 }
 \author{
-Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
 \references{
-Endler, J. A. (1990) On the measurement and classification
-of color in studies of animal color patterns. Biological
-Journal of the Linnean Society, 41, 315-352.
+  Endler, J. A. (1990) On the measurement and
+  classification of color in studies of animal color
+  patterns. Biological Journal of the Linnean Society, 41,
+  315-352.
 }
 

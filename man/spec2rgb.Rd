@@ -2,7 +2,7 @@
 \alias{spec2rgb}
 \title{Spectrum to rgb color conversion}
 \usage{
-spec2rgb(rspecdata, alpha = 1)
+  spec2rgb(rspecdata, alpha = 1)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -14,13 +14,13 @@ spec2rgb(rspecdata, alpha = 1)
   1, opaque)}
 }
 \value{
-A character vector of class \code{spec2rgb} consisting of
-hexadecimal color values for passing to further plotting
-functions.
+  A character vector of class \code{spec2rgb} consisting of
+  hexadecimal color values for passing to further plotting
+  functions.
 }
 \description{
-Calculates rgb values from spectra based on human color
-matching functions
+  Calculates rgb values from spectra based on human color
+  matching functions
 }
 \examples{
 \dontrun{
@@ -30,16 +30,16 @@ spec2rgb(teal)
 plot(teal, col = spec2rgb(teal), type = 'o')}
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}
+  Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \references{
-CIE(1932). Commission Internationale de l'Eclairage
-Proceedings, 1931. Cambridge: Cambridge University Press.
+  CIE(1932). Commission Internationale de l'Eclairage
+  Proceedings, 1931. Cambridge: Cambridge University Press.
 
-Color matching functions obtained from Colour and Vision
-Research Laboratory online data respository at
-\url{http://www.cvrl.org/}.
+  Color matching functions obtained from Colour and Vision
+  Research Laboratory online data respository at
+  \url{http://www.cvrl.org/}.
 
-\url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
+  \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 }
 

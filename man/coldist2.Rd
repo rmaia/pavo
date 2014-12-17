@@ -1,8 +1,8 @@
-\name{coldist}
-\alias{coldist}
+\name{coldist2}
+\alias{coldist2}
 \title{Color distances}
 \usage{
-  coldist(vismodeldata, qcatch = c("Qi", "fi"),
+  coldist2(vismodeldata, qcatch = c("Qi", "fi"),
     vis = c("tetra", "tri", "di"),
     noise = c("neural", "quantum"), subset = NULL,
     achro = TRUE, n1 = 1, n2 = 2, n3 = 2, n4 = 4,

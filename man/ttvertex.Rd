@@ -3,16 +3,17 @@
 \alias{ttvertex}
 \title{vertex for the tetrahedral color space}
 \description{
-internal data for plotting devices.
+  internal data for plotting devices.
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}
+  Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
-plumage color in a tetrahedral color space: A phylogenetic
-analysis of new world buntings. The American Naturalist,
-171(6), 755-776.
+  Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
+  plumage color in a tetrahedral color space: A
+  phylogenetic analysis of new world buntings. The American
+  Naturalist, 171(6), 755-776.
 }
 \keyword{data}
+\keyword{datasets}
 

@@ -2,7 +2,7 @@
 \alias{merge.rspec}
 \title{Merge two rspec objects}
 \usage{
-\method{merge}{rspec}(x, y, by = "wl", ...)
+  \method{merge}{rspec} (x, y, by = "wl", ...)
 }
 \arguments{
   \item{x,y}{(required) two data frames (or \code{rspec}
@@ -14,12 +14,12 @@
   \item{...}{additional class arguments}
 }
 \value{
-an object of class \code{rspec} for use with \code{pavo}
-functions
+  an object of class \code{rspec} for use with \code{pavo}
+  functions
 }
 \description{
-Merges two \code{rspec} or \code{data.frame} objects into a
-single \code{rspec} object
+  Merges two \code{rspec} or \code{data.frame} objects into
+  a single \code{rspec} object
 }
 \examples{
 \dontrun{
@@ -36,9 +36,9 @@ plot(teal)
 }
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}
+  Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \seealso{
-\code{\link{as.rspec}}, \code{\link{aggspec}}
+  \code{\link{as.rspec}}, \code{\link{aggspec}}
 }
 

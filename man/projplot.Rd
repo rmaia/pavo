@@ -2,7 +2,7 @@
 \alias{projplot}
 \title{Hue projection plot}
 \usage{
-projplot(tcsdata, ...)
+  projplot(tcsdata, ...)
 }
 \arguments{
   \item{tcsdata}{(required) color space coordinates,
@@ -14,18 +14,19 @@ projplot(tcsdata, ...)
   plotting of data points.}
 }
 \value{
-\code{projplot} creates a 2D plot of color points projected
-from the tetrahedron to its encapsulating sphere, and is
-ideal to visualize differences in hue.
+  \code{projplot} creates a 2D plot of color points
+  projected from the tetrahedron to its encapsulating
+  sphere, and is ideal to visualize differences in hue.
 }
 \description{
-Produces a 2D projection plot of points in a color space
+  Produces a 2D projection plot of points in a color space
 }
 \note{
-\code{projplot} uses the Mollweide projection, and not the
-Robinson projection, which has been used in the past. Among
-other advantages, the Mollweide projection preserves area
-relationships within latitudes without distortion.
+  \code{projplot} uses the Mollweide projection, and not
+  the Robinson projection, which has been used in the past.
+  Among other advantages, the Mollweide projection
+  preserves area relationships within latitudes without
+  distortion.
 }
 \examples{
 \dontrun{
@@ -35,17 +36,17 @@ tcs.sicalis <- tcs(vis.sicalis)
 projplot(tcs.sicalis, pch=16, col=setNames(rep(1:3, 7), rep(c('C','T','B'),7))) }
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}
+  Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
-plumage color in a tetrahedral color space: A phylogenetic
-analysis of new world buntings. The American Naturalist,
-171(6), 755-776.
+  Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
+  plumage color in a tetrahedral color space: A
+  phylogenetic analysis of new world buntings. The American
+  Naturalist, 171(6), 755-776.
 
-Endler, J. A., Westcott, D., Madden, J., & Robson, T.
-(2005). Animal visual systems and the evolution of color
-patterns: Sensory processing illuminates signal evolution.
-Evolution, 59(8), 1795-1818.
+  Endler, J. A., Westcott, D., Madden, J., & Robson, T.
+  (2005). Animal visual systems and the evolution of color
+  patterns: Sensory processing illuminates signal
+  evolution. Evolution, 59(8), 1795-1818.
 }
 

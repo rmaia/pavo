@@ -2,8 +2,8 @@
 \alias{plotsmooth}
 \title{Plot loess smoothed curves}
 \usage{
-plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
-  specnum = 0, ask = TRUE)
+  plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2,
+    curves = 5, specnum = 0, ask = TRUE)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly of
@@ -27,12 +27,13 @@ plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
   before changing plot pages}
 }
 \value{
-Series of plot with curves processed with varying level of
-loess smoothing
+  Series of plot with curves processed with varying level
+  of loess smoothing
 }
 \description{
-Plots curves with various levels of loess smoothing to help
-determine what loess parameters are best for the data.
+  Plots curves with various levels of loess smoothing to
+  help determine what loess parameters are best for the
+  data.
 }
 \examples{
 \dontrun{
@@ -40,6 +41,6 @@ data(sicalis)
 plotsmooth(sicalis,0.05,0.1,7,6)}
 }
 \author{
-Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
 

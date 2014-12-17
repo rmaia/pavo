@@ -4,11 +4,11 @@
 \alias{subset.vismodel}
 \title{Subset rspec, tcs and vismodel objects}
 \usage{
-\method{subset}{rspec}(x, subset, ...)
+  \method{subset}{rspec} (x, subset, ...)
 
-\method{subset}{tcs}(x, subset, ...)
+  \method{subset}{tcs} (x, subset, ...)
 
-\method{subset}{vismodel}(x, subset, ...)
+  \method{subset}{vismodel} (x, subset, ...)
 }
 \arguments{
   \item{x}{(required) an object of class \code{rspec},
@@ -21,11 +21,11 @@
   observations}
 }
 \value{
-a subsetted object of the same class as the input object
+  a subsetted object of the same class as the input object
 }
 \description{
-Subsets various object types based on a given vector or
-grep partial matching of data names
+  Subsets various object types based on a given vector or
+  grep partial matching of data names
 }
 \examples{
 \dontrun{
@@ -42,6 +42,6 @@ subset(vm1, "B")
 subset(tcs1, "B")[, 1:5]}
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}
+  Chad Eliason \email{cme16@zips.uakron.edu}
 }
 

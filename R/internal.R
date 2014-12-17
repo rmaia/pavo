@@ -168,35 +168,13 @@ ttdistcalcachro <- function(f1,f2,w){
         round(abs(dq1/w),7)
 		}
 
-qn.ttdistcalcachro <- function(f1,f2,qn1, qn2, n4,v){
+qn.ttdistcalcachro <- function(f1,f2,qn1, qn2, n4, weber.achro){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
-        w <- sqrt((v^2/n4) + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
+        w <- sqrt((weber.achro)^2 + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
         round(abs(dq1/w),7)
 		}
 
-
-# monodistcalc <- function(f1,f2,w1){
-        # dq1 <- f1[1]-f2[1]
-
-		# numer<-	(dq1)^2
-		
-		# denom<- w1
-			
-		# as.numeric(sqrt(numer/denom))
-		# }
-
-# qn.monodistcalc <- function(f1, f2, qn1, qn2, n1, v){
-        # dq1 <- f1[1]-f2[1]
-
-        # w1 <- sqrt((v^2/n1) + (2/(qn1[1]+qn2[1])))
-		
-		# numer<-	(dq1-dq2)^2
-		
-		# denom<- w1
-			
-		# as.numeric(sqrt(numer/denom))
-		# }
 
 
 ###################

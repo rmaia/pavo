@@ -26,17 +26,23 @@
 #' length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
 #' must match the labels of the imput samples, but partial matching (and regular expressions) 
 #' are supported.
-#' @param achro logical. If \code{TRUE}, last column of the data frame is used to calculate 
+#' @param achro Logical. If \code{TRUE}, last column of the data frame is used to calculate 
 #' the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}
 #' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
 #' the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
 #' \code{'tetra'}, only \code{n1} and \code{n2} (\code{vis='di'}) or 
 #' \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
-#' are used for chromatic contrast (NOTE: \code{n4} is still the value used for the achromatic
-#' contrast.)
-#' @param v Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
-#' the default densities, the Weber fraction for the large cone will be 0.05, as
-#' estimated from behavioral experiment with the Pekin robin, \emph{Leiothrix lutea})
+#' are used for chromatic contrast.
+#' @param weber The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
+#' and therefore must be calculated based on the epirically estimated Weber fraction of one of
+#' the cone classes. \code{v} is then applied to estimate the Weber fraction of the 
+#' other cones. by default, the value of 0.1 is used (the empirically estimated value for the
+#' LWS cone from \emph{Leiothrix lutea}).
+#' @param weber.ref the cone class used to obtain the empirical estimate of the 
+#' Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
+#' representing the LWS cone for \emph{Leiothrix lutea}.
+#' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when 
+#' \code{achro = TRUE}. Defaults to 0.1.
 #' @param noise how the noise will be calculated:
 #' \itemize{
 #' 	\item \code{neural}: noise is proportional to the Weber fraction and is independent of the
@@ -62,11 +68,11 @@
 
 
 coldist <-function(vismodeldata, qcatch=c('Qi','fi'),
-#                  vis=c('tetra', 'tri', 'di', 'mono'), 
                   vis=c('tetra', 'tri', 'di'), 
                   noise=c('neural','quantum'), subset=NULL,
                   achro=TRUE,
-                  n1=1, n2=2, n3=2, n4=4, v=0.1)
+                  n1=1, n2=2, n3=2, n4=4, 
+                  weber=0.1, weber.ref='n4', weber.achro=0.1)
 {
 
 if('vismodel' %in% class(vismodeldata)){
@@ -100,6 +106,14 @@ vis <- match.arg(vis)
 
 dat <- switch(qcatch, fi = dat, Qi = log(dat))
 
+# Calculate v based on weber fraction and reference cone
+
+v <- switch(weber.ref,
+        n1 = weber*sqrt(n1),
+        n2 = weber*sqrt(n2),
+        n3 = weber*sqrt(n3),
+        n4 = weber*sqrt(n4))
+
 #NEURAL NOISE MODEL
 
 w1e <- v/sqrt(n1)
@@ -113,12 +127,6 @@ patch1 <- row.names(dat)[pairsid[,1]]
 patch2 <- row.names(dat)[pairsid[,2]]
 
 res <- data.frame(patch1, patch2)
-
-# if (vis=='mono' & noise=='neural'){
-# res$dS <- apply(pairsid,1,function(x) 
-  # monodistcalc(dat[x[1],], dat[x[2],], 
-  # w1=w1e) )
-# }
 
 
 if (vis=='di' & noise=='neural'){
@@ -142,18 +150,10 @@ res$dS <- apply(pairsid,1,function(x)
 if(achro==TRUE & noise=='neural'){
 res$dL <- apply(pairsid,1,function(x) 
   ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  w=w4e) )
+  w=weber.achro) )
 }
 
 
-
-
-# if (vis=='mono' & noise=='quantum'){
-# res$dS <- apply(pairsid,1,function(x) 
-  # qn.monodistcalc(dat[x[1],], dat[x[2],], 
-  # qndat[x[1],], qndat[x[2],], 
-  # n1=n1, v=v) )
-# }
 
 if (vis=='di' & noise=='quantum'){
 res$dS <- apply(pairsid,1,function(x) 
@@ -179,7 +179,7 @@ res$dS <- apply(pairsid,1,function(x)
 if(achro==TRUE & noise=='quantum'){
 res$dL <- apply(pairsid,1,function(x) 
   qn.ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  qndat[x[1],], qndat[x[2],], n4=n4, v=v) )
+  qndat[x[1],], qndat[x[2],], weber=weber.achro) )
 }
 
 

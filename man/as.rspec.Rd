@@ -3,9 +3,10 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL)
+  as.rspec(object, whichwl = NULL, interp = TRUE,
+    lim = NULL)
 
-is.rspec(object)
+  is.rspec(object)
 }
 \arguments{
   \item{object}{(required) a data frame or matrix
@@ -25,15 +26,15 @@ is.rspec(object)
   interpolate over (e.g., \code{c(300, 700)})}
 }
 \value{
-an object of class \code{rspec} for use in further
-\code{pavo} functions
+  an object of class \code{rspec} for use in further
+  \code{pavo} functions
 
-a logical value indicating whether the object is of class
-\code{rspec}
+  a logical value indicating whether the object is of class
+  \code{rspec}
 }
 \description{
-Converts data frames or matrices containing spectral data
-to \code{rspec} object
+  Converts data frames or matrices containing spectral data
+  to \code{rspec} object
 }
 \examples{
 \dontrun{
@@ -51,6 +52,6 @@ is.rspec(fakedat2)
 head(fakedat2)}
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}
+  Chad Eliason \email{cme16@zips.uakron.edu}
 }
 

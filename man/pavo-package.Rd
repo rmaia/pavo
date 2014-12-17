@@ -4,21 +4,21 @@
 \alias{pavo-package}
 \title{pavo: analyzing color data in R}
 \description{
-An R package for the perceptual analysis, visualization and
-organization of color data
+  An R package for the perceptual analysis, visualization
+  and organization of color data
 }
 \details{
-\tabular{ll}{ Package: \tab pavo\cr Type: \tab Package\cr
-Version: \tab 0.5-1\cr Date: \tab 2012-10-13\cr License:
-\tab GPL (>= 2)\cr LazyLoad: \tab yes\cr}
+  \tabular{ll}{ Package: \tab pavo\cr Type: \tab Package\cr
+  Version: \tab 0.5-1\cr Date: \tab 2012-10-13\cr License:
+  \tab GPL (>= 2)\cr LazyLoad: \tab yes\cr}
 }
 \examples{
 #see functions.
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
-\email{cme16@zips.uakron.edu}, Pierre-Paul Bitton
-\email{bittonp@uwindsor.ca}
+  Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
+  \email{cme16@zips.uakron.edu}, Pierre-Paul Bitton
+  \email{bittonp@uwindsor.ca}
 }
 \keyword{package}
 

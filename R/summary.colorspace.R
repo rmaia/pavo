@@ -2,10 +2,10 @@
 #'
 #' Calculates characteristics of a cloud of points (spectra) in avian tetrahedral color space
 #'
-#' @S3method summary tcs
-#' @method summary tcs
+#' @S3method summary colorspace
+#' @method summary colorspace
 #' @import geometry
-#' @param object (required) Results of \code{tcs} or Can be either the result
+#' @param object (required) Results of \code{tcs}, or can be either the result
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
 #' @param by either a single value specifying the range of color points for which
@@ -24,6 +24,8 @@
 #' @return \code{c.vol} the total volume occupied by the points
 #' @return \code{colspan.m} the mean hue span
 #' @return \code{colspan.v} the variance in hue span
+#' @return \code{huedisp.m} the mean hue disparity
+#' @return \code{huedisp.v} the variance in hue disparity
 #' @return \code{mean.ra} mean saturation
 #' @return \code{max.ra} maximum saturation achieved by the group of points
 #'
@@ -36,7 +38,7 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-summary.tcs <- function(object, by=NULL, ...){
+summary.colorspace <- function(object, by=NULL, ...){
 
 if(!is.null(by)){
     
