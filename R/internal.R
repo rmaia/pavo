@@ -1,4 +1,4 @@
-#' @export summary.tcs
+#' @export loadrgl
 
 loadrgl <- function(){
 # load RGL, and attempt install if not found

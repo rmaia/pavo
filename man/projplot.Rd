@@ -1,8 +1,11 @@
 \name{projplot}
 \alias{projplot}
+\alias{projpoints}
 \title{Hue projection plot}
 \usage{
   projplot(tcsdata, ...)
+
+  projpoints(tcsres, ...)
 }
 \arguments{
   \item{tcsdata}{(required) color space coordinates,
@@ -17,9 +20,15 @@
   \code{projplot} creates a 2D plot of color points
   projected from the tetrahedron to its encapsulating
   sphere, and is ideal to visualize differences in hue.
+
+  \code{projpoints} creates points in a projection color
+  space plot produced by \code{projplot}
 }
 \description{
   Produces a 2D projection plot of points in a color space
+
+  \code{projpoints} plots points in the color space
+  projection
 }
 \note{
   \code{projplot} uses the Mollweide projection, and not

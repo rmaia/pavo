@@ -3,7 +3,7 @@
 \title{Aggregate reflectance spectra}
 \usage{
   aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE,
-    ...)
+    na.rm = FALSE)
 }
 \arguments{
   \item{rspecdata}{(required) data frame, possibly of class

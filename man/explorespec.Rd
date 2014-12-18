@@ -2,7 +2,7 @@
 \alias{explorespec}
 \title{Plot spectral curves}
 \usage{
-  explorespec(rspecdata, by = 1,
+  explorespec(rspecdata, by = NULL,
     scale = c("equal", "free"), legpos = "topright", ...)
 }
 \arguments{
