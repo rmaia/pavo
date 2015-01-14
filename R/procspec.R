@@ -31,6 +31,7 @@
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}
 #' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
+#' @param evaluation argument to pass to \code{loess.smooth} when \code{opt="smooth"} is chosen
 #' @return A data frame of class \code{rspec} with the processed data.
 #' @export
 #' @examples \dontrun{
@@ -50,7 +51,7 @@
 procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 
 										 'bin', 'sum', 'center'), 
 										 fixneg = c('none', 'addmin', 'zero'),
-										 span = .25, bins = 20, ...) {
+										 span = .25, bins = 20, evaluation = NULL, ...) {
 
 opt <- match.arg(opt, several.ok = TRUE)
 
@@ -78,12 +79,17 @@ if (length(wl_index > 0)){
 
 nam <- names(rspecdata)
 
-if (any(opt=='smooth')){
-  rspecdata <- sapply(1:ncol(rspecdata), function(z){loess.smooth(x = wl, 
-                  y = as.data.frame(rspecdata[, z]), span = span, degree = 2, 
-                  family = "gaussian", evaluation = length(wl))$y})
-  applied <- c(applied, paste('smoothing spectra with a span of',span,'\n'))
+if (any(opt=='smooth')) {
+  if (is.null(evaluation)) {
+    evaluation <- length(wl)
   }
+  rspecdata <- sapply(1:ncol(rspecdata), function(z){
+    loess.smooth(x = wl, y = as.data.frame(rspecdata[, z]), span = span, degree = 2, 
+                 family = "gaussian", evaluation = evaluation)$y
+  })
+  wl <- seq(min(wl), max(wl), length=evaluation)
+  applied <- c(applied, paste('smoothing spectra with a span of',span,'\n'))
+}
 
 # if (any(opt=='smooth')&method=='spline')
   # rspecdata <- sapply(names(rspecdata), function(z){smooth.spline(x = wl, y = rspecdata[, z], 
