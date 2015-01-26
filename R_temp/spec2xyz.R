@@ -1,4 +1,4 @@
-#' Spectrum to rgb color conversion
+#' Spectrum to XYZ color coordinates
 #'
 #' Calculates rgb values from spectra based on human color matching functions
 #'
@@ -49,10 +49,12 @@ P2 <- rspecdata
 X <- apply(sens[, 'x'] * P2, 2, sum)
 Y <- apply(sens[, 'y'] * P2, 2, sum)
 Z <- apply(sens[, 'z'] * P2, 2, sum)
+N <- sum(sens[, 'y'])
 
 XYZ <- cbind(X, Y, Z)
 
-XYZ <- t(sapply(1:nrow(XYZ), function(x) XYZ[x, ] / sum(XYZ[x, ])))
+XYZ <- XYZ / N
+# XYZ <- t(sapply(1:nrow(XYZ), function(x) XYZ[x, ] / sum(XYZ[x, ])))
 
 setNames(as.data.frame(XYZ), c("X","Y","Z"))
 
