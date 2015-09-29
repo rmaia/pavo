@@ -13,3 +13,5 @@ sum(rowSums(aaa/apply(aaa,1,sum)))
 sum(rowSums(aaa/apply(aaa,1,sum))) == dim(aaa)[1]
 dim(aaa)[1]
 round(sum(rowSums(aaa/apply(aaa,1,sum)))) == dim(aaa)[1]
+?image
+image(rainbow(100))

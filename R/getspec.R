@@ -35,6 +35,8 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
            subdir=FALSE, subdir.names=FALSE)
 {
 
+corrupt <- FALSE
+
 extension <- paste('.', ext, sep='')
 
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
@@ -104,7 +106,9 @@ tempframe <- suppressWarnings(read.table(files[i], dec=decimal, sep=separ, skip=
 if(any(c('character','factor') %in% apply(tempframe, 2, class))){
   tempframe <- suppressWarnings(apply(tempframe, 2, 
     function(x) as.numeric(as.character(x))))
-  warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+  
+  if(sum(apply(tempframe, 2, function(x) sum(is.na(x))))) 
+    corrupt <- TRUE
 }
   
 
@@ -126,6 +130,9 @@ setTxtProgressBar(progbar, i)
 
 names(final) <- c('wl',gsub(extension,'',file_names))
 class(final) <- c('rspec','data.frame')
+
+if(corrupt) warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+
 	
 final
 }
