@@ -2,8 +2,7 @@
 #'
 #' Returns the attributes used when calculating a visual model using \code{vismodel}
 #'
-#' @S3method summary vismodel
-#' @method summary vismodel
+#' @export 
 #' @param object (required) Results of \code{vismodel}
 #' @param ... class consistency (ignored)
 #' 

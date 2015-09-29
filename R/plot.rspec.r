@@ -2,8 +2,7 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @S3method plot rspec
-#' @method plot rspec
+#' @export 
 #' @param x (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to plot.
