@@ -2,7 +2,7 @@
 \alias{summary.tcs}
 \title{Tetracolorspace avian visual model summary}
 \usage{
-  \method{summary}{tcs} (object, by = NULL, ...)
+\method{summary}{tcs}(object, by = NULL, ...)
 }
 \arguments{
   \item{object}{(required) Results of \code{tcs} or Can be
@@ -25,27 +25,27 @@
   \item{...}{class consistency (ignored)}
 }
 \value{
-  a \code{data.frame} containing summary statistics with
-  groups of points in rows and the following variables in
-  columns:
+a \code{data.frame} containing summary statistics with
+groups of points in rows and the following variables in
+columns:
 
-  \code{centroid.u, .s, .m, .l} the centroids of
-  \code{usml} coordinates of points
+\code{centroid.u, .s, .m, .l} the centroids of \code{usml}
+coordinates of points
 
-  \code{c.vol} the total volume occupied by the points
+\code{c.vol} the total volume occupied by the points
 
-  \code{colspan.m} the mean hue span
+\code{colspan.m} the mean hue span
 
-  \code{colspan.v} the variance in hue span
+\code{colspan.v} the variance in hue span
 
-  \code{mean.ra} mean saturation
+\code{mean.ra} mean saturation
 
-  \code{max.ra} maximum saturation achieved by the group of
-  points
+\code{max.ra} maximum saturation achieved by the group of
+points
 }
 \description{
-  Calculates characteristics of a cloud of points (spectra)
-  in avian tetrahedral color space
+Calculates characteristics of a cloud of points (spectra)
+in avian tetrahedral color space
 }
 \examples{
 \dontrun{
@@ -55,16 +55,16 @@ tcs.sicalis <- tcs(vis.sicalis)
 summary(tcs.sicalis, by=rep(c('C','T','B'),7))}
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-  Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
-  plumage color in a tetrahedral color space: A
-  phylogenetic analysis of new world buntings. The American
-  Naturalist, 171(6), 755-776.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
+plumage color in a tetrahedral color space: A phylogenetic
+analysis of new world buntings. The American Naturalist,
+171(6), 755-776.
 
-  Endler, J. A., & Mielke, P. (2005). Comparing entire
-  colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The
+Linnean Society, 86(4), 405-431.
 }
 

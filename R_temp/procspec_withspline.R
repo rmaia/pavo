@@ -47,7 +47,7 @@
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183-200.
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 
-procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 
+procspec2 <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 
 										 'bin', 'sum', 'center'), fixneg = c('none', 'addmin', 'zero'),
 										 span = .25, bins = 20, method=c("loess", "spline"), spar=.65) {
 

@@ -2,7 +2,7 @@
 \alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-  aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
+aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE, ...)
 }
 \arguments{
   \item{rspecdata}{(required) data frame, possibly of class
@@ -28,12 +28,12 @@
   end of the names of the columns in the new rspec object.}
 }
 \value{
-  A data frame of class \code{rspec} containing the spectra
-  after applying the aggregating function.
+A data frame of class \code{rspec} containing the spectra
+after applying the aggregating function.
 }
 \description{
-  Combines spectra (by taking the average, for example)
-  according to an index or a vector of identities.
+Combines spectra (by taking the average, for example)
+according to an index or a vector of identities.
 }
 \examples{
 \dontrun{
@@ -47,11 +47,11 @@ teal.sset2 <- aggspec(teal, by=ind)
 plot(teal.sset2) }
 }
 \author{
-  Chad Eliason \email{cme16@zips.uakron.edu}
+Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \references{
-  Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw
-  K (eds) Bird coloration. Harvard University Press,
-  Cambridge, pp 90-147.
+Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K
+(eds) Bird coloration. Harvard University Press, Cambridge,
+pp 90-147.
 }
 

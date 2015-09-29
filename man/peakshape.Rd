@@ -2,8 +2,8 @@
 \alias{peakshape}
 \title{Peak shape descriptors}
 \usage{
-  peakshape(rspecdata, select = NULL, lim = c(300, 700),
-    plot = TRUE, ask = FALSE, ...)
+peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
+  ask = FALSE, ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -27,20 +27,18 @@
   \item{...}{additional arguments to be passed to plot}
 }
 \value{
-  a data frame containing column names (id); peak height
-  (max value, B3), location (hue, H1) and full width at
-  half maximum (FWHM), as well as half widths on left
-  (HWHM.l) and right side of peak (HWHM.r). Incl.min column
-  indicates whether user-defined bounds incorporate the
-  actual minima of the spectra. Function will return a
-  warning if not.
+a data frame containing column names (id); peak height (max
+value, B3), location (hue, H1) and full width at half
+maximum (FWHM), as well as half widths on left (HWHM.l) and
+right side of peak (HWHM.r). Incl.min column indicates
+whether user-defined bounds incorporate the actual minima
+of the spectra. Function will return a warning if not.
 }
 \description{
-  Calculates height, location and width of peak at the
-  reflectance midpoint (FWHM). Note: bounds should be set
-  wide enough to incorporate all minima in spectra.
-  Smoothing spectra using \code{\link{procspec}} is also
-  recommended.
+Calculates height, location and width of peak at the
+reflectance midpoint (FWHM). Note: bounds should be set
+wide enough to incorporate all minima in spectra. Smoothing
+spectra using \code{\link{procspec}} is also recommended.
 }
 \examples{
 \dontrun{
@@ -51,10 +49,10 @@ peakshape(teal, select = 10)
 peakshape(teal, select = 10, lim=c(400, 550))}
 }
 \author{
-  Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia
-  \email{rm72@zips.uakron.edu}
+Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia
+\email{rm72@zips.uakron.edu}
 }
 \seealso{
-  \code{\link{procspec}}
+\code{\link{procspec}}
 }
 

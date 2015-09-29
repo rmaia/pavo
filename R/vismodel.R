@@ -74,7 +74,7 @@ vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
   visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
-  vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
+  vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
 {
 
 # remove & save colum with wavelengths
@@ -91,7 +91,7 @@ if(is.null(dim(y))){
   }
 
 visual2 <- try(match.arg(visual), silent=T)
-sens <- pavo::vissyst
+sens <- vissyst
 
 if(!inherits(visual2,'try-error')){
   
@@ -122,7 +122,7 @@ if(max(y) > 1)
 
 #DEFINING ILLUMINANT & BACKGROUND
 
-bgil<- pavo::bgandilum
+bgil<- bgandilum
 
 illum2 <- try(match.arg(illum), silent=T)
 if(!inherits(illum2,'try-error')){
@@ -238,6 +238,7 @@ if(achromatic2=='ml'){
 }
 
 if(achromatic2=='none'){
+	L   <- NULL
 	lum <- NULL
 }
 
@@ -281,7 +282,7 @@ if(relative & is.null(lum)){
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
 
-#OUTPUT
+# OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 
 qcatch <- match.arg(qcatch)
@@ -289,11 +290,22 @@ qcatch <- match.arg(qcatch)
 res <- switch(qcatch, Qi = Qi, fi = fi)
 
 class(res) <- c('vismodel', 'data.frame')
+
+# Descriptive attributes
+
 attr(res, 'qcatch') <- qcatch
 attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
+attr(res, 'conenumb') <- dim(S)[2]
+attr(res, 'vonkries') <- vonkries
+
+# Data attributes
+attr(res, 'data.visualsystem.chromatic') <- S
+attr(res, 'data.visualsystem.achromatic') <- L
+attr(res, 'data.background') <- bkg
+
 
 res
 }

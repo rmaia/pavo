@@ -6,7 +6,8 @@
 #' and spectra data in remaining columns. 
 #' @param range vector of length 2 indicating the lower and upper wavelength bounds used
 #' to calculate segments (defaults to 300nm to 700nm).
-#' @return A data frame with LM and MS segment classification scores.
+#' @return A data frame with the reflectance proportion at each of the four segments, as
+#' well as the LM and MS segment classification scores.
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
@@ -44,7 +45,10 @@ Q4score <- apply(Q4mat,2,sum)/B1
 LM <- Q4score-Q2score
 MS <- Q3score-Q1score
 
-segclassdata <- data.frame(LM,MS, row.names = names(rspecdata))
+segclassdata <- data.frame(S1=Q1score, S2=Q2score, S3=Q3score, S4=Q4score,
+                LM,MS, row.names = names(rspecdata))
+
+class(segclassdata) <- c('segclass', 'data.frame')
 
 segclassdata
 

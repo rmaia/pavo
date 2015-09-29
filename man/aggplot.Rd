@@ -2,9 +2,8 @@
 \alias{aggplot}
 \title{Plot aggregated reflectance spectra}
 \usage{
-  aggplot(rspecdata, by = NULL, FUN.center = mean,
-    FUN.error = sd, lcol = NULL, shadecol = NULL,
-    alpha = 0.2, ...)
+aggplot(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
+  lcol = NULL, shadecol = NULL, alpha = 0.2, ...)
 }
 \arguments{
   \item{rspecdata}{(required) data frame containing the
@@ -39,13 +38,13 @@
   to plot.}
 }
 \value{
-  Plot containing the lines and shaded areas of the groups
-  of spectra.
+Plot containing the lines and shaded areas of the groups of
+spectra.
 }
 \description{
-  Combines and plots spectra (by taking the average and the
-  standard deviation, for example) according to an index or
-  a vector of identities.
+Combines and plots spectra (by taking the average and the
+standard deviation, for example) according to an index or a
+vector of identities.
 }
 \examples{
 \dontrun{
@@ -56,12 +55,12 @@ aggplot(sicalis,bysic, shade=spec2rgb(sicalis),lcol=1)
 aggplot(sicalis,bysic,lcol=1, FUN.error=function(x)sd(x)/sqrt(length(x))) }
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
-  \email{cme16@zips.uakron.edu}
+Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
+\email{cme16@zips.uakron.edu}
 }
 \references{
-  Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw
-  K (eds) Bird coloration. Harvard University Press,
-  Cambridge, pp 90-147.
+Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K
+(eds) Bird coloration. Harvard University Press, Cambridge,
+pp 90-147.
 }
 

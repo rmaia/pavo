@@ -4,16 +4,15 @@
 \alias{tcsvol}
 \title{Plot a Tetrahedral Color Space}
 \usage{
-  tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
-    vertexsize = 0.02, achrosize = 0.01, achrocol = "grey",
-    lwd = 1, lcol = "lightgrey", new = FALSE,
-    hspin = FALSE, vspin = FALSE, floor = TRUE,
-    grid = TRUE, fill = TRUE)
+tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
+  vertexsize = 0.02, achrosize = 0.01, achrocol = "grey", lwd = 1,
+  lcol = "lightgrey", new = FALSE, hspin = FALSE, vspin = FALSE,
+  floor = TRUE, grid = TRUE, fill = TRUE)
 
-  tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
+tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
-  tcsvol(tcsdata, col = "black", alpha = 0.2,
-    grid.alpha = 1, grid = T, fill = T)
+tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1, grid = T,
+  fill = T)
 }
 \arguments{
   \item{tcsdata}{(required) a data frame, possibly a result
@@ -69,32 +68,31 @@
   \code{TRUE}).}
 }
 \value{
-  \code{tcsplot} creates a 3D plot using functions of the
-  package \code{rgl}, based on openGL capabilities. Plot is
-  interactive and can be manipulated with the mouse (left
-  button: rotate along 'z' axis; right button: rotate along
-  'x' axis; third button: zoom). \code{tcsvol} creates
-  polygon based on points, determining the volume occupied
-  by them in the colorspace. \code{tcspoints} adds points
-  to the plot. Points are currently plotted only as spheres
-  to maintain export capabilities.
+\code{tcsplot} creates a 3D plot using functions of the
+package \code{rgl}, based on openGL capabilities. Plot is
+interactive and can be manipulated with the mouse (left
+button: rotate along 'z' axis; right button: rotate along
+'x' axis; third button: zoom). \code{tcsvol} creates
+polygon based on points, determining the volume occupied by
+them in the colorspace. \code{tcspoints} adds points to the
+plot. Points are currently plotted only as spheres to
+maintain export capabilities.
 
-  \code{tcspoints} creates 3D points in a tetrahedral color
-  space plot produced by \code{tcsplot} using functions of
-  the package \code{rgl}, based on openGL capabilities.
+\code{tcspoints} creates 3D points in a tetrahedral color
+space plot produced by \code{tcsplot} using functions of
+the package \code{rgl}, based on openGL capabilities.
 
-  \code{tcsvol} creates a 3D convex hull within a
-  \code{tcsplot} object
+\code{tcsvol} creates a 3D convex hull within a
+\code{tcsplot} object
 }
 \description{
-  \code{tcsplot} produces a 3D plot of a tetrahedral color
-  space using OpenGL capabilities
+\code{tcsplot} produces a 3D plot of a tetrahedral color
+space using OpenGL capabilities
 
-  \code{tcspoints} plots points in a tetrahedral color
-  space
+\code{tcspoints} plots points in a tetrahedral color space
 
-  \code{tcsvol} produces a 3D convex hull in tetrahedral
-  color space
+\code{tcsvol} produces a 3D convex hull in tetrahedral
+color space
 }
 \examples{
 \dontrun{
@@ -118,20 +116,20 @@ tcsplot(tcs.sicalis, col='blue', size=.005)
 tcsvol(tcs.sicalis)}
 }
 \author{
-  Rafael Maia \email{rm72@zips.uakron.edu}
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-  Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
-  plumage color in a tetrahedral color space: A
-  phylogenetic analysis of new world buntings. The American
-  Naturalist, 171(6), 755-776.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian
+plumage color in a tetrahedral color space: A phylogenetic
+analysis of new world buntings. The American Naturalist,
+171(6), 755-776.
 
-  Endler, J. A., & Mielke, P. (2005). Comparing entire
-  colour patterns as birds see them. Biological Journal Of
-  The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The
+Linnean Society, 86(4), 405-431.
 }
 \seealso{
-  \code{\link{spheres3d}},\code{\link{rgl.postscript}},
-  \code{\link{rgl.snapshot}},\code{\link{rgl.material}}
+\code{\link{spheres3d}},\code{\link{rgl.postscript}},
+\code{\link{rgl.snapshot}},\code{\link{rgl.material}}
 }
 

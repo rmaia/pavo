@@ -1,0 +1,15 @@
+matrix(rnorm(40),ncol=4)
+aaa = matrix(rnorm(40),ncol=4)
+aaa
+apply(aaa, 1, function(x) x/sum(x))
+t(apply(aaa, 1, function(x) x/sum(x)))
+rowSums(t(apply(aaa, 1, function(x) x/sum(x))))
+rowSums(aaa[,1:4])
+apply(aaa, 1, function(x) x/sum(x))
+aaa/apply(aaa,1,sum)
+rowSums(aaa/apply(aaa,1,sum))
+sum(rowSums(aaa/apply(aaa,1,sum))))
+sum(rowSums(aaa/apply(aaa,1,sum)))
+sum(rowSums(aaa/apply(aaa,1,sum))) == dim(aaa)[1]
+dim(aaa)[1]
+round(sum(rowSums(aaa/apply(aaa,1,sum)))) == dim(aaa)[1]

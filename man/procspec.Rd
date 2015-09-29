@@ -2,10 +2,9 @@
 \alias{procspec}
 \title{Process spectra}
 \usage{
-  procspec(rspecdata,
-    opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center"),
-    fixneg = c("none", "addmin", "zero"), span = 0.25,
-    bins = 20)
+procspec(rspecdata, opt = c("none", "smooth", "maximum", "minimum", "bin",
+  "sum", "center"), fixneg = c("none", "addmin", "zero"), span = 0.25,
+  bins = 20, ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -45,12 +44,11 @@
   bins for \code{opt="bin"}}
 }
 \value{
-  A data frame of class \code{rspec} with the processed
-  data.
+A data frame of class \code{rspec} with the processed data.
 }
 \description{
-  Applies normalization and/or smoothing to spectra for
-  further analysis or plotting
+Applies normalization and/or smoothing to spectra for
+further analysis or plotting
 }
 \examples{
 \dontrun{
@@ -64,20 +62,20 @@ teal.max <- procspec(teal, opt = c('max'), span = 0.25)
 plot(teal.max, select = 10)}
 }
 \author{
-  Chad Eliason \email{cme16@zips.uakron.edu}
+Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \references{
-  Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E.
-  1999. Plumage reflectance and the objective assessment of
-  avian sexual dichromatism. The American Naturalist, 153,
-  183-200.
+Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E.
+1999. Plumage reflectance and the objective assessment of
+avian sexual dichromatism. The American Naturalist, 153,
+183-200.
 
-  Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and
-  McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms
-  and measuremements. Harvard University Press, Cambridge,
-  Massachusetts.
+Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and
+McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and
+measuremements. Harvard University Press, Cambridge,
+Massachusetts.
 }
 \seealso{
-  \code{\link{loess.smooth}}
+\code{\link{loess.smooth}}
 }
 

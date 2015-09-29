@@ -2,8 +2,8 @@
 \alias{explorespec}
 \title{Plot spectral curves}
 \usage{
-  explorespec(rspecdata, by = 1,
-    scale = c("equal", "free"), legpos = "topright", ...)
+explorespec(rspecdata, by = 1, scale = c("equal", "free"),
+  legpos = "topright", ...)
 }
 \arguments{
   \item{rspecdata}{(required) a data frame, possibly an
@@ -29,15 +29,15 @@
   \item{...}{additional parameters to be passed to plot}
 }
 \value{
-  Spectral curve plots
+Spectral curve plots
 }
 \description{
-  Plots one or multiple spectral curves in the same graph
-  to rapidly compare groups of spectra.
+Plots one or multiple spectral curves in the same graph to
+rapidly compare groups of spectra.
 }
 \note{
-  Number of plots presented per page depends on the number
-  of graphs produced.
+Number of plots presented per page depends on the number of
+graphs produced.
 }
 \examples{
 \dontrun{
@@ -46,6 +46,6 @@ explorespec(sicalis, 3)
 explorespec(sicalis, 3, ylim=c(0,100), legpos=c(500,80))}
 }
 \author{
-  Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
 

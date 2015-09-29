@@ -1,4 +1,4 @@
-#' Import spectra files
+#' Fast importing of spectral data files
 #' 
 #' Finds and imports spectra files from a folder. Currently works
 #' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
@@ -40,7 +40,7 @@
 #   suggested solution: a secondary function that examines files and returns recorded WL 
 #     range (in a dataframe or table)
 
-getspec3 <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
+fgetspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
            subdir=FALSE, subdir.names=FALSE)
 
 {
@@ -136,7 +136,7 @@ tempframe <- as.data.frame(do.call(cbind, read.all))
 
 interp <- sapply(1:ncol(tempframe), FUN = function(x) {approx(x = wl, y = tempframe[, x], xout = range)$y})
 
-interp <- as.data.frame(cbind(wl, interp))
+interp <- as.data.frame(cbind(range, interp))
 
 names(interp) <- c("wl", as.character(strsplit(file_names, extension)))
 
@@ -157,8 +157,8 @@ interp
 
 # # library(pavo)
 
-# # setwd("/Users/chad/github/pavo/examplespec")
+# setwd("/Users/chad/github/pavo/examplespec")
 
 # getspec(ext='txt')
 # getspec2(ext='txt')
-# getspec3(ext='txt')
+# fastgetspec(ext='txt')

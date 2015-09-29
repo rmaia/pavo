@@ -160,6 +160,10 @@
  
 summary.rspec <- function (object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
 
+# TESTING
+# object <- teal2
+#
+
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
 # object <- object[,-wl_index]
@@ -185,11 +189,16 @@ if(is.null(wlmin)){
 
      lambdamax <- wlmax
      }
-    
+
 # restrict to range of wlmin:wlmax
 object <- object[which(wl==lambdamin):which(wl==lambdamax),]
 wl <- object[,wl_index]
-object <- object[,-wl_index]
+
+# CE begin edit:
+select <- (1:ncol(object))[-wl_index]
+# object <- object[,-wl_index]
+object <- object[select]
+# CE end edit
 
 output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
@@ -270,10 +279,10 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(object[Q4, ],2,sum)/B1
-S5Y <- apply(object[Q3, ],2,sum)/B1
-S5G <- apply(object[Q2, ],2,sum)/B1
-S5B <- apply(object[Q1, ],2,sum)/B1
+S5R <- apply(as.data.frame(object[Q4, ]), 2, sum) / B1
+S5Y <- apply(as.data.frame(object[Q3, ]), 2, sum) / B1
+S5G <- apply(as.data.frame(object[Q2, ]), 2, sum) / B1
+S5B <- apply(as.data.frame(object[Q1, ]), 2, sum) / B1
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
