@@ -53,8 +53,7 @@ if (length(wl_index) > 0) {
 
 # set default wavelength range if not provided
 if (is.null(lim)) {
-  # lim <- c(head(wl,1), tail(wl,1))
-  lim <- range(wl)
+  lim <- c(head(wl,1), tail(wl,1))
 }
 
 # subset based on indexing vector
@@ -67,15 +66,11 @@ if (is.null(select)&haswl==FALSE)
 
 rspecdata <- as.data.frame(rspecdata[, select])
 
-# wlrange <- lim[1]:lim[2]
-wlminid <- which.min(abs(lim[1]-wl))
-wlmaxid <- which.min(abs(lim[2]-wl))
-wlrange <- wl[wlminid:wlmaxid]
-# wlrange <- seq(lim[1], lim[2], length = length(wl))
+
+wlrange <- lim[1]:lim[2]
 
 if (ncol(rspecdata)==1) {
-  # rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
-  rspecdata2 <- rspecdata[(which.min(abs(wl-lim[1]))):(which.min(abs(wl-lim[2]))), ]  # working wl range
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- max(rspecdata2)  # max refls
   Yj <- min(rspecdata2)  # min refls
   Yk <- min(rspecdata)  # min refls, whole spectrum
@@ -91,8 +86,7 @@ if (ncol(rspecdata)==1) {
   fstHM <- which.min(abs(fsthalf - halfmax))
   sndHM <- which.min(abs(sndhalf - halfmax))
 } else {
-  # rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
-  rspecdata2 <- rspecdata[(which.min(abs(wl-lim[1]))):(which.min(abs(wl-lim[2]))), ]  # working wl range
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
   Yj <- apply(rspecdata2, 2, min)  # min refls
   Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
