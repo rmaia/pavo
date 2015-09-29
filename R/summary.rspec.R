@@ -3,7 +3,7 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
-#' @S3method summary rspec
+#' @export summary.rspec
 #' @method summary rspec
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},

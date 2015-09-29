@@ -27,6 +27,7 @@
 #' plot(teal, type = 'heatmap')}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
+#' @export plot.rspec
 
 # TODO: add argument for padding region between x in stack plot
 
