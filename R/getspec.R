@@ -16,6 +16,8 @@
 #' included in the search? (defaults to \code{FALSE})
 #' @param subdir.names should subdirectory path be included in the name of the
 #' spectra? (defaults to \code{FALSE})
+#' @param fast whether to use fast input of spectral files. Useful if all files
+#' are in the same format (e.g., Avantes or Ocean Optics). Defaults to \code{TRUE}
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
@@ -41,7 +43,7 @@
 #     range (in a dataframe or table)
 
 getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
-           subdir=FALSE, subdir.names=FALSE)
+           subdir=FALSE, subdir.names=FALSE, fast=TRUE)
 {
 
 extension <- paste('.', ext, sep='')
@@ -62,72 +64,139 @@ if(length(file_names)==0){
 
 range <- lim[1]:lim[2]
 
-final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
-final[,1] <- range
+if (fast) {
 
-# Setting a progress bar
-progbar <- txtProgressBar(min=0, max=length(files), style=2)
+  raw <- scan(file = files[1], what = '', quiet = T, dec = decimal, sep = '\n')
 
-for(i in 1:length(files))
-{
+  # find last line with text
 
-raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
-#ToDo we can actually use this raw string to import metadata if we want
+  # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
+  start <- grep('[A-Da-dF-Zf-z]',raw)
+  isendline <- length(grep('End.*Spectral Data', raw)) > 0
 
-# find last line with text
-# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
+  if (isendline) {
+    start <- start[-length(start)]
+  }
 
-start <- grep('[A-Da-dF-Zf-z]',raw)
-isendline <- length(grep('End.*Spectral Data', raw)) > 0
+  start <- max(start)
 
-if(isendline)
-  start <- start[-length(start)]
+  end <- length(raw) - start
 
+  if (isendline > 0) {
+    end <- end - 1
+  }
 
-start <- max(start)
+  # Avantes has an extra skipped line between header and data. Bad Avantes.
+  newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
+  if(newavaheader) {
+    start <- start+1
+  }
 
-end <- length(raw) - start
+  # find if columns are separated by semicolon or tab
+  issem <- length(grep(';', raw)) > 0
+  istab <- length(grep('\t', raw)) > 0
 
-if( isendline > 0 )
-  end <- end - 1
+  if (issem & istab) {
+    stop('inconsistent column delimitation in source files.')
+  }
 
-# Avantes has an extra skipped line between header and data. Bad Avantes.
-newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
+  separ <- ifelse(issem, ';', '\t')
 
-if(newavaheader)
-  start <- start + 1
+  rawtab <- read.table(files[1], skip=start, nrows=end, dec=decimal, sep=separ, row.names=NULL)
 
-# find if columns are separated by semicolon or tab
-issem <- length(grep(';',raw)) > 0
-istab <- length(grep('\t',raw)) > 0
+  wl <- rawtab[, 1]
 
-if(issem & istab)
-  stop('inconsistent column delimitation in source files.')
+  # set what type of data are in columns (null causes not to read)
+  # Jaz and Avasoft8 have 5 columns, correct
+  numcols <- dim(rawtab)[2]
+  colClasses <- c(rep("NULL", numcols-1), "numeric")
+
+  # read data
+  read.all <- lapply(files, read.table, skip = start, nrows = end, dec = decimal, sep = separ, colClasses = colClasses, row.names=NULL)
+
+  # combine columns
+  tempframe <- as.data.frame(do.call(cbind, read.all))
+
+  # remove columns where all values are NAs (due to poor tabulation)
+  # tempframe <- tempframe[, colSums(is.na(tempframe)) < nrow(tempframe)]
+
+  final <- sapply(1:ncol(tempframe), FUN = function(x) {approx(x = wl, y = tempframe[, x], xout = range)$y})
+
+  final <- as.data.frame(cbind(range, final))
+
+} else {
+
+  final <- data.frame(matrix(nrow=length(range), ncol=length(file_names)+1))
   
-separ <- ifelse(issem,';','\t')
+  final[,1] <- range
+  
+  # Setting a progress bar
+  progbar <- txtProgressBar(min=0, max=length(files), style=2)
 
-# extract data from file
+  for(i in 1:length(files))
+  {
 
-tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL)		
+  raw <- scan(file=files[i], what='', quiet=T, dec=decimal, sep='\n')
+  #ToDo we can actually use this raw string to import metadata if we want
 
-# remove columns where all values are NAs (due to poor tabulation)
-tempframe <- tempframe[ ,colSums(is.na(tempframe))<nrow(tempframe)]
+  # find last line with text
+  # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
 
-# Jaz and Avasoft8 have 5 columns, correct
-tempframe <- tempframe[ ,c(1,dim(tempframe)[2])]
+  start <- grep('[A-Da-dF-Zf-z]',raw)
+  isendline <- length(grep('End.*Spectral Data', raw)) > 0
+
+  if(isendline)
+    start <- start[-length(start)]
 
 
-interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
-names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
+  start <- max(start)
 
-final[,i+1] <- interp[,2]
+  end <- length(raw) - start
 
-setTxtProgressBar(progbar, i)
+  if( isendline > 0 )
+    end <- end - 1
+
+  # Avantes has an extra skipped line between header and data. Bad Avantes.
+  newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
+
+  if(newavaheader)
+    start <- start + 1
+
+  # find if columns are separated by semicolon or tab
+  issem <- length(grep(';',raw)) > 0
+  istab <- length(grep('\t',raw)) > 0
+
+  if(issem & istab)
+    stop('inconsistent column delimitation in source files.')
+    
+  separ <- ifelse(issem,';','\t')
+
+  # extract data from file
+
+  tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL)		
+
+  # remove columns where all values are NAs (due to poor tabulation)
+  tempframe <- tempframe[ ,colSums(is.na(tempframe))<nrow(tempframe)]
+
+  # Jaz and Avasoft8 have 5 columns, correct
+  tempframe <- tempframe[ ,c(1,dim(tempframe)[2])]
+
+
+  interp <- data.frame(approx(tempframe[,1], tempframe[,2], xout=range))
+  names(interp) <- c("wavelength", strsplit(file_names[i], extension) )
+
+  final[,i+1] <- interp[,2]
+
+  setTxtProgressBar(progbar, i)
+
+  }
 
 }
 
-names(final) <- c('wl',gsub(extension,'',file_names))
-class(final) <- c('rspec','data.frame')
+names(final) <- c('wl', gsub(extension, '', file_names))
+
+class(final) <- c('rspec', 'data.frame')
 	
 final
+
 }

@@ -6,6 +6,8 @@
 - return warnings in `peakshape` if (1) one of the peak boundaries is at either 300 or 700 nm, (2) the ratio of the two halves of the peak is >>1; also, it would be nice to be able to specify unique boundaries in this case.. (how??)
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
 - add couple plotting options for `segclass` objects
+- add ability to use RegExp subsetting within plot.rspec() (e.g., plot(specs, subset="Duck1"))
+- fix getspec() to give reasonable output when provided wl limits are outside those the wls in the data
 
 ## Me
 - Add CIE chromaticity diagram function
