@@ -5,8 +5,8 @@
 \title{Visual Models}
 \usage{
 vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
-  "bluetit", "star", "pfowl"), achromatic = c("bt.dc", "ch.dc", "st.dc", "ml",
-  "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
+  "bluetit", "star", "pfowl", "apis"), achromatic = c("bt.dc", "ch.dc",
+  "st.dc", "ml", "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
   vonkries = FALSE, scale = 1, bkg = "ideal", relative = TRUE)
 }
 \arguments{
@@ -32,6 +32,7 @@ cone as a column
 \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 \item \code{star}: Starling \emph{Sturnus vulgaris} visual system
 \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+\item \code{apis}: Honeybee \emph{Apis mellifera} visual system
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
