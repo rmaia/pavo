@@ -35,6 +35,7 @@ Collate:
     'internal.R'
     'irrad2flux.R'
     'merge.rspec.R'
+    'maxplot.R'
     'maxwell.R'
     'pavo-package.R'
     'peakshape.R'
