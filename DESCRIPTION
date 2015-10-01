@@ -25,6 +25,7 @@ Collate:
     'coldist.R'
     'data-bgandilum.R'
     'data-sicalis.R'
+    'data-flowers.R'
     'data-teal.R'
     'data-ttvertex.R'
     'data-vissyst.R'
