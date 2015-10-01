@@ -23,4 +23,11 @@
 + deprecate tcs class, have general `colspace` class
 + don't load `rgl` automatically
 - add dichromatic chromaticity diagrams
-- add hexagon chromaticity diagram
+
+## Tom
+- hexagon space & plot
+- maxwell space & plot
+- categorical space & plot
+- bee/fly visual systems
+- CIE?
+- add .jazirrad to getspec
