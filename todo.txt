@@ -30,4 +30,5 @@
 - categorical space & plot
 - bee/fly visual systems
 - CIE?
+- points function for plots
 - add .jazirrad to getspec

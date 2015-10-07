@@ -5,7 +5,7 @@
 \title{Plot a Maxwell Triangle}
 \usage{
 maxplot(maxdata, achro = TRUE, achrocol = "grey", achrosize = 0.8,
-  labsize = 1, lwd = 1, lty = 1, lcol = "black", ...)
+  labsize = 1, out.lwd = 1, out.lcol = "black", out.lty = 1, ...)
 }
 \arguments{
 \item{maxdata}{(required) a data frame, possibly a result from the \code{maxwell}
@@ -19,11 +19,11 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{labsize}{size of the text labels (defaults to 1)}
 
-\item{lwd}{line width for triangle outline (defaults to 1)}
+\item{out.lwd}{line width for triangle outline (defaults to 1)}
 
-\item{lty}{line type for triangle outline (defaults to 1)}
+\item{out.lcol}{line colour for triangle outline (defaults to black)}
 
-\item{lcol}{line colour for triangle outline (defaults to black)}
+\item{out.lty}{line type for triangle outline (defaults to 1)}
 
 \item{...}{additional graphical options. See code{\link{par}}.}
 }
