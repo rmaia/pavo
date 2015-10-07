@@ -2,7 +2,7 @@
 #' 
 #' \code{maxplot} produces a Maxwell triangle plot
 #'
-#' @param tcsdata (required) a data frame, possibly a result from the \code{maxwell} 
+#' @param maxdata (required) a data frame, possibly a result from the \code{maxwell} 
 #' function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param achrosize size of the point at the origin (defaults to 0.8)
@@ -30,17 +30,17 @@
 #' @references Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
 #' Journal of comparative physiology, 139(3), 165-176.
 
-maxplot <- function(tcsdata, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
+maxplot <- function(maxdata, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                      labsize = 1, lwd = 1, lty = 1, lcol = 'black', ...){ 
   
 # todo: is the triangle the right dimensions? 
   
 # Check if object is of class colorspace and trichromat
 
-if(!('colorspace' %in% attr(tcsdata, 'class')))
+if(!('colorspace' %in% attr(maxdata, 'class')))
   stop('object is not of class ', dQuote('colorspace'))
 
-if(('colorspace' %in% attr(tcsdata, 'class')) & attr(tcsdata, 'conenumb') != 3)
+if(('colorspace' %in% attr(maxdata, 'class')) & attr(maxdata, 'conenumb') != 3)
   stop(dQuote('colorspace'), ' object is not a trichromat visual system')  
 
 # Verticy coordinates  
@@ -66,6 +66,6 @@ text('M', x = 0, y = 0.88, xpd = TRUE, cex = labsize)
 text('L', x = 0.76, y = -0.39, xpd = TRUE, cex = labsize)
 
 # Plot stimulus points
-points(x = tcsdata$x, y = tcsdata$y, ...)
+points(x = maxdata$x, y = maxdata$y, ...)
   
 }
