@@ -26,6 +26,7 @@
 #' \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -34,7 +35,8 @@
 #'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
 #'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
-#'  \item \code{ml}: sum of the two longest-wavelength cones
+#'  \item \code{ml}: sum of the two longest-wavelength photoreceptors
+#'  \item \code{l}: the longest-wavelength photoreceptor
 #'  \item \code{none}
 #' }
 #' @param illum either a vector containing the illuminant, or one of the options:
@@ -71,8 +73,8 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
-  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl"), 
-  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
+  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis'), 
+  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l',"none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
   vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
 {
@@ -234,6 +236,12 @@ if(achromatic2=='bt.dc' | achromatic2=='ch.dc' | achromatic2=='st.dc'){
 
 if(achromatic2=='ml'){
    L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
+  lum <- colSums(y*L*illum)
+  Qi <- data.frame(cbind(Qi,lum))
+}
+
+if(achromatic2=='l'){
+  L <- S[, dim(S)[2]]
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }

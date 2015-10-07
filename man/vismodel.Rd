@@ -5,9 +5,10 @@
 \title{Visual Models}
 \usage{
 vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
-  "bt", "star", "pfowl"), achromatic = c("bt.dc", "ch.dc", "st.dc", "ml",
-  "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
-  vonkries = FALSE, scale = 1, bkg = "ideal", relative = TRUE)
+  "bluetit", "star", "pfowl", "apis"), achromatic = c("bt.dc", "ch.dc",
+  "st.dc", "ml", "l", "none"), illum = c("ideal", "bluesky", "D65",
+  "forestshade"), vonkries = FALSE, scale = 1, bkg = "ideal",
+  relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
@@ -29,9 +30,10 @@ column with the range of wavelengths included, and the sensitivity for each othe
 cone as a column
 \item \code{avg.uv}: average avian UV system
 \item \code{avg.v}: average avian V system
-\item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
+\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 \item \code{star}: Starling \emph{Sturnus vulgaris} visual system
 \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+\item \code{apis}: Honeybee \emph{Apis mellifera} visual system
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
@@ -41,7 +43,8 @@ or one of the options:
     \item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
- \item \code{ml}: sum of the two longest-wavelength cones
+ \item \code{ml}: sum of the two longest-wavelength photoreceptors
+ \item \code{l}: the longest-wavelength photoreceptor
  \item \code{none}
 }}
 
