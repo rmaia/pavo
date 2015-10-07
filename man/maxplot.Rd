@@ -4,11 +4,11 @@
 \alias{maxplot}
 \title{Plot a Maxwell Triangle}
 \usage{
-maxplot(tcsdata, achro = TRUE, achrocol = "grey", achrosize = 0.8,
+maxplot(maxdata, achro = TRUE, achrocol = "grey", achrosize = 0.8,
   labsize = 1, lwd = 1, lty = 1, lcol = "black", ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{maxwell}
+\item{maxdata}{(required) a data frame, possibly a result from the \code{maxwell}
 function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
