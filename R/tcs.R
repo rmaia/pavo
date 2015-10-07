@@ -137,6 +137,7 @@ res <- res.p
 class(res) <- c('colorspace', 'data.frame')
 
 attr(res, 'conenumb') <- 4
+attr(res, 'clrsp') <- 'tcs'
 
 res
 }

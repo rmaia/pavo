@@ -96,6 +96,7 @@ res <- res.p
 class(res) <- c('colorspace', 'data.frame')
 
 attr(res, 'conenumb') <- 3
+attr(res, 'clrsp') <- 'maxwell'
 
 res
 }
