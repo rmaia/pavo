@@ -9,6 +9,11 @@ MINOR FEATURES AND BUG FIXES:
 * summary.rspec() fixed to work with single spectra
 * getspec() has a default, ~5-10X faster input option for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics).
 
+pavo 0.5-2
+------------------------------------------------------------------------------
+BUG FIXES
+* Fixed issue in vismodel() when using blue tit visual system, in which achromatic column would also be selected as a chromatic photoreceptor
+
 pavo 0.5-1
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
