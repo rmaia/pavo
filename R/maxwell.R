@@ -13,7 +13,7 @@
 #' @return \code{x}, \code{y}: cartesian coordinates for the points in the
 #' Maxwell triangle.
 #' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
-#' @return \code{r.vec}: the r vector (saturation, distance from the achromatic center).
+#' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #' @export
 #' @examples \dontrun{
 #' data(flowers)
@@ -31,7 +31,7 @@
 
 maxwell <- function(vismodeldata){
   
-  dat <- vismodeldata
+dat <- vismodeldata
   
 # if object is vismodel:
 if('vismodel' %in% attr(dat, 'class')){

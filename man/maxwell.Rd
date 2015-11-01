@@ -22,7 +22,7 @@ Maxwell triangle.
 
 \code{h.theta}: angle theta, in radians, determining the hue of the color.
 
-\code{r.vec}: the r vector (saturation, distance from the achromatic center).
+\code{r.vec}: the r vector (saturation, distance from the center).
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
