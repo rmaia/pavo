@@ -32,6 +32,7 @@ Collate:
     'explorespec.R'
     'fgetspec.R'
     'getspec.R'
+    'hexagon.R'
     'internal.R'
     'irrad2flux.R'
     'merge.rspec.R'
