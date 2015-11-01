@@ -53,11 +53,15 @@ if('vismodel' %in% attr(dat, 'class')){
   if(attr(dat, 'conenumb') > 3)
     warning('vismodel input is not trichromatic, considering first three receptors only')
   
-  # check if relative. Qcatches, at this stage, need to be raw for the hexagon as 
-  # it uses a hyperbolic transform. Another possibility is to offer hyperbolic alongside 
-  # 'log' transform in vismodel? Could be a flexible option. 
+  # check if relative. Qcatches, at this stage, need to be raw & not log-transformed 
+  # for the hexagon as it uses a hyperbolic transform. Another possibility is to 
+  # offer hyperbolic alongside 'log' transform in vismodel? Other models do use it 
+  # too - could be a flexible option. 
   if(attr(dat, 'relative'))
     stop("Quantum catch are relative, and need to be raw for the hexagon model")
+  
+  if(attr(dat, 'qcatch') != 'Qi')
+    stop("Quantum catch are log transformed, and need to be raw for the hexagon model")
   
 }
   
