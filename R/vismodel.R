@@ -108,6 +108,8 @@ if(!inherits(visual2,'try-error')){
     visual <- 'user-defined'
     }
 
+conenumb <- dim(S)[2]
+
 # transform from percentages to proportions according to Vorobyev 2003
 
 if(max(y) > 1)
@@ -307,7 +309,7 @@ attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achrom
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
-attr(res, 'conenumb') <- dim(S)[2]
+attr(res, 'conenumb') <- conenumb # previously dim(S)[2], but that overestimated b/c of binding L to S
 attr(res, 'vonkries') <- vonkries
 
 # Data attributes
