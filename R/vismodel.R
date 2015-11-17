@@ -28,6 +28,7 @@
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
 #' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
+#' \item \code{canis}: Canid \emph{Canis familiaris} visual system
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -69,23 +70,36 @@
 #' @export
 #' 
 #' @examples \dontrun{
-#' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis)
-#' 
+#' # Dichromat
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, qcatch = 'Ei', visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- hexagon(vis.flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'canis')
+#' di.flowers <- dispace(vis.flowers)
+#' 
+#' # Trichromat 
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'apis')
+#' maxwell.flowers <- maxwell(vis.flowers)
+#' 
+#' # Tetrachromat
+#' data(sicalis)
+#' vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
+#' tcs.sicalis <- tcs(vis.sicalis)
 #' }
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
-#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
-#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
+#'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
+#'  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
+#'  In Retinal And Eye Research, 20(5), 675-703.
+#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+#'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+#'  The American Naturalist, 171(6), 755-776.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi', 'Ei'),
-  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis'), 
+  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis', 'canis'), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l',"none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
   vonkries=FALSE, scale=1, bkg = c('ideal', 'green'), relative=TRUE)

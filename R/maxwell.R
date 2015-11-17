@@ -7,7 +7,7 @@
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with three columns representing trichromatic viewer).
 #' 
-#' @return A data frame of class \code{colorspace} consisting of the following rows:
+#' @return A data frame of class \code{colorspace} consisting of the following columns:
 #' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
 #'  the remaining variables.
 #' @return \code{x}, \code{y}: cartesian coordinates for the points in the
@@ -26,12 +26,13 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
 #' @references Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed) 
-#' Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
+#'  Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 #' @references Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
-#' behavioural tests and physiological concepts. Biological Reviews, 78,
-#' 81 - 118.
-#' @references Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
-#' Journal of comparative physiology, 139(3), 165-176.
+#'  behavioural tests and physiological concepts. Biological Reviews, 78,
+#'  81 - 118.
+#' @references MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing 
+#'  cone excitation by stimuli of equal luminance. Journal of the Optical 
+#'  Society of America, 69, 1183 – 1186.
 
 maxwell <- function(vismodeldata){
   
@@ -56,19 +57,19 @@ maxwell <- function(vismodeldata){
     
   }
     
-# if not, check if it has more (or less) than 4 columns
+# if not, check if it has more (or less) than 3 columns
   
   if(!('vismodel' %in% attr(dat, 'class'))){
     
     if(ncol(dat) < 3)
-      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
+      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than three columns')	
     if(ncol(dat) == 3)
       warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns 
               as standardized quantum catch for ', dQuote('s'),', ',  dQuote('m'),
               ', and ', dQuote('l'), ' receptors, respectively')
     
     if(ncol(dat) > 3)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; 
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than three columns; 
               treating the first three columns as standardized quantum catch for ', 
               dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
     

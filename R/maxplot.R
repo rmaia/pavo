@@ -33,10 +33,6 @@
 
 maxplot <- function(maxdata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, cex.labels = 1, 
                     out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
-  
-# todo: 
-  #  is the triangle definitely the right dimensions?
-  #  better handling of user defined args for triangle outline 
     
 # Check if object is of class colorspace and trichromat
   if(!('colorspace' %in% attr(maxdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(maxdata)))

@@ -31,6 +31,8 @@ Collate:
     'data-teal.R'
     'data-ttvertex.R'
     'data-vissyst.R'
+    'dispace.R'
+    'diplot.R'
     'explorespec.R'
     'fgetspec.R'
     'getspec.R'

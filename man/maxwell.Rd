@@ -12,7 +12,7 @@ maxwell(vismodeldata)
  with three columns representing trichromatic viewer).}
 }
 \value{
-A data frame of class \code{colorspace} consisting of the following rows:
+A data frame of class \code{colorspace} consisting of the following columns:
 
 \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
  the remaining variables.
@@ -40,13 +40,14 @@ Thomas White \email{thomas.white026@gmail.com}
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
-Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
+ Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
-behavioural tests and physiological concepts. Biological Reviews, 78,
-81 - 118.
+ behavioural tests and physiological concepts. Biological Reviews, 78,
+ 81 - 118.
 
-Neumeyer C (1980) Simultaneous color contrast in the honeybee.
-Journal of comparative physiology, 139(3), 165-176.
+MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
+ cone excitation by stimuli of equal luminance. Journal of the Optical
+ Society of America, 69, 1183 – 1186.
 }
 

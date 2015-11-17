@@ -23,16 +23,18 @@
 ## Raf
 + deprecate tcs class, have general `colspace` class
 + don't load `rgl` automatically
-- add dichromatic chromaticity diagrams
 
 ## Tom
-- hexagon space & plot
-- maxwell space & plot
-- categorical space & plot
++ hexagon space & plot
++ maxwell space & plot
++ categorical space & plot
++ dichromatic space & plot
 - add appropriate bits to coldist
-- bee/fly visual systems
-- hyperbolic transform as general option?
++ bee vis syst
+- fly vis syst
++ dichro vis syst (dog?)
++ hyperbolic transform as general option?
 - COC space?
 - CIE?
-- points function for plots
+- points function for plots?
 - add .jazirrad to getspec
