@@ -15,11 +15,11 @@ with four columns representing a tetrachromatic dipteran viewer).}
 Object of class \code{colorspace} consisting of the following columns:
 
 \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
-calculate the remaining variables.
+calculate the remaining variables
 
-\code{x, y}: cartesian coordinates in the categorical colour space.
+\code{x, y}: cartesian coordinates in the categorical colour space
 
-\code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
+\code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}
 }
 \description{
 Applies the fly categorical colour vision model of Troje (1993).

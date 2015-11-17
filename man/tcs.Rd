@@ -12,7 +12,7 @@ from \code{\link{vismodel}} or independently calculated data (in the form of a d
 with four columns, representing the avian cones).}
 }
 \value{
-A data frame of class \code{tcs} consisting of the following rows:
+A data frame of class \code{tcs} consisting of the following columns:
 
 \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
 calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
@@ -41,7 +41,7 @@ in the avian tetrahedral color space.
 \examples{
 \dontrun{
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- tcs(vis.sicalis)}
 }
 \author{

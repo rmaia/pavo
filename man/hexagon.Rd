@@ -15,23 +15,23 @@ with three columns representing trichromatic viewer).}
 A data frame of class \code{colorspace} consisting of the following columns:
 
 \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
-the remaining variables.
+the remaining variables
 
 \code{Es}, \code{Em}, \code{El}: photoreceptor excitation values.
 
-\code{x}, \code{y}: cartesian coordinates in the colour hexagon.
+\code{x}, \code{y}: cartesian coordinates in the colour hexagon
 
 \code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
-angle, increasing clockwise.
+angle, increasing clockwise
 
-\code{r.vec}: the r vector (saturation, distance from the center).
+\code{r.vec}: the r vector (saturation, distance from the center)
 
 \code{sec.fine}: fine 'hue sector', wherein the full hexagon is composed
-of 36 10-degree sectors, with 0-degrees at the 1200 angle (Chittka et al.1994).
+of 36 10-degree sectors, with 0-degrees at the 1200 angle (Chittka et al.1994)
 
 \code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is
 composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue
-(Chittka et al. 1994).
+(Chittka et al. 1994)
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra

@@ -1,0 +1,67 @@
+#' Plot the categorical colour vision model
+#' 
+#' \code{catplot} produces a plot based on Troje's (1993) categorical colour model. 
+#' Note that the model is 'categorical' and results were not intended to be 
+#' interpreted as continuous, which may be implied by this type of plot. 
+#'  
+#' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
+#' function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
+#' @param labels Plot category labels inside? Defaults to \code{TRUE}
+#' @param cex.lab Character expansion factor for category labels when \code{labels = TRUE})
+#' @param ... Additional graphical options. See code{\link{par}}
+#' 
+#' @export
+#'    
+#' @examples
+#' \dontrun{
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
+#' cat.flowers <- categorical(vis.flowers)
+#' catplot(cat.flowers)
+#' }
+#' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @references Troje N. (1993). Spectral categories in the learning behaviour
+#' of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+
+catplot <- function(catdata, labels = TRUE, cex.text = 0.9, ...){ 
+  
+# Check if object is of class colorspace and tetrachromat
+  if(!('colorspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))
+    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
+  
+  if(('colorspace' %in% attr(catdata, 'class')) & attr(catdata, 'clrsp') != 'categorical')
+    stop(dQuote('colorspace'), ' object is not a result of categorical()')
+  
+  arg <- list(...)
+  
+# Set defaults
+  if(is.null(arg$col))
+    arg$col <- 'black'
+  if(is.null(arg$pch))
+    arg$pch <- 19  
+  if(is.null(arg$xlim))
+    arg$xlim  = c(-1, 1)
+  if(is.null(arg$ylim))
+    arg$ylim  = c(-1, 1)
+  if(is.null(arg$xlab))
+    arg$xlab = 'R7p - R8p'
+  if(is.null(arg$ylab))
+    arg$ylab = 'R7y - R8y'
+    
+# Plot
+  arg$x <- catdata$x
+  arg$y <- catdata$y
+  
+  do.call(plot, arg)
+  abline(h = 0, v = 0, col = 'grey')  # Divide up categories
+  
+# Category labels (todo: make this less shit)
+  if(labels == TRUE){
+    legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = cex.text)
+    legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = cex.text)
+    legend(x = 'bottomleft', legend = 'p- y-', bty = 'n', cex = cex.text)
+    legend(x = 'bottomright', legend = 'p+ y-', bty = 'n', cex = cex.text)
+  }
+
+}

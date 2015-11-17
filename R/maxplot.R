@@ -34,49 +34,49 @@ maxplot <- function(maxdata, achro = TRUE, achrocol = 'grey', achrosize = 0.8, l
                     out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
   
 # todo: 
-#  is the triangle definitely the right dimensions?
-#  better handling of user defined args for triangle outline 
-  
+  #  is the triangle definitely the right dimensions?
+  #  better handling of user defined args for triangle outline 
+    
 # Check if object is of class colorspace and trichromat
-if(!('colorspace' %in% attr(maxdata, 'class')))
-  stop('object is not of class ', dQuote('colorspace'))
-
-if(('colorspace' %in% attr(maxdata, 'class')) & attr(maxdata, 'conenumb') != 3)
-  stop(dQuote('colorspace'), ' object is not a trichromat visual system')  
-
-arg <- list(...)
-
-# Set defaults
-if (is.null(arg$col))
-  arg$col <- 'black'
-if (is.null(arg$pch))
-  arg$pch <- 19
+  if(!('colorspace' %in% attr(maxdata, 'class')))
+    stop('object is not of class ', dQuote('colorspace'))
   
+  if(('colorspace' %in% attr(maxdata, 'class')) & attr(maxdata, 'conenumb') != 3)
+    stop(dQuote('colorspace'), ' object is not a trichromat visual system')  
+  
+  arg <- list(...)
+  
+# Set defaults
+  if(is.null(arg$col))
+    arg$col <- 'black'
+  if(is.null(arg$pch))
+    arg$pch <- 19
+    
 # Verticy coordinates  
-vert <- data.frame(x = c(0, -1/sqrt(2), 1/sqrt(2)),
-                     y = c(sqrt(2)/sqrt(3), -sqrt(2)/(2*(sqrt(3))), -sqrt(2)/(2*(sqrt(3)))))
-
+  vert <- data.frame(x = c(0, -1/sqrt(2), 1/sqrt(2)),
+                       y = c(sqrt(2)/sqrt(3), -sqrt(2)/(2*(sqrt(3))), -sqrt(2)/(2*(sqrt(3)))))
+  
 # Plots vertices
-plot(vert, type = 'n', xlab = " ", ylab = " ", bty = "n", axes = FALSE)
-
+  plot(vert, type = 'n', xlab = " ", ylab = " ", bty = "n", axes = FALSE)
+  
 # Add lines 
-segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
-segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
-segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
-
+  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  
 # Origin
-if (achro == TRUE){
-  points(x = 0, y = 0, pch = 15, col = achrocol, cex = achrosize)
-}
-
+  if (achro == TRUE){
+    points(x = 0, y = 0, pch = 15, col = achrocol, cex = achrosize)
+  }
+  
 # Add text (coloured points better as in tcsplot?)
-text('S', x = -0.76, y = -0.39, xpd = TRUE, cex = labsize)
-text('M', x = 0, y = 0.88, xpd = TRUE, cex = labsize)
-text('L', x = 0.76, y = -0.39, xpd = TRUE, cex = labsize)
-
+  text('S', x = -0.76, y = -0.39, xpd = TRUE, cex = labsize)
+  text('M', x = 0, y = 0.88, xpd = TRUE, cex = labsize)
+  text('L', x = 0.76, y = -0.39, xpd = TRUE, cex = labsize)
+  
 # Plot stimulus points
-arg$x <- maxdata$x
-arg$y <- maxdata$y
-do.call(points, arg)
+  arg$x <- maxdata$x
+  arg$y <- maxdata$y
+  do.call(points, arg)
   
 }
