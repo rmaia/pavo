@@ -80,18 +80,33 @@ with receptor noise based on relative photoreceptor densities.
 }
 \examples{
 \dontrun{
+# Dichromat
+data(flowers)
+vis.flowers <- vismodel(flowers, visual = 'canis', relative= FALSE)
+didist.flowers <- coldist(vis.flowers, vis = 'di')
+
+# Trichromat
+data(flowers)
+vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
+tridist.flowers <- coldist(vis.flowers, vis = 'tri')
+
+# Tetrachromat
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-coldist.sicalis <- coldist(vis.sicalis, vis='tetra')}
+vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
+tetradist.sicalis <- coldist(vis.sicalis, vis = 'tetra')}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
+ (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
+ Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 
-Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
+Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
+ In Retinal And Eye Research, 20(5), 675-703.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
+ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 

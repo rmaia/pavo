@@ -56,15 +56,33 @@
 #' @return A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S, in JNDs)
 #' and \code{dL} is the achromatic contrast (delta L, in JNDs)
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
+#' # Dichromat
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'canis', relative= FALSE)
+#' didist.flowers <- coldist(vis.flowers, vis = 'di')
+#' 
+#' # Trichromat 
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
+#' tridist.flowers <- coldist(vis.flowers, vis = 'tri')
+#' 
+#' # Tetrachromat
 #' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual='avg.uv', relative=FALSE)
-#' coldist.sicalis <- coldist(vis.sicalis, vis='tetra')}
+#' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
+#' tetradist.sicalis <- coldist(vis.sicalis, vis = 'tetra')}
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
-#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
+#'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
+#'  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
+#'  In Retinal And Eye Research, 20(5), 675-703.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 
 coldist <-function(vismodeldata, qcatch=c('Qi','fi'),
