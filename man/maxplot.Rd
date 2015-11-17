@@ -5,8 +5,8 @@
 \title{Plot a Maxwell Triangle}
 \usage{
 maxplot(maxdata, labels = TRUE, achro = TRUE, achrocol = "grey",
-  achrosize = 0.8, cex.labels = 1, tri.lwd = 1, tri.lcol = "black",
-  tri.lty = 1, ...)
+  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
+  out.lty = 1, ...)
 }
 \arguments{
 \item{maxdata}{(required) a data frame, possibly a result from the \code{maxwell}
@@ -22,11 +22,11 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
 
-\item{tri.lwd}{line width for triangle outline (defaults to 1)}
+\item{out.lwd}{line width for triangle outline (defaults to 1)}
 
-\item{tri.lcol}{line colour for triangle outline (defaults to black)}
+\item{out.lcol}{line colour for triangle outline (defaults to black)}
 
-\item{tri.lty}{line type for triangle outline (defaults to 1)}
+\item{out.lty}{line type for triangle outline (defaults to 1)}
 
 \item{...}{additional graphical options. See code{\link{par}}.}
 

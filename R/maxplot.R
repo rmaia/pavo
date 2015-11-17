@@ -9,9 +9,9 @@
 #' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param tri.lwd line width for triangle outline (defaults to 1)
-#' @param tri.lcol line colour for triangle outline (defaults to black)
-#' @param tri.lty line type for triangle outline (defaults to 1)
+#' @param out.lwd line width for triangle outline (defaults to 1)
+#' @param out.lcol line colour for triangle outline (defaults to black)
+#' @param out.lty line type for triangle outline (defaults to 1)
 #' @param labsize size of the text labels (defaults to 1)
 #' @param ... additional graphical options. See code{\link{par}}.
 #'
@@ -33,7 +33,7 @@
 #'  Journal of comparative physiology, 139(3), 165-176.
 
 maxplot <- function(maxdata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, cex.labels = 1, 
-                    tri.lwd = 1, tri.lcol = 'black', tri.lty = 1, ...){ 
+                    out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
   
 # todo: 
   #  is the triangle definitely the right dimensions?
@@ -75,9 +75,9 @@ maxplot <- function(maxdata, labels = TRUE, achro = TRUE, achrocol = 'grey', ach
   do.call(plot, arg)
   
 # Add lines 
-  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = tri.lwd, lty = tri.lty, col = tri.lcol)
-  segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = tri.lwd, lty = tri.lty, col = tri.lcol)
-  segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = tri.lwd, lty = tri.lty, col = tri.lcol)
+  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
   
 # Origin
   if(isTRUE(achro)){
