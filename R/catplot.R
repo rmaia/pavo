@@ -5,10 +5,10 @@
 #' interpreted as continuous, which may be implied by this type of plot. 
 #'  
 #' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
-#' function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
-#' @param labels Plot category labels inside? Defaults to \code{TRUE}
-#' @param cex.lab Character expansion factor for category labels when \code{labels = TRUE})
-#' @param ... Additional graphical options. See code{\link{par}}
+#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
+#' @param labels plot category labels inside? Defaults to \code{TRUE}
+#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
+#' @param ... additional graphical options. See code{\link{par}}
 #' 
 #' @export
 #'    
@@ -19,12 +19,13 @@
 #' cat.flowers <- categorical(vis.flowers)
 #' catplot(cat.flowers)
 #' }
+#' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
-#' of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+#'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-catplot <- function(catdata, labels = TRUE, cex.text = 0.9, ...){ 
+catplot <- function(catdata, labels = TRUE, cex.labels = 0.9, ...){ 
   
 # Check if object is of class colorspace and tetrachromat
   if(!('colorspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))
@@ -58,10 +59,10 @@ catplot <- function(catdata, labels = TRUE, cex.text = 0.9, ...){
   
 # Category labels (todo: make this less shit)
   if(labels == TRUE){
-    legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = cex.text)
-    legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = cex.text)
-    legend(x = 'bottomleft', legend = 'p- y-', bty = 'n', cex = cex.text)
-    legend(x = 'bottomright', legend = 'p+ y-', bty = 'n', cex = cex.text)
+    legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = cex.labels)
+    legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = cex.labels)
+    legend(x = 'bottomleft', legend = 'p- y-', bty = 'n', cex = cex.labels)
+    legend(x = 'bottomright', legend = 'p+ y-', bty = 'n', cex = cex.labels)
   }
 
 }
