@@ -26,9 +26,9 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, scale = 10000, achro = 'l')
-#' flowers.hex <- hexagon(vis.flowers)
-#' hexplot(flowers.hex, achro = FALSE, sectors = 'coarse')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#' hex.flowers <- hexagon(vis.flowers)
+#' hexplot(hex.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}

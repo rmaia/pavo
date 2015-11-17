@@ -40,7 +40,7 @@ in the hymenopteran color hexagon.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, scale = 10000, achro = 'l')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 flowers.hex <- hexagon(vis.flowers)
 }
 }

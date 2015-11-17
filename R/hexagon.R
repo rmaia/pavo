@@ -26,7 +26,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, scale = 10000, achro = 'l')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 #' flowers.hex <- hexagon(vis.flowers)
 #' }
 #' 
@@ -63,9 +63,6 @@ hexagon <- function(vismodeldata){
     
     if(attr(dat, 'qcatch') != 'Qi')
       stop("Quantum catch are log transformed, and need to be raw for the hexagon model")
-    
-    #if(!isTRUE(attr(dat, 'vonkries')))
-      #stop("von Kries transformation has not been applied, but is required for the hexagon model")
   }
     
 # if not, check if it has more (or less) than 4 columns

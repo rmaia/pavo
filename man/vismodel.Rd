@@ -7,7 +7,7 @@
 vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
   "bluetit", "star", "pfowl", "apis"), achromatic = c("bt.dc", "ch.dc",
   "st.dc", "ml", "l", "none"), illum = c("ideal", "bluesky", "D65",
-  "forestshade"), vonkries = FALSE, scale = 1, bkg = "ideal",
+  "forestshade"), vonkries = FALSE, scale = 1, bkg = c("ideal", "green"),
   relative = TRUE)
 }
 \arguments{
@@ -65,8 +65,11 @@ and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
 are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 \code{vonkries=TRUE} this transformation has no effect.}
 
-\item{bkg}{either a vector containing the background spectra, or an ideal (white)
-background is used (Default assumes an idealized homogeneous background).}
+\item{bkg}{either a vector containing the background spectra, or one of the options:
+\itemize{
+\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
+\item \code{'green'}: green foliage background
+}}
 
 \item{relative}{should relative quantum catches be returned (i.e. is it a color
 space model? Defaults to \code{TRUE}).}
@@ -86,7 +89,12 @@ and Stoddard & Prum (2008).
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis)}
+tcs.sicalis <- tcs(vis.sicalis)
+
+data(flowers)
+vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- hexagon(vis.flowers)
+}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
