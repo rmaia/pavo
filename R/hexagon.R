@@ -7,7 +7,7 @@
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with three columns representing trichromatic viewer).
 #' 
-#' @return A data frame of class \code{colorspace} consisting of the following rows:
+#' @return A data frame of class \code{colorspace} consisting of the following columns:
 #' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
 #' the remaining variables. 
 #' @return \code{Es}, \code{Em}, \code{El}: photoreceptor excitation values. 
@@ -34,8 +34,6 @@
 #' @references Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
-#'  @references Backhaus W. (1992). The Bezold-Brucke effect in the color vision 
-#'    system of the honeybee. Vision research, 32(8), 1425-1431.
 
 hexagon <- function(vismodeldata){
   
@@ -56,13 +54,15 @@ if('vismodel' %in% attr(dat, 'class')){
   # check if relative. Qcatches, at this stage, need to be raw & not log-transformed 
   # for the hexagon as it uses a hyperbolic transform. Another possibility is to 
   # offer hyperbolic alongside 'log' transform in vismodel? Other models do use it 
-  # too - could be a flexible option. 
+  # too - could be a flexible option.  
   if(attr(dat, 'relative'))
     stop("Quantum catch are relative, and need to be raw for the hexagon model")
   
   if(attr(dat, 'qcatch') != 'Qi')
     stop("Quantum catch are log transformed, and need to be raw for the hexagon model")
   
+  #if(!isTRUE(attr(dat, 'vonkries')))
+    #stop("von Kries transformation has not been applied, but is required for the hexagon model")
 }
   
 # if not, check if it has more (or less) than 4 columns
@@ -87,7 +87,7 @@ if(!('vismodel' %in% attr(dat, 'class'))){
     stop("Quantum catch are relative, and need to be raw for the hexagon model")
 }
 
-# These are a couple of functions that do what should be simple things in an 
+# TODO: These are a couple of functions that do what should be simple things in an 
 # ugly way because my maths/programming is bad. Needs to be fixed.
 
 # Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)

@@ -8,7 +8,7 @@
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #' with four columns, representing the avian cones).
 #'
-#' @return A data frame of class \code{tcs} consisting of the following rows:
+#' @return A data frame of class \code{tcs} consisting of the following columns:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
 #' calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
 #' the output column will be labeled \code{u}.
@@ -25,7 +25,7 @@
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+#' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- tcs(vis.sicalis)}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.

@@ -12,7 +12,7 @@ from \code{\link{vismodel}} or independently calculated data (in the form of a d
 with three columns representing trichromatic viewer).}
 }
 \value{
-A data frame of class \code{colorspace} consisting of the following rows:
+A data frame of class \code{colorspace} consisting of the following columns:
 
 \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
 the remaining variables.
@@ -55,8 +55,5 @@ Chittka L. (1992). The colour hexagon: a chromaticity diagram
 Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
    component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.
-
-Backhaus W. (1992). The Bezold-Brucke effect in the color vision
-   system of the honeybee. Vision research, 32(8), 1425-1431.
 }
 
