@@ -79,20 +79,20 @@ categorical <- function(vismodeldata){
   y <- R7y - R8y
   
 # Colour category calculator (surely a better way?)
-  cat <- function(object){
-    if(object$x > 0 && object$y > 0)
-      return('p+y+')
-    if(object$x < 0 && object$y > 0)
-      return('p-y+')
-    if(object$x < 0 && object$y < 0)
-      return('p-y-')
-    if(object$x > 0 && object$y < 0)
-      return('p+y-')
+  colcat <- function(object){
+      if(object$x > 0 && object$y > 0)
+        return('p+y+')
+      if(object$x < 0 && object$y > 0)
+        return('p-y+')
+      if(object$x < 0 && object$y < 0)
+        return('p-y-')
+      if(object$x > 0 && object$y < 0)
+        return('p+y-')
   }
   
   res.p <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
   
-  res.p$category <- sapply(1:nrow(res.p), function(x) cat(res.p[x,]))
+  res.p$category <- sapply(1:nrow(res.p), function(x) colcat(res.p[x,]))
   
   res <- res.p
   

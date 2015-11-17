@@ -175,15 +175,13 @@ qn.ttdistcalcachro <- function(f1,f2,qn1, qn2, n4, weber.achro){
         round(abs(dq1/w),7)
 		}
 
-
-
 ###################
 #SUMMARY VARIABLES#
 ###################
 
 huedisp <- function(tcsres){
-ind=t(combn(nrow(tcsres),2))
-apply(ind,1, function(x)	
+  ind=t(combn(nrow(tcsres),2))
+  apply(ind,1, function(x)	
 	 acos((cos(tcsres[x[1],'h.phi'])*cos(tcsres[x[2],'h.phi'])*cos(tcsres[x[1],'h.theta'] -
 	 tcsres[x[2],'h.theta'])) + (sin(tcsres[x[1],'h.phi'])*sin(tcsres[x[2],'h.phi'])))
      )
@@ -191,37 +189,66 @@ apply(ind,1, function(x)
 
 
 tcssum <- function(tcsres){
-# centroid
-centroid <- colMeans(tcsres[c('u','s','m','l')])
+  # centroid
+  centroid <- colMeans(tcsres[c('u','s','m','l')])
+  
+  # color span
+  colspan.m <- mean(dist(tcsres[,c('x','y','z')]))
+  colspan.v <- var(dist(tcsres[,c('x','y','z')]))
+  
+  # color volume
+  if(nrow(tcsres)>3)
+       {
+       c.vol <- convhulln(tcsres[,c('x','y','z')],"FA")$vol
+       }else{
+         c.vol<-NA}
+  
+  # hue disparity
+  hdisp.m <- mean(huedisp(tcsres))
+  hdisp.v <- var(huedisp(tcsres))
+  
+  # summary of achieved chroma
+  mean.ra <- mean(tcsres$r.achieved)
+  max.ra  <-  max(tcsres$r.achieved)
+  
+  res.c <- c(centroid,c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
+  names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
+                  'c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
+                  'mean.ra', 'max.ra')
+  
+  res.c
+}
 
-# color span
-colspan.m <- mean(dist(tcsres[,c('x','y','z')]))
-colspan.v <- var(dist(tcsres[,c('x','y','z')]))
+# TODO: These are a couple of functions that do what should be simple things in an 
+# ugly way because my maths/programming is bad. Needs to be fixed.
 
-# color volume
+# Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
+# in the colour hexagon
+angle360 <- function(x, y){
+  if(isTRUE(sign(x) == 1 && sign(y) == 1))
+    return(atan(abs(x)/abs(y)) * (180/pi))
+  if(isTRUE(sign(x) == 1 && sign(y) == -1))
+    return((atan(abs(y)/abs(x)) * (180/pi)) + 90)
+  if(isTRUE(sign(x) == -1 && sign(y) == -1))
+    return((atan(abs(x)/abs(y)) * (180/pi)) + 180)
+  if(isTRUE(sign(x) == -1 && sign(y) == 1))
+    return((atan(abs(y)/abs(x)) * (180/pi)) + 270)
+}
 
-if(nrow(tcsres)>3)
-     {
-     c.vol <- convhulln(tcsres[,c('x','y','z')],"FA")$vol
-     }else{
-       c.vol<-NA}
-
-# hue disparity
-
-hdisp.m <- mean(huedisp(tcsres))
-hdisp.v <- var(huedisp(tcsres))
-
-# summary of achieved chroma
-
-mean.ra <- mean(tcsres$r.achieved)
-max.ra  <-  max(tcsres$r.achieved)
-
-res.c <- c(centroid,c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
-names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
-                'c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
-                'mean.ra', 'max.ra')
-
-res.c
+# Calculate the coarse hexagon sector
+coarse_sec <- function(x){
+  if(isTRUE(x >= 30 && x < 90))
+    return('bluegreen')
+  if(isTRUE(x >= 90 && x < 150))
+    return('green')
+  if(isTRUE(x >= 150 && x < 210))
+    return('uvgreen')
+  if(isTRUE(x >= 210 && x < 270))
+    return('uv')
+  if(isTRUE(x >= 270 && x < 330))
+    return('uvblue')
+  if(isTRUE(x >= 330 || x < 30))
+    return('blue')
 }
 
 

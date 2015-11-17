@@ -90,37 +90,6 @@ hexagon <- function(vismodeldata){
       stop("Quantum catch are relative, and need to be raw for the hexagon model")
   }
   
-# TODO: These are a couple of functions that do what should be simple things in an 
-# ugly way because my maths/programming is bad. Needs to be fixed.
-  
-# Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
-  angle360 <- function(x, y){
-    if(isTRUE(sign(x) == 1 && sign(y) == 1))
-      return(atan(abs(x)/abs(y)) * (180/pi))
-    if(isTRUE(sign(x) == 1 && sign(y) == -1))
-      return((atan(abs(y)/abs(x)) * (180/pi)) + 90)
-    if(isTRUE(sign(x) == -1 && sign(y) == -1))
-      return((atan(abs(x)/abs(y)) * (180/pi)) + 180)
-    if(isTRUE(sign(x) == -1 && sign(y) == 1))
-      return((atan(abs(y)/abs(x)) * (180/pi)) + 270)
-  }
-  
-# Coarse hexagon sector
-  coarse_sec <- function(x){
-    if(isTRUE(x >= 30 && x < 90))
-      return('bluegreen')
-    if(isTRUE(x >= 90 && x < 150))
-      return('green')
-    if(isTRUE(x >= 150 && x < 210))
-      return('uvgreen')
-    if(isTRUE(x >= 210 && x < 270))
-      return('uv')
-    if(isTRUE(x >= 270 && x < 330))
-      return('uvblue')
-    if(isTRUE(x >= 330 || x < 30))
-      return('blue')
-  }
-  
   s <- dat[, 1]
   m <- dat[, 2]
   l <- dat[, 3]
