@@ -8,14 +8,14 @@ categorical(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with four columns representing a tetrachromatic dipteran viewer).}
+ from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+ with four columns representing a tetrachromatic dipteran viewer).}
 }
 \value{
 Object of class \code{colorspace} consisting of the following columns:
 
 \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
-calculate the remaining variables
+ calculate the remaining variables
 
 \code{x, y}: cartesian coordinates in the categorical colour space
 
@@ -36,6 +36,6 @@ Thomas White \email{thomas.white026@gmail.com}
 }
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour
-of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+ of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 }
 

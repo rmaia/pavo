@@ -4,17 +4,17 @@
 \alias{catplot}
 \title{Plot the categorical colour vision model}
 \usage{
-catplot(catdata, labels = TRUE, cex.text = 0.9, ...)
+catplot(catdata, labels = TRUE, cex.labels = 0.9, ...)
 }
 \arguments{
 \item{catdata}{(required) a data frame, possibly a result from the \code{categorical}
 function, containing values for 'x' and 'y' coordinates as columns (labeled as such)}
 
-\item{labels}{Plot category labels inside? Defaults to \code{TRUE}}
+\item{labels}{plot category labels inside? Defaults to \code{TRUE}}
 
-\item{...}{Additional graphical options. See code{\link{par}}}
+\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
 
-\item{cex.lab}{Character expansion factor for category labels when \code{labels = TRUE})}
+\item{...}{additional graphical options. See code{\link{par}}}
 }
 \description{
 \code{catplot} produces a plot based on Troje's (1993) categorical colour model.
@@ -34,6 +34,6 @@ Thomas White \email{thomas.white026@gmail.com}
 }
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour
-of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+ of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 }
 

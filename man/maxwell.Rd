@@ -8,17 +8,17 @@ maxwell(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with three columns representing trichromatic viewer).}
+ from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+ with three columns representing trichromatic viewer).}
 }
 \value{
 A data frame of class \code{colorspace} consisting of the following rows:
 
 \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
-the remaining variables.
+ the remaining variables.
 
 \code{x}, \code{y}: cartesian coordinates for the points in the
-Maxwell triangle.
+ Maxwell triangle.
 
 \code{h.theta}: angle theta, in radians, determining the hue of the color.
 

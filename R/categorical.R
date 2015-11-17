@@ -3,12 +3,12 @@
 #' Applies the fly categorical colour vision model of Troje (1993). 
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#' with four columns representing a tetrachromatic dipteran viewer).
+#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  with four columns representing a tetrachromatic dipteran viewer).
 #' 
 #' @return Object of class \code{colorspace} consisting of the following columns:
 #' @return \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
-#' calculate the remaining variables
+#'  calculate the remaining variables
 #' @return \code{x, y}: cartesian coordinates in the categorical colour space
 #' @return \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}
 #' 
@@ -23,7 +23,7 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
-#' of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+#'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
 categorical <- function(vismodeldata){
   

@@ -4,14 +4,14 @@
 #' in a Maxwell triangle chromaticity space.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#' with three columns representing trichromatic viewer).
+#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  with three columns representing trichromatic viewer).
 #' 
 #' @return A data frame of class \code{colorspace} consisting of the following rows:
 #' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
-#' the remaining variables.
+#'  the remaining variables.
 #' @return \code{x}, \code{y}: cartesian coordinates for the points in the
-#' Maxwell triangle.
+#'  Maxwell triangle.
 #' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #' 

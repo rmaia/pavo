@@ -4,28 +4,33 @@
 \alias{maxplot}
 \title{Plot a Maxwell Triangle}
 \usage{
-maxplot(maxdata, achro = TRUE, achrocol = "grey", achrosize = 0.8,
-  labsize = 1, out.lwd = 1, out.lcol = "black", out.lty = 1, ...)
+maxplot(maxdata, labels = TRUE, achro = TRUE, achrocol = "grey",
+  achrosize = 0.8, cex.labels = 1, tri.lwd = 1, tri.lcol = "black",
+  tri.lty = 1, ...)
 }
 \arguments{
 \item{maxdata}{(required) a data frame, possibly a result from the \code{maxwell}
 function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)}
 
+\item{labels}{plot verticy labels? Defaults to \code{TRUE}}
+
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achrocol}{color of the point at the origin (defaults to grey)}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
 
-\item{achrosize}{size of the point at the origin (defaults to 0.8)}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
-\item{labsize}{size of the text labels (defaults to 1)}
+\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
 
-\item{out.lwd}{line width for triangle outline (defaults to 1)}
+\item{tri.lwd}{line width for triangle outline (defaults to 1)}
 
-\item{out.lcol}{line colour for triangle outline (defaults to black)}
+\item{tri.lcol}{line colour for triangle outline (defaults to black)}
 
-\item{out.lty}{line type for triangle outline (defaults to 1)}
+\item{tri.lty}{line type for triangle outline (defaults to 1)}
 
 \item{...}{additional graphical options. See code{\link{par}}.}
+
+\item{labsize}{size of the text labels (defaults to 1)}
 }
 \description{
 \code{maxplot} produces a Maxwell triangle plot
@@ -47,6 +52,6 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
    81 - 118.
 
 Neumeyer C (1980) Simultaneous color contrast in the honeybee.
-Journal of comparative physiology, 139(3), 165-176.
+ Journal of comparative physiology, 139(3), 165-176.
 }
 
