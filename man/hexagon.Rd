@@ -17,8 +17,6 @@ A data frame of class \code{colorspace} consisting of the following columns:
 \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
  the remaining variables
 
-\code{Es}, \code{Em}, \code{El}: photoreceptor excitation values.
-
 \code{x}, \code{y}: cartesian coordinates in the colour hexagon
 
 \code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
@@ -40,7 +38,7 @@ in the hymenopteran color hexagon.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 flowers.hex <- hexagon(vis.flowers)
 }
 }

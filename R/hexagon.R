@@ -10,7 +10,6 @@
 #' @return A data frame of class \code{colorspace} consisting of the following columns:
 #' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
 #'  the remaining variables
-#' @return \code{Es}, \code{Em}, \code{El}: photoreceptor excitation values.
 #' @return \code{x}, \code{y}: cartesian coordinates in the colour hexagon
 #' @return \code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
 #'  angle, increasing clockwise
@@ -26,7 +25,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Qi', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 #' flowers.hex <- hexagon(vis.flowers)
 #' }
 #' 
@@ -59,10 +58,13 @@ hexagon <- function(vismodeldata){
     # offer hyperbolic alongside 'log' transform in vismodel? Other models do use it 
     # too - could be a flexible option.  
     if(attr(dat, 'relative'))
-      stop("Quantum catch are relative, and need to be raw for the hexagon model")
+      warning("Quantum catches are relative, which is not required in the hexagon model and may produce unexpected results")
     
-    if(attr(dat, 'qcatch') != 'Qi')
-      stop("Quantum catch are log transformed, and need to be raw for the hexagon model")
+    if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
+      stop("Quantum catches are not hyperbolically transformed, as required for the hexagon model")
+    
+    if(!isTRUE(attr(dat, 'vonkries')))
+      stop("Quantum catches are not von-Kries transformed, as required for the hexagon model")
   }
     
 # if not, check if it has more (or less) than 4 columns
@@ -84,21 +86,16 @@ hexagon <- function(vismodeldata){
     dat <- dat[, 1:3]
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) == dim(dat)[1])
-      stop("Quantum catch are relative, and need to be raw for the hexagon model")
+      stop("Quantum catches are relative, which is not required in the hexagon model and may produce unexpected results")
   }
   
   s <- dat[, 1]
   m <- dat[, 2]
   l <- dat[, 3]
-  
-# Calculate E values (hyperbolic transform)
-  Es <- s / (s + 1)
-  Em <- m / (m + 1)
-  El <- l / (l + 1)
     
 # Hexagon coordinates & colorimetrics
-  x <- (sqrt(3)/2) * (El - Es)
-  y <- Em - (0.5 * (Es + El))
+  x <- (sqrt(3)/2) * (l - s)
+  y <- m - (0.5 * (s + l))
   
 # colorimetrics
   r.vec <- sqrt((abs(x))^2 + (abs(y)^2))
@@ -106,7 +103,7 @@ hexagon <- function(vismodeldata){
   sec.fine <- round(floor(h.theta/10), 0) * 10
   sec.coarse <- sapply(1:length(x), function(x) coarse_sec(h.theta[x]))
   
-  res.p <- data.frame(s, m, l, Es, Em, El, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
+  res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
   
   res <- res.p
   

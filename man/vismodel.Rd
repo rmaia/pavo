@@ -4,9 +4,9 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
-  "bluetit", "star", "pfowl", "apis"), achromatic = c("bt.dc", "ch.dc",
-  "st.dc", "ml", "l", "none"), illum = c("ideal", "bluesky", "D65",
+vismodel(rspecdata, qcatch = c("Qi", "fi", "Ei"), visual = c("avg.uv",
+  "avg.v", "bluetit", "star", "pfowl", "apis"), achromatic = c("bt.dc",
+  "ch.dc", "st.dc", "ml", "l", "none"), illum = c("ideal", "bluesky", "D65",
   "forestshade"), vonkries = FALSE, scale = 1, bkg = c("ideal", "green"),
   relative = TRUE)
 }
@@ -20,6 +20,7 @@ remaining columns.}
 \item \code{Qi}: Quantum catch for each photoreceptor
 \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 channel is proportional to the logarithm of the quantum catch)
+\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
 }}
 
 \item{visual}{the visual system to be used. Options are:
@@ -92,7 +93,7 @@ vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 tcs.sicalis <- tcs(vis.sicalis)
 
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+vis.flowers <- vismodel(flowers, qcatch = 'Ei', visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- hexagon(vis.flowers)
 }
 }

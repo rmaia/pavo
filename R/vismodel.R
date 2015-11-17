@@ -14,6 +14,7 @@
 #' \item \code{Qi}: Quantum catch for each photoreceptor 
 #' \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #' channel is proportional to the logarithm of the quantum catch)
+#' \item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
 #' }
 #' @param visual the visual system to be used. Options are:
 #' \itemize{
@@ -73,7 +74,7 @@
 #' tcs.sicalis <- tcs(vis.sicalis)
 #' 
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#' vis.flowers <- vismodel(flowers, qcatch = 'Ei', visual = 'apis', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 #' hex.flowers <- hexagon(vis.flowers)
 #' }
 #' 
@@ -83,7 +84,7 @@
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
+vismodel <- function(rspecdata, qcatch = c('Qi','fi', 'Ei'),
   visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis'), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l',"none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
@@ -174,7 +175,7 @@ if('rspec' %in% class(illum)){
     , call.=FALSE)
 }
 
-if( 'data.frame' %in% class(illum) | 'matrix' %in% class(illum) & 
+if('data.frame' %in% class(illum) | 'matrix' %in% class(illum) & 
   !'rspec' %in% class(illum)){
   whichused <- names(illum)[1]
   illum <- illum[,1]
@@ -236,7 +237,6 @@ if(inherits(achromatic2,'try-error')){
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 
-
   }
   
 # using one of the predefined receptors
@@ -275,20 +275,20 @@ if(vonkries){
   if(!is.null(lum))
     S <- data.frame(cbind(S,L))
 
-  k <- 1/colSums(S*bkg*illum)
+    k <- 1/colSums(S*bkg*illum)
 
-  Qi <- data.frame(t(t(Qi)*k))
+    Qi <- data.frame(t(t(Qi)*k))
 
-  vk <- "(von Kries color correction applied)"
+    vk <- "(von Kries color correction applied)"
 }
-# fechner law (signal ~ log quantum catch)
 
-fi <- log(Qi)
-
+fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
+Ei <- Qi / (Qi + 1)  # hyperbolic transform
 
 if(relative & !is.null(lum)){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
+  Ei[,-dim(Ei)[2]] <- Ei[,-dim(Ei)[2]]/rowSums(Ei[,-dim(Ei)[2]])
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -298,6 +298,7 @@ if(relative & !is.null(lum)){
 if(relative & is.null(lum)){
   Qi <- Qi/rowSums(Qi)
   fi <- fi/rowSums(fi)
+  Ei <- Ei/rowSums(Ei)
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -309,7 +310,7 @@ if(relative & is.null(lum)){
 
 qcatch <- match.arg(qcatch)
 
-res <- switch(qcatch, Qi = Qi, fi = fi)
+res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
 class(res) <- c('vismodel', 'data.frame')
 
