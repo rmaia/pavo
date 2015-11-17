@@ -57,7 +57,7 @@ catplot <- function(catdata, labels = TRUE, cex.labels = 0.9, ...){
   do.call(plot, arg)
   abline(h = 0, v = 0, col = 'grey')  # Divide up categories
   
-# Category labels (todo: make this less shit)
+# Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
     legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = cex.labels)
     legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = cex.labels)

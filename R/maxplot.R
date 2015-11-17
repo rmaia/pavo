@@ -12,7 +12,6 @@
 #' @param out.lwd line width for triangle outline (defaults to 1)
 #' @param out.lcol line colour for triangle outline (defaults to black)
 #' @param out.lty line type for triangle outline (defaults to 1)
-#' @param labsize size of the text labels (defaults to 1)
 #' @param ... additional graphical options. See code{\link{par}}.
 #'
 #' @export

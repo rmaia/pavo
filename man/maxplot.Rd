@@ -29,8 +29,6 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{out.lty}{line type for triangle outline (defaults to 1)}
 
 \item{...}{additional graphical options. See code{\link{par}}.}
-
-\item{labsize}{size of the text labels (defaults to 1)}
 }
 \description{
 \code{maxplot} produces a Maxwell triangle plot
