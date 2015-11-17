@@ -54,11 +54,9 @@ hexagon <- function(vismodeldata){
       warning('vismodel input is not trichromatic, considering first three receptors only')
     
     # check if relative. Qcatches, at this stage, need to be raw & not log-transformed 
-    # for the hexagon as it uses a hyperbolic transform. Another possibility is to 
-    # offer hyperbolic alongside 'log' transform in vismodel? Other models do use it 
-    # too - could be a flexible option.  
+    # for the hexagon as it uses a hyperbolic transform. 
     if(attr(dat, 'relative'))
-      warning("Quantum catches are relative, which is not required in the hexagon model and may produce unexpected results")
+      stop("Quantum catches are relative, which is not required in the hexagon model")
     
     if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
       stop("Quantum catches are not hyperbolically transformed, as required for the hexagon model")
@@ -67,19 +65,19 @@ hexagon <- function(vismodeldata){
       stop("Quantum catches are not von-Kries transformed, as required for the hexagon model")
   }
     
-# if not, check if it has more (or less) than 4 columns
+# if not, check if it has more (or less) than 3 columns
   
   if(!('vismodel' %in% attr(dat, 'class'))){
     
     if(ncol(dat) < 3)
-      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
+      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than three columns')	
     if(ncol(dat) == 3)
       warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns 
               as quantum catch for ', dQuote('s'),', ',  dQuote('m'),
               ', and ', dQuote('l'), ' receptors, respectively')
     
     if(ncol(dat) > 3)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; 
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than three columns; 
               treating the first three columns as quantum catch for ', 
               dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
     

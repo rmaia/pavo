@@ -1,0 +1,99 @@
+#' Color opponenet coding model 
+#' 
+#' Calculates coordinates and colorimetric variables that represent reflectance spectra
+#' in the color opponent coding model of hymenopteran vision
+#' 
+#' @param vismodeldata (required) quantum catch color data. Can be either the result
+#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  with three columns representing trichromatic viewer).
+#' 
+#' @return A data frame of class \code{colorspace} consisting of the following columns:
+#' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
+#'  the remaining variables.
+#' @return \code{x}, \code{y}: coordinates for the points in coc space
+#' @return \code{r.vec}: the r vector (saturation, distance from the center using
+#'  a city-block metric).
+#' 
+#' @export
+#' 
+#' @examples \dontrun{
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+#' coc.flowers <- coc(vis.flowers)
+#' } 
+#' 
+#' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @references Backhaus W. (1991). Color opponent coding in the visual system
+#'  of the honeybee. Vision Research, 31, 1381-1397.
+
+coc <- function(vismodeldata){
+  
+  dat <- vismodeldata
+  
+  # if object is vismodel:
+  if('vismodel' %in% attr(dat, 'class')){
+    
+    # check if trichromat
+    if(attr(dat, 'conenumb') < 3)
+      stop('vismodel input is not trichromatic')
+    
+    if(attr(dat, 'conenumb') > 3)
+      warning('vismodel input is not trichromatic, considering first three receptors only')
+    
+    if(attr(dat, 'relative'))
+      stop("Quantum catches are relative, which is not required in the coc model")
+    
+    if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
+      stop("Quantum catches are not hyperbolically transformed, as required for the coc model")
+    
+    if(!isTRUE(attr(dat, 'vonkries')))
+      stop("Quantum catches are not von-Kries transformed, as required for the coc model")
+    
+  }
+  
+  # if not, check if it has more (or less) than 3 columns
+  
+  if(!('vismodel' %in% attr(dat, 'class'))){
+    
+    if(ncol(dat) < 3)
+      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than three columns')	
+    if(ncol(dat) == 3)
+      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns 
+              as quantum catch for ', dQuote('s'),', ',  dQuote('m'),
+              ', and ', dQuote('l'), ' receptors, respectively')
+    
+    if(ncol(dat) > 3)
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than three columns; 
+              treating the first three columns as quantum catch for ', 
+              dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+    
+    dat <- dat[, 1:3]
+    
+    if(round(sum(rowSums(dat/apply(dat,1,sum)))) == dim(dat)[1])
+      stop("Quantum catches are relative, which is not required in the coc model and may produce unexpected results")
+  }
+  
+  s <- dat[, 1]
+  m <- dat[, 2]
+  l <- dat[, 3]
+  
+  # coordinates
+  x <- (-9.86 * s) + (7.7 * m) + (2.16 * l) 
+  y <- (-5.17 * s) + (20.25 * m) - (15.08 * l) 
+  
+  # colorimetrics
+  r.vec <- abs(x) + abs(y)  # city-block from origin
+  #h.theta <- atan2(y, x)
+  
+  res.p <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
+  
+  res <- res.p
+  
+  class(res) <- c('colorspace', 'data.frame')
+  
+  attr(res, 'conenumb') <- 3
+  attr(res, 'clrsp') <- 'coc'
+  
+  res
+}
