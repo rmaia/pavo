@@ -29,12 +29,12 @@
 + maxwell space & plot
 + categorical space & plot
 + dichromatic space & plot
-- add appropriate bits to coldist
++ COC space & plot
 + bee vis syst
+- add appropriate bits to coldist
 - fly vis syst
 + dichro vis syst (dog?)
-+ hyperbolic transform as general option?
-- COC space?
++ hyperbolic transform as general option
 - CIE?
 - points function for plots?
 - add .jazirrad to getspec
