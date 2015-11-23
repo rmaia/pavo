@@ -7,6 +7,7 @@
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
 - add couple plotting options for `segclass` objects
 - summary.colorspace?
+- generalise 'vismodel' doc - it's no longer just RN vs relative. Now more general first step, including di- tri- tetra & different models like coc, hex etc. 
 
 ## Me
 - Add CIE chromaticity diagram function
@@ -35,6 +36,6 @@
 - fly vis syst
 + dichro vis syst (dog?)
 + hyperbolic transform as general option
-- CIE?
+- CIE (what does a LAB plot look like?)
 - points function for plots?
 - add .jazirrad to getspec
