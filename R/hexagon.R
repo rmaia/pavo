@@ -20,8 +20,6 @@
 #'  composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue 
 #'  (Chittka et al. 1994)
 #' 
-#' @export
-#' 
 #' @examples
 #' \dontrun{
 #' data(flowers)
@@ -37,7 +35,7 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-hexagon <- function(vismodeldata){
+.hexagon <- function(vismodeldata){
   
 ## Note: requires von kries & hyperbolic transform
   

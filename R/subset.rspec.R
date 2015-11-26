@@ -2,14 +2,13 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
-#' @S3method subset rspec
-#' @method subset rspec
-#'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}
 #' containing spectra, visual model output or colourspace data to subset
 #' @param ... class consistency (ignored).
 #' @param subset a string used for partial matching of observations
 #' @return a subsetted object of the same class as the input object
+#'
+#' @export
 #'
 #' @examples \dontrun{
 #'

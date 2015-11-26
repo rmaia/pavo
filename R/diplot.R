@@ -14,8 +14,6 @@
 #' @param out.lty line type for segment (defaults to 1)
 #' @param ... additional graphical options. See code{\link{par}}.
 #'
-#' @export
-#'
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -29,8 +27,8 @@
 #'    - behavioural tests and physiological concepts. Biological Reviews, 78,
 #'    81 - 118.
 
-diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
-                   cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
+.diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
+                    cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
     
 # Check if object is of class colorspace and trichromat
   if(!('colorspace' %in% attr(didata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(didata)))

@@ -28,8 +28,6 @@
 #' occupied by them in the colorspace. \code{tcspoints} adds points to the plot. Points are
 #' currently plotted only as spheres to maintain export capabilities.
 #'
-#' @export
-#'
 #' @examples \dontrun{
 #' # For plotting
 #' data(sicalis)
@@ -60,7 +58,7 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black', 
+.tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black', 
                   vertexsize=0.02, achrosize=0.01, achrocol='grey', 
                   lwd=1, lcol='lightgrey', new=FALSE, hspin=FALSE, 
                   vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {

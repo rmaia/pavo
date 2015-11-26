@@ -3,8 +3,6 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
-#' @S3method summary rspec
-#' @method summary rspec
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
@@ -100,11 +98,15 @@
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
 #' variables can be reliably extracted using non-smoothed data. 
+#' 
+#' @export
+#' 
 #' @examples \dontrun{
 #' data(sicalis)
 #' summary(sicalis)
 #' summary(sicalis, subset = TRUE)
 #' summary(sicalis, subset = c('B1', 'H4')) }
+#' 
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.

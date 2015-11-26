@@ -12,8 +12,6 @@
 #' @param cex.pts Character expansion factor for stimulus points.
 #' @param ... Additional graphical options. See code{\link{par}}.
 #' 
-#' @export
-#' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
@@ -27,7 +25,7 @@
 #' cie_plot(flowers.cie)
 #' }
 
-cieplot <- function(model, outline = TRUE, col.out = 'grey', cex.lab = 1, cex.axis = 1, 
+.cieplot <- function(model, outline = TRUE, col.out = 'grey', cex.lab = 1, cex.axis = 1, 
                      cex.pts = 0.9, ...){
   
     # Check input
