@@ -67,6 +67,16 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
     raw <- scan(file = files[i], what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
     #ToDo we can actually use this raw string to import metadata if we want
     
+      # TEMPORARY PLACEHOLDER TO DEAL WITH NaN & Inf VALUES IN SPEC
+      # remove NaN & inf
+      #    if(length(grep('\\tnan', raw)) + length(grep('\\tinf', raw)) > 0){    
+      #      raw <- gsub('\\tnan', '\t0.0', raw)
+      #      raw <- gsub('\\tinf', '\t0.0', raw)
+      #      corrupt <- TRUE
+      #    }
+
+
+    
     # find last line with text
     # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
     
@@ -100,7 +110,12 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
     # extract data from file
     
     tempframe <- suppressWarnings(read.table(files[i], dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
-    
+
+    # TEMPORARY PLACEHOLDER - USING THE RAW RATHER THAN THE FILE TO GET THE SPEC
+    #con <- textConnection(raw)
+    #tempframe <- suppressWarnings(read.table(con, dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
+    #close(con)
+
     if(any(c('character','factor') %in% apply(tempframe, 2, class))){
       tempframe <- suppressWarnings(apply(tempframe, 2, 
         function(x) as.numeric(as.character(x))))
@@ -129,7 +144,10 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
   names(final) <- c('wl', gsub(extension, '', file_names))
   class(final) <- c('rspec', 'data.frame')
   
-  if(corrupt) warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
-  	
+if(corrupt){
+  	cat('\n')
+  	warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+  	}  	
+
   final
   }

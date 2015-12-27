@@ -35,7 +35,7 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-.hexagon <- function(vismodeldata){
+hexagon <- function(vismodeldata){
   
 ## Note: requires von kries & hyperbolic transform
   

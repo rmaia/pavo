@@ -38,8 +38,8 @@
 #'    Vision research, 34(11), 1489-1508.
 
 .hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'fine', 'coarse'), col.sec = 'grey', 
-                    out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
-                    achrocol = 'grey', ...){
+                     out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
+                     achrocol = 'grey', ...){
   
 # Check if object is of class colorspace and/or trichromat
   if(!('colorspace' %in% attr(hexdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(hexdata)))

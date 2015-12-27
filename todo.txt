@@ -39,3 +39,4 @@
 - CIE (what does a LAB plot look like?)
 - points function for plots?
 - add .jazirrad to getspec
+- check cex vs cex.labels in plots. Something squiffy.

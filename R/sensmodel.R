@@ -47,33 +47,47 @@ sensmodel <- function(peaksense, range = c(300,700), lambdacut = NULL, Bmid = NU
 if (!is.null(lambdacut)){
  if (is.null(Bmid) & is.null(oiltype)) stop ("Bmid or oiltype must be included when including a lambdacut vector", call.=FALSE)
  if (length(lambdacut) != length(peaksense)) stop ("lambdacut must be same length as peaksense", call.=FALSE)
-}  
+}
+
+if(!is.null(Bmid) & is.null(lambdacut)) # Change once oil type corrected
+  stop("lambdacut has to be provided together with Bmid")
+
+if (!is.null(lambdacut) & !is.null(Bmid) & !is.null(oiltype))
+  stop('only 2 of lambdacut, Bmid, and oiltype can be provided')
+
 
 sensecurves <- matrix(ncol = length(peaksense)+1,nrow = (range[2]-range[1]+1))
 sensecurves[,1] <- c(range[1]:range[2])
 
 
-#Sensitivities w/o oil droplets
+
 for (i in 1: length(peaksense)){
 
-peak <- 1/(exp(69.7*(.8795+.0459*exp(-(peaksense[i]-range[1])^2/11940)-(peaksense[i]/(range[1]:range[2]))))
+  #Sensitivities w/o oil droplets
+  peak <- 1/(exp(69.7*(.8795+.0459*exp(-(peaksense[i]-range[1])^2/11940)-(peaksense[i]/(range[1]:range[2]))))
   +exp(28*(.922-peaksense[i]/(range[1]:range[2])))+exp(-14.9*(1.104-(peaksense[i]/(range[1]:range[2]))))+.674)
 
-betaband <- 0.26*exp(-(((range[1]:range[2])
+  betaband <- 0.26*exp(-(((range[1]:range[2])
   -(189+0.315*peaksense[i]))/(-40.5+0.195*peaksense[i]))^2)
 
-if (beta==TRUE) peak <- peak + betaband
+  if (beta==TRUE) peak <- peak + betaband
 peak <- peak/max(peak)
 
-if(!is.null(Bmid) | !is.null(oiltype) & is.null(lambdacut))
-  stop("lambdacut has to be provided together with Bmid or oiltype")
+ 
+
+
 
 if (!is.null(lambdacut) & !is.null(Bmid)){
- 
- if (length(lambdacut) != length(Bmid)) stop ("lambdacut and Bmid must be of same length")
+  if (length(lambdacut) != length(Bmid)) stop ("lambdacut and Bmid must be of same length")
 
+  if (is.na(lambdacut[i])){ 
+      if(!is.na(Bmid[i])) warning('NA in lambdacut not paired with NA in Bmid, value of Bmid omitted')
+  T.oil <- 1
+  } else {
+  
 T.oil <- exp(-exp(-2.89*Bmid[i]*(range[1]:range[2]-lambdacut[i])+1.08))
 peak <- peak*T.oil
+  }
 }
 
 if (!is.null(lambdacut) & !is.null(oiltype)){

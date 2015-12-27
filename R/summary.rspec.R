@@ -25,21 +25,21 @@
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
 #' range (area under the curve). Frequently used but should be discouraged because
-#' values are difficult to compare across studies (B2 is preferred). REF 1-4, 6, 8,
-#' 10, 13
+#' values are difficult to compare across studies (B2 is preferred). REF 1-3, 7, 9-11,
+#' 13
 #'
 #' B2 (Mean brightness): Mean relative reflectance over the entire spectral range.
-#' This is prefered to B1 since values are easier to compare across studies. REF 5, 11
+#' This is prefered to B1 since values are easier to compare across studies. REF 4, 12
 #'
 #' B3 (Intensity): Maximum relative reflectance (Reflectance at wavelength of maximum
-#' reflectance). Note that may be sensitive to noise near the peak. REF 1, 7, 9
+#' reflectance). Note that may be sensitive to noise near the peak. REF 1, 5, 6
 #' 
 #' S1 (Chroma): Relative contribution of a spectral range to the total brightness (B1)
 #' S1 is arbitrarily devided in 6 measures of chroma based on the wavelength ranges 
 #' normally associated with specific hues. The values are calculated using the 
 #' following ranges: S1U (UV, if applicable): lambda min-400nm; 
 #' S1v (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
-#' S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 3, 4, 6, 11-13
+#' S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 2, 7, 8, 11-13
 #'
 #' S2 (Spectral saturation): Rmax/Rmin This measure is sensitive to spectral noise.
 #' Proper interpretation of this value may be difficult for spectra with multiple
@@ -49,7 +49,7 @@
 #' within 50nm of either the minimum or maximum range of the data will not be comparable 
 #' since the area under the curve for the area of interest will not always 
 #' be based on the same wavelength range. Therefore, S3 should be interpreted 
-#' with caution for peaks in the UV or Red range. REF 13
+#' with caution for peaks in the UV or Red range. REF 11
 #'
 #' S4 (Spectral purity): |bmaxneg| , calculated by approximating the derivative
 #' of the spectral curve. As such, it is very sensitive to noise and should only
@@ -58,40 +58,40 @@
 #' curves for brown and red surfaces, for example, should not generate a values. REF 1
 #'
 #' S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006)
-#' for details. REF 8
+#' for details. REF 10
 #'
 #' S6 (Contrast): Rmax - Rmin. Because it uses both Rmin and Rmax, this measure may be
-#' sensitive to spectral noise. REF 7, 9
+#' sensitive to spectral noise. REF 5, 6
 #' 
 #' S7 (Spectral saturation): Relative reflectance between the area around the peak with
 #' reflectance equal to or larger to half of that of the peak (an approximation to the
 #' full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive 
 #' to noise and can be misleading when more than one maxima and/or minima are present.
-#' REF 2, 10
+#' REF 3, 9
 #'
 #' S8 (Chroma): (Rmax - Rmin)/B2. Because it uses both Rmin and Rmax, this measure may be
-#' sensitive to spectral noise. REF 2, 6
+#' sensitive to spectral noise. REF 3, 13
 #'
 #' S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color 
 #' of the surface is clearly due to carotenoid pigmentation and R450 is lower than
-#' R700. Could be sensitive to noise. REF 12
+#' R700. Could be sensitive to noise. REF 8
 #' 
 #' S10 (Peaky chroma): (Rmax - Rmin)/B2 x |bmaxneg|. Should be used with properly 
-#' smoothed curves. REF 3
+#' smoothed curves. REF 7
 #'
 #' H1 (Peak wavelength, hue): Wavelength of maximum reflectance. May be sensitive to noise
-#' and may be variable if there is more than one maxima. REF 1, 3-7, 11, 13
+#' and may be variable if there is more than one maxima. REF 1, 2, 4, 6, 7, 10-13
 #'
-#' H2 (Hue): Wavelength at bmaxneg. Should be calculated using smoothed data. REF 4, 6
+#' H2 (Hue): Wavelength at bmaxneg. Should be calculated using smoothed data. REF 2, 13
 #'
 #' H3 (Hue): Wavelength at Rmid. Sensitive to noisy spectra and may be variable if there are
-#' more than one maxima and minima. REF 2, 6, 10
+#' more than one maxima and minima. REF 3, 9, 13
 #'
 #' H4 (Hue): Similar in design to segment classification measures see Montgomerie
-#' (2006) for details. REF 8
+#' (2006) for details. REF 10
 #' 
 #' H5 (Hue): Wavelength at bmax. Sensitive to noise and may be variable if there is
-#' more than one maxima and minima. REF 9
+#' more than one maxima and minima. REF 5
 #' @note If minimum wavelength is over 400, UV chroma is not computed.
 #' @note Variables which compute bmax and bmaxneg should be used with caution, for they
 #' rely on smoothed curves to remove noise, which would otherwise result in spurious
@@ -281,16 +281,16 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(as.data.frame(object[Q4, ]), 2, sum) / B1
-S5Y <- apply(as.data.frame(object[Q3, ]), 2, sum) / B1
-S5G <- apply(as.data.frame(object[Q2, ]), 2, sum) / B1
-S5B <- apply(as.data.frame(object[Q1, ]), 2, sum) / B1
+S5R <- apply(as.data.frame(object[Q4, ]), 2, sum) 
+S5Y <- apply(as.data.frame(object[Q3, ]), 2, sum) 
+S5G <- apply(as.data.frame(object[Q2, ]), 2, sum) 
+S5B <- apply(as.data.frame(object[Q1, ]), 2, sum) 
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
-#H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
-# H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
-H4 <- atan2(S5R-S5G, S5Y-S5B)
+H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
+#H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
+#H4 <- atan2(S5R-S5G, S5Y-S5B)
 
 # Carotenoid chroma
 
@@ -344,7 +344,7 @@ bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
   bmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
 
 # S10
-S10 <- S8/bmaxneg #S10
+S10 <- S8*bmaxneg #S10
  S10[which(apply(diffsmooth,2,min) > 0)] <- NA
 
 # H5
