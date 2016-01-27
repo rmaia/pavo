@@ -16,4 +16,9 @@
 #' \email{cme16@@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @keywords package
 #' @examples #see functions.
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom graphics abline axis image legend lines mtext par plot points polygon title
+#' @importFrom stats approx cor dist loess.smooth median quantile runif sd var
+#' @importFrom utils combn head read.table setTxtProgressBar tail txtProgressBar
+
 NULL
