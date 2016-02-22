@@ -17,7 +17,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
 #' cat.flowers <- categorical(vis.flowers)
-#' catplot(cat.flowers)
+#' plot(cat.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}

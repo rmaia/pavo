@@ -14,7 +14,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 #' coc.flowers <- coc(vis.flowers)
-#' cocplot(coc.flowers)
+#' plot(coc.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}

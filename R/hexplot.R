@@ -16,9 +16,9 @@
 #' @param col.sec line colour of hue sector dividers. Defaults to \code{'grey'}.
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param out.lwd line width for triangle outline (defaults to 1)
-#' @param out.lcol line colour for triangle outline (defaults to black)
-#' @param out.lty line type for triangle outline (defaults to 1)
+#' @param out.lwd line width for hexagon outline (defaults to 1)
+#' @param out.lcol line colour for hexagon outline (defaults to black)
+#' @param out.lty line type for hexagon outline (defaults to 1)
 #' @param ... additional graphical options. See code{\link{par}}
 #'    
 #' @examples
@@ -26,7 +26,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 #' hex.flowers <- hexagon(vis.flowers)
-#' hexplot(hex.flowers)
+#' plot(hex.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}

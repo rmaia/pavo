@@ -68,3 +68,4 @@ Collate:
     'voloverlap.R'
     'summary.colorspace.R'
     'projpoints.R'
+RoxygenNote: 5.0.1

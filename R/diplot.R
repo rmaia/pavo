@@ -18,7 +18,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
 #' di.flowers <- dispace(vis.flowers)
-#' diplot(di.flowers)
+#' plot(di.flowers)
 #' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}

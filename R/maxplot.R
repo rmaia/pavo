@@ -18,7 +18,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
 #' maxwell.flowers <- maxwell(vis.flowers)
-#' maxplot(maxwell.flowers)
+#' plot(maxwell.flowers)
 #' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
