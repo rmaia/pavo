@@ -4,13 +4,12 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-cie(vismodeldata, space = c("XYZ", "LAB"), illuminant = c("bluesky",
-  "forestshade", "D65", "white"))
+cie(vismodeldata, space = c("XYZ", "LAB"))
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with three columns representing trichromatic viewer).}
+from \code{\link{vismodel}} or independently calculated data (in the form of a 
+data frame with three columns representing trichromatic viewer).}
 
 \item{space}{(required) Choice between XYZ (1931) or LAB (1971) colour models.}
 }
@@ -31,7 +30,7 @@ in either the CIEXYZ (1931) or CIELAB (1971) colour space
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'cie2')
+vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
 flowers.cie <- cie(vis.flowers, space = 'XYZ')
 }
 

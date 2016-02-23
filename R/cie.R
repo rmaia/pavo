@@ -4,8 +4,8 @@
 #' in either the CIEXYZ (1931) or CIELAB (1971) colour space
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with three columns representing trichromatic viewer).
+#'  from \code{\link{vismodel}} or independently calculated data (in the form of a 
+#'  data frame with three columns representing trichromatic viewer).
 #' @param space (required) Choice between XYZ (1931) or LAB (1971) colour models.
 #' 
 #' @return Object of class \code{colorspace} containing:
@@ -22,7 +22,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie2')
+#' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
 #' flowers.cie <- cie(vis.flowers, space = 'XYZ')
 #' }
 #' 
@@ -38,21 +38,45 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Éclairage.
 
-cie <- function(vismodeldata, space = c('XYZ', 'LAB'), 
-                illuminant = c('bluesky', 'forestshade', 'D65', 'white')){
+cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
+  
+  space2 <- try(match.arg(space), silent = T)
+  if(inherits(space2,'try-error'))
+    space <- 'XYZ'
   
   dat <- vismodeldata  
+  
+  X <- dat$X
+  Y <- dat$Y
+  Z <- dat$Z
 
   # Coordinates in the chosen CIE space
-  if(identical(space, 'XYZ')){
-    x <- dat$X / (dat$X + dat$Y + dat$Z)
-    y <- dat$Y / (dat$X + dat$Y + dat$Z)
-    z <- dat$Z / (dat$X + dat$Y + dat$Z)
-  }else if(identical(space, 'LAB')){
+  if(space == 'XYZ'){
+    x <- X / (X + Y + Z)
+    y <- Y / (X + Y + Z)
+    z <- Z / (X + Y + Z)
+  }else if(space == 'LAB'){
+    
+    # Re-grab the visual system phenotype and illuminant used during 'vismodel',
+    # in order to calculate the LAB neutral point. todo: options when the data didn't
+    # come from vismodel (will need to ask for user-defined illuminant & vis data).
+    sens <- vissyst
+    bgil <- bgandilum
+    
+    # Visual phenotype
+    visual <- attr(dat,'vissyst_chromatic')
+    S <- sens[, grep(visual, names(sens))]
+    names(S) <- gsub(paste(visual,'.',sep = ''), '', names(S))
+    
+    # Illuminant
+    illum2 <- sub(":.*", "", attr(vis.flowers, 'illuminant'))
+    illum <- bgil[, grep(illum2, names(bgil))]
+    
     # Tristimulus values for neutral point
-    Qn <- data.frame(Xn = sum(rep(1, 401) * vis[, 1] * illum),
-                     Yn = sum(rep(1, 401) * vis[, 2] * illum),
-                     Zn = sum(rep(1, 401) * vis[, 3] * illum))
+    Xn = sum(rep(1, 401) * S$X * illum)
+    Yn = sum(rep(1, 401) * S$Y * illum)
+    Zn = sum(rep(1, 401) * S$Z * illum)
+    
     f <- function(x){
                      if(isTRUE(x > (6/29)^3)){
                        x^(1/3)
@@ -60,16 +84,22 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB'),
                        (841/108) * x + (4/29)
                      }
     }
-    if(isTRUE(Q$Y/Qn$Yn > 0.008856)){model$L <- 116*f(Q$Y/Qn$Yn)-16}else{model$L  <- 903.3*(Q$Y/Qn$Yn)}
-    model$a <- 500 * (f(Q$X/Qn$Xn) - f(Q$Y/Qn$Yn))
-    model$b <- 200 * (f(Q$Y/Qn$Yn) - f(Q$Z/Qn$Zn))
+    if(isTRUE(Y/Yn > 0.008856))
+      L <- 116*f(Y/Yn)-16
+    else
+      L  <- 903.3*(Y/Yn)
+    a <- 500 * (f(X/Xn) - f(Y/Yn))
+    b <- 200 * (f(Y/Yn) - f(Z/Zn))
   }
   
   # todo: for CIELCh space 
   #model$C_ab <- sqrt(model$a^2 + model$b^2)
   #model$h_ab <-  atan(model$b/model$a)*(180/pi)
   
-  res.p <- data.frame(dat, x, y, z, row.names = rownames(dat))
+  if(space == 'XYZ')
+     res.p <- data.frame(X, Y, Z, x, y, z, row.names = rownames(dat))
+  else if(space == 'LAB')
+    res.p <- data.frame(X, Y, Z, L, a, b, row.names = rownames(dat))
   
   res <- res.p
   

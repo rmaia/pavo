@@ -361,7 +361,7 @@ class(res) <- c('vismodel', 'data.frame')
 attr(res, 'qcatch') <- qcatch
 attr(res,'vissyst_chromatic') <- visual
 attr(res,'vissyst_achromatic') <- achromatic2
-attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
+attr(res,'illuminant') <- paste(illum2,': scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 attr(res, 'conenumb') <- conenumb # previously dim(S)[2], but that overestimated b/c of binding L to S

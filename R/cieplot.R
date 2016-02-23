@@ -19,7 +19,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie2')
+#' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
 #' flowers.cie <- cie(vis.flowers, space = 'XYZ')
 #' plot(flowers.cie)
 #' }
