@@ -31,7 +31,7 @@
   if(!('colorspace' %in% attr(ciedata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(ciedata)))
     stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(ciedata, 'class')) & (attr(ciedata, 'clrsp') != 'CIEXYZ'))
+  if(('colorspace' %in% attr(ciedata, 'class')) & !grepl('CIE', attr(ciedata, 'clrsp')))
     stop(dQuote('colorspace'), ' object is not a result of ', dQuote('cie()'))
   
   arg <- list(...)
@@ -87,6 +87,11 @@
       
       if(mono == TRUE)
         polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+  }
+  
+  # CIELAB
+  if(attr(ciedata, 'clrsp') == 'CIELAB'){
+    print('nothing here yet')
   }
       
 }

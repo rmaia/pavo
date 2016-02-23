@@ -40,7 +40,7 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
   extension <- paste('.', ext, sep='')
   
   file_names <- list.files(where, pattern = extension, recursive = subdir, include.dirs = subdir)
-  files <- paste(where, '/', file_names,sep='')
+  files <- paste(where, '/', file_names, sep = '')
   
   cat(length(files), ' files found; importing spectra\n')
   
@@ -53,8 +53,10 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
   	stop('No files found. Try a different ext')
   	} 
   
+  # Wavelength range
   range <- lim[1]:lim[2]
   
+  # Build shell of final output
   final <- data.frame(matrix(nrow = length(range), ncol = length(file_names) + 1))
   final[, 1] <- range
   
@@ -64,7 +66,13 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
   for(i in 1:length(files))
     {
   
+    # read in raw file
     raw <- scan(file = files[i], what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
+    
+    # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
+    if(length(grep('Begin Calibration Data', raw)) > 0)
+       raw <- raw[1:grep('Begin Calibration Data', raw) - 1]
+    
     #ToDo we can actually use this raw string to import metadata if we want
     
       # TEMPORARY PLACEHOLDER TO DEAL WITH NaN & Inf VALUES IN SPEC
@@ -75,14 +83,11 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
       #      corrupt <- TRUE
       #    }
 
-
-    
     # find last line with text
-    # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
-    
     start <- grep('[A-Da-dF-Zf-z]', raw)
+  
+    # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
     isendline <- length(grep('End.*Spectral Data', raw)) > 0
-    
     if(isendline)
       start <- start[-length(start)]
     
@@ -108,14 +113,14 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
     separ <- ifelse(issem, ';', '\t')
     
     # extract data from file
-    
     tempframe <- suppressWarnings(read.table(files[i], dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
 
     # TEMPORARY PLACEHOLDER - USING THE RAW RATHER THAN THE FILE TO GET THE SPEC
     #con <- textConnection(raw)
     #tempframe <- suppressWarnings(read.table(con, dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
     #close(con)
-
+    
+    # convert non-numeric values to numeric
     if(any(c('character','factor') %in% apply(tempframe, 2, class))){
       tempframe <- suppressWarnings(apply(tempframe, 2, 
         function(x) as.numeric(as.character(x))))
@@ -124,15 +129,13 @@ getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".",
         corrupt <- TRUE
       }
       
-    
     # remove columns where all values are NAs (due to poor tabulation)
     tempframe <- tempframe[ , colSums(is.na(tempframe)) < nrow(tempframe)]
     
     # Jaz and Avasoft8 have 5 columns, correct
     tempframe <- tempframe[ , c(1, dim(tempframe)[2])]
     
-    
-    interp<-data.frame(approx(tempframe[, 1], tempframe[, 2], xout = range))
+    interp <- data.frame(approx(tempframe[, 1], tempframe[, 2], xout = range))
     names(interp) <- c("wavelength", strsplit(file_names[i], extension))
     
     final[, i+1] <- interp[, 2]

@@ -79,7 +79,7 @@ plot.colorspace <- function(clrspdata, ...) {
     .maxplot(clrspdata, ...)
   }
   
-  if(attr(clrspdata, 'clrsp') == 'CIEXYZ'){
+  if(grepl('CIE', attr(clrspdata, 'clrsp'))){
     .cieplot(clrspdata, ...)
   }
   

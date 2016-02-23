@@ -57,7 +57,7 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
     z <- Z / (X + Y + Z)
   }else if(space == 'LAB'){
     
-    # Re-grab the visual system phenotype and illuminant used during 'vismodel',
+    # Re-grab the visual system phenotype and illuminant used during 'vismodel'
     # in order to calculate the LAB neutral point. todo: options when the data didn't
     # come from vismodel (will need to ask for user-defined illuminant & vis data).
     sens <- vissyst
@@ -85,7 +85,7 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
                      }
     }
     if(isTRUE(Y/Yn > 0.008856))
-      L <- 116*f(Y/Yn)-16
+      L <- 116 * f(Y/Yn) - 16
     else
       L  <- 903.3*(Y/Yn)
     a <- 500 * (f(X/Xn) - f(Y/Yn))
