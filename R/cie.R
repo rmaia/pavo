@@ -11,13 +11,10 @@
 #' @return Object of class \code{colorspace} containing:
 #'    \itemize{
 #'      \item \code{X, Y, Z}: Tristimulus values. 
-#'      \item \code{x, y, z}: Cartesian coordinates, when using \code{space = xyz}.
+#'      \item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
 #'      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} 
 #'          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
-#'          Cartesian coordinate space. Returned when using \code{space = lab}.
-#'      \item \code{C_ab, h_ab}: Polar coordinates in a cylindrical space, representing 
-#'          chroma \code{(C_ab)} and hue \code{(h_ab, in degrees)} values. Returned 
-#'          when \code{space = LAB}. 
+#'          Cartesian coordinate space. Returned when using \code{space = LAB}.
 #'    }
 #'    
 #' @export
@@ -26,7 +23,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2')
-#' flowers.cie <- cie(flowers, space = 'lab')
+#' flowers.cie <- cie(vis.flowers, space = 'XYZ')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -41,8 +38,6 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Éclairage.
 
-
-#' 
 cie <- function(vismodeldata, space = c('XYZ', 'LAB'), 
                 illuminant = c('bluesky', 'forestshade', 'D65', 'white')){
   
@@ -50,9 +45,9 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB'),
 
   # Coordinates in the chosen CIE space
   if(identical(space, 'XYZ')){
-    model$x <- Q$X / (Q$X + Q$Y + Q$Z)
-    model$y <- Q$Y / (Q$X + Q$Y + Q$Z)
-    model$z <- Q$Z / (Q$X + Q$Y + Q$Z)
+    x <- dat$X / (dat$X + dat$Y + dat$Z)
+    y <- dat$Y / (dat$X + dat$Y + dat$Z)
+    z <- dat$Z / (dat$X + dat$Y + dat$Z)
   }else if(identical(space, 'LAB')){
     # Tristimulus values for neutral point
     Qn <- data.frame(Xn = sum(rep(1, 401) * vis[, 1] * illum),
@@ -68,13 +63,20 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB'),
     if(isTRUE(Q$Y/Qn$Yn > 0.008856)){model$L <- 116*f(Q$Y/Qn$Yn)-16}else{model$L  <- 903.3*(Q$Y/Qn$Yn)}
     model$a <- 500 * (f(Q$X/Qn$Xn) - f(Q$Y/Qn$Yn))
     model$b <- 200 * (f(Q$Y/Qn$Yn) - f(Q$Z/Qn$Zn))
-    model$C_ab <- sqrt(model$a^2 + model$b^2)
-    model$h_ab <-  atan(model$b/model$a)*(180/pi)
   }
   
-  # Class
-  class(model) <- c('colmodel', 'data.frame')
+  # todo: for CIELCh space 
+  #model$C_ab <- sqrt(model$a^2 + model$b^2)
+  #model$h_ab <-  atan(model$b/model$a)*(180/pi)
   
+  res.p <- data.frame(dat, x, y, z, row.names = rownames(dat))
   
-  model
+  res <- res.p
+  
+  class(res) <- c('colorspace', 'data.frame')
+  
+  attr(res, 'conenumb') <- 3
+  attr(res, 'clrsp') <- paste0('CIE', space)
+  
+  res
 }

@@ -1,15 +1,13 @@
 #' CIE plot
 #' 
-#' Plot a CIE (XYZ or LAB - todo) chromaticity diagram. 
+#' Plot a CIE (XYZ or LAB) chromaticity diagram. 
 #' 
-#' @param model (required)
-#' @param outline Logial. Should the monochromatic loci (the 'horseshoe') be
+#' @param ciedata (required)
+#' @param mono Logial. Should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}. 
-#' @param col.out Line colour for plotting the monochromatic locus. Defaults
-#'    to \code{'grey'}. 
-#' @param cex.lab Character expansion factor for labels.
-#' @param cex.axis Character expansion factor for minor axis labels.
-#' @param cex.pts Character expansion factor for stimulus points.
+#' @param out.lwd line width for monochromatic loci outline (defaults to 1)
+#' @param out.lcol line colour for monochromatic loci outline (defaults to black)
+#' @param out.lty line type for monochromatic loci outline (defaults to 1)
 #' @param ... Additional graphical options. See code{\link{par}}.
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -21,18 +19,47 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' flowers.cie <- cie(flowers, space = 'XYZ', illuminant = 'D65')
-#' cie_plot(flowers.cie)
+#' vis.flowers <- vismodel(flowers, visual = 'cie2')
+#' flowers.cie <- cie(vis.flowers, space = 'XYZ')
+#' plot(flowers.cie)
 #' }
 
-.cieplot <- function(model, outline = TRUE, col.out = 'grey', cex.lab = 1, cex.axis = 1, 
-                     cex.pts = 0.9, ...){
+.cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
+                     out.lty = 1, ...){
   
-    # Check input
-    if(is.element(FALSE, c('x', 'y') %in% names(model)))
-      stop('Data do not contain x, y coordinates')
+# Check if object is of class colorspace and trichromat
+  if(!('colorspace' %in% attr(ciedata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(ciedata)))
+    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
   
-    # Monochromatic locus in XYZ space, from Westland et al. 2012
+  if(('colorspace' %in% attr(ciedata, 'class')) & (attr(ciedata, 'clrsp') != 'CIEXYZ'))
+    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('cie()'))
+  
+  arg <- list(...)
+  
+  # CIEXYZ
+  if(attr(ciedata, 'clrsp') == 'CIEXYZ'){
+    
+    # Set defaults
+    if(is.null(arg$col))
+      arg$col <- 'black'
+    if(is.null(arg$pch))
+      arg$pch <- 19
+    if(is.null(arg$type))
+      arg$type = 'p'
+    if(is.null(arg$xaxp))
+      arg$xaxp <- c(0, 0.9, 9)
+    if(is.null(arg$yaxp))
+      arg$yaxp <- c(0, 0.8, 8)
+    if(is.null(arg$xlim))
+      arg$xlim <- c(0, 0.75)
+    if(is.null(arg$ylim))
+      arg$ylim <- c(0, 0.85)
+    if(is.null(arg$xlab))
+      arg$xlab <- 'x'
+    if(is.null(arg$ylab))
+      arg$ylab <- 'y'
+    
+    # Monochromatic loci in XYZ, from Westland et al. 2012
     monox <- c(0.175596, 0.172787, 0.170806, 0.170085, 0.160343, 0.146958, 0.139149,
                0.133536, 0.126688, 0.115830, 0.109616, 0.099146, 0.091310, 0.078130,
                0.068717, 0.054675, 0.040763, 0.027497, 0.016270, 0.008169, 0.004876,
@@ -51,20 +78,15 @@
                0.692326, 0.658867, 0.624470, 0.589626, 0.554734, 0.520222, 0.486611,
                0.454454, 0.424252, 0.396516, 0.372510, 0.351413, 0.334028, 0.319765,
                0.308359, 0.299317, 0.292044, 0.285945, 0.280951, 0.276964, 0.265326)
+   
+    # Plot
+    arg$x <- ciedata$x
+    arg$y <- ciedata$y
     
-    # XYZ plot    
-    plot(x = monox, y = monoy, 
-         type = 'n', 
-         xaxp  = c(0, 0.9, 9), 
-         yaxp  = c(0, 0.8, 8),
-         xlab = 'x',
-         ylab = 'y',
-         cex.lab = cex.lab,
-         cex.axis = cex.axis)
-    
-    if(outline == TRUE)
-      polygon(monoy ~ monox, border = col.out)
+    do.call(plot, arg)
       
-    # Plot stimulus points
-    points(x = model$x, y = model$y, cex = cex.pts, ...)
+      if(mono == TRUE)
+        polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
   }
+      
+}

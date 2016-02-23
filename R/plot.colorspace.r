@@ -4,23 +4,28 @@
 #' 
 #' @param clrspdata (required) an object of class \code{colorspace}. May be a result from
 #'  \code{dispace}, \code{maxwell}, \code{coc}, \code{hexagon}, \code{categorical}, 
-#'  or \code{tcs}. Note that the below options will vary by plot. 
+#'  \code{tcs}, or \code{cie}. Note that the below options will vary by plot type. 
 #' 
 #' @param labels plot verticy labels (or category labels, when clrspdata is the result of
 #'  \code{categorical})? Defaults to \code{TRUE}
 #' @param cex.labels character expansion factor for labels when \code{labels = TRUE})
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})? Has
-#'  no effect when clrspdata is the result of \code{categorical} or \code{coc}
+#'  no effect when clrspdata is the result of \code{categorical}, \code{coc}, or \code{cie}
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param out.lwd line width for plot outline (defaults to 1). Has no effect when
+#' @param out.lwd line width for plot outline, or the width of the monochromatic loci
+#'  outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
 #'  clrspdata is the result of \code{coc} 
-#' @param out.lcol line colour for plot outline (defaults to black). Has no effect when
+#' @param out.lcol line colour for plot outline, or the colour of the monochromatic loci
+#'  outline in CIEXYZ space when \code{mono = TRUE} (defaults to black). Has no effect when
 #'  clrspdata is the result of \code{coc}
-#' @param out.lty line type for plot outline (defaults to 1). Has no effect when
+#' @param out.lty line type for plot outline, or the line type for the monochromatic loci
+#'  outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
 #'  clrspdata is the result of \code{coc}
 #' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes,
-#'  only when clrspdata is the result of \code{dispace}  
+#'  only when clrspdata is the result of \code{dispace}
+#' @param mono plot the monochromatic loci (the 'horseshoe') in CIEXYZ space? 
+#'  Defaults to \code{TRUE}.   
 #' @param sectors plot the bee-hue sector dividers (only when clrspdata is the result 
 #' of \code{hexagon})? Options are:
 #'    \itemize{ 
@@ -72,6 +77,10 @@ plot.colorspace <- function(clrspdata, ...) {
   
   if(attr(clrspdata, 'clrsp') == 'maxwell'){
     .maxplot(clrspdata, ...)
+  }
+  
+  if(attr(clrspdata, 'clrsp') == 'CIEXYZ'){
+    .cieplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'tcs'){

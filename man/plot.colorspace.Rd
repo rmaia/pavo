@@ -9,7 +9,7 @@
 \arguments{
 \item{clrspdata}{(required) an object of class \code{colorspace}. May be a result from
 \code{dispace}, \code{maxwell}, \code{coc}, \code{hexagon}, \code{categorical}, 
-or \code{tcs}. Note that the below options will vary by plot.}
+\code{tcs}, or \code{cie}. Note that the below options will vary by plot type.}
 
 \item{...}{additional graphical options. See code{\link{par}}}
 
@@ -19,23 +19,29 @@ or \code{tcs}. Note that the below options will vary by plot.}
 \item{cex.labels}{character expansion factor for labels when \code{labels = TRUE})}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})? Has
-no effect when clrspdata is the result of \code{categorical} or \code{coc}}
+no effect when clrspdata is the result of \code{categorical}, \code{coc}, or \code{cie}}
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
 
-\item{out.lwd}{line width for plot outline (defaults to 1). Has no effect when
+\item{out.lwd}{line width for plot outline, or the width of the monochromatic loci
+outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
 clrspdata is the result of \code{coc}}
 
-\item{out.lcol}{line colour for plot outline (defaults to black). Has no effect when
+\item{out.lcol}{line colour for plot outline, or the colour of the monochromatic loci
+outline in CIEXYZ space when \code{mono = TRUE} (defaults to black). Has no effect when
 clrspdata is the result of \code{coc}}
 
-\item{out.lty}{line type for plot outline (defaults to 1). Has no effect when
+\item{out.lty}{line type for plot outline, or the line type for the monochromatic loci
+outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
 clrspdata is the result of \code{coc}}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes,
 only when clrspdata is the result of \code{dispace}}
+
+\item{mono}{plot the monochromatic loci (the 'horseshoe') in CIEXYZ space? 
+Defaults to \code{TRUE}.}
 
 \item{sectors}{plot the bee-hue sector dividers (only when clrspdata is the result 
 of \code{hexagon})? Options are:

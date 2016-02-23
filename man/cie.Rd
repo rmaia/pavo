@@ -18,13 +18,10 @@ with three columns representing trichromatic viewer).}
 Object of class \code{colorspace} containing:
    \itemize{
      \item \code{X, Y, Z}: Tristimulus values. 
-     \item \code{x, y, z}: Cartesian coordinates, when using \code{space = xyz}.
+     \item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} 
          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
-         Cartesian coordinate space. Returned when using \code{space = lab}.
-     \item \code{C_ab, h_ab}: Polar coordinates in a cylindrical space, representing 
-         chroma \code{(C_ab)} and hue \code{(h_ab, in degrees)} values. Returned 
-         when \code{space = LAB}. 
+         Cartesian coordinate space. Returned when using \code{space = LAB}.
    }
 }
 \description{
@@ -35,7 +32,7 @@ in either the CIEXYZ (1931) or CIELAB (1971) colour space
 \dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'cie2')
-flowers.cie <- cie(flowers, space = 'lab')
+flowers.cie <- cie(vis.flowers, space = 'XYZ')
 }
 
 }
