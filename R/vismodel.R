@@ -359,7 +359,8 @@ class(res) <- c('vismodel', 'data.frame')
 # Descriptive attributes
 
 attr(res, 'qcatch') <- qcatch
-attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
+attr(res,'vissyst_chromatic') <- visual
+attr(res,'vissyst_achromatic') <- achromatic2
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
