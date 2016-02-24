@@ -57,10 +57,12 @@ hexagon <- function(vismodeldata){
       stop("Quantum catches are relative, which is not required in the hexagon model")
     
     if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
-      stop("Quantum catches are not hyperbolically transformed, as required for the hexagon model")
+      warning("Quantum catches are not hyperbolically transformed, as required for the 
+               hexagon model. This may produce unexpected results.")
     
     if(!isTRUE(attr(dat, 'vonkries')))
-      stop("Quantum catches are not von-Kries transformed, as required for the hexagon model")
+      warning("Quantum catches are not von-Kries transformed, as required for the hexagon model. 
+               This may produce unexpected results.")
   }
     
 # if not, check if it has more (or less) than 3 columns

@@ -68,9 +68,9 @@ remaining columns.}
 (defaults to \code{FALSE})}
 
 \item{scale}{a value by which the illuminant will be multiplied. Useful for when the 
-illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
-and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
-are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
+ illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
+ and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
+ are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 \code{vonkries = TRUE} this transformation has no effect.}
 
 \item{bkg}{either a vector containing the background spectra, or one of the options:
@@ -84,14 +84,12 @@ space model? Defaults to \code{TRUE}).}
 }
 \value{
 An object of class \code{vismodel} containing the photon catches for each of the 
-photoreceptors considered. Information on the parameters used in the calculation are also
-stored and can be called using the \code{summary.vismodel} function.
+ photoreceptors considered. Information on the parameters used in the calculation are also
+ stored and can be called using the \code{summary.vismodel} function.
 }
 \description{
-Applies the visual models of Vorobyev et al. (1998) to calculate quantum 
-catches at each photoreceptor. Relative values may also be obtained, in which
-case the model reduces to the color space as described in Endler & Mielke (2005)
-and Stoddard & Prum (2008).
+Calculate quantum catches at each photoreceptor. Bot raw and relative values 
+can be returned, for use in a suite of colourspace and non-colourspace models.
 }
 \examples{
 \dontrun{
