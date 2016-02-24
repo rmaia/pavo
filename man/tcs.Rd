@@ -42,7 +42,8 @@ in the avian tetrahedral color space.
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-tcs.sicalis <- tcs(vis.sicalis)}
+tcs.sicalis <- tcs(vis.sicalis)
+}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

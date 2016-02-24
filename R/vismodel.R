@@ -359,9 +359,9 @@ class(res) <- c('vismodel', 'data.frame')
 # Descriptive attributes
 
 attr(res, 'qcatch') <- qcatch
-attr(res,'vissyst_chromatic') <- visual
-attr(res,'vissyst_achromatic') <- achromatic2
-attr(res,'illuminant') <- paste(illum2,': scale = ',scale," ",vk, sep='')
+attr(res,'visualsystem.chromatic') <- visual
+attr(res,'visualsystem.achromatic') <- achromatic2
+attr(res,'illuminant') <- paste(illum2,', scale = ', scale, " ", vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
 attr(res, 'conenumb') <- conenumb # previously dim(S)[2], but that overestimated b/c of binding L to S
@@ -371,7 +371,6 @@ attr(res, 'vonkries') <- vonkries
 attr(res, 'data.visualsystem.chromatic') <- S
 attr(res, 'data.visualsystem.achromatic') <- L
 attr(res, 'data.background') <- bkg
-
 
 res
 }

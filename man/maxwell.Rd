@@ -31,7 +31,7 @@ in a Maxwell triangle chromaticity space.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis')
+vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 maxwell.flowers <- maxwell(vis.flowers)
 } 
 

@@ -19,7 +19,7 @@
 #' 
 #' @examples \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 #' maxwell.flowers <- maxwell(vis.flowers)
 #' } 
 #' 
@@ -100,8 +100,21 @@ maxwell <- function(vismodeldata){
   
   class(res) <- c('colorspace', 'data.frame')
   
-  attr(res, 'conenumb') <- 3
+  # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'maxwell'
+  attr(res, 'conenumb') <- 3
+  attr(res, 'qcatch') <- attr(vismodeldata, 'qcatch')
+  attr(res,'visualsystem.chromatic') <- attr(vismodeldata,'visualsystem.chromatic')
+  attr(res,'visualsystem.achromatic') <- attr(vismodeldata,'visualsystem.achromatic')
+  attr(res,'illuminant') <- attr(vismodeldata,'illuminant')
+  attr(res,'background') <- attr(vismodeldata,'background')
+  attr(res,'relative') <- attr(vismodeldata,'relative')
+  attr(res, 'vonkries') <- attr(vismodeldata, 'vonkries')
+  
+  # Data attributes
+  attr(res, 'data.visualsystem.chromatic') <- attr(vismodeldata, 'data.visualsystem.chromatic')
+  attr(res, 'data.visualsystem.achromatic') <- attr(vismodeldata, 'data.visualsystem.achromatic')
+  attr(res, 'data.background') <- attr(vismodeldata, 'data.background')
   
   res
 }

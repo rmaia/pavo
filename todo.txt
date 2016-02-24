@@ -6,7 +6,6 @@
 - return warnings in `peakshape` if (1) one of the peak boundaries is at either 300 or 700 nm, (2) the ratio of the two halves of the peak is >>1; also, it would be nice to be able to specify unique boundaries in this case.. (how??)
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
 - add couple plotting options for `segclass` objects
-- summary.colorspace?
 - generalise 'vismodel' doc - it's no longer just RN vs relative. Now more general first step, including di- tri- tetra & different models like coc, hex etc. 
 
 ## Me
@@ -32,6 +31,7 @@
 + dichromatic space & plot
 + COC space & plot
 + CIEXYZ space & plot
+- generalise summary.colorspace
 - CIELAB space & plot
 - CIELCh space & plot
 + bee vis syst

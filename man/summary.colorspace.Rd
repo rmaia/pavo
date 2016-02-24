@@ -2,16 +2,15 @@
 % Please edit documentation in R/summary.colorspace.R
 \name{summary.colorspace}
 \alias{summary.colorspace}
-\title{Tetracolorspace avian visual model summary}
+\title{Colorspace summary}
 \usage{
 \method{summary}{colorspace}(object, by = NULL, ...)
 }
 \arguments{
-\item{object}{(required) Results of \code{tcs}, or can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with four columns, representing the avian cones).}
+\item{object}{(required) a \code{colorspace} object. May be the result of \code{hexagon},
+\code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.}
 
-\item{by}{either a single value specifying the range of color points for which
+\item{by}{when Results of \code{tcs}....either a single value specifying the range of color points for which
 summary colorspace variables should be calculated (for example, \code{by} = 3 
 indicates summary will be calculated for groups of 3 consecutive color points (rows)
 in the quantum catch color data frame) or a vector containing identifications for 
@@ -23,8 +22,10 @@ data.}
 \item{...}{class consistency (ignored)}
 }
 \value{
-a \code{data.frame} containing summary statistics with groups of points in rows and 
-the following variables in columns:
+returns all attributes of the data as mapped to the selected colourspace, including 
+options specified when calculating the visual model. Also return the default 
+\code{data.frame} summary, except when the object is the result of \code{tcs}, 
+in which case the following variables are output instead:
 
 \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points
 
@@ -43,21 +44,32 @@ the following variables in columns:
 \code{max.ra} maximum saturation achieved by the group of points
 }
 \description{
-Calculates characteristics of a cloud of points (spectra) in avian tetrahedral color space
+Returns the attributes of \code{colorspace} objects
 }
 \examples{
 \dontrun{
+# Colour hexagon
+data(flowers)
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
+flowers.hex <- hexagon(vis.flowers)
+summary(flowers.hex)
+
+# Tetrahedral model
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 tcs.sicalis <- tcs(vis.sicalis)
 summary(tcs.sicalis, by=rep(c('C','T','B'),7))}
+
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+ The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 

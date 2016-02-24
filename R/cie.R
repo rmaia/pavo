@@ -63,8 +63,8 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
     sens <- vissyst
     bgil <- bgandilum
     
-    # Visual phenotype
-    visual <- attr(dat,'vissyst_chromatic')
+    # Visual phenotype todo: this can be grab from vismodeldata idiot.
+    visual <- attr(dat,'visualsystem.chromatic')
     S <- sens[, grep(visual, names(sens))]
     names(S) <- gsub(paste(visual,'.',sep = ''), '', names(S))
     
@@ -105,8 +105,21 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
   
   class(res) <- c('colorspace', 'data.frame')
   
-  attr(res, 'conenumb') <- 3
+  # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- paste0('CIE', space)
+  attr(res, 'conenumb') <- 3
+  attr(res, 'qcatch') <- attr(vismodeldata, 'qcatch')
+  attr(res,'visualsystem.chromatic') <- attr(vismodeldata,'visualsystem.chromatic')
+  attr(res,'visualsystem.achromatic') <- attr(vismodeldata,'visualsystem.achromatic')
+  attr(res,'illuminant') <- attr(vismodeldata,'illuminant')
+  attr(res,'background') <- attr(vismodeldata,'background')
+  attr(res,'relative') <- attr(vismodeldata,'relative')
+  attr(res, 'vonkries') <- attr(vismodeldata, 'vonkries')
+  
+  # Data attributes
+  attr(res, 'data.visualsystem.chromatic') <- attr(vismodeldata, 'data.visualsystem.chromatic')
+  attr(res, 'data.visualsystem.achromatic') <- attr(vismodeldata, 'data.visualsystem.achromatic')
+  attr(res, 'data.background') <- attr(vismodeldata, 'data.background')
   
   res
 }
