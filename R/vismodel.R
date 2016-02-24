@@ -370,6 +370,7 @@ attr(res, 'vonkries') <- vonkries
 # Data attributes
 attr(res, 'data.visualsystem.chromatic') <- S
 attr(res, 'data.visualsystem.achromatic') <- L
+attr(res, 'data.illuminant') <- illum
 attr(res, 'data.background') <- bkg
 
 res
