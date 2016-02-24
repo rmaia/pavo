@@ -57,26 +57,15 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
     z <- Z / (X + Y + Z)
   }else if(space == 'LAB'){
     
-    # Re-grab the visual system phenotype and illuminant used during 'vismodel'
-    # in order to calculate the LAB neutral point. todo: options when the data didn't
-    # come from vismodel (will need to ask for user-defined illuminant & vis data).
-    sens <- vissyst
-    bgil <- bgandilum
+    # Calculate tristimulus values for neutral point. First need to 
+    # re-grab original sensitivity and illuminant data.
+    S <- attr(dat, 'data.visualsystem.chromatic')
+    illum <- attr(dat, 'data.illuminant')  # Illuminant
+    Xn = sum(rep(1, 401) * S[, 1] * illum)
+    Yn = sum(rep(1, 401) * S[, 2] * illum)
+    Zn = sum(rep(1, 401) * S[, 3] * illum)
     
-    # Visual phenotype todo: this can be grab from vismodeldata idiot.
-    visual <- attr(dat,'visualsystem.chromatic')
-    S <- sens[, grep(visual, names(sens))]
-    names(S) <- gsub(paste(visual,'.',sep = ''), '', names(S))
-    
-    # Illuminant
-    illum2 <- sub(":.*", "", attr(vis.flowers, 'illuminant'))
-    illum <- bgil[, grep(illum2, names(bgil))]
-    
-    # Tristimulus values for neutral point
-    Xn = sum(rep(1, 401) * S$X * illum)
-    Yn = sum(rep(1, 401) * S$Y * illum)
-    Zn = sum(rep(1, 401) * S$Z * illum)
-    
+    # Lab calculator
     f <- function(x){
                      if(isTRUE(x > (6/29)^3)){
                        x^(1/3)
