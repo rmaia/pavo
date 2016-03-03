@@ -10,8 +10,9 @@
 \item{object}{(required) a \code{colorspace} object. May be the result of \code{hexagon},
 \code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.}
 
-\item{by}{when Results of \code{tcs}....either a single value specifying the range of color points for which
-summary colorspace variables should be calculated (for example, \code{by} = 3 
+\item{by}{when the input data are the result of \code{tcs}, \code{by} is either 
+a single value specifying the range of color points for which
+summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3 
 indicates summary will be calculated for groups of 3 consecutive color points (rows)
 in the quantum catch color data frame) or a vector containing identifications for 
 the rows in the quantum catch color data frame (in which case summaries will be 

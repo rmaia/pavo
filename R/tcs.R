@@ -5,23 +5,23 @@
 #'
 #' @import geometry
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#' with four columns, representing the avian cones).
+#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  with four columns, representing the avian cones).
 #'
 #' @return A data frame of class \code{tcs} consisting of the following columns:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
-#' calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
-#' the output column will be labeled \code{u}.
+#'  calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
+#'  the output column will be labeled \code{u}.
 #' @return \code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,
-#' for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.
+#'  for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.
 #' @return \code{x}, \code{y}, \code{z}: cartesian coordinates for the points in the
-#' tetrahedral color space.
+#'  tetrahedral color space.
 #' @return \code{h.theta}, \code{h.phi}: angles theta and phi, in radians, determining
-#' the hue of the color.
+#'  the hue of the color.
 #' @return \code{r.vec}: the r vector (saturation, distance from the achromatic center).
 #' @return \code{r.max}: the maximum r vector achievable for the color's hue.
 #' @return \code{r.achieved}: the relative r distance from the achromatic center, in
-#' relation to the maximum distance achievable (\code{r.vec/r.max})
+#'  relation to the maximum distance achievable (\code{r.vec/r.max})
 #' @export
 #' @examples \dontrun{
 #' data(sicalis)
@@ -29,10 +29,13 @@
 #' tcs.sicalis <- tcs(vis.sicalis)
 #' }
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+#'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+#'  The American Naturalist, 171(6), 755-776.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tcs<- function(vismodeldata){
+tcs <- function(vismodeldata){
 
   dat <- vismodeldata
   
@@ -74,7 +77,6 @@ tcs<- function(vismodeldata){
     	warning('Quantum catch are not relative, and have been divided by their sum')
     }
   }
-  
   
   u <- dat[, 1]
   s <- dat[, 2]

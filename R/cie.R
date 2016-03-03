@@ -65,7 +65,7 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
     Yn = sum(rep(1, 401) * S[, 2] * illum)
     Zn = sum(rep(1, 401) * S[, 3] * illum)
     
-    # Lab calculator
+    # LAB calculator
     f <- function(x){
                      if(isTRUE(x > (6/29)^3)){
                        x^(1/3)

@@ -3,7 +3,7 @@
 #' Plot a CIE (XYZ or LAB) chromaticity diagram. 
 #' 
 #' @param ciedata (required)
-#' @param mono Logial. Should the monochromatic loci (the 'horseshoe') be
+#' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}. 
 #' @param out.lwd line width for monochromatic loci outline (defaults to 1)
 #' @param out.lcol line colour for monochromatic loci outline (defaults to black)
@@ -87,11 +87,12 @@
       
       if(mono == TRUE)
         polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+    
   }
   
   # CIELAB
   if(attr(ciedata, 'clrsp') == 'CIELAB'){
-    print('nothing here yet')
+    print('Nothing available yet')
   }
       
 }

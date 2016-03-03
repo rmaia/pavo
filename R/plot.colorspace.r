@@ -57,11 +57,7 @@
 #'  
 #' @seealso \code{\link{plot}}
 
-plot.colorspace <- function(clrspdata, ...) {
-  
-  # Check if object is of class colorspace. TODO: accept non-colorspace objects?
-  if(!('colorspace' %in% attr(clrspdata, 'class')))
-    stop('object is not of class ', dQuote('colorspace'))
+plot.colorspace <- function(clrspdata, ...){
   
   if(attr(clrspdata, 'clrsp') == 'hexagon'){
     .hexplot(clrspdata, ...)
