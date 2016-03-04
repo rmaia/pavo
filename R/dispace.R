@@ -13,12 +13,10 @@
 #' @return \code{x}: the coordinate of the stimulus along a segment
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #' 
-#' @export
-#' 
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- dispace(vis.flowers)
+#' di.flowers <- colorspace(vis.flowers, space = 'di')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -27,7 +25,7 @@
 #'  behavioural tests and physiological concepts. Biological Reviews, 78,
 #'  81 - 118.
 
-dispace <- function(vismodeldata){
+.dispace <- function(vismodeldata){
   
   dat <- vismodeldata
     

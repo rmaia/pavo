@@ -29,6 +29,7 @@ Collate:
     'coldist.R'
     'coc.R'
     'cocplot.R'
+    'colorspace.r'
     'data-bgandilum.R'
     'data-sicalis.R'
     'data-flowers.R'

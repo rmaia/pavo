@@ -12,20 +12,19 @@
 #' @return \code{x, y}: cartesian coordinates in the categorical colour space
 #' @return \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}
 #' 
-#' @export
-#' 
 #' @examples
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
-#' cat.flowers <- categorical(vis.flowers)
+#' cat.flowers <- colorspace(vis.flowers, space = 'categorical')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
 #'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-categorical <- function(vismodeldata){
+.categorical <- function(vismodeldata){
   
   dat <- vismodeldata
     
@@ -98,8 +97,21 @@ categorical <- function(vismodeldata){
   
   class(res) <- c('colorspace', 'data.frame')
   
-  attr(res, 'conenumb') <- 4
+  # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'categorical'
+  attr(res, 'conenumb') <- 4
+  attr(res, 'qcatch') <- attr(vismodeldata, 'qcatch')
+  attr(res,'visualsystem.chromatic') <- attr(vismodeldata,'visualsystem.chromatic')
+  attr(res,'visualsystem.achromatic') <- attr(vismodeldata,'visualsystem.achromatic')
+  attr(res,'illuminant') <- attr(vismodeldata,'illuminant')
+  attr(res,'background') <- attr(vismodeldata,'background')
+  attr(res,'relative') <- attr(vismodeldata,'relative')
+  attr(res, 'vonkries') <- attr(vismodeldata, 'vonkries')
+  
+  # Data attributes
+  attr(res, 'data.visualsystem.chromatic') <- attr(vismodeldata, 'data.visualsystem.chromatic')
+  attr(res, 'data.visualsystem.achromatic') <- attr(vismodeldata, 'data.visualsystem.achromatic')
+  attr(res, 'data.background') <- attr(vismodeldata, 'data.background')
   
   res
 }

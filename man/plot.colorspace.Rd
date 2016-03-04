@@ -7,51 +7,67 @@
 \method{plot}{colorspace}(clrspdata, ...)
 }
 \arguments{
-\item{clrspdata}{(required) an object of class \code{colorspace}. May be a result from
-\code{dispace}, \code{maxwell}, \code{coc}, \code{hexagon}, \code{categorical}, 
-\code{tcs}, or \code{cie}. Note that the below options will vary by plot type.}
+\item{clrspdata}{(required) an object of class \code{colorspace}, the result of
+\code{colorspace()}. Note that the below options will vary by selected \code{space}}
 
-\item{...}{additional graphical options. See code{\link{par}}}
+\item{...}{additional graphical options. See \code{\link{par}}}
 
-\item{labels}{plot verticy labels (or category labels, when clrspdata is the result of
-\code{categorical})? Defaults to \code{TRUE}}
+\item{labels}{plot verticy labels (or category labels, when \code{space = \strong{'categorical'}})? 
+Defaults to \code{TRUE}}
 
 \item{cex.labels}{character expansion factor for labels when \code{labels = TRUE})}
 
-\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})? Has
-no effect when clrspdata is the result of \code{categorical}, \code{coc}, or \code{cie}}
+\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
 
 \item{out.lwd}{line width for plot outline, or the width of the monochromatic loci
-outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
-clrspdata is the result of \code{coc}}
+outline when \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to 1).}
 
 \item{out.lcol}{line colour for plot outline, or the colour of the monochromatic loci
-outline in CIEXYZ space when \code{mono = TRUE} (defaults to black). Has no effect when
-clrspdata is the result of \code{coc}}
+outline in \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to black).}
 
 \item{out.lty}{line type for plot outline, or the line type for the monochromatic loci
-outline in CIEXYZ space when \code{mono = TRUE} (defaults to 1). Has no effect when
-clrspdata is the result of \code{coc}}
+outline in \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to 1).}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes,
-only when clrspdata is the result of \code{dispace}}
+only when \code{space = \strong{'di'}}}
 
-\item{mono}{plot the monochromatic loci (the 'horseshoe') in CIEXYZ space? 
+\item{mono}{plot the monochromatic loci (the 'horseshoe') when \code{space = \strong{'ciexyz'}}? 
 Defaults to \code{TRUE}.}
 
-\item{sectors}{plot the bee-hue sector dividers (only when clrspdata is the result 
-of \code{hexagon})? Options are:
+\item{sectors}{plot the bee-hue sector dividers when \code{space = \strong{'hexagon'}}? 
+Options are:
    \itemize{ 
        \item \code{'none'}: No sectors (default)
        \item \code{'fine'}: 36 10-degree sectors
        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
        }}
 
-\item{col.sec}{line colour of bee-hue sector dividers. Defaults to \code{'grey'}}
+\item{col.sec}{line colour of bee-hue sector dividers when \code{space = \strong{'hexagon'}}. 
+Defaults to \code{'grey'}}
+
+\item{new}{should a new 3D plot be called, when \code{space = \strong{'tcs'}} (defaults to \code{FALSE})?}
+
+\item{hspin}{if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis, when \code{space = \strong{'tcs'}})
+(defaults to \code{FALSE})}
+
+\item{vspin}{if \code{TRUE}, the graphic will spin vertically (around the 'x' axis, when \code{space = \strong{'tcs'}})
+(defaults to \code{FALSE})}
+
+\item{floor}{if \code{TRUE}, a reference xy plane is plotted under the tetrahedron, when \code{space = \strong{'tcs'}} 
+(defaults to \code{TRUE})}
+
+\item{grid}{if \code{TRUE}, connects the polygon outlining the volume occupied by points, when \code{space = \strong{'tcs'}}
+(defaults to \code{TRUE})}
+
+\item{grid.alpha}{transparecny of the volume polygon grid lines, when \code{space = \strong{'tcs'}}}
+
+\item{fill}{if \code{TRUE}, fills the volume occupied by points, when \code{space = \strong{'tcs'}} 
+(WARNING: transparency is not saved properly if exported using \code{rgl.postscript})
+(defaults to \code{TRUE}).}
 }
 \description{
 \code{plot.colorspace} Plots reflectance spectra in the appropriate colorspace
@@ -62,20 +78,55 @@ data(flowers)
 
 # Dichromat space
 vis.flowers <- vismodel(flowers, visual = 'canis')
-di.flowers <- dispace(vis.flowers)
+di.flowers <- colorspace(vis.flowers, space = 'di')
 plot(di.flowers)
 
 # Colour hexagon 
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- hexagon(vis.flowers)
+hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
 plot(hex.flowers)
 
 # Maxwell triangle
 vis.flowers <- vismodel(flowers, visual = 'apis')
-maxwell.flowers <- maxwell(vis.flowers)
+maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
 plot(maxwell.flowers)
 }
- 
+
+}
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
+\references{
+Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
+   Transactions of the Optical Society, 33(3), 73-134.
+
+Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+   using MATLAB. John Wiley & Sons.
+
+Chittka L. (1992). The colour hexagon: a chromaticity diagram
+   based on photoreceptor excitations as a generalized representation of 
+   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
+
+Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
+   component of flower reflections, and the colour perception of Hymenoptera. 
+   Vision research, 34(11), 1489-1508.
+
+Troje N. (1993). Spectral categories in the learning behaviour
+ of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+ The American Naturalist, 171(6), 755-776.
+
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
+   - behavioural tests and physiological concepts. Biological Reviews, 78,
+   81 - 118.
+
+Backhaus W. (1991). Color opponent coding in the visual system
+ of the honeybee. Vision Research, 31, 1381-1397.
 }
 \seealso{
 \code{\link{plot}}

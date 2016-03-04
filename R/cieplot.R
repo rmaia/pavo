@@ -4,11 +4,11 @@
 #' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be
-#'    plotted? Defaults to \code{TRUE}. 
+#'    plotted? Defaults to \code{TRUE}
 #' @param out.lwd line width for monochromatic loci outline (defaults to 1)
 #' @param out.lcol line colour for monochromatic loci outline (defaults to black)
 #' @param out.lty line type for monochromatic loci outline (defaults to 1)
-#' @param ... Additional graphical options. See code{\link{par}}.
+#' @param ... Additional graphical options. See \code{\link{par}}.
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
@@ -16,11 +16,12 @@
 #'    Transactions of the Optical Society, 33(3), 73-134.
 #' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
 #'    using MATLAB. John Wiley & Sons.
+#'    
 #' @examples
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- cie(vis.flowers, space = 'XYZ')
+#' flowers.cie <- colorspace(vis.flowers, space = 'ciexyz')
 #' plot(flowers.cie)
 #' }
 

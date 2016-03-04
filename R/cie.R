@@ -16,17 +16,16 @@
 #'          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
 #'          Cartesian coordinate space. Returned when using \code{space = LAB}.
 #'    }
-#'    
-#' @export
 #' 
 #' @examples
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- cie(vis.flowers, space = 'XYZ')
+#' flowers.cie <- colorspace(vis.flowers, space = 'ciexyz')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 #'    Transactions of the Optical Society, 33(3), 73-134.
 #' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
@@ -38,7 +37,7 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Éclairage.
 
-cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
+.cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
   
   space2 <- try(match.arg(space), silent = T)
   if(inherits(space2,'try-error'))

@@ -15,12 +15,10 @@
 #' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #' 
-#' @export
-#' 
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
-#' maxwell.flowers <- maxwell(vis.flowers)
+#' maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -34,7 +32,7 @@
 #'  cone excitation by stimuli of equal luminance. Journal of the Optical 
 #'  Society of America, 69, 1183 – 1186.
 
-maxwell <- function(vismodeldata){
+.maxwell <- function(vismodeldata){
   
   dat <- vismodeldata
     

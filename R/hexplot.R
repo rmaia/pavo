@@ -19,17 +19,18 @@
 #' @param out.lwd line width for hexagon outline (defaults to 1)
 #' @param out.lcol line colour for hexagon outline (defaults to black)
 #' @param out.lty line type for hexagon outline (defaults to 1)
-#' @param ... additional graphical options. See code{\link{par}}
+#' @param ... additional graphical options. See \code{\link{par}}
 #'    
 #' @examples
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- hexagon(vis.flowers)
+#' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
 #' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
 #'    based on photoreceptor excitations as a generalized representation of 
 #'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.

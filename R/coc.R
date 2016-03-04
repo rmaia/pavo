@@ -14,12 +14,10 @@
 #' @return \code{r.vec}: the r vector (saturation, distance from the center using
 #'  a city-block metric).
 #' 
-#' @export
-#' 
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-#' coc.flowers <- coc(vis.flowers)
+#' coc.flowers <- colorspace(vis.flowers, space = 'coc')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -27,7 +25,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-coc <- function(vismodeldata){
+.coc <- function(vismodeldata){
   
   dat <- vismodeldata
   

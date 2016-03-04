@@ -36,13 +36,14 @@
 + dichro vis syst (dog?)
 + hyperbolic transform as general option
 + generalise 'vismodel' doc - it's no longer just RN vs relative.
-- points.colorspace
++ add .jazirrad to getspec
++ hyperbolic transform option in vismodel
+- colorspace function
+- points.colorspace?
 - CIELAB space & plot
 - CIELCh space & plot
 - add appropriate bits to coldist
 - fly vis syst
-- points function for plots?
-+ add .jazirrad to getspec
-- check cex vs cex.labels in plots. Something squiffy.
+- check cex vs cex.labels in plots. Something squiffy?
 
 

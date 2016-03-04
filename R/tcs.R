@@ -22,20 +22,22 @@
 #' @return \code{r.max}: the maximum r vector achievable for the color's hue.
 #' @return \code{r.achieved}: the relative r distance from the achromatic center, in
 #'  relation to the maximum distance achievable (\code{r.vec/r.max})
-#' @export
+#'  
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis)
+#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
 #' }
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' 
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
 #'  The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tcs <- function(vismodeldata){
+.tcs <- function(vismodeldata){
 
   dat <- vismodeldata
   

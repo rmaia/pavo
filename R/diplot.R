@@ -12,12 +12,12 @@
 #' @param out.lwd line width for segment (defaults to 1)
 #' @param out.lcol line colour for segment (defaults to black)
 #' @param out.lty line type for segment (defaults to 1)
-#' @param ... additional graphical options. See code{\link{par}}.
+#' @param ... additional graphical options. See \code{\link{par}}.
 #'
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- dispace(vis.flowers)
+#' di.flowers <- colorspace(vis.flowers, space = 'di')
 #' plot(di.flowers)
 #' }
 #'

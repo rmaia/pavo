@@ -24,10 +24,11 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' flowers.hex <- hexagon(vis.flowers)
+#' flowers.hex <- colorspace(vis.flowers, space = 'hexagon')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
 #' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
 #'    based on photoreceptor excitations as a generalized representation of 
 #'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
@@ -35,7 +36,7 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-hexagon <- function(vismodeldata){
+.hexagon <- function(vismodeldata){
   
 ## Note: requires von kries & hyperbolic transform
   
