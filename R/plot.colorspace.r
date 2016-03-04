@@ -46,10 +46,17 @@
 #'  (defaults to \code{TRUE}).
 #' @param ... additional graphical options. See \code{\link{par}} 
 #' 
+#' @return \code{plot.colorspace} creates a 2D colorspace plot appropriate to the input data.
+#'  \code{points.colorspace} adds points to the plot. When \code{space = \strong{'tcs'}}, 
+#'  it creates an interactive 3D plot using functions of the package \code{rgl}, based on 
+#'  openGL capabilities. It can be manipulated with the mouse (left button: rotate along 
+#'  'z' axis; right button: rotate along 'x' axis; third button: zoom). \code{tcsvol} creates 
+#'  polygon based on points, determining the volume occupied by them in the colorspace.
+#' 
 #' @examples \dontrun{
 #' data(flowers)
 #' 
-#' # Dichromat space
+#' # Dichromat
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
 #' di.flowers <- colorspace(vis.flowers, space = 'di')
 #' plot(di.flowers)
@@ -59,10 +66,24 @@
 #' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' 
-#' # Maxwell triangle
-#' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
-#' plot(maxwell.flowers)
+#' # Tetrahedron
+#' data(sicalis)
+#' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
+#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
+#' plot(tcs.sicalis, size = 0.005)
+#' rgl.postscript('testplot.pdf',fmt = 'pdf') 
+#' rgl.snapshot('testplot.png')
+#'
+#' ## Add points to tetrahedron
+#' patch <- rep(c('C','T','B'), 7)
+#' tcs.crown <- subset(tcs.sicalis, 'C') #### FIX SUBSET ###
+#' tcs.breast <- subset(tcs.sicalis, 'B') 
+#' plot(tcs.crown, col ='blue')
+#' points(tcs.breast, col ='red')
+#'
+#' ## Plot convex hull in tetrahedron
+#' plot(tcs.sicalis, col = 'blue', size = 0.005)
+#' vol(tcs.sicalis)
 #' }
 #' 
 #' @seealso \code{\link{plot}}

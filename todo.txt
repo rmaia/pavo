@@ -38,11 +38,13 @@
 + generalise 'vismodel' doc - it's no longer just RN vs relative.
 + add .jazirrad to getspec
 + hyperbolic transform option in vismodel
-- colorspace function
++ colorspace function
+- generalise subset.rspec
+- generalise vol?
 - points.colorspace?
+- generalise coldist
 - CIELAB space & plot
 - CIELCh space & plot
-- add appropriate bits to coldist
 - fly vis syst
 - check cex vs cex.labels in plots. Something squiffy?
 

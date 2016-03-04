@@ -64,10 +64,10 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-.tcsplot<- function(tcsdata, size=0.02, alpha=1, col='black', 
-                  vertexsize=0.02, achrosize=0.01, achrocol='grey', 
-                  lwd=1, lcol='lightgrey', new=FALSE, hspin=FALSE, 
-                  vspin=FALSE, floor=TRUE, grid=TRUE, fill=TRUE) {
+.tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black', 
+                  vertexsize=0.02, achrosize=0.01, achrocol = 'grey', 
+                  lwd = 1, lcol = 'lightgrey', new = FALSE, hspin = FALSE, 
+                  vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE) {
 
 
 
