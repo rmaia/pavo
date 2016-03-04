@@ -4,7 +4,7 @@
 \alias{plot.colorspace}
 \alias{points.colorspace}
 \alias{vol.colorspace}
-\title{Plot spectra in a colourspace}
+\title{Plot Spectra in a Colourspace}
 \usage{
 \method{plot}{colorspace}(clrspdata, ...)
 
@@ -88,7 +88,7 @@ Defaults to \code{'grey'}}
  based on openGL capabilities.
 
 \code{vol.colorspace} creates a 3D convex hull within a \code{plot.colorspace} object, 
- when \strong{\code{space = 'tcs'}},
+ only when \strong{\code{space = 'tcs'}}.
 }
 \description{
 \code{plot.colorspace} Plots reflectance spectra in the appropriate colorspace

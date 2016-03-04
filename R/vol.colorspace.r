@@ -4,7 +4,7 @@
 #' \strong{\code{space = 'tcs'}})
 #'
 #' @return \code{vol.colorspace} creates a 3D convex hull within a \code{plot.colorspace} object, 
-#'  when \strong{\code{space = 'tcs'}}, 
+#'  only when \strong{\code{space = 'tcs'}}. 
 #'  
 #' @rdname plot.colorspace
 #'

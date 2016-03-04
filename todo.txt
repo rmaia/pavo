@@ -40,8 +40,7 @@
 + hyperbolic transform option in vismodel
 + colorspace function
 - generalise subset.rspec
-- generalise vol?
-- points.colorspace?
++ generalise points and vol?
 - generalise coldist
 - CIELAB space & plot
 - CIELCh space & plot
