@@ -165,15 +165,26 @@ qn.trdistcalc <- function(f1,f2,qn1, qn2, n1,n2,n3,v){
 ttdistcalcachro <- function(f1,f2,w){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
-        round(abs(dq1/w),7)
+        round(abs(dq1/w), 7)
 		}
 
-qn.ttdistcalcachro <- function(f1,f2,qn1, qn2, n4, weber.achro){
+qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, n4, weber.achro){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
         w <- sqrt((weber.achro)^2 + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
         round(abs(dq1/w),7)
-		}
+    }
+
+# 2d Euclidean distance
+euc2d <- function(coord1, coord2){
+  as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
+}
+
+# 2d Euclidean distances in CIELAB
+lab2d <- function(coord1, coord2){
+                     dist = round(sqrt(abs(coord1$L - coord2$L)^2 + abs(coord1$a - coord2$a)^2 +
+                                         abs(coord1$b - coord2$b)^2), 7)
+}
 
 ###################
 #SUMMARY VARIABLES#

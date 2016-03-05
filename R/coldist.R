@@ -76,6 +76,7 @@
 #' tetradist.sicalis <- coldist(vis.sicalis, vis = 'tetra')}
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' 
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
 #'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
 #'  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
@@ -85,153 +86,168 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 
-coldist <-function(vismodeldata, qcatch=c('Qi','fi'),
-                  vis=c('tetra', 'tri', 'di'), 
-                  noise=c('neural','quantum'), subset=NULL,
-                  achro=TRUE,
-                  n1=1, n2=2, n3=2, n4=4, 
-                  weber=0.1, weber.ref='n4', weber.achro=0.1)
-{
+coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
+                  vis = c('tetra', 'tri', 'di'), 
+                  noise = c('neural','quantum'), subset = NULL,
+                  achro = TRUE,
+                  n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
+                  weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
+  
+  # hexagon
+  # coc
+  # categorical <- NA
+  # cie?
+  
+  # Only hexagon, coc, & cielab have distance metrics
+  # if('colorspace' %in% class(vismodeldata)){
+  #    if(!'hexagon' %in% attr(vismodeldata, 'clrsp') || !'coc' %in% attr(vismodeldata, 'clrsp')){
+  #      stop('No suitable distance metric')
+  #    }
+  # }
+  
+  # Pre-processing for colorspace objects
+  if('colorspace' %in% class(vismodeldata)){
+    dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
+    qcatch <- attr(vismodeldata, 'qcatch')
+  }
 
-if('vismodel' %in% class(vismodeldata)){
-	dat <- as.matrix(vismodeldata)
-	qcatch <- attr(vismodeldata, 'qcatch')
-#	colnames(dat) <- gsub(paste(qcatch,'.',sep=''),'',colnames(dat))
-	
-  if(attr(vismodeldata, 'qcatch') == 'Qi')
-    qndat <- as.matrix(vismodeldata)
-
-  if(attr(vismodeldata, 'qcatch') == 'fi')
-    qndat <- as.matrix(exp(vismodeldata))
-
-  if(attr(vismodeldata,'relative'))
-    warning('Quantum catch are relative, distances may not be meaningful')
-	
-  }else{
-	qcatch <- match.arg(qcatch)
+  # Pre-processing for vismodel objects
+  if('vismodel' %in% class(vismodeldata)){
   	dat <- as.matrix(vismodeldata)
-  	rownames(dat) <- rownames(vismodeldata)
-  	colnames(dat) <- colnames(vismodeldata)
+  	qcatch <- attr(vismodeldata, 'qcatch')
+  #	colnames(dat) <- gsub(paste(qcatch, '.', sep = ''), '', colnames(dat))
   	
-  	}
-
-if(!'vismodel' %in% class(vismodeldata) && noise=='quantum')
-  stop('Object must be of class vismodel to calculate quantum noise model')
-
-noise <- match.arg(noise)
-
-vis <- match.arg(vis)
-
-dat <- switch(qcatch, fi = dat, Qi = log(dat))
-
-# Calculate v based on weber fraction and reference cone
-
-v <- switch(weber.ref,
-        n1 = weber*sqrt(n1),
-        n2 = weber*sqrt(n2),
-        n3 = weber*sqrt(n3),
-        n4 = weber*sqrt(n4))
-
-#NEURAL NOISE MODEL
-
-w1e <- v/sqrt(n1)
-w2e <- v/sqrt(n2)
-w3e <- v/sqrt(n3)
-w4e <- v/sqrt(n4)
-
-pairsid <- t(combn(nrow(dat),2))
-
-patch1 <- row.names(dat)[pairsid[,1]]
-patch2 <- row.names(dat)[pairsid[,2]]
-
-res <- data.frame(patch1, patch2)
-
-
-if (vis=='di' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  didistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e) )
-}
-
-if (vis=='tri' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  trdistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e, w3=w3e) )
-}
-
-if (vis=='tetra' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  ttdistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e, w3=w3e, w4=w4e) )
-}
-
-if(achro==TRUE & noise=='neural'){
-res$dL <- apply(pairsid,1,function(x) 
-  ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  w=weber.achro) )
-}
-
-
-
-if (vis=='di' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.didistcalc(dat[x[1],], dat[x[2],], 
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, v=v) )
-}
-
-if (vis=='tri' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.trdistcalc(dat[x[1],], dat[x[2],],
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, n3=n3, v=v ) )
-}
-
-if (vis=='tetra' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.ttdistcalc(dat[x[1],], dat[x[2],],
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, n3=n3, n4=n4, v=v) )
-}
-
-if(achro==TRUE & noise=='quantum'){
-res$dL <- apply(pairsid,1,function(x) 
-  qn.ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  qndat[x[1],], qndat[x[2],], weber=weber.achro) )
-}
-
-
-nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
-
-# Subsetting samples
-
-if(length(subset) > 2){
-  stop('Too many subsetting conditions; one or two allowed.')
-}
-
-if(length(subset)==1){
+    if(attr(vismodeldata, 'qcatch') == 'Qi')
+      qndat <- as.matrix(vismodeldata)
   
-  condition1 <- grep(subset, res$patch1)
-  condition2 <- grep(subset, res$patch2)
-
-  subsamp <- unique(c(condition1, condition2))
+    if(attr(vismodeldata, 'qcatch') == 'fi')
+      qndat <- as.matrix(exp(vismodeldata))
+  	
+  	if(attr(vismodeldata, 'qcatch') == 'Ei')
+  	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches')
   
-  res <- res[subsamp,]	
- }
+    if(attr(vismodeldata, 'relative')){
+      warning('Quantum catch are relative, distances may not be meaningful')
+    }else{
+      qcatch <- match.arg(qcatch)
+    	dat <- as.matrix(vismodeldata)
+    	rownames(dat) <- rownames(vismodeldata)
+    	colnames(dat) <- colnames(vismodeldata)
+    }
+  }
   
-if(length(subset)==2){
-  condition1 <- intersect(grep(subset[1], res$patch1), 
-    grep(subset[2],res$patch2) )
-	
-  condition2 <- intersect(grep(subset[2], res$patch1), 
-    grep(subset[1],res$patch2) )
-	
-  subsamp <- unique(c(condition1, condition2))
+  if(!'vismodel' %in% class(vismodeldata) && noise == 'quantum')
+    stop('Object must be of class vismodel to calculate quantum noise model')
   
-  res <- res[subsamp,]	
-}
-
-row.names(res) <- 1:dim(res)[1]
-
-res
+  if(!'colorspace' %in% class(vismodeldata)){
+    noise <- match.arg(noise)
+    vis <- match.arg(vis)
+    dat <- switch(qcatch, fi = dat, Qi = log(dat))
+  }
+  
+  # Pair up stimuli
+  pairsid <- t(combn(nrow(dat), 2))
+  patch1 <- row.names(dat)[pairsid[, 1]]
+  patch2 <- row.names(dat)[pairsid[, 2]]
+  res <- data.frame(patch1, patch2)
+  
+  ### Receptor-noise models ###
+  if(!'colorspace' %in% class(vismodeldata)){
+    # Calculate v based on weber fraction and reference cone
+    v <- switch(weber.ref,
+            n1 = weber * sqrt(n1),
+            n2 = weber * sqrt(n2),
+            n3 = weber * sqrt(n3),
+            n4 = weber * sqrt(n4))
+    
+    # Neural noise
+    w1e <- v/sqrt(n1)
+    w2e <- v/sqrt(n2)
+    w3e <- v/sqrt(n3)
+    w4e <- v/sqrt(n4)
+    
+    if(vis == 'di' & noise == 'neural'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      didistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e) )
+    }
+    
+    if(vis == 'tri' & noise == 'neural'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      trdistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e, w3 = w3e) )
+    }
+    
+    if(vis == 'tetra' & noise == 'neural'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      ttdistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e) )
+    }
+    
+    if(achro == TRUE & noise == 'neural'){
+    res$dL <- apply(pairsid, 1, function(x) 
+      ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
+      w = weber.achro) )
+    }
+    
+    if (vis == 'di' & noise == 'quantum'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      qn.didistcalc(dat[x[1], ], dat[x[2], ], 
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, v = v) )
+    }
+    
+    if(vis == 'tri' & noise == 'quantum'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      qn.trdistcalc(dat[x[1],], dat[x[2], ],
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, n3 = n3, v = v ) )
+    }
+    
+    if(vis == 'tetra' & noise == 'quantum'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      qn.ttdistcalc(dat[x[1], ], dat[x[2], ],
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, n3 = n3, n4 = n4, v = v) )
+    }
+    
+    if(achro == TRUE & noise == 'quantum'){
+    res$dL <- apply(pairsid, 1, function(x) 
+      qn.ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
+      qndat[x[1], ], qndat[x[2], ], weber = weber.achro) )
+    }
+    
+  }
+  
+  ### Colorspace model distances ###
+  if(attr(vismodeldata, 'clrsp') == 'hexagon'){
+    res$dS <- apply(pairsid, 1, function(x) euc2d2(dat[x[1], ], dat[x[2], ]))
+  }
+  
+  nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
+  
+  # Subsetting samples
+  if(length(subset) > 2){
+    stop('Too many subsetting conditions; only one or two allowed.')
+  }
+  
+  if(length(subset) == 1){
+    condition1 <- grep(subset, res$patch1)
+    condition2 <- grep(subset, res$patch2)
+    subsamp <- unique(c(condition1, condition2))
+    res <- res[subsamp, ]	
+   }
+    
+  if(length(subset) == 2){
+    condition1 <- intersect(grep(subset[1], res$patch1), 
+      grep(subset[2], res$patch2) )
+    condition2 <- intersect(grep(subset[2], res$patch1), 
+      grep(subset[1], res$patch2) )
+    subsamp <- unique(c(condition1, condition2))
+    res <- res[subsamp, ]	
+  }
+  
+  row.names(res) <- 1:dim(res)[1]
+  
+  res
 }
