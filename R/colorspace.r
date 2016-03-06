@@ -19,10 +19,10 @@
 #' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' 
-#' # Maxwell triangle
+#' # Trichromat
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
-#' plot(maxwell.flowers)
+#' tri.flowers <- colorspace(vis.flowers, space = 'tri')
+#' plot(tri.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -50,7 +50,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-colorspace <- function(modeldata, space = c('di', 'maxwell', 'hexagon', 'tcs', 'coc', 'categorical', 'ciexyz', 'cielab')){
+colorspace <- function(modeldata, space = c('di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
   
   space2 <- try(match.arg(space), silent = T)
 
@@ -61,8 +61,8 @@ colorspace <- function(modeldata, space = c('di', 'maxwell', 'hexagon', 'tcs', '
     return(.dispace(modeldata))
   }
   
-  if(space2 == 'maxwell'){
-    return(.maxwell(modeldata))
+  if(space2 == 'tri'){
+    return(.trispace(modeldata))
   }
   
   if(space2 == 'hexagon'){

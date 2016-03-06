@@ -1,8 +1,8 @@
 #' Plot a Maxwell Triangle
 #' 
-#' \code{maxplot} produces a Maxwell triangle plot
+#' \code{triplot} produces a Maxwell triangle plot
 #'
-#' @param maxdata (required) a data frame, possibly a result from the \code{maxwell} 
+#' @param tridata (required) a data frame, possibly a result from the \code{trispace} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param labels plot verticy labels? Defaults to \code{TRUE}
@@ -17,8 +17,8 @@
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
-#' plot(maxwell.flowers)
+#' tri.flowers <- colorspace(vis.flowers, space = 'tri')
+#' plot(tri.flowers)
 #' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -29,15 +29,15 @@
 #' @references Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
 #'  Journal of comparative physiology, 139(3), 165-176.
 
-.maxplot <- function(maxdata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
+.triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                      cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
     
 # Check if object is of class colorspace and trichromat
-  if(!('colorspace' %in% attr(maxdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(maxdata)))
+  if(!('colorspace' %in% attr(tridata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(tridata)))
     stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(maxdata, 'class')) & attr(maxdata, 'clrsp') != 'maxwell')
-    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('maxwell()')) 
+  if(('colorspace' %in% attr(tridata, 'class')) & attr(tridata, 'clrsp') != 'trispace')
+    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('trispace()')) 
   
   arg <- list(...)
   
@@ -58,8 +58,8 @@
                        y = c(sqrt(2)/sqrt(3), -sqrt(2)/(2*(sqrt(3))), -sqrt(2)/(2*(sqrt(3)))))
   
 # Plot
-  arg$x <- maxdata$x
-  arg$y <- maxdata$y
+  arg$x <- tridata$x
+  arg$y <- tridata$y
   arg$xlab = ' '
   arg$ylab = ' '
   arg$bty = 'n'

@@ -1,7 +1,7 @@
-#' Maxwell triangle
+#' Trichromatic colour space
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in a Maxwell triangle chromaticity space.
+#' in a trichromat (i.e. Maxwell) chromaticity space.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -18,7 +18,7 @@
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
-#' maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
+#' tri.flowers <- colorspace(vis.flowers, space = 'tri')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -32,7 +32,7 @@
 #'  cone excitation by stimuli of equal luminance. Journal of the Optical 
 #'  Society of America, 69, 1183 – 1186.
 
-.maxwell <- function(vismodeldata){
+.trispace <- function(vismodeldata){
   
   dat <- vismodeldata
     
@@ -99,7 +99,7 @@
   class(res) <- c('colorspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
-  attr(res, 'clrsp') <- 'maxwell'
+  attr(res, 'clrsp') <- 'trispace'
   attr(res, 'conenumb') <- 3
   attr(res, 'qcatch') <- attr(vismodeldata, 'qcatch')
   attr(res,'visualsystem.chromatic') <- attr(vismodeldata,'visualsystem.chromatic')

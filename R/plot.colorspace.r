@@ -131,8 +131,8 @@ plot.colorspace <- function(clrspdata, ...){
     .diplot(clrspdata, ...)
   }
   
-  if(attr(clrspdata, 'clrsp') == 'maxwell'){
-    .maxplot(clrspdata, ...)
+  if(attr(clrspdata, 'clrsp') == 'trispace'){
+    .triplot(clrspdata, ...)
   }
   
   if(grepl('CIE', attr(clrspdata, 'clrsp'))){

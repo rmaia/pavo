@@ -4,7 +4,7 @@
 \alias{colorspace}
 \title{Model spectra in a colorspace}
 \usage{
-colorspace(modeldata, space = c("di", "maxwell", "hexagon", "tcs", "coc",
+colorspace(modeldata, space = c("di", "tri", "tcs", "hexagon", "coc",
   "categorical", "ciexyz", "cielab"))
 }
 \arguments{
@@ -29,10 +29,10 @@ vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALS
 hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
 plot(hex.flowers)
 
-# Maxwell triangle
+# Trichromat
 vis.flowers <- vismodel(flowers, visual = 'apis')
-maxwell.flowers <- colorspace(vis.flowers, space = 'maxwell')
-plot(maxwell.flowers)
+tri.flowers <- colorspace(vis.flowers, space = 'tri')
+plot(tri.flowers)
 }
 
 }

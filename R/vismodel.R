@@ -76,17 +76,17 @@
 #' # Dichromat
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- dispace(vis.flowers)
+#' di.flowers <- colorspace(vis.flowers, space = 'di')
 #' 
 #' # Trichromat 
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' maxwell.flowers <- maxwell(vis.flowers)
+#' tri.flowers <- colorspace(vis.flowers, space = 'tri')
 #' 
 #' # Tetrachromat
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
-#' tcs.sicalis <- tcs(vis.sicalis)
+#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
 #' }
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
