@@ -41,7 +41,7 @@
 + Add general 'plot' function. The main workflow is now vismodel() -> colorspace() -> plot().
 + Add general 'points' & 'vol' function.
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
-+ projplot
+- projplot as general option
 - CIELAB space & plot
 - CIELCh space & plot
 - fly vis syst
