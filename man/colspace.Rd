@@ -33,6 +33,10 @@ plot(hex.flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis')
 tri.flowers <- colspace(vis.flowers, space = 'tri')
 plot(tri.flowers)
+
+# Tetrachromat
+vis.flowers <- vismodel(flowers, visual = 'bluetit')
+tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 }
 
 }

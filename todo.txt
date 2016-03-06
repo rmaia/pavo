@@ -7,6 +7,7 @@
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
 - add couple plotting options for `segclass` objects 
 - reformat & extend vignette
+- subset.rspec doesn't work
 
 ## Me
 - Add CIE chromaticity diagram function
@@ -32,7 +33,7 @@
 + Add color opponent coding (coc) space & plot
 + Add CIEXYZ space & plot
 + Generalise summary.colorspace
-+ Add new visual systems. Canis (dichromat), Apis (trichromat)
++ Add new visual systems: canis (dichromat), apis (trichromat)
 + Generalise 'vismodel' doc
 + Add .jazirrad capability to getspec()
 + Add hyperbolic transform of quantum catches as an option in vismodel()
@@ -40,7 +41,7 @@
 + Add general 'plot' function. The main workflow is now vismodel() -> colorspace() -> plot().
 + Add general 'points' & 'vol' function.
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
-- generalise subset.rspec
++ projplot
 - CIELAB space & plot
 - CIELCh space & plot
 - fly vis syst

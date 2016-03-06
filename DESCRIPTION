@@ -17,7 +17,8 @@ Imports:
     rcdd,
     rgl,
     mapproj,
-    geometry
+    geometry,
+    scatterplot3d
 Collate:
     'aggplot.R'
     'aggspec.R'

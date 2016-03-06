@@ -23,6 +23,10 @@
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
 #' tri.flowers <- colspace(vis.flowers, space = 'tri')
 #' plot(tri.flowers)
+#' 
+#' # Tetrachromat
+#' vis.flowers <- vismodel(flowers, visual = 'bluetit')
+#' tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
