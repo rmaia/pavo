@@ -2,7 +2,7 @@
 % Please edit documentation in R/colorspace.r
 \name{colorspace}
 \alias{colorspace}
-\title{Model spectra in a colourspace}
+\title{Model spectra in a colorspace}
 \usage{
 colorspace(modeldata, space = c("di", "maxwell", "hexagon", "tcs", "coc",
   "categorical", "ciexyz", "cielab"))

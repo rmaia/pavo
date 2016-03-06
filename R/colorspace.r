@@ -1,4 +1,4 @@
-#' Model spectra in a colourspace
+#' Model spectra in a colorspace
 #'
 #' \code{colorspace} Plots reflectance spectra in the appropriate colorspace
 #' 
