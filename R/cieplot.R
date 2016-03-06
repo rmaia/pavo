@@ -21,7 +21,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- colorspace(vis.flowers, space = 'ciexyz')
+#' flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
 #' plot(flowers.cie)
 #' }
 
@@ -29,11 +29,11 @@
                      out.lty = 1, ...){
   
 # Check if object is of class colorspace and trichromat
-  if(!('colorspace' %in% attr(ciedata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(ciedata)))
-    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
+  if(!('colspace' %in% attr(ciedata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(ciedata)))
+    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(ciedata, 'class')) & !grepl('CIE', attr(ciedata, 'clrsp')))
-    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('cie()'))
+  if(('colspace' %in% attr(ciedata, 'class')) & !grepl('CIE', attr(ciedata, 'clrsp')))
+    stop(dQuote('colspace'), ' object is not a result of ', dQuote('cie()'))
   
   arg <- list(...)
   

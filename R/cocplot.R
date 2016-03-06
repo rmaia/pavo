@@ -16,7 +16,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-#' coc.flowers <- colorspace(vis.flowers, space = 'coc')
+#' coc.flowers <- colspace(vis.flowers, space = 'coc')
 #' plot(coc.flowers)
 #' }
 #' 
@@ -28,12 +28,12 @@
 .cocplot <- function(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
                      achro = FALSE, achrosize = 0.8, achrocol = 'grey', ...){ 
   
-  # Check if object is of class colorspace and trichromat
-  if(!('colorspace' %in% attr(cocdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(cocdata)))
-    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
+  # Check if object is of class colspace and trichromat
+  if(!('colspace' %in% attr(cocdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(cocdata)))
+    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(cocdata, 'class')) & attr(cocdata, 'clrsp') != 'coc')
-    stop(dQuote('colorspace'), ' object is not a result of coc()')
+  if(('colspace' %in% attr(cocdata, 'class')) & attr(cocdata, 'clrsp') != 'coc')
+    stop(dQuote('colspace'), ' object is not a result of coc()')
   
   arg <- list(...)
   

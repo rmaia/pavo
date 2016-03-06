@@ -2,12 +2,12 @@
 #' 
 #' Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
-#' with noise based on relative photoreceptor densities. It also accepts \code{\link{colorspace}} data 
+#' with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
 #' from the hexagon, colour-opponent-coding, and cielab spaces, in which case euclidean
 #' distances (hexagon, cielab) or manhattan distances (coc) are returned.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be the result
-#'  from \code{\link{vismodel}}, or \code{\link{colorspace}} when \code{space = 
+#'  from \code{\link{vismodel}}, or \code{\link{colspace}} when \code{space = 
 #'  'hexagon', 'coc', or 'cielab'}. Data may also be independently calculated quantum catches, 
 #'  in the form of a data frame with columns representing photoreceptors.
 #' @param qcatch if the object is of class \code{vismodel}, such as one generated using 
@@ -20,7 +20,7 @@
 #'    channel is proportional to the logarithm of the quantum catch)
 #'  }
 #' @param vis visual system phenotype to use in the model (ignored when data are 
-#'  of class \code{\link{vismodel}}, or \code{\link{colorspace}}):
+#'  of class \code{\link{vismodel}}, or \code{\link{colspace}}):
 #' \itemize{
 #'  \item \code{tetra}: Tetrachromatic color vision (default)
 #'  \item \code{tri}: Trichromatic color vision
@@ -33,24 +33,24 @@
 #'  are supported.
 #' @param achro Logical. If \code{TRUE}, last column of the data frame is used to calculate 
 #'  the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}. 
-#'  If the data are from the hexagon model (i.e. \code{colorspace(space = 'hexagon')}), it 
+#'  If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
 #'  instead returns long (or 'green') receptor contrast.
 #' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
 #'  the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
 #'  \code{'tetra'}, only \code{n1} and \code{n2} (\code{vis = 'di'}) or 
 #'  \code{n1}, \code{n2} and \code{n3} (\code{vis = 'tri'}) are used for chromatic contrast. 
-#'  Ignored when data are of class \code{\link{colorspace}}.
+#'  Ignored when data are of class \code{\link{colspace}}.
 #' @param weber The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
 #'  and therefore must be calculated based on the epirically estimated Weber fraction of one of
 #'  the cone classes. \code{v} is then applied to estimate the Weber fraction of the 
 #'  other cones. by default, the value of 0.1 is used (the empirically estimated value for the
-#'  LWS cone from \emph{Leiothrix lutea}). Ignored when data are of class \code{\link{colorspace}}.
+#'  LWS cone from \emph{Leiothrix lutea}). Ignored when data are of class \code{\link{colspace}}.
 #' @param weber.ref the cone class used to obtain the empirical estimate of the 
 #'  Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
-#'  representing the LWS cone for \emph{Leiothrix lutea}. Ignored when data are of class \code{\link{colorspace}}.
+#'  representing the LWS cone for \emph{Leiothrix lutea}. Ignored when data are of class \code{\link{colspace}}.
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when 
-#'  \code{achro = TRUE}. Defaults to 0.1. Ignored when data are the result of \code{\link{colorspace}}.
-#' @param noise how the noise will be calculated (gnored when data are of class \code{\link{colorspace}}):
+#'  \code{achro = TRUE}. Defaults to 0.1. Ignored when data are the result of \code{\link{colspace}}.
+#' @param noise how the noise will be calculated (gnored when data are of class \code{\link{colspace}}):
 #' \itemize{
 #' 	\item \code{neural}: noise is proportional to the Weber fraction and is independent of the
 #' 	intensity of the signal received.
@@ -80,7 +80,7 @@
 #' 
 #' # Trichromat, color-hexagon model
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
+#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' hexdist.flowers <- coldist(hex.flowers)
 #' 
 #' # Tetrachromat
@@ -108,14 +108,14 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
 
   # Only hexagon, coc, & cielab models have distance metrics
-  if('colorspace' %in% class(vismodeldata)){
+  if('colspace' %in% class(vismodeldata)){
     space <- match.arg(attr(vismodeldata, 'clrsp'), c('coc', 'hexagon', 'CIELAB'))
     if(inherits(space,'try-error'))
-       stop('Object is of class colorspace, but has no suitable distance metric')
+       stop('Object is of class colspace, but has no suitable distance metric')
     }
   
-  # Pre-processing for colorspace objects
-  if('colorspace' %in% class(vismodeldata)){
+  # Pre-processing for colspace objects
+  if('colspace' %in% class(vismodeldata)){
     dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
     qcatch <- attr(vismodeldata, 'qcatch')
   }
@@ -148,7 +148,7 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
   if(!'vismodel' %in% class(vismodeldata) && noise == 'quantum')
     stop('Object must be of class vismodel to calculate quantum noise model')
   
-  if(!'colorspace' %in% class(vismodeldata)){
+  if(!'colspace' %in% class(vismodeldata)){
     noise <- match.arg(noise)
     vis <- match.arg(vis)
     dat <- switch(qcatch, fi = dat, Qi = log(dat))
@@ -161,7 +161,7 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
   res <- data.frame(patch1, patch2)
   
   ### Receptor-noise models ###
-  if(!'colorspace' %in% class(vismodeldata)){
+  if(!'colspace' %in% class(vismodeldata)){
     # Calculate v based on weber fraction and reference cone
     v <- switch(weber.ref,
             n1 = weber * sqrt(n1),
@@ -228,7 +228,7 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
     
   }
   
-  ### Colorspace model distances ###
+  ### colspace model distances ###
   if(attr(vismodeldata, 'clrsp') == 'hexagon'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)

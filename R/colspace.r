@@ -1,6 +1,6 @@
 #' Model spectra in a colorspace
 #'
-#' \code{colorspace} Plots reflectance spectra in the appropriate colorspace
+#' \code{colspace} Model reflectance spectra in a colorspace
 #' 
 #' @param modeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -11,17 +11,17 @@
 #' 
 #' # Dichromat space
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colorspace(vis.flowers, space = 'di')
+#' di.flowers <- colspace(vis.flowers, space = 'di')
 #' summary(di.flowers)
 #'
 #' # Colour hexagon 
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
+#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' 
 #' # Trichromat
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' tri.flowers <- colorspace(vis.flowers, space = 'tri')
+#' tri.flowers <- colspace(vis.flowers, space = 'tri')
 #' plot(tri.flowers)
 #' }
 #' 
@@ -50,7 +50,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-colorspace <- function(modeldata, space = c('di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
+colspace <- function(modeldata, space = c('di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
   
   space2 <- try(match.arg(space), silent = T)
 

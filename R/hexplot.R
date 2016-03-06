@@ -25,7 +25,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
+#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' }
 #' 
@@ -42,12 +42,12 @@
                      out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
                      achrocol = 'grey', ...){
   
-# Check if object is of class colorspace and/or trichromat
-  if(!('colorspace' %in% attr(hexdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(hexdata)))
-    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
+# Check if object is of class colspace and/or trichromat
+  if(!('colspace' %in% attr(hexdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(hexdata)))
+    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(hexdata, 'class')) & attr(hexdata, 'clrsp') != 'hexagon')
-    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('hexagon()')) 
+  if(('colspace' %in% attr(hexdata, 'class')) & attr(hexdata, 'clrsp') != 'hexagon')
+    stop(dQuote('colspace'), ' object is not a result of ', dQuote('hexagon()')) 
   
   sectors <- match.arg(sectors)
   

@@ -11,7 +11,7 @@ coldist(vismodeldata, qcatch = c("Qi", "fi", "Ei"), vis = c("tetra", "tri",
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be the result
-from \code{\link{vismodel}}, or \code{\link{colorspace}} when \code{space = 
+from \code{\link{vismodel}}, or \code{\link{colspace}} when \code{space = 
 'hexagon', 'coc', or 'cielab'}. Data may also be independently calculated quantum catches, 
 in the form of a data frame with columns representing photoreceptors.}
 
@@ -26,14 +26,14 @@ in the form of a data frame with columns representing photoreceptors.}
  }}
 
 \item{vis}{visual system phenotype to use in the model (ignored when data are 
- of class \code{\link{vismodel}}, or \code{\link{colorspace}}):
+ of class \code{\link{vismodel}}, or \code{\link{colspace}}):
 \itemize{
  \item \code{tetra}: Tetrachromatic color vision (default)
  \item \code{tri}: Trichromatic color vision
  \item \code{di}: Dichromatic color vision
 }}
 
-\item{noise}{how the noise will be calculated (gnored when data are of class \code{\link{colorspace}}):
+\item{noise}{how the noise will be calculated (gnored when data are of class \code{\link{colspace}}):
 \itemize{
     \item \code{neural}: noise is proportional to the Weber fraction and is independent of the
     intensity of the signal received.
@@ -50,27 +50,27 @@ are supported.}
 
 \item{achro}{Logical. If \code{TRUE}, last column of the data frame is used to calculate 
 the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}. 
-If the data are from the hexagon model (i.e. \code{colorspace(space = 'hexagon')}), it 
+If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
 instead returns long (or 'green') receptor contrast.}
 
 \item{n1, n2, n3, n4}{tetrachromatic photoreceptor densities for u, s, m & l (default to 
 the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
 \code{'tetra'}, only \code{n1} and \code{n2} (\code{vis = 'di'}) or 
 \code{n1}, \code{n2} and \code{n3} (\code{vis = 'tri'}) are used for chromatic contrast. 
-Ignored when data are of class \code{\link{colorspace}}.}
+Ignored when data are of class \code{\link{colspace}}.}
 
 \item{weber}{The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
 and therefore must be calculated based on the epirically estimated Weber fraction of one of
 the cone classes. \code{v} is then applied to estimate the Weber fraction of the 
 other cones. by default, the value of 0.1 is used (the empirically estimated value for the
-LWS cone from \emph{Leiothrix lutea}). Ignored when data are of class \code{\link{colorspace}}.}
+LWS cone from \emph{Leiothrix lutea}). Ignored when data are of class \code{\link{colspace}}.}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the 
 Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
-representing the LWS cone for \emph{Leiothrix lutea}. Ignored when data are of class \code{\link{colorspace}}.}
+representing the LWS cone for \emph{Leiothrix lutea}. Ignored when data are of class \code{\link{colspace}}.}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when 
-\code{achro = TRUE}. Defaults to 0.1. Ignored when data are the result of \code{\link{colorspace}}.}
+\code{achro = TRUE}. Defaults to 0.1. Ignored when data are the result of \code{\link{colspace}}.}
 }
 \value{
 A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer
@@ -82,7 +82,7 @@ in the color-opponent-coding space.
 \description{
 Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
-with noise based on relative photoreceptor densities. It also accepts \code{\link{colorspace}} data 
+with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
 from the hexagon, colour-opponent-coding, and cielab spaces, in which case euclidean
 distances (hexagon, cielab) or manhattan distances (coc) are returned.
 }
@@ -99,7 +99,7 @@ tridist.flowers <- coldist(vis.flowers, vis = 'tri')
 
 # Trichromat, color-hexagon model
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 hexdist.flowers <- coldist(hex.flowers)
 
 # Tetrachromat

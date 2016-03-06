@@ -8,7 +8,7 @@
 #'  data frame with three columns representing trichromatic viewer).
 #' @param space (required) Choice between XYZ (1931) or LAB (1971) colour models.
 #' 
-#' @return Object of class \code{colorspace} containing:
+#' @return Object of class \code{colspace} containing:
 #'    \itemize{
 #'      \item \code{X, Y, Z}: Tristimulus values. 
 #'      \item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
@@ -21,7 +21,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- colorspace(vis.flowers, space = 'ciexyz')
+#' flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -91,7 +91,7 @@
   
   res <- res.p
   
-  class(res) <- c('colorspace', 'data.frame')
+  class(res) <- c('colspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- paste0('CIE', space)

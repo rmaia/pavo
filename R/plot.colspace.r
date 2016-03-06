@@ -1,9 +1,9 @@
 #' Plot Spectra in a Colourspace
 #'
-#' \code{plot.colorspace} Plots reflectance spectra in the appropriate colorspace
+#' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
 #' 
-#' @param clrspdata (required) an object of class \code{colorspace}, the result of
-#'  \code{colorspace()}. Note that the below options will vary by selected \code{space} 
+#' @param clrspdata (required) an object of class \code{colspace}, the result of
+#'  \code{colspace()}. Note that the below options will vary by selected \code{space} 
 #' 
 #' @param labels plot verticy labels (or category labels, when \code{space = \strong{'categorical'}})? 
 #'  Defaults to \code{TRUE}
@@ -46,8 +46,8 @@
 #'  (defaults to \code{TRUE}).
 #' @param ... additional graphical options. See \code{\link{par}} 
 #' 
-#' @return \code{plot.colorspace} creates a 2D colorspace plot appropriate to the input data.
-#'  \code{points.colorspace} adds points to the plot. When \code{space = \strong{'tcs'}}, 
+#' @return \code{plot.colspace} creates a 2D colspace plot appropriate to the input data.
+#'  \code{points.colspace} adds points to the plot. When \code{space = \strong{'tcs'}}, 
 #'  it creates an interactive 3D plot using functions of the package \code{rgl}, based on 
 #'  openGL capabilities. It can be manipulated with the mouse (left button: rotate along 
 #'  'z' axis; right button: rotate along 'x' axis; third button: zoom). \code{tcsvol} creates 
@@ -58,18 +58,18 @@
 #' 
 #' # Dichromat
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colorspace(vis.flowers, space = 'di')
+#' di.flowers <- colspace(vis.flowers, space = 'di')
 #' plot(di.flowers)
 #'
 #' # Colour hexagon 
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colorspace(vis.flowers, space = 'hexagon')
+#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
 #' 
 #' # Tetrahedron
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
+#' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' plot(tcs.sicalis, size = 0.005)
 #' rgl.postscript('testplot.pdf',fmt = 'pdf') 
 #' rgl.snapshot('testplot.png')
@@ -113,7 +113,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-plot.colorspace <- function(clrspdata, ...){
+plot.colspace <- function(clrspdata, ...){
   
   if(attr(clrspdata, 'clrsp') == 'hexagon'){
     .hexplot(clrspdata, ...)

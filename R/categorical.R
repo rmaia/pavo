@@ -6,7 +6,7 @@
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with four columns representing a tetrachromatic dipteran viewer).
 #' 
-#' @return Object of class \code{colorspace} consisting of the following columns:
+#' @return Object of class \code{colspace} consisting of the following columns:
 #' @return \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
 #'  calculate the remaining variables
 #' @return \code{x, y}: cartesian coordinates in the categorical colour space
@@ -16,7 +16,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
-#' cat.flowers <- colorspace(vis.flowers, space = 'categorical')
+#' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -95,7 +95,7 @@
   
   res <- res.p
   
-  class(res) <- c('colorspace', 'data.frame')
+  class(res) <- c('colspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'categorical'

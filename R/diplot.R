@@ -17,7 +17,7 @@
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colorspace(vis.flowers, space = 'di')
+#' di.flowers <- colspace(vis.flowers, space = 'di')
 #' plot(di.flowers)
 #' }
 #'
@@ -30,12 +30,12 @@
 .diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                     cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
     
-# Check if object is of class colorspace and trichromat
-  if(!('colorspace' %in% attr(didata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(didata)))
-    stop('object is not of class ', dQuote('colorspace'), ', and does not contain a x coordinates')
+# Check if object is of class colspace and trichromat
+  if(!('colspace' %in% attr(didata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(didata)))
+    stop('object is not of class ', dQuote('colspace'), ', and does not contain a x coordinates')
   
-  if(('colorspace' %in% attr(didata, 'class')) & attr(didata, 'clrsp') != 'dispace')
-    stop(dQuote('colorspace'), ' object is not a result of ', dQuote('dispace()')) 
+  if(('colspace' %in% attr(didata, 'class')) & attr(didata, 'clrsp') != 'dispace')
+    stop(dQuote('colspace'), ' object is not a result of ', dQuote('dispace()')) 
   
   arg <- list(...)
   

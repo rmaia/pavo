@@ -7,7 +7,7 @@
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with two columns representing trichromatic viewer).
 #' 
-#' @return A data frame of class \code{colorspace} consisting of the following columns:
+#' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{s}, \code{l}: the quantum catch data used to calculate 
 #'  the remaining variables.
 #' @return \code{x}: the coordinate of the stimulus along a segment
@@ -16,7 +16,7 @@
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colorspace(vis.flowers, space = 'di')
+#' di.flowers <- colspace(vis.flowers, space = 'di')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -85,7 +85,7 @@
   
   res <- res.p
   
-  class(res) <- c('colorspace', 'data.frame')
+  class(res) <- c('colspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'dispace'

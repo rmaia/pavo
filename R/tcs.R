@@ -26,7 +26,7 @@
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
+#' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' }
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -138,7 +138,7 @@
                     row.names=rownames(dat))
   
   res <- res.p
-  class(res) <- c('colorspace', 'data.frame')
+  class(res) <- c('colspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'tcs'

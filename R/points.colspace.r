@@ -1,16 +1,16 @@
 #' Plot Points in a Colorspace
 #'
-#' \code{points.colorspace} plots additional points in a colorspace
+#' \code{points.colspace} plots additional points in a colorspace
 #'
-#' @return \code{points.colorspace} adds points to a colorspace plot. When \code{space = 'tcs'}, 
+#' @return \code{points.colspace} adds points to a colorspace plot. When \code{space = 'tcs'}, 
 #'  it creates 3D points in a tetrahedral color space plot using functions of the package \code{rgl}, 
 #'  based on openGL capabilities.
 #'
-#' @rdname plot.colorspace
+#' @rdname plot.colspace
 #'
 #' @export
 
-points.colorspace <- function(clrspdata, ...){
+points.colspace <- function(clrspdata, ...){
   
   if(attr(clrspdata, 'clrsp') != 'tcs'){
     

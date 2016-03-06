@@ -14,7 +14,7 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
-#' cat.flowers <- colorspace(vis.flowers, space = 'categorical')
+#' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #' plot(cat.flowers)
 #' }
 #' 
@@ -26,11 +26,11 @@
 .catplot <- function(catdata, labels = TRUE, cex.labels = 0.9, ...){ 
   
 # Check if object is of class colorspace and tetrachromat
-  if(!('colorspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))
-    stop('object is not of class ', dQuote('colorspace'), ', and does not contain x, y coordinates')
+  if(!('colspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))
+    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
   
-  if(('colorspace' %in% attr(catdata, 'class')) & attr(catdata, 'clrsp') != 'categorical')
-    stop(dQuote('colorspace'), ' object is not a result of categorical()')
+  if(('colspace' %in% attr(catdata, 'class')) & attr(catdata, 'clrsp') != 'categorical')
+    stop(dQuote('colspace'), ' object is not a result of categorical()')
   
   arg <- list(...)
   

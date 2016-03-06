@@ -7,7 +7,7 @@
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with three columns representing trichromatic viewer).
 #' 
-#' @return A data frame of class \code{colorspace} consisting of the following columns:
+#' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
 #'  the remaining variables.
 #' @return \code{x}, \code{y}: coordinates for the points in coc space
@@ -17,7 +17,7 @@
 #' @examples \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-#' coc.flowers <- colorspace(vis.flowers, space = 'coc')
+#' coc.flowers <- colspace(vis.flowers, space = 'coc')
 #' } 
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -88,7 +88,7 @@
   
   res <- res.p
   
-  class(res) <- c('colorspace', 'data.frame')
+  class(res) <- c('colspace', 'data.frame')
   
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, 'clrsp') <- 'coc'

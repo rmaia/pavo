@@ -1,10 +1,10 @@
 #' Colorspace summary
 #'
-#' Returns the attributes of \code{colorspace} objects
+#' Returns the attributes of \code{colspace} objects
 #'
 #' @import geometry
 #' 
-#' @param object (required) a \code{colorspace} object. May be the result of \code{hexagon},
+#' @param object (required) a \code{colspace} object. May be the result of \code{hexagon},
 #'  \code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.
 #' @param by when the input data are the result of \code{tcs}, \code{by} is either 
 #'  a single value specifying the range of color points for which
@@ -53,7 +53,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-summary.colorspace <- function(object, by = NULL, ...){
+summary.colspace <- function(object, by = NULL, ...){
 
   if(attr(object, 'clrsp') != 'tcs'){
     

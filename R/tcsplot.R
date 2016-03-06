@@ -34,7 +34,7 @@
 #' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-#' tcs.sicalis <- colorspace(vis.sicalis, space = 'tcs')
+#' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' plot(tcs.sicalis, size = 0.005)
 #' rgl.postscript('testplot.pdf',fmt='pdf') 
 #' rgl.snapshot('testplot.png')
@@ -74,13 +74,13 @@
   # load RGL, and attempt install if not found
   loadrgl()
   
-  # Check if object is of class colorspace and tetrachromat
+  # Check if object is of class colspace and tetrachromat
   
-  if(!('colorspace' %in% attr(tcsdata, 'class')))
-    stop('object is not of class ', dQuote('colorspace'))
+  if(!('colspace' %in% attr(tcsdata, 'class')))
+    stop('object is not of class ', dQuote('colspace'))
   
-  if(('colorspace' %in% attr(tcsdata, 'class')) & attr(tcsdata, 'conenumb') != 4)
-    stop(dQuote('colorspace'), ' object is not a tetrachromat visual system')
+  if(('colspace' %in% attr(tcsdata, 'class')) & attr(tcsdata, 'conenumb') != 4)
+    stop(dQuote('colspace'), ' object is not a tetrachromat visual system')
   
   
   if(new)
