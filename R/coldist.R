@@ -221,15 +221,21 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
   
   ### Colorspace model distances ###
   if(attr(vismodeldata, 'clrsp') == 'hexagon'){
-    res$dS <- apply(pairsid, 1, function(x) euc2d2(dat[x[1], ], dat[x[2], ]))
+    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(vismodeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      warning('Achromatic contrast not calculated in the CIELAB model')
   }
   
   if(attr(vismodeldata, 'clrsp') == 'coc'){
     res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      warning('Achromatic contrast not calculated in the color-opponent-coding space')
   }
   
   nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))

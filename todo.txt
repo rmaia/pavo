@@ -41,10 +41,11 @@
 + colorspace function
 - generalise subset.rspec
 + generalise points and vol?
-- generalise coldist
+- generalise coldist (achro too. green contrast in hexagon. nothing in coc or cie?)
 - CIELAB space & plot
 - CIELCh space & plot
 - fly vis syst
 - check cex vs cex.labels in plots. Something squiffy?
+- col in hexplot
 
 

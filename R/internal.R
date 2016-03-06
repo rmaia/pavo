@@ -180,6 +180,11 @@ euc2d <- function(coord1, coord2){
   as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
 }
 
+# Achromatic 'green' receptor contrast in the hexagon
+achrohex <- function(coord1, coord2){
+  as.numeric(round(coord1['l'] - coord2['l'], 7))
+}
+
 # 2d Euclidean distances in CIELAB
 lab2d <- function(coord1, coord2){
                      as.numeric(round(sqrt(abs(coord1['L'] - coord2['L'])^2 + abs(coord1['a'] - coord2['a'])^2 +
