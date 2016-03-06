@@ -106,18 +106,13 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
                   achro = TRUE,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
-  
-  # hexagon
-  # coc
-  # categorical <- NA
-  # cielab only
-  
-  # Only hexagon, coc, & cielab have distance metrics
-  # if('colorspace' %in% class(vismodeldata)){
-  #    if(!'hexagon' %in% attr(vismodeldata, 'clrsp') || !'coc' %in% attr(vismodeldata, 'clrsp')){
-  #      stop('No suitable distance metric')
-  #    }
-  # }
+
+  # Only hexagon, coc, & cielab models have distance metrics
+  if('colorspace' %in% class(vismodeldata)){
+    space <- match.arg(attr(vismodeldata, 'clrsp'), c('coc', 'hexagon', 'CIELAB'))
+    if(inherits(space,'try-error'))
+       stop('Object is of class colorspace, but has no suitable distance metric')
+    }
   
   # Pre-processing for colorspace objects
   if('colorspace' %in% class(vismodeldata)){

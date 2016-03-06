@@ -25,28 +25,27 @@
 + don't load `rgl` automatically
 
 ## Tom
-+ hexagon space & plot
-+ maxwell space & plot
-+ categorical space & plot
-+ dichromatic space & plot
-+ COC space & plot
-+ CIEXYZ space & plot
-+ generalise summary.colorspace
-+ bee vis syst
-+ dichro vis syst (dog?)
-+ hyperbolic transform as general option
-+ generalise 'vismodel' doc - it's no longer just RN vs relative.
-+ add .jazirrad to getspec
-+ hyperbolic transform option in vismodel
-+ colorspace function
++ Add color hexagon space & plot
++ Add maxwell triangle space & plot
++ Add categorical model space & plot
++ Add dichromat space & plot
++ Add color opponent coding (coc) space & plot
++ Add CIEXYZ space & plot
++ Generalise summary.colorspace
++ Add new visual systems. Canis (dichromat), Apis (trichromat)
++ Generalise 'vismodel' doc
++ Add .jazirrad capability to getspec()
++ Add hyperbolic transform of quantum catches as an option in vismodel()
++ Add general 'colorspace' function. 
++ Add general 'plot' function. The main workflow is now vismodel() -> colorspace() -> plot().
++ Add general 'points' & 'vol' function.
++ Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
 - generalise subset.rspec
-+ generalise points and vol?
-- generalise coldist (achro too. green contrast in hexagon. nothing in coc or cie?)
 - CIELAB space & plot
 - CIELCh space & plot
 - fly vis syst
 - check cex vs cex.labels in plots. Something squiffy?
 - col in hexplot doesnt work?
-- check coldists
+- check coldist calcs
 
 

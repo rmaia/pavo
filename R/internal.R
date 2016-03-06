@@ -240,7 +240,7 @@ tcssum <- function(tcsres){
   res.c
 }
 
-# TODO: These are a couple of functions that do what should be simple things in an 
+# TODO (Tom): These are a couple of functions that do what should be simple things in an 
 # ugly way because my maths/programming is bad. Needs to be fixed.
 
 # Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
