@@ -96,7 +96,7 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
   # hexagon
   # coc
   # categorical <- NA
-  # cie?
+  # cielab only
   
   # Only hexagon, coc, & cielab have distance metrics
   # if('colorspace' %in% class(vismodeldata)){
@@ -222,6 +222,14 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
   ### Colorspace model distances ###
   if(attr(vismodeldata, 'clrsp') == 'hexagon'){
     res$dS <- apply(pairsid, 1, function(x) euc2d2(dat[x[1], ], dat[x[2], ]))
+  }
+  
+  if(attr(vismodeldata, 'clrsp') == 'CIELAB'){
+    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+  }
+  
+  if(attr(vismodeldata, 'clrsp') == 'coc'){
+    res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
   }
   
   nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))

@@ -182,8 +182,13 @@ euc2d <- function(coord1, coord2){
 
 # 2d Euclidean distances in CIELAB
 lab2d <- function(coord1, coord2){
-                     dist = round(sqrt(abs(coord1$L - coord2$L)^2 + abs(coord1$a - coord2$a)^2 +
-                                         abs(coord1$b - coord2$b)^2), 7)
+                     as.numeric(round(sqrt(abs(coord1['L'] - coord2['L'])^2 + abs(coord1['a'] - coord2['a'])^2 +
+                                         abs(coord1['b'] - coord2['b'])^2), 7))
+}
+
+# Manhattan distance
+bloc2d <- function(coord1, coord2){
+  as.numeric(round(abs(coord1['x'] - coord2['x']) + abs(coord1['y'] - coord2['y'])), 7)
 }
 
 ###################
