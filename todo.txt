@@ -46,6 +46,7 @@
 - CIELCh space & plot
 - fly vis syst
 - check cex vs cex.labels in plots. Something squiffy?
-- col in hexplot
+- col in hexplot doesnt work?
+- check coldists
 
 
