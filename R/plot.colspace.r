@@ -2,8 +2,8 @@
 #'
 #' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
 #' 
-#' @param clrspdata (required) an object of class \code{colspace}, the result of
-#'  \code{colspace()}. Note that the below options will vary by selected \code{space} 
+#' @param clrspdata (required) an object of class \code{colspace}. Note that the 
+#'  below options will vary by selected \code{space} 
 #' 
 #' @param labels plot verticy labels (or category labels, when \code{space = \strong{'categorical'}})? 
 #'  Defaults to \code{TRUE}
@@ -76,7 +76,7 @@
 #'
 #' ## Add points to tetrahedron
 #' patch <- rep(c('C','T','B'), 7)
-#' tcs.crown <- subset(tcs.sicalis, 'C') #### FIX SUBSET ###
+#' tcs.crown <- subset(tcs.sicalis, 'C')
 #' tcs.breast <- subset(tcs.sicalis, 'B') 
 #' plot(tcs.crown, col ='blue')
 #' points(tcs.breast, col ='red')

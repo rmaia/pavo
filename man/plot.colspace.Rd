@@ -13,8 +13,8 @@
 vol.colspace(clrspdata, ...)
 }
 \arguments{
-\item{clrspdata}{(required) an object of class \code{colspace}, the result of
-\code{colspace()}. Note that the below options will vary by selected \code{space}}
+\item{clrspdata}{(required) an object of class \code{colspace}. Note that the 
+below options will vary by selected \code{space}}
 
 \item{...}{additional graphical options. See \code{\link{par}}}
 
@@ -122,7 +122,7 @@ rgl.snapshot('testplot.png')
 
 ## Add points to tetrahedron
 patch <- rep(c('C','T','B'), 7)
-tcs.crown <- subset(tcs.sicalis, 'C') #### FIX SUBSET ###
+tcs.crown <- subset(tcs.sicalis, 'C')
 tcs.breast <- subset(tcs.sicalis, 'B') 
 plot(tcs.crown, col ='blue')
 points(tcs.breast, col ='red')
