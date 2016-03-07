@@ -324,7 +324,7 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H3 
 # limit to 400-700 nm range to avoid spurious UV peaks
-H3object <- object[which(wl==400):which(wl==700),]
+H3object <- object[wl %in% 400:700,]
 H3wl <- wl[wl %in% c(400:700)]
 # lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
 # Rmid <- round((H1+lambdaRmin)/2)
