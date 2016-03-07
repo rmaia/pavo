@@ -37,12 +37,12 @@
 + Generalise 'vismodel' doc
 + Add .jazirrad capability to getspec()
 + Add hyperbolic transform of quantum catches as an option in vismodel()
-+ Add general 'colorspace' function. 
-+ Add general 'plot' function. The main workflow is now vismodel() -> colorspace() -> plot().
-+ Add general 'points' & 'vol' function.
++ Add general 'colspace' function. 
++ Add general plot.colspace function. The main workflow is now vismodel() -> colspace() -> plot().
++ Add general points.colspace & vol.colspace functions.
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
-- projplot as general option
-- CIELAB space & plot
+- move projplot to general option in plot.colspace()
+- CIELAB space & plot (not quite there)
 - CIELCh space & plot
 - fly vis syst
 - check cex vs cex.labels in plots. Something squiffy?
