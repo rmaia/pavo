@@ -39,7 +39,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, ...) {
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -55,7 +55,7 @@ if (length(wl_index>0)){
 		}
 
 if (is.null(by)) {
-  dat <- apply(y, 1, FUN, ...)
+  dat <- apply(y, 1, FUN)
   res <- data.frame(cbind(wl=wl, dat))
   class(res) <- c('rspec','data.frame')
   return(res)
@@ -115,7 +115,7 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)  # is this necessary?
 
-dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
+dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
 
 colnames(dat) <- unique(by0)
 

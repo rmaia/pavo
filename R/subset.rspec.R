@@ -2,8 +2,7 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
-#' @S3method subset rspec
-#' @method subset rspec
+#' @export 
 #'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}
 #' containing spectra, visual model output or colourspace data to subset
@@ -27,12 +26,6 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 subset.rspec <- function (x, subset, ...) {
-  # remove 'wl' column if present
-  wl_index <- which(names(x)=='wl')
-  if (length(wl_index)==1) {
-    wl <- x[, wl_index]
-    x <- x[, -wl_index]
-  }
   if (is.logical(subset)) {
     subsample <- subset
   } else {
@@ -41,13 +34,12 @@ subset.rspec <- function (x, subset, ...) {
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[subsample]) # & !is.na(subset)])
+  res <- cbind(x["wl"], x[subsample]) # & !is.na(subset)])
   class(res) <- c("rspec", "data.frame")
   res
 }
 
-#' @S3method subset tcs
-#' @method subset tcs
+#' @export 
 #' @rdname subset.rspec
 #'
 subset.tcs <- function (x, subset, ...) {
@@ -66,8 +58,7 @@ subset.tcs <- function (x, subset, ...) {
   res
 }
 
-#' @S3method subset vismodel
-#' @method subset vismodel
+#' @export 
 #' @rdname subset.rspec
 #'
 subset.vismodel <- function (x, subset, ...) {
