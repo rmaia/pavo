@@ -2,14 +2,7 @@
 #'
 #' Subsets various object types based on a given vector or grep partial matching of data names
 #'
-<<<<<<< HEAD
 #' @export 
-||||||| merged common ancestors
-#' @S3method subset rspec
-#' @method subset rspec
-=======
-#' @method subset rspec
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #'
 #' @param x (required) an object of class \code{rspec}, \code{tcs} or \code{vismodel}
 #' containing spectra, visual model output or colourspace data to subset
@@ -31,7 +24,6 @@
 #' subset(tcs1, "B")[, 1:5]}
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
-#' @export subset.rspec
 
 subset.rspec <- function (x, subset, ...) {
   if (is.logical(subset)) {
@@ -47,14 +39,7 @@ subset.rspec <- function (x, subset, ...) {
   res
 }
 
-<<<<<<< HEAD
 #' @export 
-||||||| merged common ancestors
-#' @S3method subset tcs
-#' @method subset tcs
-=======
-#' @method subset tcs
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #' @rdname subset.rspec
 #'
 subset.tcs <- function (x, subset, ...) {
@@ -73,14 +58,7 @@ subset.tcs <- function (x, subset, ...) {
   res
 }
 
-<<<<<<< HEAD
 #' @export 
-||||||| merged common ancestors
-#' @S3method subset vismodel
-#' @method subset vismodel
-=======
-#' @method subset vismodel
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #' @rdname subset.rspec
 #'
 subset.vismodel <- function (x, subset, ...) {

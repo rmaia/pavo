@@ -3,15 +3,7 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
-<<<<<<< HEAD
 #' @export 
-||||||| merged common ancestors
-#' @S3method summary rspec
-#' @method summary rspec
-=======
-#' @export summary.rspec
-#' @method summary rspec
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
@@ -162,9 +154,6 @@
 #' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 
-#summary.rspec <- function (object, ...) {
-
- 
 summary.rspec <- function (object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
 
 wl_index <- which(names(object)=='wl')
@@ -326,8 +315,17 @@ S6 <- B3-Rmin # S6
 H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H3 
-lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
-  Rmid <- round((H1+lambdaRmin)/2)
+# limit to 400-700 nm range to avoid spurious UV peaks
+H3object <- object[wl %in% 400:700,]
+H3wl <- wl[wl %in% c(400:700)]
+# lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
+# Rmid <- round((H1+lambdaRmin)/2)
+RmaxH3 <- sapply(H3object, max)
+RmidH3 <- (Rmin + RmaxH3) / 2
+H3 <- sapply(1:ncol(H3object), function(x) {
+  which.min(abs(H3object[,x] - RmidH3[x]))
+})
+H3 <- H3wl[H3]
 
 # H2
 diffsmooth <- apply(object,2,diff)
@@ -364,7 +362,7 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
   output.mat[, 18] <- S10 
   output.mat[, 19] <- H1
   output.mat[, 20] <- lambdabmaxneg 
-  output.mat[, 21] <- Rmid
+  output.mat[, 21] <- H3 #Rmid
   output.mat[, 22] <- H4
   output.mat[, 23] <- lambdabmax
 

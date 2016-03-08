@@ -26,8 +26,6 @@
 #' \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
-#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
-#' \item \code{cie1931}: Human CIE 1931 color matching functions
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -73,16 +71,8 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
-<<<<<<< HEAD
   visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl"), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
-||||||| merged common ancestors
-  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl"), 
-  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
-=======
-  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl", "apis", "cie1931"), 
-  achromatic = c("none","bt.dc","ch.dc", 'st.dc',"ml"),
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
   illum = c('ideal','bluesky','D65','forestshade'), 
   vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
 {
