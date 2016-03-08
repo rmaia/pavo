@@ -3,7 +3,15 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
+<<<<<<< HEAD
 #' @export 
+||||||| merged common ancestors
+#' @S3method summary rspec
+#' @method summary rspec
+=======
+#' @export summary.rspec
+#' @method summary rspec
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing

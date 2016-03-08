@@ -39,7 +39,13 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
+<<<<<<< HEAD
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
+||||||| merged common ancestors
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, ...) {
+=======
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE) {
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -55,7 +61,13 @@ if (length(wl_index>0)){
 		}
 
 if (is.null(by)) {
+<<<<<<< HEAD
   dat <- apply(y, 1, FUN)
+||||||| merged common ancestors
+  dat <- apply(y, 1, FUN, ...)
+=======
+  dat <- apply(y, 1, FUN, na.rm = na.rm)
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
   res <- data.frame(cbind(wl=wl, dat))
   class(res) <- c('rspec','data.frame')
   return(res)
@@ -115,12 +127,25 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)  # is this necessary?
 
+<<<<<<< HEAD
 dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
+||||||| merged common ancestors
+dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, ...)})
+=======
+# check if '...' is in argument list of specified FUN
+# if not, add it. otherwise aggplot() options (like lty, lwd) will cause errors
+if (!is.name(formals(FUN)$...)) {
+  formals(FUN) <- c(formals(FUN), alist(... = ))
+}
+
+dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, na.rm = na.rm)})
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 
 colnames(dat) <- unique(by0)
 
-if(trim)
+if (trim) {
   colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
+}
 
 res <- data.frame(cbind(wl=wl, dat))
 

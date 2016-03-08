@@ -2,7 +2,15 @@
 #'
 #' Calculates characteristics of a cloud of points (spectra) in avian tetrahedral color space
 #'
+<<<<<<< HEAD
 #' @export 
+||||||| merged common ancestors
+#' @S3method summary tcs
+#' @method summary tcs
+=======
+#' @export summary.tcs
+#' @method summary tcs
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 #' @import geometry
 #' @param object (required) Results of \code{tcs} or Can be either the result
 #' from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

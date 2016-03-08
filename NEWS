@@ -1,12 +1,48 @@
+<<<<<<< HEAD
 pavo 0.5-4
+||||||| merged common ancestors
+
+=======
+pavo 0.6
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 ------------------------------------------------------------------------------
+<<<<<<< HEAD
 MINOR FEATURES AND BUG FIXES
 * changed default values for coldist()
+||||||| merged common ancestors
+MINOR FEATURES AND BUG FIXES:
 
+* procspec() fixed error when attempting to smooth rspec object without column names
+* procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
+* peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700
+* peakshape() returns warning if a spectrum contains duplicate reflectance values
+* summary.rspec() works with single spectra
+
+NEW FUNCTIONS:
+=======
+MINOR FEATURES AND BUG FIXES:
+
+* procspec() fixed error when attempting to smooth rspec object without column names
+* procspec(), aggplot() accept 'na.rm' argument
+* peakshape() wavelength limits now taken from rspec object rather than defaulting to 300-700 nm
+* peakshape() returns warning if a spectrum contains duplicate reflectance values
+* summary.rspec() fixed to work with single spectra
+* getspec() has a default, ~5-10X faster input option for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics).
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
+
+<<<<<<< HEAD
 pavo 0.5-2
 ------------------------------------------------------------------------------
 MINOR FEATURES AND BUG FIXES
 * fixes to the blue tit visual system, changed vismodel() argument to "bluetit"
+||||||| merged common ancestors
+* fgetspec() faster (~5-10X), but less flexible, version of getspec() for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics)
+=======
+pavo 0.5-2
+------------------------------------------------------------------------------
+BUG FIXES
+* Fixed issue in vismodel() when using blue tit visual system, in which achromatic column would also be selected as a chromatic photoreceptor
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 
 pavo 0.5-1
 ------------------------------------------------------------------------------

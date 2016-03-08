@@ -33,6 +33,7 @@
 
 tcs<- function(vismodeldata)
 {
+<<<<<<< HEAD
 
 # check class, import selected sensitivity
 # make relative (in case not inherited relative)
@@ -75,6 +76,91 @@ if(!any(attr(dat, 'visualsystem')=='none') & ncol(dat) > 4 & !all(c('u','s','m',
 if(!all(c('u','s','m','l') %in% names(dat)))
   stop(paste('Input data must have columns named',
   dQuote('u'),',',  dQuote('s'),',',  dQuote('m'),', and', dQuote('l')))
+||||||| merged common ancestors
+
+dat <- vismodeldata
+
+# if object is vismodel:
+if('vismodel' %in% attr(dat, 'class')){
+
+# check if tetrachromat
+  if(attr(dat, 'conenumb') < 4)
+    stop('vismodel input is not tetrachromatic')
+
+  if(attr(dat, 'conenumb') > 4)
+    warning('vismodel input is not tetrachromatic, considering first four receptors only')
+  
+# check if relative
+  if(!attr(dat, 'relative')){
+    dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+    class(dat) <- class(vismodeldata)
+    warning("Quantum catch are not relative, and have been transformed")
+  }
+    
+}
+
+# if not, check if it has more (or less) than 4 columns
+
+if(!('vismodel' %in% attr(dat, 'class'))){
+
+  if(ncol(dat) < 4)
+    stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
+  if(ncol(dat) == 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+
+  if(ncol(dat) > 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+    
+  dat <- dat[, 1:4]
+  
+  if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
+  	dat <- dat/apply(dat, 1, sum)
+  	warning('Quantum catch are not relative, and have been divided by their sum')
+  }
+}
+=======
+
+dat <- vismodeldata
+
+# if object is vismodel:
+if('vismodel' %in% attr(dat, 'class')){
+
+# check if tetrachromat
+  if(attr(dat, 'conenumb') < 4)
+    stop('vismodel input is not tetrachromatic')
+
+  if(attr(dat, 'conenumb') > 4)
+    warning('vismodel input is not tetrachromatic, considering first four receptors only')
+  
+# check if relative
+  if(!attr(dat, 'relative')){
+    dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
+    class(dat) <- class(vismodeldata)
+    warning("Quantum catch are not relative, and have been transformed")
+  }
+    
+}
+
+# if not, check if it has more (or less) than 4 columns
+
+if(!('vismodel' %in% attr(dat, 'class'))){
+
+  if(ncol(dat) < 4)
+    stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
+  if(ncol(dat) == 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+
+  if(ncol(dat) > 4)
+    warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+    
+  dat <- dat[, 1:4]
+  
+  if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
+  	dat <- dat/apply(dat, 1, sum)
+  	warning('Quantum catch are not relative, and have been divided by their sum')
+  }
+}
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 
 if(!attr(dat, 'relative')){
   dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
@@ -162,6 +248,19 @@ res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r,
 #res <- list(tcs=res.p,summary=res.c)
 
 res <- res.p
+<<<<<<< HEAD
 class(res) <- c('tcs', 'data.frame')
+||||||| merged common ancestors
+class(res) <- c('colorspace', 'data.frame')
+
+attr(res, 'conenumb') <- 4
+
+=======
+# class(res) <- c('colorspace', 'data.frame')
+class(res) <- c('tcs', 'data.frame')
+
+attr(res, 'conenumb') <- 4
+
+>>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
 res
 }
