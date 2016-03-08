@@ -32,10 +32,13 @@
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
+aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
+                    lcol = NULL, shadecol = NULL, alpha = 0.2, ...) {
 
-#  OK, so we have a little problem here. when a user specifies an error function the na.rm argument returns an error since it isn't found in the user-specified function
+if (is.numeric(by))
+  if (by==1)
+    stop('Cannot group single spectra (use plot instead)')
 
-<<<<<<< HEAD
 #take aggregated data
 cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
 errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
@@ -55,130 +58,77 @@ if (length(wl_index) > 0) {
   wl <- 1:nrow(rspecdata)
   warning('No wavelengths provided; using arbitrary index values')
 }
-||||||| merged common ancestors
-#take aggregated data
-cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center, ...)
-errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error, ...)
 
-# make wavelength vector
-wl_index <- which(names(rspecdata)=='wl')
-wl_index_cnt <- which(names(cntplotspecs)=='wl')
-wl_index_err <- which(names(errplotspecs)=='wl')
+indexsub <- 1:dim(cntplotspecs)[2]
 
-if (length(wl_index) > 0) {
-  haswl <- TRUE
-  wl <- rspecdata[, wl_index]
-  cntplotspecs <- as.data.frame(cntplotspecs[,-wl_index_cnt])
-  errplotspecs <- as.data.frame(errplotspecs[,-wl_index_err])
-} else {
-  haswl <- FALSE
-  wl <- 1:nrow(rspecdata)
-  warning('No wavelengths provided; using arbitrary index values')
-}
-=======
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
+polygon_data <- sapply(indexsub, function(x) 
+			c(cntplotspecs[,x]+errplotspecs[,x], rev(cntplotspecs[,x]-errplotspecs[,x]) )
+			)
 
-aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
-                    lcol = NULL, shadecol = NULL, alpha = 0.2, na.rm = FALSE, ...) {
+polygon_wl <- c(wl,rev(wl))
 
-  if (is.numeric(by) & by==1) {
-    stop('Cannot group single spectra (use plot instead)')
-  }
-  
-  #take aggregated data
-  cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center, na.rm = na.rm)
-  errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error, na.rm = na.rm)
+# Set sensible plotting defaults
+arg <- list(...)
 
-  # make wavelength vector
-  wl_index <- which(names(rspecdata)=='wl')
-  wl_index_cnt <- which(names(cntplotspecs)=='wl')
-  wl_index_err <- which(names(errplotspecs)=='wl')
+if (is.null(arg$xlab))
+  arg$xlab <- "Wavelength (nm)"
+if (is.null(arg$xlim))
+  arg$xlim <- range(wl)
+if (is.null(arg$ylim))
+  arg$ylim <- range(polygon_data)
+if (is.null(arg$xlab))
+  arg$xlab <- "Wavelength (nm)"
+if (is.null(arg$ylab))
+  arg$ylab <- "Reflectance (%)"
 
-  if (length(wl_index) > 0) {
-    haswl <- TRUE
-    wl <- rspecdata[, wl_index]
-    cntplotspecs <- as.data.frame(cntplotspecs[, -wl_index_cnt])
-    errplotspecs <- as.data.frame(errplotspecs[, -wl_index_err])
-  } else {
-    haswl <- FALSE
-    wl <- 1:nrow(rspecdata)
-    warning('No wavelengths provided; using arbitrary index values')
-  }
+# coloring for overlay plot & others
+if (!is.null(arg$lty))
+  lty <- arg$lty
 
-  indexsub <- 1:dim(cntplotspecs)[2]
+if (is.null(arg$lty))
+  lty <- 1
 
-  polygon_data <- sapply(indexsub, function(x) 
-  			c(cntplotspecs[,x]+errplotspecs[,x], rev(cntplotspecs[,x]-errplotspecs[,x]) )
-  			)
+if (length(lty) < ncol(cntplotspecs))
+   lty <- rep(lty, ncol(cntplotspecs))
 
-  polygon_wl <- c(wl, rev(wl))
+if (length(shadecol) < ncol(cntplotspecs))
+  shadecol <- rep(shadecol, ncol(cntplotspecs))
+# if (any(class(shadecol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+#   shadecol <- spec2rgb(cbind(wl,cntplotspecs))
 
-  # Set sensible plotting defaults
-  arg <- list(...)
+if (length(lcol) < ncol(cntplotspecs))
+  lcol <- rep(lcol, ncol(cntplotspecs))
+# if (any(class(lcol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
+#   lcol <- spec2rgb(cbind(wl,cntplotspecs))
+   
+col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+              "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
 
-  if (is.null(arg$xlab))
-    arg$xlab <- "Wavelength (nm)"
-  if (is.null(arg$xlim))
-    arg$xlim <- range(wl)
-  if (is.null(arg$ylim))
-    arg$ylim <- range(polygon_data)
-  if (is.null(arg$xlab))
-    arg$xlab <- "Wavelength (nm)"
-  if (is.null(arg$ylab))
-    arg$ylab <- "Reflectance (%)"
+col_list <- rep(col_list, length=dim(cntplotspecs)[2])
 
-  # coloring for overlay plot & others
-  if (!is.null(arg$lty))
-    lty <- arg$lty
+if (is.null(shadecol))
+  shadecol <- col_list
 
-  if (is.null(arg$lty))
-    lty <- 1
+if(is.null(lcol))
+  lcol <- col_list
+ 
+ shadecol = rgb(t(col2rgb(shadecol))/255, alpha=alpha)
+ lcol = rgb(t(col2rgb(lcol))/255)
 
-  if (length(lty) < ncol(cntplotspecs))
-     lty <- rep(lty, ncol(cntplotspecs))
+# plot polygons first...
 
-  if (length(shadecol) < ncol(cntplotspecs))
-    shadecol <- rep(shadecol, ncol(cntplotspecs))
-  # if (any(class(shadecol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
-  #   shadecol <- spec2rgb(cbind(wl,cntplotspecs))
-
-  if (length(lcol) < ncol(cntplotspecs))
-    lcol <- rep(lcol, ncol(cntplotspecs))
-  # if (any(class(lcol)=='spec2rgb'))  # this messes up when you give a normal color string; need to look for # or something about hex.
-  #   lcol <- spec2rgb(cbind(wl,cntplotspecs))
-     
-  col_list <- c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-                "#FF7F00", "#FFFF33", "#A65628", "#F781BF")
-
-  col_list <- rep(col_list, length=dim(cntplotspecs)[2])
-
-  if (is.null(shadecol))
-    shadecol <- col_list
-
-<<<<<<< HEAD
 arg$x <- wl
 arg$y <- cntplotspecs[, 1]
 arg$type <- 'n'
 
   do.call(plot, arg)
-||||||| merged common ancestors
-arg$x <- wl
-arg$y <- cntplotspecs[, 1]
-arg$type <- 'n'
 
-arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-do.call(plot, arg0)
-=======
-  if(is.null(lcol))
-    lcol <- col_list
-   
-   shadecol = rgb(t(col2rgb(shadecol))/255, alpha=alpha)
-   lcol = rgb(t(col2rgb(lcol))/255)
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
+arg$type <- NULL
+arg$x <- polygon_wl
+arg$y <- polygon_data[, 1]
+arg$col <- shadecol[1]  
+arg$border <- NA
 
-  # plot polygons first...
-
-<<<<<<< HEAD
 do.call(polygon, arg)
   
   if (ncol(cntplotspecs)>1) {
@@ -192,29 +142,11 @@ do.call(polygon, arg)
 # ...then lines (so they are on top)
   arg$border <- NULL
   arg$col <- lcol[1]
-||||||| merged common ancestors
-arg0 <- arg[names(arg)%in%names(formals(polygon))]
-do.call(polygon, arg0)
-  
-  if (ncol(cntplotspecs)>1) {
-    for (i in 2:ncol(cntplotspecs)){
-      arg$col <- shadecol[i]
-      arg$y <- polygon_data[, i]
-      arg0 <- arg[names(arg) %in% c(names(formals(polygon)), names(par()))]
-      do.call(polygon, arg0)
-    }
-  }
-  
-# ...then lines (so they are on top)
-  arg$border <- NULL
-  arg$col <- lcol[1]
-=======
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
   arg$x <- wl
   arg$y <- cntplotspecs[, 1]
-  arg$type <- 'n'
+  arg$type <- 'l'
+  arg$lty <- lty[1]
 
-<<<<<<< HEAD
   do.call(lines, arg)
 
   if (ncol(cntplotspecs)>1) {
@@ -223,59 +155,7 @@ do.call(polygon, arg0)
       arg$col <- lcol[i]
       arg$lty <- lty[i]
       do.call(lines, arg)
-||||||| merged common ancestors
-  arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-  do.call(lines, arg0)
-
-  if (ncol(cntplotspecs)>1) {
-    for (i in 2:ncol(cntplotspecs)){
-      arg$y <- cntplotspecs[, i]
-      arg$col <- lcol[i]
-      arg$lty <- lty[i]
-      arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-      do.call(lines, arg0)
-=======
-  arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-  do.call(plot, arg0)
-
-  # arg$type <- NULL
-  arg$x <- polygon_wl
-  arg$y <- polygon_data[, 1]
-  arg$col <- shadecol[1]  
-  arg$border <- NA
-
-  arg0 <- arg[names(arg)%in%names(formals(polygon))]
-  do.call(polygon, arg0)
-    
-    if (ncol(cntplotspecs)>1) {
-      for (i in 2:ncol(cntplotspecs)) {
-        arg$col <- shadecol[i]
-        arg$y <- polygon_data[, i]
-        arg0 <- arg[names(arg) %in% c(names(formals(polygon)), names(par()))]
-        do.call(polygon, arg0)
-      }
     }
-    
-  # ...then lines (so they are on top)
-    arg$border <- NULL
-    arg$col <- lcol[1]
-    arg$x <- wl
-    arg$y <- cntplotspecs[, 1]
-    arg$type <- 'l'
-    arg$lty <- lty[1]
-
-    arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-    do.call(lines, arg0)
-
-    if (ncol(cntplotspecs)>1) {
-      for (i in 2:ncol(cntplotspecs)){
-        arg$y <- cntplotspecs[, i]
-        arg$col <- lcol[i]
-        arg$lty <- lty[i]
-        arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-        do.call(lines, arg0)
-      }
->>>>>>> ab092e4ba273b9f2fd553abd0597d3fa4acb39bd
-    }
+  }
 
 }
