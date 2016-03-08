@@ -88,14 +88,14 @@ start <- max(start)
 
 end <- length(raw) - start
 
-if( isendline > 0 )
+if( isendline >0 )
   end <- end - 1
 
 # Avantes has an extra skipped line between header and data. Bad Avantes.
 newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
 
 if(newavaheader)
-  start <- start + 1
+  start <- start+1
 
 # find if columns are separated by semicolon or tab
 issem <- length(grep(';',raw)) > 0
@@ -108,13 +108,13 @@ separ <- ifelse(issem,';','\t')
 
 # extract data from file
 
-tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end, row.names=NULL)		
+tempframe <- read.table(files[i], dec=decimal, sep=separ, skip=start, nrows=end)		
 
 # remove columns where all values are NAs (due to poor tabulation)
-tempframe <- tempframe[ ,colSums(is.na(tempframe))<nrow(tempframe)]
+tempframe <- tempframe[,colSums(is.na(tempframe))<nrow(tempframe)]
 
 # Jaz and Avasoft8 have 5 columns, correct
-tempframe <- tempframe[ ,c(1,dim(tempframe)[2])]
+tempframe <- tempframe[,c(1,dim(tempframe)[2])]
 
 
 interp<-data.frame(approx(tempframe[,1], tempframe[,2], xout=range))

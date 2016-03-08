@@ -40,8 +40,8 @@ if (is.numeric(by))
     stop('Cannot group single spectra (use plot instead)')
 
 #take aggregated data
-cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center, ...)
-errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error, ...)
+cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
+errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
 
 # make wavelength vector
 wl_index <- which(names(rspecdata)=='wl')
@@ -121,8 +121,7 @@ arg$x <- wl
 arg$y <- cntplotspecs[, 1]
 arg$type <- 'n'
 
-arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-do.call(plot, arg0)
+  do.call(plot, arg)
 
 arg$type <- NULL
 arg$x <- polygon_wl
@@ -130,15 +129,13 @@ arg$y <- polygon_data[, 1]
 arg$col <- shadecol[1]  
 arg$border <- NA
 
-arg0 <- arg[names(arg)%in%names(formals(polygon))]
-do.call(polygon, arg0)
+do.call(polygon, arg)
   
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
       arg$col <- shadecol[i]
       arg$y <- polygon_data[, i]
-      arg0 <- arg[names(arg) %in% c(names(formals(polygon)), names(par()))]
-      do.call(polygon, arg0)
+      do.call(polygon, arg)
     }
   }
   
@@ -150,16 +147,14 @@ do.call(polygon, arg0)
   arg$type <- 'l'
   arg$lty <- lty[1]
 
-  arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-  do.call(lines, arg0)
+  do.call(lines, arg)
 
   if (ncol(cntplotspecs)>1) {
     for (i in 2:ncol(cntplotspecs)){
       arg$y <- cntplotspecs[, i]
       arg$col <- lcol[i]
       arg$lty <- lty[i]
-      arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-      do.call(lines, arg0)
+      do.call(lines, arg)
     }
   }
 

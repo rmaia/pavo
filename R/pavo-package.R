@@ -3,9 +3,9 @@
 #' \tabular{ll}{
 #' Package: \tab pavo\cr
 #' Type: \tab Package\cr
-#' Version: \tab 0.5-1\cr
+#' Version: \tab 0.0-1\cr
 #' Date: \tab 2012-10-13\cr
-#' License: \tab GPL (>= 2)\cr
+#' License: \tab BSD\cr
 #' LazyLoad: \tab yes\cr}
 #'
 #' @name pavo-package
@@ -16,4 +16,9 @@
 #' \email{cme16@@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #' @keywords package
 #' @examples #see functions.
-NULL
+#' @importFrom grDevices col2rgb colorRampPalette rgb
+#' @importFrom graphics abline axis image legend lines mtext par plot points polygon title
+#' @importFrom stats approx cor dist loess.smooth median quantile runif sd var
+#' @importFrom utils combn head read.table setTxtProgressBar tail txtProgressBar
+
+NA
