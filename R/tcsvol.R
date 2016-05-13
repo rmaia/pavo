@@ -5,7 +5,8 @@
 #' @return \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object
 #'
 
-.tcsvol <- function(tcsdata, col = 'black', alpha = 0.2, grid.alpha = 1, grid = T, fill = T){
+.tcsvol <- function(tcsdata, col = 'black', alpha = 0.2, 
+                     grid.alpha = 1, grid = T, fill = T, lwd = 1){
   
   # load RGL, and attempt install if not found
   loadrgl()
@@ -19,7 +20,8 @@
     for(i in 1:nrow(ppairs)){
         segments3d(coords[ppairs[i,], 'x'], 
                    coords[ppairs[i,], 'y'],
-                   coords[ppairs[i,], 'z'], color = col, alpha = grid.alpha)
+                   coords[ppairs[i,], 'z'], 
+                   color = col, alpha = grid.alpha, lwd=lwd)
     }
   }
   
