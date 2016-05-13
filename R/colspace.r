@@ -7,12 +7,15 @@
 #'  with columns representing quantum catches).
 #' @param space Which colorspace/model to use. Options are:
 #' \itemize{
+#' \item \code{auto}: if data is a result from \{vismodel}, 
+#' applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
+#' cones, respectively.
 #' \item \code{di}: dichromatic colourspace
 #' \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle)
-#' \item \code{tcs}: tetrahedral colourspace
-#' \item \code{hexagon}: the colour-hexagon of Chittka (1992)
-#' \item \code{coc}: the colour-opponent-coding model of Backhaus (1991) 
-#' \item \code{categorical}: the categorical fly-model of Troje (1993) 
+#' \item \code{tcs}: tetrahedral colourspace (tetrachromatic)
+#' \item \code{hexagon}: the colour-hexagon of Chittka (1992) (trichromatic)
+#' \item \code{coc}: the colour-opponent-coding model of Backhaus (1991) (trichromatic)
+#' \item \code{categorical}: the categorical fly-model of Troje (1993) (tetrachromatic)
 #' \item \code{ciexyz}: CIEXYZ space
 #' \item \code{cielab}: CIELAB space
 #' }
@@ -67,43 +70,30 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-colspace <- function(modeldata, space = c('di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
+colspace <- function(modeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
   
   space2 <- try(match.arg(space), silent = T)
 
   if(inherits(space2, 'try-error'))
-    stop('No colorspace selected')
-
-  if(space2 == 'di'){
-    return(.dispace(modeldata))
-  }
+    stop('Invalid colorspace selected')
   
-  if(space2 == 'tri'){
-    return(.trispace(modeldata))
-  }
-  
-  if(space2 == 'hexagon'){
-    return(.hexagon(modeldata))
-  }
-  
-  if(space2 == 'tcs'){
-    return(.tcs(modeldata))
-  }
-  
-  if(space2 == 'coc'){
-    return(.coc(modeldata))
-  }
-  
-  if(space2 == 'categorical'){
-    return(.categorical(modeldata))
-  }
-  
-  if(space2 == 'ciexyz'){
-    return(.cie(modeldata, 'XYZ'))
-  }
-  
-  if(space2 == 'cielab'){
-    return(.cie(modeldata, 'LAB'))
+  if(space2 == 'auto'){
+  	switch(as.character(attr(modeldata, 'conenumb')),
+  	  '2' = return(.dispace(modeldata)),
+  	  '3' = return(.trispace(modeldata)),
+  	  '4' = return(.tcs(modeldata))
+  	  )
+  } else{
+  	switch(space2,
+  	'di' = return(.dispace(modeldata)),
+  	'tri' = return(.trispace(modeldata)),
+  	'hexagon' = return(.hexagon(modeldata)),
+  	'tcs' = return(.tcs(modeldata)),
+  	'coc' = return(.coc(modeldata)),
+  	'categorical' = return(.categorical(modeldata)),
+  	'ciexyz' = return(.cie(modeldata, 'XYZ')),
+  	'cielab' = return(.cie(modeldata, 'LAB'))
+  	)
   }
   
 }
