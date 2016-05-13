@@ -6,7 +6,7 @@
 #' 
 #' @param object (required) a \code{colspace} object. May be the result of \code{hexagon},
 #'  \code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.
-#' @param by when the input data are the result of \code{tcs}, \code{by} is either 
+#' @param by when the input is in \code{tcs} colorspace, \code{by} is either 
 #'  a single value specifying the range of color points for which
 #'  summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3 
 #'  indicates summary will be calculated for groups of 3 consecutive color points (rows)
@@ -56,32 +56,20 @@
 
 summary.colspace <- function(object, by = NULL, ...){
 
-  if(attr(object, 'clrsp') != 'tcs'){
+  cat("Colorspace & visual model options:\n",
+      '* Colorspace:', attr(object, 'clrsp'), '\n',
+      '* Quantal catch:', attr(object, 'qcatch'), '\n',
+      '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
+      '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
+      '* Illuminant:', attr(object,'illuminant'), '\n',
+      '* Background:', attr(object,'background'), '\n', 
+      '* Relative:', attr(object, 'relative'), '\n', '\n'
+  )
+
+  if(attr(object, 'clrsp') != 'tcs') summary.data.frame(object) 
     
-    cat("Colorspace & visual model options:\n",
-        '* Colorspace:', attr(object, 'clrsp'), '\n',
-        '* Quantal catch:', attr(object, 'qcatch'), '\n',
-        '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
-        '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
-        '* Illuminant:', attr(object,'illuminant'), '\n',
-        '* Background:', attr(object,'background'), '\n', 
-        '* Relative:', attr(object, 'relative'), '\n', '\n'
-    )
-    
-    summary.data.frame(object) 
-    
-  }else if(attr(object, 'clrsp') == 'tcs'){
-    
-    cat("Colorspace & visual model options:\n",
-        '* Colorspace:', attr(object, 'clrsp'), '\n',
-        '* Quantal catch:', attr(object, 'qcatch'), '\n',
-        '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
-        '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
-        '* Illuminant:', attr(object,'illuminant'), '\n',
-        '* Background:', attr(object,'background'), '\n', 
-        '* Relative:', attr(object, 'relative'), '\n', '\n'
-    )
-    
+  if(attr(object, 'clrsp') == 'tcs'){
+
     if(!is.null(by)){
         
         if(length(by) == 1){
