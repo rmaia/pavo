@@ -1,40 +1,47 @@
-
 #' Visual Models
 #' 
-#' Applies the visual models of Vorobyev et al. (1998) to calculate quantum 
-#' catches at each photoreceptor. Relative values may also be obtained, in which
-#' case the model reduces to the color space as described in Endler & Mielke (2005)
-#' and Stoddard & Prum (2008).
+#' Calculate quantum catches at each photoreceptor. Bot raw and relative values 
+#' can be returned, for use in a suite of colourspace and non-colourspace models. 
 #' 
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}
-#' that has wavelength range in the first column, named 'wl', and spectral measurements in the 
-#' remaining columns. 
+#'  that has wavelength range in the first column, named 'wl', and spectral measurements in the 
+#'  remaining columns. 
 #' @param qcatch Which quantal catch metric to return. Options are:
 #' \itemize{
 #' \item \code{Qi}: Quantum catch for each photoreceptor 
 #' \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
-#' channel is proportional to the logarithm of the quantum catch)
+#'  channel is proportional to the logarithm of the quantum catch)
+#' \item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
 #' }
 #' @param visual the visual system to be used. Options are:
 #' \itemize{
 #'	\item a data frame such as one produced containing by \code{sensmodel}, containing 
-#' sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
-#' column with the range of wavelengths included, and the sensitivity for each other 
-#' cone as a column
+#'    sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
+#'    column with the range of wavelengths included, and the sensitivity for each other 
+#'    cone as a column
 #' \item \code{avg.uv}: average avian UV system
 #' \item \code{avg.v}: average avian V system
 #' \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
+#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
+#' \item \code{canis}: Canid \emph{Canis familiaris} visual system
+#' \item \code{cie2}: 2-degree colour matching functions for CIE models of human 
+#'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
+#'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+#' \item \code{cie10}: 10-degree colour matching functions for CIE models of human 
+#'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
+#'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
-#' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
-#' or one of the options: 
+#'  cone stimulation. Either a vector containing the sensitivity for a single receptor, 
+#'  or one of the options: 
 #' \itemize{
 #'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
 #'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
-#'  \item \code{ml}: sum of the two longest-wavelength cones
+#'  \item \code{ml}: sum of the two longest-wavelength photoreceptors
+#'  \item \code{l}: the longest-wavelength photoreceptor
 #'  \item \code{none}
 #' }
 #' @param illum either a vector containing the illuminant, or one of the options:
@@ -44,39 +51,74 @@
 #' \item \code{'D65'}: standard daylight
 #' \item \code{'forestshade'}
 #' }
-#' @param bkg either a vector containing the background spectra, or an ideal (white) 
-#' background is used (Default assumes an idealized homogeneous background).
+#' @param bkg either a vector containing the background spectra, or one of the options:
+#' \itemize{ 
+#' \item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
+#' \item \code{'green'}: green foliage background
+#' }
 #' @param relative should relative quantum catches be returned (i.e. is it a color
-#' space model? Defaults to \code{TRUE}).
+#'  space model? Defaults to \code{TRUE}).
 #' @param vonkries logical. Should the von Kries color correction transformation be applied?
-#' (defaults to \code{FALSE})
+#'  (defaults to \code{FALSE})
 #' @param scale a value by which the illuminant will be multiplied. Useful for when the 
-#' illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
-#' and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
-#' are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
-#' \code{vonkries=TRUE} this transformation has no effect.
+#'  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
+#'  and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
+#'  are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
+#' \code{vonkries = TRUE} this transformation has no effect.
 #'
 #' @return An object of class \code{vismodel} containing the photon catches for each of the 
-#' photoreceptors considered. Information on the parameters used in the calculation are also
-#' stored and can be called using the \code{summary.vismodel} function.
+#'  photoreceptors considered. Information on the parameters used in the calculation are also
+#'  stored and can be called using the \code{summary.vismodel} function.
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
+#' # Dichromat
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'canis')
+#' di.flowers <- colspace(vis.flowers, space = 'di')
+#' 
+#' # Trichromat 
+#' data(flowers)
+#' vis.flowers <- vismodel(flowers, visual = 'apis')
+#' tri.flowers <- colspace(vis.flowers, space = 'tri')
+#' 
+#' # Tetrachromat
 #' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis)}
+#' vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
+#' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+#' }
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
-#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress In Retinal And Eye Research, 20(5), 675-703.
-#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
+#'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
+#'  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+#' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
+#'  In Retinal And Eye Research, 20(5), 675-703.
+#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+#'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+#'  The American Naturalist, 171(6), 755-776.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
+#'    based on photoreceptor excitations as a generalized representation of 
+#'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
+#' @references Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of 
+#'  the middle- and long-wavelength sensitive cones derived from measurements in 
+#'  observers of known genotype. Vision Research, 40, 1711-1737.
+#' @references CIE (2006). Fundamental chromaticity diagram with physiological axes. 
+#'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
+#'  Internationale de l' Éclairage.
 
-vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
-  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl"), 
-  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
+vismodel <- function(rspecdata, 
+  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis', 'canis', 'cie2', 'cie10'), 
+  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l',"none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
-  vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
+  qcatch = c('Qi','fi', 'Ei'),
+  bkg = c('ideal', 'green'), 
+  vonkries = FALSE, scale = 1, relative = TRUE)
 {
-
+  
 # remove & save colum with wavelengths
 
 wl_index <- which(names(rspecdata)=='wl')
@@ -90,21 +132,51 @@ if(is.null(dim(y))){
   names(y) <- names(rspecdata)[-wl_index]
   }
 
-visual2 <- try(match.arg(visual), silent=T)
+visual2 <- try(match.arg(visual), silent = T)
 sens <- vissyst
 
+achromatic2 <- try(match.arg(achromatic), silent=T)
+
+qcatch <- match.arg(qcatch)
+
+# Defaults for CIE stuff. Ugly - better way to do this? Is it best to do it all silently 
+# like this and put notes in the doc mentioning which arguments are ignored? 
+  
+if(substr(visual2, 1, 3) == 'cie'){ 
+  if(!vonkries) {
+    vonkries <- TRUE
+    warning('cie system chosen, overriding vonkries to TRUE', call.=FALSE)
+  }
+  
+  if(relative){
+    relative <- FALSE
+    warning('cie system chosen, overriding relative to FALSE', call.=FALSE)
+  }
+  
+  if(achromatic2 != 'none'){
+  	achromatic2 <- 'none'
+  	warning('cie system chosen, overriding achromatic to none', call.=FALSE)
+  }
+  
+  if(qcatch != 'Qi'){
+  	qcatch <- 'Qi'
+  	warning('cie system chosen, overriding qcatch to Qi', call.=FALSE)
+  }  
+}
+
+
 if(!inherits(visual2,'try-error')){
-  
-  visual <- match.arg(visual)
-  S <- sens[,grep(visual,names(sens))]
-  names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
-  sens_wl <- sens[,'wl']
-  
+    visual <- match.arg(visual)
+    S <- sens[,grep(visual,names(sens))]
+    names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
+    sens_wl <- sens[,'wl']
 }else{
     S <- visual[,-which(names(visual)=='wl')]
     sens_wl <- visual[,'wl']
     visual <- 'user-defined'
     }
+
+conenumb <- dim(S)[2]
 
 # transform from percentages to proportions according to Vorobyev 2003
 
@@ -112,17 +184,18 @@ if(max(y) > 1)
   y <- y/100
 
 # check if wavelength range matches
-  if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)) & 
-  !inherits(visual2,'try-error'))
-    stop('wavelength range in spectra and visual system data do not match - spectral data must range between 300 and 700 nm in 1-nm intervals. Consider interpolating using as.rspec().')
+  if(!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) & 
+  !inherits(visual2, 'try-error'))
+    stop('wavelength range in spectra and visual system data do not match - spectral 
+         data must range between 300 and 700 nm in 1-nm intervals. Consider 
+         interpolating using as.rspec().')
 
-  if(!isTRUE(all.equal(wl,sens_wl, check.attributes=FALSE)))
+  if(!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)))
     stop('wavelength range in spectra and visual system data do not match')
 
+# DEFINING ILLUMINANT & BACKGROUND
 
-#DEFINING ILLUMINANT & BACKGROUND
-
-bgil<- bgandilum
+bgil <- bgandilum
 
 illum2 <- try(match.arg(illum), silent=T)
 if(!inherits(illum2,'try-error')){
@@ -159,7 +232,7 @@ if('rspec' %in% class(illum)){
     , call.=FALSE)
 }
 
-if( 'data.frame' %in% class(illum) | 'matrix' %in% class(illum) & 
+if('data.frame' %in% class(illum) | 'matrix' %in% class(illum) & 
   !'rspec' %in% class(illum)){
   whichused <- names(illum)[1]
   illum <- illum[,1]
@@ -168,15 +241,18 @@ if( 'data.frame' %in% class(illum) | 'matrix' %in% class(illum) &
     , call.=FALSE)
   }
 
-
 # scale illuminant
 illum <- illum * scale
 
 indices = 1:dim(S)[2]
 
 # calculate Qi
-
-Qi <- data.frame(sapply(indices, function(x) colSums(y*S[,x]*illum)))
+if(substr(visual2, 1, 3) == 'cie'){  # Slightly different for CIE
+  K <- 100/colSums(S[2] * illum)
+  Qi <- data.frame(sapply(indices, function(x) colSums(y * S[, x] * illum) * K))
+}else{
+  Qi <- data.frame(sapply(indices, function(x) colSums(y * S[, x] * illum)))
+}
 
 # in case rspecdata only has one spectrum
 
@@ -189,8 +265,6 @@ names(Qi) <- names(S)
 
 
 # calculate achromatic contrast
-
-achromatic2 <- try(match.arg(achromatic), silent=T)
 
 # user-defined achromatic receptor
 
@@ -208,7 +282,7 @@ if(inherits(achromatic2,'try-error')){
       , call.=FALSE)
   }
 
-  if( 'data.frame' %in% class(achromatic) | 'matrix' %in% class(achromatic) & 
+  if('data.frame' %in% class(achromatic) | 'matrix' %in% class(achromatic) & 
     !'rspec' %in% class(achromatic)){
     whichused <- names(achromatic)[1]
     achromatic <- achromatic[,1]
@@ -220,7 +294,6 @@ if(inherits(achromatic2,'try-error')){
   L <- achromatic
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
-
 
   }
   
@@ -238,12 +311,17 @@ if(achromatic2=='ml'){
   Qi <- data.frame(cbind(Qi,lum))
 }
 
-if(achromatic2=='none'){
+if(achromatic2=='l'){
+  L <- S[, dim(S)[2]]
+  lum <- colSums(y*L*illum)
+  Qi <- data.frame(cbind(Qi,lum))
+}
+
+if(achromatic2 == 'none'){
 	L   <- NULL
 	lum <- NULL
 }
 
-#qi 
 # von Kries correction (constant adapting background)
 
 vk <- "(von Kries color correction not applied)"
@@ -253,21 +331,24 @@ vk <- "(von Kries color correction not applied)"
 if(vonkries){
   if(!is.null(lum))
     S <- data.frame(cbind(S,L))
-
-  k <- 1/colSums(S*bkg*illum)
-
-  Qi <- data.frame(t(t(Qi)*k))
-
-  vk <- "(von Kries color correction applied)"
+  
+  if(substr(visual, 1, 3) == 'cie'){
+    k <- 1/(colSums(S * bkg * illum) * K)
+    Qi <- data.frame(t(t(Qi) * k))
+  }else{
+    k <- 1/(colSums(S * bkg * illum))
+    Qi <- data.frame(t(t(Qi) * k))
+  }
+    vk <- "(von Kries color correction applied)"
 }
-# fechner law (signal ~ log quantum catch)
 
-fi <- log(Qi)
-
+fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
+Ei <- Qi / (Qi + 1)  # hyperbolic transform
 
 if(relative & !is.null(lum)){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
+  Ei[,-dim(Ei)[2]] <- Ei[,-dim(Ei)[2]]/rowSums(Ei[,-dim(Ei)[2]])
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -277,6 +358,7 @@ if(relative & !is.null(lum)){
 if(relative & is.null(lum)){
   Qi <- Qi/rowSums(Qi)
   fi <- fi/rowSums(fi)
+  Ei <- Ei/rowSums(Ei)
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -286,27 +368,27 @@ if(relative & is.null(lum)){
 # OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 
-qcatch <- match.arg(qcatch)
 
-res <- switch(qcatch, Qi = Qi, fi = fi)
+res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
 class(res) <- c('vismodel', 'data.frame')
 
 # Descriptive attributes
 
 attr(res, 'qcatch') <- qcatch
-attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
-attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
+attr(res,'visualsystem.chromatic') <- visual
+attr(res,'visualsystem.achromatic') <- achromatic2
+attr(res,'illuminant') <- paste(illum2,', scale = ', scale, " ", vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
-attr(res, 'conenumb') <- dim(S)[2]
+attr(res, 'conenumb') <- conenumb # previously dim(S)[2], but that overestimated b/c of binding L to S
 attr(res, 'vonkries') <- vonkries
 
 # Data attributes
 attr(res, 'data.visualsystem.chromatic') <- S
 attr(res, 'data.visualsystem.achromatic') <- L
+attr(res, 'data.illuminant') <- illum
 attr(res, 'data.background') <- bkg
-
 
 res
 }

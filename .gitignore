@@ -26,3 +26,4 @@ vignette/.Rhistory
 vignette_data/.DS_Store
 .Rproj.user
 pavo.Rproj
+*.Rapp.history

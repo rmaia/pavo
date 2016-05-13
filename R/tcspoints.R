@@ -7,12 +7,11 @@
 #'
 #' @rdname tcsplot
 #'
-#' @export
 
-tcspoints<- function(tcsdata, size=0.02, col='black', alpha=1){
+.tcspoints<- function(tcsdata, size = 0.02, col = 'black', alpha = 1){
 
-# load RGL, and attempt install if not found
-loadrgl()
-
-spheres3d(tcsdata[,c('x','y','z')], radius=size, color=col, lit=F, alpha=alpha)
+  # load RGL, and attempt install if not found
+  loadrgl()
+  
+  spheres3d(tcsdata[, c('x', 'y', 'z')], radius = size, color = col, lit = F, alpha = alpha)
 }
