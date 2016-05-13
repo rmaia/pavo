@@ -6,26 +6,26 @@
 #' from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
 #' distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
 #' 
-#' @param qdata (required) quantum catch color data. Can be the result
-#'  from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
+#' @param vismodeldata (required) quantum catch color data. Can be the result
+#'  from \code{\link{vismodel}}, or \code{\link{colspace}} when \code{space = 
+#'  'hexagon', 'coc', or 'cielab'}. Data may also be independently calculated quantum catches, 
 #'  in the form of a data frame with columns representing photoreceptors.
-#' @param qcatch if the object is of class \code{vismodel} or \code{colspace}, 
-#'  this argument is ignored. If the object is a data frame of quantal catches 
+#' @param qcatch if the object is of class \code{vismodel}, such as one generated using 
+#'  \code{pavo}, this argument is ignored. If the object is a data frame of quantal catches 
 #'  from another source, this argument is used to specify what type of quantum catch is being 
 #'  used, so that the noise can be calculated accordingly: 
 #' \itemize{
-#'  \item \code{Qi}: Quantum catch for each photoreceptor
+#'  \item \code{Qi}: Quantum catch for each photoreceptor (default)
 #'  \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #'    channel is proportional to the logarithm of the quantum catch)
 #'  }
-#' @param vis if the object is of class \code{vismodel} or \code{colspace}, 
-#'  this argument is ignored. If the object is a data frame of quantal catches 
-#'  from another source, this argument is used to specify the visual system phenotype 
-#'  to use in the model:
+#' @param vis visual system phenotype to use in the model (ignored when data are 
+#'  of class \code{\link{vismodel}}, or \code{\link{colspace}}):
 #' \itemize{
-#'  \item \code{tcs}: Tetrachromatic color vision (default)
+#'  \item \code{tetra}: Tetrachromatic color vision (default)
 #'  \item \code{tri}: Trichromatic color vision
 #'  \item \code{di}: Dichromatic color vision
+# #' \item \code{mono}: Monochromatic vision
 #' }
 #' @param subset If only some of the comparisons should be returned, a character vector of 
 #'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
@@ -37,28 +37,20 @@
 #'  instead returns long (or 'green') receptor contrast.
 #' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
 #'  the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
-#'  \code{'tcs'}, only \code{n1} and \code{n2} (\code{vis = 'di'}) or 
+#'  \code{'tetra'}, only \code{n1} and \code{n2} (\code{vis = 'di'}) or 
 #'  \code{n1}, \code{n2} and \code{n3} (\code{vis = 'tri'}) are used for chromatic contrast. 
 #'  Ignored when data are of class \code{\link{colspace}}.
 #' @param weber The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
 #'  and therefore must be calculated based on the epirically estimated Weber fraction of one of
 #'  the cone classes. \code{v} is then applied to estimate the Weber fraction of the 
 #'  other cones. by default, the value of 0.1 is used (the empirically estimated value for the
-#'  LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
+#'  LWS cone from \emph{Leiothrix lutea}). Ignored when data are of class \code{\link{colspace}}.
 #' @param weber.ref the cone class used to obtain the empirical estimate of the 
 #'  Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
-#'  representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
+#'  representing the LWS cone for \emph{Leiothrix lutea}. Ignored when data are of class \code{\link{colspace}}.
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when 
-#'  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
-#' @param noise how the noise will be calculated. (Ignored for \code{colspace} objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models)):
+#'  \code{achro = TRUE}. Defaults to 0.1. Ignored when data are the result of \code{\link{colspace}}.
+#' @param noise how the noise will be calculated (gnored when data are of class \code{\link{colspace}}):
 #' \itemize{
 #' 	\item \code{neural}: noise is proportional to the Weber fraction and is independent of the
 #' 	intensity of the signal received.
@@ -68,7 +60,7 @@
 #' 	objects of class \code{vismodel}.
 #' }
 #'
-#' @return A data frame containing up to 4 columns. The first two (\code{patch1, patch2}) refer
+#' @return A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
 #' model, euclidean distances in the hexagon and cielab colorspaces, and manhattan distances
@@ -80,11 +72,11 @@
 #' # Dichromat
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis', relative= FALSE)
-#' didist.flowers <- coldist(vis.flowers)
+#' didist.flowers <- coldist(vis.flowers, vis = 'di')
 #' 
 #' # Trichromat 
 #' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
-#' tridist.flowers <- coldist(vis.flowers)
+#' tridist.flowers <- coldist(vis.flowers, vis = 'tri')
 #' 
 #' # Trichromat, color-hexagon model
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
@@ -94,8 +86,7 @@
 #' # Tetrachromat
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
-#' tetradist.sicalis.n <- coldist(vis.sicalis)
-#' tetradist.sicalis.q <- coldist(vis.sicalis, noise='quantum')
+#' tetradist.sicalis <- coldist(vis.sicalis, vis = 'tetra')
 #' }
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -108,67 +99,60 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-coldist <-function(qdata,
+
+coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
+                  vis = c('tetra', 'tri', 'di'), 
                   noise = c('neural','quantum'), subset = NULL,
-                  achro = TRUE, vis = NULL, qcatch = NULL,
+                  achro = TRUE,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
+
+  # Only hexagon, coc, & cielab models have distance metrics
+  if('colspace' %in% class(vismodeldata)){
+    space <- try(match.arg(attr(vismodeldata, 'clrsp'), c('coc', 'hexagon', 'CIELAB', 'categorical')), silent = T)
+    if(inherits(space,'try-error'))
+       stop('Object is of class colspace, but has no suitable distance metric')
+    }
   
-  noise <- match.arg(noise)
-      
   # Pre-processing for colspace objects
-  if('colspace' %in% class(qdata)){
-    dat <- as.matrix(qdata[, sapply(qdata, is.numeric)])
-    qcatch <- attr(qdata, 'qcatch')
-    
-    if(any(c('di','tri','tcs') %in% attr(qdata, 'clrsp')))
-      vis <- attr(qdata, 'clrsp')
-  
-    if(attr(qdata, 'relative'))
-      warning('Quantum catch are relative, distances may not be meaningful')  
+  if('colspace' %in% class(vismodeldata)){
+    dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
+    qcatch <- attr(vismodeldata, 'qcatch')
   }
-
-  if(!'vismodel' %in% class(qdata) && noise == 'quantum')
-    stop('Object must be of class vismodel to calculate quantum noise model')
-
 
   # Pre-processing for vismodel objects
-  if('vismodel' %in% class(qdata)){
-  	dat <- as.matrix(qdata)
-    rownames(dat) <- rownames(qdata)
-    colnames(dat) <- colnames(qdata)
+  if('vismodel' %in% class(vismodeldata)){
+  	dat <- as.matrix(vismodeldata)
+  	qcatch <- attr(vismodeldata, 'qcatch')
+  #	colnames(dat) <- gsub(paste(qcatch, '.', sep = ''), '', colnames(dat))
   	
-  	# transform or stop if Qi not appropriate
-  	qcatch <- attr(qdata, 'qcatch')
-  	
-    if(attr(qdata, 'qcatch') == 'Qi')
-      qndat <- as.matrix(qdata)
+    if(attr(vismodeldata, 'qcatch') == 'Qi')
+      qndat <- as.matrix(vismodeldata)
   
-    if(attr(qdata, 'qcatch') == 'fi')
-      qndat <- as.matrix(exp(qdata))
+    if(attr(vismodeldata, 'qcatch') == 'fi')
+      qndat <- as.matrix(exp(vismodeldata))
   	
-  	if(attr(qdata, 'qcatch') == 'Ei')
+  	if(attr(vismodeldata, 'qcatch') == 'Ei')
   	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches')
-     
-    if(attr(qdata, 'relative'))
-      warning('Quantum catch are relative, distances may not be meaningful')  
-      
-    # choose receptor noise model depending on visual system
-    ncone <- as.character(attr(qdata,'conenumb'))
-    vis <- switch(ncone,
-                  '2' = 'di',
-                  '3' = 'tri',
-                  '4' = 'tcs')
-    
+  
+    if(attr(vismodeldata, 'relative')){
+      warning('Quantum catch are relative, distances may not be meaningful')
+    }else{
+      qcatch <- match.arg(qcatch)
+    	dat <- as.matrix(vismodeldata)
+    	rownames(dat) <- rownames(vismodeldata)
+    	colnames(dat) <- colnames(vismodeldata)
+    }
   }
   
-# RM: is this supposed to be in case it's neither colspace nor vismodel?
-#  if(!'colspace' %in% class(qdata)){
-  if(!any(c('colspace','vismodel') %in% class(qdata))){
+  if(!'vismodel' %in% class(vismodeldata) && noise == 'quantum')
+    stop('Object must be of class vismodel to calculate quantum noise model')
+  
+  if(!'colspace' %in% class(vismodeldata)){
+    noise <- match.arg(noise)
     vis <- match.arg(vis)
     dat <- switch(qcatch, fi = dat, Qi = log(dat))
   }
-  
   
   # Pair up stimuli
   pairsid <- t(combn(nrow(dat), 2))
@@ -177,7 +161,7 @@ coldist <-function(qdata,
   res <- data.frame(patch1, patch2)
   
   ### Receptor-noise models ###
-  if(!is.null(vis)){
+  if(!'colspace' %in% class(vismodeldata)){
     # Calculate v based on weber fraction and reference cone
     v <- switch(weber.ref,
             n1 = weber * sqrt(n1),
@@ -203,7 +187,7 @@ coldist <-function(qdata,
       w1 = w1e, w2 = w2e, w3 = w3e) )
     }
     
-    if(vis == 'tcs' & noise == 'neural'){
+    if(vis == 'tetra' & noise == 'neural'){
     res$dS <- apply(pairsid, 1, function(x) 
       ttdistcalc(dat[x[1], ], dat[x[2], ], 
       w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e) )
@@ -229,7 +213,7 @@ coldist <-function(qdata,
       n1 = n1, n2 = n2, n3 = n3, v = v ) )
     }
     
-    if(vis == 'tcs' & noise == 'quantum'){
+    if(vis == 'tetra' & noise == 'quantum'){
     res$dS <- apply(pairsid, 1, function(x) 
       qn.ttdistcalc(dat[x[1], ], dat[x[2], ],
       qndat[x[1], ], qndat[x[2], ], 
@@ -245,25 +229,25 @@ coldist <-function(qdata,
   }
   
   ### colspace model distances ###
-  if(attr(qdata, 'clrsp') == 'hexagon'){
+  if(attr(vismodeldata, 'clrsp') == 'hexagon'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
-  if(attr(qdata, 'clrsp') == 'categorical'){
+  if(attr(vismodeldata, 'clrsp') == 'categorical'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the categorical model')
   }
   
-  if(attr(qdata, 'clrsp') == 'CIELAB'){
+  if(attr(vismodeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the CIELAB model')
   }
   
-  if(attr(qdata, 'clrsp') == 'coc'){
+  if(attr(vismodeldata, 'clrsp') == 'coc'){
     res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the color-opponent-coding space')
