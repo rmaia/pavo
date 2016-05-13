@@ -18,6 +18,7 @@
 #' @param nsamp if \code{montecarlo=TRUE}, determines the number of points to be sampled.
 #' @param psize if \code{montecarlo=TRUE} and \code{plot=TRUE}, sets the size to plot the points
 #' used in the Monte Carlo simulation.
+#' @param lwd if \code{plot=TRUE}, sets the line width for volume grids.
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
@@ -75,7 +76,7 @@
 
 voloverlap <- function(tcsres1,tcsres2, plot=FALSE, 
               col=c('blue','red','darkgrey'), new=TRUE,
-              montecarlo=FALSE, nsamp=1000, psize=0.001){
+              montecarlo=FALSE, nsamp=1000, psize=0.001, lwd=1){
 
 dat1 <- tcsres1[, c('x', 'y', 'z')]
 
@@ -176,8 +177,8 @@ if(plot==TRUE){
 if(new==TRUE)
   open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
-  tcsvol(dat1, col=col[1], fill=F)
-  tcsvol(dat2, col=col[2], fill=F)
+  tcsvol(dat1, col=col[1], fill=F, lwd=lwd)
+  tcsvol(dat2, col=col[2], fill=F, lwd=lwd)
 
   if(montecarlo==FALSE){
     if(dim(Voverlap)[1]>3)
