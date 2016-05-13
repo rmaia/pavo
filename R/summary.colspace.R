@@ -73,10 +73,11 @@ summary.colspace <- function(object, by = NULL, ...){
     if(!is.null(by)){
         
         if(length(by) == 1){
-        by.many <- by
-        by <- rep(1:(dim(object)[1]/by), each = by)
-        by <- factor(by, labels = row.names(object)[seq(1, length(row.names(object)), by = by.many)])
-        }
+          by.many <- by
+          by <- rep(1:(dim(object)[1]/by), each = by)
+          by <- factor(by, 
+            labels = row.names(object)[seq(1, length(row.names(object)), by = by.many)])
+          }
     
       by <- factor(by)
       res.c <- data.frame(t(sapply(levels(by),function(z) tcssum(object[which(by == z),]))))
