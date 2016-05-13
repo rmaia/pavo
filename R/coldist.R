@@ -3,8 +3,8 @@
 #' Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
 #' with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
-#' from the hexagon, colour-opponent-coding, and cielab spaces, in which case euclidean
-#' distances (hexagon, cielab) or manhattan distances (coc) are returned.
+#' from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
+#' distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be the result
 #'  from \code{\link{vismodel}}, or \code{\link{colspace}} when \code{space = 
@@ -109,7 +109,7 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
 
   # Only hexagon, coc, & cielab models have distance metrics
   if('colspace' %in% class(vismodeldata)){
-    space <- match.arg(attr(vismodeldata, 'clrsp'), c('coc', 'hexagon', 'CIELAB'))
+    space <- try(match.arg(attr(vismodeldata, 'clrsp'), c('coc', 'hexagon', 'CIELAB', 'categorical')), silent = T)
     if(inherits(space,'try-error'))
        stop('Object is of class colspace, but has no suitable distance metric')
     }
@@ -233,6 +233,12 @@ coldist <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
+  }
+  
+  if(attr(vismodeldata, 'clrsp') == 'categorical'){
+    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      warning('Achromatic contrast not calculated in the categorical model')
   }
   
   if(attr(vismodeldata, 'clrsp') == 'CIELAB'){

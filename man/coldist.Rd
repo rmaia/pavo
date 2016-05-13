@@ -83,8 +83,8 @@ in the color-opponent-coding space.
 Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
 with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
-from the hexagon, colour-opponent-coding, and cielab spaces, in which case euclidean
-distances (hexagon, cielab) or manhattan distances (coc) are returned.
+from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
+distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
 }
 \examples{
 \dontrun{
