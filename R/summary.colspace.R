@@ -64,7 +64,7 @@ summary.colspace <- function(object, by = NULL, ...){
         '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
         '* Illuminant:', attr(object,'illuminant'), '\n',
         '* Background:', attr(object,'background'), '\n', 
-        '* Relative:', attr(object, 'relative'), '\n'
+        '* Relative:', attr(object, 'relative'), '\n', '\n'
     )
     
     summary.data.frame(object) 
@@ -78,7 +78,7 @@ summary.colspace <- function(object, by = NULL, ...){
         '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
         '* Illuminant:', attr(object,'illuminant'), '\n',
         '* Background:', attr(object,'background'), '\n', 
-        '* Relative:', attr(object, 'relative'), '\n'
+        '* Relative:', attr(object, 'relative'), '\n', '\n'
     )
     
     if(!is.null(by)){
