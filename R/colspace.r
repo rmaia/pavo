@@ -7,7 +7,7 @@
 #'  with columns representing quantum catches).
 #' @param space Which colorspace/model to use. Options are:
 #' \itemize{
-#' \item \code{auto}: if data is a result from \{vismodel}, 
+#' \item \code{auto}: if data is a result from \code{vismodel}, 
 #' applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
 #' cones, respectively.
 #' \item \code{di}: dichromatic colourspace

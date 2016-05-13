@@ -4,7 +4,7 @@
 \alias{colspace}
 \title{Model spectra in a colorspace}
 \usage{
-colspace(modeldata, space = c("di", "tri", "tcs", "hexagon", "coc",
+colspace(modeldata, space = c("auto", "di", "tri", "tcs", "hexagon", "coc",
   "categorical", "ciexyz", "cielab"))
 }
 \arguments{
@@ -14,12 +14,15 @@ with columns representing quantum catches).}
 
 \item{space}{Which colorspace/model to use. Options are:
 \itemize{
+\item \code{auto}: if data is a result from \code{vismodel}, 
+applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
+cones, respectively.
 \item \code{di}: dichromatic colourspace
 \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle)
-\item \code{tcs}: tetrahedral colourspace
-\item \code{hexagon}: the colour-hexagon of Chittka (1992)
-\item \code{coc}: the colour-opponent-coding model of Backhaus (1991) 
-\item \code{categorical}: the categorical fly-model of Troje (1993) 
+\item \code{tcs}: tetrahedral colourspace (tetrachromatic)
+\item \code{hexagon}: the colour-hexagon of Chittka (1992) (trichromatic)
+\item \code{coc}: the colour-opponent-coding model of Backhaus (1991) (trichromatic)
+\item \code{categorical}: the categorical fly-model of Troje (1993) (tetrachromatic)
 \item \code{ciexyz}: CIEXYZ space
 \item \code{cielab}: CIELAB space
 }}

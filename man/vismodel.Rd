@@ -4,24 +4,16 @@
 \alias{vismodel}
 \title{Visual Models}
 \usage{
-vismodel(rspecdata, qcatch = c("Qi", "fi", "Ei"), visual = c("avg.uv",
-  "avg.v", "bluetit", "star", "pfowl", "apis", "canis", "cie2", "cie10"),
-  achromatic = c("bt.dc", "ch.dc", "st.dc", "ml", "l", "none"),
-  illum = c("ideal", "bluesky", "D65", "forestshade"), vonkries = FALSE,
-  scale = 1, bkg = c("ideal", "green"), relative = TRUE)
+vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl",
+  "apis", "canis", "cie2", "cie10"), achromatic = c("bt.dc", "ch.dc", "st.dc",
+  "ml", "l", "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
+  qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal", "green"),
+  vonkries = FALSE, scale = 1, relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
 that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 remaining columns.}
-
-\item{qcatch}{Which quantal catch metric to return. Options are:
-\itemize{
-\item \code{Qi}: Quantum catch for each photoreceptor 
-\item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
- channel is proportional to the logarithm of the quantum catch)
-\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
-}}
 
 \item{visual}{the visual system to be used. Options are:
 \itemize{
@@ -64,6 +56,20 @@ remaining columns.}
 \item \code{'forestshade'}
 }}
 
+\item{qcatch}{Which quantal catch metric to return. Options are:
+\itemize{
+\item \code{Qi}: Quantum catch for each photoreceptor 
+\item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+ channel is proportional to the logarithm of the quantum catch)
+\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
+}}
+
+\item{bkg}{either a vector containing the background spectra, or one of the options:
+\itemize{ 
+\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
+\item \code{'green'}: green foliage background
+}}
+
 \item{vonkries}{logical. Should the von Kries color correction transformation be applied?
 (defaults to \code{FALSE})}
 
@@ -72,12 +78,6 @@ remaining columns.}
  and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
  are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 \code{vonkries = TRUE} this transformation has no effect.}
-
-\item{bkg}{either a vector containing the background spectra, or one of the options:
-\itemize{ 
-\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
-\item \code{'green'}: green foliage background
-}}
 
 \item{relative}{should relative quantum catches be returned (i.e. is it a color
 space model? Defaults to \code{TRUE}).}

@@ -10,7 +10,7 @@
 \item{object}{(required) a \code{colspace} object. May be the result of \code{hexagon},
 \code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.}
 
-\item{by}{when the input data are the result of \code{tcs}, \code{by} is either 
+\item{by}{when the input is in \code{tcs} colorspace, \code{by} is either 
 a single value specifying the range of color points for which
 summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3 
 indicates summary will be calculated for groups of 3 consecutive color points (rows)
@@ -31,6 +31,8 @@ in which case the following variables are output instead:
 \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points
 
 \code{c.vol} the total volume occupied by the points
+
+\code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume
 
 \code{colspan.m} the mean hue span
 
