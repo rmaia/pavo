@@ -100,7 +100,7 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 
-coldist_old <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
+.coldist_old <-function(vismodeldata, qcatch = c('Qi', 'fi', 'Ei'),
                   vis = c('tetra', 'tri', 'di'), 
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE,
