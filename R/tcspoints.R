@@ -9,7 +9,9 @@
 #'
 
 .tcspoints<- function(tcsdata, size = 0.02, col = 'black', alpha = 1){
-
+  
+  if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
+  
   # load RGL, and attempt install if not found
   loadrgl()
   

@@ -12,8 +12,8 @@
 
 vol.colspace <- function(clrspdata, ...){
   
-  if(attr(clrspdata, 'clrsp') == 'tcs'){
-    .tcsvol(clrspdata, ...)
-  }
+  if(attr(clrspdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
+  
+  .tcsvol(clrspdata, ...)
   
 }
