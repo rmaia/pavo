@@ -40,19 +40,26 @@ rspecdata <- rspecdata[which(wl==400):which(wl==700),]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
-sens <- pavo:::ciexyz
+# TEMP: cie2 or cie10?
+# sens <- pavo:::ciexyz[,1:4] #cie2
+sens <- pavo:::ciexyz[,c(1,5:7)] #cie10
+
+# TEMP: removing wavelengths 390:400
+# TO DO: check if rspecdata starts at 400 or <400 and change this accordingly
+
+sens <- sens[which(sens$wl==400):which(sens$wl==700),]
 
 # P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 # P2 <- rspecdata
 P2 <- rspecdata / 100  # scale to proportion of incident light
 
 # Convolute
-X <- apply(sens[, 'x'] * P2, 2, sum)
-Y <- apply(sens[, 'y'] * P2, 2, sum)
-Z <- apply(sens[, 'z'] * P2, 2, sum)
+X <- apply(sens[, grep('x', names(sens))] * P2, 2, sum)
+Y <- apply(sens[, grep('y', names(sens))] * P2, 2, sum)
+Z <- apply(sens[, grep('z', names(sens))] * P2, 2, sum)
 
 # Scale by y(lambda)
-N <- sum(sens[, 'y'])  # normalization factor
+N <- sum(sens[, grep('y', names(sens))])  # normalization factor
 XYZ <- cbind(X, Y, Z) / N
 
 # transfer matrices for converting XYZ to RGB
