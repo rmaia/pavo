@@ -1,12 +1,14 @@
-
+pavo 1.0
 ------------------------------------------------------------------------------
 MAJOR CHANGES
-* coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the known cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.
+* coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.
 * coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
 * tcs() now returns an object of class colorspace, not tcs. This will facilitate the implementation of different color space models in the future.
 
 MINOR FEATURES AND BUG FIXES:
 
+* summary.colspace() for tcs spaces now returns relative color volume as well as absolute
+* tcsvol() and voloverlap() now allow control for line width
 * procspec() fixed error when attempting to smooth rspec object without column names
 * procspec() handles smoothing before fixing negatives to avoid re-adding negatives when smoothing
 * procspec(), aggplot() accept additional arguments to summary functions (e.g., na.rm=TRUE)
@@ -16,7 +18,7 @@ MINOR FEATURES AND BUG FIXES:
 * aggplot() and aggspec() fixed bug on ordering of levels when they don't match the sequence in the rspec object
 * aggplot() added logical argument "legend" for automatically adding a legend to the plot
 * vismodel() returns error if bkg=NULL
-* getspec() patched to stop returning warnigns in Yosemite
+* getspec() patched to stop returning warnings in Yosemite
 
 
 NEW FUNCTIONS:
