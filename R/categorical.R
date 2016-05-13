@@ -43,6 +43,7 @@
       dat <- dat[,c('u','s','m','l')]/rowSums(dat[,c('u','s','m','l')])
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed")
+      attr(vismodeldata,'relative') <- TRUE
     }
     
   }
@@ -63,7 +64,8 @@
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
       dat <- dat/apply(dat, 1, sum)
-      warning('Quantum catch are not relative, and have been divided by their sum')
+      warning('Quantum catch are not relative, and have been transformed')
+      attr(vismodeldata,'relative') <- TRUE
     }
   }
   
