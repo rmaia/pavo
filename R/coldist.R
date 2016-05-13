@@ -245,6 +245,8 @@ coldist <-function(qdata,
   }
   
   ### colspace model distances ###
+if('colspace' %in% class(qdata)){
+	
   if(attr(qdata, 'clrsp') == 'hexagon'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
@@ -268,6 +270,8 @@ coldist <-function(qdata,
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the color-opponent-coding space')
   }
+
+}
   
   nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
   
