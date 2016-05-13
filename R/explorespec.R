@@ -193,7 +193,7 @@ for (i in 1:nplots) {
       arg$col <- legcolor[1]
       arg$y <- bloc
       do.call(plot, arg)
-      legend(x=legx, y=legy, legend=leg2[length(leg2)], cex=0.9, bty="n", 
+      legend(x=legx, y=legy, legend=leg2[i], cex=0.9, bty="n", 
          text.col=legcolor)
       }
   if (numby == 1) {
