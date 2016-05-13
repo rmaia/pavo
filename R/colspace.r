@@ -5,6 +5,17 @@
 #' @param modeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with columns representing quantum catches).
+#' @param space Which colorspace/model to use. Options are:
+#' \itemize{
+#' \item \code{di}: dichromatic colourspace
+#' \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle)
+#' \item \code{tcs}: tetrahedral colourspace
+#' \item \code{hexagon}: the colour-hexagon of Chittka (1992)
+#' \item \code{coc}: the colour-opponent-coding model of Backhaus (1991) 
+#' \item \code{categorical}: the categorical fly-model of Troje (1993) 
+#' \item \code{ciexyz}: CIEXYZ space
+#' \item \code{cielab}: CIELAB space
+#' }
 #' 
 #' @examples \dontrun{
 #' data(flowers)
