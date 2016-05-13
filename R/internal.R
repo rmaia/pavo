@@ -224,6 +224,19 @@ tcssum <- function(tcsres){
        }else{
          c.vol<-NA}
   
+  # relative color volume
+  if(nrow(tcsres)>3)
+       {
+       totaltetra <- setNames(data.frame(diag(4)), c('u','s','m','l'))
+       class(totaltetra) <- c('vismodel', 'data.frame')
+       attr(totaltetra, 'relative') <- TRUE
+       attr(totaltetra, 'conenumb') <- 4
+       cstt <- colspace(totaltetra, 'tcs')
+       tot.c.vol <- convhulln(cstt[,c('x','y','z')],"FA")$vol
+       rel.c.vol <- c.vol/tot.c.vol
+       }else{
+         rel.c.vol<-NA}
+  
   # hue disparity
   hdisp.m <- mean(huedisp(tcsres))
   hdisp.v <- var(huedisp(tcsres))
@@ -232,9 +245,9 @@ tcssum <- function(tcsres){
   mean.ra <- mean(tcsres$r.achieved)
   max.ra  <-  max(tcsres$r.achieved)
   
-  res.c <- c(centroid,c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
+  res.c <- c(centroid,c.vol, rel.c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
   names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
-                  'c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
+                  'c.vol', 'rel.c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
                   'mean.ra', 'max.ra')
   
   res.c

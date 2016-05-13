@@ -23,6 +23,7 @@
 #' in which case the following variables are output instead:
 #' @return \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points
 #' @return \code{c.vol} the total volume occupied by the points
+#' @return \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume
 #' @return \code{colspan.m} the mean hue span
 #' @return \code{colspan.v} the variance in hue span
 #' @return \code{huedisp.m} the mean hue disparity
