@@ -4,3 +4,4 @@ addons:
   apt:
     packages:
     - libgmp3-dev
+r_build_args: --no-build-vignettes
