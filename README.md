@@ -1,6 +1,6 @@
 # `pavo`
 
-![](http://cranlogs.r-pkg.org/badges/grand-total/pavo)
+![](http://cranlogs.r-pkg.org/badges/grand-total/pavo) [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo)
 
 ## About
 
