@@ -1,2 +1,12 @@
 language: r
 cache: packages
+addons:
+  apt:
+    packages:
+    - libgmp3-dev
+r_build_args: --no-build-vignettes
+r_check_args: --no-manual
+notifications:
+  email:
+    on_success: change
+    on_failure: change
