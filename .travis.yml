@@ -1,2 +1,6 @@
 language: r
 cache: packages
+
+before_isntall:
+  - Rscript -e 'install.packages("nlme", lib="/home/travis/R-bin/lib/R/library/")'
+  
