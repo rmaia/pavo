@@ -1,5 +1,7 @@
 # `pavo`
 
+![](http://cranlogs.r-pkg.org/badges/grand-total/pavo)
+
 ## About
 
 A set of functions and tools for the analysis of color data in a unified framework
