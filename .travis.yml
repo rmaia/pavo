@@ -10,3 +10,5 @@ notifications:
   email:
     on_success: change
     on_failure: change
+  slack: r-pavo:J07z1Fy6Txm0PBcHwVk782OD
+  
