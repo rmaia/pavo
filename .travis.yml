@@ -1,7 +1,6 @@
 language: r
 cache: packages
-sudo: required
-
-before_isntall:
-  - sudo apt-get install libgmp3-dev
-  
+addons:
+  apt:
+    packages:
+    - libgmp3-dev
