@@ -1,9 +1,9 @@
-#' Plot Spectra in a Colourspace
+#' Plot spectra in a colourspace
 #'
 #' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
 #' 
 #' @param clrspdata (required) an object of class \code{colspace}. Note that the 
-#'  below options will vary by selected \code{space} 
+#'  below options will vary by selected \code{space}. 
 #' 
 #' @param labels plot verticy labels (or category labels, when \code{space = \strong{'categorical'}})? 
 #'  Defaults to \code{TRUE}
@@ -117,32 +117,17 @@
 
 plot.colspace <- function(clrspdata, ...){
   
-  if(attr(clrspdata, 'clrsp') == 'hexagon'){
-    hexplot(clrspdata, ...)
-  }
+  space <- attr(clrspdata, 'clrsp')
   
-  if(attr(clrspdata, 'clrsp') == 'coc'){
-    cocplot(clrspdata, ...)
-  }
-  
-  if(attr(clrspdata, 'clrsp') == 'categorical'){
-    catplot(clrspdata, ...)
-  }
-  
-  if(attr(clrspdata, 'clrsp') == 'dispace'){
-    diplot(clrspdata, ...)
-  }
-  
-  if(attr(clrspdata, 'clrsp') == 'trispace'){
-    triplot(clrspdata, ...)
-  }
-  
-  if(grepl('CIE', attr(clrspdata, 'clrsp'))){
-    cieplot(clrspdata, ...)
-  }
-  
-  if(attr(clrspdata, 'clrsp') == 'tcs'){
-    tcsplot(clrspdata, ...)
-  }
+  switch(space,
+         'dispace' = diplot(clrspdata, ...),
+         'trispace' = triplot(clrspdata, ...),
+         'hexagon' = hexplot(clrspdata, ...),
+         'tcs' = tcsplot(clrspdata, ...),
+         'coc' = cocplot(clrspdata, ...),
+         'categorical' = catplot(clrspdata, ...),
+         'CIEXYZ' = cieplot(clrspdata, ...),
+         'CIELAB' = cieplot(clrspdata, ...)
+  )
   
 }
