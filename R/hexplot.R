@@ -46,13 +46,6 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'f
                      out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
                      achrocol = 'grey', ...){
   
-# Check if object is of class colspace and/or trichromat
-  if(!('colspace' %in% attr(hexdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(hexdata)))
-    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
-  
-  if(('colspace' %in% attr(hexdata, 'class')) & attr(hexdata, 'clrsp') != 'hexagon')
-    stop(dQuote('colspace'), ' object is not a result of ', dQuote('hexagon()')) 
-  
   sectors <- match.arg(sectors)
   
 # Set defaults

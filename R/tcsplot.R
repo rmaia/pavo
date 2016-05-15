@@ -75,16 +75,6 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
                     lwd = 1, lcol = 'lightgrey', new = FALSE, hspin = FALSE, 
                     vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE, static = FALSE) {
   
-  # RM: this function is now internal and doesn't need these checks?
-  
-  # Check if object is of class colspace and tetrachromat
-
-  #if(!('colspace' %in% attr(tcsdata, 'class')))
-  #  stop('object is not of class ', dQuote('colspace'))
-  
-  #if(('colspace' %in% attr(tcsdata, 'class')) & attr(tcsdata, 'conenumb') != 4)
-  #  stop(dQuote('colspace'), ' object is not a tetrachromat visual system')
-  
   # Interactive 3D plot
   if(static == FALSE){
     # load RGL, and attempt install if not found

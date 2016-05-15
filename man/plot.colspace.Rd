@@ -4,7 +4,7 @@
 \alias{plot.colspace}
 \alias{points.colspace}
 \alias{vol.colspace}
-\title{Plot Spectra in a Colourspace}
+\title{Plot spectra in a colourspace}
 \usage{
 \method{plot}{colspace}(clrspdata, ...)
 
@@ -14,7 +14,7 @@ vol.colspace(clrspdata, ...)
 }
 \arguments{
 \item{clrspdata}{(required) an object of class \code{colspace}. Note that the 
-below options will vary by selected \code{space}}
+below options will vary by selected \code{space}.}
 
 \item{...}{additional graphical options. See \code{\link{par}}}
 

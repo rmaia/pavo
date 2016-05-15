@@ -5,7 +5,7 @@
 - add ability to set limits in `summary` and other functions
 - return warnings in `peakshape` if (1) one of the peak boundaries is at either 300 or 700 nm, (2) the ratio of the two halves of the peak is >>1; also, it would be nice to be able to specify unique boundaries in this case.. (how??)
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
-- add couple plotting options for `segclass` objects 
+- add couple plotting options for `segclass` objects
 - reformat & extend vignette
 - subset.rspec doesn't work
 
@@ -37,7 +37,7 @@
 + Generalise 'vismodel' doc
 + Add .jazirrad capability to getspec()
 + Add hyperbolic transform of quantum catches as an option in vismodel()
-+ Add general 'colspace' function. 
++ Add general 'colspace' function.
 + Add general plot.colspace function. The main workflow is now vismodel() -> colspace() -> plot().
 + Add general points.colspace & vol.colspace functions.
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
@@ -48,5 +48,3 @@
 - check cex vs cex.labels in plots. Something squiffy?
 - col in hexplot doesnt work?
 - check coldist calcs
-
-

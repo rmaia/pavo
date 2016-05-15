@@ -34,13 +34,6 @@
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
                      out.lty = 1, ...){
   
-# Check if object is of class colorspace and trichromat
-  if(!('colspace' %in% attr(ciedata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(ciedata)))
-    stop('object is not of class ', dQuote('colspace'), ', and does not contain x, y coordinates')
-  
-  if(('colspace' %in% attr(ciedata, 'class')) & !grepl('CIE', attr(ciedata, 'clrsp')))
-    stop(dQuote('colspace'), ' object is not a result of ', dQuote('cie()'))
-  
   arg <- list(...)
   
   # CIEXYZ
@@ -92,8 +85,8 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     
     do.call(plot, arg)
       
-      if(mono == TRUE)
-        polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+    if(mono == TRUE)
+      polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
     
   }
   

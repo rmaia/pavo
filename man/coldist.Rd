@@ -98,7 +98,7 @@ distances (hexagon, cielab, categorical) or manhattan distances (coc) are return
 \dontrun{
 # Dichromat
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'canis', relative= FALSE)
+vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
 didist.flowers <- coldist(vis.flowers)
 
 # Trichromat 
@@ -115,11 +115,11 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
-# this will also work, but give you several warnings you shouldn't ignore!!
+# This will also work, but give you several warnings you shouldn't ignore!!
 col.sicalis <- colspace(vis.sicalis)
 tetradist.sicalis.n <- coldist(col.sicalis)
 
-tetradist.sicalis.q <- coldist(vis.sicalis, noise='quantum')
+tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
 }
 
 }

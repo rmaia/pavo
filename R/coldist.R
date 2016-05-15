@@ -79,7 +79,7 @@
 #' @examples \dontrun{
 #' # Dichromat
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'canis', relative= FALSE)
+#' vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
 #' didist.flowers <- coldist(vis.flowers)
 #' 
 #' # Trichromat 
@@ -96,12 +96,11 @@
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
 #'
-#' # this will also work, but give you several warnings you shouldn't ignore!!
+#' # This will also work, but give you several warnings you shouldn't ignore!!
 #' col.sicalis <- colspace(vis.sicalis)
 #' tetradist.sicalis.n <- coldist(col.sicalis)
 #'
-#' tetradist.sicalis.q <- coldist(vis.sicalis, noise='quantum')
-
+#' tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
 #' }
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -121,7 +120,7 @@ coldist <-function(vismodeldata,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
   
-  if(!'vismodel' %in% class(vismodeldata) && noise=='quantum')
+  if(!'vismodel' %in% class(vismodeldata) && noise == 'quantum')
     stop('Object must be of class vismodel to calculate quantum noise model')
 
   noise <- match.arg(noise)
@@ -170,11 +169,11 @@ coldist <-function(vismodeldata,
    
   # transformations in case object is neither from colspace or vismodel
   if(!any(c('colspace','vismodel') %in% class(vismodeldata))){
-	qcatch <- match.arg(qcatch)
-  	dat <- as.matrix(vismodeldata)
-  	rownames(dat) <- rownames(vismodeldata)
-  	colnames(dat) <- colnames(vismodeldata)
-  	}
+  	qcatch <- match.arg(qcatch)
+    dat <- as.matrix(vismodeldata)
+    rownames(dat) <- rownames(vismodeldata)
+    colnames(dat) <- colnames(vismodeldata)
+  }
   
   dat <- switch(qcatch, fi = dat, Qi = log(dat))
   
@@ -183,7 +182,8 @@ coldist <-function(vismodeldata,
           n1 = weber * sqrt(n1),
           n2 = weber * sqrt(n2),
           n3 = weber * sqrt(n3),
-          n4 = weber * sqrt(n4))
+          n4 = weber * sqrt(n4)
+          )
     
   # Neural noise
   w1e <- v/sqrt(n1)
@@ -194,8 +194,8 @@ coldist <-function(vismodeldata,
   # Prepare output
   pairsid <- t(combn(nrow(dat),2))
 
-  patch1 <- row.names(dat)[pairsid[,1]]
-  patch2 <- row.names(dat)[pairsid[,2]]
+  patch1 <- row.names(dat)[pairsid[, 1]]
+  patch2 <- row.names(dat)[pairsid[, 2]]
 
   res <- data.frame(patch1, patch2)
   
@@ -204,32 +204,29 @@ coldist <-function(vismodeldata,
   #########################
   
   if(!is.null(vis)){
-  	if (vis=='di' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  didistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e) )
-}
+  	if(vis == 'di' & noise == 'neural'){
+      res$dS <- apply(pairsid,1,function(x) 
+      didistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e))
+  }
 
-if (vis=='tri' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  trdistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e, w3=w3e) )
-}
-
-if (vis=='tetra' & noise=='neural'){
-res$dS <- apply(pairsid,1,function(x) 
-  ttdistcalc(dat[x[1],], dat[x[2],], 
-  w1=w1e, w2=w2e, w3=w3e, w4=w4e) )
-}
-
-if(achro==TRUE & noise=='neural'){
-res$dL <- apply(pairsid,1,function(x) 
-  ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  w=w4e) )
-}
-
-
-
+  if(vis == 'tri' & noise == 'neural'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      trdistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e, w3 = w3e))
+  }
+  
+  if(vis=='tetra' & noise=='neural'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      ttdistcalc(dat[x[1], ], dat[x[2], ], 
+      w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e))
+  }
+  
+  if(achro==TRUE & noise=='neural'){
+    res$dL <- apply(pairsid, 1, function(x) 
+      ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
+      w = w4e))
+  }
 
 # if (vis=='mono' & noise=='quantum'){
 # res$dS <- apply(pairsid,1,function(x) 
@@ -238,33 +235,33 @@ res$dL <- apply(pairsid,1,function(x)
   # n1=n1, v=v) )
 # }
 
-if (vis=='di' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.didistcalc(dat[x[1],], dat[x[2],], 
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, v=v) )
-}
-
-if (vis=='tri' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.trdistcalc(dat[x[1],], dat[x[2],],
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, n3=n3, v=v ) )
-}
-
-if (vis=='tetra' & noise=='quantum'){
-res$dS <- apply(pairsid,1,function(x) 
-  qn.ttdistcalc(dat[x[1],], dat[x[2],],
-  qndat[x[1],], qndat[x[2],], 
-  n1=n1, n2=n2, n3=n3, n4=n4, v=v) )
-}
-
-if(achro==TRUE & noise=='quantum'){
-res$dL <- apply(pairsid,1,function(x) 
-  qn.ttdistcalcachro(dat[x[1],], dat[x[2],], 
-  qndat[x[1],], qndat[x[2],], n4=n4, v=v) )
-}
+  if(vis == 'di' & noise == 'quantum'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      qn.didistcalc(dat[x[1], ], dat[x[2], ], 
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, v = v) )
   }
+  
+  if(vis == 'tri' & noise == 'quantum'){
+    res$dS <- apply(pairsid,1,function(x) 
+      qn.trdistcalc(dat[x[1], ], dat[x[2], ],
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, n3 = n3, v = v))
+  }
+  
+  if (vis == 'tetra' & noise == 'quantum'){
+    res$dS <- apply(pairsid, 1, function(x) 
+      qn.ttdistcalc(dat[x[1], ], dat[x[2], ],
+      qndat[x[1], ], qndat[x[2], ], 
+      n1 = n1, n2 = n2, n3 = n3, n4 = n4, v = v))
+  }
+  
+  if(achro == TRUE & noise == 'quantum'){
+    res$dL <- apply(pairsid, 1, function(x) 
+      qn.ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
+      qndat[x[1], ], qndat[x[2], ], n4 = n4, v = v))
+  }
+}
 
 #######################
 # Other Visual Models #
@@ -298,37 +295,37 @@ if('colspace' %in% class(vismodeldata)){
 
 }
 
-nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
-
+  nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
+  
 # Subsetting samples
-
-if(length(subset) > 2){
-  stop('Too many subsetting conditions; one or two allowed.')
-}
-
-if(length(subset)==1){
   
-  condition1 <- grep(subset, res$patch1)
-  condition2 <- grep(subset, res$patch2)
-
-  subsamp <- unique(c(condition1, condition2))
+  if(length(subset) > 2){
+    stop('Too many subsetting conditions; one or two allowed.')
+  }
   
-  res <- res[subsamp,]	
- }
+  if(length(subset) == 1){
+    
+    condition1 <- grep(subset, res$patch1)
+    condition2 <- grep(subset, res$patch2)
   
-if(length(subset)==2){
-  condition1 <- intersect(grep(subset[1], res$patch1), 
-    grep(subset[2],res$patch2) )
-	
-  condition2 <- intersect(grep(subset[2], res$patch1), 
-    grep(subset[1],res$patch2) )
-	
-  subsamp <- unique(c(condition1, condition2))
+    subsamp <- unique(c(condition1, condition2))
+    
+    res <- res[subsamp, ]	
+   }
+    
+  if(length(subset) == 2){
+    condition1 <- intersect(grep(subset[1], res$patch1), 
+      grep(subset[2], res$patch2) )
+  	
+    condition2 <- intersect(grep(subset[2], res$patch1), 
+      grep(subset[1], res$patch2) )
+  	
+    subsamp <- unique(c(condition1, condition2))
+    
+    res <- res[subsamp, ]	
+  }
   
-  res <- res[subsamp,]	
-}
-
-row.names(res) <- 1:dim(res)[1]
-
-res
-}
+  row.names(res) <- 1:dim(res)[1]
+  
+  res
+  }
