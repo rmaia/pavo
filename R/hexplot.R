@@ -1,6 +1,6 @@
 #' Plot a colour hexagon 
 #' 
-#' \code{hexplot} produces a colour hexagon plot
+#' \code{hexplot} produces a colour hexagon plot. Accessed via the function \code{\link{plot.colspace}}.
 #' 
 #' @param hexdata (required) a data frame, possibly a result from the \code{hexagon} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
@@ -31,6 +31,10 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
 #'    based on photoreceptor excitations as a generalized representation of 
 #'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
@@ -38,7 +42,7 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-.hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'fine', 'coarse'), col.sec = 'grey', 
+hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'fine', 'coarse'), col.sec = 'grey', 
                      out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
                      achrocol = 'grey', ...){
   

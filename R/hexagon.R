@@ -1,7 +1,7 @@
 #' Colour hexagon
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in the hymenopteran color hexagon.
+#' in the hymenopteran color hexagon. Accessed via the function \code{\link{colspace}(space = 'hexagon')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -29,6 +29,10 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
 #'    based on photoreceptor excitations as a generalized representation of 
 #'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
@@ -36,7 +40,7 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-.hexagon <- function(vismodeldata){
+hexagon <- function(vismodeldata){
   
 ## Note: requires von kries & hyperbolic transform
   

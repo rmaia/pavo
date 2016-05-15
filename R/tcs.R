@@ -1,7 +1,7 @@
 #' Tetracolorspace avian visual model
 #'
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in the avian tetrahedral color space.
+#' in the avian tetrahedral color space. Accessed via the function \code{\link{colspace}(space = 'tcs')}.
 #'
 #' @import geometry
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
@@ -31,13 +31,17 @@
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
 #'  The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-.tcs <- function(vismodeldata){
+tcs <- function(vismodeldata){
 
   dat <- vismodeldata
   

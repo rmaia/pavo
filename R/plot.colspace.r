@@ -118,31 +118,31 @@
 plot.colspace <- function(clrspdata, ...){
   
   if(attr(clrspdata, 'clrsp') == 'hexagon'){
-    .hexplot(clrspdata, ...)
+    hexplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'coc'){
-    .cocplot(clrspdata, ...)
+    cocplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'categorical'){
-    .catplot(clrspdata, ...)
+    catplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'dispace'){
-    .diplot(clrspdata, ...)
+    diplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'trispace'){
-    .triplot(clrspdata, ...)
+    triplot(clrspdata, ...)
   }
   
   if(grepl('CIE', attr(clrspdata, 'clrsp'))){
-    .cieplot(clrspdata, ...)
+    cieplot(clrspdata, ...)
   }
   
   if(attr(clrspdata, 'clrsp') == 'tcs'){
-    .tcsplot(clrspdata, ...)
+    tcsplot(clrspdata, ...)
   }
   
 }

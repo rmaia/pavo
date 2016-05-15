@@ -1,7 +1,7 @@
 #' Plot a Tetrahedral Color Space
 #'
 #' \code{tcsplot} produces either a static or interactive 3D plot of a tetrahedral 
-#' colorspace using OpenGL capabilities
+#' colorspace using OpenGL capabilities. Accessed via the function \code{\link{plot.colspace}}.
 #'
 #' @import rgl
 #' @import scatterplot3d
@@ -58,6 +58,10 @@
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
+#' @export
+#' 
+#' @keywords internal
+#'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
 #'  The American Naturalist, 171(6), 755-776.
@@ -66,7 +70,7 @@
 
 #ToDo: Add option to not plot tetrahedron
 
-.tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black', 
+tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black', 
                     vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = 'grey', 
                     lwd = 1, lcol = 'lightgrey', new = FALSE, hspin = FALSE, 
                     vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE, static = FALSE) {

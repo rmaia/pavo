@@ -1,7 +1,7 @@
 #' Dichromatic colour space
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in a dichromatic colour space.
+#' in a dichromatic colour space. Accessed via the function \code{\link{colspace}(space = 'di')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -21,11 +21,15 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
 #'  behavioural tests and physiological concepts. Biological Reviews, 78,
 #'  81 - 118.
 
-.dispace <- function(vismodeldata){
+dispace <- function(vismodeldata){
   
   dat <- vismodeldata
     

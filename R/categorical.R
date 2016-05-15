@@ -1,6 +1,7 @@
 #' Categorical fly-visual model
 #' 
-#' Applies the fly categorical colour vision model of Troje (1993). 
+#' Applies the fly categorical colour vision model of Troje (1993). Accessed via 
+#' the function \code{\link{colspace}(space = 'cat')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -21,10 +22,14 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
 #'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-.categorical <- function(vismodeldata){
+categorical <- function(vismodeldata){
   
   dat <- vismodeldata
     

@@ -1,6 +1,7 @@
 #' Plot the colour opponent coding diagram
 #' 
-#' \code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991)
+#' \code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991).
+#' Accessed via the function \code{\link{plot.colspace}}.
 #'  
 #' @param cocdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
@@ -22,10 +23,14 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-.cocplot <- function(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
+cocplot <- function(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
                      achro = FALSE, achrosize = 0.8, achrocol = 'grey', ...){ 
   
   # Check if object is of class colspace and trichromat

@@ -1,7 +1,7 @@
 #' Trichromatic colour space
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in a trichromat (i.e. Maxwell) chromaticity space.
+#' in a trichromat (i.e. Maxwell) chromaticity space. Accessed via the function \code{\link{colspace}(space = 'tri')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -23,6 +23,10 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed) 
 #'  Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 #' @references Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
@@ -32,7 +36,7 @@
 #'  cone excitation by stimuli of equal luminance. Journal of the Optical 
 #'  Society of America, 69, 1183 – 1186.
 
-.trispace <- function(vismodeldata){
+trispace <- function(vismodeldata){
   
   dat <- vismodeldata
     

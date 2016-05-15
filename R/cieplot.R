@@ -1,6 +1,6 @@
 #' CIE plot
 #' 
-#' Plot a CIE (XYZ or LAB) chromaticity diagram. 
+#' Plot a CIE (XYZ or LAB) chromaticity diagram. Accessed via the function \code{\link{plot.colspace}}.
 #' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be
@@ -10,13 +10,6 @@
 #' @param out.lty line type for monochromatic loci outline (defaults to 1)
 #' @param ... Additional graphical options. See \code{\link{par}}.
 #' 
-#' @author Thomas White \email{thomas.white026@@gmail.com}
-#' 
-#' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-#'    Transactions of the Optical Society, 33(3), 73-134.
-#' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
-#'    using MATLAB. John Wiley & Sons.
-#'    
 #' @examples
 #' \dontrun{
 #' data(flowers)
@@ -24,8 +17,21 @@
 #' flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
 #' plot(flowers.cie)
 #' }
+#' 
+#' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @export
+#' 
+#' @keywords internal
+#' 
+#' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
+#'    Transactions of the Optical Society, 33(3), 73-134.
+#' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+#'    using MATLAB. John Wiley & Sons.
+#'    
 
-.cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
+
+cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
                      out.lty = 1, ...){
   
 # Check if object is of class colorspace and trichromat

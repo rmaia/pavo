@@ -1,6 +1,6 @@
 #' Plot a dichromat segment
 #' 
-#' \code{maxplot} produces a dichromat segment plot
+#' \code{diplot} produces a dichromat segment plot. Accessed via the function \code{\link{plot.colspace}}.
 #'
 #' @param didata (required) a data frame, possibly a result from the \code{dispace} 
 #'  function, containing values for the 'x' coordinates as a column (labeled as such)
@@ -23,11 +23,15 @@
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
 #'    - behavioural tests and physiological concepts. Biological Reviews, 78,
 #'    81 - 118.
 
-.diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
+diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                     cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
     
 # Check if object is of class colspace and trichromat

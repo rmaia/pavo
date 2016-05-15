@@ -1,7 +1,8 @@
-#' Color opponenet coding model 
+#' Color opponent coding model 
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in the color opponent coding model of hymenopteran vision
+#' in the color opponent coding model of hymenopteran vision. Accessed via 
+#' the function \code{\link{colspace}(space = 'coc')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -22,10 +23,14 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-.coc <- function(vismodeldata){
+coc <- function(vismodeldata){
   
   dat <- vismodeldata
   

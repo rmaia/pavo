@@ -17,14 +17,14 @@ with columns representing quantum catches).}
 \item \code{auto}: if data is a result from \code{vismodel}, 
 applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
 cones, respectively.
-\item \code{di}: dichromatic colourspace
-\item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle)
-\item \code{tcs}: tetrahedral colourspace (tetrachromatic)
-\item \code{hexagon}: the colour-hexagon of Chittka (1992) (trichromatic)
-\item \code{coc}: the colour-opponent-coding model of Backhaus (1991) (trichromatic)
-\item \code{categorical}: the categorical fly-model of Troje (1993) (tetrachromatic)
-\item \code{ciexyz}: CIEXYZ space
-\item \code{cielab}: CIELAB space
+\item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
+\item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details.
+\item \code{tcs}: tetrahedral colourspace (tetrachromatic). See \code{\link{tcs}} for details.
+\item \code{hexagon}: the colour-hexagon of Chittka (1992) (trichromatic). See \code{\link{hexagon}} for details.
+\item \code{coc}: the colour-opponent-coding model of Backhaus (1991) (trichromatic). See \code{\link{coc}} for details.
+\item \code{categorical}: the categorical fly-model of Troje (1993) (tetrachromatic). See \code{\link{categorical}} for details.
+\item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details.
+\item \code{cielab}: CIELAB space. See \code{\link{cie}} for details.
 }}
 }
 \description{

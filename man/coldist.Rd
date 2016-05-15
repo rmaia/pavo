@@ -4,15 +4,11 @@
 \alias{coldist}
 \title{Color distances}
 \usage{
-coldist(qdata, noise = c("neural", "quantum"), subset = NULL,
+coldist(vismodeldata, noise = c("neural", "quantum"), subset = NULL,
   achro = TRUE, vis = NULL, qcatch = NULL, n1 = 1, n2 = 2, n3 = 2,
   n4 = 4, weber = 0.1, weber.ref = "n4", weber.achro = 0.1)
 }
 \arguments{
-\item{qdata}{(required) quantum catch color data. Can be the result
-from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
-in the form of a data frame with columns representing photoreceptors.}
-
 \item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, and cielab models)):
@@ -79,6 +75,10 @@ categorical, and cielab models).}
  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, and cielab models).}
+
+\item{qdata}{(required) quantum catch color data. Can be the result
+from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
+in the form of a data frame with columns representing photoreceptors.}
 }
 \value{
 A data frame containing up to 4 columns. The first two (\code{patch1, patch2}) refer

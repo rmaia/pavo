@@ -1,7 +1,8 @@
 #' CIE colour spaces
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in either the CIEXYZ (1931) or CIELAB (1971) colour space
+#' in either the CIEXYZ (1931) or CIELAB (1971) colourspace. Accessed via 
+#' the function \code{\link{colspace}(space = 'CIEXYZ') or (space = 'CIELAB')}. 
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a 
@@ -26,6 +27,10 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 #'    Transactions of the Optical Society, 33(3), 73-134.
 #' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
@@ -37,7 +42,7 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Éclairage.
 
-.cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
+cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
   
   space2 <- try(match.arg(space), silent = T)
   if(inherits(space2,'try-error'))

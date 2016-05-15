@@ -2,7 +2,8 @@
 #' 
 #' \code{catplot} produces a plot based on Troje's (1993) categorical colour model. 
 #' Note that the model is 'categorical' and results were not intended to be 
-#' interpreted as continuous, which may be implied by this type of plot. 
+#' interpreted as continuous, which may be implied by this type of plot. Accessed via 
+#' the function \code{\link{plot.colspace}}.
 #'  
 #' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
@@ -20,10 +21,14 @@
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
 #'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-.catplot <- function(catdata, labels = TRUE, cex.labels = 0.9, ...){ 
+catplot <- function(catdata, labels = TRUE, cex.labels = 0.9, ...){ 
   
 # Check if object is of class colorspace and tetrachromat
   if(!('colspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))

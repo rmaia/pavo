@@ -1,6 +1,6 @@
 #' Plot a Maxwell Triangle
 #' 
-#' \code{triplot} produces a Maxwell triangle plot
+#' \code{triplot} produces a Maxwell triangle plot. Accessed via the function \code{\link{plot.colspace}}.
 #'
 #' @param tridata (required) a data frame, possibly a result from the \code{trispace} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
@@ -23,13 +23,17 @@
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
+#' @export
+#' 
+#' @keywords internal
+#' 
 #' @references Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
 #'    - behavioural tests and physiological concepts. Biological Reviews, 78,
 #'    81 - 118.
 #' @references Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
 #'  Journal of comparative physiology, 139(3), 165-176.
 
-.triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
+triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                      cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
     
 # Check if object is of class colspace and trichromat
