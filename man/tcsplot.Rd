@@ -3,7 +3,7 @@
 \name{tcsplot}
 \alias{.tcspoints}
 \alias{tcsplot}
-\title{Plot a Tetrahedral Color Space}
+\title{Plot a Tetrahedral Colorspace}
 \usage{
 tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
   vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",

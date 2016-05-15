@@ -2,6 +2,8 @@
 #' 
 #' Plot a CIE (XYZ or LAB) chromaticity diagram. Accessed via the function \code{\link{plot.colspace}}.
 #' 
+#' @import scatterplot3d
+#' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}
@@ -92,7 +94,41 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
   
   # CIELAB
   if(attr(ciedata, 'clrsp') == 'CIELAB'){
-    print('Nothing available yet')
+    
+    print('WORK IN PROGRESS')
+
+    plot <- scatterplot3d(0, 0, 0, box = TRUE, 
+                          xlim = c(-128, 127), ylim = c(-128, 127), 
+                          zlim = c(0, 100), axis = F, grid = F, angle = 50, 
+                          scale.y = 0.45, mar = c(2, 2, 2, 2))
+    
+    # LAB plot axis line vertices
+    L1 <- plot$xyz.convert(0, 0, 0)
+    L2 <- plot$xyz.convert(0, 0, 100)
+    a1 <- plot$xyz.convert(-128, 0, 50)
+    a2 <- plot$xyz.convert(127, 0, 50)
+    b1 <- plot$xyz.convert(0, -128, 50)
+    b2 <- plot$xyz.convert(0, 127, 50)
+    
+    # Text label locations
+    txt_L <- plot$xyz.convert(0, 0, 104)
+    txt_a <- plot$xyz.convert(-140, 0, 50)
+    txt_b <- plot$xyz.convert(0, -150, 50)
+  
+    # Draw them up
+    segments(L1$x, L1$y, L2$x, L2$y, lwd = 1.5)
+    segments(a1$x, a1$y, a2$x, a2$y, lwd = 1.5)
+    segments(b1$x, b1$y, b2$x, b2$y, lwd = 1.5)
+    
+    # Data points
+    plot$points3d(x = ciedata$a, y = ciedata$b, z = ciedata$L, 
+                  cex = 1, col = 'black', pch = 19)
+    
+    # Axis labels
+    text(x = txt_L$x, y = txt_L$y, labels = "L")
+    text(x = txt_a$x, y = txt_a$y, labels = "a")
+    text(x = txt_b$x, y = txt_b$y, labels = "b")
+    
   }
       
 }

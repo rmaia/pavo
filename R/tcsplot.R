@@ -1,4 +1,4 @@
-#' Plot a Tetrahedral Color Space
+#' Plot a Tetrahedral Colorspace
 #'
 #' \code{tcsplot} produces either a static or interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities. Accessed via the function \code{\link{plot.colspace}}.
@@ -143,6 +143,7 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
   # first projecting using plot$xyz.convers() then points(). Either way, need to access
   # the original plot object, and I don't know how to pass that back outside this function).
   # The defaults etc. aren't done properly yet either - I'll do that I've worked this out. 
+  # Facing the same problem for the CIELAB plot which also uses scatterplot3d.
   if(static == TRUE){
     
     #library(scatterplot3d)
