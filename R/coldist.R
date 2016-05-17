@@ -71,7 +71,7 @@
 #' @return A data frame containing up to 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-#' model, euclidean distances in the hexagon and cielab colorspaces, and manhattan distances
+#' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, and manhattan distances
 #' in the color-opponent-coding space. 
 #' 
 #' @export
@@ -86,10 +86,15 @@
 #' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
 #' tridist.flowers <- coldist(vis.flowers)
 #' 
-#' # Trichromat, color-hexagon model
+#' # Trichromat, color-hexagon model (euclidean distances)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 #' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' hexdist.flowers <- coldist(hex.flowers)
+#' 
+#' # Trichromat, color-opponent-coding model (manhattan distances)
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+#' coc.flowers <- colspace(vis.flowers, space = 'coc')
+#' hexdist.flowers <- coldist(coc.flowers)
 #' 
 #' # Tetrachromat
 #' data(sicalis)

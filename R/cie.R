@@ -64,7 +64,7 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB')){
     # Calculate tristimulus values for neutral point. First need to 
     # re-grab original sensitivity and illuminant data.
     S <- attr(dat, 'data.visualsystem.chromatic')
-    illum <- attr(dat, 'data.illuminant')  # Illuminant
+    illum <- attr(dat, 'data.illuminant') # Illuminant
     Xn = sum(rep(1, 401) * S[, 1] * illum)
     Yn = sum(rep(1, 401) * S[, 2] * illum)
     Zn = sum(rep(1, 401) * S[, 3] * illum)

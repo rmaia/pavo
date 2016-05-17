@@ -4,11 +4,15 @@
 \alias{coldist}
 \title{Color distances}
 \usage{
-coldist(vismodeldata, noise = c("neural", "quantum"), subset = NULL,
+coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
   achro = TRUE, vis = NULL, qcatch = NULL, n1 = 1, n2 = 2, n3 = 2,
   n4 = 4, weber = 0.1, weber.ref = "n4", weber.achro = 0.1)
 }
 \arguments{
+\item{modeldata}{(required) quantum catch color data. Can be the result
+from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
+in the form of a data frame with columns representing photoreceptors.}
+
 \item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, and cielab models)):
@@ -75,16 +79,12 @@ categorical, and cielab models).}
  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, and cielab models).}
-
-\item{qdata}{(required) quantum catch color data. Can be the result
-from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
-in the form of a data frame with columns representing photoreceptors.}
 }
 \value{
 A data frame containing up to 4 columns. The first two (\code{patch1, patch2}) refer
 to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-model, euclidean distances in the hexagon and cielab colorspaces, and manhattan distances
+model, euclidean distances in the hexagon, cielab, and categorical colorspaces, and manhattan distances
 in the color-opponent-coding space.
 }
 \description{
@@ -105,10 +105,15 @@ didist.flowers <- coldist(vis.flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
 tridist.flowers <- coldist(vis.flowers)
 
-# Trichromat, color-hexagon model
+# Trichromat, color-hexagon model (euclidean distances)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 hexdist.flowers <- coldist(hex.flowers)
+
+# Trichromat, color-opponent-coding model (manhattan distances)
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+coc.flowers <- colspace(vis.flowers, space = 'coc')
+hexdist.flowers <- coldist(coc.flowers)
 
 # Tetrachromat
 data(sicalis)
