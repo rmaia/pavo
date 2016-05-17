@@ -6,7 +6,7 @@
 #' from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
 #' distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
 #' 
-#' @param qdata (required) quantum catch color data. Can be the result
+#' @param modeldata (required) quantum catch color data. Can be the result
 #'  from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
 #'  in the form of a data frame with columns representing photoreceptors.
 #' @param qcatch if the object is of class \code{vismodel} or \code{colspace}, 
@@ -114,7 +114,7 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 
-coldist <-function(vismodeldata,
+coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, vis = NULL, qcatch = NULL,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
@@ -123,23 +123,22 @@ coldist <-function(vismodeldata,
   noise <- match.arg(noise)
 
   if(noise == 'quantum'){
-  	if(!any(c('vismodel', 'colspace') %in% class(vismodeldata)))
+  	if(!any(c('vismodel', 'colspace') %in% class(modeldata)))
   	  stop('Object must be of class vismodel or colspace to calculate quantum receptor noise model')
   }
   
   # Pre-processing for colspace objects
-  if('colspace' %in% class(vismodeldata)){
-    #dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
-    # RM: this might be better: 
-    dat <- as.matrix(vismodeldata[, names(vismodeldata) %in% c('u','s','m','l')])
+  if('colspace' %in% class(modeldata)){
+    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
     
-    qcatch <- attr(vismodeldata, 'qcatch')
+    qcatch <- attr(modeldata, 'qcatch')
     
-    if(any(c('di','tri','tcs') %in% attr(vismodeldata, 'clrsp'))){
+    if(any(c('di','tri','tcs') %in% attr(modeldata, 'clrsp'))){
       # transform or stop if Qi not appropriate
-      qcatch <- attr(vismodeldata, 'qcatch')
-      ncone <- as.character(attr(vismodeldata,'conenumb'))
+      qcatch <- attr(modeldata, 'qcatch')
+      ncone <- as.character(attr(modeldata,'conenumb'))
 
+      dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
       dat <- switch(qcatch, 
   	                fi = dat, 
   	                Qi = log(dat)
@@ -148,40 +147,40 @@ coldist <-function(vismodeldata,
   	  # quantum catch models need Qi in original scale (not log transformed)
   	  # to calculate the noise. Save as qndat object.
   	  qndat <- switch(qcatch,
-  	           Qi = as.matrix(vismodeldata),
-  	           fi = as.matrix(exp(vismodeldata)) 
+  	           Qi = as.matrix(modeldata),
+  	           fi = as.matrix(exp(modeldata)) 
   	           )
   	           
-      vis <- attr(vismodeldata, 'clrsp')
+      vis <- attr(modeldata, 'clrsp')
       if(vis == 'tcs')
         vis <- 'tetra'
     }
       
-    if(attr(vismodeldata, 'relative'))
+    if(attr(modeldata, 'relative'))
       warning('Quantum catch are relative, distances may not be meaningful')  
   }
   
   # Pre-processing for vismodel objects
-  if('vismodel' %in% class(vismodeldata)){
+  if('vismodel' %in% class(modeldata)){
 
     # initial checks... 
     
-    if(attr(vismodeldata, 'qcatch') == 'Ei')
+    if(attr(modeldata, 'qcatch') == 'Ei')
   	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)')
      
-    if(attr(vismodeldata, 'relative'))
+    if(attr(modeldata, 'relative'))
       warning('Quantum catch are relative, distances may not be meaningful')  
 
     # save input object...
      
-  	dat <- as.matrix(vismodeldata)
+  	dat <- as.matrix(modeldata)
   	
-    rownames(dat) <- rownames(vismodeldata)
-    colnames(dat) <- colnames(vismodeldata)
+    rownames(dat) <- rownames(modeldata)
+    colnames(dat) <- colnames(modeldata)
   	
   	# transform or stop if Qi not appropriate
   	
-  	qcatch <- attr(vismodeldata, 'qcatch')
+  	qcatch <- attr(modeldata, 'qcatch')
 
   	dat <- switch(qcatch, 
   	              fi = dat, 
@@ -191,12 +190,12 @@ coldist <-function(vismodeldata,
   	# quantum catch models need Qi in original scale (not log transformed)
   	# to calculate the noise. Save as qndat object.
   	qndat <- switch(qcatch,
-  	         Qi = as.matrix(vismodeldata),
-  	         fi = as.matrix(exp(vismodeldata)) 
+  	         Qi = as.matrix(modeldata),
+  	         fi = as.matrix(exp(modeldata)) 
   	         )
       
     # choose receptor noise model depending on visual system
-    ncone <- as.character(attr(vismodeldata,'conenumb'))
+    ncone <- as.character(attr(modeldata,'conenumb'))
     vis <- switch(ncone,
                   '2' = 'di',
                   '3' = 'tri',
@@ -204,11 +203,11 @@ coldist <-function(vismodeldata,
    }
    
   # transformations in case object is neither from colspace or vismodel
-  if(!any(c('colspace','vismodel') %in% class(vismodeldata))){
+  if(!any(c('colspace','vismodel') %in% class(modeldata))){
   	qcatch <- match.arg(qcatch)
-    dat <- as.matrix(vismodeldata)
-    rownames(dat) <- rownames(vismodeldata)
-    colnames(dat) <- colnames(vismodeldata)
+    dat <- as.matrix(modeldata)
+    rownames(dat) <- rownames(modeldata)
+    colnames(dat) <- colnames(modeldata)
   }
 
   # Prepare output
@@ -310,27 +309,27 @@ coldist <-function(vismodeldata,
 # Other Visual Models #
 #######################
 
-if('colspace' %in% class(vismodeldata)){
+if('colspace' %in% class(modeldata)){
 	
-  if(attr(vismodeldata, 'clrsp') == 'hexagon'){
+  if(attr(modeldata, 'clrsp') == 'hexagon'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
-  if(attr(vismodeldata, 'clrsp') == 'categorical'){
+  if(attr(modeldata, 'clrsp') == 'categorical'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the categorical model')
   }
   
-  if(attr(vismodeldata, 'clrsp') == 'CIELAB'){
+  if(attr(modeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the CIELAB model')
   }
   
-  if(attr(vismodeldata, 'clrsp') == 'coc'){
+  if(attr(modeldata, 'clrsp') == 'coc'){
     res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the color-opponent-coding space')
