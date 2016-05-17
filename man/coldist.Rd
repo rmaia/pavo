@@ -36,9 +36,9 @@ instead returns long (or 'green') receptor contrast.}
  from another source, this argument is used to specify the visual system phenotype 
  to use in the model:
 \itemize{
- \item \code{tcs}: Tetrachromatic color vision (default)
- \item \code{tri}: Trichromatic color vision
  \item \code{di}: Dichromatic color vision
+ \item \code{tri}: Trichromatic color vision
+ \item \code{tetra}: Tetrachromatic color vision
 }}
 
 \item{qcatch}{if the object is of class \code{vismodel} or \code{colspace}, 

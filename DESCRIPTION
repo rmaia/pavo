@@ -3,16 +3,23 @@ Description: A cohesive framework for parsing, analyzing and organizing color
     from spectral data
 Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
-Version: 0.5-1
+Version: 0.99
 License: GPL (>= 2)
-Date: 2013-09-01
+Date: 2016-06-01
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca"))
-URL: http://www.rafaelmaia.net/r-packages/pavo
+    email = "bittonp@uwindsor.ca"),
+    person("Thomas", "White", role = "aut",
+    email = "thomas.white@students.mq.edu.au"))
+Author: Rafael Maia [aut, cre],
+    Chad Eliason [aut],
+    Pierre-Paul Bitton [aut],
+    Thomas White [aut]
+Maintainer: Rafael Maia <rm72@zips.uakron.edu>
+URL: http://rafaelmaia.net/pavo/
 Imports:
     rcdd,
     rgl,
