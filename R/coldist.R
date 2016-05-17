@@ -119,20 +119,39 @@ coldist <-function(vismodeldata,
                   achro = TRUE, vis = NULL, qcatch = NULL,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
-  
+
+  noise <- match.arg(noise)
+
   if(noise == 'quantum'){
   	if(!any(c('vismodel', 'colspace') %in% class(vismodeldata)))
   	  stop('Object must be of class vismodel or colspace to calculate quantum receptor noise model')
   }
-
-  noise <- match.arg(noise)
   
   # Pre-processing for colspace objects
   if('colspace' %in% class(vismodeldata)){
-    dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
+    #dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
+    # RM: this might be better: 
+    dat <- as.matrix(vismodeldata[, names(vismodeldata) %in% c('u','s','m','l')])
+    
     qcatch <- attr(vismodeldata, 'qcatch')
     
     if(any(c('di','tri','tcs') %in% attr(vismodeldata, 'clrsp'))){
+      # transform or stop if Qi not appropriate
+      qcatch <- attr(vismodeldata, 'qcatch')
+      ncone <- as.character(attr(vismodeldata,'conenumb'))
+
+      dat <- switch(qcatch, 
+  	                fi = dat, 
+  	                Qi = log(dat)
+  	                )
+  	
+  	  # quantum catch models need Qi in original scale (not log transformed)
+  	  # to calculate the noise. Save as qndat object.
+  	  qndat <- switch(qcatch,
+  	           Qi = as.matrix(vismodeldata),
+  	           fi = as.matrix(exp(vismodeldata)) 
+  	           )
+  	           
       vis <- attr(vismodeldata, 'clrsp')
       if(vis == 'tcs')
         vis <- 'tetra'
@@ -276,7 +295,13 @@ coldist <-function(vismodeldata,
     if(noise =='neural')
       res$dL <- apply(pairsid, 1, function(x) 
         ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
+    
+    if(dim(dat)[2] <= as.numeric(ncone))
+      warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system, so there is no column in the data that represents an exclusively achromatic channel. The last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
+    
   }
+
+# TODO: return warning if last column used for achromatic is the same as number of cones
 
 }
 
