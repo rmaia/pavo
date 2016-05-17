@@ -18,6 +18,7 @@
 #' @param lcol color of plotted lines indicating central tendency.
 #' @param shadecol color of shaded areas indicating variance measure.
 #' @param alpha transparency of the shaded areas.
+#' @param na.rm logical. how to handle NA's.
 #' @param ... additional graphical parameters to be passed to plot.
 #' @return Plot containing the lines and shaded areas of the groups of spectra.
 #' @export

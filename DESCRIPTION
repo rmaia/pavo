@@ -1,20 +1,31 @@
 Package: pavo
-Description: A cohesive framework for parsing, analyzing and organizing color from spectral data.
-Title: Perceptual Analysis, Visualization and Organization of Spectral Color Data in R
-Version: 0.5-2
+Description: A cohesive framework for parsing, analyzing and organizing color
+    from spectral data.
+Title: Perceptual Analysis, Visualization and Organization of Spectral Color
+    Data in R
+Version: 0.5-6
 License: GPL (>= 2)
-Date: 2015-06-06
+Date: 2016-05-17
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca"))
+    email = "bittonp@uwindsor.ca"),
+    person("White", "Thomas", role = "aut",
+    email = "thomas.white@students.mq.edu.au"))
+Author: Rafael Maia [aut, cre],
+    Chad Eliason [aut],
+    Pierre-Paul Bitton [aut],
+    Thomas White [aut]
+Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: www.rafaelmaia.net/r-packages/pavo
 Depends:
     rgl
 Imports:
-    geometry, mapproj, rcdd
+    geometry,
+    mapproj,
+    rcdd
 Collate:
     'aggplot.R'
     'aggspec.R'
@@ -51,3 +62,4 @@ Collate:
     'irrad2flux.R'
     'lines.rspec.R'
     'plot.vismodel.R'
+RoxygenNote: 5.0.1

@@ -31,6 +31,7 @@
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}
 #' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
+#' @param ... class consistency (ignored)
 #' @return A data frame of class \code{rspec} with the processed data.
 #' @export
 #' @examples \dontrun{

@@ -8,6 +8,7 @@
 #' spectra to plot.
 #' @param select specification of which spectra to plot. Can be a numeric vector or 
 #' factor (e.g., \code{sex=='male'})
+#' @param type not sure...
 #' @param ... additional arguments passed to lines
 #' @examples \dontrun{
 #' data(teal)
@@ -17,6 +18,8 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{plot}}, \code{\link{lines}}
 #' @export lines.rspec
+
+# RM: WHAT ARE THE TYPE OPTIONS? NOT DOCUMENTED.
 
 lines.rspec <- function(x, select = NULL, type = 'overlay', ...) {
   type <- match.arg(type)

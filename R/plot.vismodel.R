@@ -3,7 +3,7 @@
 #' DESCRIPTION HERE...
 #'
 #' @import geometry
-#' @param vismodeldata (required) quantum catch color data. Can be either the result
+#' @param x (required) quantum catch color data. Can be either the result
 #' of \code{\link{vismodel}} or independently calculated data in the form of a data frame
 #' with columns representing the quantum catches of different cones/receptors.
 #' @param achro.pt whether to plot the achromatic center on the chromaticity diagram
@@ -15,14 +15,15 @@
 #' (default) or only the given data points
 #' @param type for visual models with <4 cones, specifies the type of chromaticity
 #' diagram to produce (defaults to Chittka's hexagon diagram)
+#' @param ... additional graphic parameters (?)
 #'
 #' @return a chromaticity diagram
 #'
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-#' tcs.sicalis <- tcs(vis.sicalis)}
-#' plot3d(tcs(vismodel(teal)), theta=60, phi=25)
+#' tcs.sicalis <- tcs(vis.sicalis)
+#' plot3d(tcs(vismodel(teal)), theta=60, phi=25)}
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -39,13 +40,17 @@
 # [ ] give ability to show frame of reference when zoomed in on data (tetrahedron in upper right?)
 # zoom option - should it always center on the centroid of the data points? or of the 3D tetrahedron?
 
-plot.vismodel <- function(vismodeldat, achro.pt = FALSE, achro.line = FALSE, hull = FALSE, 
+#plot.vismodel <- function(x, achro.pt = FALSE, achro.line = FALSE, hull = FALSE, 
+#    zoom = 1, view = c('tetrahedron', 'crop'), type = c('hexagon', 'cie', 'macleod'), ...) {
+
+plot.vismodel <- function(x, achro.pt = FALSE, achro.line = FALSE, hull = FALSE, 
     zoom = 1, view = c('tetrahedron', 'crop'), type = c('hexagon', 'cie', 'macleod'), ...) {
+
 
   par.old <- par()$mar  # save original par settings
                           # [ ] why not save all, not just 'mar'?
 
-  cones <- attr(vismodeldat, "conenumb")
+  cones <- attr(x, "conenumb")
   view <- match.arg(view)
   type <- match.arg(type)
 
@@ -83,7 +88,7 @@ plot.vismodel <- function(vismodeldat, achro.pt = FALSE, achro.line = FALSE, hul
           plot(hexcoords, type = 'n', asp = 1, ...)
           polygon(hexcoords)
           text(hexcoords[c(1,5,3), ], labels=c("UV", "B", "G"))
-          points(ubg2xy(u = vismodeldat[, 1], b = vismodeldat[, 2], g = vismodeldat[, 3]), ...)
+          points(ubg2xy(u = x[, 1], b = x[, 2], g = x[, 3]), ...)
       }
 
       if (type=="cie") {
@@ -109,7 +114,7 @@ plot.vismodel <- function(vismodeldat, achro.pt = FALSE, achro.line = FALSE, hul
                     0.308359, 0.299317, 0.292044, 0.285945, 0.280951, 0.276964, 0.265326)
 
           plot(ciey ~ ciex, type = 'n', ...)
-          points(y ~ x, vismodeldat, ...)
+          points(y ~ x, x, ...)
           polygon(ciey ~ ciex)
 
       }
@@ -124,7 +129,7 @@ plot.vismodel <- function(vismodeldat, achro.pt = FALSE, achro.line = FALSE, hul
   if (cones == 4) {
 
       # CE: Are we wanting to do this some other way?
-      colorspacedat <- tcs(vismodeldat)
+      colorspacedat <- tcs(x)
       xyz <- colorspacedat[c('x','y','z')]
       
       par(mar = c(0, 0, 0, 0))
@@ -213,7 +218,8 @@ plot.vismodel <- function(vismodeldat, achro.pt = FALSE, achro.line = FALSE, hul
                     z=xyz[vol[,i], 3],
                     M)
             # [ ] give option to change hull colors
-            polygon(xy, col = rgb(r=0,g=0,b=0,alpha=0.1), border = rgb(r=0,g=0,b=0,alpha=0.3))
+            polygon(xy, col = rgb(red=0, green=0, blue=0, alpha=0.1), 
+            border = rgb(red=0, green=0, blue=0, alpha=0.3))
           }
       }
   }

@@ -2,8 +2,8 @@
 
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)
 ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)  
-master:  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
-revamp: [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches)
+master branch (current version with minor changes):  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
+revamp branch (version 1.0 - bleeding edge) : [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches)
 
 ## About
 

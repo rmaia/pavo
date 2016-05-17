@@ -15,6 +15,7 @@
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @param trim logical. if \code{TRUE} (default), the function will try to identify and 
 #' remove numbers at the end of the names of the columns in the new rspec object.
+#' @param na.rm logical. how to handle NA's.
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
