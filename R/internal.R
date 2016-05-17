@@ -1,4 +1,4 @@
-#' @export loadrgl
+# #' @export loadrgl
 
 loadrgl <- function(){
 # load RGL, and attempt install if not found
@@ -12,43 +12,14 @@ if (!require('rgl',character.only = TRUE))
     }
 }
 
+##################################
+# START RECEPTOR NOISE FUNCTIONS #
+##################################
 
-# # ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
-# #		dq1<-log(f1['u']/f2['u'],base=10)
-# #		dq2<-log(f1['s']/f2['s'],base=10)
-# #		dq3<-log(f1['m']/f2['m'],base=10)
-# #		dq4<-log(f1['l']/f2['l'],base=10)
-        # dq1 <- f1['u']-f2['u']
-        # dq2 <- f1['s']-f2['s']
-        # dq3 <- f1['m']-f2['m']
-        # dq4 <- f1['l']-f2['l']
-		
-		# numer<-	((w1*w2)^2)*((dq4-dq3)^2) + 
-				# ((w1*w3)^2)*((dq4-dq2)^2) +
-				# ((w1*w4)^2)*((dq3-dq2)^2) +
-				# ((w2*w3)^2)*((dq4-dq1)^2) +
-				# ((w2*w4)^2)*((dq3-dq1)^2) +
-				# ((w3*w4)^2)*((dq2-dq1)^2)
-		
-		# denom<- ((w1*w2*w3)^2) +
-				# ((w1*w2*w4)^2) + 
-				# ((w1*w3*w4)^2) +
-				# ((w2*w3*w4)^2)	
-			
-		# as.numeric(sqrt(numer/denom))
-		# }
+# tetrachromat functions
 
-# ttdistcalcachro <- function(f1,f2,w){
-        # dq1 <- f1['lum']-f2['lum']
-        # dq1 <- as.numeric(dq1)
-        # round(abs(dq1/w),7)
-		# }
+ttdistcalc <- function(f1, f2, w1, w2, w3, w4){
 
-ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
-#		dq1<-log(f1['u']/f2['u'],base=10)
-#		dq2<-log(f1['s']/f2['s'],base=10)
-#		dq3<-log(f1['m']/f2['m'],base=10)
-#		dq4<-log(f1['l']/f2['l'],base=10)
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
         dq3 <- f1[3]-f2[3]
@@ -69,11 +40,8 @@ ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 		as.numeric(sqrt(numer/denom))
 		}
 		
-qn.ttdistcalc <- function(f1,f2, qn1, qn2, n1,n2,n3,n4,v){
-#		dq1<-log(f1['u']/f2['u'],base=10)
-#		dq2<-log(f1['s']/f2['s'],base=10)
-#		dq3<-log(f1['m']/f2['m'],base=10)
-#		dq4<-log(f1['l']/f2['l'],base=10)
+qn.ttdistcalc <- function(f1, f2, qn1, qn2, n1, n2, n3, n4, v){
+
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
         dq3 <- f1[3]-f2[3]
@@ -99,8 +67,9 @@ qn.ttdistcalc <- function(f1,f2, qn1, qn2, n1,n2,n3,n4,v){
 		as.numeric(sqrt(numer/denom))
 		}
 
+# dichromat functions
 
-didistcalc <- function(f1,f2,w1,w2){
+didistcalc <- function(f1, f2, w1, w2){
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
 
@@ -111,7 +80,7 @@ didistcalc <- function(f1,f2,w1,w2){
 		as.numeric(sqrt(numer/denom))
 		}
 
-qn.didistcalc <- function(f1,f2,qn1, qn2, n1,n2,v){
+qn.didistcalc <- function(f1, f2, qn1, qn2, n1, n2, v){
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
 
@@ -125,8 +94,9 @@ qn.didistcalc <- function(f1,f2,qn1, qn2, n1,n2,v){
 		as.numeric(sqrt(numer/denom))
 		}
 
+# trichromat functions
 
-trdistcalc <- function(f1,f2,w1,w2,w3){
+trdistcalc <- function(f1, f2, w1, w2, w3){
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
         dq3 <- f1[3]-f2[3]
@@ -142,7 +112,7 @@ trdistcalc <- function(f1,f2,w1,w2,w3){
 		as.numeric(sqrt(numer/denom))
 		}
 
-qn.trdistcalc <- function(f1,f2,qn1, qn2, n1,n2,n3,v){
+qn.trdistcalc <- function(f1, f2, qn1, qn2, n1, n2, n3, v){
         dq1 <- f1[1]-f2[1]
         dq2 <- f1[2]-f2[2]
         dq3 <- f1[3]-f2[3]
@@ -162,18 +132,25 @@ qn.trdistcalc <- function(f1,f2,qn1, qn2, n1,n2,n3,v){
 		as.numeric(sqrt(numer/denom))
 		}
 
-ttdistcalcachro <- function(f1,f2,w){
+# achromatic functions
+
+ttdistcalcachro <- function(f1, f2, weber.achro){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
+        w <- weber.achro
         round(abs(dq1/w), 7)
 		}
 
-qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, n4, weber.achro){
+qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
         dq1 <- f1[length(f1)]-f2[length(f1)]
         dq1 <- as.numeric(dq1)
         w <- sqrt((weber.achro)^2 + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
         round(abs(dq1/w),7)
     }
+
+################################
+# END RECEPTOR NOISE FUNCTIONS #
+################################
 
 # 2d Euclidean distance
 euc2d <- function(coord1, coord2){
@@ -196,9 +173,9 @@ bloc2d <- function(coord1, coord2){
   as.numeric(round(abs(coord1['x'] - coord2['x']) + abs(coord1['y'] - coord2['y'])), 7)
 }
 
-###################
-#SUMMARY VARIABLES#
-###################
+#####################
+# SUMMARY VARIABLES #
+#####################
 
 huedisp <- function(tcsres){
   ind=t(combn(nrow(tcsres),2))

@@ -23,9 +23,9 @@
 #'  from another source, this argument is used to specify the visual system phenotype 
 #'  to use in the model:
 #' \itemize{
-#'  \item \code{tcs}: Tetrachromatic color vision (default)
-#'  \item \code{tri}: Trichromatic color vision
 #'  \item \code{di}: Dichromatic color vision
+#'  \item \code{tri}: Trichromatic color vision
+#'  \item \code{tetra}: Tetrachromatic color vision
 #' }
 #' @param subset If only some of the comparisons should be returned, a character vector of 
 #'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
@@ -120,8 +120,10 @@ coldist <-function(vismodeldata,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
                   weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
   
-  if(!'vismodel' %in% class(vismodeldata) && noise == 'quantum')
-    stop('Object must be of class vismodel to calculate quantum noise model')
+  if(noise == 'quantum'){
+  	if(!any(c('vismodel', 'colspace') %in% class(vismodeldata)))
+  	  stop('Object must be of class vismodel or colspace to calculate quantum receptor noise model')
+  }
 
   noise <- match.arg(noise)
   
@@ -130,41 +132,56 @@ coldist <-function(vismodeldata,
     dat <- as.matrix(vismodeldata[, sapply(vismodeldata, is.numeric)])
     qcatch <- attr(vismodeldata, 'qcatch')
     
-    if(any(c('di','tri','tcs') %in% attr(vismodeldata, 'clrsp')))
+    if(any(c('di','tri','tcs') %in% attr(vismodeldata, 'clrsp'))){
       vis <- attr(vismodeldata, 'clrsp')
-  
+      if(vis == 'tcs')
+        vis <- 'tetra'
+    }
+      
     if(attr(vismodeldata, 'relative'))
       warning('Quantum catch are relative, distances may not be meaningful')  
   }
   
   # Pre-processing for vismodel objects
   if('vismodel' %in% class(vismodeldata)){
+
+    # initial checks... 
+    
+    if(attr(vismodeldata, 'qcatch') == 'Ei')
+  	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)')
+     
+    if(attr(vismodeldata, 'relative'))
+      warning('Quantum catch are relative, distances may not be meaningful')  
+
+    # save input object...
+     
   	dat <- as.matrix(vismodeldata)
+  	
     rownames(dat) <- rownames(vismodeldata)
     colnames(dat) <- colnames(vismodeldata)
   	
   	# transform or stop if Qi not appropriate
-  	qcatch <- attr(vismodeldata, 'qcatch')
   	
-    if(attr(vismodeldata, 'qcatch') == 'Qi')
-      qndat <- as.matrix(vismodeldata)
+  	qcatch <- attr(vismodeldata, 'qcatch')
 
-    if(attr(vismodeldata, 'qcatch') == 'fi')
-      qndat <- as.matrix(exp(vismodeldata))
-
-  	if(qcatch == 'Ei')
-  	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches')
-     
-    if(attr(vismodeldata, 'relative'))
-      warning('Quantum catch are relative, distances may not be meaningful')  
+  	dat <- switch(qcatch, 
+  	              fi = dat, 
+  	              Qi = log(dat)
+  	              )
+  	
+  	# quantum catch models need Qi in original scale (not log transformed)
+  	# to calculate the noise. Save as qndat object.
+  	qndat <- switch(qcatch,
+  	         Qi = as.matrix(vismodeldata),
+  	         fi = as.matrix(exp(vismodeldata)) 
+  	         )
       
     # choose receptor noise model depending on visual system
     ncone <- as.character(attr(vismodeldata,'conenumb'))
     vis <- switch(ncone,
                   '2' = 'di',
                   '3' = 'tri',
-                  '4' = 'tcs')
-    
+                  '4' = 'tetra')
    }
    
   # transformations in case object is neither from colspace or vismodel
@@ -174,22 +191,6 @@ coldist <-function(vismodeldata,
     rownames(dat) <- rownames(vismodeldata)
     colnames(dat) <- colnames(vismodeldata)
   }
-  
-  dat <- switch(qcatch, fi = dat, Qi = log(dat))
-  
-  # Calculate v based on weber fraction and reference cone
-  v <- switch(weber.ref,
-          n1 = weber * sqrt(n1),
-          n2 = weber * sqrt(n2),
-          n3 = weber * sqrt(n3),
-          n4 = weber * sqrt(n4)
-          )
-    
-  # Neural noise
-  w1e <- v/sqrt(n1)
-  w2e <- v/sqrt(n2)
-  w3e <- v/sqrt(n3)
-  w4e <- v/sqrt(n4)
 
   # Prepare output
   pairsid <- t(combn(nrow(dat),2))
@@ -204,64 +205,81 @@ coldist <-function(vismodeldata,
   #########################
   
   if(!is.null(vis)){
-  	if(vis == 'di' & noise == 'neural'){
-      res$dS <- apply(pairsid,1,function(x) 
-      didistcalc(dat[x[1], ], dat[x[2], ], 
-      w1 = w1e, w2 = w2e))
+
+  	# Calculate v based on weber fraction and reference cone
+    v <- switch(weber.ref,
+          n1 = weber * sqrt(n1),
+          n2 = weber * sqrt(n2),
+          n3 = weber * sqrt(n3),
+          n4 = weber * sqrt(n4)
+         )
+
+# TODO: RETURN WARNING IF REFERENCE CONE IS ABOVE CHROMACY (e.g. n4 for trichromat)
+    
+    # Neural noise
+    w1e <- v/sqrt(n1)
+    w2e <- v/sqrt(n2)
+    w3e <- v/sqrt(n3)
+    w4e <- v/sqrt(n4)
+
+  	if(vis == 'di'){
+      if(noise == 'neural')
+  		res$dS <- apply(pairsid,1,function(x) 
+          didistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          w1 = w1e, w2 = w2e)
+          )
+
+      if(noise == 'quantum')
+        res$dS <- apply(pairsid, 1, function(x) 
+          qn.didistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+          n1 = n1, n2 = n2, v = v) 
+          )
+    }
+
+    if(vis == 'tri'){
+      if(noise == 'neural')
+        res$dS <- apply(pairsid, 1, function(x) 
+          trdistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          w1 = w1e, w2 = w2e, w3 = w3e)
+          )
+      
+      if(noise == 'quantum')
+        res$dS <- apply(pairsid,1,function(x) 
+          qn.trdistcalc(f1=dat[x[1], ], f2=dat[x[2], ],
+          qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+          n1 = n1, n2 = n2, n3 = n3, v = v)
+          )
+    }
+  
+  if(vis=='tetra'){
+  	if(noise == 'neural')
+      res$dS <- apply(pairsid, 1, function(x) 
+        ttdistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+        w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e)
+        )
+
+    if (noise == 'quantum')
+      res$dS <- apply(pairsid, 1, function(x) 
+        qn.ttdistcalc(f1=dat[x[1], ], f2=dat[x[2], ],
+        qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+        n1 = n1, n2 = n2, n3 = n3, n4 = n4, v = v)
+        )
+  }
+  
+  if(achro == TRUE){
+  	if(noise == 'quantum')
+  	  res$dL <- apply(pairsid, 1, function(x) 
+        qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
+        qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
+   
+    if(noise =='neural')
+      res$dL <- apply(pairsid, 1, function(x) 
+        ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
   }
 
-  if(vis == 'tri' & noise == 'neural'){
-    res$dS <- apply(pairsid, 1, function(x) 
-      trdistcalc(dat[x[1], ], dat[x[2], ], 
-      w1 = w1e, w2 = w2e, w3 = w3e))
-  }
-  
-  if(vis=='tetra' & noise=='neural'){
-    res$dS <- apply(pairsid, 1, function(x) 
-      ttdistcalc(dat[x[1], ], dat[x[2], ], 
-      w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e))
-  }
-  
-  if(achro==TRUE & noise=='neural'){
-    res$dL <- apply(pairsid, 1, function(x) 
-      ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
-      w = w4e))
-  }
-
-# if (vis=='mono' & noise=='quantum'){
-# res$dS <- apply(pairsid,1,function(x) 
-  # qn.monodistcalc(dat[x[1],], dat[x[2],], 
-  # qndat[x[1],], qndat[x[2],], 
-  # n1=n1, v=v) )
-# }
-
-  if(vis == 'di' & noise == 'quantum'){
-    res$dS <- apply(pairsid, 1, function(x) 
-      qn.didistcalc(dat[x[1], ], dat[x[2], ], 
-      qndat[x[1], ], qndat[x[2], ], 
-      n1 = n1, n2 = n2, v = v) )
-  }
-  
-  if(vis == 'tri' & noise == 'quantum'){
-    res$dS <- apply(pairsid,1,function(x) 
-      qn.trdistcalc(dat[x[1], ], dat[x[2], ],
-      qndat[x[1], ], qndat[x[2], ], 
-      n1 = n1, n2 = n2, n3 = n3, v = v))
-  }
-  
-  if (vis == 'tetra' & noise == 'quantum'){
-    res$dS <- apply(pairsid, 1, function(x) 
-      qn.ttdistcalc(dat[x[1], ], dat[x[2], ],
-      qndat[x[1], ], qndat[x[2], ], 
-      n1 = n1, n2 = n2, n3 = n3, n4 = n4, v = v))
-  }
-  
-  if(achro == TRUE & noise == 'quantum'){
-    res$dL <- apply(pairsid, 1, function(x) 
-      qn.ttdistcalcachro(dat[x[1], ], dat[x[2], ], 
-      qndat[x[1], ], qndat[x[2], ], n4 = n4, v = v))
-  }
 }
+
 
 #######################
 # Other Visual Models #
