@@ -1,10 +1,6 @@
 #' Plot the categorical colour vision model
 #' 
 #' \code{catplot} produces a plot based on Troje's (1993) categorical colour model. 
-#' Note that the model is 'categorical' and results were not intended to be 
-#' interpreted as continuous, which may be implied by this type of plot
-#' 
-#' @usage plot(clrspdata).
 #'  
 #' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)

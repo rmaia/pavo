@@ -4,7 +4,9 @@
 \alias{cocplot}
 \title{Plot the colour opponent coding diagram}
 \usage{
-plot(clrspdata)
+cocplot(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9,
+  -6, -3, 3, 6, 9, 12), achro = FALSE, achrosize = 0.8, achrocol = "grey",
+  ...)
 }
 \arguments{
 \item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 

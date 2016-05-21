@@ -4,7 +4,9 @@
 \alias{triplot}
 \title{Plot a Maxwell triangle}
 \usage{
-plot(clrspdata)
+triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
+  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
+  out.lty = 1, ...)
 }
 \arguments{
 \item{tridata}{(required) a data frame, possibly a result from the \code{trispace} 

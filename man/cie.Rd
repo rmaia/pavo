@@ -4,8 +4,7 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-colspace(vismodeldata, space = 'ciexyz') 
-colspace(vismodeldata, space = 'ciexyz')
+cie(vismodeldata, space = c("XYZ", "LAB"))
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

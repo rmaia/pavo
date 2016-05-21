@@ -3,8 +3,6 @@
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in a trichromat (i.e. Maxwell) chromaticity space.
 #' 
-#' @usage colspace(vismodeldata, space = 'tri')
-#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with three columns representing trichromatic viewer).

@@ -4,7 +4,8 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-plot(clrspdata)
+cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
+  out.lty = 1, ...)
 }
 \arguments{
 \item{ciedata}{(required)}

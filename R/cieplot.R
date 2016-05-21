@@ -4,8 +4,6 @@
 #' 
 #' @import scatterplot3d 
 #' 
-#' @usage plot(clrspdata)
-#' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}

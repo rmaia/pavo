@@ -4,7 +4,7 @@
 \alias{coc}
 \title{Color opponent coding model}
 \usage{
-colspace(vismodeldata, space = 'coc')
+coc(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

@@ -4,7 +4,7 @@
 \alias{trispace}
 \title{Trichromatic colour space}
 \usage{
-colspace(vismodeldata, space = 'tri')
+trispace(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

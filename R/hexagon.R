@@ -3,8 +3,6 @@
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the hymenopteran color hexagon. 
 #' 
-#' @usage colspace(vismodeldata, space = 'hexagon')
-#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with three columns representing trichromatic viewer).

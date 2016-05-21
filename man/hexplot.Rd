@@ -4,7 +4,10 @@
 \alias{hexplot}
 \title{Plot a colour hexagon}
 \usage{
-plot(clrspdata)
+hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
+  "coarse"), col.sec = "grey", out.lwd = 1, out.lty = 1,
+  out.lcol = "black", cex.labels = 1, achrosize = 0.8,
+  achrocol = "grey", ...)
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 

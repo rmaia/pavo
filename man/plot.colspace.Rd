@@ -4,8 +4,8 @@
 \alias{plot.colspace}
 \title{Plot spectra in a colourspace}
 \usage{
-plot(clrspdata, ...) 
-points(clrspdata, ...)
+plot(clrspdata, ...)
+points(clrspdata, ...) 
 vol(clrspdata, ...)
 }
 \arguments{
