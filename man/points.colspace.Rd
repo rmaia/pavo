@@ -6,6 +6,11 @@
 \usage{
 \method{points}{colspace}(clrspdata, ...)
 }
+\arguments{
+\item{clrspdata}{(required) an object of class \code{colspace}.}
+
+\item{...}{additional graphical options. See \code{\link{par}}.}
+}
 \value{
 \code{points.colspace} adds points to a colorspace plot. When \code{space = 'tcs'}, 
  it creates 3D points in a tetrahedral color space plot using functions of the package \code{rgl}, 

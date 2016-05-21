@@ -4,7 +4,7 @@
 \alias{dispace}
 \title{Dichromatic colour space}
 \usage{
-\code{colspace(modeldata, space = 'di')}.
+colspace(modeldata, space = 'di').
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

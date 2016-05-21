@@ -9,7 +9,6 @@
 #' vol(clrspdata, ...)
 #' 
 #' @param clrspdata (required) an object of class \code{colspace}. 
-#' 
 #' @param ... additional graphical options, which vary by modelled \code{space}. Refer 
 #'  to their individual help files: 
 #'  \itemize{ 

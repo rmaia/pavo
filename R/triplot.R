@@ -2,7 +2,7 @@
 #' 
 #' \code{triplot} produces a Maxwell triangle plot.
 #' 
-#' @usage \code{plot(clrspdata)}.
+#' @usage plot(clrspdata).
 #'
 #' @param tridata (required) a data frame, possibly a result from the \code{trispace} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)

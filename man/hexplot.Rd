@@ -4,7 +4,7 @@
 \alias{hexplot}
 \title{Plot a colour hexagon}
 \usage{
-\code{plot(clrspdata)}.
+plot(clrspdata).
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 

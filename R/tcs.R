@@ -5,7 +5,7 @@
 #'
 #' @import geometry
 #' 
-#' @usage \code{colspace(modeldata, space = 'tcs')}.
+#' @usage colspace(modeldata, space = 'tcs').
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

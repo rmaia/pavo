@@ -4,7 +4,7 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-\code{colspace(modeldata, space = 'ciexyz')} or \code{space = 'cielab')}
+colspace(modeldata, space = 'ciexyz') or colspace(modeldata, space = 'ciexyz')
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

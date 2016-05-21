@@ -4,7 +4,7 @@
 \alias{categorical}
 \title{Categorical fly-visual model}
 \usage{
-\code{colspace(modeldata, space = 'categorical')}.
+colspace(modeldata, space = 'categorical').
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

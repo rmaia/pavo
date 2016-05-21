@@ -2,7 +2,7 @@
 #' 
 #' Applies the fly categorical colour vision model of Troje (1993)
 #' 
-#' @usage \code{colspace(modeldata, space = 'categorical')}.
+#' @usage colspace(modeldata, space = 'categorical').
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

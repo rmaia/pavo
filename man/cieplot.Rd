@@ -4,7 +4,7 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-\code{plot(clrspdata)}.
+plot(clrspdata).
 }
 \arguments{
 \item{ciedata}{(required)}

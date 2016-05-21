@@ -1,6 +1,9 @@
 #' Plot Points in a Colorspace
 #'
 #' \code{points.colspace} plots additional points in a colorspace
+#' 
+#' @param clrspdata (required) an object of class \code{colspace}. 
+#' @param ... additional graphical options. See \code{\link{par}}.
 #'
 #' @return \code{points.colspace} adds points to a colorspace plot. When \code{space = 'tcs'}, 
 #'  it creates 3D points in a tetrahedral color space plot using functions of the package \code{rgl}, 

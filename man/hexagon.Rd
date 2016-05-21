@@ -4,7 +4,7 @@
 \alias{hexagon}
 \title{Colour hexagon}
 \usage{
-\code{colspace(modeldata, space = 'hexagon')}.
+colspace(modeldata, space = 'hexagon').
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

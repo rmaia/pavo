@@ -2,7 +2,7 @@
 #' 
 #' \code{hexplot} produces a colour hexagon plot. 
 #' 
-#' @usage \code{plot(clrspdata)}.
+#' @usage plot(clrspdata).
 #' 
 #' @param hexdata (required) a data frame, possibly a result from the \code{hexagon} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)

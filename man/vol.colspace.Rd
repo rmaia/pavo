@@ -6,6 +6,11 @@
 \usage{
 vol.colspace(clrspdata, ...)
 }
+\arguments{
+\item{clrspdata}{(required) an object of class \code{colspace}.}
+
+\item{...}{additional graphical options. See \code{\link{par}}.}
+}
 \value{
 \code{vol.colspace} creates a 3D convex hull within a \code{plot.colspace} object, 
  only when \strong{\code{space = 'tcs'}}.

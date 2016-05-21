@@ -4,7 +4,7 @@
 \alias{cocplot}
 \title{Plot the colour opponent coding diagram}
 \usage{
-\code{plot(clrspdata)}.
+clrspdata).
 }
 \arguments{
 \item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 

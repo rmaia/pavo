@@ -4,7 +4,7 @@
 \alias{diplot}
 \title{Plot a dichromat segment}
 \usage{
-\code{plot(clrspdata)}.
+plot(clrspdata).
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{dispace} 

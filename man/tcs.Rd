@@ -4,7 +4,7 @@
 \alias{tcs}
 \title{Tetrahedral colourspace}
 \usage{
-\code{colspace(modeldata, space = 'tcs')}.
+colspace(modeldata, space = 'tcs').
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
