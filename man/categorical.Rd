@@ -2,9 +2,10 @@
 % Please edit documentation in R/categorical.R
 \name{categorical}
 \alias{categorical}
+\alias{colspace}
 \title{Categorical fly-visual model}
 \usage{
-colspace(modeldata, space = 'categorical').
+colspace(vismodeldata, space = 'categorical')
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

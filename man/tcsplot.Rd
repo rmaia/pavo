@@ -5,7 +5,7 @@
 \alias{tcsplot}
 \title{Plot a Tetrahedral Colorspace}
 \usage{
-plot(clrspdata).
+plot(clrspdata)
 
 .tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 }
