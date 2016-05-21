@@ -2,7 +2,6 @@
 % Please edit documentation in R/cieplot.R
 \name{cieplot}
 \alias{cieplot}
-\alias{plot.colspace}
 \title{CIE plot}
 \usage{
 plot(clrspdata)

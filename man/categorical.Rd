@@ -2,7 +2,6 @@
 % Please edit documentation in R/categorical.R
 \name{categorical}
 \alias{categorical}
-\alias{colspace}
 \title{Categorical fly-visual model}
 \usage{
 colspace(vismodeldata, space = 'categorical')

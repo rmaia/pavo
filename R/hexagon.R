@@ -5,8 +5,6 @@
 #' 
 #' @usage colspace(vismodeldata, space = 'hexagon')
 #' 
-#' @aliases colspace
-#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with three columns representing trichromatic viewer).

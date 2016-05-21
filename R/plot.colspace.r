@@ -3,10 +3,10 @@
 #' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
 #' 
 #' @usage plot(clrspdata, ...) 
-#' 
 #' points(clrspdata, ...)
-#' 
 #' vol(clrspdata, ...)
+#' 
+#' @aliases hexplot tcsplot triplot diplot cieplot
 #' 
 #' @param clrspdata (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options, which vary by modelled \code{space}. Refer 

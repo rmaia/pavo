@@ -2,7 +2,6 @@
 % Please edit documentation in R/hexplot.R
 \name{hexplot}
 \alias{hexplot}
-\alias{plot.colspace}
 \title{Plot a colour hexagon}
 \usage{
 plot(clrspdata)

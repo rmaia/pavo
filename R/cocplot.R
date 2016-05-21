@@ -3,8 +3,6 @@
 #' \code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991).
 #' 
 #' @usage plot(clrspdata)
-#' 
-#' @aliases plot.colspace
 #'  
 #' @param cocdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)

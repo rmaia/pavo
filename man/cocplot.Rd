@@ -2,7 +2,6 @@
 % Please edit documentation in R/cocplot.R
 \name{cocplot}
 \alias{cocplot}
-\alias{plot.colspace}
 \title{Plot the colour opponent coding diagram}
 \usage{
 plot(clrspdata)

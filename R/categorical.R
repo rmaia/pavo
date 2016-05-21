@@ -4,8 +4,6 @@
 #' 
 #' @usage colspace(vismodeldata, space = 'categorical')
 #' 
-#' @aliases colspace
-#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with four columns representing a tetrachromatic dipteran viewer).
