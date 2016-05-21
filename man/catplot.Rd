@@ -4,23 +4,22 @@
 \alias{catplot}
 \title{Plot the categorical colour vision model}
 \usage{
-catplot(catdata, labels = TRUE, cex.labels = 0.9, ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{catdata}{(required) a data frame, possibly a result from the \code{categorical} 
 function, containing values for 'x' and 'y' coordinates as columns (labeled as such)}
 
-\item{labels}{plot category labels inside? Defaults to \code{TRUE}}
+\item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 
-\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}}
 }
 \description{
 \code{catplot} produces a plot based on Troje's (1993) categorical colour model. 
 Note that the model is 'categorical' and results were not intended to be 
-interpreted as continuous, which may be implied by this type of plot. Accessed via 
-the function \code{\link{plot.colspace}}.
+interpreted as continuous, which may be implied by this type of plot
 }
 \examples{
 \dontrun{

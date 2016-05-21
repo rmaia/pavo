@@ -4,9 +4,7 @@
 \alias{triplot}
 \title{Plot a Maxwell Triangle}
 \usage{
-triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
-  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
-  out.lty = 1, ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{tridata}{(required) a data frame, possibly a result from the \code{trispace} 
@@ -31,7 +29,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
-\code{triplot} produces a Maxwell triangle plot. Accessed via the function \code{\link{plot.colspace}}.
+\code{triplot} produces a Maxwell triangle plot.
 }
 \examples{
 \dontrun{

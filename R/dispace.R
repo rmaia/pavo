@@ -1,7 +1,9 @@
 #' Dichromatic colour space
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in a dichromatic colour space. Accessed via the function \code{\link{colspace}(space = 'di')}.
+#' in a dichromatic colour space. 
+#' 
+#' @usage \code{colspace(modeldata, space = 'di')}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

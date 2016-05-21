@@ -4,7 +4,7 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-cie(vismodeldata, space = c("XYZ", "LAB"))
+\code{colspace(modeldata, space = 'ciexyz')} or \code{space = 'cielab')}
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -25,8 +25,7 @@ Object of class \code{colspace} containing:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in either the CIEXYZ (1931) or CIELAB (1971) colourspace. Accessed via 
-the function \code{\link{colspace}(space = 'CIEXYZ') or (space = 'CIELAB')}.
+in either the CIEXYZ (1931) or CIELAB (1971) colourspace
 }
 \examples{
 \dontrun{

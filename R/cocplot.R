@@ -1,7 +1,8 @@
 #' Plot the colour opponent coding diagram
 #' 
 #' \code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991).
-#' Accessed via the function \code{\link{plot.colspace}}.
+#' 
+#' @usage \code{plot(clrspdata)}.
 #'  
 #' @param cocdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)

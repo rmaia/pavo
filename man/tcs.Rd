@@ -2,9 +2,9 @@
 % Please edit documentation in R/tcs.R
 \name{tcs}
 \alias{tcs}
-\title{Tetracolorspace avian visual model}
+\title{Tetrahedral colourspace}
 \usage{
-tcs(vismodeldata)
+\code{colspace(modeldata, space = 'tcs')}.
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -36,7 +36,7 @@ A data frame of class \code{tcs} consisting of the following columns:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in the avian tetrahedral color space. Accessed via the function \code{\link{colspace}(space = 'tcs')}.
+in the avian tetrahedral color space.
 }
 \examples{
 \dontrun{

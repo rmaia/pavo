@@ -4,9 +4,7 @@
 \alias{cocplot}
 \title{Plot the colour opponent coding diagram}
 \usage{
-cocplot(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9,
-  -6, -3, 3, 6, 9, 12), achro = FALSE, achrosize = 0.8, achrocol = "grey",
-  ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 
@@ -28,7 +26,6 @@ function, containing values for 'x' and 'y' coordinates as columns (labeled as s
 }
 \description{
 \code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991).
-Accessed via the function \code{\link{plot.colspace}}.
 }
 \examples{
 \dontrun{

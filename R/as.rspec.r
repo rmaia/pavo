@@ -2,14 +2,17 @@
 #'
 #' Converts data frames or matrices containing spectral data to \code{rspec} object
 #'
-#' @param object (required) a data frame or matrix containing spectra to process
+#' @param object (required) a data frame or matrix containing spectra to process.
 #' @param whichwl specifies which column contains wavelengths. If NULL (default), function
 #' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
-#' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values
-#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to TRUE)
-#' @param lim vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)})
+#' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values.
+#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to TRUE).
+#' @param lim vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)}).
+#' 
 #' @return an object of class \code{rspec} for use in further \code{pavo} functions
+#' 
 #' @export as.rspec is.rspec
+#' 
 #' @examples \dontrun{
 #'
 #' # Generate some fake reflectance data

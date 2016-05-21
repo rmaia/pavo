@@ -1,15 +1,17 @@
 #' CIE plot
 #' 
-#' Plot a CIE (XYZ or LAB) chromaticity diagram. Accessed via the function \code{\link{plot.colspace}}.
+#' Plot a CIE (XYZ or LAB) chromaticity diagram. 
 #' 
 #' @import scatterplot3d 
+#' 
+#' @usage \code{plot(clrspdata)}.
 #' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}
-#' @param out.lwd line width for monochromatic loci outline (defaults to 1)
-#' @param out.lcol line colour for monochromatic loci outline (defaults to black)
-#' @param out.lty line type for monochromatic loci outline (defaults to 1)
+#' @param out.lwd line width for monochromatic loci outline (defaults to 1).
+#' @param out.lcol line colour for monochromatic loci outline (defaults to black).
+#' @param out.lty line type for monochromatic loci outline (defaults to 1).
 #' @param ... Additional graphical options. See \code{\link{par}}.
 #' 
 #' @examples

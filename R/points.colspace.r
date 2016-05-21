@@ -6,8 +6,6 @@
 #'  it creates 3D points in a tetrahedral color space plot using functions of the package \code{rgl}, 
 #'  based on openGL capabilities.
 #'
-#' @rdname plot.colspace
-#'
 #' @export
 
 points.colspace <- function(clrspdata, ...){

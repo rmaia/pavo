@@ -10,15 +10,15 @@ as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL)
 is.rspec(object)
 }
 \arguments{
-\item{object}{(required) a data frame or matrix containing spectra to process}
+\item{object}{(required) a data frame or matrix containing spectra to process.}
 
 \item{whichwl}{specifies which column contains wavelengths. If NULL (default), function
 searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
-wavelengths are found or \code{whichwl} is not given, returns arbitrary index values}
+wavelengths are found or \code{whichwl} is not given, returns arbitrary index values.}
 
-\item{interp}{whether to interpolate wavelengths in 1-nm bins (defaults to TRUE)}
+\item{interp}{whether to interpolate wavelengths in 1-nm bins (defaults to TRUE).}
 
-\item{lim}{vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)})}
+\item{lim}{vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)}).}
 }
 \value{
 an object of class \code{rspec} for use in further \code{pavo} functions

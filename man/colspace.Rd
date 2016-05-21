@@ -56,6 +56,8 @@ tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 
 }
 \author{
+Rafael Maia \email{rm72@zips.uakron.edu}
+
 Thomas White \email{thomas.white026@gmail.com}
 }
 \references{

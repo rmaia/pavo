@@ -4,7 +4,7 @@
 \alias{hexagon}
 \title{Colour hexagon}
 \usage{
-hexagon(vismodeldata)
+\code{colspace(modeldata, space = 'hexagon')}.
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -33,7 +33,7 @@ A data frame of class \code{colspace} consisting of the following columns:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in the hymenopteran color hexagon. Accessed via the function \code{\link{colspace}(space = 'hexagon')}.
+in the hymenopteran color hexagon.
 }
 \examples{
 \dontrun{

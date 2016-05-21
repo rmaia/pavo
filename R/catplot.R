@@ -2,13 +2,14 @@
 #' 
 #' \code{catplot} produces a plot based on Troje's (1993) categorical colour model. 
 #' Note that the model is 'categorical' and results were not intended to be 
-#' interpreted as continuous, which may be implied by this type of plot. Accessed via 
-#' the function \code{\link{plot.colspace}}.
+#' interpreted as continuous, which may be implied by this type of plot
+#' 
+#' @usage \code{plot(clrspdata)}.
 #'  
 #' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
 #'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
-#' @param labels plot category labels inside? Defaults to \code{TRUE}
-#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
+#' @param labels plot category labels inside? Defaults to \code{TRUE}.
+#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE}).
 #' @param ... additional graphical options. See \code{\link{par}}
 #'    
 #' @examples

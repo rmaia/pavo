@@ -4,7 +4,7 @@
 \alias{trispace}
 \title{Trichromatic colour space}
 \usage{
-trispace(vismodeldata)
+\code{colspace(modeldata, space = 'tri')}.
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -26,7 +26,7 @@ A data frame of class \code{colspace} consisting of the following columns:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in a trichromat (i.e. Maxwell) chromaticity space. Accessed via the function \code{\link{colspace}(space = 'tri')}.
+in a trichromat (i.e. Maxwell) chromaticity space.
 }
 \examples{
 \dontrun{

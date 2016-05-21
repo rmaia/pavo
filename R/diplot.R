@@ -1,6 +1,8 @@
 #' Plot a dichromat segment
 #' 
-#' \code{diplot} produces a dichromat segment plot. Accessed via the function \code{\link{plot.colspace}}.
+#' \code{diplot} produces a dichromat segment plot. 
+#' 
+#' @usage \code{plot(clrspdata)}.
 #'
 #' @param didata (required) a data frame, possibly a result from the \code{dispace} 
 #'  function, containing values for the 'x' coordinates as a column (labeled as such)

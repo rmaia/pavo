@@ -20,16 +20,21 @@
 #' @param alpha transparency of the shaded areas.
 #' @param legend automatically add a legend.
 #' @param ... additional graphical parameters to be passed to plot.
+#' 
 #' @return Plot containing the lines and shaded areas of the groups of spectra.
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
 #' data(sicalis)
 #' bysic <- gsub("^ind[0-9].",'',names(sicalis)[-1])
 #' aggplot(sicalis,bysic)
 #' aggplot(sicalis,bysic, shade=spec2rgb(sicalis),lcol=1)
 #' aggplot(sicalis,bysic,lcol=1, FUN.error=function(x)sd(x)/sqrt(length(x))) }
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}, 
 #' Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 

@@ -4,8 +4,7 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{ciedata}{(required)}
@@ -13,16 +12,16 @@ cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 \item{mono}{should the monochromatic loci (the 'horseshoe') be
 plotted? Defaults to \code{TRUE}}
 
-\item{out.lwd}{line width for monochromatic loci outline (defaults to 1)}
+\item{out.lwd}{line width for monochromatic loci outline (defaults to 1).}
 
-\item{out.lcol}{line colour for monochromatic loci outline (defaults to black)}
+\item{out.lcol}{line colour for monochromatic loci outline (defaults to black).}
 
-\item{out.lty}{line type for monochromatic loci outline (defaults to 1)}
+\item{out.lty}{line type for monochromatic loci outline (defaults to 1).}
 
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }
 \description{
-Plot a CIE (XYZ or LAB) chromaticity diagram. Accessed via the function \code{\link{plot.colspace}}.
+Plot a CIE (XYZ or LAB) chromaticity diagram.
 }
 \examples{
 \dontrun{

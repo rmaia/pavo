@@ -1,9 +1,12 @@
-#' Tetracolorspace avian visual model
+#' Tetrahedral colourspace
 #'
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in the avian tetrahedral color space. Accessed via the function \code{\link{colspace}(space = 'tcs')}.
+#' in the avian tetrahedral color space.
 #'
 #' @import geometry
+#' 
+#' @usage \code{colspace(modeldata, space = 'tcs')}.
+#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with four columns, representing the avian cones).

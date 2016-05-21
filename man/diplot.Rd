@@ -4,9 +4,7 @@
 \alias{diplot}
 \title{Plot a dichromat segment}
 \usage{
-diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
-  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
-  out.lty = 1, ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{dispace} 
@@ -31,7 +29,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
-\code{diplot} produces a dichromat segment plot. Accessed via the function \code{\link{plot.colspace}}.
+\code{diplot} produces a dichromat segment plot.
 }
 \examples{
 \dontrun{

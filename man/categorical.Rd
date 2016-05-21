@@ -4,7 +4,7 @@
 \alias{categorical}
 \title{Categorical fly-visual model}
 \usage{
-categorical(vismodeldata)
+\code{colspace(modeldata, space = 'categorical')}.
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -15,15 +15,14 @@ with four columns representing a tetrachromatic dipteran viewer).}
 Object of class \code{colspace} consisting of the following columns:
 
 \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
- calculate the remaining variables
+ calculate the remaining variables.
 
-\code{x, y}: cartesian coordinates in the categorical colour space
+\code{x, y}: cartesian coordinates in the categorical colour space.
 
-\code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}
+\code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
 }
 \description{
-Applies the fly categorical colour vision model of Troje (1993). Accessed via 
-the function \code{\link{colspace}(space = 'cat')}.
+Applies the fly categorical colour vision model of Troje (1993)
 }
 \examples{
 \dontrun{

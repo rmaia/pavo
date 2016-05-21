@@ -4,10 +4,7 @@
 \alias{hexplot}
 \title{Plot a colour hexagon}
 \usage{
-hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
-  "coarse"), col.sec = "grey", out.lwd = 1, out.lty = 1,
-  out.lcol = "black", cex.labels = 1, achrosize = 0.8,
-  achrocol = "grey", ...)
+\code{plot(clrspdata)}.
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 
@@ -41,7 +38,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{...}{additional graphical options. See \code{\link{par}}}
 }
 \description{
-\code{hexplot} produces a colour hexagon plot. Accessed via the function \code{\link{plot.colspace}}.
+\code{hexplot} produces a colour hexagon plot.
 }
 \examples{
 \dontrun{

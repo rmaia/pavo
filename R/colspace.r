@@ -43,6 +43,7 @@
 #' tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 #' }
 #' 
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' 
 #' @export

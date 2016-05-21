@@ -5,6 +5,8 @@
 #'
 #' @import rgl scatterplot3d
 #' 
+#' @usage \code{plot(clrspdata)}.
+#' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param size size of the points in the plot (defaults to 0.02)

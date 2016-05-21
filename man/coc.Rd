@@ -4,7 +4,7 @@
 \alias{coc}
 \title{Color opponent coding model}
 \usage{
-coc(vismodeldata)
+\code{colspace(modeldata, space = 'coc')}.
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -24,8 +24,7 @@ A data frame of class \code{colspace} consisting of the following columns:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in the color opponent coding model of hymenopteran vision. Accessed via 
-the function \code{\link{colspace}(space = 'coc')}.
+in the color opponent coding model of hymenopteran vision.
 }
 \examples{
 \dontrun{

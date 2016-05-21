@@ -1,8 +1,9 @@
 #' CIE colour spaces
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in either the CIEXYZ (1931) or CIELAB (1971) colourspace. Accessed via 
-#' the function \code{\link{colspace}(space = 'CIEXYZ') or (space = 'CIELAB')}. 
+#' in either the CIEXYZ (1931) or CIELAB (1971) colourspace  
+#' 
+#' @usage \code{colspace(modeldata, space = 'ciexyz')} or \code{space = 'cielab')}
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a 
