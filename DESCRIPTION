@@ -20,6 +20,8 @@ Author: Rafael Maia [aut, cre],
     Thomas White [aut]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
+Depends: 
+    R(>= 2.10)
 Imports:
     rcdd,
     rgl,

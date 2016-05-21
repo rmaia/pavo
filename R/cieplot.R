@@ -2,7 +2,7 @@
 #' 
 #' Plot a CIE (XYZ or LAB) chromaticity diagram. Accessed via the function \code{\link{plot.colspace}}.
 #' 
-#' @import scatterplot3d
+#' @import scatterplot3d 
 #' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be

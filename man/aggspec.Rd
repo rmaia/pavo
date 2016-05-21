@@ -22,6 +22,8 @@ same identification); or a list of vectors, e.g., \code{by = list(sex, species)}
 
 \item{trim}{logical. if \code{TRUE} (default), the function will try to identify and 
 remove numbers at the end of the names of the columns in the new rspec object.}
+
+\item{na.rm}{should NAs be reomved? Defaults to \code{FALSE}.}
 }
 \value{
 A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
@@ -40,6 +42,7 @@ plot(teal.sset1)
 ind <- rep(c('a','b'), times=6)
 teal.sset2 <- aggspec(teal, by=ind)
 plot(teal.sset2) }
+
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}

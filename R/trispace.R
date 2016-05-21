@@ -34,7 +34,7 @@
 #'  81 - 118.
 #' @references MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing 
 #'  cone excitation by stimuli of equal luminance. Journal of the Optical 
-#'  Society of America, 69, 1183 – 1186.
+#'  Society of America, 69, 1183-1186.
 
 trispace <- function(vismodeldata){
   

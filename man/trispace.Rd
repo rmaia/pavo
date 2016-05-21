@@ -49,7 +49,7 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
 
 MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing 
  cone excitation by stimuli of equal luminance. Journal of the Optical 
- Society of America, 69, 1183 – 1186.
+ Society of America, 69, 1183-1186.
 }
 \keyword{internal}
 

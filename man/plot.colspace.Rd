@@ -18,7 +18,7 @@ below options will vary by selected \code{space}.}
 
 \item{...}{additional graphical options. See \code{\link{par}}}
 
-\item{labels}{plot verticy labels (or category labels, when \code{space = \strong{'categorical'}})? 
+\item{labels}{plot verticy labels (or category labels, when \code{space = 'categorical'})? 
 Defaults to \code{TRUE}}
 
 \item{cex.labels}{character expansion factor for labels when \code{labels = TRUE})}
@@ -30,21 +30,21 @@ Defaults to \code{TRUE}}
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
 
 \item{out.lwd}{line width for plot outline, or the width of the monochromatic loci
-outline when \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to 1).}
+outline when \code{space = 'ciexyz'} if \code{mono = TRUE} (defaults to 1).}
 
 \item{out.lcol}{line colour for plot outline, or the colour of the monochromatic loci
-outline in \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to black).}
+outline in \code{space = 'ciexyz'} if \code{mono = TRUE} (defaults to black).}
 
 \item{out.lty}{line type for plot outline, or the line type for the monochromatic loci
-outline in \code{space = \strong{'ciexyz'}} if \code{mono = TRUE} (defaults to 1).}
+outline in \code{space = 'ciexyz'} if \code{mono = TRUE} (defaults to 1).}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes,
-only when \code{space = \strong{'di'}}}
+only when \code{space = 'di'}}
 
-\item{mono}{plot the monochromatic loci (the 'horseshoe') when \code{space = \strong{'ciexyz'}}? 
+\item{mono}{plot the monochromatic loci (the 'horseshoe') when \code{space = 'ciexyz'}? 
 Defaults to \code{TRUE}.}
 
-\item{sectors}{plot the bee-hue sector dividers when \code{space = \strong{'hexagon'}}? 
+\item{sectors}{plot the bee-hue sector dividers when \code{space = 'hexagon'}? 
 Options are:
    \itemize{ 
        \item \code{'none'}: No sectors (default)
@@ -52,32 +52,32 @@ Options are:
        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
        }}
 
-\item{col.sec}{line colour of bee-hue sector dividers when \code{space = \strong{'hexagon'}}. 
+\item{col.sec}{line colour of bee-hue sector dividers when \code{space = 'hexagon'}. 
 Defaults to \code{'grey'}}
 
-\item{new}{should a new 3D plot be called, when \code{space = \strong{'tcs'}} (defaults to \code{FALSE})?}
+\item{new}{should a new 3D plot be called, when \code{space = 'tcs'} (defaults to \code{FALSE})?}
 
-\item{hspin}{if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis, when \code{space = \strong{'tcs'}})
+\item{hspin}{if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis, when \code{space = 'tcs'})
 (defaults to \code{FALSE})}
 
-\item{vspin}{if \code{TRUE}, the graphic will spin vertically (around the 'x' axis, when \code{space = \strong{'tcs'}})
+\item{vspin}{if \code{TRUE}, the graphic will spin vertically (around the 'x' axis, when \code{space = 'tcs'})
 (defaults to \code{FALSE})}
 
-\item{floor}{if \code{TRUE}, a reference xy plane is plotted under the tetrahedron, when \code{space = \strong{'tcs'}} 
+\item{floor}{if \code{TRUE}, a reference xy plane is plotted under the tetrahedron, when \code{space = 'tcs'} 
 (defaults to \code{TRUE})}
 
-\item{grid}{if \code{TRUE}, connects the polygon outlining the volume occupied by points, when \code{space = \strong{'tcs'}}
+\item{grid}{if \code{TRUE}, connects the polygon outlining the volume occupied by points, when \code{space = 'tcs'}
 (defaults to \code{TRUE})}
 
-\item{grid.alpha}{transparecny of the volume polygon grid lines, when \code{space = \strong{'tcs'}}}
+\item{grid.alpha}{transparecny of the volume polygon grid lines, when \code{space = 'tcs'}}
 
-\item{fill}{if \code{TRUE}, fills the volume occupied by points, when \code{space = \strong{'tcs'}} 
+\item{fill}{if \code{TRUE}, fills the volume occupied by points, when \code{space = 'tcs'} 
 (WARNING: transparency is not saved properly if exported using \code{rgl.postscript})
 (defaults to \code{TRUE}).}
 }
 \value{
 \code{plot.colspace} creates a 2D colspace plot appropriate to the input data.
- \code{points.colspace} adds points to the plot. When \code{space = \strong{'tcs'}}, 
+ \code{points.colspace} adds points to the plot. When \code{space = 'tcs'}, 
  it creates an interactive 3D plot using functions of the package \code{rgl}, based on 
  openGL capabilities. It can be manipulated with the mouse (left button: rotate along 
  'z' axis; right button: rotate along 'x' axis; third button: zoom). \code{tcsvol} creates 

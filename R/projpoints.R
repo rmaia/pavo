@@ -1,6 +1,9 @@
 #' Plot a Tetrahedral Color Space
 #'
 #' \code{projpoints} plots points in the color space projection
+#' 
+#' @param tcsres (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
+#' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
 #'
 #' @return \code{projpoints} creates points in a projection color space plot 
 #' produced by \code{projplot}

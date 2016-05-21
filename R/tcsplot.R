@@ -3,8 +3,7 @@
 #' \code{tcsplot} produces either a static or interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities. Accessed via the function \code{\link{plot.colspace}}.
 #'
-#' @import rgl
-#' @import scatterplot3d
+#' @import rgl scatterplot3d
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)

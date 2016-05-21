@@ -15,8 +15,14 @@
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @param trim logical. if \code{TRUE} (default), the function will try to identify and 
 #' remove numbers at the end of the names of the columns in the new rspec object.
+#' @param na.rm should NAs be reomved? Defaults to \code{FALSE}.
+#' 
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
+#' 
 #' @export
+#' 
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @examples \dontrun{
 #' data(teal)
 #' # Average every two spectra
@@ -26,7 +32,7 @@
 #' ind <- rep(c('a','b'), times=6)
 #' teal.sset2 <- aggspec(teal, by=ind)
 #' plot(teal.sset2) }
-#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 

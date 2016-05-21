@@ -52,7 +52,7 @@ Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of
 
 CIE (2006). Fundamental chromaticity diagram with physiological axes. 
  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
- Internationale de l' Éclairage.
+ Internationale de l Eclairage.
 }
 \keyword{internal}
 

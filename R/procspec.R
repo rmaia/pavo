@@ -31,21 +31,35 @@
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}
 #' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
+#' @param ... Ignored
+#' 
 #' @return A data frame of class \code{rspec} with the processed data.
+#' 
 #' @export
+#' 
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @examples \dontrun{
 #' data(teal)
 #' plot(teal, select = 10)
+#' 
 #' # Smooth data to remove noise
 #' teal.sm <- procspec(teal, opt = 'smooth', span = 0.25)
 #' plot(teal.sm, select = 10)
+#' 
 #' # Normalize to max of unity
 #' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
-#' plot(teal.max, select = 10)}
-#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' plot(teal.max, select = 10)
+#' }
+#' 
 #' @seealso \code{\link{loess.smooth}}
-#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. Plumage reflectance and the objective assessment of avian sexual dichromatism. The American Naturalist, 153, 183-200.
-#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
+#' 
+#' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. 
+#'  Plumage reflectance and the objective assessment of avian sexual dichromatism. 
+#'  The American Naturalist, 153, 183-200.
+#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, 
+#'  K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard 
+#'  University Press, Cambridge, Massachusetts.
 
 procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 
 										 'bin', 'sum', 'center'), 
