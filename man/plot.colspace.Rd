@@ -4,9 +4,7 @@
 \alias{plot.colspace}
 \title{Plot spectra in a colourspace}
 \usage{
-plot(clrspdata, ...)
-points(clrspdata, ...) 
-vol(clrspdata, ...)
+\method{plot}{colspace}(clrspdata, ...)
 }
 \arguments{
 \item{clrspdata}{(required) an object of class \code{colspace}.}
