@@ -2,8 +2,6 @@
 #'
 #' \code{colspace} Model reflectance spectra in a colorspace
 #' 
-#' @aliases categorical cie dispace trispace tcs coc hexagon
-#' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with columns representing quantum catches).
