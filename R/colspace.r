@@ -2,7 +2,7 @@
 #'
 #' \code{colspace} Model reflectance spectra in a colorspace
 #' 
-#' @param modeldata (required) quantum catch color data. Can be either the result
+#' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with columns representing quantum catches).
 #' @param space Which colorspace/model to use. Options are:
@@ -71,7 +71,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-colspace <- function(modeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
+colspace <- function(vismodeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
   
   space2 <- try(match.arg(space), silent = T)
 
@@ -79,21 +79,21 @@ colspace <- function(modeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexagon',
     stop('Invalid colorspace selected')
   
   if(space2 == 'auto'){
-  	switch(as.character(attr(modeldata, 'conenumb')),
-  	  '2' = return(dispace(modeldata)),
-  	  '3' = return(trispace(modeldata)),
-  	  '4' = return(tcs(modeldata))
+  	switch(as.character(attr(vismodeldata, 'conenumb')),
+  	  '2' = return(dispace(vismodeldata)),
+  	  '3' = return(trispace(vismodeldata)),
+  	  '4' = return(tcs(vismodeldata))
   	  )
   } else{
   	switch(space2,
-  	'di' = return(dispace(modeldata)),
-  	'tri' = return(trispace(modeldata)),
-  	'hexagon' = return(hexagon(modeldata)),
-  	'tcs' = return(tcs(modeldata)),
-  	'coc' = return(coc(modeldata)),
-  	'categorical' = return(categorical(modeldata)),
-  	'ciexyz' = return(cie(modeldata, 'XYZ')),
-  	'cielab' = return(cie(modeldata, 'LAB'))
+  	'di' = return(dispace(vismodeldata)),
+  	'tri' = return(trispace(vismodeldata)),
+  	'hexagon' = return(hexagon(vismodeldata)),
+  	'tcs' = return(tcs(vismodeldata)),
+  	'coc' = return(coc(vismodeldata)),
+  	'categorical' = return(categorical(vismodeldata)),
+  	'ciexyz' = return(cie(vismodeldata, 'XYZ')),
+  	'cielab' = return(cie(vismodeldata, 'LAB'))
   	)
   }
   

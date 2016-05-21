@@ -3,7 +3,8 @@
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the color opponent coding model of hymenopteran vision.
 #' 
-#' @usage colspace(modeldata, space = 'coc').
+#' @usage colspace(vismodeldata, space = 'coc')
+#' 
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

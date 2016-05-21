@@ -4,7 +4,9 @@
 #' 
 #' @import scatterplot3d 
 #' 
-#' @usage plot(clrspdata).
+#' @usage plot(clrspdata)
+#' 
+#' @aliases plot.colspace
 #' 
 #' @param ciedata (required)
 #' @param mono should the monochromatic loci (the 'horseshoe') be

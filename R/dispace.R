@@ -3,7 +3,9 @@
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in a dichromatic colour space. 
 #' 
-#' @usage colspace(modeldata, space = 'di').
+#' @usage colspace(vismodeldata, space = 'di')
+#' 
+#' @aliases colspace
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

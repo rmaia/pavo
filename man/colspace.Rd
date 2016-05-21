@@ -4,11 +4,11 @@
 \alias{colspace}
 \title{Model spectra in a colorspace}
 \usage{
-colspace(modeldata, space = c("auto", "di", "tri", "tcs", "hexagon", "coc",
+colspace(vismodeldata, space = c("auto", "di", "tri", "tcs", "hexagon", "coc",
   "categorical", "ciexyz", "cielab"))
 }
 \arguments{
-\item{modeldata}{(required) quantum catch color data. Can be either the result
+\item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 with columns representing quantum catches).}
 

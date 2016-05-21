@@ -2,9 +2,10 @@
 % Please edit documentation in R/cocplot.R
 \name{cocplot}
 \alias{cocplot}
+\alias{plot.colspace}
 \title{Plot the colour opponent coding diagram}
 \usage{
-clrspdata).
+plot(clrspdata)
 }
 \arguments{
 \item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 

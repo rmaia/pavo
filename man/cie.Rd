@@ -2,9 +2,11 @@
 % Please edit documentation in R/cie.R
 \name{cie}
 \alias{cie}
+\alias{colspace}
 \title{CIE colour spaces}
 \usage{
-colspace(modeldata, space = 'ciexyz') or colspace(modeldata, space = 'ciexyz')
+colspace(vismodeldata, space = 'ciexyz') 
+colspace(vismodeldata, space = 'ciexyz')
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result

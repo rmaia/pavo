@@ -2,9 +2,10 @@
 % Please edit documentation in R/hexplot.R
 \name{hexplot}
 \alias{hexplot}
+\alias{plot.colspace}
 \title{Plot a colour hexagon}
 \usage{
-plot(clrspdata).
+plot(clrspdata)
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 

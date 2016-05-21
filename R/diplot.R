@@ -2,7 +2,9 @@
 #' 
 #' \code{diplot} produces a dichromat segment plot. 
 #' 
-#' @usage plot(clrspdata).
+#' @usage plot(clrspdata)
+#' 
+#' @aliases plot.colspace
 #'
 #' @param didata (required) a data frame, possibly a result from the \code{dispace} 
 #'  function, containing values for the 'x' coordinates as a column (labeled as such)

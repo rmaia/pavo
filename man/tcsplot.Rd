@@ -2,6 +2,7 @@
 % Please edit documentation in R/tcsplot.R, R/tcspoints.R
 \name{tcsplot}
 \alias{.tcspoints}
+\alias{plot.colspace}
 \alias{tcsplot}
 \title{Plot a Tetrahedral Colorspace}
 \usage{

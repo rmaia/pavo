@@ -2,9 +2,10 @@
 % Please edit documentation in R/diplot.R
 \name{diplot}
 \alias{diplot}
+\alias{plot.colspace}
 \title{Plot a dichromat segment}
 \usage{
-plot(clrspdata).
+plot(clrspdata)
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{dispace} 
