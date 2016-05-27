@@ -26,6 +26,8 @@ Imports:
     mapproj,
     geometry,
     scatterplot3d
+Suggests:
+    rgl
 Collate:
     'aggplot.R'
     'aggspec.R'
