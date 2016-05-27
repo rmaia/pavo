@@ -77,7 +77,9 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
   # Interactive 3D plot
   if(static == FALSE){
     # load RGL, and attempt install if not found
-    loadrgl()
+    #loadrgl()
+    if(!isNamespaceLoaded("rgl"))
+      requireNamespace("rgl")
     
     if(new)
        open3d(FOV = 1, mouseMode = c('zAxis', 'xAxis', 'zoom'))

@@ -13,7 +13,9 @@
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
   # load RGL, and attempt install if not found
-  loadrgl()
+  #loadrgl()
+  if(!isNamespaceLoaded("rgl"))
+    requireNamespace("rgl")
   
   spheres3d(tcsdata[, c('x', 'y', 'z')], radius = size, color = col, lit = F, alpha = alpha)
 }

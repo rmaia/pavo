@@ -1,16 +1,16 @@
 # #' @export loadrgl
 
-loadrgl <- function(){
-# load RGL, and attempt install if not found
-if (!require('rgl',character.only = TRUE))
-  {
-  message('package ', dQuote('rgl'), ' not found; attempting install...')
-  install.packages('rgl',dep=TRUE)
+# loadrgl <- function(){
+# # load RGL, and attempt install if not found
+# if (!require('rgl',character.only = TRUE))
+  # {
+  # message('package ', dQuote('rgl'), ' not found; attempting install...')
+  # install.packages('rgl',dep=TRUE)
   
-  if(!require('rgl',character.only = TRUE)) 
-    stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
-    }
-}
+  # if(!require('rgl',character.only = TRUE)) 
+    # stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
+    # }
+# }
 
 ##################################
 # START RECEPTOR NOISE FUNCTIONS #

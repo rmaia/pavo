@@ -13,7 +13,10 @@
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
   # load RGL, and attempt install if not found
-  loadrgl()
+  #loadrgl()
+  
+  if(!isNamespaceLoaded("rgl"))
+    requireNamespace("rgl")
   
   vol <- t(convhulln(tcsdata[, c('x', 'y', 'z')], options = 'FA')$hull)
   coords <- tcsdata[, c('x', 'y', 'z')]
