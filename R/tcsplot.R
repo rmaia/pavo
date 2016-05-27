@@ -54,8 +54,8 @@
 #' vol(tcs.sicalis)
 #' }
 #' 
-#' @seealso \code{\link{spheres3d}},\code{\link{rgl.postscript}}, 
-#' \code{\link{rgl.snapshot}},\code{\link{rgl.material}} 
+#' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}}, 
+#' \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}} 
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

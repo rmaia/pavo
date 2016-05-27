@@ -108,8 +108,8 @@ Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \seealso{
-\code{\link{spheres3d}},\code{\link{rgl.postscript}}, 
-\code{\link{rgl.snapshot}},\code{\link{rgl.material}}
+\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}}, 
+\code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
 }
 \keyword{internal}
 
