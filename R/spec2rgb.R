@@ -42,7 +42,7 @@ rspecdata <- as.matrix(rspecdata)
 
 # TEMP: cie2 or cie10?
 # sens <- pavo:::ciexyz[,1:4] #cie2
-sens <- pavo:::ciexyz[,c(1,5:7)] #cie10
+sens <- ciexyz[,c(1,5:7)] #cie10
 
 # TEMP: removing wavelengths 390:400
 # TO DO: check if rspecdata starts at 400 or <400 and change this accordingly

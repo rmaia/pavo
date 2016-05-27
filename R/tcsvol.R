@@ -25,14 +25,16 @@
   
   if(grid == TRUE){
     for(i in 1:nrow(ppairs)){
-        segments3d(coords[ppairs[i,], 'x'], 
-                   coords[ppairs[i,], 'y'],
-                   coords[ppairs[i,], 'z'], 
-                   color = col, alpha = grid.alpha, lwd=lwd)
+        rgl::segments3d(coords[ppairs[i,], 'x'], 
+                        coords[ppairs[i,], 'y'],
+                        coords[ppairs[i,], 'z'], 
+                        color = col, alpha = grid.alpha, lwd=lwd)
     }
   }
   
   if(fill == TRUE)
-  rgl.triangles(coords[vol, 1], coords[vol, 2], coords[vol, 3], alpha = alpha, color = col)
-  material3d(alpha = 1)
+  rgl::rgl.triangles(coords[vol, 1], coords[vol, 2], coords[vol, 3], 
+    alpha = alpha, color = col)
+    
+  rgl::material3d(alpha = 1)
 }

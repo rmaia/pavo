@@ -2,7 +2,7 @@
 #'
 #' \code{points.colspace} plots additional points in a colorspace
 #' 
-#' @param clrspdata (required) an object of class \code{colspace}. 
+#' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'
 #' @return \code{points.colspace} adds points to a colorspace plot. When \code{space = 'tcs'}, 
@@ -11,9 +11,9 @@
 #'
 #' @export
 
-points.colspace <- function(clrspdata, ...){
+points.colspace <- function(x, ...){
   
-  if(attr(clrspdata, 'clrsp') != 'tcs'){
+  if(attr(x, 'clrsp') != 'tcs'){
     
     # Defaults in line with those in the plots
     arg <- list(...)
@@ -22,14 +22,14 @@ points.colspace <- function(clrspdata, ...){
       arg$col <- 'forestgreen'
     if(is.null(arg$pch))
       arg$pch <- 19
-    arg$x <- clrspdata$x
-    arg$y <- clrspdata$y
+      arg$x <- x[ ,'x']
+      arg$y <- x[ ,'y']
     
     do.call(points, arg)
   }
   
-  if(attr(clrspdata, 'clrsp') == 'tcs'){
-    .tcspoints(clrspdata, ...)
+  if(attr(x, 'clrsp') == 'tcs'){
+    .tcspoints(x, ...)
   }
   
 }

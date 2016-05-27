@@ -3,7 +3,8 @@
 #' \code{tcsplot} produces either a static or interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities. Accessed via the function \code{\link{plot.colspace}}.
 #'
-#' @import rgl scatterplot3d
+# #' @import rgl scatterplot3d
+#' @import scatterplot3d
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
@@ -82,41 +83,42 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
       requireNamespace("rgl")
     
     if(new)
-       open3d(FOV = 1, mouseMode = c('zAxis', 'xAxis', 'zoom'))
+       rgl::open3d(FOV = 1, mouseMode = c('zAxis', 'xAxis', 'zoom'))
     
     # can't figure out how to change the character type
     
-    ttv = pavo::ttvertex
+    ttv = ttvertex
     
     cu = t(col2rgb('#984EA3')) / 255
     cs = t(col2rgb('#377EB8')) / 255
     cm = t(col2rgb('#4DAF4A')) / 255
     cl = t(col2rgb('#E41A1C')) / 255
     
-    plot3d(unlist(ttv[c('xu','xs','xm','xl')]),
+    rgl::plot3d(unlist(ttv[c('xu','xs','xm','xl')]),
     		unlist(ttv[c('yu','ys','ym','yl')]),
     		unlist(ttv[c('zu','zs','zm','zl')]), type = 's', lit = F,
     		radius = vertexsize, box = F, axes = F, xlab = '', ylab = '', zlab = '',
     		col = c(rgb(cu[1], cu[2], cu[3]), rgb(cs[1], cs[2], cs[3]), 
     		rgb(cm[1], cm[2], cm[3]), rgb(cl[1], cl[2], cl[3])))
     
-    segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], 
+    rgl::segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], 
       color = lcol, lwd = lwd)
-    segments3d(ttv[c('xu', 'xm')], ttv[c('yu', 'ym')], ttv[c('zu', 'zm')], 
+    rgl::segments3d(ttv[c('xu', 'xm')], ttv[c('yu', 'ym')], ttv[c('zu', 'zm')], 
       color = lcol, lwd = lwd)
-    segments3d(ttv[c('xu', 'xl')], ttv[c('yu', 'yl')], ttv[c('zu', 'zl')], 
+    rgl::segments3d(ttv[c('xu', 'xl')], ttv[c('yu', 'yl')], ttv[c('zu', 'zl')], 
       color = lcol, lwd = lwd)
-    segments3d(ttv[c('xs', 'xm')], ttv[c('ys', 'ym')], ttv[c('zs', 'zm')], 
+    rgl::segments3d(ttv[c('xs', 'xm')], ttv[c('ys', 'ym')], ttv[c('zs', 'zm')], 
       color = lcol, lwd = lwd)
-    segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], 
+    rgl::segments3d(ttv[c('xs','xl')], ttv[c('ys','yl')], ttv[c('zs','zl')], 
       color = lcol, lwd = lwd)
-    segments3d(ttv[c('xl','xm')], ttv[c('yl', 'ym')], ttv[c('zl', 'zm')], 
+    rgl::segments3d(ttv[c('xl','xm')], ttv[c('yl', 'ym')], ttv[c('zl', 'zm')], 
       color = lcol, lwd = lwd)
     
     if(achro == TRUE)
-      spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = F)
+      rgl::spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = F)
     
-    spheres3d(tcsdata[,c('x', 'y', 'z')], radius = size, color = col, alpha = alpha, lit = F)
+    rgl::spheres3d(tcsdata[,c('x', 'y', 'z')], 
+      radius = size, color = col, alpha = alpha, lit = F)
     
     if(floor){
       vertices <- c( 
@@ -127,14 +129,14 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
       				)
       indices <- c(1, 2, 3, 4)
       
-     wire3d(qmesh3d(vertices, indices), lit = F)
+     rgl::wire3d(rgl::qmesh3d(vertices, indices), lit = F)
     	}
     	
     if(hspin)
-       play3d(spin3d(axis = c(0, 0, 1), rpm = 20), duration = 3)
+       rgl::play3d(rgl::spin3d(axis = c(0, 0, 1), rpm = 20), duration = 3)
     
     if(vspin)
-       play3d(spin3d(axis = c(1, 0, 0), rpm = 20), duration = 3)
+       rgl::play3d(rgl::spin3d(axis = c(1, 0, 0), rpm = 20), duration = 3)
   }
   
   # Static tetradehron

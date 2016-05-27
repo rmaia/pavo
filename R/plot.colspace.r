@@ -2,7 +2,7 @@
 #'
 #' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
 #' 
-#' @param clrspdata (required) an object of class \code{colspace}. 
+#' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options, which vary by modelled \code{space}. Refer 
 #'  to their individual help files: 
 #'  \itemize{ 
@@ -90,19 +90,19 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-plot.colspace <- function(clrspdata, ...){
+plot.colspace <- function(x, ...){
   
-  space <- attr(clrspdata, 'clrsp')
+  space <- attr(x, 'clrsp')
   
   switch(space,
-         'dispace' = diplot(clrspdata, ...),
-         'trispace' = triplot(clrspdata, ...),
-         'hexagon' = hexplot(clrspdata, ...),
-         'tcs' = tcsplot(clrspdata, ...),
-         'coc' = cocplot(clrspdata, ...),
-         'categorical' = catplot(clrspdata, ...),
-         'CIEXYZ' = cieplot(clrspdata, ...),
-         'CIELAB' = cieplot(clrspdata, ...)
+         'dispace' = diplot(x, ...),
+         'trispace' = triplot(x, ...),
+         'hexagon' = hexplot(x, ...),
+         'tcs' = tcsplot(x, ...),
+         'coc' = cocplot(x, ...),
+         'categorical' = catplot(x, ...),
+         'CIEXYZ' = cieplot(x, ...),
+         'CIELAB' = cieplot(x, ...)
   )
   
 }

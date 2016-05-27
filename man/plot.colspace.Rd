@@ -4,10 +4,10 @@
 \alias{plot.colspace}
 \title{Plot spectra in a colourspace}
 \usage{
-\method{plot}{colspace}(clrspdata, ...)
+\method{plot}{colspace}(x, ...)
 }
 \arguments{
-\item{clrspdata}{(required) an object of class \code{colspace}.}
+\item{x}{(required) an object of class \code{colspace}.}
 
 \item{...}{additional graphical options, which vary by modelled \code{space}. Refer 
 to their individual help files: 

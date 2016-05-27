@@ -17,5 +17,6 @@
   if(!isNamespaceLoaded("rgl"))
     requireNamespace("rgl")
   
-  spheres3d(tcsdata[, c('x', 'y', 'z')], radius = size, color = col, lit = F, alpha = alpha)
+  rgl::spheres3d(tcsdata[, c('x', 'y', 'z')], 
+    radius = size, color = col, lit = F, alpha = alpha)
 }

@@ -5,7 +5,7 @@
 #'
 #' @import rcdd 
 #' @export
-#' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{tcs} 
+#' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{colspace} 
 #' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param plot logical. Should the volumes and points be plotted? (defaults to \code{FALSE})
@@ -169,28 +169,37 @@ res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 if(plot==TRUE){
 
   # load RGL, and attempt install if not found
-  loadrgl()
-
+  # loadrgl()
+  if(!isNamespaceLoaded("rgl"))
+    requireNamespace("rgl")
+      
   if(length(col)<3)
     col <- c(rep(col,2)[1:2], 'darkgrey')
 
 if(new==TRUE)
-  open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+  rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+  
+  #attr(dat1,'clrsp') <- 'tcs'
+  #attr(dat2,'clrsp') <- 'tcs'
 
-  tcsvol(dat1, col=col[1], fill=F, lwd=lwd)
-  tcsvol(dat2, col=col[2], fill=F, lwd=lwd)
+  vol(tcsres1, col=col[1], fill=F, lwd=lwd)
+  vol(tcsres2, col=col[2], fill=F, lwd=lwd)
 
   if(montecarlo==FALSE){
     if(dim(Voverlap)[1]>3)
-      tcsvol(Voverlap, col=col[3])
+      attr(Voverlap, 'clrsp') <- "tcs"
+      vol(Voverlap, col=col[3])
   }
   
   if(montecarlo==TRUE){
-    spheres3d(samples[which(invol1 & !invol2),], type='s', lit=F, radius=psize, col=col[1])
-    spheres3d(samples[which(invol2 & !invol1),], type='s', lit=F, radius=psize, col=col[2])  
+    rgl::spheres3d(samples[which(invol1 & !invol2),], 
+      type='s', lit=F, radius=psize, col=col[1])
+    rgl::spheres3d(samples[which(invol2 & !invol1),], 
+      type='s', lit=F, radius=psize, col=col[2])  
 
     if(s_inboth > 0){  
-      spheres3d(samples[which(invol1 & invol2),], type='s', lit=F, radius=psize, col=col[3])
+      rgl::spheres3d(samples[which(invol1 & invol2),], 
+        type='s', lit=F, radius=psize, col=col[3])
       }
     }
     

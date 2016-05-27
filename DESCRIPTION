@@ -24,7 +24,6 @@ Depends:
     R(>= 2.10)
 Imports:
     rcdd,
-    rgl,
     mapproj,
     geometry,
     scatterplot3d
@@ -78,7 +77,7 @@ Collate:
     'triplot.R'
     'vismodel.R'
     'voloverlap.R'
-    'vol.colspace.r'
+    'vol.R'
     'summary.colspace.R'
     'projpoints.R'
 RoxygenNote: 5.0.1

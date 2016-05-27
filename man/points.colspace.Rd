@@ -4,10 +4,10 @@
 \alias{points.colspace}
 \title{Plot Points in a Colorspace}
 \usage{
-\method{points}{colspace}(clrspdata, ...)
+\method{points}{colspace}(x, ...)
 }
 \arguments{
-\item{clrspdata}{(required) an object of class \code{colspace}.}
+\item{x}{(required) an object of class \code{colspace}.}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }

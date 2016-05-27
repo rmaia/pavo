@@ -9,7 +9,7 @@ voloverlap(tcsres1, tcsres2, plot = FALSE, col = c("blue", "red",
   psize = 0.001, lwd = 1)
 }
 \arguments{
-\item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{tcs} 
+\item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{colspace} 
 function, containing
 values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
 
