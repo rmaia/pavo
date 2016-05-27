@@ -1,6 +1,5 @@
 Package: pavo
-Description: A cohesive framework for parsing, analyzing and organizing color
-    from spectral data
+Description: A cohesive framework for parsing, analyzing and organizing color from spectral data.
 Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
 Version: 0.99

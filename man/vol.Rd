@@ -7,9 +7,9 @@
 vol(x, ...)
 }
 \arguments{
-\item{...}{additional graphical options. See \code{\link{par}}.}
+\item{x}{(required) an object of class \code{colspace}.}
 
-\item{clrspdata}{(required) an object of class \code{colspace}.}
+\item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \value{
 \code{vol.colspace} creates a 3D convex hull within a \code{plot.colspace} object, 

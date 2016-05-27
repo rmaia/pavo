@@ -3,7 +3,7 @@
 #' \code{vol} produces a 3D convex hull in tetrahedral color space (i.e. when 
 #' \code{space = 'tcs'})
 #' 
-#' @param clrspdata (required) an object of class \code{colspace}. 
+#' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'
 #' @return \code{vol.colspace} creates a 3D convex hull within a \code{plot.colspace} object, 

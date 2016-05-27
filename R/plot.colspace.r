@@ -65,6 +65,8 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'  
+#' @importFrom graphics plot.default segments text
+#' @importFrom stats setNames
 #' @export
 #'  
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
