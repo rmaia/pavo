@@ -5,9 +5,9 @@
 \title{Visual Models}
 \usage{
 vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl",
-  "apis", "canis", "cie2", "cie10"), achromatic = c("bt.dc", "ch.dc", "st.dc",
-  "ml", "l", "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
-  qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal", "green"),
+  "apis", "canis", "cie2", "cie10", "musca"), achromatic = c("bt.dc", "ch.dc",
+  "st.dc", "ml", "l", "md.r1", "none"), illum = c("ideal", "bluesky", "D65",
+  "forestshade"), qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal", "green"),
   vonkries = FALSE, scale = 1, relative = TRUE)
 }
 \arguments{
@@ -28,6 +28,7 @@ remaining columns.}
 \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
 \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
 \item \code{canis}: Canid \emph{Canis familiaris} visual system
+\item \code{musca}: Housefly \emph{Musca domestica} visual system
 \item \code{cie2}: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
@@ -43,6 +44,7 @@ remaining columns.}
 \item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
+ \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
  \item \code{ml}: sum of the two longest-wavelength photoreceptors
  \item \code{l}: the longest-wavelength photoreceptor
  \item \code{none}

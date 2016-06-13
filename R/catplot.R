@@ -11,7 +11,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
+#' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #' plot(cat.flowers)
 #' }
