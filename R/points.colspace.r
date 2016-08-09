@@ -26,7 +26,7 @@ points.colspace <- function(x, ...){
   if(is.null(arg$pch))
     arg$pch <- 19
   
-  if(attr(x, 'clrsp') != 'tcs'){
+  if(attr(x, 'clrsp') != 'tcs' & attr(x, 'clrsp') != 'CIELAB'){
 
       arg$x <- x[ ,'x']
       arg$y <- x[ ,'y']
@@ -43,6 +43,17 @@ points.colspace <- function(x, ...){
     arg$z <- x[ ,'z']
     
     do.call(last_tetraplot$points3d, arg)
+  }
+  
+  if(attr(x, 'clrsp') == 'CIELAB'){
+    
+    last_labplot <- get("last_plot.cielab", envir = .PlotCielabEnv)
+    
+    arg$x <- x[ ,'a']
+    arg$y <- x[ ,'b']
+    arg$z <- x[ ,'L']
+    
+    do.call(last_labplot$points3d, arg)
   }
   
 }
