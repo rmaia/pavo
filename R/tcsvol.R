@@ -7,7 +7,7 @@
 #' @rdname tcsplot
 #' 
 
-.tcsvol <- function(tcsdata, col = 'black', alpha = 0.2, 
+tcsvol <- function(tcsdata, col = 'black', alpha = 0.2, 
                      grid.alpha = 1, grid = T, fill = T, lwd = 1){
   
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")

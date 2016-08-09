@@ -19,4 +19,9 @@
 \description{
 \code{points.colspace} plots additional points in a colorspace
 }
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
+
+Thomas White \email{thomas.white026@gmail.com}
+}
 

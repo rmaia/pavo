@@ -53,7 +53,8 @@ Returns the attributes of \code{colspace} objects
 \dontrun{
 # Colour hexagon
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+                        vonkries = TRUE, bkg = 'green')
 flowers.hex <- hexagon(vis.flowers)
 summary(flowers.hex)
 
