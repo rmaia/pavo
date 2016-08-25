@@ -27,7 +27,8 @@ Imports:
     geometry,
     scatterplot3d
 Suggests:
-    rgl
+    rgl,
+    testthat
 Collate:
     'aggplot.R'
     'aggspec.R'
