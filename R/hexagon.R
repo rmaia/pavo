@@ -63,7 +63,7 @@ hexagon <- function(vismodeldata){
       stop("Quantum catches are relative, which is not required in the hexagon 
             model and may produce unexpected results", call. = FALSE)
     
-    if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
+    if(attr(dat, 'qcatch') != 'Ei')  
       warning("Quantum catches are not hyperbolically transformed, as required for 
                the hexagon model. This may produce unexpected results.", call. = FALSE)
     
