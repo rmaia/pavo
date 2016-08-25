@@ -279,7 +279,7 @@ if(inherits(achromatic2,'try-error')){
   if('rspec' %in% class(achromatic)){
     whichused <- names(achromatic)[2]
     achromatic <- achromatic[,2]
-    warning(paste('achromatic is an rspec object; first spectrum (', 
+    warning(paste('Achromatic is an rspec object; first spectrum (', 
       dQuote(whichused),') has been used (remaining columns ignored)', sep='')
       , call.=FALSE)
   }
@@ -288,7 +288,7 @@ if(inherits(achromatic2,'try-error')){
     !'rspec' %in% class(achromatic)){
     whichused <- names(achromatic)[1]
     achromatic <- achromatic[,1]
-    warning(paste('achromatic is a matrix or data frame; first column (', 
+    warning(paste('Achromatic is a matrix or data frame; first column (', 
       dQuote(whichused),') has been used (remaining columns ignored)', sep='')
       , call.=FALSE)
     }
