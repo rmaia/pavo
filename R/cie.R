@@ -20,8 +20,9 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
+#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65')
+#' flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
+#' flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
