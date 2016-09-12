@@ -37,13 +37,11 @@ data(flowers)
 # Dichromat space
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
-summary(di.flowers)
 
 # Colour hexagon 
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
-plot(hex.flowers)
 
 # Trichromat
 vis.flowers <- vismodel(flowers, visual = 'apis')
@@ -53,6 +51,10 @@ plot(tri.flowers)
 # Tetrachromat
 vis.flowers <- vismodel(flowers, visual = 'bluetit')
 tcs.flowers <- colspace(vis.flowers, space = 'tcs')
+
+# Catrgorical
+vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
+cat.flowers <- colspace(vis.flowers, space = 'categorical')
 }
 
 }
