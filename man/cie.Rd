@@ -30,8 +30,9 @@ in either the CIEXYZ (1931) or CIELAB (1971) colourspace
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65')
+flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
+flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 }
 
 }

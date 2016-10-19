@@ -19,7 +19,7 @@ Author: Rafael Maia [aut, cre],
     Thomas White [aut]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
-Depends: 
+Depends:
     R(>= 2.10)
 Imports:
     rcdd,
@@ -27,7 +27,8 @@ Imports:
     geometry,
     scatterplot3d
 Suggests:
-    rgl
+    rgl,
+    testthat
 Collate:
     'aggplot.R'
     'aggspec.R'
@@ -70,6 +71,7 @@ Collate:
     'subset.rspec.R'
     'summary.rspec.R'
     'summary.vismodel.R'
+    'tetraplot.R'
     'tcs.R'
     'tcsplot.R'
     'tcspoints.R'
@@ -78,7 +80,6 @@ Collate:
     'triplot.R'
     'vismodel.R'
     'voloverlap.R'
-    'vol.R'
     'summary.colspace.R'
     'projpoints.R'
 RoxygenNote: 5.0.1

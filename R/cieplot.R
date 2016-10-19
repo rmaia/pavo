@@ -10,6 +10,7 @@
 #' @param out.lwd line width for monochromatic loci outline (defaults to 1).
 #' @param out.lcol line colour for monochromatic loci outline (defaults to black).
 #' @param out.lty line type for monochromatic loci outline (defaults to 1).
+#' @param view orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).
 #' @param ... Additional graphical options. See \code{\link{par}}.
 #' 
 #' @examples
@@ -34,7 +35,7 @@
 
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
-                     out.lty = 1, ...){
+                     out.lty = 1, view = 70, ...){
   
   arg <- list(...)
   
@@ -95,40 +96,54 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
   # CIELAB
   if(attr(ciedata, 'clrsp') == 'CIELAB'){
     
-    print('WORK IN PROGRESS')
+    # Set defaults
+    arg <- list(...)
+    
+    if(is.null(arg$col))
+      arg$col <- 'black'
+    if(is.null(arg$cex))
+      arg$cex <- 0.9
+    if(is.null(arg$pch))
+      arg$pch <- 19
 
-    plot <- scatterplot3d(0, 0, 0, box = TRUE, 
+    P <- scatterplot3d(0, 0, 0, box = TRUE, 
                           xlim = c(-128, 127), ylim = c(-128, 127), 
-                          zlim = c(0, 100), axis = F, grid = F, angle = 50, 
+                          zlim = c(0, 100), axis = F, grid = F, angle = view, 
                           scale.y = 0.45, mar = c(2, 2, 2, 2))
     
     # LAB plot axis line vertices
-    L1 <- plot$xyz.convert(0, 0, 0)
-    L2 <- plot$xyz.convert(0, 0, 100)
-    a1 <- plot$xyz.convert(-128, 0, 50)
-    a2 <- plot$xyz.convert(127, 0, 50)
-    b1 <- plot$xyz.convert(0, -128, 50)
-    b2 <- plot$xyz.convert(0, 127, 50)
+    L1 <- P$xyz.convert(0, 0, 0)
+    L2 <- P$xyz.convert(0, 0, 100)
+    a1 <- P$xyz.convert(-128, 0, 50)
+    a2 <- P$xyz.convert(127, 0, 50)
+    b1 <- P$xyz.convert(0, -128, 50)
+    b2 <- P$xyz.convert(0, 127, 50)
     
     # Text label locations
-    txt_L <- plot$xyz.convert(0, 0, 104)
-    txt_a <- plot$xyz.convert(-140, 0, 50)
-    txt_b <- plot$xyz.convert(0, -150, 50)
+    txt_L <- P$xyz.convert(0, 0, 104)
+    txt_a <- P$xyz.convert(-140, 0, 50)
+    txt_b <- P$xyz.convert(0, -150, 50)
   
     # Draw them up
     segments(L1$x, L1$y, L2$x, L2$y, lwd = 1.5)
     segments(a1$x, a1$y, a2$x, a2$y, lwd = 1.5)
     segments(b1$x, b1$y, b2$x, b2$y, lwd = 1.5)
     
-    # Data points
-    plot$points3d(x = ciedata$a, y = ciedata$b, z = ciedata$L, 
-                  cex = 1, col = 'black', pch = 19)
-    
     # Axis labels
     text(x = txt_L$x, y = txt_L$y, labels = "L")
     text(x = txt_a$x, y = txt_a$y, labels = "a")
     text(x = txt_b$x, y = txt_b$y, labels = "b")
     
+    # Data
+    arg$x <- ciedata$a
+    arg$y <- ciedata$b
+    arg$z <- ciedata$L
+    
+    do.call(P$points3d, arg)
+    
+    # Save plot info 
+    .PlotCielabEnv <<- new.env()
+    assign("last_plot.cielab", P, envir = .PlotCielabEnv)
   }
       
 }

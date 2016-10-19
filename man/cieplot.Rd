@@ -5,7 +5,7 @@
 \title{CIE plot}
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, ...)
+  out.lty = 1, view = 70, ...)
 }
 \arguments{
 \item{ciedata}{(required)}
@@ -18,6 +18,8 @@ plotted? Defaults to \code{TRUE}}
 \item{out.lcol}{line colour for monochromatic loci outline (defaults to black).}
 
 \item{out.lty}{line type for monochromatic loci outline (defaults to 1).}
+
+\item{view}{orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).}
 
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }

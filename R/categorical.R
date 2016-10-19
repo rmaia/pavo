@@ -10,12 +10,13 @@
 #' @return \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
 #'  calculate the remaining variables.
 #' @return \code{x, y}: cartesian coordinates in the categorical colour space.
+#' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #' @return \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
 #' 
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
+#' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #' }
 #' 
@@ -98,6 +99,8 @@ categorical <- function(vismodeldata){
   res.p <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
   
   res.p$category <- sapply(1:nrow(res.p), function(x) colcat(res.p[x,]))
+  res.p$r.vec <- sqrt((abs(res.p$x))^2 + (abs(res.p$y)^2))
+  
   
   res <- res.p
   

@@ -5,5 +5,7 @@ references/
 toydata/
 vignette/
 vignette_data/
+vignettes/
 ^.*\.Rproj$
 ^\.Rproj\.user$
+.travis.yml

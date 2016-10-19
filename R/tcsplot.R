@@ -1,10 +1,9 @@
 #' Plot a Tetrahedral Colorspace
 #'
-#' \code{tcsplot} produces either a static or interactive 3D plot of a tetrahedral 
-#' colorspace using OpenGL capabilities. Accessed via the function \code{\link{plot.colspace}}.
+#' \code{tcsplot} produces an interactive 3D plot of a tetrahedral 
+#' colorspace using OpenGL capabilities.
 #'
 # #' @import rgl scatterplot3d
-#' @import scatterplot3d
 # #' @importFrom rgl spheres3d rgl.postscript rgl.snapshot rgl.material
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
@@ -13,6 +12,7 @@
 #' @param col color of the points in the plot (defaults to black)
 #' @param alpha transparency of points (or volume fill in \code{tcsvol})
 #' @param vertexsize size of the points at the vertices
+#' @param achro plot a point at the origin? (defaults to \code{TRUE})
 #' @param achrosize size of the point in the achromatic center
 #' @param achrocol color of the point in the achromatic center
 #' @param lwd line width for the edges of the tetrahedron
@@ -60,8 +60,6 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
-#' 
-#' @keywords internal
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
@@ -74,10 +72,8 @@
 tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black', 
                     vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = 'grey', 
                     lwd = 1, lcol = 'lightgrey', new = FALSE, hspin = FALSE, 
-                    vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE, static = FALSE) {
-  
-  # Interactive 3D plot
-  if(static == FALSE){
+                    vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE) {
+
     # load RGL, and attempt install if not found
     #loadrgl()
     if(!isNamespaceLoaded("rgl"))
@@ -139,52 +135,3 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
     if(vspin)
        rgl::play3d(rgl::spin3d(axis = c(1, 0, 0), rpm = 20), duration = 3)
   }
-  
-  # Static tetradehron
-  # Can't work out how to plot points separately (i.e. OUTSIDE this function. As 
-  # in plot(tcsdata) then points(moretcsdata). Scatterplot3d requires that plots be assigned
-  # as objects, then points need to be added either using points3d (plot$points3d()), or
-  # first projecting using plot$xyz.convers() then points(). Either way, need to access
-  # the original plot object, and I don't know how to pass that back outside this function).
-  # The defaults etc. aren't done properly yet either - I'll do that I've worked this out. 
-  # Facing the same problem for the CIELAB plot which also uses scatterplot3d.
-  if(static == TRUE){
-    
-    #library(scatterplot3d)
-    
-    plot <- scatterplot3d(0, 0, 0, box = TRUE, 
-                          xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
-                          zlim = c(-0.25, 0.75), axis = F, grid = F, angle = 70, 
-                          scale.y = 0.45, mar = c(1, 1, 1, 1))
-    
-    # Vertices
-    u <- plot$xyz.convert(0, 0, 0.75)
-    s <- plot$xyz.convert((-1 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25)
-    m <- plot$xyz.convert(0, (1/sqrt(2)), -0.25)
-    l <- plot$xyz.convert((0.5 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25)
-    no.u <- plot$xyz.convert(0, 0, -0.25)
-    
-    # Draw it up
-    segments(u$x, u$y, l$x, l$y)
-    segments(u$x, u$y, m$x, m$y)
-    segments(u$x, u$y, s$x, s$y)
-    segments(s$x, s$y, l$x, l$y)
-    segments(m$x, m$y, s$x, s$y)
-    segments(l$x, l$y, m$x, m$y)
-  
-  # Origin
-    if(achro == TRUE)
-      plot$points3d(0, 0, 0, col = achrocol, cex = achrosize, pch = 15)
-  
-  # Data points
-     plot$points3d(x = tcsdata$x, y = tcsdata$y, z = tcsdata$z, 
-                   cex = 1, col = 'black', pch = 19)
-  
-  # Verticy points
-  points(x = u$x, y = u$y, col = 'black', bg = 'darkorchid1', pch = 21)
-  points(x = s$x, y = s$y, col = 'black', bg = 'cornflowerblue', pch = 21)
-  points(x = m$x, y = m$y, col = 'black', bg = 'mediumseagreen', pch = 21)
-  points(x = l$x, y = l$y, col = 'black', bg = 'firebrick1', pch = 21)
-  }
-
-}

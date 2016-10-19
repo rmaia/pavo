@@ -33,7 +33,7 @@
 + Add color opponent coding (coc) space & plot
 + Add CIEXYZ space & plot
 + Generalise summary.colorspace
-+ Add new visual systems: canis (dichromat), apis (trichromat)
++ Add new visual systems: canis (dichromat), apis (trichromat), musca (housefly - tetra)
 + Generalise 'vismodel' doc
 + Add .jazirrad capability to getspec()
 + Add hyperbolic transform of quantum catches as an option in vismodel()
@@ -41,10 +41,10 @@
 + Add general plot.colspace function. The main workflow is now vismodel() -> colspace() -> plot().
 + Add general points.colspace & vol.colspace functions.
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
-- move projplot to general option in plot.colspace()
-- CIELAB space & plot (not quite there)
-- CIELCh space & plot
-- fly vis syst
++ fly vis syst
++ CIELAB space & plot
+- cielab results seem off
+- CIELCh space & plot?
 - check cex vs cex.labels in plots. Something squiffy?
 - col in hexplot doesnt work?
 - check coldist calcs

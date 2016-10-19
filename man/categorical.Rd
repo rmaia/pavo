@@ -19,6 +19,8 @@ Object of class \code{colspace} consisting of the following columns:
 
 \code{x, y}: cartesian coordinates in the categorical colour space.
 
+\code{r.vec}: the r vector (saturation, distance from the center).
+
 \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
 }
 \description{
@@ -27,7 +29,7 @@ Applies the fly categorical colour vision model of Troje (1993)
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'bluetit', relative = TRUE, scale = 10000)
+vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
 }
 

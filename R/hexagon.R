@@ -23,7 +23,8 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+#'                         vonkries = TRUE, achro = 'l', bkg = 'green')
 #' flowers.hex <- colspace(vis.flowers, space = 'hexagon')
 #' }
 #' 
@@ -59,13 +60,16 @@ hexagon <- function(vismodeldata){
     # check if relative. Qcatches, at this stage, need to be raw & not log-transformed 
     # for the hexagon as it uses a hyperbolic transform. 
     if(attr(dat, 'relative'))
-      stop("Quantum catches are relative, which is not required in the hexagon model and may produce unexpected results", call. = FALSE)
+      stop("Quantum catches are relative, which is not required in the hexagon 
+            model and may produce unexpected results", call. = FALSE)
     
-    if(attr(dat, 'qcatch') != 'Ei')  # todo: more flexible
-      warning("Quantum catches are not hyperbolically transformed, as required for the hexagon model. This may produce unexpected results.", call. = FALSE)
+    if(attr(dat, 'qcatch') != 'Ei')  
+      warning("Quantum catches are not hyperbolically transformed, as required for 
+               the hexagon model. This may produce unexpected results.", call. = FALSE)
     
     if(!isTRUE(attr(dat, 'vonkries')))
-      warning("Quantum catches are not von-Kries transformed, as required for the hexagon model. This may produce unexpected results.", call. = FALSE)
+      warning("Quantum catches are not von-Kries transformed, as required for the 
+               hexagon model. This may produce unexpected results.", call. = FALSE)
   }
     
 # if not, check if it has more (or less) than 3 columns
@@ -75,15 +79,19 @@ hexagon <- function(vismodeldata){
     if(ncol(dat) < 3)
       stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than three columns', call. = FALSE)	
     if(ncol(dat) == 3)
-      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as quantum catch for ', dQuote('s'),', ',  dQuote('m'), ', and ', dQuote('l'), ' receptors, respectively', call. = FALSE)
+      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as 
+               quantum catch for ', dQuote('s'),', ',  dQuote('m'), ', and ', dQuote('l'), ' receptors, respectively', call. = FALSE)
     
     if(ncol(dat) > 3)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than three columns; treating the first three columns as quantum catch for ', dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call. = FALSE)
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than three 
+               columns; treating the first three columns as quantum catch for ', dQuote('s'),', ',  
+               dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call. = FALSE)
     
     dat <- dat[, 1:3]
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) == dim(dat)[1])
-      stop("Quantum catches are relative, which is not required in the hexagon model and may produce unexpected results", call. = FALSE)
+      stop("Quantum catches are relative, which is not required in the hexagon model and 
+            may produce unexpected results", call. = FALSE)
   }
   
   s <- dat[, 1]
