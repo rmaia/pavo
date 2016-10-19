@@ -16,6 +16,141 @@
 # START RECEPTOR NOISE FUNCTIONS #
 ##################################
 
+newreceptornoise.neural <- function(dat, n, weber, weber.ref, res){
+	
+  reln <- n/sum(n)
+  v <- weber*sqrt(reln[weber.ref])
+  e <- setNames(v/sqrt(reln), colnames(dat))
+
+  #############
+  # NUMERATOR #
+  #############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat),dim(dat)[2]-2)
+
+  # get those combinations of ei and prod(ei)^2
+
+  num1 <- setNames(apply(n1combs, 2, function(x) prod(e[x])^2), 
+    apply(n1combs, 2, paste, collapse=""))
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ] )
+
+  # f_d and f_e
+
+  deltaqiqj <- lapply(1:length(num1), function(y) 
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[,y]] - dat[x[2], n2combs[,y]] ))
+      )
+
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse='')
+
+  # (f_d-f_e)^2
+
+  num2 <- do.call('cbind',lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z)^2)))
+
+  # (e_abc)^2*(f_d-f_e)^2
+
+  etimesq <- num2 %*% diag(num1)
+
+  # sum numerator
+
+  numerator <- rowSums(etimesq)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat),dim(dat)[2]-1)
+
+  den <- setNames(apply(dcombs, 2, function(x) prod(e[x])^2), 
+    apply(dcombs, 2, paste, collapse=""))
+
+  denominator <- sum(den)
+
+  ###########
+  # DELTA S #
+  ###########
+
+  sqrt(numerator/denominator)  
+  }
+
+
+
+newreceptornoise.quantum <- function(dat, n, weber, weber.ref, res, qndat){
+	
+  reln <- n/sum(n)
+  v <- weber*sqrt(reln[weber.ref])
+  
+  ept1 <- setNames(v^2/reln, colnames(dat))
+  ept2 <- 2/t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ] ))
+  e <- sqrt(sweep(ept2, 2, ept1, "+"))
+
+
+  #############
+  # NUMERATOR #
+  #############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat),dim(dat)[2]-2)
+
+  # get those combinations of ei and prod(ei)^2
+
+  num1 <- do.call('rbind', lapply(1:dim(res)[1], function(z) 
+    apply(n1combs, 2, function(x) prod(e[z,x])^2)))
+  colnames(num1) <- apply(n1combs, 2, paste, collapse="")
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ] )
+
+  # f_d and f_e
+
+  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y) 
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[,y]] - dat[x[2], n2combs[,y]] ))
+      )
+
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse='')
+
+  # (f_d-f_e)^2
+
+  num2 <- do.call('cbind',lapply(deltaqiqj, function(x) 
+    apply(x, 1, function(z) diff(z)^2)))
+
+  # (e_abc)^2*(f_d-f_e)^2
+
+  etimesq <- num2 * num1
+
+  # sum numerator
+
+  numerator <- rowSums(etimesq)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat),dim(dat)[2]-1)
+
+  den <- do.call('rbind', lapply(1:dim(res)[1], function(z) 
+    apply(dcombs, 2, function(x) prod(e[z,x])^2)))
+  colnames(den) <- apply(dcombs, 2, paste, collapse="")
+
+  denominator <- rowSums(den)
+
+  ###########
+  # DELTA S #
+  ###########
+
+  sqrt(numerator/denominator)
+  }
+
+
+
+
+
 # tetrachromat functions
 
 ttdistcalc <- function(f1, f2, w1, w2, w3, w4){
