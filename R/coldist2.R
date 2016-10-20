@@ -130,8 +130,11 @@ coldist2 <-function(modeldata,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 4, weber.achro = 0.1){
  
  # TODO: DEPRECATE VIS ARGUMENT
+ # TODO: allow option for weber.ref="longest"
   
   noise <- match.arg(noise)
+  
+  lengthn <- as.character(length(n))
 
   if(noise == 'quantum'){
   	if(!any(c('vismodel', 'colspace') %in% class(modeldata)))
@@ -149,7 +152,8 @@ coldist2 <-function(modeldata,
       qcatch <- attr(modeldata, 'qcatch')
       ncone <- as.character(attr(modeldata,'conenumb'))
       
-      if(as.character(length(n)) != ncone) stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
+      if(lengthn != ncone) 
+        stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
   
 
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
@@ -208,7 +212,8 @@ coldist2 <-function(modeldata,
     # choose receptor noise model depending on visual system
     ncone <- as.character(attr(modeldata,'conenumb'))
     
-    if(as.character(length(n)) != ncone) stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
+    if(lengthn != ncone) 
+      stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
     
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -266,7 +271,7 @@ coldist2 <-function(modeldata,
   	
    dat2 <- dat[, 1:as.numeric(ncone)]
   
-   if(weber.ref < length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
+   if(weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
   
   
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) in the data", sep=''))

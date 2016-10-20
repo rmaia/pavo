@@ -210,7 +210,7 @@ didistcalc <- function(f1, f2, w1, w2){
 
 		numer<-	(dq1-dq2)^2
 		
-		denom<- w1+w2
+		denom<- (w1)^2+(w2)^2
 			
 		as.numeric(sqrt(numer/denom))
 		}
@@ -224,7 +224,7 @@ qn.didistcalc <- function(f1, f2, qn1, qn2, n1, n2, v){
 		
 		numer<-	(dq1-dq2)^2
 		
-		denom<- w1+w2
+		denom<- (w1)^2+(w2)^2
 			
 		as.numeric(sqrt(numer/denom))
 		}
