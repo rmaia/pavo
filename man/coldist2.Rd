@@ -5,8 +5,8 @@
 \title{Color distances}
 \usage{
 coldist2(modeldata, noise = c("neural", "quantum"), subset = NULL,
-  achro = TRUE, vis = NULL, qcatch = NULL, n = c(1, 2, 2, 4),
-  weber = 0.1, weber.ref = 4, weber.achro = 0.1)
+  achro = TRUE, qcatch = NULL, n = c(1, 2, 2, 4), weber = 0.1,
+  weber.ref = "longest", weber.achro = 0.1)
 }
 \arguments{
 \item{modeldata}{(required) quantum catch color data. Can be the result
@@ -36,16 +36,6 @@ the achromatic contrast, with noise based on the Weber fraction given by the arg
 \code{weber.achro}.
 If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
 instead returns long (or 'green') receptor contrast.}
-
-\item{vis}{if the object is of class \code{vismodel} or \code{colspace}, 
- this argument is ignored. If the object is a data frame of quantal catches 
- from another source, this argument is used to specify the visual system phenotype 
- to use in the model:
-\itemize{
- \item \code{di}: Dichromatic color vision
- \item \code{tri}: Trichromatic color vision
- \item \code{tetra}: Tetrachromatic color vision
-}}
 
 \item{qcatch}{if the object is of class \code{vismodel} or \code{colspace}, 
  this argument is ignored. If the object is a data frame of quantal catches 

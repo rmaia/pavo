@@ -1,3 +1,4 @@
+require(pavo)
 data(sicalis)
 aa <- vismodel(sicalis, visual=sensmodel(c(400,600)), rel=F, scale=10000000)
 attr(aa, 'conenumb') <- 2 # when using pavo release
