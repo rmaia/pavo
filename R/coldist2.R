@@ -18,15 +18,6 @@
 #'  \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #'    channel is proportional to the logarithm of the quantum catch)
 #'  }
-#' @param vis if the object is of class \code{vismodel} or \code{colspace}, 
-#'  this argument is ignored. If the object is a data frame of quantal catches 
-#'  from another source, this argument is used to specify the visual system phenotype 
-#'  to use in the model:
-#' \itemize{
-#'  \item \code{di}: Dichromatic color vision
-#'  \item \code{tri}: Trichromatic color vision
-#'  \item \code{tetra}: Tetrachromatic color vision
-#' }
 #' @param subset If only some of the comparisons should be returned, a character vector of 
 #'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
 #'  must match the labels of the imput samples, but partial matching (and regular expressions) 
@@ -126,12 +117,9 @@
 
 coldist2 <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
-                  achro = TRUE, vis = NULL, qcatch = NULL,
-                  n = c(1,2,2,4), weber = 0.1, weber.ref = 4, weber.achro = 0.1){
- 
- # TODO: DEPRECATE VIS ARGUMENT
- # TODO: allow option for weber.ref="longest"
-  
+                  achro = TRUE, qcatch = NULL,
+                  n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1){
+   
   noise <- match.arg(noise)
   
   lengthn <- as.character(length(n))
@@ -169,9 +157,6 @@ coldist2 <-function(modeldata,
   	           fi = as.matrix(exp(modeldata)) 
   	           )
   	           
-      vis <- attr(modeldata, 'clrsp')
-      if(vis == 'tcs')
-        vis <- 'tetra'
     }
       
     if(attr(modeldata, 'relative'))
@@ -213,7 +198,7 @@ coldist2 <-function(modeldata,
     ncone <- as.character(attr(modeldata,'conenumb'))
     
     if(lengthn != ncone) 
-      stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
+      stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
     
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -271,10 +256,11 @@ coldist2 <-function(modeldata,
   	
    dat2 <- dat[, 1:as.numeric(ncone)]
   
-   if(weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
-  
-  
-   if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) in the data", sep=''))
+   if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
+   
+   if(weber.ref == 'longest') weber.ref <- length(n)
+   
+   if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
   
    if(noise=='neural'){
    	res$dS <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
