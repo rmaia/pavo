@@ -302,7 +302,7 @@ if(inherits(achromatic2,'try-error')){
 # using one of the predefined receptors
 
 if(achromatic2=='bt.dc' | achromatic2=='ch.dc' | achromatic2=='st.dc' | achromatic2=='md.r1'){
-   L <- sens[,grep(achromatic2,names(sens))]
+  L <- sens[,grep(achromatic2,names(sens))]
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }

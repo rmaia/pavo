@@ -32,7 +32,7 @@
 dispace <- function(vismodeldata){
   
   dat <- vismodeldata
-    
+
 # if object is vismodel:
   if('vismodel' %in% attr(dat, 'class')){
     
@@ -45,14 +45,15 @@ dispace <- function(vismodeldata){
     
 # check if relative
     if(!attr(dat, 'relative')){
-      dat <- dat[, c('s','l')]/rowSums(dat[, c('s','l')])
+      dat <- dat[, 1:2]
+      dat <- dat/apply(dat, 1, sum)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed")
-      attr(vismodeldata,'relative') <- TRUE
+      attr(vismodeldata, 'relative') <- TRUE
     }
     
   }
-    
+
 # if not, check if it has more (or less) than 2 columns
   
   if(!('vismodel' %in% attr(dat, 'class'))){
@@ -77,10 +78,10 @@ dispace <- function(vismodeldata){
       attr(vismodeldata,'relative') <- TRUE
     }
   }
-    
+
   s <- dat[, 1]
   l <- dat[, 2]
-  
+
 # coordinate
   x <- (1/sqrt(2)) * (l - s) 
     

@@ -10,10 +10,8 @@
 - subset.rspec doesn't work
 
 ## Me
-- Add CIE chromaticity diagram function
 + Make fast `getspec` function
 - make `lines.rspec`
-- add ability to produce static 3d plots (scatter3d, add points, add volumes)
 - add ability to produce heatmap plot with `varying` vector in non-ascending order
 + add ability to add arguments to `aggspec` (e.g., `na.rm=TRUE`)
 - need to make default color for points (it's transp now)
@@ -44,7 +42,7 @@
 + fly vis syst
 + CIELAB space & plot
 - cielab results seem off
+- colspace -> coldist broken when space = di/tri?
 - CIELCh space & plot?
 - check cex vs cex.labels in plots. Something squiffy?
 - col in hexplot doesnt work?
-- check coldist calcs

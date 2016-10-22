@@ -119,7 +119,6 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-
 coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, vis = NULL, qcatch = NULL,
@@ -283,7 +282,7 @@ coldist <-function(modeldata,
         w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e)
         )
 
-    if (noise == 'quantum')
+    if(noise == 'quantum')
       res$dS <- apply(pairsid, 1, function(x) 
         qn.ttdistcalc(f1=dat[x[1], ], f2=dat[x[2], ],
         qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
