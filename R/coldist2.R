@@ -135,7 +135,7 @@ coldist2 <-function(modeldata,
     
     qcatch <- attr(modeldata, 'qcatch')
     
-    if(any(c('di','tri','tcs') %in% attr(modeldata, 'clrsp'))){
+    if(any(c('dispace','trispace','tcs') %in% attr(modeldata, 'clrsp'))){
       # transform or stop if Qi not appropriate
       qcatch <- attr(modeldata, 'qcatch')
       ncone <- as.character(attr(modeldata,'conenumb'))
