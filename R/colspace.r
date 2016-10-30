@@ -7,23 +7,23 @@
 #'  with columns representing quantum catches).
 #' @param space Which colorspace/model to use. Options are:
 #' \itemize{
-#' \item \code{auto}: if data is a result from \code{vismodel}, 
-#' applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
-#' cones, respectively.
-#' \item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
-#' \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details.
-#' \item \code{tcs}: tetrahedral colourspace (tetrachromatic). See \code{\link{tcs}} for details.
-#' \item \code{hexagon}: the colour-hexagon of Chittka (1992) (trichromatic). See \code{\link{hexagon}} for details.
-#' \item \code{coc}: the colour-opponent-coding model of Backhaus (1991) (trichromatic). See \code{\link{coc}} for details.
-#' \item \code{categorical}: the categorical fly-model of Troje (1993) (tetrachromatic). See \code{\link{categorical}} for details.
-#' \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details.
-#' \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details.
+#'    \item \code{auto}: if data is a result from \code{vismodel}, 
+#'    applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
+#'    cones, respectively.
+#'    \item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
+#'    \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details.
+#'    \item \code{tcs}: tetrahedral colourspace. See \code{\link{tcs}} for details.
+#'    \item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See \code{\link{hexagon}} for details.
+#'    \item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991). See \code{\link{coc}} for details.
+#'    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details.
+#'    \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details.
+#'    \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details.
 #' }
 #' 
 #' @examples \dontrun{
 #' data(flowers)
 #' 
-#' # Dichromat space
+#' # Dichromat
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
 #' di.flowers <- colspace(vis.flowers, space = 'di')
 #'
@@ -41,7 +41,7 @@
 #' vis.flowers <- vismodel(flowers, visual = 'bluetit')
 #' tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 #' 
-#' # Catrgorical
+#' # Categorical
 #' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #' }

@@ -1,5 +1,5 @@
 library(pavo)
-context('Vismodel')
+context('vismodel')
 
 test_that('Output is in expected range', {
   data(flowers)

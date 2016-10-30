@@ -1,5 +1,5 @@
 library(pavo)
-context('General')
+context('general')
 
 test_that('Class assignment', {
   data(flowers)
