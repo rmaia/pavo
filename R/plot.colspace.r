@@ -8,7 +8,7 @@
 #'  \itemize{ 
 #'        \item \code{\link{diplot}}: dichromat space
 #'        \item \code{\link{triplot}}: trichromat space
-#'        \item \code{\link{tcsplot}}: tetrahedral space
+#'        \item \code{\link{tetraplot}}: tetrahedral space
 #'        \item \code{\link{catplot}}: categorical space 
 #'        \item \code{\link{hexplot}}: colour hexagon
 #'        \item \code{\link{cocplot}}: colour-opponent-coding space
