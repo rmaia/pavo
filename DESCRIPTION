@@ -4,7 +4,7 @@ Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
 Version: 0.99
 License: GPL (>= 2)
-Date: 2016-06-01
+Date: 2016-11-11
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",
@@ -12,7 +12,7 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca"),
     person("Thomas", "White", role = "aut",
-    email = "thomas.white@students.mq.edu.au"))
+    email = "thomas.white026@gmail.com"))
 Author: Rafael Maia [aut, cre],
     Chad Eliason [aut],
     Pierre-Paul Bitton [aut],
@@ -28,7 +28,9 @@ Imports:
     scatterplot3d
 Suggests:
     rgl,
-    testthat
+    testthat,
+    knitr
+VignetteBuilder: knitr
 Collate:
     'aggplot.R'
     'aggspec.R'

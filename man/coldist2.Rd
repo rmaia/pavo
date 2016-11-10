@@ -102,7 +102,8 @@ vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
 tridist.flowers <- coldist(vis.flowers)
 
 # Trichromat, color-hexagon model (euclidean distances)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', 
+                        relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 hexdist.flowers <- coldist(hex.flowers)
 
