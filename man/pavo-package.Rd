@@ -12,17 +12,19 @@ An R package for the perceptual analysis, visualization and organization of colo
 \tabular{ll}{
 Package: \tab pavo\cr
 Type: \tab Package\cr
-Version: \tab 0.5-1\cr
-Date: \tab 2012-10-13\cr
+Version: \tab 0.99\cr
+Date: \tab 2016-11-11\cr
 License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr}
+LazyLoad: \tab yes\cr
+To learn more about pavo, take a look at the vignettes:\cr browseVignettes(package = "pavo")}
 }
 \examples{
 #see functions.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason 
-\email{cme16@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+\email{cme16@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@uwindsor.ca},
+Thomas White \email{thomas.white026@gmail.com}
 }
 \keyword{package}
 
