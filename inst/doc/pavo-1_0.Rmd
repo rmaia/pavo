@@ -1,0 +1,37 @@
+---
+title: "An introduction to pavo 1.0"
+author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 3
+vignette: >
+  %\VignetteIndexEntry{An introduction to pavo 1.0}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(pavo)
+```
+
+# Introduction
+
+`pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow
+for working with spectral color data. It includes functions that take advantage of new data classes 
+to work seamlessly from importing raw data to visualization and analysis.
+
+Although `pavo` deals largely, in its examples, with spectral reflectance data from bird feathers,
+it is meant to be applicable to a range of taxa. It provides flexible ways to
+input spectral data from a variety of equipment manufacturers, process these data, extract
+variables, and produce publication-quality figures.
+
+`pavo` was written with the following workflow in mind:
+
+1. **Organize** spectral data by inputting files and processing spectra (e.g., to remove noise, negative values, smooth curves, etc...).
+2. **Analyze** the resulting files, either using typical colorimetric variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
+3. **Visualize** the output, with multiple options provided for exploratory analyses.
+
+Below we will show the main functions in the package in an example workflow. The development
+version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
