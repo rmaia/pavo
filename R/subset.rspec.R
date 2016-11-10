@@ -62,13 +62,14 @@ subset.colspace <- function (x, subset, ...) {
   #   stop("'subset' must be logical")
   if (is.logical(subset)) {
     subsample <- subset
+    res <- x[which(subsample), ]
   } else {
       subsample <- grep(subset, row.names(x))
+      res <- x[subsample, ]
     }
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- x[which(subsample), ] # & !is.na(subset)])
   class(res) <- c("colspace", "data.frame")
   res
 }
@@ -79,10 +80,12 @@ subset.colspace <- function (x, subset, ...) {
 subset.vismodel <- function (x, subset, ...) {
   if (is.logical(subset)) {
     subsample <- subset
+    res <- x[which(subsample), ]
   } else {
       subsample <- grep(subset, row.names(x))
+      res <- x[subsample, ]
     }
   # attr <- attributes(x)
-  res <- x[which(subsample), ]
+  class(res) <- c("vismodel", "data.frame")
   res
 }
