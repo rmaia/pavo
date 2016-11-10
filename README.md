@@ -30,8 +30,7 @@ If you want to install the bleeding edge version of `pavo`, you can:
 
 ```r     
 install.packages('devtools')
-require(devtools)
-install_github('pavo', 'rmaia')
+devtools::install_github('rmaia/pavo@revamp')
 require(pavo)
 ```
 
