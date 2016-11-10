@@ -1,5 +1,5 @@
 ---
-title: "pavo (_<= v0.5-5_)"
+title: "pavo"
 author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output: 
@@ -7,7 +7,7 @@ output:
     toc: true
     toc_depth: 3
 vignette: >
-  %\VignetteIndexEntry{Vignette Title}
+  %\VignetteIndexEntry{pavo}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -69,11 +69,12 @@ The files were downloaded and placed in a directory called
 the current folder, but a different one can be specified:
 
 ```{r, echo=FALSE, eval=TRUE, results='hide', include=FALSE}
-specs <- getspec("../vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 ```
 
 ```{r, echo=TRUE, eval=FALSE, results='hide', include=TRUE}
-specs <- getspec("~/github/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#specs <- getspec("~/github/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 # 213  files found; importing spectra
 # ============================================================
 ```
@@ -508,11 +509,11 @@ aren't  already implemented in R must be passed like they would be to functions 
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colors
-aggplot(mspecs, spp, FUN.center = median, lwd = 2, alpha = 0.3)
+aggplot(mspecs, spp, FUN.center = median, alpha = 0.3)
 
 # Plot using mean and standard error, in greyscale
 aggplot(mspecs, spp, FUN.error = function(x)sd(x)/sqrt(length(x)), 
-        lwd = 2, lty = 1:7, lcol = 1, shadecol = 'grey',  alpha = 0.7)
+        lcol = 1, shadecol = 'grey',  alpha = 0.7)
 ```
 
 # Analyzing Spectral Data
@@ -838,8 +839,8 @@ selected from the `coldist` argument `noise` (which accepts either `"neural"` or
 `"quantum"`).
 
 ```{r, echo=TRUE, eval=TRUE}
-coldist(vismod1, vis = 'tetra', noise = 'neural', n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.1)
-coldist(vismod.idi, vis = 'di', n1 = 1, n2 = 1,  v = 0.05)
+coldist(vismod1, vis = 'tetra', noise = 'neural', n1 = 1, n2 = 2, n3 = 2, n4 = 4, weber = 0.1)
+coldist(vismod.idi, vis = 'di', n1 = 1, n2 = 1,  weber = 0.05)
 ```
 
 Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast
@@ -953,7 +954,7 @@ tcsvol(tcs(vismod2))
 ```
 
 ```{r, echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Example plots obtained using `tcsplot`. Plot on the left was exported as pdf, while the one on the right was exported as png (`tcsplot` uses the `rgl` package for interactive 3D plotting capabilities, and `rgl` does not currently support transparency when exporting as `pdf`)._"}
-knitr::include_graphics("../vignette/fig/pavo-tcsplot-combined.png")
+knitr::include_graphics("fig/pavo-tcsplot-combined.png")
 ```
 
 Another plotting option available is `projplot`, which projects color points in the surface of
@@ -1002,7 +1003,7 @@ So we can clearly see that there is overlap between the throat and breast colors
 not between  the throat and the crown colors (Figures below).
 
 ```{r, echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"}
-knitr::include_graphics("../vignette/fig/pavo-overlap-combined.png")
+knitr::include_graphics("fig/pavo-overlap-combined.png")
 ```
 
 # Final Thoughts
