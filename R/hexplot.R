@@ -53,7 +53,7 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'f
   arg <- list(...)
   
   if(is.null(arg$col))
-    arg$col <- 'purple'
+    arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
   if(is.null(arg$cex))

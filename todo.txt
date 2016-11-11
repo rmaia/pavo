@@ -7,7 +7,7 @@
 - maybe `peakshape` can be interactive? i.e., plot it out, wait for user input (click, fix bounds, etc.), then record the data in an output dataset
 - add couple plotting options for `segclass` objects
 - reformat & extend vignette
-- subset.rspec doesn't work
++ subset.rspec doesn't work
 
 ## Me
 + Make fast `getspec` function
@@ -46,3 +46,4 @@
 - CIELCh space & plot?
 - check cex vs cex.labels in plots. Something squiffy?
 - col in hexplot doesnt work?
+- achro = FALSE in tetraplot still plots?

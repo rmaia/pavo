@@ -1,6 +1,6 @@
 ---
 title: "An introduction to pavo 1.0"
-author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason"
+author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -35,3 +35,147 @@ variables, and produce publication-quality figures.
 
 Below we will show the main functions in the package in an example workflow. The development
 version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
+
+# An Improved Workflow
+
+# Data
+```{r}
+data(flowers)
+
+head(flowers[1:4])
+```
+# Visual modelling
+
+## Visual Phenotypes
+
+Visual phenotypes:
+  : ```avg.uv``` average ultraviolet-sensitive avian (tetrachromat)
+  : ```avg.v``` average violet-sensitive avian (tetrachromat)
+  : ```bluetit``` The blue tit _Cyanistes caeruleus_ (tetrachromat)
+  : ```star``` The starling _Sturnus vulgaris_ (tetrachromat)
+  : ```pfowl``` The peafowl _Pavo cristatus_ (tetrachromat)
+  : ```apis``` The honeybee _Apis mellifera_ (trichromat)
+  : ```canis``` The canid _Canis familiaris_ (dichromat)
+  : ```musca``` The housefly _Musca domestica_ (tetrachromat)
+  : ```cie2``` 2-degree colour matching functions for CIE models of human colour vision (trichromat)
+  : ```cie10``` 10-degree colour matching functions for CIE models of human colour vision (trichromat)
+
+## The Receptor-noise Limited Model
+
+## Modelling and Plotting Colourspaces
+
+### The `colspace` and `plot` Functions
+
+### Di-, Tri-, and Tetra-chromatic Spaces
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'canis')
+
+di.flowers <- colspace(vis.flowers, space = 'di')
+
+head(di.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Dichromatic space._"}
+plot(di.flowers) 
+```
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis')
+
+tri.flowers <- colspace(vis.flowers, space = 'tri')
+
+head(tri.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Maxwell triangle._"}
+plot(tri.flowers) 
+```
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'bluetit')
+
+tetra.flowers <- colspace(vis.flowers, space = 'tcs')
+
+head(tetra.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Tetrahedral colorspace._"}
+par(mfrow = c(1, 2))
+plot(tetra.flowers, view = 105) 
+plot(tetra.flowers, view = 75)
+```
+
+### The Colour Hexagon
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+head(hex.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Colour hexagon._"}
+plot(hex.flowers, sectors = 'coarse')
+```
+
+### The Colour Opponent Coding (COC) Space
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+
+coc.flowers <- colspace(vis.flowers, space = 'coc')
+
+head(coc.flowers)
+
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_coc._"}
+plot(coc.flowers) 
+```
+
+### CIE Spaces
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
+
+ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+cielab.flowers <- colspace(vis.flowers, space = 'cielab')
+
+head(ciexyz.flowers)
+
+head(cielab.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIEXYZ._"}
+plot(ciexyz.flowers) 
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"}
+plot(cielab.flowers) 
+```
+
+### Categorical Fly Colourspace
+
+```{r}
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+
+cat.flowers <- colspace(vis.flowers, space = 'categorical')
+
+head(cat.flowers)
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Cat._"}
+plot(cat.flowers) 
+```
+
+# N-dimensional colour-distances with `coldist`
+
+# Under-the-Hood
+
+## Classes
+
+## Attributes
+
+
+

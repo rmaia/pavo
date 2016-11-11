@@ -17,8 +17,8 @@
 #' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' flowers.cie <- colspace(vis.flowers, space = 'ciexyz')
-#' plot(flowers.cie)
+#' cie.flowers <- colspace(vis.flowers, space = 'ciexyz')
+#' plot(cie.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
