@@ -18,27 +18,32 @@
 #'  \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #'    channel is proportional to the logarithm of the quantum catch)
 #'  }
+#' @param vis if the object is of class \code{vismodel} or \code{colspace}, 
+#'  this argument is ignored. If the object is a data frame of quantal catches 
+#'  from another source, this argument is used to specify the visual system phenotype 
+#'  to use in the model:
+#' \itemize{
+#'  \item \code{di}: Dichromatic color vision
+#'  \item \code{tri}: Trichromatic color vision
+#'  \item \code{tetra}: Tetrachromatic color vision
+#' }
 #' @param subset If only some of the comparisons should be returned, a character vector of 
 #'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
 #'  must match the labels of the imput samples, but partial matching (and regular expressions) 
 #'  are supported.
 #' @param achro Logical. If \code{TRUE}, last column of the data frame is used to calculate 
-#'  the achromatic contrast, with noise based on the Weber fraction given by the argument
-#'  \code{weber.achro}.
+#'  the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}. 
 #'  If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
 #'  instead returns long (or 'green') receptor contrast.
-#' @param n photoreceptor densities for the cones used in visual modeling.
-#'  must have same length as number of columns (excluding achromatic receptor if used;
-#'  defaults to 
-#'  the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}). 
-#'  Ignored for \code{colspace} objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#'  categorical, and cielab models).
+#' @param n1,n2,n3,n4 tetrachromatic photoreceptor densities for u, s, m & l (default to 
+#'  the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
+#'  \code{'tcs'}, only \code{n1} and \code{n2} (\code{vis = 'di'}) or 
+#'  \code{n1}, \code{n2} and \code{n3} (\code{vis = 'tri'}) are used for chromatic contrast. 
+#'  Ignored when data are of class \code{\link{colspace}}.
 #' @param weber The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
-#'  and therefore must be calculated based on the epirically estimated Weber 
-#'  fraction of one of the cone classes. \code{v} is then applied to estimate the 
-#'  Weber fraction of the other cones. by default, the value of 0.1 is used 
-#'  (the empirically estimated value for the
+#'  and therefore must be calculated based on the epirically estimated Weber fraction of one of
+#'  the cone classes. \code{v} is then applied to estimate the Weber fraction of the 
+#'  other cones. by default, the value of 0.1 is used (the empirically estimated value for the
 #'  LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 #' categorical, and cielab models).
@@ -55,21 +60,19 @@
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 #' categorical, and cielab models)):
 #' \itemize{
-#' 	\item \code{neural}: noise is proportional to the Weber fraction and 
-#'  is independent of the intensity of the signal received (i.e. assumes bright conditions).
-#' 	\item \code{quantum}: noise is the sum of the neural noise and receptor noise, 
-#'  and is thus proportional to the Weber fraction and inversely proportional 
-#'  to the intensity of the signal received (the quantum catches). 
-#'  Note that the \code{quantum} option will only work with 
+#' 	\item \code{neural}: noise is proportional to the Weber fraction and is independent of the
+#' 	intensity of the signal received.
+#' 	\item \code{quantum}: noise is the sum of the neural noise and receptor noise, and is thus
+#' 	proportional to the Weber fraction and inversely proportional to the intensity of the signal
+#' 	received (the quantum catches). Note that the \code{quantum} option will only work with 
 #' 	objects of class \code{vismodel}.
 #' }
 #'
-#' @return A data frame containing up to 4 columns. 
-#' The first two (\code{patch1, patch2}) refer
+#' @return A data frame containing up to 4 columns. The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-#' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
-#' and manhattan distances in the color-opponent-coding space. 
+#' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, and manhattan distances
+#' in the color-opponent-coding space. 
 #' 
 #' @export
 #' 
@@ -84,8 +87,8 @@
 #' tridist.flowers <- coldist(vis.flowers)
 #' 
 #' # Trichromat, color-hexagon model (euclidean distances)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', 
-#'                         relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+#'                         vonkries = TRUE, achro = 'l', bkg = 'green')
 #' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' hexdist.flowers <- coldist(hex.flowers)
 #' 
@@ -116,14 +119,13 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-coldist2 <-function(modeldata,
+coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
-                  achro = TRUE, qcatch = NULL,
-                  n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1){
-   
+                  achro = TRUE, vis = NULL, qcatch = NULL,
+                  n1 = 1, n2 = 2, n3 = 2, n4 = 4, 
+                  weber = 0.1, weber.ref = 'n4', weber.achro = 0.1){
+
   noise <- match.arg(noise)
-  
-  lengthn <- as.character(length(n))
 
   if(noise == 'quantum'){
   	if(!any(c('vismodel', 'colspace') %in% class(modeldata)))
@@ -136,14 +138,10 @@ coldist2 <-function(modeldata,
     
     qcatch <- attr(modeldata, 'qcatch')
     
-    if(any(c('dispace','trispace','tcs') %in% attr(modeldata, 'clrsp'))){
+    if(any(c('di','tri','tcs') %in% attr(modeldata, 'clrsp'))){
       # transform or stop if Qi not appropriate
       qcatch <- attr(modeldata, 'qcatch')
       ncone <- as.character(attr(modeldata,'conenumb'))
-      
-      if(lengthn != ncone) 
-        stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
-  
 
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
       dat <- switch(qcatch, 
@@ -158,6 +156,9 @@ coldist2 <-function(modeldata,
   	           fi = as.matrix(exp(modeldata)) 
   	           )
   	           
+      vis <- attr(modeldata, 'clrsp')
+      if(vis == 'tcs')
+        vis <- 'tetra'
     }
       
     if(attr(modeldata, 'relative'))
@@ -179,6 +180,9 @@ coldist2 <-function(modeldata,
      
   	dat <- as.matrix(modeldata)
   	
+    rownames(dat) <- rownames(modeldata)
+    colnames(dat) <- colnames(modeldata)
+  	
   	# transform or stop if Qi not appropriate
   	
   	qcatch <- attr(modeldata, 'qcatch')
@@ -197,13 +201,10 @@ coldist2 <-function(modeldata,
       
     # choose receptor noise model depending on visual system
     ncone <- as.character(attr(modeldata,'conenumb'))
-    
-    if(lengthn != ncone) 
-      stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
-    
-    rownames(dat) <- rownames(modeldata)
-    colnames(dat) <- colnames(modeldata)
-   
+    vis <- switch(ncone,
+                  '2' = 'di',
+                  '3' = 'tri',
+                  '4' = 'tetra')
    }
    
   # transformations in case object is neither from colspace or vismodel
@@ -212,17 +213,6 @@ coldist2 <-function(modeldata,
     dat <- as.matrix(modeldata)
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
-    
-    if(achro==FALSE){
-    	  ncone <- dim(dat)[2]
-    	  warning(paste("number of cones not specified; assumed to be", ncone))
-    }
-    
-    if(achro==TRUE){
-    	  ncone <- dim(dat)[2]-1
-    	  warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"))
-    }
-    
   }
 
   # Prepare output
@@ -237,42 +227,68 @@ coldist2 <-function(modeldata,
   # Receptor Noise Models #
   #########################
   
-  # should be used when:
-  # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab
-  # - vismodel object: always
-  # - user input data: always
+  if(!is.null(vis)){
+
+  	# Calculate v based on weber fraction and reference cone
+    v <- switch(weber.ref,
+          n1 = weber * sqrt(n1),
+          n2 = weber * sqrt(n2),
+          n3 = weber * sqrt(n3),
+          n4 = weber * sqrt(n4)
+         )
+
+# TODO: RETURN WARNING IF REFERENCE CONE IS ABOVE CHROMACY (e.g. n4 for trichromat)
+    
+    # Neural noise
+    w1e <- v/sqrt(n1)
+    w2e <- v/sqrt(n2)
+    w3e <- v/sqrt(n3)
+    w4e <- v/sqrt(n4)
+
+  	if(vis == 'di'){
+      if(noise == 'neural')
+  		res$dS <- apply(pairsid,1,function(x) 
+          didistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          w1 = w1e, w2 = w2e)
+          )
+
+      if(noise == 'quantum')
+        res$dS <- apply(pairsid, 1, function(x) 
+          qn.didistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+          n1 = n1, n2 = n2, v = v) 
+          )
+    }
+
+    if(vis == 'tri'){
+      if(noise == 'neural')
+        res$dS <- apply(pairsid, 1, function(x) 
+          trdistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+          w1 = w1e, w2 = w2e, w3 = w3e)
+          )
+      
+      if(noise == 'quantum')
+        res$dS <- apply(pairsid,1,function(x) 
+          qn.trdistcalc(f1=dat[x[1], ], f2=dat[x[2], ],
+          qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+          n1 = n1, n2 = n2, n3 = n3, v = v)
+          )
+    }
   
-  usereceptornoisemodel <- FALSE
-  
-  # this covers vismodel, user input
-  if(is.null(attr(modeldata, 'clrsp'))) usereceptornoisemodel <- TRUE 
-  
-  # this covers colspace
-  if('colspace' %in% class(modeldata)){
-  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc'))
-  	  usereceptornoisemodel <- TRUE
+  if(vis=='tetra'){
+  	if(noise == 'neural')
+      res$dS <- apply(pairsid, 1, function(x) 
+        ttdistcalc(f1=dat[x[1], ], f2=dat[x[2], ], 
+        w1 = w1e, w2 = w2e, w3 = w3e, w4 = w4e)
+        )
+
+    if(noise == 'quantum')
+      res$dS <- apply(pairsid, 1, function(x) 
+        qn.ttdistcalc(f1=dat[x[1], ], f2=dat[x[2], ],
+        qn1=qndat[x[1], ], qn2=qndat[x[2], ], 
+        n1 = n1, n2 = n2, n3 = n3, n4 = n4, v = v)
+        )
   }
-  
-  if(usereceptornoisemodel){
-  	
-   dat2 <- dat[, 1:as.numeric(ncone)]
-  
-   if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
-   
-   if(weber.ref == 'longest') weber.ref <- length(n)
-   
-   if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
-  
-   if(noise=='neural'){
-   	res$dS <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
-   	  weber.ref=weber.ref, res=res)
-   } 
-   
-   if(noise=='quantum') {
-    qndat2 <- qndat[, 1:as.numeric(ncone)]
-    res$dS <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
-      weber.ref=weber.ref, res=res, qndat = qndat2)     	
-   }
   
   if(achro == TRUE){
   	if(noise == 'quantum')
@@ -289,8 +305,9 @@ coldist2 <-function(modeldata,
     
   }
 
-  }
+# TODO: return warning if last column used for achromatic is the same as number of cones
 
+}
 
 
 #######################
@@ -358,4 +375,4 @@ if('colspace' %in% class(modeldata)){
   row.names(res) <- 1:dim(res)[1]
   
   res
-}
+  }
