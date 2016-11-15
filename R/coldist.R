@@ -116,7 +116,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-coldist2 <-function(modeldata,
+coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, qcatch = NULL,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1){

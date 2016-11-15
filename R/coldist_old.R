@@ -1,4 +1,4 @@
-#' Color distances
+#' Color distances (deprecated)
 #' 
 #' Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
@@ -75,6 +75,8 @@
 #' in the color-opponent-coding space. 
 #' 
 #' @export
+#'
+#' @keywords internal
 #' 
 #' @examples \dontrun{
 #' # Dichromat
@@ -119,7 +121,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-coldist <-function(modeldata,
+coldist_old <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, vis = NULL, qcatch = NULL,
                   n1 = 1, n2 = 2, n3 = 2, n4 = 4, 

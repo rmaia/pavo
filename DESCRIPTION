@@ -40,7 +40,6 @@ Collate:
     'cie.R'
     'cieplot.R'
     'coldist.R'
-    'coldist2.R'
     'coc.R'
     'cocplot.R'
     'colspace.r'
