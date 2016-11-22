@@ -6,6 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 3
+bibliography: refs.bib
 vignette: >
   %\VignetteIndexEntry{An introduction to pavo 1.0}
   %\VignetteEngine{knitr::rmarkdown}
@@ -38,12 +39,16 @@ version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
 
 # An Improved Workflow
 
+
+
+
 # Data
 ```{r}
 data(flowers)
 
 head(flowers[1:4])
 ```
+
 # Visual modelling
 
 ## Visual Phenotypes
@@ -60,13 +65,33 @@ Visual phenotypes:
   : ```cie2``` 2-degree colour matching functions for CIE models of human colour vision (trichromat)
   : ```cie10``` 10-degree colour matching functions for CIE models of human colour vision (trichromat)
 
+```{r fig=TRUE, include=TRUE, warnings=FALSE, message=FALSE, echo=FALSE, fig.width=8, fig.height=28, fig.align='center'}
+par(mfrow = c(10, 2))
+plot(as.rspec(cbind(vissyst$wl, vissyst[2:5])), main = 'Average avian UV', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[14:17])), main = 'Average avian V', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[6:9], vissyst$bt.dc)), main = 'Blue tit', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[10:13], vissyst$st.dc)), main = 'Starling', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[18:21], vissyst$ch.dc)), main = 'Peafowl', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[25:27])), main = 'Honeybee', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[28:29])), main = 'Canis familiaris', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[30:32])), main = 'CIE 2-degree', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[33:35])), main = 'CIE 10-degree', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[36:39], vissyst$md.r1)), main = 'Musca domestica', ylab = 'Absorbance')
+```
+
 ## The Receptor-noise Limited Model
 
 ## Modelling and Plotting Colourspaces
 
+
 ### The `colspace` and `plot` Functions
 
+
 ### Di-, Tri-, and Tetra-chromatic Spaces
+
+Di
+
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
 
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -80,6 +105,11 @@ head(di.flowers)
 plot(di.flowers) 
 ```
 
+Tri
+
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'apis')
 
@@ -91,6 +121,8 @@ head(tri.flowers)
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Maxwell triangle._"}
 plot(tri.flowers) 
 ```
+
+Tetra
 
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'bluetit')
@@ -108,6 +140,18 @@ plot(tetra.flowers, view = 75)
 
 ### The Colour Hexagon
 
+Chittka [@chittka1992colour]
+
+Receptor excitations:
+
+$$E_i = \frac{P_i}{P_i + 1}$$
+
+Coordinates:
+
+$$x = \frac{\sqrt{3}}{2(E_g = E_{uv})}$$
+
+$$y = E_b - 0.5(E_{uv} + E_g)$$
+
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 
@@ -121,6 +165,12 @@ plot(hex.flowers, sectors = 'coarse')
 ```
 
 ### The Colour Opponent Coding (COC) Space
+
+ref [@backhaus1991color]
+
+$$A = -9.86E_g + 7.70E_b + 2.16E_g$$
+$$B = -5.17E_g + 20.25E_b - 15.08E_g$$
+
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 
@@ -135,6 +185,44 @@ plot(coc.flowers)
 ```
 
 ### CIE Spaces
+
+XYZ Tristimulus values:
+
+$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
+$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
+$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+
+where k is a normalising factor:
+
+$$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)d\lambda}}$$
+
+Chromaticity coordinates:
+
+$$x = \frac{X}{X + Y + Z}$$
+$$y = \frac{Y}{X + Y + Z}$$
+$$z = \frac{Z}{X + Y + Z} = 1 - x - y$$
+
+LAB:
+$$L = 116\left(\frac{Y}{Y_n}\right)^\frac{1}{3} \;\; if \;\; \frac{Y}{Y_n} > 0.008856$$
+$$L = 903.3\left(\frac{Y}{Y_n}\right) \;\; if \;\; \frac{Y}{Y_n} \leq 0.008856$$
+
+$$a = 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)$$
+
+$$b = 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)$$
+
+where:
+
+$$f(x) = x^\frac{1}{3} \;\; if \;\; x > 0.008856$$
+$$f(x) = 7.787(x) + \frac{16}{116} \;\; if \;\; x \leq 0.008856$$
+
+Here, $X_n, Y_n, Z_n$ are neutral point values to model visual adaptation, simply calculated as:
+
+$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
+$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
+$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+
+when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
+
 
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
@@ -157,6 +245,10 @@ plot(cielab.flowers)
 
 ### Categorical Fly Colourspace
 
+$$x = R7_p - R8_p$$
+
+$$y = R7_y - R8_y$$
+
 ```{r}
 vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
 
@@ -177,5 +269,6 @@ plot(cat.flowers)
 
 ## Attributes
 
+# References
 
 

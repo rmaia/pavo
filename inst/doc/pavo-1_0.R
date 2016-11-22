@@ -6,6 +6,19 @@ data(flowers)
 
 head(flowers[1:4])
 
+## ----fig=TRUE, include=TRUE, warnings=FALSE, message=FALSE, echo=FALSE, fig.width=8, fig.height=28, fig.align='center'----
+par(mfrow = c(10, 2))
+plot(as.rspec(cbind(vissyst$wl, vissyst[2:5])), main = 'Average avian UV', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[14:17])), main = 'Average avian V', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[6:9], vissyst$bt.dc)), main = 'Blue tit', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[10:13], vissyst$st.dc)), main = 'Starling', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[18:21], vissyst$ch.dc)), main = 'Peafowl', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[25:27])), main = 'Honeybee', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[28:29])), main = 'Canis familiaris', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[30:32])), main = 'CIE 2-degree', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[33:35])), main = 'CIE 10-degree', ylab = 'Absorbance')
+plot(as.rspec(cbind(vissyst$wl, vissyst[36:39], vissyst$md.r1)), main = 'Musca domestica', ylab = 'Absorbance')
+
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'canis')
 
