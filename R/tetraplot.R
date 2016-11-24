@@ -1,6 +1,6 @@
 #' Plot a Static Tetrahedral Colorspace
 #'
-#' \code{tcsplot} produces a static 3D plot of a tetrahedral 
+#' \code{tetraplot} produces a static 3D plot of a tetrahedral 
 #'  colorspace. Accessed via the function \code{\link{plot.colspace}}.
 #' 
 #' @import scatterplot3d
@@ -14,7 +14,7 @@
 #' @param linwd line width for the edges of the tetrahedron
 #' @param lincol line color for the edges of the tetrahedron
 #' 
-#' @return \code{tcsplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
+#' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 #'
 #' @examples \dontrun{
 #' 

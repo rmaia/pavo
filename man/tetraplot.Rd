@@ -24,10 +24,10 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 \item{view}{orientation of the tetrahedron in degrees (defaults to 70)}
 }
 \value{
-\code{tcsplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
+\code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 }
 \description{
-\code{tcsplot} produces a static 3D plot of a tetrahedral 
+\code{tetraplot} produces a static 3D plot of a tetrahedral 
  colorspace. Accessed via the function \code{\link{plot.colspace}}.
 }
 \examples{

@@ -18,13 +18,6 @@
 #' 
 #' @return \itemize{ 
 #'          \item \code{plot.colspace} creates a 2D colspace plot appropriate to the input data.
-#'          \item \code{points.colspace} adds points to the plot. When \code{space = 'tcs'}, 
-#'            it creates an interactive 3D plot using functions of the package \code{rgl}, 
-#'            based on openGL capabilities. It can be manipulated with the mouse 
-#'            (left button: rotate along z' axis; right button: rotate along 'x' 
-#'            axis; third button: zoom). 
-#'          \item \code{vol.colspace} produces a 3D convex hull in tetrahedral colorspace 
-#'            (i.e. when \code{space = 'tcs'}).
 #'            }
 #' 
 #' @examples \dontrun{
