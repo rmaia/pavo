@@ -25,6 +25,7 @@ NEW FUNCTIONS:
 
 * projpoints() allows the plotting of points in a projplot() figure
 * fgetspec() faster (~5-10X), but less flexible, version of getspec() for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics)
+* vol() draws volume polygons in static tetrahedral plots
 
 pavo 0.5-1
 ------------------------------------------------------------------------------
