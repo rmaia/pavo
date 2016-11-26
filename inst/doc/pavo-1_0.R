@@ -63,28 +63,31 @@ head(hex.flowers)
 plot(hex.flowers, sectors = 'coarse')
 
 ## ------------------------------------------------------------------------
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
 
 coc.flowers <- colspace(vis.flowers, space = 'coc')
 
 head(coc.flowers)
 
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_coc._"----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"----
 plot(coc.flowers) 
 
 ## ------------------------------------------------------------------------
-vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE, achromatic = 'none')
 
+## ------------------------------------------------------------------------
 ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
-cielab.flowers <- colspace(vis.flowers, space = 'cielab')
-
 head(ciexyz.flowers)
 
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location._"----
+plot(ciexyz.flowers) 
+
+## ------------------------------------------------------------------------
+
+cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIEXYZ._"----
-plot(ciexyz.flowers) 
 
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"----
 plot(cielab.flowers) 
@@ -92,10 +95,11 @@ plot(cielab.flowers)
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
 
+## ------------------------------------------------------------------------
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
 
 head(cat.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Cat._"----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
 plot(cat.flowers) 
 

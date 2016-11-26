@@ -27,7 +27,7 @@ library(pavo)
 2. **Analyze** the resulting files, either using typical colorimetric variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
 3. **Visualize** the output, with multiple options provided for exploratory analyses.
 
-While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will explore the main new features introduced in `1.0` in an example workflow. 
+While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow. 
 
 # Data
 
@@ -183,15 +183,17 @@ Again, the output includes the photoreceptor excitation values for short- medium
 plot(hex.flowers, sectors = 'coarse')
 ```
 
-### The Colour Opponent Coding (COC) Space
+### The Color Opponent Coding (COC) Space
 
-ref [@backhaus1991color]
+The color opponent coding (coc) space is an earlier hymenopteran visual model [@backhaus1991color]. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
 
 $$A = -9.86E_g + 7.70E_b + 2.16E_g$$
 $$B = -5.17E_g + 20.25E_b - 15.08E_g$$
 
+Where E~i~ is the excitation value (quantum catch) in photoreceptor _i_.
+
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
 
 coc.flowers <- colspace(vis.flowers, space = 'coc')
 
@@ -199,29 +201,49 @@ head(coc.flowers)
 
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_coc._"}
+The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"}
 plot(coc.flowers) 
 ```
 
 ### CIE Spaces
 
-XYZ Tristimulus values:
+The CIE (International Commission on Illumination) colorspaces are a suite of models of human color vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space. Tristimulus values in XYZ space are calculated as:
 
 $$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
 $$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
 $$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
 
-where k is a normalising factor:
+where _x_, _y_, and _z_ are the trichromatic color matching functions for a 'standard colorimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
 
 $$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)d\lambda}}$$
 
-Chromaticity coordinates:
+and the chromaticity coordinates of stimuli are calculated as
 
 $$x = \frac{X}{X + Y + Z}$$
 $$y = \frac{Y}{X + Y + Z}$$
 $$z = \frac{Z}{X + Y + Z} = 1 - x - y$$
 
-LAB:
+For modelling in both XYZ and LAB spaces, here we'll use the CIE 10-degree standard observer, and assume a `D65` 'standard daylight' illuminant. Again, although they are colorspace models, we need to set `relative = FALSE` to return raw quantum catch estimates, `vonkries = TRUE` to include for the required normalising factor (as above), and `achromatic = 'none'` since there is no applicable way to estimate luminance in the CIE models. As with all models that have particular requirements, `vismodel` will output warnings and/or errors if unusual or non-standard arguments are specified.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE, achromatic = 'none')
+```
+
+```{r}
+ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+head(ciexyz.flowers)
+```
+
+The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling 
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location._"}
+plot(ciexyz.flowers) 
+```
+
+The `Lab` space is a more recent development, and is a color-opponent model that attempts to model the nonlinear responses of the human eye. The `Lab` model is also calibrated (unlike the `XYZ` model) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _percieved_ as more different that two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two color-opponent dimensions designated *a* and *b*. The `colspace` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
+
 $$L = 116\left(\frac{Y}{Y_n}\right)^\frac{1}{3} \;\; if \;\; \frac{Y}{Y_n} > 0.008856$$
 $$L = 903.3\left(\frac{Y}{Y_n}\right) \;\; if \;\; \frac{Y}{Y_n} \leq 0.008856$$
 
@@ -229,7 +251,7 @@ $$a = 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)$
 
 $$b = 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)$$
 
-where:
+where
 
 $$f(x) = x^\frac{1}{3} \;\; if \;\; x > 0.008856$$
 $$f(x) = 7.787(x) + \frac{16}{116} \;\; if \;\; x \leq 0.008856$$
@@ -242,21 +264,14 @@ $$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
 
 when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
 
-
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
 
-ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
-
-head(ciexyz.flowers)
-
 head(cielab.flowers)
+
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIEXYZ._"}
-plot(ciexyz.flowers) 
-```
+Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`: 
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"}
 plot(cielab.flowers) 
@@ -264,28 +279,33 @@ plot(cielab.flowers)
 
 ### Categorical Fly Colourspace
 
-First, we used the categorical colour vision model of Troje [@troje1993spectral]. This model assumes the involvement of all four photoreceptor classes , and further posits that colour vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). Based on behavioural data from _Lucilia_ sp.  the model predicts that colours are perceptually grouped into one of four colour categories, and that flies are unable to distinguish between colours that fall within the same category.
+The categorical colour vision model of Troje [-@troje1993spectral] is a model of dipteran vision, based on behavioural data from the blowfly _Lucilia_ sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 & R8 'pale' and 'yellow' subtypes), and further posits that colour vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colours are perceptually grouped into one of four colour categories, and that flies are unable to distinguish between colours that fall within the same category.
 
-We then calculated the difference in relative stimulation between the 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs. The signs of these differences together define the four possible fly-colour categories [p+y+, p-y+, p+y-, p-y-].        
+We'll use the visual systems of the mudcoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors [@troje1993spectral].
 
+```{r}
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+```
+
+Our call to `colspace` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
 
 $$x = R7_p - R8_p$$
 
 $$y = R7_y - R8_y$$
 
 ```{r}
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
-
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
 
 head(cat.flowers)
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Cat._"}
+And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"}
 plot(cat.flowers) 
 ```
 
-# N-dimensional colour-distances with `coldist`
+# Color Distances in N-dimensions with `coldist`
 
 # Under-the-Hood
 
