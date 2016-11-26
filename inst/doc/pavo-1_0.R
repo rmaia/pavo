@@ -54,11 +54,12 @@ plot(tetra.flowers, view = 75)
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 
+## ------------------------------------------------------------------------
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
 head(hex.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Colour hexagon._"----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"----
 plot(hex.flowers, sectors = 'coarse')
 
 ## ------------------------------------------------------------------------

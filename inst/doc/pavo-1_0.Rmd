@@ -27,7 +27,7 @@ library(pavo)
 2. **Analyze** the resulting files, either using typical colorimetric variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
 3. **Visualize** the output, with multiple options provided for exploratory analyses.
 
-While we have made various improvements that will expedite data organisation, the most significant developments in `1.0` pertain to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will explore the main new features introduced in `1.0` in an example workflow. 
+While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will explore the main new features introduced in `1.0` in an example workflow. 
 
 # Data
 
@@ -42,7 +42,7 @@ head(flowers[1:4])
 
 ## Visual Phenotypes
 
-`pavo` is now equipped with several new di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessable via the `vismodel()` option `visual`, and include:
+`pavo` is now equipped with several new di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are, as always, accessable via the `vismodel()` option `visual`, and include:
   : `avg.uv` average ultraviolet-sensitive avian (tetrachromat)
   : `avg.v` average violet-sensitive avian (tetrachromat)
   : `bluetit` The blue tit _Cyanistes caeruleus_ (tetrachromat)
@@ -147,7 +147,7 @@ tetra.flowers <- colspace(vis.flowers, space = 'tcs')
 head(tetra.flowers)
 ```
 
-As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
+As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
 
 ```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations, modelled using the visual phenotype of the blue tit._"}
 par(mfrow = c(1, 2))
@@ -159,23 +159,27 @@ plot(tetra.flowers, view = 75)
 
 The hexagon colour space of Chittka [-@chittka1992colour] is a model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@briscoe2001evolution]. What's particularly useful is that color distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance [e.g. @dyer2008comparative; @avargues2010aversive; @chittka1992colour].
 
-We then converted photoreceptor stimulation values to neural excitations using the hyperbolic transform
+In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel`. including the optional use of a 'green' vegetation background. Note that although this is a colorspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model [@chittka1992colour]. 
 
-Coordinates:
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+```
+
+We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
 
 $$x = \frac{\sqrt{3}}{2(E_g = E_{uv})}$$
 
 $$y = E_b - 0.5(E_{uv} + E_g)$$
 
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
 head(hex.flowers)
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Colour hexagon._"}
+Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green [@ultraviolet1994chittka; @dyer2012parallel]. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
 plot(hex.flowers, sectors = 'coarse')
 ```
 
@@ -285,9 +289,7 @@ plot(cat.flowers)
 
 # Under-the-Hood
 
-## Classes
-
-## Attributes
+## Classes and Attributes
 
 # Help
 
