@@ -5,7 +5,7 @@
 \title{Plot a dichromat segment}
 \usage{
 diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
-  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
+  achrosize = 0.8, lab.cex = 1, out.lwd = 1, out.lcol = "black",
   out.lty = 1, ...)
 }
 \arguments{
@@ -20,7 +20,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
-\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
 
 \item{out.lwd}{line width for segment (defaults to 1)}
 

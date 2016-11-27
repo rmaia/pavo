@@ -8,7 +8,7 @@
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
+#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
 #' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes 
 #' @param ... additional graphical options. See \code{\link{par}}
 #'    
@@ -29,7 +29,7 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-cocplot <- function(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
+cocplot <- function(cocdata, labels = TRUE, lab.cex = 0.9, tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
                      achro = FALSE, achrosize = 0.8, achrocol = 'grey', ...){ 
   
   arg <- list(...)
@@ -66,8 +66,8 @@ cocplot <- function(cocdata, labels = TRUE, cex.labels = 0.9, tick.loc = c(-12, 
   
   # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
-    text('B', x = 0, y = 13.5, xpd = TRUE, cex = cex.labels)
-    text('A', x = 13.5, y = 0, xpd = TRUE, cex = cex.labels)
+    text('B', x = 0, y = 13.5, xpd = TRUE, cex = lab.cex)
+    text('A', x = 13.5, y = 0, xpd = TRUE, cex = lab.cex)
   }
   
 }

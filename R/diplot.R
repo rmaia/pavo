@@ -6,7 +6,7 @@
 #'  function, containing values for the 'x' coordinates as a column (labeled as such)
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param labels plot verticy labels? Defaults to \code{TRUE}
-#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
+#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
 #' @param out.lwd line width for segment (defaults to 1)
@@ -32,7 +32,7 @@
 #'    81 - 118.
 
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
-                    cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
+                    lab.cex = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
   
   arg <- list(...)
   
@@ -71,8 +71,8 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achro
   
 # Add text (coloured points better as in tcsplot?)
    if(isTRUE(labels)){
-     text('S', x = -0.76, y = 0, xpd = TRUE, cex = cex.labels)
-     text('L', x = 0.76, y = 0, xpd = TRUE, cex = cex.labels)
+     text('S', x = -0.76, y = 0, xpd = TRUE, cex = lab.cex)
+     text('L', x = 0.76, y = 0, xpd = TRUE, cex = lab.cex)
    }
   
 }
