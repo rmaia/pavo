@@ -12,8 +12,8 @@
 #'        \item \code{'fine'}: 36 10-degree sectors
 #'        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
 #'        }
-#' @param cex.labels character expansion factor for category labels when \code{labels = TRUE})
-#' @param col.sec line colour of hue sector dividers. Defaults to \code{'grey'}.
+#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
+#' @param sec.col line colour of hue sector dividers. Defaults to \code{'grey'}.
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
 #' @param out.lwd line width for hexagon outline (defaults to 1)
@@ -43,19 +43,23 @@
 #'    component of flower reflections, and the colour perception of Hymenoptera. 
 #'    Vision research, 34(11), 1489-1508.
 
-hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'fine', 'coarse'), col.sec = 'grey', 
-                     out.lwd = 1, out.lty = 1, out.lcol = 'black', cex.labels = 1, achrosize = 0.8,
-                     achrocol = 'grey', ...){
+hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'fine', 'coarse'), sec.col = 'grey',
+                    out.lwd = 1, out.lty = 1, out.lcol = 'black', lab.cex = 1, achrosize = 0.8,
+                    achrocol = 'grey', ...){
   
   sectors <- match.arg(sectors)
-  
+
 # Set defaults
   arg <- list(...)
   
   if(is.null(arg$col))
+    print('col not assigned')  # Debugging
+  if(is.null(arg$col))
     arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
+  if(is.null(arg$cex))
+    print('cex not assigned')  # Debugging
   if(is.null(arg$cex))
     arg$cex <- 0.9
   if(is.null(arg$type))
@@ -63,9 +67,7 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'f
   if(is.null(arg$xlim))
     arg$xlim <- c(-1.2, 1.2)
   if(is.null(arg$ylim))
-    arg$ylim <- c(-1.2, 1.2)  
-  if(isTRUE(is.character(sectors) && length(sectors) > 1))
-    sectors == 'none'
+    arg$ylim <- c(-1.2, 1.2)
 
 # Hexagon edge coordinates
   hexX <- c(0, -0.886, -0.886, 0, 0.886, 0.886, 0)
@@ -110,18 +112,18 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'f
 # Hexagon sectors
   if(sectors == 'coarse'){
     for(x in 1:length(secX))
-      segments(0, 0, secX[x], secY[x], col = col.sec)
+      segments(0, 0, secX[x], secY[x], col = sec.col)
   }
   
   if(sectors == 'fine'){
     for(x in 1:length(secX_c))
-      segments(0, 0, secX_c[x], secY_c[x], col = col.sec)
+      segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
   }
   
 # Text labels
   if(isTRUE(labels)){
-    text('E(B)', x = 0, y = 1.1, cex = cex.labels)
-    text('E(UV)', x = -1, y = -0.6, cex = cex.labels)
-    text('E(G)', x = 1, y = -0.6, cex = cex.labels)
+    text('E(B)', x = 0, y = 1.1, cex = lab.cex)
+    text('E(UV)', x = -1, y = -0.6, cex = lab.cex)
+    text('E(G)', x = 1, y = -0.6, cex = lab.cex)
   }
 }

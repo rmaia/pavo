@@ -5,9 +5,9 @@
 \title{Plot a colour hexagon}
 \usage{
 hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
-  "coarse"), col.sec = "grey", out.lwd = 1, out.lty = 1,
-  out.lcol = "black", cex.labels = 1, achrosize = 0.8,
-  achrocol = "grey", ...)
+  "coarse"), sec.col = "grey", out.lwd = 1, out.lty = 1,
+  out.lcol = "black", lab.cex = 1, achrosize = 0.8, achrocol = "grey",
+  ...)
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 
@@ -24,7 +24,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
     \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
     }}
 
-\item{col.sec}{line colour of hue sector dividers. Defaults to \code{'grey'}.}
+\item{sec.col}{line colour of hue sector dividers. Defaults to \code{'grey'}.}
 
 \item{out.lwd}{line width for hexagon outline (defaults to 1)}
 
@@ -32,7 +32,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{out.lcol}{line colour for hexagon outline (defaults to black)}
 
-\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
