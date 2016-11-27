@@ -8,11 +8,11 @@
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #'   function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param view orientation of the tetrahedron in degrees (defaults to 70)
-#' @param vertexsize size of the points at the vertices
-#' @param achrosize size of the point in the achromatic center
-#' @param achrocol color of the point in the achromatic center
-#' @param linwd line width for the edges of the tetrahedron
-#' @param lincol line color for the edges of the tetrahedron
+#' @param vertexsize size of the points at the vertices (defaults to 0.8)
+#' @param achrosize size of the point in the achromatic center (defaults to 0.8)
+#' @param achrocol color of the point in the achromatic center (defaults to 'grey')
+#' @param out.lwd line width for hexagon outline (defaults to 1)
+#' @param out.lcol line colour for hexagon outline (defaults to black)
 #' 
 #' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 #'
@@ -43,7 +43,7 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8, 
-                     achrocol = 'grey', linwd = 1, lincol = 'darkgrey', view = 70, ...) {
+                     achrocol = 'grey', out.lwd = 1, out.lcol = 'darkgrey', view = 70, ...) {
   
     # Set defaults
     arg <- list(...)
@@ -69,12 +69,12 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     no.u <- P$xyz.convert(0, 0, -0.25)
     
     # Draw it up
-    segments(u$x, u$y, l$x, l$y, col = lincol, lwd = linwd)
-    segments(u$x, u$y, m$x, m$y, col = lincol, lwd = linwd)
-    segments(u$x, u$y, s$x, s$y, col = lincol, lwd = linwd)
-    segments(s$x, s$y, l$x, l$y, col = lincol, lwd = linwd)
-    segments(m$x, m$y, s$x, s$y, col = lincol, lwd = linwd)
-    segments(l$x, l$y, m$x, m$y, col = lincol, lwd = linwd)
+    segments(u$x, u$y, l$x, l$y, col = out.lcol, lwd = out.lwd)
+    segments(u$x, u$y, m$x, m$y, col = out.lcol, lwd = out.lwd)
+    segments(u$x, u$y, s$x, s$y, col = out.lcol, lwd = out.lwd)
+    segments(s$x, s$y, l$x, l$y, col = out.lcol, lwd = out.lwd)
+    segments(m$x, m$y, s$x, s$y, col = out.lcol, lwd = out.lwd)
+    segments(l$x, l$y, m$x, m$y, col = out.lcol, lwd = out.lwd)
   
   # Origin
     if(isTRUE(achro))

@@ -5,21 +5,21 @@
 \title{Plot a Static Tetrahedral Colorspace}
 \usage{
 tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
-  achrocol = "grey", linwd = 1, lincol = "darkgrey", view = 70, ...)
+  achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
 function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
 
-\item{vertexsize}{size of the points at the vertices}
+\item{vertexsize}{size of the points at the vertices (defaults to 0.8)}
 
-\item{achrosize}{size of the point in the achromatic center}
+\item{achrosize}{size of the point in the achromatic center (defaults to 0.8)}
 
-\item{achrocol}{color of the point in the achromatic center}
+\item{achrocol}{color of the point in the achromatic center (defaults to 'grey')}
 
-\item{linwd}{line width for the edges of the tetrahedron}
+\item{out.lwd}{line width for hexagon outline (defaults to 1)}
 
-\item{lincol}{line color for the edges of the tetrahedron}
+\item{out.lcol}{line colour for hexagon outline (defaults to black)}
 
 \item{view}{orientation of the tetrahedron in degrees (defaults to 70)}
 }
