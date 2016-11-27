@@ -43,26 +43,19 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achro
     arg$pch <- 19
   if(is.null(arg$type))
     arg$type = 'p'
-  if(is.null(arg$xlim))
-    arg$xlim <- c(-1/sqrt(2), 1/sqrt(2))
-  if(is.null(arg$ylim))
-    arg$ylim <- c(-0.5, 0.5)
-    
+
 # Verticy coordinates  
   vert <- data.frame(x = c(-1/sqrt(2), 1/sqrt(2)), y = c(0, 0))
   
-# Plot
+# Blank plot w/ segment
+  plot(0, type = 'n', xlim = c(-1/sqrt(2), 1/sqrt(2)), ylim = c(-0.5, 0.5), 
+       bty = 'n', axes = FALSE, xlab = ' ', ylab = ' ')
+  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  
+# Add points
   arg$x <- didata$x
   arg$y <- rep(0, length(didata$x))
-  arg$xlab = ' '
-  arg$ylab = ' '
-  arg$bty = 'n'
-  arg$axes = FALSE
-  
-  do.call(plot, arg)
-  
-# Add lines 
-  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  do.call(points, arg)
   
 # Origin
   if(isTRUE(achro)){
