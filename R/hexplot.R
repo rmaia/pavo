@@ -53,13 +53,9 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE, sectors = c('none', 'f
   arg <- list(...)
   
   if(is.null(arg$col))
-    print('col not assigned')  # Debugging
-  if(is.null(arg$col))
     arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
-  if(is.null(arg$cex))
-    print('cex not assigned')  # Debugging
   if(is.null(arg$cex))
     arg$cex <- 0.9
   if(is.null(arg$type))
