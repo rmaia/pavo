@@ -59,7 +59,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     P <- scatterplot3d(0, 0, 0, box = TRUE, 
                                   xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
                                   zlim = c(-0.25, 0.75), axis = F, grid = F, angle = view, 
-                                  scale.y = 0.45, mar = c(1, 1, 1, 1))
+                                  scale.y = 0.45, mar = c(1, 1, 1, 1), pch = '')
     
     # Vertices
     u <- P$xyz.convert(0, 0, 0.75)
@@ -77,7 +77,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     segments(l$x, l$y, m$x, m$y, col = lincol, lwd = linwd)
   
   # Origin
-    if(achro == TRUE)
+    if(isTRUE(achro))
       P$points3d(0, 0, 0, col = achrocol, cex = achrosize, pch = 15)
   
   # Data
