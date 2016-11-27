@@ -175,8 +175,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <ol style="list-style-type: decimal">
 <li><code>vismodel</code> to estimate photoreceptor quantum catches. The assumptions of many colorspace models may differ dramatically, so be sure to select options that are appropriate for your intended use.<br />
 </li>
-<li><code>colspace</code> to convert the results of <code>vismodel</code> (or user-provided quantum catches) into points in a given colorspace, specified with the <code>space</code> argument. If no <code>space</code> argument is provided, <code>colspace</code> will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the inpput data. The result of <code>colspace</code> will be an object of class <code>colspace</code> (that inherits from <code>data.frame</code>; see the ‘Under-the-hood’ section below), and will contain the location of stimuli in the selected space along with any associated color variables.</li>
-<li><code>plot</code> the output. <code>plot</code> will automatically select the appropriate visualisation based on the input <code>colspace</code> object, and will also accept various graphical parameters depending on the colorspace (see <code>?plot.colspace</code> for details) .</li>
+<li><code>colspace</code> to convert the results of <code>vismodel</code> (or user-provided quantum catches) into points in a given colorspace, specified with the <code>space</code> argument. If no <code>space</code> argument is provided, <code>colspace</code> will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the input data. The result of <code>colspace</code> will be an object of class <code>colspace</code> (that inherits from <code>data.frame</code>; see the ‘Under-the-hood’ section below), and will contain the location of stimuli in the selected space along with any associated color variables.</li>
+<li><code>plot</code> the output. <code>plot</code> will automatically select the appropriate visualisation based on the input <code>colspace</code> object, and will also accept various graphical parameters depending on the colorspace (see <code>?plot.colspace</code> and links therein for details) .</li>
 </ol>
 </div>
 <div id="di--tri--and-tetrachromatic-spaces" class="section level3">
@@ -476,6 +476,7 @@ coc.flowers &lt;-<span class="st"> </span><span class="kw">colspace</span>(vis.f
 </div>
 <div id="color-distances-in-n-dimensions-with-coldist" class="section level1">
 <h1>Color Distances in N-dimensions with <code>coldist</code></h1>
+<p>Raf?</p>
 </div>
 <div id="under-the-hood" class="section level1">
 <h1>Under-the-Hood</h1>
@@ -485,9 +486,7 @@ coc.flowers &lt;-<span class="st"> </span><span class="kw">colspace</span>(vis.f
 </div>
 <div id="help" class="section level1">
 <h1>Help</h1>
-<ul>
-<li>bug reports, gitter etc.</li>
-</ul>
+<p>For assistance and/or bug reports, we suggest getting in touch via ‘gitter’ at <a href="https://gitter.im/r-pavo/help" class="uri">https://gitter.im/r-pavo/help</a>, which is essentially a public chat room for all things pavo. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible.</p>
 </div>
 <div id="references" class="section level1 unnumbered">
 <h1>References</h1>

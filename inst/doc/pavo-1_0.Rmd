@@ -79,8 +79,8 @@ Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw 
 The most significant structural changes in `1.0` involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use `vismodel` to model photoreceptor stimulation to an avian viewer, `tcs` to convert the data to points in a tetrahedral colorspace, and `tcsplot` to visualise the data. In `1.0` these, and all other, colorspace modelling and plotting options are now wrapped into the new `colspace`  and `plot` functions. For modelling in colorspace, a typical workflow might use:  
 
 1. `vismodel` to estimate photoreceptor quantum catches. The assumptions of many colorspace models may differ dramatically, so be sure to select options that are appropriate for your intended use.   
-2. `colspace` to convert the results of `vismodel` (or user-provided quantum catches) into points in a given colorspace, specified with the `space` argument. If no `space` argument is provided, `colspace` will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the inpput data. The result of `colspace` will be an object of class `colspace` (that inherits from `data.frame`; see the 'Under-the-hood' section below), and will contain the location of stimuli in the selected space along with any associated color variables. 
-3. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colorspace (see `?plot.colspace` for details) . 
+2. `colspace` to convert the results of `vismodel` (or user-provided quantum catches) into points in a given colorspace, specified with the `space` argument. If no `space` argument is provided, `colspace` will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the input data. The result of `colspace` will be an object of class `colspace` (that inherits from `data.frame`; see the 'Under-the-hood' section below), and will contain the location of stimuli in the selected space along with any associated color variables. 
+3. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colorspace (see `?plot.colspace` and links therein for details) . 
 
 ### Di-, Tri-, and Tetrachromatic Spaces
 
@@ -299,13 +299,15 @@ plot(cat.flowers, pch = 21, bg = 'forestgreen')
 
 # Color Distances in N-dimensions with `coldist`
 
+Raf?
+
 # Under-the-Hood
 
 ## Classes and Attributes
 
 # Help
 
-- bug reports, gitter etc.
+For assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible.
 
 # References
 

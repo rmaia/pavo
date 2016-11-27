@@ -41,5 +41,5 @@
 + Generalise coldist. Coldist now also accepts colorspace objects from 'hexagon', 'cielab', and 'coc' spaces and returns appropriate distances.
 + fly vis syst
 + CIELAB space & plot
-- cielab results seem off
++ cielab results vs plot scale
 - CIELCh space & plot?
