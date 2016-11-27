@@ -107,22 +107,22 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
       arg$pch <- 19
 
     P <- scatterplot3d(0, 0, 0, box = TRUE, 
-                          xlim = c(-128, 127), ylim = c(-128, 127), 
-                          zlim = c(0, 100), axis = F, grid = F, angle = view, 
-                          scale.y = 0.45, mar = c(2, 2, 2, 2))
+                          xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), 
+                          zlim = c(0, 10.0), axis = F, grid = F, angle = view, 
+                          scale.y = 0.45, mar = c(2, 2, 2, 2), pch = '')
     
     # LAB plot axis line vertices
     L1 <- P$xyz.convert(0, 0, 0)
-    L2 <- P$xyz.convert(0, 0, 100)
-    a1 <- P$xyz.convert(-128, 0, 50)
-    a2 <- P$xyz.convert(127, 0, 50)
-    b1 <- P$xyz.convert(0, -128, 50)
-    b2 <- P$xyz.convert(0, 127, 50)
+    L2 <- P$xyz.convert(0, 0, 10.0)
+    a1 <- P$xyz.convert(-12.8, 0, 5.0)
+    a2 <- P$xyz.convert(12.7, 0, 5.0)
+    b1 <- P$xyz.convert(0, -12.8, 5.0)
+    b2 <- P$xyz.convert(0, 12.7, 5.0)
     
     # Text label locations
-    txt_L <- P$xyz.convert(0, 0, 104)
-    txt_a <- P$xyz.convert(-140, 0, 50)
-    txt_b <- P$xyz.convert(0, -150, 50)
+    txt_L <- P$xyz.convert(0, 0, 10.4)
+    txt_a <- P$xyz.convert(-14.0, 0, 5.0)
+    txt_b <- P$xyz.convert(0, -15.0, 5.0)
   
     # Draw them up
     segments(L1$x, L1$y, L2$x, L2$y, lwd = 1.5)

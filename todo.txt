@@ -42,8 +42,4 @@
 + fly vis syst
 + CIELAB space & plot
 - cielab results seem off
-+ colspace -> coldist broken when space = di/tri?
 - CIELCh space & plot?
-- check cex vs cex.labels in plots. Something squiffy?
-- col in hexplot doesnt work?
-- achro = FALSE in tetraplot still plots?
