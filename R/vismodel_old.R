@@ -116,7 +116,6 @@ vismodel_old <- function(rspecdata,
   visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis', 'canis', 'cie2', 'cie10', 'musca'), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l', 'md.r1', 'none'),
   illum = c('ideal','bluesky','D65','forestshade'), 
-  trans = c('ideal', 'bluetit','blackbird'),
   qcatch = c('Qi','fi', 'Ei'),
   bkg = c('ideal', 'green'), 
   vonkries = FALSE, scale = 1, relative = TRUE)
@@ -221,29 +220,9 @@ if(!inherits(bg2,'try-error')){
 if(bg2=='ideal')
   bkg <- rep(1,dim(rspecdata)[1])
   
-# Defining transmission
-
-trdat <- transmissiondata
-
-tr2 <- try(match.arg(trans), silent=T)
-if(!inherits(tr2,'try-error')){
-  if(is.null(trans)) stop('chosen transmission is NULL')
-  trans <- trdat[,grep(tr2,names(trdat))]
-  }else{
-    bg2 <- 'user-defined'
-    }
-
-if(tr2=='ideal')
-  trans <- rep(1,dim(rspecdata)[1])
-
-
 # scale background from percentage to proportion
 if(max(bkg) > 1)
   bkg <- bkg/100
-
-# scale transmission from percentage to proportion
-if(max(trans) > 1)
-  trans <- trans/100
 
   
 # is the illuminant a matrix, dataframe or rspec?
@@ -269,10 +248,6 @@ if('data.frame' %in% class(illum) | 'matrix' %in% class(illum) &
 illum <- illum * scale
 
 indices <- 1:dim(S)[2]
-
-# Filter specs by transmission
-
-# y <- y * transmission
 
 # calculate Qi
 if(substr(visual2, 1, 3) == 'cie'){  # Slightly different for CIE

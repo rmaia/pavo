@@ -58,6 +58,15 @@
 #' \item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
 #' \item \code{'green'}: green foliage background
 #' }
+#' @param trans either a vector containing the ocular or environmental transmission
+#' spectra, or one of the options:
+#' \itemize{ 
+#' \item \code{ideal}: homogeneous transmission of 1 accross all wavelengths (default)
+#' \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
+#' ocular transmission (from Hart et al. 2000)
+#' \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
+#' ocular transmission (from Hart et al. 2000)
+#' }
 #' @param relative should relative quantum catches be returned (i.e. is it a color
 #'  space model? Defaults to \code{TRUE}).
 #' @param vonkries logical. Should the von Kries color correction transformation be applied?
