@@ -74,18 +74,17 @@ tcs <- function(vismodeldata){
     if(ncol(dat) < 4)
       stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns')	
     if(ncol(dat) == 4)
-      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
   
     if(ncol(dat) > 4)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively')
       
     dat <- dat[, 1:4]
     
-    if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
     	dat <- dat/apply(dat, 1, sum)
-    	warning('Quantum catch are not relative, and have been transformed')
+    	warning('Quantum catch have been transformed to be relative (sum of 1)')
     	attr(vismodeldata,'relative') <- TRUE
-    }
+    
   }
   
   u <- dat[, 1]

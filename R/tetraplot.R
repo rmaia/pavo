@@ -8,11 +8,16 @@
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #'   function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param view orientation of the tetrahedron in degrees (defaults to 70)
+#' @param scale.y numeric. Perspective scaling of the y axis (defaults to 0.45)
+#' @param axis logical. Draw X, Y and Z axis (defaults to FALSE)
+#' @param grid logical. Draw grid (defaults to FALSE)
 #' @param vertexsize size of the points at the vertices (defaults to 0.8)
 #' @param achrosize size of the point in the achromatic center (defaults to 0.8)
 #' @param achrocol color of the point in the achromatic center (defaults to 'grey')
-#' @param out.lwd line width for hexagon outline (defaults to 1)
-#' @param out.lcol line colour for hexagon outline (defaults to black)
+#' @param out.lwd line width for tetrahedral outline (defaults to 1)
+#' @param out.lcol line colour for tetrahedral outline (defaults to black)
+#' @param xlim,ylim,zlim axis limits
+#' @param margin vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))
 #' 
 #' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 #'
@@ -43,8 +48,15 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8, 
-                     achrocol = 'grey', out.lwd = 1, out.lcol = 'darkgrey', view = 70, ...) {
-  
+                     achrocol = 'grey', out.lwd = 1, out.lcol = 'darkgrey', 
+                     view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
+                     #xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
+                     #zlim = c(-0.25, 0.75), 
+                     margin = c(1, 1, 1, 1), ...) {
+    
+    if(view >= 360)
+      view <- view - 360
+    
     # Set defaults
     arg <- list(...)
     
@@ -54,12 +66,17 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
       arg$cex <- 0.9
     if(is.null(arg$pch))
       arg$pch <- 19
+   
+   lims <- matrix(c(0, 0, 0.75,(-1 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25,
+    0, (1/sqrt(2)), -0.25, (0.5 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25,
+    0, 0, -0.25),ncol=3,byrow=TRUE)
+
   
     # Empty plot
-    P <- scatterplot3d(0, 0, 0, box = TRUE, 
-                                  xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
-                                  zlim = c(-0.25, 0.75), axis = F, grid = F, angle = view, 
-                                  scale.y = 0.45, mar = c(1, 1, 1, 1), pch = '')
+    P <- scatterplot3d(x=c(-1.23,0.62), y=c(-0.36,0.71), z=c(-0.25,0.75), box = FALSE, 
+                                  #xlim = xlim, ylim = ylim, zlim = zlim,
+                                  axis = axis, grid = grid, angle = view, 
+                                  scale.y = scale.y, mar = margin, pch = '')
     
     # Vertices
     u <- P$xyz.convert(0, 0, 0.75)
@@ -69,13 +86,21 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     no.u <- P$xyz.convert(0, 0, -0.25)
     
     # Draw it up
-    segments(u$x, u$y, l$x, l$y, col = out.lcol, lwd = out.lwd)
-    segments(u$x, u$y, m$x, m$y, col = out.lcol, lwd = out.lwd)
-    segments(u$x, u$y, s$x, s$y, col = out.lcol, lwd = out.lwd)
-    segments(s$x, s$y, l$x, l$y, col = out.lcol, lwd = out.lwd)
-    segments(m$x, m$y, s$x, s$y, col = out.lcol, lwd = out.lwd)
-    segments(l$x, l$y, m$x, m$y, col = out.lcol, lwd = out.lwd)
-  
+    segments(u$x, u$y, m$x, m$y, col = out.lcol, lwd = out.lwd) #um
+    segments(m$x, m$y, s$x, s$y, col = out.lcol, lwd = out.lwd) #sm
+      
+    if(view >= 80)
+      segments(u$x, u$y, l$x, l$y, col = out.lcol, lwd = out.lwd) #ul
+
+    if(view >= 180)
+      segments(s$x, s$y, l$x, l$y, col = out.lcol, lwd = out.lwd) #sl      
+    
+    if(view < 80)
+      segments(u$x, u$y, s$x, s$y, col = out.lcol, lwd = out.lwd) #us
+ 
+    if(view < 180)	
+    segments(l$x, l$y, m$x, m$y, col = out.lcol, lwd = out.lwd) #ml
+    
   # Origin
     if(isTRUE(achro))
       P$points3d(0, 0, 0, col = achrocol, cex = achrosize, pch = 15)
@@ -86,11 +111,25 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     arg$z <- tcsdata$z
     
     do.call(P$points3d, arg)
+    
+  # Draw vertices in front of points
+    if(view < 80)
+      segments(u$x, u$y, l$x, l$y, col = out.lcol, lwd = out.lwd) #ul
+    
+    if(view < 180)  
+      segments(s$x, s$y, l$x, l$y, col = out.lcol, lwd = out.lwd) #sl    	    	
+    
+    if(view >= 80)
+      segments(u$x, u$y, s$x, s$y, col = out.lcol, lwd = out.lwd) #us
+
+    if(view >= 180)
+      segments(l$x, l$y, m$x, m$y, col = out.lcol, lwd = out.lwd) #ml
+
   
   # Verticy points
+  points(x = m$x, y = m$y, col = 'black', bg = 'mediumseagreen', pch = 21, cex = vertexsize)
   points(x = u$x, y = u$y, col = 'black', bg = 'darkorchid1', pch = 21, cex = vertexsize)
   points(x = s$x, y = s$y, col = 'black', bg = 'cornflowerblue', pch = 21, cex = vertexsize)
-  points(x = m$x, y = m$y, col = 'black', bg = 'mediumseagreen', pch = 21, cex = vertexsize)
   points(x = l$x, y = l$y, col = 'black', bg = 'firebrick1', pch = 21, cex = vertexsize)
   
   # Save plot info 
