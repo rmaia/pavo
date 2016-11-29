@@ -5,7 +5,9 @@
 \title{Plot a Static Tetrahedral Colorspace}
 \usage{
 tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
-  achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70, ...)
+  achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
+  scale.y = 0.45, axis = FALSE, grid = FALSE, margin = c(1, 1, 1, 1),
+  ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
@@ -17,11 +19,21 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{achrocol}{color of the point in the achromatic center (defaults to 'grey')}
 
-\item{out.lwd}{line width for hexagon outline (defaults to 1)}
+\item{out.lwd}{line width for tetrahedral outline (defaults to 1)}
 
-\item{out.lcol}{line colour for hexagon outline (defaults to black)}
+\item{out.lcol}{line colour for tetrahedral outline (defaults to black)}
 
 \item{view}{orientation of the tetrahedron in degrees (defaults to 70)}
+
+\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45)}
+
+\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE)}
+
+\item{grid}{logical. Draw grid (defaults to FALSE)}
+
+\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
+
+\item{xlim, ylim, zlim}{axis limits}
 }
 \value{
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
