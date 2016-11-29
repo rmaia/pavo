@@ -286,7 +286,7 @@ indices <- 1:dim(S)[2]
 
 # Filter specs by transmission
 
-y <- y * transmission
+y <- y * trans
 
 # calculate Qi
 if(substr(visual2, 1, 3) == 'cie'){  # Slightly different for CIE
