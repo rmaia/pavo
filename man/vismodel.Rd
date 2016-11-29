@@ -59,6 +59,16 @@ remaining columns.}
 \item \code{'forestshade'}
 }}
 
+\item{trans}{either a vector containing the ocular or environmental transmission
+spectra, or one of the options:
+\itemize{ 
+\item \code{ideal}: homogeneous transmission of 1 accross all wavelengths (default)
+\item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
+ocular transmission (from Hart et al. 2000)
+\item \code{'blackbird'}: blackbird \emph{Turdus merula} 
+ocular transmission (from Hart et al. 2000)
+}}
+
 \item{qcatch}{Which quantal catch metric to return. Options are:
 \itemize{
 \item \code{Qi}: Quantum catch for each photoreceptor 
@@ -120,6 +130,12 @@ Rafael Maia \email{rm72@zips.uakron.edu}
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+
+Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
+Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
+species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
+(Turdus merula L.).
+ Journal of Comparative Physiology A, 186, 375-387.
 
 Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
  In Retinal And Eye Research, 20(5), 675-703.

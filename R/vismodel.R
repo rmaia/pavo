@@ -104,6 +104,11 @@
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
 #'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
 #'  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+#' @references Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
+#' Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
+#' species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
+#' (Turdus merula L.).
+#'  Journal of Comparative Physiology A, 186, 375-387.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
 #'  In Retinal And Eye Research, 20(5), 675-703.
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 

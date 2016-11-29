@@ -7,9 +7,8 @@
 vismodel_old(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "star",
   "pfowl", "apis", "canis", "cie2", "cie10", "musca"), achromatic = c("bt.dc",
   "ch.dc", "st.dc", "ml", "l", "md.r1", "none"), illum = c("ideal", "bluesky",
-  "D65", "forestshade"), trans = c("ideal", "bluetit", "blackbird"),
-  qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal", "green"),
-  vonkries = FALSE, scale = 1, relative = TRUE)
+  "D65", "forestshade"), qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal",
+  "green"), vonkries = FALSE, scale = 1, relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
