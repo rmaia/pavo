@@ -33,7 +33,8 @@ cat("visual model options:\n",
   '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
   '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
   '* Illuminant:', attr(object,'illuminant'), '\n',
-  '* Background:', attr(object,'background'), '\n', 
+  '* Background:', attr(object,'background'), '\n',
+  '* Transmission:', attr(object,'transmission'), '\n', 
   '* Relative:', attr(object, 'relative'), '\n'
   )
 summary.data.frame(object) 

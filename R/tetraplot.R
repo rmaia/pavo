@@ -49,9 +49,9 @@
 
 tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8, 
                      achrocol = 'grey', out.lwd = 1, out.lcol = 'darkgrey', 
-                     view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
-                     #xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
-                     #zlim = c(-0.25, 0.75), 
+                     view = 70, scale.y = 1, axis = FALSE, grid = FALSE,
+                     xlim = c(-1.22, 0.612), ylim = c(-0.35, 0.707), 
+                     zlim = c(-0.25, 0.75), 
                      margin = c(1, 1, 1, 1), ...) {
     
     if(view >= 360)
@@ -74,7 +74,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
   
     # Empty plot
     P <- scatterplot3d(x=c(-1.23,0.62), y=c(-0.36,0.71), z=c(-0.25,0.75), box = FALSE, 
-                                  #xlim = xlim, ylim = ylim, zlim = zlim,
+                                  xlim = xlim, ylim = ylim, zlim = zlim,
                                   axis = axis, grid = grid, angle = view, 
                                   scale.y = scale.y, mar = margin, pch = '')
     
@@ -126,7 +126,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
       segments(l$x, l$y, m$x, m$y, col = out.lcol, lwd = out.lwd) #ml
 
   
-  # Verticy points
+  # Vertex points
   points(x = m$x, y = m$y, col = 'black', bg = 'mediumseagreen', pch = 21, cex = vertexsize)
   points(x = u$x, y = u$y, col = 'black', bg = 'darkorchid1', pch = 21, cex = vertexsize)
   points(x = s$x, y = s$y, col = 'black', bg = 'cornflowerblue', pch = 21, cex = vertexsize)

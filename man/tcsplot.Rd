@@ -4,7 +4,7 @@
 \alias{tcsplot}
 \alias{tcspoints}
 \alias{tcsvol}
-\title{Plot a Tetrahedral Colorspace}
+\title{Interactive Plot of a Tetrahedral Colorspace}
 \usage{
 tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
   vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",

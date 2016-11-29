@@ -9,6 +9,8 @@
 #' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
 #' @param plot logical. Should the volumes and points be plotted? (defaults to \code{FALSE})
+#' @param interactive logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
+#' if \code{FALSE} then a static plot is generated.
 #' @param col a vector of length 3 with the colors for (in order) the first volume, 
 #' the second volume, and the overlap.
 #' @param new logical. Should a new plot window be called? If \code{FALSE}, volumes and their
@@ -19,6 +21,9 @@
 #' @param psize if \code{montecarlo=TRUE} and \code{plot=TRUE}, sets the size to plot the points
 #' used in the Monte Carlo simulation.
 #' @param lwd if \code{plot=TRUE}, sets the line width for volume grids.
+#' @param view,scale.y additional arguments used when using a static plot
+#' (see \code{\link{vol}}).
+#'
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
@@ -76,7 +81,7 @@
 
 voloverlap <- function(tcsres1,tcsres2, plot=FALSE, 
               col=c('blue','red','darkgrey'), new=TRUE,
-              montecarlo=FALSE, nsamp=1000, psize=0.001, lwd=1){
+              montecarlo=FALSE, nsamp=1000, psize=0.001, lwd=1, view=70, scale.y=1){
 
 dat1 <- tcsres1[, c('x', 'y', 'z')]
 
@@ -166,49 +171,62 @@ res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 ############
 #PLOT BEGIN#
 ############
-if(plot==TRUE){
-
-  # load RGL, and attempt install if not found
-  # loadrgl()
-  if(!isNamespaceLoaded("rgl"))
-    requireNamespace("rgl")
+if(plot){
+    if(length(col)<3)
+      col <- c(rep(col,2)[1:2], 'darkgrey')
       
-  if(length(col)<3)
-    col <- c(rep(col,2)[1:2], 'darkgrey')
+      
+	if(interactive){
+	  
+	  if(!isNamespaceLoaded("rgl"))
+	    requireNamespace("rgl")
+	  if(new)
+        open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
-if(new==TRUE)
-  rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
-  
-  #attr(dat1,'clrsp') <- 'tcs'
-  #attr(dat2,'clrsp') <- 'tcs'
+      tcsvol(dat1, col=col[1], fill=F)
+      tcsvol(dat2, col=col[2], fill=F)
+      
+      if(!montecarlo){
+        if(dim(Voverlap)[1]>3)
+          tcsvol(Voverlap, col=col[3])
+        }
+      
+      if(montecarlo==TRUE){
+        spheres3d(samples[which(invol1 & !invol2),], type='s', 
+          lit=F, radius=psize, col=col[1])
+        spheres3d(samples[which(invol2 & !invol1),], type='s', 
+          lit=F, radius=psize, col=col[2])  
 
-  vol(tcsres1, col=col[1], fill=F, lwd=lwd)
-  vol(tcsres2, col=col[2], fill=F, lwd=lwd)
-
-  if(montecarlo==FALSE){
-    if(dim(Voverlap)[1]>3)
-      attr(Voverlap, 'clrsp') <- "tcs"
-      vol(Voverlap, col=col[3])
-  }
-  
-  if(montecarlo==TRUE){
-    rgl::spheres3d(samples[which(invol1 & !invol2),], 
-      type='s', lit=F, radius=psize, col=col[1])
-    rgl::spheres3d(samples[which(invol2 & !invol1),], 
-      type='s', lit=F, radius=psize, col=col[2])  
-
-    if(s_inboth > 0){  
-      rgl::spheres3d(samples[which(invol1 & invol2),], 
-        type='s', lit=F, radius=psize, col=col[3])
+        if(s_inboth > 0){  
+          spheres3d(samples[which(invol1 & invol2),], type='s', 
+          lit=F, radius=psize, col=col[3])
+        }
       }
-    }
-    
-  }
+	}
+	
+	if(!interactive){
+      plotrange <- apply(rbind(tcsres1,tcsres2),2,range)
 
+      if(dim(Voverlap)[1]>3){
+        attr(Voverlap, 'clrsp') <- "tcs"
+        vol(Voverlap, col=col[3], new=new,
+          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
+          zlim=plotrange[,'z'], view=view)
+        vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=FALSE)
+        vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
+      }else{
+        vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=new,
+          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
+          zlim=plotrange[,'z'], view=view)
+        vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
+      }
+	}
+	
+    
 ##########
 #PLOT END#
-##########
+##########    
+}
 
 res
-
 }

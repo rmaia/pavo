@@ -5,6 +5,7 @@
 #' @return \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object
 #'
 #' @rdname tcsplot
+#' @export
 #' 
 
 tcsvol <- function(tcsdata, col = 'black', alpha = 0.2, 

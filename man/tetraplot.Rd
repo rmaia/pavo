@@ -6,7 +6,8 @@
 \usage{
 tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
   achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
-  scale.y = 0.45, axis = FALSE, grid = FALSE, margin = c(1, 1, 1, 1),
+  scale.y = 1, axis = FALSE, grid = FALSE, xlim = c(-1.22, 0.612),
+  ylim = c(-0.35, 0.707), zlim = c(-0.25, 0.75), margin = c(1, 1, 1, 1),
   ...)
 }
 \arguments{
@@ -31,9 +32,9 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{grid}{logical. Draw grid (defaults to FALSE)}
 
-\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
-
 \item{xlim, ylim, zlim}{axis limits}
+
+\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
 }
 \value{
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.

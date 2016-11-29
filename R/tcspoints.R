@@ -6,6 +6,7 @@
 #' using functions of the package \code{rgl}, based on openGL capabilities.
 #'
 #' @rdname tcsplot
+#' @export
 #'
 
 tcspoints<- function(tcsdata, size = 0.02, col = 'black', alpha = 1){
