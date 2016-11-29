@@ -2,9 +2,14 @@
 % Please edit documentation in R/pavo-package.R
 \docType{package}
 \name{pavo-package}
+\alias{.PlotTetraEnv}
 \alias{pavo}
 \alias{pavo-package}
 \title{pavo: analyzing color data in R}
+\format{An object of class \code{list} of length 0.}
+\usage{
+.PlotTetraEnv
+}
 \description{
 An R package for the perceptual analysis, visualization and organization of color data
 }

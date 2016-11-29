@@ -25,4 +25,6 @@
 # #' @importFrom base <<-
 # #' @importFrom rgl open3d spheres3d
 
-NULL
+.PlotTetraEnv <- list()
+.PlotCielabEnv <- list()
+
