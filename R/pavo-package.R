@@ -22,9 +22,8 @@
 #' @importFrom graphics abline axis image legend lines mtext par plot points polygon title arrows
 #' @importFrom stats approx cor dist loess.smooth median quantile runif sd var
 #' @importFrom utils combn head read.table setTxtProgressBar tail txtProgressBar
-# #' @importFrom base <<-
-# #' @importFrom rgl open3d spheres3d
+#' @importFrom rgl open3d spheres3d
 
-.PlotTetraEnv <- list()
-.PlotCielabEnv <- list()
+.PlotTetraEnv <- new.env()
+.PlotCielabEnv <- new.env()
 
