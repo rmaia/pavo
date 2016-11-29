@@ -112,7 +112,7 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Eclairage.
 
-vismodel <- function(rspecdata, 
+vismodel_old <- function(rspecdata, 
   visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", 'apis', 'canis', 'cie2', 'cie10', 'musca'), 
   achromatic = c("bt.dc","ch.dc", 'st.dc',"ml",'l', 'md.r1', 'none'),
   illum = c('ideal','bluesky','D65','forestshade'), 
@@ -272,7 +272,7 @@ indices <- 1:dim(S)[2]
 
 # Filter specs by transmission
 
-y <- y * transmission
+# y <- y * transmission
 
 # calculate Qi
 if(substr(visual2, 1, 3) == 'cie'){  # Slightly different for CIE

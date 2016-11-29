@@ -84,6 +84,7 @@ Collate:
     'trispace.R'
     'triplot.R'
     'vismodel.R'
+    'vismodel_old.R'
     'vol.R'
     'voloverlap.R'
     'summary.colspace.R'
