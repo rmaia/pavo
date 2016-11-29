@@ -79,9 +79,10 @@
 #' @references Villeger, S., Novack-Gottshall, P. M., & Mouillot, D. (2011). The multidimensionality of the niche reveals functional diversity changes in benthic marine biotas across geological time. Ecology Letters, 14(6), 561-568.
 
 
-voloverlap <- function(tcsres1,tcsres2, plot=FALSE, 
-              col=c('blue','red','darkgrey'), new=TRUE,
-              montecarlo=FALSE, nsamp=1000, psize=0.001, lwd=1, view=70, scale.y=1){
+voloverlap <- function(tcsres1, tcsres2, plot=FALSE, interactive = FALSE,
+              col = c('blue','red','darkgrey'), new = TRUE,
+              montecarlo = FALSE, nsamp = 1000, psize = 0.001, 
+              lwd = 1, view = 70, scale.y = 1){
 
 dat1 <- tcsres1[, c('x', 'y', 'z')]
 
