@@ -3,7 +3,7 @@
 #' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space
 #'
-#' @import rcdd 
+#' @import rcdd
 #' @export
 #' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{colspace} 
 #' function, containing
@@ -182,7 +182,7 @@ if(plot){
 	  if(!isNamespaceLoaded("rgl"))
 	    requireNamespace("rgl")
 	  if(new)
-        open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+        rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
       tcsvol(dat1, col=col[1], fill=F)
       tcsvol(dat2, col=col[2], fill=F)
@@ -193,13 +193,13 @@ if(plot){
         }
       
       if(montecarlo==TRUE){
-        spheres3d(samples[which(invol1 & !invol2),], type='s', 
+        rgl::spheres3d(samples[which(invol1 & !invol2),], type='s', 
           lit=F, radius=psize, col=col[1])
-        spheres3d(samples[which(invol2 & !invol1),], type='s', 
+        rgl::spheres3d(samples[which(invol2 & !invol1),], type='s', 
           lit=F, radius=psize, col=col[2])  
 
         if(s_inboth > 0){  
-          spheres3d(samples[which(invol1 & invol2),], type='s', 
+          rgl::spheres3d(samples[which(invol1 & invol2),], type='s', 
           lit=F, radius=psize, col=col[3])
         }
       }

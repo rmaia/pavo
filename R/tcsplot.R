@@ -3,7 +3,7 @@
 #' \code{tcsplot} produces an interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities.
 #'
-# #' @import rgl scatterplot3d
+# #' @import rgl
 # #' @importFrom rgl spheres3d rgl.postscript rgl.snapshot rgl.material
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
