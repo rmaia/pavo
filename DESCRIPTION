@@ -25,9 +25,9 @@ Imports:
     rcdd,
     mapproj,
     geometry,
+    rgl,
     scatterplot3d
 Suggests:
-    rgl,
     testthat,
     knitr
 VignetteBuilder: knitr
