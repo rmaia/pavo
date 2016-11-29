@@ -4,9 +4,9 @@
 \alias{voloverlap}
 \title{Color volume overlap}
 \usage{
-voloverlap(tcsres1, tcsres2, plot = FALSE, col = c("blue", "red",
-  "darkgrey"), new = TRUE, montecarlo = FALSE, nsamp = 1000,
-  psize = 0.001, lwd = 1, view = 70, scale.y = 1)
+voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
+  col = c("blue", "red", "darkgrey"), new = TRUE, montecarlo = FALSE,
+  nsamp = 1000, psize = 0.001, lwd = 1, view = 70, scale.y = 1)
 }
 \arguments{
 \item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{colspace} 
@@ -14,6 +14,9 @@ function, containing
 values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE})}
+
+\item{interactive}{logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
+if \code{FALSE} then a static plot is generated.}
 
 \item{col}{a vector of length 3 with the colors for (in order) the first volume, 
 the second volume, and the overlap.}
@@ -33,9 +36,6 @@ used in the Monte Carlo simulation.}
 
 \item{view, scale.y}{additional arguments used when using a static plot
 (see \code{\link{vol}}).}
-
-\item{interactive}{logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
-if \code{FALSE} then a static plot is generated.}
 }
 \value{
 Calculates the overlap between the volumes defined by two set of points in
