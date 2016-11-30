@@ -19,7 +19,7 @@ library(pavo)
 
 # Introduction
 
-`pavo` is an `R` package that was developed with the goal of establishing a flexible and integrated workflow for working with spectral color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw data to visualization and analysis. Here we are excited to introduce the stable release of `pavo 1.0`, which---among other things---includes a suite of new analysis and visualisation tools to make working with colour data simpler and more intuitive than ever. 
+`pavo` is an `R` package that was developed with the goal of establishing a flexible and integrated workflow for working with spectral color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw data to visualization and analysis. Here we are happy to introduce the stable release of `pavo 1.0`, which---among other things---includes a suite of new analysis and visualisation tools to make working with colour data simpler and more intuitive than ever. 
 
 `pavo` was written with the following workflow in mind, which remains true with this release:
 
@@ -64,13 +64,13 @@ plot(as.rspec(vissyst[, c('wl', 'musca.u', 'musca.s', 'musca.m', 'musca.l', 'md.
 
 ## The `vismodel` Function and Receptor-noise Limited Model
 
-...new tweaks to vismodel & receptor noise (raf?)...
+As in previous versions, the `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
 
-...`vismodel` also now includes the option of hyperbolically transforming quantum catches by specifying `qcatch = 'Ei'`:
+Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
 
 $$E_i = \frac{Q_i}{Q_i + 1}$$
 
-Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw quantum catch of said photoreceptor. The transformation is a simplification of the Michaelis–Menton photoreceptor equation [@dowling1987retina; @backhaus1987color], and is particularly common in models of Hymenopteran vision [@backhaus1987color; @chittka1992colour; @backhaus1991color].  
+Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw quantum catch of said photoreceptor. The transformation is a simplification of the Michaelis–Menton photoreceptor equation [@dowling1987retina; @backhaus1987color], and is particularly common in models of Hymenopteran vision we'll see below [@backhaus1987color; @chittka1992colour; @backhaus1991color].  
 
 ## Modelling and Plotting Colourspaces
 
@@ -299,15 +299,21 @@ plot(cat.flowers, pch = 21, bg = 'forestgreen')
 
 # Color Distances in N-dimensions with `coldist`
 
-Raf?
+The `coldist` function still calculates color distances, though we've introduced some significant changes in `1.0`. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND's. In contrast, if we input a `colspace` object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.
 
-# Under-the-Hood
+The arguments accepted by `coldist` have also changed, with implications for receptor-noise modelling. In `1.0`, `coldist` requires the empirically estimated value for the Weber fraction to be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. `coldist` now also accepts a `weber.achro` argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
 
-## Classes and Attributes
+Finally, `coldist` has been generalised, and can now accept n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work.
 
-# Help
+# Classes and Attributes
 
-For assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible.
+To enable the improved workflow and new features in `pavo 1.0`, we've expanded the underlying class system. As in previous versions, spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing funcitons, or explicitly convert an object using `as.rspec`. The results of `vismodel` are now objects of class `vismodel` and the results of `colspace` are, unsurprisingly, objects of class `colspace`. Both of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colorspace). These are easily viewed using the `summary` function (on any `rspec`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.  
+
+# Concluding Thoughts, and Further Assistance
+
+We hope that we have piqued your interest in `pavo 1.0` by illustrating some of its exciting new features. Although many of the changes are significant (and breaking), we feel the package is in its most useful form yet, which will also act as a solid foundation for expansion in the future. As always, we appreciate your interest in `pavo`, and are happy to hear from you.
+
+For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly. 
 
 # References
 
