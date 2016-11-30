@@ -19,9 +19,9 @@ library(pavo)
 
 # Introduction
 
-We are happy to introduce the stable release of `pavo 1.0`, which --- among other things --- includes a suite of new analysis and visualisation tools to make working with colour data simpler and more intuitive than ever. 
+We are happy to introduce the stable release of `pavo 1.0`, which --- among other things --- includes a suite of new analysis and visualisation tools to make working with color data simpler and more intuitive than ever. 
 
-While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow.  
+While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of color data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow.  
 
 # A Quick Guide For Familiar Users
 
@@ -31,7 +31,6 @@ We detail the changes and additions to the package below, but frequent users sho
   * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
   * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
   * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
-
 
 # New `flowers` Dataset
 
@@ -56,8 +55,8 @@ plot(flowers, lwd=2, col=spec2rgb(flowers))
   : `apis` The honeybee _Apis mellifera_ (trichromat)
   : `canis` The canid _Canis familiaris_ (dichromat)
   : `musca` The housefly _Musca domestica_ (tetrachromat)
-  : `cie2` 2-degree colour matching functions for CIE models of human colour vision (trichromat)
-  : `cie10` 10-degree colour matching functions for CIE models of human colour vision (trichromat)
+  : `cie2` 2-degree color matching functions for CIE models of human color vision (trichromat)
+  : `cie10` 10-degree color matching functions for CIE models of human color vision (trichromat)
 
 As in previous versions, the individual sensitivity functions can be accessed via a call to `vissyst`, and visualised using `plot`. For example:
 
@@ -81,7 +80,7 @@ $$E_i = \frac{Q_i}{Q_i + 1}$$
 
 Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw quantum catch of said photoreceptor. The transformation is a simplification of the Michaelis–Menton photoreceptor equation [@dowling1987retina; @backhaus1987color], and is particularly common in models of Hymenopteran vision we'll see below [@backhaus1987color; @chittka1992colour; @backhaus1991color].  
 
-## Modelling and Plotting Colourspaces
+## Modelling and Plotting colorspaces
 
 ### The New `colspace` and `plot` Functions
 
@@ -161,7 +160,7 @@ plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
 
 ### The Color Hexagon
 
-The hexagon colour space of Chittka [-@chittka1992colour] is a model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@briscoe2001evolution]. What's particularly useful is that color distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance [e.g. @dyer2008comparative; @avargues2010aversive; @chittka1992colour].
+The hexagon color space of Chittka [-@chittka1992colour] is a generalised color-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@briscoe2001evolution]. What's particularly useful is that color distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance [e.g. @dyer2008comparative; @avargues2010aversive; @chittka1992colour].
 
 In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel`. including the optional use of a 'green' vegetation background. Note that although this is a colorspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model [@chittka1992colour]. 
 
@@ -183,13 +182,13 @@ head(hex.flowers)
 
 Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green [@ultraviolet1994chittka; @dyer2012parallel]. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
 plot(hex.flowers, sectors = 'coarse', pch = 21, bg = 'forestgreen')
 ```
 
 ### The Color Opponent Coding (COC) Space
 
-The color opponent coding (coc) space is an earlier hymenopteran visual model [@backhaus1991color]. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
+The color opponent coding (coc) space is an earlier hymenopteran visual model [@backhaus1991color] which is seldom used in favour of the hexagon, though may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
 
 $$A = -9.86E_g + 7.70E_b + 2.16E_g$$
 $$B = -5.17E_g + 20.25E_b - 15.08E_g$$
@@ -242,7 +241,7 @@ head(ciexyz.flowers)
 
 The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling 
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location._"}
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"}
 plot(ciexyz.flowers, pch = 21, bg = 'forestgreen') 
 ```
 
@@ -281,9 +280,9 @@ Our output now contains the tristimulus `XYZ` values, as well as their `Lab` cou
 plot(cielab.flowers, pch = 21, bg = 'forestgreen') 
 ```
 
-### Categorical Fly Colourspace
+### Categorical Fly colorspace
 
-The categorical colour vision model of Troje [-@troje1993spectral] is a model of dipteran vision, based on behavioural data from the blowfly _Lucilia_ sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 & R8 'pale' and 'yellow' subtypes), and further posits that colour vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colours are perceptually grouped into one of four colour categories, and that flies are unable to distinguish between colours that fall within the same category.
+The categorical color vision model of Troje [-@troje1993spectral] is a model of dipteran vision, based on behavioural data from the blowfly _Lucilia_ sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 & R8 'pale' and 'yellow' subtypes), and further posits that color vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colors are perceptually grouped into one of four color categories, and that flies are unable to distinguish between colors that fall within the same category.
 
 We'll use the visual systems of the mudcoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors [@troje1993spectral].
 
@@ -303,7 +302,7 @@ cat.flowers <- colspace(vis.flowers, space = 'categorical')
 head(cat.flowers)
 ```
 
-And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
+And it is simply the signs of these differences that define the four possible fly-color categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"}
 plot(cat.flowers, pch = 21, bg = 'forestgreen') 
@@ -381,5 +380,3 @@ We hope that we have piqued your interest in `pavo 1.0` by illustrating some of 
 For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly. 
 
 # References
-
-
