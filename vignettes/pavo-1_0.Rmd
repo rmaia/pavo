@@ -83,7 +83,7 @@ Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw 
 
 ## Modelling and Plotting Colourspaces
 
-### The New `colspace` And `plot` Functions
+### The New `colspace` and `plot` Functions
 
 The most significant structural changes in `1.0` involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use `vismodel` to model photoreceptor stimulation to an avian viewer, `tcs` to convert the data to points in a tetrahedral colorspace, and `tcsplot` to visualise the data. In `1.0` these, and all other, colorspace modelling and plotting options are now wrapped into the new `colspace`  and `plot` functions. For modelling in colorspace, a typical workflow might use:  
 

@@ -82,7 +82,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><a href="#visual-phenotypes">Visual Phenotypes</a></li>
 <li><a href="#the-vismodel-function-and-receptor-noise-limited-model">The <code>vismodel</code> Function and Receptor-noise Limited Model</a></li>
 <li><a href="#modelling-and-plotting-colourspaces">Modelling and Plotting Colourspaces</a><ul>
-<li><a href="#the-new-colspace-and-plot-functions">The New <code>colspace</code> And <code>plot</code> Functions</a></li>
+<li><a href="#the-new-colspace-and-plot-functions">The New <code>colspace</code> and <code>plot</code> Functions</a></li>
 <li><a href="#new-di--tri--and-tetrachromatic-spaces">New Di-, Tri-, and Tetrachromatic Spaces</a></li>
 <li><a href="#the-color-hexagon">The Color Hexagon</a></li>
 <li><a href="#the-color-opponent-coding-coc-space">The Color Opponent Coding (COC) Space</a></li>
@@ -189,7 +189,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="modelling-and-plotting-colourspaces" class="section level2">
 <h2>Modelling and Plotting Colourspaces</h2>
 <div id="the-new-colspace-and-plot-functions" class="section level3">
-<h3>The New <code>colspace</code> And <code>plot</code> Functions</h3>
+<h3>The New <code>colspace</code> and <code>plot</code> Functions</h3>
 <p>The most significant structural changes in <code>1.0</code> involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use <code>vismodel</code> to model photoreceptor stimulation to an avian viewer, <code>tcs</code> to convert the data to points in a tetrahedral colorspace, and <code>tcsplot</code> to visualise the data. In <code>1.0</code> these, and all other, colorspace modelling and plotting options are now wrapped into the new <code>colspace</code> and <code>plot</code> functions. For modelling in colorspace, a typical workflow might use:</p>
 <ol style="list-style-type: decimal">
 <li><code>vismodel</code> to estimate photoreceptor quantum catches. The assumptions of many colorspace models may differ dramatically, so be sure to select options that are appropriate for your intended use.<br />
