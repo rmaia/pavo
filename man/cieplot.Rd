@@ -5,7 +5,9 @@
 \title{CIE plot}
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, view = 70, ...)
+  out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
+  xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), zlim = c(0, 10),
+  margin = c(1, 1, 1, 1), ...)
 }
 \arguments{
 \item{ciedata}{(required)}
@@ -20,6 +22,16 @@ plotted? Defaults to \code{TRUE}}
 \item{out.lty}{line type for monochromatic loci outline (defaults to 1).}
 
 \item{view}{orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).}
+
+\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45)}
+
+\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE)}
+
+\item{grid}{logical. Draw grid (defaults to FALSE)}
+
+\item{xlim, ylim, zlim}{axis limits}
+
+\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
 
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }

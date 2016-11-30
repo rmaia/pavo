@@ -11,7 +11,12 @@
 #' @param out.lcol line colour for monochromatic loci outline (defaults to black).
 #' @param out.lty line type for monochromatic loci outline (defaults to 1).
 #' @param view orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).
+#' @param scale.y numeric. Perspective scaling of the y axis (defaults to 0.45)
+#' @param axis logical. Draw X, Y and Z axis (defaults to FALSE)
+#' @param grid logical. Draw grid (defaults to FALSE)
 #' @param ... Additional graphical options. See \code{\link{par}}.
+#' @param xlim,ylim,zlim axis limits
+#' @param margin vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))
 #' 
 #' @examples
 #' \dontrun{
@@ -35,7 +40,10 @@
 
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
-                     out.lty = 1, view = 70, ...){
+                     out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
+                     xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), 
+                     zlim = c(0, 10.0), margin = c(1, 1, 1, 1),
+                      ...){
   
   arg <- list(...)
   
@@ -106,10 +114,10 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     if(is.null(arg$pch))
       arg$pch <- 19
 
-    P <- scatterplot3d(0, 0, 0, box = TRUE, 
-                          xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), 
-                          zlim = c(0, 10.0), axis = F, grid = F, angle = view, 
-                          scale.y = 0.45, mar = c(2, 2, 2, 2), pch = '')
+    P <- scatterplot3d(mean(xlim), mean(ylim), mean(zlim), box = TRUE, 
+                          xlim = xlim, ylim = ylim, 
+                          zlim = zlim, axis = axis, grid = grid, angle = view, 
+                          scale.y = scale.y, mar = margin, pch = '')
     
     # LAB plot axis line vertices
     L1 <- P$xyz.convert(0, 0, 0)
