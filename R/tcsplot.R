@@ -1,6 +1,6 @@
 #' Interactive Plot of a Tetrahedral Colorspace
 #'
-#' \code{tcsplot} produces an interactive 3D plot of a tetrahedral 
+#' Produces an interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities.
 #'
 # #' @import rgl

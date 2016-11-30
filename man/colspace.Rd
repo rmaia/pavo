@@ -28,7 +28,7 @@ with columns representing quantum catches).}
 }}
 }
 \description{
-\code{colspace} Model reflectance spectra in a colorspace
+Models reflectance spectra in a colorspace
 }
 \examples{
 \dontrun{

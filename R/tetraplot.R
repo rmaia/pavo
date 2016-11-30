@@ -1,7 +1,6 @@
 #' Plot a Static Tetrahedral Colorspace
 #'
-#' \code{tetraplot} produces a static 3D plot of a tetrahedral 
-#'  colorspace. Accessed via the function \code{\link{plot.colspace}}.
+#' Produces a static 3D tetrahedral plot.
 #' 
 #' @import scatterplot3d
 #' 

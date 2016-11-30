@@ -40,8 +40,7 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 }
 \description{
-\code{tetraplot} produces a static 3D plot of a tetrahedral 
- colorspace. Accessed via the function \code{\link{plot.colspace}}.
+Produces a static 3D tetrahedral plot.
 }
 \examples{
 \dontrun{

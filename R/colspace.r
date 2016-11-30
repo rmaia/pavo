@@ -1,6 +1,6 @@
 #' Model spectra in a colorspace
 #'
-#' \code{colspace} Model reflectance spectra in a colorspace
+#' Models reflectance spectra in a colorspace
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame

@@ -1,6 +1,6 @@
 #' Plot a colour hexagon 
 #' 
-#' \code{hexplot} produces a colour hexagon plot. 
+#' Produces a colour hexagon plot. 
 #' 
 #' @param hexdata (required) a data frame, possibly a result from the \code{hexagon} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)

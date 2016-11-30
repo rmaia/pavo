@@ -1,6 +1,6 @@
 #' Visual Models
 #' 
-#' Calculate quantum catches at each photoreceptor. Both raw and relative values 
+#' Calculates quantum catches at each photoreceptor. Both raw and relative values 
 #' can be returned, for use in a suite of colorspace and non-colorspace models. 
 #' 
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}

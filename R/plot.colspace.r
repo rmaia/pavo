@@ -1,6 +1,6 @@
 #' Plot spectra in a colourspace
 #'
-#' \code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
+#' Plots reflectance spectra in the appropriate colorspace
 #' 
 #' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options, which vary by modelled \code{space}. Refer 

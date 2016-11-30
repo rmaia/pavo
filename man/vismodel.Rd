@@ -101,7 +101,7 @@ An object of class \code{vismodel} containing the photon catches for each of the
  stored and can be called using the \code{summary.vismodel} function.
 }
 \description{
-Calculate quantum catches at each photoreceptor. Both raw and relative values 
+Calculates quantum catches at each photoreceptor. Both raw and relative values 
 can be returned, for use in a suite of colorspace and non-colorspace models.
 }
 \examples{

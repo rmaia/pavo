@@ -67,7 +67,7 @@ using functions of the package \code{rgl}, based on openGL capabilities.
 \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object
 }
 \description{
-\code{tcsplot} produces an interactive 3D plot of a tetrahedral 
+Produces an interactive 3D plot of a tetrahedral 
 colorspace using OpenGL capabilities.
 
 \code{tcspoints} plots points in a tetrahedral color space

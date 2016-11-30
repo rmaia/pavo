@@ -1,6 +1,6 @@
 #' Plot a Tetrahedral Color Space
 #'
-#' \code{vol} produces a 3D convex hull in tetrahedral color space when plotting a 
+#' Produces a 3D convex hull in tetrahedral color space when plotting a 
 #' non-interactive tetrahedral plot
 #'
 #' @param tcsdata (required) object of class \code{colspace}.

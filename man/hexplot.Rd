@@ -41,7 +41,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{...}{additional graphical options. See \code{\link{par}}}
 }
 \description{
-\code{hexplot} produces a colour hexagon plot.
+Produces a colour hexagon plot.
 }
 \examples{
 \dontrun{

@@ -1,6 +1,6 @@
 #' Plot a dichromat segment
 #' 
-#' \code{diplot} produces a dichromat segment plot. 
+#' Produces a dichromat segment plot. 
 #'
 #' @param didata (required) a data frame, possibly a result from the \code{dispace} 
 #'  function, containing values for the 'x' coordinates as a column (labeled as such)

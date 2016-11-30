@@ -1,6 +1,6 @@
 #' Plot a Maxwell triangle
 #' 
-#' \code{triplot} produces a Maxwell triangle plot.
+#' Produces a Maxwell triangle plot.
 #'
 #' @param tridata (required) a data frame, possibly a result from the \code{trispace} 
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)

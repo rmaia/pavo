@@ -31,7 +31,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
-\code{diplot} produces a dichromat segment plot.
+Produces a dichromat segment plot.
 }
 \examples{
 \dontrun{

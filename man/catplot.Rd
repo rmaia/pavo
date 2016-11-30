@@ -17,7 +17,7 @@ function, containing values for 'x' and 'y' coordinates as columns (labeled as s
 \item{...}{additional graphical options. See \code{\link{par}}}
 }
 \description{
-\code{catplot} produces a plot based on Troje's (1993) categorical colour model.
+Produces a plot based on Troje's (1993) categorical colour model.
 }
 \examples{
 \dontrun{

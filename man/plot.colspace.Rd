@@ -28,7 +28,7 @@ to their individual help files:
            }
 }
 \description{
-\code{plot.colspace} Plots reflectance spectra in the appropriate colorspace
+Plots reflectance spectra in the appropriate colorspace
 }
 \examples{
 \dontrun{

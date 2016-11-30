@@ -1,6 +1,6 @@
 #' Plot Points in a Colorspace
 #'
-#' \code{points.colspace} plots additional points in a colorspace
+#' Plots additional points in a colorspace
 #' 
 #' @import scatterplot3d
 #' 

@@ -27,7 +27,7 @@ function, containing values for 'x' and 'y' coordinates as columns (labeled as s
 \item{...}{additional graphical options. See \code{\link{par}}}
 }
 \description{
-\code{cocplot} produces a plot based on the colour opponent coding diagram of Backhaus (1991).
+Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
 }
 \examples{
 \dontrun{

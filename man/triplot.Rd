@@ -31,7 +31,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
-\code{triplot} produces a Maxwell triangle plot.
+Produces a Maxwell triangle plot.
 }
 \examples{
 \dontrun{

@@ -17,7 +17,7 @@
  based on openGL capabilities.
 }
 \description{
-\code{points.colspace} plots additional points in a colorspace
+Plots additional points in a colorspace
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
