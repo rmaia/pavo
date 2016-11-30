@@ -23,7 +23,7 @@ We are happy to introduce the stable release of `pavo 1.0`, which --- among othe
 
 While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow.  
 
-# A quick guide for familiar users
+# A Quick Guide For Familiar Users
 
 We detail the changes and additions to the package below, but frequent users should be aware of the following main changes:  
 
@@ -33,7 +33,7 @@ We detail the changes and additions to the package below, but frequent users sho
   * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
 
 
-# New Flower Data
+# New `flowers` Dataset
 
 `data(flowers)` is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species. which we'll use to illustrate many of the new features in this document.   
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"}
@@ -43,7 +43,7 @@ head(flowers[1:4])
 plot(flowers, lwd=2, col=spec2rgb(flowers))
 ```
 
-# Visual modelling
+# Visual Modelling
 
 ## Visual Phenotypes
 
@@ -83,7 +83,7 @@ Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw 
 
 ## Modelling and Plotting Colourspaces
 
-### The new `colspace` and `plot` functions
+### The New `colspace` And `plot` Functions
 
 The most significant structural changes in `1.0` involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use `vismodel` to model photoreceptor stimulation to an avian viewer, `tcs` to convert the data to points in a tetrahedral colorspace, and `tcsplot` to visualise the data. In `1.0` these, and all other, colorspace modelling and plotting options are now wrapped into the new `colspace`  and `plot` functions. For modelling in colorspace, a typical workflow might use:  
 
@@ -311,7 +311,7 @@ plot(cat.flowers, pch = 21, bg = 'forestgreen')
 
 # Changes to `coldist`
 
-## argument changes to `coldist`
+## Argument Changes to `coldist`
 
 The `coldist` function has undergone significant changes in `pavo 1.0`, both internally and to its user interface. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND's. In contrast, if we input a `colspace` object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.
 
@@ -347,7 +347,7 @@ head(JND.sicalis)
 
 `coldist` now also accepts a `weber.achro` argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
 
-## Color distances in *n*-dimensions
+## Color Distances in *N*-Dimensions
 
 As a result of the changes in the input of relative cone abundances and the internal calculation functions used in `coldist`, the function is not limited to di-, tri- or tetrachromatic visual systems. `coldist` has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
 

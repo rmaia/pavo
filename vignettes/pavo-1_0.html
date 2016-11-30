@@ -76,13 +76,13 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="TOC">
 <ul>
 <li><a href="#introduction">Introduction</a></li>
-<li><a href="#a-quick-guide-for-familiar-users">A quick guide for familiar users</a></li>
-<li><a href="#new-flower-data">New Flower Data</a></li>
-<li><a href="#visual-modelling">Visual modelling</a><ul>
+<li><a href="#a-quick-guide-for-familiar-users">A Quick Guide For Familiar Users</a></li>
+<li><a href="#new-flowers-dataset">New <code>flowers</code> Dataset</a></li>
+<li><a href="#visual-modelling">Visual Modelling</a><ul>
 <li><a href="#visual-phenotypes">Visual Phenotypes</a></li>
 <li><a href="#the-vismodel-function-and-receptor-noise-limited-model">The <code>vismodel</code> Function and Receptor-noise Limited Model</a></li>
 <li><a href="#modelling-and-plotting-colourspaces">Modelling and Plotting Colourspaces</a><ul>
-<li><a href="#the-new-colspace-and-plot-functions">The new <code>colspace</code> and <code>plot</code> functions</a></li>
+<li><a href="#the-new-colspace-and-plot-functions">The New <code>colspace</code> And <code>plot</code> Functions</a></li>
 <li><a href="#new-di--tri--and-tetrachromatic-spaces">New Di-, Tri-, and Tetrachromatic Spaces</a></li>
 <li><a href="#the-color-hexagon">The Color Hexagon</a></li>
 <li><a href="#the-color-opponent-coding-coc-space">The Color Opponent Coding (COC) Space</a></li>
@@ -91,8 +91,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </ul></li>
 </ul></li>
 <li><a href="#changes-to-coldist">Changes to <code>coldist</code></a><ul>
-<li><a href="#argument-changes-to-coldist">argument changes to <code>coldist</code></a></li>
-<li><a href="#color-distances-in-n-dimensions">Color distances in <em>n</em>-dimensions</a></li>
+<li><a href="#argument-changes-to-coldist">Argument Changes to <code>coldist</code></a></li>
+<li><a href="#color-distances-in-n-dimensions">Color Distances in <em>N</em>-Dimensions</a></li>
 </ul></li>
 <li><a href="#classes-and-attributes">Classes and Attributes</a></li>
 <li><a href="#concluding-thoughts-and-further-assistance">Concluding Thoughts, and Further Assistance</a></li>
@@ -106,7 +106,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <p>While we have made improvements that will expedite data organisation, the most significant developments in <code>1.0</code> relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in <code>1.0</code> in an example workflow.</p>
 </div>
 <div id="a-quick-guide-for-familiar-users" class="section level1">
-<h1>A quick guide for familiar users</h1>
+<h1>A Quick Guide For Familiar Users</h1>
 <p>We detail the changes and additions to the package below, but frequent users should be aware of the following main changes:</p>
 <ul>
 <li><code>vismodel</code> can now incorporate wavelength-dependent transmission (such as from ocular media or turbid environment) and hyperbolic transformation of quantum catches. It also includes several new build-in visual systems.</li>
@@ -115,8 +115,8 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>the <code>coldist</code> function has undergone significant changes to its imput arguments.</strong> Mainly, instead of specifying the single-cone noise <code>v</code> and the <code>n1, n2, n3</code> and <code>n4</code> relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument <code>weber</code>, (b) which cone to be used as the reference cone with the argument <code>weber.ref</code>, and (c) a single vector with the relative cone densities through the <code>n</code> argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the <code>weber.achro</code> argument.</li>
 </ul>
 </div>
-<div id="new-flower-data" class="section level1">
-<h1>New Flower Data</h1>
+<div id="new-flowers-dataset" class="section level1">
+<h1>New <code>flowers</code> Dataset</h1>
 <p><code>data(flowers)</code> is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species. which we’ll use to illustrate many of the new features in this document.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(flowers)
 
@@ -137,7 +137,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 </div>
 </div>
 <div id="visual-modelling" class="section level1">
-<h1>Visual modelling</h1>
+<h1>Visual Modelling</h1>
 <div id="visual-phenotypes" class="section level2">
 <h2>Visual Phenotypes</h2>
 <dl>
@@ -189,7 +189,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <div id="modelling-and-plotting-colourspaces" class="section level2">
 <h2>Modelling and Plotting Colourspaces</h2>
 <div id="the-new-colspace-and-plot-functions" class="section level3">
-<h3>The new <code>colspace</code> and <code>plot</code> functions</h3>
+<h3>The New <code>colspace</code> And <code>plot</code> Functions</h3>
 <p>The most significant structural changes in <code>1.0</code> involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use <code>vismodel</code> to model photoreceptor stimulation to an avian viewer, <code>tcs</code> to convert the data to points in a tetrahedral colorspace, and <code>tcsplot</code> to visualise the data. In <code>1.0</code> these, and all other, colorspace modelling and plotting options are now wrapped into the new <code>colspace</code> and <code>plot</code> functions. For modelling in colorspace, a typical workflow might use:</p>
 <ol style="list-style-type: decimal">
 <li><code>vismodel</code> to estimate photoreceptor quantum catches. The assumptions of many colorspace models may differ dramatically, so be sure to select options that are appropriate for your intended use.<br />
@@ -497,7 +497,7 @@ coc.flowers &lt;-<span class="st"> </span><span class="kw">colspace</span>(vis.f
 <div id="changes-to-coldist" class="section level1">
 <h1>Changes to <code>coldist</code></h1>
 <div id="argument-changes-to-coldist" class="section level2">
-<h2>argument changes to <code>coldist</code></h2>
+<h2>Argument Changes to <code>coldist</code></h2>
 <p>The <code>coldist</code> function has undergone significant changes in <code>pavo 1.0</code>, both internally and to its user interface. For one, it now accepts both <code>vismodel</code> and <code>coldist</code> objects, and will return distances in units that are appropriate for a given input. If we input a <code>vismodel</code> object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND’s. In contrast, if we input a <code>colspace</code> object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.</p>
 <p>The most important change to <code>coldist</code> is that some of its arguments have changed, with implications for receptor-noise modelling. In <code>pavo 1.0</code>, <code>coldist</code> requires the empirically estimated value for the Weber fraction to be entered, instead of the single cone noise-to-signal ratio (the <code>v</code> argument in previous versions of <code>pavo</code>). Further, instead of separately entering <code>n1, n2, n3</code> and <code>n4</code>, <code>coldist</code> now has a single argument <code>n</code>, and a vector of relative cone abundances is the required input. Finally, the argument <code>weber.ref</code> specifies which cone to use as the reference cone for the desired Weber fraction.</p>
 <p>The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. It was also made to demand less of the user, who used to have to calculate what value of <code>v</code> to use given the desired Weber fraction and relative cone abundances.</p>
@@ -532,7 +532,7 @@ JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.si
 <p><code>coldist</code> now also accepts a <code>weber.achro</code> argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.</p>
 </div>
 <div id="color-distances-in-n-dimensions" class="section level2">
-<h2>Color distances in <em>n</em>-dimensions</h2>
+<h2>Color Distances in <em>N</em>-Dimensions</h2>
 <p>As a result of the changes in the input of relative cone abundances and the internal calculation functions used in <code>coldist</code>, the function is not limited to di-, tri- or tetrachromatic visual systems. <code>coldist</code> has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature’s extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren’t largely implemented elsewhere, we recommend caution and validation of results prior to publication.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create an arbitrary visual phenotype with 10 photoreceptors</span>
 fakemantisshrimp &lt;-<span class="st"> </span><span class="kw">sensmodel</span>(<span class="kw">c</span>(<span class="dv">325</span>,<span class="dv">350</span>,<span class="dv">400</span>,<span class="dv">425</span>,<span class="dv">450</span>,<span class="dv">500</span>,<span class="dv">550</span>,<span class="dv">600</span>,<span class="dv">650</span>,<span class="dv">700</span>), <span class="dt">beta=</span><span class="ot">FALSE</span>, <span class="dt">integrate=</span><span class="ot">FALSE</span>)
