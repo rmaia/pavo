@@ -6,7 +6,7 @@
 \usage{
 diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
   achrosize = 0.8, lab.cex = 1, out.lwd = 1, out.lcol = "black",
-  out.lty = 1, ...)
+  out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{dispace} 
@@ -27,6 +27,11 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 \item{out.lcol}{line colour for segment (defaults to black)}
 
 \item{out.lty}{line type for segment (defaults to 1)}
+
+\item{margins}{margins for the plot}
+
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+(defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }

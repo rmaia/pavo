@@ -207,7 +207,7 @@ head(coc.flowers)
 The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"}
-plot(coc.flowers, pch = 21, bg = 'forestgreen') 
+plot(coc.flowers, pch = 21, bg = 'forestgreen', yaxt='n') 
 ```
 
 ### CIE Spaces

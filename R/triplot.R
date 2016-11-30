@@ -12,6 +12,9 @@
 #' @param out.lwd line width for triangle outline (defaults to 1)
 #' @param out.lcol line colour for triangle outline (defaults to black)
 #' @param out.lty line type for triangle outline (defaults to 1)
+#' @param margins margins for the plot
+#' @param square logical. Should the aspect ratio of the plot be held to 1:1? 
+#' (defaults to \code{TRUE})
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'
 #' @examples \dontrun{
@@ -34,7 +37,18 @@
 #'  Journal of comparative physiology, 139(3), 165-176.
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
-                     cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, ...){ 
+                     cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, 
+                     margins = c(1,1,2,2), square=TRUE, ...){ 
+
+  omargin <- par()$mar
+  oAR <- par()$pty
+  
+  par(mar=margins)
+  
+  if(square) 
+    par(pty='s')
+  
+  on.exit(par(mar=omargin, pty=oAR))
   
   arg <- list(...)
   

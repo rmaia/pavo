@@ -7,7 +7,7 @@
 hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
   "coarse"), sec.col = "grey", out.lwd = 1, out.lty = 1,
   out.lcol = "black", lab.cex = 1, achrosize = 0.8, achrocol = "grey",
-  ...)
+  margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 
@@ -37,6 +37,11 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
+
+\item{margins}{margins for the plot}
+
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+(defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}}
 }

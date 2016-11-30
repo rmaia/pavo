@@ -6,7 +6,7 @@
 \usage{
 triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
   achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
-  out.lty = 1, ...)
+  out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
 \item{tridata}{(required) a data frame, possibly a result from the \code{trispace} 
@@ -27,6 +27,11 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{out.lcol}{line colour for triangle outline (defaults to black)}
 
 \item{out.lty}{line type for triangle outline (defaults to 1)}
+
+\item{margins}{margins for the plot}
+
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+(defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
