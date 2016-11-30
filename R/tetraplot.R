@@ -65,14 +65,9 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
       arg$cex <- 0.9
     if(is.null(arg$pch))
       arg$pch <- 19
-   
-   lims <- matrix(c(0, 0, 0.75,(-1 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25,
-    0, (1/sqrt(2)), -0.25, (0.5 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25,
-    0, 0, -0.25),ncol=3,byrow=TRUE)
-
   
     # Empty plot
-    P <- scatterplot3d(x=c(-1.23,0.62), y=c(-0.36,0.71), z=c(-0.25,0.75), box = FALSE, 
+    P <- scatterplot3d(x=mean(xlim), y=mean(ylim), z=mean(zlim), box = FALSE, 
                                   xlim = xlim, ylim = ylim, zlim = zlim,
                                   axis = axis, grid = grid, angle = view, 
                                   scale.y = scale.y, mar = margin, pch = '')
@@ -132,7 +127,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
   points(x = l$x, y = l$y, col = 'black', bg = 'firebrick1', pch = 21, cex = vertexsize)
   
   # Save plot info 
-   .PlotTetraEnv <<- new.env()
+#   .PlotTetraEnv <<- new.env()
    assign("last_plot.tetra", P, envir = .PlotTetraEnv)
    
 }

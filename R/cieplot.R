@@ -142,7 +142,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     do.call(P$points3d, arg)
     
     # Save plot info 
-    .PlotCielabEnv <<- new.env()
+    #.PlotCielabEnv <<- new.env()
     assign("last_plot.cielab", P, envir = .PlotCielabEnv)
   }
       

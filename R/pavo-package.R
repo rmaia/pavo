@@ -27,3 +27,5 @@
 .PlotTetraEnv <- new.env()
 .PlotCielabEnv <- new.env()
 
+#.PlotTetraEnv <- list()
+#.PlotCielabEnv <- list()
