@@ -8,7 +8,7 @@ output:
     toc_depth: 3
 bibliography: refs.bib
 vignette: >
-  %\VignetteIndexEntry{An introduction to pavo 1.0}
+  %\VignetteIndexEntry{changes to pavo 1.0}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
@@ -19,30 +19,35 @@ library(pavo)
 
 # Introduction
 
-`pavo` is an `R` package that was developed with the goal of establishing a flexible and integrated workflow for working with spectral color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw data to visualization and analysis. Here we are happy to introduce the stable release of `pavo 1.0`, which---among other things---includes a suite of new analysis and visualisation tools to make working with colour data simpler and more intuitive than ever. 
+We are happy to introduce the stable release of `pavo 1.0`, which --- among other things --- includes a suite of new analysis and visualisation tools to make working with colour data simpler and more intuitive than ever. 
 
-`pavo` was written with the following workflow in mind, which remains true with this release:
+While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow.  
 
-1. **Organize** spectral data by inputting files and processing spectra (e.g., to remove noise, negative values, smooth curves, etc...).
-2. **Analyze** the resulting files, either using typical colorimetric variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
-3. **Visualize** the output, with multiple options provided for exploratory analyses.
+# A quick guide for familiar users
 
-While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of colour data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow. 
+We detail the changes and additions to the package below, but frequent users should be aware of the following main changes:  
 
-# Data
+  * `vismodel` can now incorporate wavelength-dependent transmission (such as from ocular media or turbid environment) and hyperbolic transformation of quantum catches. It also includes several new build-in visual systems.
+  * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
+  * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
+  * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
 
-`pavo 1.0` includes a new example dataset consisting of tidy reflectance spectra from 36 Australian angiosperm species. It can be accessed using `data(flowers)`, and we'll use it to illustrate many of the new features.   
-```{r}
+
+# New Flower Data
+
+`data(flowers)` is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species. which we'll use to illustrate many of the new features in this document.   
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"}
 data(flowers)
 
 head(flowers[1:4])
+plot(flowers, lwd=2, col=spec2rgb(flowers))
 ```
 
 # Visual modelling
 
 ## Visual Phenotypes
 
-`pavo` is now equipped with several new di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessable via the `vismodel()` option `visual`, and include:
+`pavo 1.0` introduced several new di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessable via the `vismodel()` argument `visual`:
   : `avg.uv` average ultraviolet-sensitive avian (tetrachromat)
   : `avg.v` average violet-sensitive avian (tetrachromat)
   : `bluetit` The blue tit _Cyanistes caeruleus_ (tetrachromat)
@@ -58,15 +63,19 @@ As in previous versions, the individual sensitivity functions can be accessed vi
 
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"}
 
-plot(as.rspec(vissyst[, c('wl', 'musca.u', 'musca.s', 'musca.m', 'musca.l', 'md.r1')]), main = 'Musca domestica', ylab = 'Absorbance')
-
+plot(vissyst[, c('wl', grep('musca|md',names(vissyst), value=TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd=2)
 ```
 
 ## The `vismodel` Function and Receptor-noise Limited Model
 
-As in previous versions, the `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
+**Incorporating transmission into visual models.** The `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
 
-Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Transmission example: Ocular transmission for the blue tit (red) and blackbird (blue) retinas._"}
+
+plot(pavo:::transmissiondata, lwd=2, ylab='Transmission', main = 'Ocular transmission', col=c('red','blue'))
+```
+
+**Hyperbolic transformation of quantum catches.** Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
 
 $$E_i = \frac{Q_i}{Q_i + 1}$$
 
@@ -74,7 +83,7 @@ Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw 
 
 ## Modelling and Plotting Colourspaces
 
-### The `colspace` and `plot` Functions
+### The new `colspace` and `plot` functions
 
 The most significant structural changes in `1.0` involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use `vismodel` to model photoreceptor stimulation to an avian viewer, `tcs` to convert the data to points in a tetrahedral colorspace, and `tcsplot` to visualise the data. In `1.0` these, and all other, colorspace modelling and plotting options are now wrapped into the new `colspace`  and `plot` functions. For modelling in colorspace, a typical workflow might use:  
 
@@ -82,9 +91,12 @@ The most significant structural changes in `1.0` involve the workflow for visual
 2. `colspace` to convert the results of `vismodel` (or user-provided quantum catches) into points in a given colorspace, specified with the `space` argument. If no `space` argument is provided, `colspace` will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the input data. The result of `colspace` will be an object of class `colspace` (that inherits from `data.frame`; see the 'Under-the-hood' section below), and will contain the location of stimuli in the selected space along with any associated color variables. 
 3. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colorspace (see `?plot.colspace` and links therein for details) . 
 
-### Di-, Tri-, and Tetrachromatic Spaces
+examples are featured in detail below.
 
-While `pavo` has always included the ability to model spectra in a tetrahedral colourspace, `1.0` now expands this ability to di- and trichromatic spaces, and (as outlined above) unites these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace`. For di- tri- and tetrechromatic spaces, `colspace` calculates the coordinates of stimuli as:
+### New Di-, Tri-, and Tetrachromatic Spaces  
+  
+`pavo 1.0`'s new  workflow expands modeling and visualization capabilities of di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colorspace automatically). For di- tri- and tetrechromatic spaces, `colspace` calculates the coordinates of stimuli as:   
+
   : Dichromats:
     : $$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
   : Trichromats:
@@ -95,7 +107,7 @@ While `pavo` has always included the ability to model spectra in a tetrahedral c
     : $$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
     : $$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
 
-Where Q~u~, Q~s~, Q~m~, and Q~l refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors.
+Where Q~u~, Q~s~, Q~m~, and Q~l~ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
 
 For a dichromatic example, we can model our floral reflectance data using the visual system of the domestic dog _Canis familiaris_, which has two cones with maximal sensitivity near 440 and 560 nm.   
 
@@ -141,10 +153,10 @@ head(tetra.flowers)
 
 As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
 
-```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations, modelled using the visual phenotype of the blue tit._"}
+```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"}
 par(mfrow = c(1, 2))
-plot(tetra.flowers, view = 100, pch = 21, bg = 'forestgreen') 
-plot(tetra.flowers, view = 75, pch = 21, bg = 'forestgreen')
+plot(tetra.flowers, view = 30, pch = 21, bg = 'forestgreen') 
+plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
 ```
 
 ### The Color Hexagon
@@ -297,13 +309,66 @@ And it is simply the signs of these differences that define the four possible fl
 plot(cat.flowers, pch = 21, bg = 'forestgreen') 
 ```
 
-# Color Distances in N-dimensions with `coldist`
+# Changes to `coldist`
 
-The `coldist` function still calculates color distances, though we've introduced some significant changes in `1.0`. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND's. In contrast, if we input a `colspace` object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.
+## argument changes to `coldist`
 
-The arguments accepted by `coldist` have also changed, with implications for receptor-noise modelling. In `1.0`, `coldist` requires the empirically estimated value for the Weber fraction to be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. `coldist` now also accepts a `weber.achro` argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
+The `coldist` function has undergone significant changes in `pavo 1.0`, both internally and to its user interface. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND's. In contrast, if we input a `colspace` object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.
 
-Finally, `coldist` has been generalised, and can now accept n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work.
+The most important change to `coldist` is that some of its arguments have changed, with implications for receptor-noise modelling. In `pavo 1.0`, `coldist` requires the empirically estimated value for the Weber fraction to be entered, instead of the single cone noise-to-signal ratio (the `v` argument in previous versions of `pavo`). Further, instead of separately entering `n1, n2, n3` and `n4`, `coldist` now has a single argument `n`, and a vector of relative cone abundances is the required input. Finally, the argument `weber.ref` specifies which cone to use as the reference cone for the desired Weber fraction. 
+
+The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. It was also made to demand less of the user, who used to have to calculate what value of `v` to use given the desired Weber fraction and relative cone abundances.
+
+So, for example, the code below used in previous versions of `pavo`:
+
+```{r eval=FALSE}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative=FALSE)
+JND.sicalis <- coldist(vis.sicalis, n1=1, n2=2, n3=2, n4=4, v=0.2)
+```
+
+in `pavo 1.0` would be:
+
+```{r}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative=FALSE)
+JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref=4)
+head(JND.sicalis)
+```
+
+or alternatively, `weber.ref` can be simply set to "longest":
+
+```{r}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative=FALSE)
+JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref='longest')
+head(JND.sicalis)
+```
+
+`coldist` now also accepts a `weber.achro` argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
+
+## Color distances in *n*-dimensions
+
+As a result of the changes in the input of relative cone abundances and the internal calculation functions used in `coldist`, the function is not limited to di-, tri- or tetrachromatic visual systems. `coldist` has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"}
+# create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325,350,400,425,450,500,550,600,650,700), beta=FALSE, integrate=FALSE)
+
+# convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp*100
+fakemantisshrimp.colors[,'wl'] <- fakemantisshrimp[,'wl']
+ 
+plot(fakemantisshrimp, col=spec2rgb(fakemantisshrimp.colors), lwd=2, ylab='Absorbance')
+
+# run visual model and calculate color distances
+
+vm.fms <- vismodel(flowers, visual=fakemantisshrimp, relative=FALSE, achro=FALSE)
+
+JND.fms <- coldist(vm.fms, n=c(1,1,2,2,3,3,4,4,5,5))
+
+head(JND.fms)
+```
 
 # Classes and Attributes
 
