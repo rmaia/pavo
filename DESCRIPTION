@@ -49,6 +49,7 @@ Collate:
     'data-sicalis.R'
     'data-flowers.R'
     'data-teal.R'
+    'data-transmissiondata.R'
     'data-ttvertex.R'
     'data-vissyst.R'
     'dispace.R'

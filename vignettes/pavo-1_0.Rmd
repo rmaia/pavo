@@ -72,7 +72,7 @@ plot(vissyst[, c('wl', grep('musca|md',names(vissyst), value=TRUE))], main = 'Mu
 
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Transmission example: Ocular transmission for the blue tit (red) and blackbird (blue) retinas._"}
 
-plot(pavo:::transmissiondata, lwd=2, ylab='Transmission', main = 'Ocular transmission', col=c('red','blue'))
+plot(transmissiondata, lwd=2, ylab='Transmission', main = 'Ocular transmission', col=c('red','blue'))
 ```
 
 **Hyperbolic transformation of quantum catches.** Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
