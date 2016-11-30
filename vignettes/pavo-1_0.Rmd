@@ -7,6 +7,7 @@ output:
     toc: true
     toc_depth: 3
 bibliography: refs.bib
+csl: style.csl
 vignette: >
   %\VignetteIndexEntry{changes to pavo 1.0}
   %\VignetteEngine{knitr::rmarkdown}
