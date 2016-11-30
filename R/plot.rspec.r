@@ -89,7 +89,10 @@ if (type=='heatmap') {
   	jc <- colorRampPalette(arg$col)
   	arg$col <- jc(n)
   	}
-
+  
+  if (is.null(arg$lty))
+    arg$lty <- 1
+  
   Index <- approx(varying, n = n)$y
   dat <- sapply(1:nrow(x), function(z){approx(x = varying, y = x[z, ], 
                 n = n)$y})
@@ -111,6 +114,17 @@ if (any(names(arg$col)%in%names(x))) {
   arg$col <- arg$col[select-1]
 }
 
+# line types for overlay plot & others
+if (length(arg$lty) < ncol(x)) {
+  arg$lty <- rep(arg$lty, ncol(x))
+  arg$lty <- arg$lty[1:ncol(x)]
+ }
+
+if (any(names(arg$lty)%in%names(x))) {
+  arg$col <- arg$lty[select-1]
+}
+
+
 # overlay different spec curves
 if (type=='overlay') {
 
@@ -123,12 +137,16 @@ if (type=='overlay') {
   arg$y <- x[, 1]
   col <- arg$col
   arg$col <- col[1]
+  lty <- arg$lty
+  arg$lty <- lty[1]
+
 
   do.call(plot, arg)
 
   if (ncol(x) > 1) {
     for (i in 2:ncol(x)) {
       arg$col <- col[i]
+      arg$lty <- lty[i]
       arg$y <- x[, i]
       do.call(lines, arg)
     }
