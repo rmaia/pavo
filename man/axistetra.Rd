@@ -6,7 +6,7 @@
 \usage{
 axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
   col = par("fg"), lty = par("lty"), lwd = par("lwd"), label = TRUE,
-  label.adj = 0.03, label.cex = 1, label.col = NULL)
+  adj.label = 0.03, label.cex = 1, label.col = NULL)
 }
 \arguments{
 \item{x, y, z}{coordinates for the origin position of the arrows}
@@ -20,7 +20,7 @@ axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
 
 \item{label}{logical, include x, y and z labels (defaults to TRUE).}
 
-\item{label.adj}{position adjustment for the labels. Can be either a 
+\item{adj.label}{position adjustment for the labels. Can be either a 
 single value (applied for x, y and z) or a vector of 3 separate values
 for each axis.}
 
