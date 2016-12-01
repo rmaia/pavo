@@ -32,7 +32,7 @@ We detail the changes and additions to the package below, but frequent users sho
   * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
   * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
   * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
-  * besides the familiar distances in JND for receptor noise models, **`coldist` now also calculates color distances for the other colorspaces available through `colspace`**: TOM BRIEFLY LIST WHICH COLOR DISTANCE METRICS ARE CALCULATED FOR WHICH COLOR SPACES. (also I guess at some point we need to check for consistency of color x colour :P)
+  * besides the familiar distances in JND for receptor noise models, **`coldist` now also calculates color distances for the other colorspaces available through `colspace`**: ...
 
 # New `flowers` Dataset
 
@@ -160,10 +160,10 @@ In addition, the new `axistetra` function can be used to draw arrows showing the
 par(mfrow = c(1, 2), pty='s')
 plot(tetra.flowers, view = 30, pch = 21, bg = 'forestgreen') 
 axistetra(x=1.4, y=0.2, z=0.4, size=c(0.25,0.15,0.1), adj.label=c(0.06,0.08,0.07))
-axistetra(x=1.4, y=0.2, z=-0.4, size=c(0.2,0.2,0.2), label=FALSE)
+axistetra(x=1.4, y=0.2, z=-0.4, size=0.2, label=FALSE)
 plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
 axistetra(x=0.6, y=0.2, z=0.5, size=c(0.2,0.2,0.15), adj.label=c(0.07,0.12,0.07))
-axistetra(x=0.6, y=0.2, z=-0.5, size=c(0.2,0.2,0.2), label=FALSE)
+axistetra(x=0.6, y=0.2, z=-0.5, size=0.2, label=FALSE)
 ```
 
 ### The Color Hexagon
