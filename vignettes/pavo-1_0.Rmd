@@ -154,10 +154,14 @@ head(tetra.flowers)
 
 As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
 
+In addition, the new `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+
 ```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"}
 par(mfrow = c(1, 2))
 plot(tetra.flowers, view = 30, pch = 21, bg = 'forestgreen') 
+axistetra(x=1.4, y=0.2, z=0.3, label.adj=0.06)
 plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
+axistetra(x=0.4, y=0.2, z=0.5, label.adj=0.06)
 ```
 
 ### The Color Hexagon

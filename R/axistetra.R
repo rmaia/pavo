@@ -51,10 +51,11 @@ axistetra <- function(x = 0.6, y = 0.8, z = 0.7, size = 0.1,
 
   if(length(label.adj) > 1){
   	px <- 1+label.adj[1]
-  	py <- 1+label.adj[2]
+  	py <- 1+label.adj[2]/2
   	pz <- 1+label.adj[3]
   } else{
-  	px <- py <- pz <- 1+label.adj[1]
+  	px <- pz <- 1+label.adj[1]
+  	py <- 1 + label.adj[1]/2
   }
  	
   	text(xarr$x[2]*px, xarr$y[2], labels='x', cex=label.cex, col=label.col)
