@@ -55,7 +55,6 @@ Collate:
     'dispace.R'
     'diplot.R'
     'explorespec.R'
-    'fgetspec.R'
     'getspec.R'
     'hexagon.R'
     'hexplot.R'
