@@ -4,10 +4,10 @@
 \alias{legendtetra}
 \title{Add legend to a static tetrahedral colorspace}
 \usage{
-legendtetra(location = c(-1.4, -0.3, 0.7), ...)
+legendtetra(x = -1.4, y = -0.3, z = 0.7, ...)
 }
 \arguments{
-\item{location}{a vector containing x, y and z values for the position of
+\item{x, y, z}{a vector containing x, y and z values for the position of
 the legend.}
 
 \item{...}{additional arguments passed to \code{\link{legend}}.}

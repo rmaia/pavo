@@ -2,7 +2,7 @@
 #' 
 #' Adds a legend to a static tetrahedral colorspace plot.
 #' 
-#' @param location a vector containing x, y and z values for the position of
+#' @param x,y,z a vector containing x, y and z values for the position of
 #' the legend.
 #' @param ... additional arguments passed to \code{\link{legend}}.
 #'
@@ -15,7 +15,7 @@
 #' @export
 
 
-legendtetra <- function(location = c(-1.4, -0.3, 0.7), ...){
+legendtetra <- function(x=-1.4, y=-0.3, z=0.7, ...){
   
 	last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
 	
@@ -23,7 +23,7 @@ legendtetra <- function(location = c(-1.4, -0.3, 0.7), ...){
 	
 	arg <- list(...)
 	
-	position <- last_tetraplot$xyz.convert(location[1],location[2],location[3])
+	position <- last_tetraplot$xyz.convert(x,y,z)
 	
 	arg$x <- position$x
 	arg$y <- position$y
