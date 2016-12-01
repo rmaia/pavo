@@ -55,8 +55,8 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', ach
     arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
-  if(is.null(arg$type))
-    arg$type = 'p'
+#  if(is.null(arg$type))
+#    arg$type = 'p'      is the default, not needed?
   if(is.null(arg$xlim))
     arg$xlim <- c(-1/sqrt(2), 1/sqrt(2))
   if(is.null(arg$ylim))
@@ -69,12 +69,12 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', ach
 # Plot
   arg$x <- tridata$x
   arg$y <- tridata$y
-  arg$xlab = ' '
-  arg$ylab = ' '
+  arg$xlab = ''
+  arg$ylab = ''
   arg$bty = 'n'
   arg$axes = FALSE
   
-  do.call(plot, arg)
+  do.call(plot, c(arg, type='n'))
   
 # Add lines 
   segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
@@ -85,6 +85,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', ach
   if(isTRUE(achro)){
     points(x = 0, y = 0, pch = 15, col = achrocol, cex = achrosize)
   }
+
+# add points after the hexagon stuff is drawn
+  suppressWarnings(do.call(points, arg))
+
   
 # Add text (coloured points better as in tcsplot?)
   if(isTRUE(labels)){
