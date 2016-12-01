@@ -71,8 +71,8 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
     arg$pch <- 19
   if(is.null(arg$cex))
     arg$cex <- 0.9
-  if(is.null(arg$type))
-    arg$type = 'p'
+#  if(is.null(arg$type)) 
+#    arg$type = 'p'      is the default, not needed?
   if(is.null(arg$xlim))
     arg$xlim <- c(-1.2, 1.2)
   if(is.null(arg$ylim))
@@ -101,12 +101,12 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
 # Plot
   arg$x <- hexdata$x
   arg$y <- hexdata$y
-  arg$xlab = ' '
-  arg$ylab = ' '
+  arg$xlab = ''
+  arg$ylab = ''
   arg$bty = 'n'
   arg$axes = FALSE
   
-  do.call(plot, arg)
+  do.call(plot, c(arg, type='n'))
 
 # Origin point
   if(isTRUE(achro)){
@@ -128,6 +128,9 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
     for(x in 1:length(secX_c))
       segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
   }
+
+# add points after the hexagon stuff is drawn
+  suppressWarnings(do.call(points, arg))
   
 # Text labels
   if(isTRUE(labels)){
