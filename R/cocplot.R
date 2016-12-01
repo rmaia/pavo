@@ -59,18 +59,18 @@ cocplot <- function(cocdata, labels = TRUE, lab.cex = 0.9,
   if(is.null(arg$ylim))
     arg$ylim  = c(-12, 12)
   if(is.null(arg$xlab))
-    arg$xlab = ' '
+    arg$xlab = ''
   if(is.null(arg$ylab))
-    arg$ylab = ' '
+    arg$ylab = ''
   if(is.null(arg$bty))
     arg$bty = 'n'
   
   # Plot
   arg$x <- cocdata$x
   arg$y <- cocdata$y
-  arg$axes = FALSE
+  arg$axes <- FALSE
   
-  do.call(plot, arg)
+  do.call(plot, c(arg, type='n'))
   axis(1, at = tick.loc, pos = 0, cex.axis = 0.8)  # todo - best way to handle user specs?
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
   
@@ -78,6 +78,9 @@ cocplot <- function(cocdata, labels = TRUE, lab.cex = 0.9,
   if(isTRUE(achro)){
     points(x = 0, y = 0, pch = 15, col = achrocol, cex = achrosize)
   }
+  
+  # add points after the stuff is drawn
+   suppressWarnings(do.call(points, arg))
   
   # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
