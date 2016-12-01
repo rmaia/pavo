@@ -152,6 +152,9 @@ if(is.null(dim(y))){
 visual2 <- try(match.arg(visual), silent = T)
 sens <- vissyst
 
+if(achromatic == FALSE)
+  achromatic <- "none"
+
 achromatic2 <- try(match.arg(achromatic), silent=T)
 
 qcatch <- match.arg(qcatch)
