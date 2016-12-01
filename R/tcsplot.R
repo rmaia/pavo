@@ -15,8 +15,7 @@
 #' @param achro plot a point at the origin? (defaults to \code{TRUE})
 #' @param achrosize size of the point in the achromatic center
 #' @param achrocol color of the point in the achromatic center
-#' @param lwd line width for the edges of the tetrahedron
-#' @param lcol line color for the edges of the tetrahedron
+#' @param lwd,lcol graphical parameters for the edges of the tetrahedron.
 #' @param new should a new 3D plot be called (defaults to \code{FALSE})?
 #' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})
 #' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})
@@ -43,7 +42,7 @@
 #' rgl.snapshot('testplot.png')
 #'
 #' # For adding points
-#' patch <- rep(c('C','T','B'),7)
+#' patch <- rep(c('C', 'T', 'B'), 7)
 #' tcs.crown <- subset(tcs.sicalis, 'C') 
 #' tcs.breast <- subset(tcs.sicalis, 'B') 
 #' plot(tcs.crown, col ='blue')

@@ -13,7 +13,7 @@
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
 #' names can be used in order to filter and show only those variables.
 #' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
-#' calculations (default is to use entire range in the \code{rspec} object)
+#' calculations (default is to use entire range in the \code{rspec} object).
 #' @param ... class consistency (ignored)
 #' @return A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described 
 #' in Montgomerie (2006) with spectra name as row names. 
@@ -105,9 +105,11 @@
 #' data(sicalis)
 #' summary(sicalis)
 #' summary(sicalis, subset = TRUE)
-#' summary(sicalis, subset = c('B1', 'H4')) }
+#' summary(sicalis, subset = c('B1', 'H4'))
+#' }
 #' 
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
+#' 
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 #' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
 #' @references References describing variables:

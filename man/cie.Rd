@@ -25,7 +25,7 @@ Object of class \code{colspace} containing:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in either the CIEXYZ (1931) or CIELAB (1971) colourspace
+in either the CIEXYZ (1931) or CIELAB (1971) colourspaces.
 }
 \examples{
 \dontrun{

@@ -5,7 +5,7 @@
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with two columns representing trichromatic viewer).
+#'  with two columns representing dichromatic viewer).
 #' 
 #' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{s}, \code{l}: the quantum catch data used to calculate 

@@ -21,15 +21,15 @@ remaining columns.}
 \item a data frame such as one produced containing by \code{sensmodel}, containing 
    sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
    column with the range of wavelengths included, and the sensitivity for each other 
-   cone as a column
-\item \code{avg.uv}: average avian UV system
-\item \code{avg.v}: average avian V system
-\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
-\item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
-\item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
-\item \code{apis}: Honeybee \emph{Apis mellifera} visual system
-\item \code{canis}: Canid \emph{Canis familiaris} visual system
-\item \code{musca}: Housefly \emph{Musca domestica} visual system
+   cone as a column.
+\item \code{avg.uv}: average avian UV system.
+\item \code{avg.v}: average avian V system.
+\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system.
+\item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
+\item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
+\item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
+\item \code{canis}: Canid \emph{Canis familiaris} visual system.
+\item \code{musca}: Housefly \emph{Musca domestica} visual system.
 \item \code{cie2}: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
@@ -54,9 +54,9 @@ remaining columns.}
 \item{illum}{either a vector containing the illuminant, or one of the options:
 \itemize{ 
 \item \code{ideal}: homogeneous illuminance of 1 accross wavelengths (default)
-\item \code{'bluesky'}
-\item \code{'D65'}: standard daylight
-\item \code{'forestshade'}
+\item \code{'bluesky'} open blue sky.
+\item \code{'D65'}: standard daylight.
+\item \code{'forestshade'} forest shade.
 }}
 
 \item{trans}{either a vector containing the ocular or environmental transmission
@@ -64,9 +64,9 @@ spectra, or one of the options:
 \itemize{ 
 \item \code{ideal}: homogeneous transmission of 1 accross all wavelengths (default)
 \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
-ocular transmission (from Hart et al. 2000)
+ocular transmission (from Hart et al. 2000).
 \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
-ocular transmission (from Hart et al. 2000)
+ocular transmission (from Hart et al. 2000).
 }}
 
 \item{qcatch}{Which quantal catch metric to return. Options are:
@@ -74,17 +74,17 @@ ocular transmission (from Hart et al. 2000)
 \item \code{Qi}: Quantum catch for each photoreceptor 
 \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
  channel is proportional to the logarithm of the quantum catch)
-\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1)
+\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
 \item{bkg}{either a vector containing the background spectra, or one of the options:
 \itemize{ 
-\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default)
-\item \code{'green'}: green foliage background
+\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default).
+\item \code{'green'}: green foliage.
 }}
 
 \item{vonkries}{logical. Should the von Kries color correction transformation be applied?
-(defaults to \code{FALSE})}
+(defaults to \code{FALSE}).}
 
 \item{scale}{a value by which the illuminant will be multiplied. Useful for when the 
  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),

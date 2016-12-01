@@ -32,7 +32,7 @@ A data frame of class \code{tcs} consisting of the following columns:
 \code{r.max}: the maximum r vector achievable for the color's hue.
 
 \code{r.achieved}: the relative r distance from the achromatic center, in
- relation to the maximum distance achievable (\code{r.vec/r.max})
+ relation to the maximum distance achievable (\code{r.vec/r.max}).
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra

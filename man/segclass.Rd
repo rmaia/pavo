@@ -12,19 +12,21 @@ segclass(rspecdata, range = c(300, 700))
 and spectra data in remaining columns.}
 
 \item{range}{vector of length 2 indicating the lower and upper wavelength bounds used
-to calculate segments (defaults to 300nm to 700nm).}
+to calculate segments (defaults to 300 nm to 700 nm).}
 }
 \value{
 A data frame with the reflectance proportion at each of the four segments, as
 well as the LM and MS segment classification scores.
 }
 \description{
-Calculates segment classification measures as defined in Endler (1990)
+Calculates segment classification measures as defined in Endler (1990).
 }
 \examples{
 \dontrun{
 data(sicalis)
-segclass(sicalis) }
+segclass(sicalis) 
+}
+
 }
 \author{
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}

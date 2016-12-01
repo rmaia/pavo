@@ -1,22 +1,21 @@
-#' Plot a Static Tetrahedral Colorspace
+#' Plot a static tetrahedral colorspace
 #'
 #' Produces a static 3D tetrahedral plot.
 #' 
 #' @import scatterplot3d
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
-#'   function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
-#' @param view orientation of the tetrahedron in degrees (defaults to 70)
-#' @param scale.y numeric. Perspective scaling of the y axis (defaults to 0.45)
-#' @param axis logical. Draw X, Y and Z axis (defaults to FALSE)
-#' @param grid logical. Draw grid (defaults to FALSE)
-#' @param vertexsize size of the points at the vertices (defaults to 0.8)
-#' @param achrosize size of the point in the achromatic center (defaults to 0.8)
-#' @param achrocol color of the point in the achromatic center (defaults to 'grey')
-#' @param out.lwd line width for tetrahedral outline (defaults to 1)
-#' @param out.lcol line colour for tetrahedral outline (defaults to black)
-#' @param xlim,ylim,zlim axis limits
-#' @param margin vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))
+#'   function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).
+#' @param view orientation of the tetrahedron in degrees (defaults to 70).
+#' @param scale.y numeric. Perspective scaling of the y axis (defaults to 0.45).
+#' @param axis logical. Draw X, Y and Z axis (defaults to FALSE).
+#' @param grid logical. Draw grid (defaults to FALSE).
+#' @param vertexsize size of the points at the vertices (defaults to 0.8).
+#' @param achrosize size of the point in the achromatic center (defaults to 0.8).
+#' @param achrocol color of the point in the achromatic center (defaults to 'grey').
+#' @param out.lwd,out.lcol graphical parameters for the tetrahedral outline.
+#' @param xlim,ylim,zlim axis limits.
+#' @param margin vector of four numbers specifying drawing margins (defaults to c(1, 1, 1, 1)).
 #' 
 #' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
 #'

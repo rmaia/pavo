@@ -22,7 +22,7 @@
 #' @return \code{r.vec}: the r vector (saturation, distance from the achromatic center).
 #' @return \code{r.max}: the maximum r vector achievable for the color's hue.
 #' @return \code{r.achieved}: the relative r distance from the achromatic center, in
-#'  relation to the maximum distance achievable (\code{r.vec/r.max})
+#'  relation to the maximum distance achievable (\code{r.vec/r.max}).
 #'  
 #' @examples \dontrun{
 #' data(sicalis)

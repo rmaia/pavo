@@ -2,7 +2,7 @@
 % Please edit documentation in R/vol.R
 \name{vol}
 \alias{vol}
-\title{Plot a Tetrahedral Color Space}
+\title{Plot a tetrahedral color space}
 \usage{
 vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, xlim = NULL,
   ylim = NULL, zlim = NULL, view = NULL, scale.y = NULL,
@@ -26,11 +26,11 @@ in case of a new plot. see \code{\link{tetraplot}}.}
 \item{...}{additional graphical options. See \code{link{polygon}}.}
 }
 \value{
-\code{vol} creates a 3D convex hull within a static tetrahedral plot
+\code{vol} creates a 3D convex hull within a static tetrahedral plot.
 }
 \description{
 Produces a 3D convex hull in tetrahedral color space when plotting a 
-non-interactive tetrahedral plot
+non-interactive tetrahedral plot.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

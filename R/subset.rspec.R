@@ -1,12 +1,12 @@
 #' Subset rspec, vismodel, and colspace objects
 #'
-#' Subsets various object types based on a given vector or grep partial matching of data names
+#' Subsets various object types based on a given vector or grep partial matching of data names.
 #'
 #' @param x (required) an object of class \code{rspec}, \code{vismodel}, or \code{colspace},
-#' containing spectra, visual model output or colorspace data to subset
+#' containing spectra, visual model output or colorspace data to subset.
 #' @param ... class consistency (ignored).
-#' @param subset a string used for partial matching of observations
-#' @return a subsetted object of the same class as the input object
+#' @param subset a string used for partial matching of observations.
+#' @return a subsetted object of the same class as the input object.
 #'
 #' @export
 #'
@@ -14,6 +14,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis)
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+#' 
 #' # Subset all 'crown' patches (C in file names)
 #' head(subset(sicalis, "C"))
 #' subset(vis.sicalis, "C")

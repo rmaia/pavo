@@ -23,12 +23,12 @@ containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled 
 to its encapsulating sphere, and is ideal to visualize differences in hue.
 
 \code{projpoints} creates points in a projection color space plot 
-produced by \code{projplot}
+produced by \code{projplot}.
 }
 \description{
 Produces a 2D projection plot of points in a color space
 
-\code{projpoints} plots points in the color space projection
+Adds points to a tetrahedral colorspace projection
 }
 \note{
 \code{projplot} uses the Mollweide projection, and not the Robinson projection, which
@@ -38,9 +38,9 @@ relationships within latitudes without distortion.
 \examples{
 \dontrun{
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-projplot(tcs.sicalis, pch=16, col=setNames(rep(1:3, 7), rep(c('C','T','B'),7))) 
+projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7))) 
 }
 
 }

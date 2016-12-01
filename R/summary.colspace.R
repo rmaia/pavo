@@ -1,11 +1,10 @@
-#' Colorspace summary
+#' Colorspace data summary
 #'
-#' Returns the attributes of \code{colspace} objects
+#' Returns the attributes of \code{colspace} objects.
 #'
 #' @import geometry
 #' 
-#' @param object (required) a \code{colspace} object. May be the result of \code{hexagon},
-#'  \code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.
+#' @param object (required) a \code{colspace} object.
 #' @param by when the input is in \code{tcs} colorspace, \code{by} is either 
 #'  a single value specifying the range of color points for which
 #'  summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3 
@@ -15,21 +14,21 @@
 #'  calculated for each group of points sharing the same identification). If \code{by} 
 #'  is left blank, the summary statistics are calculated accross all color points in the
 #'  data. 
-#' @param ... class consistency (ignored)
+#' @param ... class consistency (ignored).
 #' 
 #' @return returns all attributes of the data as mapped to the selected colourspace, including 
 #' options specified when calculating the visual model. Also return the default 
 #' \code{data.frame} summary, except when the object is the result of \code{tcs}, 
 #' in which case the following variables are output instead:
-#' @return \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points
-#' @return \code{c.vol} the total volume occupied by the points
-#' @return \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume
-#' @return \code{colspan.m} the mean hue span
-#' @return \code{colspan.v} the variance in hue span
-#' @return \code{huedisp.m} the mean hue disparity
-#' @return \code{huedisp.v} the variance in hue disparity
-#' @return \code{mean.ra} mean saturation
-#' @return \code{max.ra} maximum saturation achieved by the group of points
+#' @return \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
+#' @return \code{c.vol} the total volume occupied by the points.
+#' @return \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
+#' @return \code{colspan.m} the mean hue span.
+#' @return \code{colspan.v} the variance in hue span.
+#' @return \code{huedisp.m} the mean hue disparity.
+#' @return \code{huedisp.v} the variance in hue disparity.
+#' @return \code{mean.ra} mean saturation.
+#' @return \code{max.ra} maximum saturation achieved by the group of points.
 #'
 #' @export
 #'
@@ -45,7 +44,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 #' tcs.sicalis <- tcs(vis.sicalis)
-#' summary(tcs.sicalis, by=rep(c('C','T','B'),7))}
+#' summary(tcs.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 #' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' 

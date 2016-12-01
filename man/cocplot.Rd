@@ -10,26 +10,26 @@ cocplot(cocdata, labels = TRUE, lab.cex = 0.9, tick.loc = c(-12, -9, -6,
 }
 \arguments{
 \item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 
-function, containing values for 'x' and 'y' coordinates as columns (labeled as such)}
+function, containing values for 'x' and 'y' coordinates as columns (labeled as such).}
 
-\item{labels}{plot axis labels? Defaults to \code{TRUE}}
+\item{labels}{plot axis labels? Defaults to \code{TRUE}.}
 
-\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
-\item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes}
+\item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes.}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
-\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
-\item{margins}{margins for the plot}
+\item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
-(defaults to \code{TRUE})}
+(defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}}
+\item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
 Produces a plot based on the colour opponent coding diagram of Backhaus (1991).

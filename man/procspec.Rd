@@ -21,7 +21,7 @@ spectra to process.}
                      \code{\link{loess.smooth}}. Optimal smoothing parameter
                      can be assessed by using \code{\link{plotsmooth}}.
     \item \code{"minimum"} subtracts the minimum from each individual spectra.
-    \item \code{"maxmimum"} divides each spectrum by its maximum value
+    \item \code{"maxmimum"} divides each spectrum by its maximum value.
     \item \code{"sum"} divides each spectrum by summed values.
     \item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
                                  specify.
@@ -38,17 +38,17 @@ spectra to process.}
                           the minimum value to zero, but scaling other values accordingly).
 }}
 
-\item{span}{sets the smoothing parameter used by \code{loess.smooth}}
+\item{span}{sets the smoothing parameter used by \code{loess.smooth}.}
 
-\item{bins}{sets the number of equally sized wavelength bins for \code{opt="bin"}}
+\item{bins}{sets the number of equally sized wavelength bins for \code{opt = "bin"}.}
 
-\item{...}{Ignored}
+\item{...}{ignored.}
 }
 \value{
 A data frame of class \code{rspec} with the processed data.
 }
 \description{
-Applies normalization and/or smoothing to spectra for further analysis or plotting
+Applies normalization and/or smoothing to spectra for further analysis or plotting.
 }
 \examples{
 \dontrun{

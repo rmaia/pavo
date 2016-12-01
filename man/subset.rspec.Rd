@@ -14,23 +14,24 @@
 }
 \arguments{
 \item{x}{(required) an object of class \code{rspec}, \code{vismodel}, or \code{colspace},
-containing spectra, visual model output or colorspace data to subset}
+containing spectra, visual model output or colorspace data to subset.}
 
-\item{subset}{a string used for partial matching of observations}
+\item{subset}{a string used for partial matching of observations.}
 
 \item{...}{class consistency (ignored).}
 }
 \value{
-a subsetted object of the same class as the input object
+a subsetted object of the same class as the input object.
 }
 \description{
-Subsets various object types based on a given vector or grep partial matching of data names
+Subsets various object types based on a given vector or grep partial matching of data names.
 }
 \examples{
 \dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis)
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+
 # Subset all 'crown' patches (C in file names)
 head(subset(sicalis, "C"))
 subset(vis.sicalis, "C")

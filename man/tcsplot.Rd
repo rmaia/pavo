@@ -34,9 +34,7 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{achrocol}{color of the point in the achromatic center}
 
-\item{lwd}{line width for the edges of the tetrahedron}
-
-\item{lcol}{line color for the edges of the tetrahedron}
+\item{lwd, lcol}{graphical parameters for the edges of the tetrahedron.}
 
 \item{new}{should a new 3D plot be called (defaults to \code{FALSE})?}
 
@@ -64,15 +62,15 @@ currently plotted only as spheres to maintain export capabilities.
 \code{tcspoints} creates 3D points in a tetrahedral color space plot produced by \code{tcsplot}
 using functions of the package \code{rgl}, based on openGL capabilities.
 
-\code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object
+\code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
 }
 \description{
 Produces an interactive 3D plot of a tetrahedral 
 colorspace using OpenGL capabilities.
 
-\code{tcspoints} plots points in a tetrahedral color space
+Plots points in a tetrahedral color space
 
-\code{tcsvol} produces a 3D convex hull in tetrahedral color space
+Produces a 3D convex hull in tetrahedral color space
 }
 \examples{
 \dontrun{
@@ -85,7 +83,7 @@ rgl.postscript('testplot.pdf',fmt='pdf')
 rgl.snapshot('testplot.png')
 
 # For adding points
-patch <- rep(c('C','T','B'),7)
+patch <- rep(c('C', 'T', 'B'), 7)
 tcs.crown <- subset(tcs.sicalis, 'C') 
 tcs.breast <- subset(tcs.sicalis, 'B') 
 plot(tcs.crown, col ='blue')

@@ -2,33 +2,29 @@
 % Please edit documentation in R/triplot.R
 \name{triplot}
 \alias{triplot}
-\title{Plot a Maxwell triangle}
+\title{Plot a maxwell triangle}
 \usage{
 triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
   achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{tridata}{(required) a data frame, possibly a result from the \code{trispace} 
-function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)}
+\item{tridata}{(required) a data frame, possibly a result from the \code{trispace} .
+function, containing values for the 'x' and 'y' coordinates as columns (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}}
+\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
-\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
+\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?.}
 
-\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8).}
 
-\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{cex.labels}{character expansion factor for category labels when \code{labels = TRUE}).}
 
-\item{out.lwd}{line width for triangle outline (defaults to 1)}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
-\item{out.lcol}{line colour for triangle outline (defaults to black)}
-
-\item{out.lty}{line type for triangle outline (defaults to 1)}
-
-\item{margins}{margins for the plot}
+\item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
 (defaults to \code{TRUE})}

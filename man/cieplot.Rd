@@ -13,21 +13,17 @@ cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 \item{ciedata}{(required)}
 
 \item{mono}{should the monochromatic loci (the 'horseshoe') be
-plotted? Defaults to \code{TRUE}}
+plotted? Defaults to \code{TRUE}.}
 
-\item{out.lwd}{line width for monochromatic loci outline (defaults to 1).}
-
-\item{out.lcol}{line colour for monochromatic loci outline (defaults to black).}
-
-\item{out.lty}{line type for monochromatic loci outline (defaults to 1).}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the monochromatic loci outline.}
 
 \item{view}{orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).}
 
-\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45)}
+\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to \code{0.45}).}
 
-\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE)}
+\item{axis}{logical. Draw X, Y and Z axis (defaults to \code{FALSE}).}
 
-\item{grid}{logical. Draw grid (defaults to FALSE)}
+\item{grid}{logical. Draw grid (defaults to \code{FALSE}).}
 
 \item{xlim, ylim, zlim}{axis limits}
 

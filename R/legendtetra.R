@@ -1,6 +1,6 @@
-#' Add Legend to a Static Tetrahedral Colorspace
-#' \code{legendtetra} adds legend to a 
-#' static tetrahedral colorspace plot.
+#' Add legend to a static tetrahedral colorspace
+#' 
+#' Adds a legend to a static tetrahedral colorspace plot.
 #' 
 #' @param location a vector containing x, y and z values for the position of
 #' the legend.
@@ -16,6 +16,7 @@
 
 
 legendtetra <- function(location = c(-1.4, -0.3, 0.7), ...){
+  
 	last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
 	
 	if(length(location) != 3) stop('location must have values for x, y and z', call.=FALSE)
@@ -28,4 +29,5 @@ legendtetra <- function(location = c(-1.4, -0.3, 0.7), ...){
 	arg$y <- position$y
 	
 	do.call(legend, arg)	
+	
 }

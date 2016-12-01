@@ -1,8 +1,8 @@
-#' Plot a Tetrahedral Color Space
+#' Plot a tetrahedral color space
 #'
-#' \code{tcsvol} produces a 3D convex hull in tetrahedral color space
+#' Produces a 3D convex hull in tetrahedral color space
 #'
-#' @return \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object
+#' @return \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
 #'
 #' @rdname tcsplot
 #' @export

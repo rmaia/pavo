@@ -10,25 +10,21 @@ diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{dispace} 
-function, containing values for the 'x' coordinates as a column (labeled as such)}
+function, containing values for the 'x' coordinates as a column (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}}
+\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
-\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
-\item{out.lwd}{line width for segment (defaults to 1)}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the segment.}
 
-\item{out.lcol}{line colour for segment (defaults to black)}
-
-\item{out.lty}{line type for segment (defaults to 1)}
-
-\item{margins}{margins for the plot}
+\item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
 (defaults to \code{TRUE})}

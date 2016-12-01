@@ -1,6 +1,6 @@
-#' Plot Points in a Colorspace
+#' Plot points in a colorspace
 #'
-#' Plots additional points in a colorspace
+#' Add points to a colorspace plot
 #' 
 #' @import scatterplot3d
 #' 

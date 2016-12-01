@@ -15,7 +15,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}}
+\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
 \item{sectors}{plot the bee-hue sector dividers? Options are:
 \itemize{ 
@@ -26,11 +26,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{sec.col}{line colour of hue sector dividers. Defaults to \code{'grey'}.}
 
-\item{out.lwd}{line width for hexagon outline (defaults to 1)}
-
-\item{out.lty}{line type for hexagon outline (defaults to 1)}
-
-\item{out.lcol}{line colour for hexagon outline (defaults to black)}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for hexagon outline.}
 
 \item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
 
@@ -38,12 +34,12 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
 
-\item{margins}{margins for the plot}
+\item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
-(defaults to \code{TRUE})}
+(defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}}
+\item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
 Produces a colour hexagon plot.

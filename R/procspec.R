@@ -1,6 +1,6 @@
 #' Process spectra
 #'
-#' Applies normalization and/or smoothing to spectra for further analysis or plotting
+#' Applies normalization and/or smoothing to spectra for further analysis or plotting.
 #'
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
@@ -13,7 +13,7 @@
 #'                      \code{\link{loess.smooth}}. Optimal smoothing parameter
 #'                      can be assessed by using \code{\link{plotsmooth}}.
 #' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
-#' 	\item \code{"maxmimum"} divides each spectrum by its maximum value
+#' 	\item \code{"maxmimum"} divides each spectrum by its maximum value.
 #' 	\item \code{"sum"} divides each spectrum by summed values.
 #' 	\item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
 #'									 specify.
@@ -29,9 +29,9 @@
 #'                           spectra to the reflectance at all other wavelengths (setting
 #'                           the minimum value to zero, but scaling other values accordingly).
 #' }
-#' @param span sets the smoothing parameter used by \code{loess.smooth}
-#' @param bins sets the number of equally sized wavelength bins for \code{opt="bin"}
-#' @param ... Ignored
+#' @param span sets the smoothing parameter used by \code{loess.smooth}.
+#' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
+#' @param ... ignored.
 #' 
 #' @return A data frame of class \code{rspec} with the processed data.
 #' 
@@ -64,7 +64,7 @@
 procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 
 										 'bin', 'sum', 'center'), 
 										 fixneg = c('none', 'addmin', 'zero'),
-										 span = .25, bins = 20, ...) {
+										 span = 0.25, bins = 20, ...) {
 
 opt <- match.arg(opt, several.ok = TRUE)
 
