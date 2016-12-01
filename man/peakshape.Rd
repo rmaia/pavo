@@ -5,7 +5,7 @@
 \title{Peak shape descriptors}
 \usage{
 peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
-  ask = FALSE, ...)
+  ask = FALSE, absolute.min = FALSE, ...)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec},
@@ -22,6 +22,10 @@ factor (e.g., \code{sex == 'male'}).}
 
 \item{ask}{logical, specifies whether user input needed to plot multiple plots
 when number of spectra to analyze is greater than 1 (defaults to \code{FALSE}).}
+
+\item{absolute.min}{logical. If \code{TRUE}, full width at half maximum will be
+calculated using the absolute minimum reflectance of the spectrum, even if
+that value falls outside the range specified by \code{lim}. (defaults to \code{FALSE})}
 
 \item{...}{additional arguments to be passed to plot.}
 }

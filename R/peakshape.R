@@ -14,6 +14,9 @@
 #' (Defaults to \code{TRUE}).
 #' @param ask logical, specifies whether user input needed to plot multiple plots
 #' when number of spectra to analyze is greater than 1 (defaults to \code{FALSE}).
+#' @param absolute.min logical. If \code{TRUE}, full width at half maximum will be
+#' calculated using the absolute minimum reflectance of the spectrum, even if
+#' that value falls outside the range specified by \code{lim}. (defaults to \code{FALSE})
 #' @param ... additional arguments to be passed to plot.
 #' 
 #' @return a data frame containing column names (id); peak height (max value, B3), location (hue, H1) and full width
@@ -36,7 +39,7 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL, 
-                      plot = TRUE, ask = FALSE, ...) {
+                      plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
 
@@ -55,7 +58,7 @@ if (length(wl_index) > 0) {
 } else {
   haswl <- FALSE
   wl <- 1:nrow(rspecdata)
-  warning('No wavelengths provided; using arbitrary index values')
+  warning('No wavelengths provided; using arbitrary index values', call.=FALSE)
 }
 
 # set default wavelength range if not provided
@@ -84,9 +87,12 @@ if (ncol(rspecdata)==1) {
   Xi <- which(rspecdata2==Yi)  # lambda_max index
   if (length(Xi)>1) {
     Xi <- Xi[1]
-    warning("Multiple wavelengths have the same reflectance value.
-      Using first peak found. Please check the data or try smoothing.")
+    warning("Multiple wavelengths have the same reflectance value. Using first peak found. Please check the data or try smoothing.", call.=FALSE)
   }
+  
+    if(absolute.min)
+    Yj <- Yk
+  
   fsthalf <- rspecdata2[1:Xi]
   sndhalf <- rspecdata2[Xi:length(rspecdata2)]
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
@@ -104,11 +110,13 @@ if (ncol(rspecdata)==1) {
   if (any(dblpeaks>1)) {
     # Keep only first peak of each spectrum
     Xi <- sapply(Xi, "[[", 1)
-    warning(paste("Multiple wavelengths have the same reflectance value (",
-      paste(dblpeak.nms, collapse=", "),
-      "). Using first peak found. Please check the data or try smoothing.", sep=""))
+    warning(paste("Multiple wavelengths have the same reflectance value (", paste(dblpeak.nms, collapse=", "), "). Using first peak found. Please check the data or try smoothing.", sep=""), call.=FALSE)
   }
   # end CE edit
+  
+  if(absolute.min)
+    Yj <- Yk
+    
   fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
   sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
@@ -119,8 +127,7 @@ if (ncol(rspecdata)==1) {
 
 
 if (any(Yj>Yk)) {
-warning(paste("Please fix lim in spectra with incl.min marked 'No' to 
-              incorporate all minima in spectral curves"))
+warning(paste("Consider fixing ",dQuote('lim'),' in spectra with ', dQuote('incl.min'),' marked ',dQuote('No'),' to incorporate all minima in spectral curves', sep=''), call.=FALSE)
 }
 
 Xa <- wlrange[fstHM]

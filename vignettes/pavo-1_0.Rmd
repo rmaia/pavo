@@ -68,7 +68,7 @@ As in previous versions, the individual sensitivity functions can be accessed vi
 plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
 ```
 
-## The `vismodel` Function and Receptor-noise Limited Model
+## The `vismodel` Function and Receptor-Noise Limited Model
 
 **Incorporating transmission into visual models.** The `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
 
