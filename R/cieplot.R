@@ -53,8 +53,8 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
       arg$col <- 'black'
     if(is.null(arg$pch))
       arg$pch <- 19
-    if(is.null(arg$type))
-      arg$type = 'p'
+#    if(is.null(arg$type))
+#      arg$type = 'p'      is the default, not needed?
     if(is.null(arg$xaxp))
       arg$xaxp <- c(0, 0.9, 9)
     if(is.null(arg$yaxp))
@@ -92,10 +92,14 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     arg$x <- ciedata$x
     arg$y <- ciedata$y
     
-    do.call(plot, arg)
+    do.call(plot, c(arg, type='n'))
       
     if(mono == TRUE)
       polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+    
+    # add points after stuff is drawn
+    suppressWarnings(do.call(points, arg))
+
     
   }
   
