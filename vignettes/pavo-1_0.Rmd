@@ -32,6 +32,7 @@ We detail the changes and additions to the package below, but frequent users sho
   * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
   * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
   * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
+  * besides the familiar distances in JND for receptor noise models, **`coldist` now also calculates color distances for the other colorspaces available through `colspace`**: TOM BRIEFLY LIST WHICH COLOR DISTANCE METRICS ARE CALCULATED FOR WHICH COLOR SPACES. (also I guess at some point we need to check for consistency of color x colour :P)
 
 # New `flowers` Dataset
 
