@@ -1,27 +1,32 @@
 #' Spectrum to rgb color conversion
 #'
-#' Calculates rgb values from spectra based on human color matching functions
+#' Calculates rgb values from spectra based on human color matching functions.
 #'
 #' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
-#' @param alpha alpha value to use for colors (defaults to 1, opaque)
+#' @param alpha alpha value to use for colors (defaults to 1, opaque).
 #' 
 #' @return A character vector of class \code{spec2rgb} consisting of hexadecimal color values
 #' for passing to further plotting functions.
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
 #' data(teal)
 #' spec2rgb(teal)
+#' 
 #' # Plot data using estimated perceived color
 #' plot(teal, col = spec2rgb(teal), type = 'o')}
+#' 
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @references CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 #' @references Color matching functions obtained from Colour and Vision Research Laboratory 
 #' online data respository at \url{http://www.cvrl.org/}.
 #' @references \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 
-spec2rgb <- function(rspecdata, alpha=1) {
+spec2rgb <- function(rspecdata, alpha = 1){
 
 wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index > 0)){

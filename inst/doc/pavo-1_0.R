@@ -5,15 +5,13 @@ library(pavo)
 data(flowers)
 
 head(flowers[1:4])
-plot(flowers, lwd=2, col=spec2rgb(flowers))
+plot(flowers, lwd = 2, col = spec2rgb(flowers))
 
 ## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"----
-
-plot(vissyst[, c('wl', grep('musca|md',names(vissyst), value=TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd=2)
+plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
 
 ## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Transmission example: Ocular transmission for the blue tit (red) and blackbird (blue) retinas._"----
-
-plot(transmissiondata, lwd=2, ylab='Transmission', main = 'Ocular transmission', col=c('red','blue'))
+plot(transmissiondata, lwd = 2, ylab = 'Transmission', main = 'Ocular transmission', col = c('red', 'blue'))
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -65,7 +63,6 @@ coc.flowers <- colspace(vis.flowers, space = 'coc')
 
 head(coc.flowers)
 
-
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"----
 plot(coc.flowers, pch = 21, bg = 'forestgreen', yaxt='n') 
 
@@ -80,10 +77,8 @@ head(ciexyz.flowers)
 plot(ciexyz.flowers, pch = 21, bg = 'forestgreen') 
 
 ## ------------------------------------------------------------------------
-
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
-
 
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"----
 plot(cielab.flowers, pch = 21, bg = 'forestgreen') 
@@ -101,36 +96,35 @@ plot(cat.flowers, pch = 21, bg = 'forestgreen')
 
 ## ----eval=FALSE----------------------------------------------------------
 #  data(sicalis)
-#  vis.sicalis <- vismodel(sicalis, relative=FALSE)
-#  JND.sicalis <- coldist(vis.sicalis, n1=1, n2=2, n3=2, n4=4, v=0.2)
+#  vis.sicalis <- vismodel(sicalis, relative = FALSE)
+#  JND.sicalis <- coldist(vis.sicalis, n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.2)
 
 ## ------------------------------------------------------------------------
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, relative=FALSE)
-JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref=4)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 4)
 head(JND.sicalis)
 
 ## ------------------------------------------------------------------------
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, relative=FALSE)
-JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref='longest')
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 'longest')
 head(JND.sicalis)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"----
-# create an arbitrary visual phenotype with 10 photoreceptors
-fakemantisshrimp <- sensmodel(c(325,350,400,425,450,500,550,600,650,700), beta=FALSE, integrate=FALSE)
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-# convert to percentages, just to color the plot 
-fakemantisshrimp.colors <- fakemantisshrimp*100
-fakemantisshrimp.colors[,'wl'] <- fakemantisshrimp[,'wl']
+# Convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp * 100
+fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
  
-plot(fakemantisshrimp, col=spec2rgb(fakemantisshrimp.colors), lwd=2, ylab='Absorbance')
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
 
-# run visual model and calculate color distances
+# Run visual model and calculate color distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
 
-vm.fms <- vismodel(flowers, visual=fakemantisshrimp, relative=FALSE, achro=FALSE)
-
-JND.fms <- coldist(vm.fms, n=c(1,1,2,2,3,3,4,4,5,5))
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
 head(JND.fms)
 

@@ -3,10 +3,10 @@
 #' Produces a plot based on Troje's (1993) categorical colour model. 
 #'  
 #' @param catdata (required) a data frame, possibly a result from the \code{categorical} 
-#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
+#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such).
 #' @param labels plot category labels inside? Defaults to \code{TRUE}.
 #' @param lab.cex character expansion factor for category labels when \code{labels = TRUE}).
-#' @param ... additional graphical options. See \code{\link{par}}
+#' @param ... additional graphical options. See \code{\link{par}}.
 #'    
 #' @examples
 #' \dontrun{

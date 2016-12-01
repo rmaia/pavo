@@ -11,19 +11,23 @@
 #' @param lim a vector with two numbers determining the wavelength limits to be
 #' considered (defaults to 300 and 700).
 #' @param decimal character to be used to identify decimal plates 
-#' (defaults to ".")
+#' (defaults to ".").
 #' @param subdir should subdirectories within the \code{where} folder be
-#' included in the search? (defaults to \code{FALSE})
+#' included in the search? (defaults to \code{FALSE}).
 #' @param subdir.names should subdirectory path be included in the name of the
-#' spectra? (defaults to \code{FALSE})
+#' spectra? (defaults to \code{FALSE})/
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
-#' getspec('examplespec/', lim=c(400,900))	
-#' getspec('examplespec/', ext='ttt')}
+#' getspec('examplespec/', lim = c(400, 900))	
+#' getspec('examplespec/', ext = 'ttt')}
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' 
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
@@ -31,8 +35,8 @@
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
 
-getspec <- function(where=getwd(), ext='txt', lim=c(300,700), decimal=".", 
-           subdir=FALSE, subdir.names=FALSE)
+getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
+           subdir = FALSE, subdir.names = FALSE)
   {
   
   corrupt <- FALSE

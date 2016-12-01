@@ -40,7 +40,7 @@ We detail the changes and additions to the package below, but frequent users sho
 data(flowers)
 
 head(flowers[1:4])
-plot(flowers, lwd=2, col=spec2rgb(flowers))
+plot(flowers, lwd = 2, col = spec2rgb(flowers))
 ```
 
 # Visual Modelling
@@ -62,8 +62,7 @@ plot(flowers, lwd=2, col=spec2rgb(flowers))
 As in previous versions, the individual sensitivity functions can be accessed via a call to `vissyst`, and visualised using `plot`. For example:
 
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"}
-
-plot(vissyst[, c('wl', grep('musca|md',names(vissyst), value=TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd=2)
+plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
 ```
 
 ## The `vismodel` Function and Receptor-noise Limited Model
@@ -71,8 +70,7 @@ plot(vissyst[, c('wl', grep('musca|md',names(vissyst), value=TRUE))], main = 'Mu
 **Incorporating transmission into visual models.** The `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
 
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Transmission example: Ocular transmission for the blue tit (red) and blackbird (blue) retinas._"}
-
-plot(transmissiondata, lwd=2, ylab='Transmission', main = 'Ocular transmission', col=c('red','blue'))
+plot(transmissiondata, lwd = 2, ylab = 'Transmission', main = 'Ocular transmission', col = c('red', 'blue'))
 ```
 
 **Hyperbolic transformation of quantum catches.** Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
@@ -97,15 +95,17 @@ examples are featured in detail below.
   
 `pavo 1.0`'s new  workflow expands modeling and visualization capabilities of di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colorspace automatically). For di- tri- and tetrechromatic spaces, `colspace` calculates the coordinates of stimuli as:   
 
-  : Dichromats:
-    : $$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
-  : Trichromats:
-    : $$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
-    : $$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
-  : Tetrachromats:
-    : $$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
-    : $$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
-    : $$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
+**Dichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
+
+**Trichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+    
+**Tetrachromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+$$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
 
 Where Q~u~, Q~s~, Q~m~, and Q~l~ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
 
@@ -202,7 +202,6 @@ vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALS
 coc.flowers <- colspace(vis.flowers, space = 'coc')
 
 head(coc.flowers)
-
 ```
 
 The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
@@ -269,10 +268,8 @@ $$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
 when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
 
 ```{r}
-
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
-
 ```
 
 Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`: 
@@ -323,16 +320,16 @@ So, for example, the code below used in previous versions of `pavo`:
 
 ```{r eval=FALSE}
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, relative=FALSE)
-JND.sicalis <- coldist(vis.sicalis, n1=1, n2=2, n3=2, n4=4, v=0.2)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.2)
 ```
 
 in `pavo 1.0` would be:
 
 ```{r}
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, relative=FALSE)
-JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref=4)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 4)
 head(JND.sicalis)
 ```
 
@@ -340,8 +337,8 @@ or alternatively, `weber.ref` can be simply set to "longest":
 
 ```{r}
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, relative=FALSE)
-JND.sicalis <- coldist(vis.sicalis, n=c(1,2,2,4), weber=0.1, weber.ref='longest')
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 'longest')
 head(JND.sicalis)
 ```
 
@@ -352,20 +349,19 @@ head(JND.sicalis)
 As a result of the changes in the input of relative cone abundances and the internal calculation functions used in `coldist`, the function is not limited to di-, tri- or tetrachromatic visual systems. `coldist` has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"}
-# create an arbitrary visual phenotype with 10 photoreceptors
-fakemantisshrimp <- sensmodel(c(325,350,400,425,450,500,550,600,650,700), beta=FALSE, integrate=FALSE)
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-# convert to percentages, just to color the plot 
-fakemantisshrimp.colors <- fakemantisshrimp*100
-fakemantisshrimp.colors[,'wl'] <- fakemantisshrimp[,'wl']
+# Convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp * 100
+fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
  
-plot(fakemantisshrimp, col=spec2rgb(fakemantisshrimp.colors), lwd=2, ylab='Absorbance')
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
 
-# run visual model and calculate color distances
+# Run visual model and calculate color distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
 
-vm.fms <- vismodel(flowers, visual=fakemantisshrimp, relative=FALSE, achro=FALSE)
-
-JND.fms <- coldist(vm.fms, n=c(1,1,2,2,3,3,4,4,5,5))
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
 head(JND.fms)
 ```

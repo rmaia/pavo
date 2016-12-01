@@ -2,7 +2,7 @@
 % Please edit documentation in R/tetraplot.R
 \name{tetraplot}
 \alias{tetraplot}
-\title{Plot a Static Tetrahedral Colorspace}
+\title{Plot a static tetrahedral colorspace}
 \usage{
 tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
   achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
@@ -12,29 +12,27 @@ tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
-function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
+function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).}
 
-\item{vertexsize}{size of the points at the vertices (defaults to 0.8)}
+\item{vertexsize}{size of the points at the vertices (defaults to 0.8).}
 
-\item{achrosize}{size of the point in the achromatic center (defaults to 0.8)}
+\item{achrosize}{size of the point in the achromatic center (defaults to 0.8).}
 
-\item{achrocol}{color of the point in the achromatic center (defaults to 'grey')}
+\item{achrocol}{color of the point in the achromatic center (defaults to 'grey').}
 
-\item{out.lwd}{line width for tetrahedral outline (defaults to 1)}
+\item{out.lwd, out.lcol}{graphical parameters for the tetrahedral outline.}
 
-\item{out.lcol}{line colour for tetrahedral outline (defaults to black)}
+\item{view}{orientation of the tetrahedron in degrees (defaults to 70).}
 
-\item{view}{orientation of the tetrahedron in degrees (defaults to 70)}
+\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45).}
 
-\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45)}
+\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE).}
 
-\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE)}
+\item{grid}{logical. Draw grid (defaults to FALSE).}
 
-\item{grid}{logical. Draw grid (defaults to FALSE)}
+\item{xlim, ylim, zlim}{axis limits.}
 
-\item{xlim, ylim, zlim}{axis limits}
-
-\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
+\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1, 1, 1, 1)).}
 }
 \value{
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.

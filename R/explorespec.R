@@ -13,16 +13,21 @@
 #' or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, 
 #' \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} and \code{"center"}.
 #' @param ... additional parameters to be passed to plot
+#' 
 #' @return Spectral curve plots
+#' 
 #' @note Number of plots presented per page depends on the number of graphs produced.
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
 #' data(sicalis)
 #' explorespec(sicalis, 3)
-#' explorespec(sicalis, 3, ylim=c(0,100), legpos=c(500,80))}
+#' explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))}
+#' 
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-explorespec <- function (rspecdata, by=NULL, scale=c('equal','free'), legpos='topright', ...) {
+explorespec <- function (rspecdata, by = NULL, scale = c('equal', 'free'), legpos = 'topright', ...){
 
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]

@@ -4,8 +4,8 @@
 #' an index or a vector of identities.
 #' 
 #' @param rspecdata (required) data frame, possibly of class \code{rspec}
-#' containing the spectra to be manipulated. If
-#' it contains a wavelength column containing "wl", that column will be ignored.
+#' containing the spectra to be manipulated. If it contains a wavelength column 
+#' named "wl", that column will be ignored.
 #' @param by (required) either a single value specifying the range of spectra within
 #' the data frame to be combined (for example, \code{by} = 3 indicates the function
 #' will be applied to groups of 3 consecutive columns in the spectra data frame); 
@@ -25,25 +25,20 @@
 #' 
 #' @examples \dontrun{
 #' data(teal)
+#' 
 #' # Average every two spectra
 #' teal.sset1 <- aggspec(teal, by = 2)
 #' plot(teal.sset1)
+#' 
 #' # Create factor and average spectra by levels 'a' and 'b'
-#' ind <- rep(c('a','b'), times=6)
-#' teal.sset2 <- aggspec(teal, by=ind)
-#' plot(teal.sset2) }
+#' ind <- rep(c('a', 'b'), times = 6)
+#' teal.sset2 <- aggspec(teal, by = ind)
+#' 
+#' plot(teal.sset2) 
+#' }
 #' 
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
-
-
-# Function to calculate average of columns given a column index (by)
-# Returns a matrix with column names as the by's and rows as averaged values for each wl
-# Input column 1 should be wavelengths
-
-# RM tip: Always provide useful defaults. If you don't want to provide one 
-#     (i.e. there is no meaningful default), leave arg empty. Default is to return 
-#     error. But if there's an implemented default (i.e. for FUN), use it.
 
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE) {
   

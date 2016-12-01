@@ -44,10 +44,11 @@ according to an index or a vector of identities.
 \examples{
 \dontrun{
 data(sicalis)
-bysic <- gsub("^ind[0-9].",'',names(sicalis)[-1])
-aggplot(sicalis,bysic)
-aggplot(sicalis,bysic, shade=spec2rgb(sicalis),lcol=1)
-aggplot(sicalis,bysic,lcol=1, FUN.error=function(x)sd(x)/sqrt(length(x))) }
+bysic <- gsub("^ind[0-9].",'', names(sicalis)[-1])
+aggplot(sicalis, bysic)
+aggplot(sicalis, bysic, shade = spec2rgb(sicalis), lcol = 1)
+aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x))) 
+}
 
 }
 \author{

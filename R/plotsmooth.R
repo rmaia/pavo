@@ -6,16 +6,21 @@
 #' @param rspecdata (required) a data frame, possibly of class \code{rspec}, which
 #' contains a column containing a wavelength range , named 'wl', and spectra data in 
 #' remaining columns.
-#' @param minsmooth the minimum f value of the loess function to visualize (defaults to 0.05)
-#' @param maxsmooth the maximum f value of the loess function to visualize (defaults to 0.20)
-#' @param curves the number of curves to display on the same plot (defaults to 5)
-#' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to ALL)
+#' @param minsmooth the minimum f value of the loess function to visualize (defaults to \code{0.05}).
+#' @param maxsmooth the maximum f value of the loess function to visualize (defaults to \code{0.20}).
+#' @param curves the number of curves to display on the same plot (defaults to \code{5}).
+#' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to \code{ALL}).
 #' @param ask logical. if \code{TRUE}, asks for user input before changing plot pages
+#' 
 #' @return Series of plot with curves processed with varying level of loess smoothing
+#' 
 #' @export
+#' 
 #' @examples \dontrun{
 #' data(sicalis)
-#' plotsmooth(sicalis,0.05,0.1,7,6)}
+#' plotsmooth(sicalis,0.05,0.1,7,6)
+#' }
+#' 
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
   
 

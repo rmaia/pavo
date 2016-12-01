@@ -1,17 +1,18 @@
-#' Plot Reference Axes in a Static Tetrahedral Colorspace
-#' \code{axistetra} plots reference x, y and z arrows showing the direction of
+#' Plot reference axes in a static tetrahedral colorspace
+#' 
+#' Plots reference x, y and z arrows showing the direction of
 #' the axes in a static tetrahedral colorspace plot.
 #' 
 #' @param x,y,z coordinates for the origin position of the arrows
 #' @param size length of the arrows. Can be either a single value 
-#' (applied for x, y and z) or a vector of 3 separate values for each axis
-#' @param arrowhead size of the arrowhead
-#' @param col,lty,lwd graphical parameters for the arrows
-#' @param label logical, include x, y and z labels (defaults to TRUE)
+#' (applied for x, y and z) or a vector of 3 separate values for each axis.
+#' @param arrowhead size of the arrowhead.
+#' @param col,lty,lwd graphical parameters for the arrows.
+#' @param label logical, include x, y and z labels (defaults to TRUE).
 #' @param label.adj position adjustment for the labels. Can be either a 
 #' single value (applied for x, y and z) or a vector of 3 separate values
-#' for each axis
-#' @param label.cex,label.col graphical parameters for the labels
+#' for each axis.
+#' @param label.cex,label.col graphical parameters for the labels.
 #'
 #' @return \code{axistetra} adds reference arrows showing the direction of the 
 #' 3-dimensional axes in a static tetrahedral colorspace plot. 
@@ -20,10 +21,11 @@
 #'
 #' @export
 
-axistetra <- function(x=0.6, y=0.8, z=0.7, size=0.1, 
-                      arrowhead=0.05, col = par("fg"), 
+axistetra <- function(x = 0.6, y = 0.8, z = 0.7, size = 0.1, 
+                      arrowhead = 0.05, col = par("fg"), 
                       lty = par("lty"), lwd = par("lwd"),
-                      label=TRUE, label.adj=0.03, label.cex=1, label.col=NULL){
+                      label = TRUE, label.adj = 0.03, label.cex = 1, label.col = NULL){
+  
   if(length(size) > 1){
   	lx <- size[1]
   	ly <- size[2]

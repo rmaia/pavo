@@ -1,7 +1,7 @@
-#' Plot a Tetrahedral Color Space
+#' Plot a tetrahedral color space
 #'
 #' Produces a 3D convex hull in tetrahedral color space when plotting a 
-#' non-interactive tetrahedral plot
+#' non-interactive tetrahedral plot.
 #'
 #' @param tcsdata (required) object of class \code{colspace}.
 #' @param alpha transparency of volume (if \code{fill = TRUE}).
@@ -13,7 +13,7 @@
 #' (defaults to FALSE)
 #' @param ... additional graphical options. See \code{link{polygon}}. 
 #'
-#' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot
+#' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

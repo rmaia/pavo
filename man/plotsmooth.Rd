@@ -12,13 +12,13 @@ plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
 contains a column containing a wavelength range , named 'wl', and spectra data in 
 remaining columns.}
 
-\item{minsmooth}{the minimum f value of the loess function to visualize (defaults to 0.05)}
+\item{minsmooth}{the minimum f value of the loess function to visualize (defaults to \code{0.05}).}
 
-\item{maxsmooth}{the maximum f value of the loess function to visualize (defaults to 0.20)}
+\item{maxsmooth}{the maximum f value of the loess function to visualize (defaults to \code{0.20}).}
 
-\item{curves}{the number of curves to display on the same plot (defaults to 5)}
+\item{curves}{the number of curves to display on the same plot (defaults to \code{5}).}
 
-\item{specnum}{the number of spectral curves, from the data frame, to visualize (defaults to ALL)}
+\item{specnum}{the number of spectral curves, from the data frame, to visualize (defaults to \code{ALL}).}
 
 \item{ask}{logical. if \code{TRUE}, asks for user input before changing plot pages}
 }
@@ -32,7 +32,9 @@ loess parameters are best for the data.
 \examples{
 \dontrun{
 data(sicalis)
-plotsmooth(sicalis,0.05,0.1,7,6)}
+plotsmooth(sicalis,0.05,0.1,7,6)
+}
+
 }
 \author{
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}

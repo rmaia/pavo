@@ -10,7 +10,7 @@
 \item{x}{(required) an object of class \code{colspace}.}
 
 \item{...}{additional graphical options, which vary by modelled \code{space}. Refer 
-to their individual help files: 
+to their individual documentation: 
 \itemize{ 
       \item \code{\link{diplot}}: dichromat space
       \item \code{\link{triplot}}: trichromat space
@@ -23,12 +23,10 @@ to their individual help files:
       Also see \code{\link{par}}.}
 }
 \value{
-\itemize{ 
-         \item \code{plot.colspace} creates a 2D colspace plot appropriate to the input data.
-           }
+A 2D colorspace plot appropriate to the input data.
 }
 \description{
-Plots reflectance spectra in the appropriate colorspace
+Plots reflectance spectra in the appropriate colorspace.
 }
 \examples{
 \dontrun{

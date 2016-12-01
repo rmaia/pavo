@@ -19,7 +19,7 @@ Andersson and Prager 2006) are returned. Finally, a user-specified string of var
 names can be used in order to filter and show only those variables.}
 
 \item{wlmin, wlmax}{minimum and maximum used to define the range of wavelengths used in
-calculations (default is to use entire range in the \code{rspec} object)}
+calculations (default is to use entire range in the \code{rspec} object).}
 
 \item{...}{class consistency (ignored)}
 }
@@ -121,7 +121,8 @@ variables can be reliably extracted using non-smoothed data.
 data(sicalis)
 summary(sicalis)
 summary(sicalis, subset = TRUE)
-summary(sicalis, subset = c('B1', 'H4')) }
+summary(sicalis, subset = c('B1', 'H4'))
+}
 
 }
 \author{

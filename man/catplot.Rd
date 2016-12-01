@@ -8,13 +8,13 @@ catplot(catdata, labels = TRUE, lab.cex = 0.9, ...)
 }
 \arguments{
 \item{catdata}{(required) a data frame, possibly a result from the \code{categorical} 
-function, containing values for 'x' and 'y' coordinates as columns (labeled as such)}
+function, containing values for 'x' and 'y' coordinates as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 
 \item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}}
+\item{...}{additional graphical options. See \code{\link{par}}.}
 }
 \description{
 Produces a plot based on Troje's (1993) categorical colour model.

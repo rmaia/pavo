@@ -10,12 +10,12 @@
 #' @param type what type of plot should be drawn. Possibilities are: 
 #' \itemize{
 #'  \item \code{overlay} (default) for plotting multiple spectra in a single panel with 
-#' a common y-axis
-#'  \item \code{stack} for plotting multiple spectra in a vertical arrangement
+#' a common y-axis.
+#'  \item \code{stack} for plotting multiple spectra in a vertical arrangement.
 #'  \item \code{heatmap} for plotting reflectance values by wavelength and a third variable 
-#'        (\code{varying})
+#'        (\code{varying}).
 #' }
-#' @param varying a numeric vector giving values for y-axis in \code{heatplot}
+#' @param varying a numeric vector giving values for y-axis in \code{heatplot}.
 #' @param n number of bins with which to interpolate colors and \code{varying} for the 
 #' heatplot.
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).

@@ -2,9 +2,7 @@
 % Please edit documentation in R/axistetra.R
 \name{axistetra}
 \alias{axistetra}
-\title{Plot Reference Axes in a Static Tetrahedral Colorspace
-\code{axistetra} plots reference x, y and z arrows showing the direction of
-the axes in a static tetrahedral colorspace plot.}
+\title{Plot reference axes in a static tetrahedral colorspace}
 \usage{
 axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
   col = par("fg"), lty = par("lty"), lwd = par("lwd"), label = TRUE,
@@ -14,27 +12,26 @@ axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
 \item{x, y, z}{coordinates for the origin position of the arrows}
 
 \item{size}{length of the arrows. Can be either a single value 
-(applied for x, y and z) or a vector of 3 separate values for each axis}
+(applied for x, y and z) or a vector of 3 separate values for each axis.}
 
-\item{arrowhead}{size of the arrowhead}
+\item{arrowhead}{size of the arrowhead.}
 
-\item{col, lty, lwd}{graphical parameters for the arrows}
+\item{col, lty, lwd}{graphical parameters for the arrows.}
 
-\item{label}{logical, include x, y and z labels (defaults to TRUE)}
+\item{label}{logical, include x, y and z labels (defaults to TRUE).}
 
 \item{label.adj}{position adjustment for the labels. Can be either a 
 single value (applied for x, y and z) or a vector of 3 separate values
-for each axis}
+for each axis.}
 
-\item{label.cex, label.col}{graphical parameters for the labels}
+\item{label.cex, label.col}{graphical parameters for the labels.}
 }
 \value{
 \code{axistetra} adds reference arrows showing the direction of the 
 3-dimensional axes in a static tetrahedral colorspace plot.
 }
 \description{
-Plot Reference Axes in a Static Tetrahedral Colorspace
-\code{axistetra} plots reference x, y and z arrows showing the direction of
+Plots reference x, y and z arrows showing the direction of
 the axes in a static tetrahedral colorspace plot.
 }
 \author{

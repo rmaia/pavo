@@ -1,7 +1,7 @@
 #' CIE colour spaces
 #' 
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in either the CIEXYZ (1931) or CIELAB (1971) colourspace  
+#' in either the CIEXYZ (1931) or CIELAB (1971) colourspaces.  
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a 

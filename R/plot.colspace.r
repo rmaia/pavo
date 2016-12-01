@@ -1,10 +1,10 @@
 #' Plot spectra in a colourspace
 #'
-#' Plots reflectance spectra in the appropriate colorspace
+#' Plots reflectance spectra in the appropriate colorspace.
 #' 
 #' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options, which vary by modelled \code{space}. Refer 
-#'  to their individual help files: 
+#'  to their individual documentation: 
 #'  \itemize{ 
 #'        \item \code{\link{diplot}}: dichromat space
 #'        \item \code{\link{triplot}}: trichromat space
@@ -16,9 +16,7 @@
 #'        }
 #'        Also see \code{\link{par}}. 
 #' 
-#' @return \itemize{ 
-#'          \item \code{plot.colspace} creates a 2D colspace plot appropriate to the input data.
-#'            }
+#' @return A 2D colorspace plot appropriate to the input data.
 #' 
 #' @examples \dontrun{
 #' data(flowers)
@@ -64,6 +62,7 @@
 #'  
 #' @importFrom graphics plot.default segments text
 #' @importFrom stats setNames
+#' 
 #' @export
 #'  
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.

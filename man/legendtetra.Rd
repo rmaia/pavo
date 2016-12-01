@@ -2,9 +2,7 @@
 % Please edit documentation in R/legendtetra.R
 \name{legendtetra}
 \alias{legendtetra}
-\title{Add Legend to a Static Tetrahedral Colorspace
-\code{legendtetra} adds legend to a 
-static tetrahedral colorspace plot.}
+\title{Add legend to a static tetrahedral colorspace}
 \usage{
 legendtetra(location = c(-1.4, -0.3, 0.7), ...)
 }
@@ -20,9 +18,7 @@ for additional information on which areguments are necessary and how they are us
 see \code{\link{legend}}.
 }
 \description{
-Add Legend to a Static Tetrahedral Colorspace
-\code{legendtetra} adds legend to a 
-static tetrahedral colorspace plot.
+Adds a legend to a static tetrahedral colorspace plot.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

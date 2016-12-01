@@ -3,16 +3,14 @@
 #' Produces a dichromat segment plot. 
 #'
 #' @param didata (required) a data frame, possibly a result from the \code{dispace} 
-#'  function, containing values for the 'x' coordinates as a column (labeled as such)
+#'  function, containing values for the 'x' coordinates as a column (labeled as such).
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
-#' @param labels plot verticy labels? Defaults to \code{TRUE}
-#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
-#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
-#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param out.lwd line width for segment (defaults to 1)
-#' @param out.lcol line colour for segment (defaults to black)
-#' @param out.lty line type for segment (defaults to 1)
-#' @param margins margins for the plot
+#' @param labels plot verticy labels? Defaults to \code{TRUE}.
+#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE}).
+#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).
+#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).
+#' @param out.lwd,out.lcol,out.lty graphical parameters for the segment.
+#' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1? 
 #' (defaults to \code{TRUE})
 #' @param ... additional graphical options. See \code{\link{par}}.

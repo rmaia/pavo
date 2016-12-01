@@ -27,12 +27,12 @@ overlap are plotted over the current plot (defaults to \code{TRUE}).}
 \item{montecarlo}{logical. If \code{TRUE}, Monte Carlo simulation is used instead of exact
 solution (not recommended; defaults to \code{FALSE})}
 
-\item{nsamp}{if \code{montecarlo=TRUE}, determines the number of points to be sampled.}
+\item{nsamp}{if \code{montecarlo = TRUE}, determines the number of points to be sampled.}
 
-\item{psize}{if \code{montecarlo=TRUE} and \code{plot=TRUE}, sets the size to plot the points
+\item{psize}{if \code{montecarlo = TRUE} and \code{plot = TRUE}, sets the size to plot the points
 used in the Monte Carlo simulation.}
 
-\item{lwd}{if \code{plot=TRUE}, sets the line width for volume grids.}
+\item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
 \item{view, scale.y}{additional arguments used when using a static plot
 (see \code{\link{vol}}).}
@@ -52,22 +52,22 @@ The Monte Carlo solution is available mostly for legacy and benchmarking, and is
 (see notes). If used, the output will be different:
 \itemize{
 	\item \code{s_in1, s_in2} the number of sampled points that fall within each of the volumes 
-individually
-	\item \code{s_inboth} the number of sampled points that fall within both volumes
-	\item \code{s_ineither} the number of points that fall within either of the volumes
+individually.
+	\item \code{s_inboth} the number of sampled points that fall within both volumes.
+	\item \code{s_ineither} the number of points that fall within either of the volumes.
 	\item \code{psmallest} the proportion of points that fall within both volumes divided by the 
- number of points that fall within the smallest volume
+ number of points that fall within the smallest volume.
 \item \code{pboth} the proportion of points that fall within both volumes divided by the total 
- number of points that fall within both volumes
+ number of points that fall within both volumes.
 }
 
 If the Monte Carlo solution is used, a number of points much greater than the default should be
 considered (Stoddard & Stevens(2011) use around 750,000 points, but more or fewer might be required
-depending on the degree of overlap.)
+depending on the degree of overlap).
 }
 \description{
 Calculates the overlap between the volumes defined by two sets of points in cartesian
-space
+space.
 }
 \note{
 Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
@@ -91,18 +91,24 @@ data(sicalis)
 tcs.sicalis.C <- subset(tcs(vismodel(sicalis)), 'C')
 tcs.sicalis.T <- subset(tcs(vismodel(sicalis)), 'T')
 tcs.sicalis.B <- subset(tcs(vismodel(sicalis)), 'B')
-voloverlap(tcs.sicalis.T,tcs.sicalis.B)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T, col=1:3) }
+voloverlap(tcs.sicalis.T, tcs.sicalis.B)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = 1:3) }
+
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}, with code from Sebastien Villeger
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of new world buntings. The American Naturalist, 171(6), 755-776.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color 
+in a tetrahedral color space: A phylogenetic analysis of new world buntings. The 
+American Naturalist, 171(6), 755-776.
 
-Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
+Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of 
+egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
 
-Villeger, S., Novack-Gottshall, P. M., & Mouillot, D. (2011). The multidimensionality of the niche reveals functional diversity changes in benthic marine biotas across geological time. Ecology Letters, 14(6), 561-568.
+Villeger, S., Novack-Gottshall, P. M., & Mouillot, D. (2011). The 
+multidimensionality of the niche reveals functional diversity changes in benthic 
+marine biotas across geological time. Ecology Letters, 14(6), 561-568.
 }
 

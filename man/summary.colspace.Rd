@@ -2,13 +2,12 @@
 % Please edit documentation in R/summary.colspace.R
 \name{summary.colspace}
 \alias{summary.colspace}
-\title{Colorspace summary}
+\title{Colorspace data summary}
 \usage{
 \method{summary}{colspace}(object, by = NULL, ...)
 }
 \arguments{
-\item{object}{(required) a \code{colspace} object. May be the result of \code{hexagon},
-\code{coc}, \code{tcs}, \code{maxwell}, \code{dispace}, or \code{cie}.}
+\item{object}{(required) a \code{colspace} object.}
 
 \item{by}{when the input is in \code{tcs} colorspace, \code{by} is either 
 a single value specifying the range of color points for which
@@ -20,7 +19,7 @@ calculated for each group of points sharing the same identification). If \code{b
 is left blank, the summary statistics are calculated accross all color points in the
 data.}
 
-\item{...}{class consistency (ignored)}
+\item{...}{class consistency (ignored).}
 }
 \value{
 returns all attributes of the data as mapped to the selected colourspace, including 
@@ -28,26 +27,26 @@ options specified when calculating the visual model. Also return the default
 \code{data.frame} summary, except when the object is the result of \code{tcs}, 
 in which case the following variables are output instead:
 
-\code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points
+\code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
 
-\code{c.vol} the total volume occupied by the points
+\code{c.vol} the total volume occupied by the points.
 
-\code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume
+\code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
 
-\code{colspan.m} the mean hue span
+\code{colspan.m} the mean hue span.
 
-\code{colspan.v} the variance in hue span
+\code{colspan.v} the variance in hue span.
 
-\code{huedisp.m} the mean hue disparity
+\code{huedisp.m} the mean hue disparity.
 
-\code{huedisp.v} the variance in hue disparity
+\code{huedisp.v} the variance in hue disparity.
 
-\code{mean.ra} mean saturation
+\code{mean.ra} mean saturation.
 
-\code{max.ra} maximum saturation achieved by the group of points
+\code{max.ra} maximum saturation achieved by the group of points.
 }
 \description{
-Returns the attributes of \code{colspace} objects
+Returns the attributes of \code{colspace} objects.
 }
 \examples{
 \dontrun{
@@ -62,7 +61,7 @@ summary(flowers.hex)
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 tcs.sicalis <- tcs(vis.sicalis)
-summary(tcs.sicalis, by=rep(c('C','T','B'),7))}
+summary(tcs.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 
 }
 \author{

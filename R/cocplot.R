@@ -3,17 +3,17 @@
 #' Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
 #'  
 #' @param cocdata (required) a data frame, possibly a result from the \code{categorical} 
-#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such)
-#' @param labels plot axis labels? Defaults to \code{TRUE}
+#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such).
+#' @param labels plot axis labels? Defaults to \code{TRUE}.
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
-#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
-#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
-#' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes 
-#' @param margins margins for the plot
+#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).
+#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).
+#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE}).
+#' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes.
+#' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1? 
-#' (defaults to \code{TRUE})
-#' @param ... additional graphical options. See \code{\link{par}}
+#' (defaults to \code{TRUE}).
+#' @param ... additional graphical options. See \code{\link{par}}.
 #'    
 #' @examples
 #' \dontrun{
