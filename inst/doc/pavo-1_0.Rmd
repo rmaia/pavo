@@ -3,8 +3,10 @@ title: "An introduction to pavo 1.0"
 author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White"
 date: "`r Sys.Date()`"
 output: 
-  rmarkdown::html_vignette:
+  #rmarkdown::html_vignette:
+  html_document:
     toc: true
+    toc_float: true
     toc_depth: 3
 bibliography: refs.bib
 csl: style.csl
@@ -32,6 +34,8 @@ We detail the changes and additions to the package below, but frequent users sho
   * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
   * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
   * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
+  * besides the familiar distances in JND for receptor noise models, **`coldist` now also calculates color distances for the other colorspaces available through `colspace`**: ...
+  * `getspec` now has a **fast algorithm** that speeds up importing spectra. The fast version will only work when all files have the same format. `getspec` attempts to use it first, and if it fails, it will switch to the old algorithm. (the slow version can also be chosen with the argument `fast=FALSE`)
 
 # New `flowers` Dataset
 
@@ -39,8 +43,10 @@ We detail the changes and additions to the package below, but frequent users sho
 ```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"}
 data(flowers)
 
+flowercols <- spec2rgb(flowers)
+
 head(flowers[1:4])
-plot(flowers, lwd = 2, col = spec2rgb(flowers))
+plot(flowers, lwd = 2, col = flowercols)
 ```
 
 # Visual Modelling
@@ -65,7 +71,7 @@ As in previous versions, the individual sensitivity functions can be accessed vi
 plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
 ```
 
-## The `vismodel` Function and Receptor-noise Limited Model
+## The `vismodel` Function and Receptor-Noise Limited Model
 
 **Incorporating transmission into visual models.** The `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
 
@@ -122,7 +128,7 @@ head(di.flowers)
 The output contains values for the relative stimulation of shot- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in a dichromatic colorspace, as modelled according to a canid visual system._"}
-plot(di.flowers, pch = 21, bg = 'forestgreen') 
+plot(di.flowers, col = flowercols) 
 ```
 
 For our trichromatic viewer we can use the honeybee _Apis melifera_, one of the most significant and widespread pollinators. We'll also transform our quantum catches according to Fechner's law by specifying `qcatch = 'fi'`, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the `scale` argument. 
@@ -138,7 +144,7 @@ head(tri.flowers)
 As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, a well as the 'hue angle' `h.theta` and distance from the origin (`r.vec`).  
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in a Maxwell triangle, considering a honeybee visual system._"}
-plot(tri.flowers, pch = 21, bg = 'forestgreen') 
+plot(tri.flowers, pch = 21, bg = flowercols) 
 ```
 
 Finally, we'll draw on the blue tit's visual system to model our floral reflectance spectra in a tetrahedral space, again using log-transformed quantum catches and assuming bright viewing conditions. 
@@ -153,10 +159,16 @@ head(tetra.flowers)
 
 As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
 
-```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"}
-par(mfrow = c(1, 2))
-plot(tetra.flowers, view = 30, pch = 21, bg = 'forestgreen') 
-plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
+In addition, the new `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"}
+par(mfrow = c(1, 2), pty='s')
+plot(tetra.flowers, view = 30, pch = 21, bg = flowercols) 
+axistetra(x=1.4, y=0.2, z=0.4, size=c(0.25,0.15,0.1), adj.label=c(0.06,0.08,0.07))
+axistetra(x=1.4, y=0.2, z=-0.4, size=0.2, label=FALSE)
+plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = flowercols)
+axistetra(x=0.6, y=0.2, z=0.5, size=c(0.2,0.2,0.15), adj.label=c(0.07,0.12,0.07))
+axistetra(x=0.6, y=0.2, z=-0.5, size=0.2, label=FALSE)
 ```
 
 ### The Color Hexagon
@@ -184,7 +196,7 @@ head(hex.flowers)
 Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green [@ultraviolet1994chittka; @dyer2012parallel]. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
-plot(hex.flowers, sectors = 'coarse', pch = 21, bg = 'forestgreen')
+plot(hex.flowers, sectors = 'coarse', pch = 21, bg = flowercols)
 ```
 
 ### The Color Opponent Coding (COC) Space
@@ -207,7 +219,7 @@ head(coc.flowers)
 The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"}
-plot(coc.flowers, pch = 21, bg = 'forestgreen', yaxt='n') 
+plot(coc.flowers, pch = 21, bg = flowercols, yaxt='n') 
 ```
 
 ### CIE Spaces
@@ -242,7 +254,7 @@ head(ciexyz.flowers)
 The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling 
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"}
-plot(ciexyz.flowers, pch = 21, bg = 'forestgreen') 
+plot(ciexyz.flowers, pch = 21, bg = flowercols) 
 ```
 
 The `Lab` space is a more recent development, and is a color-opponent model that attempts to model the nonlinear responses of the human eye. The `Lab` model is also calibrated (unlike the `XYZ` model) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _percieved_ as more different that two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two color-opponent dimensions designated *a* and *b*. The `colspace` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
@@ -275,7 +287,7 @@ head(cielab.flowers)
 Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`: 
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"}
-plot(cielab.flowers, pch = 21, bg = 'forestgreen') 
+plot(cielab.flowers, pch = 21, bg = flowercols) 
 ```
 
 ### Categorical Fly colorspace
@@ -303,7 +315,7 @@ head(cat.flowers)
 And it is simply the signs of these differences that define the four possible fly-color categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"}
-plot(cat.flowers, pch = 21, bg = 'forestgreen') 
+plot(cat.flowers, pch = 21, bg = flowercols) 
 ```
 
 # Changes to `coldist`
