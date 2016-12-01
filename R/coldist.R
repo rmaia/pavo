@@ -166,6 +166,14 @@ coldist <-function(modeldata,
   
   # Pre-processing for vismodel objects
   if('vismodel' %in% class(modeldata)){
+  	
+  	# set achro=FALSE if visual model has achro='none'
+  	if(attr(modeldata, 'visualsystem.achromatic') == 'none'){
+  	  if(achro){
+  	  	warning(paste('achro=TRUE but visual model was calculated with achro=',dQuote('none'),'; achromatic contrast not calculated.'), call.=FALSE)
+  	  }
+  	  achro <- FALSE
+  	}
 
     # initial checks... 
     
