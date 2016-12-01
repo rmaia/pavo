@@ -52,7 +52,7 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achro
   if(is.null(arg$col))
     arg$col <- 'black'
   if(is.null(arg$pch))
-    arg$pch <- 19
+    arg$pch <- "|"
   if(is.null(arg$type))
     arg$type = 'p'
 
