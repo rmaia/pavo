@@ -3,10 +3,10 @@ title: "An introduction to pavo 1.0"
 author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White"
 date: "`r Sys.Date()`"
 output: 
-  #rmarkdown::html_vignette:
-  html_document:
+  rmarkdown::html_vignette:
+  #rmarkdown::html_document:
     toc: true
-    toc_float: true
+  #  toc_float: true
     toc_depth: 3
 bibliography: refs.bib
 csl: style.csl

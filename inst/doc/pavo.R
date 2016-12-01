@@ -200,7 +200,7 @@ plot(teal.sm, type = 'h', varying = angles,
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colors
-aggplot(mspecs, spp, FUN.center = median, alpha = 0.3)
+aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend=TRUE)
 
 # Plot using mean and standard error, in greyscale
 aggplot(mspecs, spp, FUN.error = function(x)sd(x)/sqrt(length(x)), 
@@ -236,7 +236,6 @@ peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 segclass(spec.sm)
 
 ## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
-# creating idealized specs with varying hue
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))
@@ -245,15 +244,19 @@ fakedata1 <-  sapply(seq(100,500,by = 20),
 fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
                      function(x) dnorm(300:700,550,x))
 
-# combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1, fakedata2)
-fakedata.c <- as.rspec(fakedata.c)
-fakedata.c <- procspec(fakedata.c, "max")
-
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
 fakedata1 <- procspec(fakedata1, "max")
 fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
-fakedata2 <- procspec(fakedata2, "max")
+fakedata2 <- procspec(fakedata2, "sum")
+fakedata2 <- procspec(fakedata2, "min")
+
+# converting reflectance to percentage
+fakedata1[,-1] <- fakedata1[,-1]*100
+fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+
+# combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1, fakedata2[,-1])
+fakedata.c <- as.rspec(fakedata.c)
 
 # segment classification analysis
 seg.fdc <- segclass(fakedata.c)
@@ -268,7 +271,7 @@ par(mar = c(5, 2.5, 2, 1.5))
 plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2)) 
 
 par(mar = c(5, 4, 2, 0.5))
-plot(seg.fdc, pch = 20, cex = 3, col = spec2rgb(fakedata.c))
+plot(seg.fdc[,c('LM','MS')], pch = 20, cex = 3, col = spec2rgb(fakedata.c))
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
@@ -284,9 +287,11 @@ summary(vismod1)
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
 layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
 
+sppspecol <- as.character(spec2rgb(sppspec))
+
 for (i in 1:6) {
   par(mar=c(2,2,2,2))
-  plot(sppspec, select = i + 1, col = spec2rgb(sppspec)[i], lwd = 3, ylim = c(0,100))
+  plot(sppspec, select = i+1, col = sppspecol[i], lwd = 3, ylim = c(0,100))
   par(mar=c(4.1, 2.5, 2.5, 2))
   barplot(as.matrix(vismod1[i, 1:4]), yaxt = 'n', col = 'black')
 }
@@ -350,7 +355,7 @@ projplot(tcs.mspecs, pch = 20, col = spec2rgb(mspecs))
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
 data(sicalis)
-aggplot(sicalis, by=rep(c('C','T','B'), 7))
+aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 tcs.sicalis.C <- subset(tcs(vismodel(sicalis)), 'C')

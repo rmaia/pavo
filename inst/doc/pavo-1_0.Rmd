@@ -3,10 +3,10 @@ title: "An introduction to pavo 1.0"
 author: "Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White"
 date: "`r Sys.Date()`"
 output: 
-  #rmarkdown::html_vignette:
-  html_document:
+  rmarkdown::html_vignette:
+  #rmarkdown::html_document:
     toc: true
-    toc_float: true
+  #  toc_float: true
     toc_depth: 3
 bibliography: refs.bib
 csl: style.csl
@@ -159,11 +159,14 @@ head(tetra.flowers)
 
 As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
 
-In addition, the new `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+Two additional new functions may help with tetrahedral colorspace plotting:
+  * `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+  * `legendtetra` allows you to add a legend to a plot.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"}
 par(mfrow = c(1, 2), pty='s')
-plot(tetra.flowers, view = 30, pch = 21, bg = flowercols) 
+plot(tetra.flowers, view = 30, pch = 21, bg = flowercols)
+legendtetra(x=-2.6, y=0.2, z=0.8, legend='flowers', pch=19, col='black', bty='n')
 axistetra(x=1.4, y=0.2, z=0.4, size=c(0.25,0.15,0.1), adj.label=c(0.06,0.08,0.07))
 axistetra(x=1.4, y=0.2, z=-0.4, size=0.2, label=FALSE)
 plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = flowercols)
