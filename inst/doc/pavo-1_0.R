@@ -101,6 +101,17 @@ head(cat.flowers)
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
 plot(cat.flowers, pch = 21, bg = flowercols) 
 
+## ------------------------------------------------------------------------
+
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
+
 ## ----eval=FALSE----------------------------------------------------------
 #  data(sicalis)
 #  vis.sicalis <- vismodel(sicalis, relative = FALSE)

@@ -325,7 +325,21 @@ plot(cat.flowers, pch = 21, bg = flowercols)
 
 ## Argument Changes to `coldist`
 
-The `coldist` function has undergone significant changes in `pavo 1.0`, both internally and to its user interface. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND's. In contrast, if we input a `colspace` object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.
+The `coldist` function has undergone significant changes in `pavo 1.0`, both internally and to its user interface. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, the output will contain weighted Euclidean distances in units of JND's (as was the case in previous versions). In contrast, if we input a `colspace` object, the output units will vary depending on the selected space. If we use the hexagon, for example, and specify the honeybee's long ('green') photoreceptor for the estimation of achromatic contrasts:
+
+```{r}
+
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
+```
+
+the chromatic constrasts `dS` and achromatic contrasts `dL` are expressed as Euclidean distances in the hexagon [i.e. 'hexagon units'; @chittka1992colour]. If we had instead used the color-oppoonent coding space, the units would have been city-bloc distances. The output units for each space are listed in the documentation for `coldist`, and of course the original publications remain the most authoritative source of information. 
 
 The most important change to `coldist` is that some of its arguments have changed, with implications for receptor-noise modelling. In `pavo 1.0`, `coldist` requires the empirically estimated value for the Weber fraction to be entered, instead of the single cone noise-to-signal ratio (the `v` argument in previous versions of `pavo`). Further, instead of separately entering `n1, n2, n3` and `n4`, `coldist` now has a single argument `n`, and a vector of relative cone abundances is the required input. Finally, the argument `weber.ref` specifies which cone to use as the reference cone for the desired Weber fraction. 
 

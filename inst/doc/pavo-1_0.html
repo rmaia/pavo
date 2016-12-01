@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White" />
 
-<meta name="date" content="2016-12-01" />
+<meta name="date" content="2016-12-02" />
 
 <title>An introduction to pavo 1.0</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">An introduction to pavo 1.0</h1>
 <h4 class="author"><em>Rafael Maia, Pierre-Paul Bitton, Chad Eliason, Thomas White</em></h4>
-<h4 class="date"><em>2016-12-01</em></h4>
+<h4 class="date"><em>2016-12-02</em></h4>
 
 
 <div id="TOC">
@@ -485,7 +485,23 @@ coc.flowers &lt;-<span class="st"> </span><span class="kw">colspace</span>(vis.f
 <h1>Changes to <code>coldist</code></h1>
 <div id="argument-changes-to-coldist" class="section level2">
 <h2>Argument Changes to <code>coldist</code></h2>
-<p>The <code>coldist</code> function has undergone significant changes in <code>pavo 1.0</code>, both internally and to its user interface. For one, it now accepts both <code>vismodel</code> and <code>coldist</code> objects, and will return distances in units that are appropriate for a given input. If we input a <code>vismodel</code> object for the purpose of receptor-noise modelling, for example, the output will contain weighted Euclidean distances in units of JND’s. In contrast, if we input a <code>colspace</code> object after applying modelling in the color-opponent-coding space, the returned units will be city-bloc distances.</p>
+<p>The <code>coldist</code> function has undergone significant changes in <code>pavo 1.0</code>, both internally and to its user interface. For one, it now accepts both <code>vismodel</code> and <code>coldist</code> objects, and will return distances in units that are appropriate for a given input. If we input a <code>vismodel</code> object for the purpose of receptor-noise modelling, the output will contain weighted Euclidean distances in units of JND’s (as was the case in previous versions). In contrast, if we input a <code>colspace</code> object, the output units will vary depending on the selected space. If we use the hexagon, for example, and specify the honeybee’s long (‘green’) photoreceptor for the estimation of achromatic contrasts:</p>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Model flower colours according to a honeybee</span>
+vis.flowers &lt;-<span class="st"> </span><span class="kw">vismodel</span>(flowers, <span class="dt">visual =</span> <span class="st">'apis'</span>, <span class="dt">qcatch =</span> <span class="st">'Ei'</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">vonkries =</span> <span class="ot">TRUE</span>, <span class="dt">achro =</span> <span class="st">'l'</span>, <span class="dt">bkg =</span> <span class="st">'green'</span>)
+hex.flowers &lt;-<span class="st"> </span><span class="kw">colspace</span>(vis.flowers, <span class="dt">space =</span> <span class="st">'hexagon'</span>)
+
+<span class="co"># Estimate color distances. No need to specify relative receptor densities, noise etc., </span>
+<span class="co"># which only apply in the case of receptor-noise modelling</span>
+dist.flowers &lt;-<span class="st"> </span><span class="kw">coldist</span>(hex.flowers)
+<span class="kw">head</span>(dist.flowers)</code></pre></div>
+<pre><code>##                  patch1              patch2        dS         dL
+## 1 Goodenia_heterophylla Goodenia_geniculata 0.2413616 -0.2192147
+## 2 Goodenia_heterophylla   Goodenia_gracilis 0.3705228 -0.0765704
+## 3 Goodenia_heterophylla    Xyris_operculata 0.0762169  0.0212987
+## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1272397 -0.1342596
+## 5 Goodenia_heterophylla  Faradaya_splendida 0.2289092 -0.1975760
+## 6 Goodenia_heterophylla  Gaultheria_hispida 0.1691932 -0.1186296</code></pre>
+<p>the chromatic constrasts <code>dS</code> and achromatic contrasts <code>dL</code> are expressed as Euclidean distances in the hexagon <span class="citation">(i.e. “hexagon units”; Chittka 1992)</span>. If we had instead used the color-oppoonent coding space, the units would have been city-bloc distances. The output units for each space are listed in the documentation for <code>coldist</code>, and of course the original publications remain the most authoritative source of information.</p>
 <p>The most important change to <code>coldist</code> is that some of its arguments have changed, with implications for receptor-noise modelling. In <code>pavo 1.0</code>, <code>coldist</code> requires the empirically estimated value for the Weber fraction to be entered, instead of the single cone noise-to-signal ratio (the <code>v</code> argument in previous versions of <code>pavo</code>). Further, instead of separately entering <code>n1, n2, n3</code> and <code>n4</code>, <code>coldist</code> now has a single argument <code>n</code>, and a vector of relative cone abundances is the required input. Finally, the argument <code>weber.ref</code> specifies which cone to use as the reference cone for the desired Weber fraction.</p>
 <p>The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. It was also made to demand less of the user, who used to have to calculate what value of <code>v</code> to use given the desired Weber fraction and relative cone abundances.</p>
 <p>So, for example, the code below used in previous versions of <code>pavo</code>:</p>
