@@ -97,8 +97,10 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     if(mono == TRUE)
       polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
     
-    # add points after stuff is drawn
-    suppressWarnings(do.call(points, arg))
+    # remove plot-specific args, add points after the stuff is drawn
+    arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
+    'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
+    do.call(points, arg)
 
     
   }

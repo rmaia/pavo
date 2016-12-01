@@ -129,8 +129,10 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
       segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
   }
 
-# add points after the hexagon stuff is drawn
-  suppressWarnings(do.call(points, arg))
+# remove plot-specific args, add points after the stuff is drawn
+arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
+'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
+do.call(points, arg)
   
 # Text labels
   if(isTRUE(labels)){

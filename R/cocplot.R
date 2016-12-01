@@ -79,8 +79,10 @@ cocplot <- function(cocdata, labels = TRUE, lab.cex = 0.9,
     points(x = 0, y = 0, pch = 15, col = achrocol, cex = achrosize)
   }
   
-  # add points after the stuff is drawn
-   suppressWarnings(do.call(points, arg))
+  # remove plot-specific args, add points after the stuff is drawn
+  arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
+  'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
+  do.call(points, arg)
   
   # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
