@@ -155,9 +155,10 @@ sens <- vissyst
 achromatic2 <- try(match.arg(achromatic), silent=T)
 
 if(class(achromatic2) == 'try-error')
-  if(FALSE %in% achromatic){
-    achromatic <- 'none'
-    achromatic2 <- 'none'
+  if(is.logical(achromatic))
+    if(FALSE %in% achromatic){
+      achromatic <- 'none'
+      achromatic2 <- 'none'
     }
 
 qcatch <- match.arg(qcatch)
