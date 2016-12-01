@@ -64,9 +64,9 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     if(is.null(arg$ylim))
       arg$ylim <- c(0, 0.85)
     if(is.null(arg$xlab))
-      arg$xlab <- 'x'
+      arg$xlab <- 'CIE x'
     if(is.null(arg$ylab))
-      arg$ylab <- 'y'
+      arg$ylab <- 'CIE y'
     
     # Monochromatic loci in XYZ, from Westland et al. 2012
     monox <- c(0.175596, 0.172787, 0.170806, 0.170085, 0.160343, 0.146958, 0.139149,
