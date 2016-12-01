@@ -156,12 +156,14 @@ As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = '
 
 In addition, the new `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
 
-```{r, fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"}
-par(mfrow = c(1, 2))
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"}
+par(mfrow = c(1, 2), pty='s')
 plot(tetra.flowers, view = 30, pch = 21, bg = 'forestgreen') 
-axistetra(x=1.4, y=0.2, z=0.3, label.adj=0.06)
+axistetra(x=1.4, y=0.2, z=0.4, size=c(0.25,0.15,0.1), adj.label=c(0.06,0.08,0.07))
+axistetra(x=1.4, y=0.2, z=-0.4, size=c(0.2,0.2,0.2), label=FALSE)
 plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = 'forestgreen')
-axistetra(x=0.4, y=0.2, z=0.5, label.adj=0.06)
+axistetra(x=0.6, y=0.2, z=0.5, size=c(0.2,0.2,0.15), adj.label=c(0.07,0.12,0.07))
+axistetra(x=0.6, y=0.2, z=-0.5, size=c(0.2,0.2,0.2), label=FALSE)
 ```
 
 ### The Color Hexagon
