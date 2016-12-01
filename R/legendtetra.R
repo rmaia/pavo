@@ -19,8 +19,6 @@ legendtetra <- function(x=-1.4, y=-0.3, z=0.7, ...){
   
 	last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
 	
-	if(length(location) != 3) stop('location must have values for x, y and z', call.=FALSE)
-	
 	arg <- list(...)
 	
 	position <- last_tetraplot$xyz.convert(x,y,z)
