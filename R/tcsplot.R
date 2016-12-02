@@ -73,8 +73,11 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
                     lwd = 1, lcol = 'lightgrey', new = FALSE, hspin = FALSE, 
                     vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE) {
 
-    # load RGL, and attempt install if not found
-    #loadrgl()
+    # check if rgl is installed and loaded
+    if (!requireNamespace("rgl", quietly = TRUE))
+      stop(dQuote('rgl'),' package needed for this function to work. Please install it.',
+        call. = FALSE)
+        
     if(!isNamespaceLoaded("rgl"))
       requireNamespace("rgl")
     

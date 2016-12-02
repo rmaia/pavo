@@ -55,7 +55,6 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
                                   scale.y = scale.y, mar = margin, pch = '')
     
       # Save plot info 
-   .PlotTetraEnv <<- new.env()
    assign("last_plot.tetra", P, envir = .PlotTetraEnv)
   }
     

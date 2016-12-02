@@ -311,8 +311,8 @@ vismod.idi
 sapply(vismod.idi, function(x) round(x,4))
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4))
-coldist(vismod.idi, n = c(1, 2),  weber = 0.05)
+coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber=0.1)
+coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
 
 ## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
 coldist(vismod1, subset = 'cardinal')

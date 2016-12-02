@@ -12,16 +12,19 @@ tcsvol <- function(tcsdata, col = 'black', alpha = 0.2,
                      grid.alpha = 1, grid = T, fill = T, lwd = 1){
   
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
-  
+
+  # check if rgl is installed and loaded
+  if (!requireNamespace("rgl", quietly = TRUE))
+    stop(dQuote('rgl'),' package needed for this function to work. Please install it.',
+      call. = FALSE)  
+
+  if(!isNamespaceLoaded("rgl"))
+    requireNamespace("rgl")  
   
   vol <- t(convhulln(tcsdata[, c('x', 'y', 'z')], options = 'FA')$hull)
   coords <- tcsdata[, c('x', 'y', 'z')]
   listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
   ppairs <- do.call(rbind, lapply(listvol, function(x)t(combn(x, 2))))
-  
-  if(!isNamespaceLoaded("rgl"))
-    requireNamespace("rgl")
-  
 
   if(grid){
     for(i in 1:nrow(ppairs)){

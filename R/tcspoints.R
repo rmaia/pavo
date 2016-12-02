@@ -13,8 +13,11 @@ tcspoints<- function(tcsdata, size = 0.02, col = 'black', alpha = 1){
   
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
-  # load RGL, and attempt install if not found
-  #loadrgl()
+    # check if rgl is installed and loaded
+  if (!requireNamespace("rgl", quietly = TRUE))
+    stop(dQuote('rgl'),' package needed for this function to work. Please install it.',
+      call. = FALSE)
+      
   if(!isNamespaceLoaded("rgl"))
     requireNamespace("rgl")
   

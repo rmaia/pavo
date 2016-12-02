@@ -188,9 +188,14 @@ if(plot){
       
       
 	if(interactive){
-	  
+	    # check if rgl is installed and loaded
+        if (!requireNamespace("rgl", quietly = TRUE))
+          stop(dQuote('rgl'),' package needed for interactive plots. Please install it, or use interactive=FALSE.',
+            call. = FALSE)  
+
 	  if(!isNamespaceLoaded("rgl"))
 	    requireNamespace("rgl")
+	    
 	  if(new)
         rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
