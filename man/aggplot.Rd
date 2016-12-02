@@ -5,7 +5,7 @@
 \title{Plot aggregated reflectance spectra}
 \usage{
 aggplot(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
-  lcol = NULL, shadecol = NULL, alpha = 0.2, na.rm = FALSE, ...)
+  lcol = NULL, shadecol = NULL, alpha = 0.2, ...)
 }
 \arguments{
 \item{rspecdata}{(required) data frame containing the spectra to be manipulated and 
@@ -29,8 +29,6 @@ measure of variation (defaults to \code{sd}).}
 \item{shadecol}{color of shaded areas indicating variance measure.}
 
 \item{alpha}{transparency of the shaded areas.}
-
-\item{na.rm}{logical. how to handle NA's.}
 
 \item{...}{additional graphical parameters to be passed to plot.}
 }

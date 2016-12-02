@@ -4,14 +4,12 @@
 \alias{spec2rgb}
 \title{Spectrum to rgb color conversion}
 \usage{
-spec2rgb(rspecdata, alpha = 1)
+spec2rgb(rspecdata)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec},
 with a column with wavelength data, named 'wl', and the remaining column containing
 spectra to process.}
-
-\item{alpha}{alpha value to use for colors (defaults to 1, opaque)}
 }
 \value{
 A character vector of class \code{spec2rgb} consisting of hexadecimal color values

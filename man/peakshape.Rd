@@ -4,7 +4,7 @@
 \alias{peakshape}
 \title{Peak shape descriptors}
 \usage{
-peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
+peakshape(rspecdata, select = NULL, lim = c(300, 700), plot = TRUE,
   ask = FALSE, ...)
 }
 \arguments{

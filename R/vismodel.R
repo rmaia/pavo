@@ -23,11 +23,9 @@
 #' cone as a column
 #' \item \code{avg.uv}: average avian UV system
 #' \item \code{avg.v}: average avian V system
-#' \item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
+#' \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 #' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
-#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system
-#' \item \code{cie1931}: Human CIE 1931 color matching functions
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #' cone stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -73,10 +71,10 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 vismodel <- function(rspecdata, qcatch = c('Qi','fi'),
-  visual = c("avg.uv", "avg.v", "bt", "star", "pfowl", "apis", "cie1931"), 
-  achromatic = c("none","bt.dc","ch.dc", 'st.dc',"ml"),
+  visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl"), 
+  achromatic = c("bt.dc","ch.dc", 'st.dc',"ml","none"),
   illum = c('ideal','bluesky','D65','forestshade'), 
-  vonkries=FALSE, scale=1, bkg = 'ideal', relative=TRUE)
+  vonkries=F, scale=1, bkg = 'ideal', relative=TRUE)
 {
 
 # remove & save colum with wavelengths
@@ -93,7 +91,7 @@ if(is.null(dim(y))){
   }
 
 visual2 <- try(match.arg(visual), silent=T)
-sens <- vissyst
+sens <- pavo::vissyst
 
 if(!inherits(visual2,'try-error')){
   
@@ -124,7 +122,7 @@ if(max(y) > 1)
 
 #DEFINING ILLUMINANT & BACKGROUND
 
-bgil<- bgandilum
+bgil<- pavo::bgandilum
 
 illum2 <- try(match.arg(illum), silent=T)
 if(!inherits(illum2,'try-error')){
@@ -240,7 +238,6 @@ if(achromatic2=='ml'){
 }
 
 if(achromatic2=='none'){
-	L   <- NULL
 	lum <- NULL
 }
 
@@ -284,7 +281,7 @@ if(relative & is.null(lum)){
 # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
 }
 
-# OUTPUT
+#OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
 
 qcatch <- match.arg(qcatch)
@@ -292,22 +289,11 @@ qcatch <- match.arg(qcatch)
 res <- switch(qcatch, Qi = Qi, fi = fi)
 
 class(res) <- c('vismodel', 'data.frame')
-
-# Descriptive attributes
-
 attr(res, 'qcatch') <- qcatch
 attr(res,'visualsystem') <- paste('chromatic: ', visual, ', achromatic: ',achromatic2, sep='')
 attr(res,'illuminant') <- paste(illum2,', scale = ',scale," ",vk, sep='')
 attr(res,'background') <- bg2
 attr(res,'relative') <- relative
-attr(res, 'conenumb') <- dim(S)[2]
-attr(res, 'vonkries') <- vonkries
-
-# Data attributes
-attr(res, 'data.visualsystem.chromatic') <- S
-attr(res, 'data.visualsystem.achromatic') <- L
-attr(res, 'data.background') <- bkg
-
 
 res
 }

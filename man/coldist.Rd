@@ -6,7 +6,7 @@
 \usage{
 coldist(vismodeldata, qcatch = c("Qi", "fi"), vis = c("tetra", "tri", "di"),
   noise = c("neural", "quantum"), subset = NULL, achro = TRUE, n1 = 1,
-  n2 = 2, n3 = 2, n4 = 4, v = 0.1)
+  n2 = 2, n3 = 2, n4 = 4, v = 0.2)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -49,15 +49,14 @@ are supported.}
 the achromatic contrast, with noise based on the Weber fraction calculated using \code{n4}}
 
 \item{n1, n2, n3, n4}{tetrachromatic photoreceptor densities for u, s, m & l (default to 
-the Pekin robin \emph{Leiothrix lutea} densities: 1:2:2:4). If \code{vis} does not equal 
-\code{'tetra'}, only \code{n1} and \code{n2} (\code{vis='di'}) or 
-\code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
+blue tit \emph{Cyanistes caeruleus} densities: 1:2:2:4). If \code{vis} does not equal \code{'tetra'}, only \code{n1}
+and \code{n2} (\code{vis='di'}) or \code{n1}, \code{n2} and \code{n3} (\code{vis='tri'})
 are used for chromatic contrast (NOTE: \code{n4} is still the value used for the achromatic
 contrast.)}
 
-\item{v}{Noise-to-signal ratio of a single cone (defaults to 0.1, so that under
-the default densities, the Weber fraction for the large cone will be 0.05, as
-estimated from behavioral experiment with the Pekin robin, \emph{Leiothrix lutea})}
+\item{v}{Noise-to-signal ratio of a single cone (defaults to 0.2, so that under
+the default densities, the Weber fraction for the large cone will be 0.1, as
+estimated from behavioral experiment with the Perkin robin, \emph{Leiothrix lutea})}
 }
 \value{
 A data frame containing 4 columns. The first two (\code{patch1, patch2}) refer

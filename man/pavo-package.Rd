@@ -12,9 +12,9 @@ An R package for the perceptual analysis, visualization and organization of colo
 \tabular{ll}{
 Package: \tab pavo\cr
 Type: \tab Package\cr
-Version: \tab 0.5-1\cr
+Version: \tab 0.0-1\cr
 Date: \tab 2012-10-13\cr
-License: \tab GPL (>= 2)\cr
+License: \tab BSD\cr
 LazyLoad: \tab yes\cr}
 }
 \examples{

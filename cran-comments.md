@@ -1,6 +1,25 @@
-This release fixes a bug detected in the previous version. I apologize for not addressing the notes you noted, as some of them didn't show up on my check (I believe I was using an older version). I apologize for overlooking this on the previous submission.
+# Submission 2 
 
-I have ran cran check on my local OSX install and win builder and I don't see any NOTES anymore. Thanks for the help.
+Previous submission found:
+> * checking top-level files ... NOTE
+Non-standard file/directory found at top level:
+  ‘revdep’  
 
-Regards,
-Rafael Maia
+I have now removed the directory, and added reference to it to .Rbuildignore. No errors or warnings or other notes found in the test environments listed below.
+
+# Submision 1
+
+## Test environments
+* local OS X install, R 3.3.1
+* ubuntu 12.04 (on travis-ci), R 3.3.1
+* win-builder (devel and release)
+
+## R CMD check results
+
+0 errors | 0 warnings | 0 notes
+
+## Reverse dependencies
+
+I ran R CMD check on the one package that depends on pavo (photobiologyInOut). There were no errors or warnings.
+
+---

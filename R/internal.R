@@ -1,17 +1,5 @@
 #' @export summary.tcs
 
-loadrgl <- function(){
-# load RGL, and attempt install if not found
-if (!require('rgl',character.only = TRUE))
-  {
-  message('package ', dQuote('rgl'), ' not found; attempting install...')
-  install.packages('rgl',dep=TRUE)
-  
-  if(!require('rgl',character.only = TRUE)) 
-    stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
-    }
-}
-
 
 # # ttdistcalc <- function(f1,f2,w1,w2,w3,w4){
 # #		dq1<-log(f1['u']/f2['u'],base=10)
@@ -106,7 +94,7 @@ didistcalc <- function(f1,f2,w1,w2){
 
 		numer<-	(dq1-dq2)^2
 		
-		denom<- w1+w2
+		denom<- (w1^2)+(w2^2)
 			
 		as.numeric(sqrt(numer/denom))
 		}
@@ -120,7 +108,7 @@ qn.didistcalc <- function(f1,f2,qn1, qn2, n1,n2,v){
 		
 		numer<-	(dq1-dq2)^2
 		
-		denom<- w1+w2
+		denom<- (w1^2)+(w2^2)
 			
 		as.numeric(sqrt(numer/denom))
 		}
@@ -238,13 +226,9 @@ hdisp.v <- var(huedisp(tcsres))
 mean.ra <- mean(tcsres$r.achieved)
 max.ra  <-  max(tcsres$r.achieved)
 
-res.c <- c(centroid,c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
+res.c <- c(centroid,c.vol, colspan.m,colspan.v,mean.ra,max.ra)
 names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
-                'c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
-                'mean.ra', 'max.ra')
+                'c.vol', 'colspan.m', 'colspan.v', 'mean.ra', 'max.ra')
 
 res.c
 }
-
-
-

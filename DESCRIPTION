@@ -1,65 +1,35 @@
 Package: pavo
 Description: A cohesive framework for parsing, analyzing and organizing color
     from spectral data.
-Title: Perceptual Analysis, Visualization and Organization of Spectral Color
-    Data in R
+Title: Perceptual Analysis, Visualization and Organization of Spectral
+        Color Data in R
 Version: 0.5-6
 License: GPL (>= 2)
-Date: 2016-05-17
+Date: 2016-10-19
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca"),
-    person("White", "Thomas", role = "aut",
-    email = "thomas.white@students.mq.edu.au"))
+    email = "bittonp@uwindsor.ca"))
+URL: www.rafaelmaia.net/r-packages/pavo
+Depends: rgl
+Imports: geometry, mapproj, rcdd
+Collate: 'aggplot.R' 'aggspec.R' 'as.rspec.r' 'coldist.R'
+        'data-bgandilum.R' 'data-sicalis.R' 'data-teal.R'
+        'data-ttvertex.R' 'data-vissyst.R' 'explorespec.R' 'getspec.R'
+        'internal.R' 'pavo-package.R' 'peakshape.R' 'plot.rspec.r'
+        'plotsmooth.R' 'procspec.R' 'projplot.R' 'segclass.R'
+        'sensmodel.R' 'spec2rgb.R' 'summary.rspec.R' 'summary.tcs.R'
+        'tcs.R' 'tcsplot.R' 'tcspoints.R' 'tcsvol.R' 'vismodel.R'
+        'voloverlap.R' 'merge.rspec.R' 'summary.vismodel.R'
+        'subset.rspec.R' 'irrad2flux.R'
+NeedsCompilation: no
+Packaged: 2016-03-08 19:40:47 UTC; rmaia
 Author: Rafael Maia [aut, cre],
     Chad Eliason [aut],
-    Pierre-Paul Bitton [aut],
-    Thomas White [aut]
+    Pierre-Paul Bitton [aut]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
-URL: www.rafaelmaia.net/r-packages/pavo
-Depends:
-    rgl
-Imports:
-    geometry,
-    mapproj,
-    rcdd
-Collate:
-    'aggplot.R'
-    'aggspec.R'
-    'as.rspec.r'
-    'coldist.R'
-    'data-bgandilum.R'
-    'data-sicalis.R'
-    'data-teal.R'
-    'data-ttvertex.R'
-    'data-vissyst.R'
-    'explorespec.R'
-    'getspec.R'
-    'internal.R'
-    'pavo-package.R'
-    'peakshape.R'
-    'plot.rspec.r'
-    'plotsmooth.R'
-    'procspec.R'
-    'projplot.R'
-    'segclass.R'
-    'sensmodel.R'
-    'spec2rgb.R'
-    'summary.rspec.R'
-    'summary.tcs.R'
-    'tcs.R'
-    'tcsplot.R'
-    'tcspoints.R'
-    'tcsvol.R'
-    'vismodel.R'
-    'voloverlap.R'
-    'merge.rspec.R'
-    'summary.vismodel.R'
-    'subset.rspec.R'
-    'irrad2flux.R'
-    'lines.rspec.R'
-    'plot.vismodel.R'
+Repository: CRAN
+Date/Publication: 2016-03-09 01:13:54
 RoxygenNote: 5.0.1

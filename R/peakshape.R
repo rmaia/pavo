@@ -28,7 +28,7 @@
 #' peakshape(teal, select = 10, lim=c(400, 550))}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
 
-peakshape <- function(rspecdata, select = NULL, lim = NULL, 
+peakshape <- function(rspecdata, select = NULL, lim = c(300, 700), 
                       plot = TRUE, ask = FALSE, ...) {
 
 old.par <- par(no.readonly = TRUE)  # all par settings that could be set
@@ -51,11 +51,6 @@ if (length(wl_index) > 0) {
   warning('No wavelengths provided; using arbitrary index values')
 }
 
-# set default wavelength range if not provided
-if (is.null(lim)) {
-  lim <- c(head(wl,1), tail(wl,1))
-}
-
 # subset based on indexing vector
 if (is.logical(select))
   select <- which(select=='TRUE')
@@ -70,39 +65,22 @@ rspecdata <- as.data.frame(rspecdata[, select])
 wlrange <- lim[1]:lim[2]
 
 if (ncol(rspecdata)==1) {
-  # rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
-  rspecdata2 <- rspecdata[wl%in%c(lim[1]:lim[2]), ]
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- max(rspecdata2)  # max refls
-  # Yj <- min(rspecdata2)  # min refls
-  Yj <- min(rspecdata)  # min refls, whole spectrum
+  Yj <- min(rspecdata2)  # min refls
+  Yk <- min(rspecdata)  # min refls, whole spectrum
   Xi <- which(rspecdata2==Yi)  # lambda_max index
-  if (length(Xi)>1) {
-    Xi <- Xi[1]
-    warning("Multiple wavelengths have the same reflectance value.
-      Using first peak found. Please check the data or try smoothing.")
-  }
   fsthalf <- rspecdata2[1:Xi]
   sndhalf <- rspecdata2[Xi:length(rspecdata2)]
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
   fstHM <- which.min(abs(fsthalf - halfmax))
   sndHM <- which.min(abs(sndhalf - halfmax))
 } else {
-  rspecdata2 <- rspecdata[wl%in%c(lim[1]:lim[2]), ]  # working wl range
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
-  # Yj <- apply(rspecdata2, 2, min)  # min refls
-  Yj <- apply(rspecdata, 2, min)  # min refls, whole spectrum
+  Yj <- apply(rspecdata2, 2, min)  # min refls
+  Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
   Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x]==Yi[x]))  # lambda_max index
-  # CE edit: test if any wls have equal reflectance values
-  dblpeaks <- sapply(Xi, length)
-  dblpeak.nms <- nms[select][dblpeaks>1]
-  if (any(dblpeaks>1)) {
-    # Keep only first peak of each spectrum
-    Xi <- sapply(Xi, "[[", 1)
-    warning(paste("Multiple wavelengths have the same reflectance value (",
-      paste(dblpeak.nms, collapse=", "),
-      "). Using first peak found. Please check the data or try smoothing.", sep=""))
-  }
-  # end CE edit
   fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
   sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2  # reflectance midpoint
@@ -111,18 +89,15 @@ if (ncol(rspecdata)==1) {
 
 }
 
-# if (any(Yj>Yk)) {
-# warning(paste("Please fix lim in spectra with incl.min marked 'No' to 
-#               incorporate all minima in spectral curves"))
-# }
+
+if (any(Yj>Yk)) {
+warning(paste('Please fix lim in spectra with incl.min marked "No" to 
+              incorporate all minima in spectral curves'))
+}
 
 Xa <- wlrange[fstHM]
-Xb <- wlrange[Xi+sndHM-1]
+Xb <- wlrange[Xi+sndHM]
 hue <- wlrange[Xi]
-
-if (any(Xa==lim[1]|Xb==lim[2])) {
-  warning("peak edges may be at bounds. check limits.")
-}
 
 if (plot==TRUE) {
   for (i in seq_along(select)) {
@@ -137,10 +112,8 @@ if (plot==TRUE) {
 }
 
 out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue, 
-                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
-                  bounds = c("OK", "Check")[as.numeric(Xa==lim[1]|Xb==lim[2])+1])
-
-                  # , incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
+                  FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue, 
+                  incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 # row.names(out) <- nms[select]
 

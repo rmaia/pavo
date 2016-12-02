@@ -6,7 +6,7 @@
 \usage{
 procspec(rspecdata, opt = c("none", "smooth", "maximum", "minimum", "bin",
   "sum", "center"), fixneg = c("none", "addmin", "zero"), span = 0.25,
-  bins = 20, ...)
+  bins = 20)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec},
@@ -41,8 +41,6 @@ spectra to process.}
 \item{span}{sets the smoothing parameter used by \code{loess.smooth}}
 
 \item{bins}{sets the number of equally sized wavelength bins for \code{opt="bin"}}
-
-\item{...}{class consistency (ignored)}
 }
 \value{
 A data frame of class \code{rspec} with the processed data.

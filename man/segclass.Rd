@@ -15,8 +15,7 @@ and spectra data in remaining columns.}
 to calculate segments (defaults to 300nm to 700nm).}
 }
 \value{
-A data frame with the reflectance proportion at each of the four segments, as
-well as the LM and MS segment classification scores.
+A data frame with LM and MS segment classification scores.
 }
 \description{
 Calculates segment classification measures as defined in Endler (1990)

@@ -5,10 +5,9 @@
 \title{Visual Models}
 \usage{
 vismodel(rspecdata, qcatch = c("Qi", "fi"), visual = c("avg.uv", "avg.v",
-  "bt", "star", "pfowl", "apis", "cie1931"), achromatic = c("none", "bt.dc",
-  "ch.dc", "st.dc", "ml"), illum = c("ideal", "bluesky", "D65",
-  "forestshade"), vonkries = FALSE, scale = 1, bkg = "ideal",
-  relative = TRUE)
+  "bluetit", "star", "pfowl"), achromatic = c("bt.dc", "ch.dc", "st.dc", "ml",
+  "none"), illum = c("ideal", "bluesky", "D65", "forestshade"),
+  vonkries = F, scale = 1, bkg = "ideal", relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
@@ -30,11 +29,9 @@ column with the range of wavelengths included, and the sensitivity for each othe
 cone as a column
 \item \code{avg.uv}: average avian UV system
 \item \code{avg.v}: average avian V system
-\item \code{bt}: Blue tit \emph{Cyanistes caeruleus} visual system
+\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system
 \item \code{star}: Starling \emph{Sturnus vulgaris} visual system  
 \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system
-\item \code{apis}: Honeybee \emph{Apis mellifera} visual system
-\item \code{cie1931}: Human CIE 1931 color matching functions
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)

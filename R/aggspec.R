@@ -15,7 +15,6 @@
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @param trim logical. if \code{TRUE} (default), the function will try to identify and 
 #' remove numbers at the end of the names of the columns in the new rspec object.
-#' @param na.rm logical. how to handle NA's.
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' @export
 #' @examples \dontrun{
@@ -40,7 +39,7 @@
 #     (i.e. there is no meaningful default), leave arg empty. Default is to return 
 #     error. But if there's an implemented default (i.e. for FUN), use it.
 
-aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE) {
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
 #BEGIN RM EDIT
 # check: user may have removed 'wl' function already.
@@ -56,7 +55,7 @@ if (length(wl_index>0)){
 		}
 
 if (is.null(by)) {
-  dat <- apply(y, 1, FUN, na.rm = na.rm)
+  dat <- apply(y, 1, FUN)
   res <- data.frame(cbind(wl=wl, dat))
   class(res) <- c('rspec','data.frame')
   return(res)
@@ -116,19 +115,12 @@ stop(paste('\n',dQuote(deparse(substitute(by))),'is not of same length as column
 
 by <- factor(by)  # is this necessary?
 
-# check if '...' is in argument list of specified FUN
-# if not, add it. otherwise aggplot() options (like lty, lwd) will cause errors
-if (!is.name(formals(FUN)$...)) {
-  formals(FUN) <- c(formals(FUN), alist(... = ))
-}
-
-dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, na.rm = na.rm)})
+dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
 
 colnames(dat) <- unique(by0)
 
-if (trim) {
+if(trim)
   colnames(dat) <- gsub('[\\. | \\_ | \\-][0-9]*$', '', colnames(dat))
-}
 
 res <- data.frame(cbind(wl=wl, dat))
 

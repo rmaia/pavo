@@ -31,7 +31,6 @@ projplot=function(tcsdata, ...)
     # dat <- tcsdata
     # }
 
-par.old <- par()
 
 points.theta=tcsdata[,'h.theta']
 points.phi=tcsdata[,'h.phi']
@@ -133,8 +132,5 @@ mp.p.theta <- mp$x[-c(1:9)]
 mp.p.phi <- mp$y[-c(1:9)]
 
 points(mp.p.phi~mp.p.theta, ...)
-
-par(par.old)
-
 }
 

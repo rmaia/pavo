@@ -5,7 +5,7 @@
 \title{Import spectra files}
 \usage{
 getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
-  subdir = FALSE, subdir.names = FALSE, fast = TRUE)
+  subdir = FALSE, subdir.names = FALSE)
 }
 \arguments{
 \item{where}{(required) folder in which files are located.}
@@ -24,9 +24,6 @@ included in the search? (defaults to \code{FALSE})}
 
 \item{subdir.names}{should subdirectory path be included in the name of the
 spectra? (defaults to \code{FALSE})}
-
-\item{fast}{whether to use fast input of spectral files. Useful if all files
-are in the same format (e.g., Avantes or Ocean Optics). Defaults to \code{TRUE}}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported

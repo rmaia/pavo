@@ -3,8 +3,7 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
-#' @export summary.rspec
-#' @method summary rspec
+#' @export 
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
@@ -155,14 +154,7 @@
 #' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 
-#summary.rspec <- function (object, ...) {
-
- 
 summary.rspec <- function (object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
-
-# TESTING
-# object <- teal2
-#
 
 wl_index <- which(names(object)=='wl')
 wl <- object[,wl_index]
@@ -189,16 +181,11 @@ if(is.null(wlmin)){
 
      lambdamax <- wlmax
      }
-
+    
 # restrict to range of wlmin:wlmax
 object <- object[which(wl==lambdamin):which(wl==lambdamax),]
 wl <- object[,wl_index]
-
-# CE begin edit:
-select <- (1:ncol(object))[-wl_index]
-# object <- object[,-wl_index]
-object <- object[select]
-# CE end edit
+object <- object[,-wl_index]
 
 output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
@@ -279,10 +266,10 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(as.data.frame(object[Q4, ]), 2, sum) / B1
-S5Y <- apply(as.data.frame(object[Q3, ]), 2, sum) / B1
-S5G <- apply(as.data.frame(object[Q2, ]), 2, sum) / B1
-S5B <- apply(as.data.frame(object[Q1, ]), 2, sum) / B1
+S5R <- apply(object[Q4, ],2,sum)/B1
+S5Y <- apply(object[Q3, ],2,sum)/B1
+S5G <- apply(object[Q2, ],2,sum)/B1
+S5B <- apply(object[Q1, ],2,sum)/B1
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
@@ -328,8 +315,17 @@ S6 <- B3-Rmin # S6
 H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H3 
-lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
-  Rmid <- round((H1+lambdaRmin)/2)
+# limit to 400-700 nm range to avoid spurious UV peaks
+H3object <- object[wl %in% 400:700,]
+H3wl <- wl[wl %in% c(400:700)]
+# lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
+# Rmid <- round((H1+lambdaRmin)/2)
+RmaxH3 <- sapply(H3object, max)
+RmidH3 <- (Rmin + RmaxH3) / 2
+H3 <- sapply(1:ncol(H3object), function(x) {
+  which.min(abs(H3object[,x] - RmidH3[x]))
+})
+H3 <- H3wl[H3]
 
 # H2
 diffsmooth <- apply(object,2,diff)
@@ -366,7 +362,7 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
   output.mat[, 18] <- S10 
   output.mat[, 19] <- H1
   output.mat[, 20] <- lambdabmaxneg 
-  output.mat[, 21] <- Rmid
+  output.mat[, 21] <- H3 #Rmid
   output.mat[, 22] <- H4
   output.mat[, 23] <- lambdabmax
 

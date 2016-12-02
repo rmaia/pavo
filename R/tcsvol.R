@@ -10,8 +10,11 @@
 
 tcsvol <- function(tcsdata, col='black', alpha=0.2, grid.alpha=1, grid=T, fill=T){
 
-# load RGL, and attempt install if not found
-loadrgl()
+# if(class(tcsdata)=='tcs'){
+  # dat <- tcsdata$tcs  
+  # }else{
+    # dat <- tcsdata
+    # }
 
 vol <- t(convhulln(tcsdata[,c('x','y','z')],options='FA')$hull)
 coords <- tcsdata[,c('x','y','z')]

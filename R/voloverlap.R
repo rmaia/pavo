@@ -166,10 +166,6 @@ res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 #PLOT BEGIN#
 ############
 if(plot==TRUE){
-
-  # load RGL, and attempt install if not found
-  loadrgl()
-
   if(length(col)<3)
     col <- c(rep(col,2)[1:2], 'darkgrey')
 
