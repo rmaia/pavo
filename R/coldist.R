@@ -119,7 +119,13 @@
 coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, qcatch = NULL,
-                  n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1){
+                  n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
+                  v,n1,n2,n3,n4){
+  if(!missing(v))
+    stop('argument v is deprecated, please use weber instead. see ?coldist for more information.', call.=FALSE)
+
+  if(!missing(n1) || !missing(n2) || !missing(n3) || !missing(n4))
+    stop('arguments n1, n2, n3 and n4 are deprecated, please use n instead. see ?coldist for more information.', call.=FALSE)
    
   noise <- match.arg(noise)
   
