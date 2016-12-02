@@ -844,8 +844,8 @@ selected from the `coldist` argument `noise` (which accepts either `"neural"` or
 `"quantum"`).
 
 ```{r, echo=TRUE, eval=TRUE}
-coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4))
-coldist(vismod.idi, n = c(1, 2),  weber = 0.05)
+coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber=0.1)
+coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
 ```
 
 Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast
