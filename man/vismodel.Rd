@@ -125,6 +125,8 @@ tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
+
+Thomas White \email{thomas.white026@gmail.com}
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 

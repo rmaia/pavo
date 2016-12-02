@@ -60,8 +60,8 @@ summary(flowers.hex)
 # Tetrahedral model
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
-tcs.sicalis <- tcs(vis.sicalis)
-summary(tcs.sicalis, by = rep(c('C', 'T', 'B'), 7))}
+csp.sicalis <- colspace(vis.sicalis)
+summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 
 }
 \author{
