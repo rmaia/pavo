@@ -11,7 +11,7 @@
 #' @aliases tcs
 #' @section Details:
 #' \tabular{rl}{
-#'   \code{colspace} \tab now a synonym for \code{\link{tcs}}\cr
+#'   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
 #' }
 #'  
 
