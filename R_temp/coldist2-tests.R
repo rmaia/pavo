@@ -127,6 +127,33 @@ plot(cd.new.tet.s$dL~cd.new.tet.sq$dL); abline(0,1)
 save(list=ls(), file='github/pavo/R_temp/newcoldist.RData')
 
 
+
+
+l1 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=1), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l10 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=10), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l100 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=100), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l1000 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=1000), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l10000 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=10000), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l100000 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=100000), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+l1000000 <- coldist(vismodel(sicalis, visual=sensmodel(c(300,400,500,600)), rel=F, scale=1000000), n=c(1,2,2,4), weber=0.1, weber.achro=0.1, noise='quantum')
+
+
+plot(l1000000$dS~l1$dS); abline(0,1)
+plot(l1000000$dS~l10$dS); abline(0,1)
+plot(l1000000$dS~l100$dS); abline(0,1)
+plot(l1000000$dS~l1000$dS); abline(0,1)
+plot(l1000000$dS~l10000$dS); abline(0,1)
+plot(l1000000$dS~l100000$dS); abline(0,1)
+
+
+plot(l1000000$dL~l1$dL); abline(0,1)
+plot(l1000000$dL~l10$dL); abline(0,1)
+plot(l1000000$dL~l100$dL); abline(0,1)
+plot(l1000000$dL~l1000$dL); abline(0,1)
+plot(l1000000$dL~l10000$dL); abline(0,1)
+plot(l1000000$dL~l100000$dL); abline(0,1)
+
+
 #######################
 # COMPARING OLD V NEW #
 #######################
