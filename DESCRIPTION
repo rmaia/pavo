@@ -4,7 +4,7 @@ Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
 Version: 1.0.0
 License: GPL (>= 2)
-Date: 2016-11-11
+Date: 2016-12-02
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Chad", "Eliason", role = "aut",

@@ -1,3 +1,4 @@
+revdep/
 examplespec/
 manuscript/
 R_temp/
@@ -9,3 +10,4 @@ vignette_data/
 ^\.Rproj\.user$
 .travis.yml
 todo.txt
+^cran-comments\.md$
