@@ -38,17 +38,17 @@ dispace <- function(vismodeldata){
     
 # check if trichromat
     if(attr(dat, 'conenumb') < 2)
-      stop('vismodel input is not dichromatic')
+      stop('vismodel input is not dichromatic', call.=FALSE)
     
     if(attr(dat, 'conenumb') > 2)
-      warning('vismodel input is not dichromatic, considering first two receptors only')
+      warning('vismodel input is not dichromatic, considering first two receptors only', call.=FALSE)
     
 # check if relative
     if(!attr(dat, 'relative')){
       dat <- dat[, 1:2]
       dat <- dat/apply(dat, 1, sum)
       class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed")
+      warning("Quantum catch are not relative, and have been transformed", call.=FALSE)
       attr(vismodeldata, 'relative') <- TRUE
     }
     
@@ -59,22 +59,18 @@ dispace <- function(vismodeldata){
   if(!('vismodel' %in% attr(dat, 'class'))){
     
     if(ncol(dat) < 2)
-      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than two columns')	
+      stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than two columns', call.=FALSE)	
     if(ncol(dat) == 2)
-      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns 
-              as standardized quantum catch for ', dQuote('s'), ' and ', dQuote('l'), 
-              ' receptors, respectively')
+      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as standardized quantum catch for ', dQuote('s'), ' and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
     
     if(ncol(dat) > 2)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than two columns; 
-              treating the first two columns as standardized quantum catch for ', 
-              dQuote('s'),', and ', dQuote('l'), ' receptors, respectively')
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than two columns; treating the first two columns as standardized quantum catch for ', dQuote('s'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
     
     dat <- dat[, 1:2]
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
       dat <- dat/apply(dat, 1, sum)
-      warning('Quantum catch are not relative, and have been transformed')
+      warning('Quantum catch are not relative, and have been transformed', call.=FALSE)
       attr(vismodeldata,'relative') <- TRUE
     }
   }

@@ -153,7 +153,7 @@ coldist <-function(modeldata,
 
   if(noise == 'quantum'){
   	if(!any(c('vismodel', 'colspace') %in% class(modeldata)))
-  	  stop('Object must be of class vismodel or colspace to calculate quantum receptor noise model')
+  	  stop('Object must be of class vismodel or colspace to calculate quantum receptor noise model', call.=FALSE)
   }
   
   # Pre-processing for colspace objects
@@ -168,7 +168,7 @@ coldist <-function(modeldata,
       ncone <- as.character(attr(modeldata,'conenumb'))
       
       if(lengthn != ncone) 
-        stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''))
+        stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
   
 
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
@@ -187,7 +187,7 @@ coldist <-function(modeldata,
     }
       
     if(attr(modeldata, 'relative'))
-      warning('Quantum catch are relative, distances may not be meaningful')  
+      warning('Quantum catch are relative, distances may not be meaningful', call.=FALSE)  
   }
   
   # Pre-processing for vismodel objects
@@ -204,10 +204,10 @@ coldist <-function(modeldata,
     # initial checks... 
     
     if(attr(modeldata, 'qcatch') == 'Ei')
-  	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)')
+  	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)', call.=FALSE)
      
     if(attr(modeldata, 'relative'))
-      warning('Quantum catch are relative, distances may not be meaningful')  
+      warning('Quantum catch are relative, distances may not be meaningful', call.=FALSE)  
 
     # save input object...
      
@@ -233,7 +233,7 @@ coldist <-function(modeldata,
     ncone <- as.character(attr(modeldata,'conenumb'))
     
     if(lengthn != ncone) 
-      stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
+      stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
     
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -249,12 +249,12 @@ coldist <-function(modeldata,
     
     if(achro==FALSE){
     	  ncone <- dim(dat)[2]
-    	  warning(paste("number of cones not specified; assumed to be", ncone))
+    	  warning(paste("number of cones not specified; assumed to be", ncone), call.=FALSE)
     }
     
     if(achro==TRUE){
     	  ncone <- dim(dat)[2]-1
-    	  warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"))
+    	  warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"), call.=FALSE)
     }
     
   }
@@ -291,11 +291,11 @@ coldist <-function(modeldata,
   	
    dat2 <- dat[, 1:as.numeric(ncone)]
   
-   if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''))
+   if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''), call.=FALSE)
    
    if(weber.ref == 'longest') weber.ref <- length(n)
    
-   if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''))
+   if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
   
    if(noise=='neural'){
    	res$dS <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
@@ -319,8 +319,7 @@ coldist <-function(modeldata,
         ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
     
     if(dim(dat)[2] <= as.numeric(ncone))
-      warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system, so there is no column in the data that represents an exclusively achromatic channel. The last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
-    
+      warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
   }
 
   }
@@ -342,19 +341,19 @@ if('colspace' %in% class(modeldata)){
   if(attr(modeldata, 'clrsp') == 'categorical'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      warning('Achromatic contrast not calculated in the categorical model')
+      warning('Achromatic contrast not calculated in the categorical model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      warning('Achromatic contrast not calculated in the CIELAB model')
+      warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){
     res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      warning('Achromatic contrast not calculated in the color-opponent-coding space')
+      warning('Achromatic contrast not calculated in the color-opponent-coding space', call.=FALSE)
   }
 
 }
@@ -364,7 +363,7 @@ if('colspace' %in% class(modeldata)){
 # Subsetting samples
   
   if(length(subset) > 2){
-    stop('Too many subsetting conditions; one or two allowed.')
+    stop('Too many subsetting conditions; one or two allowed.', call.=FALSE)
   }
   
   if(length(subset) == 1){
