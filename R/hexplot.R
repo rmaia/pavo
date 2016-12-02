@@ -52,15 +52,10 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   
   sectors <- match.arg(sectors)
 
-  omargin <- par()$mar
-  oAR <- par()$pty
-  
   par(mar = margins)
   
   if(square) 
     par(pty = 's')
-  
-  on.exit(par(mar = omargin, pty = oAR))
 
 # Set defaults
   arg <- list(...)

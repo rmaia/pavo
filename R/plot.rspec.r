@@ -38,6 +38,9 @@ plot.rspec <- function(x, select = NULL, type = c('overlay', 'stack', 'heatmap')
 
 type <- match.arg(type)
 
+oPar <- par(no.readonly=TRUE)
+on.exit(par(oPar))
+
 # make wavelength vector
 wl_index <- which(names(x)=='wl')
 if (length(wl_index) > 0) {

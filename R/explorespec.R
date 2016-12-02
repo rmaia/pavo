@@ -29,6 +29,9 @@
 
 explorespec <- function (rspecdata, by = NULL, scale = c('equal', 'free'), legpos = 'topright', ...){
 
+oPar <- par(no.readonly=TRUE)
+on.exit(par(oPar))
+
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 rspecdata <- rspecdata[,-wl_index]

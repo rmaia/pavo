@@ -35,14 +35,15 @@
 projplot = function(tcsdata, ...)
 {
 
+oPar <- par(no.readonly=TRUE)
+on.exit(par(oPar))
+
 # no longer tcs object
 # if(class(tcsdata)=='tcs'){
   # dat <- tcsdata$tcs	
   # }else{
     # dat <- tcsdata
     # }
-
-par.old <- par()
 
 points.theta=tcsdata[,'h.theta']
 points.phi=tcsdata[,'h.phi']

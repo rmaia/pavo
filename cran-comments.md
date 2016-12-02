@@ -15,4 +15,9 @@ I ran R CMD check on the one package that depends on pavo (photobiologyInOut). T
 Non-standard file/directory found at top level:
   ‘revdep’ 
 
+
+* Ecoengine: this appears to be a failure related to config on 
+  that machine. I couldn't reproduce it locally, and it doesn't 
+  seem to be related to changes in httr (the same problem exists 
+  with httr 0.4).
 ---

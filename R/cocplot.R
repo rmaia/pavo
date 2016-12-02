@@ -36,16 +36,11 @@ cocplot <- function(cocdata, labels = TRUE, lab.cex = 0.9,
                     tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
                     achro = FALSE, achrosize = 0.8, achrocol = 'grey',
                     margins = c(1,1,2,2), square=TRUE, ...){ 
-  
-  omargin <- par()$mar
-  oAR <- par()$pty
-  
+    
   par(mar=margins)
   
   if(square) 
     par(pty='s')
-  
-  on.exit(par(mar=omargin, pty=oAR))
   
   arg <- list(...)
   

@@ -36,15 +36,10 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achro
                     lab.cex = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, 
                     margins = c(1,1,2,2), square=TRUE,...){ 
   
-  omargin <- par()$mar
-  oAR <- par()$pty
-  
   par(mar=margins)
   
   if(square) 
     par(pty='s')
-  
-  on.exit(par(mar=omargin, pty=oAR))
     
   arg <- list(...)
   

@@ -26,6 +26,9 @@
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0, ask = TRUE){
 
+oPar <- par(no.readonly=TRUE)
+on.exit(par(oPar))
+
 curves <- curves + 1
 
 if (curves == 1) stop ("No curves to compare (curves = 1)")
