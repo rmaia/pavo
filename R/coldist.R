@@ -63,6 +63,8 @@
 #'  Note that the \code{quantum} option will only work with 
 #' 	objects of class \code{vismodel}.
 #' }
+#' 
+#' @param n1,n2,n3,n4,v deprecated arguments. see below.
 #'
 #' @return A data frame containing up to 4 columns. 
 #' The first two (\code{patch1, patch2}) refer
@@ -70,6 +72,24 @@
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
 #' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
 #' and manhattan distances in the color-opponent-coding space. 
+#'
+#' @section Note on previous versions:
+#' previous versions of \code{coldist} calculated receptor noise using the arguments
+#' \code{v} for the individual cone noise-to-signal ratio and \code{n1,n2,n3,n4} for
+#' the relative cone densities. These arguments have been replaced by \code{weber} and 
+#' \code{n}, which takes a vector of relative cone densities. \code{weber.ref} allows
+#' the user to specify which receptor to use as the reference to obtain the 
+#' desired Weber fraction, and \code{coldist} calculates internally the value of \code{v}
+#' to be used when calculating the Weber fraction for the remaining cones. 
+#'
+#' This allows
+#' a more explicit choice of Weber fraction, without the need to find the right value of
+#' \code{v} to use in order to obtain the desired signal-to-noise ratio. Additionally,
+#' by allowing \code{n} to be entered as a vector, \code{coldist} can now handle visual
+#' systems with more than four photoreceptors.
+#'
+#' In addition, the achromatic noise is calculated based on the \code{weber.achro} 
+#' argument directly, and not based on \code{v} and \code{n4} as before.
 #' 
 #' @export
 #' 
