@@ -8,3 +8,4 @@ vignette_data/
 ^.*\.Rproj$
 ^\.Rproj\.user$
 .travis.yml
+todo.txt

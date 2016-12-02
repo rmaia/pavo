@@ -70,9 +70,9 @@
 #' 
 #' @examples \dontrun{
 #' data(sicalis)
-#' tcs.sicalis.C <- subset(tcs(vismodel(sicalis)), 'C')
-#' tcs.sicalis.T <- subset(tcs(vismodel(sicalis)), 'T')
-#' tcs.sicalis.B <- subset(tcs(vismodel(sicalis)), 'B')
+#' tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
+#' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
+#' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = 1:3) }
