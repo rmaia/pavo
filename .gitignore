@@ -6,6 +6,7 @@
 *.tex
 *.out
 manuscript/
+revdep/
 vignette/fig/
 vignette/pavo.toc
 vignette/pavo.synctex.gz

@@ -19,7 +19,7 @@ with columns representing quantum catches).}
    cones, respectively.
    \item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
    \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details.
-   \item \code{tcs}: tetrahedral colourspace. See \code{\link{tcs}} for details.
+   \item \code{tcs}: tetrahedral colourspace. See \code{\link{tcspace}} for details.
    \item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See \code{\link{hexagon}} for details.
    \item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991). See \code{\link{coc}} for details.
    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details.
