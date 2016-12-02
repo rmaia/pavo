@@ -1,9 +1,20 @@
 pavo 1.0
 ------------------------------------------------------------------------------
+* See vignette for detailed description of changes.
+
 MAJOR CHANGES
 * coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.
 * coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
-* tcs() now returns an object of class colorspace, not tcs. This will facilitate the implementation of different color space models in the future.
+* tcs() is deprecated, replaced by colspace().
+
+NEW FUNCTIONS:
+
+* colspace() replaces tcs() and introduces several new colorspaces
+* plot() methods for several colspace() outputs, including a static tetrahedral colorspace
+* projpoints() allows the plotting of points in a projplot() figure
+* vol() draws volume polygons in static tetrahedral plots
+* axistetra() draws reference x, y and z axis arrows in static tetrahedral plots
+* legendtetra() adds legends to static tetrahedral plots
 
 MINOR FEATURES AND BUG FIXES:
 
@@ -19,15 +30,27 @@ MINOR FEATURES AND BUG FIXES:
 * aggplot() added logical argument "legend" for automatically adding a legend to the plot
 * vismodel() returns error if bkg=NULL
 * getspec() patched to stop returning warnings in Yosemite
+* getspec() has a faster (~5-10X), but less flexible, algorithm used when all input files are from the same source.
 
+pavo 0.5-6
+------------------------------------------------------------------------------
+BUG FIXES
+* fixed bug in calculaiton of dichromat contrast in coldist()
 
-NEW FUNCTIONS:
+pavo 0.5-5
+------------------------------------------------------------------------------
+MINOR FEATURES AND BUG FIXES
+* fixed bug in calculaiton of H3 in summary.rspec()
 
-* projpoints() allows the plotting of points in a projplot() figure
-* fgetspec() faster (~5-10X), but less flexible, version of getspec() for cases in which similar file types are to be imported (e.g., all Avantes or Ocean Optics)
-* vol() draws volume polygons in static tetrahedral plots
-* axistetra() draws reference x, y and z axis arrows in static tetrahedral plots
-* legendtetra() adds legends to static tetrahedral plots
+pavo 0.5-4
+------------------------------------------------------------------------------
+MINOR FEATURES AND BUG FIXES
+* changed default values for coldist()
+
+pavo 0.5-2
+------------------------------------------------------------------------------
+MINOR FEATURES AND BUG FIXES
+* fixes to the blue tit visual system, changed vismodel() argument to "bluetit"
 
 pavo 0.5-1
 ------------------------------------------------------------------------------
