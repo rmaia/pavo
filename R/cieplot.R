@@ -49,12 +49,8 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
   if(attr(ciedata, 'clrsp') == 'CIEXYZ'){
     
     # Set defaults
-    if(is.null(arg$col))
-      arg$col <- 'black'
     if(is.null(arg$pch))
       arg$pch <- 19
-#    if(is.null(arg$type))
-#      arg$type = 'p'      is the default, not needed?
     if(is.null(arg$xaxp))
       arg$xaxp <- c(0, 0.9, 9)
     if(is.null(arg$yaxp))
@@ -111,8 +107,6 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     # Set defaults
     arg <- list(...)
     
-    if(is.null(arg$col))
-      arg$col <- 'black'
     if(is.null(arg$cex))
       arg$cex <- 0.9
     if(is.null(arg$pch))

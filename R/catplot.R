@@ -37,8 +37,6 @@ catplot <- function(catdata, labels = TRUE, lab.cex = 0.9, ...){
   arg <- list(...)
   
 # Set defaults
-  if(is.null(arg$col))
-    arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19  
   if(is.null(arg$xlim))
