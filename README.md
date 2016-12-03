@@ -1,5 +1,7 @@
 # `pavo`
 
+### *package by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton*
+
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)
 ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo) 
 [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
