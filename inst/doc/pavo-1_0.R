@@ -43,14 +43,14 @@ tetra.flowers <- colspace(vis.flowers, space = 'tcs')
 head(tetra.flowers)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"----
-par(mfrow = c(1, 2), pty='s')
+par(mfrow = c(1, 2), pty = 's')
 plot(tetra.flowers, view = 30, pch = 21, bg = flowercols)
-legendtetra(x=-2.6, y=0.2, z=0.8, legend='flowers', pch=19, col='black', bty='n')
-axistetra(x=1.4, y=0.2, z=0.4, size=c(0.25,0.15,0.1), adj.label=c(0.06,0.08,0.07))
-axistetra(x=1.4, y=0.2, z=-0.4, size=0.2, label=FALSE)
-plot(tetra.flowers, view=60, scale.y=0.6, pch = 21, bg = flowercols)
-axistetra(x=0.6, y=0.2, z=0.5, size=c(0.2,0.2,0.15), adj.label=c(0.07,0.12,0.07))
-axistetra(x=0.6, y=0.2, z=-0.5, size=0.2, label=FALSE)
+legendtetra(x = -2.6, y = 0.2, z = 0.8, legend = 'flowers', pch = 19, col = 'black', bty = 'n')
+axistetra(x = 1.4, y = 0.2, z = 0.4, size = c(0.25, 0.15, 0.1), adj.label = c(0.06, 0.08, 0.07))
+axistetra(x = 1.4, y = 0.2, z = -0.4, size = 0.2, label = FALSE)
+plot(tetra.flowers, view=60, scale.y = 0.6, pch = 21, bg = flowercols)
+axistetra(x = 0.6, y = 0.2, z = 0.5, size = c(0.2, 0.2, 0.15), adj.label = c(0.07, 0.12, 0.07))
+axistetra(x = 0.6, y = 0.2, z = -0.5, size = 0.2, label = FALSE)
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
