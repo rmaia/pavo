@@ -1,15 +1,9 @@
----
-output:
-  md_document:
-    variant: markdown_github
----
-
 # `pavo`
 
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)
-![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)  
-master:  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
-revamp: [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches)
+![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo) 
+[![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
+<!-- revamp: [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches) -->
 
 **Need help with the package?** Join the chat: [![Join the chat at https://gitter.im/r-pavo/help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/r-pavo/help?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
@@ -36,7 +30,7 @@ If you want to install the bleeding edge version of `pavo`, you can:
 
 ```r     
 install.packages('devtools')
-devtools::install_github('rmaia/pavo@revamp')
+devtools::install_github('rmaia/pavo')
 require(pavo)
 ```
 
