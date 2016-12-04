@@ -42,8 +42,6 @@
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd, 
                     lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...) {
 
-oPar <- par(no.readonly=TRUE)
-
 if (is.numeric(by))
   if (by==1)
     stop('Cannot group single spectra (use plot instead)')

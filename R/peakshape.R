@@ -41,10 +41,6 @@
 peakshape <- function(rspecdata, select = NULL, lim = NULL, 
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
 
-old.par <- par(no.readonly = TRUE)  # all par settings that could be set
-
-par(ask = ask)
-
 # if (length(select) > 1)
 #   par(mfrow=c(2,2)) else
 #   par(mfrow=c(1,1))
@@ -135,6 +131,10 @@ Xb <- wlrange[Xi+sndHM]
 hue <- wlrange[Xi]
 
 if (plot==TRUE) {
+  oPar <- par['ask']
+  on.exit(par(oPar))
+  par(ask = ask)
+  
   for (i in seq_along(select)) {
     plot(rspecdata[, i]~wl, type = 'l', xlab = "Wavelength (nm)", 
          ylab = "Reflectance (%)", main = nms[select[i]], ...)
@@ -151,8 +151,6 @@ out <- data.frame(id = nms[select], B3 = as.numeric(Yi), H1 = hue,
                   incl.min = c("Yes", "No")[as.numeric(Yj>Yk)+1])
 
 # row.names(out) <- nms[select]
-
-par(old.par)
 
 out
 

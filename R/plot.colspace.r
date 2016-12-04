@@ -90,7 +90,8 @@
 
 plot.colspace <- function(x, ...){
   
-  oPar <- par(no.readonly=TRUE)
+  #oPar <- par(no.readonly=TRUE)
+  oPar <- par('mar','pty')
   on.exit(par(oPar))
 
   space <- attr(x, 'clrsp')
