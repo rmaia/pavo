@@ -100,7 +100,7 @@ specs.max <- procspec(sppspec, opt='max')
 specs.min <- procspec(sppspec, opt='min')
 specs.str <- procspec(sppspec, opt=c('min', 'max'))  # multiple options
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.align='center', fig.cap="_Results for max (left), min (center), and both normalizations (right)_"----
+## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.align='center', fig.cap="_Results for min (left), max (center), and both normalizations (right)_"----
 # Plot results
 par(mfrow = c(1, 3), mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
