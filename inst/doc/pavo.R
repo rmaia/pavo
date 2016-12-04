@@ -3,7 +3,7 @@ library(pavo)
 
 ## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
 #specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
-specs <- readRDS(system.file("specsdata.rda", package = "pavo"))
+specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 
 ## ---- echo=TRUE, eval=FALSE, results='hide', include=TRUE----------------
 #  #specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
