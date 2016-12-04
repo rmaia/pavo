@@ -65,16 +65,16 @@ using a computer with international numbering input, which means it uses commas 
 as a decimal separator. We can specify that in the function call.
 
 The files were downloaded and placed in a directory called 
-`/github/pavo/vignette_data`. By default, `getspec` will search for files in 
+`/pavo/vignette_data`. By default, `getspec` will search for files in 
 the current folder, but a different one can be specified:
 
 ```{r, echo=FALSE, eval=TRUE, results='hide', include=FALSE}
-specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 ```
 
 ```{r, echo=TRUE, eval=FALSE, results='hide', include=TRUE}
-#specs <- getspec("~/github/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
-specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 # 213  files found; importing spectra
 # ============================================================
 ```

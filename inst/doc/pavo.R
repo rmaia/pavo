@@ -2,11 +2,11 @@
 library(pavo)
 
 ## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
-specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 
 ## ---- echo=TRUE, eval=FALSE, results='hide', include=TRUE----------------
-#  #specs <- getspec("~/github/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
-#  specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#  #specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 #  # 213  files found; importing spectra
 #  # ============================================================
 
