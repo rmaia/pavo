@@ -131,7 +131,7 @@ Xb <- wlrange[Xi+sndHM]
 hue <- wlrange[Xi]
 
 if (plot==TRUE) {
-  oPar <- par['ask']
+  oPar <- par('ask')
   on.exit(par(oPar))
   par(ask = ask)
   
