@@ -43,7 +43,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   
   if(fast){
     cat("Attempting fast import. ")
-    fastcatch <- try(fgetspec(where = where, ext = ext, lim = lim, decimal = decimal, 
+    fastcatch <- try(getspecf(where = where, ext = ext, lim = lim, decimal = decimal, 
       subdir = subdir, subdir.names = subdir.names), silent=TRUE)
     
     if('try-error' %in% class(fastcatch)){

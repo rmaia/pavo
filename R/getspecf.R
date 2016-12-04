@@ -44,17 +44,12 @@
 #   suggested solution: a secondary function that examines files and returns recorded WL 
 #     range (in a dataframe or table)
 
-fgetspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
+getspecf <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
                      subdir = FALSE, subdir.names = FALSE){
 
-extension <- paste('.', ext, sep='')
+corrupt <- FALSE
 
-# ### remove
-# where = "~/Desktop/glossystarlings"
-# subdir=FALSE
-# extension="ttt"
-# decimal="."
-###
+extension <- paste('.', ext, sep='')
 
 file_names <- list.files(where, pattern=extension, recursive=subdir, include.dirs=subdir)
 files <- paste(where,'/',file_names,sep='')
@@ -78,49 +73,64 @@ range <- lim[1]:lim[2]
 # Setting a progress bar
 # progbar <- txtProgressBar(min=0, max=length(files), style=2)
 
-raw <- scan(file = files[1], what = '', quiet = T, dec = decimal, sep = '\n')
+###
+# START OF WHAT WAS A LOOP
+###
 
-#ToDo we can actually use this raw string to import metadata if we want
+raw <- scan(file = files[1], what = '', quiet = T, dec = decimal, 
+  sep = '\n', skipNul = TRUE)
+
+# rough fix for 'JazIrrad' files that have a stram of calibration data at the end
+if(length(grep('Begin Calibration Data', raw)) > 0)
+  raw <- raw[1:grep('Begin Calibration Data', raw) - 1]
+
 
 # find last line with text
-# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
-
 start <- grep('[A-Da-dF-Zf-z]',raw)
-isendline <- length(grep('End.*Spectral Data', raw)) > 0
 
-if (isendline) {
+# correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
+isendline <- length(grep('End.*Spectral Data', raw)) > 0
+if(isendline)
   start <- start[-length(start)]
-}
 
 start <- max(start)
-
 end <- length(raw) - start
 
-if (isendline > 0) {
+if (isendline > 0)
   end <- end - 1
-}
 
 # Avantes has an extra skipped line between header and data. Bad Avantes.
 newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
 
-if(newavaheader) {
+if(newavaheader) 
   start <- start+1
-}
 
 # find if columns are separated by semicolon or tab
 issem <- length(grep(';', raw)) > 0
 istab <- length(grep('\t', raw)) > 0
 
-if (issem & istab) {
+if (issem & istab)
   stop('inconsistent column delimitation in source files.')
-}
 
 separ <- ifelse(issem, ';', '\t')
 
-
-rawtab <- read.table(files[1], skip=start, nrows=end, dec=decimal, sep=separ, header=FALSE)
+# extract data from file
+rawtab <- suppressWarnings(read.table(files[1], dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE, header=FALSE))
 
 wl <- rawtab[, 1]
+
+# convert non-numeric values to numeric
+if(any(c('character','factor') %in% apply(rawtab, 2, class))){
+  rawtab <- suppressWarnings(apply(rawtab, 2, 
+    function(x) as.numeric(as.character(x))))
+      
+  if(sum(apply(rawtab, 2, function(x) sum(is.na(x))))) 
+    corrupt <- TRUE
+}
+
+# remove columns where all values are NAs (due to poor tabulation)
+rawtab <- rawtab[ , colSums(is.na(rawtab)) < nrow(rawtab)]
+
 
 # set what type of data are in columns (null causes not to read)
 # Jaz and Avasoft8 have 5 columns, correct
@@ -128,10 +138,13 @@ numcols <- dim(rawtab)[2]
 colClasses <- c(rep("NULL", numcols-1), "numeric")
 
 # read data
-read.all <- lapply(files, read.table, skip = start, nrows = end, dec = decimal, sep = separ, header = FALSE, colClasses = colClasses)
+read.all <- suppressWarnings(lapply(files, read.table, skip = start, nrows = end, dec = decimal, sep = separ, header = FALSE, colClasses = colClasses))
 
 # combine columns
 tempframe <- as.data.frame(do.call(cbind, read.all))
+
+if(any(apply(tempframe, 2, class) != 'numeric'))
+  corrupt <- TRUE
 
 # remove columns where all values are NAs (due to poor tabulation)
 # tempframe <- tempframe[, colSums(is.na(tempframe)) < nrow(tempframe)]
@@ -143,6 +156,12 @@ interp <- as.data.frame(cbind(range, interp))
 names(interp) <- c("wl", as.character(strsplit(file_names, extension)))
 
 class(interp) <- c('rspec','data.frame')
+
+if(corrupt){
+  cat('\n')
+  warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+  	}
+
 
 interp
 
