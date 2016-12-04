@@ -1,6 +1,6 @@
 # `pavo`
 
-### *package by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton*
+### _an R package for spectral color analysis by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton_
 
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)
 ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo) 

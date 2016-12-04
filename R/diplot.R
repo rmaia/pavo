@@ -34,7 +34,7 @@
 
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                     lab.cex = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, 
-                    margins = c(1,1,2,2), square=TRUE,...){ 
+                    margins = c(1, 1, 2, 2), square = TRUE,...){ 
   
   par(mar=margins)
   
@@ -44,12 +44,8 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = 'grey', achro
   arg <- list(...)
   
 # Set defaults
-  if(is.null(arg$col))
-    arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- "|"
-  if(is.null(arg$type))
-    arg$type = 'p'
 
 # Verticy coordinates  
   vert <- data.frame(x = c(-1/sqrt(2), 1/sqrt(2)), y = c(0, 0))

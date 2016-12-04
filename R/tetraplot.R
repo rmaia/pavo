@@ -58,8 +58,6 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     # Set defaults
     arg <- list(...)
     
-    if(is.null(arg$col))
-      arg$col <- 'black'
     if(is.null(arg$cex))
       arg$cex <- 0.9
     if(is.null(arg$pch))

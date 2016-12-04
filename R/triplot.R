@@ -36,7 +36,7 @@
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', achrosize = 0.8, 
                      cex.labels = 1, out.lwd = 1, out.lcol = 'black', out.lty = 1, 
-                     margins = c(1,1,2,2), square=TRUE, ...){ 
+                     margins = c(1, 1, 2, 2), square = TRUE, ...){ 
   
   par(mar=margins)
   
@@ -46,12 +46,8 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = 'grey', ach
   arg <- list(...)
   
 # Set defaults
-  if(is.null(arg$col))
-    arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
-#  if(is.null(arg$type))
-#    arg$type = 'p'      is the default, not needed?
   if(is.null(arg$xlim))
     arg$xlim <- c(-1/sqrt(2), 1/sqrt(2))
   if(is.null(arg$ylim))

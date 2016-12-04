@@ -60,14 +60,10 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
 # Set defaults
   arg <- list(...)
   
-  if(is.null(arg$col))
-    arg$col <- 'black'
   if(is.null(arg$pch))
     arg$pch <- 19
   if(is.null(arg$cex))
     arg$cex <- 0.9
-#  if(is.null(arg$type)) 
-#    arg$type = 'p'      is the default, not needed?
   if(is.null(arg$xlim))
     arg$xlim <- c(-1.2, 1.2)
   if(is.null(arg$ylim))
