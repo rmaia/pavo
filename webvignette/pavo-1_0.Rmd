@@ -1,0 +1,409 @@
+---
+title: "An introduction to pavo 1.0"
+author: "Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton"
+date: "`r Sys.Date()`"
+output: 
+  #rmarkdown::html_vignette:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: true
+    toc_depth: 3
+bibliography: refs.bib
+csl: style.csl
+vignette: >
+  %\VignetteIndexEntry{changes to pavo 1.0}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
+library(pavo)
+```
+
+# Introduction
+
+We are happy to introduce the stable release of `pavo 1.0`, which --- among other things --- includes a suite of new analysis and visualisation tools to make working with color data simpler and more intuitive than ever. 
+
+While we have made improvements that will expedite data organisation, the most significant developments in `1.0` relate to the analysis and visualisation of color data. This includes greater flexibility in the initial visual modelling process, and a host of new colorspace models and associated plotting options which are accessable through a simplified workflow. Below we will provide an overview of the main new features introduced in `1.0` in an example workflow.  
+
+# A Quick Guide For Familiar Users
+
+We detail the changes and additions to the package below, but frequent users should be aware of the following main changes:  
+
+  * `vismodel` can now incorporate wavelength-dependent transmission (such as from ocular media or turbid environment) and hyperbolic transformation of quantum catches. It also includes several new build-in visual systems.
+  * **the new `colspace` function replaces the old `tcs` function**, and expands colorspace calculations by incorporating a series of different di-, tri- and tetrachromatic colorspaces.
+  * there are now **`plot` options that work directly with `colspace` results**, including a static tetrahedral plot, which is more convenient when producing publication-quality figures.
+  * **the `coldist` function has undergone significant changes to its imput arguments.** Mainly, instead of specifying the single-cone noise `v` and the `n1, n2, n3` and `n4` relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument `weber`, (b) which cone to be used as the reference cone with the argument `weber.ref`, and (c) a single vector with the relative cone densities through the `n` argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the `weber.achro` argument. 
+  * besides the familiar distances in JND for receptor noise models, **`coldist` now also calculates color distances for the other colorspaces available through `colspace`**: Euclidean distances in the hexagon, cielab and categorical spaces, and manhattan (city-bloc) distances in the color-opponent-coding space.
+  * `getspec` now has a **fast algorithm** that speeds up importing spectra. The fast version will only work when all files have the same format. `getspec` attempts to use it first, and if it fails, it will switch to the old algorithm. (the slow version can also be chosen with the argument `fast=FALSE`)
+
+# New `flowers` Dataset
+
+`data(flowers)` is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species. which we'll use to illustrate many of the new features in this document.   
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"}
+data(flowers)
+
+flowercols <- spec2rgb(flowers)
+
+head(flowers[1:4])
+plot(flowers, lwd = 2, col = flowercols)
+```
+
+# Visual Modelling
+
+## Visual Phenotypes
+
+`pavo 1.0` introduced several new di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessable via the `vismodel()` argument `visual`:
+  : `avg.uv` average ultraviolet-sensitive avian (tetrachromat)
+  : `avg.v` average violet-sensitive avian (tetrachromat)
+  : `bluetit` The blue tit _Cyanistes caeruleus_ (tetrachromat)
+  : `star` The starling _Sturnus vulgaris_ (tetrachromat)
+  : `pfowl` The peafowl _Pavo cristatus_ (tetrachromat)
+  : `apis` The honeybee _Apis mellifera_ (trichromat)
+  : `canis` The canid _Canis familiaris_ (dichromat)
+  : `musca` The housefly _Musca domestica_ (tetrachromat)
+  : `cie2` 2-degree color matching functions for CIE models of human color vision (trichromat)
+  : `cie10` 10-degree color matching functions for CIE models of human color vision (trichromat)
+
+As in previous versions, the individual sensitivity functions can be accessed via a call to `vissyst`, and visualised using `plot`. For example:
+
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"}
+plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
+```
+
+## The `vismodel` Function and Receptor-Noise Limited Model
+
+**Incorporating transmission into visual models.** The `vismodel` function is the first point of contact for visual modelling, as it estimates raw or relative photoreceptor stimulation. In `1.0`, we've introduced a new argument, `trans`, which allows for the explicit modelling of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though we can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
+
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_Transmission example: Ocular transmission for the blue tit (red) and blackbird (blue) retinas._"}
+plot(transmissiondata, lwd = 2, ylab = 'Transmission', main = 'Ocular transmission', col = c('red', 'blue'))
+```
+
+**Hyperbolic transformation of quantum catches.** Some of the default options for existing arguments have been expanded, such as the `visual` and `achromatic` arguments as outlined above. A significant new inclusion is the `qcatch = 'Ei'` option, which specifies the hyperbolic transformation of quantum catches according to:
+
+$$E_i = \frac{Q_i}{Q_i + 1}$$
+
+Where E~i~ is the 'excitation value` for photoreceptor _i_, and Q~i~ is the raw quantum catch of said photoreceptor. The transformation is a simplification of the Michaelis–Menton photoreceptor equation [@dowling1987retina; @backhaus1987color], and is particularly common in models of Hymenopteran vision we'll see below [@backhaus1987color; @chittka1992colour; @backhaus1991color].  
+
+## Modelling and Plotting colorspaces
+
+### The New `colspace` and `plot` Functions
+
+The most significant structural changes in `1.0` involve the workflow for visual modelling, particular as regards the use of colorspaces. Previously, for example, we might use `vismodel` to model photoreceptor stimulation to an avian viewer, `tcs` to convert the data to points in a tetrahedral colorspace, and `tcsplot` to visualise the data. In `1.0` these, and all other, colorspace modelling and plotting options are now wrapped into the new `colspace`  and `plot` functions. For modelling in colorspace, a typical workflow might use:  
+
+1. `vismodel` to estimate photoreceptor quantum catches. The assumptions of many colorspace models may differ dramatically, so be sure to select options that are appropriate for your intended use.   
+2. `colspace` to convert the results of `vismodel` (or user-provided quantum catches) into points in a given colorspace, specified with the `space` argument. If no `space` argument is provided, `colspace` will automatically select the di-, tri- or tetrahedral colorspace, depending on the nature of the input data. The result of `colspace` will be an object of class `colspace` (that inherits from `data.frame`; see the 'Under-the-hood' section below), and will contain the location of stimuli in the selected space along with any associated color variables. 
+3. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colorspace (see `?plot.colspace` and links therein for details) . 
+
+examples are featured in detail below.
+
+### New Di-, Tri-, and Tetrachromatic Spaces  
+  
+`pavo 1.0`'s new  workflow expands modeling and visualization capabilities of di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colorspace automatically). For di- tri- and tetrechromatic spaces, `colspace` calculates the coordinates of stimuli as:   
+
+**Dichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
+
+**Trichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+    
+**Tetrachromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+$$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
+
+Where Q~u~, Q~s~, Q~m~, and Q~l~ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
+
+For a dichromatic example, we can model our floral reflectance data using the visual system of the domestic dog _Canis familiaris_, which has two cones with maximal sensitivity near 440 and 560 nm.   
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'canis')
+
+di.flowers <- colspace(vis.flowers, space = 'di')
+
+head(di.flowers)
+```
+
+The output contains values for the relative stimulation of shot- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in a dichromatic colorspace, as modelled according to a canid visual system._"}
+plot(di.flowers, col = flowercols) 
+```
+
+For our trichromatic viewer we can use the honeybee _Apis melifera_, one of the most significant and widespread pollinators. We'll also transform our quantum catches according to Fechner's law by specifying `qcatch = 'fi'`, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the `scale` argument. 
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'fi', scale = 10000)
+
+tri.flowers <- colspace(vis.flowers, space = 'tri')
+
+head(tri.flowers)
+```
+
+As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, a well as the 'hue angle' `h.theta` and distance from the origin (`r.vec`).  
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in a Maxwell triangle, considering a honeybee visual system._"}
+plot(tri.flowers, pch = 21, bg = flowercols) 
+```
+
+Finally, we'll draw on the blue tit's visual system to model our floral reflectance spectra in a tetrahedral space, again using log-transformed quantum catches and assuming bright viewing conditions. 
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'bluetit', qcatch = 'fi', scale = 10000)
+
+tetra.flowers <- colspace(vis.flowers, space = 'tcs')
+
+head(tetra.flowers)
+```
+
+As in previous versions of `pavo`, tetrahedral data (now via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. Version `1.0`, however, now also includes a _static_ tetrahedral plot, based on functionality from the package `scatterplot3d`. As with other colorspace plots there are a number of associated graphical options, though the `view` option is particularly useful in this case, as it controls the orientation of the tetrahedron by specifying a viewing angle from 0 to 360 (in degrees).
+
+Two additional new functions may help with tetrahedral colorspace plotting:
+
+  * `axistetra` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+  * `legendtetra` allows you to add a legend to a plot.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"}
+par(mfrow = c(1, 2), pty = 's')
+plot(tetra.flowers, view = 30, pch = 21, bg = flowercols)
+legendtetra(x = -2.8, y = 0.2, z = 1.1, legend = 'flowers', pch = 19, col = 'black', bty = 'n')
+axistetra(x = 1.4, y = 0.2, z = 0.4, size = c(0.25, 0.15, 0.1), adj.label = c(0.06, 0.08, 0.07))
+axistetra(x = 1.4, y = 0.2, z = -0.4, size = 0.2, label = FALSE)
+plot(tetra.flowers, view=60, scale.y = 0.6, pch = 21, bg = flowercols)
+axistetra(x = 0.6, y = 0.2, z = 0.5, size = c(0.2, 0.2, 0.15), adj.label = c(0.07, 0.12, 0.07))
+axistetra(x = 0.6, y = 0.2, z = -0.5, size = 0.2, label = FALSE)
+```
+
+### The Color Hexagon
+
+The hexagon color space of Chittka [-@chittka1992colour] is a generalised color-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@briscoe2001evolution]. What's particularly useful is that color distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance [e.g. @dyer2008comparative; @avargues2010aversive; @chittka1992colour].
+
+In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel`. including the optional use of a 'green' vegetation background. Note that although this is a colorspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model [@chittka1992colour]. 
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+```
+
+We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
+
+$$x = \frac{\sqrt{3}}{2(E_g = E_{uv})}$$
+
+$$y = E_b - 0.5(E_{uv} + E_g)$$
+
+```{r}
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+head(hex.flowers)
+```
+
+Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green [@ultraviolet1994chittka; @dyer2012parallel]. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
+plot(hex.flowers, sectors = 'coarse', pch = 21, bg = flowercols)
+```
+
+### The Color Opponent Coding (COC) Space
+
+The color opponent coding (coc) space is an earlier hymenopteran visual model [@backhaus1991color] which, although now seldom used in favour of the hexagon, may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
+
+$$A = -9.86E_g + 7.70E_b + 2.16E_g$$
+$$B = -5.17E_g + 20.25E_b - 15.08E_g$$
+
+Where E~i~ is the excitation value (quantum catch) in photoreceptor _i_.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
+
+coc.flowers <- colspace(vis.flowers, space = 'coc')
+
+head(coc.flowers)
+```
+
+The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"}
+plot(coc.flowers, pch = 21, bg = flowercols, yaxt='n') 
+```
+
+### CIE Spaces
+
+The CIE (International Commission on Illumination) colorspaces are a suite of models of human color vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space. Tristimulus values in XYZ space are calculated as:
+
+$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
+$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
+$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+
+where _x_, _y_, and _z_ are the trichromatic color matching functions for a 'standard colorimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
+
+$$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)d\lambda}}$$
+
+and the chromaticity coordinates of stimuli are calculated as
+
+$$x = \frac{X}{X + Y + Z}$$
+$$y = \frac{Y}{X + Y + Z}$$
+$$z = \frac{Z}{X + Y + Z} = 1 - x - y$$
+
+For modelling in both XYZ and LAB spaces, here we'll use the CIE 10-degree standard observer, and assume a `D65` 'standard daylight' illuminant. Again, although they are colorspace models, we need to set `relative = FALSE` to return raw quantum catch estimates, `vonkries = TRUE` to account for the required normalising factor (as above), and `achromatic = 'none'` since there is no applicable way to estimate luminance in the CIE models. As with all models that have particular requirements, `vismodel` will output warnings and/or errors if unusual or non-standard arguments are specified.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE, achromatic = 'none')
+```
+
+```{r}
+ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+head(ciexyz.flowers)
+```
+
+The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling 
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"}
+plot(ciexyz.flowers, pch = 21, bg = flowercols) 
+```
+
+The `Lab` space is a more recent development, and is a color-opponent model that attempts to mimic the nonlinear responses of the human eye. The `Lab` space is also calibrated (unlike the `XYZ` space) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _percieved_ as more different that two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two color-opponent dimensions designated *a* and *b*. The `colspace` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
+
+$$L = 116\left(\frac{Y}{Y_n}\right)^\frac{1}{3} \;\; if \;\; \frac{Y}{Y_n} > 0.008856$$
+$$L = 903.3\left(\frac{Y}{Y_n}\right) \;\; if \;\; \frac{Y}{Y_n} \leq 0.008856$$
+
+$$a = 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)$$
+
+$$b = 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)$$
+
+where
+
+$$f(x) = x^\frac{1}{3} \;\; if \;\; x > 0.008856$$
+$$f(x) = 7.787(x) + \frac{16}{116} \;\; if \;\; x \leq 0.008856$$
+
+Here, $X_n, Y_n, Z_n$ are neutral point values to model visual adaptation, calculated as:
+
+$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
+$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
+$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+
+when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
+
+```{r}
+cielab.flowers <- colspace(vis.flowers, space = 'cielab')
+head(cielab.flowers)
+```
+
+Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`: 
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"}
+plot(cielab.flowers, pch = 21, bg = flowercols) 
+```
+
+### Categorical Fly colorspace
+
+The categorical color vision model of Troje [-@troje1993spectral] is a model of dipteran vision, based on behavioural data from the blowfly _Lucilia_ sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 & R8 'pale' and 'yellow' subtypes), and further posits that color vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colors are perceptually grouped into one of four color categories, and that flies are unable to distinguish between colors that fall within the same category.
+
+We'll use the visual systems of the mudcoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors [@troje1993spectral].
+
+```{r}
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+```
+
+Our call to `colspace` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
+
+$$x = R7_p - R8_p$$
+
+$$y = R7_y - R8_y$$
+
+```{r}
+cat.flowers <- colspace(vis.flowers, space = 'categorical')
+
+head(cat.flowers)
+```
+
+And it is simply the signs of these differences that define the four possible fly-color categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"}
+plot(cat.flowers, pch = 21, bg = flowercols) 
+```
+
+# Changes to `coldist`
+
+## Argument Changes to `coldist`
+
+The `coldist` function has undergone significant changes in `pavo 1.0`, both internally and to its user interface. For one, it now accepts both `vismodel` and `coldist` objects, and will return distances in units that are appropriate for a given input. If we input a `vismodel` object for the purpose of receptor-noise modelling, the output will contain weighted Euclidean distances in units of JND's (as was the case in previous versions). In contrast, if we input a `colspace` object, the output units will vary depending on the selected space. If we use the hexagon, for example, and specify the honeybee's long ('green') photoreceptor for the estimation of achromatic contrasts:
+
+```{r}
+
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
+```
+
+the chromatic constrasts `dS` and achromatic contrasts `dL` are expressed as Euclidean distances in the hexagon [i.e. 'hexagon units'; @chittka1992colour]. If we had instead used the color-oppoonent coding space, the units would have been city-bloc distances. The output units for each space are listed in the documentation for `coldist`, and of course the original publications remain the most authoritative source of information. 
+
+The most important change to `coldist` is that some of its arguments have changed, with implications for receptor-noise modelling. In `pavo 1.0`, `coldist` requires the empirically estimated value for the Weber fraction to be entered, instead of the single cone noise-to-signal ratio (the `v` argument in previous versions of `pavo`). Further, instead of separately entering `n1, n2, n3` and `n4`, `coldist` now has a single argument `n`, and a vector of relative cone abundances is the required input. Finally, the argument `weber.ref` specifies which cone to use as the reference cone for the desired Weber fraction. 
+
+The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type (which must also be specified), and applied to the remaining cone types. This is largely to avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are common in the literature. It was also made to demand less of the user, who used to have to calculate what value of `v` to use given the desired Weber fraction and relative cone abundances.
+
+So, for example, the code below used in previous versions of `pavo`:
+
+```{r eval=FALSE}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n1 = 1, n2 = 2, n3 = 2, n4 = 4, v = 0.2)
+```
+
+in `pavo 1.0` would be:
+
+```{r}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 4)
+head(JND.sicalis)
+```
+
+or alternatively, `weber.ref` can be simply set to "longest":
+
+```{r}
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, relative = FALSE)
+JND.sicalis <- coldist(vis.sicalis, n = c(1, 2, 2, 4), weber = 0.1, weber.ref = 'longest')
+head(JND.sicalis)
+```
+
+`coldist` now also accepts a `weber.achro` argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
+
+## Color Distances in *N*-Dimensions
+
+As a result of the changes in the input of relative cone abundances and the internal calculation functions used in `coldist`, the function is not limited to di-, tri- or tetrachromatic visual systems. `coldist` has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
+
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"}
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
+
+# Convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp * 100
+fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
+ 
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
+
+# Run visual model and calculate color distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
+
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
+
+head(JND.fms)
+```
+
+# Classes and Attributes
+
+To enable the improved workflow and new features in `pavo 1.0`, we've expanded the underlying class system. As in previous versions, spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing funcitons, or explicitly convert an object using `as.rspec`. The results of `vismodel` are now objects of class `vismodel` and the results of `colspace` are, unsurprisingly, objects of class `colspace`. Both of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colorspace). These are easily viewed using the `summary` function (on any `rspec`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.  
+
+# Concluding Thoughts, and Further Assistance
+
+We hope that we have piqued your interest in `pavo 1.0` by illustrating some of its exciting new features. Although many of the changes are significant (and breaking), we feel the package is in its most useful form yet, which will also act as a solid foundation for expansion in the future. As always, we appreciate your interest in `pavo`, and are happy to hear from you.
+
+For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly. 
+
+# References
