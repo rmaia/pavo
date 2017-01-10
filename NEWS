@@ -1,8 +1,19 @@
+pavo 1.1
+------------------------------------------------------------------------------
+MAJOR CHANGES:
+
+NEW FUNCTIONS:
+
+MINOR FEATURES AND BUG FIXES:
+
+* updated several functions to work when rspec object has only one spectrum
+
+
 pavo 1.0
 ------------------------------------------------------------------------------
 * See vignette for detailed description of changes.
 
-MAJOR CHANGES
+MAJOR CHANGES:
 * coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.
 * coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.
 * tcs() is deprecated, replaced by colspace().

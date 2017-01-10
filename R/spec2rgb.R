@@ -31,7 +31,7 @@ spec2rgb <- function(rspecdata, alpha = 1){
 wl_index <- which(names(rspecdata)=='wl')
 if (length(wl_index > 0)){
   wl <- rspecdata[, wl_index]
-  rspecdata <- as.data.frame(rspecdata[, -wl_index])
+  rspecdata <- as.data.frame(rspecdata[, -wl_index, drop=FALSE])
     } else {
     stop('No wavelengths supplied; no default')
     }

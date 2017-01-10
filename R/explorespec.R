@@ -34,8 +34,8 @@ oPar <- par('mar','oma', 'ask','mfrow')
 on.exit(par(oPar))
 
 wl_index <- which(names(rspecdata)=='wl')
-wl <- rspecdata[,wl_index]
-rspecdata <- rspecdata[,-wl_index]
+wl <- rspecdata[, wl_index]
+rspecdata <- rspecdata[, -wl_index, drop=FALSE]
 leg2 <- names(rspecdata)
 
 scale <- match.arg(scale)

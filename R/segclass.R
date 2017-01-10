@@ -28,7 +28,7 @@ segclass <- function (rspecdata, range = c(300, 700)) {
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 lambdamin <- min(wl)
-rspecdata <- rspecdata[,-wl_index]
+rspecdata <- rspecdata[,-wl_index, drop=FALSE]
 
 segmts <- trunc(as.numeric(quantile(range[1]:range[2])))
 

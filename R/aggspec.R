@@ -50,7 +50,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE
   
   if (length(wl_index>0)){
     wl <- rspecdata[, wl_index]
-    y <- rspecdata[, -wl_index]
+    y <- rspecdata[, -wl_index, drop=FALSE]
   } else {
     y <- rspecdata
   }

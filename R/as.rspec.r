@@ -59,13 +59,13 @@ ind <- apply(object, 2, function(x){cor(x, 1:nrow(object))})
 if (!is.null(whichwl)){
   wl_index <- whichwl
   wl <- object[, wl_index]
-  object <- as.data.frame(object[, -wl_index])
+  object <- as.data.frame(object[, -wl_index, drop=FALSE])
   name <- name[-wl_index]
 } else if (!is.null(lim)) {
     if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
-      object <- as.data.frame(object[, -wl_index])
+      object <- as.data.frame(object[, -wl_index, drop=FALSE])
       name <- name[-wl_index]
       message(paste0('wavelengths found in column ', wl_index))
     } else {

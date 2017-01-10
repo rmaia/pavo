@@ -142,14 +142,14 @@ vismodel <- function(rspecdata,
 
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
-y <- rspecdata[,-wl_index]
+y <- rspecdata[, -wl_index, drop=TRUE]
 
 # in case rspecdata only has one spectrum
-
-if(is.null(dim(y))){
-  y <- data.frame(rspecdata[,-wl_index])
-  names(y) <- names(rspecdata)[-wl_index]
-  }
+# 01/10/2017: drop=TRUE above should fix it
+#if(is.null(dim(y))){
+#  y <- data.frame(rspecdata[,-wl_index])
+#  names(y) <- names(rspecdata)[-wl_index]
+#  }
 
 visual2 <- try(match.arg(visual), silent = T)
 sens <- vissyst

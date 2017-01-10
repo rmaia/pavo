@@ -29,7 +29,7 @@ subset.rspec <- function (x, subset, ...) {
   wl_index <- which(names(x)=='wl')
   if (length(wl_index)==1) {
     wl <- x[, wl_index]
-    x <- x[, -wl_index]
+    x <- x[, -wl_index, drop=FALSE]
   }
   
   if (is.logical(subset)) {
@@ -42,7 +42,7 @@ subset.rspec <- function (x, subset, ...) {
     subsample <- which(eval(subsample))
     # check that subset same length as number of spectra
     if (length(subsample)!=ncol(x)){
-      warning("look out, subset doesn't match length of spectral data")
+      warning("Subset doesn't match length of spectral data")
     }
   } else {
     subsample <- grep(subset, names(x))

@@ -191,11 +191,10 @@ if(is.null(wlmin)){
 object <- object[which(wl==lambdamin):which(wl==lambdamax),]
 wl <- object[,wl_index]
 
-# CE begin edit:
 select <- (1:ncol(object))[-wl_index]
 # object <- object[,-wl_index]
-object <- object[select]
-# CE end edit
+object <- object[ , select, drop=FALSE]
+
 
 output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
 
@@ -326,7 +325,7 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H3 
 # limit to 400-700 nm range to avoid spurious UV peaks
-H3object <- object[wl %in% 400:700,]
+H3object <- object[wl %in% 400:700, , drop = FALSE]
 H3wl <- wl[wl %in% c(400:700)]
 # lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
 # Rmid <- round((H1+lambdaRmin)/2)

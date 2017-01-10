@@ -101,6 +101,11 @@ if (curves > 12){
  par(mfrow=c(1,1))
  numplots <- 1}
 
+if (nplots == 1){
+ par(mfrow=c(1,1))
+ numplots <- 1
+ par(ask = FALSE)}
+
 # Plots all curves 
 # all below does not work yet
 

@@ -50,6 +50,8 @@ if (is.numeric(by))
 cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center, ...)
 errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error, ...)
 
+if(any(is.na(errplotspecs[,-1]))) stop('Could not calculate errors. Do any groups have n = 1?')
+
 # make wavelength vector
 wl_index <- which(names(rspecdata)=='wl')
 wl_index_cnt <- which(names(cntplotspecs)=='wl')
@@ -57,7 +59,7 @@ wl_index_err <- which(names(errplotspecs)=='wl')
 
 if (length(wl_index) > 0) {
   haswl <- TRUE
-  wl <- rspecdata[, wl_index]
+  wl <- rspecdata[, wl_index, drop=TRUE]
   cntplotspecs <- as.data.frame(cntplotspecs[,-wl_index_cnt])
   errplotspecs <- as.data.frame(errplotspecs[,-wl_index_err])
 } else {
