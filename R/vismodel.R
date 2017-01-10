@@ -142,7 +142,7 @@ vismodel <- function(rspecdata,
 
 wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
-y <- rspecdata[, -wl_index, drop=TRUE]
+y <- rspecdata[, -wl_index, drop=FALSE]
 
 # in case rspecdata only has one spectrum
 # 01/10/2017: drop=TRUE above should fix it
