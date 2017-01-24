@@ -49,7 +49,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     if('try-error' %in% class(fastcatch)){
     	cat('Fast import failed.\nSwitching to comprehensive evaluation.\n')
     }else{
-        cat('Fast import successful.\n')
+        cat('Fast import successful.\n NOTE: Fast import only works if all spectra have the same output format. Check!')
         return(fastcatch)
     }
     
