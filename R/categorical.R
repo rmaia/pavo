@@ -45,11 +45,11 @@ categorical <- function(vismodeldata){
     
     # check if relative
     if(!attr(dat, 'relative')){
-      dat <- dat[, 1:4]
-      dat <- dat/apply(dat, 1, sum)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call.=FALSE)
-      attr(vismodeldata,'relative') <- TRUE
+      #dat <- dat[, 1:4]
+      #dat <- dat/apply(dat, 1, sum)
+      #class(dat) <- class(vismodeldata)
+      warning("Quantum catch are not relative, which may produce unexpected results", call.=FALSE)
+      #attr(vismodeldata,'relative') <- TRUE
     }
     
   }
@@ -69,12 +69,11 @@ categorical <- function(vismodeldata){
     dat <- dat[, 1:4]
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
-      dat <- dat/apply(dat, 1, sum)
-      warning('Quantum catch are not relative, and have been transformed', call.=FALSE)
-      attr(vismodeldata,'relative') <- TRUE
+      #dat <- dat/apply(dat, 1, sum)
+      warning("Quantum catch are not relative, which may produce unexpected results", call.=FALSE)
+      #attr(vismodeldata,'relative') <- TRUE
     }
   }
-  
   
   R7p <- dat[, 1]
   R7y <- dat[, 2]
