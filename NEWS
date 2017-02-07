@@ -8,6 +8,7 @@ MINOR FEATURES AND BUG FIXES:
 
 * updated several functions to work when rspec object has only one spectrum
 * fixed bug in voloverlap where interactive plots would result in error
+* fixed incorrect labels in the maxwell triangle plot
 * the use of relative quantum catches is now optional in the categorical colorspace (though still produces a warning), for greater flexibility 
 
 
