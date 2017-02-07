@@ -199,12 +199,14 @@ if(plot){
 	  if(new)
         rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
 
-      tcsvol(dat1, col=col[1], fill=F)
-      tcsvol(dat2, col=col[2], fill=F)
+      tcsvol(tcsres1, col=col[1], fill=F)
+      tcsvol(tcsres2, col=col[2], fill=F)
       
       if(!montecarlo){
-        if(dim(Voverlap)[1]>3)
+        if(dim(Voverlap)[1]>3){
+        	  attr(Voverlap, 'clrsp') <- "tcs"
           tcsvol(Voverlap, col=col[3])
+          }
         }
       
       if(montecarlo==TRUE){

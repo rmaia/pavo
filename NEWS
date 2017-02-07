@@ -7,6 +7,7 @@ NEW FUNCTIONS:
 MINOR FEATURES AND BUG FIXES:
 
 * updated several functions to work when rspec object has only one spectrum
+* fixed bug in voloverlap where interactive plots would result in error
 
 
 pavo 1.0
