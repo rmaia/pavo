@@ -85,8 +85,8 @@ do.call(points, arg)
   
 # Add text (coloured points better as in tcsplot?)
   if(isTRUE(labels)){
-    text('S', x = -0.76, y = -0.39, xpd = TRUE, cex = cex.labels)
-    text('M', x = 0, y = 0.88, xpd = TRUE, cex = cex.labels)
+    text('M', x = -0.76, y = -0.39, xpd = TRUE, cex = cex.labels)
+    text('S', x = 0, y = 0.88, xpd = TRUE, cex = cex.labels)
     text('L', x = 0.76, y = -0.39, xpd = TRUE, cex = cex.labels)
   }
   

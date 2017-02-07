@@ -101,7 +101,6 @@ categorical <- function(vismodeldata){
   res.p$category <- sapply(1:nrow(res.p), function(x) colcat(res.p[x,]))
   res.p$r.vec <- sqrt((abs(res.p$x))^2 + (abs(res.p$y)^2))
   
-  
   res <- res.p
   
   class(res) <- c('colspace', 'data.frame')
