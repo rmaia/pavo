@@ -53,7 +53,8 @@
 #' \item \code{'D65'}: standard daylight.
 #' \item \code{'forestshade'} forest shade.
 #' }
-#' @param bkg either a vector containing the background spectra, or one of the options:
+#' @param bkg background spectrum. Note that this will have no effect when \code{vonkries = FALSE}. 
+#' Either a vector containing the spectral data, or one of the options:
 #' \itemize{ 
 #' \item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default).
 #' \item \code{'green'}: green foliage.
