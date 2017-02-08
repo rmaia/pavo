@@ -47,8 +47,8 @@ if (is.numeric(by))
     stop('Cannot group single spectra (use plot instead)')
 
 #take aggregated data
-cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center, ...)
-errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error, ...)
+cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
+errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
 
 if(any(is.na(errplotspecs[,-1]))) stop('Could not calculate errors. Do any groups have n = 1?')
 
@@ -89,6 +89,16 @@ if (is.null(arg$xlab))
   arg$xlab <- "Wavelength (nm)"
 if (is.null(arg$ylab))
   arg$ylab <- "Reflectance (%)"
+
+# line width
+if (!is.null(arg$lwd))
+  lwd <- arg$lwd
+
+if (is.null(arg$lwd))
+  lwd <- 1
+
+if (length(lwd) < ncol(cntplotspecs))
+   lwd <- rep(lwd, ncol(cntplotspecs))
 
 # coloring for overlay plot & others
 if (!is.null(arg$lty))
@@ -160,6 +170,7 @@ do.call(polygon, arg0)
   arg$y <- cntplotspecs[, 1]
   arg$type <- 'l'
   arg$lty <- lty[1]
+  arg$lwd <- lwd[1]
   
   arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
   do.call(lines, arg0)
@@ -169,6 +180,7 @@ do.call(polygon, arg0)
       arg$y <- cntplotspecs[, i]
       arg$col <- lcol[i]
       arg$lty <- lty[i]
+      arg$lwd <- lwd[i]
       arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
       do.call(lines, arg0)
     }
