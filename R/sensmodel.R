@@ -21,7 +21,9 @@
 #' If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using 
 #' values from Hart et al. (2005), or user-defined values.
 #' @param integrate logical. If \code{TRUE}, each curve is transformed to have a total area
-#' under the curve of 1 (best for visual models; defaults to \code{TRUE}).
+#' under the curve of 1 (best for visual models; defaults to \code{TRUE}). NOTE:
+#' integration is applied before any effects of ocular media are considered, for 
+#' compatibility with visual model procedures.
 #' 
 #' @return A data frame of class \code{rspec} containing each cone model as a column.
 #' 
@@ -118,6 +120,11 @@ if (oiltype[i] != "T"){
   
 peak <- peak*T.oil
 }
+
+# Apply integration
+if(integrate)
+  peak <- peak/sum(peak)
+
 # Apply ocular media transmission correction
 
 if (!is.null(om)){
@@ -137,15 +144,16 @@ if (!is.null(om)){
 sensecurves[, (i+1)] <- peak
   }
 
-if(integrate==TRUE){
-  sensecurves <- apply(sensecurves, 2, function(z) z/sum(z))
-  sensecurves[,1] <- c(range[1]:range[2])
-}
-
 sensecurves <- data.frame(sensecurves)
 names(sensecurves) <- c('wl',paste('lmax',peaksense,sep=''))
 #sensecurves <- as.rspec(sensecurves)
-class(sensecurves) <- c('rspec', 'data.frame')
+class(sensecurves) <- c('rspec', 'sensmod', 'data.frame')
+
+if (is.null(om)){
+  attr(sensecurves, 'om') <- FALSE
+  }else{
+  	attr(sensecurves, 'om') <- TRUE
+  	}
 
 sensecurves
 }

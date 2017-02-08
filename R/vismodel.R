@@ -203,6 +203,7 @@ if(!inherits(visual2,'try-error')){
 }else{
     S <- visual[,-which(names(visual)=='wl')]
     sens_wl <- visual[,'wl']
+    fullS <- visual
     visual <- 'user-defined'
     }
 
@@ -248,7 +249,7 @@ if(!inherits(bg2,'try-error')){
 if(bg2=='ideal')
   bkg <- rep(1,dim(rspecdata)[1])
   
-# Defining transmission
+# Defining ocular transmission
 
 trdat <- transmissiondata
 
@@ -257,11 +258,17 @@ if(!inherits(tr2,'try-error')){
   if(is.null(trans)) stop('chosen transmission is NULL')
   trans <- trdat[,grep(tr2,names(trdat))]
   }else{
-    bg2 <- 'user-defined'
+    tr2 <- 'user-defined'
     }
 
 if(tr2=='ideal')
   trans <- rep(1,dim(rspecdata)[1])
+
+if(tr2 != 'ideal' & visual == 'user-defined'){
+	if('sensmod' %in% class(fullS))
+		if(attr(fullS,'om'))
+		  warning('The visual system being used appears to already incorporate ocular transmission. Using anything other than trans=',dQuote('ideal'),'means ocular media effects are being applied a second time.', call.=FALSE)
+}
 
 
 # scale background from percentage to proportion
