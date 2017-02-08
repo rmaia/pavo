@@ -32,7 +32,7 @@ Converts data frames or matrices containing spectral data to \code{rspec} object
 \dontrun{
 
 # Generate some fake reflectance data
-fakedat <- data.frame(refl1 = rnorm(401), refl2 = rnorm(401), wavelength = c(300:700))
+fakedat <- data.frame(wl= c(300:700), refl1 = rnorm(401), refl2 = rnorm(401))
 head(fakedat)
 
 # Determine if is rspec object

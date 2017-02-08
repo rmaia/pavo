@@ -47,9 +47,9 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
       subdir = subdir, subdir.names = subdir.names), silent=TRUE)
     
     if('try-error' %in% class(fastcatch)){
-    	cat('Fast import failed.\nSwitching to comprehensive evaluation.\n')
+    	message('Fast import failed.\nSwitching to comprehensive evaluation.\n')
     }else{
-        cat('Fast import successful.\n NOTE: Fast import only works if all spectra have the same output format. Check!')
+        message('Fast import successful.\n NOTE: Fast import only works if all spectra have the same output format. Check!')
         return(fastcatch)
     }
     
@@ -172,7 +172,12 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
 if(corrupt){
   	cat('\n')
   	warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
-  	}  	
+}
+  
+  # Negative value check
+  if(length(final[final < 0]) > 0){
+    message(paste("The spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."))
+  }
 
   final
   }
