@@ -162,7 +162,6 @@ if(corrupt){
   warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
   	}
 
-
 interp
 
 }

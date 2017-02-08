@@ -144,6 +144,11 @@ wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 y <- rspecdata[, -wl_index, drop=FALSE]
 
+# Negative value check
+if(length(y[y < 0]) > 0){
+  warning(paste("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them."))
+}
+
 # in case rspecdata only has one spectrum
 # 01/10/2017: drop=TRUE above should fix it
 #if(is.null(dim(y))){
