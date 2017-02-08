@@ -77,7 +77,8 @@ ocular transmission (from Hart et al. 2000).
 \item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
-\item{bkg}{either a vector containing the background spectra, or one of the options:
+\item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}. 
+Either a vector containing the spectral data, or one of the options:
 \itemize{ 
 \item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default).
 \item \code{'green'}: green foliage.
