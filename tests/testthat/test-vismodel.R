@@ -23,11 +23,13 @@ test_that('Output is in expected range', {
 
 test_that('Warnings', {
   data(flowers)
+  fakedat <- as.rspec(data.frame(wl = c(300:700), refl1 = rnorm(401), refl2 = rnorm(401)))
   
   expect_warning(vismodel(flowers, vonkries = FALSE, relative = FALSE, achro = 'none', visual = 'cie10'), "overriding vonkries")
   expect_warning(vismodel(flowers, vonkries = TRUE, relative = TRUE, achro = 'none', visual = 'cie10'), "overriding relative")
   expect_warning(vismodel(flowers, vonkries = TRUE, relative = FALSE, achro = 'l', visual = 'cie10'), "overriding achro")
   expect_warning(vismodel(flowers, qcatch = 'fi', vonkries = TRUE, relative = FALSE, achro = 'none', visual = 'cie10'), "overriding qcatch")
+  expect_warning(vismodel(fakedat, visual = 'bluetit'), "negative")
   
   test_rspec <- as.rspec(flowers[1:2]) 
   test_matrix <- as.matrix(flowers[1:2])

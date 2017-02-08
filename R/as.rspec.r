@@ -140,7 +140,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   if(interp == FALSE && !is.null(lim)){
     check <- try(res[which(res$wl == l1):which(res$wl == l2), ], silent = TRUE)
     if(inherits(check,'try-error')){
-      stop("Specified limits do not match a wavelength reference in the data")
+      stop("Specified limits do not match a wavelength reference in the data. Check 'lim' argument.")
     }else{
       res <- res[which(res$wl == l1):which(res$wl == l2), ]
     }
