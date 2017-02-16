@@ -74,7 +74,9 @@
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
-colspace <- function(vismodeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab')){
+colspace <- function(vismodeldata, 
+                     space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'segment'))
+  {
   
   space2 <- try(match.arg(space), silent = T)
 
@@ -96,7 +98,8 @@ colspace <- function(vismodeldata, space = c('auto', 'di', 'tri', 'tcs', 'hexago
   	'coc' = return(coc(vismodeldata)),
   	'categorical' = return(categorical(vismodeldata)),
   	'ciexyz' = return(cie(vismodeldata, 'XYZ')),
-  	'cielab' = return(cie(vismodeldata, 'LAB'))
+  	'cielab' = return(cie(vismodeldata, 'LAB')),
+  	'segment' = return(segspace(vismodeldata))
   	)
   }
   

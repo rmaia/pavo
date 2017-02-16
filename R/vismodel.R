@@ -19,20 +19,21 @@
 #'    sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
 #'    column with the range of wavelengths included, and the sensitivity for each other 
 #'    cone as a column.
+#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{avg.uv}: average avian UV system.
 #' \item \code{avg.v}: average avian V system.
 #' \item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system.
-#' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
-#' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
-#' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{canis}: Canid \emph{Canis familiaris} visual system.
-#' \item \code{musca}: Housefly \emph{Musca domestica} visual system.
 #' \item \code{cie2}: 2-degree colour matching functions for CIE models of human 
 #'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' \item \code{cie10}: 10-degree colour matching functions for CIE models of human 
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+#' \item \code{musca}: Housefly \emph{Musca domestica} visual system.
+#' \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
+#' \item \code{segment}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
+#' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #'  cone stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -130,7 +131,7 @@
 #'  Internationale de l' Eclairage.
 
 vismodel <- function(rspecdata, 
-  visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca'), 
+  visual = c('apis', 'avg.uv', 'avg.v', 'bluetit', 'canis', 'cie2', 'cie10', 'musca', 'pfowl', 'segment', 'star'), 
   achromatic = c('bt.dc','ch.dc', 'st.dc',"ml", 'l', 'md.r1', 'none'),
   illum = c('ideal','bluesky','D65','forestshade'), 
   trans = c('ideal', 'bluetit','blackbird'),
@@ -170,9 +171,7 @@ if(class(achromatic2) == 'try-error')
 
 qcatch <- match.arg(qcatch)
 
-# Defaults for CIE stuff. Ugly - better way to do this? Is it best to do it all silently 
-# like this and put notes in the doc mentioning which arguments are ignored? 
-  
+# Defaults for CIE-specific stuff. Bit ugly - better way to do this? 
 if(substr(visual2, 1, 3) == 'cie'){ 
   if(!vonkries) {
     vonkries <- TRUE
@@ -195,8 +194,44 @@ if(substr(visual2, 1, 3) == 'cie'){
   }  
 }
 
+# Defaults for segment analysis stuff. 
+if(visual2 == 'segment'){ 
+  if(vonkries){
+    vonkries <- FALSE
+    warning('segment analysis chosen, overriding vonkries to FALSE', call.=FALSE)
+  }
+  
+  if(!relative){
+    relative <- TRUE
+    warning('segment analysis chosen, overriding relative to TRUE', call.=FALSE)
+  }
+  
+  if(achromatic2 != 'none'){
+    achromatic2 <- 'none'
+    warning('segment analysis chosen, overriding achromatic to none', call.=FALSE)
+  }
+  
+  if(qcatch != 'Qi'){
+    qcatch <- 'Qi'
+    warning('segment analysis chosen, overriding qcatch to Qi', call.=FALSE)
+  }
+}
 
-if(!inherits(visual2,'try-error')){
+# Grab the visual system
+if(visual2 == 'segment'){  # make a weird custom 'visual system' for segment analysis
+  S <- data.frame(matrix(0, nrow = length(wl), ncol = 4))
+  names(S) <- c('Q1', 'Q2', 'Q3', 'Q4')
+  segmts <- trunc(as.numeric(quantile(min(wl):max(wl))))
+  Q1 <- which(wl == segmts[1]):which(wl == segmts[2])
+  Q2 <- which(wl == segmts[2]):which(wl == segmts[3])
+  Q3 <- which(wl == segmts[3]):which(wl == segmts[4])
+  Q4 <- which(wl == segmts[4]):which(wl == segmts[5])
+  S[Q1, 1] <-  1
+  S[Q2, 2] <-  1
+  S[Q3, 3] <-  1
+  S[Q4, 4] <-  1
+  sens_wl <- wl
+}else if(!inherits(visual2,'try-error')){
     visual <- match.arg(visual)
     S <- sens[,grep(visual,names(sens))]
     names(S) <- gsub(paste(visual,'.',sep=''),'',names(S))
@@ -271,7 +306,6 @@ if(tr2 != 'ideal' & visual == 'user-defined'){
 		  warning('The visual system being used appears to already incorporate ocular transmission. Using anything other than trans=',dQuote('ideal'),'means ocular media effects are being applied a second time.', call.=FALSE)
 }
 
-
 # scale background from percentage to proportion
 if(max(bkg) > 1)
   bkg <- bkg/100
@@ -279,7 +313,6 @@ if(max(bkg) > 1)
 # scale transmission from percentage to proportion
 if(max(trans) > 1)
   trans <- trans/100
-
   
 # is the illuminant a matrix, dataframe or rspec?
 
@@ -313,6 +346,9 @@ y <- y * trans
 if(substr(visual2, 1, 3) == 'cie'){  # Slightly different for CIE
   K <- 100/colSums(S[2] * illum)
   Qi <- data.frame(sapply(indices, function(x) colSums(y * S[, x] * illum) * K))
+}else if(visual == 'segment'){ # Slightly different for segment
+  B <- apply(y, 2, sum)
+  Qi <- data.frame(sapply(indices, function(x) colSums(y * S[, x] * illum) * B))
 }else{
   Qi <- data.frame(sapply(indices, function(x) colSums(y * S[, x] * illum)))
 }
@@ -419,14 +455,13 @@ if(relative & !is.null(lum)){
 }
 
 if(relative & is.null(lum)){
-  Qi <- Qi/rowSums(Qi)
-  fi <- fi/rowSums(fi)
-  Ei <- Ei/rowSums(Ei)
-
-# Place dark specs in achromatic center?
-# blacks <- which(norm.B < 0.05) #find dark specs
-# Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
-}
+    Qi <- Qi/rowSums(Qi)
+    fi <- fi/rowSums(fi)
+    Ei <- Ei/rowSums(Ei)
+    # Place dark specs in achromatic center?
+    # blacks <- which(norm.B < 0.05) #find dark specs
+    # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
+  }
 
 # OUTPUT
 #res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
