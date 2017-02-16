@@ -3,6 +3,8 @@ pavo 1.1
 MAJOR CHANGES:
 
 NEW FUNCTIONS:
+* segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = 'segment'
+* segplot() is a plot for Endler's (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()
 
 MINOR FEATURES AND BUG FIXES:
 

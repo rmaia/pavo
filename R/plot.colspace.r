@@ -13,6 +13,7 @@
 #'        \item \code{\link{hexplot}}: colour hexagon
 #'        \item \code{\link{cocplot}}: colour-opponent-coding space
 #'        \item \code{\link{cieplot}}: cie spaces
+#'        \item \code{\link{segplot}}: segment analysis space
 #'        }
 #'        Also see \code{\link{par}}. 
 #' 
@@ -104,7 +105,8 @@ plot.colspace <- function(x, ...){
          'coc' = cocplot(x, ...),
          'categorical' = catplot(x, ...),
          'CIEXYZ' = cieplot(x, ...),
-         'CIELAB' = cieplot(x, ...)
+         'CIELAB' = cieplot(x, ...),
+         'segment' = segplot(x, ...)
   )
   
 }

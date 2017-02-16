@@ -131,7 +131,7 @@
 #'  Internationale de l' Eclairage.
 
 vismodel <- function(rspecdata, 
-  visual = c('apis', 'avg.uv', 'avg.v', 'bluetit', 'canis', 'cie2', 'cie10', 'musca', 'pfowl', 'segment', 'star'), 
+  visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
   achromatic = c('bt.dc','ch.dc', 'st.dc',"ml", 'l', 'md.r1', 'none'),
   illum = c('ideal','bluesky','D65','forestshade'), 
   trans = c('ideal', 'bluetit','blackbird'),
