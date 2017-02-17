@@ -66,8 +66,8 @@ be considered when data is adequately smoothed. NAs are returned for curves whic
 do not, at any range of wavelength, decrease in intensity. Therefore, reflectance 
 curves for brown and red surfaces, for example, should not generate a values. REF 1
 
-S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006)
-for details. REF 10
+S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006
+for details). REF 10
 
 S6 (Contrast): Rmax - Rmin. Because it uses both Rmin and Rmax, this measure may be
 sensitive to spectral noise. REF 5, 6

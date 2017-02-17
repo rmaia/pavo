@@ -19,4 +19,9 @@ tcs <- function(...){
   .Deprecated('colspace', package='pavo')
   colspace(...)
   }
+
+segclass <- function(rspecdata, range=c(300,700)){
+  .Deprecated('vismodel', msg=paste(sQuote('segclass'), ' is deprecated.\n', 'Instead, use ', sQuote('vismodel'), ' (with argument ', sQuote(paste('visual = ', sQuote('segment'))), ') and ', sQuote('colspace'), '.\n', 'See help(', dQuote('Deprecated'), ') and help(', dQuote('pavo-deprecated'), ').', sep=''))
+  vismodel(rspecdata, visual='segment')
+} 
 NULL
