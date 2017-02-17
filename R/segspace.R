@@ -9,15 +9,15 @@
 #' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
 #' of the four segments.
-#' @return \code{LM}, \code{MS}: segment classification scores
+#' @return \code{LM}, \code{MS}: segment scores
 #' @return \code{C}, \code{H}: 'chroma' and 'hue' in the segment classification space
 #' 
 #' @export
 #' 
 #' @examples \dontrun{
 #' data(sicalis)
-#' sic.vis <- vismodel(sicalis, visual = 'segment')
-#' sic.seg <- colspace(sec.vis, space = 'segment') 
+#' vis.sic <- vismodel(sicalis, visual = 'segment')
+#' seg.sic <- colspace(vis.sic, space = 'segment') 
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -39,7 +39,7 @@ segspace <- function (vismodeldata) {
       stop('vismodel input is not tetrachromatic', call.=FALSE)
     
     if(attr(dat, 'conenumb') > 4)
-      warning('vismodel input is not tetrachromatic, considering first four receptors only', call.=FALSE)
+      warning('vismodel input is not tetrachromatic, considering first four columns only', call.=FALSE)
     
     # check if relative
     if(!attr(dat, 'relative')){

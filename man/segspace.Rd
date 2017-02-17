@@ -17,7 +17,7 @@ A data frame of class \code{colspace} consisting of the following columns:
 \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
 of the four segments.
 
-\code{LM}, \code{MS}: segment classification scores
+\code{LM}, \code{MS}: segment scores
 
 \code{C}, \code{H}: 'chroma' and 'hue' in the segment classification space
 }
@@ -27,8 +27,8 @@ Calculates segment classification measures as defined in Endler (1990).
 \examples{
 \dontrun{
 data(sicalis)
-sic.vis <- vismodel(sicalis, visual = 'segment')
-sic.seg <- colspace(sec.vis, space = 'segment') 
+vis.sic <- vismodel(sicalis, visual = 'segment')
+seg.sic <- colspace(vis.sic, space = 'segment') 
 }
 
 }

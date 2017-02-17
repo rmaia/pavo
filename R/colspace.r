@@ -18,6 +18,7 @@
 #'    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details.
 #'    \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details.
 #'    \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details.
+#'    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details.
 #' }
 #' 
 #' @examples \dontrun{
@@ -73,6 +74,9 @@
 #'    81 - 118.
 #' @references Backhaus W. (1991). Color opponent coding in the visual system
 #'  of the honeybee. Vision Research, 31, 1381-1397.
+#' @references Endler, J. A. (1990) On the measurement and classification of 
+#' color in studies of animal color patterns. Biological Journal of the Linnean 
+#' Society, 41, 315-352.
 
 colspace <- function(vismodeldata, 
                      space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'segment'))

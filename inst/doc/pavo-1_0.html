@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton" />
 
-<meta name="date" content="2017-02-16" />
+<meta name="date" content="2017-02-17" />
 
 <title>An introduction to pavo 1.0</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">An introduction to pavo 1.0</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton</em></h4>
-<h4 class="date"><em>2017-02-16</em></h4>
+<h4 class="date"><em>2017-02-17</em></h4>
 
 
 <div id="TOC">
@@ -515,27 +515,31 @@ JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.si
 <p>in <code>pavo 1.0</code> would be:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(sicalis)
 vis.sicalis &lt;-<span class="st"> </span><span class="kw">vismodel</span>(sicalis, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
-JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.sicalis, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.ref =</span> <span class="dv">4</span>)
-<span class="kw">head</span>(JND.sicalis)</code></pre></div>
-<pre><code>##   patch1 patch2         dS       dL
-## 1 ind1.C ind1.T  3.5206558 6.653493
-## 2 ind1.C ind1.B  1.4452940 7.980093
-## 3 ind1.C ind2.C  0.6797948 3.389606
-## 4 ind1.C ind2.T 10.5195704 7.199048
-## 5 ind1.C ind2.B  2.7180185 6.341610
-## 6 ind1.C ind3.C  3.2067444 4.542846</code></pre>
+JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.sicalis, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.ref =</span> <span class="dv">4</span>)</code></pre></div>
+<pre><code>## Warning: achro=TRUE but visual model was calculated with achro= &quot;none&quot; ;
+## achromatic contrast not calculated.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(JND.sicalis)</code></pre></div>
+<pre><code>##   patch1 patch2         dS
+## 1 ind1.C ind1.T  3.5206558
+## 2 ind1.C ind1.B  1.4452940
+## 3 ind1.C ind2.C  0.6797948
+## 4 ind1.C ind2.T 10.5195704
+## 5 ind1.C ind2.B  2.7180185
+## 6 ind1.C ind3.C  3.2067444</code></pre>
 <p>or alternatively, <code>weber.ref</code> can be simply set to “longest”:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">data</span>(sicalis)
 vis.sicalis &lt;-<span class="st"> </span><span class="kw">vismodel</span>(sicalis, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
-JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.sicalis, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.ref =</span> <span class="st">'longest'</span>)
-<span class="kw">head</span>(JND.sicalis)</code></pre></div>
-<pre><code>##   patch1 patch2         dS       dL
-## 1 ind1.C ind1.T  3.5206558 6.653493
-## 2 ind1.C ind1.B  1.4452940 7.980093
-## 3 ind1.C ind2.C  0.6797948 3.389606
-## 4 ind1.C ind2.T 10.5195704 7.199048
-## 5 ind1.C ind2.B  2.7180185 6.341610
-## 6 ind1.C ind3.C  3.2067444 4.542846</code></pre>
+JND.sicalis &lt;-<span class="st"> </span><span class="kw">coldist</span>(vis.sicalis, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.ref =</span> <span class="st">'longest'</span>)</code></pre></div>
+<pre><code>## Warning: achro=TRUE but visual model was calculated with achro= &quot;none&quot; ;
+## achromatic contrast not calculated.</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(JND.sicalis)</code></pre></div>
+<pre><code>##   patch1 patch2         dS
+## 1 ind1.C ind1.T  3.5206558
+## 2 ind1.C ind1.B  1.4452940
+## 3 ind1.C ind2.C  0.6797948
+## 4 ind1.C ind2.T 10.5195704
+## 5 ind1.C ind2.B  2.7180185
+## 6 ind1.C ind3.C  3.2067444</code></pre>
 <p><code>coldist</code> now also accepts a <code>weber.achro</code> argument so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.</p>
 </div>
 <div id="color-distances-in-n-dimensions" class="section level2">

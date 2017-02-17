@@ -39,13 +39,13 @@
 #'  cone stimulation. Either a vector containing the sensitivity for a single receptor, 
 #'  or one of the options: 
 #' \itemize{
+#'  \item \code{none}: no achromatic stimulation calculated
 #'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
 #'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
 #'  \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
 #'  \item \code{ml}: sum of the two longest-wavelength photoreceptors
 #'  \item \code{l}: the longest-wavelength photoreceptor
-#'  \item \code{none}
 #' }
 #' @param illum either a vector containing the illuminant, or one of the options:
 #' \itemize{ 
@@ -132,7 +132,7 @@
 
 vismodel <- function(rspecdata, 
   visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
-  achromatic = c('bt.dc','ch.dc', 'st.dc',"ml", 'l', 'md.r1', 'none'),
+  achromatic = c('none', 'bt.dc','ch.dc', 'st.dc','ml', 'l', 'md.r1'),
   illum = c('ideal','bluesky','D65','forestshade'), 
   trans = c('ideal', 'bluetit','blackbird'),
   qcatch = c('Qi','fi', 'Ei'),
@@ -220,16 +220,16 @@ if(visual2 == 'segment'){
 # Grab the visual system
 if(visual2 == 'segment'){  # make a weird custom 'visual system' for segment analysis
   S <- data.frame(matrix(0, nrow = length(wl), ncol = 4))
-  names(S) <- c('Q1', 'Q2', 'Q3', 'Q4')
+  names(S) <- c('S1', 'S2', 'S3', 'S4')
   segmts <- trunc(as.numeric(quantile(min(wl):max(wl))))
-  Q1 <- which(wl == segmts[1]):which(wl == segmts[2])
-  Q2 <- which(wl == segmts[2]):which(wl == segmts[3])
-  Q3 <- which(wl == segmts[3]):which(wl == segmts[4])
-  Q4 <- which(wl == segmts[4]):which(wl == segmts[5])
-  S[Q1, 1] <-  1
-  S[Q2, 2] <-  1
-  S[Q3, 3] <-  1
-  S[Q4, 4] <-  1
+  S1 <- which(wl == segmts[1]):which(wl == segmts[2])
+  S2 <- which(wl == segmts[2]):which(wl == segmts[3])
+  S3 <- which(wl == segmts[3]):which(wl == segmts[4])
+  S4 <- which(wl == segmts[4]):which(wl == segmts[5])
+  S[S1, 1] <-  1
+  S[S2, 2] <-  1
+  S[S3, 3] <-  1
+  S[S4, 4] <-  1
   sens_wl <- wl
 }else if(!inherits(visual2,'try-error')){
     visual <- match.arg(visual)
