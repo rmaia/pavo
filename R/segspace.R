@@ -38,7 +38,7 @@ segspace <- function (vismodeldata) {
     if(attr(dat, 'conenumb') < 4)
       stop('vismodel input is not tetrachromatic', call.=FALSE)
     
-    if(attr(dat, 'conenumb') > 4)
+    if(attr(dat, 'conenumb') != 'seg' & attr(dat, 'conenumb') > 4)
       warning('vismodel input is not tetrachromatic, considering first four columns only', call.=FALSE)
     
     # check if relative

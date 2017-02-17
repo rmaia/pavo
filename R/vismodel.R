@@ -161,6 +161,9 @@ if(length(y[y < 0]) > 0){
 visual2 <- try(match.arg(visual), silent = T)
 sens <- vissyst
 achromatic2 <- try(match.arg(achromatic), silent=T)
+illum2 <- try(match.arg(illum), silent=T)
+bg2 <- try(match.arg(bkg), silent=T)
+tr2 <- try(match.arg(trans), silent=T)
 
 if(class(achromatic2) == 'try-error')
   if(is.logical(achromatic))
@@ -215,6 +218,21 @@ if(visual2 == 'segment'){
     qcatch <- 'Qi'
     warning('segment analysis chosen, overriding qcatch to Qi', call.=FALSE)
   }
+  
+  if(bg2 != 'ideal'){
+    bg2 <- 'ideal'
+    warning('segment analysis chosen, overriding bkg to ideal', call.=FALSE)
+  }
+  
+  if(tr2 != 'ideal'){
+    tr2 <- 'ideal'
+    warning('segment analysis chosen, overriding trans to ideal', call.=FALSE)
+  }
+  
+  if(illum2 != 'ideal'){
+    illum2 <- 'ideal'
+    warning('segment analysis chosen, overriding illum to ideal', call.=FALSE)
+  }
 }
 
 # Grab the visual system
@@ -222,15 +240,14 @@ if(visual2 == 'segment'){  # make a weird custom 'visual system' for segment ana
   S <- data.frame(matrix(0, nrow = length(wl), ncol = 4))
   names(S) <- c('S1', 'S2', 'S3', 'S4')
   segmts <- trunc(as.numeric(quantile(min(wl):max(wl))))
-  S1 <- which(wl == segmts[1]):which(wl == segmts[2])
-  S2 <- which(wl == segmts[2]):which(wl == segmts[3])
-  S3 <- which(wl == segmts[3]):which(wl == segmts[4])
-  S4 <- which(wl == segmts[4]):which(wl == segmts[5])
-  S[S1, 1] <-  1
-  S[S2, 2] <-  1
-  S[S3, 3] <-  1
-  S[S4, 4] <-  1
+  
+  S[wl %in% segmts[1]:segmts[2] ,1] <- 1
+  S[wl %in% segmts[2]:segmts[3] ,2] <- 1
+  S[wl %in% segmts[3]:segmts[4] ,3] <- 1
+  S[wl %in% segmts[4]:segmts[5] ,4] <- 1
+
   sens_wl <- wl
+  
 }else if(!inherits(visual2,'try-error')){
     visual <- match.arg(visual)
     S <- sens[,grep(visual,names(sens))]
@@ -244,6 +261,9 @@ if(visual2 == 'segment'){  # make a weird custom 'visual system' for segment ana
     }
 
 conenumb <- dim(S)[2]
+
+if(visual2 == 'segment')
+  conenumb <- 'seg'
 
 # transform from percentages to proportions according to Vorobyev 2003
 
@@ -264,7 +284,6 @@ if(max(y) > 1)
 
 bgil <- bgandilum
 
-illum2 <- try(match.arg(illum), silent=T)
 if(!inherits(illum2,'try-error')){
   illum <- bgil[,grep(illum2,names(bgil))]
   }else{
@@ -274,7 +293,7 @@ if(!inherits(illum2,'try-error')){
 if(illum2=='ideal')
   illum <- rep(1,dim(rspecdata)[1])
 
-bg2 <- try(match.arg(bkg), silent=T)
+
 if(!inherits(bg2,'try-error')){
   if(is.null(bkg)) stop('chosen background is NULL')
   bkg <- bgil[,grep(bg2,names(bgil))]
@@ -289,7 +308,6 @@ if(bg2=='ideal')
 
 trdat <- transmissiondata
 
-tr2 <- try(match.arg(trans), silent=T)
 if(!inherits(tr2,'try-error')){
   if(is.null(trans)) stop('chosen transmission is NULL')
   trans <- trdat[,grep(tr2,names(trdat))]

@@ -91,7 +91,8 @@ colspace <- function(vismodeldata,
   	switch(as.character(attr(vismodeldata, 'conenumb')),
   	  '2' = return(dispace(vismodeldata)),
   	  '3' = return(trispace(vismodeldata)),
-  	  '4' = return(tcspace(vismodeldata))
+  	  '4' = return(tcspace(vismodeldata)),
+  	  'seg' = return(segspace(vismodeldata))
   	  )
   } else{
   	switch(space2,
