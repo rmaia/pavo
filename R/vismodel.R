@@ -16,9 +16,9 @@
 #' @param visual the visual system to be used. Options are:
 #' \itemize{
 #'	\item a data frame such as one produced containing by \code{sensmodel}, containing 
-#'    sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
-#'    column with the range of wavelengths included, and the sensitivity for each other 
-#'    cone as a column.
+#'    user-defined sensitivity data for the receptors involved in colour vision. 
+#'    The data frame must contain a \code{'wl'} column with the range of wavelengths included, 
+#'    and the sensitivity for each other cone as a column.
 #' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{avg.uv}: average avian UV system.
 #' \item \code{avg.v}: average avian V system.
@@ -36,7 +36,7 @@
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
-#'  cone stimulation. Either a vector containing the sensitivity for a single receptor, 
+#'  receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
 #'  or one of the options: 
 #' \itemize{
 #'  \item \code{none}: no achromatic stimulation calculated
