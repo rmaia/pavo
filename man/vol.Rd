@@ -35,4 +35,3 @@ non-interactive tetrahedral plot.
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
-

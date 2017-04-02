@@ -111,6 +111,7 @@ systems with more than four photoreceptors.
 In addition, the achromatic noise is calculated based on the \code{weber.achro} 
 argument directly, and not based on \code{v} and \code{n4} as before.
 }
+
 \examples{
 \dontrun{
 # Dichromat
@@ -146,9 +147,6 @@ tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
@@ -160,4 +158,6 @@ Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
-
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
+}

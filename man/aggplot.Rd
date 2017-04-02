@@ -51,12 +51,11 @@ aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x)))
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}, 
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 }
-
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}, 
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

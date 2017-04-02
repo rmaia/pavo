@@ -28,12 +28,11 @@ plot(cat.flowers)
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour
  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

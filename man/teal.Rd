@@ -13,4 +13,3 @@ a single male at different incident angles (15-75 degrees in 5-degree increments
 Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \keyword{data}
-

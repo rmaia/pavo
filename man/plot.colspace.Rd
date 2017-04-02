@@ -68,11 +68,6 @@ tcsvol(tcs.sicalis)
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
@@ -108,4 +103,8 @@ Backhaus W. (1991). Color opponent coding in the visual system
 \seealso{
 \code{\link{plot}}
 }
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
 
+Thomas White \email{thomas.white026@gmail.com}
+}

@@ -42,12 +42,11 @@ getspec('examplespec/', lim = c(400, 900))
 getspec('examplespec/', ext = 'ttt')}
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 }
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia \email{rm72@zips.uakron.edu}
+}
 \keyword{internal}
-

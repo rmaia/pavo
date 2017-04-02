@@ -39,4 +39,3 @@ plotsmooth(sicalis,0.05,0.1,7,6)
 \author{
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
-

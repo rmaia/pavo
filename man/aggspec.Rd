@@ -48,11 +48,10 @@ plot(teal.sset2)
 }
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

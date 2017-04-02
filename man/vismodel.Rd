@@ -6,10 +6,11 @@
 \usage{
 vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl",
   "apis", "canis", "cie2", "cie10", "musca", "segment"),
-  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "ml", "l", "md.r1"),
-  illum = c("ideal", "bluesky", "D65", "forestshade"), trans = c("ideal",
-  "bluetit", "blackbird"), qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal",
-  "green"), vonkries = FALSE, scale = 1, relative = TRUE)
+  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "ml", "l", "md.r1",
+  "all"), illum = c("ideal", "bluesky", "D65", "forestshade"),
+  trans = c("ideal", "bluetit", "blackbird"), qcatch = c("Qi", "fi", "Ei"),
+  bkg = c("ideal", "green"), vonkries = FALSE, scale = 1,
+  relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
@@ -48,8 +49,9 @@ remaining columns.}
  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
  \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
- \item \code{ml}: sum of the two longest-wavelength photoreceptors
+ \item \code{ml}: the summed response of the two longest-wavelength photoreceptors
  \item \code{l}: the longest-wavelength photoreceptor
+ \item \code{all}: the summed response of all photoreceptors
 }}
 
 \item{illum}{either a vector containing the illuminant, or one of the options:
@@ -125,11 +127,6 @@ tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
@@ -163,4 +160,8 @@ CIE (2006). Fundamental chromaticity diagram with physiological axes.
  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
  Internationale de l' Eclairage.
 }
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
 
+Thomas White \email{thomas.white026@gmail.com}
+}

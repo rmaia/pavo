@@ -42,10 +42,9 @@ plot(teal, type = 'stack')
 plot(teal, type = 'heatmap')}
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \seealso{
 \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

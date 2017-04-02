@@ -29,9 +29,6 @@ spec2rgb(teal)
 plot(teal, col = spec2rgb(teal), type = 'o')}
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \references{
 CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 
@@ -40,4 +37,6 @@ online data respository at \url{http://www.cvrl.org/}.
 
 \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

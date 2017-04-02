@@ -13,4 +13,3 @@ dataset containing reflectance measurements from 3 body parts
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \keyword{data}
-

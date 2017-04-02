@@ -35,10 +35,9 @@ plot(teal)
 }
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \seealso{
 \code{\link{as.rspec}}, \code{\link{aggspec}}
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

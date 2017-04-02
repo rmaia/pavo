@@ -55,9 +55,6 @@ daniosens <- sensmodel(c(357, 411, 477, 569))
 }
 
 }
-\author{
-Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \references{
 Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. 
 In search of the visual pigment template. Visual Neuroscience 17:509-528
@@ -71,4 +68,6 @@ oil droplets, ocular media and cone photoreceptor distribution in two species of
 passerine bird: the blue tit (Parus caeruleus L) and the blackbird (Turdus merula L). J Comp
 Physiol A 186:375-387
 }
-
+\author{
+Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad Eliason \email{cme16@zips.uakron.edu}
+}

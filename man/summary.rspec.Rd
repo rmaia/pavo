@@ -125,9 +125,6 @@ summary(sicalis, subset = c('B1', 'H4'))
 }
 
 }
-\author{
-Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \references{
 Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
 Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
@@ -179,4 +176,6 @@ eastern bluebirds. Animal Behaviour 69:67-72.
 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 }
-
+\author{
+Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael Maia \email{rm72@zips.uakron.edu}
+}

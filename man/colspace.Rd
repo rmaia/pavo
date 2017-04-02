@@ -59,11 +59,6 @@ cat.flowers <- colspace(vis.flowers, space = 'categorical')
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
@@ -100,4 +95,8 @@ Endler, J. A. (1990) On the measurement and classification of
 color in studies of animal color patterns. Biological Journal of the Linnean 
 Society, 41, 315-352.
 }
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
 
+Thomas White \email{thomas.white026@gmail.com}
+}

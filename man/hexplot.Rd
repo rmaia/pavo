@@ -54,9 +54,6 @@ plot(hex.flowers)
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
    based on photoreceptor excitations as a generalized representation of 
@@ -66,5 +63,7 @@ Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
    component of flower reflections, and the colour perception of Hymenoptera. 
    Vision research, 34(11), 1489-1508.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

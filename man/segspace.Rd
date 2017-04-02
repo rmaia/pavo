@@ -32,14 +32,13 @@ seg.sic <- colspace(vis.sic, space = 'segment')
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-
-Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
-}
 \references{
 Endler, J. A. (1990) On the measurement and classification of 
 color in studies of animal color patterns. Biological Journal of the Linnean 
 Society, 41, 315-352.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
 
+Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+}

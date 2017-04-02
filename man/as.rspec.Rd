@@ -47,4 +47,3 @@ head(fakedat2)}
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}
 }
-

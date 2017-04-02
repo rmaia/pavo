@@ -65,9 +65,6 @@ plot(teal.max, select = 10)
 }
 
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-}
 \references{
 Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. 
  Plumage reflectance and the objective assessment of avian sexual dichromatism. 
@@ -80,4 +77,6 @@ Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
 \seealso{
 \code{\link{loess.smooth}}
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}
+}

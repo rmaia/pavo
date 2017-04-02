@@ -43,4 +43,3 @@ explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))}
 \author{
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
-

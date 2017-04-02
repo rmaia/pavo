@@ -50,10 +50,9 @@ peakshape(teal, select = 10)
 peakshape(teal, select = 10, lim=c(400, 550))
 }
 }
-\author{
-Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \seealso{
 \code{\link{procspec}}
 }
-
+\author{
+Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia \email{rm72@zips.uakron.edu}
+}
