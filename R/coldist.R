@@ -242,7 +242,27 @@ coldist <-function(modeldata,
    
   # transformations in case object is neither from colspace or vismodel
   if(!any(c('colspace','vismodel') %in% class(modeldata))){
-  	qcatch <- match.arg(qcatch)
+    
+  	if(is.null(qcatch)) 
+  	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
+    
+    dat <- as.matrix(modeldata)
+    
+  	# Ensure catches are log transformed
+  	dat <- switch(qcatch, 
+  	              fi = dat, 
+  	              Qi = log(dat)
+  	)
+  	
+  	# Save Qi in original scale (not log transformed)
+  	# to calculate noise.
+  	# TW: Don't actually need this right - since it's for quantum-noise calcs?
+
+  	# qndat <- switch(qcatch,
+  	#                 Qi = as.matrix(modeldata),
+  	#                 fi = as.matrix(exp(modeldata)) 
+  	# )
+  	
     dat <- as.matrix(modeldata)
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
