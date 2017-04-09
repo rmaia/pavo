@@ -88,6 +88,10 @@ if(length(grep('Begin Calibration Data', raw)) > 0)
 # find last line with text
 start <- grep('[A-Da-dF-Zf-z]',raw)
 
+# For files with no preamble text
+if(length(start) == 0)
+  start <- 1
+
 # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
 isendline <- length(grep('End.*Spectral Data', raw)) > 0
 if(isendline)
