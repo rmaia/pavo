@@ -16,6 +16,7 @@ MINOR FEATURES AND BUG FIXES:
 * fixed bug in aggplot() which resulted in error when using lty, lwd arguments
 * warning if ocular media is being used in both vismodel() and sensmodel()
 * added an 'all' option to the achromatic argument in vismodel()
+* added the ability to calculate dL for cielab models in coldist()
 * added some more informative messages and warnings
 
 pavo 1.0

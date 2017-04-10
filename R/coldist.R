@@ -70,8 +70,9 @@
 #' The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-#' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
-#' and manhattan distances in the color-opponent-coding space. 
+#' model, euclidean distances in the categorical space, manhattan distances in the 
+#' color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L) 
+#' contrast in the cielab model. 
 #'
 #' @section Note on previous versions:
 #' previous versions of \code{coldist} calculated receptor noise using the arguments
@@ -367,7 +368,8 @@ if('colspace' %in% class(modeldata)){
   if(attr(modeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
+      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      #warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){

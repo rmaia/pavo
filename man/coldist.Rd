@@ -82,8 +82,9 @@ A data frame containing up to 4 columns.
 The first two (\code{patch1, patch2}) refer
 to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
-and manhattan distances in the color-opponent-coding space.
+model, euclidean distances in the categorical space, manhattan distances in the 
+color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L) 
+contrast in the cielab model.
 }
 \description{
 Calculates color distances. When data are the result of \code{\link{vismodel}}, 

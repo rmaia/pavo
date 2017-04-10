@@ -297,6 +297,14 @@ achrohex <- function(coord1, coord2){
   as.numeric(round(coord1['l'] - coord2['l'], 7))
 }
 
+# Achromatic michelson contrast in cielab
+achrolab <- function(coord1, coord2){
+  if(coord1['L'] > coord2['L'])
+    as.numeric(coord1['L'] - coord2['L'])
+  else
+    as.numeric(coord2['L'] - coord1['L'])
+}
+
 # 2d Euclidean distances in CIELAB
 lab2d <- function(coord1, coord2){
                      as.numeric(round(sqrt(abs(coord1['L'] - coord2['L'])^2 + abs(coord1['a'] - coord2['a'])^2 +
