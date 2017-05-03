@@ -170,7 +170,6 @@ coldist <-function(modeldata,
       
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
-  
 
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
       dat <- switch(qcatch, 
@@ -304,7 +303,7 @@ coldist <-function(modeldata,
   
   # this covers colspace
   if('colspace' %in% class(modeldata)){
-  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc'))
+  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc', 'segment'))
   	  usereceptornoisemodel <- TRUE
   }
   
@@ -357,6 +356,12 @@ if('colspace' %in% class(modeldata)){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
+  }
+  
+  if(attr(modeldata, 'clrsp') == 'segment'){
+    res$dS <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      res$dL <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'categorical'){
