@@ -10,7 +10,7 @@
 #' @return \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
 #' of the four segments.
 #' @return \code{LM}, \code{MS}: segment scores
-#' @return \code{C}, \code{H}, \code{B}: 'chroma', 'hue', and 'brightness' in the segment classification space
+#' @return \code{C}, \code{H}, \code{B}: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
 #' 
 #' @export
 #' 
@@ -85,7 +85,7 @@ segspace <- function(vismodeldata){
   
 # Colormetrics
   C <- sqrt(LM^2 + MS^2)
-  H <- asin(MS/C)
+  H <- asin(MS/C) * (180/pi)
   
   res.p <- data.frame(S1 = Q1, S2 = Q2, S3 = Q3, S4 = Q4, LM, MS, C, H, B, row.names = rownames(dat))
   
