@@ -642,7 +642,7 @@ Where $Qi$ represent the interquantile distances (e.g. for the human visible ran
 
 In `pavo`, the segment classification model is obtained through the function `segclass`:
 
-```{r, echo=TRUE, eval=TRUE}
+```{r, echo=TRUE, eval=FALSE}
 segclass(spec.sm)
 ```
 
@@ -651,7 +651,7 @@ where `LM` and `MS` are the segment differences or "opponents".
 The example below uses idealized reflectance spectra to illustrate how the avian color space defined 
 from the segment classification maps to the human color wheel:
 
-```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
+```{r, fig=TRUE, eval=FALSE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))

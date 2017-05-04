@@ -15,7 +15,7 @@ in the form of a data frame with columns representing photoreceptors.}
 
 \item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, and cielab models)):
+categorical, segment, and cielab models)):
 \itemize{
     \item \code{neural}: noise is proportional to the Weber fraction and 
  is independent of the intensity of the signal received (i.e. assumes bright conditions).
@@ -56,24 +56,24 @@ if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, and cielab models).}
 
 \item{weber}{The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
- and therefore must be calculated based on the epirically estimated Weber 
- fraction of one of the cone classes. \code{v} is then applied to estimate the 
- Weber fraction of the other cones. by default, the value of 0.1 is used 
- (the empirically estimated value for the
- LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
- if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, and cielab models).}
+and therefore must be calculated based on the epirically estimated Weber 
+fraction of one of the cone classes. \code{v} is then applied to estimate the 
+Weber fraction of the other cones. by default, the value of 0.1 is used 
+(the empirically estimated value for the
+LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
+if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
+categorical, segment, and cielab models).}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the 
  Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
  representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, and cielab models).}
+categorical, segment, and cielab models).}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when 
  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, and cielab models).}
+categorical, segment, and cielab models).}
 
 \item{n1, n2, n3, n4, v}{deprecated arguments. see below.}
 }
@@ -82,15 +82,16 @@ A data frame containing up to 4 columns.
 The first two (\code{patch1, patch2}) refer
 to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
-and manhattan distances in the color-opponent-coding space.
+model, euclidean distances in the categorical and segment space, manhattan distances in the 
+color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L) 
+contrast in the cielab model.
 }
 \description{
 Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
 with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
-from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
+from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
+distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.
 }
 \section{Note on previous versions}{
 

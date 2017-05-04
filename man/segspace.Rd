@@ -19,7 +19,7 @@ of the four segments.
 
 \code{LM}, \code{MS}: segment scores
 
-\code{C}, \code{H}: 'chroma' and 'hue' in the segment classification space
+\code{C}, \code{H}, \code{B}: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
 }
 \description{
 Calculates segment classification measures as defined in Endler (1990).

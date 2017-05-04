@@ -3,8 +3,8 @@
 #' Calculates color distances. When data are the result of \code{\link{vismodel}}, 
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
 #' with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data 
-#' from the hexagon, colour-opponent-coding, categorical, and cielab models, in which case euclidean
-#' distances (hexagon, cielab, categorical) or manhattan distances (coc) are returned.
+#' from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
+#' distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.
 #' 
 #' @param modeldata (required) quantum catch color data. Can be the result
 #'  from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches, 
@@ -41,19 +41,19 @@
 #'  (the empirically estimated value for the
 #'  LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
+#'  categorical, segment, and cielab models).
 #' @param weber.ref the cone class used to obtain the empirical estimate of the 
 #'  Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
 #'  representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
+#' categorical, segment, and cielab models).
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when 
 #'  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models).
+#' categorical, segment, and cielab models).
 #' @param noise how the noise will be calculated. (Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-#' categorical, and cielab models)):
+#' categorical, segment, and cielab models)):
 #' \itemize{
 #' 	\item \code{neural}: noise is proportional to the Weber fraction and 
 #'  is independent of the intensity of the signal received (i.e. assumes bright conditions).
@@ -70,8 +70,9 @@
 #' The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
 #' and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-#' model, euclidean distances in the hexagon, cielab, and categorical colorspaces, 
-#' and manhattan distances in the color-opponent-coding space. 
+#' model, euclidean distances in the categorical and segment space, manhattan distances in the 
+#' color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L) 
+#' contrast in the cielab model. 
 #'
 #' @section Note on previous versions:
 #' previous versions of \code{coldist} calculated receptor noise using the arguments
@@ -175,7 +176,6 @@ coldist <-function(modeldata,
       
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
-  
 
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
       dat <- switch(qcatch, 
@@ -248,7 +248,27 @@ coldist <-function(modeldata,
    
   # transformations in case object is neither from colspace or vismodel
   if(!any(c('colspace','vismodel') %in% class(modeldata))){
-  	qcatch <- match.arg(qcatch)
+    
+  	if(is.null(qcatch)) 
+  	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
+    
+    dat <- as.matrix(modeldata)
+    
+  	# Ensure catches are log transformed
+  	dat <- switch(qcatch, 
+  	              fi = dat, 
+  	              Qi = log(dat)
+  	)
+  	
+  	# Save Qi in original scale (not log transformed)
+  	# to calculate noise.
+  	# TW: Don't actually need this right - since it's for quantum-noise calcs?
+
+  	# qndat <- switch(qcatch,
+  	#                 Qi = as.matrix(modeldata),
+  	#                 fi = as.matrix(exp(modeldata)) 
+  	# )
+  	
     dat <- as.matrix(modeldata)
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -289,7 +309,7 @@ coldist <-function(modeldata,
   
   # this covers colspace
   if('colspace' %in% class(modeldata)){
-  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc'))
+  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc', 'segment'))
   	  usereceptornoisemodel <- TRUE
   }
   
@@ -344,6 +364,12 @@ if('colspace' %in% class(modeldata)){
       res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
+  if(attr(modeldata, 'clrsp') == 'segment'){
+    res$dS <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      res$dL <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
+  }
+  
   if(attr(modeldata, 'clrsp') == 'categorical'){
     res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
@@ -353,7 +379,8 @@ if('colspace' %in% class(modeldata)){
   if(attr(modeldata, 'clrsp') == 'CIELAB'){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
+      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      #warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){

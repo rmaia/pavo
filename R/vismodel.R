@@ -16,9 +16,9 @@
 #' @param visual the visual system to be used. Options are:
 #' \itemize{
 #'	\item a data frame such as one produced containing by \code{sensmodel}, containing 
-#'    sensitivity for the user-defined visual system. The data frame must contain a \code{'wl'}
-#'    column with the range of wavelengths included, and the sensitivity for each other 
-#'    cone as a column.
+#'    user-defined sensitivity data for the receptors involved in colour vision. 
+#'    The data frame must contain a \code{'wl'} column with the range of wavelengths included, 
+#'    and the sensitivity for each other cone as a column.
 #' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{avg.uv}: average avian UV system.
 #' \item \code{avg.v}: average avian V system.
@@ -36,7 +36,7 @@
 #' \item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
-#'  cone stimulation. Either a vector containing the sensitivity for a single receptor, 
+#'  receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
 #'  or one of the options: 
 #' \itemize{
 #'  \item \code{none}: no achromatic stimulation calculated
@@ -44,8 +44,9 @@
 #'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
 #'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
 #'  \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
-#'  \item \code{ml}: sum of the two longest-wavelength photoreceptors
+#'  \item \code{ml}: the summed response of the two longest-wavelength photoreceptors
 #'  \item \code{l}: the longest-wavelength photoreceptor
+#'  \item \code{all}: the summed response of all photoreceptors
 #' }
 #' @param illum either a vector containing the illuminant, or one of the options:
 #' \itemize{ 
@@ -132,7 +133,7 @@
 
 vismodel <- function(rspecdata, 
   visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
-  achromatic = c('none', 'bt.dc','ch.dc', 'st.dc','ml', 'l', 'md.r1'),
+  achromatic = c('none', 'bt.dc','ch.dc', 'st.dc','ml', 'l', 'md.r1', 'all'),
   illum = c('ideal','bluesky','D65','forestshade'), 
   trans = c('ideal', 'bluetit','blackbird'),
   qcatch = c('Qi','fi', 'Ei'),
@@ -209,9 +210,9 @@ if(visual2 == 'segment'){
     warning('segment analysis chosen, overriding relative to TRUE', call.=FALSE)
   }
   
-  if(achromatic2 != 'none'){
-    achromatic2 <- 'none'
-    warning('segment analysis chosen, overriding achromatic to none', call.=FALSE)
+  if(achromatic2 != 'all'){
+    achromatic2 <- 'all'
+    warning('segment analysis chosen, overriding achromatic to all', call.=FALSE)
   }
   
   if(qcatch != 'Qi'){
@@ -423,7 +424,7 @@ if(achromatic2=='bt.dc' | achromatic2=='ch.dc' | achromatic2=='st.dc' | achromat
 }
 
 if(achromatic2=='ml'){
-   L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
+  L <- rowSums(S[,c(dim(S)[2]-1,dim(S)[2])])
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
 }
@@ -432,6 +433,16 @@ if(achromatic2=='l'){
   L <- S[, dim(S)[2]]
   lum <- colSums(y*L*illum)
   Qi <- data.frame(cbind(Qi,lum))
+}
+
+if(achromatic2=='all'){
+  L <- rowSums(S)
+  lum <- colSums(y*L*illum)
+  Qi <- data.frame(cbind(Qi,lum))
+}
+
+if(achromatic2=='segment'){
+  Qi <- data.frame(cbind(Qi, B))
 }
 
 if(achromatic2 == 'none'){
@@ -462,6 +473,7 @@ if(vonkries){
 fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
 Ei <- Qi / (Qi + 1)  # hyperbolic transform
 
+# Convert to relative
 if(relative & !is.null(lum)){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
@@ -479,11 +491,9 @@ if(relative & is.null(lum)){
     # Place dark specs in achromatic center?
     # blacks <- which(norm.B < 0.05) #find dark specs
     # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
-  }
+}
 
 # OUTPUT
-#res<-list(descriptive=descriptive,Qi=Qi, qi=qi, fi=fi)
-
 
 res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
