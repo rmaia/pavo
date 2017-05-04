@@ -36,9 +36,6 @@ flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
@@ -54,5 +51,7 @@ CIE (2006). Fundamental chromaticity diagram with physiological axes.
  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
  Internationale de l Eclairage.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

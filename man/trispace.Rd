@@ -36,9 +36,6 @@ tri.flowers <- colspace(vis.flowers, space = 'tri')
 } 
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed) 
  Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
@@ -51,5 +48,7 @@ MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
  cone excitation by stimuli of equal luminance. Journal of the Optical 
  Society of America, 69, 1183-1186.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

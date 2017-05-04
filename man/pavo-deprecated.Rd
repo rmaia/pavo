@@ -3,8 +3,8 @@
 \docType{package}
 \name{pavo-deprecated}
 \alias{pavo-deprecated}
-\alias{pavo-deprecated-package}
 \alias{tcs}
+\alias{pavo-deprecated-package}
 \title{Deprecated function(s) in the pavo package}
 \usage{
 tcs(...)

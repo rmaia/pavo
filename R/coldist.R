@@ -135,6 +135,12 @@
 #'  In Retinal And Eye Research, 20(5), 675-703.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Olsson, P., Lind, O., & Kelber, A. (2015) Bird colour vision: 
+#'  behavioural thresholds reveal receptor noise. Journal of Experimental Biology, 
+#'  218, 184-193.
+#' @references Lind, O. (2016) Colour vision and background adaptation in a passerine 
+#'  bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.
+
 
 coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,

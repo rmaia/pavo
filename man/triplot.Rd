@@ -43,9 +43,6 @@ plot(tri.flowers)
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
    - behavioural tests and physiological concepts. Biological Reviews, 78,
@@ -54,5 +51,7 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
 Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
  Journal of comparative physiology, 139(3), 165-176.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

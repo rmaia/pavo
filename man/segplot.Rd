@@ -36,13 +36,12 @@ plot(seg.flowers)
 }
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Endler, J. A. (1990) On the measurement and classification of 
 color in studies of animal color patterns. Biological Journal of the Linnean 
 Society, 41, 315-352.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

@@ -34,12 +34,11 @@ coc.flowers <- colspace(vis.flowers, space = 'coc')
 } 
 
 }
-\author{
-Thomas White \email{thomas.white026@gmail.com}
-}
 \references{
 Backhaus W. (1991). Color opponent coding in the visual system
  of the honeybee. Vision Research, 31, 1381-1397.
 }
+\author{
+Thomas White \email{thomas.white026@gmail.com}
+}
 \keyword{internal}
-

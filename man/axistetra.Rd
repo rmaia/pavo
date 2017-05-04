@@ -37,4 +37,3 @@ the axes in a static tetrahedral colorspace plot.
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
-

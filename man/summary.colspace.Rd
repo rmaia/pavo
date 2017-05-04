@@ -64,9 +64,6 @@ csp.sicalis <- colspace(vis.sicalis)
 summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
@@ -75,4 +72,6 @@ Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
-
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
+}

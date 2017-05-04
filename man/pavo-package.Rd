@@ -2,9 +2,9 @@
 % Please edit documentation in R/pavo-package.R
 \docType{package}
 \name{pavo-package}
+\alias{pavo-package}
 \alias{.PlotTetraEnv}
 \alias{pavo}
-\alias{pavo-package}
 \title{pavo: analyzing color data in R}
 \format{An object of class \code{environment} of length 0.}
 \usage{
@@ -32,4 +32,3 @@ Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason
 Thomas White \email{thomas.white026@gmail.com}
 }
 \keyword{package}
-

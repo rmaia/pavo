@@ -95,9 +95,6 @@ vol(tcs.sicalis)
 }
 
 }
-\author{
-Rafael Maia \email{rm72@zips.uakron.edu}
-}
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
@@ -110,4 +107,6 @@ Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}}, 
 \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
 }
-
+\author{
+Rafael Maia \email{rm72@zips.uakron.edu}
+}
