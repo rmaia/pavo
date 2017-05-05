@@ -29,7 +29,7 @@ test_that('Equivalent', {
 
   expect_equal(
     coldist(vismodel(flowers, relative=FALSE), achro=FALSE), 
-    suppressWarnings(coldist(colspace(vismodel(flowers, relative=FALSE)), achro=FALSE))
-    )	
+    suppressWarnings(coldist(colspace(vismodel(flowers, relative=FALSE)), achro=FALSE)),
+    check.attributes = FALSE)	
 
 })
