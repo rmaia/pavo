@@ -431,7 +431,7 @@ if('colspace' %in% class(modeldata)){
   res$patch2 <- as.character(res$patch2)
   
   #remove reference results
-  arethererefs <- grep('whiref|bluref|redref',paste(whatis$patch1, whatis$patch2))
+  arethererefs <- grep('whiref|bluref|redref',paste(res$patch1, res$patch2))
   if(length(arethererefs) > 0){
   
     resrefs <- res[arethererefs, ]
