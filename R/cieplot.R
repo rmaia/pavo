@@ -4,7 +4,11 @@
 #' 
 #' @import scatterplot3d 
 #' 
-#' @param ciedata (required)
+#' @usage plot(ciedata, ...)
+#' 
+#' @param ciedata (required). a data frame, possibly a result from the \code{colspace} 
+#' or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 
+#' as columns (labeled as such).
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted? Defaults to \code{TRUE}.
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline. 

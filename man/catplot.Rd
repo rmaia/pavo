@@ -4,11 +4,12 @@
 \alias{catplot}
 \title{Plot the categorical colour vision model}
 \usage{
-catplot(catdata, labels = TRUE, lab.cex = 0.9, ...)
+plot(catdata, ...)
 }
 \arguments{
-\item{catdata}{(required) a data frame, possibly a result from the \code{categorical} 
-function, containing values for 'x' and 'y' coordinates as columns (labeled as such).}
+\item{catdata}{(required) a data frame, possibly a result from the \code{colspace} 
+or \code{categorical} function, containing values for 'x' and 'y' coordinates 
+as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 

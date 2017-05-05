@@ -2,7 +2,10 @@
 #' 
 #' Produces a dichromat segment plot. 
 #'
-#' @param didata (required) a data frame, possibly a result from the \code{dispace} 
+#' @usage plot(didata, ...)
+#' 
+#' @param didata (required) a data frame, possibly a result from the \code{colspace} 
+#'  or \code{dispace}
 #'  function, containing values for the 'x' coordinates as a column (labeled as such).
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param labels plot verticy labels? Defaults to \code{TRUE}.

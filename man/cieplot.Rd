@@ -4,13 +4,12 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
-  xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), zlim = c(0, 10),
-  margin = c(1, 1, 1, 1), ...)
+plot(ciedata, ...)
 }
 \arguments{
-\item{ciedata}{(required)}
+\item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
+or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 
+as columns (labeled as such).}
 
 \item{mono}{should the monochromatic loci (the 'horseshoe') be
 plotted? Defaults to \code{TRUE}.}

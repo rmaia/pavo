@@ -1,9 +1,12 @@
 #' Plot the colour opponent coding diagram
 #' 
 #' Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
+#'
+#' @usage plot(cocdata, ...)
 #'  
-#' @param cocdata (required) a data frame, possibly a result from the \code{categorical} 
-#'  function, containing values for 'x' and 'y' coordinates as columns (labeled as such).
+#' @param cocdata (required) a data frame, possibly a result from the \code{colspace} 
+#' or \code{categorical} function, containing values for 'x' and 'y' coordinates 
+#' as columns (labeled as such).
 #' @param labels plot axis labels? Defaults to \code{TRUE}.
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).

@@ -4,8 +4,11 @@
 #' 
 #' @import scatterplot3d
 #' 
+#' @usage plot(tcsdata, ...)
+#' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
-#'   function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).
+#' or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
+#' coordinates as columns (labeled as such).
 #' @param view orientation of the tetrahedron in degrees (defaults to 70).
 #' @param scale.y numeric. Perspective scaling of the y axis (defaults to 0.45).
 #' @param axis logical. Draw X, Y and Z axis (defaults to FALSE).

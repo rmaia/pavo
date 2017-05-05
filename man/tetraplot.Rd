@@ -4,15 +4,12 @@
 \alias{tetraplot}
 \title{Plot a static tetrahedral colorspace}
 \usage{
-tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
-  achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
-  scale.y = 1, axis = FALSE, grid = FALSE, xlim = c(-1.22, 0.612),
-  ylim = c(-0.35, 0.707), zlim = c(-0.25, 0.75), margin = c(1, 1, 1, 1),
-  ...)
+plot(tcsdata, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
-function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).}
+or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
+coordinates as columns (labeled as such).}
 
 \item{vertexsize}{size of the points at the vertices (defaults to 0.8).}
 

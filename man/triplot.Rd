@@ -4,13 +4,12 @@
 \alias{triplot}
 \title{Plot a maxwell triangle}
 \usage{
-triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
-  achrosize = 0.8, cex.labels = 1, out.lwd = 1, out.lcol = "black",
-  out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
+plot(tridata, ...)
 }
 \arguments{
-\item{tridata}{(required) a data frame, possibly a result from the \code{trispace} .
-function, containing values for the 'x' and 'y' coordinates as columns (labeled as such).}
+\item{tridata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{trispace} function, containing values for the 'x' and 'y' coordinates 
+as columns (labeled as such).}
 
 \item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 

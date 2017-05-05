@@ -7,11 +7,13 @@
 #' @name pavo-deprecated
 #' @param ... Parameters to be passed to the modern version of the function
 #' @docType package
-#' @export  tcs
-#' @aliases tcs
+#' @export  tcs segclass
+#' @aliases tcs segclass
 #' @section Details:
 #' \tabular{rl}{
 #'   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
+#'   \code{segclass} \tab now a synonym for 
+#'   \code{\link{vismodel(..., visual = "segment")}}\cr
 #' }
 #'  
 
