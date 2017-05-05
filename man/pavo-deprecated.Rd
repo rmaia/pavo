@@ -23,7 +23,7 @@ removed.
 \tabular{rl}{
   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
   \code{segclass} \tab now a synonym for 
-  \code{\link{vismodel(..., visual = "segment")}}\cr
+  \code{\link[vismodel]{vismodel(..., visual = "segment")}}\cr
 }
 }
 
