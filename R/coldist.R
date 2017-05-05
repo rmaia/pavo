@@ -427,6 +427,9 @@ if('colspace' %in% class(modeldata)){
   
   row.names(res) <- 1:dim(res)[1]
   
+  res$patch1 <- as.character(res$patch1)
+  res$patch2 <- as.character(res$patch2)
+  
   #remove reference results
   resrefs <- res[grep('whiref|bluref|redref',paste(res$patch1, res$patch2)), ]
   res <- res[-grep('whiref|bluref|redref',paste(res$patch1, res$patch2)), ] 
