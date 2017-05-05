@@ -10,7 +10,8 @@ hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
   margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{hexdata}{(required) a data frame, possibly a result from the \code{hexagon} 
+\item{hexdata}{(required) a data frame, possibly a result from the \code{colspace} 
+or \code{hexagon} 
 function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}

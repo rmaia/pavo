@@ -9,8 +9,9 @@ cocplot(cocdata, labels = TRUE, lab.cex = 0.9, tick.loc = c(-12, -9, -6,
   margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{cocdata}{(required) a data frame, possibly a result from the \code{categorical} 
-function, containing values for 'x' and 'y' coordinates as columns (labeled as such).}
+\item{cocdata}{(required) a data frame, possibly a result from the \code{colspace} 
+or \code{categorical} function, containing values for 'x' and 'y' coordinates 
+as columns (labeled as such).}
 
 \item{labels}{plot axis labels? Defaults to \code{TRUE}.}
 

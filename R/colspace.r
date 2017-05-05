@@ -1,6 +1,7 @@
 #' Model spectra in a colorspace
 #'
-#' Models reflectance spectra in a colorspace
+#' Models reflectance spectra in a colorspace. For information on plotting arguments
+#' and graphical parameters, see \code{\link{plot.colspace}}.
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
@@ -11,14 +12,16 @@
 #'    applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
 #'    cones, respectively.
 #'    \item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
-#'    \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details.
+#'    (\link[=diplot]{plotting arguments})
+#'    \item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link{trispace}} for details. (\link[=triplot]{plotting arguments})
 #'    \item \code{tcs}: tetrahedral colourspace. See \code{\link{tcspace}} for details.
-#'    \item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See \code{\link{hexagon}} for details.
-#'    \item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991). See \code{\link{coc}} for details.
-#'    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details.
-#'    \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details.
-#'    \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details.
-#'    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details.
+#' (\link[=tetraplot]{plotting arguments})
+#'    \item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See \code{\link{hexagon}} for details. (\link[=hexplot]{plotting arguments})
+#'    \item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991). See \code{\link{coc}} for details. (\link[=cocplot]{plotting arguments})
+#'    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details. (\link[=catplot]{plotting arguments})
+#'    \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
+#'    \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
+#'    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details. (\link[=segplot]{plotting arguments})
 #' }
 #' 
 #' @examples \dontrun{

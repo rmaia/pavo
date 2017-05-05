@@ -640,18 +640,34 @@ $$MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\l
 
 Where $Qi$ represent the interquantile distances (e.g. for the human visible range, $Q_1=blue$, $Q_2=green$, $Q_3=yellow$ and $Q_4=red$)
 
-In `pavo`, the segment classification model is obtained through the function `segclass`:
+In `pavo`, the segment classification model is obtained through the function `vismodel` when
+the `visual` argument is set to `"segment"`:
 
-```{r, echo=TRUE, eval=FALSE}
-segclass(spec.sm)
+```{r}
+segexample <- vismodel(spec.sm, visual='segment')
+segexample
 ```
 
-where `LM` and `MS` are the segment differences or "opponents". 
+Where `S1-4` are the segments. The warning message reminds 
+you that segment classification analysis will use the sum of the segment differences as a
+measure of total reflectance, or brightness, which is expressed by the `vismodel` argument
+`achromatic="all"`.
 
-The example below uses idealized reflectance spectra to illustrate how the avian color space defined 
-from the segment classification maps to the human color wheel:
+You can obtain the segment differences, or "opponents", as well as colorimetric variables 
+(hue, chroma, brightness) from the segment classification analysis by using the function
+`colspace`, which also has plotting options, as shown below.
 
-```{r, fig=TRUE, eval=FALSE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
+```{r}
+colspace(segexample)
+```
+
+where `LM` and `MS` are the segment differences or "opponents", and `C`, `H` & `B` are 
+chroma, hue and brightness, respectively, as described by Endler 1990. 
+
+The example below uses idealized reflectance spectra to illustrate how the avian color 
+space defined from the segment classification maps to the human color wheel:
+
+```{r, fig=TRUE, include=TRUE, message=FALSE, results = "hide", fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))
@@ -671,11 +687,12 @@ fakedata1[,-1] <- fakedata1[,-1]*100
 fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
 
 # combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1, fakedata2[,-1])
+fakedata.c <- data.frame(fakedata1, fakedata2[,-1])
 fakedata.c <- as.rspec(fakedata.c)
 
 # segment classification analysis
-seg.fdc <- segclass(fakedata.c)
+seg.fdc <- vismodel(fakedata.c, visual='segment', achro='all')
+segcolspace.fdc <- colspace(seg.fdc)
 
 # plot results
 layout(cbind(1, 2, 3), widths = c(1, 1, 3))
@@ -684,10 +701,10 @@ par(mar = c(5, 4, 2, 0.5))
 plot(fakedata1, type = 'stack', col = spec2rgb(fakedata1)) 
 
 par(mar = c(5, 2.5, 2, 1.5))
-plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2)) 
+plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2), yaxt='n') 
 
 par(mar = c(5, 4, 2, 0.5))
-plot(seg.fdc[,c('LM','MS')], pch = 20, cex = 3, col = spec2rgb(fakedata.c))
+plot(segcolspace.fdc, pch = 20, cex = 3, col = spec2rgb(fakedata.c), out.lty=3)
 ```
 
 ### Photon Catch & Receptor Noise Model
