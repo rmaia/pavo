@@ -643,7 +643,7 @@ Where $Qi$ represent the interquantile distances (e.g. for the human visible ran
 In `pavo`, the segment classification model is obtained through the function `vismodel` when
 the `visual` argument is set to `"segment"`:
 
-```{r, echo=TRUE, eval=FALSE}
+```{r}
 segexample <- vismodel(spec.sm, visual='segment')
 segexample
 ```
@@ -657,7 +657,7 @@ You can obtain the segment differences, or "opponents", as well as colorimetric 
 (hue, chroma, brightness) from the segment classification analysis by using the function
 `colspace`, which also has plotting options, as shown below.
 
-```{r, echo=TRUE, eval=FALSE}
+```{r}
 colspace(segexample)
 ```
 
@@ -667,7 +667,7 @@ chroma, hue and brightness, respectively, as described by Endler 1990.
 The example below uses idealized reflectance spectra to illustrate how the avian color 
 space defined from the segment classification maps to the human color wheel:
 
-```{r, fig=TRUE, eval=FALSE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
+```{r, fig=TRUE, include=TRUE, message=FALSE, results = "hide", fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))
@@ -701,7 +701,7 @@ par(mar = c(5, 4, 2, 0.5))
 plot(fakedata1, type = 'stack', col = spec2rgb(fakedata1)) 
 
 par(mar = c(5, 2.5, 2, 1.5))
-plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2)) 
+plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2), yaxt='n') 
 
 par(mar = c(5, 4, 2, 0.5))
 plot(segcolspace.fdc, pch = 20, cex = 3, col = spec2rgb(fakedata.c), out.lty=3)

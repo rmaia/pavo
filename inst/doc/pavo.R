@@ -232,10 +232,14 @@ peakshape(spec.sm, plot = TRUE)
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm_"----
 peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-segclass(spec.sm)
+## ------------------------------------------------------------------------
+segexample <- vismodel(spec.sm, visual='segment')
+segexample
 
-## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
+## ------------------------------------------------------------------------
+colspace(segexample)
+
+## ---- fig=TRUE, include=TRUE, message=FALSE, results = "hide", fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))
@@ -255,11 +259,12 @@ fakedata1[,-1] <- fakedata1[,-1]*100
 fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
 
 # combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1, fakedata2[,-1])
+fakedata.c <- data.frame(fakedata1, fakedata2[,-1])
 fakedata.c <- as.rspec(fakedata.c)
 
 # segment classification analysis
-seg.fdc <- segclass(fakedata.c)
+seg.fdc <- vismodel(fakedata.c, visual='segment', achro='all')
+segcolspace.fdc <- colspace(seg.fdc)
 
 # plot results
 layout(cbind(1, 2, 3), widths = c(1, 1, 3))
@@ -268,10 +273,10 @@ par(mar = c(5, 4, 2, 0.5))
 plot(fakedata1, type = 'stack', col = spec2rgb(fakedata1)) 
 
 par(mar = c(5, 2.5, 2, 1.5))
-plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2)) 
+plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2), yaxt='n') 
 
 par(mar = c(5, 4, 2, 0.5))
-plot(seg.fdc[,c('LM','MS')], pch = 20, cex = 3, col = spec2rgb(fakedata.c))
+plot(segcolspace.fdc, pch = 20, cex = 3, col = spec2rgb(fakedata.c), out.lty=3)
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
