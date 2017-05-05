@@ -29,23 +29,23 @@ coords <- matrix(NA, nrow=nrow(M), ncol=2, dimnames=list(row.names(M), c('x','y'
 # first point
 coords['whiref', ] <- c(0,0)
 # second point
-coords['redref', ] <- c(M['whiref','redref'],0)
+coords['bluref', ] <- c(M['whiref','bluref'],0)
 # third point
-coords['bluref', ] <- pos3(M['whiref','redref'], M['whiref','bluref'], M['redref','bluref'])[1, ]
+coords['redref', ] <- pos3(M['whiref','bluref'], M['whiref','redref'], M['bluref','redref'])[1, ]
 
 # subsequent points
-nextpoints <- row.names(M)[!row.names(M) %in% c("whiref","redref", "bluref") ]
-positions <- lapply(nextpoints, function(x) pos3(M['whiref','redref'], M['whiref',x], M['redref',x]))
+nextpoints <- row.names(M)[!row.names(M) %in% c("whiref","bluref", "redref") ]
+positions <- lapply(nextpoints, function(x) pos3(M['whiref','bluref'], M['whiref',x], M['bluref',x]))
 names(positions) <- nextpoints
 
-eucdis <- lapply(positions, function(x) dist(rbind(x, coords['bluref',]))[c(2,3)])
-whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M['bluref', x])))
+eucdis <- lapply(positions, function(x) dist(rbind(x, coords['redref',]))[c(2,3)])
+whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M['redref', x])))
 names(whichdist) <- names(eucdis)
 
 coords[nextpoints, ] <- do.call(rbind,
   lapply(nextpoints, function(x) positions[[x]][whichdist[[x]], ]))
 
-coords[nextpoints,]
+data.frame(coords[nextpoints,])
 }
 
 
@@ -67,4 +67,7 @@ fakedata.c <- as.rspec(fakedata.c)
 
 test <- coldist(vismodel(fakedata.c, visual='apis',relative=FALSE), n=c(1,1,2), achro=FALSE)
 
-plot(tripyke(test), pch=20, col=spec2rgb(fakedata.c), cex=2); abline(v=0); abline(h=0)
+plot(tripyke(test), pch=20, col=spec2rgb(fakedata.c), cex=2); abline(v=0, lty=3); abline(h=0, lty=3)
+#make circles with radius = 1 JND
+symbols(tripyke(test)$x,tripyke(test)$y, circles=rep(1, dim(tripyke(test))[1]), add=T, inches=F)
+segments(0,0,1,0)

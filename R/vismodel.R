@@ -152,8 +152,8 @@ y <- rspecdata[, -wl_index, drop=FALSE]
 y$whiref <- rep(100, dim(y)[1])
 y$redref <- rep(0.1, dim(y)[1])
 y$bluref <- rep(0.1, dim(y)[1])
-y$bluref[1:ceiling(dim(y)[1]/10)] <- 100
-y$redref[ceiling(dim(y)[1]*2/10):dim(y)[1]] <- 100
+y$bluref[1:ceiling(dim(y)[1]/5)] <- 100
+y$redref[ceiling(dim(y)[1]*4/5):dim(y)[1]] <- 100
 
 # Negative value check
 if(length(y[y < 0]) > 0){
