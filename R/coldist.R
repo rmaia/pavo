@@ -148,6 +148,9 @@ coldist <-function(modeldata,
                   achro = TRUE, qcatch = NULL,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
                   v,n1,n2,n3,n4){
+  
+  resrefs <- NULL
+  
   if(!missing(v))
     stop('argument v is deprecated, please use weber instead. see ?coldist for more information.', call.=FALSE)
 
@@ -216,7 +219,7 @@ coldist <-function(modeldata,
       warning('Quantum catch are relative, distances may not be meaningful', call.=FALSE)  
 
     # save input object...
-     
+    modeldata <- rbind(modeldata, attr(modeldata, 'resrefs'))
   	dat <- as.matrix(modeldata)
   	
   	# transform or stop if Qi not appropriate
@@ -333,6 +336,7 @@ coldist <-function(modeldata,
     res$dS <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
       weber.ref=weber.ref, res=res, qndat = qndat2)     	
    }
+   
   
   if(achro == TRUE){
   	if(noise == 'quantum')
@@ -422,6 +426,12 @@ if('colspace' %in% class(modeldata)){
   }
   
   row.names(res) <- 1:dim(res)[1]
+  
+  #remove reference results
+  resrefs <- res[grep('whiref|bluref|redref',paste(res$patch1, res$patch2)), ]
+  res <- res[-grep('whiref|bluref|redref',paste(res$patch1, res$patch2)), ] 
+  
+  attr(res, 'resrefs') <- resrefs
   
   res
 }

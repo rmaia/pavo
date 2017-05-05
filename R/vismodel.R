@@ -147,6 +147,14 @@ wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 y <- rspecdata[, -wl_index, drop=FALSE]
 
+# add white, blue and red reference fake spectra
+
+y$whiref <- rep(100, dim(y)[1])
+y$redref <- rep(0.1, dim(y)[1])
+y$bluref <- rep(0.1, dim(y)[1])
+y$bluref[1:ceiling(dim(y)[1]/10)] <- 100
+y$redref[ceiling(dim(y)[1]*2/10):dim(y)[1]] <- 100
+
 # Negative value check
 if(length(y[y < 0]) > 0){
   warning(paste("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them."))
@@ -497,6 +505,10 @@ if(relative & is.null(lum)){
 
 res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
+resrefs <- res[c('whiref','redref','bluref'),]
+
+res <- res[!row.names(res) %in% c('whiref','bluref','redref'),]
+
 class(res) <- c('vismodel', 'data.frame')
 
 # Descriptive attributes
@@ -517,6 +529,8 @@ attr(res, 'data.visualsystem.achromatic') <- L
 attr(res, 'data.illuminant') <- illum
 attr(res, 'data.background') <- bkg
 attr(res, 'data.transmission') <- trans
+attr(res, 'resrefs') <- resrefs
 
 res
+
 }
