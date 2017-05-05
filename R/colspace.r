@@ -88,24 +88,28 @@ colspace <- function(vismodeldata,
     stop('Invalid colorspace selected')
   
   if(space2 == 'auto'){
+  	res<- 
   	switch(as.character(attr(vismodeldata, 'conenumb')),
-  	  '2' = return(dispace(vismodeldata)),
-  	  '3' = return(trispace(vismodeldata)),
-  	  '4' = return(tcspace(vismodeldata)),
-  	  'seg' = return(segspace(vismodeldata))
+  	  '2' = dispace(vismodeldata),
+  	  '3' = trispace(vismodeldata),
+  	  '4' = tcspace(vismodeldata),
+  	  'seg' = segspace(vismodeldata)
   	  )
   } else{
+  	res <-
   	switch(space2,
-  	'di' = return(dispace(vismodeldata)),
-  	'tri' = return(trispace(vismodeldata)),
-  	'hexagon' = return(hexagon(vismodeldata)),
-  	'tcs' = return(tcspace(vismodeldata)),
-  	'coc' = return(coc(vismodeldata)),
-  	'categorical' = return(categorical(vismodeldata)),
-  	'ciexyz' = return(cie(vismodeldata, 'XYZ')),
-  	'cielab' = return(cie(vismodeldata, 'LAB')),
-  	'segment' = return(segspace(vismodeldata))
+  	'di' = dispace(vismodeldata),
+  	'tri' = trispace(vismodeldata),
+  	'hexagon' = hexagon(vismodeldata),
+  	'tcs' = tcspace(vismodeldata),
+  	'coc' = coc(vismodeldata),
+  	'categorical' = categorical(vismodeldata),
+  	'ciexyz' = cie(vismodeldata, 'XYZ'),
+  	'cielab' = cie(vismodeldata, 'LAB'),
+  	'segment' = segspace(vismodeldata)
   	)
   }
-  
+attr(res, 'resrefs') <- attr(vismodeldata, 'resrefs')  
+
+res
 }
