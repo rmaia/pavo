@@ -2,7 +2,7 @@
 #' 
 #' Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
 #'
-#' @usage plot(cocdata, ...)
+# #' @usage plot(cocdata, ...)
 #'  
 #' @param cocdata (required) a data frame, possibly a result from the \code{colspace} 
 #' or \code{categorical} function, containing values for 'x' and 'y' coordinates 

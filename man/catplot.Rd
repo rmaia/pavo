@@ -4,7 +4,7 @@
 \alias{catplot}
 \title{Plot the categorical colour vision model}
 \usage{
-plot(catdata, ...)
+catplot(catdata, labels = TRUE, lab.cex = 0.9, ...)
 }
 \arguments{
 \item{catdata}{(required) a data frame, possibly a result from the \code{colspace} 

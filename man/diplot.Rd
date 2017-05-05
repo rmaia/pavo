@@ -4,7 +4,9 @@
 \alias{diplot}
 \title{Plot a dichromat segment}
 \usage{
-plot(didata, ...)
+diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
+  achrosize = 0.8, lab.cex = 1, out.lwd = 1, out.lcol = "black",
+  out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
 \item{didata}{(required) a data frame, possibly a result from the \code{colspace} 

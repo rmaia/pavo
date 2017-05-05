@@ -2,7 +2,7 @@
 #' 
 #' Produces a dichromat segment plot. 
 #'
-#' @usage plot(didata, ...)
+# #' @usage plot(didata, ...)
 #' 
 #' @param didata (required) a data frame, possibly a result from the \code{colspace} 
 #'  or \code{dispace}

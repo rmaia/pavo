@@ -4,7 +4,10 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-plot(ciedata, ...)
+cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
+  out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
+  xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), zlim = c(0, 10),
+  margin = c(1, 1, 1, 1), ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 

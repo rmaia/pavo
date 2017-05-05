@@ -4,7 +4,7 @@
 #' 
 #' @import scatterplot3d 
 #' 
-#' @usage plot(ciedata, ...)
+# #' @usage plot(ciedata, ...)
 #' 
 #' @param ciedata (required). a data frame, possibly a result from the \code{colspace} 
 #' or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 

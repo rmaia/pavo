@@ -2,7 +2,7 @@
 #' 
 #' Produces a Maxwell triangle plot.
 #'
-#' @usage plot(tridata, ...)
+# #' @usage plot(tridata, ...)
 #'
 #' @param tridata (required) a data frame, possibly a result from the \code{colspace}
 #'  or \code{trispace} function, containing values for the 'x' and 'y' coordinates 

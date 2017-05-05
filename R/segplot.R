@@ -2,7 +2,7 @@
 #' 
 #' Produces a plot based on Endler's (1990) segment analysis. 
 #'
-#' @usage plot(segdata, ...)  
+# #' @usage plot(segdata, ...)  
 #' 
 #' @param segdata (required) a data frame, possibly a result from the \code{colspace} 
 #'  or \code{segspace} function, containing values for 'LM' and 'MS' 

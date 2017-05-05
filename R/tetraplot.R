@@ -4,7 +4,7 @@
 #' 
 #' @import scatterplot3d
 #' 
-#' @usage plot(tcsdata, ...)
+# #' @usage plot(tcsdata, ...)
 #' 
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #' or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
