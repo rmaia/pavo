@@ -1,14 +1,18 @@
 #' Plot the segment-analysis model
 #' 
 #' Produces a plot based on Endler's (1990) segment analysis. 
-#'  
-#' @param segdata (required) a data frame, possibly a result from the \code{segspace} 
-#'  function, containing values for 'LM' and 'MS' as columns (labeled as such).
+#'
+# #' @usage plot(segdata, ...)  
+#' 
+#' @param segdata (required) a data frame, possibly a result from the \code{colspace} 
+#'  or \code{segspace} function, containing values for 'LM' and 'MS' 
+#'  as columns (labeled as such).
 #' @param labels plot category labels inside? Defaults to \code{TRUE}.
 #' @param lab.cex character expansion factor for category labels when \code{labels = TRUE}).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for plot outline.
-#' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes.
-#' @param margins margins for the plot.
+#' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes. (defaults to c(-1, -0.5, 0.5, 1))
+#' @param margins margins for the plot. (defaults to c(1, 1, 2, 2))
+#' @param square square plotting area? (defaults to \code{TRUE})
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'    
 #' @examples

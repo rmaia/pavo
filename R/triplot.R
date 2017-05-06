@@ -2,8 +2,11 @@
 #' 
 #' Produces a Maxwell triangle plot.
 #'
-#' @param tridata (required) a data frame, possibly a result from the \code{trispace} .
-#'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such).
+# #' @usage plot(tridata, ...)
+#'
+#' @param tridata (required) a data frame, possibly a result from the \code{colspace}
+#'  or \code{trispace} function, containing values for the 'x' and 'y' coordinates 
+#'  as columns (labeled as such).
 #' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?.
 #' @param labels plot verticy labels? Defaults to \code{TRUE}.
 #' @param cex.labels character expansion factor for category labels when \code{labels = TRUE}).

@@ -4,6 +4,7 @@
 \name{pavo-deprecated}
 \alias{pavo-deprecated}
 \alias{tcs}
+\alias{segclass}
 \alias{pavo-deprecated-package}
 \title{Deprecated function(s) in the pavo package}
 \usage{
@@ -21,6 +22,8 @@ removed.
 
 \tabular{rl}{
   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
+  \code{segclass} \tab now a synonym for 
+  \code{\link[=vismodel]{vismodel(..., visual = "segment")}}\cr
 }
 }
 

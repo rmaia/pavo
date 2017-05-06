@@ -4,7 +4,7 @@
 
 <head>
 
-<meta charset="utf-8">
+<meta charset="utf-8" />
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="generator" content="pandoc" />
 
@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton" />
 
-<meta name="date" content="2017-02-17" />
+<meta name="date" content="2017-05-05" />
 
 <title>An introduction to pavo 1.0</title>
 
@@ -70,7 +70,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 
 <h1 class="title toc-ignore">An introduction to pavo 1.0</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton</em></h4>
-<h4 class="date"><em>2017-02-17</em></h4>
+<h4 class="date"><em>2017-05-05</em></h4>
 
 
 <div id="TOC">
@@ -115,6 +115,7 @@ code > span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Inf
 <li><strong>the <code>coldist</code> function has undergone significant changes to its imput arguments.</strong> Mainly, instead of specifying the single-cone noise <code>v</code> and the <code>n1, n2, n3</code> and <code>n4</code> relative cone densities, users now (a) specify the desired weber fraction for the reference cone using the argument <code>weber</code>, (b) which cone to be used as the reference cone with the argument <code>weber.ref</code>, and (c) a single vector with the relative cone densities through the <code>n</code> argument. Explanations for these changes follow below. The achromatic Weber fraction can now also be specified separately through the <code>weber.achro</code> argument.</li>
 <li>besides the familiar distances in JND for receptor noise models, <strong><code>coldist</code> now also calculates color distances for the other colorspaces available through <code>colspace</code></strong>: Euclidean distances in the hexagon, cielab and categorical spaces, and manhattan (city-bloc) distances in the color-opponent-coding space.</li>
 <li><code>getspec</code> now has a <strong>fast algorithm</strong> that speeds up importing spectra. The fast version will only work when all files have the same format. <code>getspec</code> attempts to use it first, and if it fails, it will switch to the old algorithm. (the slow version can also be chosen with the argument <code>fast=FALSE</code>)</li>
+<li><strong>new in version 1.1</strong> segment classification analysis is now conducted through <code>vismodel(..., visual='segment')</code>, replacing the old function <code>segclass</code>. Color variables can be obtained using <code>colspace</code> on that result.</li>
 </ul>
 </div>
 <div id="new-flowers-dataset" class="section level1">

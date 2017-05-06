@@ -12,7 +12,8 @@ tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
-function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such).}
+or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
+coordinates as columns (labeled as such).}
 
 \item{vertexsize}{size of the points at the vertices (defaults to 0.8).}
 

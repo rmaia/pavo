@@ -9,8 +9,9 @@ segplot(segdata, labels = TRUE, lab.cex = 0.9, out.lwd = 1, out.lty = 1,
   2), square = TRUE, ...)
 }
 \arguments{
-\item{segdata}{(required) a data frame, possibly a result from the \code{segspace} 
-function, containing values for 'LM' and 'MS' as columns (labeled as such).}
+\item{segdata}{(required) a data frame, possibly a result from the \code{colspace} 
+or \code{segspace} function, containing values for 'LM' and 'MS' 
+as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 
@@ -18,9 +19,11 @@ function, containing values for 'LM' and 'MS' as columns (labeled as such).}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for plot outline.}
 
-\item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes.}
+\item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes. (defaults to c(-1, -0.5, 0.5, 1))}
 
-\item{margins}{margins for the plot.}
+\item{margins}{margins for the plot. (defaults to c(1, 1, 2, 2))}
+
+\item{square}{square plotting area? (defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }

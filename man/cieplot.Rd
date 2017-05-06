@@ -10,7 +10,9 @@ cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
   margin = c(1, 1, 1, 1), ...)
 }
 \arguments{
-\item{ciedata}{(required)}
+\item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
+or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 
+as columns (labeled as such).}
 
 \item{mono}{should the monochromatic loci (the 'horseshoe') be
 plotted? Defaults to \code{TRUE}.}

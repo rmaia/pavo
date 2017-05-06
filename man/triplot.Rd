@@ -9,8 +9,9 @@ triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{tridata}{(required) a data frame, possibly a result from the \code{trispace} .
-function, containing values for the 'x' and 'y' coordinates as columns (labeled as such).}
+\item{tridata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{trispace} function, containing values for the 'x' and 'y' coordinates 
+as columns (labeled as such).}
 
 \item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
