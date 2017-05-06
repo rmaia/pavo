@@ -152,8 +152,10 @@ y <- rspecdata[, -wl_index, drop=FALSE]
 y$whiref <- rep(100, dim(y)[1])
 y$redref <- rep(0.1, dim(y)[1])
 y$bluref <- rep(0.1, dim(y)[1])
+y$greref <- rep(0.1, dim(y)[1])
 y$bluref[1:ceiling(dim(y)[1]/5)] <- 100
 y$redref[ceiling(dim(y)[1]*4/5):dim(y)[1]] <- 100
+y$greref[ceiling(dim(y)[1]*2/5):ceiling(dim(y)[1]*3/5)] <- 100
 
 # Negative value check
 if(length(y[y < 0]) > 0){
@@ -505,9 +507,9 @@ if(relative & is.null(lum)){
 
 res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
-resrefs <- res[c('whiref','redref','bluref'),]
+resrefs <- res[c('whiref','redref','bluref','greref'),]
 
-res <- res[!row.names(res) %in% c('whiref','bluref','redref'),]
+res <- res[!row.names(res) %in% c('whiref','bluref','redref','greref'),]
 
 class(res) <- c('vismodel', 'data.frame')
 
