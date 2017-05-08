@@ -18,7 +18,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'segment')
+#' vis.flowers <- vismodel(flowers, visual = 'segment', achromatic = 'all')
 #' seg.flowers <- colspace(vis.flowers, space = 'segment')
 #' plot(seg.flowers)
 #' }
@@ -91,10 +91,10 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   
 # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
-    text(x = 0, y = 1.05, labels = 'L', cex = lab.cex)
-    text(x = 0, y = -1.05, labels = 'M', cex = lab.cex)
-    text(x = 1.05, y = 0, labels = 'M', cex = lab.cex)
-    text(x = -1.05, y = 0, labels = 'S', cex = lab.cex)
+    text(x = 0, y = 1.05, labels = 'S4', cex = lab.cex)
+    text(x = 0, y = -1.05, labels = 'S2', cex = lab.cex)
+    text(x = 1.05, y = 0, labels = 'S3', cex = lab.cex)
+    text(x = -1.05, y = 0, labels = 'S1', cex = lab.cex)
   }
 
 }
