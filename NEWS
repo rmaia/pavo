@@ -1,5 +1,8 @@
-pavo 1.1.1
+pavo x
 ------------------------------------------------------------------------------
+
+MAJOR CHANGES:
+* Added the CIELch model and an associated 3d plot, which are accessed via colspace(space = 'cielch') and plot.colspace(). 
 
 MINOR FEATURES AND BUG FIXES:
 * added more informative labels for the segment analysis plot

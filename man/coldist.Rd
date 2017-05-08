@@ -15,7 +15,7 @@ in the form of a data frame with columns representing photoreceptors.}
 
 \item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, segment, and cielab models)):
+categorical, segment, and cie models)):
 \itemize{
     \item \code{neural}: noise is proportional to the Weber fraction and 
  is independent of the intensity of the signal received (i.e. assumes bright conditions).
@@ -53,7 +53,7 @@ defaults to
 the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}). 
 Ignored for \code{colspace} objects
 if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, and cielab models).}
+categorical, and cie models).}
 
 \item{weber}{The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
 and therefore must be calculated based on the epirically estimated Weber 
@@ -62,18 +62,18 @@ Weber fraction of the other cones. by default, the value of 0.1 is used
 (the empirically estimated value for the
 LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
 if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, segment, and cielab models).}
+categorical, segment, and cie models).}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the 
  Weber fraction used for the \code{weber} argument. By default, \code{n4} is used, 
  representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, segment, and cielab models).}
+categorical, segment, and cie models).}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when 
  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
-categorical, segment, and cielab models).}
+categorical, segment, and cie models).}
 
 \item{n1, n2, n3, n4, v}{deprecated arguments. see below.}
 }

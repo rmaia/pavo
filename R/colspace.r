@@ -21,6 +21,7 @@
 #'    \item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link{categorical}} for details. (\link[=catplot]{plotting arguments})
 #'    \item \code{ciexyz}: CIEXYZ space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
 #'    \item \code{cielab}: CIELAB space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
+#'    \item \code{cielch}: CIELCh space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
 #'    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details. (\link[=segplot]{plotting arguments})
 #' }
 #' 
@@ -82,7 +83,7 @@
 #' Society, 41, 315-352.
 
 colspace <- function(vismodeldata, 
-                     space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'segment'))
+                     space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'cielch', 'segment'))
   {
   
   space2 <- try(match.arg(space), silent = T)
@@ -109,6 +110,7 @@ colspace <- function(vismodeldata,
   	'categorical' = categorical(vismodeldata),
   	'ciexyz' = cie(vismodeldata, 'XYZ'),
   	'cielab' = cie(vismodeldata, 'LAB'),
+  	'cielch' = cie(vismodeldata, 'LCh'),
   	'segment' = segspace(vismodeldata)
   	)
   }

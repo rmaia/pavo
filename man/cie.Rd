@@ -4,14 +4,14 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-cie(vismodeldata, space = c("XYZ", "LAB"))
+cie(vismodeldata, space = c("XYZ", "LAB", "LCh"))
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a 
 data frame with three columns representing trichromatic viewer).}
 
-\item{space}{(required) Choice between XYZ (1931) or LAB (1971) colour models.}
+\item{space}{(required) Choice between XYZ (1931), LAB (1971), or LCH colour models.}
 }
 \value{
 Object of class \code{colspace} containing:
@@ -21,11 +21,15 @@ Object of class \code{colspace} containing:
      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} 
          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
          Cartesian coordinate space. Returned when using \code{space = LAB}.
+     \item \code{L, C, h}: Lightness, \code{L}, chroma \code{C} 
+         and hue-angle \code{h} (degrees), the latter of which are cylindrical 
+         representations of \code{a} and \code{b} from the CIELAB model. Returned 
+         when using \code{space = LCh}.
    }
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in either the CIEXYZ (1931) or CIELAB (1971) colourspaces.
+in either the CIEXYZ (1931), CIELAB (1971), or CIELCH (1971) colourspaces.
 }
 \examples{
 \dontrun{
@@ -33,6 +37,7 @@ data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65')
 flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 flowers.cielab <- colspace(vis.flowers, space = 'cielab')
+flowers.cielch <- colspace(vis.flowers, space = 'cielch')
 }
 
 }

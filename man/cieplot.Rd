@@ -34,7 +34,7 @@ plotted? Defaults to \code{TRUE}.}
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }
 \description{
-Plot a CIE (XYZ or LAB) chromaticity diagram.
+Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 }
 \examples{
 \dontrun{
