@@ -5,6 +5,7 @@ MAJOR CHANGES:
 * Added the CIELch model and an associated 3d plot, which are accessed via colspace(space = 'cielch') and plot.colspace(). 
 
 MINOR FEATURES AND BUG FIXES:
+* vignettes have been amalgamated & the single, main vignette is now up-to-date
 * added more informative labels for the segment analysis plot
 
 pavo 1.1

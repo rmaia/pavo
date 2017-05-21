@@ -68,7 +68,7 @@ specs.new <- merge(specs.tanager, specs.parakeet)
 
 ## ---- label=explorespecfig, fig=TRUE, include=TRUE, fig.align='center', fig.width=7, fig.height=5.5, fig.cap="_Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels_"----
 # 36 spectra plus the first (wl) column
-explorespec(specs[,1:37], by=3, lwd=2) 
+explorespec(specs[, 1:37], by = 3, lwd = 2) 
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 mspecs <- aggspec(specs, by = 3, FUN = mean)
@@ -82,23 +82,23 @@ table(spp)
 
 ## ---- label=exploresppmeans, fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.cap="_Result from `explorespec` for species means_"----
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
-round(sppspec[1:5, ],2)
+round(sppspec[1:5, ], 2)
 explorespec(sppspec, by = 6, lwd = 3)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center'----
 plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 4, ask = FALSE)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=5, fig.align='center', fig.cap="_Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet_"----
-spec.sm <- procspec(sppspec, opt='smooth', span = 0.2)
+spec.sm <- procspec(sppspec, opt = 'smooth', span = 0.2)
 plot(sppspec[, 5] ~ sppspec[, 1], type = 'l', lwd = 10, col = 'grey', 
      xlab = "Wavelength (nm)", ylab = "Reflectance (%)")
 lines(spec.sm[, 5] ~ sppspec[, 1], col = 'red', lwd = 2)
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 # Run some different normalizations
-specs.max <- procspec(sppspec, opt='max')
-specs.min <- procspec(sppspec, opt='min')
-specs.str <- procspec(sppspec, opt=c('min', 'max'))  # multiple options
+specs.max <- procspec(sppspec, opt = 'max')
+specs.min <- procspec(sppspec, opt = 'min')
+specs.str <- procspec(sppspec, opt = c('min', 'max'))  # multiple options
 
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.align='center', fig.cap="_Results for min (left), max (center), and both normalizations (right)_"----
 # Plot results
@@ -174,17 +174,17 @@ mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color._"----
 par(mar = c(4, 4, 2, 2))
 data(teal)
-plot(teal, type='o', col = spec2rgb(teal))
+plot(teal, type = 'o', col = spec2rgb(teal))
 
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=7, fig.align='center', fig.cap="_Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance_"----
-teal.norm <- procspec(teal, opt=c('min', 'max'))
-par(mfrow=c(1,2), mar=c(2,2,2,2), oma=c(2,2,0,0))
+teal.norm <- procspec(teal, opt = c('min', 'max'))
+par(mfrow = c(1, 2), mar = c(2, 2, 2, 2), oma = c(2, 2, 0, 0))
 
-plot(teal, type='s', col=spec2rgb(teal))
-plot(teal.norm, type='s', col=spec2rgb(teal))
+plot(teal, type = 's', col = spec2rgb(teal))
+plot(teal.norm, type = 's', col = spec2rgb(teal))
 
-mtext("Wavelength (nm)", side=1, outer=T, line=1)
-mtext("Cumulative reflectance (A.U.)", side=2, outer=T, line=1)
+mtext("Wavelength (nm)", side = 1, outer = T, line = 1)
+mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 angles <- seq(15, 70, by = 5)
@@ -200,7 +200,7 @@ plot(teal.sm, type = 'h', varying = angles,
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colors
-aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend=TRUE)
+aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend = TRUE)
 
 # Plot using mean and standard error, in greyscale
 aggplot(mspecs, spp, FUN.error = function(x)sd(x)/sqrt(length(x)), 
@@ -210,7 +210,7 @@ aggplot(mspecs, spp, FUN.error = function(x)sd(x)/sqrt(length(x)),
 summary(spec.sm)
 
 ## ---- echo=FALSE, eval=TRUE----------------------------------------------
-round(summary(spec.sm),2)
+round(summary(spec.sm), 2)
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 summary(spec.sm, subset = TRUE)
@@ -232,14 +232,173 @@ peakshape(spec.sm, plot = TRUE)
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm_"----
 peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
-## ------------------------------------------------------------------------
-segexample <- vismodel(spec.sm, visual='segment')
-segexample
+## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"----
+plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
+
+## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
+vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
+vismod1
+
+## ---- echo=FALSE, eval=TRUE----------------------------------------------
+round(vismod1, 4)
+
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+summary(vismod1)
+
+## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)._"----
+par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
+layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
+
+sppspecol <- as.character(spec2rgb(sppspec))
+
+for (i in 1:6) {
+  par(mar = c(2, 2, 2, 2))
+  plot(sppspec, select = i+1, col = sppspecol[i], lwd = 3, ylim = c(0, 100))
+  par(mar = c(4.1, 2.5, 2.5, 2))
+  barplot(as.matrix(vismod1[i, 1:4]), yaxt = 'n', col = 'black')
+}
+
+mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
+mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Idealized dichromat photoreceptors created using `sensmodel`._"----
+idealizeddichromat <- sensmodel(c(350, 650))
+plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = 'Absorbance')
+
+## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
+vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative = FALSE)
+vismod.idi
+
+## ---- echo=FALSE, eval=TRUE----------------------------------------------
+sapply(vismod.idi, function(x) round(x,4))
+
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber = 0.1)
+coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
+
+## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
+coldist(vismod1, subset = 'cardinal')
+
+## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
+coldist(vismod1, subset = c('cardinal', 'jacana'))
+
+## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"----
+data(flowers)
+
+flowercols <- spec2rgb(flowers)
+
+head(flowers[1:4])
+plot(flowers, lwd = 2, col = flowercols)
 
 ## ------------------------------------------------------------------------
-colspace(segexample)
+vis.flowers <- vismodel(flowers, visual = 'canis')
 
-## ---- fig=TRUE, include=TRUE, message=FALSE, results = "hide", fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
+di.flowers <- colspace(vis.flowers, space = 'di')
+
+head(di.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in a dichromatic colorspace, as modelled according to a canid visual system._"----
+plot(di.flowers, col = flowercols) 
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'fi', scale = 10000)
+
+tri.flowers <- colspace(vis.flowers, space = 'tri')
+
+head(tri.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in a Maxwell triangle, considering a honeybee visual system._"----
+plot(tri.flowers, pch = 21, bg = flowercols) 
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, visual = 'bluetit', qcatch = 'fi', scale = 10000)
+
+tetra.flowers <- colspace(vis.flowers, space = 'tcs')
+
+head(tetra.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit. Top arrows show direction of axes, and bottom arrows of equal length shows differences in perspective and distortion._"----
+par(mfrow = c(1, 2), pty = 's')
+plot(tetra.flowers, view = 30, pch = 21, bg = flowercols)
+legendtetra(x = -2.8, y = 0.2, z = 1.1, legend = 'flowers', pch = 19, col = 'black', bty = 'n')
+axistetra(x = 1.4, y = 0.2, z = 0.4, size = c(0.25, 0.15, 0.1), adj.label = c(0.06, 0.08, 0.07))
+axistetra(x = 1.4, y = 0.2, z = -0.4, size = 0.2, label = FALSE)
+plot(tetra.flowers, view=60, scale.y = 0.6, pch = 21, bg = flowercols)
+axistetra(x = 0.6, y = 0.2, z = 0.5, size = c(0.2, 0.2, 0.15), adj.label = c(0.07, 0.12, 0.07))
+axistetra(x = 0.6, y = 0.2, z = -0.5, size = 0.2, label = FALSE)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
+projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
+data(sicalis)
+aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
+
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
+tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
+tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
+#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
+#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
+voloverlap(tcs.sicalis.T, tcs.sicalis.B)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C)
+
+## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"----
+knitr::include_graphics("fig/pavo-overlap-combined.png")
+
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+summary(tetra.flowers)
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+
+## ------------------------------------------------------------------------
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+head(hex.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"----
+plot(hex.flowers, sectors = 'coarse', pch = 21, bg = flowercols)
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
+
+coc.flowers <- colspace(vis.flowers, space = 'coc')
+
+head(coc.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"----
+plot(coc.flowers, pch = 21, bg = flowercols, yaxt='n') 
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE, achromatic = 'none')
+
+## ------------------------------------------------------------------------
+ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+head(ciexyz.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"----
+plot(ciexyz.flowers, pch = 21, bg = flowercols) 
+
+## ------------------------------------------------------------------------
+cielab.flowers <- colspace(vis.flowers, space = 'cielab')
+head(cielab.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"----
+plot(cielab.flowers, pch = 21, bg = flowercols) 
+
+## ------------------------------------------------------------------------
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+
+## ------------------------------------------------------------------------
+cat.flowers <- colspace(vis.flowers, space = 'categorical')
+
+head(cat.flowers)
+
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
+plot(cat.flowers, pch = 21, bg = flowercols) 
+
+## ---- fig=TRUE, eval=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
 fakedata1 <-  sapply(seq(100,500,by = 20), 
                      function(x) rowSums(cbind(dnorm(300:700,x,30), 
                                                dnorm(300:700,x+400,30))))
@@ -259,118 +418,43 @@ fakedata1[,-1] <- fakedata1[,-1]*100
 fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
 
 # combining and converting to rspec
-fakedata.c <- data.frame(fakedata1, fakedata2[,-1])
+fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
 fakedata.c <- as.rspec(fakedata.c)
 
 # segment classification analysis
-seg.fdc <- vismodel(fakedata.c, visual='segment', achro='all')
-segcolspace.fdc <- colspace(seg.fdc)
+seg.vis <- vismodel(fakedata.c, visual = 'segment', achromatic = 'all')
+seg.fdc <- colspace(seg.vis, space = 'segment')
 
 # plot results
-layout(cbind(1, 2, 3), widths = c(1, 1, 3))
+plot(seg.fdc, col = spec2rgb(fakedata.c))
 
-par(mar = c(5, 4, 2, 0.5))
-plot(fakedata1, type = 'stack', col = spec2rgb(fakedata1)) 
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  head(coldist(tetra.flowers))
 
-par(mar = c(5, 2.5, 2, 1.5))
-plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2), yaxt='n') 
+## ------------------------------------------------------------------------
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
-par(mar = c(5, 4, 2, 0.5))
-plot(segcolspace.fdc, pch = 20, cex = 3, col = spec2rgb(fakedata.c), out.lty=3)
+# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
 
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
-vismod1
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"----
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-## ---- echo=FALSE, eval=TRUE----------------------------------------------
-round(vismod1, 4)
+# Convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp * 100
+fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
+ 
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-summary(vismod1)
+# Run visual model and calculate color distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
 
-## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)._"----
-par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
-layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
-sppspecol <- as.character(spec2rgb(sppspec))
-
-for (i in 1:6) {
-  par(mar=c(2,2,2,2))
-  plot(sppspec, select = i+1, col = sppspecol[i], lwd = 3, ylim = c(0,100))
-  par(mar=c(4.1, 2.5, 2.5, 2))
-  barplot(as.matrix(vismod1[i, 1:4]), yaxt = 'n', col = 'black')
-}
-
-mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
-mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
-
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Idealized dichromat photoreceptors created using `sensmodel`._"----
-idealizeddichromat <- sensmodel(c(350, 650))
-plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = 'Absorbance')
-
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative = FALSE)
-vismod.idi
-
-## ---- echo=FALSE, eval=TRUE----------------------------------------------
-sapply(vismod.idi, function(x) round(x,4))
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber=0.1)
-coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
-
-## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
-coldist(vismod1, subset = 'cardinal')
-
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-coldist(vismod1, subset = c('cardinal', 'jacana'))
-
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-vismod2 <- vismodel(sppspec)
-tcs(vismod2)
-
-## ---- echo=FALSE, eval=TRUE----------------------------------------------
-round(tcs(vismod2), 2)
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-dist(vismod2[, 1:4])
-dist(tcs(vismod2)[, c('u', 's', 'm', 'l')])
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-summary(tcs(vismod2))
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-tcs.mspecs <- tcs(vismodel(mspecs))
-summary(tcs.mspecs, by = spp)
-
-## ---- echo=TRUE, eval=FALSE, results='hide'------------------------------
-#  tcsplot(tcs.mspecs, col = spec2rgb(mspecs), size = 0.01)
-#  # rgl.postscript('pavo-tcsplot.pdf',fmt='pdf')
-
-## ---- echo=TRUE, eval=FALSE, results='hide'------------------------------
-#  tcsplot(tcs(vismod2), size=0)
-#  tcsvol(tcs(vismod2))
-#  # rgl.snapshot('pavo-tcsvolplot.png')
-
-## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Example plots obtained using `tcsplot`. Plot on the left was exported as pdf, while the one on the right was exported as png (`tcsplot` uses the `rgl` package for interactive 3D plotting capabilities, and `rgl` does not currently support transparency when exporting as `pdf`)._"----
-knitr::include_graphics("fig/pavo-tcsplot-combined.png")
-
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
-projplot(tcs.mspecs, pch = 20, col = spec2rgb(mspecs))
-
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
-data(sicalis)
-aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-tcs.sicalis.C <- subset(tcs(vismodel(sicalis)), 'C')
-tcs.sicalis.T <- subset(tcs(vismodel(sicalis)), 'T')
-tcs.sicalis.B <- subset(tcs(vismodel(sicalis)), 'B')
-#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
-#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
-voloverlap(tcs.sicalis.T, tcs.sicalis.B)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C)
-
-## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"----
-knitr::include_graphics("fig/pavo-overlap-combined.png")
+head(JND.fms)
 
