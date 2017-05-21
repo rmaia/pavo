@@ -272,6 +272,16 @@ vismod.idi
 ## ---- echo=FALSE, eval=TRUE----------------------------------------------
 sapply(vismod.idi, function(x) round(x,4))
 
+## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber = 0.1)
+coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
+
+## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
+coldist(vismod1, subset = 'cardinal')
+
+## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
+coldist(vismod1, subset = c('cardinal', 'jacana'))
+
 ## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"----
 data(flowers)
 
@@ -317,23 +327,27 @@ plot(tetra.flowers, view=60, scale.y = 0.6, pch = 21, bg = flowercols)
 axistetra(x = 0.6, y = 0.2, z = 0.5, size = c(0.2, 0.2, 0.15), adj.label = c(0.07, 0.12, 0.07))
 axistetra(x = 0.6, y = 0.2, z = -0.5, size = 0.2, label = FALSE)
 
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-vismod2 <- vismodel(sppspec)
-tcs(vismod2)
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
+projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 
-## ---- echo=FALSE, eval=TRUE----------------------------------------------
-round(tcs(vismod2), 2)
-
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-dist(vismod2[, 1:4])
-dist(tcs(vismod2)[, c('u', 's', 'm', 'l')])
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
+data(sicalis)
+aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-summary(tcs(vismod2))
+tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
+tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
+tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
+#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
+#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
+voloverlap(tcs.sicalis.T, tcs.sicalis.B)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C)
+
+## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"----
+knitr::include_graphics("fig/pavo-overlap-combined.png")
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-tcs.mspecs <- tcs(vismodel(mspecs))
-summary(tcs.mspecs, by = spp)
+summary(tetra.flowers)
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
@@ -384,85 +398,63 @@ head(cat.flowers)
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
 plot(cat.flowers, pch = 21, bg = flowercols) 
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-#segclass(spec.sm)
+## ---- fig=TRUE, eval=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
+fakedata1 <-  sapply(seq(100,500,by = 20), 
+                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
+                                               dnorm(300:700,x+400,30))))
 
-## ---- fig=TRUE, eval = FALSE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
-#  fakedata1 <-  sapply(seq(100,500,by = 20),
-#                       function(x) rowSums(cbind(dnorm(300:700,x,30),
-#                                                 dnorm(300:700,x+400,30))))
-#  
-#  # creating idealized specs with varying saturation
-#  fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30),
-#                       function(x) dnorm(300:700,550,x))
-#  
-#  fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
-#  fakedata1 <- procspec(fakedata1, "max")
-#  fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
-#  fakedata2 <- procspec(fakedata2, "sum")
-#  fakedata2 <- procspec(fakedata2, "min")
-#  
-#  # converting reflectance to percentage
-#  fakedata1[,-1] <- fakedata1[,-1]*100
-#  fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
-#  
-#  # combining and converting to rspec
-#  fakedata.c <- data.frame(wl = 300:700, fakedata1, fakedata2[,-1])
-#  fakedata.c <- as.rspec(fakedata.c)
-#  
-#  # segment classification analysis
-#  seg.fdc <- segclass(fakedata.c)
-#  
-#  # plot results
-#  layout(cbind(1, 2, 3), widths = c(1, 1, 3))
-#  
-#  par(mar = c(5, 4, 2, 0.5))
-#  plot(fakedata1, type = 'stack', col = spec2rgb(fakedata1))
-#  
-#  par(mar = c(5, 2.5, 2, 1.5))
-#  plot(fakedata2, type = 'stack', col = spec2rgb(fakedata2))
-#  
-#  par(mar = c(5, 4, 2, 0.5))
-#  plot(seg.fdc[,c('LM','MS')], pch = 20, cex = 3, col = spec2rgb(fakedata.c))
+# creating idealized specs with varying saturation
+fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
+                     function(x) dnorm(300:700,550,x))
 
-## ---- echo=TRUE, eval=FALSE, results='hide'------------------------------
-#  tcsplot(tcs.mspecs, col = spec2rgb(mspecs), size = 0.01)
-#  # rgl.postscript('pavo-tcsplot.pdf',fmt='pdf')
+fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
+fakedata1 <- procspec(fakedata1, "max")
+fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
+fakedata2 <- procspec(fakedata2, "sum")
+fakedata2 <- procspec(fakedata2, "min")
 
-## ---- echo=TRUE, eval=FALSE, results='hide'------------------------------
-#  tcsplot(tcs(vismod2), size=0)
-#  tcsvol(tcs(vismod2))
-#  # rgl.snapshot('pavo-tcsvolplot.png')
+# converting reflectance to percentage
+fakedata1[,-1] <- fakedata1[,-1]*100
+fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
 
-## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Example plots obtained using `tcsplot`. Plot on the left was exported as pdf, while the one on the right was exported as png (`tcsplot` uses the `rgl` package for interactive 3D plotting capabilities, and `rgl` does not currently support transparency when exporting as `pdf`)._"----
-knitr::include_graphics("fig/pavo-tcsplot-combined.png")
+# combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+fakedata.c <- as.rspec(fakedata.c)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
-projplot(tcs.mspecs, pch = 20, col = spec2rgb(mspecs))
+# segment classification analysis
+seg.vis <- vismodel(fakedata.c, visual = 'segment', achromatic = 'all')
+seg.fdc <- colspace(seg.vis, space = 'segment')
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
-data(sicalis)
-aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
+# plot results
+plot(seg.fdc, col = spec2rgb(fakedata.c))
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-tcs.sicalis.C <- subset(tcs(vismodel(sicalis)), 'C')
-tcs.sicalis.T <- subset(tcs(vismodel(sicalis)), 'T')
-tcs.sicalis.B <- subset(tcs(vismodel(sicalis)), 'B')
-#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
-#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
-voloverlap(tcs.sicalis.T, tcs.sicalis.B)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C)
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  head(coldist(tetra.flowers))
 
-## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"----
-knitr::include_graphics("fig/pavo-overlap-combined.png")
+## ------------------------------------------------------------------------
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber = 0.1)
-coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
+# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
 
-## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
-coldist(vismod1, subset = 'cardinal')
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"----
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-coldist(vismod1, subset = c('cardinal', 'jacana'))
+# Convert to percentages, just to color the plot 
+fakemantisshrimp.colors <- fakemantisshrimp * 100
+fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
+ 
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
+
+# Run visual model and calculate color distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
+
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
+
+head(JND.fms)
 
