@@ -82,9 +82,9 @@
 <p>The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal <em>Cardinalis cardinalis</em>, Wattled Jacana <em>Jacana jacana</em>, Baltimore Oriole <em>Icterus galbula</em>, Peach-fronted Parakeet <em>Aratinga aurea</em>, American Robin <em>Turdus migratorius</em>, and Sayaca Tanager <em>Thraupis sayaca</em>. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility <code>pavo</code> offers, as we’ll see below.</p>
 <p>In addition, <code>pavo</code> includes three datasets that can be called with the <code>data</code> function. <code>data(teal)</code>, <code>data(sicalis)</code>, and <code>data(flowers)</code> will all be used in this vignette. See help for more information <code>help(package = "pavo")</code>.</p>
 </div>
-<div id="organizing-and-processing-spectral-data" class="section level1">
+<div id="organizing-spectral-data" class="section level1">
 <h1 class="hasAnchor">
-<a href="#organizing-and-processing-spectral-data" class="anchor"></a>Organizing and Processing Spectral Data</h1>
+<a href="#organizing-spectral-data" class="anchor"></a>Organizing Spectral Data</h1>
 <div id="importing-data" class="section level2">
 <h2 class="hasAnchor">
 <a href="#importing-data" class="anchor"></a>Importing Data</h2>
@@ -117,13 +117,13 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
                       <span class="dt">refl2 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">801</span>), 
                       <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> .<span class="dv">5</span>))
 <span class="kw">head</span>(fakedat)</code></pre></div>
-<pre><code>##        refl1      refl2 wavelength
-## 1 -1.2667539  1.0925861      300.0
-## 2  1.8710984  1.9170040      300.5
-## 3 -0.8457866  2.2345651      301.0
-## 4  0.3611889 -0.2801805      301.5
-## 5  0.3383448  1.2652474      302.0
-## 6 -0.1032927  1.4596222      302.5</code></pre>
+<pre><code>##        refl1         refl2 wavelength
+## 1 -1.2623494  0.0001096679      300.0
+## 2 -0.1585033  1.2280075570      300.5
+## 3 -0.5818697 -0.6290154764      301.0
+## 4 -1.1589180 -1.5285894760      301.5
+## 5  0.4971264  0.7040173896      302.0
+## 6 -0.0296462  0.3013962610      302.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</code></pre></div>
@@ -131,22 +131,22 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(fakedat.new)</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -1.26675393  1.0925861
-## 2 301 -0.84578663  2.2345651
-## 3 302  0.33834476  1.2652474
-## 4 303 -1.48495661 -1.3439431
-## 5 304  0.74637850  0.9283136
-## 6 305  0.02238623  0.5077285</code></pre>
+<pre><code>##    wl      refl1         refl2
+## 1 300 -1.2623494  0.0001096679
+## 2 301 -0.5818697 -0.6290154764
+## 3 302  0.4971264  0.7040173896
+## 4 303  0.3056033 -0.3104827787
+## 5 304 -0.6343019 -0.0805788665
+## 6 305  1.5508883  1.6269029382</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -1.26675393  1.0925861
-## 2 301 -0.84578663  2.2345651
-## 3 302  0.33834476  1.2652474
-## 4 303 -1.48495661 -1.3439431
-## 5 304  0.74637850  0.9283136
-## 6 305  0.02238623  0.5077285</code></pre>
+<pre><code>##    wl      refl1         refl2
+## 1 300 -1.2623494  0.0001096679
+## 2 301 -0.5818697 -0.6290154764
+## 3 302  0.4971264  0.7040173896
+## 4 303  0.3056033 -0.3104827787
+## 5 304 -0.6343019 -0.0805788665
+## 6 305  1.5508883  1.6269029382</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
@@ -193,12 +193,13 @@ specs.parakeet &lt;-<span class="st"> </span><span class="kw">subset</span>(spec
 specs.new &lt;-<span class="st"> </span><span class="kw">merge</span>(specs.tanager, specs.parakeet)</code></pre></div>
 <p>Note that this re-combined file (<code>specs.new</code>) has only a single <code>wl</code> column with the merged spectra as columns. Keep in mind that the order of objects in <code>merge</code> will determine the order of columns in the final merged object (i.e. tanagers will be before parakeets).</p>
 </div>
-<div id="processing-data" class="section level2">
+</div>
+<div id="processing-spectral-data" class="section level1">
+<h1 class="hasAnchor">
+<a href="#processing-spectral-data" class="anchor"></a>Processing Spectral Data</h1>
+<div id="averaging-spectra" class="section level2">
 <h2 class="hasAnchor">
-<a href="#processing-data" class="anchor"></a>Processing Data</h2>
-<div id="averaging-spectra" class="section level3">
-<h3 class="hasAnchor">
-<a href="#averaging-spectra" class="anchor"></a>Averaging Spectra</h3>
+<a href="#averaging-spectra" class="anchor"></a>Averaging Spectra</h2>
 <p>As previously described, our data (contained in the <code>specs</code> object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function <code>explorespec</code> provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument <code>specreps</code>, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 36 spectra plus the first (wl) column</span>
 <span class="kw"><a href="../reference/explorespec.html">explorespec</a></span>(specs[, <span class="dv">1</span><span class="op">:</span><span class="dv">37</span>], <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) </code></pre></div>
@@ -241,9 +242,9 @@ spp &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">
 </p>
 </div>
 </div>
-<div id="normalizing-and-smoothing-spectra" class="section level3">
-<h3 class="hasAnchor">
-<a href="#normalizing-and-smoothing-spectra" class="anchor"></a>Normalizing and Smoothing Spectra</h3>
+<div id="normalizing-and-smoothing-spectra" class="section level2">
+<h2 class="hasAnchor">
+<a href="#normalizing-and-smoothing-spectra" class="anchor"></a>Normalizing and Smoothing Spectra</h2>
 <p>Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted “spikes”" in reflectance curves. The <code>pavo</code> function <code>procspec</code> can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the <code>loess.smooth</code> function in <code>R</code>, wrapped in the <code>opt="smooth"</code> argument of <code>procspec</code>.</p>
 <p>But first, let’s use the <code>plotsmooth</code> function to determine a suitable smoothing parameter (<code>span</code>). This function allows you to set a minimum and maximum smoothing parameter to try and plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/plotsmooth.html">plotsmooth</a></span>(sppspec, <span class="dt">minsmooth =</span> <span class="fl">0.05</span>, <span class="dt">maxsmooth =</span> <span class="fl">0.5</span>, <span class="dt">curves =</span> <span class="dv">4</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>)</code></pre></div>
@@ -286,9 +287,9 @@ specs.str &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p
 </p>
 </div>
 </div>
-<div id="binning-and-pca-analysis-of-spectral-shape" class="section level3">
-<h3 class="hasAnchor">
-<a href="#binning-and-pca-analysis-of-spectral-shape" class="anchor"></a>Binning and PCA Analysis of Spectral Shape</h3>
+<div id="binning-and-pca-analysis-of-spectral-shape" class="section level2">
+<h2 class="hasAnchor">
+<a href="#binning-and-pca-analysis-of-spectral-shape" class="anchor"></a>Binning and PCA Analysis of Spectral Shape</h2>
 <p>Another intended usage of <code>procspec</code> is preparation of spectral data for variable reduction (for example, using Principal Component Analysis, or PCA). Following Cuthill et al. (1999), we can use <code>opt = 'center'</code> to center spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the <code>opt = 'bin'</code> argument) to obtain a dataframe suitable for the PCA.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># pca analysis</span>
 spec.bin &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(sppspec, <span class="dt">opt =</span> <span class="kw">c</span>(<span class="st">'bin'</span>, <span class="st">'center'</span>))
@@ -324,9 +325,9 @@ sel &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw"
 </p>
 </div>
 </div>
-<div id="dealing-with-negative-values-in-spectra" class="section level3">
-<h3 class="hasAnchor">
-<a href="#dealing-with-negative-values-in-spectra" class="anchor"></a>Dealing With Negative Values in Spectra</h3>
+<div id="dealing-with-negative-values-in-spectra" class="section level2">
+<h2 class="hasAnchor">
+<a href="#dealing-with-negative-values-in-spectra" class="anchor"></a>Dealing With Negative Values in Spectra</h2>
 <p>Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of color variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the <code>procspec</code> function has an argument called <code>fixneg</code>. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with <code>addmin</code>, and (2) changing all negative values to zero with <code>zero</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a duplicate spectrum and add some negative values</span>
 refl &lt;-<span class="st"> </span>sppspec[, <span class="dv">7</span>] <span class="op">-</span><span class="st"> </span><span class="dv">20</span>
@@ -356,7 +357,6 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 </p>
 </div>
 <p>These manipultions may have different effects on the final spectra, which the user should keep in mind and use according to the final goal of the analysis. For example, by adding the minimum reflectance to all other wavelength, the shape of the curve is preserved, but the maximum reflectance is much higher. On the other hand, substituting negative values with zero preserves absolute reflectance values, but may cause the spectral shape to be lost. The “best” transformation will depend on the severity of the problem of negative values and the goal of the analysis (e.g. will reflectance intensity be used? What is more important, to preserve reflectance values or the total shape of the curve?). Which correction to use would also depend on the source of the negative values. If they are thought to originate from improper calibration of the spectrophotometer, <code>fixneg = addmin</code> would be appropriate. However, if they are thought to originate from electric noise, <code>fixneg = zero</code> would be more appropriate.</p>
-</div>
 </div>
 </div>
 <div id="visualizing-spectral-data" class="section level1">
@@ -1297,10 +1297,17 @@ JND.fms &lt;-<span class="st"> </span><span class="kw"><a href="../reference/col
 <li><a href="#introduction">Introduction</a></li>
       <li><a href="#dataset-description">Dataset Description</a></li>
       <li>
-<a href="#organizing-and-processing-spectral-data">Organizing and Processing Spectral Data</a><ul class="nav nav-pills nav-stacked">
+<a href="#organizing-spectral-data">Organizing Spectral Data</a><ul class="nav nav-pills nav-stacked">
 <li><a href="#importing-data">Importing Data</a></li>
       <li><a href="#subsetting-and-merging-data">Subsetting and Merging Data</a></li>
-      <li><a href="#processing-data">Processing Data</a></li>
+      </ul>
+</li>
+      <li>
+<a href="#processing-spectral-data">Processing Spectral Data</a><ul class="nav nav-pills nav-stacked">
+<li><a href="#averaging-spectra">Averaging Spectra</a></li>
+      <li><a href="#normalizing-and-smoothing-spectra">Normalizing and Smoothing Spectra</a></li>
+      <li><a href="#binning-and-pca-analysis-of-spectral-shape">Binning and PCA Analysis of Spectral Shape</a></li>
+      <li><a href="#dealing-with-negative-values-in-spectra">Dealing With Negative Values in Spectra</a></li>
       </ul>
 </li>
       <li>
