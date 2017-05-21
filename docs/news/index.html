@@ -79,6 +79,42 @@
     </div>
 
     <div class="contents">
+    <div id="pavo-1-2" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pavo-1-2" class="anchor"></a>pavo 1.2</h2>
+<p>MAJOR CHANGES:</p>
+<ul>
+<li>Added the CIELch model and an associated 3d plot, which are accessed via colspace(space = ‘cielch’) and plot.colspace().</li>
+</ul>
+<p>MINOR FEATURES AND BUG FIXES:</p>
+<ul>
+<li>vignettes have been amalgamated &amp; the single, main vignette is now up-to-date</li>
+<li>added more informative labels for the segment analysis plot</li>
+</ul>
+</div>
+    <div id="pavo-1-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pavo-1-1" class="anchor"></a>pavo 1.1</h2>
+<p>MAJOR CHANGES:</p>
+<p>NEW FUNCTIONS:</p>
+<ul>
+<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
+<li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
+</ul>
+<p>MINOR FEATURES AND BUG FIXES:</p>
+<ul>
+<li>the use of relative quantum catches is now optional in the categorical colorspace (though still produces a warning), for greater flexibility</li>
+<li>updated several functions to work when rspec object has only one spectrum</li>
+<li>fixed bug in voloverlap where interactive plots would result in error</li>
+<li>fixed incorrect labels in the maxwell triangle plot</li>
+<li>fixed a bug in as.rspec() in which lim was not applied when interpolate = FALSE</li>
+<li>fixed bug in aggplot() which resulted in error when using lty, lwd arguments</li>
+<li>warning if ocular media is being used in both vismodel() and sensmodel()</li>
+<li>added an ‘all’ option to the achromatic argument in vismodel()</li>
+<li>added the ability to calculate dL for cielab models in coldist()</li>
+<li>added some more informative messages and warnings</li>
+</ul>
+</div>
     <div id="pavo-1-0" class="section level2">
 <h2 class="hasAnchor">
 <a href="#pavo-1-0" class="anchor"></a>pavo 1.0</h2>
@@ -251,7 +287,6 @@
 <li>peakshape() minor fixes</li>
 </ul>
 </div>
-    NA
     </div>
   </div>
 
@@ -259,6 +294,8 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#pavo-1-2">1.2</a></li>
+        <li><a href="#pavo-1-1">1.1</a></li>
         <li><a href="#pavo-1-0">1.0</a></li>
         <li><a href="#pavo-0-5-6">0.5-6</a></li>
         <li><a href="#pavo-0-5-5">0.5-5</a></li>
@@ -269,7 +306,6 @@
         <li><a href="#pavo-0-3-1">0.3-1</a></li>
         <li><a href="#pavo-0-3">0.3</a></li>
         <li><a href="#pavo-0-1-2">0.1-2</a></li>
-        <li><a href="#NA">NA</a></li>
       </ul>
     </div>
   </div>
