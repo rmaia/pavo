@@ -38,7 +38,7 @@ The data consist of reflectance spectra, obtained using Avantes equipment and so
 
 In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See help for more information `help(package = "pavo")`.
 
-# Organizing and Processing Spectral Data
+# Organizing Spectral Data
 
 ## Importing Data
 
@@ -146,9 +146,9 @@ specs.new <- merge(specs.tanager, specs.parakeet)
 
 Note that this re-combined file (`specs.new`) has only a single `wl` column with the merged spectra as columns. Keep in mind that the order of objects in `merge` will determine the order of columns in the final merged object (i.e. tanagers will be before parakeets).
 
-## Processing Data
+# Processing Spectral Data
 
-### Averaging Spectra
+## Averaging Spectra
 
 As previously described, our data (contained in the `specs` object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function `explorespec` provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument `specreps`, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
 
@@ -182,7 +182,7 @@ round(sppspec[1:5, ], 2)
 explorespec(sppspec, by = 6, lwd = 3)
 ```
 
-### Normalizing and Smoothing Spectra
+## Normalizing and Smoothing Spectra
 
 Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes"" in reflectance curves. The `pavo` function `procspec` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth` function in `R`, wrapped in the `opt="smooth"` argument of `procspec`.
 
@@ -227,7 +227,7 @@ mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 ```
 
-### Binning and PCA Analysis of Spectral Shape
+## Binning and PCA Analysis of Spectral Shape
 
 Another intended usage of `procspec` is preparation of spectral data for variable reduction (for example, using Principal Component Analysis, or PCA). Following Cuthill et al. (1999), we can use `opt = 'center'` to center spectra to have a mean reflectance of  zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
 
@@ -265,7 +265,7 @@ plot(sppspec, select = sel, type = 's', col = spec2rgb(sppspec))
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 ```
 
-### Dealing With Negative Values in Spectra
+## Dealing With Negative Values in Spectra
 
 Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of color variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the `procspec` function has an argument called `fixneg`. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with `addmin`, and (2) changing all negative values to zero with `zero`.
 

@@ -12,3 +12,5 @@ vignette_data/
 .travis.yml
 todo.txt
 ^cran-comments\.md$
+^docs$
+^_pkgdown\.yml$

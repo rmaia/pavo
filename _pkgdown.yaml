@@ -1,0 +1,59 @@
+reference:
+- title: Processing and Organisation
+  desc: "Functions for importing and processing spectral data"
+  contents:
+  - '`aggspec`'
+  - '`as.rspec`'
+  - '`getspec`'
+  - '`irrad2flux`'
+  - '`merge.rspec`'
+  - '`procspec`'
+  - '`spec2rgb`'
+  - '`subset.rspec`'
+
+- title: Visualisation
+  desc: "Functions for visualising spectral data, including the results of visual modelling"
+  contents:
+  - '`aggplot`'
+  - '`axistetra`'
+  - '`explorespec`'
+  - '`legendtetra`'
+  - '`plot.colspace`'
+  - '`plot.rspec`'
+  - '`plotsmooth`'
+  - '`points.colspace`'
+  - '`projplot`'
+  - '`tcsplot`'
+
+- title: Analysis
+  desc: "Functions for analysing spectral data"
+  contents:
+  - '`coldist`'
+  - '`colspace`'
+  - '`peakshape`'
+  - '`segspace`'
+  - '`sensmodel`'
+  - '`summary.colspace`'
+  - '`summary.rspec`'
+  - '`summary.vismodel`'
+  - '`vismodel`'
+  - '`vol`'
+  - '`voloverlap`'
+
+- title: Misc
+  desc: "Assorted functions containing example and internally-used data"
+  contents:
+  - '`bgandilum`'
+  - '`flowers`'
+  - '`pavo-deprecated`'
+  - '`pavo-package`'
+  - '`sicalis`'
+  - '`teal`'
+  - '`transmissiondata`'
+  - '`ttvertex`'
+  - '`vissyst`'
+
+navbar:
+  right:
+  - icon: fa-github fa-lg
+    href: https://github.com/rmaia/pavo
