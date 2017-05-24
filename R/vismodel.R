@@ -335,6 +335,25 @@ if(tr2 != 'ideal' & visual == 'user-defined'){
 		  warning('The visual system being used appears to already incorporate ocular transmission. Using anything other than trans=',dQuote('ideal'),'means ocular media effects are being applied a second time.', call.=FALSE)
 }
 
+
+if('rspec' %in% class(bkg)){
+  bkgwhichused <- names(bkg)[2]
+  bkg <- bkg[,2]
+  warning(paste('Background is an rspec object; first spectrum (', 
+    dQuote(bkgwhichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+}
+
+if('data.frame' %in% class(bkg) | 'matrix' %in% class(bkg) & 
+  !'rspec' %in% class(bkg)){
+  bkgwhichused <- names(bkg)[1]
+  bkg <- bkg[,1]
+  warning(paste('Background is a matrix or data frame; first column (', 
+    dQuote(bkgwhichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+  }
+
+
 # scale background from percentage to proportion
 if(max(bkg) > 1)
   bkg <- bkg/100

@@ -19,7 +19,11 @@ M[is.na(M)] <- 0
 
 pos3 <- function(d12, d13, d23){
 	x3 <- (d13^2 - d23^2 + d12^2)/(2*d12)
-	y3 <- sqrt(d13^2 - x3^2)*c(1,-1)
+	y3 <- rep(0, 2)
+	y3sq <- d13^2 - x3^2
+	if(y3sq > 0)
+	  y3 <- sqrt(y3sq)*c(1,-1)
+	
 	matrix(c(rep(x3,2),y3), ncol=2, dimnames=list(NULL, c('x','y')))
 }
 
@@ -29,7 +33,7 @@ pos4 <- function(d12, d14, d24, d34){
 	      (x4*(thirdpointxy['x']/thirdpointxy['y']))
 	z4 <- rep(0, 2)
 	z4sq <- d14^2 - x4^2 - y4^2
-	if(z4sq > 0 )
+	if(z4sq > 0)
 	  z4 <- sqrt(z4sq)*c(1,-1)
 	matrix(c(rep(x4,2), rep(y4,2), z4), ncol=3, dimnames=list(NULL, c('x','y','z')))
 }

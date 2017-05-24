@@ -1,3 +1,10 @@
+pavo 1.2.1
+------------------------------------------------------------------------------
+MAJOR CHANGES:
+
+MINOR FEATURES AND BUG FIXES:
+* fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
+
 pavo 1.2
 ------------------------------------------------------------------------------
 
