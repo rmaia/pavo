@@ -62,12 +62,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/rmaia/pavo">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -112,8 +107,9 @@ data frame with three columns representing trichromatic viewer).</p></td>
 <li><p><code>L, a, b</code>: Lightness, <code>L</code>, and colour-opponent <code>a</code> 
          (redness-greenness) and <code>b</code> (yellowness-blueness) values, in a 
          Cartesian coordinate space. Returned when using <code>space = LAB</code>.</p></li>
-<li><p><code>L, C, h</code>: Lightness, <code>L</code>, chroma <code>C</code> 
-         and hue-angle <code>h</code> (degrees), the latter of which are cylindrical 
+<li><p><code>L, a, b, C, h</code>: Lightness, <code>L</code>, colour-opponent <code>a</code> 
+         (redness-greenness) and <code>b</code> (yellowness-blueness) values, as well as
+         chroma <code>C</code> and hue-angle <code>h</code> (degrees), the latter of which are cylindrical 
          representations of <code>a</code> and <code>b</code> from the CIELAB model. Returned 
          when using <code>space = LCh</code>.</p></li>
 </ul>
@@ -136,7 +132,7 @@ data frame with three columns representing trichromatic viewer).</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
   <span class='fu'>data</span>(<span class='no'>flowers</span>)
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'cie10'</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>'D65'</span>)
+  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'cie10'</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>'D65'</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
   <span class='no'>flowers.ciexyz</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'ciexyz'</span>)
   <span class='no'>flowers.cielab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'cielab'</span>)
   <span class='no'>flowers.cielch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'cielch'</span>)

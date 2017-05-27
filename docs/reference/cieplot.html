@@ -62,12 +62,7 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        <li>
-  <a href="https://github.com/rmaia/pavo">
-    <span class="fa fa-github fa-lg"></span>
-     
-  </a>
-</li>
+        
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -97,13 +92,13 @@
     <tr>
       <th>ciedata</th>
       <td><p>(required). a data frame, possibly a result from the <code>colspace</code> 
-or <code>cie</code> function, containing values for 'x', 'y' and 'z' coordinates 
-as columns (labeled as such).</p></td>
+or <code>cie</code> function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
+model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>mono</th>
       <td><p>should the monochromatic loci (the 'horseshoe') be
-plotted? Defaults to <code>TRUE</code>.</p></td>
+plotted when <code>space = 'ciexyz'</code>? Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>out.lwd, out.lcol, out.lty</th>
