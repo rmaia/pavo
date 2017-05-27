@@ -221,7 +221,7 @@ cie2000 <- function(coord1, coord2){
   
   Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275)/25)^2)))
   
-  as.numeric(round(sqrt((dL/sL)^2 + (dC/sC)^2 + (dh/sH)^2 + (Rt * (dC/sC) * (dh/sH)))))
+  as.numeric(round(sqrt((dL/sL)^2 + (dC/sC)^2 + (dh/sH)^2 + (Rt * (dC/sC) * (dh/sH)))), 7)
 }
 
 # Manhattan distance

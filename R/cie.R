@@ -94,11 +94,9 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB', 'LCh')){
     b <- 200 * (f(Y/Yn) - f(Z/Zn))
     
     # LCh calculator
-    #if(atan(b/a) >= 0)
     C <- sqrt(a^2 + b^2)
-    #else
-    # h <-  (atan(b/a) * (180/pi)) + 360
-    h <- atan(b/a) * (180/pi)
+    h <- atan2(b, a) * (180/pi)
+    h[h < 0] <- h[h < 0] + 360
   }
 
   if(space == 'XYZ')
