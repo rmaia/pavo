@@ -117,13 +117,13 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
                       <span class="dt">refl2 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">801</span>), 
                       <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> .<span class="dv">5</span>))
 <span class="kw">head</span>(fakedat)</code></pre></div>
-<pre><code>##         refl1      refl2 wavelength
-## 1 -0.59181524  1.7470503      300.0
-## 2  0.38147839 -0.3067690      300.5
-## 3  0.37534085 -0.1506863      301.0
-## 4  0.93583474 -0.3668199      301.5
-## 5 -0.04372582  1.6929348      302.0
-## 6 -0.79675171 -0.2984046      302.5</code></pre>
+<pre><code>##        refl1      refl2 wavelength
+## 1  0.7150491 -0.1315969      300.0
+## 2 -0.4679484  1.6762680      300.5
+## 3  0.6341692 -0.8099154      301.0
+## 4 -0.1105081 -0.4170580      301.5
+## 5  0.9361751 -0.8456390      302.0
+## 6 -1.1866671 -1.6351672      302.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</code></pre></div>
@@ -131,22 +131,22 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(fakedat.new)</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -0.59181524  1.7470503
-## 2 301  0.37534085 -0.1506863
-## 3 302 -0.04372582  1.6929348
-## 4 303 -0.89129623  0.3398778
-## 5 304  1.45214974  0.5669444
-## 6 305  0.19950672  1.1050573</code></pre>
+<pre><code>##    wl       refl1       refl2
+## 1 300  0.71504909 -0.13159693
+## 2 301  0.63416915 -0.80991544
+## 3 302  0.93617515 -0.84563900
+## 4 303  0.06301449  0.78476186
+## 5 304 -1.43167604 -2.18782052
+## 6 305  1.09343199 -0.06745649</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -0.59181524  1.7470503
-## 2 301  0.37534085 -0.1506863
-## 3 302 -0.04372582  1.6929348
-## 4 303 -0.89129623  0.3398778
-## 5 304  1.45214974  0.5669444
-## 6 305  0.19950672  1.1050573</code></pre>
+<pre><code>##    wl       refl1       refl2
+## 1 300  0.71504909 -0.13159693
+## 2 301  0.63416915 -0.80991544
+## 3 302  0.93617515 -0.84563900
+## 4 303  0.06301449  0.78476186
+## 5 304 -1.43167604 -2.18782052
+## 6 305  1.09343199 -0.06745649</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>

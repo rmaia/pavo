@@ -39,9 +39,15 @@ Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-cie.flowers <- colspace(vis.flowers, space = 'ciexyz')
-plot(cie.flowers)
+
+# CIEXYZ
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
+xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+plot(xyz.flowers)
+
+#CIELAB
+lab.flowers <- colspace(vis.flowers, space = 'cielab')
+plot(lab.flowers)
 }
 
 }

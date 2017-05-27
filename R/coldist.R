@@ -301,7 +301,7 @@ coldist <-function(modeldata,
   #########################
   
   # should be used when:
-  # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab
+  # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
   # - vismodel object: always
   # - user input data: always
   
@@ -312,7 +312,7 @@ coldist <-function(modeldata,
   
   # this covers colspace
   if('colspace' %in% class(modeldata)){
-  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'coc', 'segment'))
+  	if(!attr(modeldata, 'clrsp') %in% c('hexagon', 'categorical', 'CIELAB', 'CIELCh', 'coc', 'segment'))
   	  usereceptornoisemodel <- TRUE
   }
   
@@ -384,7 +384,13 @@ if('colspace' %in% class(modeldata)){
     res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
-      #warning('Achromatic contrast not calculated in the CIELAB model', call.=FALSE)
+  }
+  
+  if(attr(modeldata, 'clrsp') == 'CIELCh'){
+    #res$dS <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
+    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    if(achro == TRUE)
+      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){
