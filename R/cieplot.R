@@ -7,10 +7,10 @@
 # #' @usage plot(ciedata, ...)
 #' 
 #' @param ciedata (required). a data frame, possibly a result from the \code{colspace} 
-#' or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 
-#' as columns (labeled as such).
+#' or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
+#' model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).
 #' @param mono should the monochromatic loci (the 'horseshoe') be
-#'    plotted? Defaults to \code{TRUE}.
+#'    plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline. 
 #' @param view orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).
 #' @param scale.y numeric. Perspective scaling of the y axis (defaults to \code{0.45}).
@@ -23,9 +23,15 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie2', illum = 'D65')
-#' cie.flowers <- colspace(vis.flowers, space = 'ciexyz')
-#' plot(cie.flowers)
+#' 
+#' # CIEXYZ
+#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
+#' xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+#' plot(xyz.flowers)
+#' 
+#' #CIELAB
+#' lab.flowers <- colspace(vis.flowers, space = 'cielab')
+#' plot(lab.flowers)
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -104,9 +110,9 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
 
     
   }
-  
-  # CIELAB
-  if(attr(ciedata, 'clrsp') == 'CIELAB'){
+
+  # CIELAB or CIELch
+  if(attr(ciedata, 'clrsp') == 'CIELAB' | attr(ciedata, 'clrsp') == 'CIELCh'){
     
     # Set defaults
     arg <- list(...)

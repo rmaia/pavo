@@ -21,8 +21,9 @@ Object of class \code{colspace} containing:
      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} 
          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
          Cartesian coordinate space. Returned when using \code{space = LAB}.
-     \item \code{L, C, h}: Lightness, \code{L}, chroma \code{C} 
-         and hue-angle \code{h} (degrees), the latter of which are cylindrical 
+     \item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a} 
+         (redness-greenness) and \code{b} (yellowness-blueness) values, as well as
+         chroma \code{C} and hue-angle \code{h} (degrees), the latter of which are cylindrical 
          representations of \code{a} and \code{b} from the CIELAB model. Returned 
          when using \code{space = LCh}.
    }
@@ -34,7 +35,7 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCH (1971) colourspaces.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65')
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 flowers.cielch <- colspace(vis.flowers, space = 'cielch')

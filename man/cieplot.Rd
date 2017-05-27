@@ -11,11 +11,11 @@ cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
-or \code{cie} function, containing values for 'x', 'y' and 'z' coordinates 
-as columns (labeled as such).}
+or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
+model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).}
 
 \item{mono}{should the monochromatic loci (the 'horseshoe') be
-plotted? Defaults to \code{TRUE}.}
+plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for the monochromatic loci outline.}
 

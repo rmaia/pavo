@@ -15,8 +15,9 @@
 #'      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} 
 #'          (redness-greenness) and \code{b} (yellowness-blueness) values, in a 
 #'          Cartesian coordinate space. Returned when using \code{space = LAB}.
-#'      \item \code{L, C, h}: Lightness, \code{L}, chroma \code{C} 
-#'          and hue-angle \code{h} (degrees), the latter of which are cylindrical 
+#'      \item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a} 
+#'          (redness-greenness) and \code{b} (yellowness-blueness) values, as well as
+#'          chroma \code{C} and hue-angle \code{h} (degrees), the latter of which are cylindrical 
 #'          representations of \code{a} and \code{b} from the CIELAB model. Returned 
 #'          when using \code{space = LCh}.
 #'    }
@@ -24,7 +25,7 @@
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65')
+#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 #' flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 #' flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 #' flowers.cielch <- colspace(vis.flowers, space = 'cielch')
@@ -105,7 +106,7 @@ cie <- function(vismodeldata, space = c('XYZ', 'LAB', 'LCh')){
   else if(space == 'LAB')
     res.p <- data.frame(X, Y, Z, L, a, b, row.names = rownames(dat))
   else if(space == 'LCh')
-    res.p <- data.frame(X, Y, Z, L, C, h, row.names = rownames(dat))
+    res.p <- data.frame(X, Y, Z, L, a, b, C, h, row.names = rownames(dat))
   
   res <- res.p
   

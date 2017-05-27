@@ -9,7 +9,7 @@ pavo 1.2
 ------------------------------------------------------------------------------
 
 MAJOR CHANGES:
-* Added the CIELch model and an associated 3d plot, which are accessed via colspace(space = 'cielch') and plot.colspace(). 
+* Added the CIELch model accessed via colspace(space = 'cielch'). 
 
 MINOR FEATURES AND BUG FIXES:
 * vignettes have been amalgamated & the single, main vignette is now up-to-date

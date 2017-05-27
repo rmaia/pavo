@@ -106,6 +106,7 @@ plot.colspace <- function(x, ...){
          'categorical' = catplot(x, ...),
          'CIEXYZ' = cieplot(x, ...),
          'CIELAB' = cieplot(x, ...),
+         'CIELCh' = cieplot(x, ...),
          'segment' = segplot(x, ...)
   )
   
