@@ -4,6 +4,7 @@ MAJOR CHANGES:
 
 MINOR FEATURES AND BUG FIXES:
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
+* replaced the modelled receptor sensitivities of the honeybee Apis melifera with the empirical sensitivities from Peitsch et al (1992)
 
 pavo 1.2
 ------------------------------------------------------------------------------
