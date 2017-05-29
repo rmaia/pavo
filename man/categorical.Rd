@@ -9,7 +9,7 @@ categorical(vismodeldata)
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with four columns representing a tetrachromatic dipteran viewer).}
+with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipteran viewer).}
 }
 \value{
 Object of class \code{colspace} consisting of the following columns:

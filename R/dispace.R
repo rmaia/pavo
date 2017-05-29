@@ -5,7 +5,7 @@
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with two columns representing dichromatic viewer).
+#'  with two columns named 's' and 'l', representing a dichromatic viewer's receptors).
 #' 
 #' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{s}, \code{l}: the quantum catch data used to calculate 
@@ -67,6 +67,7 @@ dispace <- function(vismodeldata){
       warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than two columns; treating the first two columns as standardized quantum catch for ', dQuote('s'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
     
     dat <- dat[, 1:2]
+    names(dat) <- c('s', 'l')
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
       dat <- dat/apply(dat, 1, sum)
@@ -75,8 +76,14 @@ dispace <- function(vismodeldata){
     }
   }
 
-  s <- dat[, 1]
-  l <- dat[, 2]
+  if(all(c('s','l') %in% names(dat))){
+    s <- dat[, 's']
+    l <- dat[, 'l']
+  } else {
+    warning('Could not find columns named ', dQuote('s'),', and ', dQuote('l'), ', using first two columns instead.', call. = FALSE)
+    s <- dat[, 1]
+    l <- dat[, 2]
+  }
 
 # coordinate
   x <- (1/sqrt(2)) * (l - s) 

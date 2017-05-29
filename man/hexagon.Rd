@@ -9,7 +9,7 @@ hexagon(vismodeldata)
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with three columns representing trichromatic viewer).}
+with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }
 \value{
 A data frame of class \code{colspace} consisting of the following columns:

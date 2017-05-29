@@ -9,7 +9,7 @@ tcspace(vismodeldata)
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with four columns, representing the avian cones).}
+with four columns name 'u', 's', 'm', 'l', representing the avian cones).}
 }
 \value{
 A data frame of class \code{tcs} consisting of the following columns:

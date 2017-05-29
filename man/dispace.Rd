@@ -9,7 +9,7 @@ dispace(vismodeldata)
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with two columns representing dichromatic viewer).}
+with two columns named 's' and 'l', representing a dichromatic viewer's receptors).}
 }
 \value{
 A data frame of class \code{colspace} consisting of the following columns:

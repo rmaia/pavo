@@ -4,7 +4,8 @@
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with four columns representing a generic 'tetrachromatic' viewer).
+#'  with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic 
+#'  'tetrachromatic' viewer).
 #'  
 #' @return A data frame of class \code{colspace} consisting of the following columns:
 #' @return \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
@@ -16,7 +17,7 @@
 #' 
 #' @examples \dontrun{
 #' data(sicalis)
-#' vis.sic <- vismodel(sicalis, visual = 'segment')
+#' vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
 #' seg.sic <- colspace(vis.sic, space = 'segment') 
 #' }
 #' 
@@ -59,12 +60,13 @@ segspace <- function(vismodeldata){
     if(ncol(dat) < 4)
       stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns', call.=FALSE)	
     if(ncol(dat) == 4)
-      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
+      warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as unstandardized quantum catch for ', dQuote('S1'),', ',  dQuote('S2'),', ',  dQuote('S3'),', and ', dQuote('S4'), ' segments, respectively', call.=FALSE)
     
     if(ncol(dat) > 4)
-      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
+      warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ', dQuote('S1'),', ',  dQuote('S2'),', ',  dQuote('S3'),', and ', dQuote('S4'), ' segments, respectively', call.=FALSE)
     
     dat <- dat[, 1:4]
+    names(dat) <- c('S1', 'S2', 'S3', 'S4')
     
     dat <- dat/apply(dat, 1, sum)
     warning('Quantum catch have been transformed to be relative (sum of 1)', call.=FALSE)
@@ -72,10 +74,19 @@ segspace <- function(vismodeldata){
     
   }
   
-  Q1 <- dat[, 1]
-  Q2 <- dat[, 2]
-  Q3 <- dat[, 3]
-  Q4 <- dat[, 4]
+  if(all(c('S1', 'S2', 'S3', 'S4') %in% names(dat))){
+    Q1 <- dat[, 'S1']
+    Q2 <- dat[, 'S2']
+    Q3 <- dat[, 'S3']
+    Q4 <- dat[, 'S4']
+  } else {
+    warning('Could not find columns named ', dQuote('S1'),', ',  dQuote('S2'),', ',  dQuote('S3'),', and ', dQuote('S4'), ', using first four columns instead.', call. = FALSE)
+    Q1 <- dat[, 1]
+    Q2 <- dat[, 2]
+    Q3 <- dat[, 3]
+    Q4 <- dat[, 4]
+  }
+  
   B <- dat$lum
   
 # LM/MS

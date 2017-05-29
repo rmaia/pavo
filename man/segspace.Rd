@@ -9,7 +9,8 @@ segspace(vismodeldata)
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
 from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-with four columns representing a generic 'tetrachromatic' viewer).}
+with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic 
+'tetrachromatic' viewer).}
 }
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
@@ -27,7 +28,7 @@ Calculates segment classification measures as defined in Endler (1990).
 \examples{
 \dontrun{
 data(sicalis)
-vis.sic <- vismodel(sicalis, visual = 'segment')
+vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
 seg.sic <- colspace(vis.sic, space = 'segment') 
 }
 

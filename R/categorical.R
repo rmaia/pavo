@@ -4,7 +4,7 @@
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with four columns representing a tetrachromatic dipteran viewer).
+#'  with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipteran viewer).
 #' 
 #' @return Object of class \code{colspace} consisting of the following columns:
 #' @return \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
@@ -67,6 +67,7 @@ categorical <- function(vismodeldata){
       warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as standardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
     
     dat <- dat[, 1:4]
+    names(dat) <- c('u', 's', 'm', 'l')
     
     if(round(sum(rowSums(dat/apply(dat,1,sum)))) != dim(dat)[1]){
       #dat <- dat/apply(dat, 1, sum)
@@ -74,11 +75,19 @@ categorical <- function(vismodeldata){
       #attr(vismodeldata,'relative') <- TRUE
     }
   }
-  
-  R7p <- dat[, 1]
-  R7y <- dat[, 2]
-  R8p <- dat[, 3]
-  R8y <- dat[, 4]
+ 
+   if(all(c('u', 's', 'm', 'l') %in% names(dat))){
+    R7p <- dat[, 'u']
+    R7y <- dat[, 's']
+    R8p <- dat[, 'm']
+    R8y <- dat[, 'l']
+  } else {
+    warning('Could not find columns named ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ', using first four columns instead.', call. = FALSE)
+    R7p <- dat[, 1]
+    R7y <- dat[, 2]
+    R8p <- dat[, 3]
+    R8y <- dat[, 4]
+  }
     
 # x & y coordinates
   x <- R7p - R8p

@@ -7,7 +7,7 @@
 #' 
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
-#'  with four columns, representing the avian cones).
+#'  with four columns name 'u', 's', 'm', 'l', representing the avian cones).
 #'
 #' @return A data frame of class \code{tcs} consisting of the following columns:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
@@ -79,7 +79,8 @@ tcspace <- function(vismodeldata){
     if(ncol(dat) > 4)
       warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
       
-    dat <- dat[, 1:4]
+      dat <- dat[, 1:4]
+      names(dat) <- c('u', 's', 'm', 'l')
     
     	dat <- dat/apply(dat, 1, sum)
     	warning('Quantum catch have been transformed to be relative (sum of 1)', call.=FALSE)
@@ -87,10 +88,18 @@ tcspace <- function(vismodeldata){
     
   }
   
-  u <- dat[, 1]
-  s <- dat[, 2]
-  m <- dat[, 3]
-  l <- dat[, 4]
+  if(all(c('u', 's', 'm', 'l') %in% names(dat))){
+    u <- dat[, 'u']
+    s <- dat[, 's']
+    m <- dat[, 'm']
+    l <- dat[, 'l']
+  } else {
+    warning('Could not find columns named ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ', using first four columns instead.', call. = FALSE)
+    u <- dat[, 1]
+    s <- dat[, 2]
+    m <- dat[, 3]
+    l <- dat[, 4]
+  }
   
   # cartesian coordinates
   
