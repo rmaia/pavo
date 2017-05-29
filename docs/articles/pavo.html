@@ -53,7 +53,7 @@
       <h1>pavo</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2017-05-27</h4>
+            <h4 class="date">2017-05-30</h4>
           </div>
 
     
@@ -117,13 +117,13 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
                       <span class="dt">refl2 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">801</span>), 
                       <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> .<span class="dv">5</span>))
 <span class="kw">head</span>(fakedat)</code></pre></div>
-<pre><code>##        refl1      refl2 wavelength
-## 1  0.7150491 -0.1315969      300.0
-## 2 -0.4679484  1.6762680      300.5
-## 3  0.6341692 -0.8099154      301.0
-## 4 -0.1105081 -0.4170580      301.5
-## 5  0.9361751 -0.8456390      302.0
-## 6 -1.1866671 -1.6351672      302.5</code></pre>
+<pre><code>##        refl1       refl2 wavelength
+## 1 -0.8850061 -1.01634429      300.0
+## 2  0.3513417  0.81660623      300.5
+## 3  1.5029076  0.08131787      301.0
+## 4 -0.2047402 -0.92004443      301.5
+## 5 -2.0134029  1.75980368      302.0
+## 6 -0.2416365  0.15798448      302.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</code></pre></div>
@@ -131,22 +131,22 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(fakedat.new)</code></pre></div>
-<pre><code>##    wl       refl1       refl2
-## 1 300  0.71504909 -0.13159693
-## 2 301  0.63416915 -0.80991544
-## 3 302  0.93617515 -0.84563900
-## 4 303  0.06301449  0.78476186
-## 5 304 -1.43167604 -2.18782052
-## 6 305  1.09343199 -0.06745649</code></pre>
+<pre><code>##    wl      refl1       refl2
+## 1 300 -0.8850061 -1.01634429
+## 2 301  1.5029076  0.08131787
+## 3 302 -2.0134029  1.75980368
+## 4 303  1.4877922 -0.71069483
+## 5 304  2.0130384  0.40086445
+## 6 305  1.1885364 -0.85265118</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</code></pre></div>
-<pre><code>##    wl       refl1       refl2
-## 1 300  0.71504909 -0.13159693
-## 2 301  0.63416915 -0.80991544
-## 3 302  0.93617515 -0.84563900
-## 4 303  0.06301449  0.78476186
-## 5 304 -1.43167604 -2.18782052
-## 6 305  1.09343199 -0.06745649</code></pre>
+<pre><code>##    wl      refl1       refl2
+## 1 300 -0.8850061 -1.01634429
+## 2 301  1.5029076  0.08131787
+## 3 302 -2.0134029  1.75980368
+## 4 303  1.4877922 -0.71069483
+## 5 304  2.0130384  0.40086445
+## 6 305  1.1885364 -0.85265118</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
@@ -837,20 +837,20 @@ di.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/
 tri.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/colspace.html">colspace</a></span>(vis.flowers, <span class="dt">space =</span> <span class="st">'tri'</span>)
 
 <span class="kw">head</span>(tri.flowers)</code></pre></div>
-<pre><code>##                               s         m         l            x
-## Goodenia_heterophylla 0.2680609 0.3692102 0.3627289 -0.004583018
-## Goodenia_geniculata   0.2271455 0.3674126 0.4054419  0.026890830
-## Goodenia_gracilis     0.1123462 0.3278566 0.5597972  0.164006728
-## Xyris_operculata      0.1255093 0.4303017 0.4441890  0.009819783
-## Eucalyptus_sp         0.2516894 0.3676007 0.3807098  0.009269542
-## Faradaya_splendida    0.2538901 0.3503816 0.3957283  0.032064975
-##                                 y   h.theta      r.vec
-## Goodenia_heterophylla -0.07994212 -1.628063 0.08007338
-## Goodenia_geniculata   -0.13005300 -1.366901 0.13280399
-## Goodenia_gracilis     -0.27065282 -1.026001 0.31646668
-## Xyris_operculata      -0.25453138 -1.532236 0.25472073
-## Eucalyptus_sp         -0.09999295 -1.478359 0.10042168
-## Faradaya_splendida    -0.09729766 -1.252450 0.10244509</code></pre>
+<pre><code>##                               s         m         l           x
+## Goodenia_heterophylla 0.2955164 0.3502035 0.3542801 0.002882569
+## Goodenia_geniculata   0.2706117 0.3479426 0.3814457 0.023690267
+## Goodenia_gracilis     0.2197755 0.3243663 0.4558582 0.092978775
+## Xyris_operculata      0.2675552 0.3579527 0.3744921 0.011695085
+## Eucalyptus_sp         0.2877842 0.3479724 0.3642433 0.011505268
+## Faradaya_splendida    0.2815398 0.3407029 0.3777573 0.026201472
+##                                 y    h.theta      r.vec
+## Goodenia_heterophylla -0.04631614 -1.5086397 0.04640575
+## Goodenia_geniculata   -0.07681800 -1.2716558 0.08038802
+## Goodenia_gracilis     -0.13907941 -0.9815047 0.16729655
+## Xyris_operculata      -0.08056142 -1.4266336 0.08140588
+## Eucalyptus_sp         -0.05578604 -1.3674088 0.05696010
+## Faradaya_splendida    -0.06343386 -1.1790893 0.06863215</code></pre>
 <p>As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, a well as the ‘hue angle’ <code>h.theta</code> and distance from the origin (<code>r.vec</code>).</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(tri.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> flowercols) </code></pre></div>
 <div class="figure" style="text-align: center">
@@ -979,20 +979,20 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">hex.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/colspace.html">colspace</a></span>(vis.flowers, <span class="dt">space =</span> <span class="st">'hexagon'</span>)
 
 <span class="kw">head</span>(hex.flowers)</code></pre></div>
-<pre><code>##                                 s          m         l         x
-## Goodenia_heterophylla 0.086435155 0.37464448 0.2383065 0.1315245
-## Goodenia_geniculata   0.040686930 0.38653516 0.4575212 0.3609891
-## Goodenia_gracilis     0.001709545 0.02738349 0.3148769 0.2712109
-## Xyris_operculata      0.002844880 0.26835909 0.2170078 0.1854705
-## Eucalyptus_sp         0.074047589 0.42777802 0.3725662 0.2585247
-## Faradaya_splendida    0.074604645 0.32783502 0.4358825 0.3128758
+<pre><code>##                                 s          m         l          x
+## Goodenia_heterophylla 0.144232163 0.37683707 0.2364924 0.07989972
+## Goodenia_geniculata   0.067186629 0.36715591 0.4576284 0.33813246
+## Goodenia_gracilis     0.002484603 0.02445654 0.3158624 0.27139315
+## Xyris_operculata      0.033405667 0.26365186 0.2154210 0.15762993
+## Eucalyptus_sp         0.139539148 0.42602969 0.3721750 0.20146855
+## Faradaya_splendida    0.098752095 0.31818609 0.4359901 0.29205668
 ##                                 y   h.theta     r.vec sec.fine sec.coarse
-## Goodenia_heterophylla  0.21227364  31.78230 0.2497174       30  bluegreen
-## Goodenia_geniculata    0.13743110  69.15781 0.3862647       60  bluegreen
-## Goodenia_gracilis     -0.13090974 115.76596 0.3011523      110      green
-## Xyris_operculata       0.15843274  49.49537 0.2439267       40  bluegreen
-## Eucalyptus_sp          0.20447114  51.65899 0.3296111       50  bluegreen
-## Faradaya_splendida     0.07259145  76.93771 0.3211865       70  bluegreen</code></pre>
+## Goodenia_heterophylla  0.18647478  23.19391 0.2028714       20       blue
+## Goodenia_geniculata    0.10474841  72.78780 0.3539856       70  bluegreen
+## Goodenia_gracilis     -0.13471697 116.39936 0.3029899      110      green
+## Xyris_operculata       0.13923851  48.54502 0.2103201       40  bluegreen
+## Eucalyptus_sp          0.17017262  49.81353 0.2637201       40  bluegreen
+## Faradaya_splendida     0.05081499  80.12990 0.2964444       80  bluegreen</code></pre>
 <p>Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective ‘bee-hue’; <code>sec.fine</code> and <code>sec.coarse</code>. <code>sec.fine</code> describes the location of stimuli within one of 36 ‘hue sectors’ that are specified by radially dissecting the hexagon in 10-degree increments. <code>sec.coarse</code> follows a similar principle, though here the hexagon is divided into only five ‘bee-hue’ sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying <code>sectors = 'coarse</code> or <code>sectors = 'fine'</code> in a call to <code>plot</code> after modelling.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(hex.flowers, <span class="dt">sectors =</span> <span class="st">'coarse'</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> flowercols)</code></pre></div>
 <div class="figure" style="text-align: center">
@@ -1012,20 +1012,20 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 coc.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/colspace.html">colspace</a></span>(vis.flowers, <span class="dt">space =</span> <span class="st">'coc'</span>)
 
 <span class="kw">head</span>(coc.flowers)</code></pre></div>
-<pre><code>##                                 s          m         l         x
-## Goodenia_heterophylla 0.086435155 0.37464448 0.2383065 2.5472539
-## Goodenia_geniculata   0.040686930 0.38653516 0.4575212 3.5633933
-## Goodenia_gracilis     0.001709545 0.02738349 0.3148769 0.8741309
-## Xyris_operculata      0.002844880 0.26835909 0.2170078 2.5070514
-## Eucalyptus_sp         0.074047589 0.42777802 0.3725662 3.3685245
-## Faradaya_splendida    0.074604645 0.32783502 0.4358825 2.7302341
-##                                y    r.vec
-## Goodenia_heterophylla  3.5460185 6.093272
-## Goodenia_geniculata    0.7175661 4.280959
-## Goodenia_gracilis     -4.2026664 5.076797
-## Xyris_operculata       2.1470857 4.654137
-## Eucalyptus_sp          2.6613811 6.029906
-## Faradaya_splendida    -0.3201549 3.050389</code></pre>
+<pre><code>##                                 s          m         l        x          y
+## Goodenia_heterophylla 0.144232163 0.37683707 0.2364924 1.990340  3.3189648
+## Goodenia_geniculata   0.067186629 0.36715591 0.4576284 3.153118  0.1865165
+## Goodenia_gracilis     0.002484603 0.02445654 0.3158624 0.846080 -4.2808058
+## Xyris_operculata      0.033405667 0.26365186 0.2154210 2.166049  1.9176937
+## Eucalyptus_sp         0.139539148 0.42602969 0.3721750 2.708471  2.2932850
+## Faradaya_splendida    0.098752095 0.31818609 0.4359901 2.418076 -0.6420107
+##                          r.vec
+## Goodenia_heterophylla 5.309305
+## Goodenia_geniculata   3.339634
+## Goodenia_gracilis     5.126886
+## Xyris_operculata      4.083743
+## Eucalyptus_sp         5.001756
+## Faradaya_splendida    3.060087</code></pre>
 <p>The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in <code>r.vec</code>, it contains no associated measure of hue.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(coc.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> flowercols, <span class="dt">yaxt=</span><span class="st">'n'</span>) </code></pre></div>
 <div class="figure" style="text-align: center">
@@ -1196,12 +1196,12 @@ hex.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 dist.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(hex.flowers)
 <span class="kw">head</span>(dist.flowers)</code></pre></div>
 <pre><code>##                  patch1              patch2        dS         dL
-## 1 Goodenia_heterophylla Goodenia_geniculata 0.2413616 -0.2192147
-## 2 Goodenia_heterophylla   Goodenia_gracilis 0.3705228 -0.0765704
-## 3 Goodenia_heterophylla    Xyris_operculata 0.0762169  0.0212987
-## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1272397 -0.1342596
-## 5 Goodenia_heterophylla  Faradaya_splendida 0.2289092 -0.1975760
-## 6 Goodenia_heterophylla  Gaultheria_hispida 0.1691932 -0.1186296</code></pre>
+## 1 Goodenia_heterophylla Goodenia_geniculata 0.2708567 -0.2211359
+## 2 Goodenia_heterophylla   Goodenia_gracilis 0.3739437 -0.0793700
+## 3 Goodenia_heterophylla    Xyris_operculata 0.0909574  0.0210714
+## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1226570 -0.1356826
+## 5 Goodenia_heterophylla  Faradaya_splendida 0.2518217 -0.1994977
+## 6 Goodenia_heterophylla  Gaultheria_hispida 0.1614409 -0.1183300</code></pre>
 <p>the chromatic constrasts <code>dS</code> and achromatic contrasts <code>dL</code> are expressed as Euclidean distances in the hexagon, known as ‘hexagon units’ (Chittka 1992). If we had instead used the color-oppoonent coding space the units would have been city-bloc distances, while in the CIELAB model the distances would be derived from the CIE colour-distance formula (2000).</p>
 </div>
 <div id="distances-in-n-dimensions" class="section level4">

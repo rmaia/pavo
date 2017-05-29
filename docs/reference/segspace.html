@@ -90,7 +90,8 @@
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
 from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a data frame
-with four columns representing a generic 'tetrachromatic' viewer).</p></td>
+with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic 
+'tetrachromatic' viewer).</p></td>
     </tr>
     </table>
     
@@ -115,7 +116,7 @@ Society, 41, 315-352.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
   <span class='fu'>data</span>(<span class='no'>sicalis</span>)
-  <span class='no'>vis.sic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'segment'</span>)
+  <span class='no'>vis.sic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'segment'</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>'all'</span>)
   <span class='no'>seg.sic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sic</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'segment'</span>)
 })</div></pre>
   </div>
