@@ -34,37 +34,37 @@ sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
 \item{achromatic}{the sensitivity data used to calculate luminance (achromatic)
  receptor stimulation. Options are: 
 \itemize{
- \item \code{none}: no achromatic sensitivity data
-\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
- \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
- \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
- \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
+ \item \code{none}: no achromatic sensitivity data.
+\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone.
+ \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone.
+ \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone.
+ \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
 }}
 
 \item{illum}{illuminants. Options are:
 \itemize{ 
-\item \code{none}: no illuminant data
-\item \code{'bluesky'} open blue sky
-\item \code{'D65'}: standard daylight
-\item \code{'forestshade'} forest shade
+\item \code{none}: no illuminant data.
+\item \code{'bluesky'} open blue sky.
+\item \code{'D65'}: standard daylight.
+\item \code{'forestshade'} forest shade.
 }}
 
 \item{trans}{Ocular transmission data. Options are:
 \itemize{ 
-\item \code{none}: no transmission data
+\item \code{none}: no transmission data.
 \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
-ocular transmission (from Hart et al. 2000)
+ocular transmission (from Hart et al. 2000).
 \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
-ocular transmission (from Hart et al. 2000)
+ocular transmission (from Hart et al. 2000).
 }}
 
 \item{bkg}{background spectra. Options are:
 \itemize{ 
-\item \code{none}: no background spectral data
-\item \code{'green'}: green foliage
+\item \code{none}: no background spectral data.
+\item \code{'green'}: green foliage.
 }}
 
-\item{plot}{should the data be plotted, or returned instead (defaults to \code{TRUE})?}
+\item{plot}{should the spectral data be plotted, or returned instead (defaults to \code{TRUE})?}
 
 \item{...}{additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.}
 }

@@ -24,31 +24,31 @@
 #' @param achromatic the sensitivity data used to calculate luminance (achromatic)
 #'  receptor stimulation. Options are: 
 #' \itemize{
-#'  \item \code{none}: no achromatic sensitivity data
-#'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
-#'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
-#'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
-#'  \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
+#'  \item \code{none}: no achromatic sensitivity data.
+#'	\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone.
+#'  \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone.
+#'  \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone.
+#'  \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
 #' }
 #' @param illum illuminants. Options are:
 #' \itemize{ 
-#' \item \code{none}: no illuminant data
-#' \item \code{'bluesky'} open blue sky
-#' \item \code{'D65'}: standard daylight
-#' \item \code{'forestshade'} forest shade
+#' \item \code{none}: no illuminant data.
+#' \item \code{'bluesky'} open blue sky.
+#' \item \code{'D65'}: standard daylight.
+#' \item \code{'forestshade'} forest shade.
 #' }
 #' @param bkg background spectra. Options are:
 #' \itemize{ 
-#' \item \code{none}: no background spectral data
-#' \item \code{'green'}: green foliage
+#' \item \code{none}: no background spectral data.
+#' \item \code{'green'}: green foliage.
 #' }
 #' @param trans Ocular transmission data. Options are:
 #' \itemize{ 
-#' \item \code{none}: no transmission data
+#' \item \code{none}: no transmission data.
 #' \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
-#' ocular transmission (from Hart et al. 2000)
+#' ocular transmission (from Hart et al. 2000).
 #' \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
-#' ocular transmission (from Hart et al. 2000)
+#' ocular transmission (from Hart et al. 2000).
 #' }
 #' @param plot should the spectral data be plotted, or returned instead (defaults to \code{TRUE})? 
 #' @param ... additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.
@@ -79,6 +79,11 @@ sensdata <- function(
     plot = TRUE,
     ...){
   
+  # TODO: 
+  # - No options selected warning
+  # - 'all' option for each
+  # - segment vissyst
+  
   visual2 <- match.arg(visual, several.ok = TRUE)
   achro2 <- match.arg(achromatic, several.ok = TRUE)
   illum2 <- match.arg(illum, several.ok = TRUE)
@@ -98,7 +103,6 @@ sensdata <- function(
   if(!isTRUE('none' %in% achro2)){
     sens <- as.data.frame(vissyst)
     achro <- as.data.frame(subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens))))
-    #names(achro) <- achro2
     dat <- cbind(dat, achro)
   }
   
@@ -106,7 +110,6 @@ sensdata <- function(
   if(!isTRUE('none' %in% illum2)){
     bgil <- as.data.frame(bgandilum)
     illum <- as.data.frame(subset(bgil, select = grepl(paste(illum2, collapse = "|"), names(bgil))))
-    #names(illum) <- illum2
     dat <- cbind(dat, illum)
   }
 
@@ -114,7 +117,6 @@ sensdata <- function(
   if(!isTRUE('none' %in% bkg2)){
     bgil <- as.data.frame(bgandilum)
     bkg <- as.data.frame(subset(bgil, select = grepl(paste(bkg, collapse = "|"), names(bgil))))
-    #names(bkg) <- bkg2
     dat <- cbind(dat, bkg)
   }
 
@@ -122,7 +124,6 @@ sensdata <- function(
   if(!isTRUE('none' %in% trans2)){
     trdat <- as.data.frame(transmissiondata)
     trans <- as.data.frame(subset(trdat, select = grepl(paste(trans2, collapse = "|"), names(trdat))))
-    #names(trans) <- trans2
     dat <- cbind(dat, trans)
   }
   
