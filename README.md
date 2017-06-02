@@ -1,21 +1,21 @@
 # `pavo`
 
-### an R package for spectral color analysis by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton
+### an R package for spectral color analysis by Rafael Maia, Thomas White, Chad Eliason and Pierre-Paul Bitton
 
-[![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)
-![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)
-[![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
+[![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)  ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
 <!-- revamp: [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches) -->
 
 ## About
 
 A set of functions and tools for the analysis of color data in a unified framework.
 
-Click here for [Latest News](http://rafaelmaia.net/pavo/news/index.html) and [Package Vignette](http://rafaelmaia.net/pavo/articles/pavo.html).
+ and 
 
-##Need help with the package? 
-
-Join the chat: [![Join the chat at https://gitter.im/r-pavo/help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/r-pavo/help?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)  
+###Need help with the package? 
+- Click the links above for help with specific functions.
+- Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
+- Read the [Package Vignette](http://rafaelmaia.net/pavo/articles/pavo.html) for detailed examples and workflow pipeline.
+- **Can't find what you're looking for? Join the chat: [![Join the chat at https://gitter.im/r-pavo/help](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/r-pavo/help?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)**  
   
 ## Citing pavo
 
