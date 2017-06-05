@@ -2,18 +2,18 @@
 % Please edit documentation in R/sensdata.R
 \name{sensdata}
 \alias{sensdata}
-\title{Plot or Retrieve In-built Data}
+\title{Retrieve or Plot In-built Data}
 \usage{
 sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
   "apis", "canis", "cie2", "cie10", "musca", "segment"),
   achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1"),
   illum = c("none", "bluesky", "D65", "forestshade"), trans = c("none",
-  "bluetit", "blackbird"), bkg = c("none", "green"), plot = TRUE, ...)
+  "bluetit", "blackbird"), bkg = c("none", "green"), plot = FALSE, ...)
 }
 \arguments{
 \item{visual}{visual systems. Options are:
 \itemize{
-\item \code{none}: no sensitivity data
+\item \code{none}: no visual sensitivity data
 \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 \item \code{avg.uv}: average avian UV system.
 \item \code{avg.v}: average avian V system.
@@ -27,7 +27,6 @@ sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{musca}: Housefly \emph{Musca domestica} visual system.
 \item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
-\item \code{segment}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
 \item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
 }}
 
@@ -69,18 +68,18 @@ ocular transmission (from Hart et al. 2000).
 \item{...}{additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.}
 }
 \description{
-Plots or retrieves pavo's in-built spectral data.
+Retrieve or plot pavo's in-built spectral data.
 }
 \examples{
 \dontrun{
-# Blue tit's receptor
-sensdata(visual = 'bluetit', achromatic = 'bt.dc', ylab = 'Absorbance')
+# Honeybee's receptors
+sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 
 # Average UV vs V avian receptors
-sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance')
+sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance', plot = TRUE)
 
 # CIE colour matching functions
-sensdata(visual = c('cie2', 'cie10'), ylab = 'Absorbance')
+sensdata(visual = c('cie2', 'cie10'), ylab = 'Absorbance', plot = TRUE)
 }
 
 }

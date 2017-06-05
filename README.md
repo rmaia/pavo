@@ -9,9 +9,7 @@
 
 A set of functions and tools for the analysis of color data in a unified framework.
 
- and 
-
-###Need help with the package? 
+### Need help with the package? 
 - Click the links above for help with specific functions.
 - Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
 - Read the [Package Vignette](http://rafaelmaia.net/pavo/articles/pavo.html) for detailed examples and workflow pipeline.

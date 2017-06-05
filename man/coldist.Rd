@@ -35,7 +35,7 @@ are supported.}
 the achromatic contrast, with noise based on the Weber fraction given by the argument
 \code{weber.achro}.
 If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
-instead returns long (or 'green') receptor contrast.}
+instead returns simple long (or 'green') receptor contrast.}
 
 \item{qcatch}{if the object is of class \code{vismodel} or \code{colspace}, 
  this argument is ignored. If the object is a data frame of quantal catches 
@@ -103,9 +103,8 @@ the user to specify which receptor to use as the reference to obtain the
 desired Weber fraction, and \code{coldist} calculates internally the value of \code{v}
 to be used when calculating the Weber fraction for the remaining cones. 
 
-This allows
-a more explicit choice of Weber fraction, without the need to find the right value of
-\code{v} to use in order to obtain the desired signal-to-noise ratio. Additionally,
+This allows a more explicit choice of Weber fraction, without the need to find the 
+right value of \code{v} to use in order to obtain the desired signal-to-noise ratio. Furthermore,
 by allowing \code{n} to be entered as a vector, \code{coldist} can now handle visual
 systems with more than four photoreceptors.
 
