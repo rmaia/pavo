@@ -2,7 +2,7 @@
 % Please edit documentation in R/vismodel.R
 \name{vismodel}
 \alias{vismodel}
-\title{Visual Models}
+\title{Visual models}
 \usage{
 vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "star", "pfowl",
   "apis", "canis", "cie2", "cie10", "musca", "segment"),

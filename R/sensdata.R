@@ -1,4 +1,4 @@
-#' Retrieve or Plot In-built Data
+#' Retrieve or plot in-built data
 #' 
 #' Retrieve or plot pavo's in-built spectral data.
 #'

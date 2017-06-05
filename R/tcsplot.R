@@ -1,4 +1,4 @@
-#' Interactive Plot of a Tetrahedral Colorspace
+#' Interactive plot of a tetrahedral colorspace
 #'
 #' Produces an interactive 3D plot of a tetrahedral 
 #' colorspace using OpenGL capabilities.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensdata.R
 \name{sensdata}
 \alias{sensdata}
-\title{Retrieve or Plot In-built Data}
+\title{Retrieve or plot in-built data}
 \usage{
 sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
   "apis", "canis", "cie2", "cie10", "musca", "segment"),
