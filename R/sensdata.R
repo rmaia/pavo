@@ -49,7 +49,7 @@
 #' \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
 #' ocular transmission (from Hart et al. 2000).
 #' }
-#' @param plot should the spectral data be plotted, or returned instead (defaults to \code{TRUE})? 
+#' @param plot should the spectral data be plotted, or returned instead (defaults to \code{FALSE})? 
 #' @param ... additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.
 #'
 #' @examples \dontrun{
