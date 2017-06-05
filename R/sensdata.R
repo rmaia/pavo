@@ -4,7 +4,7 @@
 #'
 #' @param visual visual systems. Options are:
 #' \itemize{
-#' \item \code{none}: no visual sensitivity data
+#' \item \code{none}: no visual sensitivity data.
 #' \item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{avg.uv}: average avian UV system.
 #' \item \code{avg.v}: average avian V system.
