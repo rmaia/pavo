@@ -63,7 +63,7 @@ ocular transmission (from Hart et al. 2000).
 \item \code{'green'}: green foliage.
 }}
 
-\item{plot}{should the spectral data be plotted, or returned instead (defaults to \code{TRUE})?}
+\item{plot}{should the spectral data be plotted, or returned instead (defaults to \code{FALSE})?}
 
 \item{...}{additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.}
 }
