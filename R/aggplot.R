@@ -29,6 +29,7 @@
 #' data(sicalis)
 #' bysic <- gsub("^ind[0-9].",'', names(sicalis)[-1])
 #' aggplot(sicalis, bysic)
+#' aggplot(sicalis, bysic, FUN.error=function(x) quantile(x, c(0.0275,0.975)))
 #' aggplot(sicalis, bysic, shade = spec2rgb(sicalis), lcol = 1)
 #' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x))) 
 #' }
@@ -70,9 +71,20 @@ if (length(wl_index) > 0) {
 
 indexsub <- 1:dim(cntplotspecs)[2]
 
-polygon_data <- sapply(indexsub, function(x) 
-			c(cntplotspecs[,x]+errplotspecs[,x], rev(cntplotspecs[,x]-errplotspecs[,x]) )
-			)
+if(as.integer(dim(errplotspecs)[1]/2) == as.integer(dim(cntplotspecs)[1]) &&
+   as.integer(dim(errplotspecs)[1] %% 2) == 0){
+  polygon_data <- sapply(indexsub, function(x) 
+    c(errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 1,x],  
+      rev(errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 0,x]))
+  )
+} else{
+  polygon_data <- sapply(indexsub, function(x) 
+    c(cntplotspecs[,x]+errplotspecs[,x], rev(cntplotspecs[,x]-errplotspecs[,x]) )
+  )
+}
+  
+
+
 
 polygon_wl <- c(wl,rev(wl))
 
