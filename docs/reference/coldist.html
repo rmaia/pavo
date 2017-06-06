@@ -125,7 +125,7 @@ are supported.</p></td>
 the achromatic contrast, with noise based on the Weber fraction given by the argument
 <code>weber.achro</code>.
 If the data are from the hexagon model (i.e. <code>colspace(space = 'hexagon')</code>), it 
-instead returns long (or 'green') receptor contrast.</p></td>
+instead returns simple long (or 'green') receptor contrast.</p></td>
     </tr>
     <tr>
       <th>qcatch</th>
@@ -200,9 +200,8 @@ the relative cone densities. These arguments have been replaced by <code>weber</
 the user to specify which receptor to use as the reference to obtain the 
 desired Weber fraction, and <code>coldist</code> calculates internally the value of <code>v</code>
 to be used when calculating the Weber fraction for the remaining cones.</p>
-<p>This allows
-a more explicit choice of Weber fraction, without the need to find the right value of
-<code>v</code> to use in order to obtain the desired signal-to-noise ratio. Additionally,
+<p>This allows a more explicit choice of Weber fraction, without the need to find the 
+right value of <code>v</code> to use in order to obtain the desired signal-to-noise ratio. Furthermore,
 by allowing <code>n</code> to be entered as a vector, <code>coldist</code> can now handle visual
 systems with more than four photoreceptors.</p>
 <p>In addition, the achromatic noise is calculated based on the <code>weber.achro</code> 

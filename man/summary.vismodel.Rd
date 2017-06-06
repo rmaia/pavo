@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.vismodel.R
 \name{summary.vismodel}
 \alias{summary.vismodel}
-\title{Visual Model Summary}
+\title{Visual model summary}
 \usage{
 \method{summary}{vismodel}(object, ...)
 }

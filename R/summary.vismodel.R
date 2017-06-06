@@ -1,4 +1,4 @@
-#' Visual Model Summary
+#' Visual model summary
 #'
 #' Returns the attributes used when calculating a visual model using \code{vismodel}
 #'

@@ -168,7 +168,7 @@ achroseg <- function(coord1, coord2){
 
 # Achromatic 'green' receptor contrast in the hexagon
 achrohex <- function(coord1, coord2){
-  as.numeric(round(coord1['l'] - coord2['l'], 7))
+  as.numeric(round(coord1['l'] / coord2['l'], 7))
 }
 
 # Achromatic contrast in cielab

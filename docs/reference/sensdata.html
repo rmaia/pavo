@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot or Retrieve In-built Data — sensdata • pavo</title>
+<title>Retrieve or plot in-built data — sensdata • pavo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -74,18 +74,18 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot or Retrieve In-built Data</h1>
+    <h1>Retrieve or plot in-built data</h1>
     </div>
 
     
-    <p>Plots or retrieves pavo's in-built spectral data.</p>
+    <p>Retrieve or plot pavo's in-built spectral data.</p>
     
 
     <pre class="usage"><span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>,
   <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>),
   <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>),
   <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>,
-  <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"green"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+  <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"green"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -93,7 +93,7 @@
     <tr>
       <th>visual</th>
       <td><p>visual systems. Options are:</p><ul>
-<li><p><code>none</code>: no sensitivity data</p></li>
+<li><p><code>none</code>: no visual sensitivity data.</p></li>
 <li><p><code>apis</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
 <li><p><code>avg.uv</code>: average avian UV system.</p></li>
 <li><p><code>avg.v</code>: average avian V system.</p></li>
@@ -107,7 +107,6 @@
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>musca</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
 <li><p><code>pfowl</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
-<li><p><code>segment</code>: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).</p></li>
 <li><p><code>star</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
 </ul></td>
     </tr>
@@ -150,7 +149,7 @@ ocular transmission (from Hart et al. 2000).</p></li>
     </tr>
     <tr>
       <th>plot</th>
-      <td><p>should the spectral data be plotted, or returned instead (defaults to <code>TRUE</code>)?</p></td>
+      <td><p>should the spectral data be plotted, or returned instead (defaults to <code>FALSE</code>)?</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -161,14 +160,14 @@ ocular transmission (from Hart et al. 2000).</p></li>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='co'># Blue tit's receptor</span>
-  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'bluetit'</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>'bt.dc'</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>)
+  <span class='co'># Honeybee's receptors</span>
+  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
   <span class='co'># Average UV vs V avian receptors</span>
-  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'avg.v'</span>, <span class='st'>'avg.uv'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>)
+  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'avg.v'</span>, <span class='st'>'avg.uv'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
   <span class='co'># CIE colour matching functions</span>
-  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'cie2'</span>, <span class='st'>'cie10'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>)
+  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'cie2'</span>, <span class='st'>'cie10'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 })</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

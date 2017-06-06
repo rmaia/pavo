@@ -3,7 +3,6 @@
 #' Calculates all 23 colorimetric variables reviewed in 
 #' Montgomerie (2006).
 #'
-#'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
@@ -15,6 +14,7 @@
 #' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
 #' calculations (default is to use entire range in the \code{rspec} object).
 #' @param ... class consistency (ignored)
+#' 
 #' @return A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described 
 #' in Montgomerie (2006) with spectra name as row names. 
 #' The colorimetric variables calculated by this function are 

@@ -26,7 +26,7 @@
 #'  the achromatic contrast, with noise based on the Weber fraction given by the argument
 #'  \code{weber.achro}.
 #'  If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it 
-#'  instead returns long (or 'green') receptor contrast.
+#'  instead returns simple long (or 'green') receptor contrast.
 #' @param n photoreceptor densities for the cones used in visual modeling.
 #'  must have same length as number of columns (excluding achromatic receptor if used;
 #'  defaults to 
@@ -83,9 +83,8 @@
 #' desired Weber fraction, and \code{coldist} calculates internally the value of \code{v}
 #' to be used when calculating the Weber fraction for the remaining cones. 
 #'
-#' This allows
-#' a more explicit choice of Weber fraction, without the need to find the right value of
-#' \code{v} to use in order to obtain the desired signal-to-noise ratio. Additionally,
+#' This allows a more explicit choice of Weber fraction, without the need to find the 
+#' right value of \code{v} to use in order to obtain the desired signal-to-noise ratio. Furthermore,
 #' by allowing \code{n} to be entered as a vector, \code{coldist} can now handle visual
 #' systems with more than four photoreceptors.
 #'
@@ -147,7 +146,7 @@ coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
                   achro = TRUE, qcatch = NULL,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
-                  v,n1,n2,n3,n4){
+                  v, n1, n2, n3, n4){
   
   resrefs <- NULL
   

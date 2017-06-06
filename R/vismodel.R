@@ -1,4 +1,4 @@
-#' Visual Models
+#' Visual models
 #' 
 #' Calculates quantum catches at each photoreceptor. Both raw and relative values 
 #' can be returned, for use in a suite of colorspace and non-colorspace models. 
@@ -134,9 +134,9 @@
 vismodel <- function(rspecdata, 
   visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
   achromatic = c('none', 'bt.dc','ch.dc', 'st.dc','ml', 'l', 'md.r1', 'all'),
-  illum = c('ideal','bluesky','D65','forestshade'), 
-  trans = c('ideal', 'bluetit','blackbird'),
-  qcatch = c('Qi','fi', 'Ei'),
+  illum = c('ideal', 'bluesky', 'D65', 'forestshade'), 
+  trans = c('ideal', 'bluetit', 'blackbird'),
+  qcatch = c('Qi', 'fi', 'Ei'),
   bkg = c('ideal', 'green'), 
   vonkries = FALSE, scale = 1, relative = TRUE)
 {
