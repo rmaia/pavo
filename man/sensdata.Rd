@@ -72,19 +72,23 @@ ocular transmission (from Hart et al. 2000).
 
 \item{...}{additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.}
 }
+\value{
+An object of class \code{rspec} (when \code{plot = FALSE}), containing 
+a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
+}
 \description{
-Retrieve or plot pavo's in-built spectral data.
+Retrieve (as an rspec object) or plot pavo's in-built spectral data.
 }
 \examples{
 \dontrun{
-# Honeybee's receptors
+# Plot the honeybee's receptors
 sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 
-# Average UV vs V avian receptors
+# Plot the vverage UV vs V avian receptors
 sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance', plot = TRUE)
 
-# CIE colour matching functions
-sensdata(visual = c('cie2', 'cie10'), ylab = 'Absorbance', plot = TRUE)
+# Retrieve the CIE colour matching functions as an rspec object
+ciedat <- sensdata(visual = c('cie2', 'cie10'))
 }
 
 }
