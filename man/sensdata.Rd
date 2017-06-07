@@ -4,45 +4,48 @@
 \alias{sensdata}
 \title{Retrieve or plot in-built data}
 \usage{
-sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
-  "apis", "canis", "cie2", "cie10", "musca", "segment"),
-  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1"),
-  illum = c("none", "bluesky", "D65", "forestshade"), trans = c("none",
-  "bluetit", "blackbird"), bkg = c("none", "green"), plot = FALSE, ...)
+sensdata(visual = c("none", "all", "avg.uv", "avg.v", "bluetit", "star",
+  "pfowl", "apis", "canis", "cie2", "cie10", "musca"), achromatic = c("none",
+  "all", "bt.dc", "ch.dc", "st.dc", "md.r1"), illum = c("none", "all",
+  "bluesky", "D65", "forestshade"), trans = c("none", "all", "bluetit",
+  "blackbird"), bkg = c("none", "all", "green"), plot = FALSE, ...)
 }
 \arguments{
 \item{visual}{visual systems. Options are:
 \itemize{
-\item \code{none}: no visual sensitivity data.
-\item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
-\item \code{avg.uv}: average avian UV system.
-\item \code{avg.v}: average avian V system.
-\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system.
-\item \code{canis}: Canid \emph{Canis familiaris} visual system.
-\item \code{cie2}: 2-degree colour matching functions for CIE models of human 
+\item \code{'none'}: no visual sensitivity data.
+\item \code{'all'}: no visual sensitivity data.
+\item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
+\item \code{'avg.uv'}: average avian UV system.
+\item \code{'avg.v'}: average avian V system.
+\item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus} visual system.
+\item \code{'canis'}: Canid \emph{Canis familiaris} visual system.
+\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{cie10}: 10-degree colour matching functions for CIE models of human 
+\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{musca}: Housefly \emph{Musca domestica} visual system.
-\item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
-\item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
+\item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
+\item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
+\item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
 }}
 
 \item{achromatic}{the sensitivity data used to calculate luminance (achromatic)
  receptor stimulation. Options are: 
 \itemize{
- \item \code{none}: no achromatic sensitivity data.
-\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone.
- \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone.
- \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone.
- \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+ \item \code{'none'}: no achromatic sensitivity data.
+ \item \code{'all'}: all achromatic sensitivity data.
+\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
+ \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
+ \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
+ \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
 }}
 
 \item{illum}{illuminants. Options are:
 \itemize{ 
-\item \code{none}: no illuminant data.
+\item \code{'none'}: no illuminant data.
+\item \code{'all'}: no background spectral data.
 \item \code{'bluesky'} open blue sky.
 \item \code{'D65'}: standard daylight.
 \item \code{'forestshade'} forest shade.
@@ -50,7 +53,8 @@ sensdata(visual = c("none", "avg.uv", "avg.v", "bluetit", "star", "pfowl",
 
 \item{trans}{Ocular transmission data. Options are:
 \itemize{ 
-\item \code{none}: no transmission data.
+\item \code{'none'}: no transmission data.
+\item \code{'all'}: all transmission data.
 \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
 ocular transmission (from Hart et al. 2000).
 \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
@@ -59,7 +63,8 @@ ocular transmission (from Hart et al. 2000).
 
 \item{bkg}{background spectra. Options are:
 \itemize{ 
-\item \code{none}: no background spectral data.
+\item \code{'none'}: no background spectral data.
+\item \code{'all'}: no background spectral data.
 \item \code{'green'}: green foliage.
 }}
 

@@ -1,4 +1,4 @@
-#' Converts bewtween irradiance and photon (quantum) flux
+#' Converts between irradiance and photon (quantum) flux
 #'
 #' Some spectrometers will give illuminant values in units of irradiance (uWatt * cm^-2),
 #' but physiological models require illuminants in units of photon (quantum) flux 

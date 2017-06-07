@@ -3,7 +3,7 @@
 \name{irrad2flux}
 \alias{irrad2flux}
 \alias{flux2irrad}
-\title{Converts bewtween irradiance and photon (quantum) flux}
+\title{Converts between irradiance and photon (quantum) flux}
 \usage{
 irrad2flux(rspecdata)
 

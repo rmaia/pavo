@@ -1,7 +1,5 @@
 language: r
 cache: packages
-before_install:
-  - tlmgr install xkeyval
 addons:
   apt:
     packages:
