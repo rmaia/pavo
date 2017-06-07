@@ -147,6 +147,23 @@ newreceptornoise.quantum <- function(dat, n, weber, weber.ref, res, qndat){
   sqrt(numerator/denominator)
   }
 
+# achromatic functions
+
+ttdistcalcachro <- function(f1, f2, weber.achro){
+        dq1 <- f1[length(f1)]-f2[length(f1)]
+        dq1 <- as.numeric(dq1)
+        w <- weber.achro
+        round(abs(dq1/w), 7)
+        }
+
+qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
+        dq1 <- f1[length(f1)]-f2[length(f1)]
+        dq1 <- as.numeric(dq1)
+        w <- sqrt((weber.achro)^2 + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
+        round(abs(dq1/w),7)
+    }
+
+
 ################################
 # END RECEPTOR NOISE FUNCTIONS #
 ################################
