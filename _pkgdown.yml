@@ -23,6 +23,7 @@ reference:
   - '`plotsmooth`'
   - '`points.colspace`'
   - '`projplot`'
+  - '`sensdata`'
   - '`tcsplot`'
 
 - title: Analysis

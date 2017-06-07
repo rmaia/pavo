@@ -106,21 +106,21 @@ remaining columns.</p></td>
    user-defined sensitivity data for the receptors involved in colour vision. 
    The data frame must contain a <code>'wl'</code> column with the range of wavelengths included, 
    and the sensitivity for each other cone as a column.</p></li>
-<li><p><code>apis</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
-<li><p><code>avg.uv</code>: average avian UV system.</p></li>
-<li><p><code>avg.v</code>: average avian V system.</p></li>
-<li><p><code>bluetit</code>: Blue tit <em>Cyanistes caeruleus</em> visual system.</p></li>
-<li><p><code>canis</code>: Canid <em>Canis familiaris</em> visual system.</p></li>
-<li><p><code>cie2</code>: 2-degree colour matching functions for CIE models of human 
+<li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
+<li><p><code>'avg.uv'</code>: average avian UV system.</p></li>
+<li><p><code>'avg.v'</code>: average avian V system.</p></li>
+<li><p><code>'bluetit'</code>: Blue tit <em>Cyanistes caeruleus</em> visual system.</p></li>
+<li><p><code>'canis'</code>: Canid <em>Canis familiaris</em> visual system.</p></li>
+<li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>cie10</code>: 10-degree colour matching functions for CIE models of human 
+<li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>musca</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
-<li><p><code>pfowl</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
-<li><p><code>segment</code>: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).</p></li>
-<li><p><code>star</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
+<li><p><code>'musca'</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
+<li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
+<li><p><code>'segment'</code>: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).</p></li>
+<li><p><code>'star'</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -128,20 +128,20 @@ remaining columns.</p></td>
       <td><p>the sensitivity data to be used to calculate luminance (achromatic)
  receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
  or one of the options:</p><ul>
-<li><p><code>none</code>: no achromatic stimulation calculated</p></li>
-<li><p><code>bt.dc</code>: Blue tit <em>Cyanistes caeruleus</em> double cone</p></li>
-<li><p><code>ch.dc</code>: Chicken <em>Gallus gallus</em> double cone</p></li>
-<li><p><code>st.dc</code>: Starling <em>Sturnus vulgaris</em> double cone</p></li>
-<li><p><code>md.r1</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor</p></li>
-<li><p><code>ml</code>: the summed response of the two longest-wavelength photoreceptors</p></li>
-<li><p><code>l</code>: the longest-wavelength photoreceptor</p></li>
-<li><p><code>all</code>: the summed response of all photoreceptors</p></li>
+<li><p><code>'none'</code>: no achromatic stimulation calculated</p></li>
+<li><p><code>'bt.dc'</code>: Blue tit <em>Cyanistes caeruleus</em> double cone</p></li>
+<li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone</p></li>
+<li><p><code>'st.dc'</code>: Starling <em>Sturnus vulgaris</em> double cone</p></li>
+<li><p><code>'md.r1'</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor</p></li>
+<li><p><code>'ml'</code>: the summed response of the two longest-wavelength photoreceptors</p></li>
+<li><p><code>'l'</code>: the longest-wavelength photoreceptor</p></li>
+<li><p><code>'all'</code>: the summed response of all photoreceptors</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>illum</th>
       <td><p>either a vector containing the illuminant, or one of the options:</p><ul>
-<li><p><code>ideal</code>: homogeneous illuminance of 1 accross wavelengths (default)</p></li>
+<li><p><code>'ideal'</code>: homogeneous illuminance of 1 accross wavelengths (default)</p></li>
 <li><p><code>'bluesky'</code> open blue sky.</p></li>
 <li><p><code>'D65'</code>: standard daylight.</p></li>
 <li><p><code>'forestshade'</code> forest shade.</p></li>
@@ -151,7 +151,7 @@ remaining columns.</p></td>
       <th>trans</th>
       <td><p>either a vector containing the ocular or environmental transmission
 spectra, or one of the options:</p><ul>
-<li><p><code>ideal</code>: homogeneous transmission of 1 accross all wavelengths (default)</p></li>
+<li><p><code>'ideal'</code>: homogeneous transmission of 1 accross all wavelengths (default)</p></li>
 <li><p><code>'bluetit'</code>: blue tit <em>Cyanistes caeruleus</em> 
 ocular transmission (from Hart et al. 2000).</p></li>
 <li><p><code>'blackbird'</code>: blackbird <em>Turdus merula</em> 
@@ -161,17 +161,17 @@ ocular transmission (from Hart et al. 2000).</p></li>
     <tr>
       <th>qcatch</th>
       <td><p>Which quantal catch metric to return. Options are:</p><ul>
-<li><p><code>Qi</code>: Quantum catch for each photoreceptor</p></li>
-<li><p><code>fi</code>: Quantum catch according to Fechner law (the signal of the receptor
+<li><p><code>'Qi'</code>: Quantum catch for each photoreceptor</p></li>
+<li><p><code>'fi'</code>: Quantum catch according to Fechner law (the signal of the receptor
  channel is proportional to the logarithm of the quantum catch)</p></li>
-<li><p><code>Ei</code>: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).</p></li>
+<li><p><code>'Ei'</code>: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>bkg</th>
       <td><p>background spectrum. Note that this will have no effect when <code>vonkries = FALSE</code>. 
 Either a vector containing the spectral data, or one of the options:</p><ul>
-<li><p><code>ideal</code>: homogeneous illuminance of 1 accross all wavelengths (default).</p></li>
+<li><p><code>'ideal'</code>: homogeneous illuminance of 1 accross all wavelengths (default).</p></li>
 <li><p><code>'green'</code>: green foliage.</p></li>
 </ul></td>
     </tr>

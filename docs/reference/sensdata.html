@@ -81,11 +81,11 @@
     <p>Retrieve or plot pavo's in-built spectral data.</p>
     
 
-    <pre class="usage"><span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>,
-  <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>),
-  <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>),
-  <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>,
-  <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"green"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"star"</span>,
+  <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>), <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>,
+  <span class='st'>"all"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>), <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"all"</span>,
+  <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"bluetit"</span>,
+  <span class='st'>"blackbird"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"green"</span>), <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -93,38 +93,41 @@
     <tr>
       <th>visual</th>
       <td><p>visual systems. Options are:</p><ul>
-<li><p><code>none</code>: no visual sensitivity data.</p></li>
-<li><p><code>apis</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
-<li><p><code>avg.uv</code>: average avian UV system.</p></li>
-<li><p><code>avg.v</code>: average avian V system.</p></li>
-<li><p><code>bluetit</code>: Blue tit <em>Cyanistes caeruleus</em> visual system.</p></li>
-<li><p><code>canis</code>: Canid <em>Canis familiaris</em> visual system.</p></li>
-<li><p><code>cie2</code>: 2-degree colour matching functions for CIE models of human 
+<li><p><code>'none'</code>: no visual sensitivity data.</p></li>
+<li><p><code>'all'</code>: no visual sensitivity data.</p></li>
+<li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
+<li><p><code>'avg.uv'</code>: average avian UV system.</p></li>
+<li><p><code>'avg.v'</code>: average avian V system.</p></li>
+<li><p><code>'bluetit'</code>: Blue tit <em>Cyanistes caeruleus</em> visual system.</p></li>
+<li><p><code>'canis'</code>: Canid <em>Canis familiaris</em> visual system.</p></li>
+<li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>cie10</code>: 10-degree colour matching functions for CIE models of human 
+<li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>musca</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
-<li><p><code>pfowl</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
-<li><p><code>star</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
+<li><p><code>'musca'</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
+<li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
+<li><p><code>'star'</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>achromatic</th>
       <td><p>the sensitivity data used to calculate luminance (achromatic)
  receptor stimulation. Options are:</p><ul>
-<li><p><code>none</code>: no achromatic sensitivity data.</p></li>
-<li><p><code>bt.dc</code>: Blue tit <em>Cyanistes caeruleus</em> double cone.</p></li>
-<li><p><code>ch.dc</code>: Chicken <em>Gallus gallus</em> double cone.</p></li>
-<li><p><code>st.dc</code>: Starling <em>Sturnus vulgaris</em> double cone.</p></li>
-<li><p><code>md.r1</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor.</p></li>
+<li><p><code>'none'</code>: no achromatic sensitivity data.</p></li>
+<li><p><code>'all'</code>: all achromatic sensitivity data.</p></li>
+<li><p><code>'bt.dc'</code>: Blue tit <em>Cyanistes caeruleus</em> double cone.</p></li>
+<li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone.</p></li>
+<li><p><code>'st.dc'</code>: Starling <em>Sturnus vulgaris</em> double cone.</p></li>
+<li><p><code>'md.r1'</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>illum</th>
       <td><p>illuminants. Options are:</p><ul>
-<li><p><code>none</code>: no illuminant data.</p></li>
+<li><p><code>'none'</code>: no illuminant data.</p></li>
+<li><p><code>'all'</code>: no background spectral data.</p></li>
 <li><p><code>'bluesky'</code> open blue sky.</p></li>
 <li><p><code>'D65'</code>: standard daylight.</p></li>
 <li><p><code>'forestshade'</code> forest shade.</p></li>
@@ -133,7 +136,8 @@
     <tr>
       <th>trans</th>
       <td><p>Ocular transmission data. Options are:</p><ul>
-<li><p><code>none</code>: no transmission data.</p></li>
+<li><p><code>'none'</code>: no transmission data.</p></li>
+<li><p><code>'all'</code>: all transmission data.</p></li>
 <li><p><code>'bluetit'</code>: blue tit <em>Cyanistes caeruleus</em> 
 ocular transmission (from Hart et al. 2000).</p></li>
 <li><p><code>'blackbird'</code>: blackbird <em>Turdus merula</em> 
@@ -143,7 +147,8 @@ ocular transmission (from Hart et al. 2000).</p></li>
     <tr>
       <th>bkg</th>
       <td><p>background spectra. Options are:</p><ul>
-<li><p><code>none</code>: no background spectral data.</p></li>
+<li><p><code>'none'</code>: no background spectral data.</p></li>
+<li><p><code>'all'</code>: no background spectral data.</p></li>
 <li><p><code>'green'</code>: green foliage.</p></li>
 </ul></td>
     </tr>
