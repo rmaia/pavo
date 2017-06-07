@@ -232,8 +232,12 @@ peakshape(spec.sm, plot = TRUE)
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm_"----
 peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
+## ----echo=TRUE, eval=TRUE------------------------------------------------
+musca_sense <- sensdata(visual = 'musca', achromatic = 'md.r1')
+head(musca_sense)
+
 ## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"----
-plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
+sensdata(visual = 'musca', achromatic = 'md.r1', plot = TRUE, ylab = 'Absorbance')
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
