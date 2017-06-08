@@ -199,7 +199,7 @@ lab2d <- function(coord1, coord2){
                                          abs(coord1['b'] - coord2['b'])^2), 7))
 }
 
-# CIE2000 colour distance for CIELCh
+# CIE2000 colour distance for CIELCh (LOLWAT)
 cie2000 <- function(coord1, coord2){
   
   # Lightness difference

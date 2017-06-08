@@ -5,7 +5,7 @@
 #' @param visual visual systems. Options are:
 #' \itemize{
 #' \item \code{'none'}: no visual sensitivity data.
-#' \item \code{'all'}: no visual sensitivity data.
+#' \item \code{'all'}: all visual sensitivity data.
 #' \item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
 #' \item \code{'avg.uv'}: average avian UV system.
 #' \item \code{'avg.v'}: average avian V system.
@@ -34,7 +34,7 @@
 #' @param illum illuminants. Options are:
 #' \itemize{ 
 #' \item \code{'none'}: no illuminant data.
-#' \item \code{'all'}: no background spectral data.
+#' \item \code{'all'}: all background spectral data.
 #' \item \code{'bluesky'} open blue sky.
 #' \item \code{'D65'}: standard daylight.
 #' \item \code{'forestshade'} forest shade.
@@ -42,7 +42,7 @@
 #' @param bkg background spectra. Options are:
 #' \itemize{ 
 #' \item \code{'none'}: no background spectral data.
-#' \item \code{'all'}: no background spectral data.
+#' \item \code{'all'}: all background spectral data.
 #' \item \code{'green'}: green foliage.
 #' }
 #' @param trans Ocular transmission data. Options are:
