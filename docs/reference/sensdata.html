@@ -78,7 +78,7 @@
     </div>
 
     
-    <p>Retrieve or plot pavo's in-built spectral data.</p>
+    <p>Retrieve (as an rspec object) or plot pavo's in-built spectral data.</p>
     
 
     <pre class="usage"><span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"star"</span>,
@@ -94,7 +94,7 @@
       <th>visual</th>
       <td><p>visual systems. Options are:</p><ul>
 <li><p><code>'none'</code>: no visual sensitivity data.</p></li>
-<li><p><code>'all'</code>: no visual sensitivity data.</p></li>
+<li><p><code>'all'</code>: all visual sensitivity data.</p></li>
 <li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
 <li><p><code>'avg.uv'</code>: average avian UV system.</p></li>
 <li><p><code>'avg.v'</code>: average avian V system.</p></li>
@@ -127,7 +127,7 @@
       <th>illum</th>
       <td><p>illuminants. Options are:</p><ul>
 <li><p><code>'none'</code>: no illuminant data.</p></li>
-<li><p><code>'all'</code>: no background spectral data.</p></li>
+<li><p><code>'all'</code>: all background spectral data.</p></li>
 <li><p><code>'bluesky'</code> open blue sky.</p></li>
 <li><p><code>'D65'</code>: standard daylight.</p></li>
 <li><p><code>'forestshade'</code> forest shade.</p></li>
@@ -148,7 +148,7 @@ ocular transmission (from Hart et al. 2000).</p></li>
       <th>bkg</th>
       <td><p>background spectra. Options are:</p><ul>
 <li><p><code>'none'</code>: no background spectral data.</p></li>
-<li><p><code>'all'</code>: no background spectral data.</p></li>
+<li><p><code>'all'</code>: all background spectral data.</p></li>
 <li><p><code>'green'</code>: green foliage.</p></li>
 </ul></td>
     </tr>
@@ -162,24 +162,31 @@ ocular transmission (from Hart et al. 2000).</p></li>
     </tr>
     </table>
     
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>An object of class <code>rspec</code> (when <code>plot = FALSE</code>), containing 
+a wavelength column <code>'wl'</code> and spectral data binned at 1 nm intervals from 300-700 nm.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='co'># Honeybee's receptors</span>
+  <span class='co'># Plot the honeybee's receptors</span>
   <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-  <span class='co'># Average UV vs V avian receptors</span>
+  <span class='co'># Plot the vverage UV vs V avian receptors</span>
   <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'avg.v'</span>, <span class='st'>'avg.uv'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
-  <span class='co'># CIE colour matching functions</span>
-  <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'cie2'</span>, <span class='st'>'cie10'</span>), <span class='kw'>ylab</span> <span class='kw'>=</span> <span class='st'>'Absorbance'</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+  <span class='co'># Retrieve the CIE colour matching functions as an rspec object</span>
+  <span class='no'>ciedat</span> <span class='kw'>&lt;-</span> <span class='fu'>sensdata</span>(<span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>'cie2'</span>, <span class='st'>'cie10'</span>))
 })</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-            
+      
+      <li><a href="#value">Value</a></li>
+      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

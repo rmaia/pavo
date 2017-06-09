@@ -765,7 +765,7 @@ vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALS
 
 We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
 
-$$x = \frac{\sqrt{3}}{2(E_g = E_{uv})}$$
+$$x = \frac{\sqrt{3}}{2(E_g + E_{uv})}$$
 
 $$y = E_b - 0.5(E_{uv} + E_g)$$
 
