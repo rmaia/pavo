@@ -11,7 +11,8 @@ pavo 1.2
 ------------------------------------------------------------------------------
 
 MAJOR CHANGES:
-* Added the CIELch model accessed via colspace(space = 'cielch'). 
+* added the CIELch model accessed via colspace(space = 'cielch')
+* added the sensdata() function for retrieving and/or visualising pavo's in-build spectral data 
 
 MINOR FEATURES AND BUG FIXES:
 * vignettes have been amalgamated & the single, main vignette is now up-to-date

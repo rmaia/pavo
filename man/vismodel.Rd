@@ -23,40 +23,40 @@ remaining columns.}
    user-defined sensitivity data for the receptors involved in colour vision. 
    The data frame must contain a \code{'wl'} column with the range of wavelengths included, 
    and the sensitivity for each other cone as a column.
-\item \code{apis}: Honeybee \emph{Apis mellifera} visual system.
-\item \code{avg.uv}: average avian UV system.
-\item \code{avg.v}: average avian V system.
-\item \code{bluetit}: Blue tit \emph{Cyanistes caeruleus} visual system.
-\item \code{canis}: Canid \emph{Canis familiaris} visual system.
-\item \code{cie2}: 2-degree colour matching functions for CIE models of human 
+\item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
+\item \code{'avg.uv'}: average avian UV system.
+\item \code{'avg.v'}: average avian V system.
+\item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus} visual system.
+\item \code{'canis'}: Canid \emph{Canis familiaris} visual system.
+\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{cie10}: 10-degree colour matching functions for CIE models of human 
+\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human 
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{musca}: Housefly \emph{Musca domestica} visual system.
-\item \code{pfowl}: Peafowl \emph{Pavo cristatus} visual system.
-\item \code{segment}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
-\item \code{star}: Starling \emph{Sturnus vulgaris} visual system.
+\item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
+\item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
+\item \code{'segment'}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
+\item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
  receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
  or one of the options: 
 \itemize{
- \item \code{none}: no achromatic stimulation calculated
-\item \code{bt.dc}: Blue tit \emph{Cyanistes caeruleus} double cone
- \item \code{ch.dc}: Chicken \emph{Gallus gallus} double cone
- \item \code{st.dc}: Starling \emph{Sturnus vulgaris} double cone
- \item \code{md.r1}: Housefly \emph{Musca domestica} R1-6 photoreceptor
- \item \code{ml}: the summed response of the two longest-wavelength photoreceptors
- \item \code{l}: the longest-wavelength photoreceptor
- \item \code{all}: the summed response of all photoreceptors
+ \item \code{'none'}: no achromatic stimulation calculated
+\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone
+ \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone
+ \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone
+ \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor
+ \item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors
+ \item \code{'l'}: the longest-wavelength photoreceptor
+ \item \code{'all'}: the summed response of all photoreceptors
 }}
 
 \item{illum}{either a vector containing the illuminant, or one of the options:
 \itemize{ 
-\item \code{ideal}: homogeneous illuminance of 1 accross wavelengths (default)
+\item \code{'ideal'}: homogeneous illuminance of 1 accross wavelengths (default)
 \item \code{'bluesky'} open blue sky.
 \item \code{'D65'}: standard daylight.
 \item \code{'forestshade'} forest shade.
@@ -65,7 +65,7 @@ remaining columns.}
 \item{trans}{either a vector containing the ocular or environmental transmission
 spectra, or one of the options:
 \itemize{ 
-\item \code{ideal}: homogeneous transmission of 1 accross all wavelengths (default)
+\item \code{'ideal'}: homogeneous transmission of 1 accross all wavelengths (default)
 \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
 ocular transmission (from Hart et al. 2000).
 \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
@@ -74,16 +74,16 @@ ocular transmission (from Hart et al. 2000).
 
 \item{qcatch}{Which quantal catch metric to return. Options are:
 \itemize{
-\item \code{Qi}: Quantum catch for each photoreceptor 
-\item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+\item \code{'Qi'}: Quantum catch for each photoreceptor 
+\item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
  channel is proportional to the logarithm of the quantum catch)
-\item \code{Ei}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
+\item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
 \item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}. 
 Either a vector containing the spectral data, or one of the options:
 \itemize{ 
-\item \code{ideal}: homogeneous illuminance of 1 accross all wavelengths (default).
+\item \code{'ideal'}: homogeneous illuminance of 1 accross all wavelengths (default).
 \item \code{'green'}: green foliage.
 }}
 

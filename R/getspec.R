@@ -15,9 +15,10 @@
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
 #' @param subdir.names should subdirectory path be included in the name of the
-#' spectra? (defaults to \code{FALSE})/
-#' @param fast logical. if \code{TRUE} (default), will try a fast algorithm that 
-#' assumes all spectra were produced using the same software configuration.
+#' spectra? (defaults to \code{FALSE}).
+#' @param fast logical. if \code{TRUE}, will try a fast algorithm that assumes
+#'  all spectra were produced using the same software configuration (defaults
+#'  to \code{FALSE}).
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
@@ -38,7 +39,7 @@
 
 
 getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
-           subdir = FALSE, subdir.names = FALSE, fast = TRUE)
+           subdir = FALSE, subdir.names = FALSE, fast = FALSE)
   {
   
   if(fast){
@@ -180,7 +181,7 @@ if(corrupt){
   
   # Negative value check
   if(length(final[final < 0]) > 0){
-    message(paste("The spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."))
+    message(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."))
   }
 
   final

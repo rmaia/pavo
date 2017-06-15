@@ -449,6 +449,21 @@ As of version `1.0`, all visual and colorspace modelling and plotting options ar
 3. `coldist` to estimate the color distances between points in a colourspace (if the input is from `colspace`), or the 'perceptual', noise-weighted distances in the receptor-noise limited model (if the input is from `vismodel` where `relative = FALSE`).
 4. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colorspace (see `?plot.colspace` and links therein for details). 
 
+### Accessing and Plotting In-built Spectral Data
+
+All in-built spectral data in `pavo` can be easily retrieved and/or plotted via the `sensdata()` function. These data can be assigned to an object for subsequent use, as in:
+
+```{r echo=TRUE, eval=TRUE}
+musca_sense <- sensdata(visual = 'musca', achromatic = 'md.r1')
+head(musca_sense)
+```
+
+Or visualised directly, by including `plot = TRUE`:
+
+```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"}
+sensdata(visual = 'musca', achromatic = 'md.r1', plot = TRUE, ylab = 'Absorbance')
+```
+
 ### Visual Phenotypes
 
 `pavo` contains numerous di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessable via the `vismodel()` argument `visual`:
@@ -463,12 +478,6 @@ As of version `1.0`, all visual and colorspace modelling and plotting options ar
   : `cie2` 2-degree color matching functions for CIE models of human color vision (trichromat)
   : `cie10` 10-degree color matching functions for CIE models of human color vision (trichromat)
   : `segment` A generic 'viewer' with broad sensitivities for use in the segment analysis of Endler (1990) (tetrachromat)
-
-The individual sensitivity functions can be accessed via a call to `vissyst`, and visualised using `plot`. For example:
-
-```{r fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"}
-plot(vissyst[, c('wl', grep('musca|md', names(vissyst), value = TRUE))], main = 'Musca domestica', ylab = 'Absorbance', lwd = 2)
-```
 
 ### Estimating Quantum Catch
 
@@ -756,7 +765,7 @@ vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALS
 
 We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
 
-$$x = \frac{\sqrt{3}}{2(E_g = E_{uv})}$$
+$$x = \frac{\sqrt{3}}{2(E_g + E_{uv})}$$
 
 $$y = E_b - 0.5(E_{uv} + E_g)$$
 

@@ -85,7 +85,7 @@ Avantes (after exporting).</p>
     
 
     <pre class="usage"><span class='fu'>getspec</span>(<span class='kw'>where</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"txt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>300</span>, <span class='fl'>700</span>), <span class='kw'>decimal</span> <span class='kw'>=</span> <span class='st'>"."</span>,
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fast</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>fast</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -117,12 +117,13 @@ included in the search? (defaults to <code>FALSE</code>).</p></td>
     <tr>
       <th>subdir.names</th>
       <td><p>should subdirectory path be included in the name of the
-spectra? (defaults to <code>FALSE</code>)/</p></td>
+spectra? (defaults to <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>fast</th>
-      <td><p>logical. if <code>TRUE</code> (default), will try a fast algorithm that 
-assumes all spectra were produced using the same software configuration.</p></td>
+      <td><p>logical. if <code>TRUE</code>, will try a fast algorithm that assumes
+all spectra were produced using the same software configuration (defaults
+to <code>FALSE</code>).</p></td>
     </tr>
     </table>
     
