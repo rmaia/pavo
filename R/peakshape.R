@@ -70,32 +70,13 @@ if (is.null(select)&haswl==TRUE)
 if (is.null(select)&haswl==FALSE)
   select <- 1:ncol(rspecdata)
 
-rspecdata <- as.data.frame(rspecdata[, select])
+rspecdata <- as.data.frame(rspecdata[, select, drop=FALSE])
 
 
 wlrange <- lim[1]:lim[2]
 
-if (ncol(rspecdata)==1) {
-  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
-  Yi <- max(rspecdata2)  # max refls
-  Yj <- min(rspecdata2)  # min refls
-  Yk <- min(rspecdata)  # min refls, whole spectrum
-  Xi <- which(rspecdata2==Yi)  # lambda_max index
-  if (length(Xi)>1) {
-    Xi <- Xi[1]
-    warning("Multiple wavelengths have the same reflectance value. Using first peak found. Please check the data or try smoothing.", call.=FALSE)
-  }
-  
-    if(absolute.min)
-    Yj <- Yk
-  
-  fsthalf <- rspecdata2[1:Xi]
-  sndhalf <- rspecdata2[Xi:length(rspecdata2)]
-  halfmax <- (Yi + Yj) / 2  # reflectance midpoint
-  fstHM <- which.min(abs(fsthalf - halfmax))
-  sndHM <- which.min(abs(sndhalf - halfmax))
-} else {
-  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), ]  # working wl range
+
+  rspecdata2 <- rspecdata[(which(wl==lim[1])):(which(wl==lim[2])), , drop=FALSE]  # working wl range
   Yi <- apply(rspecdata2, 2, max)  # max refls
   Yj <- apply(rspecdata2, 2, min)  # min refls
   Yk <- apply(rspecdata, 2, min)  # min refls, whole spectrum
@@ -119,7 +100,7 @@ if (ncol(rspecdata)==1) {
   fstHM <- sapply(1:length(fsthalf), function(x) which.min(abs(fsthalf[[x]]-halfmax[x])))
   sndHM <- sapply(1:length(sndhalf), function(x) which.min(abs(sndhalf[[x]]-halfmax[x])))
 
-}
+
 
 
 if (any(Yj>Yk)) {
