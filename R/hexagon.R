@@ -109,6 +109,7 @@ hexagon <- function(vismodeldata){
   sec.coarse <- sapply(1:length(x), function(x) coarse_sec(h.theta[x]))
   
   res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
+  #res.p <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
   
   res <- res.p
   
