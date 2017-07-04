@@ -246,6 +246,10 @@ bloc2d <- function(coord1, coord2){
   as.numeric(round(abs(coord1['x'] - coord2['x']) + abs(coord1['y'] - coord2['y'])), 7)
 }
 
+#######################
+# END OTHER DISTANCES #
+#######################
+
 #####################
 # SUMMARY VARIABLES #
 #####################
