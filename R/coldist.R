@@ -250,9 +250,21 @@ coldist <-function(modeldata,
    
   # transformations in case object is neither from colspace or vismodel
   if(!any(c('colspace','vismodel') %in% class(modeldata))){
-    
+  	    
   	if(is.null(qcatch)) 
   	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
+    
+    # check if there is a resrefs attribute and bind it
+  	if(!is.null(attr(modeldata, 'resrefs'))){
+  		colsincommon <- intersect(colnames(modeldata), 
+  		                          colnames(attr(modeldata, 'resrefs')))
+  		
+  		modeldata <- rbind(
+  		             attr(modeldata, 'resrefs')[, colsincommon],
+  		             modeldata[, colsincommon]
+  		             )
+  	}
+
     
     dat <- as.matrix(modeldata)
     
