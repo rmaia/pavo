@@ -148,7 +148,7 @@ coldistWI <-function(modeldata,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
                   v, n1, n2, n3, n4){
                   	
-  ##################################
+##################################
 # START RECEPTOR NOISE FUNCTIONS #
 ##################################
 
@@ -386,15 +386,17 @@ bloc2d <- function(coord1, coord2){
 # END OTHER DISTANCES #
 #######################
 
-  
+  # vector for references for jnd2xyz
   resrefs <- NULL
   
+  # check deprecated arguments
   if(!missing(v))
     stop('argument v is deprecated, please use weber instead. see ?coldist for more information.', call.=FALSE)
 
   if(!missing(n1) || !missing(n2) || !missing(n3) || !missing(n4))
     stop('arguments n1, n2, n3 and n4 are deprecated, please use n instead. see ?coldist for more information.', call.=FALSE)
-   
+  
+  
   noise <- match.arg(noise)
   
   lengthn <- as.character(length(n))
@@ -406,6 +408,19 @@ bloc2d <- function(coord1, coord2){
   
   # Pre-processing for colspace objects
   if('colspace' %in% class(modeldata)){
+  	
+  	# check if there is a resrefs attribute and bind it
+  	if(!is.null(attr(modeldata, 'resrefs'))){
+  		colsincommon <- intersect(colnames(modeldata), 
+  		                          colnames(attr(modeldata, 'resrefs')))
+  		
+  		modeldata <- rbind(
+  		             attr(modeldata, 'resrefs')[, colsincommon],
+  		             modeldata[, colsincommon]
+  		             )
+  		}
+
+  	
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
     
     qcatch <- attr(modeldata, 'qcatch')
@@ -449,7 +464,6 @@ bloc2d <- function(coord1, coord2){
   	}
 
     # initial checks... 
-    
     if(attr(modeldata, 'qcatch') == 'Ei')
   	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)', call.=FALSE)
      

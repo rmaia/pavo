@@ -91,6 +91,17 @@ colspace <- function(vismodeldata,
   if(inherits(space2, 'try-error'))
     stop('Invalid colorspace selected')
   
+  # check if there is a resrefs attribute and bind it
+  	if(!is.null(attr(vismodeldata, 'resrefs'))){
+  		colsincommon <- intersect(colnames(vismodeldata), 
+  		                          colnames(attr(vismodeldata, 'resrefs')))
+  		
+  		vismodeldata <- rbind(
+  		             attr(vismodeldata, 'resrefs')[, colsincommon],
+  		             vismodeldata[, colsincommon]
+  		             )
+  	}
+  
   if(space2 == 'auto'){
   	res<- 
   	switch(as.character(attr(vismodeldata, 'conenumb')),
@@ -114,7 +125,18 @@ colspace <- function(vismodeldata,
   	'segment' = segspace(vismodeldata)
   	)
   }
-attr(res, 'resrefs') <- attr(vismodeldata, 'resrefs')  
+  
+  attr(res, 'resrefs') <- NULL
+  
+  #remove reference results
+  arethererefs <- grep('whiref|bluref|redref|greref', rownames(res))
+  if(length(arethererefs) > 0){
+  
+    resrefs <- res[arethererefs, ]
+    res <- res[-arethererefs, ] 
+  
+    attr(res, 'resrefs') <- resrefs
+  }
 
 res
 }
