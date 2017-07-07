@@ -582,7 +582,7 @@ bloc2d <- function(coord1, coord2){
   
   if(usereceptornoisemodel){
   	
-   dat2 <- dat[, 1:as.numeric(ncone)]
+   dat2 <- dat[, 1:as.numeric(ncone), drop=FALSE]
   
    if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''), call.=FALSE)
    

@@ -4,7 +4,7 @@
 #'
 #' @param x (required) an object of class \code{rspec}, \code{vismodel}, or \code{colspace},
 #' containing spectra, visual model output or colorspace data to subset.
-#' @param ... class consistency (ignored).
+#' @param ... additional attributes passed to \code{grep}. Ignored if \code{subset} is logical.
 #' @param subset a string used for partial matching of observations.
 #' @return a subsetted object of the same class as the input object.
 #'
@@ -19,6 +19,8 @@
 #' head(subset(sicalis, "C"))
 #' subset(vis.sicalis, "C")
 #' subset(tcs.sicalis, "C")[, 1:5]
+#' subset(sicalis, c("B","C"))
+#' subset(sicalis, "T", invert=TRUE)
 #' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
@@ -45,7 +47,7 @@ subset.rspec <- function (x, subset, ...) {
       warning("Subset doesn't match length of spectral data")
     }
   } else {
-    subsample <- grep(subset, names(x))
+    subsample <- grep(pattern=paste(subset, collapse='|'), x=names(x), ...)
   }
   if (length(subsample)==0) {
     warning("Subset condition not found")
@@ -65,7 +67,7 @@ subset.colspace <- function (x, subset, ...) {
     subsample <- subset
     res <- x[which(subsample), ]
   } else {
-      subsample <- grep(subset, row.names(x))
+      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
       res <- x[subsample, ]
     }
   if (length(subsample)==0) {
@@ -83,7 +85,7 @@ subset.vismodel <- function (x, subset, ...) {
     subsample <- subset
     res <- x[which(subsample), ]
   } else {
-      subsample <- grep(subset, row.names(x))
+      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
       res <- x[subsample, ]
     }
   # attr <- attributes(x)

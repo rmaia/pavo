@@ -3,6 +3,7 @@ pavo 1.2.1
 MAJOR CHANGES:
 
 MINOR FEATURES AND BUG FIXES:
+* subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
 * replaced the modelled receptor sensitivities of the honeybee Apis melifera with the empirical sensitivities from Peitsch et al (1992)
 * fixed bug in colspace models when using non-standard receptor names or ordering
