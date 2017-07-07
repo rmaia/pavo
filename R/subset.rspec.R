@@ -8,6 +8,9 @@
 #' @param subset a string used for partial matching of observations.
 #' @return a subsetted object of the same class as the input object.
 #'
+#' @note if more than one value is given to \code{subset}, any spectra that matches \emph{either}
+#' condition will be included. It's a union, not an intersect.
+#'
 #' @export
 #'
 #' @examples \dontrun{
