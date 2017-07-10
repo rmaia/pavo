@@ -9,6 +9,7 @@ MINOR FEATURES AND BUG FIXES:
 * replaced the modelled receptor sensitivities of the honeybee Apis melifera with the empirical sensitivities from Peitsch et al (1992)
 * fixed bug in colspace models when using non-standard receptor names or ordering
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
+* the built-in 'green' background spectrum is no longer normalised
 
 pavo 1.2
 ------------------------------------------------------------------------------
