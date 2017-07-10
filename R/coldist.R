@@ -147,15 +147,256 @@ coldist <-function(modeldata,
                   achro = TRUE, qcatch = NULL,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
                   v, n1, n2, n3, n4){
+                  	
+##################################
+# START RECEPTOR NOISE FUNCTIONS #
+##################################
+
+newreceptornoise.neural <- function(dat, n, weber, weber.ref, res){
+	
+  reln <- n/sum(n)
+  v <- weber*sqrt(reln[weber.ref])
+  e <- setNames(v/sqrt(reln), colnames(dat))
+
+  #############
+  # NUMERATOR #
+  #############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat),dim(dat)[2]-2)
+
+  # get those combinations of ei and prod(ei)^2
+
+  num1 <- setNames(apply(n1combs, 2, function(x) prod(e[x])^2), 
+    apply(n1combs, 2, paste, collapse=""))
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ] )
+
+  # f_d and f_e
+
+  deltaqiqj <- lapply(1:length(num1), function(y) 
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[,y]] - dat[x[2], n2combs[,y]] ))
+      )
+
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse='')
+
+  # (f_d-f_e)^2
+
+  num2 <- do.call('cbind',lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z)^2)))
+
+  # (e_abc)^2*(f_d-f_e)^2
+
+  etimesq <- num2 %*% diag(num1)
+
+  # sum numerator
+
+  numerator <- rowSums(etimesq)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat),dim(dat)[2]-1)
+
+  den <- setNames(apply(dcombs, 2, function(x) prod(e[x])^2), 
+    apply(dcombs, 2, paste, collapse=""))
+
+  denominator <- sum(den)
+
+  ###########
+  # DELTA S #
+  ###########
+
+  sqrt(numerator/denominator)  
+  }
+
+
+
+newreceptornoise.quantum <- function(dat, n, weber, weber.ref, res, qndat){
+	
+  reln <- n/sum(n)
+  v <- weber*sqrt(reln[weber.ref])
   
+  ept1 <- setNames(v^2/reln, colnames(dat))
+  ept2 <- 2/t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ] ))
+  e <- sqrt(sweep(ept2, 2, ept1, "+"))
+
+
+  #############
+  # NUMERATOR #
+  #############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat),dim(dat)[2]-2)
+
+  # get those combinations of ei and prod(ei)^2
+
+  num1 <- do.call('rbind', lapply(1:dim(res)[1], function(z) 
+    apply(n1combs, 2, function(x) prod(e[z,x])^2)))
+  colnames(num1) <- apply(n1combs, 2, paste, collapse="")
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ] )
+
+  # f_d and f_e
+
+  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y) 
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[,y]] - dat[x[2], n2combs[,y]] ))
+      )
+
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse='')
+
+  # (f_d-f_e)^2
+
+  num2 <- do.call('cbind',lapply(deltaqiqj, function(x) 
+    apply(x, 1, function(z) diff(z)^2)))
+
+  # (e_abc)^2*(f_d-f_e)^2
+
+  etimesq <- num2 * num1
+
+  # sum numerator
+
+  numerator <- rowSums(etimesq)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat),dim(dat)[2]-1)
+
+  den <- do.call('rbind', lapply(1:dim(res)[1], function(z) 
+    apply(dcombs, 2, function(x) prod(e[z,x])^2)))
+  colnames(den) <- apply(dcombs, 2, paste, collapse="")
+
+  denominator <- rowSums(den)
+
+  ###########
+  # DELTA S #
+  ###########
+
+  sqrt(numerator/denominator)
+  }
+
+# achromatic functions
+
+ttdistcalcachro <- function(f1, f2, weber.achro){
+        dq1 <- f1[length(f1)]-f2[length(f1)]
+        dq1 <- as.numeric(dq1)
+        w <- weber.achro
+        round(abs(dq1/w), 7)
+        }
+
+qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
+        dq1 <- f1[length(f1)]-f2[length(f1)]
+        dq1 <- as.numeric(dq1)
+        w <- sqrt((weber.achro)^2 + (2/(qn1[length(qn1)]+qn2[length(qn1)])))
+        round(abs(dq1/w),7)
+    }
+
+
+################################
+# END RECEPTOR NOISE FUNCTIONS #
+################################
+
+# 2d Euclidean distance
+euc2d <- function(coord1, coord2){
+  as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
+}
+
+# 2d Euclidean distance in segment space
+seg2d <- function(coord1, coord2){
+  as.numeric(round(sqrt(abs(coord1['MS'] - coord2['MS'])^2 + abs(coord1['LM'] - coord2['LM'])^2), 7))
+}
+
+# Achromatic contrast in segment space
+achroseg <- function(coord1, coord2){
+  as.numeric(abs(coord1['B'] - coord2['B']))
+}
+
+# Achromatic 'green' receptor contrast in the hexagon
+achrohex <- function(coord1, coord2){
+  as.numeric(round(coord1['l'] / coord2['l'], 7))
+}
+
+# Achromatic contrast in cielab
+achrolab <- function(coord1, coord2){
+    as.numeric(abs(coord1['L'] - coord2['L']))
+}
+
+# 2d Euclidean distances in CIELAB
+lab2d <- function(coord1, coord2){
+                     as.numeric(round(sqrt(abs(coord1['L'] - coord2['L'])^2 + abs(coord1['a'] - coord2['a'])^2 +
+                                         abs(coord1['b'] - coord2['b'])^2), 7))
+}
+
+# CIE2000 colour distance for CIELCh (LOLWAT)
+cie2000 <- function(coord1, coord2){
+  
+  # Lightness difference
+  dL <- coord2['L'] - coord1['L']
+  
+  # Mean lightness
+  mL <- (coord2['L'] + coord1['L'])/2
+  
+  # Chroma difference
+  dC <- coord2['C'] - coord1['C']
+  
+  # Mean chroma
+  mC <- (coord2['C'] + coord1['C'])/2
+  
+  # Hue difference
+  if(coord1['h'] - coord2['h'] <= 180)
+    dh <- coord2['h'] - coord1['h']
+  else if(coord1['h'] - coord2['h'] > 180 & coord2['h'] <= coord1['h'])
+    dh <- coord2['h'] + coord1['h'] + 360 
+  else if(coord1['h'] - coord2['h'] > 180 & coord2['h'] > coord1['h'])
+    dh <- coord2['h'] + coord1['h'] - 360
+  
+  # Mean hue
+  if(abs(coord2['h'] - coord1['h']) <= 180)
+    mh <- (coord2['h'] + coord1['h'])/2
+  else if(abs(coord2['h'] - coord1['h']) > 180 & coord2['h'] + coord1['h'] < 360)
+    mh <- (coord2['h'] + coord1['h'] + 360)/2 
+  else if(abs(coord2['h'] - coord1['h']) > 180 & coord2['h'] + coord1['h'] >= 360)
+    mh <- (coord2['h'] + coord1['h'] - 360)/2
+  
+  t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
+    
+  sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
+  sC <-  1 + 0.045 * mC
+  sH <- 1 + 0.015 * mC * t
+  
+  Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275)/25)^2)))
+  
+  as.numeric(round(sqrt((dL/sL)^2 + (dC/sC)^2 + (dh/sH)^2 + (Rt * (dC/sC) * (dh/sH)))), 7)
+}
+
+# Manhattan distance
+bloc2d <- function(coord1, coord2){
+  as.numeric(round(abs(coord1['x'] - coord2['x']) + abs(coord1['y'] - coord2['y'])), 7)
+}
+
+#######################
+# END OTHER DISTANCES #
+#######################
+
+  # vector for references for jnd2xyz
   resrefs <- NULL
   
+  # check deprecated arguments
   if(!missing(v))
     stop('argument v is deprecated, please use weber instead. see ?coldist for more information.', call.=FALSE)
 
   if(!missing(n1) || !missing(n2) || !missing(n3) || !missing(n4))
     stop('arguments n1, n2, n3 and n4 are deprecated, please use n instead. see ?coldist for more information.', call.=FALSE)
-   
+  
+  
   noise <- match.arg(noise)
   
   lengthn <- as.character(length(n))
@@ -167,6 +408,24 @@ coldist <-function(modeldata,
   
   # Pre-processing for colspace objects
   if('colspace' %in% class(modeldata)){
+  	
+  	# check if there is a resrefs attribute and bind it
+  	if(!is.null(attr(modeldata, 'resrefs'))){
+  		attribdat <- attributes(modeldata)
+  		colsincommon <- intersect(colnames(modeldata), 
+  		                          colnames(attr(modeldata, 'resrefs')))
+  		
+  		modeldata <- rbind(
+  		             attr(modeldata, 'resrefs')[, colsincommon],
+  		             modeldata[, colsincommon]
+  		             )
+  	    attribdat$names <- attributes(modeldata)$names
+  		attribdat$row.names <- attributes(modeldata)$row.names
+  		attributes(modeldata) <- attribdat
+
+  		}
+
+  	
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
     
     qcatch <- attr(modeldata, 'qcatch')
@@ -179,7 +438,7 @@ coldist <-function(modeldata,
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
 
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
+      dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l', 'lum')])
       dat <- switch(qcatch, 
   	                fi = dat, 
   	                Qi = log(dat)
@@ -210,7 +469,6 @@ coldist <-function(modeldata,
   	}
 
     # initial checks... 
-    
     if(attr(modeldata, 'qcatch') == 'Ei')
   	  stop('Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)', call.=FALSE)
      
@@ -254,8 +512,9 @@ coldist <-function(modeldata,
   	if(is.null(qcatch)) 
   	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
     
-    # check if there is a resrefs attribute and bind it
+  	# check if there is a resrefs attribute and bind it
   	if(!is.null(attr(modeldata, 'resrefs'))){
+  		attribdat <- attributes(modeldata)
   		colsincommon <- intersect(colnames(modeldata), 
   		                          colnames(attr(modeldata, 'resrefs')))
   		
@@ -263,7 +522,11 @@ coldist <-function(modeldata,
   		             attr(modeldata, 'resrefs')[, colsincommon],
   		             modeldata[, colsincommon]
   		             )
-  	}
+  	    attribdat$names <- attributes(modeldata)$names
+  		attribdat$row.names <- attributes(modeldata)$row.names
+  		attributes(modeldata) <- attribdat
+
+  		}
 
     
     dat <- as.matrix(modeldata)
@@ -329,7 +592,7 @@ coldist <-function(modeldata,
   
   if(usereceptornoisemodel){
   	
-   dat2 <- dat[, 1:as.numeric(ncone)]
+   dat2 <- dat[, 1:as.numeric(ncone), drop=FALSE]
   
    if(is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep=''), call.=FALSE)
    
@@ -448,7 +711,7 @@ if('colspace' %in% class(modeldata)){
   res$patch2 <- as.character(res$patch2)
   
   #remove reference results
-  arethererefs <- grep('whiref|bluref|redref|greref',paste(res$patch1, res$patch2))
+  arethererefs <- grep('refforjnd2xyz',paste(res$patch1, res$patch2))
   if(length(arethererefs) > 0){
   
     resrefs <- res[arethererefs, ]

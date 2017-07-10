@@ -411,6 +411,7 @@ bloc2d <- function(coord1, coord2){
   	
   	# check if there is a resrefs attribute and bind it
   	if(!is.null(attr(modeldata, 'resrefs'))){
+  		attribdat <- attributes(modeldata)
   		colsincommon <- intersect(colnames(modeldata), 
   		                          colnames(attr(modeldata, 'resrefs')))
   		
@@ -418,6 +419,10 @@ bloc2d <- function(coord1, coord2){
   		             attr(modeldata, 'resrefs')[, colsincommon],
   		             modeldata[, colsincommon]
   		             )
+  	    attribdat$names <- attributes(modeldata)$names
+  		attribdat$row.names <- attributes(modeldata)$row.names
+  		attributes(modeldata) <- attribdat
+
   		}
 
   	
@@ -433,7 +438,7 @@ bloc2d <- function(coord1, coord2){
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
 
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l')])
+      dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l', 'lum')])
       dat <- switch(qcatch, 
   	                fi = dat, 
   	                Qi = log(dat)
@@ -507,8 +512,9 @@ bloc2d <- function(coord1, coord2){
   	if(is.null(qcatch)) 
   	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
     
-    # check if there is a resrefs attribute and bind it
+  	# check if there is a resrefs attribute and bind it
   	if(!is.null(attr(modeldata, 'resrefs'))){
+  		attribdat <- attributes(modeldata)
   		colsincommon <- intersect(colnames(modeldata), 
   		                          colnames(attr(modeldata, 'resrefs')))
   		
@@ -516,7 +522,11 @@ bloc2d <- function(coord1, coord2){
   		             attr(modeldata, 'resrefs')[, colsincommon],
   		             modeldata[, colsincommon]
   		             )
-  	}
+  	    attribdat$names <- attributes(modeldata)$names
+  		attribdat$row.names <- attributes(modeldata)$row.names
+  		attributes(modeldata) <- attribdat
+
+  		}
 
     
     dat <- as.matrix(modeldata)
@@ -701,7 +711,7 @@ if('colspace' %in% class(modeldata)){
   res$patch2 <- as.character(res$patch2)
   
   #remove reference results
-  arethererefs <- grep('whiref|bluref|redref|greref',paste(res$patch1, res$patch2))
+  arethererefs <- grep('refforjnd2xyz',paste(res$patch1, res$patch2))
   if(length(arethererefs) > 0){
   
     resrefs <- res[arethererefs, ]

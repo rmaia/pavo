@@ -147,16 +147,6 @@ wl_index <- which(names(rspecdata)=='wl')
 wl <- rspecdata[,wl_index]
 y <- rspecdata[, -wl_index, drop=FALSE]
 
-# add white, blue and red reference fake spectra
-
-y$whiref <- rep(100, dim(y)[1])
-y$redref <- rep(0.1, dim(y)[1])
-y$bluref <- rep(0.1, dim(y)[1])
-y$greref <- rep(0.1, dim(y)[1])
-y$bluref[1:ceiling(dim(y)[1]/5)] <- 100
-y$redref[ceiling(dim(y)[1]*4/5):dim(y)[1]] <- 100
-y$greref[ceiling(dim(y)[1]*2/5):ceiling(dim(y)[1]*3/5)] <- 100
-
 # Negative value check
 if(length(y[y < 0]) > 0){
   warning(paste("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them."))
@@ -502,11 +492,34 @@ if(vonkries){
 fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
 Ei <- Qi / (Qi + 1)  # hyperbolic transform
 
+# make references for jnd2xyz
+resrefs <- switch(qcatch,
+  Qi = matrix(apply(Qi,2,min), nrow=dim(Qi)[2], ncol=dim(Qi)[2], byrow=TRUE),
+  fi = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE),
+  Ei = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE)
+)
+
+diag(resrefs) <- switch(qcatch,
+  Qi = apply(Qi,2,max),
+  fi = apply(fi,2,max),
+  Ei = apply(Ei,2,max)
+)
+
+colnames(resrefs) <- colnames(Qi)
+rownames(resrefs) <- paste0('refforjnd2xyz.',colnames(Qi))
+resrefs <- rbind(resrefs, refforjnd2xyz.acent = 1)
+
+
+matrix(apply(Qi,2,min), nrow=dim(Qi)[2], ncol=dim(Qi)[2], byrow=TRUE)
+
 # Convert to relative
 if(relative & !is.null(lum)){
   Qi[,-dim(Qi)[2]] <- Qi[,-dim(Qi)[2]]/rowSums(Qi[,-dim(Qi)[2]])
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
   Ei[,-dim(Ei)[2]] <- Ei[,-dim(Ei)[2]]/rowSums(Ei[,-dim(Ei)[2]])
+  
+  resrefs[,-dim(resrefs)[2]] <- resrefs[,-dim(resrefs)[2]]/
+    rowSums(resrefs[,-dim(resrefs)[2]])
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -520,15 +533,13 @@ if(relative & is.null(lum)){
     # Place dark specs in achromatic center?
     # blacks <- which(norm.B < 0.05) #find dark specs
     # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
+    
+    resrefs <- resrefs/rowSums(resrefs)
 }
 
 # OUTPUT
 
 res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
-
-resrefs <- res[c('whiref','redref','bluref','greref'),]
-
-res <- res[!row.names(res) %in% c('whiref','bluref','redref','greref'),]
 
 class(res) <- c('vismodel', 'data.frame')
 
