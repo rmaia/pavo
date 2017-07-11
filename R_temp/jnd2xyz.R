@@ -1,4 +1,6 @@
 jnd2xyz <- function(coldistres, TRI=F, TET=F) {
+
+cdrbackup <- coldistres
 	
 coldistres <- rbind(attr(coldistres, 'resrefs'), coldistres)
 
@@ -41,27 +43,34 @@ pos4 <- function(d12, d14, d24, d34){
 if(TET){
 coords <- matrix(NA, nrow=nrow(M), ncol=3, dimnames=list(row.names(M), c('x','y', 'z')))
 
+reffornames <- grep('refforjnd2xyz', rownames(coords), value=TRUE)
+
 # first point
-coords['whiref', ] <- c(0,0,0)
+coords['refforjnd2xyz.acent', ] <- c(0,0,0)
 # second point
-coords['bluref', ] <- c(M['whiref','bluref'],0,0)
+coords[reffornames[1], ] <- c(M['refforjnd2xyz.acent',reffornames[1]],0,0)
 # third point
-thirdpointxy <- pos3(M['whiref','bluref'], M['whiref','redref'], M['bluref','redref'])[1, ]
-coords['redref', ] <- c(thirdpointxy, 0)
+thirdpointxy <- pos3(M['refforjnd2xyz.acent', reffornames[1]], 
+                     M['refforjnd2xyz.acent', reffornames[as.numeric(attr(cdrbackup,'conenumb'))] ], 
+                     M[reffornames[1], reffornames[as.numeric(attr(cdrbackup,'conenumb'))] ])[1, ]
+coords[reffornames[as.numeric(attr(cdrbackup,'conenumb'))], ] <- c(thirdpointxy, 0)
+
 #fourth point
-fourthpointxyz <- pos4(M['whiref', 'bluref'], M['whiref', 'greref'], 
-  M['bluref', 'greref'], M['redref', 'greref'])[1, ]
-coords['greref', ] <- fourthpointxyz
+fourthpointxyz <- pos4(M['refforjnd2xyz.acent', reffornames[1]], 
+                       M['refforjnd2xyz.acent', reffornames[2]], 
+                       M[reffornames[1], reffornames[2]], 
+                       M[reffornames[as.numeric(attr(cdrbackup,'conenumb'))], reffornames[2]])[1, ]
+coords[reffornames[2], ] <- fourthpointxyz
 
 # subsequent points
-nextpoints <- row.names(M)[!row.names(M) %in% c("whiref","bluref", "redref", "greref") ]
+nextpoints <- row.names(M)[!row.names(M) %in% reffornames ]
 positions <- lapply(nextpoints, function(x) 
-  pos4(M['whiref', 'bluref'], M['whiref', x],
-       M['bluref', x], M['redref', x]))
+  pos4(M['refforjnd2xyz.acent', reffornames[1]], M['refforjnd2xyz.acent', x],
+       M[reffornames[1], x], M[reffornames[as.numeric(attr(cdrbackup,'conenumb'))], x]))
 names(positions) <- nextpoints
 
-eucdis <- lapply(positions, function(x) dist(rbind(x, coords['greref',]))[c(2,3)])
-whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M['greref', x])))
+eucdis <- lapply(positions, function(x) dist(rbind(x, coords[reffornames[2],]))[c(2,3)])
+whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M[reffornames[2], x])))
 names(whichdist) <- names(eucdis)
 
 coords[nextpoints, ] <- do.call(rbind,
@@ -71,26 +80,54 @@ coords[nextpoints, ] <- do.call(rbind,
 if(TRI){
 coords <- matrix(NA, nrow=nrow(M), ncol=2, dimnames=list(row.names(M), c('x','y')))
 
+reffornames <- grep('refforjnd2xyz', rownames(coords), value=TRUE)
+
 # first point
-coords['whiref', ] <- c(0,0)
+coords['refforjnd2xyz.acent', ] <- c(0,0)
 # second point
-coords['bluref', ] <- c(M['whiref','bluref'],0)
+coords['bluref', ] <- c(M['refforjnd2xyz.acent',reffornames[1]],0)
 # third point
-coords['redref', ] <- pos3(M['whiref','bluref'], M['whiref','redref'], M['bluref','redref'])[1, ]
+coords['redref', ] <- pos3(M['refforjnd2xyz.acent',reffornames[1]], M['refforjnd2xyz.acent', reffornames[as.numeric(attr(cdrbackup,'conenumb'))]], M[reffornames[1], reffornames[as.numeric(attr(cdrbackup,'conenumb'))]])[1, ]
 
 # subsequent points
-nextpoints <- row.names(M)[!row.names(M) %in% c("whiref","bluref", "redref","greref") ]
-positions <- lapply(nextpoints, function(x) pos3(M['whiref','bluref'], M['whiref',x], M['bluref',x]))
+nextpoints <- row.names(M)[!row.names(M) %in% reffornames ]
+positions <- lapply(nextpoints, function(x) pos3(M['refforjnd2xyz.acent',reffornames[1]], M['refforjnd2xyz.acent',x], M[reffornames[1],x]))
 names(positions) <- nextpoints
 
-eucdis <- lapply(positions, function(x) dist(rbind(x, coords['redref',]))[c(2,3)])
-whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M['redref', x])))
+eucdis <- lapply(positions, function(x) dist(rbind(x, coords[reffornames[as.numeric(attr(cdrbackup,'conenumb'))],]))[c(2,3)])
+whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - M[reffornames[as.numeric(attr(cdrbackup,'conenumb'))], x])))
 names(whichdist) <- names(eucdis)
 
 coords[nextpoints, ] <- do.call(rbind,
   lapply(nextpoints, function(x) positions[[x]][whichdist[[x]], ]))
 }
-data.frame(coords[nextpoints,])
+
+
+chromcoords <- data.frame(coords[nextpoints,])
+
+# Achromatic coords
+if('dL' %in% colnames(cdrbackup)){
+coldistres <- as.matrix(rbind(cdrbackup[ ,c(1,2,4)], cdrbackup[ ,c(2,1,4)]))
+
+uniquepatches <-  unique(c(coldistres[,1], coldistres[,2]))
+
+M <- matrix(nrow=length(uniquepatches), ncol=length(uniquepatches))
+
+rownames(M) <- uniquepatches
+colnames(M) <- uniquepatches
+
+M[coldistres[,1:2] ] <- coldistres[,3]
+M[coldistres[,2:1] ] <- coldistres[,3]
+
+class(M) <- 'numeric'
+M[is.na(M)] <- 0
+
+# use ind that is the furthest from all others on average as reference
+achrocoords <- as.matrix(M[which.max(colMeans(M)),])
+chromcoords$lum <- achrocoords[rownames(chromcoords), ]
+}
+
+chromcoords
 }
 
 

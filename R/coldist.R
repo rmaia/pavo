@@ -144,7 +144,7 @@
 
 coldist <-function(modeldata,
                   noise = c('neural','quantum'), subset = NULL,
-                  achro = TRUE, qcatch = NULL,
+                  achro = FALSE, qcatch = NULL,
                   n = c(1,2,2,4), weber = 0.1, weber.ref = 'longest', weber.achro = 0.1,
                   v, n1, n2, n3, n4){
                   	
@@ -718,6 +718,7 @@ if('colspace' %in% class(modeldata)){
     res <- res[-arethererefs, ] 
   
     attr(res, 'resrefs') <- resrefs
+    attr(res, 'conenumb') <- ncone
   }
   
   res
