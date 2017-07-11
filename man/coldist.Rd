@@ -5,7 +5,7 @@
 \title{Color distances}
 \usage{
 coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
-  achro = TRUE, qcatch = NULL, n = c(1, 2, 2, 4), weber = 0.1,
+  achro = FALSE, qcatch = NULL, n = c(1, 2, 2, 4), weber = 0.1,
   weber.ref = "longest", weber.achro = 0.1, v, n1, n2, n3, n4)
 }
 \arguments{
