@@ -5,7 +5,7 @@
 \title{Model spectra in a colorspace}
 \usage{
 colspace(vismodeldata, space = c("auto", "di", "tri", "tcs", "hexagon", "coc",
-  "categorical", "ciexyz", "cielab", "cielch", "segment"))
+  "categorical", "ciexyz", "cielab", "cielch", "segment"), qcatch = NULL)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -30,6 +30,9 @@ with columns representing quantum catches).}
    \item \code{cielch}: CIELCh space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details. (\link[=segplot]{plotting arguments})
 }}
+
+\item{qcatch}{Which quantal catch metric is being inputted. Only used when input data is NOT
+an output from \code{\link{vismodel}}. Must be \code{Qi}, \code{fi} or \code{Ei}.}
 }
 \description{
 Models reflectance spectra in a colorspace. For information on plotting arguments
