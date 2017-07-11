@@ -127,6 +127,8 @@ achrocoords <- as.matrix(M[which.max(colMeans(M)),])
 chromcoords$lum <- achrocoords[rownames(chromcoords), ]
 }
 
+attr(chromcoords, 'class') <- c('colspace', 'data.frame')
+
 chromcoords
 }
 

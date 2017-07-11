@@ -24,6 +24,9 @@
 #'    \item \code{cielch}: CIELCh space. See \code{\link{cie}} for details. (\link[=cieplot]{plotting arguments})
 #'    \item \code{segment}: segment analysis of Endler (1990). See \code{\link{segspace}} for details. (\link[=segplot]{plotting arguments})
 #' }
+#'
+#' @param qcatch Which quantal catch metric is being inputted. Only used when input data is NOT
+#' an output from \code{\link{vismodel}}. Must be \code{Qi}, \code{fi} or \code{Ei}.
 #' 
 #' @examples \dontrun{
 #' data(flowers)
@@ -83,7 +86,7 @@
 #' Society, 41, 315-352.
 
 colspace <- function(vismodeldata, 
-                     space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'cielch', 'segment'))
+                     space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'cielch', 'segment'), qcatch=NULL)
   {
   
   space2 <- try(match.arg(space), silent = T)
@@ -136,8 +139,25 @@ colspace <- function(vismodeldata,
       res$lum <- vismodeldata$lum
     }  
   }  
+  
+  # check qcatch if user-defined input
+  if(is.null(attr(res, 'qcatch'))){
+  	if(is.null(qcatch)){
+      qcatch <- 'Qi'
+      warning('input is not a "vismodel" object and argument "qcatch" is undefined; assuming quantum catch are not transformed (i.e. qcatch="Qi")')
+  	}
+  	attr(res, 'qcatch') <- qcatch 
+  }
+  
+  # check relative if user-defined input
+  if(is.null(attr(res, 'relative'))){
+  	attr(res, 'relative') <- FALSE
+  	receptcols <- res[, colnames(res) %in% c('u','s','m','l')]
+  	if(isTRUE(all.equal(rowSums(receptcols), rowSums(receptcols/rowSums(receptcols)), tol=0.001)))
+  	  attr(res, 'relative') <- TRUE
+  }
 
-attr(res, 'resrefs') <- NULL
+  attr(res, 'resrefs') <- NULL
   
   #remove reference results
   arethererefs <- grep('refforjnd2xyz', rownames(res))
