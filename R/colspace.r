@@ -131,10 +131,13 @@ colspace <- function(vismodeldata,
   }
   
   # include achromatic if there is any
-  if(attr(vismodeldata, 'visualsystem.achromatic') != 'none')
-    res$lum <- vismodeldata$lum
-  
-  attr(res, 'resrefs') <- NULL
+  if(!is.null(attr(vismodeldata,'visualsystem.achromatic'))){
+    if(attr(vismodeldata, 'visualsystem.achromatic') != 'none'){
+      res$lum <- vismodeldata$lum
+    }  
+  }  
+
+attr(res, 'resrefs') <- NULL
   
   #remove reference results
   arethererefs <- grep('refforjnd2xyz', rownames(res))
