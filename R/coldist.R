@@ -427,13 +427,13 @@ bloc2d <- function(coord1, coord2){
 
 
     qcatch <- attr(modeldata, 'qcatch')
+    ncone <- as.character(attr(modeldata, 'conenumb'))
   	
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
         
     if(any(c('dispace','trispace','tcs') %in% attr(modeldata, 'clrsp'))){
       # transform or stop if Qi not appropriate
       qcatch <- attr(modeldata, 'qcatch')
-      ncone <- as.character(attr(modeldata,'conenumb'))
       
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
