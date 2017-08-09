@@ -546,7 +546,6 @@ bloc2d <- function(coord1, coord2){
   	#                 fi = as.matrix(exp(modeldata)) 
   	# )
   	
-    dat <- as.matrix(modeldata)
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
     
