@@ -325,16 +325,17 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H3 
 # limit to 400-700 nm range to avoid spurious UV peaks
-H3object <- object[wl %in% 400:700, , drop = FALSE]
-H3wl <- wl[wl %in% c(400:700)]
+#  how about we don't do that?
+# H3object <- object[wl %in% 400:700, , drop = FALSE]
+# H3wl <- wl[wl %in% c(400:700)]
 # lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
 # Rmid <- round((H1+lambdaRmin)/2)
-RmaxH3 <- sapply(H3object, max)
+RmaxH3 <- sapply(object, max)
 RmidH3 <- (Rmin + RmaxH3) / 2
-H3 <- sapply(1:ncol(H3object), function(x) {
-  which.min(abs(H3object[,x] - RmidH3[x]))
+H3 <- sapply(1:ncol(object), function(x) {
+  which.min(abs(object[,x] - RmidH3[x]))
 })
-H3 <- H3wl[H3]
+H3 <- wl[H3]
 
 
 # H2
