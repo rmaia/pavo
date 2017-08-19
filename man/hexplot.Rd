@@ -6,8 +6,8 @@
 \usage{
 hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
   "coarse"), sec.col = "grey", out.lwd = 1, out.lty = 1,
-  out.lcol = "black", lab.cex = 1, achrosize = 0.8, achrocol = "grey",
-  margins = c(1, 1, 2, 2), square = TRUE, ...)
+  out.lcol = "black", labels.cex = 1, achrosize = 0.8,
+  achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
 \item{hexdata}{(required) a data frame, possibly a result from the \code{colspace} 
@@ -29,7 +29,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for hexagon outline.}
 
-\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE})}
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
 

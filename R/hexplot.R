@@ -15,7 +15,7 @@
 #'        \item \code{'fine'}: 36 10-degree sectors
 #'        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
 #'        }
-#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE})
+#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE})
 #' @param sec.col line colour of hue sector dividers. Defaults to \code{'grey'}.
 #' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
 #' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
@@ -50,7 +50,7 @@
 hexplot <- function(hexdata, achro = TRUE, labels = TRUE, 
                     sectors = c('none', 'fine', 'coarse'), sec.col = 'grey',
                     out.lwd = 1, out.lty = 1, out.lcol = 'black', 
-                    lab.cex = 1, achrosize = 0.8,
+                    labels.cex = 1, achrosize = 0.8,
                     achrocol = 'grey', margins = c(1, 1, 2, 2), square = TRUE,  ...){
   
   sectors <- match.arg(sectors)
@@ -130,8 +130,8 @@ do.call(points, arg)
   
 # Text labels
   if(isTRUE(labels)){
-    text('E(B)', x = 0, y = 1.1, cex = lab.cex)
-    text('E(UV)', x = -1, y = -0.6, cex = lab.cex)
-    text('E(G)', x = 1, y = -0.6, cex = lab.cex)
+    text('E(B)', x = 0, y = 1.1, cex = labels.cex)
+    text('E(UV)', x = -1, y = -0.6, cex = labels.cex)
+    text('E(G)', x = 1, y = -0.6, cex = labels.cex)
   }
 }

@@ -3,14 +3,16 @@ pavo 1.2.1
 MAJOR CHANGES:
 
 MINOR FEATURES AND BUG FIXES:
-* fixed bug on dL calculation when input is a colspace object
+* fixed bug in dL calculation when input is a colspace object
 * subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
-* replaced the modelled receptor sensitivities of the honeybee Apis melifera with the empirical sensitivities from Peitsch et al (1992)
+* replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)
 * fixed bug in colspace models when using non-standard receptor names or ordering
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
 * changed default to achro=FALSE in coldist()
 * the built-in 'green' background spectrum is no longer normalized
+* fixed a bug in the calculation of H3 from summary.rspec
+* fixed a bug in the argument names for expanding text labels in colspace plots 
 
 pavo 1.2
 ------------------------------------------------------------------------------

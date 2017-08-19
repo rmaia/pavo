@@ -4,7 +4,7 @@
 \alias{catplot}
 \title{Plot the categorical colour vision model}
 \usage{
-catplot(catdata, labels = TRUE, lab.cex = 0.9, ...)
+catplot(catdata, labels = TRUE, labels.cex = 0.9, ...)
 }
 \arguments{
 \item{catdata}{(required) a data frame, possibly a result from the \code{colspace} 
@@ -13,7 +13,7 @@ as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 
-\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }

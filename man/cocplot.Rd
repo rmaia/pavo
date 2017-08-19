@@ -4,8 +4,8 @@
 \alias{cocplot}
 \title{Plot the colour opponent coding diagram}
 \usage{
-cocplot(cocdata, labels = TRUE, lab.cex = 0.9, tick.loc = c(-12, -9, -6,
-  -3, 3, 6, 9, 12), achro = FALSE, achrosize = 0.8, achrocol = "grey",
+cocplot(cocdata, labels = TRUE, labels.cex = 0.9, tick.loc = c(-12, -9,
+  -6, -3, 3, 6, 9, 12), achro = FALSE, achrosize = 0.8, achrocol = "grey",
   margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
@@ -15,7 +15,7 @@ as columns (labeled as such).}
 
 \item{labels}{plot axis labels? Defaults to \code{TRUE}.}
 
-\item{lab.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes.}
 
