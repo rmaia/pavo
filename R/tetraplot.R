@@ -74,7 +74,7 @@ tetraplot<- function(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
     
     # Vertices
     u <- P$xyz.convert(0, 0, 0.75)
-    s <- P$xyz.convert((-1 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25)
+    s <- P$xyz.convert((-0.5 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25)
     m <- P$xyz.convert(0, (1/sqrt(2)), -0.25)
     l <- P$xyz.convert((0.5 * sqrt(1.5)), (-1/(2 * sqrt(2))), -0.25)
     no.u <- P$xyz.convert(0, 0, -0.25)
