@@ -4,9 +4,9 @@
 \alias{vol}
 \title{Plot a tetrahedral color space}
 \usage{
-vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, xlim = NULL,
-  ylim = NULL, zlim = NULL, view = NULL, scale.y = NULL,
-  margin = NULL, axis = FALSE, new = FALSE, ...)
+vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, theta = NULL,
+  phi = NULL, r = NULL, zoom = 1, box = NULL, margin = NULL,
+  new = FALSE, view, scale.y, axis, ...)
 }
 \arguments{
 \item{tcsdata}{(required) object of class \code{colspace}.}
@@ -17,11 +17,13 @@ vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, xlim = NULL,
 
 \item{fill}{logical. if \code{TRUE} (default), fills the volume defined by the points.}
 
-\item{xlim, ylim, zlim, view, scale.y, margin, axis}{plotting parameters 
+\item{theta, phi, r, zoom, box, margin}{plotting parameters.
 in case of a new plot. see \code{\link{tetraplot}}.}
 
 \item{new}{logical. Should a new plot be started or draw over an open plot? 
 (defaults to FALSE)}
+
+\item{view, scale.y, axis}{deprecated arguments.}
 
 \item{...}{additional graphical options. See \code{link{polygon}}.}
 }

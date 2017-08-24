@@ -4,36 +4,43 @@
 \alias{tetraplot}
 \title{Plot a static tetrahedral colorspace}
 \usage{
-tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
-  achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
-  scale.y = 1, axis = FALSE, grid = FALSE, xlim = c(-0.613, 0.613),
-  ylim = c(-0.355, 0.7072), zlim = c(-0.25, 0.75), margin = c(1, 1, 1, 1),
-  ...)
+tetraplot(tcsdata, theta = 45, phi = 10, r = 12, zoom = 1,
+  achro = TRUE, achro.col = "grey", achro.size = 0.8,
+  achro.line = FALSE, achro.lwd = 1, achro.lty = 3, tetrahedron = TRUE,
+  out.lwd = 1, out.lcol = "darkgrey", vertexsize = 0.8, box = FALSE,
+  margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
 or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
 coordinates as columns (labeled as such).}
 
-\item{vertexsize}{size of the points at the vertices (defaults to 0.8).}
+\item{theta}{angle to rotate the plot in the xy plane (defaults to 10).}
 
-\item{achrosize}{size of the point in the achromatic center (defaults to 0.8).}
+\item{phi}{angle to rotate the plot in the yz plane (defaults to 45).}
 
-\item{achrocol}{color of the point in the achromatic center (defaults to 'grey').}
+\item{r}{the distance of the eyepoint from the centre of the plotting box. 
+See \code{\link{persp}} for details.}
 
-\item{out.lwd, out.lcol}{graphical parameters for the tetrahedral outline.}
+\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.}
 
-\item{view}{orientation of the tetrahedron in degrees (defaults to 70).}
+\item{achro}{logical. Should the achromatic center be plotted? (defaults to \code{TRUE})}
 
-\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to 0.45).}
+\item{achro.col, }{achro.size, achro.lwd, achro.lty graphical parameters for the achromatic coordinates.}
 
-\item{axis}{logical. Draw X, Y and Z axis (defaults to FALSE).}
+\item{achro.line}{logical. Should the achromatic line be plotted? (defaults to \code{FALSE})}
 
-\item{grid}{logical. Draw grid (defaults to FALSE).}
+\item{tetrahedron}{logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})}
 
-\item{xlim, ylim, zlim}{axis limits.}
+\item{out.lwd, }{out.lcol graphical parameters for the tetrahedral outline.}
 
-\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1, 1, 1, 1)).}
+\item{box}{logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})}
+
+\item{margin}{vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).}
+
+\item{view, }{scale.y, axis, grid deprecated arguments.}
+
+\item{vertex.size}{size of the points at the vertices (defaults to 0.8).}
 }
 \value{
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
