@@ -30,6 +30,16 @@ test_that('Equivalent', {
   expect_equal(
     coldist(vismodel(flowers, relative = FALSE), achro = FALSE), 
     suppressWarnings(coldist(colspace(vismodel(flowers, relative = FALSE)), achro = FALSE)),
-    check.attributes = FALSE)	
+    check.attributes = FALSE)
+    
+  expect_equal(
+  suppressWarnings(coldist(vismodel(flowers))),
+  suppressWarnings(coldist(colspace(vismodel(flowers)))),
+  check.attributes = FALSE)
+  
+  expect_equal(
+  suppressWarnings(coldist(vismodel(flowers))),
+  suppressWarnings(coldist(as.data.frame(vismodel(flowers)), qcatch='Qi')),
+  check.attributes = FALSE)  	
 
 })
