@@ -81,11 +81,11 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
     P <- do.call(persp, argempty)
     
     # Save plot info 
-    assign("last_plot.tetra", P, envir = pavo:::.PlotTetraEnv)
+    assign("last_plot.tetra", P, envir = .PlotTetraEnv)
   }
     
   
-  last_tetraplot <- get("last_plot.tetra", envir = pavo:::.PlotTetraEnv)
+  last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
   
   flatcoords <- data.frame(trans3d(coords[,'x'], coords[,'y'], coords[,'z'], last_tetraplot))
   
