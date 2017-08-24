@@ -4,12 +4,15 @@
 \alias{axistetra}
 \title{Plot reference axes in a static tetrahedral colorspace}
 \usage{
-axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
+axistetra(x = 0, y = 1.3, size = 0.1, arrowhead = 0.05,
   col = par("fg"), lty = par("lty"), lwd = par("lwd"), label = TRUE,
-  adj.label = 0.03, label.cex = 1, label.col = NULL)
+  adj.label = list(x = c(0.003, 0), y = c(0.003, 0.003), z = c(0, 0.003)),
+  label.cex = 1, label.col = NULL)
 }
 \arguments{
-\item{x, y, z}{coordinates for the origin position of the arrows}
+\item{x, y}{position of the legend relative to plot limits
+ (usually a value between 0 and 1, but because of the perspective distortion,
+values greater than 1 are possible)}
 
 \item{size}{length of the arrows. Can be either a single value 
 (applied for x, y and z) or a vector of 3 separate values for each axis.}
@@ -20,9 +23,8 @@ axistetra(x = 0.6, y = 0.8, z = 0.7, size = 0.1, arrowhead = 0.05,
 
 \item{label}{logical, include x, y and z labels (defaults to TRUE).}
 
-\item{adj.label}{position adjustment for the labels. Can be either a 
-single value (applied for x, y and z) or a vector of 3 separate values
-for each axis.}
+\item{adj.label}{position adjustment for the labels. a list of 3 named objects 
+for x, y and z arrows, each with 2 values for x and y adjustment.}
 
 \item{label.cex, label.col}{graphical parameters for the labels.}
 }
