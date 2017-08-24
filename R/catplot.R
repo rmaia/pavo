@@ -8,7 +8,7 @@
 #'  or \code{categorical} function, containing values for 'x' and 'y' coordinates 
 #'  as columns (labeled as such).
 #' @param labels plot category labels inside? Defaults to \code{TRUE}.
-#' @param lab.cex character expansion factor for category labels when \code{labels = TRUE}).
+#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE}).
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'    
 #' @examples
@@ -28,7 +28,7 @@
 #' @references Troje N. (1993). Spectral categories in the learning behaviour
 #'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-catplot <- function(catdata, labels = TRUE, lab.cex = 0.9, ...){ 
+catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...){ 
   
 # Check if object is of class colorspace and tetrachromat
   if(!('colspace' %in% attr(catdata, 'class')) & is.element(FALSE, c('x', 'y') %in% names(catdata)))
@@ -60,10 +60,10 @@ catplot <- function(catdata, labels = TRUE, lab.cex = 0.9, ...){
   
 # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
-    legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = lab.cex)
-    legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = lab.cex)
-    legend(x = 'bottomleft', legend = 'p- y-', bty = 'n', cex = lab.cex)
-    legend(x = 'bottomright', legend = 'p+ y-', bty = 'n', cex = lab.cex)
+    legend(x = 'topleft', legend = 'p- y+', bty = 'n', cex = labels.cex)
+    legend(x = 'topright', legend = 'p+ y+', bty = 'n', cex = labels.cex)
+    legend(x = 'bottomleft', legend = 'p- y-', bty = 'n', cex = labels.cex)
+    legend(x = 'bottomright', legend = 'p+ y-', bty = 'n', cex = labels.cex)
   }
 
 }
