@@ -492,22 +492,22 @@ if(vonkries){
 fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
 Ei <- Qi / (Qi + 1)  # hyperbolic transform
 
-# make references for jnd2xyz
-resrefs <- switch(qcatch,
-  Qi = matrix(apply(Qi,2,min), nrow=dim(Qi)[2], ncol=dim(Qi)[2], byrow=TRUE),
-  fi = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE),
-  Ei = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE)
-)
+# # make references for jnd2xyz
+# resrefs <- switch(qcatch,
+  # Qi = matrix(apply(Qi,2,min), nrow=dim(Qi)[2], ncol=dim(Qi)[2], byrow=TRUE),
+  # fi = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE),
+  # Ei = matrix(apply(fi,2,min), nrow=dim(fi)[2], ncol=dim(fi)[2], byrow=TRUE)
+# )
 
-diag(resrefs) <- switch(qcatch,
-  Qi = apply(Qi,2,max),
-  fi = apply(fi,2,max),
-  Ei = apply(Ei,2,max)
-)
+# # diag(resrefs) <- switch(qcatch,
+  # Qi = apply(Qi,2,max),
+  # fi = apply(fi,2,max),
+  # Ei = apply(Ei,2,max)
+# )
 
-colnames(resrefs) <- colnames(Qi)
-rownames(resrefs) <- paste0('refforjnd2xyz.',colnames(Qi))
-resrefs <- rbind(resrefs, refforjnd2xyz.acent = 1)
+# colnames(resrefs) <- colnames(Qi)
+# rownames(resrefs) <- paste0('refforjnd2xyz.',colnames(Qi))
+# resrefs <- rbind(resrefs, refforjnd2xyz.acent = 1)
 
 
 matrix(apply(Qi,2,min), nrow=dim(Qi)[2], ncol=dim(Qi)[2], byrow=TRUE)
@@ -518,8 +518,8 @@ if(relative & !is.null(lum)){
   fi[,-dim(fi)[2]] <- fi[,-dim(fi)[2]]/rowSums(fi[,-dim(fi)[2]])
   Ei[,-dim(Ei)[2]] <- Ei[,-dim(Ei)[2]]/rowSums(Ei[,-dim(Ei)[2]])
   
-  resrefs[,-dim(resrefs)[2]] <- resrefs[,-dim(resrefs)[2]]/
-    rowSums(resrefs[,-dim(resrefs)[2]])
+  # resrefs[,-dim(resrefs)[2]] <- resrefs[,-dim(resrefs)[2]]/
+    # rowSums(resrefs[,-dim(resrefs)[2]])
 
 # Place dark specs in achromatic center?
 # blacks <- which(norm.B < 0.05) #find dark specs
@@ -534,7 +534,7 @@ if(relative & is.null(lum)){
     # blacks <- which(norm.B < 0.05) #find dark specs
     # Qi[blacks,] <- 0.2500 #place dark specs in achromatic center
     
-    resrefs <- resrefs/rowSums(resrefs)
+#    resrefs <- resrefs/rowSums(resrefs)
 }
 
 # OUTPUT
@@ -561,7 +561,7 @@ attr(res, 'data.visualsystem.achromatic') <- L
 attr(res, 'data.illuminant') <- illum
 attr(res, 'data.background') <- bkg
 attr(res, 'data.transmission') <- trans
-attr(res, 'resrefs') <- resrefs
+#attr(res, 'resrefs') <- resrefs
 
 res
 

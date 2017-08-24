@@ -94,20 +94,20 @@ colspace <- function(vismodeldata,
   if(inherits(space2, 'try-error'))
     stop('Invalid colorspace selected')
   
-  # check if there is a resrefs attribute and bind it
-  	if(!is.null(attr(vismodeldata, 'resrefs'))){
-  		attribdat <- attributes(vismodeldata)
-  		colsincommon <- intersect(colnames(vismodeldata), 
-  		                          colnames(attr(vismodeldata, 'resrefs')))
+  # # check if there is a resrefs attribute and bind it
+  	# if(!is.null(attr(vismodeldata, 'resrefs'))){
+  		# attribdat <- attributes(vismodeldata)
+  		# colsincommon <- intersect(colnames(vismodeldata), 
+  		                          # colnames(attr(vismodeldata, 'resrefs')))
   		
-  		vismodeldata <- rbind(
-  		             attr(vismodeldata, 'resrefs')[, colsincommon],
-  		             vismodeldata[, colsincommon]
-  		             )
-  		attribdat$names <- attributes(vismodeldata)$names
-  		attribdat$row.names <- attributes(vismodeldata)$row.names
-  		attributes(vismodeldata) <- attribdat
-  	}
+  		# vismodeldata <- rbind(
+  		             # attr(vismodeldata, 'resrefs')[, colsincommon],
+  		             # vismodeldata[, colsincommon]
+  		             # )
+  		# attribdat$names <- attributes(vismodeldata)$names
+  		# attribdat$row.names <- attributes(vismodeldata)$row.names
+  		# attributes(vismodeldata) <- attribdat
+  	# }
   
   if(space2 == 'auto'){
   	res<- 
