@@ -7,10 +7,11 @@
 #' @param alpha transparency of volume (if \code{fill = TRUE}).
 #' @param grid logical. if \code{TRUE} (default), draws the polygon outline defined by the points.
 #' @param fill logical. if \code{TRUE} (default), fills the volume defined by the points.
-#' @param xlim,ylim,zlim,view,scale.y,margin,axis plotting parameters 
-#' in case of a new plot. see \code{\link{tetraplot}}.
 #' @param new logical. Should a new plot be started or draw over an open plot? 
 #' (defaults to FALSE)
+#' @param theta,phi,r,zoom,box,margin plotting parameters.
+#' in case of a new plot. see \code{\link{tetraplot}}.
+#' @param view,scale.y,axis deprecated arguments.
 #' @param ... additional graphical options. See \code{link{polygon}}. 
 #'
 #' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot.
@@ -19,12 +20,19 @@
 #'
 #' @export 
 #' 
-
-vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, 
-                xlim = NULL, ylim = NULL, zlim = NULL, 
-                view = NULL, scale.y = NULL, margin = NULL, 
-                axis = FALSE, new = FALSE, ...){
   
+vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, 
+                theta = NULL, phi = NULL, r = NULL, zoom = 1, 
+                box = NULL, margin = NULL, 
+                new = FALSE, view, scale.y, axis, ...){
+
+  if(!missing(view))
+    stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+  if(!missing(scale.y))
+    stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+  if(!missing(axis))
+    stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
   vol <- t(convhulln(tcsdata[, c('x', 'y', 'z')], options = 'FA')$hull)
@@ -35,34 +43,51 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   #check if there is a plot
   isthereplot <- try(get("last_plot.tetra", envir = .PlotTetraEnv), silent=TRUE)
   
+  arg <- list(...)
+
   if(new){
-  	if(is.null(xlim))
-  	  xlim <- range(tcsdata[,'x'])
-  	if(is.null(ylim))
-  	  ylim <- range(tcsdata[,'y'])
-  	if(is.null(zlim))
-  	  zlim <- range(tcsdata[,'z'])
-  	if(is.null(view))
-  	  view <- 70
-  	if(is.null(scale.y))
-  	  scale.y <- 1
+
+    argempty <- c(list(border=FALSE, r=r, box=box, theta=theta, phi=phi), arg)
+
+    argempty$col <- NULL
+
+  	if(is.null(argempty$xlim))
+  	  argempty$xlim <- range(tcsdata[,'x'])/zoom
+  	if(is.null(argempty$ylim))
+  	  argempty$ylim <- range(tcsdata[,'y'])/zoom
+  	if(is.null(arg$zlim))
+  	  argempty$zlim <- range(tcsdata[,'z'])/zoom
+  	if(is.null(argempty$theta))
+  	  argempty$theta <- 45
+  	if(is.null(argempty$phi))
+  	  argempty$phi <- 10
+  	if(is.null(argempty$r))
+  	  argempty$r <- 12
+  	if(is.null(argempty$box))
+  	  argempty$box <- FALSE
   	if(is.null(margin))
-  	  margin <- c(1,1,1,1)
+  	  margin <- c(0,0,0,0)
   	
-  	# Empty plot
-    P <- scatterplot3d(x=xlim, y=ylim, z=zlim, box = FALSE,
-                                  axis = axis, grid = FALSE, angle = view, 
-                                  scale.y = scale.y, mar = margin, pch = '')
+  	argempty$x <- argempty$xlim
+  	argempty$y <- argempty$ylim
+  	argempty$z <- matrix(c(argempty$zlim,argempty$zlim), nrow=2)
+  
+    # empty plot
+    oPar <- par('mar','pty')
+    on.exit(par(oPar))
+  
+    par(mar=margin)
     
-      # Save plot info 
-   assign("last_plot.tetra", P, envir = .PlotTetraEnv)
+    P <- do.call(persp, argempty)
+    
+    # Save plot info 
+    assign("last_plot.tetra", P, envir = pavo:::.PlotTetraEnv)
   }
     
   
-  last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
-  flatcoords <- data.frame(last_tetraplot$xyz.convert(coords))
-
-  arg <- list(...)
+  last_tetraplot <- get("last_plot.tetra", envir = pavo:::.PlotTetraEnv)
+  
+  flatcoords <- data.frame(trans3d(coords[,'x'], coords[,'y'], coords[,'z'], last_tetraplot))
   
   if(is.null(arg$col))
     arg$col <- 'darkgrey'
