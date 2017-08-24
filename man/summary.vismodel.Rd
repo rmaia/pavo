@@ -4,7 +4,7 @@
 \alias{summary.vismodel}
 \title{Visual model summary}
 \usage{
-\method{summary}{vismodel}(object, ...)
+summary.vismodel(object, ...)
 }
 \arguments{
 \item{object}{(required) Results of \code{vismodel}}
