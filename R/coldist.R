@@ -437,7 +437,6 @@ bloc2d <- function(coord1, coord2){
       
       if(lengthn != ncone) 
         stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep=''), call.=FALSE)
-      print(qcatch)
       dat <- as.matrix(modeldata[, names(modeldata) %in% c('u','s','m','l', 'lum')])
       dat <- switch(qcatch, 
   	                fi = dat, 
