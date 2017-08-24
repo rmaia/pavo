@@ -6,8 +6,8 @@
 \usage{
 tetraplot(tcsdata, vertexsize = 0.8, achro = TRUE, achrosize = 0.8,
   achrocol = "grey", out.lwd = 1, out.lcol = "darkgrey", view = 70,
-  scale.y = 1, axis = FALSE, grid = FALSE, xlim = c(-1.22, 0.612),
-  ylim = c(-0.35, 0.707), zlim = c(-0.25, 0.75), margin = c(1, 1, 1, 1),
+  scale.y = 1, axis = FALSE, grid = FALSE, xlim = c(-0.613, 0.613),
+  ylim = c(-0.355, 0.7072), zlim = c(-0.25, 0.75), margin = c(1, 1, 1, 1),
   ...)
 }
 \arguments{
