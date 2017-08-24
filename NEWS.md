@@ -3,6 +3,8 @@ pavo 1.2.1
 MAJOR CHANGES:
 
 MINOR FEATURES AND BUG FIXES:
+* fixed bug in which the tetrahedral plot long vertex was too far off
+* fixed bug in coldist() calculation where quantum catch were not log-transformed when object was neither of class vismodel nor colspace
 * fixed bug in dL calculation when input is a colspace object
 * subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
