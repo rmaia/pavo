@@ -1,20 +1,22 @@
-pavo 1.2.1
+pavo 1.3
 ------------------------------------------------------------------------------
 MAJOR CHANGES:
 
+* tetraplot() has been completely rewritten to allow finer viewing control
+* subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
+
 MINOR FEATURES AND BUG FIXES:
 * fixed bug in which the tetrahedral plot long vertex was too far off
-* fixed bug in coldist() calculation where quantum catch were not log-transformed when object was neither of class vismodel nor colspace
+* fixed bug in coldist() on log-transformation when object was neither of class vismodel nor colspace
 * fixed bug in dL calculation when input is a colspace object
-* subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
-* replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)
-* fixed bug in colspace models when using non-standard receptor names or ordering
+* fixed bug in colspace() models when using non-standard receptor names or ordering
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
 * changed default to achro=FALSE in coldist()
-* the built-in 'green' background spectrum is no longer normalized
-* fixed a bug in the calculation of H3 from summary.rspec
 * fixed a bug in the argument names for expanding text labels in colspace plots 
+* replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)
+* the built-in 'green' background spectrum is no longer normalized
+* removed wavelength limitations in the calculation of H3 from summary.rspec
 
 pavo 1.2
 ------------------------------------------------------------------------------

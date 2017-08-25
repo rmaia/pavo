@@ -2,7 +2,6 @@
 #'
 #' Add points to a colorspace plot
 #' 
-#' @import scatterplot3d
 #' 
 #' @param x (required) an object of class \code{colspace}. 
 #' @param ... additional graphical options. See \code{\link{par}}.
@@ -15,6 +14,7 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
+#'
 
 points.colspace <- function(x, ...){
   
@@ -53,11 +53,15 @@ points.colspace <- function(x, ...){
     
     last_labplot <- get("last_plot.cielab", envir = .PlotCielabEnv)
     
-    arg$x <- x[ ,'a']
-    arg$y <- x[ ,'b']
-    arg$z <- x[ ,'L']
+    # arg$x <- x[ ,'a']
+    # arg$y <- x[ ,'b']
+    # arg$z <- x[ ,'L']
     
-    do.call(last_labplot$points3d, arg)
+    # do.call(last_labplot$points3d, arg)
+    
+    xy <- trans3d(x[,'a'], x[,'b'], x[,'L'], last_labplot)  
+    do.call(points, c(xy, arg))
+
   }
   
 }

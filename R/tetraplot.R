@@ -2,7 +2,6 @@
 #'
 #' Produces a static 3D tetrahedral plot.
 #' 
-#' @import scatterplot3d
 #' 
 # #' @usage plot(tcsdata, ...) 
 #' 
@@ -41,10 +40,14 @@
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' @author Chad Eliason \email{cme16@zips.uakron.edu}
 #'
 #' @export
 #' 
 #' @keywords internal
+#'
+#' @importFrom grDevices trans3d
+#' @importFrom graphics persp
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
