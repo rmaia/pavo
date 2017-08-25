@@ -107,4 +107,6 @@ Backhaus W. (1991). Color opponent coding in the visual system
 Rafael Maia \email{rm72@zips.uakron.edu}
 
 Thomas White \email{thomas.white026@gmail.com}
+
+Chad Eliason \email{cme16@zips.uakron.edu}
 }

@@ -76,5 +76,7 @@ Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 Rafael Maia \email{rm72@zips.uakron.edu}
 
 Thomas White \email{thomas.white026@gmail.com}
+
+Chad Eliason \email{cme16@zips.uakron.edu}
 }
 \keyword{internal}
