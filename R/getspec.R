@@ -127,7 +127,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     raw <- gsub('^;|;$', '', raw)
 
     # split on separators
-    rawsplit <- strsplit(raw, seps)
+    rawsplit <- strsplit(raw, ";", fixed=TRUE)
     
     rawsplit <- do.call(rbind, rawsplit)
     
