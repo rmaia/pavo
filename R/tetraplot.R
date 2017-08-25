@@ -159,7 +159,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 12, zoom = 1,
 #              'lphi', 'shade', 'box', 'axes', 'nticks', 'ticktype')] <- NULL
 
 
-  # add tcsdataa points
+  # add tcsdata points
   
   argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
   argpoints['col'] <- col

@@ -5,9 +5,8 @@
 \title{CIE plot}
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
-  xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), zlim = c(0, 10),
-  margin = c(1, 1, 1, 1), ...)
+  out.lty = 1, theta = 45, phi = 10, r = 12, zoom = 1, box = FALSE,
+  margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
@@ -19,17 +18,24 @@ plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for the monochromatic loci outline.}
 
-\item{view}{orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).}
+\item{theta}{angle to rotate the plot in the xy plane  when \code{space = 'cielab'} 
+(defaults to 10).}
 
-\item{scale.y}{numeric. Perspective scaling of the y axis (defaults to \code{0.45}).}
+\item{phi}{angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
+(defaults to 45).}
 
-\item{axis}{logical. Draw X, Y and Z axis (defaults to \code{FALSE}).}
+\item{r}{the distance of the eyepoint from the centre of the plotting box 
+when \code{space = 'cielab'}. See \code{\link{persp}} for details.}
 
-\item{grid}{logical. Draw grid (defaults to \code{FALSE}).}
+\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
+when \code{space = 'cielab'}.}
 
-\item{xlim, ylim, zlim}{axis limits}
+\item{box}{logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})}
 
-\item{margin}{vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))}
+\item{margin}{vector of four numbers specifying drawing margins for CIELAB plot
+(defaults to c(0,0,0,0))}
+
+\item{view, }{scale.y, axis, grid deprecated arguments.}
 
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }
@@ -60,5 +66,7 @@ Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}
+
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \keyword{internal}

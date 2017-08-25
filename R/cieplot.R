@@ -12,13 +12,19 @@
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline. 
-#' @param view orientation of the 3d plot in degrees, when \code{space = 'cielab'} (defaults to 70).
-#' @param scale.y numeric. Perspective scaling of the y axis (defaults to \code{0.45}).
-#' @param axis logical. Draw X, Y and Z axis (defaults to \code{FALSE}).
-#' @param grid logical. Draw grid (defaults to \code{FALSE}).
+#' @param theta angle to rotate the plot in the xy plane  when \code{space = 'cielab'} 
+#' (defaults to 10).
+#' @param phi angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
+#' (defaults to 45).
+#' @param r the distance of the eyepoint from the centre of the plotting box 
+#' when \code{space = 'cielab'}. See \code{\link{persp}} for details.
+#' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
+#' when \code{space = 'cielab'}.
+#' @param box logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})
+#' @param view, scale.y, axis, grid deprecated arguments.
+#' @param margin vector of four numbers specifying drawing margins for CIELAB plot
+#'   (defaults to c(0,0,0,0))
 #' @param ... Additional graphical options. See \code{\link{par}}.
-#' @param xlim,ylim,zlim axis limits
-#' @param margin vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))
 #' 
 #' @examples
 #' \dontrun{
@@ -35,10 +41,14 @@
 #' }
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' 
 #' @export
 #' 
 #' @keywords internal
+#' 
+#' @importFrom grDevices trans3d
+#' @importFrom graphics persp
 #' 
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 #'    Transactions of the Optical Society, 33(3), 73-134.
@@ -46,12 +56,9 @@
 #'    using MATLAB. John Wiley & Sons.
 #'    
 
-
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
-                     out.lty = 1, view = 70, scale.y = 0.45, axis = FALSE, grid = FALSE,
-                     xlim = c(-12.8, 12.7), ylim = c(-12.8, 12.7), 
-                     zlim = c(0, 10.0), margin = c(1, 1, 1, 1),
-                      ...){
+                     out.lty = 1, theta = 45, phi = 10, r = 12, zoom = 1, box = FALSE,
+                     margin = c(0, 0, 0, 0), view, scale.y, axis, grid , ...){
   
   arg <- list(...)
   
@@ -113,49 +120,79 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
 
   # CIELAB or CIELch
   if(attr(ciedata, 'clrsp') == 'CIELAB' | attr(ciedata, 'clrsp') == 'CIELCh'){
+  	
+  	# check deprecated arguments view, scale.y, axis, grid
+    if(!missing(view))
+      stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+    if(!missing(scale.y))
+      stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+    if(!missing(axis))
+      stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+    if(!missing(grid))
+      stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
     
     # Set defaults
     arg <- list(...)
     
-    if(is.null(arg$cex))
-      arg$cex <- 0.9
     if(is.null(arg$pch))
       arg$pch <- 19
-
-    P <- scatterplot3d(mean(xlim), mean(ylim), mean(zlim), box = TRUE, 
-                          xlim = xlim, ylim = ylim, 
-                          zlim = zlim, axis = axis, grid = grid, angle = view, 
-                          scale.y = scale.y, mar = margin, pch = '')
+    if(is.null(arg$col))
+      arg$col <- 1    
+    if(is.null(arg$xlim))
+      arg$xlim <- c(-12.8, 12.7) / zoom
+    if(is.null(arg$ylim))
+      arg$ylim <- c(-12.8, 12.7) / zoom
+    if(is.null(arg$zlim))
+      arg$zlim <- c(0, 10) / zoom
+      
+    col <- arg['col']
+    arg['col'] <- NULL
     
+    # draw empty plot
+    
+    par(mar=margin)
+    
+    P <- do.call(persp, c(list(x=arg$xlim,
+                             y=arg$ylim,
+                             z=matrix(c(arg$zlim,arg$zlim), nrow=2),
+                             border=FALSE, r=r, box=box, theta=theta, phi=phi), arg))    
+
+        
     # LAB plot axis line vertices
-    L1 <- P$xyz.convert(0, 0, 0)
-    L2 <- P$xyz.convert(0, 0, 10.0)
-    a1 <- P$xyz.convert(-12.8, 0, 5.0)
-    a2 <- P$xyz.convert(12.7, 0, 5.0)
-    b1 <- P$xyz.convert(0, -12.8, 5.0)
-    b2 <- P$xyz.convert(0, 12.7, 5.0)
+    verts <- matrix(c(0,0,0,0,0,10,-12.8,0,5,12.7,0,5,0,-12.8,5,0,12.7,5), 
+      ncol=3, byrow=TRUE, 
+      dimnames=list(paste0(rep(c('L', 'a', 'b'), each=2), 1:2), c('x','y','z')))
+      
+    vertst <- trans3d(verts[,'x'], verts[,'y'], verts[,'z'], P)
     
     # Text label locations
-    txt_L <- P$xyz.convert(0, 0, 10.4)
-    txt_a <- P$xyz.convert(-14.0, 0, 5.0)
-    txt_b <- P$xyz.convert(0, -15.0, 5.0)
+    
+    txtlab <- matrix(c(0,0,10.4, -14,0,5, 0,-15,5), ncol=3, byrow=TRUE,
+      dimnames=list(c('tL', 'ta', 'tb'), c('x', 'y', 'z')))
+      
+    txtlabt <- trans3d(txtlab[,'x'], txtlab[,'y'], txtlab[,'z'], P)
   
     # Draw them up
-    segments(L1$x, L1$y, L2$x, L2$y, lwd = 1.5)
-    segments(a1$x, a1$y, a2$x, a2$y, lwd = 1.5)
-    segments(b1$x, b1$y, b2$x, b2$y, lwd = 1.5)
+    segments(vertst$x['L1'], vertst$y['L1'], vertst$x['L2'], vertst$y['L2'], lwd = 1.5)
+    segments(vertst$x['a1'], vertst$y['a1'], vertst$x['a2'], vertst$y['a2'], lwd = 1.5)
+    segments(vertst$x['b1'], vertst$y['b1'], vertst$x['b2'], vertst$y['b2'], lwd = 1.5)
     
     # Axis labels
-    text(x = txt_L$x, y = txt_L$y, labels = "L")
-    text(x = txt_a$x, y = txt_a$y, labels = "a")
-    text(x = txt_b$x, y = txt_b$y, labels = "b")
-    
+    text(x = txtlabt$x['tL'], txtlabt$y['tL'], labels = 'L')
+    text(x = txtlabt$x['ta'], txtlabt$y['ta'], labels = 'a')
+    text(x = txtlabt$x['tb'], txtlabt$y['tb'], labels = 'b')
+        
     # Data
-    arg$x <- ciedata$a
-    arg$y <- ciedata$b
-    arg$z <- ciedata$L
+    argpoints <- arg
+    argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
+    argpoints['col'] <- col
+
+    xy <- trans3d(ciedata[,'a'], ciedata[,'b'], ciedata[,'L'], P)
     
-    do.call(P$points3d, arg)
+    argpoints$x <- xy$x
+    argpoints$y <- xy$y
+    
+    do.call(points, argpoints)
     
     # Save plot info 
     #.PlotCielabEnv <<- new.env()
