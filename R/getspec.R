@@ -12,6 +12,8 @@
 #' considered (defaults to 300 and 700).
 #' @param decimal character to be used to identify decimal plates 
 #' (defaults to ".").
+#' @param sep column delimiting characters to be considered in addition to the
+#' default (which are: tab, space, and ";")
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
 #' @param subdir.names should subdirectory path be included in the name of the
@@ -39,7 +41,7 @@
 
 
 getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
-           subdir = FALSE, subdir.names = FALSE, fast = FALSE)
+           sep=NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE)
   {
   
   if(fast){
@@ -57,11 +59,10 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     
   }
   
-  
-  corrupt <- FALSE
-  
-  extension <- paste('.', ext, sep='')
-  
+  # allow multiple extensions
+  extension <- paste0("\\.",ext, collapse='|')
+ 
+  # get file names
   file_names <- list.files(where, pattern = extension, recursive = subdir, include.dirs = subdir)
   files <- paste(where, '/', file_names, sep = '')
   
@@ -73,15 +74,22 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   	 }
   
   if(length(file_names) == 0){
-  	stop('No files found. Try a different ext')
+  	stop('No files found. Try a different extension value for argument "ext"')
   	} 
   
   # Wavelength range
-  range <- lim[1]:lim[2]
+  range <- seq(lim[1],lim[2])
   
   # Build shell of final output
-  final <- data.frame(matrix(nrow = length(range), ncol = length(file_names) + 1))
+  final <- matrix(nrow = length(range), ncol = length(file_names) + 1)
   final[, 1] <- range
+  
+  # vector of corrupt files
+  corrupt <- rep(FALSE, length(files))
+  
+  # define separators 
+  seps <- paste0(c("\\\t|\\;| ",sep), collapse="|\\")
+
   
   # Setting a progress bar
   progbar <- txtProgressBar(min = 0, max = length(files), style = 2)
@@ -105,78 +113,59 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
       #      raw <- gsub('\\tinf', '\t0.0', raw)
       #      corrupt <- TRUE
       #    }
+    
+    # exclude columns that have text
+    raw <- raw[!grepl(paste0('[A-Da-dF-Zf-z]'), raw)]
+        
+    # substitute separators for a single value to be used in split
+    raw <- gsub(seps, ";", raw)
+    
+    # remove multiply occuring split character
+    raw <- gsub(paste0("(;)\\1+"), "\\1", raw)
+    
+    # remove split character from first or last occurence
+    raw <- gsub('^;|;$', '', raw)
 
-    # find last line with text
-    start <- grep('[A-Da-dF-Zf-z]', raw)
+    # split on separators
+    rawsplit <- strsplit(raw, seps)
     
-    # For files with no preamble text
-    if(length(start) == 0)
-      start <- 1
-  
-    # correct for spectrasuite files, which have a "End Processed Spectral Data" at the end
-    isendline <- length(grep('End.*Spectral Data', raw)) > 0
-    if(isendline)
-      start <- start[-length(start)]
+    rawsplit <- do.call(rbind, rawsplit)
     
-    start <- max(start)
-    end <- length(raw) - start
+    if(dim(rawsplit)[2] < 2)
+      stop('could not separate columns, choose a different value for "sep" argument', call.=FALSE)
+   
+   # convert to numeric, check for NA
+   suppressWarnings(class(rawsplit) <- 'numeric')
+   
+   # remove columns where all values are NAs (due to poor tabulation)
+   rawsplit <- rawsplit[, !apply(rawsplit, 2, function(x) all(is.na(x)))]
     
-    if(isendline > 0)
-      end <- end - 1
-    
-    # Avantes has an extra skipped line between header and data. Bad Avantes.
-    newavaheader <- length(grep("Wave.*;Sample.*;Dark.*;Reference;Reflectance", raw)) > 0
-    
-    if(newavaheader)
-      start <- start + 1
-    
-    # find if columns are separated by semicolon or tab
-    issem <- length(grep(';', raw)) > 0
-    istab <- length(grep('\t', raw)) > 0
-    
-    if(issem & istab)
-      stop('inconsistent column delimitation in source files.')
-      
-    separ <- ifelse(issem, ';', '\t')
-    
-    # extract data from file
-    tempframe <- suppressWarnings(read.table(files[i], dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
+   # use only first and last column
+   tempframe <- rawsplit[, c(1, dim(rawsplit)[2])]
+   
+   # interpolate
+   interp <- do.call(cbind, approx(tempframe[, 1], tempframe[, 2], xout = range))
+   
+   # check if there are any NA left, assign as corrupt if so
+   if(any(is.na(interp)))
+     corrupt[i] <- TRUE
 
-    # TEMPORARY PLACEHOLDER - USING THE RAW RATHER THAN THE FILE TO GET THE SPEC
-    #con <- textConnection(raw)
-    #tempframe <- suppressWarnings(read.table(con, dec = decimal, sep = separ, skip = start, nrows = end, row.names = NULL, skipNul = TRUE))
-    #close(con)
-    
-    # convert non-numeric values to numeric
-    if(any(c('character','factor') %in% apply(tempframe, 2, class))){
-      tempframe <- suppressWarnings(apply(tempframe, 2, 
-        function(x) as.numeric(as.character(x))))
-      
-      if(sum(apply(tempframe, 2, function(x) sum(is.na(x))))) 
-        corrupt <- TRUE
-      }
-      
-    # remove columns where all values are NAs (due to poor tabulation)
-    tempframe <- tempframe[ , colSums(is.na(tempframe)) < nrow(tempframe)]
-    
-    # Jaz and Avasoft8 have 5 columns, correct
-    tempframe <- tempframe[ , c(1, dim(tempframe)[2])]
-    
-    interp <- data.frame(approx(tempframe[, 1], tempframe[, 2], xout = range))
-    names(interp) <- c("wavelength", strsplit(file_names[i], extension))
-    
-    final[, i+1] <- interp[, 2]
+   # add to final table
+   final[, i+1] <- interp[, 2]
+   
+   head(final)
     
     setTxtProgressBar(progbar, i)
     
     }
   
-  names(final) <- c('wl', gsub(extension, '', file_names))
+  colnames(final) <- c('wl', gsub(extension, '', file_names))
+  final <- as.data.frame(final)
   class(final) <- c('rspec', 'data.frame')
   
-if(corrupt){
+if(any(corrupt)){
   	cat('\n')
-  	warning('one or more files contains character elements within wavelength and/or reflectance values - check for corrupt or otherwise poorly exported files. Verify values returned.')
+  	warning('the following files contain character elements within wavelength and/or reflectance values: - check for corrupt or otherwise poorly exported files. Verify values returned.')
 }
   
   # Negative value check

@@ -5,7 +5,7 @@
 \title{Import spectra files}
 \usage{
 getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
-  subdir = FALSE, subdir.names = FALSE, fast = FALSE)
+  sep = NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE)
 }
 \arguments{
 \item{where}{(required) folder in which files are located.}
@@ -18,6 +18,9 @@ considered (defaults to 300 and 700).}
 
 \item{decimal}{character to be used to identify decimal plates 
 (defaults to ".").}
+
+\item{sep}{column delimiting characters to be considered in addition to the
+default (which are: tab, space, and ";")}
 
 \item{subdir}{should subdirectories within the \code{where} folder be
 included in the search? (defaults to \code{FALSE}).}
