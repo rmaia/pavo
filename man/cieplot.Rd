@@ -5,8 +5,8 @@
 \title{CIE plot}
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
-  out.lty = 1, theta = 45, phi = 10, r = 12, zoom = 1, box = FALSE,
-  margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
+  out.lty = 1, theta = 45, phi = 10, r = 1e+06, zoom = 1,
+  box = FALSE, margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
@@ -25,7 +25,9 @@ plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.}
 (defaults to 45).}
 
 \item{r}{the distance of the eyepoint from the centre of the plotting box 
-when \code{space = 'cielab'}. See \code{\link{persp}} for details.}
+when \code{space = 'cielab'}. Very high values approximate an orthographic projection 
+(defaults to 1e6). See \code{\link{persp}} for details.
+. See \code{\link{persp}} for details.}
 
 \item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
 when \code{space = 'cielab'}.}

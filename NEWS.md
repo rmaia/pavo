@@ -2,7 +2,7 @@ pavo 1.3
 ------------------------------------------------------------------------------
 MAJOR CHANGES:
 
-* tetraplot() has been completely rewritten to allow finer viewing control
+* tetraplot() and cieplot() have been completely rewritten to allow finer viewing control
 * subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 
 MINOR FEATURES AND BUG FIXES:
@@ -12,6 +12,7 @@ MINOR FEATURES AND BUG FIXES:
 * fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background
 * fixed bug in colspace() models when using non-standard receptor names or ordering
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
+* fixed location of red vertex in tetraplot()
 * changed default to achro=FALSE in coldist()
 * fixed a bug in the argument names for expanding text labels in colspace plots 
 * replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)

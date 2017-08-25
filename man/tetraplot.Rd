@@ -4,7 +4,7 @@
 \alias{tetraplot}
 \title{Plot a static tetrahedral colorspace}
 \usage{
-tetraplot(tcsdata, theta = 45, phi = 10, r = 12, zoom = 1,
+tetraplot(tcsdata, theta = 45, phi = 10, r = 1e+06, zoom = 1,
   achro = TRUE, achro.col = "grey", achro.size = 0.8,
   achro.line = FALSE, achro.lwd = 1, achro.lty = 3, tetrahedron = TRUE,
   out.lwd = 1, out.lcol = "darkgrey", vertexsize = 0.8, box = FALSE,
@@ -20,6 +20,7 @@ coordinates as columns (labeled as such).}
 \item{phi}{angle to rotate the plot in the yz plane (defaults to 45).}
 
 \item{r}{the distance of the eyepoint from the centre of the plotting box. 
+Very high values approximate an orthographic projection (defaults to 1e6).
 See \code{\link{persp}} for details.}
 
 \item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.}

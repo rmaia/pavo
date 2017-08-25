@@ -17,7 +17,9 @@
 #' @param phi angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
 #' (defaults to 45).
 #' @param r the distance of the eyepoint from the centre of the plotting box 
-#' when \code{space = 'cielab'}. See \code{\link{persp}} for details.
+#' when \code{space = 'cielab'}. Very high values approximate an orthographic projection 
+#' (defaults to 1e6). See \code{\link{persp}} for details.
+#' . See \code{\link{persp}} for details.
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
 #' when \code{space = 'cielab'}.
 #' @param box logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})
@@ -57,7 +59,7 @@
 #'    
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
-                     out.lty = 1, theta = 45, phi = 10, r = 12, zoom = 1, box = FALSE,
+                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
                      margin = c(0, 0, 0, 0), view, scale.y, axis, grid , ...){
   
   arg <- list(...)
