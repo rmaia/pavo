@@ -14,6 +14,7 @@ MINOR FEATURES AND BUG FIXES:
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
 * fixed location of red vertex in tetraplot()
 * fixed a bug in the argument names for expanding text labels in colspace plots
+* removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.
 * changed default to achro=FALSE in coldist() 
 * replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)
 * the built-in 'green' background spectrum is no longer normalized

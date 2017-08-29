@@ -4,8 +4,7 @@
 \alias{summary.rspec}
 \title{Colorimetric variables}
 \usage{
-\method{summary}{rspec}(object, subset = FALSE, wlmin = NULL,
-  wlmax = NULL, ...)
+summary.rspec(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...)
 }
 \arguments{
 \item{object}{(required) a data frame, possibly an object of class \code{rspec},

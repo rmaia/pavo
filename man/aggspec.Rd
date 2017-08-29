@@ -4,7 +4,7 @@
 \alias{aggspec}
 \title{Aggregate reflectance spectra}
 \usage{
-aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE)
+aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) data frame, possibly of class \code{rspec}
@@ -22,8 +22,6 @@ same identification); or a list of vectors, e.g., \code{by = list(sex, species)}
 
 \item{trim}{logical. if \code{TRUE} (default), the function will try to identify and 
 remove numbers at the end of the names of the columns in the new rspec object.}
-
-\item{na.rm}{should NAs be reomved? Defaults to \code{FALSE}.}
 }
 \value{
 A data frame of class \code{rspec} containing the spectra after applying the aggregating function.

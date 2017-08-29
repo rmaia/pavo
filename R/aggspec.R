@@ -15,7 +15,6 @@
 #' @param FUN the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})
 #' @param trim logical. if \code{TRUE} (default), the function will try to identify and 
 #' remove numbers at the end of the names of the columns in the new rspec object.
-#' @param na.rm should NAs be reomved? Defaults to \code{FALSE}.
 #' 
 #' @return A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 #' 
@@ -40,7 +39,7 @@
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
-aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE) {
+aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   
   #BEGIN RM EDIT
   # check: user may have removed 'wl' function already.
@@ -56,7 +55,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE
   }
   
   if (is.null(by)) {
-    dat <- apply(y, 1, FUN, na.rm = na.rm)
+    dat <- apply(y, 1, FUN)
     res <- data.frame(cbind(wl=wl, dat))
     class(res) <- c('rspec','data.frame')
     return(res)
@@ -122,7 +121,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE, na.rm = FALSE
     formals(FUN) <- c(formals(FUN), alist(... = ))
   }
   
-  dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN, na.rm = na.rm)})
+  dat <- sapply(unique(by), function(z){apply(y[which(by==z)], 1, FUN)})
   
   colnames(dat) <- unique(by0)
   
