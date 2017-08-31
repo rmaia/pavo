@@ -83,8 +83,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   col <- arg['col']
   arg['col'] <- NULL
     
-
-  
+    
   # tetrahedron vertices
   verts <- matrix(c(
   0, 0, 0.75,
@@ -96,7 +95,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   
   # combinations of vertices to make facets
   sides <- verts[combn(1:4, 2), ] 
-  
+  rownames(sides) <- paste0(rep(
+     do.call(paste0, data.frame(t(combn(c('u','s','m','l'), 2)))),each=2),
+     c('.1', '.2'))
+
   # if no limits are given, estimate based on tetrahedron or tcsdataa limits
   if(any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))){
 
@@ -118,78 +120,152 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
 
 
   # draw blank 3d plot
+  # Save rotation matrix without plotting
 
-  par(mar=margin)
-  
+  pdf(file=NULL)
   M <- do.call(persp, c(list(x=arg$xlim,
                              y=arg$ylim,
                              z=matrix(c(arg$zlim,arg$zlim), nrow=2),
                              border=FALSE, r=r, box=box, theta=theta, phi=phi), arg))
+  garbage <- dev.off()
+
+  # position of points in projected space
+  allcoords <- as.matrix(rbind(
+    tcsdata[,c('x','y','z')], 
+    verts[,c('x','y','z')], 
+    achro=c(0,0,0), 
+    achrbot=c(0,0,-0.25)
+    ))
+    
+  tcoord <- cbind(allcoords, 1) %*% M
+  tcoord[ ,1] <- tcoord[ ,1]/tcoord[ ,4] 
+  tcoord[ ,2] <- tcoord[ ,2]/tcoord[ ,4] 
+  colnames(tcoord) <- c('x', 'y', 'depth', 'scale')
   
-  # add tetrahedron
+  argblank <- arg
+
+  argblank[names(as.list(args(graphics:::persp.default)))] <- NULL  
+  argblank$xlim <- tcoord['achro','x'] + c(-1,1)*max(abs(tcoord['achro','x'] - tcoord[,'x'])) / zoom
+  argblank$ylim <- tcoord['achro','y'] + c(-1,1)*max(abs(tcoord['achro','y'] - tcoord[,'y'])) / zoom
+  #argblank$ylim <- range(tcoord[,'y'])
+  argblank$x <- tcoord
+  argblank$type <- 'n'
+  argblank$bty <- 'n'
+  argblank$xaxt <- 'n'
+  argblank$yaxt <- 'n'
+  argblank$ylab <- ''
+  argblank$xlab <- ''
+  
+  par(mar=margin, pty='s')  
+  do.call(plot, argblank)
+  
+  xy <- tcoord[rownames(tcoord) %in% rownames(tcsdata), c('x','y'), drop=FALSE]
+
+  # get depth vector
   if(tetrahedron){
-  	xytet <- trans3d(sides[,'x'], sides[,'y'], sides[,'z'], M)
-  	lines(xytet, lwd = out.lwd, col = out.lcol)
-  	  	
-  	if(theta > 0 & theta <= 120)
-  	  lines(xytet$x[-c(5:6)], xytet$y[-c(5:6)], lwd = out.lwd, col = out.lcol)
-  	  
-  	# theta between 120 and 250: um in front
-  	if(theta > 120 & theta <= 250)
-  	  lines(xytet$x[-c(3:4)], xytet$y[-c(3:4)], lwd = out.lwd, col = out.lcol)
-  	
-  	# theta between 250 and 360: us in front
-  	if(theta > 250 & theta <= 360)
-  	  lines(xytet$x[-c(1:2)], xytet$y[-c(1:2)], lwd = out.lwd, col = out.lcol)
-  	  
+  	dvals <- tcoord[,'depth']
+  } else{
+  	dvals <- tcoord[!rownames(tcoord) %in% c('u','s','m','l'),'depth']
   }
   
-  # add achromatic center
-  if(achro)
-    points(trans3d(0, 0, 0, M), col=NULL, bg=achro.col, pch=21, cex=achro.size)
+  dvals <- (((dvals - min(dvals)) * (2 - 1)) / (max(dvals) - min(dvals))) + 1
   
-  # add achromatic line
-  if(achro.line)
-    lines(trans3d(c(0,0), c(0,0), c(-.25,.75), M), col=achro.col, lty=achro.lty, lwd=achro.lwd)
+  maxdatad <-  max(dvals[dvals[names(dvals) %in% rownames(tcsdata)]])
+  
+  # add tetrahedron lines and vertices behind the data
+  
+  if(tetrahedron){
+  	
+    # vertice colors
+    vcols <- setNames(c('darkorchid1','cornflowerblue','mediumseagreen', 'firebrick1'), rownames(verts))   
+    
+    # tetrahedron sides
+    xytet <- cbind(sides, 1) %*% M
+    xytet[ ,1] <- xytet[ ,1]/xytet[ ,4] 
+    xytet[ ,2] <- xytet[ ,2]/xytet[ ,4] 
+    colnames(xytet) <- c('x', 'y', 'depth', 'scale')
+
+    # find which vertices are in front of the tetrahedron
+    # CAVEATS: 
+    # 1: if viewed from the top, only 'u' can be in the front
+    # however, if viewed from the side, 'u' may be in the front but 
+    # not all ux segments should be in the front...
+    #
+    # 2: for a segment with one vertice in front, 
+    # if any vertice behind is higher (greater y) than the data points,  
+    # the segment should still be drawn before the points 
+
+
+    # which vertex are behind data
+    vinback <- dvals[c('u','s','m','l')] < maxdatad
+    
+    segs <- cbind(xytet[c(1,3,5,7,9,11), c('x','y')], xytet[c(2,4,6,8,10,12), c('x','y')])
+    
+    linback <- apply(do.call(rbind, 
+      lapply(names(vinback)[vinback], grepl, x=rownames(segs))), 2, all)
+    
+    segments(
+      segs[linback,1,drop=F],
+      segs[linback,2,drop=F],
+      segs[linback,3,drop=F],
+      segs[linback,4,drop=F],
+      lwd = out.lwd, col = out.lcol
+      )
+    
+    # add vertices behind tetrahedron
+ 
+    points(tcoord[names(vinback)[vinback], c('x','y'), drop=FALSE], pch=21, 
+      cex = dvals[names(vinback)[vinback]], col=NULL, 
+      bg=vcols[names(vinback)[vinback]])
+      
+  }
   
 
+  # add achromatic center if it is behind the data
+  if(achro && dvals["achro"] < maxdatad)
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=dvals['achro'])
+    
+  # add achromatic line if behind the data
+  if(achro.line && dvals["achro"] < maxdatad)
+    lines(tcoord[c('achrbot','u'),c('x','y'), drop=FALSE], col=achro.col, lty=achro.lty, lwd=achro.lwd)
   
+  ######################
+  # add tcsdata points #
+  ######################
   argpoints <- arg
-#  argpoints[c('xlim', 'ylim', 'zlim', 'xlab', 'ylab', 'zlab', 
-#              'main', 'sub', 'd', 'scale', 'expand', 'border', 'ltheta',
-#              'lphi', 'shade', 'box', 'axes', 'nticks', 'ticktype')] <- NULL
 
-
-  # add tcsdata points
-  
   argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
   argpoints['col'] <- col
-    
-  xy <- trans3d(tcsdata[,'x'], tcsdata[,'y'], tcsdata[,'z'], M)
+  argpoints$cex <- dvals[names(dvals) %in% rownames(tcsdata)]
+  
+  argpoints$x <- xy
 
-  do.call(points, c(xy, argpoints))
+  do.call(points, argpoints)
+  
+  # add achromatic center if it is in front of the data
+  if(achro && dvals["achro"] > maxdatad)
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=dvals['achro'])
     
-  # add tetrahedron lines in front of the points
-  if(tetrahedron){
-  	# theta between 0 and 120: ul in front
-  	if(theta > 0 & theta <= 120)
-  	  lines(xytet$x[c('u','l')], xytet$y[c('u','l')], lwd = out.lwd, col = out.lcol)
-  	  
-  	# theta between 120 and 250: um in front
-  	if(theta > 120 & theta <= 250)
-  	  lines(xytet$x[c('u','m')], xytet$y[c('u','m')], lwd = out.lwd, col = out.lcol)
-  	
-  	# theta between 250 and 360: us in front
-  	if(theta > 250 & theta <= 360)
-  	  lines(xytet$x[c('u','s')], xytet$y[c('u','s')], lwd = out.lwd, col = out.lcol)
-
-  	
-    # add vertex points
-    xyvert <- trans3d(verts[,'x'], verts[,'y'], verts[,'z'], M)
-    points(xyvert, pch=21, cex = vertexsize, col=NULL, 
-      bg=c('darkorchid1','cornflowerblue','mediumseagreen', 'firebrick1'))
-	
+  # add achromatic line if in front of the data
+  if(achro.line && dvals["achro"] > maxdatad)
+    lines(tcoord[c('achrbot','u'),c('x','y'), drop=FALSE], col=achro.col, lty=achro.lty, lwd=achro.lwd)
+  
+  # add tetrahedron lines and vertices in front of the points
+  if(tetrahedron){  
+    segments(
+      segs[!linback,1,drop=F],
+      segs[!linback,2,drop=F],
+      segs[!linback,3,drop=F],
+      segs[!linback,4,drop=F],
+      lwd = out.lwd, col = out.lcol
+      )
+ 
+    points(tcoord[names(vinback)[!vinback], c('x','y'), drop=FALSE], pch=21, 
+      cex = dvals[names(vinback)[!vinback]], col=NULL, 
+      bg=vcols[names(vinback)[!vinback]])
+   
   }
+
 
  # Save plot info 
  assign("last_plot.tetra", M, envir = .PlotTetraEnv)  
