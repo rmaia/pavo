@@ -25,6 +25,8 @@
 #' @param vert.cex size of the points at the vertices (defaults to 1).
 #' @param out.lwd, out.lcol graphical parameters for the tetrahedral outline.
 #' @param margin vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).
+#' @param type accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
+#' the base of the tetrahedron.
 #' @param view, scale.y, axis, grid deprecated arguments.
 #' 
 #' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
@@ -63,7 +65,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   range = c(1, 2), r = 1e6, zoom = 1, 
   achro = TRUE, achro.col = 'grey', achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
   tetrahedron = TRUE, vert.cex = 1, vert.range = c(1,2) ,out.lwd = 1, out.lcol = 'darkgrey',
-  margin = c(0,0,0,0), view, scale.y, axis, grid, vertexsize, ...) {
+  margin = c(0,0,0,0), type='p', view, scale.y, axis, grid, vertexsize, ...) {
     	
   # check deprecated arguments view, scale.y, axis, grid
   if(!missing(view))
@@ -183,6 +185,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   # transform depth vector
   dvals <- trange(dvals, range[1], range[2])
   
+  # square root so it scales by area
+  dvals <- sqrt(dvals)
+  dvals <- trange(dvals, range[1], range[2])
+  
   maxdatad <-  max(dvals[dvals[names(dvals) %in% rownames(tcsdata)]]) 
   
   # turn depth vector to point size
@@ -261,8 +267,27 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]
   
   argpoints$x <- xy
+  
+   if('l' %in% type){
+   	 # calculate bottom of the points
+     botpoints <- as.matrix(tcsdata[, c('x','y','z')])
+     botpoints[,'z'] <- -0.25
+   	 botpoints <- cbind(botpoints, 1) %*% M
+   	 botpoints[ ,1] <- botpoints[ ,1]/botpoints[ ,4] 
+     botpoints[ ,2] <- botpoints[ ,2]/botpoints[ ,4] 
+     colnames(botpoints) <- c('x', 'y', 'depth', 'scale')
 
-  do.call(points, argpoints)
+  	 arghl <- argpoints
+  	 arghl$x <- NULL
+  	 arghl$x0 <- xy[,'x']
+  	 arghl$y0 <- xy[,'y']
+  	 arghl$x1 <- botpoints[,'x']
+  	 arghl$y1 <- botpoints[,'y']
+  	 do.call(segments, arghl)
+   }
+
+  if('p' %in% type)
+    do.call(points, argpoints)  
   
   # add achromatic center if it is in front of the data
   if(achro && dvals["achro"] > maxdatad)
