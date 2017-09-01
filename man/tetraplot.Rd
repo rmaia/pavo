@@ -4,11 +4,12 @@
 \alias{tetraplot}
 \title{Plot a static tetrahedral colorspace}
 \usage{
-tetraplot(tcsdata, theta = 45, phi = 10, r = 1e+06, zoom = 1,
-  achro = TRUE, achro.col = "grey", achro.size = 0.8,
-  achro.line = FALSE, achro.lwd = 1, achro.lty = 3, tetrahedron = TRUE,
-  out.lwd = 1, out.lcol = "darkgrey", vertexsize = 0.8, box = FALSE,
-  margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
+tetraplot(tcsdata, theta = 45, phi = 10, perspective = TRUE,
+  range = c(1, 2), r = 1e+06, zoom = 1, achro = TRUE,
+  achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1,
+  achro.lty = 3, tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2),
+  out.lwd = 1, out.lcol = "darkgrey", margin = c(0, 0, 0, 0), view,
+  scale.y, axis, grid, vertexsize, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
@@ -18,6 +19,12 @@ coordinates as columns (labeled as such).}
 \item{theta}{angle to rotate the plot in the xy plane (defaults to 10).}
 
 \item{phi}{angle to rotate the plot in the yz plane (defaults to 45).}
+
+\item{perspective}{logical, should perspective be forced by using point size to reflect
+distance from the plane of view? (defaults to TRUE)}
+
+\item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
+to indicate the size range variation reflecting the distance from the plane of view.}
 
 \item{r}{the distance of the eyepoint from the centre of the plotting box. 
 Very high values approximate an orthographic projection (defaults to 1e6).
@@ -33,15 +40,13 @@ See \code{\link{persp}} for details.}
 
 \item{tetrahedron}{logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})}
 
-\item{out.lwd, }{out.lcol graphical parameters for the tetrahedral outline.}
+\item{vert.cex}{size of the points at the vertices (defaults to 1).}
 
-\item{box}{logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})}
+\item{out.lwd, }{out.lcol graphical parameters for the tetrahedral outline.}
 
 \item{margin}{vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).}
 
 \item{view, }{scale.y, axis, grid deprecated arguments.}
-
-\item{vertex.size}{size of the points at the vertices (defaults to 0.8).}
 }
 \value{
 \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.

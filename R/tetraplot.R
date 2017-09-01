@@ -10,6 +10,10 @@
 #' coordinates as columns (labeled as such).
 #' @param theta angle to rotate the plot in the xy plane (defaults to 10).
 #' @param phi angle to rotate the plot in the yz plane (defaults to 45).
+#' @param perspective logical, should perspective be forced by using point size to reflect
+#' distance from the plane of view? (defaults to TRUE)
+#' @param range, vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
+#' to indicate the size range variation reflecting the distance from the plane of view.
 #' @param r the distance of the eyepoint from the centre of the plotting box. 
 #' Very high values approximate an orthographic projection (defaults to 1e6).
 #' See \code{\link{persp}} for details.
@@ -18,9 +22,8 @@
 #' @param achro.line logical. Should the achromatic line be plotted? (defaults to \code{FALSE})
 #' @param achro.col, achro.size, achro.lwd, achro.lty graphical parameters for the achromatic coordinates.
 #' @param tetrahedron logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})
+#' @param vert.cex size of the points at the vertices (defaults to 1).
 #' @param out.lwd, out.lcol graphical parameters for the tetrahedral outline.
-#' @param vertex.size size of the points at the vertices (defaults to 0.8).
-#' @param box logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})
 #' @param margin vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).
 #' @param view, scale.y, axis, grid deprecated arguments.
 #' 
@@ -56,10 +59,11 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1, 
-  achro = TRUE, achro.col = 'grey', achro.size = 0.8, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
-  tetrahedron = TRUE, out.lwd = 1, out.lcol = 'darkgrey', vertexsize = 0.8, box = FALSE,
-  margin = c(0,0,0,0), view, scale.y, axis, grid, ...) {
+tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE, 
+  range = c(1, 2), r = 1e6, zoom = 1, 
+  achro = TRUE, achro.col = 'grey', achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
+  tetrahedron = TRUE, vert.cex = 1, vert.range = c(1,2) ,out.lwd = 1, out.lcol = 'darkgrey',
+  margin = c(0,0,0,0), view, scale.y, axis, grid, vertexsize, ...) {
     	
   # check deprecated arguments view, scale.y, axis, grid
   if(!missing(view))
@@ -67,14 +71,20 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   if(!missing(scale.y))
     stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
   if(!missing(axis))
-    stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+    stop('argument "axis" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
   if(!missing(grid))
     stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+  if(!missing(vertexsize))
+    stop('argument "vertexsize" is deprecated, please use "vert.cex" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+    
+  trange <- function(x, newmin, newmax) 
+    (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
 
   # get arguments
   arg <- list(...)
     
   if(is.null(arg$col)) arg$col <- 1
+  if(is.null(arg$cex)) arg$cex <- 1
   if(is.null(arg$pch)) arg$pch <- 19
   if(is.null(arg$xlab)) arg$xlab <- 'x'    
   if(is.null(arg$ylab)) arg$ylab <- 'y'
@@ -126,7 +136,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   M <- do.call(persp, c(list(x=arg$xlim,
                              y=arg$ylim,
                              z=matrix(c(arg$zlim,arg$zlim), nrow=2),
-                             border=FALSE, r=r, box=box, theta=theta, phi=phi), arg))
+                             border=FALSE, r=r, box=FALSE, theta=theta, phi=phi), arg))
   garbage <- dev.off()
 
   # position of points in projected space
@@ -142,6 +152,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   tcoord[ ,2] <- tcoord[ ,2]/tcoord[ ,4] 
   colnames(tcoord) <- c('x', 'y', 'depth', 'scale')
   
+  # Empty plot
   argblank <- arg
 
   argblank[names(as.list(args(graphics:::persp.default)))] <- NULL  
@@ -159,6 +170,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   par(mar=margin, pty='s')  
   do.call(plot, argblank)
   
+  # Get point coordinates
   xy <- tcoord[rownames(tcoord) %in% rownames(tcsdata), c('x','y'), drop=FALSE]
 
   # get depth vector
@@ -168,9 +180,29 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   	dvals <- tcoord[!rownames(tcoord) %in% c('u','s','m','l'),'depth']
   }
   
-  dvals <- (((dvals - min(dvals)) * (2 - 1)) / (max(dvals) - min(dvals))) + 1
+  # transform depth vector
+  dvals <- trange(dvals, range[1], range[2])
   
-  maxdatad <-  max(dvals[dvals[names(dvals) %in% rownames(tcsdata)]])
+  maxdatad <-  max(dvals[dvals[names(dvals) %in% rownames(tcsdata)]]) 
+  
+  # turn depth vector to point size
+  	psize <- dvals*arg$cex
+  	
+  	vrange <- vert.cex*vert.range
+  	psize[c('u','s','m','l')] <- trange(psize[c('u','s','m','l')], vrange[1], vrange[2])
+  	
+  	# distort if ranges are not the same for points and vertices
+  	if(!identical(range, vert.range)){
+  	  psize[names(psize) %in% rownames(tcsdata)] <- 
+  	    trange(psize[names(psize) %in% rownames(tcsdata)], range[1], range[2])
+  	}
+  	  
+
+  	if(!perspective){
+  	  psize[] <- arg$cex
+  	  psize[c('u','s','m','l')] <- vert.cex
+  	}
+
   
   # add tetrahedron lines and vertices behind the data
   
@@ -184,17 +216,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
     xytet[ ,1] <- xytet[ ,1]/xytet[ ,4] 
     xytet[ ,2] <- xytet[ ,2]/xytet[ ,4] 
     colnames(xytet) <- c('x', 'y', 'depth', 'scale')
-
-    # find which vertices are in front of the tetrahedron
-    # CAVEATS: 
-    # 1: if viewed from the top, only 'u' can be in the front
-    # however, if viewed from the side, 'u' may be in the front but 
-    # not all ux segments should be in the front...
-    #
-    # 2: for a segment with one vertice in front, 
-    # if any vertice behind is higher (greater y) than the data points,  
-    # the segment should still be drawn before the points 
-
 
     # which vertex are behind data
     vinback <- dvals[c('u','s','m','l')] < maxdatad
@@ -215,7 +236,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
     # add vertices behind tetrahedron
  
     points(tcoord[names(vinback)[vinback], c('x','y'), drop=FALSE], pch=21, 
-      cex = dvals[names(vinback)[vinback]], col=NULL, 
+      cex = psize[names(vinback)[vinback]], col=NULL, 
       bg=vcols[names(vinback)[vinback]])
       
   }
@@ -223,7 +244,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
 
   # add achromatic center if it is behind the data
   if(achro && dvals["achro"] < maxdatad)
-    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=dvals['achro'])
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=psize['achro'])
     
   # add achromatic line if behind the data
   if(achro.line && dvals["achro"] < maxdatad)
@@ -236,7 +257,8 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
 
   argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
   argpoints['col'] <- col
-  argpoints$cex <- dvals[names(dvals) %in% rownames(tcsdata)]
+
+  argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]
   
   argpoints$x <- xy
 
@@ -244,7 +266,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
   
   # add achromatic center if it is in front of the data
   if(achro && dvals["achro"] > maxdatad)
-    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=dvals['achro'])
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=21, cex=psize['achro'])
     
   # add achromatic line if in front of the data
   if(achro.line && dvals["achro"] > maxdatad)
@@ -261,7 +283,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, r = 1e6, zoom = 1,
       )
  
     points(tcoord[names(vinback)[!vinback], c('x','y'), drop=FALSE], pch=21, 
-      cex = dvals[names(vinback)[!vinback]], col=NULL, 
+      cex = psize[names(vinback)[!vinback]], col=NULL, 
       bg=vcols[names(vinback)[!vinback]])
    
   }
