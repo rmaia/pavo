@@ -29,7 +29,7 @@
 #' the base of the tetrahedron.
 #' @param view, scale.y, axis, grid deprecated arguments.
 #' 
-#' @return \code{tetraplot} creates a 3D plot using functions of the package \code{scatterplot3d}.
+#' @return \code{tetraplot} creates a 3D plot.
 #'
 #' @examples \dontrun{
 #' 

@@ -2,7 +2,6 @@
 #' 
 #' Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram. 
 #' 
-#' @import scatterplot3d 
 #' 
 # #' @usage plot(ciedata, ...)
 #' 
