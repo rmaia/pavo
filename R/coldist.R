@@ -594,14 +594,25 @@ bloc2d <- function(coord1, coord2){
    
   
   if(achro == TRUE){
-  	if(noise == 'quantum')
-  	  res[, 'dL'] <- apply(pairsid, 1, function(x) 
-        qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
-        qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
+  	if(noise == 'quantum')        
+      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        qn.ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
+        qn1=qndat[res[x,1], ], qn2=qndat[res[x,2], ], weber.achro = weber.achro)
+        ))
+        
+  	  # res[, 'dL'] <- apply(pairsid, 1, function(x) 
+        # qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
+        # qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
+
    
     if(noise =='neural')
-      res[, 'dL'] <- apply(pairsid, 1, function(x) 
-        ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
+      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
+        weber.achro = weber.achro)
+        ))
+        
+      # res[, 'dL'] <- apply(pairsid, 1, function(x) 
+        # ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
     
     if(dim(dat)[2] <= as.numeric(ncone))
       warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
@@ -692,6 +703,7 @@ if('colspace' %in% class(modeldata)){
     attr(res, 'resref') <- resref
     
   attr(res, 'ncone') <- ncone
+  attr(res, 'isrnoise') <- usereceptornoisemodel
     
   res
 }
