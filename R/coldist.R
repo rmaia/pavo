@@ -501,16 +501,7 @@ bloc2d <- function(coord1, coord2){
   	              fi = dat, 
   	              Qi = log(dat)
   	)
-  	
-  	# Save Qi in original scale (not log transformed)
-  	# to calculate noise.
-  	# TW: Don't actually need this right - since it's for quantum-noise calcs?
-
-  	# qndat <- switch(qcatch,
-  	#                 Qi = as.matrix(modeldata),
-  	#                 fi = as.matrix(exp(modeldata)) 
-  	# )
-  	
+  	  	
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
     
@@ -527,12 +518,13 @@ bloc2d <- function(coord1, coord2){
   }
 
   # Prepare output
-  pairsid <- t(combn(nrow(dat),2))
-
-  patch1 <- row.names(dat)[pairsid[, 1]]
-  patch2 <- row.names(dat)[pairsid[, 2]]
-
-  res <- data.frame(patch1, patch2)
+  res <- as.data.frame(matrix(rownames(dat)[t(combn(nrow(dat),2))], 
+                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))))
+                    
+  res[,'dS'] <- NA
+  
+  if(achro)
+    res[,'dL'] <- NA
   
   #########################
   # Receptor Noise Models #
@@ -565,25 +557,25 @@ bloc2d <- function(coord1, coord2){
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
   
    if(noise=='neural'){
-   	res$dS <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
+   	res[, 'dS'] <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
    	  weber.ref=weber.ref, res=res)
    } 
    
    if(noise=='quantum') {
     qndat2 <- qndat[, 1:as.numeric(ncone)]
-    res$dS <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
+    res[, 'dS'] <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
       weber.ref=weber.ref, res=res, qndat = qndat2)     	
    }
    
   
   if(achro == TRUE){
   	if(noise == 'quantum')
-  	  res$dL <- apply(pairsid, 1, function(x) 
+  	  res[, 'dL'] <- apply(pairsid, 1, function(x) 
         qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
         qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
    
     if(noise =='neural')
-      res$dL <- apply(pairsid, 1, function(x) 
+      res[, 'dL'] <- apply(pairsid, 1, function(x) 
         ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
     
     if(dim(dat)[2] <= as.numeric(ncone))
@@ -601,38 +593,38 @@ bloc2d <- function(coord1, coord2){
 if('colspace' %in% class(modeldata)){
 	
   if(attr(modeldata, 'clrsp') == 'hexagon'){
-    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'segment'){
-    res$dS <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'categorical'){
-    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the categorical model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'CIELAB'){
-    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'CIELCh'){
-    #res$dS <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
-    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    #res[, 'dS'] <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){
-    res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the color-opponent-coding space', call.=FALSE)
   }
