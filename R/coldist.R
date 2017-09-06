@@ -519,7 +519,7 @@ bloc2d <- function(coord1, coord2){
 
   # Prepare output
   res <- as.data.frame(matrix(rownames(dat)[t(combn(nrow(dat),2))], 
-                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))))
+                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
                     
   res[,'dS'] <- NA
   
@@ -555,16 +555,41 @@ bloc2d <- function(coord1, coord2){
    if(weber.ref == 'longest') weber.ref <- length(n)
    
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
+   
+   
+   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
+   visref <- matrix(NA, ncol=as.numeric(ncone), nrow=4, 
+     dimnames=list(
+       c(rownames(dat2)[1:2], 'jnd2xyzrefachro', 'jnd2xyzreflongest'),
+       colnames(dat2)
+       )
+   )
+   
+   visref[1:2,] <- dat2[1:2,]
+   visref[3, ] <- mean(dat2)
+   visref[4, ] <- log(c(rep(1e-2, ncol(visref)-1), 9))
+   
+   resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
+                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
+   resref[,'dS'] <- NA
+
   
    if(noise=='neural'){
    	res[, 'dS'] <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
    	  weber.ref=weber.ref, res=res)
+
+   	resref[, 'dS'] <- newreceptornoise.neural(dat=visref, n=n, weber=weber, 
+   	  weber.ref=weber.ref, res=resref)
    } 
    
    if(noise=='quantum') {
     qndat2 <- qndat[, 1:as.numeric(ncone)]
     res[, 'dS'] <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
-      weber.ref=weber.ref, res=res, qndat = qndat2)     	
+      weber.ref=weber.ref, res=res, qndat = qndat2)    
+
+    qnref <- exp(visref)
+    resref[, 'dS'] <- newreceptornoise.quantum(dat=visref, n=n, weber=weber, 
+      weber.ref=weber.ref, res=resref, qndat = qnref)    
    }
    
   
@@ -631,7 +656,7 @@ if('colspace' %in% class(modeldata)){
 
 }
 
-  nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
+  nams2 <- with(res, unique(c(patch1, patch2)))
   
 # Subsetting samples
   
@@ -659,12 +684,14 @@ if('colspace' %in% class(modeldata)){
     subsamp <- unique(c(condition1, condition2))
     
     res <- res[subsamp, ]	
+   row.names(res) <- 1:dim(res)[1]
+
   }
   
-  row.names(res) <- 1:dim(res)[1]
-  
-  res$patch1 <- as.character(res$patch1)
-  res$patch2 <- as.character(res$patch2)
+  if(exists('resref', inherits=FALSE))
+    attr(res, 'resref') <- resref
+    
+  attr(res, 'ncone') <- ncone
     
   res
 }
