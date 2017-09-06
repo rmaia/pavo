@@ -42,8 +42,14 @@ jnd2xyz <- function(coldistres) {
   }
   
   references <- attr(coldistres, 'resref')
+  references <- references[intersect(
+    grep('jnd2xyzref', references$patch1, invert=T), 
+    grep('jnd2xyzref', references$patch2)
+    ),]
+    
+  combined <- rbind(coldistres, references)
 
-  cdmat <- coldist2mat(coldistres)[['dS']]
+  cdmat <- coldist2mat(combined)[['dS']]
 
   coords <- matrix(NA, nrow=nrow(cdmat), ncol=3, dimnames=list(row.names(cdmat), c('x','y', 'z')))
 

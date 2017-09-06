@@ -558,16 +558,16 @@ bloc2d <- function(coord1, coord2){
    
    
    # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
-   visref <- matrix(NA, ncol=as.numeric(ncone), nrow=4, 
+   visref <- matrix(NA, ncol=as.numeric(ncone), nrow=5, 
      dimnames=list(
-       c(rownames(dat2)[1:2], 'jnd2xyzrefachro', 'jnd2xyzreflongest'),
+       c(rownames(dat2)[1:3], 'jnd2xyzrefachro', 'jnd2xyzreflongest'),
        colnames(dat2)
        )
    )
    
-   visref[1:2,] <- dat2[1:2,]
-   visref[3, ] <- mean(dat2)
-   visref[4, ] <- log(c(rep(1e-2, ncol(visref)-1), 9))
+   visref[1:3,] <- dat2[1:3,]
+   visref[4, ] <- mean(dat2)
+   visref[5, ] <- log(c(rep(0.001, ncol(visref)-1), 9))
    
    resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
                     ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
