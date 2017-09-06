@@ -578,30 +578,6 @@ bloc2d <- function(coord1, coord2){
     visref[seq(as.numeric(ncone)-1),] <- dat2[seq(as.numeric(ncone)-1),]
     visref[as.numeric(ncone), ] <- mean(dat2)
     visref[-seq(as.numeric(ncone)),] <- rrf
-    
-    # TESTING IF PROBLEM IS HAVING 3 FROM DATA
-    
-    visref <- matrix(NA, 
-      ncol=as.numeric(ncone), 
-      nrow = 4 + as.numeric(ncone),
-      dimnames=list(
-        c(rownames(dat2)[seq(3)], 
-        paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
-        colnames(dat2)
-        )
-    )
-   
-    rrf <- diag(9, as.numeric(ncone))
-    rrf[lower.tri(rrf)] <- 0.001
-    rrf[upper.tri(rrf)] <- 0.001
-   
-    rrf <- log(rrf)
-      
-    visref[1:3,] <- dat2[1:3,]
-    visref[4, ] <- mean(dat2)
-    visref[-seq(as.numeric(4)),] <- rrf
-    
-    # END
 
   
     resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 

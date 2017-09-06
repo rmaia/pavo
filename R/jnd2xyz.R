@@ -18,6 +18,20 @@
 #'  
 
 jnd2xyz <- function(coldistres) {
+	
+  if(as.numeric(ncone) < 2 || as.numeric(ncone) > 4 )
+    stop('only di-, tri- and tetrachromatic models are implemented so far', call.=TRUE)
+ 
+   # Accessory functions
+  pos2 <- function(d12, d13, d23){
+	x3 <- d13
+	
+	if(all(d12 < d23, d13 < d23))
+	  x3 <- x3*-1
+	
+	x3
+  }
+
  
   # Accessory functions
   pos3 <- function(d12, d13, d23){
@@ -41,6 +55,8 @@ jnd2xyz <- function(coldistres) {
 	matrix(c(rep(x4,2), rep(y4,2), z4), ncol=3, dimnames=list(NULL, c('x','y','z')))
   }
   
+  ncone <- attr(coldistres,'ncone')
+  
   references <- attr(coldistres, 'resref')
   references <- references[intersect(
     grep('jnd2xyzrrf', references$patch1, invert=T), 
@@ -51,10 +67,61 @@ jnd2xyz <- function(coldistres) {
 
   cdmat <- coldist2mat(combined)[['dS']]
 
-  coords <- matrix(NA, nrow=nrow(cdmat), ncol=3, dimnames=list(row.names(cdmat), c('x','y', 'z')))
+  coords <- matrix(NA, nrow=nrow(cdmat), ncol=as.numeric(ncone)-1, 
+    dimnames=list(row.names(cdmat), c('x','y', 'z')[seq(as.numeric(ncone)-1)]))
   
   ptnames <- rownames(coords)
+  
+  if(ncone == '2'){
+  # 2 cones, only 1 dimension
+  
+  # first point
+  coords[ptnames[1], ] <- 0
+  
+  # second point
+  coords[ptnames[2], ] <- cdmat[ptnames[1], ptnames[2]]
+  
+  # subsequent points  
+  coords[c(ptnames[-c(1:2)]), ] <- unlist(lapply(ptnames[-c(1:2)], function(x)
+                      pos2(cdmat[ptnames[1],ptnames[2]],
+                           cdmat[ptnames[1],x],
+                           cdmat[ptnames[2],x])
+                      ))
+  }
+  
+  if(ncone == '3'){
 
+  # first point
+  coords[ptnames[1], ] <- c(0,0)
+  
+  # second point
+  coords[ptnames[2], ] <- c(cdmat[ptnames[1], ptnames[2]],0)
+
+  # third point
+  coords[ptnames[3], ] <- pos3(cdmat[ptnames[1], ptnames[2]], 
+                       cdmat[ptnames[1], ptnames[3]], 
+                       cdmat[ptnames[2], ptnames[3]])[1, ]
+
+  
+  # subsequent points
+  positions <- lapply(ptnames[-c(1:3)], function(x) 
+      pos3(cdmat[ptnames[1], ptnames[2]],
+           cdmat[ptnames[1], x],
+           cdmat[ptnames[2], x])
+      )
+  names(positions) <- ptnames[-c(1:3)]
+
+
+eucdis <- lapply(positions, function(x) dist(rbind(x, coords[ptnames[3],]))[c(2,3)])
+
+whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - cdmat[ptnames[3], x])))
+names(whichdist) <- names(eucdis)
+
+coords[names(eucdis), ] <- do.call(rbind,
+  lapply(names(eucdis), function(x) positions[[x]][whichdist[[x]], ]))  	
+  }
+
+  if(ncone == '4'){
   # first point
   coords[ptnames[1], ] <- c(0,0,0)
   
@@ -88,11 +155,13 @@ jnd2xyz <- function(coldistres) {
 
 eucdis <- lapply(positions, function(x) dist(rbind(x, coords[4,]))[c(2,3)])
 
-whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - cdmat[4, x])))
+whichdist <- lapply(names(eucdis), function(x) which.min(abs(eucdis[[x]] - cdmat[ptnames[4], x])))
 names(whichdist) <- names(eucdis)
 
 coords[names(eucdis), ] <- do.call(rbind,
   lapply(names(eucdis), function(x) positions[[x]][whichdist[[x]], ]))
+  
+}
   
 chromcoords <- as.data.frame(coords)
 
