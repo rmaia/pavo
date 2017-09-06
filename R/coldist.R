@@ -304,6 +304,11 @@ qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
 # END RECEPTOR NOISE FUNCTIONS #
 ################################
 
+#########################
+# START OTHER DISTANCES #
+#########################
+
+
 # 2d Euclidean distance
 euc2d <- function(coord1, coord2){
   as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
@@ -385,9 +390,6 @@ bloc2d <- function(coord1, coord2){
 #######################
 # END OTHER DISTANCES #
 #######################
-
-  # vector for references for jnd2xyz
-  resrefs <- NULL
   
   # check deprecated arguments
   if(!missing(v))
@@ -409,23 +411,6 @@ bloc2d <- function(coord1, coord2){
   # Pre-processing for colspace objects
   if('colspace' %in% class(modeldata)){
   	
-  	# check if there is a resrefs attribute and bind it
-  	if(!is.null(attr(modeldata, 'resrefs'))){
-  		attribdat <- attributes(modeldata)
-  		colsincommon <- intersect(colnames(modeldata), 
-  		                          colnames(attr(modeldata, 'resrefs')))
-  		
-  		modeldata <- rbind(
-  		             attr(modeldata, 'resrefs')[, colsincommon],
-  		             modeldata[, colsincommon]
-  		             )
-  	    attribdat$names <- attributes(modeldata)$names
-  		attribdat$row.names <- attributes(modeldata)$row.names
-  		attributes(modeldata) <- attribdat
-
-  		}
-
-
     qcatch <- attr(modeldata, 'qcatch')
     ncone <- as.character(attr(modeldata, 'conenumb'))
   	
@@ -475,11 +460,9 @@ bloc2d <- function(coord1, coord2){
       warning('Quantum catch are relative, distances may not be meaningful', call.=FALSE)  
 
     # save input object...
-    modeldata <- rbind(modeldata, attr(modeldata, 'resrefs'))
   	dat <- as.matrix(modeldata)
   	
-  	# transform or stop if Qi not appropriate
-  	
+  	# transform or stop if Qi not appropriate  	
   	qcatch <- attr(modeldata, 'qcatch')
 
   	dat <- switch(qcatch, 
@@ -510,24 +493,7 @@ bloc2d <- function(coord1, coord2){
   	    
   	if(is.null(qcatch)) 
   	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
-    
-  	# check if there is a resrefs attribute and bind it
-  	if(!is.null(attr(modeldata, 'resrefs'))){
-  		attribdat <- attributes(modeldata)
-  		colsincommon <- intersect(colnames(modeldata), 
-  		                          colnames(attr(modeldata, 'resrefs')))
-  		
-  		modeldata <- rbind(
-  		             attr(modeldata, 'resrefs')[, colsincommon],
-  		             modeldata[, colsincommon]
-  		             )
-  	    attribdat$names <- attributes(modeldata)$names
-  		attribdat$row.names <- attributes(modeldata)$row.names
-  		attributes(modeldata) <- attribdat
-
-  		}
-
-    
+        
     dat <- as.matrix(modeldata)
     
   	# Ensure catches are log transformed
@@ -707,17 +673,6 @@ if('colspace' %in% class(modeldata)){
   
   res$patch1 <- as.character(res$patch1)
   res$patch2 <- as.character(res$patch2)
-  
-  #remove reference results
-  arethererefs <- grep('refforjnd2xyz',paste(res$patch1, res$patch2))
-  if(length(arethererefs) > 0){
-  
-    resrefs <- res[arethererefs, ]
-    res <- res[-arethererefs, ] 
-  
-    attr(res, 'resrefs') <- resrefs
-    attr(res, 'conenumb') <- ncone
-  }
-  
+    
   res
 }
