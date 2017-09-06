@@ -557,21 +557,56 @@ bloc2d <- function(coord1, coord2){
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
    
    
-   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
-   visref <- matrix(NA, ncol=as.numeric(ncone), nrow=5, 
-     dimnames=list(
-       c(rownames(dat2)[1:3], 'jnd2xyzrefachro', 'jnd2xyzreflongest'),
-       colnames(dat2)
-       )
-   )
+   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION   
    
-   visref[1:3,] <- dat2[1:3,]
-   visref[4, ] <- mean(dat2)
-   visref[5, ] <- log(c(rep(0.001, ncol(visref)-1), 9))
+    visref <- matrix(NA, 
+      ncol=as.numeric(ncone), 
+      nrow=2*as.numeric(ncone), 
+      dimnames=list(
+        c(rownames(dat2)[seq(as.numeric(ncone)-1)], 
+        paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
+        colnames(dat2)
+        )
+    )
    
-   resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
-                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
-   resref[,'dS'] <- NA
+    rrf <- diag(9, as.numeric(ncone))
+    rrf[lower.tri(rrf)] <- 0.001
+    rrf[upper.tri(rrf)] <- 0.001
+   
+    rrf <- log(rrf)
+      
+    visref[seq(as.numeric(ncone)-1),] <- dat2[seq(as.numeric(ncone)-1),]
+    visref[as.numeric(ncone), ] <- mean(dat2)
+    visref[-seq(as.numeric(ncone)),] <- rrf
+    
+    # TESTING IF PROBLEM IS HAVING 3 FROM DATA
+    
+    visref <- matrix(NA, 
+      ncol=as.numeric(ncone), 
+      nrow = 4 + as.numeric(ncone),
+      dimnames=list(
+        c(rownames(dat2)[seq(3)], 
+        paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
+        colnames(dat2)
+        )
+    )
+   
+    rrf <- diag(9, as.numeric(ncone))
+    rrf[lower.tri(rrf)] <- 0.001
+    rrf[upper.tri(rrf)] <- 0.001
+   
+    rrf <- log(rrf)
+      
+    visref[1:3,] <- dat2[1:3,]
+    visref[4, ] <- mean(dat2)
+    visref[-seq(as.numeric(4)),] <- rrf
+    
+    # END
+
+  
+    resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
+                     ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
+    resref[,'dS'] <- NA
 
   
    if(noise=='neural'){

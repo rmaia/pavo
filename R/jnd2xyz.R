@@ -43,8 +43,8 @@ jnd2xyz <- function(coldistres) {
   
   references <- attr(coldistres, 'resref')
   references <- references[intersect(
-    grep('jnd2xyzref', references$patch1, invert=T), 
-    grep('jnd2xyzref', references$patch2)
+    grep('jnd2xyzrrf', references$patch1, invert=T), 
+    grep('jnd2xyzrrf', references$patch2)
     ),]
     
   combined <- rbind(coldistres, references)
@@ -52,36 +52,38 @@ jnd2xyz <- function(coldistres) {
   cdmat <- coldist2mat(combined)[['dS']]
 
   coords <- matrix(NA, nrow=nrow(cdmat), ncol=3, dimnames=list(row.names(cdmat), c('x','y', 'z')))
+  
+  ptnames <- rownames(coords)
 
   # first point
-  coords[1, ] <- c(0,0,0)
+  coords[ptnames[1], ] <- c(0,0,0)
   
   # second point
-  coords[2, ] <- c(cdmat[1,2],0,0)
+  coords[ptnames[2], ] <- c(cdmat[ptnames[1], ptnames[2]],0,0)
   
   # third point
-  thirdpointxy <- pos3(cdmat[1, 2], 
-                       cdmat[1, 3], 
-                       cdmat[2, 3])[1, ]
+  thirdpointxy <- pos3(cdmat[ptnames[1], ptnames[2]], 
+                       cdmat[ptnames[1], ptnames[3]], 
+                       cdmat[ptnames[2], ptnames[3]])[1, ]
                        
-  coords[3, ] <- c(thirdpointxy, 0)
+  coords[ptnames[3], ] <- c(thirdpointxy, 0)
 
   #fourth point
-  fourthpointxyz <- pos4(cdmat[1, 2], 
-                         cdmat[1, 4], 
-                         cdmat[2, 4], 
-                         cdmat[3, 4])[1, ]
+  fourthpointxyz <- pos4(cdmat[ptnames[1], ptnames[2]], 
+                         cdmat[ptnames[1], ptnames[4]], 
+                         cdmat[ptnames[2], ptnames[4]], 
+                         cdmat[ptnames[3], ptnames[4]])[1, ]
 
-  coords[4, ] <- fourthpointxyz
+  coords[ptnames[4], ] <- fourthpointxyz
 
   # subsequent points
-  positions <- lapply(rownames(coords)[-c(1:4)], function(x) 
-      pos4(cdmat[1, 2],
-           cdmat[1, x],
-           cdmat[2, x],
-           cdmat[3, x])
+  positions <- lapply(ptnames[-c(1:4)], function(x) 
+      pos4(cdmat[ptnames[1], ptnames[2]],
+           cdmat[ptnames[1], x],
+           cdmat[ptnames[2], x],
+           cdmat[ptnames[3], x])
       )
-  names(positions) <- rownames(coords)[-c(1:4)]
+  names(positions) <- ptnames[-c(1:4)]
 
 
 eucdis <- lapply(positions, function(x) dist(rbind(x, coords[4,]))[c(2,3)])
