@@ -6,13 +6,13 @@
 #' @param ref1 the cone to be used as a the first reference. Must match name
 #' in the original data that was used for \code{coldist}. Defaults to 'l'.
 #" (only used if data has 2 or 3 dimensions)
-#' @param axi1 A vector of length 3 composed of 0's and 1's, with 
+#' @param axis1 A vector of length 3 composed of 0's and 1's, with 
 #' 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
 #' that the rotation aligns with the xy plane. (only used if data has 2 or 3 dimensions)
 #' @param ref2 the cone to be used as a the second reference. Must match name
 #' in the original data that was used for \code{coldist}. Defaults to 'u'.
 #' (only used if data has 3 dimensions).
-#' @param axi1 A vector of length 3 composed of 0's and 1's, with 
+#' @param axis2 A vector of length 3 composed of 0's and 1's, with 
 #' 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
 #' that the rotation aligns with the z axis. (only used if data has 3 dimensions).
 #'
