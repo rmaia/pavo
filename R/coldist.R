@@ -561,9 +561,9 @@ bloc2d <- function(coord1, coord2){
    
     visref <- matrix(NA, 
       ncol=as.numeric(ncone), 
-      nrow=2*as.numeric(ncone), 
+      nrow=2*as.numeric(ncone)+1, 
       dimnames=list(
-        c(rownames(dat2)[seq(as.numeric(ncone)-1)], 
+        c(rownames(dat2)[seq(as.numeric(ncone))], 
         paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
         colnames(dat2)
         )
@@ -575,9 +575,9 @@ bloc2d <- function(coord1, coord2){
    
     rrf <- log(rrf)
       
-    visref[seq(as.numeric(ncone)-1),] <- dat2[seq(as.numeric(ncone)-1),]
-    visref[as.numeric(ncone), ] <- mean(dat2)
-    visref[-seq(as.numeric(ncone)),] <- rrf
+    visref[seq(as.numeric(ncone)),] <- dat2[seq(as.numeric(ncone)),]
+    visref[as.numeric(ncone)+1, ] <- mean(dat2)
+    visref[-seq(as.numeric(ncone)+1),] <- rrf
 
   
     resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 

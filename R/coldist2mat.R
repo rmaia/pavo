@@ -38,7 +38,8 @@ coldist2mat <- function(coldistres){
   dSM[cdrep[,2:1] ] <- cdrep[,3]
 
   class(dSM) <- 'numeric'
-  dSM[is.na(dSM)] <- 0
+  #dSM[is.na(dSM)] <- 0
+  diag(dSM) <- 0
   
   res <- list(dS = dSM)
   
@@ -52,7 +53,7 @@ coldist2mat <- function(coldistres){
     dLM[cdrepL[,1:2] ] <- cdrepL[,3]
     dLM[cdrepL[,2:1] ] <- cdrepL[,3]
 
-    class(dSM) <- 'numeric'
+    class(dLM) <- 'numeric'
     dLM[is.na(dLM)] <- 0
     
     res$dL <- dLM

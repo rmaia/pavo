@@ -24,8 +24,7 @@ Depends:
 Imports:
     rcdd,
     mapproj,
-    geometry,
-    scatterplot3d
+    geometry
 Suggests:
     rgl,
     testthat,

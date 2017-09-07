@@ -18,17 +18,14 @@
 #'  
 
 jnd2xyz <- function(coldistres) {
-	
-  if(as.numeric(ncone) < 2 || as.numeric(ncone) > 4 )
-    stop('only di-, tri- and tetrachromatic models are implemented so far', call.=TRUE)
  
    # Accessory functions
   pos2 <- function(d12, d13, d23){
 	x3 <- d13
 	
-	if(all(d12 < d23, d13 < d23))
+	if(!d23 < d12+d13)
 	  x3 <- x3*-1
-	
+	  
 	x3
   }
 
@@ -56,6 +53,9 @@ jnd2xyz <- function(coldistres) {
   }
   
   ncone <- attr(coldistres,'ncone')
+
+  if(as.numeric(ncone) < 2 || as.numeric(ncone) > 4 )
+    stop('only methods for di-, tri- and tetrachromatic models are implemented so far', call.=TRUE)
   
   references <- attr(coldistres, 'resref')
   references <- references[intersect(
@@ -74,7 +74,7 @@ jnd2xyz <- function(coldistres) {
   
   if(ncone == '2'){
   # 2 cones, only 1 dimension
-  
+   
   # first point
   coords[ptnames[1], ] <- 0
   
@@ -82,11 +82,12 @@ jnd2xyz <- function(coldistres) {
   coords[ptnames[2], ] <- cdmat[ptnames[1], ptnames[2]]
   
   # subsequent points  
-  coords[c(ptnames[-c(1:2)]), ] <- unlist(lapply(ptnames[-c(1:2)], function(x)
+  coords[c(ptnames[-c(1:2)]), ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x)
                       pos2(cdmat[ptnames[1],ptnames[2]],
                            cdmat[ptnames[1],x],
                            cdmat[ptnames[2],x])
                       ))
+                      
   }
   
   if(ncone == '3'){
@@ -165,7 +166,7 @@ coords[names(eucdis), ] <- do.call(rbind,
   
 chromcoords <- as.data.frame(coords)
 
-attr(chromcoords, 'class') <- c('colspace', 'data.frame')
+attr(chromcoords, 'class') <- c('colspace', 'jnd2xyz', 'data.frame')
 
 chromcoords
 }
