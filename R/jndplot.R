@@ -37,7 +37,7 @@
 #'
 #' @export
 #'
-#' @importFrom graphics persp.default plot.default arrows
+#' @importFrom graphics plot.default arrows
 #' 
 #' @keywords internal
 #' 
