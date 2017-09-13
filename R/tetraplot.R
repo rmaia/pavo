@@ -268,7 +268,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   ######################
   argpoints <- arg
 
-  argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
+  argpoints[perspargs] <- NULL
   argpoints['col'] <- col
 
   argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]

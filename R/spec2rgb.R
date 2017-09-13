@@ -46,7 +46,7 @@ names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
 # TEMP: cie2 or cie10?
-# sens <- pavo:::ciexyz[,1:4] #cie2
+# sens <- ciexyz[,1:4] #cie2
 sens <- ciexyz[,c(1,5:7)] #cie10
 
 # TEMP: removing wavelengths 390:400
