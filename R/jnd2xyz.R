@@ -16,6 +16,9 @@
 #' 
 #' @export
 #'  
+#' @references Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams. 
+#' Behavioral Ecology, 23, 723–728.
+
 
 jnd2xyz <- function(coldistres) {
  
