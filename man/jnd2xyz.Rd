@@ -24,7 +24,7 @@ jnd2xyz(cd.flowers)
 }
 \references{
 Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams. 
-Behavioral Ecology, 23, 723–728.
+Behavioral Ecology, 23, 723-728.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
