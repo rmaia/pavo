@@ -79,7 +79,13 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   if(plotdims == '4')
     stop('cannot use "achro=TRUE" when chromatic space is three-dimensional.')
     
+  # CRAN won't accept triple : arguments, so we need to enter persp.default
+  # arguments by hand
+  perspargs <- c("x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab", 
+    "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border", 
+    "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
 
+  
   # 1 DIMENSION
   if(plotdims == '1'){
   
@@ -481,7 +487,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   # Add points
   pointsarg <- arg
   pointsarg[names(as.list(args(arrows)))] <- NULL
-  pointsarg[setdiff(names(as.list(args(persp.default))), 
+  pointsarg[setdiff(perspargs, 
                     names(as.list(args(plot.default))))] <- NULL
   pointsarg$col <- arg$col
   
