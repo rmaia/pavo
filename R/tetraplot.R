@@ -52,7 +52,7 @@
 #' 
 #' @keywords internal
 #'
-#' @importFrom grDevices trans3d dev.off
+#' @importFrom grDevices trans3d dev.off pdf
 #' @importFrom graphics persp grconvertX grconvertY
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 

@@ -3,8 +3,8 @@
 #' Plot options for \code{jnd2xyz} objects.
 #' @param x (required) the output from a \code{jnd2xyz} call.
 #' @param arrow If and how arrows indicating receptor vectors should be 
-#' drawn. Options are \code{"relative"} (default), \code{"absolute"} or
-#' \code{"none"}. See description.
+#' drawn. Options are \code{'relative'} (default), \code{'absolute'} or
+#' \code{'none'}. See description.
 #' @param achro Logical. Should the achromatic variable be plotted as a
 #' dimension? (only available for dichromats and trichromats, defaults to \code{FALSE}).
 #' @param arrow.labels Logical. Should labels be plotted for receptor arrows?
@@ -12,7 +12,7 @@
 #' @param arrow.col color of the arrows and labels.
 #' @param arrow.p scaling factor for arrows.
 #' @param labels.cex scaling factor for arrow labels.
-#' @param margin accepts either \code{"recommended"}, where the function will choose margin
+#' @param margin accepts either \code{'recommended'}, where the function will choose margin
 #' attributes, or a numerical vector of the form \code{c(bottom, left, top, right)}
 #' which gives the number of lines of margin to be specified on the four sides of the plot. 
 #' (Default varies depending on plot dimensionality).
@@ -23,19 +23,21 @@
 #' @return Creates a plot, details of the plot depend on the imput data. 
 #' @note the \code{arrow} argument accepts three options:
 #' \itemize{
-#'  \item \code{"relative"}: With this option, arrows will be made relative to the data. Arrows
+#'  \item \code{'relative'}: With this option, arrows will be made relative to the data. Arrows
 #'    will be centered on the data centroid, and will have an arbitrary length of half the 
 #'    average pairwise distance between points, which can be scaled with the \code{arrow.p}
 #'    argument.
-#'  \item \code{"absolute"}: With this option, arrows will be made to reflect the visual system
+#'  \item \code{'absolute'}: With this option, arrows will be made to reflect the visual system
 #'    underlying the data. Arrows will be centered on the achromatic point in colorspace, and
 #'    will have length equal to the distance to a monochromatic point (i.e. a color that 
 #'    stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
 #'    the \code{arrow.p} argument, in which case they cannot be interpreted as described.
-#'   \item \code{"none"}: no arrows will be included.
+#'   \item \code{'none'}: no arrows will be included.
 #' }
 #'
 #' @export
+#'
+#' @importFrom graphics persp.default plot.default arrows
 #' 
 #' @keywords internal
 #' 
@@ -71,7 +73,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   if(achro){
     plotdims <- as.character(round(sum(c('x','y','z', 'lum') %in% colnames(x))))
   }else{
-  	plotdims <- as.character(round(sum(c('x','y','z') %in% colnames(x))))
+    plotdims <- as.character(round(sum(c('x','y','z') %in% colnames(x))))
   }
   
   if(plotdims == '4')
@@ -79,10 +81,10 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
 
   # 1 DIMENSION
-  if(plotdims == "1"){
+  if(plotdims == '1'){
   
   if(!is.null(margin)){
-    if(margin == 'recommended'){	
+    if(margin == 'recommended'){  
       par(mar=c(5.1,2.1,4.1,2.1))
     }else{
       par(mar = margin)
@@ -108,11 +110,11 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     absolute = (attr(dat, 'resref')[2:3, 'x'] - arrowstart)*arrow.p + arrowstart,
     none = NULL)
   
-  if(is.null(arg$pch)) arg$pch <- "|"
+  if(is.null(arg$pch)) arg$pch <- '|'
       
   # Blank plot w/ segment
   plotarg <- arg
-  plotarg[names(as.list(args(graphics:::arrows)))] <- NULL
+  plotarg[names(as.list(args(arrows)))] <- NULL
   plotarg$x <- 0
   plotarg$y <- 0
   plotarg$type <- 'n'
@@ -130,7 +132,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   # add arrows
   if(arrow != 'none'){
   arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(graphics:::arrows)))]
+  arrowarg <- arrowarg[names(as.list(args(arrows)))]
   arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
   arrowarg$x0 <- arrowstart
   arrowarg$x1 <-  arrowpos
@@ -150,7 +152,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
   # Add points
   pointsarg <- arg
-  pointsarg[names(as.list(args(graphics:::arrows)))] <- NULL
+  pointsarg[names(as.list(args(arrows)))] <- NULL
   pointsarg$col <- arg$col
   
   pointsarg$x <- x[ ,'x']
@@ -162,10 +164,10 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   }  
   
   # 2 DIMENSIONS
-  if(plotdims == "2"){
+  if(plotdims == '2'){
   
   if(!is.null(margin)){
-    if(margin == 'recommended'){	
+    if(margin == 'recommended'){  
       par(mar=c(5.1,4.1,4.1,2.1))
     }else{
       par(mar = margin)
@@ -176,7 +178,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   if(achro){
     colstouse <- c('x','lum')
   }else{
-  	colstouse <- c('x', 'y')
+    colstouse <- c('x', 'y')
   }
 
   # combine data with references
@@ -186,33 +188,30 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   dat <- rbind(x[, colstouse], attr(x, 'resref')[,colstouse])
   attr(dat, 'resref') <- attr(x, 'resref')[,colstouse]
   
-  # get arrow coordinates
-  arrow <- match.arg(arrow)
-  
-  arrowstart <- switch(arrow,
-    relative = as.matrix(attr(dat, 'resref')[dim(attr(dat,'resref'))[1] ,colstouse]),
-    absolute = as.matrix(attr(dat, 'resref')['jnd2xyzrrf.achro', colstouse]),
-    none = NULL
-    )
-  
-  arrowindex <- seq(length(rownames(attr(dat, 'resref')))-1)[-1]
-    
-
-  # Find angle (atan2(y2-y1, x2-x1))
-  endpoints <- as.matrix(attr(dat, 'resref')[arrowindex, colstouse])
-  angle <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) atan2(s[2],s[1]))
-  
-  rad <- mean(dist(x2))/2*arrow.p
-
-  # find points y=dist*sin, x=dist*cos 	
-  arrowlims <- sweep(cbind(rad*cos(angle), rad*sin(angle)), 2, arrowstart, '+')
-  rownames(arrowlims) <- rownames(endpoints)
-  colnames(arrowlims) <- colnames(endpoints)
-  
   
   if(arrow != 'none'){
-    arrowlims <- findlims2d(apply(x2, 2, range), 
-                   as.matrix(attr(dat, 'resref')[arrowindex, colstouse]))
+    # get arrow coordinates
+    arrow <- match.arg(arrow)
+  
+    arrowstart <- switch(arrow,
+      relative = as.matrix(attr(dat, 'resref')[dim(attr(dat,'resref'))[1] ,colstouse]),
+      absolute = as.matrix(attr(dat, 'resref')['jnd2xyzrrf.achro', colstouse]),
+      none = NULL
+      )
+  
+    arrowindex <- seq(length(rownames(attr(dat, 'resref')))-1)[-1]
+    
+
+    # Find angle (atan2(y2-y1, x2-x1))
+    endpoints <- as.matrix(attr(dat, 'resref')[arrowindex, colstouse])
+    angle <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) atan2(s[2],s[1]))
+  
+    rad <- mean(dist(x2))/2*arrow.p
+
+    # find points y=dist*sin, x=dist*cos   
+    arrowlims <- sweep(cbind(rad*cos(angle), rad*sin(angle)), 2, arrowstart, '+')
+    rownames(arrowlims) <- rownames(endpoints)
+    colnames(arrowlims) <- colnames(endpoints)
 
     arrowpos <- switch(arrow,
       relative = sweep(sweep(arrowlims, 
@@ -249,7 +248,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
       
   # Blank plot w/ segment
   plotarg <- arg
-  plotarg[names(as.list(args(graphics:::arrows)))] <- NULL
+  plotarg[names(as.list(args(arrows)))] <- NULL
   plotarg$x <- 0
   plotarg$y <- 0
   plotarg$type <- 'n'
@@ -271,7 +270,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   # add arrows
   if(arrow != 'none'){
   arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(graphics:::arrows)))]
+  arrowarg <- arrowarg[names(as.list(args(arrows)))]
   arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
   arrowarg$x0 <- rep(arrowstart[, colstouse[1]], 3)
   arrowarg$x1 <- arrowpos[, colstouse[1]]
@@ -283,7 +282,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   do.call(arrows, arrowarg)
   }
   
-  if(arrow.labels){  	
+  if(arrow.labels){    
     if(achro){
       lbl <- c('S', 'L', 'lum')
     }else{
@@ -301,7 +300,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
   # Add points
   pointsarg <- arg
-  pointsarg[names(as.list(args(graphics:::arrows)))] <- NULL
+  pointsarg[names(as.list(args(arrows)))] <- NULL
   pointsarg$col <- arg$col
   
   pointsarg$x <- x[, colstouse[1]]
@@ -314,10 +313,10 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   
   
   # 3 DIMENSIONS
-  if(plotdims == "3"){
+  if(plotdims == '3'){
   
   if(!is.null(margin)){
-    if(margin == 'recommended'){	
+    if(margin == 'recommended'){  
       par(mar=c(1,2,0,1)+0.1) 
     }else{
       par(mar = margin)
@@ -328,7 +327,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   if(achro){
     colstouse <- c('x','y', 'lum')
   }else{
-  	colstouse <- c('x', 'y', 'z')
+    colstouse <- c('x', 'y', 'z')
   }
 
   # combine data with references
@@ -360,7 +359,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
 
   rad <- mean(dist(x2))*arrow.p/2
 
-  # find points based on spherical coordinates 	
+  # find points based on spherical coordinates   
   arrowlims <- sweep(cbind(rad*sin(anglephi)*cos(anglethe),
                            rad*sin(anglephi)*sin(anglethe),
                            rad*cos(anglephi)
@@ -404,7 +403,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
       
   # Blank plot w/ segment
   plotarg <- arg
-  plotarg[names(as.list(args(graphics:::arrows)))] <- NULL
+  plotarg[names(as.list(args(arrows)))] <- NULL
   if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
   if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2,labelpos)[, colstouse[2]])
   if(is.null(plotarg$zlim)) plotarg$zlim <- range(rbind(x2,labelpos)[, colstouse[3]])  
@@ -443,9 +442,9 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
                   arrowpos[, colstouse[2]],
                   arrowpos[, colstouse[3]], P)
 
-  	
+    
   arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(graphics:::arrows)))]
+  arrowarg <- arrowarg[names(as.list(args(arrows)))]
   arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
   
   arrowarg$x0 <- astart$x
@@ -459,11 +458,11 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   }
   
   if(arrow.labels){
-  	
+    
   if(achro){
     lbl <- c('S', 'M', 'L', 'lum')
   }else{
-  	lbl <- c('U', 'S', 'M', 'L')
+    lbl <- c('U', 'S', 'M', 'L')
   }
   
   lpos <- trans3d(labelpos[,1], labelpos[,2], labelpos[,3], P)
@@ -481,9 +480,9 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
   # Add points
   pointsarg <- arg
-  pointsarg[names(as.list(args(graphics:::arrows)))] <- NULL
-  pointsarg[setdiff(names(as.list(args(graphics:::persp.default))), 
-                    names(as.list(args(graphics:::plot.default))))] <- NULL
+  pointsarg[names(as.list(args(arrows)))] <- NULL
+  pointsarg[setdiff(names(as.list(args(persp.default))), 
+                    names(as.list(args(plot.default))))] <- NULL
   pointsarg$col <- arg$col
   
   ptpos <- trans3d(x2[ ,colstouse[1]], x2[ ,colstouse[2]], x2[, colstouse[3]], P)
@@ -495,7 +494,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
 
   # Save plot info 
   
-  assign("last_plot.jnd2xyz", P, envir = .PlotJND2XYZEnv)
+  assign('last_plot.jnd2xyz', P, envir = .PlotJND2XYZEnv)
   }    
   
 }

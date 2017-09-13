@@ -518,7 +518,9 @@ bloc2d <- function(coord1, coord2){
   }
 
   # Prepare output
-  res <- as.data.frame(matrix(rownames(dat)[t(combn(nrow(dat),2))], 
+  pairsid <- t(combn(nrow(dat),2))
+  
+  res <- as.data.frame(matrix(rownames(dat)[pairsid], 
                     ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
                     
   res[,'dS'] <- NA
