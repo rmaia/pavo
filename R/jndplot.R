@@ -446,7 +446,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), arrow.col='dar
 
   # Save plot info 
   
-  #assign("last_plot.jnd2xyz", P, envir = .PlotJND2XYZEnv)
+  assign("last_plot.jnd2xyz", P, envir = .PlotJND2XYZEnv)
   }    
   
 }
