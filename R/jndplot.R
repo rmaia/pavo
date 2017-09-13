@@ -52,7 +52,7 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams. 
-#' Behavioral Ecology, 23, 723–728.
+#' Behavioral Ecology, 23, 723-728.
 
 
 jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE, 
