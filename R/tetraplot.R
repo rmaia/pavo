@@ -156,8 +156,15 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   
   # Empty plot
   argblank <- arg
+  
+  # CRAN won't accept triple : arguments and persp.default is not exported,
+  # so we need to pass arguments by hand
+  perspargs <- c("x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab", 
+    "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border", 
+    "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
+  
 
-  argblank[names(as.list(args(graphics:::persp.default)))] <- NULL  
+  argblank[perspargs] <- NULL  
   argblank$xlim <- tcoord['achro','x'] + c(-1,1)*max(abs(tcoord['achro','x'] - tcoord[,'x'])) / zoom
   argblank$ylim <- tcoord['achro','y'] + c(-1,1)*max(abs(tcoord['achro','y'] - tcoord[,'y'])) / zoom
   #argblank$ylim <- range(tcoord[,'y'])
