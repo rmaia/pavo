@@ -64,8 +64,10 @@ jnd2xyz <- function(coldistres) {
     ),]
     
   combined <- rbind(coldistres, references)
+  
+  colmat <- coldist2mat(combined)
 
-  cdmat <- coldist2mat(combined)[['dS']]
+  cdmat <- colmat[['dS']]
 
   coords <- matrix(NA, nrow=nrow(cdmat), ncol=as.numeric(ncone)-1, 
     dimnames=list(row.names(cdmat), c('x','y', 'z')[seq(as.numeric(ncone)-1)]))
@@ -163,10 +165,40 @@ coords[names(eucdis), ] <- do.call(rbind,
   lapply(names(eucdis), function(x) positions[[x]][whichdist[[x]], ]))
   
 }
+
+if('dL' %in% names(colmat)){
+  ldmat <- colmat[['dL']]
+  coords <- cbind(coords, lum=0)
   
-chromcoords <- as.data.frame(coords)
+  # first point
+  coords[ptnames[1], 'lum'] <- 0
+  
+  # second point
+  coords[ptnames[2], 'lum'] <- ldmat[ptnames[1], ptnames[2]]
+  
+  # subsequent points  
+  coords[c(ptnames[-c(1:2)]), 'lum' ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x)
+                      pos2(ldmat[ptnames[1],ptnames[2]],
+                           ldmat[ptnames[1],x],
+                           ldmat[ptnames[2],x])
+                      ))
+  # invert if darkest point is positive
+  
+  
+  # center on achromatic point
+  coords[,'lum'] <- coords[,'lum'] - coords['jnd2xyzrrf.achro','lum']
+  #coords[,'lum'] <- coords[,'lum'] - coords[darker,'lum']
+}
+
+jnd2xyzrrf.ctrd <- colMeans(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
+  
+chromcoords <- as.data.frame(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
+
+refstosave <- as.data.frame(rbind(
+  coords[grep('jnd2xyzrrf', rownames(coords)), , drop=FALSE], jnd2xyzrrf.ctrd))
 
 attr(chromcoords, 'class') <- c('colspace', 'jnd2xyz', 'data.frame')
+attr(chromcoords, 'resref') <- refstosave
 
 chromcoords
 }

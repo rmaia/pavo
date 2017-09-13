@@ -3,6 +3,8 @@
 #' Rotates the Cartesian coordinates obtained from \code{jnd2xyz}
 #' 
 #' @param jnd2xyzres (required) the output from a \code{jnd2xyz} call.
+#' @param center should the vectors for rotation be centered in the achromatic
+#' center ("achro") or the data centroid ("mean", the default)?
 #' @param ref1 the cone to be used as a the first reference. Must match name
 #' in the original data that was used for \code{coldist}. Defaults to 'l'.
 #" (only used if data has 2 or 3 dimensions)
@@ -30,14 +32,13 @@
 
 
 
-jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0,0,1)){
+jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0,0,1)){
 
 
-  # TODO: OPTION TO CENTER ON DATA, NOT ACHROMATIC ROOT
-  # TODO: "HIDE" REFERENCES FROM JND2XYZ OUTPUT
-	
   if(!'jnd2xyz' %in% class(jnd2xyzres))
     stop('object must be a result from the "jnd2xyz" function')
+  
+  center <- match.arg(center)
   
   # helper functions
   vectormag <- function(x) sqrt(sum(x^2))
@@ -48,7 +49,7 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
     a[i]*b[j] - a[j]*b[i]
   }
   
-  coords <- as.matrix(jnd2xyzres)
+  coords <- as.matrix(rbind(jnd2xyzres, attr(jnd2xyzres, 'resref')))
   
   # one dimension
   if(round(sum(c('x','y','z') %in% colnames(coords))) == 1){
@@ -67,8 +68,13 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
     if(length(axis1) !=3)
       stop('"axis1" must be a vector of length 3')
       
+    cent <- switch(center, 
+                   achro = coords['jnd2xyzrrf.achro', ],
+                   mean = coords['jnd2xyzrrf.ctrd', ]
+                   )
+      
     aa <- vectornorm(coords[grep(paste0('jnd2xyzrrf.',ref1), rownames(coords)), ] - 
-                     coords['jnd2xyzrrf.achro', ])
+                     cent)
     bb <- vectornorm(axis1)
     daabb <- sum(aa*bb)
     ncaabb <- vectormag(vectorcross(aa,bb))
@@ -81,7 +87,7 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
 
     RR <- FF %*% GG %*% solve(FF)
 
-   res <- sweep(coords, 2, coords['jnd2xyzrrf.achro',], '-')
+   res <- sweep(coords, 2, cent, '-')
    res <- t(apply(res, 1, function(x) RR %*% x))
    #res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
    
@@ -97,8 +103,13 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
     if(length(axis1) !=3)
       stop('"axis1" must be a vector of length 3')
       
+    cent <- switch(center, 
+                   achro = coords['jnd2xyzrrf.achro', ],
+                   mean = coords['jnd2xyzrrf.ctrd', ]
+                   )
+
     aa <- vectornorm(coords[grep(paste0('jnd2xyzrrf.',ref1), rownames(coords)), ] - 
-                     coords['jnd2xyzrrf.achro', ])
+                     cent)
     bb <- vectornorm(axis1)
     daabb <- sum(aa*bb)
     ncaabb <- vectormag(vectorcross(aa,bb))
@@ -111,7 +122,7 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
 
     RR <- FF %*% GG %*% solve(FF)
 
-   res <- sweep(coords, 2, coords['jnd2xyzrrf.achro',], '-')
+   res <- sweep(coords, 2, cent, '-')
    res <- t(apply(res, 1, function(x) RR %*% x))
    #res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
    
@@ -122,7 +133,7 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
       stop('"axis2" must be a vector of length 3')
       
     aa <- vectornorm(res[grep(paste0('jnd2xyzrrf.',ref2), rownames(res)), ] - 
-                     res['jnd2xyzrrf.achro', ])
+                     cent)
     bb <- vectornorm(axis2)
     daabb <- sum(aa*bb)
     ncaabb <- vectormag(vectorcross(aa,bb))
@@ -135,7 +146,7 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
 
     RR <- FF %*% GG %*% solve(FF)
 
-   res <- sweep(res, 2, res['jnd2xyzrrf.achro',], '-')
+   res <- sweep(res, 2, cent, '-')
    res <- t(apply(res, 1, function(x) RR %*% x))
    #res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
    
@@ -143,8 +154,12 @@ jndrot <- function(jnd2xyzres, ref1='l', axis1 = c(1,1,0), ref2='u', axis2 = c(0
    
   }
 
-res <- as.data.frame(res)
-class(res) <- class(jnd2xyzres)
+chromcoords <- as.data.frame(res[grep('jnd2xyzrrf', rownames(res), invert=TRUE), ])
 
-res
+refstosave <- as.data.frame(res[grep('jnd2xyzrrf', rownames(res)), ])
+
+attr(chromcoords, 'class') <- c('colspace', 'jnd2xyz', 'data.frame')
+attr(chromcoords, 'resref') <- refstosave
+
+chromcoords
 }

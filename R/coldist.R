@@ -576,14 +576,15 @@ bloc2d <- function(coord1, coord2){
     rrf <- log(rrf)
       
     visref[seq(as.numeric(ncone)),] <- dat2[seq(as.numeric(ncone)),]
-    visref[as.numeric(ncone)+1, ] <- mean(dat2)
+    visref[as.numeric(ncone)+1, ] <- log(1e-10)
     visref[-seq(as.numeric(ncone)+1),] <- rrf
 
   
     resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
                      ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
     resref[,'dS'] <- NA
-
+    if(achro)
+      resref[,'dL'] <- NA
   
    if(noise=='neural'){
    	res[, 'dS'] <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
@@ -604,26 +605,40 @@ bloc2d <- function(coord1, coord2){
    }
    
   
-  if(achro == TRUE){
-  	if(noise == 'quantum')        
-      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
-        qn.ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
-        qn1=qndat[res[x,1], ], qn2=qndat[res[x,2], ], weber.achro = weber.achro)
-        ))
-        
-  	  # res[, 'dL'] <- apply(pairsid, 1, function(x) 
-        # qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
-        # qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
+  if(achro){
 
-   
-    if(noise =='neural')
+    if(noise =='neural'){
       res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
         ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
         weber.achro = weber.achro)
         ))
         
-      # res[, 'dL'] <- apply(pairsid, 1, function(x) 
-        # ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
+      visref <- cbind(visref, lum=log(1e-10))
+      visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
+        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+ 
+  	  resref[, 'dL'] <- unlist(lapply(seq(nrow(resref)), function(x)
+        ttdistcalcachro(f1= visref[resref[x,1], ], f2= visref[resref[x,2], ], 
+        weber.achro = weber.achro)
+        ))
+    }
+
+  	if(noise == 'quantum'){        
+      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        qn.ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
+        qn1=qndat[res[x,1], ], qn2=qndat[res[x,2], ], weber.achro = weber.achro)
+        ))
+      
+      visref <- cbind(visref, lum=log(1e-10))
+      visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
+        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+
+      qnref <- exp(visref)
+  	  resref[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        qn.ttdistcalcachro(f1=visref[resref[x,1], ], f2=visref[resref[x,2], ], 
+        qn1=qnref[resref[x,1], ], qn2=qnref[resref[x,2], ], weber.achro = weber.achro)
+        ))
+    }
     
     if(dim(dat)[2] <= as.numeric(ncone))
       warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
