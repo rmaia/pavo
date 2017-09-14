@@ -304,6 +304,11 @@ qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
 # END RECEPTOR NOISE FUNCTIONS #
 ################################
 
+#########################
+# START OTHER DISTANCES #
+#########################
+
+
 # 2d Euclidean distance
 euc2d <- function(coord1, coord2){
   as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
@@ -385,9 +390,6 @@ bloc2d <- function(coord1, coord2){
 #######################
 # END OTHER DISTANCES #
 #######################
-
-  # vector for references for jnd2xyz
-  resrefs <- NULL
   
   # check deprecated arguments
   if(!missing(v))
@@ -409,23 +411,6 @@ bloc2d <- function(coord1, coord2){
   # Pre-processing for colspace objects
   if('colspace' %in% class(modeldata)){
   	
-  	# check if there is a resrefs attribute and bind it
-  	if(!is.null(attr(modeldata, 'resrefs'))){
-  		attribdat <- attributes(modeldata)
-  		colsincommon <- intersect(colnames(modeldata), 
-  		                          colnames(attr(modeldata, 'resrefs')))
-  		
-  		modeldata <- rbind(
-  		             attr(modeldata, 'resrefs')[, colsincommon],
-  		             modeldata[, colsincommon]
-  		             )
-  	    attribdat$names <- attributes(modeldata)$names
-  		attribdat$row.names <- attributes(modeldata)$row.names
-  		attributes(modeldata) <- attribdat
-
-  		}
-
-
     qcatch <- attr(modeldata, 'qcatch')
     ncone <- as.character(attr(modeldata, 'conenumb'))
   	
@@ -475,11 +460,9 @@ bloc2d <- function(coord1, coord2){
       warning('Quantum catch are relative, distances may not be meaningful', call.=FALSE)  
 
     # save input object...
-    modeldata <- rbind(modeldata, attr(modeldata, 'resrefs'))
   	dat <- as.matrix(modeldata)
   	
-  	# transform or stop if Qi not appropriate
-  	
+  	# transform or stop if Qi not appropriate  	
   	qcatch <- attr(modeldata, 'qcatch')
 
   	dat <- switch(qcatch, 
@@ -510,24 +493,7 @@ bloc2d <- function(coord1, coord2){
   	    
   	if(is.null(qcatch)) 
   	  stop('Scale of quantum catches not defined (Qi or fi in argument qcatch).')
-    
-  	# check if there is a resrefs attribute and bind it
-  	if(!is.null(attr(modeldata, 'resrefs'))){
-  		attribdat <- attributes(modeldata)
-  		colsincommon <- intersect(colnames(modeldata), 
-  		                          colnames(attr(modeldata, 'resrefs')))
-  		
-  		modeldata <- rbind(
-  		             attr(modeldata, 'resrefs')[, colsincommon],
-  		             modeldata[, colsincommon]
-  		             )
-  	    attribdat$names <- attributes(modeldata)$names
-  		attribdat$row.names <- attributes(modeldata)$row.names
-  		attributes(modeldata) <- attribdat
-
-  		}
-
-    
+        
     dat <- as.matrix(modeldata)
     
   	# Ensure catches are log transformed
@@ -535,16 +501,7 @@ bloc2d <- function(coord1, coord2){
   	              fi = dat, 
   	              Qi = log(dat)
   	)
-  	
-  	# Save Qi in original scale (not log transformed)
-  	# to calculate noise.
-  	# TW: Don't actually need this right - since it's for quantum-noise calcs?
-
-  	# qndat <- switch(qcatch,
-  	#                 Qi = as.matrix(modeldata),
-  	#                 fi = as.matrix(exp(modeldata)) 
-  	# )
-  	
+  	  	
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
     
@@ -562,11 +519,14 @@ bloc2d <- function(coord1, coord2){
 
   # Prepare output
   pairsid <- t(combn(nrow(dat),2))
-
-  patch1 <- row.names(dat)[pairsid[, 1]]
-  patch2 <- row.names(dat)[pairsid[, 2]]
-
-  res <- data.frame(patch1, patch2)
+  
+  res <- as.data.frame(matrix(rownames(dat)[pairsid], 
+                    ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
+                    
+  res[,'dS'] <- NA
+  
+  if(achro)
+    res[,'dL'] <- NA
   
   #########################
   # Receptor Noise Models #
@@ -597,28 +557,90 @@ bloc2d <- function(coord1, coord2){
    if(weber.ref == 'longest') weber.ref <- length(n)
    
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
+   
+   
+   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION   
+   
+    visref <- matrix(NA, 
+      ncol=as.numeric(ncone), 
+      nrow=2*as.numeric(ncone)+1, 
+      dimnames=list(
+        c(rownames(dat2)[seq(as.numeric(ncone))], 
+        paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
+        colnames(dat2)
+        )
+    )
+   
+    rrf <- diag(9, as.numeric(ncone))
+    rrf[lower.tri(rrf)] <- 0.001
+    rrf[upper.tri(rrf)] <- 0.001
+   
+    rrf <- log(rrf)
+      
+    visref[seq(as.numeric(ncone)),] <- dat2[seq(as.numeric(ncone)),]
+    visref[as.numeric(ncone)+1, ] <- log(1e-10)
+    visref[-seq(as.numeric(ncone)+1),] <- rrf
+
+  
+    resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
+                     ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
+    resref[,'dS'] <- NA
+    if(achro)
+      resref[,'dL'] <- NA
   
    if(noise=='neural'){
-   	res$dS <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
+   	res[, 'dS'] <- newreceptornoise.neural(dat=dat2, n=n, weber=weber, 
    	  weber.ref=weber.ref, res=res)
+
+   	resref[, 'dS'] <- newreceptornoise.neural(dat=visref, n=n, weber=weber, 
+   	  weber.ref=weber.ref, res=resref)
    } 
    
    if(noise=='quantum') {
     qndat2 <- qndat[, 1:as.numeric(ncone)]
-    res$dS <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
-      weber.ref=weber.ref, res=res, qndat = qndat2)     	
+    res[, 'dS'] <- newreceptornoise.quantum(dat=dat2, n=n, weber=weber, 
+      weber.ref=weber.ref, res=res, qndat = qndat2)    
+
+    qnref <- exp(visref)
+    resref[, 'dS'] <- newreceptornoise.quantum(dat=visref, n=n, weber=weber, 
+      weber.ref=weber.ref, res=resref, qndat = qnref)    
    }
    
   
-  if(achro == TRUE){
-  	if(noise == 'quantum')
-  	  res$dL <- apply(pairsid, 1, function(x) 
-        qn.ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], 
-        qn1=qndat[x[1], ], qn2=qndat[x[2], ], weber.achro = weber.achro))
-   
-    if(noise =='neural')
-      res$dL <- apply(pairsid, 1, function(x) 
-        ttdistcalcachro(f1=dat[x[1], ], f2=dat[x[2], ], weber.achro = weber.achro))
+  if(achro){
+
+    if(noise =='neural'){
+      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
+        weber.achro = weber.achro)
+        ))
+        
+      visref <- cbind(visref, lum=log(1e-10))
+      visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
+        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+ 
+  	  resref[, 'dL'] <- unlist(lapply(seq(nrow(resref)), function(x)
+        ttdistcalcachro(f1= visref[resref[x,1], ], f2= visref[resref[x,2], ], 
+        weber.achro = weber.achro)
+        ))
+    }
+
+  	if(noise == 'quantum'){        
+      res[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        qn.ttdistcalcachro(f1=dat[res[x,1], ], f2=dat[res[x,2], ], 
+        qn1=qndat[res[x,1], ], qn2=qndat[res[x,2], ], weber.achro = weber.achro)
+        ))
+      
+      visref <- cbind(visref, lum=log(1e-10))
+      visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
+        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+
+      qnref <- exp(visref)
+  	  resref[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
+        qn.ttdistcalcachro(f1=visref[resref[x,1], ], f2=visref[resref[x,2], ], 
+        qn1=qnref[resref[x,1], ], qn2=qnref[resref[x,2], ], weber.achro = weber.achro)
+        ))
+    }
     
     if(dim(dat)[2] <= as.numeric(ncone))
       warning('achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.', call.=FALSE)
@@ -635,45 +657,45 @@ bloc2d <- function(coord1, coord2){
 if('colspace' %in% class(modeldata)){
 	
   if(attr(modeldata, 'clrsp') == 'hexagon'){
-    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'segment'){
-    res$dS <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'categorical'){
-    res$dS <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the categorical model', call.=FALSE)
   }
   
   if(attr(modeldata, 'clrsp') == 'CIELAB'){
-    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'CIELCh'){
-    #res$dS <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
-    res$dS <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
+    #res[, 'dS'] <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
-      res$dL <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
+      res[, 'dL'] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
   }
   
   if(attr(modeldata, 'clrsp') == 'coc'){
-    res$dS <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+    res[, 'dS'] <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     if(achro == TRUE)
       warning('Achromatic contrast not calculated in the color-opponent-coding space', call.=FALSE)
   }
 
 }
 
-  nams2 <- with(res, unique(c(as.character(patch1), as.character(patch2))))
+  nams2 <- with(res, unique(c(patch1, patch2)))
   
 # Subsetting samples
   
@@ -701,23 +723,15 @@ if('colspace' %in% class(modeldata)){
     subsamp <- unique(c(condition1, condition2))
     
     res <- res[subsamp, ]	
+   row.names(res) <- 1:dim(res)[1]
+
   }
   
-  row.names(res) <- 1:dim(res)[1]
-  
-  res$patch1 <- as.character(res$patch1)
-  res$patch2 <- as.character(res$patch2)
-  
-  #remove reference results
-  arethererefs <- grep('refforjnd2xyz',paste(res$patch1, res$patch2))
-  if(length(arethererefs) > 0){
-  
-    resrefs <- res[arethererefs, ]
-    res <- res[-arethererefs, ] 
-  
-    attr(res, 'resrefs') <- resrefs
-    attr(res, 'conenumb') <- ncone
-  }
-  
+  if(exists('resref', inherits=FALSE))
+    attr(res, 'resref') <- resref
+    
+  attr(res, 'ncone') <- ncone
+  attr(res, 'isrnoise') <- usereceptornoisemodel
+    
   res
 }

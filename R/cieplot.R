@@ -184,8 +184,14 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black',
     text(x = txtlabt$x['tb'], txtlabt$y['tb'], labels = 'b')
         
     # Data
+    # CRAN won't accept triple : arguments and persp.default is not exported,
+    # so we need to pass arguments by hand
+    perspargs <- c("x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab", 
+      "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border", 
+      "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
+
     argpoints <- arg
-    argpoints[names(as.list(args(graphics:::persp.default)))] <- NULL
+    argpoints[perspargs] <- NULL
     argpoints['col'] <- col
 
     xy <- trans3d(ciedata[,'a'], ciedata[,'b'], ciedata[,'L'], P)

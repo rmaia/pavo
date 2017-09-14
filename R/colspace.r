@@ -94,21 +94,6 @@ colspace <- function(vismodeldata,
   if(inherits(space2, 'try-error'))
     stop('Invalid colorspace selected')
   
-  # # check if there is a resrefs attribute and bind it
-  	# if(!is.null(attr(vismodeldata, 'resrefs'))){
-  		# attribdat <- attributes(vismodeldata)
-  		# colsincommon <- intersect(colnames(vismodeldata), 
-  		                          # colnames(attr(vismodeldata, 'resrefs')))
-  		
-  		# vismodeldata <- rbind(
-  		             # attr(vismodeldata, 'resrefs')[, colsincommon],
-  		             # vismodeldata[, colsincommon]
-  		             # )
-  		# attribdat$names <- attributes(vismodeldata)$names
-  		# attribdat$row.names <- attributes(vismodeldata)$row.names
-  		# attributes(vismodeldata) <- attribdat
-  	# }
-  
   if(space2 == 'auto'){
   	res<- 
   	switch(as.character(attr(vismodeldata, 'conenumb')),
@@ -155,23 +140,6 @@ colspace <- function(vismodeldata,
   	receptcols <- res[, colnames(res) %in% c('u','s','m','l')]
   	if(isTRUE(all.equal(rowSums(receptcols), rowSums(receptcols/rowSums(receptcols)), tol=0.001)))
   	  attr(res, 'relative') <- TRUE
-  }
-
-  attr(res, 'resrefs') <- NULL
-  
-  #remove reference results
-  arethererefs <- grep('refforjnd2xyz', rownames(res))
-  if(length(arethererefs) > 0){
-    attribres <- attributes(res)
-
-    resrefs <- res[arethererefs, ]
-    res <- res[-arethererefs, ] 
-    
-    attribres$names <- attributes(res)$names
-    attribres$row.names <- attributes(res)$row.names
-    attributes(res) <- attribres
-
-    attr(res, 'resrefs') <- resrefs
   }
 
 res
