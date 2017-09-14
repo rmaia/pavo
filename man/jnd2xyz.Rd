@@ -4,10 +4,31 @@
 \alias{jnd2xyz}
 \title{Convert JND distances into perceptually-corrected Cartesian coordinates}
 \usage{
-jnd2xyz(coldistres)
+jnd2xyz(coldistres, rotate = TRUE, center = c("mean", "achro"),
+  ref1 = "l", axis1 = c(1, 1, 0), ref2 = "u", axis2 = c(0, 0, 1))
 }
 \arguments{
 \item{coldistres}{(required) the output from a \code{coldist} call.}
+
+\item{rotate}{logical indicating if the data should be rotated (defaults to \code{TRUE}).}
+
+\item{center}{should the vectors for rotation be centered in the achromatic
+center ("achro") or the data centroid ("mean", the default)?}
+
+\item{ref1}{the cone to be used as a the first reference. Must match name
+in the original data that was used for \code{coldist}. Defaults to 'l'.}
+
+\item{axis1}{A vector of length 3 composed of 0's and 1's, with 
+1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
+that the rotation aligns with the xy plane. (only used if data has 2 or 3 dimensions)}
+
+\item{ref2}{the cone to be used as a the second reference. Must match name
+in the original data that was used for \code{coldist}. Defaults to 'u'.
+(only used if data has 3 dimensions).}
+
+\item{axis2}{A vector of length 3 composed of 0's and 1's, with 
+1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
+that the rotation aligns with the z axis. (only used if data has 3 dimensions).}
 }
 \description{
 Converts a \code{coldist} output into Cartesian coordinates that are
