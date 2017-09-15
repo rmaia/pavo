@@ -96,7 +96,7 @@ plot.colspace <- function(x, ...){
   oPar <- par('mar','pty')
   on.exit(par(oPar))
   
-  if('jn2xyz' %in% attr(x, 'class'))
+  if('jnd2xyz' %in% attr(x, 'class'))
     jndplot(x, ...)
 
   space <- attr(x, 'clrsp')
