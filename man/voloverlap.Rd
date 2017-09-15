@@ -34,7 +34,7 @@ used in the Monte Carlo simulation.}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
-\item{...}{additional arguments passed to the plot. See \link{\code{vol}}}
+\item{...}{additional arguments passed to the plot. See \code{\link{vol}}}
 }
 \value{
 Calculates the overlap between the volumes defined by two set of points in

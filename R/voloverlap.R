@@ -23,7 +23,7 @@
 #' @param psize if \code{montecarlo = TRUE} and \code{plot = TRUE}, sets the size to plot the points
 #' used in the Monte Carlo simulation.
 #' @param lwd if \code{plot = TRUE}, sets the line width for volume grids.
-#' @param ... additional arguments passed to the plot. See \link{\code{vol}}
+#' @param ... additional arguments passed to the plot. See \code{\link{vol}}
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
