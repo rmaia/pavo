@@ -338,7 +338,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
 
   # combine data with references
   x2 <- x[, colstouse]
-  attr(x, 'resref') <- attr(x, 'resref')[,colstouse]  
+  attr(x2, 'resref') <- attr(x, 'resref')[,colstouse]  
   
   dat <- rbind(x[, colstouse], attr(x, 'resref')[,colstouse])
   attr(dat, 'resref') <- attr(x, 'resref')[,colstouse]

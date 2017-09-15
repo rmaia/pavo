@@ -96,8 +96,9 @@ plot.colspace <- function(x, ...){
   oPar <- par('mar','pty')
   on.exit(par(oPar))
   
-  if('jnd2xyz' %in% attr(x, 'class'))
+  if('jnd2xyz' %in% attr(x, 'class')){
     jndplot(x, ...)
+  }else{
 
   space <- attr(x, 'clrsp')
   
@@ -113,5 +114,5 @@ plot.colspace <- function(x, ...){
          'CIELCh' = cieplot(x, ...),
          'segment' = segplot(x, ...)
   )
-  
+  } 
 }

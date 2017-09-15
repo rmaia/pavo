@@ -42,13 +42,13 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
   if(!'jnd2xyz' %in% class(jnd2xyzres))
     stop('object must be a result from the "jnd2xyz" function')
 
-  if(!paste0('jnd2xyzrrf.',ref1) %in% rownames(attr(jnd2xyzres, 'resref')))
+  if(!is.null(ref1) && !paste0('jnd2xyzrrf.',ref1) %in% rownames(attr(jnd2xyzres, 'resref')))
     stop('"ref1" does not match the name of a photoreceptor; must be one of: ', 
       paste0(gsub('jnd2xyzrrf.', '', rownames(attr(jnd2xyzres, 'resref'))) 
       [-c(1, length(rownames(attr(jnd2xyzres, 'resref'))))], collapse=', ') 
       , call.=FALSE) 
 
-  if(all(c('x','y','z') %in% colnames(jnd2xyzres)) && !paste0('jnd2xyzrrf.',ref2) %in% rownames(attr(jnd2xyzres, 'resref')))
+  if(!is.null(ref2) && all(c('x','y','z') %in% colnames(jnd2xyzres)) && !paste0('jnd2xyzrrf.',ref2) %in% rownames(attr(jnd2xyzres, 'resref')))
     stop('"ref2" does not match the name of a photoreceptor; must be one of: ', 
       paste0(gsub('jnd2xyzrrf.', '', rownames(attr(jnd2xyzres, 'resref'))) 
       [-c(1, length(rownames(attr(jnd2xyzres, 'resref'))))], collapse=', ') 
@@ -65,10 +65,10 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
     a[i]*b[j] - a[j]*b[i]
   }
   
-  coords <- as.matrix(rbind(jnd2xyzres, attr(jnd2xyzres, 'resref')))
+  coordsall <- as.matrix(rbind(jnd2xyzres, attr(jnd2xyzres, 'resref')))
   
   # remove lum column if there is one
-  coords <- coords[, colnames(coords) %in% c('x','y','z')]
+  coords <- coordsall[, colnames(coordsall) %in% c('x','y','z'), drop = FALSE]
   
   # one dimension
   if(round(sum(c('x','y','z') %in% colnames(coords))) == 1){
@@ -82,7 +82,7 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
   # two dimensions
   if(round(sum(c('x','y','z') %in% colnames(coords))) == 2){
   	
-  	coords <- cbind(coords, 0)
+  	coords <- cbind(coords, tempcol=0)
 
     if(length(axis1) !=3)
       stop('"axis1" must be a vector of length 3')
@@ -110,7 +110,8 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
    res <- t(apply(res, 1, function(x) RR %*% x))
    #res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
    
-   res <- res[,seq(dim(res)[2]-1)]
+   res <- res[, -dim(res)[2]]
+   coords <- coords[, -dim(coords)[2]]
    colnames(res) <- colnames(coords)
   }
 
@@ -118,7 +119,7 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
   if(round(sum(c('x','y','z') %in% colnames(coords))) == 3){
   	
     # first rotation
-    if(!is.null(ref2)){
+    if(!is.null(ref1)){
     if(length(axis1) !=3)
       stop('"axis1" must be a vector of length 3')
       
@@ -180,10 +181,11 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
    
   }
 
-chromcoords <- res[grep('jnd2xyzrrf', rownames(res), invert=TRUE), ]
+if('lum' %in% colnames(jnd2xyzres)){
+  res <- cbind(res, lum=coordsall[,'lum'])
+  }
 
-if('lum' %in% colnames(jnd2xyzres))
-  chromcoords <- cbind(chromcoords, jnd2xyzres[,'lum'])
+chromcoords <- res[grep('jnd2xyzrrf', rownames(res), invert=TRUE), ]
 
 chromcoords <- as.data.frame(chromcoords)
 
