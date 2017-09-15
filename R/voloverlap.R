@@ -23,9 +23,7 @@
 #' @param psize if \code{montecarlo = TRUE} and \code{plot = TRUE}, sets the size to plot the points
 #' used in the Monte Carlo simulation.
 #' @param lwd if \code{plot = TRUE}, sets the line width for volume grids.
-#' @param view,scale.y additional arguments used when using a static plot
-#' (see \code{\link{vol}}).
-#'
+#' @param ... additional arguments passed to the plot. See \link{\code{vol}}
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
 #' \itemize{
@@ -92,7 +90,7 @@
 voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
               col = c('blue', 'red', 'darkgrey'), new = TRUE,
               montecarlo = FALSE, nsamp = 1000, psize = 0.001, 
-              lwd = 1, view = 70, scale.y = 1){
+              lwd = 1, ...){
 
 dat1 <- tcsres1[, c('x', 'y', 'z')]
 
@@ -229,13 +227,13 @@ if(plot){
         attr(Voverlap, 'clrsp') <- "tcs"
         vol(Voverlap, col=col[3], new=new,
           xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], view=view)
+          zlim=plotrange[,'z'], lwd=lwd, ...)
         vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=FALSE)
         vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
       }else{
         vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=new,
           xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], view=view)
+          zlim=plotrange[,'z'], ...)
         vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
       }
 	}

@@ -9,10 +9,8 @@
 #' @param fill logical. if \code{TRUE} (default), fills the volume defined by the points.
 #' @param new logical. Should a new plot be started or draw over an open plot? 
 #' (defaults to FALSE)
-#' @param theta,phi,r,zoom,box,margin plotting parameters.
-#' in case of a new plot. see \code{\link{tetraplot}}.
 #' @param view,scale.y,axis deprecated arguments.
-#' @param ... additional graphical options. See \code{link{polygon}}. 
+#' @param ... additional graphical options. See \code{link{polygon}} and \code{\link{tetraplot}}. 
 #'
 #' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot.
 #'
@@ -22,8 +20,6 @@
 #' 
   
 vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, 
-                theta = NULL, phi = NULL, r = NULL, zoom = 1, 
-                box = NULL, margin = NULL, 
                 new = FALSE, view, scale.y, axis, ...){
 
   if(!missing(view))
@@ -32,6 +28,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
     stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
   if(!missing(axis))
     stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
+
 
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
@@ -47,7 +44,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
 
   if(new){
 
-    argempty <- c(list(border=FALSE, r=r, box=box, theta=theta, phi=phi), arg)
+    argempty <- c(list(border=FALSE, r=r, box=box), arg)
 
     argempty$col <- NULL
 
@@ -105,6 +102,15 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   
   if(!fill)
     arg$col <- NA
+
+  # CRAN won't accept triple : arguments and persp.default is not exported,
+  # so we need to pass arguments by hand
+  perspargs <- c("x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab", 
+    "main", "sub", "theta", "phi", "r", "d", "scale", "expand",
+    "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
+  
+  arg[perspargs] <- NULL  
+
     
   for(i in 1:ncol(vol)){
   	arg$x <- flatcoords[vol[,i],'x']

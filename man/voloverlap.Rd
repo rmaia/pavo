@@ -6,7 +6,7 @@
 \usage{
 voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
   col = c("blue", "red", "darkgrey"), new = TRUE, montecarlo = FALSE,
-  nsamp = 1000, psize = 0.001, lwd = 1, view = 70, scale.y = 1)
+  nsamp = 1000, psize = 0.001, lwd = 1, ...)
 }
 \arguments{
 \item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{colspace} 
@@ -34,8 +34,7 @@ used in the Monte Carlo simulation.}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
-\item{view, scale.y}{additional arguments used when using a static plot
-(see \code{\link{vol}}).}
+\item{...}{additional arguments passed to the plot. See \link{\code{vol}}}
 }
 \value{
 Calculates the overlap between the volumes defined by two set of points in
