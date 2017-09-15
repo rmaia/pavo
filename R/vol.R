@@ -44,16 +44,21 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
 
   if(new){
 
-    argempty <- c(list(border=FALSE, r=r, box=box), arg)
+    argempty <- c(list(border=FALSE), arg)
 
     argempty$col <- NULL
-
+    
+    if(is.null(argempty$zoom))
+      argempty$zoom <- 1
   	if(is.null(argempty$xlim))
-  	  argempty$xlim <- range(tcsdata[,'x'])/zoom
+  	  argempty$xlim <- range(tcsdata[,'x'])/argempty$zoom
   	if(is.null(argempty$ylim))
-  	  argempty$ylim <- range(tcsdata[,'y'])/zoom
+  	  argempty$ylim <- range(tcsdata[,'y'])/argempty$zoom
   	if(is.null(arg$zlim))
-  	  argempty$zlim <- range(tcsdata[,'z'])/zoom
+  	  argempty$zlim <- range(tcsdata[,'z'])/argempty$zoom
+  	
+  	argempty$zoom <- NULL  
+  
   	if(is.null(argempty$theta))
   	  argempty$theta <- 45
   	if(is.null(argempty$phi))
