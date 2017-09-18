@@ -21,7 +21,8 @@
 #' @param fast logical. if \code{TRUE}, will try a fast algorithm that assumes
 #'  all spectra were produced using the same software configuration (defaults
 #'  to \code{FALSE}).
-#' @param cores Numeric. If greater than 1, parallelization is used. 
+#' @param cores Number of cores to be used. If greater than 1, import will use
+#'  parallel processing (not available in Windows).
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
