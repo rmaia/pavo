@@ -24,7 +24,8 @@ Depends:
 Imports:
     rcdd,
     mapproj,
-    geometry
+    geometry,
+    pbmcapply
 Suggests:
     rgl,
     testthat,
