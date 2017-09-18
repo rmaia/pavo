@@ -77,6 +77,7 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
       coords[,'x'] <- coords[,'x']*-1
     
     res <- coords
+    colnames(res) <- colnames(coords)
   }
   
   # two dimensions
@@ -118,8 +119,6 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
   # three dimensions
   if(round(sum(c('x','y','z') %in% colnames(coords))) == 3){
   	
-    # first rotation
-    if(!is.null(ref1)){
     if(length(axis1) !=3)
       stop('"axis1" must be a vector of length 3')
       
@@ -128,6 +127,8 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
                    mean = coords['jnd2xyzrrf.ctrd', ]
                    )
 
+    # first rotation    
+    if(!is.null(ref1)){
     aa <- vectornorm(coords[grep(paste0('jnd2xyzrrf.',ref1), rownames(coords)), ] - 
                      cent)
     bb <- vectornorm(axis1)
@@ -185,11 +186,11 @@ if('lum' %in% colnames(jnd2xyzres)){
   res <- cbind(res, lum=coordsall[,'lum'])
   }
 
-chromcoords <- res[grep('jnd2xyzrrf', rownames(res), invert=TRUE), ]
+chromcoords <- res[grep('jnd2xyzrrf', rownames(res), invert=TRUE), , drop=FALSE]
 
 chromcoords <- as.data.frame(chromcoords)
 
-refstosave <- as.data.frame(res[grep('jnd2xyzrrf', rownames(res)), ])
+refstosave <- as.data.frame(res[grep('jnd2xyzrrf', rownames(res)), , drop=FALSE])
 
 attr(chromcoords, 'class') <- c('colspace', 'jnd2xyz', 'data.frame')
 attr(chromcoords, 'resref') <- refstosave
