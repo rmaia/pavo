@@ -21,11 +21,14 @@
 #' @param fast logical. if \code{TRUE}, will try a fast algorithm that assumes
 #'  all spectra were produced using the same software configuration (defaults
 #'  to \code{FALSE}).
+#' @param cores Numeric. If greater than 1, parallelization is used. 
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
 #' 
 #' @export
+#'
+#' @importFrom pbmcapply pbmclapply
 #' 
 #' @examples \dontrun{
 #' getspec('examplespec/', lim = c(400, 900))	
@@ -41,7 +44,8 @@
 
 
 getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
-           sep=NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE)
+           sep=NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE, 
+           cores=getOption("mc.cores", 2L))
   {
   
   if(fast){
@@ -65,9 +69,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   # get file names
   file_names <- list.files(where, pattern = extension, recursive = subdir, include.dirs = subdir)
   files <- paste(where, '/', file_names, sep = '')
-  
-  cat(length(files), ' files found; importing spectra\n')
-  
+    
   if(subdir.names){
   	file_names <- gsub(extension, '', file_names)}else{
   	file_names <- gsub(extension, '', basename(file_names))
@@ -76,6 +78,8 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   if(length(file_names) == 0){
   	stop('No files found. Try a different extension value for argument "ext"')
   	} 
+
+  cat(length(files), ' files found; importing spectra\n')
   
   # Wavelength range
   range <- seq(lim[1],lim[2])
@@ -92,13 +96,12 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
 
   
   # Setting a progress bar
-  progbar <- txtProgressBar(min = 0, max = length(files), style = 2)
+  #progbar <- txtProgressBar(min = 0, max = length(files), style = 2)
   
-  for(i in 1:length(files))
-    {
+  gsp <- function(ff){
   
     # read in raw file
-    raw <- scan(file = files[i], what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
+    raw <- scan(file = ff, what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
     
     # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
     if(length(grep('Begin Calibration Data', raw)) > 0)
@@ -151,13 +154,25 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
      corrupt[i] <- TRUE
 
    # add to final table
-   final[, i+1] <- interp[, 2]
+   #final[, i+1] <- interp[, 2]
    
-   head(final)
+   interp[ ,2]
     
-    setTxtProgressBar(progbar, i)
-    
+   #setTxtProgressBar(progbar, i)
     }
+    
+
+    # On Windows, set cores to be 1
+    if (cores > 1 && .Platform$OS.type == "windows") {
+      cores <- 1
+      warning('Parallel processing not implemented in Windows; "cores" set to 1', call.=FALSE)
+    } 
+    
+  tmp <- pbmclapply(files, gsp, mc.cores=cores)
+    
+  tmp <- do.call(cbind, tmp)
+
+  final <- cbind(range, tmp)
   
   colnames(final) <- c('wl', gsub(extension, '', file_names))
   final <- as.data.frame(final)

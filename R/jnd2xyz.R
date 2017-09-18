@@ -213,6 +213,10 @@ if('dL' %in% names(colmat)){
   #coords[,'lum'] <- coords[,'lum'] - coords[darker,'lum']
 }
 
+# Center variables 
+centroids <- colMeans(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
+coords <- sweep(coords, 2, centroids, '-')
+
 jnd2xyzrrf.ctrd <- colMeans(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
   
 chromcoords <- as.data.frame(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
@@ -225,7 +229,7 @@ attr(chromcoords, 'resref') <- refstosave
 
 if(rotate){
     center <- match.arg(center)
-    rotarg <- list(jnd2xyzres = chromcoords, center=match.arg(center), 
+    rotarg <- list(jnd2xyzres = chromcoords, center=center, 
       ref1=ref1, ref2=ref2, axis1=axis1, axis2=axis2)
 
     chromcoords <- do.call(jndrot, rotarg)

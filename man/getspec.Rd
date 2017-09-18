@@ -5,7 +5,8 @@
 \title{Import spectra files}
 \usage{
 getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
-  sep = NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE)
+  sep = NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE,
+  cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{where}{(required) folder in which files are located.}
@@ -31,6 +32,8 @@ spectra? (defaults to \code{FALSE}).}
 \item{fast}{logical. if \code{TRUE}, will try a fast algorithm that assumes
 all spectra were produced using the same software configuration (defaults
 to \code{FALSE}).}
+
+\item{cores}{Numeric. If greater than 1, parallelization is used.}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported
