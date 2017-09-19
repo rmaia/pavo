@@ -31,6 +31,8 @@ reference:
   contents:
   - '`coldist`'
   - '`colspace`'
+  - '`jnd2xyz`'
+  - '`jndrot`'
   - '`peakshape`'
   - '`segspace`'
   - '`sensmodel`'

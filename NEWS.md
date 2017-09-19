@@ -4,6 +4,7 @@ NEW FUNCTIONS:
 * jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates
 * plot() methods for objects resulting from jnd2xyz()
 * jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()
+* coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix
 * sensdata() function for retrieving and/or visualising pavo's in-build spectral data 
 
 MAJOR CHANGES:

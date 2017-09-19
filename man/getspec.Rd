@@ -33,7 +33,8 @@ spectra? (defaults to \code{FALSE}).}
 all spectra were produced using the same software configuration (defaults
 to \code{FALSE}).}
 
-\item{cores}{Numeric. If greater than 1, parallelization is used.}
+\item{cores}{Number of cores to be used. If greater than 1, import will use
+parallel processing (not available in Windows).}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported
