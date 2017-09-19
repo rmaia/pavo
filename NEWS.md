@@ -1,9 +1,16 @@
 pavo 1.3
 ------------------------------------------------------------------------------
-MAJOR CHANGES:
+NEW FUNCTIONS:
+* jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates
+* plot() methods for objects resulting from jnd2xyz()
+* jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()
+* sensdata() function for retrieving and/or visualising pavo's in-build spectral data 
 
+MAJOR CHANGES:
 * tetraplot() and cieplot() have been completely rewritten to allow finer viewing control
-* getspec() has been rewritten to be faster and more general
+* tetraplot() allows forced perspective using size to denote distance
+* voloverlap() and vol() have also been changed to work with the new tetraplot() options
+* getspec() has been rewritten to be faster, more general, and allow parallel processing
 * subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)
 
 MINOR FEATURES AND BUG FIXES:
@@ -13,12 +20,13 @@ MINOR FEATURES AND BUG FIXES:
 * fixed bug in colspace() models when using non-standard receptor names or ordering
 * fixed bug in hexagon() model when calculating location & metrics for achromatic stimuli
 * fixed location of red vertex in tetraplot()
-* fixed a bug in the argument names for expanding text labels in colspace plots
+* fixed bug in the argument names for expanding text labels in colspace plots
 * removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.
 * changed default to achro=FALSE in coldist() 
 * replaced the modelled receptor sensitivities of the honeybee _Apis melifera_ with the empirical sensitivities from Peitsch et al (1992)
 * the built-in 'green' background spectrum is no longer normalized
 * removed wavelength limitations in the calculation of H3 from summary.rspec
+* all visual systems (except CIE) have been normalized to have an integral of 1
 
 pavo 1.2
 ------------------------------------------------------------------------------
