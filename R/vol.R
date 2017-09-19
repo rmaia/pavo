@@ -67,8 +67,13 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   	  argempty$r <- 12
   	if(is.null(argempty$box))
   	  argempty$box <- FALSE
-  	if(is.null(margin))
+
+  	if(is.null(argempty$margin)){
   	  margin <- c(0,0,0,0)
+    }else{
+      margin <- argempty$margin
+      argempty$margin <- NULL  
+  	  }
   	
   	argempty$x <- argempty$xlim
   	argempty$y <- argempty$ylim
@@ -78,7 +83,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
     oPar <- par('mar','pty')
     on.exit(par(oPar))
   
-    par(mar=margin)
+    par(mar= margin)
     
     P <- do.call(persp, argempty)
     

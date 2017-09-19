@@ -207,7 +207,7 @@ if(plot){
           }
         }
       
-      if(montecarlo==TRUE){
+      if(montecarlo){
         rgl::spheres3d(samples[which(invol1 & !invol2),], type='s', 
           lit=F, radius=psize, col=col[1])
         rgl::spheres3d(samples[which(invol2 & !invol1),], type='s', 
