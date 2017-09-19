@@ -151,8 +151,8 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
    interp <- do.call(cbind, approx(tempframe[, 1], tempframe[, 2], xout = range))
    
    # check if there are any NA left, assign as corrupt if so
-   if(any(is.na(interp)))
-     corrupt[i] <- TRUE
+   #if(any(is.na(interp)))
+   #  corrupt[i] <- TRUE
 
    # add to final table
    #final[, i+1] <- interp[, 2]
@@ -166,7 +166,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     # On Windows, set cores to be 1
     if (cores > 1 && .Platform$OS.type == "windows") {
       cores <- 1
-      warning('Parallel processing not implemented in Windows; "cores" set to 1', call.=FALSE)
+      cat('Parallel processing not available in Windows; "cores" set to 1\n')
     } 
     
   tmp <- pbmclapply(files, gsp, mc.cores=cores)
