@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -81,11 +88,12 @@
     <p>Produces a static 3D tetrahedral plot.</p>
     
 
-    <pre class="usage"><span class='fu'>tetraplot</span>(<span class='no'>tcsdata</span>, <span class='kw'>vertexsize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>, <span class='kw'>view</span> <span class='kw'>=</span> <span class='fl'>70</span>,
-  <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>axis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>1.22</span>, <span class='fl'>0.612</span>),
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>0.35</span>, <span class='fl'>0.707</span>), <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>0.25</span>, <span class='fl'>0.75</span>), <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>),
-  <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>tetraplot</span>(<span class='no'>tcsdata</span>, <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>perspective</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>achro.col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>achro.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro.line</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>achro.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>achro.lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>tetrahedron</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vert.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>vert.range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
+  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='no'>view</span>, <span class='no'>scale.y</span>, <span class='no'>axis</span>, <span class='no'>grid</span>, <span class='no'>vertexsize</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -97,50 +105,75 @@ or <code>tetraspace</code> function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
-      <th>vertexsize</th>
-      <td><p>size of the points at the vertices (defaults to 0.8).</p></td>
+      <th>theta</th>
+      <td><p>angle to rotate the plot in the xy plane (defaults to 10).</p></td>
     </tr>
     <tr>
-      <th>achrosize</th>
-      <td><p>size of the point in the achromatic center (defaults to 0.8).</p></td>
+      <th>phi</th>
+      <td><p>angle to rotate the plot in the yz plane (defaults to 45).</p></td>
     </tr>
     <tr>
-      <th>achrocol</th>
-      <td><p>color of the point in the achromatic center (defaults to 'grey').</p></td>
+      <th>perspective</th>
+      <td><p>logical, should perspective be forced by using point size to reflect
+distance from the plane of view? (defaults to TRUE)</p></td>
     </tr>
     <tr>
-      <th>out.lwd, out.lcol</th>
-      <td><p>graphical parameters for the tetrahedral outline.</p></td>
+      <th>range, </th>
+      <td><p>vert.range multiplier applied to <code>cex</code> and <code>vert.cex</code>, respectively, 
+to indicate the size range variation reflecting the distance from the plane of view.</p></td>
     </tr>
     <tr>
-      <th>view</th>
-      <td><p>orientation of the tetrahedron in degrees (defaults to 70).</p></td>
+      <th>r</th>
+      <td><p>the distance of the eyepoint from the centre of the plotting box. 
+Very high values approximate an orthographic projection (defaults to 1e6).
+See <code>persp</code> for details.</p></td>
     </tr>
     <tr>
-      <th>scale.y</th>
-      <td><p>numeric. Perspective scaling of the y axis (defaults to 0.45).</p></td>
+      <th>zoom</th>
+      <td><p>zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.</p></td>
     </tr>
     <tr>
-      <th>axis</th>
-      <td><p>logical. Draw X, Y and Z axis (defaults to FALSE).</p></td>
+      <th>achro</th>
+      <td><p>logical. Should the achromatic center be plotted? (defaults to <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>grid</th>
-      <td><p>logical. Draw grid (defaults to FALSE).</p></td>
+      <th>achro.col, </th>
+      <td><p>achro.size, achro.lwd, achro.lty graphical parameters for the achromatic coordinates.</p></td>
     </tr>
     <tr>
-      <th>xlim, ylim, zlim</th>
-      <td><p>axis limits.</p></td>
+      <th>achro.line</th>
+      <td><p>logical. Should the achromatic line be plotted? (defaults to <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>tetrahedron</th>
+      <td><p>logical. Should the tetrahedron be plotted? (defaults to <code>TRUE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>vert.cex</th>
+      <td><p>size of the points at the vertices (defaults to 1).</p></td>
+    </tr>
+    <tr>
+      <th>out.lwd, </th>
+      <td><p>out.lcol graphical parameters for the tetrahedral outline.</p></td>
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins (defaults to c(1, 1, 1, 1)).</p></td>
+      <td><p>vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
+the base of the tetrahedron.</p></td>
+    </tr>
+    <tr>
+      <th>view, </th>
+      <td><p>scale.y, axis, grid deprecated arguments.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tetraplot</code> creates a 3D plot using functions of the package <code>scatterplot3d</code>.</p>
+    <p><code>tetraplot</code> creates a 3D plot.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -157,15 +190,15 @@ coordinates as columns (labeled as such).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># For plotting</span>
+<span class='fu'>data</span>(<span class='no'>sicalis</span>)
+<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'avg.uv'</span>)
+<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'tcs'</span>)
+<span class='fu'>plot</span>(<span class='no'>tcs.sicalis</span>)
 
-  <span class='co'># For plotting</span>
-  <span class='fu'>data</span>(<span class='no'>sicalis</span>)
-  <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'avg.uv'</span>)
-  <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'tcs'</span>)
-  <span class='fu'>plot</span>(<span class='no'>tcs.sicalis</span>)
-
-})</div></pre>
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -186,6 +219,8 @@ coordinates as columns (labeled as such).</p></td>
 Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a>
 
 Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a>
+
+Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a>
 
   </div>
 </div>

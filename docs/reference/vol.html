@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -82,9 +89,8 @@
 non-interactive tetrahedral plot.</p>
     
 
-    <pre class="usage"><span class='fu'>vol</span>(<span class='no'>tcsdata</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>view</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>axis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>vol</span>(<span class='no'>tcsdata</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>view</span>,
+  <span class='no'>scale.y</span>, <span class='no'>axis</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -106,18 +112,17 @@ non-interactive tetrahedral plot.</p>
       <td><p>logical. if <code>TRUE</code> (default), fills the volume defined by the points.</p></td>
     </tr>
     <tr>
-      <th>xlim, ylim, zlim, view, scale.y, margin, axis</th>
-      <td><p>plotting parameters 
-in case of a new plot. see <code><a href='tetraplot.html'>tetraplot</a></code>.</p></td>
-    </tr>
-    <tr>
       <th>new</th>
       <td><p>logical. Should a new plot be started or draw over an open plot? 
 (defaults to FALSE)</p></td>
     </tr>
     <tr>
+      <th>view, scale.y, axis</th>
+      <td><p>deprecated arguments.</p></td>
+    </tr>
+    <tr>
       <th>...</th>
-      <td><p>additional graphical options. See <code>link{polygon}</code>.</p></td>
+      <td><p>additional graphical options. See <code>link{polygon}</code> and <code><a href='tetraplot.html'>tetraplot</a></code>.</p></td>
     </tr>
     </table>
     

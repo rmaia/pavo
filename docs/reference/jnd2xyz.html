@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the categorical colour vision model — catplot • pavo</title>
+<title>Convert JND distances into perceptually-corrected Cartesian coordinates — jnd2xyz • pavo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -81,50 +81,74 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the categorical colour vision model</h1>
+    <h1>Convert JND distances into perceptually-corrected Cartesian coordinates</h1>
     </div>
 
     
-    <p>Produces a plot based on Troje's (1993) categorical colour model.</p>
+    <p>Converts a <code>coldist</code> output into Cartesian coordinates that are
+perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     
 
-    <pre class="usage"><span class='fu'>catplot</span>(<span class='no'>catdata</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>jnd2xyz</span>(<span class='no'>coldistres</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
+  <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>catdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code>colspace</code> 
-or <code>categorical</code> function, containing values for 'x' and 'y' coordinates 
-as columns (labeled as such).</p></td>
+      <th>coldistres</th>
+      <td><p>(required) the output from a <code>coldist</code> call.</p></td>
     </tr>
     <tr>
-      <th>labels</th>
-      <td><p>plot category labels inside? Defaults to <code>TRUE</code>.</p></td>
+      <th>rotate</th>
+      <td><p>logical indicating if the data should be rotated (defaults to <code>TRUE</code>).</p></td>
     </tr>
     <tr>
-      <th>labels.cex</th>
-      <td><p>character expansion factor for category labels when <code>labels = TRUE</code>).</p></td>
+      <th>center</th>
+      <td><p>should the vectors for rotation be centered in the achromatic
+center ("achro") or the data centroid ("mean", the default)?</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>additional graphical options. See <code>par</code>.</p></td>
+      <th>ref1</th>
+      <td><p>the cone to be used as a the first reference. May be NULL 
+(for no first rotation in the 3-dimensional case) or must match name
+in the original data that was used for <code>coldist</code>. Defaults to 'l'.</p></td>
+    </tr>
+    <tr>
+      <th>ref2</th>
+      <td><p>the cone to be used as a the second reference.May be NULL 
+(for no first rotation in the 3-dimensional case) or must match name
+in the original data that was used for <code>coldist</code>. Defaults to 'u'.
+(only used if data has 3 dimensions).</p></td>
+    </tr>
+    <tr>
+      <th>axis1</th>
+      <td><p>A vector of length 3 composed of 0's and 1's, with 
+1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
+that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
+Ignored if <code>ref1</code> is NULL (in 3-dimensional case only)</p></td>
+    </tr>
+    <tr>
+      <th>axis2</th>
+      <td><p>A vector of length 3 composed of 0's and 1's, with 
+1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
+that the rotation aligns with the z axis (only used if data has 3 dimensions).
+Ignored if <code>ref2</code> is NULL (in 3-dimensional case only)</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Troje N. (1993). Spectral categories in the learning behaviour
- of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
+    <p>Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams. 
+Behavioral Ecology, 23, 723-728.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>data</span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Qi'</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'musca'</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'none'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>cat.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'categorical'</span>)
-<span class='fu'>plot</span>(<span class='no'>cat.flowers</span>)
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
+<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)
+<span class='fu'>jnd2xyz</span>(<span class='no'>cd.flowers</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
@@ -140,7 +164,7 @@ as columns (labeled as such).</p></td>
 
     <h2>Author</h2>
     
-Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a>
+Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a>
 
   </div>
 </div>

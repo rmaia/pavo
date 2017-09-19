@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -82,9 +89,8 @@
     
 
     <pre class="usage"><span class='fu'>cieplot</span>(<span class='no'>ciedata</span>, <span class='kw'>mono</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>view</span> <span class='kw'>=</span> <span class='fl'>70</span>, <span class='kw'>scale.y</span> <span class='kw'>=</span> <span class='fl'>0.45</span>, <span class='kw'>axis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>xlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>12.8</span>, <span class='fl'>12.7</span>), <span class='kw'>ylim</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>12.8</span>, <span class='fl'>12.7</span>), <span class='kw'>zlim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>10</span>),
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>box</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='no'>view</span>, <span class='no'>scale.y</span>, <span class='no'>axis</span>, <span class='no'>grid</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -105,28 +111,39 @@ plotted when <code>space = 'ciexyz'</code>? Defaults to <code>TRUE</code>.</p></
       <td><p>graphical parameters for the monochromatic loci outline.</p></td>
     </tr>
     <tr>
-      <th>view</th>
-      <td><p>orientation of the 3d plot in degrees, when <code>space = 'cielab'</code> (defaults to 70).</p></td>
+      <th>theta</th>
+      <td><p>angle to rotate the plot in the xy plane  when <code>space = 'cielab'</code> 
+(defaults to 10).</p></td>
     </tr>
     <tr>
-      <th>scale.y</th>
-      <td><p>numeric. Perspective scaling of the y axis (defaults to <code>0.45</code>).</p></td>
+      <th>phi</th>
+      <td><p>angle to rotate the plot in the yz plane  when <code>space = 'cielab'</code> 
+(defaults to 45).</p></td>
     </tr>
     <tr>
-      <th>axis</th>
-      <td><p>logical. Draw X, Y and Z axis (defaults to <code>FALSE</code>).</p></td>
+      <th>r</th>
+      <td><p>the distance of the eyepoint from the centre of the plotting box 
+when <code>space = 'cielab'</code>. Very high values approximate an orthographic projection 
+(defaults to 1e6). See <code>persp</code> for details.
+. See <code>persp</code> for details.</p></td>
     </tr>
     <tr>
-      <th>grid</th>
-      <td><p>logical. Draw grid (defaults to <code>FALSE</code>).</p></td>
+      <th>zoom</th>
+      <td><p>zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
+when <code>space = 'cielab'</code>.</p></td>
     </tr>
     <tr>
-      <th>xlim, ylim, zlim</th>
-      <td><p>axis limits</p></td>
+      <th>box</th>
+      <td><p>logical. Should the plot area box and axes be plotted? (defaults to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins (defaults to c(1,1,1,1))</p></td>
+      <td><p>vector of four numbers specifying drawing margins for CIELAB plot
+(defaults to c(0,0,0,0))</p></td>
+    </tr>
+    <tr>
+      <th>view, </th>
+      <td><p>scale.y, axis, grid deprecated arguments.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -143,18 +160,19 @@ plotted when <code>space = 'ciexyz'</code>? Defaults to <code>TRUE</code>.</p></
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>data</span>(<span class='no'>flowers</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>flowers</span>)
 
-  <span class='co'># CIEXYZ</span>
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'cie10'</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>'D65'</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-  <span class='no'>xyz.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'ciexyz'</span>)
-  <span class='fu'>plot</span>(<span class='no'>xyz.flowers</span>)
+<span class='co'># CIEXYZ</span>
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'cie10'</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>'D65'</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>xyz.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'ciexyz'</span>)
+<span class='fu'>plot</span>(<span class='no'>xyz.flowers</span>)
 
-  <span class='co'>#CIELAB</span>
-  <span class='no'>lab.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'cielab'</span>)
-  <span class='fu'>plot</span>(<span class='no'>lab.flowers</span>)
-})</div></pre>
+<span class='co'>#CIELAB</span>
+<span class='no'>lab.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'cielab'</span>)
+<span class='fu'>plot</span>(<span class='no'>lab.flowers</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -169,6 +187,8 @@ plotted when <code>space = 'ciexyz'</code>? Defaults to <code>TRUE</code>.</p></
     <h2>Author</h2>
     
 Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a>
+
+Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a>
 
   </div>
 </div>

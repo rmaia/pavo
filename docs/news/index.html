@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -79,15 +86,40 @@
     </div>
 
     <div class="contents">
-    <div id="pavo-1-2-1" class="section level2">
+    <div id="pavo-1-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pavo-1-2-1" class="anchor"></a>pavo 1.2.1</h2>
+<a href="#pavo-1-3" class="anchor"></a>pavo 1.3</h2>
+<p>NEW FUNCTIONS:</p>
+<ul>
+<li>jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates</li>
+<li>plot() methods for objects resulting from jnd2xyz()</li>
+<li>jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()</li>
+<li>coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix</li>
+<li>sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
+</ul>
 <p>MAJOR CHANGES:</p>
+<ul>
+<li>tetraplot() and cieplot() have been completely rewritten to allow finer viewing control</li>
+<li>tetraplot() allows forced perspective using size to denote distance</li>
+<li>voloverlap() and vol() have also been changed to work with the new tetraplot() options</li>
+<li>getspec() has been rewritten to be faster, more general, and allow parallel processing</li>
+<li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</li>
+</ul>
 <p>MINOR FEATURES AND BUG FIXES:</p>
 <ul>
+<li>fixed bug in coldist() on log-transformation when object was neither of class vismodel nor colspace</li>
+<li>fixed bug in dL calculation when input is a colspace object</li>
 <li>fixed bug in vismodel() when a data frame, matrix or rspec object was passed as the background</li>
-<li>replaced the modelled receptor sensitivities of the honeybee Apis melifera with the empirical sensitivities from Peitsch et al (1992)</li>
-<li>fixed bug in colspace models when using non-standard receptor names or ordering</li>
+<li>fixed bug in colspace() models when using non-standard receptor names or ordering</li>
+<li>fixed bug in hexagon() model when calculating location &amp; metrics for achromatic stimuli</li>
+<li>fixed location of red vertex in tetraplot()</li>
+<li>fixed bug in the argument names for expanding text labels in colspace plots</li>
+<li>removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.</li>
+<li>changed default to achro=FALSE in coldist()</li>
+<li>replaced the modelled receptor sensitivities of the honeybee <em>Apis melifera</em> with the empirical sensitivities from Peitsch et al (1992)</li>
+<li>the built-in ‘green’ background spectrum is no longer normalized</li>
+<li>removed wavelength limitations in the calculation of H3 from summary.rspec</li>
+<li>all visual systems (except CIE) have been normalized to have an integral of 1</li>
 </ul>
 </div>
     <div id="pavo-1-2" class="section level2">
@@ -306,7 +338,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pavo-1-2-1">1.2.1</a></li>
+        <li><a href="#pavo-1-3">1.3</a></li>
         <li><a href="#pavo-1-2">1.2</a></li>
         <li><a href="#pavo-1-1">1.1</a></li>
         <li><a href="#pavo-1-0">1.0</a></li>

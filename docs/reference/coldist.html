@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -86,7 +93,7 @@ distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) a
     
 
     <pre class="usage"><span class='fu'>coldist</span>(<span class='no'>modeldata</span>, <span class='kw'>noise</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"neural"</span>, <span class='st'>"quantum"</span>), <span class='kw'>subset</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>weber</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>weber</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
   <span class='kw'>weber.ref</span> <span class='kw'>=</span> <span class='st'>"longest"</span>, <span class='kw'>weber.achro</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='no'>v</span>, <span class='no'>n1</span>, <span class='no'>n2</span>, <span class='no'>n3</span>, <span class='no'>n4</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -124,7 +131,7 @@ are supported.</p></td>
       <td><p>Logical. If <code>TRUE</code>, last column of the data frame is used to calculate 
 the achromatic contrast, with noise based on the Weber fraction given by the argument
 <code>weber.achro</code>.
-If the data are from the hexagon model (i.e. <code>colspace(space = 'hexagon')</code>), it 
+If the data are from the hexagon model (i.e. <code><a href='colspace.html'>colspace(space = 'hexagon')</a></code>), it 
 instead returns simple long (or 'green') receptor contrast.</p></td>
     </tr>
     <tr>
@@ -224,38 +231,39 @@ argument directly, and not based on <code>v</code> and <code>n4</code> as before
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='co'># Dichromat</span>
-  <span class='fu'>data</span>(<span class='no'>flowers</span>)
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'canis'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-  <span class='no'>didist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.flowers</span>)
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Dichromat</span>
+<span class='fu'>data</span>(<span class='no'>flowers</span>)
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'canis'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>didist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.flowers</span>)
 
-  <span class='co'># Trichromat </span>
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-  <span class='no'>tridist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.flowers</span>)
+<span class='co'># Trichromat </span>
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>tridist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.flowers</span>)
 
-  <span class='co'># Trichromat, color-hexagon model (euclidean distances)</span>
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>,
-                          <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'l'</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>'green'</span>)
-  <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'hexagon'</span>)
-  <span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>hex.flowers</span>)
+<span class='co'># Trichromat, color-hexagon model (euclidean distances)</span>
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>,
+                        <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'l'</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>'green'</span>)
+<span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'hexagon'</span>)
+<span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>hex.flowers</span>)
 
-  <span class='co'># Trichromat, color-opponent-coding model (manhattan distances)</span>
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-  <span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'coc'</span>)
-  <span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>coc.flowers</span>)
+<span class='co'># Trichromat, color-opponent-coding model (manhattan distances)</span>
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'coc'</span>)
+<span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>coc.flowers</span>)
 
-  <span class='co'># Tetrachromat</span>
-  <span class='fu'>data</span>(<span class='no'>sicalis</span>)
-  <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'avg.uv'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-  <span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>)
+<span class='co'># Tetrachromat</span>
+<span class='fu'>data</span>(<span class='no'>sicalis</span>)
+<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'avg.uv'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>)
 
-  <span class='co'># This will also work, but give you several warnings you shouldn't ignore!!</span>
-  <span class='no'>col.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>)
-  <span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>col.sicalis</span>)
+<span class='co'># This will also work, but give you several warnings you shouldn't ignore!!</span>
+<span class='no'>col.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>)
+<span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>col.sicalis</span>)
 
-  <span class='no'>tetradist.sicalis.q</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>, <span class='kw'>noise</span> <span class='kw'>=</span> <span class='st'>'quantum'</span>)
-})</div></pre>
+<span class='no'>tetradist.sicalis.q</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>, <span class='kw'>noise</span> <span class='kw'>=</span> <span class='st'>'quantum'</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -23,7 +23,8 @@
 <link href="../pkgdown.css" rel="stylesheet">
 <script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-
+  
+  
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -51,10 +52,16 @@
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="../reference/index.html">Reference</a>
+  <a href="..//index.html">
+    <span class="fa fa-home fa-lg"></span>
+     
+  </a>
 </li>
 <li>
-  <a href="../articles/index.html">Articles</a>
+  <a href="../articles/pavo.html">Get Started</a>
+</li>
+<li>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li>
   <a href="../news/index.html">News</a>
@@ -81,8 +88,8 @@
     <p>Produces a plot based on the colour opponent coding diagram of Backhaus (1991).</p>
     
 
-    <pre class="usage"><span class='fu'>cocplot</span>(<span class='no'>cocdata</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lab.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>tick.loc</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>12</span>, -<span class='fl'>9</span>, -<span class='fl'>6</span>,
-  -<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>9</span>, <span class='fl'>12</span>), <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
+    <pre class="usage"><span class='fu'>cocplot</span>(<span class='no'>cocdata</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>tick.loc</span> <span class='kw'>=</span> <span class='fu'>c</span>(-<span class='fl'>12</span>, -<span class='fl'>9</span>,
+  -<span class='fl'>6</span>, -<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>9</span>, <span class='fl'>12</span>), <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>, <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
   <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>), <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
@@ -99,7 +106,7 @@ as columns (labeled as such).</p></td>
       <td><p>plot axis labels? Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
-      <th>lab.cex</th>
+      <th>labels.cex</th>
       <td><p>character expansion factor for category labels when <code>labels = TRUE</code>).</p></td>
     </tr>
     <tr>
@@ -140,12 +147,13 @@ as columns (labeled as such).</p></td>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>not_run</span>({
-  <span class='fu'>data</span>(<span class='no'>flowers</span>)
-  <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-  <span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'coc'</span>)
-  <span class='fu'>plot</span>(<span class='no'>coc.flowers</span>)
-})</div></pre>
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='fu'>data</span>(<span class='no'>flowers</span>)
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'coc'</span>)
+<span class='fu'>plot</span>(<span class='no'>coc.flowers</span>)
+<span class='co'># }</span><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
