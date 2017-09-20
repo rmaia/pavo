@@ -559,33 +559,14 @@ bloc2d <- function(coord1, coord2){
    if(length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep=''), call.=FALSE)
    
    
-   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION   
+   # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION  
+   
+   refsamp <- min(dim(dat2)[1], as.numeric(ncone)) 
 
-   if(dim(dat2)[1] >= as.numeric(ncone)){
-    visref <- matrix(NA, 
-      ncol=as.numeric(ncone), 
-      nrow=2*as.numeric(ncone)+1, 
-      dimnames=list(
-        c(rownames(dat2)[seq(as.numeric(ncone))], 
-        paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
-        colnames(dat2)
-        )
-    )
-   
-    rrf <- diag(9, as.numeric(ncone))
-    rrf[lower.tri(rrf)] <- 0.001
-    rrf[upper.tri(rrf)] <- 0.001
-   
-    rrf <- log(rrf)
-      
-    visref[seq(as.numeric(ncone)),] <- dat2[seq(as.numeric(ncone)),]
-    visref[as.numeric(ncone)+1, ] <- log(1e-10)
-    visref[-seq(as.numeric(ncone)+1),] <- rrf
-   }else{
    	visref <- matrix(NA, 
-      ncol=as.numeric(ncone), 
-      nrow=dim(dat2)[1]+as.numeric(ncone)+1, 
-      dimnames=list(
+      ncol = as.numeric(ncone), 
+      nrow = refsamp + as.numeric(ncone) + 1, 
+      dimnames = list(
         c(rownames(dat2), 
         paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
         colnames(dat2)
@@ -598,11 +579,9 @@ bloc2d <- function(coord1, coord2){
    
     rrf <- log(rrf)
       
-    visref[seq(dim(dat2)[1]),] <- dat2
-    visref[dim(dat2)[1]+1, ] <- log(1e-10)
-    visref[-seq(dim(dat2)[1]+1),] <- rrf
-
-   }
+    visref[seq(refsamp),] <- dat2[seq(refsamp), ]
+    visref[refsamp+1, ] <- log(1e-10)
+    visref[-seq(refsamp+1),] <- rrf
   
     resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref),2))], 
                      ncol=2, dimnames=list(NULL, c('patch1', 'patch2'))), stringsAsFactors=FALSE)
@@ -639,7 +618,7 @@ bloc2d <- function(coord1, coord2){
         
       visref <- cbind(visref, lum=log(1e-10))
       visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
-        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+        dat[seq(refsamp), dim(dat)[2]]
  
   	  resref[, 'dL'] <- unlist(lapply(seq(nrow(resref)), function(x)
         ttdistcalcachro(f1= visref[resref[x,1], ], f2= visref[resref[x,2], ], 
@@ -655,7 +634,7 @@ bloc2d <- function(coord1, coord2){
       
       visref <- cbind(visref, lum=log(1e-10))
       visref[grep('jnd2xyzrrf', rownames(visref), invert=TRUE), 'lum'] <-
-        dat[seq(as.numeric(ncone)), dim(dat)[2]]
+        dat[seq(refsamp), dim(dat)[2]]
 
       qnref <- exp(visref)
   	  resref[, 'dL'] <- unlist(lapply(seq(nrow(res)), function(x)
