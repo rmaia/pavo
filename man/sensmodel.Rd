@@ -2,26 +2,26 @@
 % Please edit documentation in R/sensmodel.R
 \name{sensmodel}
 \alias{sensmodel}
-\title{Modelling spectral sensitivity}
+\title{modeling spectral sensitivity}
 \usage{
-sensmodel(peaksense, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
+sensmodel(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
   oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE)
 }
 \arguments{
-\item{peaksense}{(required) a vector with peak sensitivities for the cones to
+\item{peaksens}{(required) a vector with peak sensitivities for the cones to
 model.}
 
 \item{range}{a vector of length 2 for the range over which to calculate the spectral 
 sensitivities (defaults to 300nm to 700nm).}
 
-\item{lambdacut}{a vector of same length as peaksense that lists the cut-off wavelength
+\item{lambdacut}{a vector of same length as peaksens that lists the cut-off wavelength
 value for oil droplets. Needs either \code{Bmid} or \code{oiltype} to also be entered.
 See Hart and Vorobyev (2005).}
 
-\item{Bmid}{a vector of same length as peaksense that lists the gradient of line 
+\item{Bmid}{a vector of same length as peaksens that lists the gradient of line 
 tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005).}
 
-\item{oiltype}{a list of same length as peaksense that lists the oil droplet types
+\item{oiltype}{a list of same length as peaksens that lists the oil droplet types
 (currently accepts only "T", C", "Y", "R", "P") when Bmid is not known. Calculates
 Bmid based on the regression equations found in Hart ad Vorobyev (2005).}
 
@@ -59,7 +59,7 @@ daniosens <- sensmodel(c(357, 411, 477, 569))
 Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. 
 In search of the visual pigment template. Visual Neuroscience 17:509-528
 
-Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
+Hart NS, and Vorobyev M. 2005. modeling oil droplet absorption
 spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 Comparative Physiology A. 191: 381-392
 

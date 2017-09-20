@@ -56,7 +56,7 @@ remaining columns.}
 
 \item{illum}{either a vector containing the illuminant, or one of the options:
 \itemize{ 
-\item \code{'ideal'}: homogeneous illuminance of 1 accross wavelengths (default)
+\item \code{'ideal'}: homogeneous illuminance of 1 across wavelengths (default)
 \item \code{'bluesky'} open blue sky.
 \item \code{'D65'}: standard daylight.
 \item \code{'forestshade'} forest shade.
@@ -65,7 +65,7 @@ remaining columns.}
 \item{trans}{either a vector containing the ocular or environmental transmission
 spectra, or one of the options:
 \itemize{ 
-\item \code{'ideal'}: homogeneous transmission of 1 accross all wavelengths (default)
+\item \code{'ideal'}: homogeneous transmission of 1 across all wavelengths (default)
 \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
 ocular transmission (from Hart et al. 2000).
 \item \code{'blackbird'}: blackbird \emph{Turdus merula} 
@@ -83,7 +83,7 @@ ocular transmission (from Hart et al. 2000).
 \item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}. 
 Either a vector containing the spectral data, or one of the options:
 \itemize{ 
-\item \code{'ideal'}: homogeneous illuminance of 1 accross all wavelengths (default).
+\item \code{'ideal'}: homogeneous illuminance of 1 across all wavelengths (default).
 \item \code{'green'}: green foliage.
 }}
 

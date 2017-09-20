@@ -24,7 +24,7 @@ plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.}
 \item{phi}{angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
 (defaults to 45).}
 
-\item{r}{the distance of the eyepoint from the centre of the plotting box 
+\item{r}{the distance of the eyepoint from the center of the plotting box 
 when \code{space = 'cielab'}. Very high values approximate an orthographic projection 
 (defaults to 1e6). See \code{\link{persp}} for details.
 . See \code{\link{persp}} for details.}

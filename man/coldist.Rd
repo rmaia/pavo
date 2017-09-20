@@ -28,7 +28,7 @@ categorical, segment, and cie models)):
 
 \item{subset}{If only some of the comparisons should be returned, a character vector of 
 length 1 or 2 can be provided, indicating which samples are desired. The subset vector 
-must match the labels of the imput samples, but partial matching (and regular expressions) 
+must match the labels of the input samples, but partial matching (and regular expressions) 
 are supported.}
 
 \item{achro}{Logical. If \code{TRUE}, last column of the data frame is used to calculate 
@@ -56,7 +56,7 @@ if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, and cie models).}
 
 \item{weber}{The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
-and therefore must be calculated based on the epirically estimated Weber 
+and therefore must be calculated based on the empirically estimated Weber 
 fraction of one of the cone classes. \code{v} is then applied to estimate the 
 Weber fraction of the other cones. by default, the value of 0.1 is used 
 (the empirically estimated value for the

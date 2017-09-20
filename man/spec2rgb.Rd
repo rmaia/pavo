@@ -33,7 +33,7 @@ plot(teal, col = spec2rgb(teal), type = 'o')}
 CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 
 Color matching functions obtained from Colour and Vision Research Laboratory 
-online data respository at \url{http://www.cvrl.org/}.
+online data repository at \url{http://www.cvrl.org/}.
 
 \url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 }

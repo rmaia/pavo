@@ -15,7 +15,7 @@ with four columns name 'u', 's', 'm', 'l', representing the avian cones).}
 A data frame of class \code{tcs} consisting of the following columns:
 
 \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
- calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
+ calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
  the output column will be labeled \code{u}.
 
 \code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,

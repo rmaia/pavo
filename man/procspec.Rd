@@ -14,7 +14,7 @@ with a column with wavelength data, named 'wl', and the remaining column contain
 spectra to process.}
 
 \item{opt}{what type of processing options to apply. User can select multiple options
-           by providing a vector. Possibilites are:
+           by providing a vector. Possibilities are:
 \itemize{
 \item \code{"none"} does not perform any processing (default).
 \item \code{"smooth"} applies LOESS smoothing to each spectrum using 
@@ -71,7 +71,7 @@ Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
  The American Naturalist, 153, 183-200.
 
 Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, 
- K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard 
+ K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard 
  University Press, Cambridge, Massachusetts.
 }
 \seealso{

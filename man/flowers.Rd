@@ -3,7 +3,7 @@
 \docType{data}
 \name{flowers}
 \alias{flowers}
-\title{Reflectane spectra from a suite of native Australian flowers, collected
+\title{Reflectance spectra from a suite of native Australian flowers, collected
 around Cairns, Queensland.}
 \description{
 dataset containing reflectance measurements from 36 native 

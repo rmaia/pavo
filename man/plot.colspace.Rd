@@ -9,7 +9,7 @@
 \arguments{
 \item{x}{(required) an object of class \code{colspace}.}
 
-\item{...}{additional graphical options, which vary by modelled \code{space}. Refer 
+\item{...}{additional graphical options, which vary by modeled \code{space}. Refer 
 to their individual documentation: 
 \itemize{ 
       \item \code{\link{diplot}}: dichromat space

@@ -26,7 +26,7 @@ distance from the plane of view? (defaults to TRUE)}
 \item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
 to indicate the size range variation reflecting the distance from the plane of view.}
 
-\item{r}{the distance of the eyepoint from the centre of the plotting box. 
+\item{r}{the distance of the eyepoint from the center of the plotting box. 
 Very high values approximate an orthographic projection (defaults to 1e6).
 See \code{\link{persp}} for details.}
 

@@ -3,9 +3,9 @@
 \docType{data}
 \name{bgandilum}
 \alias{bgandilum}
-\title{Default backgound and illuminant data}
+\title{Default background and illuminant data}
 \description{
-Default backgound and illuminant data
+Default background and illuminant data
 }
 \references{
 Endler, J. (1993). The Color of Light in Forests and Its Implications. Ecological Monographs, 63, 1-27.

@@ -38,7 +38,7 @@ which gives the number of lines of margin to be specified on the four sides of t
 and \code{link{persp}} (for 3D plots).}
 }
 \value{
-Creates a plot, details of the plot depend on the imput data.
+Creates a plot, details of the plot depend on the input data.
 }
 \description{
 Plot options for \code{jnd2xyz} objects.
