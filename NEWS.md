@@ -1,4 +1,4 @@
-pavo 1.3
+pavo 1.3.0
 ------------------------------------------------------------------------------
 NEW FUNCTIONS:
 * jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates
@@ -29,7 +29,7 @@ MINOR FEATURES AND BUG FIXES:
 * removed wavelength limitations in the calculation of H3 from summary.rspec
 * all visual systems (except CIE) have been normalized to have an integral of 1
 
-pavo 1.2
+pavo 1.2.0
 ------------------------------------------------------------------------------
 
 MAJOR CHANGES:
@@ -40,7 +40,7 @@ MINOR FEATURES AND BUG FIXES:
 * vignettes have been amalgamated & the single, main vignette is now up-to-date
 * added more informative labels for the segment analysis plot
 
-pavo 1.1
+pavo 1.1.0
 ------------------------------------------------------------------------------
 MAJOR CHANGES:
 
