@@ -8,7 +8,7 @@
 #' @param by (required) a vector containing indicating the group to wich each row from 
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
-#' @param the confidence level for the confidence intervals (defaults to 0.95)
+#' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}
 #' @param ... other arguments to be passed to \code{\link{coldist}}. Must at minimum
