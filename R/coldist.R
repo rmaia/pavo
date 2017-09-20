@@ -567,7 +567,7 @@ bloc2d <- function(coord1, coord2){
       ncol = as.numeric(ncone), 
       nrow = refsamp + as.numeric(ncone) + 1, 
       dimnames = list(
-        c(rownames(dat2), 
+        c(rownames(dat2)[seq(refsamp)], 
         paste0('jnd2xyzrrf.', c('achro',colnames(dat2)))),
         colnames(dat2)
         )
