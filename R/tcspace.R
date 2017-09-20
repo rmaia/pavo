@@ -11,7 +11,7 @@
 #'
 #' @return A data frame of class \code{tcs} consisting of the following columns:
 #' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
-#'  calculate the remaining variables. NOTE: even if visual sistem is of type V-VIS,
+#'  calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
 #'  the output column will be labeled \code{u}.
 #' @return \code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,
 #'  for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.

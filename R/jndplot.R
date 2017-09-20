@@ -20,7 +20,7 @@
 #' @param ... additional parameters to be passed to \code{\link{plot}}, \code{\link{arrows}}
 #' and \code{link{persp}} (for 3D plots).
 #'
-#' @return Creates a plot, details of the plot depend on the imput data. 
+#' @return Creates a plot, details of the plot depend on the input data. 
 #' @note the \code{arrow} argument accepts three options:
 #' \itemize{
 #'  \item \code{'relative'}: With this option, arrows will be made relative to the data. Arrows

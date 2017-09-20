@@ -6,7 +6,7 @@
 #' 
 #' @param tcsdata (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
 #' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
-#' @param ... additonal parameters to be passed to the plotting of data points.
+#' @param ... additional parameters to be passed to the plotting of data points.
 #' 
 #' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron 
 #' to its encapsulating sphere, and is ideal to visualize differences in hue. 

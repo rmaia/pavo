@@ -8,7 +8,7 @@
 #' spectra to process.
 #' @param subset Either \code{FALSE} (the default), \code{TRUE}, or a character vector. 
 #' If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset 
-#' of the complete ouput (composed of B2, S8 and H1; the variables described in 
+#' of the complete output (composed of B2, S8 and H1; the variables described in 
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
 #' names can be used in order to filter and show only those variables.
 #' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
@@ -19,7 +19,7 @@
 #' in Montgomerie (2006) with spectra name as row names. 
 #' The colorimetric variables calculated by this function are 
 #' described in Montgomerie (2006) with corrections included in the README CLR
-#' file from the May 2008 distribution of the CLR sofware. Authors should reference 
+#' file from the May 2008 distribution of the CLR software. Authors should reference 
 #' both this package,Montgomerie (2006), and the original reference(s).
 #' Description and notes on the measures:
 #'
@@ -29,13 +29,13 @@
 #' 13
 #'
 #' B2 (Mean brightness): Mean relative reflectance over the entire spectral range.
-#' This is prefered to B1 since values are easier to compare across studies. REF 4, 12
+#' This is preferred to B1 since values are easier to compare across studies. REF 4, 12
 #'
 #' B3 (Intensity): Maximum relative reflectance (Reflectance at wavelength of maximum
 #' reflectance). Note that may be sensitive to noise near the peak. REF 1, 5, 6
 #' 
 #' S1 (Chroma): Relative contribution of a spectral range to the total brightness (B1)
-#' S1 is arbitrarily devided in 6 measures of chroma based on the wavelength ranges 
+#' S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges 
 #' normally associated with specific hues. The values are calculated using the 
 #' following ranges: S1U (UV, if applicable): lambda min-400nm; 
 #' S1v (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
@@ -111,7 +111,7 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #' 
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
-#' Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard University Press, Cambridge, Massachusetts.
+#' Bird Coloration. Volume 1 Mechanisms and measurements. Harvard University Press, Cambridge, Massachusetts.
 #' @references References describing variables:
 #'
 #' 1- Andersson, S. 1999. Morphology of uv reflectance in a whistling-thrush: Implications for the study
@@ -149,7 +149,7 @@
 #' 10- Saks, L., K. Mcgraw, and P. Horak. 2003. How feather colour reflects its carotenoid content.
 #' Functional Ecology 17:555-561.
 #'
-#' 11- Shawkey, M., A. Estes, L. Sieffereman, and G. Hill. 2003. Nanostructure predicts intraspecific
+#' 11- Shawkey, M., A. Estes, L. Siefferman, and G. Hill. 2003. Nanostructure predicts intraspecific
 #' variation in ultraviolet-blue plumage colour. Proceedings of the Royal Society B
 #' 270:1455-1460.
 #'

@@ -7,8 +7,8 @@
 #' values greater than 1 are possible)
 #' @param ... additional arguments passed to \code{\link{legend}}.
 #'
-#' @return \code{legendtetra} adds a legend to astatic tetrahedral colorspace plot. 
-#' for additional information on which areguments are necessary and how they are used,
+#' @return \code{legendtetra} adds a legend to a static tetrahedral colorspace plot. 
+#' for additional information on which arguments are necessary and how they are used,
 #' see \code{\link{legend}}.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

@@ -14,7 +14,7 @@
 #' distance from the plane of view? (defaults to TRUE)
 #' @param range, vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
 #' to indicate the size range variation reflecting the distance from the plane of view.
-#' @param r the distance of the eyepoint from the centre of the plotting box. 
+#' @param r the distance of the eyepoint from the center of the plotting box. 
 #' Very high values approximate an orthographic projection (defaults to 1e6).
 #' See \code{\link{persp}} for details.
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.

@@ -1,4 +1,4 @@
-#' Default backgound and illuminant data
+#' Default background and illuminant data
 #'
 #' @name bgandilum
 #' @docType data

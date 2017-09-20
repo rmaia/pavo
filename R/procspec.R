@@ -6,7 +6,7 @@
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
 #' @param opt what type of processing options to apply. User can select multiple options
-#'            by providing a vector. Possibilites are:
+#'            by providing a vector. Possibilities are:
 #' \itemize{
 #'	\item \code{"none"} does not perform any processing (default).
 #'	\item \code{"smooth"} applies LOESS smoothing to each spectrum using 
@@ -58,7 +58,7 @@
 #'  Plumage reflectance and the objective assessment of avian sexual dichromatism. 
 #'  The American Naturalist, 153, 183-200.
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, 
-#'  K.J., eds. Bird Coloration. Volume 1 Mechanisms and measuremements. Harvard 
+#'  K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard 
 #'  University Press, Cambridge, Massachusetts.
 
 procspec <- function(rspecdata, opt = c('none', 'smooth', 'maximum', 'minimum', 

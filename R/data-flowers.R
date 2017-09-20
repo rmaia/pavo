@@ -1,4 +1,4 @@
-#' Reflectane spectra from a suite of native Australian flowers, collected
+#' Reflectance spectra from a suite of native Australian flowers, collected
 #' around Cairns, Queensland.
 #' 
 #' @name flowers
