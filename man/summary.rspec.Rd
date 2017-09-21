@@ -47,7 +47,7 @@ S1 (Chroma): Relative contribution of a spectral range to the total brightness (
 S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges 
 normally associated with specific hues. The values are calculated using the 
 following ranges: S1U (UV, if applicable): lambda min-400nm; 
-S1v (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
+S1V (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
 S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 2, 7, 8, 11-13
 
 S2 (Spectral saturation): Rmax/Rmin This measure is sensitive to spectral noise.

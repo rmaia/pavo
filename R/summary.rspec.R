@@ -38,7 +38,7 @@
 #' S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges 
 #' normally associated with specific hues. The values are calculated using the 
 #' following ranges: S1U (UV, if applicable): lambda min-400nm; 
-#' S1v (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
+#' S1V (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
 #' S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 2, 7, 8, 11-13
 #'
 #' S2 (Spectral saturation): Rmax/Rmin This measure is sensitive to spectral noise.
@@ -382,8 +382,8 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 color.var <- data.frame(output.mat, row.names=names(object))
 
-names(color.var) <- c("B1", "B2", "B3", "S1.UV", "S1.violet", "S1.blue", "S1.green", 
-                      "S1.yellow", "S1.red", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
+names(color.var) <- c("B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G", 
+                      "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
 
 colvarnames <- names(color.var)
