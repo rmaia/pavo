@@ -174,7 +174,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   argblank$ylab <- ''
   argblank$xlab <- ''
   
-  par(mar=margin, pty='s')  
+  par(mar=margin, pty='s', new = TRUE)  
   do.call(plot, argblank)
   
   # Get point coordinates
