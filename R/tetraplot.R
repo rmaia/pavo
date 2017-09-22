@@ -134,12 +134,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = TRUE,
   # draw blank 3d plot
   # Save rotation matrix without plotting
 
-  pdf(file=NULL)
   M <- do.call(persp, c(list(x=arg$xlim,
                              y=arg$ylim,
                              z=matrix(c(arg$zlim,arg$zlim), nrow=2),
                              border=FALSE, r=r, box=FALSE, theta=theta, phi=phi), arg))
-  garbage <- dev.off()
 
   # position of points in projected space
   allcoords <- as.matrix(rbind(
