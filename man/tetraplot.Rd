@@ -16,9 +16,9 @@ tetraplot(tcsdata, theta = 45, phi = 10, perspective = TRUE,
 or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
 coordinates as columns (labeled as such).}
 
-\item{theta}{angle to rotate the plot in the xy plane (defaults to 10).}
+\item{theta}{angle to rotate the plot in the xy plane (defaults to 45).}
 
-\item{phi}{angle to rotate the plot in the yz plane (defaults to 45).}
+\item{phi}{angle to rotate the plot in the yz plane (defaults to 10).}
 
 \item{perspective}{logical, should perspective be forced by using point size to reflect
 distance from the plane of view? (defaults to TRUE)}
