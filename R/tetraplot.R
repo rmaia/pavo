@@ -8,8 +8,8 @@
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace} 
 #' or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
 #' coordinates as columns (labeled as such).
-#' @param theta angle to rotate the plot in the xy plane (defaults to 10).
-#' @param phi angle to rotate the plot in the yz plane (defaults to 45).
+#' @param theta angle to rotate the plot in the xy plane (defaults to 45).
+#' @param phi angle to rotate the plot in the yz plane (defaults to 10).
 #' @param perspective logical, should perspective be forced by using point size to reflect
 #' distance from the plane of view? (defaults to TRUE)
 #' @param range, vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
