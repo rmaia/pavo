@@ -61,7 +61,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tetraplot2 <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE, 
+tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE, 
   range = c(1, 2), r = 1e6, zoom = 1, 
   achro = TRUE, achro.col = 'grey', achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
   tetrahedron = TRUE, vert.cex = 1, vert.range = c(1,2) ,out.lwd = 1, out.lcol = 'darkgrey',
@@ -243,13 +243,6 @@ tetraplot2 <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     inback <- names(sort(combdist, )[1:3])
     
     linback <- grepl(paste0(inback, collapse='|'), rownames(segs))
-
-
-    linback[grep(paste(
-      paste0(names(vinback[vinback]), whichhighest, collapse="|"), 
-      paste0(whichhighest, names(vinback[vinback]), collapse="|"), 
-      collapse='|', sep='|'), 
-      rownames(segs))] <- TRUE
           
     segments(
       segs[linback,1,drop=F],
