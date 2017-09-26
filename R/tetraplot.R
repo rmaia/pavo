@@ -276,7 +276,8 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   argpoints[perspargs] <- NULL
 
   argpoints$col <- col
-  argpoints$bg <- col
+  if(is.null(argpoints$bg)) argpoints$bg <- col
+  if(is.null(argpoints$fg)) argpoints$fg <- bg
   argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]
   argpoints$x <- xy
   
@@ -292,6 +293,13 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   if(length(argpoints$bg) < dim(argpoints$x)[1]){
     if(dim(argpoints$x)[1] %% length(argpoints$bg) > 0)
       warning('data object length is not a multiple of "bg"', call. = FALSE)
+    
+    argpoints$bg <- rep(argpoints$bg, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
+  }
+
+  if(length(argpoints$fg) < dim(argpoints$x)[1]){
+    if(dim(argpoints$x)[1] %% length(argpoints$fg) > 0)
+      warning('data object length is not a multiple of "fg"', call. = FALSE)
     
     argpoints$bg <- rep(argpoints$bg, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
   }
