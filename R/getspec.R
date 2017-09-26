@@ -178,16 +178,25 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     
     
   tmp <- pbmclapply(files, function(x) 
-    tryCatch(gsp(files), 
+    tryCatch(gsp(x), 
     error = function(e) NULL, 
     warning = function(e) NULL
     ))
+    
+  specnames <- gsub(extension, '', file_names)
   
   if(any(unlist(lapply(tmp, is.null)))){
   	whichfailed <- which(unlist(lapply(tmp, is.null)))
-    stop('Could not import one or more files:\n', 
+  	# stop if all files are corrupt
+  	if(!length(whichfailed) < length(files))
+  	  stop('Could not import spectra, check input files and function arguments', call.=FALSE)
+    
+    # if not, import the ones remaining
+    warning('Could not import one or more files:\n', 
       paste0(files[whichfailed], '\n'), 
-      call.=FALSE)  	
+      call.=FALSE)  
+    
+    specnames <- specnames[-whichfailed]	
   }
 
     
@@ -195,7 +204,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
 
   final <- cbind(range, tmp)
   
-  colnames(final) <- c('wl', gsub(extension, '', file_names))
+  colnames(final) <- c('wl', specnames)
   final <- as.data.frame(final)
   class(final) <- c('rspec', 'data.frame')
   
@@ -206,7 +215,7 @@ if(any(corrupt)){
   
   # Negative value check
   if(length(final[final < 0]) > 0){
-    message(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."))
+    warning(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."), call.=FALSE)
   }
 
   final
