@@ -110,9 +110,11 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   rownames(sides) <- paste0(rep(
      do.call(paste0, data.frame(t(combn(c('u','s','m','l'), 2)))),each=2),
      c('.1', '.2'))
+     
+  plims <- any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))
 
   # if no limits are given, estimate based on tetrahedron or tcsdataa limits
-  if(any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))){
+  if(plims){
 
   	# first check if all xyzlim are null
   	if(!all(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null)))
@@ -158,7 +160,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border", 
     "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
   
-
   argblank[perspargs] <- NULL  
   argblank$xlim <- tcoord['achro','x'] + c(-1,1)*max(abs(tcoord['achro','x'] - tcoord[,'x'])) / zoom
   argblank$ylim <- tcoord['achro','y'] + c(-1,1)*max(abs(tcoord['achro','y'] - tcoord[,'y'])) / zoom
@@ -170,6 +171,17 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   argblank$yaxt <- 'n'
   argblank$ylab <- ''
   argblank$xlab <- ''
+
+  if(!plims){
+  	prange <- cbind(x=arg$xlim, y=arg$ylim, z=arg$zlim, 1) %*% M
+  	prange[,1] <- prange[,1]/prange[,4]
+  	prange[,2] <- prange[,2]/prange[,4]
+  	
+  	argblank$xlim <- prange[,1]
+  	argblank$ylim <- prange[,2]
+  	
+  }
+
   
   par(mar=margin, pty='s', new = TRUE)  
   do.call(plot, argblank)
@@ -277,7 +289,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
   argpoints$col <- col
   if(is.null(argpoints$bg)) argpoints$bg <- col
-  if(is.null(argpoints$fg)) argpoints$fg <- bg
   argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]
   argpoints$x <- xy
   
@@ -293,13 +304,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   if(length(argpoints$bg) < dim(argpoints$x)[1]){
     if(dim(argpoints$x)[1] %% length(argpoints$bg) > 0)
       warning('data object length is not a multiple of "bg"', call. = FALSE)
-    
-    argpoints$bg <- rep(argpoints$bg, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
-  }
-
-  if(length(argpoints$fg) < dim(argpoints$x)[1]){
-    if(dim(argpoints$x)[1] %% length(argpoints$fg) > 0)
-      warning('data object length is not a multiple of "fg"', call. = FALSE)
     
     argpoints$bg <- rep(argpoints$bg, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
   }
