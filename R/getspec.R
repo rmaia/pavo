@@ -46,8 +46,7 @@
 
 getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
            sep=NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE, 
-           cores=getOption("mc.cores", 2L))
-  {
+           cores=getOption("mc.cores", 2L)){
   
   if(fast){
     cat("Attempting fast import. ")
@@ -79,8 +78,6 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   if(length(file_names) == 0){
   	stop('No files found. Try a different extension value for argument "ext"')
   	} 
-
-  cat(length(files), ' files found; importing spectra\n')
   
   # Wavelength range
   range <- seq(lim[1],lim[2])
@@ -98,6 +95,14 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   
   # Setting a progress bar
   #progbar <- txtProgressBar(min = 0, max = length(files), style = 2)
+
+  # On Windows, set cores to be 1
+    if (cores > 1 && .Platform$OS.type == "windows") {
+      cores <- 1
+      message('Parallel processing not available in Windows; "cores" set to 1.\n')
+    } 
+  
+  message(length(files), ' files found; importing spectra:') 
   
   gsp <- function(ff){
   
@@ -138,6 +143,9 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     if(dim(rawsplit)[2] < 2)
       stop('could not separate columns, choose a different value for "sep" argument', call.=FALSE)
    
+   # convert decimal value to point
+   rawsplit <- gsub(decimal, '.', rawsplit)
+   
    # convert to numeric, check for NA
    suppressWarnings(class(rawsplit) <- 'numeric')
    
@@ -162,12 +170,6 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
    #setTxtProgressBar(progbar, i)
     }
     
-
-    # On Windows, set cores to be 1
-    if (cores > 1 && .Platform$OS.type == "windows") {
-      cores <- 1
-      cat('Parallel processing not available in Windows; "cores" set to 1\n')
-    } 
     
   tmp <- pbmclapply(files, gsp, mc.cores=cores)
     
