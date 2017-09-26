@@ -100,7 +100,10 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     if (cores > 1 && .Platform$OS.type == "windows") {
       cores <- 1
       message('Parallel processing not available in Windows; "cores" set to 1.\n')
-    } 
+    }
+    
+    if(length(files) <= cores)
+      cores <- 1 
   
   message(length(files), ' files found; importing spectra:') 
   
