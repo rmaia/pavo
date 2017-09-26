@@ -177,7 +177,19 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     }
     
     
-  tmp <- pbmclapply(files, gsp, mc.cores=cores)
+  tmp <- pbmclapply(files, function(x) 
+    tryCatch(gsp(files), 
+    error = function(e) NULL, 
+    warning = function(e) NULL
+    ))
+  
+  if(any(unlist(lapply(tmp, is.null)))){
+  	whichfailed <- which(unlist(lapply(tmp, is.null)))
+    stop('Could not import one or more files:\n', 
+      paste0(files[whichfailed], '\n'), 
+      call.=FALSE)  	
+  }
+
     
   tmp <- do.call(cbind, tmp)
 
