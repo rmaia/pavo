@@ -122,10 +122,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
       #      raw <- gsub('\\tinf', '\t0.0', raw)
       #      corrupt <- TRUE
       #    }
-    
-    # exclude columns that have text
-    raw <- raw[!grepl(paste0('[A-Da-dF-Zf-z]'), raw)]
-        
+            
     # substitute separators for a single value to be used in split
     raw <- gsub(seps, ";", raw)
     
@@ -134,6 +131,12 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     
     # remove split character from first or last occurence
     raw <- gsub('^;|;$', '', raw)
+    
+    # exclude lines that have text
+    #raw <- raw[!grepl('[A-Da-dF-Zf-z]', raw)]
+    
+    # exclude any line that doesn't start with a number
+    raw <- raw[grepl('^[0-9\\-]', raw)]
 
     # split on separators
     rawsplit <- strsplit(raw, ";", fixed=TRUE)
@@ -144,7 +147,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
       stop('could not separate columns, choose a different value for "sep" argument', call.=FALSE)
    
    # convert decimal value to point
-   rawsplit <- gsub(decimal, '.', rawsplit)
+   rawsplit <- gsub(paste0('\\',decimal), '.', rawsplit)
    
    # convert to numeric, check for NA
    suppressWarnings(class(rawsplit) <- 'numeric')
