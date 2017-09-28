@@ -275,7 +275,8 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
   # add achromatic center if it is behind the data
   if(achro && dvals["achro"] < maxdatad)
-    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=22, cex=psize['achro'])
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, 
+      pch=22, cex=psize['achro']*achro.size)
     
   # add achromatic line if behind the data
   if(achro.line && dvals["achro"] < maxdatad)
@@ -354,7 +355,8 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   
   # add achromatic center if it is in front of the data
   if(achro && dvals["achro"] > maxdatad)
-    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, pch=22, cex=psize['achro'])
+    points(tcoord['achro',c('x','y'), drop=FALSE], col=NULL, bg=achro.col, 
+      pch=22, cex=psize['achro']*achro.size)
     
   # add achromatic line if in front of the data
   if(achro.line && dvals["achro"] > maxdatad)
