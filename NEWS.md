@@ -5,6 +5,8 @@ NEW FUNCTIONS
 
 MINOR FEATURES AND BUG FIXES:
 * fixed bug in coldist() when fewer samples than the number of photoreceptors 
+* fixed bug in getspec() that would cause it to crash with errors
+* fixed bug in tetraplot() when saving images
 
 pavo 1.3.0
 ------------------------------------------------------------------------------
