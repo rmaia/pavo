@@ -25,6 +25,7 @@
 #'
 #' @export 
 #' @importFrom pbmcapply pbmclapply
+#' @importFrom stats aggregate
 
 
 bootcoldist <- function(vismodeldata, by, boot.n=1000, alpha=0.95, 
