@@ -181,7 +181,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     tryCatch(gsp(x), 
     error = function(e) NULL, 
     warning = function(e) NULL
-    ))
+    ), mc.cores=cores)
     
   specnames <- gsub(extension, '', file_names)
   

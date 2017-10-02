@@ -172,14 +172,19 @@ for(i in seq_along(bootgrouped))
 # apply coldist to the replicated bootstraps
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
-    cat('Parallel processing not available in Windows; "cores" set to 1\n')
+    message('Parallel processing not available in Windows; "cores" set to 1\n')
     } 
-    
-  bootcd <- pbmclapply(bootgrouped, function(x){
+
+tmpbootcdfoo <- function(x){
     tmparg <- arg0
     tmparg$modeldata <- x
     do.call(coldist, tmparg)
-    }, mc.cores=cores)
+    }
+    
+  bootcd <- pbmclapply(bootgrouped, function(z){
+  	tryCatch(tmpbootcdfoo(z),
+  	error = function(e) NULL
+  	)}, mc.cores=cores)
 
 
 # get deltaS and name by group difference
@@ -188,7 +193,8 @@ bootdS <- do.call(rbind,
                   setNames(x$dS, paste(x$patch1, x$patch2, sep='-')))
                   )
 
-
+if(dim(bootdS)[1] < boot.n)
+  stop('Bootstrap sampling encountered errors. Try using "cores = 1".')
 # ...subtract them from the empirical
 # bootdS <- bootdS - empdS
 
