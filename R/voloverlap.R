@@ -15,7 +15,7 @@
 #' if \code{FALSE} then a static plot is generated.
 #' @param col a vector of length 3 with the colors for (in order) the first volume, 
 #' the second volume, and the overlap.
-#" @param fill logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})
+#' @param fill logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})
 #' @param new logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 #' overlap are plotted over the current plot (defaults to \code{TRUE}).
 #' @param montecarlo logical. If \code{TRUE}, Monte Carlo simulation is used instead of exact
