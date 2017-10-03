@@ -30,7 +30,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
     stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
 
 
-  if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
+  if(!is.null(attr(tcsdata, 'clrsp')) && attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
   vol <- t(convhulln(tcsdata[, c('x', 'y', 'z')], options = 'FA')$hull)
   coords <- tcsdata[, c('x', 'y', 'z')]
