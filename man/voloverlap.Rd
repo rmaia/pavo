@@ -5,8 +5,8 @@
 \title{Color volume overlap}
 \usage{
 voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
-  col = c("blue", "red", "darkgrey"), new = TRUE, montecarlo = FALSE,
-  nsamp = 1000, psize = 0.001, lwd = 1, ...)
+  col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
+  montecarlo = FALSE, nsamp = 1000, psize = 0.001, lwd = 1, ...)
 }
 \arguments{
 \item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{colspace} 

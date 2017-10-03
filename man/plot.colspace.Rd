@@ -4,7 +4,7 @@
 \alias{plot.colspace}
 \title{Plot spectra in a colourspace}
 \usage{
-\method{plot}{colspace}(x, ...)
+plot.colspace(x, ...)
 }
 \arguments{
 \item{x}{(required) an object of class \code{colspace}.}

@@ -1,3 +1,9 @@
+pavo 1.3.2
+------------------------------------------------------------------------------
+MINOR FEATURES AND BUG FIXES:
+* fixed bug in voloverlap() when plot = TRUE
+* added argument fill=FALSE in voloverlap()
+
 pavo 1.3.1
 ------------------------------------------------------------------------------
 NEW FUNCTIONS
