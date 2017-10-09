@@ -29,6 +29,7 @@ reference:
 - title: Analysis
   desc: "Functions for analysing spectral data"
   contents:
+  - '`bootcoldist`'
   - '`coldist`'
   - '`colspace`'
   - '`jnd2xyz`'

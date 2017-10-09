@@ -86,10 +86,33 @@
     </div>
 
     <div class="contents">
-    <div id="pavo-1-3" class="section level2">
+    <div id="pavo-1-3-2-development" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pavo-1-3" class="anchor"></a>pavo 1.3</h2>
-<p>NEW FUNCTIONS:</p>
+<a href="#pavo-1-3-2-development" class="anchor"></a>pavo 1.3.2 (development)</h2>
+<p>MINOR FEATURES AND BUG FIXES</p>
+<ul>
+<li>fixed bug in voloverlap() when plot = TRUE</li>
+<li>added argument fill=FALSE in voloverlap()</li>
+</ul>
+</div>
+    <div id="pavo-1-3-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pavo-1-3-1" class="anchor"></a>pavo 1.3.1</h2>
+<p>NEW FUNCTIONS</p>
+<ul>
+<li>bootcoldist() uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
+</ul>
+<p>MINOR FEATURES AND BUG FIXES</p>
+<ul>
+<li>fixed bug in coldist() when fewer samples than the number of photoreceptors</li>
+<li>fixed bug in getspec() that would cause it to crash with errors</li>
+<li>fixed bug in tetraplot() when saving images</li>
+</ul>
+</div>
+    <div id="pavo-1-3-0" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pavo-1-3-0" class="anchor"></a>pavo 1.3.0</h2>
+<p>NEW FUNCTIONS</p>
 <ul>
 <li>jnd2xyz() converts distances (in JND, resulting from a coldist() call) into cartesian coordinates</li>
 <li>plot() methods for objects resulting from jnd2xyz()</li>
@@ -97,7 +120,7 @@
 <li>coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix</li>
 <li>sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
 </ul>
-<p>MAJOR CHANGES:</p>
+<p>MAJOR CHANGES</p>
 <ul>
 <li>tetraplot() and cieplot() have been completely rewritten to allow finer viewing control</li>
 <li>tetraplot() allows forced perspective using size to denote distance</li>
@@ -105,7 +128,7 @@
 <li>getspec() has been rewritten to be faster, more general, and allow parallel processing</li>
 <li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</li>
 </ul>
-<p>MINOR FEATURES AND BUG FIXES:</p>
+<p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
 <li>fixed bug in coldist() on log-transformation when object was neither of class vismodel nor colspace</li>
 <li>fixed bug in dL calculation when input is a colspace object</li>
@@ -122,30 +145,30 @@
 <li>all visual systems (except CIE) have been normalized to have an integral of 1</li>
 </ul>
 </div>
-    <div id="pavo-1-2" class="section level2">
+    <div id="pavo-1-2-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pavo-1-2" class="anchor"></a>pavo 1.2</h2>
-<p>MAJOR CHANGES:</p>
+<a href="#pavo-1-2-0" class="anchor"></a>pavo 1.2.0</h2>
+<p>MAJOR CHANGES</p>
 <ul>
 <li>added the CIELch model accessed via colspace(space = ‘cielch’)</li>
 <li>added the sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
 </ul>
-<p>MINOR FEATURES AND BUG FIXES:</p>
+<p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
 <li>vignettes have been amalgamated &amp; the single, main vignette is now up-to-date</li>
 <li>added more informative labels for the segment analysis plot</li>
 </ul>
 </div>
-    <div id="pavo-1-1" class="section level2">
+    <div id="pavo-1-1-0" class="section level2">
 <h2 class="hasAnchor">
-<a href="#pavo-1-1" class="anchor"></a>pavo 1.1</h2>
-<p>MAJOR CHANGES:</p>
-<p>NEW FUNCTIONS:</p>
+<a href="#pavo-1-1-0" class="anchor"></a>pavo 1.1.0</h2>
+<p>NEW FUNCTIONS</p>
 <ul>
-<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
+<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace()<br>
+are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
 <li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
 </ul>
-<p>MINOR FEATURES AND BUG FIXES:</p>
+<p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
 <li>the use of relative quantum catches is now optional in the categorical colorspace (though still produces a warning), for greater flexibility</li>
 <li>updated several functions to work when rspec object has only one spectrum</li>
@@ -165,13 +188,13 @@
 <ul>
 <li>See vignette for detailed description of changes.</li>
 </ul>
-<p>MAJOR CHANGES:</p>
+<p>MAJOR CHANGES</p>
 <ul>
 <li>coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.</li>
 <li>coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.</li>
 <li>tcs() is deprecated, replaced by colspace().</li>
 </ul>
-<p>NEW FUNCTIONS:</p>
+<p>NEW FUNCTIONS</p>
 <ul>
 <li>colspace() replaces tcs() and introduces several new colorspaces</li>
 <li>plot() methods for several colspace() outputs, including a static tetrahedral colorspace</li>
@@ -180,7 +203,7 @@
 <li>axistetra() draws reference x, y and z axis arrows in static tetrahedral plots</li>
 <li>legendtetra() adds legends to static tetrahedral plots</li>
 </ul>
-<p>MINOR FEATURES AND BUG FIXES:</p>
+<p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
 <li>summary.colspace() for tcs spaces now returns relative color volume as well as absolute</li>
 <li>tcsvol() and voloverlap() now allow control for line width</li>
@@ -338,9 +361,11 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pavo-1-3">1.3</a></li>
-        <li><a href="#pavo-1-2">1.2</a></li>
-        <li><a href="#pavo-1-1">1.1</a></li>
+        <li><a href="#pavo-1-3-2-development">1.3.2</a></li>
+        <li><a href="#pavo-1-3-1">1.3.1</a></li>
+        <li><a href="#pavo-1-3-0">1.3.0</a></li>
+        <li><a href="#pavo-1-2-0">1.2.0</a></li>
+        <li><a href="#pavo-1-1-0">1.1.0</a></li>
         <li><a href="#pavo-1-0">1.0</a></li>
         <li><a href="#pavo-0-5-6">0.5-6</a></li>
         <li><a href="#pavo-0-5-5">0.5-5</a></li>

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Modelling spectral sensitivity — sensmodel • pavo</title>
+<title>modeling spectral sensitivity — sensmodel • pavo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -81,7 +81,7 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Modelling spectral sensitivity</h1>
+    <h1>modeling spectral sensitivity</h1>
     </div>
 
     
@@ -89,14 +89,14 @@
 according to the models of Govardovskii et al. (2000) and Hart &amp; Vorobyev (2005).</p>
     
 
-    <pre class="usage"><span class='fu'>sensmodel</span>(<span class='no'>peaksense</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>300</span>, <span class='fl'>700</span>), <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Bmid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+    <pre class="usage"><span class='fu'>sensmodel</span>(<span class='no'>peaksens</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>300</span>, <span class='fl'>700</span>), <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>Bmid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>om</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>peaksense</th>
+      <th>peaksens</th>
       <td><p>(required) a vector with peak sensitivities for the cones to
 model.</p></td>
     </tr>
@@ -107,18 +107,18 @@ sensitivities (defaults to 300nm to 700nm).</p></td>
     </tr>
     <tr>
       <th>lambdacut</th>
-      <td><p>a vector of same length as peaksense that lists the cut-off wavelength
+      <td><p>a vector of same length as peaksens that lists the cut-off wavelength
 value for oil droplets. Needs either <code>Bmid</code> or <code>oiltype</code> to also be entered.
 See Hart and Vorobyev (2005).</p></td>
     </tr>
     <tr>
       <th>Bmid</th>
-      <td><p>a vector of same length as peaksense that lists the gradient of line 
+      <td><p>a vector of same length as peaksens that lists the gradient of line 
 tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005).</p></td>
     </tr>
     <tr>
       <th>oiltype</th>
-      <td><p>a list of same length as peaksense that lists the oil droplet types
+      <td><p>a list of same length as peaksens that lists the oil droplet types
 (currently accepts only "T", C", "Y", "R", "P") when Bmid is not known. Calculates
 Bmid based on the regression equations found in Hart ad Vorobyev (2005).</p></td>
     </tr>
@@ -150,7 +150,7 @@ compatibility with visual model procedures.</p></td>
 
     <p>Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. 
 In search of the visual pigment template. Visual Neuroscience 17:509-528</p>
-<p>Hart NS, and Vorobyev M. 2005. Modelling oil droplet absorption
+<p>Hart NS, and Vorobyev M. 2005. modeling oil droplet absorption
 spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 Comparative Physiology A. 191: 381-392</p>
 <p>Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual pigments, 
