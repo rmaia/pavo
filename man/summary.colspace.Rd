@@ -4,7 +4,7 @@
 \alias{summary.colspace}
 \title{Colorspace data summary}
 \usage{
-summary.colspace(object, by = NULL, ...)
+\method{summary}{colspace}(object, by = NULL, ...)
 }
 \arguments{
 \item{object}{(required) a \code{colspace} object.}

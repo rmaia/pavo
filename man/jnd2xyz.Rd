@@ -4,15 +4,19 @@
 \alias{jnd2xyz}
 \title{Convert JND distances into perceptually-corrected Cartesian coordinates}
 \usage{
-jnd2xyz(coldistres, rotate = TRUE, center = c("mean", "achro"),
-  ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0, 1))
+jnd2xyz(coldistres, center = TRUE, rotate = TRUE, rotcenter = c("mean",
+  "achro"), ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0,
+  1))
 }
 \arguments{
 \item{coldistres}{(required) the output from a \code{coldist} call.}
 
+\item{center}{logical indicating if the data should be centered on its centroid 
+(defaults to \code{TRUE}).}
+
 \item{rotate}{logical indicating if the data should be rotated (defaults to \code{TRUE}).}
 
-\item{center}{should the vectors for rotation be centered in the achromatic
+\item{rotcenter}{should the vectors for rotation be centered in the achromatic
 center ("achro") or the data centroid ("mean", the default)?}
 
 \item{ref1}{the cone to be used as a the first reference. May be NULL 

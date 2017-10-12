@@ -4,8 +4,10 @@
 #' perceptually-corrected (i.e. Euclidean distances = JND distances)
 #' 
 #' @param coldistres (required) the output from a \code{coldist} call.
+#' @param center logical indicating if the data should be centered on its centroid 
+#' (defaults to \code{TRUE}).
 #' @param rotate logical indicating if the data should be rotated (defaults to \code{TRUE}).
-#' @param center should the vectors for rotation be centered in the achromatic
+#' @param rotcenter should the vectors for rotation be centered in the achromatic
 #' center ("achro") or the data centroid ("mean", the default)?
 #' @param ref1 the cone to be used as a the first reference. May be NULL 
 #' (for no first rotation in the 3-dimensional case) or must match name
@@ -39,8 +41,8 @@
 #' Behavioral Ecology, 23, 723-728.
 
 
-jnd2xyz <- function(coldistres, rotate=TRUE, 
-  center=c('mean', 'achro'), ref1='l', ref2='u', axis1 = c(1,1,0), axis2 = c(0,0,1)) {
+jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE, 
+  rotcenter = c('mean', 'achro'), ref1 = 'l', ref2 = 'u', axis1 = c(1,1,0), axis2 = c(0,0,1)) {
  
    # Accessory functions
   pos2 <- function(d12, d13, d23){
@@ -215,7 +217,8 @@ if('dL' %in% names(colmat)){
 
 # Center variables 
 centroids <- colMeans(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
-coords <- sweep(coords, 2, centroids, '-')
+if(center)
+  coords <- sweep(coords, 2, centroids, '-')
 
 jnd2xyzrrf.ctrd <- colMeans(coords[grep('jnd2xyzrrf', rownames(coords), invert=TRUE), , drop=FALSE])
   
@@ -228,8 +231,8 @@ attr(chromcoords, 'class') <- c('colspace', 'jnd2xyz', 'data.frame')
 attr(chromcoords, 'resref') <- refstosave
 
 if(rotate){
-    center <- match.arg(center)
-    rotarg <- list(jnd2xyzres = chromcoords, center=center, 
+    rotcenter <- match.arg(rotcenter)
+    rotarg <- list(jnd2xyzres = chromcoords, center=rotcenter, 
       ref1=ref1, ref2=ref2, axis1=axis1, axis2=axis2)
 
     chromcoords <- do.call(jndrot, rotarg)
