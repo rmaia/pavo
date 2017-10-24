@@ -142,6 +142,9 @@
 #'  218, 184-193.
 #' @references Lind, O. (2016) Colour vision and background adaptation in a passerine 
 #'  bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.
+#' @references Olsson, P., Lind, O., & Kelber, A. (2017) Chromatic and achromatic 
+#'  vision: parameter choice and limitations for reliable model predictions. 
+#'  Behavioral Ecology, doi: 10.1093/beheco/arx133
 
 
 coldist <-function(modeldata,
