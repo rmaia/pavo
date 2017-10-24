@@ -40,7 +40,8 @@
 #'  fraction of one of the cone classes. \code{v} is then applied to estimate the 
 #'  Weber fraction of the other cones. by default, the value of 0.1 is used 
 #'  (the empirically estimated value for the
-#'  LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
+#'  LWS cone from \emph{Leiothrix lutea}). See Olsson et al. 2017 for a review of 
+#'  published values in the literature. Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 #'  categorical, segment, and cie models).
 #' @param weber.ref the cone class used to obtain the empirical estimate of the 
