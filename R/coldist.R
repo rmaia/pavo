@@ -34,7 +34,8 @@
 #'  Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 #'  categorical, and cie models).
-#' @param weber The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
+#' @param weber The Weber fraction to be used (often also referred to as receptor noise, 
+#'  or \emph{e}). The noise-to-signal ratio \code{v} is unknown, 
 #'  and therefore must be calculated based on the empirically estimated Weber 
 #'  fraction of one of the cone classes. \code{v} is then applied to estimate the 
 #'  Weber fraction of the other cones. by default, the value of 0.1 is used 
