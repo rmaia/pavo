@@ -25,7 +25,9 @@ Imports:
     rcdd,
     mapproj,
     geometry,
-    pbmcapply
+    pbmcapply,
+    xml2,
+    readr
 Suggests:
     rgl,
     testthat,
