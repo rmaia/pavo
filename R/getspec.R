@@ -108,7 +108,6 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   message(length(files), ' files found; importing spectra:')
 
   gsp <- function(ff){
-
     if(grepl("\\.ProcSpec$", ff)){
       # ProcSpec files differ too much from the other formats and need their own
       # function.
