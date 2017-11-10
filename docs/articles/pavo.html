@@ -59,7 +59,7 @@
       <h1>pavo</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2017-10-09</h4>
+            <h4 class="date">2017-11-10</h4>
           </div>
 
     
@@ -125,12 +125,12 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
                       <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> .<span class="dv">5</span>))
 <span class="kw">head</span>(fakedat)</code></pre></div>
 <pre><code>##        refl1      refl2 wavelength
-## 1  0.3964994 -1.6079186      300.0
-## 2 -0.1131019 -0.3828344      300.5
-## 3  2.0766931 -0.7215139      301.0
-## 4 -0.4259357  1.6587341      301.5
-## 5  1.6519413  0.4478869      302.0
-## 6  0.0918889 -2.4337307      302.5</code></pre>
+## 1 -1.2272772 -0.6635434      300.0
+## 2 -0.5275246 -0.8168936      300.5
+## 3  0.5262006  0.2187456      301.0
+## 4 -0.9961822  0.3774593      301.5
+## 5 -0.4730275 -1.5633029      302.0
+## 6 -0.5391414 -1.1598770      302.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</code></pre></div>
@@ -138,22 +138,22 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(fakedat.new)</code></pre></div>
-<pre><code>##    wl      refl1       refl2
-## 1 300  0.3964994 -1.60791862
-## 2 301  2.0766931 -0.72151390
-## 3 302  1.6519413  0.44788686
-## 4 303 -0.5174077 -0.47441392
-## 5 304  0.0716316  0.01036088
-## 6 305 -0.7567025  1.38508944</code></pre>
+<pre><code>##    wl      refl1      refl2
+## 1 300 -1.2272772 -0.6635434
+## 2 301  0.5262006  0.2187456
+## 3 302 -0.4730275 -1.5633029
+## 4 303 -1.6931685  2.0750530
+## 5 304  0.5625714 -1.1795108
+## 6 305 -0.8933720 -0.5481358</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</code></pre></div>
-<pre><code>##    wl      refl1       refl2
-## 1 300  0.3964994 -1.60791862
-## 2 301  2.0766931 -0.72151390
-## 3 302  1.6519413  0.44788686
-## 4 303 -0.5174077 -0.47441392
-## 5 304  0.0716316  0.01036088
-## 6 305 -0.7567025  1.38508944</code></pre>
+<pre><code>##    wl      refl1      refl2
+## 1 300 -1.2272772 -0.6635434
+## 2 301  0.5262006  0.2187456
+## 3 302 -0.4730275 -1.5633029
+## 4 303 -1.6931685  2.0750530
+## 5 304  0.5625714 -1.1795108
+## 6 305 -0.8933720 -0.5481358</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
@@ -306,7 +306,7 @@ spec.bin &lt;-<span class="st"> </span><span class="kw">t</span>(spec.bin)  <spa
 spec.bin &lt;-<span class="st"> </span>spec.bin[<span class="op">-</span><span class="dv">1</span>, ]  <span class="co"># remove 'wl' column</span>
 pca1 &lt;-<span class="st"> </span><span class="kw">prcomp</span>(spec.bin, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(pca1)</code></pre></div>
-<pre><code>## Importance of components%s:
+<pre><code>## Importance of components:
 ##                           PC1    PC2    PC3     PC4     PC5       PC6
 ## Standard deviation     3.5846 2.0307 1.5612 0.67444 0.36661 4.782e-16
 ## Proportion of Variance 0.6425 0.2062 0.1219 0.02274 0.00672 0.000e+00
@@ -656,21 +656,22 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <code>relative</code>: If <code>TRUE</code>, it will make the cone stimulations relative to their sum. This is appropriate for colorspace models such as the avian tetrahedral colorspace (Goldsmith 1990, Stoddard 2008; For the photon catch and neural noise model, it is important to set} <code>relative = FALSE</code>).</li>
 </ul>
 <p>All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vismod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(sppspec, <span class="dt">visual =</span> <span class="st">"avg.uv"</span>, <span class="dt">illum =</span> <span class="st">'D65'</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vismod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(sppspec, <span class="dt">visual =</span> <span class="st">"avg.uv"</span>, <span class="dt">achromatic =</span> <span class="st">'bt.dc'</span>, 
+                    <span class="dt">illum =</span> <span class="st">'D65'</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
 vismod1</code></pre></div>
-<pre><code>##               u      s      m      l
-## cardinal 0.0341 0.0649 0.1297 0.4187
-## jacana   0.0199 0.1484 0.2923 0.3313
-## oriole   0.0139 0.0375 0.2649 0.4807
-## parakeet 0.0186 0.0611 0.2542 0.2171
-## robin    0.0109 0.0622 0.1413 0.2420
-## tanager  0.0418 0.1572 0.2747 0.2284</code></pre>
+<pre><code>##               u      s      m      l    lum
+## cardinal 0.0341 0.0649 0.1297 0.4187 0.1939
+## jacana   0.0199 0.1484 0.2923 0.3313 0.2709
+## oriole   0.0139 0.0375 0.2649 0.4807 0.2755
+## parakeet 0.0186 0.0611 0.2542 0.2171 0.2042
+## robin    0.0109 0.0622 0.1413 0.2420 0.1501
+## tanager  0.0418 0.1572 0.2747 0.2284 0.2346</code></pre>
 <p>Since there are multiple parameters that can be used to customize the output of <code>vismodel</code>, as detailed above, for convenience these can be returned by using <code>summary</code> in a <code>vismodel</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(vismod1)</code></pre></div>
 <pre><code>## visual model options:
 ##  * Quantal catch: Qi 
 ##  * Visual system, chromatic: avg.uv 
-##  * Visual system, achromatic: none 
+##  * Visual system, achromatic: bt.dc 
 ##  * Illuminant: D65, scale = 1 (von Kries color correction not applied) 
 ##  * Background: ideal 
 ##  * Transmission: ideal 
@@ -681,7 +682,14 @@ vismod1</code></pre></div>
 ##  Median :0.01925   Median :0.06353   Median :0.2595   Median :0.2866  
 ##  Mean   :0.02321   Mean   :0.08854   Mean   :0.2262   Mean   :0.3197  
 ##  3rd Qu.:0.03059   3rd Qu.:0.12753   3rd Qu.:0.2722   3rd Qu.:0.3969  
-##  Max.   :0.04177   Max.   :0.15716   Max.   :0.2923   Max.   :0.4807</code></pre>
+##  Max.   :0.04177   Max.   :0.15716   Max.   :0.2923   Max.   :0.4807  
+##       lum        
+##  Min.   :0.1501  
+##  1st Qu.:0.1965  
+##  Median :0.2194  
+##  Mean   :0.2215  
+##  3rd Qu.:0.2618  
+##  Max.   :0.2755</code></pre>
 <p>We can visualize what vismodel is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>))
 <span class="kw">layout</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">5</span>), <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">11</span>), <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>)))
@@ -744,23 +752,24 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a href="#perceptual-distances-with-coldist" class="anchor"></a>Perceptual Distances with <code>coldist</code>
 </h4>
 <p><code>pavo</code> implements the noise-weighted color distance calculations in the function <code>coldist</code>, assuming that raw receptor quantum catches are provided (via <code>relative = FALSE</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code>). For the achromatic contrast, <code>coldist</code> uses <code>n4</code> to calculate <span class="math inline">\(w\)</span> for the achromatic contrast. Note that even if <span class="math inline">\(Q_i\)</span> is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by <code>vismodel</code> as an input. In this case, the argument <code>qcatch</code> should be used to inform the function if <span class="math inline">\(Q_i\)</span> or <span class="math inline">\(f_i\)</span> values are being used (note that if the imput to <code>coldist</code> is an object generated using the <code>vismodel</code> function, this argument is ignored.) The type of noise to be calculated can be selected from the <code>coldist</code> argument <code>noise</code> (which accepts either <code>"neural"</code> or <code>"quantum"</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">noise =</span> <span class="st">'neural'</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>)</code></pre></div>
-<pre><code>##      patch1   patch2        dS
-## 1  cardinal   jacana  8.423965
-## 2  cardinal   oriole  7.905876
-## 3  cardinal parakeet  7.999730
-## 4  cardinal    robin  5.805562
-## 5  cardinal  tanager 10.100311
-## 6    jacana   oriole 10.151253
-## 7    jacana parakeet  4.231570
-## 8    jacana    robin  3.503769
-## 9    jacana  tanager  5.126266
-## 10   oriole parakeet  8.135793
-## 11   oriole    robin  7.220505
-## 12   oriole  tanager 13.608253
-## 13 parakeet    robin  4.606847
-## 14 parakeet  tanager  5.969760
-## 15    robin  tanager  7.688707</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">noise =</span> <span class="st">'neural'</span>, <span class="dt">achro =</span> <span class="ot">TRUE</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), 
+        <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.achro=</span><span class="fl">0.1</span>)</code></pre></div>
+<pre><code>##      patch1   patch2        dS        dL
+## 1  cardinal   jacana  8.423965 3.3449627
+## 2  cardinal   oriole  7.905876 3.5110820
+## 3  cardinal parakeet  7.999730 0.5177495
+## 4  cardinal    robin  5.805562 2.5606167
+## 5  cardinal  tanager 10.100311 1.9068807
+## 6    jacana   oriole 10.151253 0.1661193
+## 7    jacana parakeet  4.231570 2.8272132
+## 8    jacana    robin  3.503769 5.9055794
+## 9    jacana  tanager  5.126266 1.4380820
+## 10   oriole parakeet  8.135793 2.9933325
+## 11   oriole    robin  7.220505 6.0716987
+## 12   oriole  tanager 13.608253 1.6042013
+## 13 parakeet    robin  4.606847 3.0783661
+## 14 parakeet  tanager  5.969760 1.3891312
+## 15    robin  tanager  7.688707 4.4674974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod.idi, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),  <span class="dt">weber =</span> <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##      patch1   patch2        dS
 ## 1  cardinal   jacana 2.0993283
@@ -778,7 +787,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 13 parakeet    robin 5.9812236
 ## 14 parakeet  tanager 1.2842244
 ## 15    robin  tanager 7.2654480</code></pre>
-<p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). As expected, values are really high under the avian color vision, since the colors of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
+<p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). Note that, by default, <code>achro = FALSE</code>, so <code>dL</code> isn’t included in the second result (this is to maintain consistency since, in the <code>vismodel</code> function, the <code>achromatic</code> argument defaults to <code>none</code>). As expected, values are really high under the avian color vision, since the colors of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
 <p><code>coldist</code> also has a <code>subset</code> argument, which is useful if only certain comparisons are of interest (for example, of color patches against a background, or only comparisons among a species or body patch). <code>subset</code> can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">subset =</span> <span class="st">'cardinal'</span>)</code></pre></div>
 <p>to:</p>
