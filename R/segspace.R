@@ -15,6 +15,8 @@
 #' 
 #' @export
 #' 
+#' @keywords internal
+#' 
 #' @examples \dontrun{
 #' data(sicalis)
 #' vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
