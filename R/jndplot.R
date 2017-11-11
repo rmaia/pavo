@@ -127,7 +127,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   plotarg$ylim <- 0.5*c(-1,1)
   if(is.null(plotarg$bty)) plotarg$bty <- 'n'
   if(is.null(plotarg$yaxt)) plotarg$yaxt <- 'n'
-  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x (JND)'
+  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x'
   if(is.null(plotarg$ylab)) plotarg$ylab <- ''
   if(is.null(plotarg$xlim)) plotarg$xlim <- range(c(x[ ,'x'], arrowpos))
 
@@ -259,12 +259,12 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   plotarg$y <- 0
   plotarg$type <- 'n'
 
-  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x (JND)'
+  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x'
   if(is.null(plotarg$ylab)){ 
     if(achro){
-      plotarg$ylab <- 'Luminance (JND)'
+      plotarg$ylab <- 'Luminance'
     }else{
-      plotarg$ylab <- 'y (JND)'
+      plotarg$ylab <- 'y'
     }
   }
   if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
@@ -417,13 +417,13 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   plotarg$y <- plotarg$ylim
   plotarg$z <- matrix(c(plotarg$zlim,plotarg$zlim), nrow=2) 
 
-  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x (JND)'
-  if(is.null(plotarg$ylab)) plotarg$ylab <- 'y (JND)'
+  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x'
+  if(is.null(plotarg$ylab)) plotarg$ylab <- 'y'
   if(is.null(plotarg$zlab)){ 
     if(achro){
-      plotarg$zlab <- 'Luminance (JND)'
+      plotarg$zlab <- 'Luminance'
     }else{
-      plotarg$zlab <- 'z (JND)'
+      plotarg$zlab <- 'z'
     }
   }
   

@@ -59,7 +59,7 @@
       <h1>pavo</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2017-09-19</h4>
+            <h4 class="date">2017-11-10</h4>
           </div>
 
     
@@ -100,7 +100,7 @@
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co">#specs &lt;- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)</span>
 <span class="co"># 213  files found; importing spectra</span>
 <span class="co"># |================================================================================| 100%, ETA 00:00</span></code></pre></div>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">specs[<span class="dv">1</span>:<span class="dv">10</span>,<span class="dv">1</span>:<span class="dv">4</span>]</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">specs[<span class="dv">1</span><span class="op">:</span><span class="dv">10</span>,<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##     wl cardinal.0001 cardinal.0002 cardinal.0003
 ## 1  300        5.7453        8.0612        8.0723
 ## 2  301        6.0181        8.3926        8.8669
@@ -124,13 +124,13 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
                       <span class="dt">refl2 =</span> <span class="kw">rnorm</span>(<span class="dt">n =</span> <span class="dv">801</span>), 
                       <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> .<span class="dv">5</span>))
 <span class="kw">head</span>(fakedat)</code></pre></div>
-<pre><code>##         refl1      refl2 wavelength
-## 1 -0.08339261 -0.4548549      300.0
-## 2  0.23508335 -0.5405571      300.5
-## 3  0.20266593  1.5561112      301.0
-## 4  0.38246980  0.6987461      301.5
-## 5  1.20504758 -0.8984129      302.0
-## 6 -1.40474431  0.3190091      302.5</code></pre>
+<pre><code>##        refl1      refl2 wavelength
+## 1 -1.2272772 -0.6635434      300.0
+## 2 -0.5275246 -0.8168936      300.5
+## 3  0.5262006  0.2187456      301.0
+## 4 -0.9961822  0.3774593      301.5
+## 5 -0.4730275 -1.5633029      302.0
+## 6 -0.5391414 -1.1598770      302.5</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</code></pre></div>
@@ -138,33 +138,33 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(fakedat.new)</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -0.08339261 -0.4548549
-## 2 301  0.20266593  1.5561112
-## 3 302  1.20504758 -0.8984129
-## 4 303  0.69595484 -0.7903657
-## 5 304 -0.94888428 -0.2166998
-## 6 305 -1.53226899 -0.5768365</code></pre>
+<pre><code>##    wl      refl1      refl2
+## 1 300 -1.2272772 -0.6635434
+## 2 301  0.5262006  0.2187456
+## 3 302 -0.4730275 -1.5633029
+## 4 303 -1.6931685  2.0750530
+## 5 304  0.5625714 -1.1795108
+## 6 305 -0.8933720 -0.5481358</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</code></pre></div>
-<pre><code>##    wl       refl1      refl2
-## 1 300 -0.08339261 -0.4548549
-## 2 301  0.20266593  1.5561112
-## 3 302  1.20504758 -0.8984129
-## 4 303  0.69595484 -0.7903657
-## 5 304 -0.94888428 -0.2166998
-## 6 305 -1.53226899 -0.5768365</code></pre>
+<pre><code>##    wl      refl1      refl2
+## 1 300 -1.2272772 -0.6635434
+## 2 301  0.5262006  0.2187456
+## 3 302 -0.4730275 -1.5633029
+## 4 303 -1.6931685  2.0750530
+## 5 304  0.5625714 -1.1795108
+## 6 305 -0.8933720 -0.5481358</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] ~<span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">xlab =</span> <span class="st">'wl'</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] <span class="op">~</span><span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">xlab =</span> <span class="st">'wl'</span>)</code></pre></div>
 <p><img src="pavo_files/figure-html/unnamed-chunk-8-1.png" width="480" style="display: block; margin: auto;"></p>
 <p>We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (<code>as.rspec</code> will warn you when wavelengths in the data are not present in the range specified with <code>lim</code>), otherwise <code>as.rspec</code> will assume that wavelengths exist when in fact they may not. For example, if we set <code>lim = c(300, 1000)</code> and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">1000</span>))</code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
 <pre><code>## Warning in as.rspec(fakedat, lim = c(300, 1000)): Specified wavelength
 ## limits outside of actual data. Check 'lim' argument.</code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] ~<span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>)</code></pre></div>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] <span class="op">~</span><span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>)</code></pre></div>
 <p><img src="pavo_files/figure-html/unnamed-chunk-9-1.png" width="480" style="display: block; margin: auto;"></p>
 </div>
 <div id="subsetting-and-merging-data" class="section level2">
@@ -173,7 +173,7 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 <p>Once an <code>rspec</code> object has been created, either by importing raw spectral data or converting a dataset with the <code>as.rspec</code> function, you can subset the spectra based on their names using a modified version of <code>R</code>’s built-in <code>subset</code> function. For example, the following code illustrates how to create an <code>rspec</code> object containing only tanagers:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">specs.tanager1 &lt;-<span class="st"> </span><span class="kw">subset</span>(specs, <span class="st">"tanager"</span>)
 
-<span class="kw">head</span>(specs.tanager1)[<span class="dv">1</span>:<span class="dv">5</span>]</code></pre></div>
+<span class="kw">head</span>(specs.tanager1)[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>]</code></pre></div>
 <pre><code>##    wl tanager.0001 tanager.0002 tanager.0003 tanager.0004
 ## 1 300      10.0618      10.6744      10.1499      13.7473
 ## 2 301      11.1472      10.8054       9.8003      14.3102
@@ -187,7 +187,7 @@ fakedat &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span c
 spp &lt;-<span class="st"> </span><span class="kw">do.call</span>(rbind, <span class="kw">strsplit</span>(<span class="kw">names</span>(specs), <span class="st">"</span><span class="ch">\\</span><span class="st">."</span>))[, <span class="dv">1</span>]
 
 <span class="co"># subset</span>
-specs.tanager2 &lt;-<span class="st"> </span><span class="kw">subset</span>(specs, <span class="dt">subset =</span> spp ==<span class="st"> "tanager"</span>)</code></pre></div>
+specs.tanager2 &lt;-<span class="st"> </span><span class="kw">subset</span>(specs, <span class="dt">subset =</span> spp <span class="op">==</span><span class="st"> "tanager"</span>)</code></pre></div>
 <pre><code>## Warning in subset.rspec(specs, subset = spp == "tanager"): Subset doesn't
 ## match length of spectral data</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># compare subsetting methods</span>
@@ -209,7 +209,7 @@ specs.new &lt;-<span class="st"> </span><span class="kw">merge</span>(specs.tana
 <a href="#averaging-spectra" class="anchor"></a>Averaging Spectra</h2>
 <p>As previously described, our data (contained in the <code>specs</code> object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function <code>explorespec</code> provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument <code>specreps</code>, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># 36 spectra plus the first (wl) column</span>
-<span class="kw"><a href="../reference/explorespec.html">explorespec</a></span>(specs[, <span class="dv">1</span>:<span class="dv">37</span>], <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) </code></pre></div>
+<span class="kw"><a href="../reference/explorespec.html">explorespec</a></span>(specs[, <span class="dv">1</span><span class="op">:</span><span class="dv">37</span>], <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) </code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo_files/figure-html/explorespecfig-1.png" alt="_Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels_" width="672"><p class="caption">
 <em>Result from <code>explorespec</code>, showing the three measurements for each individual cardinal in separate panels</em>
@@ -217,7 +217,7 @@ specs.new &lt;-<span class="st"> </span><span class="kw">merge</span>(specs.tana
 </div>
 <p>So our first step would be to take the average of each of these three measurements to obtain average individual spectra to be used in further analyses. This is easily accomplished using the <code>aggspec</code> function. The <code>by</code> argument can be either a number (specifying how many specs should be averaged for each new sample) or a vector specifying the identities of the spectra to be combined (see below):</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mspecs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aggspec.html">aggspec</a></span>(specs, <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">FUN =</span> mean)
-mspecs[<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</span>:<span class="dv">4</span>]</code></pre></div>
+mspecs[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]</code></pre></div>
 <pre><code>##    wl cardinal cardinal.1 cardinal.2
 ## 1 300 7.292933   5.676700   6.387233
 ## 2 301 7.759200   5.806700   6.698200
@@ -228,14 +228,14 @@ mspecs[<span class="dv">1</span>:<span class="dv">5</span>, <span class="dv">1</
 <pre><code>## [1] 401  72</code></pre>
 <p>Now we’ll use the <code>aggspec</code> function again, but this time to take the average spectrum for each species. However, each species has a different number of samples, so we can’t use the <code>by</code> argument as before. Instead we will use regular expressions to create a species name vector by removing the numbers that identify individual spectra:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># create a vector with species identity names</span>
-spp &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">'</span><span class="ch">\\</span><span class="st">.[0-9].*$'</span>, <span class="st">''</span>, <span class="kw">names</span>(mspecs))[-<span class="dv">1</span>]
+spp &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">'</span><span class="ch">\\</span><span class="st">.[0-9].*$'</span>, <span class="st">''</span>, <span class="kw">names</span>(mspecs))[<span class="op">-</span><span class="dv">1</span>]
 <span class="kw">table</span>(spp)</code></pre></div>
 <pre><code>## spp
 ## cardinal   jacana   oriole parakeet    robin  tanager 
 ##       12        9        9       13       10       18</code></pre>
 <p>Instead, we are going to use the <code>spp</code> vector we created to tell the <code>aggspec</code> function how to average the spectra in <code>mspec</code>:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">sppspec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aggspec.html">aggspec</a></span>(mspecs, <span class="dt">by =</span> spp, <span class="dt">FUN =</span> mean)
-<span class="kw">round</span>(sppspec[<span class="dv">1</span>:<span class="dv">5</span>, ], <span class="dv">2</span>)</code></pre></div>
+<span class="kw">round</span>(sppspec[<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>, ], <span class="dv">2</span>)</code></pre></div>
 <pre><code>##    wl cardinal jacana oriole parakeet robin tanager
 ## 1 300     7.05   7.33   3.89     7.63  3.98    9.02
 ## 2 301     7.25   7.35   3.91     7.75  3.91    9.53
@@ -261,9 +261,9 @@ spp &lt;-<span class="st"> </span><span class="kw">gsub</span>(<span class="st">
 <pre><code>## processing options applied:
 ##  smoothing spectra with a span of 0.2 
 ## </code></pre>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sppspec[, <span class="dv">5</span>] ~<span class="st"> </span>sppspec[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">lwd =</span> <span class="dv">10</span>, <span class="dt">col =</span> <span class="st">'grey'</span>, 
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">plot</span>(sppspec[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span>sppspec[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">lwd =</span> <span class="dv">10</span>, <span class="dt">col =</span> <span class="st">'grey'</span>, 
      <span class="dt">xlab =</span> <span class="st">"Wavelength (nm)"</span>, <span class="dt">ylab =</span> <span class="st">"Reflectance (%)"</span>)
-<span class="kw">lines</span>(spec.sm[, <span class="dv">5</span>] ~<span class="st"> </span>sppspec[, <span class="dv">1</span>], <span class="dt">col =</span> <span class="st">'red'</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
+<span class="kw">lines</span>(spec.sm[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span>sppspec[, <span class="dv">1</span>], <span class="dt">col =</span> <span class="st">'red'</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo_files/figure-html/unnamed-chunk-16-1.png" alt="_Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet_" width="576"><p class="caption">
 <em>Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet</em>
@@ -277,13 +277,13 @@ specs.str &lt;-<span class="st"> </span><span class="kw"><a href="../reference/p
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Plot results</span>
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>))
 
-<span class="kw">plot</span>(specs.min[, <span class="dv">5</span>] ~<span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span>:<span class="dv">700</span>), <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>, <span class="dt">type =</span> <span class="st">'l'</span>)
+<span class="kw">plot</span>(specs.min[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>), <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>, <span class="dt">type =</span> <span class="st">'l'</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 
-<span class="kw">plot</span>(specs.max[, <span class="dv">5</span>] ~<span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span>:<span class="dv">700</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>, <span class="dt">type =</span> <span class="st">'l'</span>)
+<span class="kw">plot</span>(specs.max[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>), <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>, <span class="dt">type =</span> <span class="st">'l'</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)
 
-<span class="kw">plot</span>(specs.str[, <span class="dv">5</span>] ~<span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span>:<span class="dv">700</span>), <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>)
+<span class="kw">plot</span>(specs.str[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span><span class="kw">c</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>), <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">xlab =</span> <span class="st">""</span>, <span class="dt">ylab =</span> <span class="st">""</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">1</span>), <span class="dt">lty =</span> <span class="dv">2</span>)
 
 <span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)
@@ -303,10 +303,10 @@ spec.bin &lt;-<span class="st"> </span><span class="kw"><a href="../reference/pr
 <span class="kw">head</span>(spec.bin)
 spec.bin &lt;-<span class="st"> </span><span class="kw">t</span>(spec.bin)  <span class="co"># transpose so wavelength are variables for the PCA</span>
 <span class="kw">colnames</span>(spec.bin) &lt;-<span class="st"> </span>spec.bin[<span class="dv">1</span>, ]  <span class="co"># names variables as wavelength bins</span>
-spec.bin &lt;-<span class="st"> </span>spec.bin[-<span class="dv">1</span>, ]  <span class="co"># remove 'wl' column</span>
+spec.bin &lt;-<span class="st"> </span>spec.bin[<span class="op">-</span><span class="dv">1</span>, ]  <span class="co"># remove 'wl' column</span>
 pca1 &lt;-<span class="st"> </span><span class="kw">prcomp</span>(spec.bin, <span class="dt">scale =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(pca1)</code></pre></div>
-<pre><code>## Importance of components%s:
+<pre><code>## Importance of components:
 ##                           PC1    PC2    PC3     PC4     PC5       PC6
 ## Standard deviation     3.5846 2.0307 1.5612 0.67444 0.36661 4.782e-16
 ## Proportion of Variance 0.6425 0.2062 0.1219 0.02274 0.00672 0.000e+00
@@ -317,12 +317,12 @@ colr &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spec2r
 wls &lt;-<span class="st"> </span><span class="kw">as.numeric</span>(<span class="kw">colnames</span>(spec.bin))
 
 <span class="co"># Rank specs by PC1</span>
-sel &lt;-<span class="st"> </span><span class="kw">rank</span>(pca1$x[, <span class="dv">1</span>])
+sel &lt;-<span class="st"> </span><span class="kw">rank</span>(pca1<span class="op">$</span>x[, <span class="dv">1</span>])
 sel &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw">names</span>(<span class="kw">sort</span>(sel)), <span class="kw">names</span>(sppspec))
 
 <span class="co"># Plot results</span>
 <span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>,<span class="dv">2</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">0</span>, <span class="dv">0</span>, <span class="dv">0</span>))
-<span class="kw">plot</span>(pca1$r[,<span class="dv">1</span>] ~<span class="st"> </span>wls, <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">ylab =</span> <span class="st">"PC1 loading"</span>)
+<span class="kw">plot</span>(pca1<span class="op">$</span>r[,<span class="dv">1</span>] <span class="op">~</span><span class="st"> </span>wls, <span class="dt">type =</span> <span class="st">'l'</span>, <span class="dt">ylab =</span> <span class="st">"PC1 loading"</span>)
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)
 <span class="kw">plot</span>(sppspec, <span class="dt">select =</span> sel, <span class="dt">type =</span> <span class="st">'s'</span>, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(sppspec))
 <span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</code></pre></div>
@@ -337,8 +337,8 @@ sel &lt;-<span class="st"> </span><span class="kw">match</span>(<span class="kw"
 <a href="#dealing-with-negative-values-in-spectra" class="anchor"></a>Dealing With Negative Values in Spectra</h2>
 <p>Negative values in spectra are unwanted, as they are uninterpretable (how can there be less than zero light reflected by a surface?) and can affect estimates of color variables. Nonetheless, certain spectrometer manufacturers allow negative values to be saved. To handle negative values, the <code>procspec</code> function has an argument called <code>fixneg</code>. The two options available are (1) adding the absolute value of the most negative value to the whole spectrum with <code>addmin</code>, and (2) changing all negative values to zero with <code>zero</code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Create a duplicate spectrum and add some negative values</span>
-refl &lt;-<span class="st"> </span>sppspec[, <span class="dv">7</span>] -<span class="st"> </span><span class="dv">20</span>
-testspecs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">300</span>:<span class="dv">700</span>), refl))</code></pre></div>
+refl &lt;-<span class="st"> </span>sppspec[, <span class="dv">7</span>] <span class="op">-</span><span class="st"> </span><span class="dv">20</span>
+testspecs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>), refl))</code></pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># Apply two different processing options</span>
 testspecs.fix1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(testspecs, <span class="dt">fixneg =</span> <span class="st">'addmin'</span>)
@@ -347,13 +347,13 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>))
 <span class="kw">layout</span>(<span class="kw">cbind</span>(<span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>), <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>)), <span class="dt">widths =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">1</span>))
 
-<span class="kw">plot</span>(testspecs, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">10</span>, <span class="dv">30</span>))
+<span class="kw">plot</span>(testspecs, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">30</span>))
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 
-<span class="kw">plot</span>(testspecs.fix1, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">10</span>, <span class="dv">30</span>))
+<span class="kw">plot</span>(testspecs.fix1, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">30</span>))
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 
-<span class="kw">plot</span>(testspecs.fix2, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(-<span class="dv">10</span>, <span class="dv">30</span>))
+<span class="kw">plot</span>(testspecs.fix2, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="op">-</span><span class="dv">10</span>, <span class="dv">30</span>))
 <span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">3</span>)
 
 <span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)
@@ -451,7 +451,7 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <span class="kw"><a href="../reference/aggplot.html">aggplot</a></span>(mspecs, spp, <span class="dt">FUN.center =</span> median, <span class="dt">alpha =</span> <span class="fl">0.3</span>, <span class="dt">legend =</span> <span class="ot">TRUE</span>)
 
 <span class="co"># Plot using mean and standard error, in greyscale</span>
-<span class="kw"><a href="../reference/aggplot.html">aggplot</a></span>(mspecs, spp, <span class="dt">FUN.error =</span> function(x)<span class="kw">sd</span>(x)/<span class="kw">sqrt</span>(<span class="kw">length</span>(x)), 
+<span class="kw"><a href="../reference/aggplot.html">aggplot</a></span>(mspecs, spp, <span class="dt">FUN.error =</span> <span class="cf">function</span>(x)<span class="kw">sd</span>(x)<span class="op">/</span><span class="kw">sqrt</span>(<span class="kw">length</span>(x)), 
         <span class="dt">lcol =</span> <span class="dv">1</span>, <span class="dt">shadecol =</span> <span class="st">'grey'</span>,  <span class="dt">alpha =</span> <span class="fl">0.7</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo_files/figure-html/unnamed-chunk-28-1.png" alt="_Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale_" width="768"><p class="caption">
@@ -478,27 +478,20 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <p>Obtaining colorimetric variables (peratining to hue, saturation and brightness/value) is pretty straightforward in <code>pavo</code>. Since reflectance spectra is stored in an object of class <code>rspec</code>, the <code>summary</code> function recognizes the object as such and extracts 23 variables, as outlined in Montgomerie (2006). Though outlined in a book chapter on bird coloration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has color vision within the UV-human visible range.</p>
 <p>The description and formulas for these variables can be found by running <code><a href="../reference/summary.rspec.html">?summary.rspec</a></code>.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(spec.sm)</code></pre></div>
-<pre><code>##               B1    B2    B3 S1.UV S1.violet S1.blue S1.green S1.yellow
-## cardinal 8984.27 22.40 52.70  0.17      0.19    0.12     0.19      0.25
-## jacana   9668.50 24.11 53.79  0.10      0.11    0.19     0.31      0.25
-## oriole   9108.47 22.71 54.16  0.07      0.08    0.06     0.33      0.36
-## parakeet 6020.73 15.01 29.87  0.17      0.19    0.14     0.42      0.34
-## robin    5741.39 14.32 37.86  0.09      0.10    0.14     0.27      0.27
-## tanager  8515.25 21.24 30.48  0.20      0.24    0.26     0.32      0.24
-##          S1.red    S2   S3   S4      S5    S6    S7   S8    S9  S10  H1
-## cardinal   0.53  7.61 0.30 0.20 4003.47 45.77 -0.45 2.04 -0.84 0.41 700
-## jacana     0.41  7.10 0.25 0.05 3314.02 46.21 -0.48 1.92 -0.73 0.10 700
-## oriole     0.55 14.51 0.30 0.09 5233.01 50.42 -0.75 2.22 -0.92 0.19 700
-## parakeet   0.27  5.11 0.45 0.27 1894.02 24.02 -0.16 1.60 -0.59 0.44 572
-## robin      0.51  9.13 0.30   NA 2532.41 33.71 -0.58 2.35 -0.81   NA 700
-## tanager    0.22  3.23 0.33 0.17 1106.47 21.03 -0.08 0.99  0.05 0.17 557
-##           H2  H3   H4  H5
-## cardinal 419 587 0.02 581
-## jacana   593 529 0.72 468
-## oriole   382 551 0.41 544
-## parakeet 618 634 0.98 506
-## robin     NA 593 0.42 631
-## tanager  594 362 1.53 518</code></pre>
+<pre><code>##               B1    B2    B3  S1U  S1V  S1B  S1G  S1Y  S1R    S2   S3   S4
+## cardinal 8984.27 22.40 52.70 0.17 0.19 0.12 0.19 0.25 0.53  7.61 0.30 0.20
+## jacana   9668.50 24.11 53.79 0.10 0.11 0.19 0.31 0.25 0.41  7.10 0.25 0.05
+## oriole   9108.47 22.71 54.16 0.07 0.08 0.06 0.33 0.36 0.55 14.51 0.30 0.09
+## parakeet 6020.73 15.01 29.87 0.17 0.19 0.14 0.42 0.34 0.27  5.11 0.45 0.27
+## robin    5741.39 14.32 37.86 0.09 0.10 0.14 0.27 0.27 0.51  9.13 0.30   NA
+## tanager  8515.25 21.24 30.48 0.20 0.24 0.26 0.32 0.24 0.22  3.23 0.33 0.17
+##               S5    S6    S7   S8    S9  S10  H1  H2  H3   H4  H5
+## cardinal 4003.47 45.77 -0.45 2.04 -0.84 0.41 700 419 587 0.02 581
+## jacana   3314.02 46.21 -0.48 1.92 -0.73 0.10 700 593 529 0.72 468
+## oriole   5233.01 50.42 -0.75 2.22 -0.92 0.19 700 382 551 0.41 544
+## parakeet 1894.02 24.02 -0.16 1.60 -0.59 0.44 572 618 634 0.98 506
+## robin    2532.41 33.71 -0.58 2.35 -0.81   NA 700  NA 593 0.42 631
+## tanager  1106.47 21.03 -0.08 0.99  0.05 0.17 557 594 362 1.53 518</code></pre>
 <p><code>summary</code> also takes an additional argument <code>subset</code> which if changed from the default <code>FALSE</code> to <code>TRUE</code> will return only the most commonly used colorimetrics (Andersson 2006). <code>summary</code> can also take a vector of color variable names, which can be used to filter the results</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(spec.sm, <span class="dt">subset =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <pre><code>##             B2   S8  H1
@@ -523,7 +516,7 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <a href="#peak-shape-descriptors" class="anchor"></a>Peak Shape Descriptors</h3>
 <p>Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the <code>summary</code> function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak’s properties. The <code>peakshape</code> function identifies the peak location (<code>H1</code>), returns the reflectance at that point (<code>B3</code>), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwith of that interval (the Full Width at Half Maximum, or <code>FWHM</code>). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.</p>
 <p>If this all sounds too esoteric, fear not: <code>peakshape</code> has the option of returning plots indicating what it’s calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (<code>HWHM.l</code> and <code>HWHM.r</code>) is the FWHM:</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>) +<span class="st"> </span><span class="fl">0.1</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>), <span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">5</span>, <span class="dv">4</span>, <span class="fl">0.5</span>, <span class="fl">0.5</span>) <span class="op">+</span><span class="st"> </span><span class="fl">0.1</span>)
 <span class="kw"><a href="../reference/peakshape.html">peakshape</a></span>(spec.sm, <span class="dt">plot =</span> <span class="ot">TRUE</span>)</code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo_files/figure-html/unnamed-chunk-35-1.png" alt="_Plots from `peakshape`_" width="672"><p class="caption">
@@ -663,21 +656,22 @@ testspecs.fix2 &lt;-<span class="st"> </span><span class="kw"><a href="../refere
 <code>relative</code>: If <code>TRUE</code>, it will make the cone stimulations relative to their sum. This is appropriate for colorspace models such as the avian tetrahedral colorspace (Goldsmith 1990, Stoddard 2008; For the photon catch and neural noise model, it is important to set} <code>relative = FALSE</code>).</li>
 </ul>
 <p>All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vismod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(sppspec, <span class="dt">visual =</span> <span class="st">"avg.uv"</span>, <span class="dt">illum =</span> <span class="st">'D65'</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">vismod1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(sppspec, <span class="dt">visual =</span> <span class="st">"avg.uv"</span>, <span class="dt">achromatic =</span> <span class="st">'bt.dc'</span>, 
+                    <span class="dt">illum =</span> <span class="st">'D65'</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>)
 vismod1</code></pre></div>
-<pre><code>##               u      s      m      l
-## cardinal 0.0341 0.0649 0.1297 0.4187
-## jacana   0.0199 0.1484 0.2923 0.3313
-## oriole   0.0139 0.0375 0.2649 0.4807
-## parakeet 0.0186 0.0611 0.2542 0.2171
-## robin    0.0109 0.0622 0.1413 0.2420
-## tanager  0.0418 0.1572 0.2747 0.2284</code></pre>
+<pre><code>##               u      s      m      l    lum
+## cardinal 0.0341 0.0649 0.1297 0.4187 0.1939
+## jacana   0.0199 0.1484 0.2923 0.3313 0.2709
+## oriole   0.0139 0.0375 0.2649 0.4807 0.2755
+## parakeet 0.0186 0.0611 0.2542 0.2171 0.2042
+## robin    0.0109 0.0622 0.1413 0.2420 0.1501
+## tanager  0.0418 0.1572 0.2747 0.2284 0.2346</code></pre>
 <p>Since there are multiple parameters that can be used to customize the output of <code>vismodel</code>, as detailed above, for convenience these can be returned by using <code>summary</code> in a <code>vismodel</code> object:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">summary</span>(vismod1)</code></pre></div>
 <pre><code>## visual model options:
 ##  * Quantal catch: Qi 
 ##  * Visual system, chromatic: avg.uv 
-##  * Visual system, achromatic: none 
+##  * Visual system, achromatic: bt.dc 
 ##  * Illuminant: D65, scale = 1 (von Kries color correction not applied) 
 ##  * Background: ideal 
 ##  * Transmission: ideal 
@@ -688,18 +682,25 @@ vismod1</code></pre></div>
 ##  Median :0.01925   Median :0.06353   Median :0.2595   Median :0.2866  
 ##  Mean   :0.02321   Mean   :0.08854   Mean   :0.2262   Mean   :0.3197  
 ##  3rd Qu.:0.03059   3rd Qu.:0.12753   3rd Qu.:0.2722   3rd Qu.:0.3969  
-##  Max.   :0.04177   Max.   :0.15716   Max.   :0.2923   Max.   :0.4807</code></pre>
+##  Max.   :0.04177   Max.   :0.15716   Max.   :0.2923   Max.   :0.4807  
+##       lum        
+##  Min.   :0.1501  
+##  1st Qu.:0.1965  
+##  Median :0.2194  
+##  Mean   :0.2215  
+##  3rd Qu.:0.2618  
+##  Max.   :0.2755</code></pre>
 <p>We can visualize what vismodel is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">6</span>), <span class="dt">oma =</span> <span class="kw">c</span>(<span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">0</span>, <span class="dv">0</span>))
 <span class="kw">layout</span>(<span class="kw">rbind</span>(<span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">1</span>, <span class="dv">4</span>, <span class="dv">3</span>, <span class="dv">6</span>, <span class="dv">5</span>), <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">5</span>, <span class="dv">5</span>), <span class="kw">c</span>(<span class="dv">8</span>, <span class="dv">7</span>, <span class="dv">10</span>, <span class="dv">9</span>, <span class="dv">12</span>, <span class="dv">11</span>), <span class="kw">c</span>(<span class="dv">7</span>, <span class="dv">7</span>, <span class="dv">9</span>, <span class="dv">9</span>, <span class="dv">11</span>, <span class="dv">11</span>)))
 
 sppspecol &lt;-<span class="st"> </span><span class="kw">as.character</span>(<span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(sppspec))
 
-for (i in <span class="dv">1</span>:<span class="dv">6</span>) {
+<span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span><span class="dv">6</span>) {
   <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">2</span>))
-  <span class="kw">plot</span>(sppspec, <span class="dt">select =</span> i<span class="dv">+1</span>, <span class="dt">col =</span> sppspecol[i], <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))
+  <span class="kw">plot</span>(sppspec, <span class="dt">select =</span> i<span class="op">+</span><span class="dv">1</span>, <span class="dt">col =</span> sppspecol[i], <span class="dt">lwd =</span> <span class="dv">3</span>, <span class="dt">ylim =</span> <span class="kw">c</span>(<span class="dv">0</span>, <span class="dv">100</span>))
   <span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="fl">4.1</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="dv">2</span>))
-  <span class="kw">barplot</span>(<span class="kw">as.matrix</span>(vismod1[i, <span class="dv">1</span>:<span class="dv">4</span>]), <span class="dt">yaxt =</span> <span class="st">'n'</span>, <span class="dt">col =</span> <span class="st">'black'</span>)
+  <span class="kw">barplot</span>(<span class="kw">as.matrix</span>(vismod1[i, <span class="dv">1</span><span class="op">:</span><span class="dv">4</span>]), <span class="dt">yaxt =</span> <span class="st">'n'</span>, <span class="dt">col =</span> <span class="st">'black'</span>)
 }
 
 <span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)
@@ -751,23 +752,24 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a href="#perceptual-distances-with-coldist" class="anchor"></a>Perceptual Distances with <code>coldist</code>
 </h4>
 <p><code>pavo</code> implements the noise-weighted color distance calculations in the function <code>coldist</code>, assuming that raw receptor quantum catches are provided (via <code>relative = FALSE</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code>). For the achromatic contrast, <code>coldist</code> uses <code>n4</code> to calculate <span class="math inline">\(w\)</span> for the achromatic contrast. Note that even if <span class="math inline">\(Q_i\)</span> is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by <code>vismodel</code> as an input. In this case, the argument <code>qcatch</code> should be used to inform the function if <span class="math inline">\(Q_i\)</span> or <span class="math inline">\(f_i\)</span> values are being used (note that if the imput to <code>coldist</code> is an object generated using the <code>vismodel</code> function, this argument is ignored.) The type of noise to be calculated can be selected from the <code>coldist</code> argument <code>noise</code> (which accepts either <code>"neural"</code> or <code>"quantum"</code>).</p>
-<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">noise =</span> <span class="st">'neural'</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>)</code></pre></div>
-<pre><code>##      patch1   patch2        dS
-## 1  cardinal   jacana  8.423965
-## 2  cardinal   oriole  7.905876
-## 3  cardinal parakeet  7.999730
-## 4  cardinal    robin  5.805562
-## 5  cardinal  tanager 10.100311
-## 6    jacana   oriole 10.151253
-## 7    jacana parakeet  4.231570
-## 8    jacana    robin  3.503769
-## 9    jacana  tanager  5.126266
-## 10   oriole parakeet  8.135793
-## 11   oriole    robin  7.220505
-## 12   oriole  tanager 13.608253
-## 13 parakeet    robin  4.606847
-## 14 parakeet  tanager  5.969760
-## 15    robin  tanager  7.688707</code></pre>
+<div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">noise =</span> <span class="st">'neural'</span>, <span class="dt">achro =</span> <span class="ot">TRUE</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>), 
+        <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.achro=</span><span class="fl">0.1</span>)</code></pre></div>
+<pre><code>##      patch1   patch2        dS        dL
+## 1  cardinal   jacana  8.423965 3.3449627
+## 2  cardinal   oriole  7.905876 3.5110820
+## 3  cardinal parakeet  7.999730 0.5177495
+## 4  cardinal    robin  5.805562 2.5606167
+## 5  cardinal  tanager 10.100311 1.9068807
+## 6    jacana   oriole 10.151253 0.1661193
+## 7    jacana parakeet  4.231570 2.8272132
+## 8    jacana    robin  3.503769 5.9055794
+## 9    jacana  tanager  5.126266 1.4380820
+## 10   oriole parakeet  8.135793 2.9933325
+## 11   oriole    robin  7.220505 6.0716987
+## 12   oriole  tanager 13.608253 1.6042013
+## 13 parakeet    robin  4.606847 3.0783661
+## 14 parakeet  tanager  5.969760 1.3891312
+## 15    robin  tanager  7.688707 4.4674974</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod.idi, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>),  <span class="dt">weber =</span> <span class="fl">0.1</span>)</code></pre></div>
 <pre><code>##      patch1   patch2        dS
 ## 1  cardinal   jacana 2.0993283
@@ -785,7 +787,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 13 parakeet    robin 5.9812236
 ## 14 parakeet  tanager 1.2842244
 ## 15    robin  tanager 7.2654480</code></pre>
-<p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). As expected, values are really high under the avian color vision, since the colors of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
+<p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). Note that, by default, <code>achro = FALSE</code>, so <code>dL</code> isn’t included in the second result (this is to maintain consistency since, in the <code>vismodel</code> function, the <code>achromatic</code> argument defaults to <code>none</code>). As expected, values are really high under the avian color vision, since the colors of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
 <p><code>coldist</code> also has a <code>subset</code> argument, which is useful if only certain comparisons are of interest (for example, of color patches against a background, or only comparisons among a species or body patch). <code>subset</code> can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">subset =</span> <span class="st">'cardinal'</span>)</code></pre></div>
 <p>to:</p>
@@ -796,25 +798,25 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a href="#converting-receptor-noise-corrected-distances-to-cartesian-coordinates" class="anchor"></a>Converting receptor noise-corrected distances to Cartesian coordinates</h4>
 <p>You can convert distances in JND back to Cartesian position coordinates with the function <code>jnd2xyz</code>. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedata1 &lt;-<span class="st">  </span><span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">100</span>,<span class="dv">500</span>,<span class="dt">by =</span> <span class="dv">20</span>), 
-                     function(x) <span class="kw">rowSums</span>(<span class="kw">cbind</span>(<span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,x,<span class="dv">30</span>), 
-                                               <span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,x<span class="dv">+400</span>,<span class="dv">30</span>))))
+                     <span class="cf">function</span>(x) <span class="kw">rowSums</span>(<span class="kw">cbind</span>(<span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,x,<span class="dv">30</span>), 
+                                               <span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,x<span class="op">+</span><span class="dv">400</span>,<span class="dv">30</span>))))
 
 <span class="co"># creating idealized specs with varying saturation</span>
 fakedata2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">500</span>, <span class="dv">300</span>, <span class="dv">150</span>, <span class="dv">105</span>, <span class="dv">75</span>, <span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">30</span>), 
-                     function(x) <span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,<span class="dv">550</span>,x))
+                     <span class="cf">function</span>(x) <span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,<span class="dv">550</span>,x))
 
-fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata1))
+fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata1))
 fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata1, <span class="st">"max"</span>)
-fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata2))
+fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata2))
 fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata2, <span class="st">"sum"</span>)
 fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata2, <span class="st">"min"</span>)
 
 <span class="co"># converting reflectance to percentage</span>
-fakedata1[,-<span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata1[,-<span class="dv">1</span>]*<span class="dv">100</span>
-fakedata2[,-<span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata2[,-<span class="dv">1</span>]/<span class="kw">max</span>(fakedata2[,-<span class="dv">1</span>])*<span class="dv">100</span>
+fakedata1[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata1[,<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span>
+fakedata2[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata2[,<span class="op">-</span><span class="dv">1</span>]<span class="op">/</span><span class="kw">max</span>(fakedata2[,<span class="op">-</span><span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>
 
 <span class="co"># combining and converting to rspec</span>
-fakedata.c &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata1[,-<span class="dv">1</span>], fakedata2[,-<span class="dv">1</span>])
+fakedata.c &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata1[,<span class="op">-</span><span class="dv">1</span>], fakedata2[,<span class="op">-</span><span class="dv">1</span>])
 fakedata.c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedata.c)</code></pre></div>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># visual model and color distances</span>
 fakedata.vm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(fakedata.c, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">achro =</span> <span class="ot">TRUE</span>)
@@ -851,7 +853,7 @@ fakedata.cc &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 
 flowercols &lt;-<span class="st"> </span><span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)
 
-<span class="kw">head</span>(flowers[<span class="dv">1</span>:<span class="dv">4</span>])</code></pre></div>
+<span class="kw">head</span>(flowers[<span class="dv">1</span><span class="op">:</span><span class="dv">4</span>])</code></pre></div>
 <pre><code>##    wl Goodenia_heterophylla Goodenia_geniculata Goodenia_gracilis
 ## 1 300             1.7426387            1.918962         0.3638354
 ## 2 301             1.5724849            1.872966         0.3501921
@@ -1213,27 +1215,27 @@ coc.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference
 <p>Where <span class="math inline">\(Qi\)</span> represent the interquantile distances (e.g. <span class="math inline">\(Q_1=ultraviolet\)</span>, <span class="math inline">\(Q_2=blue\)</span>, <span class="math inline">\(Q_3=green\)</span> and <span class="math inline">\(Q_4=red\)</span>)</p>
 <p>As of vesion <code>1.1</code>, the segment classification model is obtained through the <code><a href="../reference/colspace.html">colspace()</a></code> argument <code>space = 'segment'</code>, following initial modelling with <code><a href="../reference/vismodel.html">vismodel()</a></code>. The example below uses idealized reflectance spectra to illustrate how the avian color space defined from the segment classification maps to the human color wheel:</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedata1 &lt;-<span class="st">  </span><span class="kw">sapply</span>(<span class="kw">seq</span>(<span class="dv">100</span>,<span class="dv">500</span>,<span class="dt">by =</span> <span class="dv">20</span>), 
-                     function(x) <span class="kw">rowSums</span>(<span class="kw">cbind</span>(<span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,x,<span class="dv">30</span>), 
-                                               <span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,x<span class="dv">+400</span>,<span class="dv">30</span>))))
+                     <span class="cf">function</span>(x) <span class="kw">rowSums</span>(<span class="kw">cbind</span>(<span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,x,<span class="dv">30</span>), 
+                                               <span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,x<span class="op">+</span><span class="dv">400</span>,<span class="dv">30</span>))))
 
 <span class="co"># creating idealized specs with varying saturation</span>
 fakedata2 &lt;-<span class="st"> </span><span class="kw">sapply</span>(<span class="kw">c</span>(<span class="dv">500</span>, <span class="dv">300</span>, <span class="dv">150</span>, <span class="dv">105</span>, <span class="dv">75</span>, <span class="dv">55</span>, <span class="dv">40</span>, <span class="dv">30</span>), 
-                     function(x) <span class="kw">dnorm</span>(<span class="dv">300</span>:<span class="dv">700</span>,<span class="dv">550</span>,x))
+                     <span class="cf">function</span>(x) <span class="kw">dnorm</span>(<span class="dv">300</span><span class="op">:</span><span class="dv">700</span>,<span class="dv">550</span>,x))
 
-fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata1))</code></pre></div>
+fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata1))</code></pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedata1 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata1, <span class="st">"max"</span>)
-fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata2))</code></pre></div>
+fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata2))</code></pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata2, <span class="st">"sum"</span>)
 fakedata2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(fakedata2, <span class="st">"min"</span>)
 
 <span class="co"># converting reflectance to percentage</span>
-fakedata1[,-<span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata1[,-<span class="dv">1</span>]*<span class="dv">100</span>
-fakedata2[,-<span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata2[,-<span class="dv">1</span>]/<span class="kw">max</span>(fakedata2[,-<span class="dv">1</span>])*<span class="dv">100</span>
+fakedata1[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata1[,<span class="op">-</span><span class="dv">1</span>]<span class="op">*</span><span class="dv">100</span>
+fakedata2[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span>fakedata2[,<span class="op">-</span><span class="dv">1</span>]<span class="op">/</span><span class="kw">max</span>(fakedata2[,<span class="op">-</span><span class="dv">1</span>])<span class="op">*</span><span class="dv">100</span>
 
 <span class="co"># combining and converting to rspec</span>
-fakedata.c &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span>:<span class="dv">700</span>, fakedata1[,-<span class="dv">1</span>], fakedata2[,-<span class="dv">1</span>])
+fakedata.c &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">wl =</span> <span class="dv">300</span><span class="op">:</span><span class="dv">700</span>, fakedata1[,<span class="op">-</span><span class="dv">1</span>], fakedata2[,<span class="op">-</span><span class="dv">1</span>])
 fakedata.c &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedata.c)</code></pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># segment classification analysis</span>
@@ -1280,7 +1282,7 @@ dist.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../referenc
 fakemantisshrimp &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="kw">c</span>(<span class="dv">325</span>, <span class="dv">350</span>, <span class="dv">400</span>, <span class="dv">425</span>, <span class="dv">450</span>, <span class="dv">500</span>, <span class="dv">550</span>, <span class="dv">600</span>, <span class="dv">650</span>, <span class="dv">700</span>), <span class="dt">beta =</span> <span class="ot">FALSE</span>, <span class="dt">integrate =</span> <span class="ot">FALSE</span>)
 
 <span class="co"># Convert to percentages, just to color the plot </span>
-fakemantisshrimp.colors &lt;-<span class="st"> </span>fakemantisshrimp *<span class="st"> </span><span class="dv">100</span>
+fakemantisshrimp.colors &lt;-<span class="st"> </span>fakemantisshrimp <span class="op">*</span><span class="st"> </span><span class="dv">100</span>
 fakemantisshrimp.colors[, <span class="st">'wl'</span>] &lt;-<span class="st"> </span>fakemantisshrimp[, <span class="st">'wl'</span>]
  
 <span class="kw">plot</span>(fakemantisshrimp, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(fakemantisshrimp.colors), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ylab =</span> <span class="st">'Absorbance'</span>)</code></pre></div>

@@ -15,6 +15,7 @@
 #' if \code{FALSE} then a static plot is generated.
 #' @param col a vector of length 3 with the colors for (in order) the first volume, 
 #' the second volume, and the overlap.
+#' @param fill logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})
 #' @param new logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 #' overlap are plotted over the current plot (defaults to \code{TRUE}).
 #' @param montecarlo logical. If \code{TRUE}, Monte Carlo simulation is used instead of exact
@@ -88,7 +89,7 @@
 
 
 voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
-              col = c('blue', 'red', 'darkgrey'), new = TRUE,
+              col = c('blue', 'red', 'darkgrey'), fill=FALSE, new = TRUE,
               montecarlo = FALSE, nsamp = 1000, psize = 0.001, 
               lwd = 1, ...){
 
@@ -221,20 +222,21 @@ if(plot){
 	}
 	
 	if(!interactive){
-      plotrange <- apply(rbind(tcsres1,tcsres2),2,range)
+      plotrange <- apply(rbind(tcsres1[,c('x','y','z')],tcsres2[,c('x','y','z')]),2,range)
+
+    if(length(fill)<3)
 
       if(dim(Voverlap)[1]>3){
-        attr(Voverlap, 'clrsp') <- "tcs"
-        vol(Voverlap, col=col[3], new=new,
+        vol(Voverlap, col=col[3], new=new, fill=TRUE,
           xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
           zlim=plotrange[,'z'], lwd=lwd, ...)
-        vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=FALSE)
-        vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
+        vol(tcsres1, col=col[1], fill=fill, lwd=lwd, new=FALSE)
+        vol(tcsres2, col=col[2], fill=fill, lwd=lwd, new=FALSE)
       }else{
-        vol(tcsres1, col=col[1], fill=FALSE, lwd=lwd, new=new,
+        vol(tcsres1, col=col[1], lwd=lwd, new=new, fill=fill,
           xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
           zlim=plotrange[,'z'], ...)
-        vol(tcsres2, col=col[2], fill=FALSE, lwd=lwd, new=FALSE)
+        vol(tcsres2, col=col[2], lwd=lwd, fill = fill, new=FALSE)
       }
 	}
 	

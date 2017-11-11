@@ -90,8 +90,8 @@ space.</p>
     
 
     <pre class="usage"><span class='fu'>voloverlap</span>(<span class='no'>tcsres1</span>, <span class='no'>tcsres2</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"darkgrey"</span>), <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>montecarlo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>nsamp</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>psize</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"darkgrey"</span>), <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>montecarlo</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>nsamp</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>psize</span> <span class='kw'>=</span> <span class='fl'>0.001</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -115,6 +115,10 @@ if <code>FALSE</code> then a static plot is generated.</p></td>
       <th>col</th>
       <td><p>a vector of length 3 with the colors for (in order) the first volume, 
 the second volume, and the overlap.</p></td>
+    </tr>
+    <tr>
+      <th>fill</th>
+      <td><p>logical. should the two volumes be filled in the plot? (defaults to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>new</th>

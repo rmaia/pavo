@@ -5,8 +5,8 @@
 \title{Color volume overlap}
 \usage{
 voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
-  col = c("blue", "red", "darkgrey"), new = TRUE, montecarlo = FALSE,
-  nsamp = 1000, psize = 0.001, lwd = 1, ...)
+  col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
+  montecarlo = FALSE, nsamp = 1000, psize = 0.001, lwd = 1, ...)
 }
 \arguments{
 \item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{colspace} 
@@ -20,6 +20,8 @@ if \code{FALSE} then a static plot is generated.}
 
 \item{col}{a vector of length 3 with the colors for (in order) the first volume, 
 the second volume, and the overlap.}
+
+\item{fill}{logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})}
 
 \item{new}{logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 overlap are plotted over the current plot (defaults to \code{TRUE}).}

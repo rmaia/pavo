@@ -89,8 +89,9 @@
 perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     
 
-    <pre class="usage"><span class='fu'>jnd2xyz</span>(<span class='no'>coldistres</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
-  <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</pre>
+    <pre class="usage"><span class='fu'>jnd2xyz</span>(<span class='no'>coldistres</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotcenter</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>,
+  <span class='st'>"achro"</span>), <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>, <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>,
+  <span class='fl'>1</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
@@ -100,11 +101,16 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
       <td><p>(required) the output from a <code>coldist</code> call.</p></td>
     </tr>
     <tr>
+      <th>center</th>
+      <td><p>logical indicating if the data should be centered on its centroid 
+(defaults to <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
       <th>rotate</th>
       <td><p>logical indicating if the data should be rotated (defaults to <code>TRUE</code>).</p></td>
     </tr>
     <tr>
-      <th>center</th>
+      <th>rotcenter</th>
       <td><p>should the vectors for rotation be centered in the achromatic
 center ("achro") or the data centroid ("mean", the default)?</p></td>
     </tr>

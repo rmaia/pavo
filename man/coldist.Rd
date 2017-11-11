@@ -55,12 +55,14 @@ Ignored for \code{colspace} objects
 if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, and cie models).}
 
-\item{weber}{The Weber fraction to be used. The noise-to-signal ratio \code{v} is unknown, 
+\item{weber}{The Weber fraction to be used (often also referred to as receptor noise, 
+or \emph{e}). The noise-to-signal ratio \code{v} is unknown, 
 and therefore must be calculated based on the empirically estimated Weber 
 fraction of one of the cone classes. \code{v} is then applied to estimate the 
 Weber fraction of the other cones. by default, the value of 0.1 is used 
 (the empirically estimated value for the
-LWS cone from \emph{Leiothrix lutea}). Ignored for \code{colspace} objects
+LWS cone from \emph{Leiothrix lutea}). See Olsson et al. 2017 for a review of 
+published values in the literature. Ignored for \code{colspace} objects
 if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, segment, and cie models).}
 
@@ -164,6 +166,10 @@ Olsson, P., Lind, O., & Kelber, A. (2015) Bird colour vision:
 
 Lind, O. (2016) Colour vision and background adaptation in a passerine 
  bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.
+
+Olsson, P., Lind, O., & Kelber, A. (2017) Chromatic and achromatic 
+ vision: parameter choice and limitations for reliable model predictions. 
+ Behavioral Ecology, doi: 10.1093/beheco/arx133
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
