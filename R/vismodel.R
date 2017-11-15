@@ -318,6 +318,24 @@ if(tr2 != 'ideal' & visual == 'user-defined'){
 		  warning('The visual system being used appears to already incorporate ocular transmission. Using anything other than trans="ideal" means ocular media effects are being applied a second time.', call.=FALSE)
 }
 
+if('rspec' %in% class(trans)){
+  transwhichused <- names(trans)[2]
+  trans <- trans[,2]
+  warning(paste('Transmission is an rspec object; first spectrum (', 
+    dQuote(transwhichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+}
+
+if('data.frame' %in% class(trans) | 'matrix' %in% class(trans) & 
+  !'rspec' %in% class(trans)){
+  transgwhichused <- names(trans)[1]
+  trans <- trans[,1]
+  warning(paste('Transmission is a matrix or data frame; first column (', 
+    dQuote(transgwhichused),') has been used (remaining columns ignored)', sep='')
+    , call.=FALSE)
+  }
+
+
 
 if('rspec' %in% class(bkg)){
   bkgwhichused <- names(bkg)[2]
