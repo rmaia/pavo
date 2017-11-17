@@ -5,6 +5,8 @@
 \alias{pavo-deprecated}
 \alias{tcs}
 \alias{segclass}
+\alias{getspecf}
+\alias{getspecf2}
 \alias{pavo-deprecated-package}
 \title{Deprecated function(s) in the pavo package}
 \usage{
@@ -15,8 +17,7 @@ tcs(...)
 }
 \description{
 These functions are provided for compatibility with older version of
-the pavo package.  They may eventually be completely
-removed.
+the pavo package. They may eventually be completely removed.
 }
 \section{Details}{
 
@@ -24,6 +25,8 @@ removed.
   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
   \code{segclass} \tab now a synonym for 
   \code{\link[=vismodel]{vismodel(..., visual = "segment")}}\cr
+  \code{getspecf} \tab removed, use \code{\link{getspec}}\cr
+  \code{getspecf2} \tab removed, use \code{\link{getspec}}\cr
 }
 }
 

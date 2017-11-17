@@ -157,12 +157,14 @@ categorical, and cie models).</p></td>
     </tr>
     <tr>
       <th>weber</th>
-      <td><p>The Weber fraction to be used. The noise-to-signal ratio <code>v</code> is unknown, 
+      <td><p>The Weber fraction to be used (often also referred to as receptor noise, 
+or <em>e</em>). The noise-to-signal ratio <code>v</code> is unknown, 
 and therefore must be calculated based on the empirically estimated Weber 
 fraction of one of the cone classes. <code>v</code> is then applied to estimate the 
 Weber fraction of the other cones. by default, the value of 0.1 is used 
 (the empirically estimated value for the
-LWS cone from <em>Leiothrix lutea</em>). Ignored for <code>colspace</code> objects
+LWS cone from <em>Leiothrix lutea</em>). See Olsson et al. 2017 for a review of 
+published values in the literature. Ignored for <code>colspace</code> objects
 if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding, 
 categorical, segment, and cie models).</p></td>
     </tr>
@@ -228,6 +230,9 @@ argument directly, and not based on <code>v</code> and <code>n4</code> as before
  218, 184-193.</p>
 <p>Lind, O. (2016) Colour vision and background adaptation in a passerine 
  bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.</p>
+<p>Olsson, P., Lind, O., &amp; Kelber, A. (2017) Chromatic and achromatic 
+ vision: parameter choice and limitations for reliable model predictions. 
+ Behavioral Ecology, doi: 10.1093/beheco/arx133</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

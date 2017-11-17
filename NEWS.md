@@ -4,9 +4,14 @@ NEW FEATURES
 
 * getspec() can now read OceanOptics `.ProcSpec` files
 
+MAJOR CHANGES
+* getspecf (and the argument fast=TRUE in getspec) have been deprecated
+
 MINOR FEATURES AND BUG FIXES 
 
 * fixed bug in voloverlap() when plot = TRUE
+* fixed bug in vismodel() when transmission has more than one column
+* fixed bug in vismodel() that applied von Kries correction to achromatic channel
 * added argument fill=FALSE in voloverlap()
 
 pavo 1.3.1

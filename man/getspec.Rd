@@ -5,8 +5,8 @@
 \title{Import spectra files}
 \usage{
 getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
-  sep = NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE,
-  cores = getOption("mc.cores", 2L))
+  sep = NULL, subdir = FALSE, subdir.names = FALSE,
+  cores = getOption("mc.cores", 2L), fast)
 }
 \arguments{
 \item{where}{(required) folder in which files are located.}
@@ -29,12 +29,11 @@ included in the search? (defaults to \code{FALSE}).}
 \item{subdir.names}{should subdirectory path be included in the name of the
 spectra? (defaults to \code{FALSE}).}
 
-\item{fast}{logical. if \code{TRUE}, will try a fast algorithm that assumes
-all spectra were produced using the same software configuration (defaults
-to \code{FALSE}).}
-
 \item{cores}{Number of cores to be used. If greater than 1, import will use
 parallel processing (not available in Windows).}
+
+\item{fast}{deprecated argument. use \code{cores} for parallel processing 
+instead.}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported
