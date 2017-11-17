@@ -18,11 +18,10 @@
 #' included in the search? (defaults to \code{FALSE}).
 #' @param subdir.names should subdirectory path be included in the name of the
 #' spectra? (defaults to \code{FALSE}).
-#' @param fast logical. if \code{TRUE}, will try a fast algorithm that assumes
-#'  all spectra were produced using the same software configuration (defaults
-#'  to \code{FALSE}).
 #' @param cores Number of cores to be used. If greater than 1, import will use
 #'  parallel processing (not available in Windows).
+#' @param fast deprecated argument. use \code{cores} for parallel processing 
+#'  instead.
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
@@ -45,23 +44,12 @@
 
 
 getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
-           sep=NULL, subdir = FALSE, subdir.names = FALSE, fast = FALSE, 
-           cores=getOption("mc.cores", 2L)){
-  
-  if(fast){
-    cat("Attempting fast import. ")
-    fastcatch <- try(getspecf(where = where, ext = ext, lim = lim, decimal = decimal, 
-      subdir = subdir, subdir.names = subdir.names), silent=TRUE)
-    
-    if('try-error' %in% class(fastcatch)){
-    	message('Fast import failed.\nSwitching to comprehensive evaluation.\n')
-    }else{
-        message('Fast import successful.\n NOTE: Fast import only works if all spectra have the same output format. Check!')
-        return(fastcatch)
-    }
-    
-    
-  }
+           sep=NULL, subdir = FALSE, subdir.names = FALSE,
+           cores=getOption("mc.cores", 2L), fast){
+
+  # check deprecated arguments
+  if(!missing(fast))
+    stop('argument "fast" is deprecated. see ?getspec for more information.', call.=FALSE)
   
   # allow multiple extensions
   extension <- paste0("\\.",ext, collapse='|')
