@@ -28,11 +28,11 @@ Imports:
     rcdd,
     mapproj,
     geometry,
-    pbmcapply,
-    xml2,
-    readr
+    pbmcapply
 Suggests:
     rgl,
+    xml2,
+    readr,    
     testthat,
     knitr
 VignetteBuilder: knitr
