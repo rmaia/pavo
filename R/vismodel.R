@@ -487,9 +487,11 @@ vk <- "(von Kries color correction not applied)"
 # quantum catch normalized to the background (qi = k*Qi)
 
 if(vonkries){
-  if(!is.null(lum))
+  if(!is.null(lum)){
     S <- data.frame(cbind(S,L))
-  
+    uncqi <- Qi[,'lum']
+  }
+      
   if(substr(visual, 1, 3) == 'cie'){
     k <- 1/(colSums(S * bkg * illum) * K)
     Qi <- data.frame(t(t(Qi) * k))
@@ -498,6 +500,11 @@ if(vonkries){
     Qi <- data.frame(t(t(Qi) * k))
   }
     vk <- "(von Kries color correction applied)"
+
+  if(!is.null(lum)){
+    Qi[,'lum'] <- uncqi
+  }
+
 }
 
 fi <- log(Qi)  # fechner law (signal ~ log quantum catch)
