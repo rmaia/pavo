@@ -35,6 +35,7 @@
 #' getspec('examplespec/', ext = 'ttt')}
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
@@ -92,14 +93,34 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     if(length(files) <= cores)
       cores <- 1
 
+  # if ProcSpec, check if xml2 and readr are installed and loaded
+  if(any(grepl("\\.ProcSpec$", files))){
+    if (!requireNamespace("xml2", quietly = TRUE))
+      stop('"xml2" package needed for to import .ProcSpec files. Please install it.',
+      call. = FALSE)
+
+    if(!isNamespaceLoaded("xml2"))
+      requireNamespace("xml2")
+
+    if (!requireNamespace("readr", quietly = TRUE))
+      stop('"readr" package needed for to import .ProcSpec files. Please install it.',
+      call. = FALSE)
+    if(!isNamespaceLoaded("readr"))
+      requireNamespace("readr")
+  }
+
+  # message with number of spectra files being imported
   message(length(files), ' files found; importing spectra:')
 
   gsp <- function(ff){
     if(grepl("\\.ProcSpec$", ff)){
       # ProcSpec files differ too much from the other formats and need their own
       # function.
+
       tempframe <- parse_procspec(ff)
+
     }else{
+
       # read in raw file
       raw <- scan(file = ff, what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
 
