@@ -1,6 +1,9 @@
 pavo 1.3.2 (development)
 ------------------------------------------------------------------------------
 
+MAJOR CHANGES
+* getspecf (and the argument fast=TRUE in getspec) have been deprecated
+
 MINOR FEATURES AND BUG FIXES 
 
 * fixed bug in voloverlap() when plot = TRUE
