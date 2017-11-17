@@ -12,11 +12,14 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca"))
+    email = "bittonp@uwindsor.ca"),
+    person("Hugo", "Gruson", role = "ctb",
+    email = "hugo.gruson+R@normalesup.org"))
 Author: Rafael Maia [aut, cre],
     Thomas White [aut],
     Chad Eliason [aut],
-    Pierre-Paul Bitton [aut]
+    Pierre-Paul Bitton [aut],
+    Hugo Gruson [ctb]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
 Depends:
@@ -25,7 +28,9 @@ Imports:
     rcdd,
     mapproj,
     geometry,
-    pbmcapply
+    pbmcapply,
+    xml2,
+    readr
 Suggests:
     rgl,
     testthat,

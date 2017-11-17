@@ -1,5 +1,8 @@
 pavo 1.3.2 (development)
 ------------------------------------------------------------------------------
+NEW FEATURES
+
+* getspec() can now read OceanOptics `.ProcSpec` files
 
 MAJOR CHANGES
 * getspecf (and the argument fast=TRUE in getspec) have been deprecated
