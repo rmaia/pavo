@@ -267,8 +267,13 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
       plotarg$ylab <- 'y'
     }
   }
-  if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
-  if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2,labelpos)[, colstouse[2]])
+  if(arrow != 'none'){
+    if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
+    if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2,labelpos)[, colstouse[2]])
+  }else{
+    if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2)[, colstouse[1]])
+    if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2)[, colstouse[2]])
+  }
   
   do.call(plot, plotarg)
 
@@ -288,21 +293,24 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   do.call(arrows, arrowarg)
   }
   
-  if(arrow.labels){    
-    if(achro){
-      lbl <- c('S', 'L', 'lum')
-    }else{
-      lbl <- c('S', 'M', 'L')
+  if(arrow != 'none'){
+    if(arrow.labels){    
+      if(achro){
+        lbl <- c('S', 'L', 'lum')
+      }else{
+        lbl <- c('S', 'M', 'L')
+    }
+      
+    text(lbl[1], x = labelpos[1,colstouse[1]], y = labelpos[1,colstouse[2]], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    text(lbl[2], x = labelpos[2,colstouse[1]], y = labelpos[2,colstouse[2]], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    text(lbl[3], x = labelpos[3,colstouse[1]], y = labelpos[3,colstouse[2]], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+  
+    }
   }
     
-  text(lbl[1], x = labelpos[1,colstouse[1]], y = labelpos[1,colstouse[2]], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-  text(lbl[2], x = labelpos[2,colstouse[1]], y = labelpos[2,colstouse[2]], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-  text(lbl[3], x = labelpos[3,colstouse[1]], y = labelpos[3,colstouse[2]], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-
-  }
     
   # Add points
   pointsarg <- arg
@@ -410,9 +418,15 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   # Blank plot w/ segment
   plotarg <- arg
   plotarg[names(as.list(args(arrows)))] <- NULL
-  if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
-  if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2,labelpos)[, colstouse[2]])
-  if(is.null(plotarg$zlim)) plotarg$zlim <- range(rbind(x2,labelpos)[, colstouse[3]])  
+  if(arrow != 'none'){
+    if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2,labelpos)[, colstouse[1]])
+    if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2,labelpos)[, colstouse[2]])
+    if(is.null(plotarg$zlim)) plotarg$zlim <- range(rbind(x2,labelpos)[, colstouse[3]])
+  }else{
+    if(is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2)[, colstouse[1]])
+    if(is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2)[, colstouse[2]])
+    if(is.null(plotarg$zlim)) plotarg$zlim <- range(rbind(x2)[, colstouse[3]])
+  }
   plotarg$x <- plotarg$xlim
   plotarg$y <- plotarg$ylim
   plotarg$z <- matrix(c(plotarg$zlim,plotarg$zlim), nrow=2) 
@@ -440,48 +454,49 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
   # add arrows  
   if(arrow != 'none'){
-  astart <- trans3d(rep(arrowstart[,colstouse[1]], 4), 
-                    rep(arrowstart[,colstouse[2]], 4), 
-                    rep(arrowstart[,colstouse[3]], 4), P)
-
-  aend <- trans3d(arrowpos[, colstouse[1]],
-                  arrowpos[, colstouse[2]],
-                  arrowpos[, colstouse[3]], P)
-
-    
-  arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(arrows)))]
-  arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+    astart <- trans3d(rep(arrowstart[,colstouse[1]], 4), 
+                      rep(arrowstart[,colstouse[2]], 4), 
+                      rep(arrowstart[,colstouse[3]], 4), P)
   
-  arrowarg$x0 <- astart$x
-  arrowarg$x1 <- aend$x
-  arrowarg$y0 <- astart$y
-  arrowarg$y1 <- aend$y
-  arrowarg$col <- arrow.col
+    aend <- trans3d(arrowpos[, colstouse[1]],
+                    arrowpos[, colstouse[2]],
+                    arrowpos[, colstouse[3]], P)
   
+      
+    arrowarg <- arg
+    arrowarg <- arrowarg[names(as.list(args(arrows)))]
+    arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
     
-  do.call(arrows, arrowarg)
+    arrowarg$x0 <- astart$x
+    arrowarg$x1 <- aend$x
+    arrowarg$y0 <- astart$y
+    arrowarg$y1 <- aend$y
+    arrowarg$col <- arrow.col
+    
+      
+    do.call(arrows, arrowarg)
   }
   
-  if(arrow.labels){
+  if(arrow != 'none'){
+    if(arrow.labels){
+      
+    if(achro){
+      lbl <- c('S', 'M', 'L', 'lum')
+    }else{
+      lbl <- c('U', 'S', 'M', 'L')
+    }
     
-  if(achro){
-    lbl <- c('S', 'M', 'L', 'lum')
-  }else{
-    lbl <- c('U', 'S', 'M', 'L')
-  }
-  
-  lpos <- trans3d(labelpos[,1], labelpos[,2], labelpos[,3], P)
-    
-  text(lbl[1], x = lpos$x[1], y = lpos$y[1], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-  text(lbl[2], x = lpos$x[2], y = lpos$y[2], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-  text(lbl[3], x = lpos$x[3], y = lpos$y[3], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-  text(lbl[4], x = lpos$x[4], y = lpos$y[4], xpd = TRUE, 
-    cex = labels.cex, col= arrow.col)
-
+    lpos <- trans3d(labelpos[,1], labelpos[,2], labelpos[,3], P)
+      
+    text(lbl[1], x = lpos$x[1], y = lpos$y[1], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    text(lbl[2], x = lpos$x[2], y = lpos$y[2], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    text(lbl[3], x = lpos$x[3], y = lpos$y[3], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    text(lbl[4], x = lpos$x[4], y = lpos$y[4], xpd = TRUE, 
+      cex = labels.cex, col= arrow.col)
+    }
   }
     
   # Add points
