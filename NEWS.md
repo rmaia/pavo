@@ -13,7 +13,8 @@ MINOR FEATURES AND BUG FIXES
 * fixed bug in vismodel() when transmission has more than one column
 * fixed bug in vismodel() that applied von Kries correction to achromatic channel
 * added argument fill=FALSE in voloverlap()
-* Fixed bug in jndplot() when suppressing the plotting of arrows
+* fixed bug in jndplot() when suppressing the plotting of arrows
+* better handling of subset data when using summary.colspace() and summary.vismodel()
 
 pavo 1.3.1
 ------------------------------------------------------------------------------

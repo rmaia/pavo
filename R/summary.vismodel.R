@@ -28,6 +28,12 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 summary.vismodel <- function(object,...){
+  
+  if(is.null(attr(object, 'qcatch'))){
+    message('Cannot return full vismodel summary on subset data')
+    return(summary(as.data.frame(object))) 
+  }
+  
 cat("visual model options:\n",
   '* Quantal catch:', attr(object, 'qcatch'), '\n',
   '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
