@@ -106,10 +106,8 @@ vol2 <- convhulln(dat2, 'FA')$vol
 if(!montecarlo){
 rat1 <- d2q(cbind(0, cbind(1, as.matrix(dat1))))
 rat2 <- d2q(cbind(0, cbind(1, as.matrix(dat2))))
-vert1 <- redundant(rat1, representation = "V")$output
-vert2 <- redundant(rat2, representation = "V")$output
-Hvert1 <- scdd(vert1, representation = "V")$output
-Hvert2 <- scdd(vert2, representation = "V")$output
+Hvert1 <- scdd(rat1, representation = "V")$output
+Hvert2 <- scdd(rat2, representation = "V")$output
 Hinter <- rbind(Hvert1, Hvert2)
 Vinter <- scdd(Hinter, representation = "H")$output
 
