@@ -104,25 +104,25 @@ vol2 <- convhulln(dat2, 'FA')$vol
 #EXACT SOLUTION BEGIN#
 ######################
 if(!montecarlo){
-rat1 <- d2q(cbind(0, cbind(1, as.matrix(dat1))))
-rat2 <- d2q(cbind(0, cbind(1, as.matrix(dat2))))
+rat1 <- d2q(cbind(0, 1, as.matrix(dat1)))
+rat2 <- d2q(cbind(0, 1, as.matrix(dat2)))
 Hvert1 <- scdd(rat1, representation = "V")$output
 Hvert2 <- scdd(rat2, representation = "V")$output
 Hinter <- rbind(Hvert1, Hvert2)
 Vinter <- scdd(Hinter, representation = "H")$output
 
 Voverlap <- data.frame(q2d(Vinter[ , - c(1, 2)]))
-names(Voverlap) = c('x','y','z')
+colnames(Voverlap) <- c('x','y','z')
 
-if(dim(Voverlap)[1]>3){
+if(nrow(Voverlap)>3){
   overlapVol <- convhulln(Voverlap, 'FA')$vol
   }else{
     overlapVol <- 0
     }
 
-vsmallest <- overlapVol/min(c(vol1,vol2))
+vsmallest <- overlapVol/min(vol1,vol2)
 
-vboth <- overlapVol/(sum(c(vol1,vol2))-overlapVol)
+vboth <- overlapVol/(sum(vol1,vol2)-overlapVol)
 
 res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
 }
@@ -244,5 +244,5 @@ if(plot){
 ##########    
 }
 
-res
+return(res)
 }
