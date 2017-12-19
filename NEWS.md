@@ -15,6 +15,7 @@ MINOR FEATURES AND BUG FIXES
 * added argument fill=FALSE in voloverlap()
 * fixed bug in jndplot() when suppressing the plotting of arrows
 * better handling of subset data when using summary.colspace() and summary.vismodel()
+* fixed bug in coldist() when `noise = "quantum"` and `achro = TRUE` were used
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
