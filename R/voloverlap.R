@@ -223,6 +223,7 @@ if(plot){
     plotrange <- apply(rbind(tcsres1[,c('x','y','z')],tcsres2[,c('x','y','z')]),2,range)
 
     if(length(fill)<3)
+      fill <- c(rep(fill,2)[1:2], 'darkgrey')
 
     if(dim(Voverlap)[1]>3){
       vol(Voverlap, col=col[3], new=new, fill=TRUE,
