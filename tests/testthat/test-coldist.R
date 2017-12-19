@@ -43,3 +43,11 @@ test_that('Equivalent', {
   check.attributes = FALSE)  	
 
 })
+
+test_that("Options", {
+  data(sicalis)
+
+  expect_length(coldist(vismodel(sicalis, achromatic = "bt.dc", qcatch = "fi", relative = FALSE),
+			noise = "quantum",
+			achro = TRUE), 4)
+})
