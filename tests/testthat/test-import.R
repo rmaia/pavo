@@ -21,7 +21,11 @@ test_that('getspec', {
 
   proc <- suppressMessages(getspec(system.file("testdata", package = 'pavo'), ext = 'ProcSpec'))
   expect_is(proc, "rspec")
-
+  
+  csv <- suppressMessages(getspec(system.file("testdata", package = 'pavo'), ext = 'csv', sep = ','))
+  expect_is(csv, "rspec")
+  expect_length(csv, 2)
+  
 ## Error handling
   # should fail completely
   expect_error(getspec(system.file("testdata", package = 'pavo'), ext = 'TRM', sep = ''))
