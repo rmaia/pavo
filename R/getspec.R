@@ -52,7 +52,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     stop('argument "fast" is deprecated. see ?getspec for more information.', call.=FALSE)
   
   # allow multiple extensions
-  extension <- paste0("\\.",ext, collapse='|')
+  extension <- paste0("\\.", ext, "$", collapse = "|")
 
   # get file names
   file_names <- list.files(where, pattern = extension, recursive = subdir, include.dirs = subdir)
