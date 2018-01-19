@@ -131,6 +131,7 @@
 #' @references CIE (2006). Fundamental chromaticity diagram with physiological axes. 
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Eclairage.
+#'  
 
 vismodel <- function(rspecdata, 
   visual = c('avg.uv', 'avg.v', 'bluetit', 'ctenophorus', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
