@@ -41,17 +41,11 @@ parse_procspec <- function(path) {
   tmp_file <- tempfile(pattern = "clean_ps_", fileext = ".xml")
   writeLines(paste(clean_text, collapse = "\n"), tmp_file)
 
-  # From what I have seen, encoding is UTF-8 for files created on GNU/Linux and
-  # ISO-8859-1 (aka latin-1) for windows.
-  # TODO: what about macOS? This approach should support it anyways.
-  # TODO: it is a bit awkward to import a package just for this small task. Try
-  # to find a lighter but still reliable way to do this in the future.
-  candidates_encoding <- readr::guess_encoding(tmp_file, n_max = -1)
-  encoding <- candidates_encoding$encoding[which.max(candidates_encoding$confidence)]
-
   # TODO: it should be possible to read clean_text directly without having to
   # add disk I/O (that may be critical for very large files collections).
-  xml_source <- xml2::read_xml(tmp_file, encoding = encoding)
+  #
+  # Because the file is non ASCII, we don't need to specify the encoding.
+  xml_source <- xml2::read_xml(tmp_file)
 
   wl_node <- xml2::xml_find_all(xml_source, ".//channelWavelengths")
   wl_values <- xml2::xml_find_all(wl_node, ".//double")

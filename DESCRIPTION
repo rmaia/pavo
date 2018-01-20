@@ -33,7 +33,6 @@ Imports:
 Suggests:
     rgl,
     xml2,
-    readr,    
     testthat,
     knitr
 VignetteBuilder: knitr
