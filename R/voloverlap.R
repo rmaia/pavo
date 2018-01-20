@@ -89,7 +89,7 @@
 
 
 voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
-              col = c('blue', 'red', 'darkgrey'), fill=FALSE, new = TRUE,
+              col = c('blue', 'red', 'darkgrey'), fill = FALSE, new = TRUE,
               montecarlo = FALSE, nsamp = 1000, psize = 0.001, 
               lwd = 1, ...){
 
@@ -182,68 +182,67 @@ if(montecarlo){
 if(plot){
   if(length(col)<3)
     col <- c(rep(col,2)[1:2], 'darkgrey')
-      
-      
+  
+  
   if(interactive){
-  # check if rgl is installed and loaded
+    # check if rgl is installed and loaded
     if (!requireNamespace("rgl", quietly = TRUE))
       stop(dQuote('rgl'),' package needed for interactive plots. Please install it, or use interactive=FALSE.',
            call. = FALSE)  
-
+    
     if(!isNamespaceLoaded("rgl"))
-       requireNamespace("rgl")
-	    
+      requireNamespace("rgl")
+    
     if(new)
       rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
-
+    
     tcsvol(tcsres1, col=col[1], fill=F)
     tcsvol(tcsres2, col=col[2], fill=F)
-      
+    
     if(!montecarlo){
       if(dim(Voverlap)[1]>3){
         attr(Voverlap, 'clrsp') <- "tcs"
         tcsvol(Voverlap, col=col[3])
       }
     }
-      
+    
     if(montecarlo){
       rgl::spheres3d(samples[which(invol1 & !invol2),], type='s', 
                      lit=F, radius=psize, col=col[1])
-      rgl::spheres3d(samples[which(invol2 & !invol1),], type='s',
+      rgl::spheres3d(samples[which(invol2 & !invol1),], type='s', 
                      lit=F, radius=psize, col=col[2])  
-
+      
       if(s_inboth > 0){  
         rgl::spheres3d(samples[which(invol1 & invol2),], type='s', 
                        lit=F, radius=psize, col=col[3])
       }
     }
   }
-	
+  
   if(!interactive){
     plotrange <- apply(rbind(tcsres1[,c('x','y','z')],tcsres2[,c('x','y','z')]),2,range)
-
-    if(length(fill)<3)
-      fill <- c(rep(fill,2)[1:2], 'darkgrey')
-
-    if(dim(Voverlap)[1]>3){
-      vol(Voverlap, col=col[3], new=new, fill=TRUE,
-          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], lwd=lwd, ...)
-      vol(tcsres1, col=col[1], fill=fill, lwd=lwd, new=FALSE)
-      vol(tcsres2, col=col[2], fill=fill, lwd=lwd, new=FALSE)
-    }else{
-      vol(tcsres1, col=col[1], lwd=lwd, new=new, fill=fill,
-          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], ...)
-      vol(tcsres2, col=col[2], lwd=lwd, fill = fill, new=FALSE)
-    }
-  }
-	
     
-##########
-#PLOT END#
-##########    
+    if(length(fill)<3)
+      
+      if(dim(Voverlap)[1]>3){
+        vol(Voverlap, col=col[3], new=new, fill=TRUE,
+            xlim=plotrange[,'x'], ylim = plotrange[,'y'], 
+            zlim=plotrange[,'z'], lwd = lwd, ...)
+        vol(tcsres1, col = col[1], fill = fill, lwd=lwd, new = FALSE)
+        vol(tcsres2, col = col[2], fill = fill, lwd=lwd, new = FALSE)
+      }else{
+        vol(tcsres1, col = col[1], lwd=lwd, new=new, fill=fill,
+            xlim = plotrange[,'x'], ylim=plotrange[,'y'], 
+            zlim = plotrange[,'z'], ...)
+        vol(tcsres2, col=col[2], lwd = lwd, fill = fill, new = FALSE)
+      }
+  }
+  
+  
+  ##########
+  #PLOT END#
+  ##########    
 }
 
-return(res)
+res
 }

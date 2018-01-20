@@ -4,8 +4,7 @@ context("voloverlap")
 test_that("tcs", {
   data(sicalis)
 
-  vm_sicalis <- vismodel(sicalis)
-  tcs_sicalis <- colspace(vm_sicalis)
+  tcs_sicalis <- colspace(vismodel(sicalis))
   vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis)
 
   expect_length(vol_sicalis, 5)

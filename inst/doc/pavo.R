@@ -8,7 +8,7 @@ specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 ## ---- echo=TRUE, eval=FALSE, results='hide', include=TRUE----------------
 #  #specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 #  # 213  files found; importing spectra
-#  # ============================================================
+#  # |================================================================================| 100%, ETA 00:00
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 specs[1:10,1:4]
@@ -240,7 +240,8 @@ head(musca_sense)
 sensdata(visual = 'musca', achromatic = 'md.r1', plot = TRUE, ylab = 'Absorbance')
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
-vismod1 <- vismodel(sppspec, visual = "avg.uv", illum = 'D65', relative = FALSE)
+vismod1 <- vismodel(sppspec, visual = "avg.uv", achromatic = 'bt.dc', 
+                    illum = 'D65', relative = FALSE)
 vismod1
 
 ## ---- echo=FALSE, eval=TRUE----------------------------------------------
@@ -277,7 +278,8 @@ vismod.idi
 sapply(vismod.idi, function(x) round(x,4))
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
-coldist(vismod1, noise = 'neural', n = c(1, 2, 2, 4), weber = 0.1)
+coldist(vismod1, noise = 'neural', achro = TRUE, n = c(1, 2, 2, 4), 
+        weber = 0.1, weber.achro=0.1)
 coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
 
 ## ---- echo = TRUE, eval = TRUE, results = 'hide'-------------------------
@@ -285,6 +287,65 @@ coldist(vismod1, subset = 'cardinal')
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 coldist(vismod1, subset = c('cardinal', 'jacana'))
+
+## ---- echo=TRUE, eval=FALSE----------------------------------------------
+#  fakedata1 <-  sapply(seq(100,500,by = 20),
+#                       function(x) rowSums(cbind(dnorm(300:700,x,30),
+#                                                 dnorm(300:700,x+400,30))))
+#  
+#  # creating idealized specs with varying saturation
+#  fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30),
+#                       function(x) dnorm(300:700,550,x))
+#  
+#  fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
+#  fakedata1 <- procspec(fakedata1, "max")
+#  fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
+#  fakedata2 <- procspec(fakedata2, "sum")
+#  fakedata2 <- procspec(fakedata2, "min")
+#  
+#  # converting reflectance to percentage
+#  fakedata1[,-1] <- fakedata1[,-1]*100
+#  fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+#  
+#  # combining and converting to rspec
+#  fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+#  fakedata.c <- as.rspec(fakedata.c)
+
+## ---- echo=FALSE, include=FALSE------------------------------------------
+fakedata1 <-  sapply(seq(100,500,by = 20), 
+                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
+                                               dnorm(300:700,x+400,30))))
+
+# creating idealized specs with varying saturation
+fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
+                     function(x) dnorm(300:700,550,x))
+
+fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
+fakedata1 <- procspec(fakedata1, "max")
+fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
+fakedata2 <- procspec(fakedata2, "sum")
+fakedata2 <- procspec(fakedata2, "min")
+
+# converting reflectance to percentage
+fakedata1[,-1] <- fakedata1[,-1]*100
+fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+
+# combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+fakedata.c <- as.rspec(fakedata.c)
+
+## ------------------------------------------------------------------------
+# visual model and color distances
+fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achro = TRUE)
+fakedata.cd <- coldist(fakedata.vm, noise = 'neural', n = c(1, 2, 2, 4), 
+                       weber = 0.1, achro = TRUE)
+
+# converting to Cartesian coordinates
+fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = 'l', axis1 = c(1,0,0), ref2 = NULL)
+head(fakedata.cc)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Spectral data in a receptor noise-corrected colorspace_"----
+plot(fakedata.cc, theta= 55, phi= 25, col = spec2rgb(fakedata.c))
 
 ## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"----
 data(flowers)
@@ -321,12 +382,15 @@ tetra.flowers <- colspace(vis.flowers, space = 'tcs')
 
 head(tetra.flowers)
 
+## ---- fig=TRUE, include=TRUE, fig.height=6, fig.height=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective_"----
+plot(tetra.flowers, pch = 21, bg = flowercols, perspective = TRUE, range=c(1,2), cex=0.5)
+
 ## ---- fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"----
 par(mfrow = c(1, 2), pty = 's')
 plot(tetra.flowers, pch = 21, bg = flowercols)
-axistetra()
+axistetra(x = 0, y = 1.8)
 plot(tetra.flowers, theta = 110, phi = 10, pch = 21, bg = flowercols)
-axistetra()
+axistetra(x = 0, y = 1.8)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
@@ -335,17 +399,18 @@ projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 data(sicalis)
 aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
 
-## ---- echo=TRUE, eval=TRUE-----------------------------------------------
+## ---- echo=TRUE, eval=TRUE, fig.show='hide'------------------------------
+par(mfrow = c(1,2), pty = 's' )
 tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
-#voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot=T)
-#voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot=T) 
-voloverlap(tcs.sicalis.T, tcs.sicalis.B)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C)
+voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot = TRUE)
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot = TRUE) 
 
-## ---- echo=FALSE, out.width = 500, fig.retina = NULL, fig.align='center', fig.cap="_Color volume overlaps. Shaded area in panel a represents the overlap between those two sets of points._"----
-knitr::include_graphics("fig/pavo-overlap-combined.png")
+## ---- echo=FALSE, eval=TRUE, results='hide', fig.width=6, fig.align='center', fig.cap="_Volume overlap between male Stripe-Tailed Yellow Finch (_Sicalis citrina_) throat and breast (left) and throat and crown (right)._"----
+par(mfrow = c(1,2), pty = 's' )
+voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot = TRUE)
+voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot = TRUE) 
 
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 summary(tetra.flowers)
