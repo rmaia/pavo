@@ -28,7 +28,8 @@ Imports:
     rcdd,
     mapproj,
     geometry,
-    pbmcapply
+    pbmcapply,
+    utils
 Suggests:
     rgl,
     xml2,

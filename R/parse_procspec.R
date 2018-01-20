@@ -7,6 +7,8 @@
 #'
 #' @return A dataframe with 2 columns: first column contains the wavelengths and
 #' second column contains the processed spectrum
+#' 
+#' @keywords internal
 #'
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -14,8 +16,8 @@
 #'
 parse_procspec <- function(path) {
   # We let R find the suitable tmp folder to extract files
-  extracted_files <- unzip(zipfile = path,
-                           exdir = tempdir())
+  extracted_files <- utils::unzip(zipfile = path,
+                                  exdir = tempdir())
 
   # According to OceanOptics FAQ [1], each procspec archive will only contain
   # one XML spectra file.
