@@ -113,10 +113,12 @@
 #' @references Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
 #' Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
 #' species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
-#' (Turdus merula L.).
-#'  Journal of Comparative Physiology A, 186, 375-387.
+#' (Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
 #'  In Retinal And Eye Research, 20(5), 675-703.
+#' @references Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
+#'  Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
+#'  Lizard, Ctenophorus ornatus. 
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
 #'  The American Naturalist, 171(6), 755-776.
