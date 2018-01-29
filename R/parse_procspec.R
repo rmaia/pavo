@@ -26,15 +26,26 @@ parse_procspec <- function(path) {
   # Data files have the format ps_\d+.xml
   data_file <- grep(pattern = "ps_\\d+\\.xml", extracted_files, value = TRUE)
 
-  # From what I have seen, encoding is UTF-8 for files created on GNU/Linux and
-  # ISO-8859-1 (aka latin-1) for windows.
-  # TODO: what about macOS? This approach should support it anyways.
-  # TODO: it is a bit awkward to import a package just for this small task. Try
-  # to find a lighter but still reliable way to do this in the future.
-  candidates_encoding <- readr::guess_encoding(data_file, n_max = -1)
-  encoding <- candidates_encoding$encoding[which.max(candidates_encoding$confidence)]
+  # OceanOptics softwares produce badly encoded characters. The only fix is to
+  # strip them before feeding the xml file to read_xml.
+  plain_text <- scan(data_file, what = "character", sep = "\n")
+  clean_text <- sapply(plain_text, function(line) {
+    # Convert non-ASCII character to ""
+    line <- iconv(line, to = "ASCII", sub = "")
+    # Remove the extra malformed character
+    line <- gsub("\\\001", "", line)
 
-  xml_source <- xml2::read_xml(data_file, encoding = encoding)
+    return(line)
+  }, USE.NAMES = FALSE)
+
+  tmp_file <- tempfile(pattern = "clean_ps_", fileext = ".xml")
+  writeLines(paste(clean_text, collapse = "\n"), tmp_file)
+
+  # TODO: it should be possible to read clean_text directly without having to
+  # add disk I/O (that may be critical for very large files collections).
+  #
+  # Because the file is non ASCII, we don't need to specify the encoding.
+  xml_source <- xml2::read_xml(tmp_file)
 
   wl_node <- xml2::xml_find_all(xml_source, ".//channelWavelengths")
   wl_values <- xml2::xml_find_all(wl_node, ".//double")
