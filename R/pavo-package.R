@@ -13,7 +13,7 @@
 #' @aliases pavo
 #' @docType package
 #' @title pavo: analyzing color data in R
-#' @author  Rafael Maia \email{rm72@@zips.uakron.edu}, Chad Eliason 
+#' @author  Rafael Maia \email{rm72@@zips.uakron.edu}, Chad Eliason
 #' \email{cme16@@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@@uwindsor.ca},
 #' Thomas White \email{thomas.white026@@gmail.com}
 #' @keywords package
@@ -28,5 +28,5 @@
 .PlotCielabEnv <- new.env()
 .PlotJND2XYZEnv <- new.env()
 
-#.PlotTetraEnv <- list()
-#.PlotCielabEnv <- list()
+# .PlotTetraEnv <- list()
+# .PlotCielabEnv <- list()

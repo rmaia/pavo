@@ -1,22 +1,22 @@
 #' CIE plot
-#' 
-#' Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram. 
-#' 
-#' 
+#'
+#' Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
+#'
+#'
 # #' @usage plot(ciedata, ...)
-#' 
-#' @param ciedata (required). a data frame, possibly a result from the \code{colspace} 
+#'
+#' @param ciedata (required). a data frame, possibly a result from the \code{colspace}
 #' or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
 #' model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).
 #' @param mono should the monochromatic loci (the 'horseshoe') be
 #'    plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.
-#' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline. 
-#' @param theta angle to rotate the plot in the xy plane  when \code{space = 'cielab'} 
+#' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline.
+#' @param theta angle to rotate the plot in the xy plane  when \code{space = 'cielab'}
 #' (defaults to 10).
-#' @param phi angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
+#' @param phi angle to rotate the plot in the yz plane  when \code{space = 'cielab'}
 #' (defaults to 45).
-#' @param r the distance of the eyepoint from the center of the plotting box 
-#' when \code{space = 'cielab'}. Very high values approximate an orthographic projection 
+#' @param r the distance of the eyepoint from the center of the plotting box
+#' when \code{space = 'cielab'}. Very high values approximate an orthographic projection
 #' (defaults to 1e6). See \code{\link{persp}} for details.
 #' . See \code{\link{persp}} for details.
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
@@ -26,184 +26,210 @@
 #' @param margin vector of four numbers specifying drawing margins for CIELAB plot
 #'   (defaults to c(0,0,0,0))
 #' @param ... Additional graphical options. See \code{\link{par}}.
-#' 
+#'
 #' @examples
 #' \dontrun{
 #' data(flowers)
-#' 
+#'
 #' # CIEXYZ
 #' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 #' xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 #' plot(xyz.flowers)
-#' 
+#'
 #' #CIELAB
 #' lab.flowers <- colspace(vis.flowers, space = 'cielab')
 #' plot(lab.flowers)
 #' }
-#' 
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' 
+#'
 #' @export
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 #' @importFrom grDevices trans3d
 #' @importFrom graphics persp
-#' 
+#'
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 #'    Transactions of the Optical Society, 33(3), 73-134.
-#' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+#' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
 #'    using MATLAB. John Wiley & Sons.
-#'    
+#'
 
-cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = 'black', 
-                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
-                     margin = c(0, 0, 0, 0), view, scale.y, axis, grid , ...){
-  
+cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
+                    out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
+                    margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...) {
   arg <- list(...)
-  
+
   # CIEXYZ
-  if(attr(ciedata, 'clrsp') == 'CIEXYZ'){
-    
+  if (attr(ciedata, "clrsp") == "CIEXYZ") {
+
     # Set defaults
-    if(is.null(arg$pch))
+    if (is.null(arg$pch)) {
       arg$pch <- 19
-    if(is.null(arg$xaxp))
+    }
+    if (is.null(arg$xaxp)) {
       arg$xaxp <- c(0, 0.9, 9)
-    if(is.null(arg$yaxp))
+    }
+    if (is.null(arg$yaxp)) {
       arg$yaxp <- c(0, 0.8, 8)
-    if(is.null(arg$xlim))
+    }
+    if (is.null(arg$xlim)) {
       arg$xlim <- c(0, 0.75)
-    if(is.null(arg$ylim))
+    }
+    if (is.null(arg$ylim)) {
       arg$ylim <- c(0, 0.85)
-    if(is.null(arg$xlab))
-      arg$xlab <- 'CIE x'
-    if(is.null(arg$ylab))
-      arg$ylab <- 'CIE y'
-    
+    }
+    if (is.null(arg$xlab)) {
+      arg$xlab <- "CIE x"
+    }
+    if (is.null(arg$ylab)) {
+      arg$ylab <- "CIE y"
+    }
+
     # Monochromatic loci in XYZ, from Westland et al. 2012
-    monox <- c(0.175596, 0.172787, 0.170806, 0.170085, 0.160343, 0.146958, 0.139149,
-               0.133536, 0.126688, 0.115830, 0.109616, 0.099146, 0.091310, 0.078130,
-               0.068717, 0.054675, 0.040763, 0.027497, 0.016270, 0.008169, 0.004876,
-               0.003983, 0.003859, 0.004646, 0.007988, 0.013870, 0.022244, 0.027273,
-               0.032820, 0.038851, 0.045327, 0.052175, 0.059323, 0.066713, 0.074299,
-               0.089937, 0.114155, 0.138695, 0.154714, 0.192865, 0.229607, 0.265760,
-               0.301588, 0.337346, 0.373083, 0.408717, 0.444043, 0.478755, 0.512467,
-               0.544767, 0.575132, 0.602914, 0.627018, 0.648215, 0.665746, 0.680061,
-               0.691487, 0.700589, 0.707901, 0.714015, 0.719017, 0.723016, 0.734674)
-    monoy <- c(0.005295, 0.004800, 0.005472, 0.005976, 0.014496, 0.026643, 0.035211,
-               0.042704, 0.053441, 0.073601, 0.086866, 0.112037, 0.132737, 0.170464,
-               0.200773, 0.254155, 0.317049, 0.387997, 0.463035, 0.538504, 0.587196,
-               0.610526, 0.654897, 0.675970, 0.715407, 0.750246, 0.779682, 0.792153,
-               0.802971, 0.812059, 0.819430, 0.825200, 0.829460, 0.832306, 0.833833,
-               0.833316, 0.826231, 0.814796, 0.805884, 0.781648, 0.754347, 0.724342,
-               0.692326, 0.658867, 0.624470, 0.589626, 0.554734, 0.520222, 0.486611,
-               0.454454, 0.424252, 0.396516, 0.372510, 0.351413, 0.334028, 0.319765,
-               0.308359, 0.299317, 0.292044, 0.285945, 0.280951, 0.276964, 0.265326)
-   
+    monox <- c(
+      0.175596, 0.172787, 0.170806, 0.170085, 0.160343, 0.146958, 0.139149,
+      0.133536, 0.126688, 0.115830, 0.109616, 0.099146, 0.091310, 0.078130,
+      0.068717, 0.054675, 0.040763, 0.027497, 0.016270, 0.008169, 0.004876,
+      0.003983, 0.003859, 0.004646, 0.007988, 0.013870, 0.022244, 0.027273,
+      0.032820, 0.038851, 0.045327, 0.052175, 0.059323, 0.066713, 0.074299,
+      0.089937, 0.114155, 0.138695, 0.154714, 0.192865, 0.229607, 0.265760,
+      0.301588, 0.337346, 0.373083, 0.408717, 0.444043, 0.478755, 0.512467,
+      0.544767, 0.575132, 0.602914, 0.627018, 0.648215, 0.665746, 0.680061,
+      0.691487, 0.700589, 0.707901, 0.714015, 0.719017, 0.723016, 0.734674
+    )
+    monoy <- c(
+      0.005295, 0.004800, 0.005472, 0.005976, 0.014496, 0.026643, 0.035211,
+      0.042704, 0.053441, 0.073601, 0.086866, 0.112037, 0.132737, 0.170464,
+      0.200773, 0.254155, 0.317049, 0.387997, 0.463035, 0.538504, 0.587196,
+      0.610526, 0.654897, 0.675970, 0.715407, 0.750246, 0.779682, 0.792153,
+      0.802971, 0.812059, 0.819430, 0.825200, 0.829460, 0.832306, 0.833833,
+      0.833316, 0.826231, 0.814796, 0.805884, 0.781648, 0.754347, 0.724342,
+      0.692326, 0.658867, 0.624470, 0.589626, 0.554734, 0.520222, 0.486611,
+      0.454454, 0.424252, 0.396516, 0.372510, 0.351413, 0.334028, 0.319765,
+      0.308359, 0.299317, 0.292044, 0.285945, 0.280951, 0.276964, 0.265326
+    )
+
     # Plot
     arg$x <- ciedata$x
     arg$y <- ciedata$y
-    
-    do.call(plot, c(arg, type='n'))
-      
-    if(mono == TRUE)
-      polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
-    
-    # remove plot-specific args, add points after the stuff is drawn
-    arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
-    'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
-    do.call(points, arg)
 
-    
+    do.call(plot, c(arg, type = "n"))
+
+    if (mono == TRUE) {
+      polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+    }
+
+    # remove plot-specific args, add points after the stuff is drawn
+    arg[c(
+      "type", "xlim", "ylim", "log", "main", "sub", "xlab", "ylab",
+      "ann", "axes", "frame.plot", "panel.first", "panel.last", "asp"
+    )] <- NULL
+    do.call(points, arg)
   }
 
   # CIELAB or CIELch
-  if(attr(ciedata, 'clrsp') == 'CIELAB' | attr(ciedata, 'clrsp') == 'CIELCh'){
-  	
-  	# check deprecated arguments view, scale.y, axis, grid
-    if(!missing(view))
-      stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
-    if(!missing(scale.y))
-      stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
-    if(!missing(axis))
-      stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
-    if(!missing(grid))
-      stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call.=FALSE)
-    
+  if (attr(ciedata, "clrsp") == "CIELAB" | attr(ciedata, "clrsp") == "CIELCh") {
+
+    # check deprecated arguments view, scale.y, axis, grid
+    if (!missing(view)) {
+      stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
+    }
+    if (!missing(scale.y)) {
+      stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
+    }
+    if (!missing(axis)) {
+      stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
+    }
+    if (!missing(grid)) {
+      stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
+    }
+
     # Set defaults
     arg <- list(...)
-    
-    if(is.null(arg$pch))
-      arg$pch <- 19
-    if(is.null(arg$col))
-      arg$col <- 1    
-    if(is.null(arg$xlim))
-      arg$xlim <- c(-12.8, 12.7) / zoom
-    if(is.null(arg$ylim))
-      arg$ylim <- c(-12.8, 12.7) / zoom
-    if(is.null(arg$zlim))
-      arg$zlim <- c(0, 10) / zoom
-      
-    col <- arg['col']
-    arg['col'] <- NULL
-    
-    # draw empty plot
-    
-    par(mar=margin)
-    
-    P <- do.call(persp, c(list(x=arg$xlim,
-                             y=arg$ylim,
-                             z=matrix(c(arg$zlim,arg$zlim), nrow=2),
-                             border=FALSE, r=r, box=box, theta=theta, phi=phi), arg))    
 
-        
+    if (is.null(arg$pch)) {
+      arg$pch <- 19
+    }
+    if (is.null(arg$col)) {
+      arg$col <- 1
+    }
+    if (is.null(arg$xlim)) {
+      arg$xlim <- c(-12.8, 12.7) / zoom
+    }
+    if (is.null(arg$ylim)) {
+      arg$ylim <- c(-12.8, 12.7) / zoom
+    }
+    if (is.null(arg$zlim)) {
+      arg$zlim <- c(0, 10) / zoom
+    }
+
+    col <- arg["col"]
+    arg["col"] <- NULL
+
+    # draw empty plot
+
+    par(mar = margin)
+
+    P <- do.call(persp, c(list(
+      x = arg$xlim,
+      y = arg$ylim,
+      z = matrix(c(arg$zlim, arg$zlim), nrow = 2),
+      border = FALSE, r = r, box = box, theta = theta, phi = phi
+    ), arg))
+
+
     # LAB plot axis line vertices
-    verts <- matrix(c(0,0,0,0,0,10,-12.8,0,5,12.7,0,5,0,-12.8,5,0,12.7,5), 
-      ncol=3, byrow=TRUE, 
-      dimnames=list(paste0(rep(c('L', 'a', 'b'), each=2), 1:2), c('x','y','z')))
-      
-    vertst <- trans3d(verts[,'x'], verts[,'y'], verts[,'z'], P)
-    
+    verts <- matrix(c(0, 0, 0, 0, 0, 10, -12.8, 0, 5, 12.7, 0, 5, 0, -12.8, 5, 0, 12.7, 5),
+      ncol = 3, byrow = TRUE,
+      dimnames = list(paste0(rep(c("L", "a", "b"), each = 2), 1:2), c("x", "y", "z"))
+    )
+
+    vertst <- trans3d(verts[, "x"], verts[, "y"], verts[, "z"], P)
+
     # Text label locations
-    
-    txtlab <- matrix(c(0,0,10.4, -14,0,5, 0,-15,5), ncol=3, byrow=TRUE,
-      dimnames=list(c('tL', 'ta', 'tb'), c('x', 'y', 'z')))
-      
-    txtlabt <- trans3d(txtlab[,'x'], txtlab[,'y'], txtlab[,'z'], P)
-  
+
+    txtlab <- matrix(c(0, 0, 10.4, -14, 0, 5, 0, -15, 5),
+      ncol = 3, byrow = TRUE,
+      dimnames = list(c("tL", "ta", "tb"), c("x", "y", "z"))
+    )
+
+    txtlabt <- trans3d(txtlab[, "x"], txtlab[, "y"], txtlab[, "z"], P)
+
     # Draw them up
-    segments(vertst$x['L1'], vertst$y['L1'], vertst$x['L2'], vertst$y['L2'], lwd = 1.5)
-    segments(vertst$x['a1'], vertst$y['a1'], vertst$x['a2'], vertst$y['a2'], lwd = 1.5)
-    segments(vertst$x['b1'], vertst$y['b1'], vertst$x['b2'], vertst$y['b2'], lwd = 1.5)
-    
+    segments(vertst$x["L1"], vertst$y["L1"], vertst$x["L2"], vertst$y["L2"], lwd = 1.5)
+    segments(vertst$x["a1"], vertst$y["a1"], vertst$x["a2"], vertst$y["a2"], lwd = 1.5)
+    segments(vertst$x["b1"], vertst$y["b1"], vertst$x["b2"], vertst$y["b2"], lwd = 1.5)
+
     # Axis labels
-    text(x = txtlabt$x['tL'], txtlabt$y['tL'], labels = 'L')
-    text(x = txtlabt$x['ta'], txtlabt$y['ta'], labels = 'a')
-    text(x = txtlabt$x['tb'], txtlabt$y['tb'], labels = 'b')
-        
+    text(x = txtlabt$x["tL"], txtlabt$y["tL"], labels = "L")
+    text(x = txtlabt$x["ta"], txtlabt$y["ta"], labels = "a")
+    text(x = txtlabt$x["tb"], txtlabt$y["tb"], labels = "b")
+
     # Data
     # CRAN won't accept triple : arguments and persp.default is not exported,
     # so we need to pass arguments by hand
-    perspargs <- c("x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab", 
-      "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border", 
-      "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", "")
+    perspargs <- c(
+      "x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab",
+      "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border",
+      "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", ""
+    )
 
     argpoints <- arg
     argpoints[perspargs] <- NULL
-    argpoints['col'] <- col
+    argpoints["col"] <- col
 
-    xy <- trans3d(ciedata[,'a'], ciedata[,'b'], ciedata[,'L'], P)
-    
+    xy <- trans3d(ciedata[, "a"], ciedata[, "b"], ciedata[, "L"], P)
+
     argpoints$x <- xy$x
     argpoints$y <- xy$y
-    
+
     do.call(points, argpoints)
-    
-    # Save plot info 
-    #.PlotCielabEnv <<- new.env()
+
+    # Save plot info
+    # .PlotCielabEnv <<- new.env()
     assign("last_plot.cielab", P, envir = .PlotCielabEnv)
   }
-      
 }

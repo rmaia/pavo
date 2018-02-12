@@ -20,20 +20,20 @@
 #' par(mfrow = c(1, 2))
 #' plot(teal.mer)
 #' plot(teal)
-#' 
+#'
 #' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{as.rspec}}, \code{\link{aggspec}}
 
-merge.rspec <- function(x, y, by = 'wl', ...) {
-  
-  if (!(is.rspec(x)&&is.rspec(y))) {stop("One or more invalid rspec objects")}
-  if (!(any(names(x)=='wl')&any(names(y)=='wl'))) {
+merge.rspec <- function(x, y, by = "wl", ...) {
+  if (!(is.rspec(x) && is.rspec(y))) {
+    stop("One or more invalid rspec objects")
+  }
+  if (!(any(names(x) == "wl") & any(names(y) == "wl"))) {
     stop("Cannot find valid 'wl' column in one or both input objects")
   }
   res <- merge.data.frame(x, y, ...)
   class(res) <- c("rspec", "data.frame")
   res
-
 }
