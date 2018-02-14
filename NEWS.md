@@ -17,6 +17,7 @@ MINOR FEATURES AND BUG FIXES
 * fixed bug in jndplot() when suppressing the plotting of arrows
 * better handling of subset data when using summary.colspace() and summary.vismodel()
 * fixed bug in coldist() when `noise = "quantum"` and `achro = TRUE` were used
+* fixed bug in jndplot() when `arrow = "none"` and `achro = TRUE`
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
