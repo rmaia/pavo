@@ -58,21 +58,19 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   if (!is.null(whichwl)) {
     wl_index <- whichwl
     wl <- object[, wl_index]
-    object <- as.data.frame(object[, -wl_index, drop = FALSE])
+    object <- object[, -wl_index, drop = FALSE]
     name <- name[-wl_index]
   } else if (any(ind > 0.999)) {
     wl_index <- which(ind > 0.999)[1]
     wl <- object[, wl_index]
-    object <- as.data.frame(object[, -wl_index])
+    object <- object[, -wl_index]
     name <- name[-wl_index]
     message("wavelengths found in column ", wl_index)
   } else if (!is.null(lim)) {
     wl <- seq(lim[1], lim[2], length = nrow(object))
-    object <- as.data.frame(object)
     warning("No wavelengths contained in dataset, using user-specified range. Check output carefully!")
   } else {
     wl <- 1:nrow(object)
-    object <- as.data.frame(object)
     warning("No wavelengths found or whichwl not provided; using arbitrary index values")
   }
 
