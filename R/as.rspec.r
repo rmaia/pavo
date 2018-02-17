@@ -1,22 +1,28 @@
 #' Convert data to an rspec object
 #'
-#' Converts data frames or matrices containing spectral data to \code{rspec} object
+#' Converts data frames or matrices containing spectral data to \code{rspec}
+#' object
 #'
-#' @param object (required) a data frame or matrix containing spectra to process.
-#' @param whichwl specifies which column contains wavelengths. If NULL (default), function
-#' searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no
-#' wavelengths are found or \code{whichwl} is not given, returns arbitrary index values.
-#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to TRUE).
-#' @param lim vector specifying wavelength range to interpolate over (e.g., \code{c(300, 700)}).
+#' @param object (required) a data frame or matrix containing spectra to
+#' process.
+#' @param whichwl specifies which column contains wavelengths. If NULL
+#' (default), function searches for column containing equally spaced numbers
+#' and sets it as wavelengths "wl". If no wavelengths are found or
+#' \code{whichwl} is not given, returns arbitrary index values.
+#' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
+#' TRUE).
+#' @param lim vector specifying wavelength range to interpolate over (e.g.
+#' \code{c(300, 700)}).
 #'
-#' @return an object of class \code{rspec} for use in further \code{pavo} functions
+#' @return an object of class \code{rspec} for use in further \code{pavo}
+#' functions
 #'
 #' @export as.rspec is.rspec
 #'
 #' @examples \dontrun{
 #'
 #' # Generate some fake reflectance data
-#' fakedat <- data.frame(wl= c(300:700), refl1 = rnorm(401), refl2 = rnorm(401))
+#' fakedat <- data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401))
 #' head(fakedat)
 #'
 #' # Determine if is rspec object
@@ -30,7 +36,6 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
-
   if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
   } else {
@@ -68,10 +73,16 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     message("wavelengths found in column ", wl_index)
   } else if (!is.null(lim)) {
     wl <- seq(lim[1], lim[2], length = nrow(object))
-    warning("No wavelengths contained in dataset, using user-specified range. Check output carefully!")
+    warning(
+      "No wavelengths contained in dataset, using user-specified range. ",
+      "Check output carefully!"
+    )
   } else {
     wl <- 1:nrow(object)
-    warning("No wavelengths found or whichwl not provided; using arbitrary index values")
+    warning(
+      "No wavelengths found or whichwl not provided; ",
+      "using arbitrary index values"
+    )
   }
 
   l1.dat <- ceiling(wl[which.min(wl)]) # lower wavelength limit of given data
@@ -85,7 +96,10 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     l1 <- lim[1]
     l2 <- lim[2]
     if (l1.dat > lim[1] || l2.dat < lim[2]) {
-      warning("Specified wavelength limits outside of actual data. Check 'lim' argument.")
+      warning(
+        "Specified wavelength limits outside of actual data. ",
+        "Check 'lim' argument."
+      )
     }
   }
 
@@ -95,8 +109,11 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     if (ncol(object) == 1) {
       object <- approx(x = wl, y = object[, 1], xout = l1:l2, rule = 2)$y
     } else {
-      object <- sapply(1:ncol(object), function(x) approx(x = wl, y = object[, x], xout = l1:l2, rule = 2)$y)
-      # rule=2 gives value at nearest point instead of giving NAs in the case of the user inputting wls that start at, say, 300.1nm
+      object <- sapply(1:ncol(object), function(x) {
+        approx(x = wl, y = object[, x], xout = l1:l2, rule = 2)$y
+      })
+      # rule=2 gives value at nearest point instead of giving NAs in the case of
+      # the user inputting wls that start at, say, 300.1nm
     }
     wl <- seq(l1, l2)
   }
@@ -117,7 +134,10 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   if (!interp && !is.null(lim)) {
     check <- try(res[which(res$wl == l1):which(res$wl == l2), ], silent = TRUE)
     if (inherits(check, "try-error")) {
-      stop("Specified limits do not match a wavelength reference in the data. Check 'lim' argument.")
+      stop(
+        "Specified limits do not match a wavelength reference in the data. ",
+        "Check 'lim' argument."
+      )
     } else {
       res <- res[which(res$wl == l1):which(res$wl == l2), ]
     }
@@ -129,7 +149,8 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 }
 
 #' @rdname as.rspec
-#' @return a logical value indicating whether the object is of class \code{rspec}
+#' @return a logical value indicating whether the object is of class
+#' \code{rspec}
 
 is.rspec <- function(object) {
   inherits(object, "rspec")
