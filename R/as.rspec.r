@@ -105,16 +105,11 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
   # Interpolation & data-trimming
   if (interp) {
-    # RM: This throws an error if the object is just a single vector
-    if (ncol(object) == 1) {
-      object <- approx(x = wl, y = object[, 1], xout = l1:l2, rule = 2)$y
-    } else {
-      object <- sapply(1:ncol(object), function(x) {
-        approx(x = wl, y = object[, x], xout = l1:l2, rule = 2)$y
-      })
-      # rule=2 gives value at nearest point instead of giving NAs in the case of
-      # the user inputting wls that start at, say, 300.1nm
-    }
+    object <- sapply(1:ncol(object), function(x) {
+      approx(x = wl, y = object[, x], xout = l1:l2, rule = 2)$y
+    })
+    # rule=2 gives value at nearest point instead of giving NAs in the case of
+    # the user inputting wls that start at, say, 300.1nm
     wl <- seq(l1, l2)
   }
 
