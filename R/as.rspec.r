@@ -30,10 +30,9 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
-  if (is.matrix(object)) {
+
+  if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
-  } else if (is.data.frame(object)) {
-    name <- names(object)
   } else {
     stop("object must be a data frame or matrix")
   }
@@ -71,7 +70,6 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     } else {
       wl <- seq(lim[1], lim[2], length = nrow(object))
       object <- as.data.frame(object)
-      name <- name
       warning("No wavelengths contained in dataset, using user-specified range. Check output carefully!")
     }
   } else if (any(ind > 0.999)) {
@@ -83,7 +81,6 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   } else {
     wl <- 1:nrow(object)
     object <- as.data.frame(object)
-    name <- name
     warning("No wavelengths found or whichwl not provided; using arbitrary index values")
   }
 
