@@ -65,7 +65,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     wl <- object[, wl_index]
     object <- as.data.frame(object[, -wl_index])
     name <- name[-wl_index]
-    message(paste0("wavelengths found in column ", wl_index))
+    message("wavelengths found in column ", wl_index)
   } else if (!is.null(lim)) {
     wl <- seq(lim[1], lim[2], length = nrow(object))
     object <- as.data.frame(object)
