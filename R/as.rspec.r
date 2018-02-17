@@ -74,7 +74,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     warning("No wavelengths found or whichwl not provided; using arbitrary index values")
   }
 
-  l1.dat <- round(wl[which.min(wl)]) # lower wavelength limit of given data
+  l1.dat <- ceiling(wl[which.min(wl)]) # lower wavelength limit of given data
   l2.dat <- floor(wl[which.max(wl)]) # upper wavelength limit of given data
 
   # Get data limits
