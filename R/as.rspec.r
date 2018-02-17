@@ -113,15 +113,15 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     wl <- seq(l1, l2)
   }
 
-  res <- as.data.frame(cbind(wl, object))
+  res <- cbind(wl, object)
 
-  names(res) <- c("wl", name)
+  colnames(res) <- c("wl", name)
 
-  wl_index <- which(names(res) == "wl")
+  wl_index <- which(colnames(res) == "wl")
 
   if (length(wl_index) > 1) {
     warning("Multiple columns named 'wl', check column names")
-    names(res)[wl_index] <- c("wl", paste0("wl.", wl_index[-1] - 1))
+    colnames(res)[wl_index] <- c("wl", paste0("wl.", wl_index[-1] - 1))
   }
 
   # Trim data when not interpolating (todo: bit clumsy, weave this in above &
@@ -138,6 +138,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     }
   }
 
+  res <- as.data.frame(res)
   class(res) <- c("rspec", "data.frame")
 
   res
