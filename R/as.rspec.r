@@ -105,8 +105,8 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
   # Interpolation & data-trimming
   if (interp) {
-    object <- sapply(1:ncol(object), function(x) {
-      approx(x = wl, y = object[, x], xout = l1:l2, rule = 2)$y
+    object <- apply(object, 2, function(col) {
+      approx(x = wl, y = col, xout = l1:l2, rule = 2)$y
     })
     # rule=2 gives value at nearest point instead of giving NAs in the case of
     # the user inputting wls that start at, say, 300.1nm
