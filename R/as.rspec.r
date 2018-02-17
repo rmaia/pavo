@@ -127,15 +127,15 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   # Trim data when not interpolating (todo: bit clumsy, weave this in above &
   # perhaps default to nearest-wavelength if incorrect reference is provided)
   if (!interp && !is.null(lim)) {
-    check <- try(res[which(res$wl == l1):which(res$wl == l2), ], silent = TRUE)
-    if (inherits(check, "try-error")) {
+    if (l1 %in% res$wl && l2 %in% res$wl) {
+      res <- res[which(res$wl == l1):which(res$wl == l2), ]
+    } else {
       stop(
         "Specified limits do not match a wavelength reference in the data. ",
         "Check 'lim' argument."
       )
-    } else {
-      res <- res[which(res$wl == l1):which(res$wl == l2), ]
     }
+  
   }
 
   res <- as.data.frame(res)
