@@ -109,7 +109,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
   if (length(wl_index) > 1) {
     warning("Multiple columns named 'wl', check column names")
-    names(res)[wl_index] <- c("wl", paste("wl.", wl_index[-1] - 1, sep = ""))
+    names(res)[wl_index] <- c("wl", paste0("wl.", wl_index[-1] - 1))
   }
 
   # Trim data when not interpolating (todo: bit clumsy, weave this in above &
