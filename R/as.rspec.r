@@ -141,7 +141,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   res <- as.data.frame(res)
   class(res) <- c("rspec", "data.frame")
 
-  res
+  return(res)
 }
 
 #' @rdname as.rspec
