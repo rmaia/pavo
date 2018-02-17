@@ -90,7 +90,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   }
 
   # Interpolation & data-trimming
-  if (interp == TRUE) {
+  if (interp) {
     # RM: This throws an error if the object is just a single vector
     if (ncol(object) == 1) {
       object <- approx(x = wl, y = object[, 1], xout = l1:l2, rule = 2)$y
@@ -114,7 +114,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
   # Trim data when not interpolating (todo: bit clumsy, weave this in above &
   # perhaps default to nearest-wavelength if incorrect reference is provided)
-  if (interp == FALSE && !is.null(lim)) {
+  if (!interp && !is.null(lim)) {
     check <- try(res[which(res$wl == l1):which(res$wl == l2), ], silent = TRUE)
     if (inherits(check, "try-error")) {
       stop("Specified limits do not match a wavelength reference in the data. Check 'lim' argument.")
