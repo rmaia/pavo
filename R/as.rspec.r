@@ -68,7 +68,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   } else if (any(ind > 0.999)) {
     wl_index <- which(ind > 0.999)[1]
     wl <- object[, wl_index]
-    object <- object[, -wl_index]
+    object <- object[, -wl_index, drop = FALSE]
     name <- name[-wl_index]
     message("wavelengths found in column ", wl_index)
   } else if (!is.null(lim)) {
