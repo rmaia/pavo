@@ -1,6 +1,7 @@
 # `pavo`
 
-### an R package for spectral color analysis by Rafael Maia, Thomas White, Chad Eliason and Pierre-Paul Bitton
+### an R package for spectral color analysis
+### Currently maintained by [Rafael Maia](https://github.com/rmaia), [Thomas White](https://github.com/thomased) and [Hugo Gruson](https://github.com/bisaloo)
 
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)  ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  
 <!-- revamp: [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=revamp)](https://travis-ci.org/rmaia/pavo/branches) -->
