@@ -10,8 +10,8 @@ hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
   achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{hexdata}{(required) a data frame, possibly a result from the \code{colspace} 
-or \code{hexagon} 
+\item{hexdata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{hexagon}
 function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
@@ -19,7 +19,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 \item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
 \item{sectors}{plot the bee-hue sector dividers? Options are:
-\itemize{ 
+\itemize{
     \item \code{'none'}: No sectors (default)
     \item \code{'fine'}: 36 10-degree sectors
     \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
@@ -37,7 +37,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{margins}{margins for the plot.}
 
-\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
@@ -48,7 +48,7 @@ Produces a colour hexagon plot.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 plot(hex.flowers)
@@ -57,11 +57,11 @@ plot(hex.flowers)
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
-Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
-   component of flower reflections, and the colour perception of Hymenoptera. 
+Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
+   component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.
 }
 \author{

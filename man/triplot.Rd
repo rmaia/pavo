@@ -10,7 +10,7 @@ triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
 }
 \arguments{
 \item{tridata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{trispace} function, containing values for the 'x' and 'y' coordinates 
+or \code{trispace} function, containing values for the 'x' and 'y' coordinates
 as columns (labeled as such).}
 
 \item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
@@ -27,7 +27,7 @@ as columns (labeled as such).}
 
 \item{margins}{margins for the plot.}
 
-\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
@@ -49,7 +49,7 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
    - behavioural tests and physiological concepts. Biological Reviews, 78,
    81 - 118.
 
-Neumeyer C (1980) Simultaneous color contrast in the honeybee. 
+Neumeyer C (1980) Simultaneous color contrast in the honeybee.
  Journal of comparative physiology, 139(3), 165-176.
 }
 \author{

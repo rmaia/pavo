@@ -14,7 +14,7 @@ with two columns named 's' and 'l', representing a dichromatic viewer's receptor
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
 
-\code{s}, \code{l}: the quantum catch data used to calculate 
+\code{s}, \code{l}: the quantum catch data used to calculate
  the remaining variables.
 
 \code{x}: the coordinate of the stimulus along a segment
@@ -30,11 +30,11 @@ in a dichromatic colour space.
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
-} 
+}
 
 }
 \references{
-Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
  behavioural tests and physiological concepts. Biological Reviews, 78,
  81 - 118.
 }

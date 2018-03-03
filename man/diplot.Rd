@@ -9,7 +9,7 @@ diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{didata}{(required) a data frame, possibly a result from the \code{colspace} 
+\item{didata}{(required) a data frame, possibly a result from the \code{colspace}
 or \code{dispace}
 function, containing values for the 'x' coordinates as a column (labeled as such).}
 
@@ -27,7 +27,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 
 \item{margins}{margins for the plot.}
 
-\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}

@@ -7,8 +7,8 @@
 catplot(catdata, labels = TRUE, labels.cex = 0.9, ...)
 }
 \arguments{
-\item{catdata}{(required) a data frame, possibly a result from the \code{colspace} 
-or \code{categorical} function, containing values for 'x' and 'y' coordinates 
+\item{catdata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{categorical} function, containing values for 'x' and 'y' coordinates
 as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
