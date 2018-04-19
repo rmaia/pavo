@@ -7,6 +7,9 @@ test_that('getspec', {
   avantes1 <- suppressMessages(getspec(system.file("testdata", package = 'pavo'), ext = 'ttt'))
   expect_is(avantes1, "rspec")
 
+  avantes2 <- suppressMessages(getspec(system.file("testdata", package = 'pavo'), ext = 'trt'))
+  expect_is(avantes2, "rspec")
+
   transmit <- suppressMessages(getspec(system.file("testdata", package = 'pavo'), ext = 'Transmission'))
   expect_is(transmit, "rspec")
 
