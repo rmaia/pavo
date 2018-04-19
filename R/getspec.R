@@ -20,7 +20,7 @@
 #' spectra? (defaults to \code{FALSE}).
 #' @param cores Number of cores to be used. If greater than 1, import will use
 #'  parallel processing (not available in Windows).
-#' @param fast deprecated argument. use \code{cores} for parallel processing 
+#' @param fast deprecated argument. use \code{cores} for parallel processing
 #'  instead.
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
@@ -43,14 +43,14 @@
 
 #clumsy: if subdir=T, column name includes subdir name (desired?)
 
-getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".", 
+getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = ".",
            sep=NULL, subdir = FALSE, subdir.names = FALSE,
            cores=getOption("mc.cores", 2L), fast){
 
   # check deprecated arguments
   if(!missing(fast))
     stop('argument "fast" is deprecated. see ?getspec for more information.', call.=FALSE)
-  
+
   # allow multiple extensions
   extension <- paste0("\\.", ext, "$", collapse = "|")
 
@@ -141,22 +141,23 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
       # remove split character from first or last occurence
       raw <- gsub('^;|;$', '', raw)
 
+      # convert decimal value to point
+      raw <- gsub(decimal, '.', raw, fixed = TRUE)
+
       # exclude lines that have text
       #raw <- raw[!grepl('[A-Da-dF-Zf-z]', raw)]
 
       # exclude any line that doesn't start with a number
-      raw <- raw[grepl('^[0-9\\-]', raw)]
+      scinum <- "-?[[:digit:]]+\\.?[[:digit:]]*((E|e)(-|+)?[[:digit:]]+)?"
+      raw <- raw[grepl(paste0("^", scinum, ";"), raw)]
 
       # split on separators
-      rawsplit <- strsplit(raw, ";", fixed=TRUE)
+      rawsplit <- strsplit(raw, ";")
 
       rawsplit <- do.call(rbind, rawsplit)
 
       if(dim(rawsplit)[2] < 2)
         stop('could not separate columns, choose a different value for "sep" argument', call.=FALSE)
-
-      # convert decimal value to point
-      rawsplit <- gsub(paste0('\\',decimal), '.', rawsplit)
 
       # convert to numeric, check for NA
       suppressWarnings(class(rawsplit) <- 'numeric')
