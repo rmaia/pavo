@@ -12,8 +12,8 @@ tetraplot(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   type = "p", view, scale.y, axis, grid, vertexsize, ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
-or \code{tetraspace} function, containing values for the 'x', 'y' and 'z' 
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).}
 
 \item{theta}{angle to rotate the plot in the xy plane (defaults to 45).}
@@ -23,10 +23,10 @@ coordinates as columns (labeled as such).}
 \item{perspective}{logical, should perspective be forced by using point size to reflect
 distance from the plane of view? (defaults to FALSE)}
 
-\item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively, 
+\item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively,
 to indicate the size range variation reflecting the distance from the plane of view.}
 
-\item{r}{the distance of the eyepoint from the center of the plotting box. 
+\item{r}{the distance of the eyepoint from the center of the plotting box.
 Very high values approximate an orthographic projection (defaults to 1e6).
 See \code{\link{persp}} for details.}
 
@@ -70,15 +70,15 @@ plot(tcs.sicalis)
 
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \seealso{
-\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}}, 
+\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
 \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
 }
 \author{

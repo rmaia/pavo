@@ -54,6 +54,7 @@
 #'
 #' @importFrom grDevices trans3d dev.off pdf
 #' @importFrom graphics grconvertX grconvertY
+#' @importFrom plot3D perspbox
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
@@ -135,7 +136,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   # draw blank 3d plot
   # Using persp directly creates a white rectangle that cannot be removed. So
   # we have to use perspbox instead.
-  M <- do.call(plot3D::perspbox, c(list(x=arg$xlim,
+  M <- do.call(perspbox, c(list(x=arg$xlim,
                                         y=arg$ylim,
                                         z=diag(2)*arg$zlim,
                                         r=r, box=FALSE, theta=theta, phi=phi), arg))

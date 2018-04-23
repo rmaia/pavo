@@ -32,7 +32,7 @@ spectra? (defaults to \code{FALSE}).}
 \item{cores}{Number of cores to be used. If greater than 1, import will use
 parallel processing (not available in Windows).}
 
-\item{fast}{deprecated argument. use \code{cores} for parallel processing 
+\item{fast}{deprecated argument. use \code{cores} for parallel processing
 instead.}
 }
 \value{
