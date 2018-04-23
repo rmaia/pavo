@@ -8,6 +8,19 @@ test_that('Conversion to rspec', {
   expect_equal(dim(as.rspec(fakedat, lim = c(200, 800), interp = FALSE)), c(1201, 3))
   expect_equal(dim(as.rspec(fakedat, lim = c(300, 700), interp = TRUE)), c(401, 3))
   expect_equal(as.data.frame(as.rspec(fakedat, lim = c(300, 700))['wl']), data.frame(wl = as.numeric(c(300:700))))
+
+  # Matrix and df input should have the same output
+  expect_equal(as.rspec(fakedat), as.rspec(as.matrix(fakedat)))
+
+  # Single column df should work and output a 2 columns rspec object
+  expect_equal(dim(suppressWarnings(as.rspec(fakedat[, 2, drop = FALSE]))), c(1201, 2))
+
+  expect_silent(as.rspec(fakedat, whichwl = 1))
+
+  expect_message(as.rspec(fakedat), "wavelengths found")
+
+  expect_warning(as.rspec(fakedat[, -1], lim = c(300, 700)), "user-specified range")
+  expect_warning(as.rspec(fakedat[, -1]), "arbitrary index")
   
   expect_error(as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE), "limits")
   expect_error(as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE), "limits")
