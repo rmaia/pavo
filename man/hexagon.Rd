@@ -14,7 +14,7 @@ with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
 
-\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
+\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
  the remaining variables
 
 \code{x}, \code{y}: cartesian coordinates in the colour hexagon.
@@ -27,7 +27,7 @@ A data frame of class \code{colspace} consisting of the following columns:
 \code{sec.fine}: fine 'hue sector', wherein the full hexagon is composed
  of 36 10-degree sectors, with 0-degrees at the 1200 angle.
 
-\code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is 
+\code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is
  composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.
 }
 \description{
@@ -37,7 +37,7 @@ in the hymenopteran color hexagon.
 \examples{
 \dontrun{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 flowers.hex <- colspace(vis.flowers, space = 'hexagon')
 }
@@ -45,11 +45,11 @@ flowers.hex <- colspace(vis.flowers, space = 'hexagon')
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
-Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
-   component of flower reflections, and the colour perception of Hymenoptera. 
+Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
+   component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.
 }
 \author{

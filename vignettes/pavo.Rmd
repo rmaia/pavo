@@ -475,6 +475,7 @@ sensdata(visual = 'musca', achromatic = 'md.r1', plot = TRUE, ylab = 'Absorbance
   : `star` The starling _Sturnus vulgaris_ (tetrachromat)
   : `pfowl` The peafowl _Pavo cristatus_ (tetrachromat)
   : `apis` The honeybee _Apis mellifera_ (trichromat)
+  : 'ctenophorus' The ornate dragon lizard _Ctenophorus ornatus_ (trichromat)
   : `canis` The canid _Canis familiaris_ (dichromat)
   : `musca` The housefly _Musca domestica_ (tetrachromat)
   : `cie2` 2-degree color matching functions for CIE models of human color vision (trichromat)

@@ -89,82 +89,82 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   # 1 DIMENSION
   if(plotdims == '1'){
   
-  if(!is.null(margin)){
-    if(margin == 'recommended'){  
-      par(mar=c(5.1,2.1,4.1,2.1))
-    }else{
-      par(mar = margin)
+    if(!is.null(margin)){
+      if(margin == 'recommended'){  
+        par(mar=c(5.1,2.1,4.1,2.1))
+      }else{
+        par(mar = margin)
+      }
     }
-  }
 
-  # combine data with references
-  dat <- rbind(x[, 'x', drop=FALSE], attr(x, 'resref')[,'x', drop=FALSE])
-  attr(dat, 'resref') <- attr(x, 'resref')[,'x', drop=FALSE]
-  
-  x2 <- x[, 'x', drop=FALSE]
-  
-  # get arrow coordinates
-  
-  arrowstart <- switch(arrow,
-    relative = rep(attr(dat, 'resref')[4, 1], 2),
-    absolute = rep(attr(dat, 'resref')[1, 1], 2),
-    none = NULL
-    )  
+    # combine data with references
+    dat <- rbind(x[, 'x', drop=FALSE], attr(x, 'resref')[,'x', drop=FALSE])
+    attr(dat, 'resref') <- attr(x, 'resref')[,'x', drop=FALSE]
+    
+    x2 <- x[, 'x', drop=FALSE]
+    
+    # get arrow coordinates
+    
+    arrowstart <- switch(arrow,
+      relative = rep(attr(dat, 'resref')[4, 1], 2),
+      absolute = rep(attr(dat, 'resref')[1, 1], 2),
+      none = NULL
+      )  
    
-  arrowpos <- switch(arrow, 
-    relative = (range(x2[,'x']) - arrowstart)*arrow.p + arrowstart,
-    absolute = (attr(dat, 'resref')[2:3, 'x'] - arrowstart)*arrow.p + arrowstart,
-    none = NULL)
+    arrowpos <- switch(arrow, 
+      relative = (range(x2[,'x']) - arrowstart)*arrow.p + arrowstart,
+      absolute = (attr(dat, 'resref')[2:3, 'x'] - arrowstart)*arrow.p + arrowstart,
+      none = NULL)
+    
+    if(is.null(arg$pch)) arg$pch <- '|'
+        
+    # Blank plot w/ segment
+    plotarg <- arg
+    plotarg[names(as.list(args(arrows)))] <- NULL
+    plotarg$x <- 0
+    plotarg$y <- 0
+    plotarg$type <- 'n'
+    plotarg$ylim <- 0.5*c(-1,1)
+    if(is.null(plotarg$bty)) plotarg$bty <- 'n'
+    if(is.null(plotarg$yaxt)) plotarg$yaxt <- 'n'
+    if(is.null(plotarg$xlab)) plotarg$xlab <- 'x'
+    if(is.null(plotarg$ylab)) plotarg$ylab <- ''
+    if(is.null(plotarg$xlim)) plotarg$xlim <- range(c(x[ ,'x'], arrowpos))
   
-  if(is.null(arg$pch)) arg$pch <- '|'
+    
+    do.call(plot, plotarg)
+  
       
-  # Blank plot w/ segment
-  plotarg <- arg
-  plotarg[names(as.list(args(arrows)))] <- NULL
-  plotarg$x <- 0
-  plotarg$y <- 0
-  plotarg$type <- 'n'
-  plotarg$ylim <- 0.5*c(-1,1)
-  if(is.null(plotarg$bty)) plotarg$bty <- 'n'
-  if(is.null(plotarg$yaxt)) plotarg$yaxt <- 'n'
-  if(is.null(plotarg$xlab)) plotarg$xlab <- 'x'
-  if(is.null(plotarg$ylab)) plotarg$ylab <- ''
-  if(is.null(plotarg$xlim)) plotarg$xlim <- range(c(x[ ,'x'], arrowpos))
-
-  
-  do.call(plot, plotarg)
-
-    
-  # add arrows
-  if(arrow != 'none'){
-  arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(arrows)))]
-  arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
-  arrowarg$x0 <- arrowstart
-  arrowarg$x1 <-  arrowpos
-  arrowarg$y0 <- rep(0,2)
-  arrowarg$y1 <- rep(0,2)
-  arrowarg$col <- arrow.col
-    
-  do.call(arrows, arrowarg)
+    # add arrows
+    if(arrow != 'none'){
+      arrowarg <- arg
+      arrowarg <- arrowarg[names(as.list(args(arrows)))]
+      arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+      arrowarg$x0 <- arrowstart
+      arrowarg$x1 <-  arrowpos
+      arrowarg$y0 <- rep(0,2)
+      arrowarg$y1 <- rep(0,2)
+      arrowarg$col <- arrow.col
+        
+      do.call(arrows, arrowarg)
   }
   
   if(arrow.labels){
-  text('S', x = arrowarg$x1[1], y = 0, xpd = TRUE, 
-    pos=2, cex = labels.cex, col= arrow.col)
-  text('L', x = arrowarg$x1[2], y = 0, xpd = TRUE, 
-    pos=4, cex = labels.cex, col= arrow.col)
+    text('S', x = arrowarg$x1[1], y = 0, xpd = TRUE, 
+      pos=2, cex = labels.cex, col= arrow.col)
+    text('L', x = arrowarg$x1[2], y = 0, xpd = TRUE, 
+      pos=4, cex = labels.cex, col= arrow.col)
   }
     
-  # Add points
-  pointsarg <- arg
-  pointsarg[names(as.list(args(arrows)))] <- NULL
-  pointsarg$col <- arg$col
-  
-  pointsarg$x <- x[ ,'x']
-  pointsarg$y <- rep(0, length(x[ ,'x']))
-  
-  do.call(points, pointsarg)
+    # Add points
+    pointsarg <- arg
+    pointsarg[names(as.list(args(arrows)))] <- NULL
+    pointsarg$col <- arg$col
+    
+    pointsarg$x <- x[ ,'x']
+    pointsarg$y <- rep(0, length(x[ ,'x']))
+    
+    do.call(points, pointsarg)
     
     
   }  
@@ -237,19 +237,17 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
         2, arrowstart, '+')
     )    
     
+    if(achro){
+      arrowpos[,'lum'] <- arrowstart[,'lum']
+      arrowpos <- rbind(arrowpos, c(arrowstart[, colstouse[1]], 
+                                    0.9*arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
+      labelpos[,'lum'] <- arrowstart[,'lum']
+      labelpos <- rbind(labelpos, c(arrowstart[, colstouse[1]], 
+                                    arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
+    }
+    
   }
 
-
-  if(achro){
-    arrowpos[,'lum'] <- arrowstart[,'lum']
-    arrowpos <- rbind(arrowpos, c(arrowstart[, colstouse[1]], 
-       0.9*arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
-    labelpos[,'lum'] <- arrowstart[,'lum']
-    labelpos <- rbind(labelpos, c(arrowstart[, colstouse[1]], 
-       arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
-  }
-
-  
   if(is.null(arg$pch)) arg$pch <- 19
       
   # Blank plot w/ segment
@@ -280,17 +278,17 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
     
   # add arrows
   if(arrow != 'none'){
-  arrowarg <- arg
-  arrowarg <- arrowarg[names(as.list(args(arrows)))]
-  arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
-  arrowarg$x0 <- rep(arrowstart[, colstouse[1]], 3)
-  arrowarg$x1 <- arrowpos[, colstouse[1]]
-  arrowarg$y0 <- rep(arrowstart[, colstouse[2]], 3)
-  arrowarg$y1 <- arrowpos[, colstouse[2]]
-  arrowarg$col <- arrow.col
-  
+    arrowarg <- arg
+    arrowarg <- arrowarg[names(as.list(args(arrows)))]
+    arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+    arrowarg$x0 <- rep(arrowstart[, colstouse[1]], 3)
+    arrowarg$x1 <- arrowpos[, colstouse[1]]
+    arrowarg$y0 <- rep(arrowstart[, colstouse[2]], 3)
+    arrowarg$y1 <- arrowpos[, colstouse[2]]
+    arrowarg$col <- arrow.col
     
-  do.call(arrows, arrowarg)
+      
+    do.call(arrows, arrowarg)
   }
   
   if(arrow != 'none'){
@@ -356,63 +354,61 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
    
   if(arrow != 'none'){
 
-  arrowstart <- switch(arrow,
-    relative = as.matrix(attr(dat, 'resref')[dim(attr(dat,'resref'))[1] ,colstouse]),
-    absolute = as.matrix(attr(dat, 'resref')['jnd2xyzrrf.achro', colstouse]),
-    none = NULL
-    )
-
-
-  arrowindex <- seq(length(rownames(attr(dat, 'resref')))-1)[-1]
-
-
-  # Find angles (atan2(y2-y1, x2-x1))
-  endpoints <- as.matrix(attr(dat, 'resref')[arrowindex, colstouse])
-  anglethe <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) atan2(s[2], s[1])  )
-  anglephi <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) acos(s[3]/sqrt(s[1]^2+s[2]^2+s[3]^2)))
-
-  rad <- mean(dist(x2))*arrow.p/2
-
-  # find points based on spherical coordinates   
-  arrowlims <- sweep(cbind(rad*sin(anglephi)*cos(anglethe),
-                           rad*sin(anglephi)*sin(anglethe),
-                           rad*cos(anglephi)
-                           ), 2, arrowstart, '+')
-                           
-                           
-  rownames(arrowlims) <- rownames(endpoints)
-  colnames(arrowlims) <- colnames(x2)
-
-    arrowpos <- switch(arrow,
-      relative = sweep(sweep(arrowlims, 
-        2, arrowstart, '-')*arrow.p*0.9, 
-        2, arrowstart, '+'),
-      absolute = sweep(sweep(as.matrix(attr(dat, 'resref')[arrowindex, colstouse]), 
-        2, arrowstart, '-')*arrow.p*0.9, 
-        2, arrowstart, '+')
-    )
-
-    labelpos <- switch(arrow,
-      relative = sweep(sweep(arrowlims, 
-        2, arrowstart, '-')*arrow.p, 
-        2, arrowstart, '+'),
-      absolute = sweep(sweep(as.matrix(attr(dat, 'resref')[arrowindex, colstouse]), 
-        2, arrowstart, '-')*arrow.p, 
-        2, arrowstart, '+')
-    )    
-    
+    arrowstart <- switch(arrow,
+      relative = as.matrix(attr(dat, 'resref')[dim(attr(dat,'resref'))[1] ,colstouse]),
+      absolute = as.matrix(attr(dat, 'resref')['jnd2xyzrrf.achro', colstouse]),
+      none = NULL
+      )
+  
+  
+    arrowindex <- seq(length(rownames(attr(dat, 'resref')))-1)[-1]
+  
+  
+    # Find angles (atan2(y2-y1, x2-x1))
+    endpoints <- as.matrix(attr(dat, 'resref')[arrowindex, colstouse])
+    anglethe <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) atan2(s[2], s[1])  )
+    anglephi <- apply(sweep(endpoints, 2, arrowstart, '-'), 1, function(s) acos(s[3]/sqrt(s[1]^2+s[2]^2+s[3]^2)))
+  
+    rad <- mean(dist(x2))*arrow.p/2
+  
+    # find points based on spherical coordinates   
+    arrowlims <- sweep(cbind(rad*sin(anglephi)*cos(anglethe),
+                             rad*sin(anglephi)*sin(anglethe),
+                             rad*cos(anglephi)
+                             ), 2, arrowstart, '+')
+                             
+                             
+    rownames(arrowlims) <- rownames(endpoints)
+    colnames(arrowlims) <- colnames(x2)
+  
+      arrowpos <- switch(arrow,
+        relative = sweep(sweep(arrowlims, 
+          2, arrowstart, '-')*arrow.p*0.9, 
+          2, arrowstart, '+'),
+        absolute = sweep(sweep(as.matrix(attr(dat, 'resref')[arrowindex, colstouse]), 
+          2, arrowstart, '-')*arrow.p*0.9, 
+          2, arrowstart, '+')
+      )
+  
+      labelpos <- switch(arrow,
+        relative = sweep(sweep(arrowlims, 
+          2, arrowstart, '-')*arrow.p, 
+          2, arrowstart, '+'),
+        absolute = sweep(sweep(as.matrix(attr(dat, 'resref')[arrowindex, colstouse]), 
+          2, arrowstart, '-')*arrow.p, 
+          2, arrowstart, '+')
+      )   
+      
+      if(achro){
+        arrowpos[,'lum'] <- arrowstart[,'lum']
+        arrowpos <- rbind(arrowpos, c(arrowstart[, colstouse[1:2]], 
+                                      0.9*arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
+        labelpos[,'lum'] <- arrowstart[,'lum']
+        labelpos <- rbind(labelpos, c(arrowstart[, colstouse[1:2]], 
+                                      arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
+      }
   }
  
-
-  if(achro){
-    arrowpos[,'lum'] <- arrowstart[,'lum']
-    arrowpos <- rbind(arrowpos, c(arrowstart[, colstouse[1:2]], 
-       0.9*arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
-    labelpos[,'lum'] <- arrowstart[,'lum']
-    labelpos <- rbind(labelpos, c(arrowstart[, colstouse[1:2]], 
-       arrow.p*(max(dat[,'lum']) - arrowstart[,'lum']) + arrowstart[,'lum']))
-  }
-  
   if(is.null(arg$pch)) arg$pch <- 19
       
   # Blank plot w/ segment

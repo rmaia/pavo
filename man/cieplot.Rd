@@ -9,7 +9,7 @@ cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
   box = FALSE, margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
 }
 \arguments{
-\item{ciedata}{(required). a data frame, possibly a result from the \code{colspace} 
+\item{ciedata}{(required). a data frame, possibly a result from the \code{colspace}
 or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
 model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).}
 
@@ -18,14 +18,14 @@ plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for the monochromatic loci outline.}
 
-\item{theta}{angle to rotate the plot in the xy plane  when \code{space = 'cielab'} 
+\item{theta}{angle to rotate the plot in the xy plane  when \code{space = 'cielab'}
 (defaults to 10).}
 
-\item{phi}{angle to rotate the plot in the yz plane  when \code{space = 'cielab'} 
+\item{phi}{angle to rotate the plot in the yz plane  when \code{space = 'cielab'}
 (defaults to 45).}
 
-\item{r}{the distance of the eyepoint from the center of the plotting box 
-when \code{space = 'cielab'}. Very high values approximate an orthographic projection 
+\item{r}{the distance of the eyepoint from the center of the plotting box
+when \code{space = 'cielab'}. Very high values approximate an orthographic projection
 (defaults to 1e6). See \code{\link{persp}} for details.
 . See \code{\link{persp}} for details.}
 
@@ -63,7 +63,7 @@ plot(lab.flowers)
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
 
-Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
    using MATLAB. John Wiley & Sons.
 }
 \author{

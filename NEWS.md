@@ -3,6 +3,7 @@ pavo 1.3.2 (development)
 NEW FEATURES
 
 * getspec() can now read OceanOptics `.ProcSpec` files
+* added the visual system of _Ctenophorous ornatus_, the (trichromatic) ornate dragon lizard
 
 MAJOR CHANGES
 * getspecf (and the argument fast=TRUE in getspec) have been deprecated
@@ -15,6 +16,8 @@ MINOR FEATURES AND BUG FIXES
 * added argument fill=FALSE in voloverlap()
 * fixed bug in jndplot() when suppressing the plotting of arrows
 * better handling of subset data when using summary.colspace() and summary.vismodel()
+* fixed bug in coldist() when `noise = "quantum"` and `achro = TRUE` were used
+* fixed bug in jndplot() when `arrow = "none"` and `achro = TRUE`
 
 pavo 1.3.1
 ------------------------------------------------------------------------------

@@ -14,7 +14,7 @@ with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
 
-\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
+\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
  the remaining variables.
 
 \code{x}, \code{y}: cartesian coordinates for the points in the
@@ -33,19 +33,19 @@ in a trichromatic chromaticity space.
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 tri.flowers <- colspace(vis.flowers, space = 'tri')
-} 
+}
 
 }
 \references{
-Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed) 
+Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
  Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 
-Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
  behavioural tests and physiological concepts. Biological Reviews, 78,
  81 - 118.
 
-MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing 
- cone excitation by stimuli of equal luminance. Journal of the Optical 
+MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
+ cone excitation by stimuli of equal luminance. Journal of the Optical
  Society of America, 69, 1183-1186.
 }
 \author{

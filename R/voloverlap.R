@@ -89,7 +89,7 @@
 
 
 voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
-              col = c('blue', 'red', 'darkgrey'), fill=FALSE, new = TRUE,
+              col = c('blue', 'red', 'darkgrey'), fill = FALSE, new = TRUE,
               montecarlo = FALSE, nsamp = 1000, psize = 0.001, 
               lwd = 1, ...){
 
@@ -104,29 +104,27 @@ vol2 <- convhulln(dat2, 'FA')$vol
 #EXACT SOLUTION BEGIN#
 ######################
 if(!montecarlo){
-rat1 <- d2q(cbind(0, cbind(1, as.matrix(dat1))))
-rat2 <- d2q(cbind(0, cbind(1, as.matrix(dat2))))
-vert1 <- redundant(rat1, representation = "V")$output
-vert2 <- redundant(rat2, representation = "V")$output
-Hvert1 <- scdd(vert1, representation = "V")$output
-Hvert2 <- scdd(vert2, representation = "V")$output
-Hinter <- rbind(Hvert1, Hvert2)
-Vinter <- scdd(Hinter, representation = "H")$output
+  rat1 <- d2q(cbind(0, 1, as.matrix(dat1)))
+  rat2 <- d2q(cbind(0, 1, as.matrix(dat2)))
+  Hvert1 <- scdd(rat1, representation = "V")$output
+  Hvert2 <- scdd(rat2, representation = "V")$output
+  Hinter <- rbind(Hvert1, Hvert2)
+  Vinter <- scdd(Hinter, representation = "H")$output
 
-Voverlap <- data.frame(q2d(Vinter[ , - c(1, 2)]))
-names(Voverlap) = c('x','y','z')
+  Voverlap <- data.frame(q2d(Vinter[ , - c(1, 2)]))
+  colnames(Voverlap) <- c('x','y','z')
 
-if(dim(Voverlap)[1]>3){
-  overlapVol <- convhulln(Voverlap, 'FA')$vol
+  if(nrow(Voverlap)>3){
+    overlapVol <- convhulln(Voverlap, 'FA')$vol
   }else{
     overlapVol <- 0
-    }
+  }
 
-vsmallest <- overlapVol/min(c(vol1,vol2))
+  vsmallest <- overlapVol/min(vol1,vol2)
 
-vboth <- overlapVol/(sum(c(vol1,vol2))-overlapVol)
+  vboth <- overlapVol/(sum(vol1,vol2)-overlapVol)
 
-res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
+  res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
 }
 
 ####################
@@ -138,40 +136,40 @@ res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
 ###################
 
 if(montecarlo){
-# sample random points
-pmin <- apply(rbind(dat1,dat2),2,min)
-pmax <- apply(rbind(dat1,dat2),2,max)
-
-samples <- apply(rbind(pmin,pmax), 2, function(x) runif(nsamp,x[1],x[2]))
-
-sindex <- 1:dim(samples)[1]
-
-newvol1 <- sapply(sindex, function(x) convhulln(rbind(dat1,samples[x,]),'FA')$vol)
-newvol2 <- sapply(sindex, function(x) convhulln(rbind(dat2,samples[x,]),'FA')$vol)
-
-# points that are within each volume
-
-invol1 <- sapply(newvol1, function(x) isTRUE(x<=vol1))
-invol2 <- sapply(newvol2, function(x) isTRUE(x<=vol2))
-
-# how many points are in each category
-
-s_in1 <- length(which(invol1))
-s_in2 <- length(which(invol2))
-
-s_inboth <- length(which(invol1 & invol2))
-
-s_ineither <- length(which(invol1 | invol2))
-
-# points in both relative points in smallest
-
-psmallest <- s_inboth / c(s_in1,s_in2)[which.min(c(vol1,vol2))]
-
-# points in both relative to total points in both
-
-pboth <- s_inboth / s_ineither
-
-res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
+  # sample random points
+  pmin <- apply(rbind(dat1,dat2),2,min)
+  pmax <- apply(rbind(dat1,dat2),2,max)
+  
+  samples <- apply(rbind(pmin,pmax), 2, function(x) runif(nsamp,x[1],x[2]))
+  
+  sindex <- 1:dim(samples)[1]
+  
+  newvol1 <- sapply(sindex, function(x) convhulln(rbind(dat1,samples[x,]),'FA')$vol)
+  newvol2 <- sapply(sindex, function(x) convhulln(rbind(dat2,samples[x,]),'FA')$vol)
+  
+  # points that are within each volume
+  
+  invol1 <- sapply(newvol1, function(x) isTRUE(x<=vol1))
+  invol2 <- sapply(newvol2, function(x) isTRUE(x<=vol2))
+  
+  # how many points are in each category
+  
+  s_in1 <- length(which(invol1))
+  s_in2 <- length(which(invol2))
+  
+  s_inboth <- length(which(invol1 & invol2))
+  
+  s_ineither <- length(which(invol1 | invol2))
+  
+  # points in both relative points in smallest
+  
+  psmallest <- s_inboth / c(s_in1,s_in2)[which.min(c(vol1,vol2))]
+  
+  # points in both relative to total points in both
+  
+  pboth <- s_inboth / s_ineither
+  
+  res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 }
 
 #################
@@ -182,68 +180,68 @@ res <- data.frame(vol1, vol2, s_in1,s_in2,s_inboth,s_ineither,psmallest,pboth)
 #PLOT BEGIN#
 ############
 if(plot){
-    if(length(col)<3)
-      col <- c(rep(col,2)[1:2], 'darkgrey')
-      
-      
-	if(interactive){
-	    # check if rgl is installed and loaded
-        if (!requireNamespace("rgl", quietly = TRUE))
-          stop(dQuote('rgl'),' package needed for interactive plots. Please install it, or use interactive=FALSE.',
-            call. = FALSE)  
-
-	  if(!isNamespaceLoaded("rgl"))
-	    requireNamespace("rgl")
-	    
-	  if(new)
-        rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
-
-      tcsvol(tcsres1, col=col[1], fill=F)
-      tcsvol(tcsres2, col=col[2], fill=F)
-      
-      if(!montecarlo){
-        if(dim(Voverlap)[1]>3){
-        	  attr(Voverlap, 'clrsp') <- "tcs"
-          tcsvol(Voverlap, col=col[3])
-          }
-        }
-      
-      if(montecarlo){
-        rgl::spheres3d(samples[which(invol1 & !invol2),], type='s', 
-          lit=F, radius=psize, col=col[1])
-        rgl::spheres3d(samples[which(invol2 & !invol1),], type='s', 
-          lit=F, radius=psize, col=col[2])  
-
-        if(s_inboth > 0){  
-          rgl::spheres3d(samples[which(invol1 & invol2),], type='s', 
-          lit=F, radius=psize, col=col[3])
-        }
+  if(length(col)<3)
+    col <- c(rep(col,2)[1:2], 'darkgrey')
+  
+  
+  if(interactive){
+    # check if rgl is installed and loaded
+    if (!requireNamespace("rgl", quietly = TRUE))
+      stop(dQuote('rgl'),' package needed for interactive plots. Please install it, or use interactive=FALSE.',
+           call. = FALSE)  
+    
+    if(!isNamespaceLoaded("rgl"))
+      requireNamespace("rgl")
+    
+    if(new)
+      rgl::open3d(FOV=1, mouseMode=c('zAxis','xAxis','zoom'))
+    
+    tcsvol(tcsres1, col=col[1], fill=F)
+    tcsvol(tcsres2, col=col[2], fill=F)
+    
+    if(!montecarlo){
+      if(dim(Voverlap)[1]>3){
+        attr(Voverlap, 'clrsp') <- "tcs"
+        tcsvol(Voverlap, col=col[3])
       }
-	}
-	
-	if(!interactive){
-      plotrange <- apply(rbind(tcsres1[,c('x','y','z')],tcsres2[,c('x','y','z')]),2,range)
-
+    }
+    
+    if(montecarlo){
+      rgl::spheres3d(samples[which(invol1 & !invol2),], type='s', 
+                     lit=F, radius=psize, col=col[1])
+      rgl::spheres3d(samples[which(invol2 & !invol1),], type='s', 
+                     lit=F, radius=psize, col=col[2])  
+      
+      if(s_inboth > 0){  
+        rgl::spheres3d(samples[which(invol1 & invol2),], type='s', 
+                       lit=F, radius=psize, col=col[3])
+      }
+    }
+  }
+  
+  if(!interactive){
+    plotrange <- apply(rbind(tcsres1[,c('x','y','z')],tcsres2[,c('x','y','z')]),2,range)
+    
     if(length(fill)<3)
-
+      
       if(dim(Voverlap)[1]>3){
         vol(Voverlap, col=col[3], new=new, fill=TRUE,
-          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], lwd=lwd, ...)
-        vol(tcsres1, col=col[1], fill=fill, lwd=lwd, new=FALSE)
-        vol(tcsres2, col=col[2], fill=fill, lwd=lwd, new=FALSE)
+            xlim=plotrange[,'x'], ylim = plotrange[,'y'], 
+            zlim=plotrange[,'z'], lwd = lwd, ...)
+        vol(tcsres1, col = col[1], fill = fill, lwd=lwd, new = FALSE)
+        vol(tcsres2, col = col[2], fill = fill, lwd=lwd, new = FALSE)
       }else{
-        vol(tcsres1, col=col[1], lwd=lwd, new=new, fill=fill,
-          xlim=plotrange[,'x'], ylim=plotrange[,'y'], 
-          zlim=plotrange[,'z'], ...)
-        vol(tcsres2, col=col[2], lwd=lwd, fill = fill, new=FALSE)
+        vol(tcsres1, col = col[1], lwd=lwd, new=new, fill=fill,
+            xlim = plotrange[,'x'], ylim=plotrange[,'y'], 
+            zlim = plotrange[,'z'], ...)
+        vol(tcsres2, col=col[2], lwd = lwd, fill = fill, new = FALSE)
       }
-	}
-	
-    
-##########
-#PLOT END#
-##########    
+  }
+  
+  
+  ##########
+  #PLOT END#
+  ##########    
 }
 
 res

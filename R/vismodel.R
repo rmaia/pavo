@@ -19,21 +19,22 @@
 #'    user-defined sensitivity data for the receptors involved in colour vision. 
 #'    The data frame must contain a \code{'wl'} column with the range of wavelengths included, 
 #'    and the sensitivity for each other cone as a column.
-#' \item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
+#' \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
 #' \item \code{'avg.uv'}: average avian UV system.
 #' \item \code{'avg.v'}: average avian V system.
-#' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus} visual system.
-#' \item \code{'canis'}: Canid \emph{Canis familiaris} visual system.
+#' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
+#' \item \code{'canis'}: Canid \emph{Canis familiaris}.
 #' \item \code{'cie2'}: 2-degree colour matching functions for CIE models of human 
 #'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human 
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-#' \item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
-#' \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
+#' \item \code{'ctenophorus'}: Ornate dragon lizatd \emph{Ctenophorus ornatus}.
+#' \item \code{'musca'}: Housefly \emph{Musca domestica}.
+#' \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus}.
 #' \item \code{'segment'}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
-#' \item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
+#' \item \code{'star'}: Starling \emph{Sturnus vulgaris}.
 #' }
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #'  receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
@@ -112,10 +113,12 @@
 #' @references Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
 #' Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
 #' species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
-#' (Turdus merula L.).
-#'  Journal of Comparative Physiology A, 186, 375-387.
+#' (Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.
 #' @references Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
 #'  In Retinal And Eye Research, 20(5), 675-703.
+#' @references Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
+#'  Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
+#'  Lizard, Ctenophorus ornatus. 
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
 #'  The American Naturalist, 171(6), 755-776.
@@ -130,9 +133,10 @@
 #' @references CIE (2006). Fundamental chromaticity diagram with physiological axes. 
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
 #'  Internationale de l' Eclairage.
+#'  
 
 vismodel <- function(rspecdata, 
-  visual = c('avg.uv', 'avg.v', 'bluetit', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
+  visual = c('avg.uv', 'avg.v', 'bluetit', 'ctenophorus', 'star', 'pfowl', 'apis', 'canis', 'cie2', 'cie10', 'musca', 'segment'), 
   achromatic = c('none', 'bt.dc','ch.dc', 'st.dc','ml', 'l', 'md.r1', 'all'),
   illum = c('ideal', 'bluesky', 'D65', 'forestshade'), 
   trans = c('ideal', 'bluetit', 'blackbird'),
