@@ -29,7 +29,8 @@ Imports:
     mapproj,
     geometry,
     pbmcapply,
-    utils
+    utils,
+    plot3D
 Suggests:
     rgl,
     xml2,
