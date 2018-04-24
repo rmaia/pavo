@@ -85,7 +85,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   
     par(mar= margin)
     
-    P <- do.call(persp, argempty)
+    P <- do.call(perspbox, argempty)
     
     # Save plot info 
     assign("last_plot.tetra", P, envir = .PlotTetraEnv)

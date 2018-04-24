@@ -49,7 +49,7 @@
 #' @keywords internal
 #'
 #' @importFrom grDevices trans3d
-#' @importFrom graphics persp
+#' @importFrom plot3D perspbox
 #'
 #' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 #'    Transactions of the Optical Society, 33(3), 73-134.
@@ -169,14 +169,16 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     col <- arg["col"]
     arg["col"] <- NULL
 
-    # draw empty plot
+    # draw blank 3d plot
+    # Using persp directly creates a white rectangle that cannot be removed. So
+    # we have to use perspbox instead.
 
     par(mar = margin)
 
-    P <- do.call(persp, c(list(
+    P <- do.call(perspbox, c(list(
       x = arg$xlim,
       y = arg$ylim,
-      z = matrix(c(arg$zlim, arg$zlim), nrow = 2),
+      z = diag(2)*arg$zlim,
       border = FALSE, r = r, box = box, theta = theta, phi = phi
     ), arg))
 

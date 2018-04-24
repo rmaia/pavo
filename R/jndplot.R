@@ -445,7 +445,7 @@ jndplot <- function(x, arrow = c('relative', 'absolute', 'none'), achro = FALSE,
   if(is.null(plotarg$d)) plotarg$d <- 1e6
   if(is.null(plotarg$ticktype)) plotarg$ticktype <- 'detailed'
   
-  P <- do.call(persp, plotarg)
+  P <- do.call(perspbox, plotarg)
   
     
   # add arrows  
