@@ -40,7 +40,7 @@ merge.rspec <- function(x, y, ...) {
   arg$x <- x
   arg$y <- y
   
-  res <- do.call(merge.data.frame, args)
+  res <- do.call(merge.data.frame, arg)
   class(res) <- c("rspec", "data.frame")
   res
 
