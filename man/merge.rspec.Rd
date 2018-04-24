@@ -7,7 +7,7 @@
 \method{merge}{rspec}(x, y, ...)
 }
 \arguments{
-\item{x, y}{(required) two data frames (or \code{rspec} objects) to merge.}
+\item{x, y}{(required) \code{rspec} objects to merge.}
 
 \item{...}{additional class arguments.}
 }

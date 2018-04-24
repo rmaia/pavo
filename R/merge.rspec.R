@@ -2,7 +2,7 @@
 #'
 #' Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object.
 #'
-#' @param x,y (required) two data frames (or \code{rspec} objects) to merge.
+#' @param x,y (required) \code{rspec} objects to merge.
 #' @param ... additional class arguments.
 #' @return an object of class \code{rspec} for use with \code{pavo} functions.
 #' Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the 
