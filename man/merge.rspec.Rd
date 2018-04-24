@@ -4,17 +4,17 @@
 \alias{merge.rspec}
 \title{Merge two rspec objects}
 \usage{
-\method{merge}{rspec}(x, y, by = "wl", ...)
+\method{merge}{rspec}(x, y, ...)
 }
 \arguments{
 \item{x, y}{(required) two data frames (or \code{rspec} objects) to merge.}
-
-\item{by}{wavelength column name (defaults to \code{"wl"}).}
 
 \item{...}{additional class arguments.}
 }
 \value{
 an object of class \code{rspec} for use with \code{pavo} functions.
+Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the 
+\code{by} argument if one is specified.
 }
 \description{
 Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object.
