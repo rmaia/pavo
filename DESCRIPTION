@@ -32,7 +32,8 @@ Imports:
     utils,
     plot3D,
     readbitmap,
-    stats
+    stats,
+    dplyr
 Suggests:
     rgl,
     xml2,

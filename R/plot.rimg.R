@@ -39,8 +39,7 @@ plot.rimg <- function(x, ...) {
 
   switch(space,
          'raw' = rawplot(x, ...),
-         'colclass' = classplot(x, ...),
-         'imgdiff' = diffplot(x, ...)
+         'colclass' = classplot(x, ...)
          )
 }
 
