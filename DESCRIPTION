@@ -31,7 +31,8 @@ Imports:
     pbmcapply,
     utils,
     plot3D,
-    readbitmap
+    readbitmap,
+    stats
 Suggests:
     rgl,
     xml2,
