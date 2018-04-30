@@ -30,7 +30,8 @@ Imports:
     geometry,
     pbmcapply,
     utils,
-    plot3D
+    plot3D,
+    readbitmap
 Suggests:
     rgl,
     xml2,
