@@ -2,6 +2,7 @@
 
 S3method(merge,rspec)
 S3method(plot,colspace)
+S3method(plot,rimg)
 S3method(plot,rspec)
 S3method(points,colspace)
 S3method(subset,colspace)
