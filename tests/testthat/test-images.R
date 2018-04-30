@@ -1,4 +1,4 @@
-library(ptrn)
+library(pavo)
 context("adjacency")
 
 test_that("Basic", {
