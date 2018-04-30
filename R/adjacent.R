@@ -67,6 +67,7 @@
 
 adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE) {
 
+  ## Checks
   multi_image <- inherits(classimg, "list") # Single or multiple images?
 
   ## Setting scales
@@ -115,7 +116,29 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
   outdata
 }
 
-## Internal calcs
+#' Main function for adjacency analysis
+#'
+#' @param classimg_i (required) an xyz image matrix, or list of matrices, in which
+#' x and y correspond to pixel coordinates, and z is a numeric code specifying
+#' a colour-class. Preferably the result of \code{\link{classify}}.
+#' @param x_pts_i (required) an integer specifying the number of sample points, or grid-sampling
+#' density, along the x axis. Y-axis sampling density is calculated automatically
+#' from this, to maintain an even grid spacing.
+#' @param x_scale_i (required) an integer specifying the true length of the x-axis,
+#' in preferred units. Not required, and ignored, if image scales have been set via
+#' \code{\link{calibrate}}.
+#' @param bkg_ID_i an integer specifying the colour-class ID number of the homogeneous background.
+#' Examine the attributes of, or call \code{summary} on, the result of \code{\link{classify}}
+#' to visualise the RGB values corresponding to colour-class ID numbers.
+#' @param bkg_include_i logical; should the background be excluded from the analyses?
+#' Defaults to \code{FALSE}.
+#'
+#' @keywords internal
+#'
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#'
+#' @return a data frame of summary variables. See \code{\link{adjacent}} for details.
+#'
 adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = NULL, bkg_include_i = TRUE) {
   c1 <- c2 <- NULL
 
@@ -127,7 +150,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
   # Scales
   y_scale <- x_scale_i / (ncol(classimg_i) / nrow(classimg_i))
 
-  # Subsample
+  # Subsample, if specified
   if (length(x_pts_i) == 1) {
     subclass <- classimg_i[
       seq(1, nrow(classimg_i), ncol(classimg_i) / x_pts_i),
@@ -204,9 +227,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
   offdiagprop <- offdiag
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
-
-  ## Summary variables
-
+  ## Summary variables  ##
 
   # Internal
   ## -----------------------------##

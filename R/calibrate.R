@@ -2,13 +2,13 @@
 #'
 #' Manually specify the scale of images.
 #'
-#' @param image (required) image data. Either a single image, or a series of images
+#' @param image (required) image data. Either a single image array, or a number of images
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
 #' @param scale_length (required) an integer specifying the length of the scale
 #' in the image.
 #'
-#' @return an image, or list containing images, for use in further
-#' \code{ptrn} functions, with scales stored as an attribute.
+#' @return an image array, or list containing images, for use in further
+#' \code{pavo} functions, with scales stored as an attribute.
 #'
 #' @export
 #'
@@ -26,6 +26,8 @@
 #'
 
 calibrate <- function(image, scale_length = NULL) {
+
+  ## Checks
   multi_image <- inherits(image, "list") # Single or multiple images?
 
   if (isTRUE(multi_image)) { # Multiple images
@@ -51,10 +53,9 @@ calibrate <- function(image, scale_length = NULL) {
 #' @keywords internal
 #'
 #' @return an image, or list containing images, for use in further
-#' \code{ptrn} functions, with scales stored as an attribute.
+#' \code{pavo} functions, with scales stored as an attribute.
 #'
 calibrate_main <- function(image_i, scale_length_i = NULL) {
-
   graphics::plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
   graphics::rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
 

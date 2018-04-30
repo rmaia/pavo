@@ -4,11 +4,11 @@
 #' input data is a list of classified image data, images will be stepped through
 #' one by one.
 #'
-#' @param x (required) unprocessed or colour-classified image data, or a list thereof. 
+#' @param x (required) unprocessed or colour-classified image data, or a list thereof.
 #' Preferably the result of \code{\link{classify}}.
 #' @param ... additional graphical parameters. See \code{\link{rawplot}} for unprocessed
 #' image plotting, and \code{\link{classplot}} for colour-classified image plots.
-#' Also see \code{\link{par}}.  
+#' Also see \code{\link{par}}.
 #'
 #' @return a image plot or plots.
 #'
@@ -29,18 +29,18 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 plot.rimg <- function(x, ...) {
-
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (!isTRUE(multi_image))
-    space <- attr(x, 'state')
-  else if (isTRUE(multi_image))
-    space <- attr(x[[1]], 'state')
+  if (!isTRUE(multi_image)) {
+    space <- attr(x, "state")
+  } else if (isTRUE(multi_image)) {
+    space <- attr(x[[1]], "state")
+  }
 
   switch(space,
-         'raw' = rawplot(x, ...),
-         'colclass' = classplot(x, ...)
-         )
+    "raw" = rawplot(x, ...),
+    "colclass" = classplot(x, ...)
+  )
 }
 
 #' Plot unprocessed images
@@ -51,7 +51,7 @@ plot.rimg <- function(x, ...) {
 #'
 #' @keywords internal
 #'
-rawplot <- function(x, ...){
+rawplot <- function(x, ...) {
 
   # Defaults
   arg <- list(...)
@@ -74,7 +74,6 @@ rawplot <- function(x, ...){
 
   do.call(graphics::plot, arg)
   graphics::rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
-
 }
 
 #' Plot colour-classified images
@@ -93,8 +92,9 @@ rawplot <- function(x, ...){
 #'
 #' @keywords internal
 #'
-classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex = 1, ...){
+classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex = 1, ...) {
 
+  ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
 
   # Reformat & rotate to account for the silliness of image()
@@ -204,6 +204,4 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
       graphics::points(grid, col = grid.col, pch = 16, cex = grid.cex)
     }
   }
-
-
 }

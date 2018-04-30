@@ -16,7 +16,7 @@
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, n_cols = 4)
 #' summary(papilio_class)
-#' 
+#'
 #' # Plot the unprocessed and colour-classified images alongside the colour class samples
 #' par(mfrow = c(1,3))
 #' plot(papilio)

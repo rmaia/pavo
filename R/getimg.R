@@ -5,8 +5,10 @@
 #' @param imgpath (required) either the full path to a given image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
 #' within a folder are fine.
+#' @param subdir should subdirectories within the \code{where} folder be
+#' included in the search? (defaults to \code{FALSE}).
 #'
-#' @return a array, or list of arrays, of class \code{rimg}, containing image data 
+#' @return a array, or list of arrays, of class \code{rimg}, containing image data
 #' for use in further \code{pavo} functions.
 #'
 #' @export
@@ -21,22 +23,24 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd()) {
+getimg <- function(imgpath = getwd(), subdir = FALSE) {
+
+  ## Checks
   ext <- c("jpg", "jpeg", "png", "bmp") # Allowed extensions
 
-  # If file extensions are in imgpath, it's a single image being directly specified
+  # If file extensions are in 'imgpath', it's a single image being directly specified
   if (isTRUE(grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE))) {
     imgdat <- readbitmap::read.bitmap(imgpath)
 
     # Duplicate channels if grayscale
-    if(is.na(dim(imgdat)[3])){
+    if (is.na(dim(imgdat)[3])) {
       imgdat <- replicate(3, imgdat, simplify = "array")
     }
 
     # Attributes
     attr(imgdat, "imgname") <- sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
     attr(imgdat, "scale") <- NULL
-    attr(imgdat, 'state') <- 'raw'
+    attr(imgdat, "state") <- "raw"
     class(imgdat) <- c("rimg", "array")
 
     # Otherwise it's a directory of images
@@ -46,10 +50,10 @@ getimg <- function(imgpath = getwd()) {
     extensions <- paste0("\\.", ext, "$", collapse = "|")
 
     # File names
-    file_names <- list.files(imgpath, pattern = extensions, recursive = FALSE, include.dirs = FALSE)
+    file_names <- list.files(imgpath, pattern = extensions, recursive = subdir, include.dirs = subdir)
     files <- paste(imgpath, "/", file_names, sep = "")
 
-    message(length(files), ' files found; importing images.')
+    message(length(files), " files found; importing images.")
 
     if (length(file_names) == 0) {
       stop("No .jpg, .jpeg, .png, or .bmp files found in specified location.")
@@ -67,10 +71,10 @@ getimg <- function(imgpath = getwd()) {
     for (i in 1:length(file_names)) {
       attr(imgdat[[i]], "imgname") <- imgnames[i]
       attr(imgdat[[i]], "scale") <- NULL
-      attr(imgdat[[i]], 'state') <- 'raw'
+      attr(imgdat[[i]], "state") <- "raw"
       class(imgdat[[i]]) <- c("rimg", "array")
     }
-    #class(imgdat) <- c("ptrn", "list")
+    # class(imgdat) <- c("ptrn", "list")
   }
   imgdat
 }

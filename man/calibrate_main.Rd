@@ -15,7 +15,7 @@ in the image.}
 }
 \value{
 an image, or list containing images, for use in further
-\code{ptrn} functions, with scales stored as an attribute.
+\code{pavo} functions, with scales stored as an attribute.
 }
 \description{
 Main function for calibrating images

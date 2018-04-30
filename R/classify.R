@@ -13,8 +13,8 @@
 #' will be reliably classified between images. Defaults to the first image in the list.
 #' Ignored if n_cols is a vector.
 #'
-#' @return A matrix, or list of matrices, of class \code{rimg} containing the colour 
-#' class classifications at each pixel location. The RGB values corresponding to 
+#' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
+#' class classifications at each pixel location. The RGB values corresponding to
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 #' @export
@@ -36,54 +36,66 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, n_cols, ref_ID = 1) {
-
-  multi_image <- inherits(imgdat, "list")  # Single or multiple images?
+  multi_image <- inherits(imgdat, "list") # Single or multiple images?
 
   if (isTRUE(multi_image)) { # Multiple images
-    if(length(n_cols) == length(imgdat)){  # Multiple k's
+    if (length(n_cols) == length(imgdat)) { # Multiple k's
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
-    }else if(length(n_cols) == 1){  # Single k with reference
+    } else if (length(n_cols) == 1) { # Single k with reference
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
     }
     # Names & attributes
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
-      attr(outdata[[i]], "k") <- n_cols                             ## what if multiple?
-      attr(outdata[[i]], 'state') <- 'colclass'
+      attr(outdata[[i]], "k") <- n_cols ## what if multiple?
+      attr(outdata[[i]], "state") <- "colclass"
     }
     class(outdata) <- c("rimg", "list")
-
   } else if (!isTRUE(multi_image)) { # Single image
     outdata <- classify_main(imgdat, n_cols)
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
     attr(outdata, "k") <- n_cols
-    attr(outdata, 'state') <- 'colclass'
+    attr(outdata, "state") <- "colclass"
   }
 
-  if(!is.null(attr(imgdat, "px_scale")))
+  if (!is.null(attr(imgdat, "px_scale"))) {
     attr(outdata, "px_scale") <- attr(imgdat, "px_scale")
+  }
 
   outdata
 }
 
-## Internal calcs
-classify_main <- function(imagedata, n_colours) {
+#' Main function for identifying colour classes in an image for adjacency analyses
+#'
+#' @param imgdat_i (required) image data. Either a single image, or a series of images
+#' stored in a list. preferably the result of \code{\link{getimg}}.
+#' @param n_cols_i (required) either an integer, or vector the same length as imgdat (if
+#' passing a list of images), specifying the number of discrete colour classes present
+#' in an image, for k-means clustering.
+#'
+#' @keywords internal
+#'
+#' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
+#' class classifications at each pixel location. The RGB values corresponding to
+#' k-means centres (i.e. colour classes) are stored as object attributes.
+#'
+classify_main <- function(imgdat_i, n_cols_i) {
 
   ## Dimensions
-  imgdim <- dim(imagedata)
+  imgdim <- dim(imgdat_i)
 
   # Assign RGB channels to data frame
   imgRGB <- data.frame(
     x = rep(imgdim[1]:1, imgdim[2]),
     y = rep(1:imgdim[2], each = imgdim[1]),
-    R = as.vector(imagedata[, , 1]),
-    G = as.vector(imagedata[, , 2]),
-    B = as.vector(imagedata[, , 3])
+    R = as.vector(imgdat_i[, , 1]),
+    G = as.vector(imgdat_i[, , 2]),
+    B = as.vector(imgdat_i[, , 3])
   )
 
   # Cluster analysis
-  kMeans <- stats::kmeans(imgRGB[, c("R", "G", "B")], centers = n_colours)
+  kMeans <- stats::kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
 
   # Tidy & format as image matrix
   cmbn <- cbind(imgRGB, kMeans$cluster)

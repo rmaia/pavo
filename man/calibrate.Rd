@@ -7,15 +7,15 @@
 calibrate(image, scale_length = NULL)
 }
 \arguments{
-\item{image}{(required) image data. Either a single image, or a series of images
+\item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{scale_length}{(required) an integer specifying the length of the scale
 in the image.}
 }
 \value{
-an image, or list containing images, for use in further
-\code{ptrn} functions, with scales stored as an attribute.
+an image array, or list containing images, for use in further
+\code{pavo} functions, with scales stored as an attribute.
 }
 \description{
 Manually specify the scale of images.

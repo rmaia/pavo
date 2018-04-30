@@ -4,12 +4,15 @@
 \alias{getimg}
 \title{Import image data}
 \usage{
-getimg(imgpath = getwd())
+getimg(imgpath = getwd(), subdir = FALSE)
 }
 \arguments{
 \item{imgpath}{(required) either the full path to a given image (including extension),
 or the path to a folder in which multiple image files are located. Mixed file formats
 within a folder are fine.}
+
+\item{subdir}{should subdirectories within the \code{where} folder be
+included in the search? (defaults to \code{FALSE}).}
 }
 \value{
 a array, or list of arrays, of class \code{rimg}, containing image data 
