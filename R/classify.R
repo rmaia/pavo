@@ -12,6 +12,9 @@
 #' in the reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images. Defaults to the first image in the list.
 #' Ignored if n_cols is a vector.
+#' @param manual manually specify the colour-category 'centers', for k-means clustering.
+#' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols}) 
+#' on the reference image that represent the distinct colours of interest. 
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -25,8 +28,8 @@
 #' @importFrom stats kmeans xtabs
 #'
 #' @note Since the \code{kmeans} process draws on random numbers to find initial
-#' cluster centres, use \code{set.seed} if reproducible cluster ID's are desired
-#' between runs.
+#' cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible 
+#' cluster ID's are desired between runs.
 #'
 #' @examples \dontrun{
 #' # Single image
@@ -40,7 +43,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols, ref_ID = 1, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOption("mc.cores", 2L)) {
   
   ## Checks
   # Single or multiple images?
@@ -54,9 +57,27 @@ classify <- function(imgdat, n_cols, ref_ID = 1, cores = getOption("mc.cores", 2
   if (isTRUE(multi_image)) { # Multiple images
     if (length(n_cols) == length(imgdat)) { # Multiple k's TODO
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
-    } else if (length(n_cols) == 1) { # Single k with reference
+    } else if (length(n_cols) == 1 & manual == FALSE) { # Single k with reference
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+    }else if (length(n_cols) == 1 & manual == TRUE) { # Single k with manual reference
+      
+      # Reference image
+      refimg <- imgdat[[ref_ID]]
+      
+      cat(paste("Select the", n_cols, "focal colours."))
+      
+      plot(c(1, dim(refimg)[1]), c(1, dim(refimg)[2]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1]/dim(refimg)[2])
+      rasterImage(refimg, 1, 1, dim(refimg)[1], dim(refimg)[2])
+      reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
+      
+      ref_centers <- as.data.frame(t(refimg[reference$x[1], reference$y[1], 1:3]))
+      for(i in 2:n_cols)
+        ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
+      names(ref_centers) <- c('R', 'G', 'B')
+      
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      
     }
     # Names & attributes
     for (i in 1:length(outdata)) {
@@ -66,7 +87,25 @@ classify <- function(imgdat, n_cols, ref_ID = 1, cores = getOption("mc.cores", 2
     }
     class(outdata) <- c("rimg", "list")
   } else if (!isTRUE(multi_image)) { # Single image
-    outdata <- classify_main(imgdat, n_cols)
+    if (manual == TRUE) {
+      # Reference (only) image
+      refimg <- imgdat
+      
+      cat(paste("Select the", n_cols, "focal colours."))
+      
+      plot(c(1, dim(refimg)[1]), c(1, dim(refimg)[2]), type = "n", xlab = "x", ylab = "y")
+      rasterImage(refimg, 1, 1, dim(refimg)[1], dim(refimg)[2])
+      reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
+      
+      ref_centers <- as.data.frame(t(refimg[reference$x[1], reference$y[1], 1:3]))
+      for(i in 2:n_cols)
+        ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
+      names(ref_centers) <- c('R', 'G', 'B')
+      
+      outdata <- classify_main(imgdat, ref_centers)
+      }else{
+      outdata <- classify_main(imgdat, n_cols)
+      }
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
     attr(outdata, "k") <- n_cols
     attr(outdata, "state") <- "colclass"

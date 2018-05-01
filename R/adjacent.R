@@ -16,11 +16,12 @@
 #' to visualise the RGB values corresponding to colour-class ID numbers.
 #' @param bkg_include logical; should the background be excluded from the analyses?
 #' Defaults to \code{FALSE}.
-#' @param coldists An data.frame or matrix specifying the visually-modelled chromatic (dS)
+#' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1' 
 #' and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL 
-#' (for achromatic distances).
+#' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
+#' for visual modelling with spectral data.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -85,7 +86,8 @@
 #' geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution, Early View.
 
-adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
+adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, 
+                     bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?

@@ -27,11 +27,12 @@ to visualise the RGB values corresponding to colour-class ID numbers.}
 \item{bkg_include}{logical; should the background be excluded from the analyses?
 Defaults to \code{FALSE}.}
 
-\item{coldists}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
+\item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
 should specify all possible combinations of colour category ID's, and be named 'c1' 
 and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL 
-(for achromatic distances).}
+(for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
+for visual modelling with spectral data.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}

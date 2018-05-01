@@ -4,7 +4,8 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, n_cols, ref_ID = 1, cores = getOption("mc.cores", 2L))
+classify(imgdat, n_cols, ref_ID = 1, manual = FALSE,
+  cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
@@ -20,6 +21,10 @@ in the reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images. Defaults to the first image in the list.
 Ignored if n_cols is a vector.}
 
+\item{manual}{manually specify the colour-category 'centers', for k-means clustering.
+When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols}) 
+on the reference image that represent the distinct colours of interest.}
+
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 }
@@ -33,8 +38,8 @@ Use k-means clustering to classify image pixels into discrete colour classes.
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial
-cluster centres, use \code{set.seed} if reproducible cluster ID's are desired
-between runs.
+cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible 
+cluster ID's are desired between runs.
 }
 \examples{
 \dontrun{

@@ -38,6 +38,7 @@ Suggests:
     rgl,
     xml2,
     testthat,
-    knitr
+    knitr,
+    imager
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
