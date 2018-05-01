@@ -4,8 +4,7 @@
 \alias{classplot}
 \title{Plot colour-classified images}
 \usage{
-classplot(x, x_pts = NULL, aspect = TRUE, grid.col = "red",
-  grid.cex = 1, ...)
+classplot(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...)
 }
 \arguments{
 \item{x}{(required) colour-classified image data, or a list thereof. Preferably
@@ -15,9 +14,6 @@ the result of \code{\link{classify}}.}
 sampling density) along the x axis, with the resulting sampling grid being
 plotted atop the sample image. Useful for planning the sampling density prior
 to adjacency analysis .}
-
-\item{aspect}{logical; Should the aspect ratio of the original image be replicated?
-Defaults to \code{TRUE}.}
 
 \item{grid.col}{the colour of sampling-grid points.}
 

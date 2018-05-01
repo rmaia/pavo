@@ -100,9 +100,9 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
               contain colour-category IDs.")
       names(coldists)[1:2] <- c('c1', 'c2')
     }
-    
-  # Need to sort & check existence? Need to rename
-    
+    if(!and(c('dS', 'dL') %in% names(coldists)))
+      stop("No columns named 'dS' and/or 'dL' in coldists.")
+    # Need to sort?
   }
 
   # Background

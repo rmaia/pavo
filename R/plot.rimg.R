@@ -30,13 +30,13 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 plot.rimg <- function(x, ...) {
-  #  multi_image <- inherits(x, "list") # Single or multiple images?
+    multi_image <- inherits(x, "list") # Single or multiple images?
 
-  #  if (!isTRUE(multi_image)) {
+    if (!isTRUE(multi_image)) {
   space <- attr(x, "state")
-  #  } else if (isTRUE(multi_image)) {
-  #   space <- attr(x[[1]], "state")
-  # }
+    } else if (isTRUE(multi_image)) {
+     space <- attr(x[[1]], "state")
+   }
 
   switch(space,
     "raw" = rawplot(x, ...),
@@ -120,8 +120,6 @@ rawplot <- function(x, ...) {
 #' sampling density) along the x axis, with the resulting sampling grid being
 #' plotted atop the sample image. Useful for planning the sampling density prior
 #' to adjacency analysis .
-#' @param aspect logical; Should the aspect ratio of the original image be replicated?
-#' Defaults to \code{TRUE}.
 #' @param grid.col the colour of sampling-grid points.
 #' @param grid.cex the size of sampling-grid points.
 #' @param ... additional graphical parameters passed to \code{\link{image}}.
@@ -131,7 +129,7 @@ rawplot <- function(x, ...) {
 #' @importFrom grDevices rgb
 #' @importFrom graphics image points
 #'
-classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex = 1, ...) {
+classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
 
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
@@ -166,8 +164,8 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
         padcol <- round(ncol(imgdat2) * 0.02)
         arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
       }
-      if (isTRUE(aspect)) {
-        arg$asp <- dim(imgdat2)[1] / dim(imgdat2)[2]
+      if (is.null(arg$asp)) {
+        arg$asp <- dim(x[[i]])[1] / dim(x[[i]])[2]
       }
       if (is.null(arg$useRaster)) {
         arg$useRaster <- TRUE
@@ -214,7 +212,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
       padcol <- round(ncol(imgdat2) * 0.02)
       arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
     }
-    if (isTRUE(aspect)) {
+    if (is.null(arg$asp)) {
       arg$asp <- dim(x)[1] / dim(x)[2]
     }
     if (is.null(arg$useRaster)) {
