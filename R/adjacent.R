@@ -16,6 +16,8 @@
 #' to visualise the RGB values corresponding to colour-class ID numbers.
 #' @param bkg_include logical; should the background be excluded from the analyses?
 #' Defaults to \code{FALSE}.
+#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
+#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return a data frame of summary variables:
 #' \itemize{
@@ -41,6 +43,7 @@
 #'   \item \code{'m_c'}: The column transition density (mean column transitions),
 #'     in user-specified units.
 #'   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
+#'   \item \code{'B'}: The animal/background transition ratio.
 #'   \item \code{'Sc'}: Simpson colour class diversity.
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
@@ -50,6 +53,7 @@
 #' @export
 #' 
 #' @importFrom dplyr bind_rows
+#' @importFrom pbmcapply pbmclapply
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -67,10 +71,16 @@
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE) {
+adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
-  multi_image <- inherits(classimg, "list") # Single or multiple images?
+  # Single or multiple images?
+  multi_image <- inherits(classimg, "list")
+  
+  # Background
+  if (bkg_include == FALSE && is.null(bkg_ID)) {
+    stop("Background cannot be excluded without specifying its ID via the argument bkg_ID.")
+  }
 
   ## Setting scales
   # Single image
@@ -94,12 +104,12 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
   }
 
   if (isTRUE(multi_image)) { # Multiple images
-    outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+    outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
         x_pts_i = x_pts,
         x_scale_i = x_scale[[x]],
         bkg_ID_i = bkg_ID,
         bkg_include_i = bkg_include
-      ))
+      ), mc.cores = cores)
     outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
@@ -144,13 +154,8 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
 #'
 #' @return a data frame of summary variables. See \code{\link{adjacent}} for details.
 #'
-adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = NULL, bkg_include_i = TRUE) {
+adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i = NULL, bkg_include_i = TRUE) {
   c1 <- c2 <- NULL
-
-  # Integrity check
-  if (bkg_include_i == FALSE && is.null(bkg_ID_i)) {
-    stop("Background cannot be excluded without specifying its ID via the argument bkg_ID.")
-  }
 
   # Scales
   y_scale <- x_scale_i / (ncol(classimg_i) / nrow(classimg_i))
@@ -234,15 +239,6 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
 
   ## Summary variables  ##
 
-  # Internal
-  ## -----------------------------##
-
-
-
-
-  # Output
-  ## -----------------------------##
-
   # n colour classes
   k <- n_class
 
@@ -291,10 +287,28 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
   }
   E <- data.frame(t(offdiag$exp))
   names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
-
+    
   # Deviations
-  d_t_o <- sum(abs(offdiag$N - offdiag$exp))
-
+  d_t_o <- sum(abs(offdiag$N - offdiag$exp))  # observed
+  
+  d_t_r <- sum(abs(offdiag$N - offdiag$exp))  # permuted
+  
+  # Permutation test
+  L <- t(cumsum(t(p)))  # Cumulative probabilities
+  
+  # permutator <- function(){
+  # randpair <- cbind(sample(c(1:k), size = N, replace = TRUE, prob = p), sample(c(1:k), size = N, replace = TRUE, prob = p))
+  # randpair <- t(apply(randpair, 1, sort))
+  # perm <- subset(aggregate(randpair[,1] ~ ., randpair, FUN = length), V1 != V2)
+  # names(perm) <- c('c1', 'c2', 'N')
+  # perm$exp <- NA
+  # for (i in 1:nrow(perm)) {
+  #   perm$exp[i] <- 2 * sum(perm[,3]) * freq$rel_freq[perm[i, 1]] * freq$rel_freq[perm[i, 2]]
+  # }
+  # sum(abs(perm$N - perm$exp))  # permuted
+  # }
+  # permutated <- unlist(pbmclapply(1:n.boot, function(x) foo(), mc.cores = cores))
+  
   # Off-diagonal transition frequencies
   t <- data.frame(t(offdiagprop$N))
   names(t) <- paste0("t_", offdiagprop$c1, "_", offdiagprop$c2)
@@ -310,9 +324,24 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
 
   # Simpson transition diversity relative to maximum
   Jt <- St / (k * (k - 1) / 2)
+  
+  ## Things involving the background
+  if (!is.null(bkg_ID_i) && bkg_include_i == TRUE) {
+    # Animal/background transition ratio
+    O_a_a <- subset(offdiag, c1 & c2 != bkg_ID_i)
+    O_a_b <- subset(offdiag, c1 == bkg_ID_i | c2 == bkg_ID_i)
+    B <- sum(O_a_a$N)/sum(O_a_b$N)
+    
+    # # Animal/background transition diversity ratio (TODO)
+    # S_t_a_a <- 
+    # S_t_a_b <-
+      
+  }else{
+    B <- NA
+  }
 
   # Output
-  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, Sc, St, Jc, Jt)
+  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt)
 
   fin <- as.data.frame(fin)
 

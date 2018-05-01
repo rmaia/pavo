@@ -5,7 +5,7 @@
 \title{Run an adjacency analysis}
 \usage{
 adjacent(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
-  bkg_include = TRUE)
+  bkg_include = TRUE, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
@@ -26,6 +26,9 @@ to visualise the RGB values corresponding to colour-class ID numbers.}
 
 \item{bkg_include}{logical; should the background be excluded from the analyses?
 Defaults to \code{FALSE}.}
+
+\item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
+computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 }
 \value{
 a data frame of summary variables:
@@ -52,6 +55,7 @@ a data frame of summary variables:
   \item \code{'m_c'}: The column transition density (mean column transitions),
     in user-specified units.
   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
+  \item \code{'B'}: The animal/background transition ratio.
   \item \code{'Sc'}: Simpson colour class diversity.
   \item \code{'St'}: Simpson transition diversity.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.

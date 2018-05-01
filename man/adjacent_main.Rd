@@ -4,8 +4,8 @@
 \alias{adjacent_main}
 \title{Main function for adjacency analysis}
 \usage{
-adjacent_main(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = NULL,
-  bkg_include_i = TRUE)
+adjacent_main(classimg_i, x_pts_i = NULL, x_scale_i = NULL,
+  bkg_ID_i = NULL, bkg_include_i = TRUE)
 }
 \arguments{
 \item{classimg_i}{(required) an xyz image matrix, or list of matrices, in which
