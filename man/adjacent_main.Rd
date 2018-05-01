@@ -5,7 +5,7 @@
 \title{Main function for adjacency analysis}
 \usage{
 adjacent_main(classimg_i, x_pts_i = NULL, x_scale_i = NULL,
-  bkg_ID_i = NULL, bkg_include_i = TRUE)
+  bkg_ID_i = NULL, bkg_include_i = TRUE, coldists_i = NULL)
 }
 \arguments{
 \item{classimg_i}{(required) an xyz image matrix, or list of matrices, in which
@@ -26,6 +26,11 @@ to visualise the RGB values corresponding to colour-class ID numbers.}
 
 \item{bkg_include_i}{logical; should the background be excluded from the analyses?
 Defaults to \code{FALSE}.}
+
+\item{coldists_i}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
+and/or achromatic (dL) distances between colour-categories. The first two columns
+should specify all possible combinations of colour category ID's, with the remaining
+columns named dS (for chromatic distances) and/or dL (for achromatic distances).}
 }
 \value{
 a data frame of summary variables. See \code{\link{adjacent}} for details.

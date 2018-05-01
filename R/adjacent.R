@@ -16,6 +16,11 @@
 #' to visualise the RGB values corresponding to colour-class ID numbers.
 #' @param bkg_include logical; should the background be excluded from the analyses?
 #' Defaults to \code{FALSE}.
+#' @param coldists An data.frame or matrix specifying the visually-modelled chromatic (dS)
+#' and/or achromatic (dL) distances between colour-categories. The first two columns
+#' should specify all possible combinations of colour category ID's, and be named 'c1' 
+#' and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL 
+#' (for achromatic distances).
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -48,10 +53,16 @@
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+#'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude
+#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude
+#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude
+#'   \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude
+#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude
+#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude
 #'   }
 #'
 #' @export
-#' 
+#'
 #' @importFrom dplyr bind_rows
 #' @importFrom pbmcapply pbmclapply
 #'
@@ -70,13 +81,26 @@
 #'
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern 
+#' geometry and coloured patch visual properties for use in predicting behaviour
+#' and fitness. Methods in Ecology and Evolution, Early View.
 
-adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE, cores = getOption("mc.cores", 2L)) {
+adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
   multi_image <- inherits(classimg, "list")
   
+  # coldists format
+  if(is.null(coldists)){
+    if(ncol(coldists) < 3)
+      stop("Too few columns present in 'coldists' data.frame.")
+    
+    
+  # Need to sort & check existence? Need to rename
+    
+  }
+
   # Background
   if (bkg_include == FALSE && is.null(bkg_ID)) {
     stop("Background cannot be excluded without specifying its ID via the argument bkg_ID.")
@@ -108,7 +132,8 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
         x_pts_i = x_pts,
         x_scale_i = x_scale[[x]],
         bkg_ID_i = bkg_ID,
-        bkg_include_i = bkg_include
+        bkg_include_i = bkg_include,
+        coldists_i = coldists
       ), mc.cores = cores)
     outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
@@ -121,7 +146,8 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
       x_pts_i = x_pts,
       x_scale_i = x_scale,
       bkg_ID_i = bkg_ID,
-      bkg_include_i = bkg_include
+      bkg_include_i = bkg_include,
+      coldists_i = coldists
     )
     rownames(outdata) <- attr(classimg, "imgname")
   }
@@ -144,9 +170,13 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
 #' to visualise the RGB values corresponding to colour-class ID numbers.
 #' @param bkg_include_i logical; should the background be excluded from the analyses?
 #' Defaults to \code{FALSE}.
+#' @param coldists_i An data.frame or matrix specifying the visually-modelled chromatic (dS)
+#' and/or achromatic (dL) distances between colour-categories. The first two columns
+#' should specify all possible combinations of colour category ID's, with the remaining
+#' columns named dS (for chromatic distances) and/or dL (for achromatic distances).
 #'
 #' @keywords internal
-#' 
+#'
 #' @importFrom stats na.omit aggregate
 #' @importFrom utils head tail
 #'
@@ -154,7 +184,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
 #'
 #' @return a data frame of summary variables. See \code{\link{adjacent}} for details.
 #'
-adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i = NULL, bkg_include_i = TRUE) {
+adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i = NULL, bkg_include_i = TRUE, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
   # Scales
@@ -287,15 +317,15 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   }
   E <- data.frame(t(offdiag$exp))
   names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
-    
+
   # Deviations
-  d_t_o <- sum(abs(offdiag$N - offdiag$exp))  # observed
-  
-  d_t_r <- sum(abs(offdiag$N - offdiag$exp))  # permuted
-  
+  d_t_o <- sum(abs(offdiag$N - offdiag$exp)) # observed
+
+  d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
+
   # Permutation test
-  L <- t(cumsum(t(p)))  # Cumulative probabilities
-  
+  L <- t(cumsum(t(p))) # Cumulative probabilities
+
   # permutator <- function(){
   # randpair <- cbind(sample(c(1:k), size = N, replace = TRUE, prob = p), sample(c(1:k), size = N, replace = TRUE, prob = p))
   # randpair <- t(apply(randpair, 1, sort))
@@ -308,7 +338,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   # sum(abs(perm$N - perm$exp))  # permuted
   # }
   # permutated <- unlist(pbmclapply(1:n.boot, function(x) foo(), mc.cores = cores))
-  
+
   # Off-diagonal transition frequencies
   t <- data.frame(t(offdiagprop$N))
   names(t) <- paste0("t_", offdiagprop$c1, "_", offdiagprop$c2)
@@ -324,24 +354,56 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
 
   # Simpson transition diversity relative to maximum
   Jt <- St / (k * (k - 1) / 2)
-  
+
   ## Things involving the background
   if (!is.null(bkg_ID_i) && bkg_include_i == TRUE) {
     # Animal/background transition ratio
     O_a_a <- subset(offdiag, c1 & c2 != bkg_ID_i)
     O_a_b <- subset(offdiag, c1 == bkg_ID_i | c2 == bkg_ID_i)
-    B <- sum(O_a_a$N)/sum(O_a_b$N)
-    
+    B <- sum(O_a_a$N) / sum(O_a_b$N)
+
     # # Animal/background transition diversity ratio (TODO)
-    # S_t_a_a <- 
+    # S_t_a_a <-
     # S_t_a_b <-
-      
-  }else{
+  } else {
     B <- NA
   }
 
+  # Edge salience
+  if(!in.null(coldists)){
+    weightmean <- function(x, wt) {
+      s <- which(is.finite(x * wt))
+      wt <- wt[s]
+      x <- x[s]
+      sum(wt * x) / sum(wt)
+    }
+    weightsd <- function(x, wt) {
+      s <- which(is.finite(x + wt))
+      wt <- wt[s]
+      x <- x[s]
+      xbar <- weightmean(x, wt)
+      sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
+    }
+    
+    offdiagprop <- merge(offdiagprop, coldists)
+  
+    m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
+
+    s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
+
+    cv_dS <- s_dS/m_dS
+
+    m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
+
+    s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
+
+    cv_dL <- s_dL/m_dL
+  } else{
+    m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+  }
+  
   # Output
-  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt)
+  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
 
   fin <- as.data.frame(fin)
 

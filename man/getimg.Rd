@@ -4,8 +4,8 @@
 \alias{getimg}
 \title{Import image data}
 \usage{
-getimg(imgpath = getwd(), subdir = FALSE, cores = getOption("mc.cores",
-  2L))
+getimg(imgpath = getwd(), subdir = FALSE, max.size = 2,
+  cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{imgpath}{(required) either the full path to a given image (including extension),
@@ -14,6 +14,9 @@ within a folder are fine.}
 
 \item{subdir}{should subdirectories within the \code{where} folder be
 included in the search? (defaults to \code{FALSE}).}
+
+\item{max.size}{maximum size of all images allowed in memory, in GB. Defaults to
+\code{2}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}

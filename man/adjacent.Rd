@@ -5,7 +5,7 @@
 \title{Run an adjacency analysis}
 \usage{
 adjacent(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
-  bkg_include = TRUE, cores = getOption("mc.cores", 2L))
+  bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
@@ -26,6 +26,11 @@ to visualise the RGB values corresponding to colour-class ID numbers.}
 
 \item{bkg_include}{logical; should the background be excluded from the analyses?
 Defaults to \code{FALSE}.}
+
+\item{coldists}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
+and/or achromatic (dL) distances between colour-categories. The first two columns
+should specify all possible combinations of colour category ID's, with the remaining
+columns named dS (for chromatic distances) and/or dL (for achromatic distances).}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
@@ -60,6 +65,12 @@ a data frame of summary variables:
   \item \code{'St'}: Simpson transition diversity.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+  \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude
+  \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude
+  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude
+  \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude
+  \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude
+  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude
   }
 }
 \description{
@@ -81,6 +92,10 @@ snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 50)
 \references{
 Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
+
+Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern 
+geometry and coloured patch visual properties for use in predicting behaviour
+and fitness. Methods in Ecology and Evolution, Early View.
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

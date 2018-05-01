@@ -7,6 +7,8 @@
 #' within a folder are fine.
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
+#' @param max.size maximum size of all images allowed in memory, in GB. Defaults to
+#' \code{2}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -28,7 +30,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE, cores = getOption("mc.cores", 2L)) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Allowed extensions
@@ -71,6 +73,12 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, cores = getOption("mc.core
     }
 
     imgnames <- gsub(extensions, "", file_names)
+    
+    # Stop if max size estimated to exceed available memory
+    imgsize <- prod(dim(read.bitmap(files[1])))
+    totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
+    if(totalsize > max.size)
+      stop("Total size of images likely exceeds available memory")
 
     imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
     
