@@ -91,11 +91,15 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
   # Single or multiple images?
   multi_image <- inherits(classimg, "list")
   
-  # coldists format
-  if(is.null(coldists)){
+  # Coldists formatting (individual/multiple? todo)
+  if(!is.null(coldists)){
     if(ncol(coldists) < 3)
       stop("Too few columns present in 'coldists' data.frame.")
-    
+    if(!all(c('c1', 'c2') %in% names(coldists))){
+      warning("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns
+              contain colour-category IDs.")
+      names(coldists)[1:2] <- c('c1', 'c2')
+    }
     
   # Need to sort & check existence? Need to rename
     
@@ -369,8 +373,8 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
     B <- NA
   }
 
-  # Edge salience
-  if(!in.null(coldists)){
+  # Edge salience (Endler et al. 2018 )
+  if(!is.null(coldists_i)){
     weightmean <- function(x, wt) {
       s <- which(is.finite(x * wt))
       wt <- wt[s]
@@ -385,21 +389,29 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
       sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
     }
     
-    offdiagprop <- merge(offdiagprop, coldists)
-  
+    offdiagprop <- merge(offdiagprop, coldists_i)
+    
+    # Chromatic calcs
+    if("dS" %in% names(offdiagprop)){
     m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
 
     s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
 
     cv_dS <- s_dS/m_dS
-
-    m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
-
-    s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
-
-    cv_dL <- s_dL/m_dL
+    }else
+      m_dS <- s_dS <- cv_dS <- NA
+    
+    # Achromatic calcs
+    if("dL" %in% names(offdiagprop)){
+      m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
+      s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
+      cv_dL <- s_dL/m_dL
+    }else
+      m_dL <- s_dL <- cv_dL <- NA
+    
   } else{
-    m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+    # Or should the default be weights of 1?
+      m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
   }
   
   # Output
