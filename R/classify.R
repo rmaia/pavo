@@ -39,7 +39,7 @@ classify <- function(imgdat, n_cols, ref_ID = 1) {
   multi_image <- inherits(imgdat, "list") # Single or multiple images?
 
   if (isTRUE(multi_image)) { # Multiple images
-    if (length(n_cols) == length(imgdat)) { # Multiple k's
+    if (length(n_cols) == length(imgdat)) { # Multiple k's TODO
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
     } else if (length(n_cols) == 1) { # Single k with reference
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image

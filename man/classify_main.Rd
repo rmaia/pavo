@@ -15,8 +15,8 @@ passing a list of images), specifying the number of discrete colour classes pres
 in an image, for k-means clustering.}
 }
 \value{
-A matrix, or list of matrices, of class \code{rimg} containing the colour 
-class classifications at each pixel location. The RGB values corresponding to 
+A matrix, or list of matrices, of class \code{rimg} containing the colour
+class classifications at each pixel location. The RGB values corresponding to
 k-means centres (i.e. colour classes) are stored as object attributes.
 }
 \description{

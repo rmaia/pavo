@@ -62,10 +62,12 @@ getimg <- function(imgpath = getwd(), subdir = FALSE) {
     imgnames <- gsub(extensions, "", file_names)
 
     imgdat <- lapply(1:length(file_names), function(x) readbitmap::read.bitmap(files[x]))
-    # for(i in 1:length(imgdat)){  # b & w images?
-    #   if(is.na(dim(imgdat[[i]])[3]))
-    #     imgdat[[i]] <- replicate(3, imgdat[[i]], simplify = "array")
-    # }
+    
+    # Duplicate channels if grayscale
+    for(i in 1:length(imgdat)){  
+      if(is.na(dim(imgdat[[i]])[3]))
+        imgdat[[i]] <- replicate(3, imgdat[[i]], simplify = "array")
+    }
 
     # Attributes
     for (i in 1:length(file_names)) {
@@ -74,7 +76,9 @@ getimg <- function(imgpath = getwd(), subdir = FALSE) {
       attr(imgdat[[i]], "state") <- "raw"
       class(imgdat[[i]]) <- c("rimg", "array")
     }
-    # class(imgdat) <- c("ptrn", "list")
+    # the list itself needs attributes 
+     class(imgdat) <- c("rimg", "list")
+     attr(imgdat, 'state') <- 'raw'
   }
   imgdat
 }

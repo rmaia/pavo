@@ -21,8 +21,8 @@ will be reliably classified between images. Defaults to the first image in the l
 Ignored if n_cols is a vector.}
 }
 \value{
-A matrix, or list of matrices, of class \code{rimg} containing the colour 
-class classifications at each pixel location. The RGB values corresponding to 
+A matrix, or list of matrices, of class \code{rimg} containing the colour
+class classifications at each pixel location. The RGB values corresponding to
 k-means centres (i.e. colour classes) are stored as object attributes.
 }
 \description{

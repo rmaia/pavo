@@ -22,6 +22,7 @@
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+#' plot(snakes)
 #' snakes_class <- classify(snakes, n_cols = 3)
 #' plot(snakes_class)
 #' }
@@ -29,13 +30,13 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 plot.rimg <- function(x, ...) {
-  multi_image <- inherits(x, "list") # Single or multiple images?
+  #  multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (!isTRUE(multi_image)) {
-    space <- attr(x, "state")
-  } else if (isTRUE(multi_image)) {
-    space <- attr(x[[1]], "state")
-  }
+  #  if (!isTRUE(multi_image)) {
+  space <- attr(x, "state")
+  #  } else if (isTRUE(multi_image)) {
+  #   space <- attr(x[[1]], "state")
+  # }
 
   switch(space,
     "raw" = rawplot(x, ...),
@@ -53,27 +54,60 @@ plot.rimg <- function(x, ...) {
 #'
 rawplot <- function(x, ...) {
 
-  # Defaults
-  arg <- list(...)
+  ## Checks
+  multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (is.null(arg$xlab)) {
-    arg$xlab <- "x"
-  }
-  if (is.null(arg$ylab)) {
-    arg$ylab <- "y"
-  }
-  if (is.null(arg$type)) {
-    arg$type <- "n"
-  }
-  if (is.null(arg$asp)) {
-    arg$asp <- dim(x)[1] / dim(x)[2]
-  }
+  if (isTRUE(multi_image)) { # Multiple images
 
-  arg$x <- c(1, dim(x)[2])
-  arg$y <- c(1, dim(x)[1])
+    for (i in 1:length(x)) {
+      readline(prompt = "Press [enter] for next plot")
+      x2 <- x[[i]]
 
-  do.call(graphics::plot, arg)
-  graphics::rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
+      # Defaults
+      arg <- list(...)
+
+      if (is.null(arg$xlab)) {
+        arg$xlab <- "x"
+      }
+      if (is.null(arg$ylab)) {
+        arg$ylab <- "y"
+      }
+      if (is.null(arg$type)) {
+        arg$type <- "n"
+      }
+      if (is.null(arg$asp)) {
+        arg$asp <- dim(x2)[1] / dim(x2)[2]
+      }
+
+      arg$x <- c(1, dim(x2)[2])
+      arg$y <- c(1, dim(x2)[1])
+
+      do.call(graphics::plot, arg)
+      graphics::rasterImage(x2, 1, 1, dim(x2)[2], dim(x2)[1])
+    }
+  } else if (!isTRUE(multi_image)) { # Single image
+    # Defaults
+    arg <- list(...)
+
+    if (is.null(arg$xlab)) {
+      arg$xlab <- "x"
+    }
+    if (is.null(arg$ylab)) {
+      arg$ylab <- "y"
+    }
+    if (is.null(arg$type)) {
+      arg$type <- "n"
+    }
+    if (is.null(arg$asp)) {
+      arg$asp <- dim(x)[1] / dim(x)[2]
+    }
+
+    arg$x <- c(1, dim(x)[2])
+    arg$y <- c(1, dim(x)[1])
+
+    do.call(graphics::plot, arg)
+    graphics::rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
+  }
 }
 
 #' Plot colour-classified images

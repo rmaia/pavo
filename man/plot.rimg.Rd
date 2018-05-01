@@ -7,7 +7,7 @@
 \method{plot}{rimg}(x, ...)
 }
 \arguments{
-\item{x}{(required) unprocessed or colour-classified image data, or a list thereof. 
+\item{x}{(required) unprocessed or colour-classified image data, or a list thereof.
 Preferably the result of \code{\link{classify}}.}
 
 \item{...}{additional graphical parameters. See \code{\link{rawplot}} for unprocessed
@@ -31,6 +31,7 @@ plot(papilio_class)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+plot(snakes)
 snakes_class <- classify(snakes, n_cols = 3)
 plot(snakes_class)
 }

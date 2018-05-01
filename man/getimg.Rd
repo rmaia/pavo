@@ -15,7 +15,7 @@ within a folder are fine.}
 included in the search? (defaults to \code{FALSE}).}
 }
 \value{
-a array, or list of arrays, of class \code{rimg}, containing image data 
+a array, or list of arrays, of class \code{rimg}, containing image data
 for use in further \code{pavo} functions.
 }
 \description{
