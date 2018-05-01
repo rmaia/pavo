@@ -48,6 +48,8 @@
 #'   }
 #'
 #' @export
+#' 
+#' @importFrom dplyr bind_rows
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -98,7 +100,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
         bkg_ID_i = bkg_ID,
         bkg_include_i = bkg_include
       ))
-    outdata <- do.call(dplyr::bind_rows, outdata)
+    outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
     }
@@ -134,6 +136,9 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, bkg_
 #' Defaults to \code{FALSE}.
 #'
 #' @keywords internal
+#' 
+#' @importFrom stats na.omit aggregate
+#' @importFrom utils head tail
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
@@ -175,13 +180,13 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
   n_x <- ncol(subclass) # n columns
   n_y <- nrow(subclass) # n rows
   # n_area <- sum(rowSums(!is.na(subclass))) # total number of non-NA pixels
-  n_class <- length(stats::na.omit(unique(c(as.matrix((subclass)))))) # n color classes
+  n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
 
   # All row transitions
-  rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(utils::head(as.numeric(subclass[x, ]), -1), ".", utils::tail(as.numeric(subclass[x, ]), -1))))
-  rt <- stats::aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
+  rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
+  rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
   rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
   rowtrans <- data.frame(
@@ -192,8 +197,8 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
 
   # All column transitions
   subclass_trans <- as.data.frame(t(subclass))
-  ct_temp <- lapply(1:nrow(subclass_trans), function(x) table(paste0(utils::head(as.numeric(subclass_trans[x, ]), -1), ".", utils::tail(as.numeric(subclass_trans[x, ]), -1))))
-  ct <- stats::aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
+  ct_temp <- lapply(1:nrow(subclass_trans), function(x) table(paste0(head(as.numeric(subclass_trans[x, ]), -1), ".", tail(as.numeric(subclass_trans[x, ]), -1))))
+  ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
   ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names
   coltrans <- data.frame(
@@ -207,14 +212,14 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = 1, bkg_ID_i = 
   coltrans[, 1:2] <- as.data.frame(t(apply(coltrans[, 1:2], 1, sort)))
 
   # Aggregate
-  rowtrans2 <- stats::aggregate(rowtrans$N ~ rowtrans$c1 + rowtrans$c2, FUN = sum)
+  rowtrans2 <- aggregate(rowtrans$N ~ rowtrans$c1 + rowtrans$c2, FUN = sum)
   names(rowtrans2) <- c("c1", "c2", "N")
-  coltrans2 <- stats::aggregate(coltrans$N ~ coltrans$c1 + coltrans$c2, FUN = sum)
+  coltrans2 <- aggregate(coltrans$N ~ coltrans$c1 + coltrans$c2, FUN = sum)
   names(coltrans2) <- c("c1", "c2", "N")
 
   # All raw transitions
   transitions <- rbind(rowtrans2, coltrans2)
-  transitions <- stats::aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
+  transitions <- aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
   names(transitions) <- c("c1", "c2", "N")
 
   # Raw diag/offdiag

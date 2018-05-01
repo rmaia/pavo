@@ -51,6 +51,8 @@ plot.rimg <- function(x, ...) {
 #' @param ... additional graphical parameters plassed to \code{\link{plot}}.
 #'
 #' @keywords internal
+#' 
+#' @importFrom graphics plot rasterImage
 #'
 rawplot <- function(x, ...) {
 
@@ -82,8 +84,8 @@ rawplot <- function(x, ...) {
       arg$x <- c(1, dim(x2)[2])
       arg$y <- c(1, dim(x2)[1])
 
-      do.call(graphics::plot, arg)
-      graphics::rasterImage(x2, 1, 1, dim(x2)[2], dim(x2)[1])
+      do.call(plot, arg)
+      rasterImage(x2, 1, 1, dim(x2)[2], dim(x2)[1])
     }
   } else if (!isTRUE(multi_image)) { # Single image
     # Defaults
@@ -105,8 +107,8 @@ rawplot <- function(x, ...) {
     arg$x <- c(1, dim(x)[2])
     arg$y <- c(1, dim(x)[1])
 
-    do.call(graphics::plot, arg)
-    graphics::rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
+    do.call(plot, arg)
+    rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
   }
 }
 
@@ -125,6 +127,9 @@ rawplot <- function(x, ...) {
 #' @param ... additional graphical parameters passed to \code{\link{image}}.
 #'
 #' @keywords internal
+#' 
+#' @importFrom grDevices rgb
+#' @importFrom graphics image points
 #'
 classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex = 1, ...) {
 
@@ -169,7 +174,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
       }
       if (is.null(arg$col)) {
         values <- attr(x[[i]], "classRGB")
-        arg$col <- grDevices::rgb(values)
+        arg$col <- rgb(values)
       }
 
       # Main plot
@@ -177,7 +182,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
       arg$y <- 1:ncol(imgdat2)
       arg$z <- imgdat2
 
-      do.call(graphics::image, arg)
+      do.call(image, arg)
 
       # Visualise the sampling grid
       if (!is.null(x_pts)) {
@@ -187,7 +192,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
         )
 
         names(grid) <- c("y", "x")
-        graphics::points(grid, col = grid.col, pch = 16, cex = grid.cex)
+        points(grid, col = grid.col, pch = 16, cex = grid.cex)
       }
     }
   } else if (!isTRUE(multi_image)) { # Single image
@@ -217,7 +222,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
     }
     if (is.null(arg$col)) {
       values <- attr(x, "classRGB")
-      arg$col <- grDevices::rgb(values)
+      arg$col <- rgb(values)
     }
 
     # Main plot
@@ -225,7 +230,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
     arg$y <- 1:ncol(imgdat2)
     arg$z <- imgdat2
 
-    do.call(graphics::image, arg)
+    do.call(image, arg)
 
     # Visualise the sampling grid
     if (!is.null(x_pts)) {
@@ -235,7 +240,7 @@ classplot <- function(x, x_pts = NULL, aspect = TRUE, grid.col = "red", grid.cex
       )
 
       names(grid) <- c("y", "x")
-      graphics::points(grid, col = grid.col, pch = 16, cex = grid.cex)
+      points(grid, col = grid.col, pch = 16, cex = grid.cex)
     }
   }
 }

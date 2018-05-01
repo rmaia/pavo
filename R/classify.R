@@ -12,12 +12,17 @@
 #' in the reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images. Defaults to the first image in the list.
 #' Ignored if n_cols is a vector.
+#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
+#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
 #' class classifications at each pixel location. The RGB values corresponding to
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 #' @export
+#' 
+#' @importFrom pbmcapply pbmclapply
+#' @importFrom stats kmeans xtabs
 #'
 #' @note Since the \code{kmeans} process draws on random numbers to find initial
 #' cluster centres, use \code{set.seed} if reproducible cluster ID's are desired
@@ -35,15 +40,23 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols, ref_ID = 1) {
-  multi_image <- inherits(imgdat, "list") # Single or multiple images?
+classify <- function(imgdat, n_cols, ref_ID = 1, cores = getOption("mc.cores", 2L)) {
+  
+  ## Checks
+  # Single or multiple images?
+  multi_image <- inherits(imgdat, "list") 
+  # Cores
+  if (cores > 1 && .Platform$OS.type == "windows") {  
+    cores <- 1
+    message('Parallel processing not available in Windows; "cores" set to 1\n')
+  }
 
   if (isTRUE(multi_image)) { # Multiple images
     if (length(n_cols) == length(imgdat)) { # Multiple k's TODO
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
     } else if (length(n_cols) == 1) { # Single k with reference
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
     }
     # Names & attributes
     for (i in 1:length(outdata)) {
@@ -95,13 +108,13 @@ classify_main <- function(imgdat_i, n_cols_i) {
   )
 
   # Cluster analysis
-  kMeans <- stats::kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
+  kMeans <- kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
 
   # Tidy & format as image matrix
   cmbn <- cbind(imgRGB, kMeans$cluster)
   names(cmbn) <- c("x", "y", "ch1", "ch2", "ch3", "class")
 
-  outmat2 <- as.data.frame.matrix(stats::xtabs(class ~ x + y, data = cmbn))
+  outmat2 <- as.data.frame.matrix(xtabs(class ~ x + y, data = cmbn))
 
   # Rotate to match original orientation
   outmat <- rev(t(apply(outmat2, 1, rev)))

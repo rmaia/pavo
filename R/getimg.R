@@ -7,11 +7,16 @@
 #' within a folder are fine.
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
+#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
+#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return a array, or list of arrays, of class \code{rimg}, containing image data
 #' for use in further \code{pavo} functions.
 #'
 #' @export
+#' 
+#' @importFrom pbmcapply pbmclapply
+#' @importFrom readbitmap read.bitmap
 #'
 #' @examples \dontrun{
 #' # Single image
@@ -23,14 +28,20 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
-  ext <- c("jpg", "jpeg", "png", "bmp") # Allowed extensions
+  # Allowed extensions
+  ext <- c("jpg", "jpeg", "png", "bmp")
+  # Cores
+  if (cores > 1 && .Platform$OS.type == "windows") {  
+    cores <- 1
+    message('Parallel processing not available in Windows; "cores" set to 1\n')
+  }
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (isTRUE(grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE))) {
-    imgdat <- readbitmap::read.bitmap(imgpath)
+    imgdat <- read.bitmap(imgpath)
 
     # Duplicate channels if grayscale
     if (is.na(dim(imgdat)[3])) {
@@ -61,7 +72,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE) {
 
     imgnames <- gsub(extensions, "", file_names)
 
-    imgdat <- lapply(1:length(file_names), function(x) readbitmap::read.bitmap(files[x]))
+    imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
     
     # Duplicate channels if grayscale
     for(i in 1:length(imgdat)){  

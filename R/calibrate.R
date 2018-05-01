@@ -51,16 +51,19 @@ calibrate <- function(image, scale_length = NULL) {
 #' in the image.
 #'
 #' @keywords internal
+#' 
+#' @importFrom graphics plot rasterImage locator
+#' @importFrom stats dist
 #'
 #' @return an image, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
 calibrate_main <- function(image_i, scale_length_i = NULL) {
-  graphics::plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
-  graphics::rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
+  plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
+  rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
 
-  reference <- as.data.frame(graphics::locator(type = "l", col = "red", n = 2))
-  pixdist <- as.integer(stats::dist(round(reference)))
+  reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
+  pixdist <- as.integer(dist(round(reference)))
   realscale <- scale_length_i / pixdist
 
   realscale
