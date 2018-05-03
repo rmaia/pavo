@@ -22,7 +22,7 @@ will be reliably classified between images. Defaults to the first image in the l
 Ignored if n_cols is a vector.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
-When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols}) 
+When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
 on the reference image that represent the distinct colours of interest.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
@@ -38,7 +38,7 @@ Use k-means clustering to classify image pixels into discrete colour classes.
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial
-cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible 
+cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible
 cluster ID's are desired between runs.
 }
 \examples{

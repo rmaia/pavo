@@ -30,13 +30,13 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 plot.rimg <- function(x, ...) {
-    multi_image <- inherits(x, "list") # Single or multiple images?
+  multi_image <- inherits(x, "list") # Single or multiple images?
 
-    if (!isTRUE(multi_image)) {
-  space <- attr(x, "state")
-    } else if (isTRUE(multi_image)) {
-     space <- attr(x[[1]], "state")
-   }
+  if (!isTRUE(multi_image)) {
+    space <- attr(x, "state")
+  } else if (isTRUE(multi_image)) {
+    space <- attr(x[[1]], "state")
+  }
 
   switch(space,
     "raw" = rawplot(x, ...),
@@ -51,7 +51,7 @@ plot.rimg <- function(x, ...) {
 #' @param ... additional graphical parameters plassed to \code{\link{plot}}.
 #'
 #' @keywords internal
-#' 
+#'
 #' @importFrom graphics plot rasterImage
 #'
 rawplot <- function(x, ...) {
@@ -125,7 +125,7 @@ rawplot <- function(x, ...) {
 #' @param ... additional graphical parameters passed to \code{\link{image}}.
 #'
 #' @keywords internal
-#' 
+#'
 #' @importFrom grDevices rgb
 #' @importFrom graphics image points
 #'
