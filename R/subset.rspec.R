@@ -30,34 +30,32 @@
 
 subset.rspec <- function (x, subset, ...) {
   
-  # remove 'wl' column if present
-  wl_index <- which(names(x)=='wl')
-  if (length(wl_index)==1) {
-    wl <- x[, wl_index]
-    x <- x[, -wl_index, drop=FALSE]
-  }
+  # This could be simplified a lot by using grepl instead of grep, removing 
+  # which and using boolean operations. But at the moment, grep supports an
+  # additional argument `invert` that grepl doesn't. Because some scripts maybe
+  # already depends on it, we can't really change it.
+  
+  wl_index <- which(names(x)=="wl")
   
   if (is.logical(subset)) {
-    # test whether 'wl' is in subset condition
-    # gets from function call for subset
-    subsample <- substitute(subset)
-    if ('wl' %in% eval(subsample[[2]])) {
-      subsample[[2]] <- eval(subsample[[2]])[-wl_index]
-    }
-    subsample <- which(eval(subsample))
-    # check that subset same length as number of spectra
-    if (length(subsample)!=ncol(x)){
+    if (length(subset)!=ncol(x)){
       warning("Subset doesn't match length of spectral data")
     }
-  } else {
-    subsample <- grep(pattern=paste(subset, collapse='|'), x=names(x), ...)
+    subsample <- which(subset)
+  }
+  else {
+    subsample <- grep(pattern=paste(subset, collapse="|"), x = colnames(x), ...)
   }
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[subsample])
+
+  # We don't drop the "wl" column if it exists, no matter what subset says.
+  res = x[, c(wl_index, subsample)]
+
   class(res) <- c("rspec", "data.frame")
-  res
+  
+  return(res)
 }
 
 #' @export
