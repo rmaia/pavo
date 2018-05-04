@@ -62,20 +62,20 @@ subset.rspec <- function (x, subset, ...) {
 #' @rdname subset.rspec
 #'
 subset.colspace <- function (x, subset, ...) {
-  # if (!is.logical(subset)) 
-  #   stop("'subset' must be logical")
-  if (is.logical(subset)) {
-    subsample <- subset
-    res <- x[which(subsample), ]
-  } else {
-      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
-      res <- x[subsample, ]
-    }
-  if (length(subsample)==0) {
+
+  if (!is.logical(subset)) {
+    subset <- grep(paste(subset, collapse='|'), row.names(x), ...)
+  }
+  
+  res <- x[subset, ]
+  
+  if (nrow(res)==0) {
     warning("Subset condition not found")
   }
+
   class(res) <- c("colspace", "data.frame")
-  res
+  
+  return(res)
 }
 
 #' @export
