@@ -82,14 +82,14 @@ subset.colspace <- function (x, subset, ...) {
 #' @rdname subset.rspec
 #'
 subset.vismodel <- function (x, subset, ...) {
-  if (is.logical(subset)) {
-    subsample <- subset
-    res <- x[which(subsample), ]
-  } else {
-      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
-      res <- x[subsample, ]
-    }
-  # attr <- attributes(x)
+
+  if (!is.logical(subset)) {
+    subset <- grep(paste(subset, collapse='|'), row.names(x), ...)
+  }
+  
+  res <- x[subset, ]
+
   class(res) <- c("vismodel", "data.frame")
-  res
+  
+  return(res)
 }
