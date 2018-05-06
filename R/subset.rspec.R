@@ -1,15 +1,19 @@
 #' Subset rspec, vismodel, and colspace objects
 #'
-#' Subsets various object types based on a given vector or grep partial matching of data names.
+#' Subsets various object types based on a given vector or grep partial matching 
+#' of data names.
 #'
-#' @param x (required) an object of class \code{rspec}, \code{vismodel}, or \code{colspace},
-#' containing spectra, visual model output or colorspace data to subset.
-#' @param ... additional attributes passed to \code{grep}. Ignored if \code{subset} is logical.
+#' @param x (required) an object of class \code{rspec}, \code{vismodel}, or 
+#' \code{colspace}, containing spectra, visual model output or colorspace data 
+#' to subset.
 #' @param subset a string used for partial matching of observations.
+#' @param ... additional attributes passed to \code{grep}. Ignored if 
+#' \code{subset} is logical.
 #' @return a subsetted object of the same class as the input object.
 #'
-#' @note if more than one value is given to \code{subset}, any spectra that matches \emph{either}
-#' condition will be included. It's a union, not an intersect.
+#' @note if more than one value is given to \code{subset}, any spectra that
+#' matches \emph{either} condition will be included. It's a union, not an 
+#' intersect.
 #'
 #' @export
 #'
@@ -30,68 +34,66 @@
 
 subset.rspec <- function (x, subset, ...) {
   
-  # remove 'wl' column if present
-  wl_index <- which(names(x)=='wl')
-  if (length(wl_index)==1) {
-    wl <- x[, wl_index]
-    x <- x[, -wl_index, drop=FALSE]
-  }
+  # This could be simplified a lot by using grepl instead of grep, removing 
+  # which and using boolean operations. But at the moment, grep supports an
+  # additional argument `invert` that grepl doesn't. Because some scripts maybe
+  # already depends on it, we can't really change it.
+  
+  wl_index <- which(names(x)=="wl")
   
   if (is.logical(subset)) {
-    # test whether 'wl' is in subset condition
-    # gets from function call for subset
-    subsample <- substitute(subset)
-    if ('wl' %in% eval(subsample[[2]])) {
-      subsample[[2]] <- eval(subsample[[2]])[-wl_index]
-    }
-    subsample <- which(eval(subsample))
-    # check that subset same length as number of spectra
-    if (length(subsample)!=ncol(x)){
+    if (length(subset)!=ncol(x)){
       warning("Subset doesn't match length of spectral data")
     }
-  } else {
-    subsample <- grep(pattern=paste(subset, collapse='|'), x=names(x), ...)
+    subsample <- which(subset)
+  }
+  else {
+    subsample <- grep(pattern=paste(subset, collapse="|"), x = colnames(x), ...)
   }
   if (length(subsample)==0) {
     warning("Subset condition not found")
   }
-  res <- cbind(wl, x[subsample])
+
+  # We don't drop the "wl" column if it exists, no matter what subset says.
+  res = x[, unique(wl_index, subsample)]
+
   class(res) <- c("rspec", "data.frame")
-  res
+  
+  return(res)
 }
 
 #' @export
 #' @rdname subset.rspec
 #'
 subset.colspace <- function (x, subset, ...) {
-  # if (!is.logical(subset)) 
-  #   stop("'subset' must be logical")
-  if (is.logical(subset)) {
-    subsample <- subset
-    res <- x[which(subsample), ]
-  } else {
-      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
-      res <- x[subsample, ]
-    }
-  if (length(subsample)==0) {
+
+  if (!is.logical(subset)) {
+    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
+  }
+  
+  res <- x[subset, ]
+  
+  if (nrow(res)==0) {
     warning("Subset condition not found")
   }
+
   class(res) <- c("colspace", "data.frame")
-  res
+  
+  return(res)
 }
 
 #' @export
 #' @rdname subset.rspec
 #'
 subset.vismodel <- function (x, subset, ...) {
-  if (is.logical(subset)) {
-    subsample <- subset
-    res <- x[which(subsample), ]
-  } else {
-      subsample <- grep(paste(subset, collapse='|'), row.names(x), ...)
-      res <- x[subsample, ]
-    }
-  # attr <- attributes(x)
+
+  if (!is.logical(subset)) {
+    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
+  }
+  
+  res <- x[subset, ]
+
   class(res) <- c("vismodel", "data.frame")
-  res
+  
+  return(res)
 }
