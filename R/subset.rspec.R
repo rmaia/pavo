@@ -68,7 +68,7 @@ subset.rspec <- function (x, subset, ...) {
 subset.colspace <- function (x, subset, ...) {
 
   if (!is.logical(subset)) {
-    subset <- grep(paste(subset, collapse='|'), row.names(x), ...)
+    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
   }
   
   res <- x[subset, ]
@@ -88,7 +88,7 @@ subset.colspace <- function (x, subset, ...) {
 subset.vismodel <- function (x, subset, ...) {
 
   if (!is.logical(subset)) {
-    subset <- grep(paste(subset, collapse='|'), row.names(x), ...)
+    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
   }
   
   res <- x[subset, ]
