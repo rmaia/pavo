@@ -15,10 +15,10 @@
 irrad2flux <- function(rspecdata){
 
   if(!is.rspec(rspecdata))
-    stop('not an object of class rspec')
+    stop("not an object of class rspec")
 
   nam <- names(rspecdata)
-  wl <- rspecdata[, nam=='wl']
+  wl <- rspecdata[, nam=="wl"]
 
   K <- 0.01/(6.626*2.998*6.02308)
   
@@ -33,7 +33,7 @@ irrad2flux <- function(rspecdata){
 flux2irrad <- function(rspecdata){
 
   if(!is.rspec(rspecdata))
-    stop('not an object of class rspec')
+    stop("not an object of class rspec")
 
   nam <- names(rspecdata)
   wl <- rspecdata[, nam=="wl"]
