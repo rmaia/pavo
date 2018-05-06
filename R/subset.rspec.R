@@ -42,15 +42,15 @@ subset.rspec <- function (x, subset, ...) {
   wl_index <- which(names(x)=="wl")
   
   if (is.logical(subset)) {
-    if (length(subset)!=ncol(x)){
+    if (length(subset) != ncol(x)){
       warning("Subset doesn't match length of spectral data")
     }
     subsample <- which(subset)
   }
   else {
-    subsample <- grep(pattern=paste(subset, collapse="|"), x = colnames(x), ...)
+    subsample <- grep(pattern = paste(subset, collapse="|"), x = colnames(x), ...)
   }
-  if (length(subsample)==0) {
+  if (length(subsample) == 0) {
     warning("Subset condition not found")
   }
 
@@ -59,7 +59,7 @@ subset.rspec <- function (x, subset, ...) {
 
   class(res) <- c("rspec", "data.frame")
   
-  return(res)
+  res
 }
 
 #' @export
@@ -73,13 +73,13 @@ subset.colspace <- function (x, subset, ...) {
   
   res <- x[subset, ]
   
-  if (nrow(res)==0) {
+  if (nrow(res) == 0) {
     warning("Subset condition not found")
   }
 
   class(res) <- c("colspace", "data.frame")
   
-  return(res)
+  res
 }
 
 #' @export
@@ -95,5 +95,5 @@ subset.vismodel <- function (x, subset, ...) {
 
   class(res) <- c("vismodel", "data.frame")
   
-  return(res)
+  res
 }
