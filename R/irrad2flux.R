@@ -30,24 +30,17 @@ irrad2flux <- function(rspecdata){
 #' @rdname irrad2flux
 #' @return a converted \code{rspec} object
 
-
 flux2irrad <- function(rspecdata){
 
-if(!is.rspec(rspecdata))
-  stop('not an object of class rspec')
+  if(!is.rspec(rspecdata))
+    stop('not an object of class rspec')
 
   nam <- names(rspecdata)
-  wl_index <- which(names(rspecdata)=='wl')
-  wl <- rspecdata[,wl_index]
-  #rspecdata <- rspecdata[,-wl_index]	
+  wl <- rspecdata[, nam=="wl"]
+
   K <- 0.01/(6.626*2.998*6.02308)
   
-  res <- sapply(1:ncol(rspecdata), function(z) rspecdata[,z] / (wl * K) )
-  res <- data.frame(res)
-  names(res) <- nam
-  class(res) <- c('rspec', 'data.frame')
+  rspecdata[, nam!="wl"] <- rspecdata[, nam!="wl"] / (wl * K)
   
-  res[,'wl'] <- wl
-  
-  res
+  return(rspecdata)
 }
