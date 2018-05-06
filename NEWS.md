@@ -10,6 +10,9 @@ MAJOR CHANGES
 
 MINOR FEATURES AND BUG FIXES 
 
+* fixed warning when subset.rspec was provided with a logical vector
+* fixed harmless warning when summary.colspace() was used on a tcs object
+* `by` argument in merge.rspec() is no longer ignored
 * fixed bug in voloverlap() when plot = TRUE
 * fixed bug in vismodel() when transmission has more than one column
 * fixed bug in vismodel() that applied von Kries correction to achromatic channel
