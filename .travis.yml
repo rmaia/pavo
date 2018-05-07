@@ -4,8 +4,8 @@ addons:
   apt:
     packages:
     - libgmp3-dev
-r_build_args: --no-build-vignettes
-r_check_args: --no-build-vignettes
+r_build_args: 
+r_check_args: 
 # warnings_are_errors: false
 notifications:
   email:
