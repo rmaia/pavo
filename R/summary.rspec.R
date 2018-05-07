@@ -330,8 +330,7 @@ H1 <- wl[max.col(t(object), ties.method='first')]
 # H3wl <- wl[wl %in% c(400:700)]
 # lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
 # Rmid <- round((H1+lambdaRmin)/2)
-RmaxH3 <- sapply(object, max)
-RmidH3 <- (Rmin + RmaxH3) / 2
+RmidH3 <- (Rmin + B3) / 2
 H3 <- sapply(1:ncol(object), function(x) {
   which.min(abs(object[,x] - RmidH3[x]))
 })
