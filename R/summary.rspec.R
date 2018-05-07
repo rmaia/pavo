@@ -282,9 +282,7 @@ S5B <- colSums(object[Q1, ])
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
-H4 <- atan(((S5Y-S5B)/B1)/((S5R-S5G)/B1))
-#H4 <- atan2((S5R-S5G)/B1, (S5Y-S5B)/B1)
-#H4 <- atan2(S5R-S5G, S5Y-S5B)
+H4 <- atan2(S5Y-S5B, S5R-S5G)
 
 # Carotenoid chroma
 
