@@ -1,25 +1,25 @@
 #' Colorimetric variables
 #'
-#' Calculates all 23 colorimetric variables reviewed in 
+#' Calculates all 23 colorimetric variables reviewed in
 #' Montgomerie (2006).
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to process.
-#' @param subset Either \code{FALSE} (the default), \code{TRUE}, or a character vector. 
-#' If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset 
-#' of the complete output (composed of B2, S8 and H1; the variables described in 
-#' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
+#' @param subset Either \code{FALSE} (the default), \code{TRUE}, or a character vector.
+#' If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset
+#' of the complete output (composed of B2, S8 and H1; the variables described in
+#' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 #' names can be used in order to filter and show only those variables.
 #' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
 #' calculations (default is to use entire range in the \code{rspec} object).
 #' @param ... class consistency (ignored)
-#' 
-#' @return A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described 
-#' in Montgomerie (2006) with spectra name as row names. 
-#' The colorimetric variables calculated by this function are 
+#'
+#' @return A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described
+#' in Montgomerie (2006) with spectra name as row names.
+#' The colorimetric variables calculated by this function are
 #' described in Montgomerie (2006) with corrections included in the README CLR
-#' file from the May 2008 distribution of the CLR software. Authors should reference 
+#' file from the May 2008 distribution of the CLR software. Authors should reference
 #' both this package,Montgomerie (2006), and the original reference(s).
 #' Description and notes on the measures:
 #'
@@ -33,11 +33,11 @@
 #'
 #' B3 (Intensity): Maximum relative reflectance (Reflectance at wavelength of maximum
 #' reflectance). Note that may be sensitive to noise near the peak. REF 1, 5, 6
-#' 
+#'
 #' S1 (Chroma): Relative contribution of a spectral range to the total brightness (B1)
-#' S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges 
-#' normally associated with specific hues. The values are calculated using the 
-#' following ranges: S1U (UV, if applicable): lambda min-400nm; 
+#' S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges
+#' normally associated with specific hues. The values are calculated using the
+#' following ranges: S1U (UV, if applicable): lambda min-400nm;
 #' S1V (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
 #' S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 2, 7, 8, 11-13
 #'
@@ -45,16 +45,16 @@
 #' Proper interpretation of this value may be difficult for spectra with multiple
 #' peaks in the range of interest. REF 1
 #'
-#' S3 (Chroma): Reflectance over the Rmax +- 50nm range divided by B1. Values for peaks 
-#' within 50nm of either the minimum or maximum range of the data will not be comparable 
-#' since the area under the curve for the area of interest will not always 
-#' be based on the same wavelength range. Therefore, S3 should be interpreted 
+#' S3 (Chroma): Reflectance over the Rmax +- 50nm range divided by B1. Values for peaks
+#' within 50nm of either the minimum or maximum range of the data will not be comparable
+#' since the area under the curve for the area of interest will not always
+#' be based on the same wavelength range. Therefore, S3 should be interpreted
 #' with caution for peaks in the UV or Red range. REF 11
 #'
 #' S4 (Spectral purity): |bmaxneg| , calculated by approximating the derivative
 #' of the spectral curve. As such, it is very sensitive to noise and should only
 #' be considered when data is adequately smoothed. NAs are returned for curves which
-#' do not, at any range of wavelength, decrease in intensity. Therefore, reflectance 
+#' do not, at any range of wavelength, decrease in intensity. Therefore, reflectance
 #' curves for brown and red surfaces, for example, should not generate a values. REF 1
 #'
 #' S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006
@@ -62,21 +62,21 @@
 #'
 #' S6 (Contrast): Rmax - Rmin. Because it uses both Rmin and Rmax, this measure may be
 #' sensitive to spectral noise. REF 5, 6
-#' 
+#'
 #' S7 (Spectral saturation): Relative reflectance between the area around the peak with
 #' reflectance equal to or larger to half of that of the peak (an approximation to the
-#' full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive 
+#' full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive
 #' to noise and can be misleading when more than one maxima and/or minima are present.
 #' REF 3, 9
 #'
 #' S8 (Chroma): (Rmax - Rmin)/B2. Because it uses both Rmin and Rmax, this measure may be
 #' sensitive to spectral noise. REF 3, 13
 #'
-#' S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color 
+#' S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color
 #' of the surface is clearly due to carotenoid pigmentation and R450 is lower than
 #' R700. Could be sensitive to noise. REF 8
-#' 
-#' S10 (Peaky chroma): (Rmax - Rmin)/B2 x |bmaxneg|. Should be used with properly 
+#'
+#' S10 (Peaky chroma): (Rmax - Rmin)/B2 x |bmaxneg|. Should be used with properly
 #' smoothed curves. REF 7
 #'
 #' H1 (Peak wavelength, hue): Wavelength of maximum reflectance. May be sensitive to noise
@@ -89,28 +89,28 @@
 #'
 #' H4 (Hue): Similar in design to segment classification measures see Montgomerie
 #' (2006) for details. REF 10
-#' 
+#'
 #' H5 (Hue): Wavelength at bmax. Sensitive to noise and may be variable if there is
 #' more than one maxima and minima. REF 5
 #' @note If minimum wavelength is over 400, UV chroma is not computed.
 #' @note Variables which compute bmax and bmaxneg should be used with caution, for they
 #' rely on smoothed curves to remove noise, which would otherwise result in spurious
 #' results. Make sure chosen smoothing parameters are adequate.
-#' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
-#' variables can be reliably extracted using non-smoothed data. 
-#' 
+#' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other
+#' variables can be reliably extracted using non-smoothed data.
+#'
 #' @export
-#' 
+#'
 #' @examples \dontrun{
 #' data(sicalis)
 #' summary(sicalis)
 #' summary(sicalis, subset = TRUE)
 #' summary(sicalis, subset = c('B1', 'H4'))
 #' }
-#' 
+#'
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
-#' 
-#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
+#'
+#' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.
 #' Bird Coloration. Volume 1 Mechanisms and measurements. Harvard University Press, Cambridge, Massachusetts.
 #' @references References describing variables:
 #'
@@ -172,7 +172,7 @@ if(is.null(wlmin)){
   }else{
     if(wlmin < min(wl))
       stop('wlmin is smaller than the range of spectral data')
-      
+
     lambdamin <- wlmin
     }
 
@@ -210,34 +210,34 @@ B3 <- sapply(object, max)
 # Red
 if(lambdamin <= 605 & lambdamax >= 700){
   Redchromamat <- as.matrix(object[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
-  Redchroma <- as.vector(apply(Redchromamat,2,sum))/B1 # S1 red
+  Redchroma <- colSums(Redchromamat)/B1 # S1 red
   output.mat[, 9] <- Redchroma
 }else{
   warning('cannot calculate red chroma; wavelength range not between 605 and 700 nm', call.=FALSE)
-}	
-  
-# Yellow  
+}
+
+# Yellow
 if(lambdamin <= 550 & lambdamax >= 625){
   Yellowchromamat <- as.matrix(object[which(wl==550):which(wl==625),]) #yellow 550-625nm
-  Yellowchroma <- as.vector(apply(Yellowchromamat,2,sum))/B1 # S1 yellow
+  Yellowchroma <- colSums(Yellowchromamat)/B1 # S1 yellow
   output.mat[, 8] <- Yellowchroma
 }else{
   warning('cannot calculate yellow chroma; wavelength range not between 550 and 625 nm', call.=FALSE)
 }
 
-# Green  
+# Green
 if(lambdamin <= 510 & lambdamax >= 605){
   Greenchromamat <- as.matrix(object[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
-  Greenchroma <- (apply(Greenchromamat,2,sum))/B1 # S1 green
+  Greenchroma <- colSums(Greenchromamat)/B1 # S1 green
   output.mat[, 7] <- Greenchroma
   }else{
   warning('cannot calculate green chroma; wavelength range not between 510 and 605 nm', call.=FALSE)
 }
 
-# Blue 
+# Blue
 if(lambdamin <= 400 & lambdamax >= 510){
   Bluechromamat <- as.matrix(object[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
-  Bluechroma <- (apply(Bluechromamat,2,sum))/B1 # S1 blue
+  Bluechroma <- colSums(Bluechromamat)/B1 # S1 blue
   output.mat[, 6] <- Bluechroma
   }else{
   warning('cannot calculate blue chroma; wavelength range not between 400 and 510 nm', call.=FALSE)
@@ -246,7 +246,7 @@ if(lambdamin <= 400 & lambdamax >= 510){
 # UV
 if(lambdamin <= 400 & lambdamax >=400){
   UVchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==400),])
-  UVchroma <- (apply(UVchromamat,2,sum))/B1 # S1 UV
+  UVchroma <- colSums(UVchromamat)/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   }else{
   warning('cannot calculate UV chroma; wavelength range not below 400 nm', call.=FALSE)
@@ -259,12 +259,12 @@ if(lambdamin > 300 & lambdamin < 400){
 # Violet
 if(lambdamin <= 415 & lambdamax >= 415){
   Vchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==415),])
-  Vchroma <- (apply(Vchromamat,2,sum))/B1 # S1 Violet
-  output.mat[, 5] <- Vchroma  
+  Vchroma <- colSums(Vchromamat)/B1 # S1 Violet
+  output.mat[, 5] <- Vchroma
 }else{
   warning('cannot calculate violet chroma; wavelength below 415 nm', call.=FALSE)
 }
-  
+
 
 # Segment-based variables
 
@@ -275,10 +275,10 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- apply(as.data.frame(object[Q4, ]), 2, sum) 
-S5Y <- apply(as.data.frame(object[Q3, ]), 2, sum) 
-S5G <- apply(as.data.frame(object[Q2, ]), 2, sum) 
-S5B <- apply(as.data.frame(object[Q1, ]), 2, sum) 
+S5R <- colSums(object[Q4, ])
+S5Y <- colSums(object[Q3, ])
+S5G <- colSums(object[Q2, ])
+S5B <- colSums(object[Q1, ])
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
@@ -294,9 +294,9 @@ Carotchroma <- (R450-R700)/R700
 
 # S7
 
-sum_min_mid <- apply(object, 2, function(x) 
+sum_min_mid <- apply(object, 2, function(x)
                      sum(x[which.min(x):round((which.max(x) + which.min(x))/2)]))
-sum_mid_max <- apply(object, 2, function(x) 
+sum_mid_max <- apply(object, 2, function(x)
                      sum(x[round((which.max(x) + which.min(x))/2):which.max(x)]))
 
 S7 <- (sum_min_mid - sum_mid_max)/(B1)
@@ -323,7 +323,7 @@ S6 <- B3-Rmin # S6
 # lambda Rmax hue
 H1 <- wl[max.col(t(object), ties.method='first')]
 
-# H3 
+# H3
 # limit to 400-700 nm range to avoid spurious UV peaks
 #  how about we don't do that?
 # H3object <- object[wl %in% 400:700, , drop = FALSE]
@@ -370,9 +370,9 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
   output.mat[, 15] <- S7
   output.mat[, 16] <- S8
   output.mat[, 17] <- Carotchroma
-  output.mat[, 18] <- S10 
+  output.mat[, 18] <- S10
   output.mat[, 19] <- H1
-  output.mat[, 20] <- lambdabmaxneg 
+  output.mat[, 20] <- lambdabmaxneg
   output.mat[, 21] <- H3 # Rmid
   output.mat[, 22] <- H4
   output.mat[, 23] <- lambdabmax
@@ -382,8 +382,8 @@ lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
 
 color.var <- data.frame(output.mat, row.names=names(object))
 
-names(color.var) <- c("B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G", 
-                      "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8", 
+names(color.var) <- c("B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G",
+                      "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8",
                       "S9", "S10", "H1", "H2", "H3", "H4", "H5")
 
 colvarnames <- names(color.var)
