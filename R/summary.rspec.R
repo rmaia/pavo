@@ -326,19 +326,19 @@ H3 <- wl[H3]
 diffsmooth <- apply(object,2,diff)
 
 lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
-  lambdabmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
+lambdabmaxneg[apply(diffsmooth,2,min) > 0] <- NA
 
 # S4
 bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
-  bmaxneg[which(apply(diffsmooth,2,min) > 0)] <- NA
+bmaxneg[apply(diffsmooth,2,min) > 0] <- NA
 
 # S10
 S10 <- S8*bmaxneg #S10
- S10[which(apply(diffsmooth,2,min) > 0)] <- NA
+S10[apply(diffsmooth,2,min) > 0] <- NA
 
 # H5
 lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
-  lambdabmax[which(apply(diffsmooth,2,which.max) < 0)] <- NA
+lambdabmax[apply(diffsmooth,2,which.max) < 0] <- NA
 
 
 # Add remaining variables to output
