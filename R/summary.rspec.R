@@ -196,7 +196,7 @@ B3 <- sapply(object, max)
 
 # Red
 if(lambdamin <= 605 & lambdamax >= 700){
-  Redchromamat <- as.matrix(object[which(wl==605):which(wl==700),]) # red 605-700nm inclusive
+  Redchromamat <- object[which(wl==605):which(wl==700),] # red 605-700nm inclusive
   Redchroma <- colSums(Redchromamat)/B1 # S1 red
   output.mat[, 9] <- Redchroma
 }else{
@@ -205,7 +205,7 @@ if(lambdamin <= 605 & lambdamax >= 700){
 
 # Yellow
 if(lambdamin <= 550 & lambdamax >= 625){
-  Yellowchromamat <- as.matrix(object[which(wl==550):which(wl==625),]) #yellow 550-625nm
+  Yellowchromamat <- object[which(wl==550):which(wl==625),] #yellow 550-625nm
   Yellowchroma <- colSums(Yellowchromamat)/B1 # S1 yellow
   output.mat[, 8] <- Yellowchroma
 }else{
@@ -214,7 +214,7 @@ if(lambdamin <= 550 & lambdamax >= 625){
 
 # Green
 if(lambdamin <= 510 & lambdamax >= 605){
-  Greenchromamat <- as.matrix(object[which(wl==510):which(wl==605),]) # green 510-605nm inlusive
+  Greenchromamat <- object[which(wl==510):which(wl==605),] # green 510-605nm inlusive
   Greenchroma <- colSums(Greenchromamat)/B1 # S1 green
   output.mat[, 7] <- Greenchroma
   }else{
@@ -223,7 +223,7 @@ if(lambdamin <= 510 & lambdamax >= 605){
 
 # Blue
 if(lambdamin <= 400 & lambdamax >= 510){
-  Bluechromamat <- as.matrix(object[which(wl==400):which(wl==510),]) # blue 400-510nm inclusive
+  Bluechromamat <- object[which(wl==400):which(wl==510),] # blue 400-510nm inclusive
   Bluechroma <- colSums(Bluechromamat)/B1 # S1 blue
   output.mat[, 6] <- Bluechroma
   }else{
@@ -232,7 +232,7 @@ if(lambdamin <= 400 & lambdamax >= 510){
 
 # UV
 if(lambdamin <= 400 & lambdamax >=400){
-  UVchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==400),])
+  UVchromamat <- object[which(wl==lambdamin):which(wl==400),]
   UVchroma <- colSums(UVchromamat)/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   }else{
@@ -255,7 +255,7 @@ if(lambdamin <= 415 & lambdamax >= 415){
 
 # Segment-based variables
 
-segmts <- trunc(as.numeric(quantile(lambdamin:lambdamax)))
+segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
 
 Q1 <- which(wl==segmts[1]):which(wl==segmts[2])
 Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
