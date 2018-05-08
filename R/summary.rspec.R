@@ -166,26 +166,13 @@ wl <- object[,wl_index]
 # object <- object[,-wl_index]
 
 # set WL min & max
+lambdamin <- max(wlmin, min(wl))
+lambdamax <- min(wlmax, max(wl))
 
-if(is.null(wlmin)){
-  lambdamin <- min(wl)
-  }else{
-    if(wlmin < min(wl))
-      stop('wlmin is smaller than the range of spectral data')
-
-    lambdamin <- wlmin
-    }
-
-# lambdamax <- max(wl)
-
- if(is.null(wlmax)){
-   lambdamax <- max(wl)
-   }else{
-     if(wlmax > max(wl))
-       stop('wlmax is larger than the range of spectral data')
-
-     lambdamax <- wlmax
-     }
+if (!is.null(wlmin) && lambdamin > wlmin)
+  stop("wlmin is smaller than the range of spectral data")
+if (!is.null(wlmax) && lambdamax < wlmax)
+  stop("wlmax is larger than the range of spectral data")
 
 # restrict to range of wlmin:wlmax
 object <- object[which(wl==lambdamin):which(wl==lambdamax),]
