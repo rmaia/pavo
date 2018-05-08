@@ -325,20 +325,23 @@ H3 <- wl[H3]
 # H2
 diffsmooth <- apply(object,2,diff)
 
+# Spectra that are monotically increasing or decreasing
+incr <- apply(diffsmooth,2,min) > 0
+decr <- apply(diffsmooth,2,max) < 0
+
 lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
-lambdabmaxneg[apply(diffsmooth,2,min) > 0] <- NA
+lambdabmaxneg[incr] <- NA
 
 # S4
 bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
-bmaxneg[apply(diffsmooth,2,min) > 0] <- NA
+bmaxneg[incr] <- NA
 
 # S10
 S10 <- S8*bmaxneg #S10
-S10[apply(diffsmooth,2,min) > 0] <- NA
 
 # H5
 lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
-lambdabmax[apply(diffsmooth,2,max) < 0] <- NA
+lambdabmax[decr] <- NA
 
 
 # Add remaining variables to output
