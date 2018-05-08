@@ -1,11 +1,13 @@
-#' @title Bootstrap colour distance confidence intervals
-#' @description Uses a bootstrap procedure to generate confidence intervals
+#' Bootstrap colour distance confidence intervals
+#'
+#' Uses a bootstrap procedure to generate confidence intervals
 #'  for the mean colour distance between two or more samples of colours
-#' @param vismodeldata (required) quantum catch color data. 
-#'  Can be the result from \code{vismodel}, or \code{colspace}. Data may also be 
-#'  independently calculated quantum catches, in the form of a data frame with 
+#'
+#' @param vismodeldata (required) quantum catch color data.
+#'  Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
+#'  independently calculated quantum catches, in the form of a data frame with
 #'  columns representing photoreceptors.
-#' @param by (required) a vector containing indicating the group to wich each row from 
+#' @param by (required) a vector containing indicating the group to wich each row from
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
@@ -13,226 +15,246 @@
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}
 #' @param ... other arguments to be passed to \code{\link{coldist}}. Must at minimum
 #' include \code{n} and \code{weber}. See \code{\link{coldist}} for details.
+#' 
 #' @return a matrix including the empirical mean and bootstrapped
 #'  confidence limits for dS (and dL if \code{achro = TRUE}).
-#' @examples 
+#'
+#' @examples
 #' \dontrun{
 #'  data(sicalis)
 #'  vm <- vismodel(sicalis, achro='bt.dc')
 #'  gr <- gsub("ind..", "", rownames(vm))
-#'  bootcoldist(vm, gr, n=c(1,2,2,4), weber=0.1, weber.achro=0.1, cores=1)
+#'  bootcoldist(vm, gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
 #'  }
 #'
-#' @export 
+#' @export
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom stats aggregate
+#'
+#' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
+#'  Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
 
 
-bootcoldist <- function(vismodeldata, by, boot.n=1000, alpha=0.95, 
-  cores = getOption("mc.cores", 2L), ...){
+bootcoldist <- function(vismodeldata, by, boot.n=1000, alpha=0.95,
+                        cores = getOption("mc.cores", 2L), ...) {
+  if (!any(c("colspace", "vismodel") %in% class(vismodeldata))) {
+    stop('object must be a "vismodel" or "colspace" result', call. = FALSE)
+  }
 
-if(!any(c('colspace', 'vismodel') %in% class(vismodeldata)))
-  stop('object must be a "vismodel" or "colspace" result', call.=FALSE)
-  
   # geometric mean
-  gmean <- function(x, na.rm=TRUE, zero.propagate = FALSE){
-    if(any(x < 0, na.rm = TRUE)){
+  gmean <- function(x, na.rm=TRUE, zero.propagate = FALSE) {
+    if (any(x < 0, na.rm = TRUE)) {
       return(NaN)
     }
-    if(zero.propagate){
-      if(any(x == 0, na.rm = TRUE)){
+    if (zero.propagate) {
+      if (any(x == 0, na.rm = TRUE)) {
         return(0)
       }
       exp(mean(log(x), na.rm = na.rm))
     } else {
-      exp(sum(log(x[x > 0]), na.rm=na.rm) / length(x))
+      exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
     }
   }
-  
-# start actual function
 
-arg0 <- list(...)
+  # start actual function
 
-if(is.null(arg0$n))
-  stop('argument "n" to be passed to "coldist" is missing', call.=FALSE)
+  arg0 <- list(...)
 
-if(is.null(arg0$weber))
-  stop('argument "weber" to be passed to "coldist" is missing', call.=FALSE)
+  if (is.null(arg0$n)) {
+    stop('argument "n" to be passed to "coldist" is missing', call. = FALSE)
+  }
 
-if(is.null(arg0$qcatch)){
-  if(is.null(attr(vismodeldata, 'qcatch')))
-    stop('argument "qcatch" to be passed to "coldist" is missing', call.=FALSE)
-  
-  arg0$qcatch <- attr(vismodeldata, 'qcatch')
-}
-  
-if(is.null(arg0$achro)){
-  if(is.null(attr(vismodeldata, 'visualsystem.achromatic')))
-    stop('argument "achro" to be passed to "coldist" is missing', call.=FALSE)
-  
-  if(attr(vismodeldata, 'visualsystem.achromatic') == 'none')
-    arg0$achro <- FALSE
+  if (is.null(arg0$weber)) {
+    stop('argument "weber" to be passed to "coldist" is missing', call. = FALSE)
+  }
 
-  if(attr(vismodeldata, 'visualsystem.achromatic') != 'none')
-    arg0$achro <- TRUE
-}
+  if (is.null(arg0$qcatch)) {
+    if (is.null(attr(vismodeldata, "qcatch"))) {
+      stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
+    }
 
-if(arg0$achro){
-  if(is.null(arg0$weber.achro))
-    stop('argument "weber.achro" to be passed to "coldist" is missing', call.=FALSE)
-}
+    arg0$qcatch <- attr(vismodeldata, "qcatch")
+  }
 
-if(is.null(arg0$noise))
-  arg0$noise <- 'neural'
+  if (is.null(arg0$achro)) {
+    if (is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
+      stop('argument "achro" to be passed to "coldist" is missing', call. = FALSE)
+    }
 
-if(is.null(arg0$weber.ref))
-  arg0$weber.ref <- 'longest'
+    if (attr(vismodeldata, "visualsystem.achromatic") == "none") {
+      arg0$achro <- FALSE
+    }
 
+    if (attr(vismodeldata, "visualsystem.achromatic") != "none") {
+      arg0$achro <- TRUE
+    }
+  }
 
-  
-sortinggroups <- order(by)
-vismodeldata <- vismodeldata[sortinggroups, ]
-by <- by[sortinggroups]
-  
-samplesizes <- table(by)
+  if (arg0$achro) {
+    if (is.null(arg0$weber.achro)) {
+      stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
+    }
+  }
 
-# calculate empirical deltaS
-empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify=TRUE)
-row.names(empgroupmeans) <- empgroupmeans[,1]
-empgroupmeans <- empgroupmeans[, -1]
+  if (is.null(arg0$noise)) {
+    arg0$noise <- "neural"
+  }
 
-#empcd <- coldist(empgroupmeans, ...)
-#empcd <- do.call(coldist, list(modeldata=empgroupmeans, arg0))
-
-datattributes <- grep('names', names(attributes(vismodeldata)), 
-  invert = TRUE, value = TRUE)
-
-attributes(empgroupmeans)[datattributes] <- attributes(vismodeldata)[datattributes]
-
-emparg <- arg0
-emparg$modeldata <- empgroupmeans
-
-empcd <- do.call(coldist, emparg)
-
-empdS <- setNames(empcd$dS, paste(empcd$patch1,empcd$patch2, sep='-'))
+  if (is.null(arg0$weber.ref)) {
+    arg0$weber.ref <- "longest"
+  }
 
 
-# separate data by group
-bygroup <- lapply(unique(by), function(x) vismodeldata[by==x, ])
 
-# split(dat, by) also works but is about twice as slow
-names(bygroup) <- unique(by)
+  sortinggroups <- order(by)
+  vismodeldata <- vismodeldata[sortinggroups, ]
+  by <- by[sortinggroups]
 
-# create vectors of indices to sample
-its <- lapply(samplesizes, function(x) sample(1:x, x*boot.n, replace=TRUE))
+  samplesizes <- table(by)
 
-# use the indices from its to sample from the data
-# returns a list with length = number of by
-# and rows = (sample size for that group) * (the number of bootstrap replicates) in each
-bootsamples <- lapply(1:length(bygroup), function(x) bygroup[[x]][its[[x]], ] )
+  # calculate empirical deltaS
+  empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
+  row.names(empgroupmeans) <- empgroupmeans[, 1]
+  empgroupmeans <- empgroupmeans[, -1]
+
+  # empcd <- coldist(empgroupmeans, ...)
+  # empcd <- do.call(coldist, list(modeldata=empgroupmeans, arg0))
+
+  datattributes <- grep("names", names(attributes(vismodeldata)),
+    invert = TRUE, value = TRUE
+  )
+
+  attributes(empgroupmeans)[datattributes] <- attributes(vismodeldata)[datattributes]
+
+  emparg <- arg0
+  emparg$modeldata <- empgroupmeans
+
+  empcd <- do.call(coldist, emparg)
+
+  empdS <- setNames(empcd$dS, paste(empcd$patch1, empcd$patch2, sep = "-"))
 
 
-# next, split by bootstrap replicate
-# preserving the same sample size as that original group had
-#
-# list with length = number of by
-# and values = index for the bootstrap replicate that sample belongs to
-bootindex <- lapply(samplesizes, function(x) as.character(rep(1:boot.n, each=x)))
+  # separate data by group
+  bygroup <- lapply(unique(by), function(x) vismodeldata[by == x, ])
 
-# use the index to break samples into bootstrap replicates
-# returns a list with length = number of by
-# each entry is itself a list with length = number of replicates
-bootbygroup <- lapply(1:length(bygroup), function(x){
-  lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]]==z, ])  
-}
-)
+  # split(dat, by) also works but is about twice as slow
+  names(bygroup) <- unique(by)
 
-# now take the column means for all bootstrapped by
-# returns a list with length = number of by
-# each row in these = the (geometric) mean of bootstrap replicates
-groupcolmeans <- lapply(bootbygroup, function(z) 
-  do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))))
+  # create vectors of indices to sample
+  its <- lapply(samplesizes, function(x) sample(1:x, x * boot.n, replace = TRUE))
 
-# now "split and merge"
-# creating a list with length = number of bootstrap replicates
-# and rows in each entry = mean per group in that replicate
-bootgrouped <- lapply(1:boot.n, function(x) 
-  do.call(rbind, lapply(groupcolmeans, '[', x, )))
+  # use the indices from its to sample from the data
+  # returns a list with length = number of by
+  # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
+  bootsamples <- lapply(1:length(bygroup), function(x) bygroup[[x]][its[[x]], ])
 
-# ...name the rows by group
-bootgrouped <- lapply(bootgrouped, function(x){row.names(x) <- unique(by); x})
 
-# ...and give them the necessary attributes
-bootgrouped <- lapply(bootgrouped, as.data.frame)
-attribs <- attributes(vismodeldata)
-attribs <- attribs[grep('data|names', names(attribs), invert=TRUE)]
+  # next, split by bootstrap replicate
+  # preserving the same sample size as that original group had
+  #
+  # list with length = number of by
+  # and values = index for the bootstrap replicate that sample belongs to
+  bootindex <- lapply(samplesizes, function(x) as.character(rep(1:boot.n, each = x)))
 
-for(i in seq_along(bootgrouped)) 
-  attributes(bootgrouped[[i]])[names(attribs)] <- attribs
+  # use the index to break samples into bootstrap replicates
+  # returns a list with length = number of by
+  # each entry is itself a list with length = number of replicates
+  bootbygroup <- lapply(1:length(bygroup), function(x) {
+    lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]] == z, ])
+  })
 
-# apply coldist to the replicated bootstraps
+  # now take the column means for all bootstrapped by
+  # returns a list with length = number of by
+  # each row in these = the (geometric) mean of bootstrap replicates
+  groupcolmeans <- lapply(bootbygroup, function(z)
+    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))))
+
+  # now "split and merge"
+  # creating a list with length = number of bootstrap replicates
+  # and rows in each entry = mean per group in that replicate
+  bootgrouped <- lapply(1:boot.n, function(x)
+    do.call(rbind, lapply(groupcolmeans, "[", x, )))
+
+  # ...name the rows by group
+  bootgrouped <- lapply(bootgrouped, function(x) {
+    row.names(x) <- unique(by)
+    x
+  })
+
+  # ...and give them the necessary attributes
+  bootgrouped <- lapply(bootgrouped, as.data.frame)
+  attribs <- attributes(vismodeldata)
+  attribs <- attribs[grep("data|names", names(attribs), invert = TRUE)]
+
+  for (i in seq_along(bootgrouped))
+    attributes(bootgrouped[[i]])[names(attribs)] <- attribs
+
+  # apply coldist to the replicated bootstraps
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
-    } 
+  }
 
-tmpbootcdfoo <- function(x){
+  tmpbootcdfoo <- function(x) {
     tmparg <- arg0
     tmparg$modeldata <- x
     do.call(coldist, tmparg)
-    }
-    
-  bootcd <- pbmclapply(bootgrouped, function(z){
-  	tryCatch(tmpbootcdfoo(z),
-  	error = function(e) NULL
-  	)}, mc.cores=cores)
+  }
+
+  bootcd <- pbmclapply(bootgrouped, function(z) {
+    tryCatch(tmpbootcdfoo(z),
+      error = function(e) NULL
+    )
+  }, mc.cores = cores)
 
 
-# get deltaS and name by group difference
-bootdS <- do.call(rbind,
-                  lapply(bootcd, function(x) 
-                  setNames(x$dS, paste(x$patch1, x$patch2, sep='-')))
-                  )
+  # get deltaS and name by group difference
+  bootdS <- do.call(
+    rbind,
+    lapply(bootcd, function(x)
+      setNames(x$dS, paste(x$patch1, x$patch2, sep = "-")))
+  )
 
-if(dim(bootdS)[1] < boot.n)
-  stop('Bootstrap sampling encountered errors. Try using "cores = 1".')
-# ...subtract them from the empirical
-# bootdS <- bootdS - empdS
+  if (dim(bootdS)[1] < boot.n) {
+    stop('Bootstrap sampling encountered errors. Try using "cores = 1".')
+  }
+  # ...subtract them from the empirical
+  # bootdS <- bootdS - empdS
 
-# ... sort and find quantiles
-#bootdS <- sort(bootdS)
-#quantileindices <- round(length(bootdS)*((1+c(-alpha, alpha))/2))
-#dsCI <- empdS + bootdS[quantileindices]
+  # ... sort and find quantiles
+  # bootdS <- sort(bootdS)
+  # quantileindices <- round(length(bootdS)*((1+c(-alpha, alpha))/2))
+  # dsCI <- empdS + bootdS[quantileindices]
 
-# which gives the same as just
-quantileindices <- round(boot.n*((1+c(-alpha, alpha))/2))
-bootdS <- apply(bootdS, 2, sort)
-dsCI <- bootdS[quantileindices, , drop=FALSE]
-rownames(dsCI) <- c('dS.lwr','dS.upr')
-# make sure names match with empirical (they always should but just in case)
-dsCI <- dsCI[, names(empdS), drop=FALSE]
-
-dS.mean <- empdS
-
-res <- t(rbind(dS.mean, dsCI))
-
-if(arg0$achro){
-  empdL <- setNames(empcd$dL, paste(empcd$patch1,empcd$patch2, sep='-'))
-
-  bootdL <- do.call(rbind,
-                    lapply(bootcd, function(x) 
-                    setNames(x$dL, paste(x$patch1, x$patch2, sep='-')))
-                    )
-
-  bootdL <- apply(bootdL, 2, sort)
-  dlCI <- bootdL[quantileindices, , drop=FALSE]
-  rownames(dlCI) <- c('dL.lwr','dL.upr')
+  # which gives the same as just
+  quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
+  bootdS <- apply(bootdS, 2, sort)
+  dsCI <- bootdS[quantileindices, , drop = FALSE]
+  rownames(dsCI) <- c("dS.lwr", "dS.upr")
   # make sure names match with empirical (they always should but just in case)
-  dlCI <- dlCI[, names(empdL), drop=FALSE]
-  dL.mean <- empdL
-  res <- cbind(res, t(rbind(dL.mean, dlCI)))
-}
+  dsCI <- dsCI[, names(empdS), drop = FALSE]
 
-res
+  dS.mean <- empdS
 
+  res <- t(rbind(dS.mean, dsCI))
+
+  if (arg0$achro) {
+    empdL <- setNames(empcd$dL, paste(empcd$patch1, empcd$patch2, sep = "-"))
+
+    bootdL <- do.call(
+      rbind,
+      lapply(bootcd, function(x)
+        setNames(x$dL, paste(x$patch1, x$patch2, sep = "-")))
+    )
+
+    bootdL <- apply(bootdL, 2, sort)
+    dlCI <- bootdL[quantileindices, , drop = FALSE]
+    rownames(dlCI) <- c("dL.lwr", "dL.upr")
+    # make sure names match with empirical (they always should but just in case)
+    dlCI <- dlCI[, names(empdL), drop = FALSE]
+    dL.mean <- empdL
+    res <- cbind(res, t(rbind(dL.mean, dlCI)))
+  }
+
+  res
 }
