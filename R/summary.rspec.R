@@ -301,9 +301,9 @@ Rmin <- sapply(object, min)
 
 S2 <- B3/Rmin #S2
 
-S8  <- (B3-Rmin)/B2 # S8
-
 S6 <- B3-Rmin # S6
+
+S8 <- S6/B2 # S8
 
 # lambda Rmax hue
 H1 <- wl[max.col(t(object), ties.method='first')]
