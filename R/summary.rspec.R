@@ -338,7 +338,7 @@ S10[apply(diffsmooth,2,min) > 0] <- NA
 
 # H5
 lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
-lambdabmax[apply(diffsmooth,2,which.max) < 0] <- NA
+lambdabmax[apply(diffsmooth,2,max) < 0] <- NA
 
 
 # Add remaining variables to output
