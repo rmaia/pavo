@@ -192,6 +192,10 @@ B2 <- sapply(object, mean)
 
 B3 <- sapply(object, max)
 
+Rmin <- sapply(object, min)
+
+Rmid <- (B3 + Rmin) / 2
+
 # Chromas
 
 # Red
@@ -277,14 +281,25 @@ R450 <- as.numeric(object[which(wl==450), ])
 R700 <- as.numeric(object[which(wl==700), ])
 Carotchroma <- (R450-R700)/R700
 
+# H3
+index_Rmid <- sapply(1:ncol(object), function(x) {
+  which.min(abs(object[,x] - Rmid[x]))
+})
+H3 <- wl[index_Rmid]
+
 # S7
 
-sum_min_mid <- apply(object, 2, function(x)
-                     sum(x[which.min(x):round((which.max(x) + which.min(x))/2)]))
-sum_mid_max <- apply(object, 2, function(x)
-                     sum(x[round((which.max(x) + which.min(x))/2):which.max(x)]))
+S7 <- sapply(1:ncol(object), function(col) {
+  spec <- object[,col]
+  index_Rmid_spec <- index_Rmid[col]
+  spec_low <- spec[1:index_Rmid_spec]
+  spec_high <- spec[index_Rmid_spec:length(spec)]
 
-S7 <- (sum_min_mid - sum_mid_max)/(B1)
+  return(sum(spec_low) - sum(spec_high))
+
+})
+
+S7 <- S7/B1
 
 
 # S3
@@ -297,8 +312,6 @@ S3 <- sapply(pmindex, function(x) sum(object[minus50[x]:plus50[x],x]))/B1
 
 
 # Spectral saturation
-Rmin <- sapply(object, min)
-
 S2 <- B3/Rmin #S2
 
 S6 <- B3-Rmin # S6
@@ -307,20 +320,6 @@ S8 <- S6/B2 # S8
 
 # lambda Rmax hue
 H1 <- wl[max.col(t(object), ties.method='first')]
-
-# H3
-# limit to 400-700 nm range to avoid spurious UV peaks
-#  how about we don't do that?
-# H3object <- object[wl %in% 400:700, , drop = FALSE]
-# H3wl <- wl[wl %in% c(400:700)]
-# lambdaRmin <- wl[apply(object, 2, which.min)]  # H3
-# Rmid <- round((H1+lambdaRmin)/2)
-RmidH3 <- (Rmin + B3) / 2
-H3 <- sapply(1:ncol(object), function(x) {
-  which.min(abs(object[,x] - RmidH3[x]))
-})
-H3 <- wl[H3]
-
 
 # H2
 diffsmooth <- apply(object,2,diff)
