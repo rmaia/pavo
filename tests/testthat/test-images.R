@@ -21,4 +21,5 @@ test_that("Basic", {
   snakes_class <- classify(snakes, n_cols = 3)
   snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 150)
   
+  
 })
