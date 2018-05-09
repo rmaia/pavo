@@ -8,12 +8,12 @@ bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   cores = getOption("mc.cores", 2L), ...)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data. 
-Can be the result from \code{vismodel}, or \code{colspace}. Data may also be 
-independently calculated quantum catches, in the form of a data frame with 
+\item{vismodeldata}{(required) quantum catch color data.
+Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
+independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.}
 
-\item{by}{(required) a vector containing indicating the group to wich each row from 
+\item{by}{(required) a vector containing indicating the group to wich each row from
 the object belongs to.}
 
 \item{boot.n}{number of bootstrap replicates (defaults to 1000)}
@@ -39,7 +39,11 @@ Uses a bootstrap procedure to generate confidence intervals
  data(sicalis)
  vm <- vismodel(sicalis, achro='bt.dc')
  gr <- gsub("ind..", "", rownames(vm))
- bootcoldist(vm, gr, n=c(1,2,2,4), weber=0.1, weber.achro=0.1, cores=1)
+ bootcoldist(vm, gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
  }
 
+}
+\references{
+Maia, R., White, T. E., (2018) Comparing colors using visual models.
+ Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
 }

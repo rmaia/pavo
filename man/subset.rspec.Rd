@@ -13,22 +13,26 @@
 \method{subset}{vismodel}(x, subset, ...)
 }
 \arguments{
-\item{x}{(required) an object of class \code{rspec}, \code{vismodel}, or \code{colspace},
-containing spectra, visual model output or colorspace data to subset.}
+\item{x}{(required) an object of class \code{rspec}, \code{vismodel}, or 
+\code{colspace}, containing spectra, visual model output or colorspace data 
+to subset.}
 
 \item{subset}{a string used for partial matching of observations.}
 
-\item{...}{additional attributes passed to \code{grep}. Ignored if \code{subset} is logical.}
+\item{...}{additional attributes passed to \code{grep}. Ignored if 
+\code{subset} is logical.}
 }
 \value{
 a subsetted object of the same class as the input object.
 }
 \description{
-Subsets various object types based on a given vector or grep partial matching of data names.
+Subsets various object types based on a given vector or grep partial matching 
+of data names.
 }
 \note{
-if more than one value is given to \code{subset}, any spectra that matches \emph{either}
-condition will be included. It's a union, not an intersect.
+if more than one value is given to \code{subset}, any spectra that
+matches \emph{either} condition will be included. It's a union, not an 
+intersect.
 }
 \examples{
 \dontrun{
