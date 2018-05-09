@@ -256,6 +256,8 @@ if(lambdamin <= 415 & lambdamax >= 415){
   warning('cannot calculate violet chroma; wavelength below 415 nm', call.=FALSE)
 }
 
+# lambda Rmax hue
+H1 <- wl[max.col(t(object), ties.method='first')]
 
 # Segment-based variables
 
@@ -303,13 +305,12 @@ S7 <- S7/B1
 
 
 # S3
-
-plus50 <- apply(object,2,function(x) min(c(which.max(x)+50,which.max(wl))))
-minus50 <- apply(object,2,function(x) max(c(which.max(x)-50,which.min(wl))))
-pmindex <- 1:dim(object)[2]
-
-S3 <- sapply(pmindex, function(x) sum(object[minus50[x]:plus50[x],x]))/B1
-
+S3 <- sapply(1:ncol(object), function(col) {
+  spec <- object[,col]
+  H1_spec <- H1[col]
+  sum(spec[wl>(H1_spec-50) & wl<(H1_spec+50)])
+})
+S3 <- S3/B1
 
 # Spectral saturation
 S2 <- B3/Rmin #S2
@@ -317,9 +318,6 @@ S2 <- B3/Rmin #S2
 S6 <- B3-Rmin # S6
 
 S8 <- S6/B2 # S8
-
-# lambda Rmax hue
-H1 <- wl[max.col(t(object), ties.method='first')]
 
 # H2
 diffsmooth <- apply(object,2,diff)
