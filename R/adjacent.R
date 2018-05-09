@@ -11,11 +11,15 @@
 #' @param x_scale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID an integer specifying the colour-class ID number of the homogeneous background.
-#' Examine the attributes of, or call \code{summary} on, the result of \code{\link{classify}}
-#' to visualise the RGB values corresponding to colour-class ID numbers.
-#' @param bkg_include logical; should the background be excluded from the analyses?
-#' Defaults to \code{FALSE}.
+#' @param bkg_ID an integer or vector specifying the colour-class ID number(s) of 
+#' pertaining to the background. Examine the attributes of, or call \code{summary} on, 
+#' the result of \code{\link{classify}} to visualise the RGB values corresponding to 
+#' colour-class ID numbers. 
+#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID_i} 
+#' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
+#' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+#' may give undesired results if elements are shared between the background and focal
+#' stimulus.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1' 
@@ -109,7 +113,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 
   # Background
   if (bkg_include == FALSE && is.null(bkg_ID)) {
-    stop("Background cannot be excluded without specifying its ID via the argument bkg_ID.")
+    stop("Background cannot be excluded without specifying one or more ID's via the argument bkg_ID.")
   }
 
   ## Setting scales
@@ -171,11 +175,15 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 #' @param x_scale_i (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID_i an integer specifying the colour-class ID number of the homogeneous background.
-#' Examine the attributes of, or call \code{summary} on, the result of \code{\link{classify}}
-#' to visualise the RGB values corresponding to colour-class ID numbers.
-#' @param bkg_include_i logical; should the background be excluded from the analyses?
-#' Defaults to \code{FALSE}.
+#' @param bkg_ID_i an integer or vector specifying the colour-class ID number(s) of 
+#' pertaining to the background. Examine the attributes of, or call \code{summary} on, 
+#' the result of \code{\link{classify}} to visualise the RGB values corresponding to 
+#' colour-class ID numbers. 
+#' @param bkg_include_i logical; should the colour classes specified by \code{bkg_ID_i} 
+#' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
+#' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+#' may give undesired results if elements are shared between the background and focal
+#' stimulus.
 #' @param coldists_i An data.frame or matrix specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, with the remaining
@@ -209,10 +217,12 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   # Exclude background, if specified
   if (!is.null(bkg_ID_i) && bkg_include_i == FALSE) {
 
-    # Render background NA
-    subclass[subclass == bkg_ID_i] <- NA
+    # Render selected classes NA
+    for(i in 1:length(bkg_ID_i)){
+      subclass[subclass == bkg_ID_i[[i]]] <- NA
+    }
 
-    # Subset matrix to include only rows with at least one non-bkg transition
+    # Subset matrix to include only rows with at least one non-NA transition
     subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
   }
 
@@ -286,14 +296,14 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
 
   # Row transition density (mean transitions / row)
   if (nrow(subset(rowtrans2, c1 != c2)) == 0) {
-    m_r <- 0.001
+    m_r <- Inf
   } else {
     m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / x_scale_i
   }
 
   # Col transition density (mean transitions / scaled unit)
   if (nrow(subset(coltrans2, c1 != c2)) == 0) {
-    m_c <- 0.001
+    m_c <- Inf
   } else {
     m_c <- (sum(subset(coltrans2, c1 != c2)["N"]) / n_x) / y_scale
   }
@@ -319,7 +329,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   # Expected frequency of off-diagonal transitions
   offdiag$exp <- NA
   for (i in 1:nrow(offdiag)) {
-    offdiag$exp[i] <- 2 * n_off * freq$rel_freq[offdiag[i, 1]] * freq$rel_freq[offdiag[i, 2]]
+    offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$Var1 == offdiag[i, 1]] * freq$rel_freq[freq$Var1 == offdiag[i, 2]]
   }
   E <- data.frame(t(offdiag$exp))
   names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)

@@ -20,12 +20,16 @@ from this, to maintain an even grid spacing.}
 in preferred units. Not required, and ignored, if image scales have been set via
 \code{\link{calibrate}}.}
 
-\item{bkg_ID_i}{an integer specifying the colour-class ID number of the homogeneous background.
-Examine the attributes of, or call \code{summary} on, the result of \code{\link{classify}}
-to visualise the RGB values corresponding to colour-class ID numbers.}
+\item{bkg_ID_i}{an integer or vector specifying the colour-class ID number(s) of 
+pertaining to the background. Examine the attributes of, or call \code{summary} on, 
+the result of \code{\link{classify}} to visualise the RGB values corresponding to 
+colour-class ID numbers.}
 
-\item{bkg_include_i}{logical; should the background be excluded from the analyses?
-Defaults to \code{FALSE}.}
+\item{bkg_include_i}{logical; should the colour classes specified by \code{bkg_ID_i} 
+be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
+members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+may give undesired results if elements are shared between the background and focal
+stimulus.}
 
 \item{coldists_i}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
