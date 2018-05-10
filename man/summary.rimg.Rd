@@ -9,14 +9,14 @@
 \arguments{
 \item{object}{(required) Results of \code{\link{classify}}.}
 
-\item{plot}{logical; plot the actual colours corresponding to colour class
-categories? Defaults to \code{FALSE}.}
+\item{plot}{logical; plot both the image and the colours corresponding to colour class
+categories side-by-side? Defaults to \code{FALSE}.}
 
-\item{...}{class consistency (ignored)}
+\item{...}{additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.}
 }
 \value{
 Either the RGB values of the k-means centres from the colour-classified image,
-or a plot of the colours specified by those values (when \code{plot = TRUE}.
+or a plot of both the image and specified colours (when \code{plot = TRUE}.
 }
 \description{
 Returns the attributes of the colour-classified matrix generated from \code{\link{classify}}.
@@ -27,10 +27,7 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, n_cols = 4)
 summary(papilio_class)
 
-# Plot the unprocessed and colour-classified images alongside the colour class samples
-par(mfrow = c(1,3))
-plot(papilio)
-plot(papilio_class)
+# Plot the colour-classified image alongside the colour class palette
 summary(papilio_class, plot = TRUE)
 }
 
