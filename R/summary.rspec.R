@@ -308,7 +308,7 @@ S7 <- S7/B1
 S3 <- sapply(1:ncol(object), function(col) {
   spec <- object[,col]
   H1_spec <- H1[col]
-  sum(spec[wl>(H1_spec-50) & wl<(H1_spec+50)])
+  sum(spec[wl>=(H1_spec-50) & wl<=(H1_spec+50)])
 })
 S3 <- S3/B1
 
