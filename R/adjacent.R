@@ -381,8 +381,10 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   ## Things involving the background
   if (!is.null(bkg_ID_i) && bkg_include_i == TRUE) {
     # Animal/background transition ratio
-    O_a_a <- subset(offdiag, c1 & c2 != bkg_ID_i)
-    O_a_b <- subset(offdiag, c1 == bkg_ID_i | c2 == bkg_ID_i)
+    O_a_a <- offdiag[!offdiag$c1 %in% bkg_ID_i, ]
+    O_a_a <- O_a_a[!O_a_a$c2 %in% bkg_ID_i, ]
+    subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
+    O_a_b <- offdiag[!subb,]
     B <- sum(O_a_a$N) / sum(O_a_b$N)
 
     # # Animal/background transition diversity ratio (TODO)
