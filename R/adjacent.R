@@ -112,9 +112,16 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   }
 
   # Background
+  if(isTRUE(multi_image))
+    n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
+  else
+    n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
   if (bkg_include == FALSE && is.null(bkg_ID)) {
     stop("Background cannot be excluded without specifying one or more ID's via the argument bkg_ID.")
   }
+  if(!is.null(bkg_ID) && length(bkg_ID) >= n_class - 1 && bkg_include == FALSE)
+    stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
+         in the image.")
 
   ## Setting scales
   # Single image
