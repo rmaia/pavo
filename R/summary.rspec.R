@@ -183,7 +183,7 @@ select <- (1:ncol(object))[-wl_index]
 object <- object[ , select, drop=FALSE]
 
 
-output.mat <- matrix (nrow=(dim(object)[2]), ncol=23)
+output.mat <- matrix(nrow=ncol(object), ncol=23)
 
 # Three measures of brightness
 B1 <- sapply(object, sum)
