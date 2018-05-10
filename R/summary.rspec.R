@@ -200,7 +200,7 @@ Rmid <- (B3 + Rmin) / 2
 
 # Red
 if(lambdamin <= 605 & lambdamax >= 700){
-  Redchromamat <- object[which(wl==605):which(wl==700),] # red 605-700nm inclusive
+  Redchromamat <- object[which(wl==605):which(wl==700), , drop = FALSE] # red 605-700nm inclusive
   Redchroma <- colSums(Redchromamat)/B1 # S1 red
   output.mat[, 9] <- Redchroma
 }else{
@@ -209,7 +209,7 @@ if(lambdamin <= 605 & lambdamax >= 700){
 
 # Yellow
 if(lambdamin <= 550 & lambdamax >= 625){
-  Yellowchromamat <- object[which(wl==550):which(wl==625),] #yellow 550-625nm
+  Yellowchromamat <- object[which(wl==550):which(wl==625), , drop = FALSE] #yellow 550-625nm
   Yellowchroma <- colSums(Yellowchromamat)/B1 # S1 yellow
   output.mat[, 8] <- Yellowchroma
 }else{
@@ -218,7 +218,7 @@ if(lambdamin <= 550 & lambdamax >= 625){
 
 # Green
 if(lambdamin <= 510 & lambdamax >= 605){
-  Greenchromamat <- object[which(wl==510):which(wl==605),] # green 510-605nm inlusive
+  Greenchromamat <- object[which(wl==510):which(wl==605), , drop = FALSE] # green 510-605nm inlusive
   Greenchroma <- colSums(Greenchromamat)/B1 # S1 green
   output.mat[, 7] <- Greenchroma
   }else{
@@ -227,7 +227,7 @@ if(lambdamin <= 510 & lambdamax >= 605){
 
 # Blue
 if(lambdamin <= 400 & lambdamax >= 510){
-  Bluechromamat <- object[which(wl==400):which(wl==510),] # blue 400-510nm inclusive
+  Bluechromamat <- object[which(wl==400):which(wl==510), , drop = FALSE] # blue 400-510nm inclusive
   Bluechroma <- colSums(Bluechromamat)/B1 # S1 blue
   output.mat[, 6] <- Bluechroma
   }else{
@@ -236,7 +236,7 @@ if(lambdamin <= 400 & lambdamax >= 510){
 
 # UV
 if(lambdamin <= 400 & lambdamax >=400){
-  UVchromamat <- object[which(wl==lambdamin):which(wl==400),]
+  UVchromamat <- object[which(wl==lambdamin):which(wl==400), , drop = FALSE]
   UVchroma <- colSums(UVchromamat)/B1 # S1 UV
   output.mat [, 4] <- UVchroma
   }else{
@@ -249,7 +249,7 @@ if(lambdamin > 300 & lambdamin < 400){
 
 # Violet
 if(lambdamin <= 415 & lambdamax >= 415){
-  Vchromamat <- as.matrix(object[which(wl==lambdamin):which(wl==415),])
+  Vchromamat <- object[which(wl==lambdamin):which(wl==415), , drop = FALSE]
   Vchroma <- colSums(Vchromamat)/B1 # S1 Violet
   output.mat[, 5] <- Vchroma
 }else{
@@ -268,10 +268,10 @@ Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
 Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
 Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
 
-S5R <- colSums(object[Q4, ])
-S5Y <- colSums(object[Q3, ])
-S5G <- colSums(object[Q2, ])
-S5B <- colSums(object[Q1, ])
+S5R <- colSums(object[Q4, , drop = FALSE])
+S5Y <- colSums(object[Q3, , drop = FALSE])
+S5G <- colSums(object[Q2, , drop = FALSE])
+S5B <- colSums(object[Q1, , drop = FALSE])
 
 S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
 
