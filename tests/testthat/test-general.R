@@ -5,8 +5,7 @@ test_that('Class assignment', {
   data(flowers)
   
   # Check rspec
-  flowers <- as.rspec(as.data.frame(flowers))
-  expect_is(flowers, "rspec")
+  # See test-S3rspec.R
   
   # Check vismodel
   vis.flowers <- vismodel(flowers, visual = 'apis')
