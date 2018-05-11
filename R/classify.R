@@ -26,6 +26,7 @@
 #'
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom stats kmeans xtabs
+#' @importFrom utils object.size
 #'
 #' @note Since the \code{kmeans} process draws on random numbers to find initial
 #' cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible
@@ -76,7 +77,12 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
         ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      if(format(object.size(imgdat), units = 'Gb') < 0.5){
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      }else{
+        message('Image data too large for parallel-processing, reverting to single-core processing.')
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      }
     }
     # Names & attributes
     for (i in 1:length(outdata)) {

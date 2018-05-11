@@ -78,9 +78,14 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     imgsize <- prod(dim(read.bitmap(files[1])))
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if(totalsize > max.size)
-      stop("Total size of images likely exceeds available memory")
+      stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
 
-    imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
+    if(totalsize < 0.5)
+      imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
+    else{
+      message('Image data too large for parallel-processing, reverting to single-core processing.')
+      imgdat <- lapply(1:length(file_names), function(x) read.bitmap(files[x]))
+    }
     
     # Duplicate channels if grayscale
     for(i in 1:length(imgdat)){  
