@@ -16,7 +16,7 @@
 #' for use in further \code{pavo} functions.
 #'
 #' @export
-#' 
+#'
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom readbitmap read.bitmap
 #'
@@ -36,7 +36,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
   # Allowed extensions
   ext <- c("jpg", "jpeg", "png", "bmp")
   # Cores
-  if (cores > 1 && .Platform$OS.type == "windows") {  
+  if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
@@ -73,24 +73,26 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     }
 
     imgnames <- gsub(extensions, "", file_names)
-    
+
     # Stop if max size estimated to exceed available memory
     imgsize <- prod(dim(read.bitmap(files[1])))
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
-    if(totalsize > max.size)
+    if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
+    }
 
-    if(totalsize < 0.5)
+    if (totalsize < 0.5) {
       imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
-    else{
-      message('Image data too large for parallel-processing, reverting to single-core processing.')
+    } else {
+      message("Image data too large for parallel-processing, reverting to single-core processing.")
       imgdat <- lapply(1:length(file_names), function(x) read.bitmap(files[x]))
     }
-    
+
     # Duplicate channels if grayscale
-    for(i in 1:length(imgdat)){  
-      if(is.na(dim(imgdat[[i]])[3]))
+    for (i in 1:length(imgdat)) {
+      if (is.na(dim(imgdat[[i]])[3])) {
         imgdat[[i]] <- replicate(3, imgdat[[i]], simplify = "array")
+      }
     }
 
     # Attributes
@@ -100,9 +102,9 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       attr(imgdat[[i]], "state") <- "raw"
       class(imgdat[[i]]) <- c("rimg", "array")
     }
-    # the list itself needs attributes 
-     class(imgdat) <- c("rimg", "list")
-     attr(imgdat, 'state') <- 'raw'
+    # the list itself needs attributes
+    class(imgdat) <- c("rimg", "list")
+    attr(imgdat, "state") <- "raw"
   }
   imgdat
 }

@@ -11,19 +11,19 @@
 #' @param x_scale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID an integer or vector specifying the colour-class ID number(s) of 
-#' pertaining to the background. Examine the attributes of, or call \code{summary} on, 
-#' the result of \code{\link{classify}} to visualise the RGB values corresponding to 
-#' colour-class ID numbers. 
-#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID_i} 
+#' @param bkg_ID an integer or vector specifying the colour-class ID number(s) of
+#' pertaining to the background. Examine the attributes of, or call \code{summary} on,
+#' the result of \code{\link{classify}} to visualise the RGB values corresponding to
+#' colour-class ID numbers.
+#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID_i}
 #' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
 #' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
 #' may give undesired results if elements are shared between the background and focal
 #' stimulus.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should specify all possible combinations of colour category ID's, and be named 'c1' 
-#' and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL 
+#' should specify all possible combinations of colour category ID's, and be named 'c1'
+#' and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL
 #' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 #' for visual modelling with spectral data.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
@@ -87,42 +87,46 @@
 #'
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
-#' @references Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern 
+#' @references Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern
 #' geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution, Early View.
 
-adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL, 
+adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
                      bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
   multi_image <- inherits(classimg, "list")
-  
+
   # Coldists formatting (individual/multiple? todo)
-  if(!is.null(coldists)){
-    if(ncol(coldists) < 3)
+  if (!is.null(coldists)) {
+    if (ncol(coldists) < 3) {
       stop("Too few columns present in 'coldists' data.frame.")
-    if(!all(c('c1', 'c2') %in% names(coldists))){
+    }
+    if (!all(c("c1", "c2") %in% names(coldists))) {
       warning("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns
               contain colour-category IDs.")
-      names(coldists)[1:2] <- c('c1', 'c2')
+      names(coldists)[1:2] <- c("c1", "c2")
     }
-    if(!any(c('dS', 'dL') %in% names(coldists)))
+    if (!any(c("dS", "dL") %in% names(coldists))) {
       stop("No columns named 'dS' and/or 'dL' in coldists.")
+    }
     # Need to sort?
   }
 
   # Background
-  if(isTRUE(multi_image))
+  if (isTRUE(multi_image)) {
     n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
-  else
+  } else {
     n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
+  }
   if (bkg_include == FALSE && is.null(bkg_ID)) {
     stop("Background cannot be excluded without specifying one or more ID's via the argument bkg_ID.")
   }
-  if(!is.null(bkg_ID) && length(bkg_ID) >= n_class - 1 && bkg_include == FALSE)
+  if (!is.null(bkg_ID) && length(bkg_ID) >= n_class - 1 && bkg_include == FALSE) {
     stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
          in the image.")
+  }
 
   ## Setting scales
   # Single image
@@ -146,23 +150,23 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   }
 
   if (isTRUE(multi_image)) { # Multiple images
-    if(format(object.size(classimg), units = 'Gb') < 0.5){
+    if (format(object.size(classimg), units = "Gb") < 0.5) {
       outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-                                                                          x_pts_i = x_pts,
-                                                                          x_scale_i = x_scale[[x]],
-                                                                          bkg_ID_i = bkg_ID,
-                                                                          bkg_include_i = bkg_include,
-                                                                          coldists_i = coldists
-      ), mc.cores = cores)
-    }else{
-      message('Image data too large for parallel-processing, reverting to single-core processing.')
+          x_pts_i = x_pts,
+          x_scale_i = x_scale[[x]],
+          bkg_ID_i = bkg_ID,
+          bkg_include_i = bkg_include,
+          coldists_i = coldists
+        ), mc.cores = cores)
+    } else {
+      message("Image data too large for parallel-processing, reverting to single-core processing.")
       outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-                                                                          x_pts_i = x_pts,
-                                                                          x_scale_i = x_scale[[x]],
-                                                                          bkg_ID_i = bkg_ID,
-                                                                          bkg_include_i = bkg_include,
-                                                                          coldists_i = coldists
-      ))
+          x_pts_i = x_pts,
+          x_scale_i = x_scale[[x]],
+          bkg_ID_i = bkg_ID,
+          bkg_include_i = bkg_include,
+          coldists_i = coldists
+        ))
     }
     outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
@@ -194,11 +198,11 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 #' @param x_scale_i (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID_i an integer or vector specifying the colour-class ID number(s) of 
-#' pertaining to the background. Examine the attributes of, or call \code{summary} on, 
-#' the result of \code{\link{classify}} to visualise the RGB values corresponding to 
-#' colour-class ID numbers. 
-#' @param bkg_include_i logical; should the colour classes specified by \code{bkg_ID_i} 
+#' @param bkg_ID_i an integer or vector specifying the colour-class ID number(s) of
+#' pertaining to the background. Examine the attributes of, or call \code{summary} on,
+#' the result of \code{\link{classify}} to visualise the RGB values corresponding to
+#' colour-class ID numbers.
+#' @param bkg_include_i logical; should the colour classes specified by \code{bkg_ID_i}
 #' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
 #' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
 #' may give undesired results if elements are shared between the background and focal
@@ -237,7 +241,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   if (!is.null(bkg_ID_i) && bkg_include_i == FALSE) {
 
     # Render selected classes NA
-    for(i in 1:length(bkg_ID_i)){
+    for (i in 1:length(bkg_ID_i)) {
       subclass[subclass == bkg_ID_i[[i]]] <- NA
     }
 
@@ -396,7 +400,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
     O_a_a <- offdiag[!offdiag$c1 %in% bkg_ID_i, ]
     O_a_a <- O_a_a[!O_a_a$c2 %in% bkg_ID_i, ]
     subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
-    O_a_b <- offdiag[!subb,]
+    O_a_b <- offdiag[!subb, ]
     B <- sum(O_a_a$N) / sum(O_a_b$N)
 
     # # Animal/background transition diversity ratio (TODO)
@@ -407,7 +411,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   }
 
   # Edge salience (Endler et al. 2018 )
-  if(!is.null(coldists_i)){
+  if (!is.null(coldists_i)) {
     weightmean <- function(x, wt) {
       s <- which(is.finite(x * wt))
       wt <- wt[s]
@@ -421,32 +425,33 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
       xbar <- weightmean(x, wt)
       sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
     }
-    
+
     offdiagprop <- merge(offdiagprop, coldists_i)
-    
+
     # Chromatic calcs
-    if("dS" %in% names(offdiagprop)){
-    m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
+    if ("dS" %in% names(offdiagprop)) {
+      m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
 
-    s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
+      s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
 
-    cv_dS <- s_dS/m_dS
-    }else
+      cv_dS <- s_dS / m_dS
+    } else {
       m_dS <- s_dS <- cv_dS <- NA
-    
+    }
+
     # Achromatic calcs
-    if("dL" %in% names(offdiagprop)){
+    if ("dL" %in% names(offdiagprop)) {
       m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
       s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
-      cv_dL <- s_dL/m_dL
-    }else
+      cv_dL <- s_dL / m_dL
+    } else {
       m_dL <- s_dL <- cv_dL <- NA
-    
-  } else{
+    }
+  } else {
     # Or should the default be weights of 1?
-      m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+    m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
   }
-  
+
   # Output
   fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
 

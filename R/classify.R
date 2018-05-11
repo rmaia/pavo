@@ -60,7 +60,12 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
     } else if (length(n_cols) == 1 & manual == FALSE) { # Single k with reference
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      if (format(object.size(imgdat), units = "Gb") < 0.5) {
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      } else {
+        message("Image data too large for parallel-processing, reverting to single-core processing.")
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      }
     } else if (length(n_cols) == 1 & manual == TRUE) { # Single k with manual reference
 
       # Reference image
@@ -77,10 +82,10 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
         ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
-      if(format(object.size(imgdat), units = 'Gb') < 0.5){
+      if (format(object.size(imgdat), units = "Gb") < 0.5) {
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
-      }else{
-        message('Image data too large for parallel-processing, reverting to single-core processing.')
+      } else {
+        message("Image data too large for parallel-processing, reverting to single-core processing.")
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       }
     }
