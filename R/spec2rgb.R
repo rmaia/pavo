@@ -87,11 +87,8 @@ rgb1 <- do.call(cbind, rgb1)
 rgb1[rgb1 < 0] <- 0
 rgb1[rgb1 > 1] <- 1
 
-colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3], alpha=alpha)
-
-#class(colrs) <- c('spec2rgb', 'character')
-
-names(colrs) <- names_rspecdata
+colrs <- rgb(red=rgb1[, 1], green=rgb1[, 2], blue=rgb1[, 3], alpha=alpha,
+             names = names_rspecdata)
 
 colrs
 
