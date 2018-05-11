@@ -150,7 +150,6 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   }
 
   if (isTRUE(multi_image)) { # Multiple images
-    if (format(object.size(classimg), units = "Gb") < 0.5) {
       outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
           x_pts_i = x_pts,
           x_scale_i = x_scale[[x]],
@@ -158,16 +157,6 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
           bkg_include_i = bkg_include,
           coldists_i = coldists
         ), mc.cores = cores)
-    } else {
-      message("Image data too large for parallel-processing, reverting to single-core processing.")
-      outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-          x_pts_i = x_pts,
-          x_scale_i = x_scale[[x]],
-          bkg_ID_i = bkg_ID,
-          bkg_include_i = bkg_include,
-          coldists_i = coldists
-        ))
-    }
     outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")

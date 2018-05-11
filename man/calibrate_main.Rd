@@ -4,7 +4,7 @@
 \alias{calibrate_main}
 \title{Main function for calibrating images}
 \usage{
-calibrate_main(image_i, scale_length_i = NULL)
+calibrate_main(image_i, scale_length_i, type = c("scale", "k"))
 }
 \arguments{
 \item{image_i}{(required) image data. Either a single image, or a series of images
@@ -12,6 +12,8 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 
 \item{scale_length_i}{(required) an integer specifying the length of the scale
 in the image.}
+
+\item{type}{internal consistency.}
 }
 \value{
 an image, or list containing images, for use in further

@@ -5,7 +5,7 @@ test_that("Basic", {
   set.seed(1)
   # Single
   stripe <- getimg(system.file("testdata/images/stripe.png", package = "pavo"))
-  stripe_class <- classify(stripe, n_cols = 4)
+  stripe_class <- classify(stripe, n_cols = 4, ref_ID = 1)
   stripe_adjacent <- adjacent(stripe_class, x_pts = 100, x_scale = 10, bkg_ID = c(1, 3), bkg_include = FALSE)
 
   expect_equal(stripe_adjacent$k, 2)

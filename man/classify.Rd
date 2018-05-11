@@ -4,7 +4,7 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, n_cols, ref_ID = 1, manual = FALSE,
+classify(imgdat, n_cols, ref_ID = NULL, manual = FALSE,
   cores = getOption("mc.cores", 2L))
 }
 \arguments{
@@ -13,7 +13,8 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 
 \item{n_cols}{(required) either an integer, or vector the same length as imgdat (if
 passing a list of images), specifying the number of discrete colour classes present
-in an image, for k-means clustering.}
+in an image, for k-means clustering. Ignored if n_cols has already been set via
+\code{\link{calibrate}}.}
 
 \item{ref_ID}{The numeric identifier of the 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified

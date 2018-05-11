@@ -53,6 +53,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     # Attributes
     attr(imgdat, "imgname") <- sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
     attr(imgdat, "scale") <- NULL
+    attr(imgdat, "k") <- NULL
     attr(imgdat, "state") <- "raw"
     class(imgdat) <- c("rimg", "array")
 
@@ -100,6 +101,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       attr(imgdat[[i]], "imgname") <- imgnames[i]
       attr(imgdat[[i]], "scale") <- NULL
       attr(imgdat[[i]], "state") <- "raw"
+      attr(imgdat[[i]], "k") <- NULL
       class(imgdat[[i]]) <- c("rimg", "array")
     }
     # the list itself needs attributes

@@ -6,7 +6,8 @@
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param n_cols (required) either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
-#' in an image, for k-means clustering.
+#' in an image, for k-means clustering. Ignored if n_cols has already been set via
+#' \code{\link{calibrate}}.
 #' @param ref_ID The numeric identifier of the 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the reference image, thus helping to ensure that homologous pattern elements
@@ -44,7 +45,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
@@ -54,11 +55,33 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
+  # # Extract n_cols if present as an attribute following calibrate()
+  if (isTRUE(multi_image)) {
+    if (!is.null(attr(imgdat[[1]], "k"))) {
+      n_cols <- as.numeric(unlist(lapply(1:length(imgdat), function(x) attr(imgdat[[x]], "k"))))
+    }
+  } else if (!isTRUE(multi_image)) {
+    if (!is.null(attr(imgdat, "k"))) {
+      n_cols <- attr(imgdat, "k")
+    }
+  }
+  # Multiple manual k's
+  if (length(n_cols) > 1 & length(n_cols) < length(imgdat)) {
+    stop("When supplying more than one value, the length of n_cols must equal the number of images.")
+  }
 
-  if (isTRUE(multi_image)) { # Multiple images
-    if (length(n_cols) == length(imgdat)) { # Multiple k's TODO
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
-    } else if (length(n_cols) == 1 & manual == FALSE) { # Single k with reference
+  # Multiple images
+  if (isTRUE(multi_image)) {
+    ## Multiple k, no reference ##
+    if (length(n_cols) == length(imgdat)) {
+      if (format(object.size(imgdat), units = "Gb") < 0.5) {
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]), mc.cores = cores)
+      } else {
+        message("Image data too large for parallel-processing, reverting to single-core processing.")
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
+      }
+      ## Single k, with reference ##
+    } else if (length(n_cols) == 1 & manual == FALSE & (!is.null(ref_ID))) {
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
       if (format(object.size(imgdat), units = "Gb") < 0.5) {
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
@@ -66,7 +89,16 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
         message("Image data too large for parallel-processing, reverting to single-core processing.")
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       }
-    } else if (length(n_cols) == 1 & manual == TRUE) { # Single k with manual reference
+      ## Single k, no reference ##
+    } else if (length(n_cols) == 1 & manual == FALSE & (is.null(ref_ID))) {
+      if (format(object.size(imgdat), units = "Gb") < 0.5) {
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols), mc.cores = cores)
+      } else {
+        message("Image data too large for parallel-processing, reverting to single-core processing.")
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols))
+      }
+      ## Single k, manual, with reference ##
+    } else if (length(n_cols) == 1 & manual == TRUE) {
 
       # Reference image
       refimg <- imgdat[[ref_ID]]
@@ -89,11 +121,16 @@ classify <- function(imgdat, n_cols, ref_ID = 1, manual = FALSE, cores = getOpti
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       }
     }
+
     # Names & attributes
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
-      attr(outdata[[i]], "k") <- n_cols ## what if multiple?
       attr(outdata[[i]], "state") <- "colclass"
+      if (length(n_cols) > 1) {
+        attr(outdata[[i]], "k") <- n_cols[[i]]
+      } else {
+        attr(outdata[[i]], "k") <- n_cols
+      }
     }
     class(outdata) <- c("rimg", "list")
   } else if (!isTRUE(multi_image)) { # Single image
