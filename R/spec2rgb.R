@@ -41,7 +41,8 @@ if (length(wl_index > 0)){
 if(min(wl) > 400 | max(wl) < 700)
   stop('wavelength range does not capture the full visible range (400 to 700)')
 
-rspecdata <- rspecdata[which(wl==400):which(wl==700), , drop=FALSE]
+rspecdata <- rspecdata[wl>=390 & wl<=700, , drop=FALSE]
+wl <- wl[wl>=390 & wl<=700]
 names_rspecdata <- names(rspecdata)
 rspecdata <- as.matrix(rspecdata)
 
@@ -49,10 +50,7 @@ rspecdata <- as.matrix(rspecdata)
 # sens <- ciexyz[,1:4] #cie2
 sens <- ciexyz[,c(1,5:7)] #cie10
 
-# TEMP: removing wavelengths 390:400
-# TO DO: check if rspecdata starts at 400 or <400 and change this accordingly
-
-sens <- as.matrix(sens[which(sens$wl==400):which(sens$wl==700),])
+sens <- as.matrix(sens[match(wl, sens$wl),])
 
 # P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
 # P2 <- rspecdata
