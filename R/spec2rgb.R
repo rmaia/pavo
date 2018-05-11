@@ -75,11 +75,7 @@ xyzmat <- rbind(c(3.240479, -1.537150, -0.498535),
 rgb1 <- tcrossprod(XYZ, xyzmat)
 
 # sRGB companding (e.g., see http://www.brucelindbloom.com/index.html?Eqn_RGB_XYZ_Matrix.html)
-rgb1 <- lapply(1:ncol(rgb1), function(x) {
-  ifelse(rgb1[,x, drop=F] <= 0.0031308, 12.92*rgb1[,x, drop=F], 1.055*rgb1[,x, drop=F]^(1/2.4) - 0.055)
-  })
-
-rgb1 <- do.call(cbind, rgb1)
+rgb1 <- ifelse(rgb1 <= 0.0031308, 12.92 * rgb1, 1.055 * rgb1^(1/2.4) - 0.055)
 
 # clip RGB values outside {0-1}
 rgb1[rgb1 < 0] <- 0
