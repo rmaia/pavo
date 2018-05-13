@@ -7,9 +7,12 @@ NEW FEATURES
 
 MAJOR CHANGES
 * getspecf (and the argument fast=TRUE in getspec) have been deprecated
+* summary.rspec() returned incorrect values for S7. If you use S7, please re-run
+your analyses
 
 MINOR FEATURES AND BUG FIXES 
 
+* summary.rspec() now properly outputs `NA` for monotonically decreasing spectra
 * fixed warning when subset.rspec was provided with a logical vector
 * fixed harmless warning when summary.colspace() was used on a tcs object
 * `by` argument in merge.rspec() is no longer ignored
