@@ -55,7 +55,8 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, cores = getO
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
-  # # Extract n_cols if present as an attribute following calibrate()
+  # Extract n_cols if present as an object attribute following calibrate(),
+  # ignoring the n_cols argument.
   if (isTRUE(multi_image)) {
     if (!is.null(attr(imgdat[[1]], "k"))) {
       n_cols <- as.numeric(unlist(lapply(1:length(imgdat), function(x) attr(imgdat[[x]], "k"))))
@@ -65,45 +66,63 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, cores = getO
       n_cols <- attr(imgdat, "k")
     }
   }
-  # Multiple manual k's
-  if (length(n_cols) > 1 & length(n_cols) < length(imgdat)) {
-    stop("When supplying more than one value, the length of n_cols must equal the number of images.")
+  # k checking.
+  if (length(n_cols) > 1){ 
+    # Must have k's for each image
+    if(length(n_cols) < length(imgdat)){     
+      stop("When supplying more than one value, the length of n_cols must equal the number of images.")
+    }
+    # Reduce to single integer if multiple k's are all the same
+    if(length(unique(n_cols)) == 1){  
+      n_cols <- n_cols[1]
+    }
+    # Can't have a reference image when k's vary
+    if(length(unique(n_cols)) > 1 && !is.null(ref_ID)){
+      warning('Cannot use reference image when n_cols varies between images.')
+      ref_ID <- NULL
+    }
   }
 
-  # Multiple images
+  #### So your options/configurations for classification are:
+  #
+  ## Multiple images ##
+  # - Multiple different k's, no reference image (note: cannot have reference image - controlled above).
+  #       (length(n_cols) == length(imgdat) && manual = FALSE)
+  # - Single k (or multiple identical k), with a reference image.
+  #       (length(n_cols) == 1 && !is.null(ref_ID) && manual = FALSE)
+  # - Single k (or multiple identical k), without a reference image, so the centres & assignments will vary between images.
+  #       (length(n_cols) == 1 && is.null(ref_ID) && manual = FALSE)
+  # - Single k (or multiple identical k), with manually-specified centres, and a single reference image.
+  #       (length(n_cols) == 1 && !is.null(ref_ID) && manual == TRUE)
+  # - Multiple k (identical or not), with manually-specified centres for each image.                  TODO
+  #       (length(n_cols) == length(imgdat) && is.null(ref_ID) && manual == TRUE)
+  #
+  ## Single image ##
+  # - Single k
+  #   (length(n_cols) == 1)
+  # - Single k, with manual centre
+  #   (length(n_cols) == 1 && manual = TRUE)
+  
+
+  ## Multiple images  ##
   if (isTRUE(multi_image)) {
-    ## Multiple k, no reference ##
-    if (length(n_cols) == length(imgdat)) {
-      if (format(object.size(imgdat), units = "Gb") < 0.5) {
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]), mc.cores = cores)
-      } else {
-        message("Image data too large for parallel-processing, reverting to single-core processing.")
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
-      }
-      ## Single k, with reference ##
-    } else if (length(n_cols) == 1 & manual == FALSE & (!is.null(ref_ID))) {
+    ## Multiple k, no reference image ##
+    if (length(n_cols) == length(imgdat) && manual == FALSE) {
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]), mc.cores = cores)
+      ## Single k, with reference image ##
+    } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
-      if (format(object.size(imgdat), units = "Gb") < 0.5) {
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
-      } else {
-        message("Image data too large for parallel-processing, reverting to single-core processing.")
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
-      }
-      ## Single k, no reference ##
-    } else if (length(n_cols) == 1 & manual == FALSE & (is.null(ref_ID))) {
-      if (format(object.size(imgdat), units = "Gb") < 0.5) {
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols), mc.cores = cores)
-      } else {
-        message("Image data too large for parallel-processing, reverting to single-core processing.")
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols))
-      }
-      ## Single k, manual, with reference ##
-    } else if (length(n_cols) == 1 & manual == TRUE) {
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      ## Single k, no reference image ##
+    } else if (length(n_cols) == 1 && is.null(ref_ID) && manual == FALSE) {
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols), mc.cores = cores)
+      ## Single k, manually specified centres, with reference image ##
+    } else if (length(n_cols) == 1 && is.null(ref_ID) && manual == TRUE ) {
 
       # Reference image
       refimg <- imgdat[[ref_ID]]
 
-      cat(paste("Select the", n_cols, "focal colours."))
+      message(paste("Select the", n_cols, "focal colours."))
 
       plot(c(1, dim(refimg)[1]), c(1, dim(refimg)[2]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
       rasterImage(refimg, 1, 1, dim(refimg)[1], dim(refimg)[2])
@@ -114,13 +133,30 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, cores = getO
         ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
-      if (format(object.size(imgdat), units = "Gb") < 0.5) {
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
-      } else {
-        message("Image data too large for parallel-processing, reverting to single-core processing.")
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      ## Multiple non-identical k, with manually-specified centres for each image. ##
+    } else if (length(n_cols) == length(imgdat) && is.null(ref_ID) && manual == TRUE){
+      
+      centers <- list()
+      for(i in 1:length(imgdat)){
+        message(paste0("Select the ", n_cols[[i]], " focal colours in image ", attr(imgdat[[i]], 'imgname', '.')))
+        
+        plot(c(1, dim(imgdat[[i]])[1]), c(1, dim(imgdat[[i]])[2]), 
+             type = "n", 
+             xlab = "x", 
+             ylab = "y", 
+             asp = dim(imgdat[[i]])[1] / dim(imgdat[[i]])[2])
+        rasterImage(imgdat[[i]], 1, 1, dim(imgdat[[i]])[1], dim(imgdat[[i]])[2])
+        reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols[[i]]))
+        
+        ref_centers <- as.data.frame(t(imgdat[[i]][reference$x[1], reference$y[1], 1:3]))
+        for (i in 2:n_cols[[i]])
+          ref_centers <- rbind(ref_centers, imgdat[[i]][reference$x[i], reference$y[i], 1:3])
+        names(ref_centers) <- c("R", "G", "B")
+        centers[[i]] <- ref_centers
       }
-    }
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores)
+      }
 
     # Names & attributes
     for (i in 1:length(outdata)) {
@@ -133,9 +169,12 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, cores = getO
       }
     }
     class(outdata) <- c("rimg", "list")
-  } else if (!isTRUE(multi_image)) { # Single image
+  }
+
+  ## Single image ##
+  if (!isTRUE(multi_image)) {
     if (manual == TRUE) {
-      # Reference (only) image
+      # Reference (only present) image
       refimg <- imgdat
 
       cat(paste("Select the", n_cols, "focal colours."))
