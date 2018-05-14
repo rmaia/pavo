@@ -32,10 +32,12 @@ calibrate <- function(image, scale_length = NULL, assign_n = FALSE) {
 
   ## Checks
   multi_image <- inherits(image, "list") # Single or multiple images?
-  if(is.null(scale_length) && assign_n == FALSE)
+  if (is.null(scale_length) && assign_n == FALSE) {
     stop("No options selected.")
+  }
 
   if (isTRUE(multi_image)) { # Multiple images
+
     ## Assign k ##
     if (isTRUE(assign_n)) {
       message("n_col specification: Enter n_cols present in each image and press return, images will progress automatically.")
@@ -43,6 +45,7 @@ calibrate <- function(image, scale_length = NULL, assign_n = FALSE) {
         attr(image[[i]], "k") <- calibrate_main(image_i = image[[i]], scale_length_i = scale_length, type = "k")
       }
     }
+
     ## Scale ##
     if (is.numeric(scale_length)) {
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
@@ -51,11 +54,13 @@ calibrate <- function(image, scale_length = NULL, assign_n = FALSE) {
       }
     }
   } else if (!isTRUE((multi_image))) {
+
     ## Assign k ##
     if (isTRUE(assign_n)) {
       message("n_col specification: Enter n_cols present and press return.")
       attr(image, "k") <- calibrate_main(image_i = image, scale_length_i = scale_length, type = "k")
     }
+
     ## Scale ##
     if (is.numeric(scale_length)) {
       message("Scale calibration: Select both ends of the scale.")
@@ -92,7 +97,7 @@ calibrate_main <- function(image_i, scale_length_i, type = c("scale", "k")) {
     output <- scale_length_i / pixdist
   }
   if (type == "k") {
-    output <- readline(prompt = paste0("Enter n_cols for ", attr(image_i, 'imgname'), ":"))
+    output <- readline(prompt = paste0("Enter n_cols for ", attr(image_i, "imgname"), ":"))
   }
 
   output

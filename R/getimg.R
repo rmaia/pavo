@@ -108,10 +108,11 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     # The list itself needs attributes
     class(imgdat) <- c("rimg", "list")
     attr(imgdat, "state") <- "raw"
-    
-    # Simplify if it's a single image 
-    if(length(imgdat) == 1)
+
+    # Simplify if it's a single image  (TODO LESS SHITE)
+    if (length(imgdat) == 1) {
       imgdat <- as.array(imgdat[[1]])
+    }
   }
   imgdat
 }
