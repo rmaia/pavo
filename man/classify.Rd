@@ -11,7 +11,7 @@ classify(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FALSE,
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. preferably the result of \code{\link{getimg}}.}
 
-\item{n_cols}{(required) either an integer, or vector the same length as imgdat (if
+\item{n_cols}{either an integer, or vector the same length as imgdat (if
 passing a list of images), specifying the number of discrete colour classes present
 in an image, for k-means clustering. Ignored if n_cols has already been set via
 \code{\link{calibrate}}.}

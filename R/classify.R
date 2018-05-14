@@ -4,7 +4,7 @@
 #'
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param n_cols (required) either an integer, or vector the same length as imgdat (if
+#' @param n_cols either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
 #' in an image, for k-means clustering. Ignored if n_cols has already been set via
 #' \code{\link{calibrate}}.
@@ -58,8 +58,7 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
-  # Extract n_cols if present as an object attribute following calibrate(),
-  # ignoring the n_cols argument.
+  # Extract n_cols if present as an object attribute following calibrate().
   if (isTRUE(multi_image)) {
     if (!is.null(attr(imgdat[[1]], "k"))) {
       if (!is.null(n_cols)) {
@@ -148,7 +147,7 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
       for (i in 2:n_cols)
         ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
-
+      
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
 
       ## (5) Multiple k, with manually-specified centres for each image. ##
@@ -158,7 +157,8 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
       }
 
       centers <- list()
-      for (i in 1:length(imgdat)) {
+      i = 1
+      while (i < length(imgdat)) {
         message(paste0("Select the ", n_cols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
 
         if (window == TRUE) {
@@ -180,6 +180,14 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
         }
         names(ref_centers) <- c("R", "G", "B")
         centers[[i]] <- ref_centers
+        
+        # If duplicates centers specified, try again 
+        if(any(duplicated(centers[[i]]))){
+          message('Duplicate colours specified. Select again, or use [esc] to abort.')
+          i <- i
+        }else{
+          i = i + 1
+        }
       }
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores)
     }
