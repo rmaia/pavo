@@ -82,6 +82,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
     }
 
+    # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.5) {
       imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
     } else {
@@ -104,9 +105,13 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       attr(imgdat[[i]], "k") <- NULL
       class(imgdat[[i]]) <- c("rimg", "array")
     }
-    # the list itself needs attributes
+    # The list itself needs attributes
     class(imgdat) <- c("rimg", "list")
     attr(imgdat, "state") <- "raw"
+    
+    # Simplify if it's a single image 
+    if(length(imgdat) == 1)
+      imgdat <- as.array(imgdat[[1]])
   }
   imgdat
 }
