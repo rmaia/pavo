@@ -158,7 +158,7 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
 
       centers <- list()
       i = 1
-      while (i < length(imgdat)) {
+      while (i <= length(imgdat)) {
         message(paste0("Select the ", n_cols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
 
         if (window == TRUE) {
@@ -173,10 +173,18 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
         rasterImage(imgdat[[i]], 1, 1, dim(imgdat[[i]])[1], dim(imgdat[[i]])[2])
         reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols[[i]]))
         dev.off()
+        
+        # Transformed image data (TODO: SIMPLIFY)
+        reftrans <- array(c(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))),  
+                            as.matrix(t(apply(imgdat[[i]][,,2], 2, rev))),
+                            as.matrix(t(apply(imgdat[[i]][,,3], 2, rev)))),
+                            dim = c(dim(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))))[1], 
+                                    dim(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))))[2], 
+                                    3))
 
-        ref_centers <- as.data.frame(t(imgdat[[i]][reference$x[1], reference$y[1], 1:3]))
+        ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (j in 2:n_cols[[i]]) {
-          ref_centers <- rbind(ref_centers, imgdat[[i]][reference$x[j], reference$y[j], 1:3])
+          ref_centers <- rbind(ref_centers, reftrans[reference$x[j], reference$y[j], 1:3])
         }
         names(ref_centers) <- c("R", "G", "B")
         centers[[i]] <- ref_centers
@@ -210,7 +218,15 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
     if (manual == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
-
+      
+      # Transformed image data (TODO: SIMPLIFY)
+      reftrans <- array(c(as.matrix(t(apply(imgdat[,,1], 2, rev))),  
+                          as.matrix(t(apply(imgdat[,,2], 2, rev))),
+                          as.matrix(t(apply(imgdat[,,3], 2, rev)))),
+                          dim = c(dim(as.matrix(t(apply(imgdat[,,1], 2, rev))))[1], 
+                          dim(as.matrix(t(apply(imgdat[,,1], 2, rev))))[2], 
+                          3))
+                   
       message(paste("Select the", n_cols, "focal colours."))
 
       if (window == TRUE) {
@@ -220,9 +236,9 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
       rasterImage(refimg, 1, 1, dim(refimg)[1], dim(refimg)[2])
       reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
 
-      ref_centers <- as.data.frame(t(refimg[reference$x[1], reference$y[1], 1:3]))
+      ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
       for (i in 2:n_cols)
-        ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
+        ref_centers <- rbind(ref_centers, reftrans[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
       outdata <- classify_main(imgdat, ref_centers)
