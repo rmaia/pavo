@@ -6,18 +6,18 @@
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param n_cols either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
-#' in an image, for k-means clustering. Ignored if n_cols has already been set via
-#' \code{\link{calibrate}}.
+#' in an image, for k-means clustering. Not required if n_cols has already been set via
+#' \code{\link{calibrate}}, though will be overwritten by the values specified here.
 #' @param ref_ID The numeric identifier of the 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the reference image, thus helping to ensure that homologous pattern elements
-#' will be reliably classified between images. Defaults to the first image in the list.
-#' Ignored if n_cols is a vector.
+#' will be reliably classified between images, if so desired. 
 #' @param manual manually specify the colour-category 'centers', for k-means clustering.
 #' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
-#' on the reference image that represent the distinct colours of interest.
+#' that represent the distinct colours of interest. If a reference image is specified,
+#' it will be the only image presented.
 #' @param window Should plots be openened in a new window when \code{manual = TRUE}?
-#' defaults to \code{FALSE}.
+#' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -113,20 +113,20 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
 
   ## Multiple images  ##
   if (isTRUE(multi_image)) {
-    
+
     ## Multiple k, no reference image ##
     if (length(n_cols) > 1 && manual == FALSE) {
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]), mc.cores = cores)
-      
+
       ## Single k, with reference image ##
     } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
-      
+
       ## Single k, no reference image ##
     } else if (length(n_cols) == 1 && is.null(ref_ID) && manual == FALSE) {
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols), mc.cores = cores)
-      
+
       ## Single k, manually specified centres, with reference image ##
     } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == TRUE) {
 
@@ -147,7 +147,7 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
       for (i in 2:n_cols)
         ref_centers <- rbind(ref_centers, refimg[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
-      
+
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
 
       ## (5) Multiple k, with manually-specified centres for each image. ##
@@ -157,7 +157,7 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
       }
 
       centers <- list()
-      i = 1
+      i <- 1
       while (i <= length(imgdat)) {
         message(paste0("Select the ", n_cols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
 
@@ -173,14 +173,19 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
         rasterImage(imgdat[[i]], 1, 1, dim(imgdat[[i]])[1], dim(imgdat[[i]])[2])
         reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols[[i]]))
         dev.off()
-        
+
         # Transformed image data (TODO: SIMPLIFY)
-        reftrans <- array(c(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))),  
-                            as.matrix(t(apply(imgdat[[i]][,,2], 2, rev))),
-                            as.matrix(t(apply(imgdat[[i]][,,3], 2, rev)))),
-                            dim = c(dim(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))))[1], 
-                                    dim(as.matrix(t(apply(imgdat[[i]][,,1], 2, rev))))[2], 
-                                    3))
+        reftrans <- array(c(
+          as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))),
+          as.matrix(t(apply(imgdat[[i]][, , 2], 2, rev))),
+          as.matrix(t(apply(imgdat[[i]][, , 3], 2, rev)))
+        ),
+        dim = c(
+          dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[1],
+          dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[2],
+          3
+        )
+        )
 
         ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (j in 2:n_cols[[i]]) {
@@ -188,13 +193,13 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
         }
         names(ref_centers) <- c("R", "G", "B")
         centers[[i]] <- ref_centers
-        
-        # If duplicates centers specified, try again 
-        if(any(duplicated(centers[[i]]))){
-          message('Duplicate colours specified. Select again, or use [esc] to abort.')
+
+        # If duplicates centers specified, try again
+        if (any(duplicated(centers[[i]]))) {
+          message("Duplicate colours specified. Select again, or use [esc] to abort.")
           i <- i
-        }else{
-          i = i + 1
+        } else {
+          i <- i + 1
         }
       }
       outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores)
@@ -218,15 +223,20 @@ classify <- function(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FAL
     if (manual == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
-      
+
       # Transformed image data (TODO: SIMPLIFY)
-      reftrans <- array(c(as.matrix(t(apply(imgdat[,,1], 2, rev))),  
-                          as.matrix(t(apply(imgdat[,,2], 2, rev))),
-                          as.matrix(t(apply(imgdat[,,3], 2, rev)))),
-                          dim = c(dim(as.matrix(t(apply(imgdat[,,1], 2, rev))))[1], 
-                          dim(as.matrix(t(apply(imgdat[,,1], 2, rev))))[2], 
-                          3))
-                   
+      reftrans <- array(c(
+        as.matrix(t(apply(imgdat[, , 1], 2, rev))),
+        as.matrix(t(apply(imgdat[, , 2], 2, rev))),
+        as.matrix(t(apply(imgdat[, , 3], 2, rev)))
+      ),
+      dim = c(
+        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[1],
+        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[2],
+        3
+      )
+      )
+
       message(paste("Select the", n_cols, "focal colours."))
 
       if (window == TRUE) {

@@ -30,7 +30,7 @@ Manually specify the scale of images.
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio <- calibrate(papilio, scale = 10)
 
-# Multiple images
+# Multiple images. Assign a scale an specify the nuber of colours present.
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 snakes <- calibrate(snakes, scale = 100, assign_n = TRUE)
 }

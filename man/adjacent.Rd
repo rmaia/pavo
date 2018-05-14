@@ -25,7 +25,7 @@ pertaining to the background. Examine the attributes of, or call \code{summary} 
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
 colour-class ID numbers.}
 
-\item{bkg_include}{logical; should the colour classes specified by \code{bkg_ID_i}
+\item{bkg_include}{logical; should the colour classes specified by \code{bkg_ID}
 be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
 members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
 may give undesired results if elements are shared between the background and focal

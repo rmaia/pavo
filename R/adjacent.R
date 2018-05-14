@@ -15,7 +15,7 @@
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers.
-#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID_i}
+#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID}
 #' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
 #' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
 #' may give undesired results if elements are shared between the background and focal
@@ -150,13 +150,13 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   }
 
   if (isTRUE(multi_image)) { # Multiple images
-      outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-          x_pts_i = x_pts,
-          x_scale_i = x_scale[[x]],
-          bkg_ID_i = bkg_ID,
-          bkg_include_i = bkg_include,
-          coldists_i = coldists
-        ), mc.cores = cores)
+    outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+        x_pts_i = x_pts,
+        x_scale_i = x_scale[[x]],
+        bkg_ID_i = bkg_ID,
+        bkg_include_i = bkg_include,
+        coldists_i = coldists
+      ), mc.cores = cores)
     outdata <- do.call(bind_rows, outdata)
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")

@@ -13,21 +13,21 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 
 \item{n_cols}{either an integer, or vector the same length as imgdat (if
 passing a list of images), specifying the number of discrete colour classes present
-in an image, for k-means clustering. Ignored if n_cols has already been set via
-\code{\link{calibrate}}.}
+in an image, for k-means clustering. Not required if n_cols has already been set via
+\code{\link{calibrate}}, though will be overwritten by the values specified here.}
 
 \item{ref_ID}{The numeric identifier of the 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
 in the reference image, thus helping to ensure that homologous pattern elements
-will be reliably classified between images. Defaults to the first image in the list.
-Ignored if n_cols is a vector.}
+will be reliably classified between images, if so desired.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
 When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
-on the reference image that represent the distinct colours of interest.}
+that represent the distinct colours of interest. If a reference image is specified,
+it will be the only image presented.}
 
 \item{window}{Should plots be openened in a new window when \code{manual = TRUE}?
-defaults to \code{FALSE}.}
+Defaults to \code{FALSE}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
