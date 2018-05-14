@@ -4,7 +4,7 @@
 \alias{calibrate}
 \title{Calibrate images}
 \usage{
-calibrate(image, scale_length = NULL, assign_n_cols = FALSE)
+calibrate(image, scale_length = NULL, assign_n = FALSE)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
@@ -13,7 +13,7 @@ stored in a list. Preferably the result of \code{\link{getimg}}.}
 \item{scale_length}{an integer specifying the length of the scale
 in the image, if desired.}
 
-\item{assign_n_cols}{do you want to manually specify the number of discrete colour
+\item{assign_n}{do you want to interactively specify the number of discrete colour
 classes present in each image (i.e. the k for k-means clustering)? Useful
 when the number of colour categories varies between images. Defaults to \code{FALSE}.}
 }
@@ -32,7 +32,7 @@ papilio <- calibrate(papilio, scale = 10)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes <- calibrate(snakes, scale = 100)
+snakes <- calibrate(snakes, scale = 100, assign_n = TRUE)
 }
 
 }

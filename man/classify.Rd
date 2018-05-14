@@ -4,7 +4,7 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, n_cols, ref_ID = NULL, manual = FALSE,
+classify(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FALSE,
   cores = getOption("mc.cores", 2L))
 }
 \arguments{
@@ -25,6 +25,9 @@ Ignored if n_cols is a vector.}
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
 When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
 on the reference image that represent the distinct colours of interest.}
+
+\item{window}{Should plots be openened in a new window when \code{manual = TRUE}?
+defaults to \code{FALSE}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
