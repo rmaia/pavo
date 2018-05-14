@@ -14,6 +14,8 @@
 #' 
 #' @importFrom graphics image
 #' @importFrom grDevices rgb 
+#' 
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -24,7 +26,6 @@
 #' summary(papilio_class, plot = TRUE)
 #' }
 #'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 summary.rimg <- function(object, plot = FALSE, ...) {
   

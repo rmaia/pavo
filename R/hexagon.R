@@ -111,7 +111,7 @@ hexagon <- function(vismodeldata) {
   y <- m - (0.5 * (s + l))
 
   # colorimetrics
-  r.vec <- sqrt((abs(x)) ^ 2 + (abs(y) ^ 2))
+  r.vec <- sqrt((abs(x))^2 + (abs(y)^2))
   h.theta <- sapply(1:length(x), function(i) angle360(x[i], y[i]))
   sec.fine <- round(floor(h.theta / 10), 0) * 10
   sec.coarse <- sapply(1:length(x), function(x) coarse_sec(h.theta[x]))

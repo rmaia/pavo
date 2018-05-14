@@ -18,7 +18,7 @@ test_that("Basic", {
 
   # Multiple
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-  snakes_class <- classify(snakes, n_cols = 3)
+  snakes_class <- classify(snakes, n_cols = 3, ref_ID = 1)
   snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 150)
   
 })

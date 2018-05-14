@@ -11,7 +11,7 @@ jndplot(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 \arguments{
 \item{x}{(required) the output from a \code{jnd2xyz} call.}
 
-\item{arrow}{If and how arrows indicating receptor vectors should be 
+\item{arrow}{If and how arrows indicating receptor vectors should be
 drawn. Options are \code{'relative'} (default), \code{'absolute'} or
 \code{'none'}. See description.}
 
@@ -29,7 +29,7 @@ dimension? (only available for dichromats and trichromats, defaults to \code{FAL
 
 \item{margin}{accepts either \code{'recommended'}, where the function will choose margin
 attributes, or a numerical vector of the form \code{c(bottom, left, top, right)}
-which gives the number of lines of margin to be specified on the four sides of the plot. 
+which gives the number of lines of margin to be specified on the four sides of the plot.
 (Default varies depending on plot dimensionality).}
 
 \item{square}{Logical. Should a square plotting area be used? (defaults to \code{TRUE})}
@@ -47,12 +47,12 @@ Plot options for \code{jnd2xyz} objects.
 the \code{arrow} argument accepts three options:
 \itemize{
  \item \code{'relative'}: With this option, arrows will be made relative to the data. Arrows
-   will be centered on the data centroid, and will have an arbitrary length of half the 
+   will be centered on the data centroid, and will have an arbitrary length of half the
    average pairwise distance between points, which can be scaled with the \code{arrow.p}
    argument.
  \item \code{'absolute'}: With this option, arrows will be made to reflect the visual system
    underlying the data. Arrows will be centered on the achromatic point in colorspace, and
-   will have length equal to the distance to a monochromatic point (i.e. a color that 
+   will have length equal to the distance to a monochromatic point (i.e. a color that
    stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
    the \code{arrow.p} argument, in which case they cannot be interpreted as described.
   \item \code{'none'}: no arrows will be included.
@@ -69,7 +69,7 @@ plot(propxyz)
 
 }
 \references{
-Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams. 
+Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams.
 Behavioral Ecology, 23, 723-728.
 }
 \author{
