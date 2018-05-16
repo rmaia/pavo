@@ -12,10 +12,10 @@
 with a column with wavelength data, named 'wl', and the remaining column containing
 spectra to process.}
 
-\item{subset}{Either \code{FALSE} (the default), \code{TRUE}, or a character vector. 
-If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset 
-of the complete output (composed of B2, S8 and H1; the variables described in 
-Andersson and Prager 2006) are returned. Finally, a user-specified string of variable 
+\item{subset}{Either \code{FALSE} (the default), \code{TRUE}, or a character vector.
+If \code{FALSE}, all variables calculated are returned. If \code{TRUE}, only a subset
+of the complete output (composed of B2, S8 and H1; the variables described in
+Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 names can be used in order to filter and show only those variables.}
 
 \item{wlmin, wlmax}{minimum and maximum used to define the range of wavelengths used in
@@ -24,11 +24,11 @@ calculations (default is to use entire range in the \code{rspec} object).}
 \item{...}{class consistency (ignored)}
 }
 \value{
-A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described 
-in Montgomerie (2006) with spectra name as row names. 
-The colorimetric variables calculated by this function are 
+A data frame containing either 23 or 5 (\code{subset = TRUE}) variables described
+in Montgomerie (2006) with spectra name as row names.
+The colorimetric variables calculated by this function are
 described in Montgomerie (2006) with corrections included in the README CLR
-file from the May 2008 distribution of the CLR software. Authors should reference 
+file from the May 2008 distribution of the CLR software. Authors should reference
 both this package,Montgomerie (2006), and the original reference(s).
 Description and notes on the measures:
 
@@ -44,9 +44,9 @@ B3 (Intensity): Maximum relative reflectance (Reflectance at wavelength of maxim
 reflectance). Note that may be sensitive to noise near the peak. REF 1, 5, 6
 
 S1 (Chroma): Relative contribution of a spectral range to the total brightness (B1)
-S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges 
-normally associated with specific hues. The values are calculated using the 
-following ranges: S1U (UV, if applicable): lambda min-400nm; 
+S1 is arbitrarily divided in 6 measures of chroma based on the wavelength ranges
+normally associated with specific hues. The values are calculated using the
+following ranges: S1U (UV, if applicable): lambda min-400nm;
 S1V (Violet) lambda min-415nm; S1B (Blue) 400nm-510nm; S1G (Green) 510nm-605nm;
 S1Y (Yellow) 550nm-625nm; S1R (Red) 605nm-lambda max. REF 2, 7, 8, 11-13
 
@@ -54,16 +54,16 @@ S2 (Spectral saturation): Rmax/Rmin This measure is sensitive to spectral noise.
 Proper interpretation of this value may be difficult for spectra with multiple
 peaks in the range of interest. REF 1
 
-S3 (Chroma): Reflectance over the Rmax +- 50nm range divided by B1. Values for peaks 
-within 50nm of either the minimum or maximum range of the data will not be comparable 
-since the area under the curve for the area of interest will not always 
-be based on the same wavelength range. Therefore, S3 should be interpreted 
+S3 (Chroma): Reflectance over the Rmax +- 50nm range divided by B1. Values for peaks
+within 50nm of either the minimum or maximum range of the data will not be comparable
+since the area under the curve for the area of interest will not always
+be based on the same wavelength range. Therefore, S3 should be interpreted
 with caution for peaks in the UV or Red range. REF 11
 
 S4 (Spectral purity): |bmaxneg| , calculated by approximating the derivative
 of the spectral curve. As such, it is very sensitive to noise and should only
 be considered when data is adequately smoothed. NAs are returned for curves which
-do not, at any range of wavelength, decrease in intensity. Therefore, reflectance 
+do not, at any range of wavelength, decrease in intensity. Therefore, reflectance
 curves for brown and red surfaces, for example, should not generate a values. REF 1
 
 S5 (Chroma): Similar in design to segment classification measures (see Montgomerie 2006
@@ -74,18 +74,18 @@ sensitive to spectral noise. REF 5, 6
 
 S7 (Spectral saturation): Relative reflectance between the area around the peak with
 reflectance equal to or larger to half of that of the peak (an approximation to the
-full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive 
+full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive
 to noise and can be misleading when more than one maxima and/or minima are present.
 REF 3, 9
 
 S8 (Chroma): (Rmax - Rmin)/B2. Because it uses both Rmin and Rmax, this measure may be
 sensitive to spectral noise. REF 3, 13
 
-S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color 
+S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color
 of the surface is clearly due to carotenoid pigmentation and R450 is lower than
 R700. Could be sensitive to noise. REF 8
 
-S10 (Peaky chroma): (Rmax - Rmin)/B2 x |bmaxneg|. Should be used with properly 
+S10 (Peaky chroma): (Rmax - Rmin)/B2 x |bmaxneg|. Should be used with properly
 smoothed curves. REF 7
 
 H1 (Peak wavelength, hue): Wavelength of maximum reflectance. May be sensitive to noise
@@ -103,7 +103,7 @@ H5 (Hue): Wavelength at bmax. Sensitive to noise and may be variable if there is
 more than one maxima and minima. REF 5
 }
 \description{
-Calculates all 23 colorimetric variables reviewed in 
+Calculates all 23 colorimetric variables reviewed in
 Montgomerie (2006).
 }
 \note{
@@ -113,7 +113,7 @@ Variables which compute bmax and bmaxneg should be used with caution, for they
 rely on smoothed curves to remove noise, which would otherwise result in spurious
 results. Make sure chosen smoothing parameters are adequate.
 
-Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other 
+Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other
 variables can be reliably extracted using non-smoothed data.
 }
 \examples{
@@ -126,7 +126,7 @@ summary(sicalis, subset = c('B1', 'H4'))
 
 }
 \references{
-Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds. 
+Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.
 Bird Coloration. Volume 1 Mechanisms and measurements. Harvard University Press, Cambridge, Massachusetts.
 
 References describing variables:

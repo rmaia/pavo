@@ -2,33 +2,34 @@
 % Please edit documentation in R/pavo-package.R
 \docType{package}
 \name{pavo-package}
-\alias{pavo-package}
-\alias{.PlotTetraEnv}
 \alias{pavo}
-\title{pavo: analyzing color data in R}
-\format{An object of class \code{environment} of length 0.}
-\usage{
-.PlotTetraEnv
-}
+\alias{pavo-package}
+\title{pavo: Perceptual Analysis, Visualization and Organization of Spectral Color
+Data in R}
 \description{
-An R package for the perceptual analysis, visualization and organization of color data
+A cohesive framework for parsing, analyzing and organizing color from spectral data.
 }
-\details{
-\tabular{ll}{
-Package: \tab pavo\cr
-Type: \tab Package\cr
-Version: \tab 0.99\cr
-Date: \tab 2016-11-11\cr
-License: \tab GPL (>= 2)\cr
-LazyLoad: \tab yes\cr
-To learn more about pavo, take a look at the vignettes:\cr browseVignettes(package = "pavo")}
+\seealso{
+Useful links:
+\itemize{
+  \item \url{http://rafaelmaia.net/pavo/}
 }
-\examples{
-#see functions.
+
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}, Chad Eliason 
-\email{cme16@zips.uakron.edu}, Pierre-Paul Bitton \email{bittonp@uwindsor.ca},
-Thomas White \email{thomas.white026@gmail.com}
+\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu}
+
+Authors:
+\itemize{
+  \item Thomas White \email{thomas.white026@gmail.com}
+  \item Chad Eliason \email{cme16@zips.uakron.edu}
+  \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }
-\keyword{package}
+
+Other contributors:
+\itemize{
+  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} [contributor]
+}
+
+}
+\keyword{internal}
