@@ -16,10 +16,8 @@
 #' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
 #' that represent the distinct colours of interest. If a reference image is specified,
 #' it will be the only image presented.
-#' @param window Should plots be openened in a new window when \code{manual = TRUE}?
+#' @param plot_new Should plots be openened in a new window when \code{manual = TRUE}?
 #' Defaults to \code{FALSE}.
-#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
-#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
 #' class classifications at each pixel location. The RGB values corresponding to
@@ -48,7 +46,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, window = FALSE, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_new = FALSE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
@@ -116,16 +114,16 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
 
     ## Multiple k, no reference image ##
     if (length(n_cols) > 1 && manual == FALSE) {
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]), mc.cores = cores)
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
 
       ## Single k, with reference image ##
     } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
 
       ## Single k, no reference image ##
     } else if (length(n_cols) == 1 && is.null(ref_ID) && manual == FALSE) {
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols), mc.cores = cores)
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols))
 
       ## Single k, manually specified centre, with reference image ##
     } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == TRUE) {
@@ -146,8 +144,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
       )
       )
 
-      if (window == TRUE) {
-        dev.new(width = 8, height = 8)
+      if (isTRUE(window)) {
+        dev.new()
       }
       plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
       rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
@@ -159,14 +157,16 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
         reference <- as.data.frame(locator(type = "p", col = "red"))
         n_cols <- nrow(reference)
       }
-      dev.off()
+      if (isTRUE(window)) {
+        dev.off()
+      }
 
       ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
       for (i in 2:nrow(reference))
         ref_centers <- rbind(ref_centers, reftrans[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores)
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
 
       ## (5) Multiple k, with manually-specified centres for each image. ##
     } else if (is.null(ref_ID) && manual == TRUE) {
@@ -195,8 +195,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
         )
         )
 
-        if (window == TRUE) {
-          dev.new(width = 8, height = 8)
+        if (isTRUE(window)) {
+          dev.new()
         }
         plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
           type = "n",
@@ -212,7 +212,9 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
           reference <- as.data.frame(locator(type = "p", col = "red"))
           n_cols[[i]] <- nrow(reference)
         }
-        dev.off()
+        if (isTRUE(window)) {
+          dev.off()
+        }
 
         ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (j in 2:nrow(reference)) {
@@ -229,7 +231,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
           i <- i + 1
         }
       }
-      outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores)
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
     }
 
     # Names & attributes
@@ -266,7 +268,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
 
       i <- 1
       while (i <= 1) {
-        if (window == TRUE) {
+        
+        if (isTRUE(window)) {
           dev.new(width = 8, height = 8)
         }
         plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
@@ -278,7 +281,9 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, windo
           message(paste("Select the focal colours, and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
-        dev.off()
+        if (isTRUE(window)) {
+          dev.off()
+        }
 
         ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (i in 2:nrow(reference))

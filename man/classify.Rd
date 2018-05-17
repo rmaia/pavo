@@ -5,7 +5,7 @@
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
 classify(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE,
-  window = FALSE, cores = getOption("mc.cores", 2L))
+  plot_new = FALSE, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
@@ -26,11 +26,8 @@ When \code{TRUE}, the user is asked to click a number of points (equal to \code{
 that represent the distinct colours of interest. If a reference image is specified,
 it will be the only image presented.}
 
-\item{window}{Should plots be openened in a new window when \code{manual = TRUE}?
+\item{plot_new}{Should plots be openened in a new window when \code{manual = TRUE}?
 Defaults to \code{FALSE}.}
-
-\item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 }
 \value{
 A matrix, or list of matrices, of class \code{rimg} containing the colour
