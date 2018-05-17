@@ -126,25 +126,25 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols))
 
       ## Single k, manually specified centre, with reference image ##
-    } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == TRUE) {
+    } else if (!is.null(ref_ID) && manual == TRUE) {
 
       # Reference image
       refimg <- imgdat[[ref_ID]]
 
       # Transformed image data (TODO: SIMPLIFY)
       reftrans <- array(c(
-        as.matrix(t(apply(imgdat[, , 1], 2, rev))),
-        as.matrix(t(apply(imgdat[, , 2], 2, rev))),
-        as.matrix(t(apply(imgdat[, , 3], 2, rev)))
+        as.matrix(t(apply(refimg[, , 1], 2, rev))),
+        as.matrix(t(apply(refimg[, , 2], 2, rev))),
+        as.matrix(t(apply(refimg[, , 3], 2, rev)))
       ),
       dim = c(
-        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[1],
-        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[2],
+        dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[1],
+        dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[2],
         3
       )
       )
 
-      if (isTRUE(window)) {
+      if (isTRUE(plot_new)) {
         dev.new()
       }
       plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
@@ -157,7 +157,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         reference <- as.data.frame(locator(type = "p", col = "red"))
         n_cols <- nrow(reference)
       }
-      if (isTRUE(window)) {
+      if (isTRUE(plot_new)) {
         dev.off()
       }
 
@@ -195,7 +195,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         )
         )
 
-        if (isTRUE(window)) {
+        if (isTRUE(plot_new)) {
           dev.new()
         }
         plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
@@ -212,7 +212,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           reference <- as.data.frame(locator(type = "p", col = "red"))
           n_cols[[i]] <- nrow(reference)
         }
-        if (isTRUE(window)) {
+        if (isTRUE(plot_new)) {
           dev.off()
         }
 
@@ -269,7 +269,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       i <- 1
       while (i <= 1) {
         
-        if (isTRUE(window)) {
+        if (isTRUE(plot_new)) {
           dev.new(width = 8, height = 8)
         }
         plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
@@ -281,7 +281,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           message(paste("Select the focal colours, and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
-        if (isTRUE(window)) {
+        if (isTRUE(plot_new)) {
           dev.off()
         }
 
