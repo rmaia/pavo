@@ -4,8 +4,8 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, n_cols, ref_ID = NULL, manual = FALSE, window = FALSE,
-  cores = getOption("mc.cores", 2L))
+classify(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE,
+  window = FALSE, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
