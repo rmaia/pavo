@@ -74,6 +74,9 @@ rawplot <- function(x, ...) {
       if (is.null(arg$ylab)) {
         arg$ylab <- "y"
       }
+      if (is.null(arg$main)) {
+        arg$main <- attr(x[[i]], "imgname")
+      }
       if (is.null(arg$type)) {
         arg$type <- "n"
       }
@@ -96,6 +99,9 @@ rawplot <- function(x, ...) {
     }
     if (is.null(arg$ylab)) {
       arg$ylab <- "y"
+    }
+    if (is.null(arg$main)) {
+      arg$main <- attr(x, "imgname")
     }
     if (is.null(arg$type)) {
       arg$type <- "n"
@@ -156,6 +162,9 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
       if (is.null(arg$ylab)) {
         arg$ylab <- "y"
       }
+      if (is.null(arg$main)) {
+        arg$main <- attr(x[[i]], "imgname")
+      }
       if (is.null(arg$xlim)) {
         padrow <- round(nrow(imgdat2) * 0.02)
         arg$xlim <- c(0 - padrow, nrow(imgdat2) + padrow)
@@ -203,6 +212,9 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
     }
     if (is.null(arg$ylab)) {
       arg$ylab <- "y"
+    }
+    if (is.null(arg$main)) {
+      arg$main <- attr(x, "imgname")
     }
     if (is.null(arg$xlim)) {
       padrow <- round(nrow(imgdat2) * 0.02)

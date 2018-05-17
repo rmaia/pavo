@@ -11,10 +11,10 @@
 #' or a plot of both the image and specified colours (when \code{plot = TRUE}.
 #'
 #' @export
-#' 
+#'
 #' @importFrom graphics image
-#' @importFrom grDevices rgb 
-#' 
+#' @importFrom grDevices rgb
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @examples \dontrun{
@@ -28,21 +28,50 @@
 #'
 
 summary.rimg <- function(object, plot = FALSE, ...) {
-  
-  #values <- attr(object, "classRGB")
-  
+  multi_image <- inherits(object, "list") # Single or multiple images?
+
+  if (isTRUE(multi_image)) {
+    if (isTRUE(plot)) {
+      for (i in 1:length(object)){
+        readline(prompt = "Press [enter] for next plot.")
+        summary_main(object[[i]], plot, ...)
+      }
+    } else {
+      out <- lapply(1:length(object), function(x) data.frame(
+          ID = attr(object[[x]], "imgname"),
+          col_ID = seq(1:nrow(attr(object[[x]], "classRGB"))),
+          attr(object[[x]], "classRGB")
+        ))
+      do.call(rbind, out)
+    }
+  } else if (!isTRUE(multi_image)) {
+    if (isTRUE(plot)) {
+      summary_main(object, plot, ...)
+    } else {
+      data.frame(
+        ID = attr(object, "imgname"),
+        col_ID = seq(1:nrow(attr(object, "classRGB"))),
+        attr(object, "classRGB")
+      )
+    }
+  }
+}
+
+summary_main <- function(object, plot, ...) {
   if (isTRUE(plot)) {
-    
     object2 <- as.matrix(t(apply(object, 2, rev)))
-    
+
     # Defaults for image plot
     arg <- list(...)
-    
+
     if (is.null(arg$xlab)) {
       arg$xlab <- "x"
     }
     if (is.null(arg$ylab)) {
       arg$ylab <- "y"
+    }
+    if (is.null(arg$main)) {
+      arg$main <- attr(object, "imgname")
     }
     if (is.null(arg$xlim)) {
       padrow <- round(nrow(object2) * 0.02)
@@ -59,27 +88,25 @@ summary.rimg <- function(object, plot = FALSE, ...) {
       arg$useRaster <- TRUE
     }
     if (is.null(arg$col)) {
-      #values <- attr(object, "classRGB")
       arg$col <- rgb(attr(object, "classRGB"))
     }
 
     arg$x <- 1:nrow(object2)
     arg$y <- 1:ncol(object2)
     arg$z <- object2
-    
+
     # Plotting
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
-    
+
     # Main
     do.call(image, arg)
-    
+
     # Palette
-      image(1:length(arg$col), 1, as.matrix(1:length(arg$col)),
+    image(1:length(arg$col), 1, as.matrix(1:length(arg$col)),
       col = arg$col,
       xlab = paste("Colour class IDs:", paste(1:length(arg$col), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
     )
-    
   } else {
     attr(object, "classRGB")
   }

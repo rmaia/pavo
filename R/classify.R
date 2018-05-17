@@ -46,16 +46,16 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_new = FALSE, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_new = FALSE) {
 
   ## Checks
   # Single or multiple images?
   multi_image <- inherits(imgdat, "list")
   # Cores
-  if (cores > 1 && .Platform$OS.type == "windows") {
-    cores <- 1
-    message('Parallel processing not available in Windows; "cores" set to 1\n')
-  }
+  # if (cores > 1 && .Platform$OS.type == "windows") {
+  #   cores <- 1
+  #   message('Parallel processing not available in Windows; "cores" set to 1\n')
+  # }
   # Extract n_cols if present as an object attribute following calibrate().
   if (isTRUE(multi_image)) {
     if (!is.null(attr(imgdat[[1]], "k"))) {
@@ -153,7 +153,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         message(paste("Select the", n_cols, "focal colours"))
         reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
       } else if (is.null(n_cols)) {
-        message(paste0("Select the focal colours in image ", attr(refimg, "imgname", ", and press [esc] to continue.")))
+        message(paste0("Select the focal colours in image ", attr(refimg, "imgname"), ", and press [esc] to continue."))
         reference <- as.data.frame(locator(type = "p", col = "red"))
         n_cols <- nrow(reference)
       }
@@ -176,7 +176,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       if(is.null(n_cols)){
         n_cols_test <- NULL
         n_cols <- rep(NA, length(imgdat))
-      }
+      }else
+        n_cols_test <- FALSE
 
       centers <- list()
       i <- 1
@@ -300,6 +301,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       }
 
       outdata <- classify_main(imgdat, ref_centers)
+      
     } else {
       outdata <- classify_main(imgdat, n_cols)
     }
@@ -334,7 +336,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 classify_main <- function(imgdat_i, n_cols_i) {
-
+  
   ## Dimensions
   imgdim <- dim(imgdat_i)
 
