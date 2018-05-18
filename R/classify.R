@@ -6,17 +6,16 @@
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param n_cols either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
-#' in an image, for k-means clustering. Not required if n_cols has already been set via
-#' \code{\link{calibrate}}, though will be overwritten by the values specified here.
-#' @param ref_ID The numeric identifier of the 'reference' image, for use when passing
+#' in an image, for k-means clustering. 
+#' @param ref_ID The numeric identifier of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
-#' in the reference image, thus helping to ensure that homologous pattern elements
+#' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
 #' @param manual manually specify the colour-category 'centers', for k-means clustering.
-#' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
-#' that represent the distinct colours of interest. If a reference image is specified,
-#' it will be the only image presented.
-#' @param plot_new Should plots be openened in a new window when \code{manual = TRUE}?
+#' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
+#' if specified, otherwise user-determined) that represent the distinct colours of interest. 
+#' If a reference image is specified, it will be the only image presented.
+#' @param plot_window Should plots be opened in a new window when \code{manual = TRUE}?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
@@ -46,7 +45,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_new = FALSE) {
+classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_window = FALSE) {
 
   ## Checks
   # Single or multiple images?
@@ -56,21 +55,6 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
   #   cores <- 1
   #   message('Parallel processing not available in Windows; "cores" set to 1\n')
   # }
-  # Extract n_cols if present as an object attribute following calibrate().
-  if (isTRUE(multi_image)) {
-    if (!is.null(attr(imgdat[[1]], "k"))) {
-      if (!is.null(n_cols)) {
-        warning("n_cols argument specified for already-calibrated images, using n_cols as specified.")
-        n_cols <- n_cols
-      } else {
-        n_cols <- as.numeric(unlist(lapply(1:length(imgdat), function(x) attr(imgdat[[x]], "k"))))
-      }
-    }
-  } else if (!isTRUE(multi_image)) {
-    if (!is.null(attr(imgdat, "k"))) {
-      n_cols <- attr(imgdat, "k")
-    }
-  }
   # k checking.
   if (length(n_cols) > 1) {
     # Must have k's for each image
@@ -144,8 +128,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       )
       )
 
-      if (isTRUE(plot_new)) {
-        dev.new()
+      if (isTRUE(plot_window)) {
+        dev.new(noRStudioGD = TRUE)
       }
       plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
       rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
@@ -157,7 +141,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         reference <- as.data.frame(locator(type = "p", col = "red"))
         n_cols <- nrow(reference)
       }
-      if (isTRUE(plot_new)) {
+      if (isTRUE(plot_window)) {
         dev.off()
       }
 
@@ -196,8 +180,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         )
         )
 
-        if (isTRUE(plot_new)) {
-          dev.new()
+        if (isTRUE(plot_window)) {
+          dev.new(noRStudioGD = TRUE)
         }
         plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
           type = "n",
@@ -213,7 +197,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           reference <- as.data.frame(locator(type = "p", col = "red"))
           n_cols[[i]] <- nrow(reference)
         }
-        if (isTRUE(plot_new)) {
+        if (isTRUE(plot_window)) {
           dev.off()
         }
 
@@ -250,6 +234,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 
   ## Single image ##
   if (!isTRUE(multi_image)) {
+    
     if (manual == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
@@ -270,8 +255,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       i <- 1
       while (i <= 1) {
         
-        if (isTRUE(plot_new)) {
-          dev.new(width = 8, height = 8)
+        if (isTRUE(plot_window)) {
+          dev.new(noRStudioGD = TRUE)
         }
         plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
         rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
@@ -282,7 +267,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           message(paste("Select the focal colours, and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
-        if (isTRUE(plot_new)) {
+        if (isTRUE(plot_window)) {
           dev.off()
         }
 

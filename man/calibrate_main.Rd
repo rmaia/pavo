@@ -4,7 +4,7 @@
 \alias{calibrate_main}
 \title{Main function for calibrating images}
 \usage{
-calibrate_main(image_i, scale_length_i, type = c("scale", "k"))
+calibrate_main(image_i, scale_length_i)
 }
 \arguments{
 \item{image_i}{(required) image data. Either a single image, or a series of images

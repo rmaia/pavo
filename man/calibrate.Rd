@@ -4,18 +4,14 @@
 \alias{calibrate}
 \title{Calibrate images}
 \usage{
-calibrate(image, scale_length = NULL, assign_n = FALSE)
+calibrate(image, scale_length = NULL)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{scale_length}{an integer specifying the length of the scale
-in the image, if desired.}
-
-\item{assign_n}{do you want to interactively specify the number of discrete colour
-classes present in each image (i.e. the k for k-means clustering)? Useful
-when the number of colour categories varies between images. Defaults to \code{FALSE}.}
+in the image(s), if desired.}
 }
 \value{
 an image array, or list containing images, for use in further

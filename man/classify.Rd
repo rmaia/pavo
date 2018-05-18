@@ -5,7 +5,7 @@
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
 classify(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE,
-  plot_new = FALSE, cores = getOption("mc.cores", 2L))
+  plot_window = FALSE)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
@@ -13,20 +13,19 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 
 \item{n_cols}{either an integer, or vector the same length as imgdat (if
 passing a list of images), specifying the number of discrete colour classes present
-in an image, for k-means clustering. Not required if n_cols has already been set via
-\code{\link{calibrate}}, though will be overwritten by the values specified here.}
+in an image, for k-means clustering.}
 
-\item{ref_ID}{The numeric identifier of the 'reference' image, for use when passing
+\item{ref_ID}{The numeric identifier of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
-in the reference image, thus helping to ensure that homologous pattern elements
+in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
-When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols})
-that represent the distinct colours of interest. If a reference image is specified,
-it will be the only image presented.}
+When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
+if specified, otherwise user-determined) that represent the distinct colours of interest. 
+If a reference image is specified, it will be the only image presented.}
 
-\item{plot_new}{Should plots be openened in a new window when \code{manual = TRUE}?
+\item{plot_window}{Should plots be opened in a new window when \code{manual = TRUE}?
 Defaults to \code{FALSE}.}
 }
 \value{
