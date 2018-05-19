@@ -60,7 +60,6 @@ calibrate <- function(image, scale_length = NULL) {
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param scale_length_i (required) an integer specifying the length of the scale
 #' in the image.
-#' @param type internal consistency.
 #'
 #' @keywords internal
 #'
