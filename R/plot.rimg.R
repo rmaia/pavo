@@ -32,9 +32,9 @@
 plot.rimg <- function(x, ...) {
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (!isTRUE(multi_image)) {
+  if (!multi_image) {
     space <- attr(x, "state")
-  } else if (isTRUE(multi_image)) {
+  } else if (multi_image) {
     space <- attr(x[[1]], "state")
   }
 
@@ -59,7 +59,7 @@ rawplot <- function(x, ...) {
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (isTRUE(multi_image)) { # Multiple images
+  if (multi_image) { # Multiple images
 
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
@@ -67,22 +67,11 @@ rawplot <- function(x, ...) {
 
       # Defaults
       arg <- list(...)
-
-      if (is.null(arg$xlab)) {
-        arg$xlab <- "x"
-      }
-      if (is.null(arg$ylab)) {
-        arg$ylab <- "y"
-      }
-      if (is.null(arg$main)) {
-        arg$main <- attr(x[[i]], "imgname")
-      }
-      if (is.null(arg$type)) {
-        arg$type <- "n"
-      }
-      if (is.null(arg$asp)) {
-        arg$asp <- dim(x2)[1] / dim(x2)[2]
-      }
+      if (is.null(arg$xlab)) arg$xlab <- "x"
+      if (is.null(arg$ylab)) arg$ylab <- "y"
+      if (is.null(arg$main)) arg$main <- attr(x[[i]], "imgname")
+      if (is.null(arg$type)) arg$type <- "n"
+      if (is.null(arg$asp)) arg$asp <- dim(x2)[1] / dim(x2)[2]
 
       arg$x <- c(1, dim(x2)[2])
       arg$y <- c(1, dim(x2)[1])
@@ -90,25 +79,15 @@ rawplot <- function(x, ...) {
       do.call(plot, arg)
       rasterImage(x2, 1, 1, dim(x2)[2], dim(x2)[1])
     }
-  } else if (!isTRUE(multi_image)) { # Single image
+  } else if (!multi_image) { # Single image
+
     # Defaults
     arg <- list(...)
-
-    if (is.null(arg$xlab)) {
-      arg$xlab <- "x"
-    }
-    if (is.null(arg$ylab)) {
-      arg$ylab <- "y"
-    }
-    if (is.null(arg$main)) {
-      arg$main <- attr(x, "imgname")
-    }
-    if (is.null(arg$type)) {
-      arg$type <- "n"
-    }
-    if (is.null(arg$asp)) {
-      arg$asp <- dim(x)[1] / dim(x)[2]
-    }
+    if (is.null(arg$xlab)) arg$xlab <- "x"
+    if (is.null(arg$ylab)) arg$ylab <- "y"
+    if (is.null(arg$main)) arg$main <- attr(x, "imgname")
+    if (is.null(arg$type)) arg$type <- "n"
+    if (is.null(arg$asp)) arg$asp <- dim(x)[1] / dim(x)[2]
 
     arg$x <- c(1, dim(x)[2])
     arg$y <- c(1, dim(x)[1])
@@ -141,13 +120,13 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
   multi_image <- inherits(x, "list") # Single or multiple images?
 
   # Reformat & rotate to account for the silliness of image()
-  if (isTRUE(multi_image)) {
+  if (multi_image) {
     x_trans <- lapply(1:length(x), function(y) as.matrix(t(apply(x[[y]], 2, rev))))
-  } else if (!isTRUE(multi_image)) {
+  } else if (!multi_image) {
     imgdat2 <- as.matrix(t(apply(x, 2, rev)))
   }
 
-  if (isTRUE(multi_image)) { # Multiple images
+  if (multi_image) { # Multiple images
 
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
@@ -155,16 +134,11 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
 
       # Defaults
       arg <- list(...)
-
-      if (is.null(arg$xlab)) {
-        arg$xlab <- "x"
-      }
-      if (is.null(arg$ylab)) {
-        arg$ylab <- "y"
-      }
-      if (is.null(arg$main)) {
-        arg$main <- attr(x[[i]], "imgname")
-      }
+      if (is.null(arg$xlab)) arg$xlab <- "x"
+      if (is.null(arg$ylab)) arg$ylab <- "y"
+      if (is.null(arg$main)) arg$main <- attr(x[[i]], "imgname")
+      if (is.null(arg$asp)) arg$asp <- dim(x[[i]])[1] / dim(x[[i]])[2]
+      if (is.null(arg$useRaster)) arg$useRaster <- TRUE
       if (is.null(arg$xlim)) {
         padrow <- round(nrow(imgdat2) * 0.02)
         arg$xlim <- c(0 - padrow, nrow(imgdat2) + padrow)
@@ -172,12 +146,6 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
       if (is.null(arg$ylim)) {
         padcol <- round(ncol(imgdat2) * 0.02)
         arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
-      }
-      if (is.null(arg$asp)) {
-        arg$asp <- dim(x[[i]])[1] / dim(x[[i]])[2]
-      }
-      if (is.null(arg$useRaster)) {
-        arg$useRaster <- TRUE
       }
       if (is.null(arg$col)) {
         values <- attr(x[[i]], "classRGB")
@@ -202,20 +170,16 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
         points(grid, col = grid.col, pch = 16, cex = grid.cex)
       }
     }
-  } else if (!isTRUE(multi_image)) { # Single image
+  } else if (!multi_image) { # Single image
 
     # Defaults
     arg <- list(...)
 
-    if (is.null(arg$xlab)) {
-      arg$xlab <- "x"
-    }
-    if (is.null(arg$ylab)) {
-      arg$ylab <- "y"
-    }
-    if (is.null(arg$main)) {
-      arg$main <- attr(x, "imgname")
-    }
+    if (is.null(arg$xlab)) arg$xlab <- "x"
+    if (is.null(arg$ylab)) arg$ylab <- "y"
+    if (is.null(arg$main)) arg$main <- attr(x, "imgname")
+    if (is.null(arg$useRaster)) arg$useRaster <- TRUE
+    if (is.null(arg$asp)) arg$asp <- dim(x)[1] / dim(x)[2]
     if (is.null(arg$xlim)) {
       padrow <- round(nrow(imgdat2) * 0.02)
       arg$xlim <- c(0 - padrow, nrow(imgdat2) + padrow)
@@ -223,12 +187,6 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
     if (is.null(arg$ylim)) {
       padcol <- round(ncol(imgdat2) * 0.02)
       arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
-    }
-    if (is.null(arg$asp)) {
-      arg$asp <- dim(x)[1] / dim(x)[2]
-    }
-    if (is.null(arg$useRaster)) {
-      arg$useRaster <- TRUE
     }
     if (is.null(arg$col)) {
       values <- attr(x, "classRGB")

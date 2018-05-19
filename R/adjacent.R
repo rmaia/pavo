@@ -115,7 +115,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   }
 
   # Background
-  if (isTRUE(multi_image)) {
+  if (multi_image) {
     n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
   } else {
     n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
@@ -130,7 +130,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 
   ## Setting scales
   # Single image
-  if (!isTRUE(multi_image)) {
+  if (!multi_image) {
     if (!is.null(attr(classimg, "px_scale"))) {
       x_scale <- attr(classimg, "px_scale") * dim(classimg)[2]
     } else if (is.null(attr(classimg, "px_scale")) && is.null(x_scale)) {
@@ -138,7 +138,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
          specify x_scale or use calibrate() to set a scale.")
     }
     ## Multi images
-  } else if (isTRUE(multi_image)) {
+  } else if (multi_image) {
     if (!is.null(attr(classimg[[1]], "px_scale"))) {
       x_scale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
     } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(x_scale)) {
@@ -149,7 +149,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
     }
   }
 
-  if (isTRUE(multi_image)) { # Multiple images
+  if (multi_image) { # Multiple images
     outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
         x_pts_i = x_pts,
         x_scale_i = x_scale[[x]],
@@ -161,7 +161,7 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
     }
-  } else if (!isTRUE(multi_image)) { # Single image
+  } else if (!multi_image) { # Single image
 
     outdata <- adjacent_main(
       classimg_i = classimg,

@@ -22,7 +22,7 @@ will be reliably classified between images, if so desired.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
 When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
-if specified, otherwise user-determined) that represent the distinct colours of interest. 
+if specified, otherwise user-determined) that represent the distinct colours of interest.
 If a reference image is specified, it will be the only image presented.}
 
 \item{plot_window}{Should plots be opened in a new window when \code{manual = TRUE}?

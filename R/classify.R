@@ -6,14 +6,14 @@
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param n_cols either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
-#' in an image, for k-means clustering. 
+#' in an image, for k-means clustering.
 #' @param ref_ID The numeric identifier of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
 #' @param manual manually specify the colour-category 'centers', for k-means clustering.
 #' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
-#' if specified, otherwise user-determined) that represent the distinct colours of interest. 
+#' if specified, otherwise user-determined) that represent the distinct colours of interest.
 #' If a reference image is specified, it will be the only image presented.
 #' @param plot_window Should plots be opened in a new window when \code{manual = TRUE}?
 #' Defaults to \code{FALSE}.
@@ -94,7 +94,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 
 
   ## Multiple images  ##
-  if (isTRUE(multi_image)) {
+  if (multi_image) {
 
     ## Multiple k, no reference image ##
     if (length(n_cols) > 1 && manual == FALSE) {
@@ -128,7 +128,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       )
       )
 
-      if (isTRUE(plot_window)) {
+      if (plot_window) {
         dev.new(noRStudioGD = TRUE)
       }
       plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
@@ -141,7 +141,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         reference <- as.data.frame(locator(type = "p", col = "red"))
         n_cols <- nrow(reference)
       }
-      if (isTRUE(plot_window)) {
+      if (plot_window) {
         dev.off()
       }
 
@@ -157,11 +157,12 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       if (length(n_cols) == 1) {
         n_cols <- rep(n_cols, length(imgdat))
       }
-      if(is.null(n_cols)){
+      if (is.null(n_cols)) {
         n_cols_test <- NULL
         n_cols <- rep(NA, length(imgdat))
-      }else
+      } else {
         n_cols_test <- FALSE
+      }
 
       centers <- list()
       i <- 1
@@ -180,7 +181,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         )
         )
 
-        if (isTRUE(plot_window)) {
+        if (plot_window) {
           dev.new(noRStudioGD = TRUE)
         }
         plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
@@ -197,7 +198,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           reference <- as.data.frame(locator(type = "p", col = "red"))
           n_cols[[i]] <- nrow(reference)
         }
-        if (isTRUE(plot_window)) {
+        if (plot_window) {
           dev.off()
         }
 
@@ -223,18 +224,17 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
       attr(outdata[[i]], "state") <- "colclass"
-        if (length(n_cols) > 1) {
-          attr(outdata[[i]], "k") <- n_cols[[i]]
-        } else {
-          attr(outdata[[i]], "k") <- n_cols
-        }
+      if (length(n_cols) > 1) {
+        attr(outdata[[i]], "k") <- n_cols[[i]]
+      } else {
+        attr(outdata[[i]], "k") <- n_cols
+      }
     }
     class(outdata) <- c("rimg", "list")
   }
 
   ## Single image ##
-  if (!isTRUE(multi_image)) {
-    
+  if (!multi_image) {
     if (manual == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
@@ -254,8 +254,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 
       i <- 1
       while (i <= 1) {
-        
-        if (isTRUE(plot_window)) {
+        if (plot_window) {
           dev.new(noRStudioGD = TRUE)
         }
         plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
@@ -267,7 +266,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
           message(paste("Select the focal colours, and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
-        if (isTRUE(plot_window)) {
+        if (plot_window) {
           dev.off()
         }
 
@@ -286,7 +285,6 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       }
 
       outdata <- classify_main(imgdat, ref_centers)
-      
     } else {
       outdata <- classify_main(imgdat, n_cols)
     }
@@ -321,7 +319,7 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 classify_main <- function(imgdat_i, n_cols_i) {
-  
+
   ## Dimensions
   imgdim <- dim(imgdat_i)
 

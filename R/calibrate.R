@@ -33,7 +33,7 @@ calibrate <- function(image, scale_length = NULL) {
     stop("No options selected.")
   }
 
-  if (isTRUE(multi_image)) { # Multiple images
+  if (multi_image) { # Multiple images
 
     ## Scale ##
     if (is.numeric(scale_length)) {
@@ -42,7 +42,7 @@ calibrate <- function(image, scale_length = NULL) {
         attr(image[[i]], "scale") <- calibrate_main(image_i = image[[i]], scale_length_i = scale_length)
       }
     }
-  } else if (!isTRUE((multi_image))) {
+  } else if (!multi_image) {
 
     ## Scale ##
     if (is.numeric(scale_length)) {
@@ -73,9 +73,9 @@ calibrate_main <- function(image_i, scale_length_i) {
   plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
   rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
 
-    reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
-    pixdist <- as.integer(dist(round(reference)))
-    output <- scale_length_i / pixdist
+  reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
+  pixdist <- as.integer(dist(round(reference)))
+  output <- scale_length_i / pixdist
 
   output
 }

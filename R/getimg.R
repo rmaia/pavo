@@ -42,7 +42,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
   }
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
-  if (isTRUE(grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE))) {
+  if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
     imgdat <- read.bitmap(imgpath)
 
     # Duplicate channels if grayscale
@@ -58,7 +58,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     class(imgdat) <- c("rimg", "array")
 
     # Otherwise it's a directory of images
-  } else if (!isTRUE(grepl(paste(ext, collapse = "|"), imgpath))) {
+  } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
 
     # Set allowed file extensions
     extensions <- paste0("\\.", ext, "$", collapse = "|")

@@ -30,9 +30,9 @@
 summary.rimg <- function(object, plot = FALSE, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 
-  if (isTRUE(multi_image)) {
-    if (isTRUE(plot)) {
-      for (i in 1:length(object)){
+  if (multi_image) {
+    if (plot) {
+      for (i in 1:length(object)) {
         readline(prompt = "Press [enter] for next plot.")
         summary_main(object[[i]], plot, ...)
       }
@@ -44,8 +44,8 @@ summary.rimg <- function(object, plot = FALSE, ...) {
         ))
       do.call(rbind, out)
     }
-  } else if (!isTRUE(multi_image)) {
-    if (isTRUE(plot)) {
+  } else if (!multi_image) {
+    if (plot) {
       summary_main(object, plot, ...)
     } else {
       data.frame(
@@ -58,7 +58,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
 }
 
 summary_main <- function(object, plot, ...) {
-  if (isTRUE(plot)) {
+  if (plot) {
     object2 <- as.matrix(t(apply(object, 2, rev)))
 
     # Defaults for image plot
