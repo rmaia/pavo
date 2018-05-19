@@ -4,6 +4,11 @@ context("adjacency")
 test_that("Basic", {
   # set.seed(1)
   # # Single
+  fakeimg <- array(c(
+    as.matrix(rep(c(0.2, 0.4, 0.6), each = 250)),
+    as.matrix(rep(c(0.4, 0.7, 0.8), each = 250)),
+    as.matrix(rep(c(0.6, 0.1, 0.2), each = 250))),
+    dim = c(750, 750, 3))
   # stripe <- getimg(system.file("testdata/images/validation/stripe.png", package = "pavo"))
   # stripe_class <- classify(stripe, n_cols = 4, ref_ID = 1)
   # stripe_adjacent <- adjacent(stripe_class, x_pts = 100, x_scale = 10, bkg_ID = c(1, 3), bkg_include = FALSE)
@@ -22,3 +27,4 @@ test_that("Basic", {
   # snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 150)
   
 })
+
