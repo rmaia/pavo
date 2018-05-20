@@ -83,7 +83,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     }
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
-    if (totalsize < 0.5) {
+    if (totalsize < 0.2) {
       imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
     } else {
       message("Image data too large for parallel-processing, reverting to single-core processing.")

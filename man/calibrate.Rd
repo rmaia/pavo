@@ -4,13 +4,13 @@
 \alias{calibrate}
 \title{Calibrate images}
 \usage{
-calibrate(image, scale_length = NULL)
+calibrate(image, scaledist = NULL)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
-\item{scale_length}{an integer specifying the length of the scale
+\item{scaledist}{an integer specifying the length of the scale
 in the image(s), if desired.}
 }
 \value{
@@ -28,7 +28,7 @@ papilio <- calibrate(papilio, scale = 10)
 
 # Multiple images. Assign a scale an specify the nuber of colours present.
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes <- calibrate(snakes, scale = 100, assign_n = TRUE)
+snakes <- calibrate(snakes, scale = 100)
 }
 
 }

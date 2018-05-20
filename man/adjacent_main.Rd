@@ -4,30 +4,30 @@
 \alias{adjacent_main}
 \title{Main function for adjacency analysis}
 \usage{
-adjacent_main(classimg_i, x_pts_i = NULL, x_scale_i = NULL,
-  bkg_ID_i = NULL, bkg_include_i = TRUE, coldists_i = NULL)
+adjacent_main(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
+  bkg.include_i = TRUE, coldists_i = NULL)
 }
 \arguments{
 \item{classimg_i}{(required) an xyz image matrix, or list of matrices, in which
 x and y correspond to pixel coordinates, and z is a numeric code specifying
 a colour-class. Preferably the result of \code{\link{classify}}.}
 
-\item{x_pts_i}{(required) an integer specifying the number of sample points, or grid-sampling
+\item{xpts_i}{(required) an integer specifying the number of sample points, or grid-sampling
 density, along the x axis. Y-axis sampling density is calculated automatically
 from this, to maintain an even grid spacing.}
 
-\item{x_scale_i}{(required) an integer specifying the true length of the x-axis,
+\item{xscale_i}{(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, if image scales have been set via
 \code{\link{calibrate}}.}
 
-\item{bkg_ID_i}{an integer or vector specifying the colour-class ID number(s) of
+\item{bkgID_i}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
 colour-class ID numbers.}
 
-\item{bkg_include_i}{logical; should the colour classes specified by \code{bkg_ID_i}
+\item{bkg.include_i}{logical; should the colour classes specified by \code{bkgID_i}
 be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+members of the colour classes specified in \code{bkgID_i} will be excluded, which
 may give undesired results if elements are shared between the background and focal
 stimulus.}
 

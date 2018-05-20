@@ -4,30 +4,30 @@
 \alias{adjacent}
 \title{Run an adjacency analysis}
 \usage{
-adjacent(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
-  bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L))
+adjacent(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
+  bkg.include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
 x and y correspond to pixel coordinates, and z is a numeric code specifying
 a colour-class. Preferably the result of \code{\link{classify}}.}
 
-\item{x_pts}{(required) an integer specifying the number of sample points, or grid-sampling
+\item{xpts}{(required) an integer specifying the number of sample points, or grid-sampling
 density, along the x axis. Y-axis sampling density is calculated automatically
 from this, to maintain an even grid spacing.}
 
-\item{x_scale}{(required) an integer specifying the true length of the x-axis,
+\item{xscale}{(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, if image scales have been set via
 \code{\link{calibrate}}.}
 
-\item{bkg_ID}{an integer or vector specifying the colour-class ID number(s) of
+\item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
 colour-class ID numbers.}
 
-\item{bkg_include}{logical; should the colour classes specified by \code{bkg_ID}
+\item{bkg.include}{logical; should the colour classes specified by \code{bkgID}
 be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+members of the colour classes specified in \code{bkgID_i} will be excluded, which
 may give undesired results if elements are shared between the background and focal
 stimulus.}
 
@@ -42,7 +42,8 @@ for visual modelling with spectral data.}
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 }
 \value{
-a data frame of summary variables:
+a data frame of summary variables. Only variables with at least
+one non-NA value are returned:
 \itemize{
   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.
@@ -60,7 +61,7 @@ a data frame of summary variables:
   \item \code{'t_i_j'}: The frequency of off-diagonal (i.e. class-change
     transitions) transitions \emph{i} and \emph{j}, such that \code{sum(t_i_j) = 1}.
   \item \code{'m'}: The overall transition density (mean transitions),
-    in units specified in the argument \code{x_scale}.
+    in units specified in the argument \code{xscale}.
   \item \code{'m_r'}: The row transition density (mean row transitions),
     in user-specified units.
   \item \code{'m_c'}: The column transition density (mean column transitions),
@@ -71,12 +72,12 @@ a data frame of summary variables:
   \item \code{'St'}: Simpson transition diversity.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
-  \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude
-  \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude
-  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude
-  \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude
-  \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude
-  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude
+  \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
+  \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
+  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
+  \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude.
+  \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude.
+  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude.
   }
 }
 \description{
@@ -85,13 +86,13 @@ Calculate summary variables from the adjacency analysis (Endler 2012 & Endler et
 \examples{
 \dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio_class <- classify(papilio, n_cols = 4)
-papilio_adj <- adjacent(papilio_class, x_pts = 150, x_scale = 100)
+papilio_class <- classify(papilio, ncols = 4)
+papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, n_cols = 3)
-snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 50)
+snakes_class <- classify(snakes, ncols = 3)
+snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
 }
 
 }

@@ -5,19 +5,19 @@
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param x_pts (required) an integer specifying the number of sample points, or grid-sampling
+#' @param xpts (required) an integer specifying the number of sample points, or grid-sampling
 #' density, along the x axis. Y-axis sampling density is calculated automatically
 #' from this, to maintain an even grid spacing.
-#' @param x_scale (required) an integer specifying the true length of the x-axis,
+#' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID an integer or vector specifying the colour-class ID number(s) of
+#' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers.
-#' @param bkg_include logical; should the colour classes specified by \code{bkg_ID}
+#' @param bkg.include logical; should the colour classes specified by \code{bkgID}
 #' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-#' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+#' members of the colour classes specified in \code{bkgID_i} will be excluded, which
 #' may give undesired results if elements are shared between the background and focal
 #' stimulus.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
@@ -29,7 +29,8 @@
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
-#' @return a data frame of summary variables:
+#' @return a data frame of summary variables. Only variables with at least
+#' one non-NA value are returned:
 #' \itemize{
 #'   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
 #'   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.
@@ -47,7 +48,7 @@
 #'   \item \code{'t_i_j'}: The frequency of off-diagonal (i.e. class-change
 #'     transitions) transitions \emph{i} and \emph{j}, such that \code{sum(t_i_j) = 1}.
 #'   \item \code{'m'}: The overall transition density (mean transitions),
-#'     in units specified in the argument \code{x_scale}.
+#'     in units specified in the argument \code{xscale}.
 #'   \item \code{'m_r'}: The row transition density (mean row transitions),
 #'     in user-specified units.
 #'   \item \code{'m_c'}: The column transition density (mean column transitions),
@@ -58,12 +59,12 @@
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
-#'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude
-#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude
-#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude
-#'   \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude
-#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude
-#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude
+#'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
+#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
+#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
+#'   \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude.
+#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude.
+#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude.
 #'   }
 #'
 #' @export
@@ -74,13 +75,13 @@
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio_class <- classify(papilio, n_cols = 4)
-#' papilio_adj <- adjacent(papilio_class, x_pts = 150, x_scale = 100)
+#' papilio_class <- classify(papilio, ncols = 4)
+#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, n_cols = 3)
-#' snakes_adj <- adjacent(snakes_class, x_pts = 250, x_scale = 50)
+#' snakes_class <- classify(snakes, ncols = 3)
+#' snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -91,8 +92,8 @@
 #' geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution, Early View.
 
-adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
-                     bkg_include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
+adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
+                     bkg.include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
@@ -120,10 +121,10 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   } else {
     n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
   }
-  if (bkg_include == FALSE && is.null(bkg_ID)) {
-    stop("Background cannot be excluded without specifying one or more ID's via the argument bkg_ID.")
+  if (bkg.include == FALSE && is.null(bkgID)) {
+    stop("Background cannot be excluded without specifying one or more ID's via the argument bkgID.")
   }
-  if (!is.null(bkg_ID) && length(bkg_ID) >= n_class - 1 && bkg_include == FALSE) {
+  if (!is.null(bkgID) && length(bkgID) >= n_class - 1 && bkg.include == FALSE) {
     stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
          in the image.")
   }
@@ -132,29 +133,29 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
   # Single image
   if (!multi_image) {
     if (!is.null(attr(classimg, "px_scale"))) {
-      x_scale <- attr(classimg, "px_scale") * dim(classimg)[2]
-    } else if (is.null(attr(classimg, "px_scale")) && is.null(x_scale)) {
-      stop("Required argument x_scale is missing, and image data are uncalibrated. Either
-         specify x_scale or use calibrate() to set a scale.")
+      xscale <- attr(classimg, "px_scale") * dim(classimg)[2]
+    } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
+      stop("Required argument xscale is missing, and image data are uncalibrated. Either
+         specify xscale or use calibrate() to set a scale.")
     }
     ## Multi images
   } else if (multi_image) {
     if (!is.null(attr(classimg[[1]], "px_scale"))) {
-      x_scale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(x_scale)) {
-      x_scale <- lapply(1:length(classimg), function(x) x_scale)
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(x_scale)) {
-      stop("Required argument x_scale is missing, and one or more images are uncalibrated.
-           Either specify x_scale or use calibrate() to set a scale for each image.")
+      xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
+    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale)) {
+      xscale <- lapply(1:length(classimg), function(x) xscale)
+    } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
+      stop("Required argument xscale is missing, and one or more images are uncalibrated.
+           Either specify xscale or use calibrate() to set a scale for each image.")
     }
   }
 
   if (multi_image) { # Multiple images
     outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-        x_pts_i = x_pts,
-        x_scale_i = x_scale[[x]],
-        bkg_ID_i = bkg_ID,
-        bkg_include_i = bkg_include,
+        xpts_i = xpts,
+        xscale_i = xscale[[x]],
+        bkgID_i = bkgID,
+        bkg.include_i = bkg.include,
         coldists_i = coldists
       ), mc.cores = cores)
     outdata <- do.call(bind_rows, outdata)
@@ -165,10 +166,10 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 
     outdata <- adjacent_main(
       classimg_i = classimg,
-      x_pts_i = x_pts,
-      x_scale_i = x_scale,
-      bkg_ID_i = bkg_ID,
-      bkg_include_i = bkg_include,
+      xpts_i = xpts,
+      xscale_i = xscale,
+      bkgID_i = bkgID,
+      bkg.include_i = bkg.include,
       coldists_i = coldists
     )
     rownames(outdata) <- attr(classimg, "imgname")
@@ -181,19 +182,19 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 #' @param classimg_i (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param x_pts_i (required) an integer specifying the number of sample points, or grid-sampling
+#' @param xpts_i (required) an integer specifying the number of sample points, or grid-sampling
 #' density, along the x axis. Y-axis sampling density is calculated automatically
 #' from this, to maintain an even grid spacing.
-#' @param x_scale_i (required) an integer specifying the true length of the x-axis,
+#' @param xscale_i (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
-#' @param bkg_ID_i an integer or vector specifying the colour-class ID number(s) of
+#' @param bkgID_i an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers.
-#' @param bkg_include_i logical; should the colour classes specified by \code{bkg_ID_i}
+#' @param bkg.include_i logical; should the colour classes specified by \code{bkgID_i}
 #' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-#' members of the colour classes specified in \code{bkg_ID_i} will be excluded, which
+#' members of the colour classes specified in \code{bkgID_i} will be excluded, which
 #' may give undesired results if elements are shared between the background and focal
 #' stimulus.
 #' @param coldists_i An data.frame or matrix specifying the visually-modelled chromatic (dS)
@@ -210,28 +211,28 @@ adjacent <- function(classimg, x_pts = NULL, x_scale = NULL, bkg_ID = NULL,
 #'
 #' @return a data frame of summary variables. See \code{\link{adjacent}} for details.
 #'
-adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i = NULL, bkg_include_i = TRUE, coldists_i = NULL) {
+adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, bkg.include_i = TRUE, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
   # Scales
-  y_scale <- x_scale_i / (ncol(classimg_i) / nrow(classimg_i))
+  y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
   # Subsample, if specified
-  if (length(x_pts_i) == 1) {
+  if (length(xpts_i) == 1) {
     subclass <- classimg_i[
-      seq(1, nrow(classimg_i), ncol(classimg_i) / x_pts_i),
-      seq(1, ncol(classimg_i), ncol(classimg_i) / x_pts_i)
+      seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
+      seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
     ]
-  } else if (is.null(x_pts_i)) {
-    x_pts_i <- c(dim(classimg_i))
+  } else if (is.null(xpts_i)) {
+    xpts_i <- c(dim(classimg_i))
   }
 
   # Exclude background, if specified
-  if (!is.null(bkg_ID_i) && bkg_include_i == FALSE) {
+  if (!is.null(bkgID_i) && bkg.include_i == FALSE) {
 
     # Render selected classes NA
-    for (i in 1:length(bkg_ID_i)) {
-      subclass[subclass == bkg_ID_i[[i]]] <- NA
+    for (i in 1:length(bkgID_i)) {
+      subclass[subclass == bkgID_i[[i]]] <- NA
     }
 
     # Subset matrix to include only rows with at least one non-NA transition
@@ -239,7 +240,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   }
 
   # Summary info
-  pt_scale <- x_scale_i / x_pts_i # distance between grid sample points in user-specified units
+  pt_scale <- xscale_i / xpts_i # distance between grid sample points in user-specified units
   n_x <- ncol(subclass) # n columns
   n_y <- nrow(subclass) # n rows
   # n_area <- sum(rowSums(!is.na(subclass))) # total number of non-NA pixels
@@ -310,7 +311,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   if (nrow(subset(rowtrans2, c1 != c2)) == 0) {
     m_r <- Inf
   } else {
-    m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / x_scale_i
+    m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / xscale_i
   }
 
   # Col transition density (mean transitions / scaled unit)
@@ -384,10 +385,10 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
   Jt <- St / (k * (k - 1) / 2)
 
   ## Things involving the background
-  if (!is.null(bkg_ID_i) && bkg_include_i == TRUE) {
+  if (!is.null(bkgID_i) && bkg.include_i == TRUE) {
     # Animal/background transition ratio
-    O_a_a <- offdiag[!offdiag$c1 %in% bkg_ID_i, ]
-    O_a_a <- O_a_a[!O_a_a$c2 %in% bkg_ID_i, ]
+    O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
+    O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
     subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
     O_a_b <- offdiag[!subb, ]
     B <- sum(O_a_a$N) / sum(O_a_b$N)
@@ -443,6 +444,7 @@ adjacent_main <- function(classimg_i, x_pts_i = NULL, x_scale_i = NULL, bkg_ID_i
 
   # Output
   fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
+  fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
   fin <- as.data.frame(fin)
 

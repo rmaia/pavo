@@ -4,28 +4,28 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE,
-  plot_window = FALSE)
+classify(imgdat, ncols = NULL, refID = NULL, manual = FALSE,
+  plotnew = FALSE)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. preferably the result of \code{\link{getimg}}.}
 
-\item{n_cols}{either an integer, or vector the same length as imgdat (if
+\item{ncols}{either an integer, or vector the same length as imgdat (if
 passing a list of images), specifying the number of discrete colour classes present
 in an image, for k-means clustering.}
 
-\item{ref_ID}{The numeric identifier of a 'reference' image, for use when passing
+\item{refID}{The numeric identifier of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
 in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
-When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
+When \code{TRUE}, the user is asked to click a number of points (equal to \code{ncols},
 if specified, otherwise user-determined) that represent the distinct colours of interest.
 If a reference image is specified, it will be the only image presented.}
 
-\item{plot_window}{Should plots be opened in a new window when \code{manual = TRUE}?
+\item{plotnew}{Should plots be opened in a new window when \code{manual = TRUE}?
 Defaults to \code{FALSE}.}
 }
 \value{
@@ -45,11 +45,11 @@ cluster ID's are desired between runs.
 \dontrun{
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio_class <- classify(papilio, n_cols = 4)
+papilio_class <- classify(papilio, ncols = 4)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, n_cols = 3)
+snakes_class <- classify(snakes, ncols = 3)
 }
 
 }

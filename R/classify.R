@@ -4,18 +4,18 @@
 #'
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param n_cols either an integer, or vector the same length as imgdat (if
+#' @param ncols either an integer, or vector the same length as imgdat (if
 #' passing a list of images), specifying the number of discrete colour classes present
 #' in an image, for k-means clustering.
-#' @param ref_ID The numeric identifier of a 'reference' image, for use when passing
+#' @param refID The numeric identifier of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
 #' @param manual manually specify the colour-category 'centers', for k-means clustering.
-#' When \code{TRUE}, the user is asked to click a number of points (equal to \code{n_cols},
+#' When \code{TRUE}, the user is asked to click a number of points (equal to \code{ncols},
 #' if specified, otherwise user-determined) that represent the distinct colours of interest.
 #' If a reference image is specified, it will be the only image presented.
-#' @param plot_window Should plots be opened in a new window when \code{manual = TRUE}?
+#' @param plotnew Should plots be opened in a new window when \code{manual = TRUE}?
 #' Defaults to \code{FALSE}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
@@ -36,16 +36,16 @@
 #' @examples \dontrun{
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio_class <- classify(papilio, n_cols = 4)
+#' papilio_class <- classify(papilio, ncols = 4)
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, n_cols = 3)
+#' snakes_class <- classify(snakes, ncols = 3)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_window = FALSE) {
+classify <- function(imgdat, ncols = NULL, refID = NULL, manual = FALSE, plotnew = FALSE) {
 
   ## Checks
   # Single or multiple images?
@@ -56,19 +56,19 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
   #   message('Parallel processing not available in Windows; "cores" set to 1\n')
   # }
   # k checking.
-  if (length(n_cols) > 1) {
+  if (length(ncols) > 1) {
     # Must have k's for each image
-    if (length(n_cols) < length(imgdat)) {
-      stop("When supplying more than one value, the length of n_cols must equal the number of images.")
+    if (length(ncols) < length(imgdat)) {
+      stop("When supplying more than one value, the length of ncols must equal the number of images.")
     }
     # Reduce to single integer if multiple k's are all the same
-    if (length(unique(n_cols)) == 1) {
-      n_cols <- n_cols[1]
+    if (length(unique(ncols)) == 1) {
+      ncols <- ncols[1]
     }
     # Can't have a reference image when k's vary
-    if (length(unique(n_cols)) > 1 && !is.null(ref_ID)) {
-      warning("Cannot use reference image when n_cols varies between images. Ignoring ref_ID.")
-      ref_ID <- NULL
+    if (length(unique(ncols)) > 1 && !is.null(refID)) {
+      warning("Cannot use reference image when ncols varies between images. Ignoring refID.")
+      refID <- NULL
     }
   }
 
@@ -76,44 +76,44 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
   #
   ## Multiple images ##
   # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
-  #       (length(n_cols) > 1 && manual = FALSE)
+  #       (length(ncols) > 1 && manual = FALSE)
   # (2) Single k (or multiple identical k), with a reference image.
-  #       (length(n_cols) == 1 && !is.null(ref_ID) && manual = FALSE)
+  #       (length(ncols) == 1 && !is.null(refID) && manual = FALSE)
   # (3) Single k (or multiple identical k), without a reference image, so the centres & assignments will vary between images.
-  #       (length(n_cols) == 1 && is.null(ref_ID) && manual = FALSE)
+  #       (length(ncols) == 1 && is.null(refID) && manual = FALSE)
   # (4) Single k (or multiple identical k), with manually-specified centres, and a single reference image.
-  #       (length(n_cols) == 1 && !is.null(ref_ID) && manual == TRUE)
+  #       (length(ncols) == 1 && !is.null(refID) && manual == TRUE)
   # (5) Multiple k (identical or not), with manually-specified centres for each image.
-  #       (is.null(ref_ID) && manual == TRUE)
+  #       (is.null(refID) && manual == TRUE)
   #
   ## Single image ##
-  # - Single k
-  #   (length(n_cols) == 1)
-  # - Single k, with manual centre
-  #   (length(n_cols) == 1 && manual = TRUE)
+  # (1) Single k
+  #      (length(ncols) == 1)
+  # (2) Single k, with manual centre
+  #      (length(ncols) == 1 && manual = TRUE)
 
 
   ## Multiple images  ##
   if (multi_image) {
 
-    ## Multiple k, no reference image ##
-    if (length(n_cols) > 1 && manual == FALSE) {
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols[[x]]))
+    ## (1) Multiple k, no reference image ##
+    if (length(ncols) > 1 && manual == FALSE) {
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ncols[[x]]))
 
-      ## Single k, with reference image ##
-    } else if (length(n_cols) == 1 && !is.null(ref_ID) && manual == FALSE) {
-      ref_centers <- attr(classify_main(imgdat[[ref_ID]], n_cols), "classRGB") # k means centers of ref image
+      ## (2) Single k, with reference image ##
+    } else if (length(ncols) == 1 && !is.null(refID) && manual == FALSE) {
+      ref_centers <- attr(classify_main(imgdat[[refID]], ncols), "classRGB") # k means centers of ref image
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
 
-      ## Single k, no reference image ##
-    } else if (length(n_cols) == 1 && is.null(ref_ID) && manual == FALSE) {
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], n_cols))
+      ## (3) Single k, no reference image ##
+    } else if (length(ncols) == 1 && is.null(refID) && manual == FALSE) {
+      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ncols))
 
-      ## Single k, manually specified centre, with reference image ##
-    } else if (!is.null(ref_ID) && manual == TRUE) {
+      ## (4) Single k, manually specified centre, with reference image ##
+    } else if (!is.null(refID) && manual == TRUE) {
 
       # Reference image
-      refimg <- imgdat[[ref_ID]]
+      refimg <- imgdat[[refID]]
 
       # Transformed image data (TODO: SIMPLIFY)
       reftrans <- array(c(
@@ -128,22 +128,20 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       )
       )
 
-      if (plot_window) {
-        dev.new(noRStudioGD = TRUE)
-      }
+      if (plotnew) dev.new(noRStudioGD = TRUE)
+      
       plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
       rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
-      if (!is.null(n_cols)) {
-        message(paste("Select the", n_cols, "focal colours"))
-        reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
-      } else if (is.null(n_cols)) {
+      if (!is.null(ncols)) {
+        message(paste("Select the", ncols, "focal colours"))
+        reference <- as.data.frame(locator(type = "p", col = "red", n = ncols))
+      } else if (is.null(ncols)) {
         message(paste0("Select the focal colours in image ", attr(refimg, "imgname"), ", and press [esc] to continue."))
         reference <- as.data.frame(locator(type = "p", col = "red"))
-        n_cols <- nrow(reference)
+        ncols <- nrow(reference)
       }
-      if (plot_window) {
-        dev.off()
-      }
+      
+      if (plotnew) dev.off()
 
       ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
       for (i in 2:nrow(reference))
@@ -153,13 +151,13 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
       outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
 
       ## (5) Multiple k, with manually-specified centres for each image. ##
-    } else if (is.null(ref_ID) && manual == TRUE) {
-      if (length(n_cols) == 1) {
-        n_cols <- rep(n_cols, length(imgdat))
+    } else if (is.null(refID) && manual == TRUE) {
+      if (length(ncols) == 1) {
+        ncols <- rep(ncols, length(imgdat))
       }
-      if (is.null(n_cols)) {
+      if (is.null(ncols)) {
         n_cols_test <- NULL
-        n_cols <- rep(NA, length(imgdat))
+        ncols <- rep(NA, length(imgdat))
       } else {
         n_cols_test <- FALSE
       }
@@ -181,9 +179,8 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         )
         )
 
-        if (plot_window) {
-          dev.new(noRStudioGD = TRUE)
-        }
+        if (plotnew) dev.new(noRStudioGD = TRUE)
+        
         plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
           type = "n",
           xlab = "x",
@@ -191,16 +188,14 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
         )
         rasterImage(imgdat[[i]], 1, 1, dim(imgdat[[i]])[2], dim(imgdat[[i]])[1])
         if (!is.null(n_cols_test)) {
-          message(paste0("Select the ", n_cols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
-          reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols[[i]]))
+          message(paste0("Select the ", ncols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
+          reference <- as.data.frame(locator(type = "p", col = "red", n = ncols[[i]]))
         } else if (is.null(n_cols_test)) {
           message(paste0("Select the focal colours in image ", attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
-          n_cols[[i]] <- nrow(reference)
+          ncols[[i]] <- nrow(reference)
         }
-        if (plot_window) {
-          dev.off()
-        }
+        if (plotnew) dev.off()
 
         ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (j in 2:nrow(reference)) {
@@ -224,10 +219,10 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
       attr(outdata[[i]], "state") <- "colclass"
-      if (length(n_cols) > 1) {
-        attr(outdata[[i]], "k") <- n_cols[[i]]
+      if (length(ncols) > 1) {
+        attr(outdata[[i]], "k") <- ncols[[i]]
       } else {
-        attr(outdata[[i]], "k") <- n_cols
+        attr(outdata[[i]], "k") <- ncols
       }
     }
     class(outdata) <- c("rimg", "list")
@@ -254,21 +249,19 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 
       i <- 1
       while (i <= 1) {
-        if (plot_window) {
-          dev.new(noRStudioGD = TRUE)
-        }
+        
+        if (plotnew) dev.new(noRStudioGD = TRUE)
+        
         plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
         rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
-        if (!is.null(n_cols)) {
-          message(paste("Select the", n_cols, "focal colours."))
-          reference <- as.data.frame(locator(type = "p", col = "red", n = n_cols))
-        } else if (is.null(n_cols)) {
+        if (!is.null(ncols)) {
+          message(paste("Select the", ncols, "focal colours."))
+          reference <- as.data.frame(locator(type = "p", col = "red", n = ncols))
+        } else if (is.null(ncols)) {
           message(paste("Select the focal colours, and press [esc] to continue."))
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
-        if (plot_window) {
-          dev.off()
-        }
+        if (plotnew) dev.off()
 
         ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
         for (i in 2:nrow(reference))
@@ -286,11 +279,11 @@ classify <- function(imgdat, n_cols = NULL, ref_ID = NULL, manual = FALSE, plot_
 
       outdata <- classify_main(imgdat, ref_centers)
     } else {
-      outdata <- classify_main(imgdat, n_cols)
+      outdata <- classify_main(imgdat, ncols)
     }
-    if (!is.null(n_cols)) {
-      attr(outdata, "k") <- n_cols
-    } else if (is.null(n_cols)) {
+    if (!is.null(ncols)) {
+      attr(outdata, "k") <- ncols
+    } else if (is.null(ncols)) {
       attr(outdata, "k") <- nrow(reference)
     }
     attr(outdata, "imgname") <- attr(imgdat, "imgname")

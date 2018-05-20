@@ -15,7 +15,7 @@
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}
 #' @param ... other arguments to be passed to \code{\link{coldist}}. Must at minimum
 #' include \code{n} and \code{weber}. See \code{\link{coldist}} for details.
-#' 
+#'
 #' @return a matrix including the empirical mean and bootstrapped
 #'  confidence limits for dS (and dL if \code{achro = TRUE}).
 #'
