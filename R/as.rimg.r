@@ -31,6 +31,7 @@
 #' @author Thomas E. White \email{thoma.white026@@gmail.com}
 
 as.rimg <- function(object) {
+  
   if (!is.array(object)) {
     stop("object must be an array")
   }
@@ -39,6 +40,7 @@ as.rimg <- function(object) {
   attr(object, "state") <- "raw"
 
   object
+  
 }
 
 #' Check if data is an rimg object.

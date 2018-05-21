@@ -4,16 +4,18 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, ncols = NULL, refID = NULL, manual = FALSE,
+classify(imgdat, kcols = NULL, refID = NULL, manual = FALSE,
   plotnew = FALSE)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. preferably the result of \code{\link{getimg}}.}
 
-\item{ncols}{either an integer, or vector the same length as imgdat (if
-passing a list of images), specifying the number of discrete colour classes present
-in an image, for k-means clustering.}
+\item{kcols}{the number of discrete colour classes present in the input image(s). 
+Can be an integer when only a single image is present or if kcols is identical for all
+images. When passing a list of images, \code{kcols} can also be a vector the same length 
+as \code{imgdat}, or a data.frame with two columns specifying image file names and 
+corresponding kcols.}
 
 \item{refID}{The numeric identifier of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
@@ -21,7 +23,7 @@ in the single reference image, thus helping to ensure that homologous pattern el
 will be reliably classified between images, if so desired.}
 
 \item{manual}{manually specify the colour-category 'centers', for k-means clustering.
-When \code{TRUE}, the user is asked to click a number of points (equal to \code{ncols},
+When \code{TRUE}, the user is asked to click a number of points (equal to \code{kcols},
 if specified, otherwise user-determined) that represent the distinct colours of interest.
 If a reference image is specified, it will be the only image presented.}
 
@@ -45,11 +47,11 @@ cluster ID's are desired between runs.
 \dontrun{
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio_class <- classify(papilio, ncols = 4)
+papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, ncols = 3)
+snakes_class <- classify(snakes, kcols = 3)
 }
 
 }
