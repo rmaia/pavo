@@ -36,9 +36,6 @@ and/or achromatic (dL) distances between colour-categories. The first two column
 should specify all possible combinations of colour category ID's, with the remaining
 columns named dS (for chromatic distances) and/or dL (for achromatic distances).}
 }
-\value{
-a data frame of summary variables. See \code{\link{adjacent}} for details.
-}
 \description{
 Main function for adjacency analysis
 }

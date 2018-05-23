@@ -227,9 +227,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #' @importFrom utils head tail
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#'
-#' @return a data frame of summary variables. See \code{\link{adjacent}} for details.
-#'
+#' 
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, bkg.include_i = TRUE, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
@@ -434,19 +432,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   # Edge salience (Endler et al. 2018 )
   if (!is.null(coldists_i)) {
-    weightmean <- function(x, wt) {
-      s <- which(is.finite(x * wt))
-      wt <- wt[s]
-      x <- x[s]
-      sum(wt * x) / sum(wt)
-    }
-    weightsd <- function(x, wt) {
-      s <- which(is.finite(x + wt))
-      wt <- wt[s]
-      x <- x[s]
-      xbar <- weightmean(x, wt)
-      sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
-    }
 
     offdiagprop <- merge(offdiagprop, coldists_i)
 
