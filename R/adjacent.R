@@ -75,12 +75,12 @@
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio_class <- classify(papilio, ncols = 4)
+#' papilio_class <- classify(papilio, kcols = 4)
 #' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, ncols = 3)
+#' snakes_class <- classify(snakes, kcols = 3)
 #' snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
 #' }
 #'
@@ -444,7 +444,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   # Output
   fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
-  fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
+  #fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
   fin <- as.data.frame(fin)
 

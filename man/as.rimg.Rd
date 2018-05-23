@@ -38,5 +38,5 @@ is.rimg(fake2)
 
 }
 \author{
-Thomas E. White \email{thoma.white026@gmail.com}
+Thomas E. White \email{thomas.white026@gmail.com}
 }

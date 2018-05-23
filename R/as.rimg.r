@@ -28,16 +28,25 @@
 #' is.rimg(fake2)
 #' }
 #'
-#' @author Thomas E. White \email{thoma.white026@@gmail.com}
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object) {
   
   if (!is.array(object)) {
-    stop("object must be an array")
+    stop("Object must be an array.")
   }
-
+  
+  # Duplicate channels if grayscale
+  if (is.na(dim(object)[3])) {
+    imgdat <- replicate(3, object, simplify = "array")
+  }
+  
+  # Attributes
   class(object) <- c("rimg", "array")
   attr(object, "state") <- "raw"
+  attr(object, "imgname") <- "img"
+  attr(object, "scale") <- NULL
+  attr(object, "k") <- NULL
 
   object
   

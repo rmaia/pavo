@@ -11,10 +11,10 @@ classify(imgdat, kcols = NULL, refID = NULL, manual = FALSE,
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. preferably the result of \code{\link{getimg}}.}
 
-\item{kcols}{the number of discrete colour classes present in the input image(s). 
+\item{kcols}{the number of discrete colour classes present in the input image(s).
 Can be an integer when only a single image is present or if kcols is identical for all
-images. When passing a list of images, \code{kcols} can also be a vector the same length 
-as \code{imgdat}, or a data.frame with two columns specifying image file names and 
+images. When passing a list of images, \code{kcols} can also be a vector the same length
+as \code{imgdat}, or a data.frame with two columns specifying image file names and
 corresponding kcols.}
 
 \item{refID}{The numeric identifier of a 'reference' image, for use when passing
@@ -51,7 +51,7 @@ papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, kcols = 3)
+snakes_class <- classify(snakes, manual = TRUE, plotnew = TRUE)
 }
 
 }

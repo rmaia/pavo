@@ -59,20 +59,17 @@ summary.rimg <- function(object, plot = FALSE, ...) {
 
 summary_main <- function(object, plot, ...) {
   if (plot) {
+    
     object2 <- as.matrix(t(apply(object, 2, rev)))
 
     # Defaults for image plot
     arg <- list(...)
-
-    if (is.null(arg$xlab)) {
-      arg$xlab <- "x"
-    }
-    if (is.null(arg$ylab)) {
-      arg$ylab <- "y"
-    }
-    if (is.null(arg$main)) {
-      arg$main <- attr(object, "imgname")
-    }
+    if (is.null(arg$xlab)) arg$xlab <- "x"
+    if (is.null(arg$ylab)) arg$ylab <- "y"
+    if (is.null(arg$main)) arg$main <- attr(object, "imgname")
+    if (is.null(arg$useRaster)) arg$useRaster <- TRUE
+    if (is.null(arg$col)) arg$col <- rgb(attr(object, "classRGB"))
+    if (is.null(arg$asp)) arg$asp <- dim(object)[1] / dim(object)[2]
     if (is.null(arg$xlim)) {
       padrow <- round(nrow(object2) * 0.02)
       arg$xlim <- c(0 - padrow, nrow(object2) + padrow)
@@ -80,15 +77,6 @@ summary_main <- function(object, plot, ...) {
     if (is.null(arg$ylim)) {
       padcol <- round(ncol(object2) * 0.02)
       arg$ylim <- c(0 - padcol, ncol(object2) + padcol)
-    }
-    if (is.null(arg$asp)) {
-      arg$asp <- dim(object)[1] / dim(object)[2]
-    }
-    if (is.null(arg$useRaster)) {
-      arg$useRaster <- TRUE
-    }
-    if (is.null(arg$col)) {
-      arg$col <- rgb(attr(object, "classRGB"))
     }
 
     arg$x <- 1:nrow(object2)

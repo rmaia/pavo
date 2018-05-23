@@ -4,11 +4,11 @@
 #'
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param kcols the number of discrete colour classes present in the input image(s). 
+#' @param kcols the number of discrete colour classes present in the input image(s).
 #' Can be an integer when only a single image is present or if kcols is identical for all
-#' images. When passing a list of images, \code{kcols} can also be a vector the same length 
-#' as \code{imgdat}, or a data.frame with two columns specifying image file names and 
-#' corresponding kcols.  
+#' images. When passing a list of images, \code{kcols} can also be a vector the same length
+#' as \code{imgdat}, or a data.frame with two columns specifying image file names and
+#' corresponding kcols.
 #' @param refID The numeric identifier of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
@@ -43,7 +43,7 @@
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, kcols = 3)
+#' snakes_class <- classify(snakes, manual = TRUE, plotnew = TRUE)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -58,47 +58,56 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
   #   cores <- 1
   #   message('Parallel processing not available in Windows; "cores" set to 1\n')
   # }
-  
+
   # k checking.
-  if (!is.vector(kcols)) {
-    
-    #TODO more safety
-    
-    # Identify the name of the column containing file names
-    id_col <- names(kcols[lapply(kcols, class) != "numeric"])
-    
-    # Remove file extensions if present
-    kcols[[id_col]] <- file_path_sans_ext(kcols[[id_col]])
-    
-    # Extract image names from image data
-    imageIDs <- data.frame(names = unlist(lapply(1:length(imgdat), 
-                                                 function (x) attr(imgdat[[x]], 'imgname'))), 
-                           stringsAsFactors = FALSE)
-    
-    # Reorder user-supplied kcols to match order of images
-    kcols <- kcols[match(imageIDs[,1], kcols[[id_col]]),]
-    
-    # Extract kcols
-    kcols <- as.numeric(unlist(kcols[lapply(kcols, class) == "numeric"]))
-    
-  }
   if (!is.null(kcols)) {
-      if (length(kcols) > 1) {
-        # Must have k's for each image
-        if (length(kcols) < length(imgdat)) {
-          stop("When supplying more than one value, the length of kcols must equal the number of images.")
-        }
-        # Reduce to single integer if multiple k's are all the same
-        if (length(unique(kcols)) == 1) {
-          kcols <- kcols[1]
-        }
-        # Can't have a reference image when k's vary
-        if (length(unique(kcols)) > 1 && !is.null(refID)) {
-          warning("Cannot use reference image when kcols varies between images. Ignoring refID.")
-          refID <- NULL
-        }
+
+    # If kcols is a 2-col data frame/matrix
+    if (!is.vector(kcols)) {
+
+      # TODO more safety
+      if (ncol(kcols) > 2) {
+        warning("More than two columns included in kcols. Taking the first two columns only.")
+        kcols <- as.data.frame(kcols[, 1:2])
       }
-    } 
+
+      # Identify the name of the column containing file names
+      id_col <- names(kcols[lapply(kcols, class) != "numeric"])
+
+      # Remove file extensions if present
+      kcols[[id_col]] <- file_path_sans_ext(kcols[[id_col]])
+
+      # Extract image names from image data
+      imageIDs <- data.frame(
+        names = unlist(lapply(
+          1:length(imgdat),
+          function(x) attr(imgdat[[x]], "imgname")
+        )),
+        stringsAsFactors = FALSE
+      )
+
+      # Reorder user-supplied kcols to match order of images
+      kcols <- kcols[match(imageIDs[, 1], kcols[[id_col]]), ]
+
+      # Extract kcols
+      kcols <- as.numeric(unlist(kcols[lapply(kcols, class) == "numeric"]))
+    }
+    if (length(kcols) > 1) {
+      # Must have k's for each image
+      if (length(kcols) < length(imgdat)) {
+        stop("When supplying more than one value, the length of kcols must equal the number of images.")
+      }
+      # Reduce to single integer if multiple k's are all the same
+      if (length(unique(kcols)) == 1) {
+        kcols <- kcols[1]
+      }
+      # Can't have a reference image when k's vary
+      if (length(unique(kcols)) > 1 && !is.null(refID)) {
+        warning("Cannot use reference image when kcols varies between images. Ignoring refID.")
+        refID <- NULL
+      }
+    }
+  }
 
   #### So your options/configurations for classification are:
   #

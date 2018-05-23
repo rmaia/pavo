@@ -35,6 +35,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
   ## Checks
   # Allowed extensions
   ext <- c("jpg", "jpeg", "png", "bmp")
+  
   # Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1

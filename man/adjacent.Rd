@@ -86,12 +86,12 @@ Calculate summary variables from the adjacency analysis (Endler 2012 & Endler et
 \examples{
 \dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio_class <- classify(papilio, ncols = 4)
+papilio_class <- classify(papilio, kcols = 4)
 papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, ncols = 3)
+snakes_class <- classify(snakes, kcols = 3)
 snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
 }
 
