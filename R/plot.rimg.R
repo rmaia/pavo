@@ -101,7 +101,7 @@ rawplot <- function(x, ...) {
 #'
 #' @param x (required) colour-classified image data, or a list thereof. Preferably
 #' the result of \code{\link{classify}}.
-#' @param x_pts an optional integer specifying the number of sample points (grid
+#' @param xpts an optional integer specifying the number of sample points (grid
 #' sampling density) along the x axis, with the resulting sampling grid being
 #' plotted atop the sample image. Useful for planning the sampling density prior
 #' to adjacency analysis .
@@ -114,7 +114,7 @@ rawplot <- function(x, ...) {
 #' @importFrom grDevices rgb
 #' @importFrom graphics image points
 #'
-classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
+classplot <- function(x, xpts = NULL, grid.col = "red", grid.cex = 1, ...) {
 
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
@@ -160,10 +160,10 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
       do.call(image, arg)
 
       # Visualise the sampling grid
-      if (!is.null(x_pts)) {
+      if (!is.null(xpts)) {
         grid <- expand.grid(
-          seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / x_pts),
-          seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / x_pts)
+          seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / xpts),
+          seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / xpts)
         )
 
         names(grid) <- c("y", "x")
@@ -201,10 +201,10 @@ classplot <- function(x, x_pts = NULL, grid.col = "red", grid.cex = 1, ...) {
     do.call(image, arg)
 
     # Visualise the sampling grid
-    if (!is.null(x_pts)) {
+    if (!is.null(xpts)) {
       grid <- expand.grid(
-        seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / x_pts),
-        seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / x_pts)
+        seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / xpts),
+        seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / xpts)
       )
 
       names(grid) <- c("y", "x")
