@@ -25,6 +25,8 @@ test_that("Basic", {
   fake_IDs <- data.frame(ID = c('fake_02.png', 'fake_01.jpg'),
                          k = c(2, 2))
   fake2_class <- classify(fake2, kcols = fake_IDs)
+  fake2_class2 <- classify(fake2, kcols = fake_IDs, refID = 1)
+  
   fake2_adjacent <- adjacent(fake2_class, xpts = 250, xscale = 150)
   expect_equal(fake2_adjacent$k, c(2, 2))
   expect_equal(fake2_adjacent$E_1_2, 2 * fake2_adjacent$n_off * fake2_adjacent$p_1 * fake2_adjacent$p_2)

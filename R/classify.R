@@ -19,6 +19,8 @@
 #' If a reference image is specified, it will be the only image presented.
 #' @param plotnew Should plots be opened in a new window when \code{manual = TRUE}?
 #' Defaults to \code{FALSE}.
+#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
+#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
 #' class classifications at each pixel location. The RGB values corresponding to
@@ -48,16 +50,17 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew = FALSE) {
+classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew = FALSE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
   multi_image <- inherits(imgdat, "list")
+
   # Cores
-  # if (cores > 1 && .Platform$OS.type == "windows") {
-  #   cores <- 1
-  #   message('Parallel processing not available in Windows; "cores" set to 1\n')
-  # }
+  if (cores > 1 && .Platform$OS.type == "windows") {
+    cores <- 1
+    message('Parallel processing not available in Windows; "cores" set to 1\n')
+  }
 
   # k checking.
   if (!is.null(kcols)) {
@@ -129,22 +132,33 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
   # (2) Single k, with manual centre
   #      (length(kcols) == 1 && manual = TRUE)
 
+  paralap <- function(img, k) {}
 
   ## Multiple images  ##
   if (multi_image) {
+    imgsize <- format(object.size(imgdat), units = "Mb")
 
     ## (1) Multiple k, no reference image ##
     if (length(kcols) > 1 && manual == FALSE) {
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
+      ifelse(imgsize < 100,
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
+      )
 
       ## (2) Single k, with reference image ##
     } else if (length(kcols) == 1 && !is.null(refID) && manual == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      ifelse(imgsize < 100,
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      )
 
       ## (3) Single k, no reference image ##
     } else if (length(kcols) == 1 && is.null(refID) && manual == FALSE) {
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
+      ifelse(imgsize < 100,
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
+      )
 
       ## (4) Single k, manually specified centre, with reference image ##
     } else if (!is.null(refID) && manual == TRUE) {
@@ -185,7 +199,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         ref_centers <- rbind(ref_centers, reftrans[reference$x[i], reference$y[i], 1:3])
       names(ref_centers) <- c("R", "G", "B")
 
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      ifelse(imgsize < 100,
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+      )
 
       ## (5) Multiple k, with manually-specified centres for each image. ##
     } else if (is.null(refID) && manual == TRUE) {
@@ -249,7 +266,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
           i <- i + 1
         }
       }
-      outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
+      ifelse(imgsize < 100,
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
+      )
     }
 
     # Names & attributes
