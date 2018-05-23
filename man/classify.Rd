@@ -17,7 +17,7 @@ images. When passing a list of images, \code{kcols} can also be a vector the sam
 as \code{imgdat}, or a data.frame with two columns specifying image file names and
 corresponding kcols.}
 
-\item{refID}{The numeric identifier of a 'reference' image, for use when passing
+\item{refID}{the numeric identifier of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
 in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.}

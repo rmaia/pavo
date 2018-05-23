@@ -72,6 +72,10 @@ one non-NA value are returned:
   \item \code{'St'}: Simpson transition diversity.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+  \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities, 
+  \code{Rt = St_a_a / St_a_b}.
+  \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities, 
+  \code{Rt = St_a_a / St_b_b}. 
   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.

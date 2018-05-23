@@ -9,7 +9,7 @@
 #' images. When passing a list of images, \code{kcols} can also be a vector the same length
 #' as \code{imgdat}, or a data.frame with two columns specifying image file names and
 #' corresponding kcols.
-#' @param refID The numeric identifier of a 'reference' image, for use when passing
+#' @param refID the numeric identifier of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
@@ -131,8 +131,6 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
   #      (length(kcols) == 1)
   # (2) Single k, with manual centre
   #      (length(kcols) == 1 && manual = TRUE)
-
-  paralap <- function(img, k) {}
 
   ## Multiple images  ##
   if (multi_image) {

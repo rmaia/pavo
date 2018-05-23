@@ -59,6 +59,10 @@
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+#'   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities, 
+#'   \code{Rt = St_a_a / St_a_b}.
+#'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities, 
+#'   \code{Rt = St_a_a / St_b_b}. 
 #'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
 #'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
 #'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
@@ -151,14 +155,29 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   if (multi_image) { # Multiple images
-    outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-        xpts_i = xpts,
-        xscale_i = xscale[[x]],
-        bkgID_i = bkgID,
-        bkg.include_i = bkg.include,
-        coldists_i = coldists
-      ), mc.cores = cores)
+
+    imgsize <- format(object.size(classimg), units = "Mb")
+
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+          xpts_i = xpts,
+          xscale_i = xscale[[x]],
+          bkgID_i = bkgID,
+          bkg.include_i = bkg.include,
+          coldists_i = coldists
+        ),
+      mc.cores = cores
+      ),
+      outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+          xpts_i = xpts,
+          xscale_i = xscale[[x]],
+          bkgID_i = bkgID,
+          bkg.include_i = bkg.include,
+          coldists_i = coldists
+        ))
+    )
     outdata <- do.call(bind_rows, outdata)
+
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
     }
@@ -376,7 +395,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   Sc <- 1 / sum(freq$rel_freq^2)
 
   # Simpson diversity of colour transitions
-  St <- 1 / sum(q^2)
+  St <- 1 / sum(offdiagprop$N^2)
 
   # Colour class diversity relative to maximum
   Jc <- Sc / k
@@ -386,6 +405,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   ## Things involving the background
   if (!is.null(bkgID_i) && bkg.include_i == TRUE) {
+    
     # Animal/background transition ratio
     O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
     O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
@@ -393,11 +413,23 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     O_a_b <- offdiag[!subb, ]
     B <- sum(O_a_a$N) / sum(O_a_b$N)
 
-    # # Animal/background transition diversity ratio (TODO)
-    # S_t_a_a <-
-    # S_t_a_b <-
+    # Animal/background transition diversity ratios Rt & Rab
+    q_a_a <- q
+    q_a_b <- q
+    q_b_b <- q
+    animID <- setdiff(1:k, bkgID_i)
+    for(i in 1:length(bkgID_i)) {
+      q_a_a = q_a_a[, !grepl(bkgID_i[i], names(q_a_a))]  # Animal background transitions
+      q_b_b = q_b_b[, !grepl(animID[i], names(q_b_b))]  # Background background transitions
+    }
+    q_a_a <- q_a_a / sum(q_a_a)
+    q_b_b <- q_b_b / sum(q_b_b)
+    
+    Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
+    Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
+    
   } else {
-    B <- NA
+    B <- Rt <- Rab <- NA
   }
 
   # Edge salience (Endler et al. 2018 )
@@ -443,8 +475,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   }
 
   # Output
-  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
-  #fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
+  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
+  # fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
   fin <- as.data.frame(fin)
 

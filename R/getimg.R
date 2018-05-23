@@ -1,13 +1,13 @@
 #' Import image data
 #'
-#' Finds and imports PNG, JPEG, or BMP images.
+#' Finds and imports PNG, JPEG, and/or BMP images.
 #'
 #' @param imgpath (required) either the full path to a given image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
 #' within a folder are fine.
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
-#' @param max.size maximum size of all images allowed in memory, in GB. Defaults to
+#' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
 #' \code{2}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.

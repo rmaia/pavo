@@ -15,7 +15,7 @@ within a folder are fine.}
 \item{subdir}{should subdirectories within the \code{where} folder be
 included in the search? (defaults to \code{FALSE}).}
 
-\item{max.size}{maximum size of all images allowed in memory, in GB. Defaults to
+\item{max.size}{maximum size of all images to be allowed in memory, in GB. Defaults to
 \code{2}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
@@ -26,7 +26,7 @@ a array, or list of arrays, of class \code{rimg}, containing image data
 for use in further \code{pavo} functions.
 }
 \description{
-Finds and imports PNG, JPEG, or BMP images.
+Finds and imports PNG, JPEG, and/or BMP images.
 }
 \examples{
 \dontrun{
