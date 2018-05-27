@@ -24,6 +24,7 @@ MINOR FEATURES AND BUG FIXES
 * better handling of subset data when using summary.colspace() and summary.vismodel()
 * fixed bug in coldist() when `noise = "quantum"` and `achro = TRUE` were used
 * fixed bug in jndplot() when `arrow = "none"` and `achro = TRUE`
+* spec2rgb() now takes into account the 390-400nm wavelength range into account when possible
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
