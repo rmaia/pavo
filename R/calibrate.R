@@ -70,9 +70,9 @@ calibrate <- function(image, scaledist = NULL) {
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
 calibrate_main <- function(image_i, scaledist_i) {
+  
   plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
   rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
-
   reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
   pixdist <- as.integer(dist(round(reference)))
   output <- scaledist_i / pixdist
