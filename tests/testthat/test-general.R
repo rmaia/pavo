@@ -24,3 +24,12 @@ test_that('Class assignment', {
   col.hex <- colspace(vis.hex, space = 'hex')
   expect_is(col.hex, 'colspace')
 })
+
+test_that("plot utilities", {
+  
+  data(sicalis)
+  expect_known_hash(spec2rgb(sicalis), "0d3e41a7b6")
+  
+  expect_error(spec2rgb(sicalis[300:nrow(sicalis),]), "full visible range")
+  expect_error(spec2rgb(sicalis[,-1]), "No wavelengths supplied")
+})
