@@ -192,9 +192,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
 
       if (plotnew) dev.off()
 
-      ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
-      for (i in 2:nrow(reference))
-        ref_centers <- rbind(ref_centers, reftrans[reference$x[i], reference$y[i], 1:3])
+      ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
       names(ref_centers) <- c("R", "G", "B")
 
       ifelse(imgsize < 100,
@@ -249,10 +247,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
-        for (j in 2:nrow(reference)) {
-          ref_centers <- rbind(ref_centers, reftrans[reference$x[j], reference$y[j], 1:3])
-        }
+        ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
         names(ref_centers) <- c("R", "G", "B")
         centers[[i]] <- ref_centers
 
@@ -317,9 +312,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- as.data.frame(t(reftrans[reference$x[1], reference$y[1], 1:3]))
-        for (i in 2:nrow(reference))
-          ref_centers <- rbind(ref_centers, reftrans[reference$x[i], reference$y[i], 1:3])
+        ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
         names(ref_centers) <- c("R", "G", "B")
 
         # If duplicates centers specified, try again

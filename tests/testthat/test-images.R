@@ -41,7 +41,7 @@ test_that("Basic", {
     matrix(c(0, 0, 0, 0), nrow = 100, ncol = 100),
     matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100)),
     dim = c(100, 100, 3)))
-  fake3_class <- classify(fake, kcols = 1)
+  fake3_class <- classify(fake3, kcols = 1)
   fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
   expect_equal(fake3_adjacent$k, 1)
   expect_equal(fake3_adjacent$p_1, 1)
