@@ -128,10 +128,6 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   if (bkg.include == FALSE && is.null(bkgID)) {
     stop("Background cannot be excluded without specifying one or more ID's via the argument bkgID.")
   }
-  if (!is.null(bkgID) && length(bkgID) >= n_class - 1 && bkg.include == FALSE) {
-    stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
-         in the image.")
-  }
 
   ## Setting scales
   # Single image
@@ -264,6 +260,15 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
+  
+  # Single colour check
+  single_col <- FALSE
+  if (!is.null(bkgID_i) && length(bkgID_i) >= n_class - 1 && bkg.include_i == FALSE) {
+    single_col <- TRUE
+    # stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
+    #      in the image.")
+  }
+  if(n_class == 1) single_col <- TRUE
 
   # All row transitions
   rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
@@ -314,6 +319,23 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
   ## Summary variables  ##
+  
+  if(single_col){  # TODO: Fix this evil hack
+    k <- n_class
+    N <- sum(transitions$N)
+    n_off <- m_r <- m_c <- m <- t <- 0
+    A <- Obs <- E <- d_t_o <- d_t_r <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+    
+    p <- data.frame(t(freq$rel_freq))
+    names(p) <- paste0("p_", freq$Var1)
+    
+    q <- data.frame(t(transitions$N / sum(transitions$N)))
+    names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
+    
+    Sc <- 1 / sum(freq$rel_freq^2)
+    Jc <- Sc
+    
+  }else{
 
   # n colour classes
   k <- n_class
@@ -457,6 +479,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   } else {
     # Or should the default be weights of 1?
     m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+  }
   }
 
   # Output

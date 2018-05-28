@@ -35,5 +35,20 @@ test_that("Basic", {
   expect_gt(fake2_adjacent$N[1], fake2_adjacent$n_off[1])
   expect_equal(fake2_adjacent$m, ((fake2_adjacent$m_r + fake2_adjacent$m_c) / 2))
   
+  ## Single colour
+  fake3 <- as.rimg(array(c(
+    matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100),
+    matrix(c(0, 0, 0, 0), nrow = 100, ncol = 100),
+    matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100)),
+    dim = c(100, 100, 3)))
+  fake3_class <- classify(fake, kcols = 1)
+  fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
+  expect_equal(fake3_adjacent$k, 1)
+  expect_equal(fake3_adjacent$p_1, 1)
+  expect_equal(fake3_adjacent$q_1_1, 1)
+  expect_equal(fake3_adjacent$q_1_1, 1)
+  expect_equal(fake3_adjacent$m, 0)
+  expect_equal(fake3_adjacent$Sc, 1)
+  
 })
 
