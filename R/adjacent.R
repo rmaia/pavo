@@ -118,7 +118,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
     }
     # Need to sort?
   }
-
+  
   # Background
   if (multi_image) {
     n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
@@ -128,6 +128,8 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   if (bkg.include == FALSE && is.null(bkgID)) {
     stop("Background cannot be excluded without specifying one or more ID's via the argument bkgID.")
   }
+  if(bkg.include == FALSE && length(bkgID) - n_class < 1)
+    stop('No colour classes remaining.')
 
   ## Setting scales
   # Single image

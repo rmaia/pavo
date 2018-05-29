@@ -247,15 +247,19 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
-        names(ref_centers) <- c("R", "G", "B")
+        ref_centers <- try(do.call(rbind, lapply(1:nrow(reference), 
+                                                 function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3])))),
+                                   silent = TRUE)
         centers[[i]] <- ref_centers
-
-        # If duplicates centers specified, try again
-        if (any(duplicated(centers[[i]]))) {
-          message("Duplicate colours specified. Select again, or use [esc] to abort.")
+        
+        if (class(centers[[i]]) == 'try-error'){
+          message("One or more coorodinates out-of bounds. Try again.")
+          i <- i
+        } else if (any(duplicated(centers[[i]]))) {
+          message("Duplicate colours specified. Try again.")
           i <- i
         } else {
+          names(centers[[i]]) <- c("R", "G", "B")
           i <- i + 1
         }
       }
@@ -312,19 +316,24 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
-        names(ref_centers) <- c("R", "G", "B")
-
-        # If duplicates centers specified, try again
-        if (any(duplicated(ref_centers))) {
-          message("Duplicate colours specified. Select again, or press [esc] to abort.")
+        ref_centers <- try(do.call(rbind, lapply(1:nrow(reference), 
+                                                 function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3])))), 
+                           silent = TRUE)
+        
+        if (class(ref_centers) == 'try-error'){
+          message("One or more coorodinates out-of bounds. Try again.")
+          i <- i
+        } else if (any(duplicated(ref_centers))) {
+          message("Duplicate colours specified. Try again.")
           i <- i
         } else {
+          names(ref_centers) <- c("R", "G", "B")
           i <- i + 1
         }
       }
-
+      
       outdata <- classify_main(imgdat, ref_centers)
+      
     } else {
       outdata <- classify_main(imgdat, kcols)
     }
