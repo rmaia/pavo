@@ -128,8 +128,8 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   if (bkg.include == FALSE && is.null(bkgID)) {
     stop("Background cannot be excluded without specifying one or more ID's via the argument bkgID.")
   }
-  if(bkg.include == FALSE && length(bkgID) - n_class < 1)
-    stop('No colour classes remaining.')
+  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)                        #FIX
+  #   stop('No colour classes remaining.')
 
   ## Setting scales
   # Single image
