@@ -9,8 +9,8 @@ cocplot(cocdata, labels = TRUE, labels.cex = 0.9, tick.loc = c(-12, -9,
   margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{cocdata}{(required) a data frame, possibly a result from the \code{colspace} 
-or \code{categorical} function, containing values for 'x' and 'y' coordinates 
+\item{cocdata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{categorical} function, containing values for 'x' and 'y' coordinates
 as columns (labeled as such).}
 
 \item{labels}{plot axis labels? Defaults to \code{TRUE}.}
@@ -27,7 +27,7 @@ as columns (labeled as such).}
 
 \item{margins}{margins for the plot.}
 
-\item{square}{logical. Should the aspect ratio of the plot be held to 1:1? 
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}

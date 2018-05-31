@@ -1,18 +1,18 @@
 #' Subset rspec, vismodel, and colspace objects
 #'
-#' Subsets various object types based on a given vector or grep partial matching 
+#' Subsets various object types based on a given vector or grep partial matching
 #' of data names.
 #'
-#' @param x (required) an object of class \code{rspec}, \code{vismodel}, or 
-#' \code{colspace}, containing spectra, visual model output or colorspace data 
+#' @param x (required) an object of class \code{rspec}, \code{vismodel}, or
+#' \code{colspace}, containing spectra, visual model output or colorspace data
 #' to subset.
 #' @param subset a string used for partial matching of observations.
-#' @param ... additional attributes passed to \code{grep}. Ignored if 
+#' @param ... additional attributes passed to \code{grep}. Ignored if
 #' \code{subset} is logical.
 #' @return a subsetted object of the same class as the input object.
 #'
 #' @note if more than one value is given to \code{subset}, any spectra that
-#' matches \emph{either} condition will be included. It's a union, not an 
+#' matches \emph{either} condition will be included. It's a union, not an
 #' intersect.
 #'
 #' @export
@@ -21,7 +21,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis)
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' 
+#'
 #' # Subset all 'crown' patches (C in file names)
 #' head(subset(sicalis, "C"))
 #' subset(vis.sicalis, "C")
@@ -32,68 +32,66 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-subset.rspec <- function (x, subset, ...) {
-  
-  # This could be simplified a lot by using grepl instead of grep, removing 
+subset.rspec <- function(x, subset, ...) {
+
+  # This could be simplified a lot by using grepl instead of grep, removing
   # which and using boolean operations. But at the moment, grep supports an
   # additional argument `invert` that grepl doesn't. Because some scripts maybe
   # already depends on it, we can't really change it.
-  
-  wl_index <- which(names(x)=="wl")
-  
+
+  wl_index <- which(names(x) == "wl")
+
   if (is.logical(subset)) {
-    if (length(subset) != ncol(x)){
+    if (length(subset) != ncol(x)) {
       warning("Subset doesn't match length of spectral data")
     }
     subsample <- which(subset)
   }
   else {
-    subsample <- grep(pattern = paste(subset, collapse="|"), x = colnames(x), ...)
+    subsample <- grep(pattern = paste(subset, collapse = "|"), x = colnames(x), ...)
   }
   if (length(subsample) == 0) {
     warning("Subset condition not found")
   }
 
   # We don't drop the "wl" column if it exists, no matter what subset says.
-  res = x[, unique(c(wl_index, subsample))]
+  res <- x[, unique(c(wl_index, subsample))]
 
   class(res) <- c("rspec", "data.frame")
-  
+
   res
 }
 
 #' @export
 #' @rdname subset.rspec
 #'
-subset.colspace <- function (x, subset, ...) {
-
+subset.colspace <- function(x, subset, ...) {
   if (!is.logical(subset)) {
-    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
+    subset <- grep(paste(subset, collapse = "|"), row.names(x), ...)
   }
-  
+
   res <- x[subset, ]
-  
+
   if (nrow(res) == 0) {
     warning("Subset condition not found")
   }
 
   class(res) <- c("colspace", "data.frame")
-  
+
   res
 }
 
 #' @export
 #' @rdname subset.rspec
 #'
-subset.vismodel <- function (x, subset, ...) {
-
+subset.vismodel <- function(x, subset, ...) {
   if (!is.logical(subset)) {
-    subset <- grep(paste(subset, collapse="|"), row.names(x), ...)
+    subset <- grep(paste(subset, collapse = "|"), row.names(x), ...)
   }
-  
+
   res <- x[subset, ]
 
   class(res) <- c("vismodel", "data.frame")
-  
+
   res
 }

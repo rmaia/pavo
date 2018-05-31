@@ -247,12 +247,15 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- try(do.call(rbind, lapply(1:nrow(reference), 
-                                                 function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3])))),
-                                   silent = TRUE)
+        ref_centers <- try(do.call(rbind, lapply(
+          1:nrow(reference),
+          function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
+        )),
+        silent = TRUE
+        )
         centers[[i]] <- ref_centers
-        
-        if (class(centers[[i]]) == 'try-error'){
+
+        if (class(centers[[i]]) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
           i <- i
         } else if (any(duplicated(centers[[i]]))) {
@@ -316,11 +319,14 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         }
         if (plotnew) dev.off()
 
-        ref_centers <- try(do.call(rbind, lapply(1:nrow(reference), 
-                                                 function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3])))), 
-                           silent = TRUE)
-        
-        if (class(ref_centers) == 'try-error'){
+        ref_centers <- try(do.call(rbind, lapply(
+          1:nrow(reference),
+          function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
+        )),
+        silent = TRUE
+        )
+
+        if (class(ref_centers) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
           i <- i
         } else if (any(duplicated(ref_centers))) {
@@ -331,9 +337,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
           i <- i + 1
         }
       }
-      
+
       outdata <- classify_main(imgdat, ref_centers)
-      
     } else {
       outdata <- classify_main(imgdat, kcols)
     }

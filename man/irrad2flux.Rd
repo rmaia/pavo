@@ -16,9 +16,9 @@ flux2irrad(rspecdata)
 a converted \code{rspec} object.
 }
 \description{
-Some spectrometers will give illuminant values in units of irradiance 
-(uWatt * cm^-2), but physiological models require illuminants in units of 
-photon (quantum) flux (umol * s^-1 * m^-2). The functions \code{irrad2flux} 
+Some spectrometers will give illuminant values in units of irradiance
+(uWatt * cm^-2), but physiological models require illuminants in units of
+photon (quantum) flux (umol * s^-1 * m^-2). The functions \code{irrad2flux}
 and \code{flux2irrad} allows for easy conversion of \code{rspec} objects
 between these units.
 }

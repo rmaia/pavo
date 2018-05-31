@@ -59,10 +59,10 @@
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
-#'   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities, 
+#'   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
 #'   \code{Rt = St_a_a / St_a_b}.
-#'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities, 
-#'   \code{Rt = St_a_a / St_b_b}. 
+#'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
+#'   \code{Rt = St_a_a / St_b_b}.
 #'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
 #'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
 #'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
@@ -118,7 +118,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
     }
     # Need to sort?
   }
-  
+
   # Background
   if (multi_image) {
     n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
@@ -225,7 +225,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #' @importFrom utils head tail
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#' 
+#'
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, bkg.include_i = TRUE, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
@@ -262,15 +262,15 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
-  
+
   # Single colour check
   single_col <- FALSE
   if (!is.null(bkgID_i) && length(bkgID_i) >= n_class - 1 && bkg.include_i == FALSE) {
     single_col <- TRUE
-    # stop("Cannot exclude backgrounds as specified: at least two colour classes must remain 
+    # stop("Cannot exclude backgrounds as specified: at least two colour classes must remain
     #      in the image.")
   }
-  if(n_class == 1) single_col <- TRUE
+  if (n_class == 1) single_col <- TRUE
 
   # All row transitions
   rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
@@ -321,167 +321,164 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
   ## Summary variables  ##
-  
-  if(single_col){  # TODO: Fix this evil hack
+
+  if (single_col) { # TODO: Fix this evil hack
     k <- n_class
     N <- sum(transitions$N)
     n_off <- m_r <- m_c <- m <- t <- 0
     A <- Obs <- E <- d_t_o <- d_t_r <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
-    
+
     p <- data.frame(t(freq$rel_freq))
     names(p) <- paste0("p_", freq$Var1)
-    
+
     q <- data.frame(t(transitions$N / sum(transitions$N)))
     names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
-    
+
     Sc <- 1 / sum(freq$rel_freq^2)
     Jc <- Sc
-    
-  }else{
-
-  # n colour classes
-  k <- n_class
-
-  # Grand total transitions
-  N <- sum(transitions$N)
-
-  # Total off-diagonal (class-change) transitions
-  n_off <- sum(offdiag$N)
-
-  # Row transition density (mean transitions / row)
-  if (nrow(subset(rowtrans2, c1 != c2)) == 0) {
-    m_r <- Inf
   } else {
-    m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / xscale_i
-  }
 
-  # Col transition density (mean transitions / scaled unit)
-  if (nrow(subset(coltrans2, c1 != c2)) == 0) {
-    m_c <- Inf
-  } else {
-    m_c <- (sum(subset(coltrans2, c1 != c2)["N"]) / n_x) / y_scale
-  }
+    # n colour classes
+    k <- n_class
 
-  # Transition density (mean transitions / scale)
-  m <- (m_r + m_c) / 2
+    # Grand total transitions
+    N <- sum(transitions$N)
 
-  # Transition aspect ratio (< 1 = wide, > 1 = tall)
-  A <- m_r / m_c
+    # Total off-diagonal (class-change) transitions
+    n_off <- sum(offdiag$N)
 
-  # Colour class proportions
-  p <- data.frame(t(freq$rel_freq))
-  names(p) <- paste0("p_", freq$Var1)
-
-  # Total transition frequencies
-  q <- data.frame(t(transitions$N / sum(transitions$N)))
-  names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
-
-  # Observed off-diagonal transitions
-  Obs <- data.frame(t(offdiag$N))
-  names(Obs) <- paste0("Obs_", offdiag$c1, "_", offdiag$c2)
-
-  # Expected frequency of off-diagonal transitions
-  offdiag$exp <- NA
-  for (i in 1:nrow(offdiag)) {
-    offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$Var1 == offdiag[i, 1]] * freq$rel_freq[freq$Var1 == offdiag[i, 2]]
-  }
-  E <- data.frame(t(offdiag$exp))
-  names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
-
-  # Deviations
-  d_t_o <- sum(abs(offdiag$N - offdiag$exp)) # observed
-
-  d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
-
-  # Permutation test
-  L <- t(cumsum(t(p))) # Cumulative probabilities
-
-  # permutator <- function(){
-  # randpair <- cbind(sample(c(1:k), size = N, replace = TRUE, prob = p), sample(c(1:k), size = N, replace = TRUE, prob = p))
-  # randpair <- t(apply(randpair, 1, sort))
-  # perm <- subset(aggregate(randpair[,1] ~ ., randpair, FUN = length), V1 != V2)
-  # names(perm) <- c('c1', 'c2', 'N')
-  # perm$exp <- NA
-  # for (i in 1:nrow(perm)) {
-  #   perm$exp[i] <- 2 * sum(perm[,3]) * freq$rel_freq[perm[i, 1]] * freq$rel_freq[perm[i, 2]]
-  # }
-  # sum(abs(perm$N - perm$exp))  # permuted
-  # }
-  # permutated <- unlist(pbmclapply(1:n.boot, function(x) foo(), mc.cores = cores))
-
-  # Off-diagonal transition frequencies
-  t <- data.frame(t(offdiagprop$N))
-  names(t) <- paste0("t_", offdiagprop$c1, "_", offdiagprop$c2)
-
-  # Simpson diversity of colour proportions
-  Sc <- 1 / sum(freq$rel_freq^2)
-
-  # Simpson diversity of colour transitions
-  St <- 1 / sum(offdiagprop$N^2)
-
-  # Colour class diversity relative to maximum
-  Jc <- Sc / k
-
-  # Simpson transition diversity relative to maximum
-  Jt <- St / (k * (k - 1) / 2)
-
-  ## Things involving the background
-  if (!is.null(bkgID_i) && bkg.include_i == TRUE) {
-    
-    # Animal/background transition ratio
-    O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
-    O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
-    subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
-    O_a_b <- offdiag[!subb, ]
-    B <- sum(O_a_a$N) / sum(O_a_b$N)
-
-    # Animal/background transition diversity ratios Rt & Rab
-    q_a_a <- q
-    q_a_b <- q
-    q_b_b <- q
-    animID <- setdiff(1:k, bkgID_i)
-    for(i in 1:length(bkgID_i)) {
-      q_a_a = q_a_a[, !grepl(bkgID_i[i], names(q_a_a))]  # Animal background transitions
-      q_b_b = q_b_b[, !grepl(animID[i], names(q_b_b))]  # Background background transitions
-    }
-    q_a_a <- q_a_a / sum(q_a_a)
-    q_b_b <- q_b_b / sum(q_b_b)
-    
-    Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
-    Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
-    
-  } else {
-    B <- Rt <- Rab <- NA
-  }
-
-  # Edge salience (Endler et al. 2018 )
-  if (!is.null(coldists_i)) {
-
-    offdiagprop <- merge(offdiagprop, coldists_i)
-
-    # Chromatic calcs
-    if ("dS" %in% names(offdiagprop)) {
-      m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
-
-      s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
-
-      cv_dS <- s_dS / m_dS
+    # Row transition density (mean transitions / row)
+    if (nrow(subset(rowtrans2, c1 != c2)) == 0) {
+      m_r <- Inf
     } else {
-      m_dS <- s_dS <- cv_dS <- NA
+      m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / xscale_i
     }
 
-    # Achromatic calcs
-    if ("dL" %in% names(offdiagprop)) {
-      m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
-      s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
-      cv_dL <- s_dL / m_dL
+    # Col transition density (mean transitions / scaled unit)
+    if (nrow(subset(coltrans2, c1 != c2)) == 0) {
+      m_c <- Inf
     } else {
-      m_dL <- s_dL <- cv_dL <- NA
+      m_c <- (sum(subset(coltrans2, c1 != c2)["N"]) / n_x) / y_scale
     }
-  } else {
-    # Or should the default be weights of 1?
-    m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
-  }
+
+    # Transition density (mean transitions / scale)
+    m <- (m_r + m_c) / 2
+
+    # Transition aspect ratio (< 1 = wide, > 1 = tall)
+    A <- m_r / m_c
+
+    # Colour class proportions
+    p <- data.frame(t(freq$rel_freq))
+    names(p) <- paste0("p_", freq$Var1)
+
+    # Total transition frequencies
+    q <- data.frame(t(transitions$N / sum(transitions$N)))
+    names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
+
+    # Observed off-diagonal transitions
+    Obs <- data.frame(t(offdiag$N))
+    names(Obs) <- paste0("Obs_", offdiag$c1, "_", offdiag$c2)
+
+    # Expected frequency of off-diagonal transitions
+    offdiag$exp <- NA
+    for (i in 1:nrow(offdiag)) {
+      offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$Var1 == offdiag[i, 1]] * freq$rel_freq[freq$Var1 == offdiag[i, 2]]
+    }
+    E <- data.frame(t(offdiag$exp))
+    names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
+
+    # Deviations
+    d_t_o <- sum(abs(offdiag$N - offdiag$exp)) # observed
+
+    d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
+
+    # Permutation test
+    L <- t(cumsum(t(p))) # Cumulative probabilities
+
+    # permutator <- function(){
+    # randpair <- cbind(sample(c(1:k), size = N, replace = TRUE, prob = p), sample(c(1:k), size = N, replace = TRUE, prob = p))
+    # randpair <- t(apply(randpair, 1, sort))
+    # perm <- subset(aggregate(randpair[,1] ~ ., randpair, FUN = length), V1 != V2)
+    # names(perm) <- c('c1', 'c2', 'N')
+    # perm$exp <- NA
+    # for (i in 1:nrow(perm)) {
+    #   perm$exp[i] <- 2 * sum(perm[,3]) * freq$rel_freq[perm[i, 1]] * freq$rel_freq[perm[i, 2]]
+    # }
+    # sum(abs(perm$N - perm$exp))  # permuted
+    # }
+    # permutated <- unlist(pbmclapply(1:n.boot, function(x) foo(), mc.cores = cores))
+
+    # Off-diagonal transition frequencies
+    t <- data.frame(t(offdiagprop$N))
+    names(t) <- paste0("t_", offdiagprop$c1, "_", offdiagprop$c2)
+
+    # Simpson diversity of colour proportions
+    Sc <- 1 / sum(freq$rel_freq^2)
+
+    # Simpson diversity of colour transitions
+    St <- 1 / sum(offdiagprop$N^2)
+
+    # Colour class diversity relative to maximum
+    Jc <- Sc / k
+
+    # Simpson transition diversity relative to maximum
+    Jt <- St / (k * (k - 1) / 2)
+
+    ## Things involving the background
+    if (!is.null(bkgID_i) && bkg.include_i == TRUE) {
+
+      # Animal/background transition ratio
+      O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
+      O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
+      subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
+      O_a_b <- offdiag[!subb, ]
+      B <- sum(O_a_a$N) / sum(O_a_b$N)
+
+      # Animal/background transition diversity ratios Rt & Rab
+      q_a_a <- q
+      q_a_b <- q
+      q_b_b <- q
+      animID <- setdiff(1:k, bkgID_i)
+      for (i in 1:length(bkgID_i)) {
+        q_a_a <- q_a_a[, !grepl(bkgID_i[i], names(q_a_a))] # Animal background transitions
+        q_b_b <- q_b_b[, !grepl(animID[i], names(q_b_b))] # Background background transitions
+      }
+      q_a_a <- q_a_a / sum(q_a_a)
+      q_b_b <- q_b_b / sum(q_b_b)
+
+      Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
+      Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
+    } else {
+      B <- Rt <- Rab <- NA
+    }
+
+    # Edge salience (Endler et al. 2018 )
+    if (!is.null(coldists_i)) {
+      offdiagprop <- merge(offdiagprop, coldists_i)
+
+      # Chromatic calcs
+      if ("dS" %in% names(offdiagprop)) {
+        m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
+
+        s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
+
+        cv_dS <- s_dS / m_dS
+      } else {
+        m_dS <- s_dS <- cv_dS <- NA
+      }
+
+      # Achromatic calcs
+      if ("dL" %in% names(offdiagprop)) {
+        m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
+        s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
+        cv_dL <- s_dL / m_dL
+      } else {
+        m_dL <- s_dL <- cv_dL <- NA
+      }
+    } else {
+      # Or should the default be weights of 1?
+      m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+    }
   }
 
   # Output

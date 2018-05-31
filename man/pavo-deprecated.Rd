@@ -23,7 +23,7 @@ the pavo package. They may eventually be completely removed.
 
 \tabular{rl}{
   \code{tcs} \tab now a synonym for \code{\link{colspace}}\cr
-  \code{segclass} \tab now a synonym for 
+  \code{segclass} \tab now a synonym for
   \code{\link[=vismodel]{vismodel(..., visual = "segment")}}\cr
   \code{getspecf} \tab removed, use \code{\link{getspec}}\cr
   \code{getspecf2} \tab removed, use \code{\link{getspec}}\cr

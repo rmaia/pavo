@@ -8,26 +8,26 @@ aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) data frame, possibly of class \code{rspec}
-containing the spectra to be manipulated. If it contains a wavelength column 
+containing the spectra to be manipulated. If it contains a wavelength column
 named "wl", that column will be ignored.}
 
 \item{by}{(required) either a single value specifying the range of spectra within
 the data frame to be combined (for example, \code{by} = 3 indicates the function
-will be applied to groups of 3 consecutive columns in the spectra data frame); 
+will be applied to groups of 3 consecutive columns in the spectra data frame);
 a vector containing identifications for the columns in the spectra data frame
 (in which case the function will be applied to each group of spectra sharing the
 same identification); or a list of vectors, e.g., \code{by = list(sex, species)}.}
 
 \item{FUN}{the function to be applied to the groups of spectra. (defaults to \code{\link{mean}})}
 
-\item{trim}{logical. if \code{TRUE} (default), the function will try to identify and 
+\item{trim}{logical. if \code{TRUE} (default), the function will try to identify and
 remove numbers at the end of the names of the columns in the new rspec object.}
 }
 \value{
 A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
 }
 \description{
-Combines spectra (by taking the average, for example) according to 
+Combines spectra (by taking the average, for example) according to
 an index or a vector of identities.
 }
 \examples{
@@ -42,12 +42,12 @@ plot(teal.sset1)
 ind <- rep(c('a', 'b'), times = 6)
 teal.sset2 <- aggspec(teal, by = ind)
 
-plot(teal.sset2) 
+plot(teal.sset2)
 }
 
 }
 \references{
-Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds) 
+Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
 Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 }
 \author{

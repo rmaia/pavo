@@ -9,22 +9,22 @@
 \arguments{
 \item{object}{(required) a \code{colspace} object.}
 
-\item{by}{when the input is in \code{tcs} colorspace, \code{by} is either 
+\item{by}{when the input is in \code{tcs} colorspace, \code{by} is either
 a single value specifying the range of color points for which
-summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3 
+summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3
 indicates summary will be calculated for groups of 3 consecutive color points (rows)
-in the quantum catch color data frame) or a vector containing identifications for 
-the rows in the quantum catch color data frame (in which case summaries will be 
-calculated for each group of points sharing the same identification). If \code{by} 
+in the quantum catch color data frame) or a vector containing identifications for
+the rows in the quantum catch color data frame (in which case summaries will be
+calculated for each group of points sharing the same identification). If \code{by}
 is left blank, the summary statistics are calculated across all color points in the
 data.}
 
 \item{...}{class consistency (ignored).}
 }
 \value{
-returns all attributes of the data as mapped to the selected colourspace, including 
-options specified when calculating the visual model. Also return the default 
-\code{data.frame} summary, except when the object is the result of \code{tcs}, 
+returns all attributes of the data as mapped to the selected colourspace, including
+options specified when calculating the visual model. Also return the default
+\code{data.frame} summary, except when the object is the result of \code{tcs},
 in which case the following variables are output instead:
 
 \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
@@ -52,7 +52,7 @@ Returns the attributes of \code{colspace} objects.
 \dontrun{
 # Colour hexagon
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, bkg = 'green')
 flowers.hex <- hexagon(vis.flowers)
 summary(flowers.hex)
@@ -65,11 +65,11 @@ summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \author{

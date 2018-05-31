@@ -80,8 +80,8 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
 
     # LAB calculator
     f <- function(x) {
-      if (isTRUE(x > (6 / 29) ^ 3)) {
-        x ^ (1 / 3)
+      if (isTRUE(x > (6 / 29)^3)) {
+        x^(1 / 3)
       } else {
         (841 / 108) * x + (4 / 29)
       }
@@ -95,7 +95,7 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
     b <- 200 * (f(Y / Yn) - f(Z / Zn))
 
     # LCh calculator
-    C <- sqrt(a ^ 2 + b ^ 2)
+    C <- sqrt(a^2 + b^2)
     h <- atan2(b, a) * (180 / pi)
     h[h < 0] <- h[h < 0] + 360
   }

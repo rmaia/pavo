@@ -12,12 +12,12 @@ peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
 with a column with wavelength data, named 'wl', and the remaining column containing
 spectra to process.}
 
-\item{select}{specification of which spectra to plot. Can be a numeric vector or 
+\item{select}{specification of which spectra to plot. Can be a numeric vector or
 factor (e.g., \code{sex == 'male'}).}
 
 \item{lim}{a vector specifying the wavelength range to analyze.}
 
-\item{plot}{logical. Should plots indicating calculated parameters be returned? 
+\item{plot}{logical. Should plots indicating calculated parameters be returned?
 (Defaults to \code{TRUE}).}
 
 \item{ask}{logical, specifies whether user input needed to plot multiple plots

@@ -5,7 +5,7 @@
 #' @param x,y (required) \code{rspec} objects to merge.
 #' @param ... additional class arguments.
 #' @return an object of class \code{rspec} for use with \code{pavo} functions.
-#' Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the 
+#' Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the
 #' \code{by} argument if one is specified.
 #'
 #' @export
@@ -21,27 +21,27 @@
 #' par(mfrow = c(1, 2))
 #' plot(teal.mer)
 #' plot(teal)
-#' 
+#'
 #' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{as.rspec}}, \code{\link{aggspec}}
 
 merge.rspec <- function(x, y, ...) {
-  
-  if (!all(is.rspec(x), is.rspec(y))) 
+  if (!all(is.rspec(x), is.rspec(y))) {
     stop("One or more invalid rspec objects")
+  }
 
-  if (!all('wl' %in% names(x), 'wl' %in% names(y))) 
+  if (!all("wl" %in% names(x), "wl" %in% names(y))) {
     stop("Cannot find valid 'wl' column in one or both input objects")
-  
-  arg <- list(...)  
-  arg$by <- c('wl', arg$by)
+  }
+
+  arg <- list(...)
+  arg$by <- c("wl", arg$by)
   arg$x <- x
   arg$y <- y
-  
+
   res <- do.call(merge.data.frame, arg)
   class(res) <- c("rspec", "data.frame")
   res
-
 }

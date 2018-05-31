@@ -59,7 +59,6 @@ summary.rimg <- function(object, plot = FALSE, ...) {
 
 summary_main <- function(object, plot, ...) {
   if (plot) {
-    
     object2 <- as.matrix(t(apply(object, 2, rev)))
 
     # Defaults for image plot

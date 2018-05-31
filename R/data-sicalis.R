@@ -1,4 +1,4 @@
-#' Spectral curves from three body regions of Stripe-Tailed Yellow Finch 
+#' Spectral curves from three body regions of Stripe-Tailed Yellow Finch
 #' (\emph{Sicalis citrina}) males
 #'
 #' @name sicalis

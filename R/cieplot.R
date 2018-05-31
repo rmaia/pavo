@@ -178,7 +178,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     P <- do.call(perspbox, c(list(
       x = arg$xlim,
       y = arg$ylim,
-      z = diag(2)*arg$zlim,
+      z = diag(2) * arg$zlim,
       border = FALSE, r = r, box = box, theta = theta, phi = phi
     ), arg))
 
@@ -195,7 +195,8 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     # Text label locations
 
     txtlab <- matrix(
-      c(0, 0, 10.4, -14, 0, 5, 0, -15, 5), ncol = 3, byrow = TRUE,
+      c(0, 0, 10.4, -14, 0, 5, 0, -15, 5),
+      ncol = 3, byrow = TRUE,
       dimnames = list(c("tL", "ta", "tb"), c("x", "y", "z"))
     )
 

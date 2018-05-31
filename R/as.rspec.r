@@ -135,7 +135,6 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
         "Check 'lim' argument."
       )
     }
-  
   }
 
   res <- as.data.frame(res)

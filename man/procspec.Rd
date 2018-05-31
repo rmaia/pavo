@@ -16,22 +16,22 @@ spectra to process.}
 \item{opt}{what type of processing options to apply. User can select multiple options
            by providing a vector. Possibilities are:
 \itemize{
-\item \code{"none"} does not perform any processing (default).
-\item \code{"smooth"} applies LOESS smoothing to each spectrum using 
+    \item \code{"none"} does not perform any processing (default).
+    \item \code{"smooth"} applies LOESS smoothing to each spectrum using
                      \code{\link{loess.smooth}}. Optimal smoothing parameter
                      can be assessed by using \code{\link{plotsmooth}}.
     \item \code{"minimum"} subtracts the minimum from each individual spectra.
     \item \code{"maxmimum"} divides each spectrum by its maximum value.
     \item \code{"sum"} divides each spectrum by summed values.
     \item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
-                                 specify.
- \item \code{"center"} centers individual spectra by subtracting mean reflectance from 
+                                     specify.
+ \item \code{"center"} centers individual spectra by subtracting mean reflectance from
                      all values.
 }}
 
 \item{fixneg}{how to handle negative values. Possibilities are:
-\itemize{ 
-\item \code{"none"} does not perform negative value correction (default).
+\itemize{
+    \item \code{"none"} does not perform negative value correction (default).
    \item \code{"zero"} sets all negative values to zero.
    \item \code{"addmin"} adds the absolute value of the maximally negative values of each
                           spectra to the reflectance at all other wavelengths (setting
@@ -66,12 +66,12 @@ plot(teal.max, select = 10)
 
 }
 \references{
-Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999. 
- Plumage reflectance and the objective assessment of avian sexual dichromatism. 
+Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
+ Plumage reflectance and the objective assessment of avian sexual dichromatism.
  The American Naturalist, 153, 183-200.
 
-Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, 
- K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard 
+Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
+ K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
  University Press, Cambridge, Massachusetts.
 }
 \seealso{
