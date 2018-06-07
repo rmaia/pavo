@@ -176,7 +176,7 @@ procspec <- function(rspecdata, opt = c(
   class(rspecdata) <- c("rspec", "data.frame")
 
   applied <- c(applied, "\n")
-  cat(applied)
+  message(applied)
 
   rspecdata
 }
