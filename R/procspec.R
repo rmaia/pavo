@@ -15,19 +15,20 @@
 #' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
 #' 	\item \code{"maxmimum"} divides each spectrum by its maximum value.
 #' 	\item \code{"sum"} divides each spectrum by summed values.
-#' 	\item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
-#' 									 specify.
-#'  \item \code{"center"} centers individual spectra by subtracting mean reflectance from
-#'                      all values.
+#' 	\item \code{"bin"} bins each spectrum into the specified number of bins.
+#'                      \code{bins} argument must be set.
+#'      \item \code{"center"} centers individual spectra by subtracting mean
+#'                      reflectance from all values.
 #' }
 #'
 #' @param fixneg how to handle negative values. Possibilities are:
 #' \itemize{
 #' 	\item \code{"none"} does not perform negative value correction (default).
-#'  \item \code{"zero"} sets all negative values to zero.
-#'  \item \code{"addmin"} adds the absolute value of the maximally negative values of each
-#'                      spectra to the reflectance at all other wavelengths (setting
-#'                      the minimum value to zero, but scaling other values accordingly).
+#'      \item \code{"zero"} sets all negative values to zero.
+#'      \item \code{"addmin"} adds the absolute value of the maximally negative
+#'                      values of each spectra to the reflectance at all other
+#'                      wavelengths (setting the minimum value to zero, but
+#'                      scaling other values accordingly).
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}.
 #' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
