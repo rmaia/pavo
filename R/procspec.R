@@ -52,7 +52,7 @@
 #' plot(teal.max, select = 10)
 #' }
 #'
-#' @seealso \code{\link{loess.smooth}}
+#' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
 #'
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
 #'  Plumage reflectance and the objective assessment of avian sexual dichromatism.
