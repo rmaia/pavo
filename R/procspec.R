@@ -31,7 +31,6 @@
 #' }
 #' @param span sets the smoothing parameter used by \code{loess.smooth}.
 #' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
-#' @param ... ignored.
 #'
 #' @return A data frame of class \code{rspec} with the processed data.
 #'
@@ -66,7 +65,7 @@ procspec <- function(rspecdata, opt = c(
                        "bin", "sum", "center"
                      ),
                      fixneg = c("none", "addmin", "zero"),
-                     span = 0.25, bins = 20, ...) {
+                     span = 0.25, bins = 20) {
   opt <- match.arg(opt, several.ok = TRUE)
 
   fixneg <- match.arg(fixneg)
@@ -135,22 +134,22 @@ procspec <- function(rspecdata, opt = c(
 
 
   if (any(opt == "minimum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z], ...))
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
   }
 
   if (any(opt == "maximum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z], ...))
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
   }
 
   if (any(opt == "sum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z], ...))
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
 
   if (any(opt == "center")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z], ...))
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z]))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
