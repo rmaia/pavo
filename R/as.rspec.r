@@ -36,6 +36,10 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
+  
+  # tibble dodge
+  if("tbl_df" %in% attr(object, "class")) object <- data.frame(object)
+  
   if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
   } else {
