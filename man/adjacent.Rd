@@ -104,8 +104,8 @@ snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
 Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern
-geometry and coloured patch visual properties for use in predicting behaviour
+Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: 
+Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 and fitness. Methods in Ecology and Evolution, Early View.
 }
 \author{

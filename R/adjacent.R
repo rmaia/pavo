@@ -92,8 +92,8 @@
 #'
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
-#' @references Endler, J. A., Cole G., Kranz A.  (2018). Combining color pattern
-#' geometry and coloured patch visual properties for use in predicting behaviour
+#' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: 
+#' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution, Early View.
 
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
@@ -452,7 +452,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       B <- Rt <- Rab <- NA
     }
 
-    # Edge salience (Endler et al. 2018 )
+    # Boundary strength (Endler et al. 2018)
     if (!is.null(coldists_i)) {
       offdiagprop <- merge(offdiagprop, coldists_i)
 
