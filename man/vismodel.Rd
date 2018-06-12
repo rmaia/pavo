@@ -14,25 +14,25 @@ vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit", "ctenophorus",
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
-that has wavelength range in the first column, named 'wl', and spectral measurements in the 
+that has wavelength range in the first column, named 'wl', and spectral measurements in the
 remaining columns.}
 
 \item{visual}{the visual system to be used. Options are:
 \itemize{
-\item a data frame such as one produced containing by \code{sensmodel}, containing 
-   user-defined sensitivity data for the receptors involved in colour vision. 
-   The data frame must contain a \code{'wl'} column with the range of wavelengths included, 
+    \item a data frame such as one produced containing by \code{sensmodel}, containing
+   user-defined sensitivity data for the receptors involved in colour vision.
+   The data frame must contain a \code{'wl'} column with the range of wavelengths included,
    and the sensitivity for each other cone as a column.
 \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
 \item \code{'avg.uv'}: average avian UV system.
 \item \code{'avg.v'}: average avian V system.
 \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 \item \code{'canis'}: Canid \emph{Canis familiaris}.
-\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human 
- colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
+\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
+ colour vision. Functions are linear transformations of the 2-degree cone fundamentals
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human 
- colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
+\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
+ colour vision. Functions are linear transformations of the 10-degree cone fundamentals
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{'ctenophorus'}: Ornate dragon lizatd \emph{Ctenophorus ornatus}.
 \item \code{'musca'}: Housefly \emph{Musca domestica}.
@@ -42,11 +42,11 @@ remaining columns.}
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
- receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
- or one of the options: 
+ receptor stimulation. Either a vector containing the sensitivity for a single receptor,
+ or one of the options:
 \itemize{
  \item \code{'none'}: no achromatic stimulation calculated
-\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone
+    \item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone
  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone
  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone
  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor
@@ -56,7 +56,7 @@ remaining columns.}
 }}
 
 \item{illum}{either a vector containing the illuminant, or one of the options:
-\itemize{ 
+\itemize{
 \item \code{'ideal'}: homogeneous illuminance of 1 across wavelengths (default)
 \item \code{'bluesky'} open blue sky.
 \item \code{'D65'}: standard daylight.
@@ -65,25 +65,25 @@ remaining columns.}
 
 \item{trans}{either a vector containing the ocular or environmental transmission
 spectra, or one of the options:
-\itemize{ 
+\itemize{
 \item \code{'ideal'}: homogeneous transmission of 1 across all wavelengths (default)
-\item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus} 
+\item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus}
 ocular transmission (from Hart et al. 2000).
-\item \code{'blackbird'}: blackbird \emph{Turdus merula} 
+\item \code{'blackbird'}: blackbird \emph{Turdus merula}
 ocular transmission (from Hart et al. 2000).
 }}
 
 \item{qcatch}{Which quantal catch metric to return. Options are:
 \itemize{
-\item \code{'Qi'}: Quantum catch for each photoreceptor 
+\item \code{'Qi'}: Quantum catch for each photoreceptor
 \item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
  channel is proportional to the logarithm of the quantum catch)
 \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
-\item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}. 
+\item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}.
 Either a vector containing the spectral data, or one of the options:
-\itemize{ 
+\itemize{
 \item \code{'ideal'}: homogeneous illuminance of 1 across all wavelengths (default).
 \item \code{'green'}: green foliage.
 }}
@@ -91,7 +91,7 @@ Either a vector containing the spectral data, or one of the options:
 \item{vonkries}{logical. Should the von Kries color correction transformation be applied?
 (defaults to \code{FALSE}).}
 
-\item{scale}{a value by which the illuminant will be multiplied. Useful for when the 
+\item{scale}{a value by which the illuminant will be multiplied. Useful for when the
  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
  and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
  are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
@@ -101,12 +101,12 @@ Either a vector containing the spectral data, or one of the options:
 space model? Defaults to \code{TRUE}).}
 }
 \value{
-An object of class \code{vismodel} containing the photon catches for each of the 
+An object of class \code{vismodel} containing the photon catches for each of the
  photoreceptors considered. Information on the parameters used in the calculation are also
  stored and can be called using the \code{summary.vismodel} function.
 }
 \description{
-Calculates quantum catches at each photoreceptor. Both raw and relative values 
+Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colorspace and non-colorspace models.
 }
 \examples{
@@ -129,39 +129,39 @@ tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 
 }
 \references{
-Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. 
- (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
+Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
+ (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 
-Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
+Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000).
 Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
-species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
+species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird
 (Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.
 
-Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
+Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
  In Retinal And Eye Research, 20(5), 675-703.
 
 Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
  Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
  Lizard, Ctenophorus ornatus.
 
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
-Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of 
- the middle- and long-wavelength sensitive cones derived from measurements in 
+Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of
+ the middle- and long-wavelength sensitive cones derived from measurements in
  observers of known genotype. Vision Research, 40, 1711-1737.
 
-CIE (2006). Fundamental chromaticity diagram with physiological axes. 
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
+CIE (2006). Fundamental chromaticity diagram with physiological axes.
+ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
  Internationale de l' Eclairage.
 }
 \author{

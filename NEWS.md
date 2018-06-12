@@ -6,7 +6,7 @@ NEW FEATURES
 * added the visual system of _Ctenophorous ornatus_, the (trichromatic) ornate dragon lizard
 
 MAJOR CHANGES
-* getspecf (and the argument fast=TRUE in getspec) have been deprecated
+* getspecf (and the argument fast = TRUE in getspec) have been deprecated
 * summary.rspec() returned incorrect values for S7. If you use S7, please re-run
 your analyses
 
@@ -24,7 +24,8 @@ MINOR FEATURES AND BUG FIXES
 * better handling of subset data when using summary.colspace() and summary.vismodel()
 * fixed bug in coldist() when `noise = "quantum"` and `achro = TRUE` were used
 * fixed bug in jndplot() when `arrow = "none"` and `achro = TRUE`
-* spec2rgb() now takes into account the 390-400nm wavelength range into account when possible
+* spec2rgb() now takes into account the 390-400 nm wavelength range into account when possible
+* as.rspec() no longer fails with tibbles
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
