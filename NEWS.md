@@ -26,6 +26,7 @@ MINOR FEATURES AND BUG FIXES
 * fixed bug in jndplot() when `arrow = "none"` and `achro = TRUE`
 * spec2rgb() now takes into account the 390-400 nm wavelength range into account when possible
 * as.rspec() no longer fails with tibbles
+* bin option of procspec() now works for all values of bins
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
