@@ -5,9 +5,10 @@
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param xpts (required) an integer specifying the number of sample points, or grid-sampling
-#' density, along the x axis. Y-axis sampling density is calculated automatically
-#' from this, to maintain an even grid spacing.
+#' @param xpts an integer specifying the number of sample points, or grid-sampling
+#' density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
+#' Y-axis sampling density is calculated automatically from this, to maintain an even 
+#' grid spacing.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{calibrate}}.
@@ -145,11 +146,26 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
     if (!is.null(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
     } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale)) {
-      xscale <- lapply(1:length(classimg), function(x) xscale)
+      xscale <- as.list(rep(xscale, length(classimg)))
     } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and one or more images are uncalibrated.
            Either specify xscale or use calibrate() to set a scale for each image.")
     }
+  }
+  
+  ## Sampling density
+  if (!multi_image) {
+  
+    if(is.null(xpts)) 
+      xpts <- ncol(classimg)
+      
+  } else if (multi_image) {
+    
+    if(!is.null(xpts)) 
+      xpts <- as.list(rep(xpts, length(classimg)))
+    if(is.null(xpts))
+      xpts <- lapply(1:length(classimg), function(x) ncol(classimg[[x]]))
+    
   }
 
   if (multi_image) { # Multiple images
@@ -158,7 +174,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 
     ifelse(imgsize < 100,
       outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-          xpts_i = xpts,
+          xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           bkg.include_i = bkg.include,
@@ -167,7 +183,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       mc.cores = cores
       ),
       outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
-          xpts_i = xpts,
+          xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           bkg.include_i = bkg.include,
@@ -232,15 +248,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
-  # Subsample, if specified
-  if (length(xpts_i) == 1) {
+  # Subsample (does nothing if x_pts = ncols, default)
     subclass <- classimg_i[
       seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
       seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
     ]
-  } else if (is.null(xpts_i)) {
-    xpts_i <- c(dim(classimg_i))
-  }
 
   # Exclude background, if specified
   if (!is.null(bkgID_i) && bkg.include_i == FALSE) {
@@ -264,13 +276,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
 
   # Single colour check
-  single_col <- FALSE
-  if (!is.null(bkgID_i) && length(bkgID_i) >= n_class - 1 && bkg.include_i == FALSE) {
-    single_col <- TRUE
-    # stop("Cannot exclude backgrounds as specified: at least two colour classes must remain
-    #      in the image.")
-  }
-  if (n_class == 1) single_col <- TRUE
+  single_col <- ifelse (n_class == 1, TRUE, FALSE) 
 
   # All row transitions
   rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
