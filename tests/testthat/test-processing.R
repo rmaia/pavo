@@ -25,3 +25,11 @@ test_that("Conversion to rspec", {
   expect_error(as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE), "limits")
   expect_error(as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE), "limits")
 })
+
+test_that('Spectra pre-processing', {
+  
+  data(sicalis)
+  
+  expect_equal(dim(procspec(sicalis, opt = "bin", bins = 24)), c(24, 22))
+  expect_equal(dim(procspec(sicalis, opt = "bin", bins = 33)), c(33, 22))
+})

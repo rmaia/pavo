@@ -15,15 +15,23 @@
 #' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
 #' 	\item \code{"maxmimum"} divides each spectrum by its maximum value.
 #' 	\item \code{"sum"} divides each spectrum by summed values.
+<<<<<<< HEAD
 #' 	\item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
 #' 									 specify.
 #'  \item \code{"center"} centers individual spectra by subtracting mean reflectance from
 #'                      all values.
+=======
+#' 	\item \code{"bin"} bins each spectrum into the specified number of bins.
+#'                      \code{bins} argument must be set.
+#'      \item \code{"center"} centers individual spectra by subtracting mean
+#'                      reflectance from all values.
+>>>>>>> origin/master
 #' }
 #'
 #' @param fixneg how to handle negative values. Possibilities are:
 #' \itemize{
 #' 	\item \code{"none"} does not perform negative value correction (default).
+<<<<<<< HEAD
 #'    \item \code{"zero"} sets all negative values to zero.
 #'    \item \code{"addmin"} adds the absolute value of the maximally negative values of each
 #'                           spectra to the reflectance at all other wavelengths (setting
@@ -32,6 +40,16 @@
 #' @param span sets the smoothing parameter used by \code{loess.smooth}.
 #' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
 #' @param ... ignored.
+=======
+#'      \item \code{"zero"} sets all negative values to zero.
+#'      \item \code{"addmin"} adds the absolute value of the maximally negative
+#'                      values of each spectra to the reflectance at all other
+#'                      wavelengths (setting the minimum value to zero, but
+#'                      scaling other values accordingly).
+#' }
+#' @param span sets the smoothing parameter used by \code{loess.smooth}.
+#' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
+>>>>>>> origin/master
 #'
 #' @return A data frame of class \code{rspec} with the processed data.
 #'
@@ -52,7 +70,11 @@
 #' plot(teal.max, select = 10)
 #' }
 #'
+<<<<<<< HEAD
 #' @seealso \code{\link{loess.smooth}}
+=======
+#' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
+>>>>>>> origin/master
 #'
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
 #'  Plumage reflectance and the objective assessment of avian sexual dichromatism.
@@ -66,7 +88,11 @@ procspec <- function(rspecdata, opt = c(
                        "bin", "sum", "center"
                      ),
                      fixneg = c("none", "addmin", "zero"),
+<<<<<<< HEAD
                      span = 0.25, bins = 20, ...) {
+=======
+                     span = 0.25, bins = 20) {
+>>>>>>> origin/master
   opt <- match.arg(opt, several.ok = TRUE)
 
   fixneg <- match.arg(fixneg)
@@ -135,38 +161,66 @@ procspec <- function(rspecdata, opt = c(
 
 
   if (any(opt == "minimum")) {
+<<<<<<< HEAD
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z], ...))
+=======
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))
+>>>>>>> origin/master
     applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
   }
 
   if (any(opt == "maximum")) {
+<<<<<<< HEAD
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z], ...))
+=======
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z]))
+>>>>>>> origin/master
     applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
   }
 
   if (any(opt == "sum")) {
+<<<<<<< HEAD
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z], ...))
+=======
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z]))
+>>>>>>> origin/master
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
 
   if (any(opt == "center")) {
+<<<<<<< HEAD
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z], ...))
+=======
+    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z]))
+>>>>>>> origin/master
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
   # Calculate medians according to # of bins specified for use in PCA
   # Method follows Cuthill et al. (1999)
   if (any(opt == "bin")) {
+<<<<<<< HEAD
     bw <- floor(length(wl) / bins)
     wl_bin <- seq(head(wl, 1), tail(wl, 1), by = bw)
     wl_ind <- match(wl_bin, wl)
     rspecdata <- sapply(1:(length(wl_ind) - 1), function(z)
       apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = F], 2, median),
+=======
+    bw <- floor(length(wl) / (bins - 1))
+    wl_bin <- seq(min(wl), by = bw, length.out = bins)
+    wl_ind <- match(wl_bin, wl)
+    rspecdata <- sapply(1:length(wl_ind), function(z)
+      apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = F], 2, median, na.rm = TRUE),
+>>>>>>> origin/master
     simplify = FALSE
     )
 
     rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = T))
+<<<<<<< HEAD
     rspecdata <- as.data.frame(cbind(wl_bin[-length(wl_bin)], rspecdata))
+=======
+    rspecdata <- as.data.frame(cbind(wl_bin, rspecdata))
+>>>>>>> origin/master
     applied <- c(applied, paste("binned spectra to ", bw, "-nm intervals\n", sep = ""))
   } else {
     rspecdata <- as.data.frame(cbind(wl, rspecdata))
@@ -176,7 +230,11 @@ procspec <- function(rspecdata, opt = c(
   class(rspecdata) <- c("rspec", "data.frame")
 
   applied <- c(applied, "\n")
+<<<<<<< HEAD
   cat(applied)
+=======
+  message(applied)
+>>>>>>> origin/master
 
   rspecdata
 }
