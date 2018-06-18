@@ -160,6 +160,7 @@ procspec <- function(rspecdata, opt = c(
     bw <- floor(length(wl) / (bins - 1))
     wl_bin <- seq(min(wl), by = bw, length.out = bins)
     wl_ind <- match(wl_bin, wl)
+    rspecdata <- as.data.frame(rspecdata)
     rspecdata <- sapply(1:length(wl_ind), function(z)
       apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = F], 2, median, na.rm = TRUE),
     simplify = FALSE
