@@ -6,6 +6,7 @@ addons:
     - libgmp3-dev
 r_build_args: 
 r_check_args: 
+r_packages: rmarkdown
 # warnings_are_errors: false
 notifications:
   email:
