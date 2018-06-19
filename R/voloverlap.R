@@ -3,11 +3,7 @@
 #' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space.
 #'
-#' @importFrom rcdd d2q q2d scdd
-#'
-#' @importFrom geometry convhulln
-#'
-#' @importFrom stats runif
+#' @importFrom geometry convhulln intersectn
 #'
 #' @export
 #'
@@ -95,32 +91,21 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
                        montecarlo = FALSE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
-  dat1 <- tcsres1[, c("x", "y", "z")]
+  dat1 <- as.matrix(tcsres1[, c("x", "y", "z")])
 
-  dat2 <- tcsres2[, c("x", "y", "z")]
+  dat2 <- as.matrix(tcsres2[, c("x", "y", "z")])
 
-  vol1 <- convhulln(dat1, "FA")$vol
-  vol2 <- convhulln(dat2, "FA")$vol
+  over <- intersectn(dat1, dat2)
+
+  vol1 <- over$ch1$vol
+  vol2 <- over$ch2$vol
 
   ######################
   # EXACT SOLUTION BEGIN#
   ######################
   if (!montecarlo) {
-    rat1 <- d2q(cbind(0, 1, as.matrix(dat1)))
-    rat2 <- d2q(cbind(0, 1, as.matrix(dat2)))
-    Hvert1 <- scdd(rat1, representation = "V")$output
-    Hvert2 <- scdd(rat2, representation = "V")$output
-    Hinter <- rbind(Hvert1, Hvert2)
-    Vinter <- scdd(Hinter, representation = "H")$output
 
-    Voverlap <- data.frame(q2d(Vinter[, -c(1, 2)]))
-    colnames(Voverlap) <- c("x", "y", "z")
-
-    if (nrow(Voverlap) > 3) {
-      overlapVol <- convhulln(Voverlap, "FA")$vol
-    } else {
-      overlapVol <- 0
-    }
+    overlapVol <- over$ch$vol
 
     vsmallest <- overlapVol / min(vol1, vol2)
 

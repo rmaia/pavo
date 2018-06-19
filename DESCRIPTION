@@ -41,11 +41,10 @@ Depends:
     R (>= 3.3.0)
 Imports:
     cluster,
-    geometry,
+    geometry(>= 0.4.0),
     magick,
     pbmcapply,
     plot3D,
-    rcdd,
     sp,
     viridisLite
 Suggests:
