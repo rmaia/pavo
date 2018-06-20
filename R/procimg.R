@@ -1,4 +1,4 @@
-#' Calibrate images
+#' Process images
 #'
 #' Manually specify the scale of images.
 #'
@@ -15,17 +15,17 @@
 #' @examples \dontrun{
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio <- calibrate(papilio, scale = 10)
+#' papilio <- procimg(papilio, scale = 10)
 #'
 #' # Multiple images. Assign a scale an specify the nuber of colours present.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes <- calibrate(snakes, scale = 100)
+#' snakes <- procimg(snakes, scale = 100)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 
-calibrate <- function(image, scaledist = NULL) {
+procimg <- function(image, scaledist = NULL) {
 
   ## Checks
   multi_image <- inherits(image, "list") # Single or multiple images?
@@ -39,7 +39,7 @@ calibrate <- function(image, scaledist = NULL) {
     if (is.numeric(scaledist)) {
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in 1:length(image)) {
-        attr(image[[i]], "scale") <- calibrate_main(image_i = image[[i]], scaledist_i = scaledist)
+        attr(image[[i]], "scale") <- procimg_main(image_i = image[[i]], scaledist_i = scaledist)
       }
     }
   } else if (!multi_image) {
@@ -47,7 +47,7 @@ calibrate <- function(image, scaledist = NULL) {
     ## Scale ##
     if (is.numeric(scaledist)) {
       message("Scale calibration: Select both ends of the scale.")
-      attr(image, "px_scale") <- calibrate_main(image_i = image, scaledist_i = scaledist)
+      attr(image, "px_scale") <- procimg_main(image_i = image, scaledist_i = scaledist)
     }
   }
 
@@ -69,7 +69,7 @@ calibrate <- function(image, scaledist = NULL) {
 #' @return an image, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
-calibrate_main <- function(image_i, scaledist_i) {
+procimg_main <- function(image_i, scaledist_i) {
   
   plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
   rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])

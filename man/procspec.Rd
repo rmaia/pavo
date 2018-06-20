@@ -6,7 +6,7 @@
 \usage{
 procspec(rspecdata, opt = c("none", "smooth", "maximum", "minimum", "bin",
   "sum", "center"), fixneg = c("none", "addmin", "zero"), span = 0.25,
-  bins = 20, ...)
+  bins = 20)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec},
@@ -23,26 +23,25 @@ spectra to process.}
     \item \code{"minimum"} subtracts the minimum from each individual spectra.
     \item \code{"maxmimum"} divides each spectrum by its maximum value.
     \item \code{"sum"} divides each spectrum by summed values.
-    \item \code{"bin"} bins each spectrum into specified wavelength ranges. User should
-                                     specify.
- \item \code{"center"} centers individual spectra by subtracting mean reflectance from
-                     all values.
+    \item \code{"bin"} bins each spectrum into the specified number of bins.
+                     \code{bins} argument must be set.
+     \item \code{"center"} centers individual spectra by subtracting mean
+                     reflectance from all values.
 }}
 
 \item{fixneg}{how to handle negative values. Possibilities are:
 \itemize{
     \item \code{"none"} does not perform negative value correction (default).
-   \item \code{"zero"} sets all negative values to zero.
-   \item \code{"addmin"} adds the absolute value of the maximally negative values of each
-                          spectra to the reflectance at all other wavelengths (setting
-                          the minimum value to zero, but scaling other values accordingly).
+     \item \code{"zero"} sets all negative values to zero.
+     \item \code{"addmin"} adds the absolute value of the maximally negative
+                     values of each spectra to the reflectance at all other
+                     wavelengths (setting the minimum value to zero, but
+                     scaling other values accordingly).
 }}
 
 \item{span}{sets the smoothing parameter used by \code{loess.smooth}.}
 
 \item{bins}{sets the number of equally sized wavelength bins for \code{opt = "bin"}.}
-
-\item{...}{ignored.}
 }
 \value{
 A data frame of class \code{rspec} with the processed data.
@@ -75,7 +74,7 @@ Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
  University Press, Cambridge, Massachusetts.
 }
 \seealso{
-\code{\link{loess.smooth}}
+\code{\link{loess.smooth}}, \code{\link{plotsmooth}}
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}

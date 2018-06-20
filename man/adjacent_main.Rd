@@ -18,7 +18,7 @@ from this, to maintain an even grid spacing.}
 
 \item{xscale_i}{(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, if image scales have been set via
-\code{\link{calibrate}}.}
+\code{\link{procimg}}.}
 
 \item{bkgID_i}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,

@@ -11,7 +11,7 @@
 #' grid spacing.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
-#' \code{\link{calibrate}}.
+#' \code{\link{procimg}}.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
@@ -64,12 +64,12 @@
 #'   \code{Rt = St_a_a / St_a_b}.
 #'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
 #'   \code{Rt = St_a_a / St_b_b}.
-#'   \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
-#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
-#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
-#'   \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude.
-#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude.
-#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude.
+#'   \item \code{'m_dS'}: weighted mean of the chromatic boundary strength.
+#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic boundary strength.
+#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic boundary strength.
+#'   \item \code{'m_dL'}: weighted mean of the achromatic boundary strength.
+#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic boundary strength.
+#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic boundary strength.
 #'   }
 #'
 #' @export
@@ -95,7 +95,7 @@
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
 #' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: 
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
-#' and fitness. Methods in Ecology and Evolution, Early View.
+#' and fitness. Methods in Ecology and Evolution.
 
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      bkg.include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
@@ -139,7 +139,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       xscale <- attr(classimg, "px_scale") * dim(classimg)[2]
     } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and image data are uncalibrated. Either
-         specify xscale or use calibrate() to set a scale.")
+         specify xscale or use procimg() to set a scale.")
     }
     ## Multi images
   } else if (multi_image) {
@@ -149,7 +149,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       xscale <- as.list(rep(xscale, length(classimg)))
     } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and one or more images are uncalibrated.
-           Either specify xscale or use calibrate() to set a scale for each image.")
+           Either specify xscale or use procimg() to set a scale for each image.")
     }
   }
   
@@ -220,7 +220,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #' from this, to maintain an even grid spacing.
 #' @param xscale_i (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
-#' \code{\link{calibrate}}.
+#' \code{\link{procimg}}.
 #' @param bkgID_i an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to

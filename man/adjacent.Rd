@@ -12,13 +12,14 @@ adjacent(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 x and y correspond to pixel coordinates, and z is a numeric code specifying
 a colour-class. Preferably the result of \code{\link{classify}}.}
 
-\item{xpts}{(required) an integer specifying the number of sample points, or grid-sampling
-density, along the x axis. Y-axis sampling density is calculated automatically
-from this, to maintain an even grid spacing.}
+\item{xpts}{an integer specifying the number of sample points, or grid-sampling
+density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
+Y-axis sampling density is calculated automatically from this, to maintain an even 
+grid spacing.}
 
 \item{xscale}{(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, if image scales have been set via
-\code{\link{calibrate}}.}
+\code{\link{procimg}}.}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,
@@ -76,12 +77,12 @@ one non-NA value are returned:
   \code{Rt = St_a_a / St_a_b}.
   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
   \code{Rt = St_a_a / St_b_b}.
-  \item \code{'m_dS'}: weighted mean of the chromatic edge magnitude.
-  \item \code{'s_dS'}: weighted standard deviation of the chromatic edge magnitude.
-  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic edge magnitude.
-  \item \code{'m_dL'}: weighted mean of the achromatic edge magnitude.
-  \item \code{'s_dL'}: weighted standard deviation of the achromatic edge magnitude.
-  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic edge magnitude.
+  \item \code{'m_dS'}: weighted mean of the chromatic boundary strength.
+  \item \code{'s_dS'}: weighted standard deviation of the chromatic boundary strength.
+  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic boundary strength.
+  \item \code{'m_dL'}: weighted mean of the achromatic boundary strength.
+  \item \code{'s_dL'}: weighted standard deviation of the achromatic boundary strength.
+  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic boundary strength.
   }
 }
 \description{
@@ -106,7 +107,7 @@ adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: 
 Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
-and fitness. Methods in Ecology and Evolution, Early View.
+and fitness. Methods in Ecology and Evolution.
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}
