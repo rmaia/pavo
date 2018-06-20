@@ -73,8 +73,7 @@
 #'   }
 #'
 #' @export
-#'
-#' @importFrom dplyr bind_rows
+#' 
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom utils object.size
 #'
@@ -86,7 +85,7 @@
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes_class <- classify(snakes, kcols = 3)
-#' snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = 50)
+#' snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = 50)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -190,7 +189,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
           coldists_i = coldists
         ))
     )
-    outdata <- do.call(bind_rows, outdata)
+    
+    # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
+    allNms <- unique(unlist(lapply(outdata, names)))
+    outdata <- do.call(rbind, c(lapply(outdata, function(x) data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names=FALSE))
 
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
