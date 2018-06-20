@@ -4,7 +4,7 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, kcols = NULL, refID = NULL, manual = FALSE,
+classify(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   plotnew = FALSE, cores = getOption("mc.cores", 2L))
 }
 \arguments{
@@ -22,12 +22,12 @@ a list of images. Other images will be k-means classified using centres identifi
 in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.}
 
-\item{manual}{manually specify the colour-category 'centers', for k-means clustering.
+\item{interactive}{interactively specify the colour-category 'centers', for k-means clustering.
 When \code{TRUE}, the user is asked to click a number of points (equal to \code{kcols},
 if specified, otherwise user-determined) that represent the distinct colours of interest.
 If a reference image is specified, it will be the only image presented.}
 
-\item{plotnew}{Should plots be opened in a new window when \code{manual = TRUE}?
+\item{plotnew}{Should plots be opened in a new window when \code{interactive = TRUE}?
 Defaults to \code{FALSE}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
@@ -43,7 +43,7 @@ Use k-means clustering to classify image pixels into discrete colour classes.
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial
-cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible
+cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproducible
 cluster ID's are desired between runs.
 }
 \examples{
@@ -54,7 +54,7 @@ papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes_class <- classify(snakes, manual = TRUE, plotnew = TRUE)
+snakes_class <- classify(snakes, interactive = TRUE, plotnew = TRUE)
 }
 
 }

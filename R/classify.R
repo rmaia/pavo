@@ -13,11 +13,11 @@
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
-#' @param manual manually specify the colour-category 'centers', for k-means clustering.
+#' @param interactive interactively specify the colour-category 'centers', for k-means clustering.
 #' When \code{TRUE}, the user is asked to click a number of points (equal to \code{kcols},
 #' if specified, otherwise user-determined) that represent the distinct colours of interest.
 #' If a reference image is specified, it will be the only image presented.
-#' @param plotnew Should plots be opened in a new window when \code{manual = TRUE}?
+#' @param plotnew Should plots be opened in a new window when \code{interactive = TRUE}?
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
@@ -35,7 +35,7 @@
 #' @importFrom tools file_path_sans_ext
 #'
 #' @note Since the \code{kmeans} process draws on random numbers to find initial
-#' cluster centres when \code{manual = FALSE}, use \code{set.seed} if reproducible
+#' cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproducible
 #' cluster ID's are desired between runs.
 #'
 #' @examples \dontrun{
@@ -45,12 +45,12 @@
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, manual = TRUE, plotnew = TRUE)
+#' snakes_class <- classify(snakes, interactive = TRUE, plotnew = TRUE)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew = FALSE, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, plotnew = FALSE, cores = getOption("mc.cores", 2L)) {
 
   ## Checks
   # Single or multiple images?
@@ -116,35 +116,35 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
   #
   ## Multiple images ##
   # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
-  #       (length(kcols) > 1 && manual = FALSE)
+  #       (length(kcols) > 1 && interactive = FALSE)
   # (2) Single k (or multiple identical k), with a reference image.
-  #       (length(kcols) == 1 && !is.null(refID) && manual = FALSE)
+  #       (length(kcols) == 1 && !is.null(refID) && interactive = FALSE)
   # (3) Single k (or multiple identical k), without a reference image, so the centres & assignments will vary between images.
-  #       (length(kcols) == 1 && is.null(refID) && manual = FALSE)
-  # (4) Single k (or multiple identical k), with manually-specified centres, and a single reference image.
-  #       (length(kcols) == 1 && !is.null(refID) && manual == TRUE)
-  # (5) Multiple k (identical or not), with manually-specified centres for each image.
-  #       (is.null(refID) && manual == TRUE)
+  #       (length(kcols) == 1 && is.null(refID) && interactive = FALSE)
+  # (4) Single k (or multiple identical k), with interactively-specified centres, and a single reference image.
+  #       (length(kcols) == 1 && !is.null(refID) && interactive == TRUE)
+  # (5) Multiple k (identical or not), with interactively-specified centres for each image.
+  #       (is.null(refID) && interactive == TRUE)
   #
   ## Single image ##
   # (1) Single k
   #      (length(kcols) == 1)
-  # (2) Single k, with manual centre
-  #      (length(kcols) == 1 && manual = TRUE)
+  # (2) Single k, with interactive centre
+  #      (length(kcols) == 1 && interactive = TRUE)
 
   ## Multiple images  ##
   if (multi_image) {
     imgsize <- format(object.size(imgdat), units = "Mb")
 
     ## (1) Multiple k, no reference image ##
-    if (length(kcols) > 1 && manual == FALSE) {
+    if (length(kcols) > 1 && interactive == FALSE) {
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
       )
 
       ## (2) Single k, with reference image ##
-    } else if (length(kcols) == 1 && !is.null(refID) && manual == FALSE) {
+    } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
@@ -152,14 +152,14 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
       )
 
       ## (3) Single k, no reference image ##
-    } else if (length(kcols) == 1 && is.null(refID) && manual == FALSE) {
+    } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
       )
 
-      ## (4) Single k, manually specified centre, with reference image ##
-    } else if (!is.null(refID) && manual == TRUE) {
+      ## (4) Single k, interactively specified centre, with reference image ##
+    } else if (!is.null(refID) && interactive == TRUE) {
 
       # Reference image
       refimg <- imgdat[[refID]]
@@ -200,8 +200,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       )
 
-      ## (5) Multiple k, with manually-specified centres for each image. ##
-    } else if (is.null(refID) && manual == TRUE) {
+      ## (5) Multiple k, with interactively-specified centres for each image. ##
+    } else if (is.null(refID) && interactive == TRUE) {
       if (length(kcols) == 1) {
         kcols <- rep(kcols, length(imgdat))
       }
@@ -287,7 +287,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, manual = FALSE, plotnew
 
   ## Single image ##
   if (!multi_image) {
-    if (manual == TRUE) {
+    if (interactive == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
 
