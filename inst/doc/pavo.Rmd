@@ -1,6 +1,6 @@
 ---
 title: "pavo"
-author: "Rafael Maia, Thomas White, Pierre-Paul Bitton, Chad Eliason"
+author: "Rafael Maia, Hugo Gruson, Thomas White"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
@@ -18,21 +18,19 @@ library(pavo)
 
 # Introduction
 
-`pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw data to visualization and analysis.
-
-Although `pavo` deals largely, in its examples, with spectral reflectance data from bird feathers, it is meant to be applicable to a range of taxa. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
+`pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualization and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
 
 `pavo` was written with the following workflow in mind:
 
-1. **Organize** spectral data by inputting files and processing spectra (e.g., to remove noise, negative values, smooth curves, etc...).
-2. **Analyze** the resulting files, either using typical colorimetric variables (hue, saturation, brightness) or using visual models based on perceptual data from the taxon of interest.
-3. **Visualize** the output, with multiple options provided for exploratory analyses.
+1. **Organize** data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).
+2. **Analyze** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
+3. **Visualize** the output, with multiple options provided for exploration and analysis.
 
-Below we will show the main functions in the package in an example workflow. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
+Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
 
-# Dataset Description
+# Spectral Dataset Description
 
-The data used in this example are available from [github](http://github.com) by clicking [here](https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip). You can download and extract it to follow the vignette.
+The spectral data used in this example are available from [github](http://github.com) by clicking [here](https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip). You can download and extract it to follow the vignette.
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
@@ -40,7 +38,7 @@ In addition, `pavo` includes three datasets that can be called with the `data` f
 
 # Organizing Spectral Data
 
-## Importing Data
+## Importing
 
 The first thing we need to do is import the spectral data into R using the function `getspec()`. Since the spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also has a **fast algorithm** that speeds up importing spectra, which will only work when all files have the same format. `getspec`  attempts to use it first, and if it fails, it will switch to the old algorithm (the slow version can also be chosen with the argument `fast = FALSE`). A final issue with the  data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call. 
 
@@ -60,7 +58,7 @@ specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 ```
 
 ```{r, echo=TRUE, eval=TRUE}
-specs[1:10,1:4]
+specs[1:10, 1:4]
 dim(specs) # the data set has 213 spectra, from 300 to 700 nm, plus a 'wl' column
 ```
 
@@ -73,11 +71,13 @@ is.rspec(specs)
 If you already have multiple spectra in a single data frame that you'd like to use with `pavo` functions, you can use the command `as.rspec` to convert it to an rspec object. The function will attempt to identify the wavelength variable or you can specify the column containing wavelengths with the `whichwl` argument. The default way that `as.rspec` handles reflectance data is to interpolate the data in 1-nm bins, as is commonly done for spectral analyses. However, this can be turned off by using: `interp = FALSE`. As an example, we will create some fake reflectance data, name the column containing wavelengths (in 0.5-nm bins) _wavelength_ rather than _wl_ (required for `pavo` functions to work) and also put the column containing wavelengths third rather than first.
 
 ```{r, echo=TRUE, eval=TRUE}
-# Create some fake reflectance data with wavelength column arbitrarily titled 
+# Create some fake reflectance data with wavelength column arbitrarily titled
 # and not first in the data frame:
-fakedat <- data.frame(refl1 = rnorm(n = 801), 
-                      refl2 = rnorm(n = 801), 
-                      wavelength = seq(300, 700, by = .5))
+fakedat <- data.frame(
+  refl1 = rnorm(n = 801),
+  refl2 = rnorm(n = 801),
+  wavelength = seq(300, 700, by = .5)
+)
 head(fakedat)
 
 is.rspec(fakedat)
@@ -100,7 +100,7 @@ Finally, the `lim` argument allows you to specify the range of wavelengths conta
 ```{r, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=5}
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
-plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = 'l', xlab = 'wl')
+plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l", xlab = "wl")
 ```
 
 We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (`as.rspec` will warn you when wavelengths in the data are not present in the range specified with `lim`), otherwise `as.rspec` will assume that wavelengths exist when in fact they may not. For example, if we set `lim = c(300, 1000)` and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:
@@ -108,10 +108,10 @@ We want to stress that it is important to check the actual wavelengths contained
 ```{r, echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=5}
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 
-plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = 'l')
+plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l")
 ```
 
-## Subsetting and Merging Data
+## Subsetting and Merging Spectral Data
 
 Once an `rspec` object has been created, either by importing raw spectral data or converting a dataset with the `as.rspec` function, you can subset the spectra based on their names using a modified version of `R`'s built-in `subset` function. For example, the following code illustrates how to create an `rspec` object containing only tanagers:
 
@@ -197,32 +197,34 @@ plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 4, ask = FALSE)
 From the resulting plot, we can see that `span = 0.2` is the minimum amount of smoothing to remove spectral noise while preserving the original spectral shape. Based on this value, we will now use the `opt` argument in `procspec` to smooth data for further plotting and analysis.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=5, fig.align='center', fig.cap="_Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet_"}
-spec.sm <- procspec(sppspec, opt = 'smooth', span = 0.2)
-plot(sppspec[, 5] ~ sppspec[, 1], type = 'l', lwd = 10, col = 'grey', 
-     xlab = "Wavelength (nm)", ylab = "Reflectance (%)")
-lines(spec.sm[, 5] ~ sppspec[, 1], col = 'red', lwd = 2)
+spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
+plot(sppspec[, 5] ~ sppspec[, 1],
+  type = "l", lwd = 10, col = "grey",
+  xlab = "Wavelength (nm)", ylab = "Reflectance (%)"
+)
+lines(spec.sm[, 5] ~ sppspec[, 1], col = "red", lwd = 2)
 ```
 
 We can also try different normalizations. Options include subtracting the minimum reflectance of a spectrum at all wavelengths (effectively making the minimum reflectance equal to zero, `opt = "min"`, left panel, below) and making the reflectance at all wavelength proportional to the maximum reflectance (i.e. setting maximum reflectance to 1; `opt = "max"`, center panel, below). Note that the user can specify multiple processing options that will be applied sequentially to the spectral data by `procspec` (right panel, below).
 
 ```{r, echo=TRUE, eval=TRUE, results='hide'}
 # Run some different normalizations
-specs.max <- procspec(sppspec, opt = 'max')
-specs.min <- procspec(sppspec, opt = 'min')
-specs.str <- procspec(sppspec, opt = c('min', 'max'))  # multiple options
+specs.max <- procspec(sppspec, opt = "max")
+specs.min <- procspec(sppspec, opt = "min")
+specs.str <- procspec(sppspec, opt = c("min", "max")) # multiple options
 ```
 
 ```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.align='center', fig.cap="_Results for min (left), max (center), and both normalizations (right)_"}
 # Plot results
 par(mfrow = c(1, 3), mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
-plot(specs.min[, 5] ~ c(300:700), xlab = "", ylab = "", type = 'l')
+plot(specs.min[, 5] ~ c(300:700), xlab = "", ylab = "", type = "l")
 abline(h = 0, lty = 2)
 
-plot(specs.max[, 5] ~ c(300:700), ylim = c(0, 1), xlab = "", ylab = "", type = 'l')
+plot(specs.max[, 5] ~ c(300:700), ylim = c(0, 1), xlab = "", ylab = "", type = "l")
 abline(h = c(0, 1), lty = 2)
 
-plot(specs.str[, 5] ~ c(300:700), type = 'l', xlab = "", ylab = "")
+plot(specs.str[, 5] ~ c(300:700), type = "l", xlab = "", ylab = "")
 abline(h = c(0, 1), lty = 2)
 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
@@ -235,11 +237,11 @@ Another intended usage of `procspec` is preparation of spectral data for variabl
 
 ```{r, echo=TRUE, eval=TRUE, results='hide'}
 # pca analysis
-spec.bin <- procspec(sppspec, opt = c('bin', 'center'))
+spec.bin <- procspec(sppspec, opt = c("bin", "center"))
 head(spec.bin)
-spec.bin <- t(spec.bin)  # transpose so wavelength are variables for the PCA
-colnames(spec.bin) <- spec.bin[1, ]  # names variables as wavelength bins
-spec.bin <- spec.bin[-1, ]  # remove 'wl' column
+spec.bin <- t(spec.bin) # transpose so wavelength are variables for the PCA
+colnames(spec.bin) <- spec.bin[1, ] # names variables as wavelength bins
+spec.bin <- spec.bin[-1, ] # remove 'wl' column
 pca1 <- prcomp(spec.bin, scale = TRUE)
 ```
 
@@ -260,10 +262,10 @@ sel <- rank(pca1$x[, 1])
 sel <- match(names(sort(sel)), names(sppspec))
 
 # Plot results
-par(mfrow = c(1,2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
-plot(pca1$r[,1] ~ wls, type = 'l', ylab = "PC1 loading")
+par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
+plot(pca1$r[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
-plot(sppspec, select = sel, type = 's', col = spec2rgb(sppspec))
+plot(sppspec, select = sel, type = "s", col = spec2rgb(sppspec))
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 ```
 
@@ -277,8 +279,8 @@ refl <- sppspec[, 7] - 20
 testspecs <- as.rspec(cbind(c(300:700), refl))
 
 # Apply two different processing options
-testspecs.fix1 <- procspec(testspecs, fixneg = 'addmin')
-testspecs.fix2 <- procspec(testspecs, fixneg = 'zero')
+testspecs.fix1 <- procspec(testspecs, fixneg = "addmin")
+testspecs.fix2 <- procspec(testspecs, fixneg = "zero")
 ```
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.align='center', fig.cap="_Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)._"}
@@ -324,7 +326,7 @@ We can start out by visualizing these spectra with the `overlay` option in plot.
 ```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color._"}
 par(mar = c(4, 4, 2, 2))
 data(teal)
-plot(teal, type = 'o', col = spec2rgb(teal))
+plot(teal, type = "o", col = spec2rgb(teal))
 ```
 
 ### The `stack` Option
@@ -332,11 +334,11 @@ plot(teal, type = 'o', col = spec2rgb(teal))
 Another option is the `stack` plot (again, with human vision approximations of the color produced by the spectra using `spec2rgb`).
 
 ```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=7, fig.align='center', fig.cap="_Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance_"}
-teal.norm <- procspec(teal, opt = c('min', 'max'))
+teal.norm <- procspec(teal, opt = c("min", "max"))
 par(mfrow = c(1, 2), mar = c(2, 2, 2, 2), oma = c(2, 2, 0, 0))
 
-plot(teal, type = 's', col = spec2rgb(teal))
-plot(teal.norm, type = 's', col = spec2rgb(teal))
+plot(teal, type = "s", col = spec2rgb(teal))
+plot(teal.norm, type = "s", col = spec2rgb(teal))
 
 mtext("Wavelength (nm)", side = 1, outer = T, line = 1)
 mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
@@ -356,11 +358,13 @@ angles <- seq(15, 70, by = 5)
 Next, we will smooth the data with `procspec` and plot as a false color map (heatmap):
  
 ```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_Heatmap plot for angle-resolved reflectance measurements of the green-winged teal._"}
-teal.sm <- procspec(teal, opt = c('smooth'))
+teal.sm <- procspec(teal, opt = c("smooth"))
 
-plot(teal.sm, type = 'h', varying = angles, 
-     ylab = expression(paste("Incident angle (", degree, ")")), 
-     las = 1, useRaster = TRUE)
+plot(teal.sm,
+  type = "h", varying = angles,
+  ylab = expression(paste("Incident angle (", degree, ")")),
+  las = 1, useRaster = TRUE
+)
 ```
 
 These plots can be very useful to observe changes over time, for example, or any other type of  continuous variation.
@@ -376,8 +380,10 @@ par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend = TRUE)
 
 # Plot using mean and standard error, in greyscale
-aggplot(mspecs, spp, FUN.error = function(x)sd(x)/sqrt(length(x)), 
-        lcol = 1, shadecol = 'grey',  alpha = 0.7)
+aggplot(mspecs, spp,
+  FUN.error = function(x) sd(x) / sqrt(length(x)),
+  lcol = 1, shadecol = "grey", alpha = 0.7
+)
 ```
 
 # Analyzing Spectral Data
@@ -411,7 +417,7 @@ summary(spec.sm, subset = TRUE)
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-round(summary(spec.sm, subset = TRUE),2)
+round(summary(spec.sm, subset = TRUE), 2)
 ```
 
 ```{r, echo=TRUE, eval=TRUE, results='hide'}
@@ -456,7 +462,7 @@ As of version `1.0`, all visual and colorspace modelling and plotting options ar
 All in-built spectral data in `pavo` can be easily retrieved and/or plotted via the `sensdata()` function. These data can be assigned to an object for subsequent use, as in:
 
 ```{r echo=TRUE, eval=TRUE}
-musca_sense <- sensdata(visual = 'musca', achromatic = 'md.r1')
+musca_sense <- sensdata(visual = "musca", achromatic = "md.r1")
 head(musca_sense)
 ```
 
@@ -508,8 +514,10 @@ To quantify the stimulation of cones by the emitted color, we will use the `pavo
 All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.
 
 ```{r, echo=TRUE, eval=TRUE, results='hide'}
-vismod1 <- vismodel(sppspec, visual = "avg.uv", achromatic = 'bt.dc', 
-                    illum = 'D65', relative = FALSE)
+vismod1 <- vismodel(sppspec,
+  visual = "avg.uv", achromatic = "bt.dc",
+  illum = "D65", relative = FALSE
+)
 vismod1
 ```
 
@@ -533,9 +541,9 @@ sppspecol <- as.character(spec2rgb(sppspec))
 
 for (i in 1:6) {
   par(mar = c(2, 2, 2, 2))
-  plot(sppspec, select = i+1, col = sppspecol[i], lwd = 3, ylim = c(0, 100))
+  plot(sppspec, select = i + 1, col = sppspecol[i], lwd = 3, ylim = c(0, 100))
   par(mar = c(4.1, 2.5, 2.5, 2))
-  barplot(as.matrix(vismod1[i, 1:4]), yaxt = 'n', col = 'black')
+  barplot(as.matrix(vismod1[i, 1:4]), yaxt = "n", col = "black")
 }
 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
@@ -546,7 +554,7 @@ As described above, `vismodel` also accepts user-defined visual systems, backgro
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Idealized dichromat photoreceptors created using `sensmodel`._"}
 idealizeddichromat <- sensmodel(c(350, 650))
-plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = 'Absorbance')
+plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = "Absorbance")
 ```
 
 ```{r, echo=TRUE, eval=TRUE, results='hide'}
@@ -555,7 +563,7 @@ vismod.idi
 ```
 
 ```{r, echo=FALSE, eval=TRUE}
-sapply(vismod.idi, function(x) round(x,4))
+sapply(vismod.idi, function(x) round(x, 4))
 ```
 
 ### The Receptor Noise Model
@@ -595,9 +603,11 @@ $$\Delta L =  \frac{\Delta f}{w}$$
 `pavo` implements the noise-weighted color distance calculations in the function `coldist`, assuming that raw receptor quantum catches are provided (via `relative = FALSE` in `vismodel()`). For the achromatic contrast,  `coldist` uses `n4` to calculate $w$ for the achromatic contrast. Note that even if $Q_i$  is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by `vismodel` as an  input. In this case, the argument `qcatch` should be used to inform the function if $Q_i$ or $f_i$ values are being used (note that if the imput to `coldist` is an object generated using the `vismodel` function, this argument is ignored.) The type of noise to be calculated can be selected from the `coldist` argument `noise` (which accepts either `"neural"` or `"quantum"`).
 
 ```{r, echo=TRUE, eval=TRUE}
-coldist(vismod1, noise = 'neural', achro = TRUE, n = c(1, 2, 2, 4), 
-        weber = 0.1, weber.achro=0.1)
-coldist(vismod.idi, n = c(1, 2),  weber = 0.1)
+coldist(vismod1,
+  noise = "neural", achro = TRUE, n = c(1, 2, 2, 4),
+  weber = 0.1, weber.achro = 0.1
+)
+coldist(vismod.idi, n = c(1, 2), weber = 0.1)
 ```
 
 Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achro = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian color vision, since the colors of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
@@ -619,13 +629,19 @@ coldist(vismod1, subset = c('cardinal', 'jacana'))
 You can convert distances in JND back to Cartesian position coordinates with the function `jnd2xyz`. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:
 
 ```{r, echo=TRUE, eval=FALSE}
-fakedata1 <-  sapply(seq(100,500,by = 20), 
-                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
-                                               dnorm(300:700,x+400,30))))
+fakedata1 <- sapply(
+  seq(100, 500, by = 20),
+  function(x) rowSums(cbind(
+      dnorm(300:700, x, 30),
+      dnorm(300:700, x + 400, 30)
+    ))
+)
 
-# creating idealized specs with varying saturation
-fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
-                     function(x) dnorm(300:700,550,x))
+# Creating idealized specs with varying saturation
+fakedata2 <- sapply(
+  c(500, 300, 150, 105, 75, 55, 40, 30),
+  function(x) dnorm(300:700, 550, x)
+)
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
 fakedata1 <- procspec(fakedata1, "max")
@@ -633,23 +649,29 @@ fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
 fakedata2 <- procspec(fakedata2, "sum")
 fakedata2 <- procspec(fakedata2, "min")
 
-# converting reflectance to percentage
-fakedata1[,-1] <- fakedata1[,-1]*100
-fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+# Converting reflectance to percentage
+fakedata1[, -1] <- fakedata1[, -1] * 100
+fakedata2[, -1] <- fakedata2[, -1] / max(fakedata2[, -1]) * 100
 
-# combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+# Combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
 fakedata.c <- as.rspec(fakedata.c)
 ```
 
 ```{r, echo=FALSE, include=FALSE}
-fakedata1 <-  sapply(seq(100,500,by = 20), 
-                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
-                                               dnorm(300:700,x+400,30))))
+fakedata1 <- sapply(
+  seq(100, 500, by = 20),
+  function(x) rowSums(cbind(
+      dnorm(300:700, x, 30),
+      dnorm(300:700, x + 400, 30)
+    ))
+)
 
-# creating idealized specs with varying saturation
-fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
-                     function(x) dnorm(300:700,550,x))
+# Creating idealized specs with varying saturation
+fakedata2 <- sapply(
+  c(500, 300, 150, 105, 75, 55, 40, 30),
+  function(x) dnorm(300:700, 550, x)
+)
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
 fakedata1 <- procspec(fakedata1, "max")
@@ -657,30 +679,32 @@ fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
 fakedata2 <- procspec(fakedata2, "sum")
 fakedata2 <- procspec(fakedata2, "min")
 
-# converting reflectance to percentage
-fakedata1[,-1] <- fakedata1[,-1]*100
-fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+# Converting reflectance to percentage
+fakedata1[, -1] <- fakedata1[, -1] * 100
+fakedata2[, -1] <- fakedata2[, -1] / max(fakedata2[, -1]) * 100
 
-# combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+# Combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
 fakedata.c <- as.rspec(fakedata.c)
 ```
 
 ```{r}
-# visual model and color distances
+# Visual model and color distances
 fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achro = TRUE)
-fakedata.cd <- coldist(fakedata.vm, noise = 'neural', n = c(1, 2, 2, 4), 
-                       weber = 0.1, achro = TRUE)
+fakedata.cd <- coldist(fakedata.vm,
+  noise = "neural", n = c(1, 2, 2, 4),
+  weber = 0.1, achro = TRUE
+)
 
-# converting to Cartesian coordinates
-fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = 'l', axis1 = c(1,0,0), ref2 = NULL)
+# Converting to Cartesian coordinates
+fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = "l", axis1 = c(1, 0, 0), ref2 = NULL)
 head(fakedata.cc)
 ```
 
 which you can then plot as well:
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Spectral data in a receptor noise-corrected colorspace_"}
-plot(fakedata.cc, theta= 55, phi= 25, col = spec2rgb(fakedata.c))
+plot(fakedata.cc, theta = 55, phi = 25, col = spec2rgb(fakedata.c))
 ```
 
 The axes in this colorspace are in JND units. For more information on these functions, see `?jnd2xyz`, `?jndrot` and `?jndplot`.
@@ -705,7 +729,7 @@ plot(flowers, lwd = 2, col = flowercols)
 
 #### Di-, Tri-, and Tetrachromatic Colorspaces  
   
-As of version `1.0`, `pavo` has expanded modeling and visualization capabilities for generic di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colorspace automatically). For di- tri- and tetrachromatic spaces, `colspace` calculates the coordinates of stimuli as:   
+As of version `1.0`, `pavo` has expanded modeling and visualization capabilities for generic di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colorspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colorspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colorspace automatically). For di- tri- and tetrachromatic spaces, `colspace` calculates the coordinates of stimuli as:
 
 **Dichromats:**
 $$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
@@ -756,9 +780,9 @@ plot(tri.flowers, pch = 21, bg = flowercols)
 Finally, we'll draw on the blue tit's visual system to model our floral reflectance spectra in a tetrahedral space, again using log-transformed quantum catches and assuming bright viewing conditions. 
 
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'bluetit', qcatch = 'fi', scale = 10000)
+vis.flowers <- vismodel(flowers, visual = "bluetit", qcatch = "fi", scale = 10000)
 
-tetra.flowers <- colspace(vis.flowers, space = 'tcs')
+tetra.flowers <- colspace(vis.flowers, space = "tcs")
 
 head(tetra.flowers)
 ```
@@ -768,7 +792,7 @@ Tetrahedral data (via `colspace(space = 'tcs')`) may be visualised in an _intera
 When plotting the tetrahedral colorspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments `perspective = TRUE` and controling the size range with the `range` argument. Several other options control the appearance of this plot, you can check these using `?plot.colspace` or `?tetraplot`
 
 ```{r, fig=TRUE, include=TRUE, fig.height=6, fig.height=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective_"}
-plot(tetra.flowers, pch = 21, bg = flowercols, perspective = TRUE, range=c(1,2), cex=0.5)
+plot(tetra.flowers, pch = 21, bg = flowercols, perspective = TRUE, range = c(1, 2), cex = 0.5)
 ```
 
 Two additional functions may help with tetrahedral colorspace plotting:
@@ -777,7 +801,7 @@ Two additional functions may help with tetrahedral colorspace plotting:
   * `legendtetra` allows you to add a legend to a plot.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"}
-par(mfrow = c(1, 2), pty = 's')
+par(mfrow = c(1, 2), pty = "s")
 plot(tetra.flowers, pch = 21, bg = flowercols)
 axistetra(x = 0, y = 1.8)
 plot(tetra.flowers, theta = 110, phi = 10, pch = 21, bg = flowercols)
@@ -801,12 +825,12 @@ aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
 We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colorspace (note the option `plot` for plotting of the volumes:
 
 ```{r, echo=TRUE, eval=TRUE, fig.show='hide'}
-par(mfrow = c(1,2), pty = 's' )
-tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
-tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
-tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
-voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot = TRUE)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot = TRUE) 
+par(mfrow = c(1, 2), pty = "s")
+tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
+tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
+tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
+voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
 `voverlap` gives the volume ($V$) of the convex hull delimited by the overlap between the two
@@ -818,9 +842,9 @@ So we can clearly see that there is overlap between the throat and breast colors
 
 
 ```{r, echo=FALSE, eval=TRUE, results='hide', fig.width=6, fig.align='center', fig.cap="_Volume overlap between male Stripe-Tailed Yellow Finch (_Sicalis citrina_) throat and breast (left) and throat and crown (right)._"}
-par(mfrow = c(1,2), pty = 's' )
-voloverlap(tcs.sicalis.T,tcs.sicalis.B, plot = TRUE)
-voloverlap(tcs.sicalis.T,tcs.sicalis.C, plot = TRUE) 
+par(mfrow = c(1, 2), pty = "s")
+voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
 
@@ -873,9 +897,9 @@ $$B = -5.17E_g + 20.25E_b - 15.08E_g$$
 Where E~i~ is the excitation value (quantum catch) in photoreceptor _i_.
 
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, bkg = "green")
 
-coc.flowers <- colspace(vis.flowers, space = 'coc')
+coc.flowers <- colspace(vis.flowers, space = "coc")
 
 head(coc.flowers)
 ```
@@ -883,7 +907,7 @@ head(coc.flowers)
 The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"}
-plot(coc.flowers, pch = 21, bg = flowercols, yaxt='n') 
+plot(coc.flowers, pch = 21, bg = flowercols, yaxt = "n")
 ```
 
 #### CIE Spaces
@@ -996,16 +1020,22 @@ $$MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\l
 
 Where $Qi$ represent the interquantile distances (e.g. $Q_1=ultraviolet$, $Q_2=blue$, $Q_3=green$ and $Q_4=red$)
 
-As of vesion `1.1`, the segment classification model is obtained through the `colspace()` argument `space = 'segment'`, following initial modelling with `vismodel()`. The example below uses idealized reflectance spectra to illustrate how the avian color space defined from the segment classification maps to the human color wheel:
+The segment classification model is obtained through the `colspace()` argument `space = 'segment'`, following initial modelling with `vismodel()`. The example below uses idealized reflectance spectra to illustrate how the avian color space defined from the segment classification maps to the human color wheel:
 
 ```{r, fig=TRUE, eval=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"}
-fakedata1 <-  sapply(seq(100,500,by = 20), 
-                     function(x) rowSums(cbind(dnorm(300:700,x,30), 
-                                               dnorm(300:700,x+400,30))))
+fakedata1 <- sapply(
+  seq(100, 500, by = 20),
+  function(x) rowSums(cbind(
+      dnorm(300:700, x, 30),
+      dnorm(300:700, x + 400, 30)
+    ))
+)
 
 # creating idealized specs with varying saturation
-fakedata2 <- sapply(c(500, 300, 150, 105, 75, 55, 40, 30), 
-                     function(x) dnorm(300:700,550,x))
+fakedata2 <- sapply(
+  c(500, 300, 150, 105, 75, 55, 40, 30),
+  function(x) dnorm(300:700, 550, x)
+)
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
 fakedata1 <- procspec(fakedata1, "max")
@@ -1014,16 +1044,16 @@ fakedata2 <- procspec(fakedata2, "sum")
 fakedata2 <- procspec(fakedata2, "min")
 
 # converting reflectance to percentage
-fakedata1[,-1] <- fakedata1[,-1]*100
-fakedata2[,-1] <- fakedata2[,-1]/max(fakedata2[,-1])*100
+fakedata1[, -1] <- fakedata1[, -1] * 100
+fakedata2[, -1] <- fakedata2[, -1] / max(fakedata2[, -1]) * 100
 
 # combining and converting to rspec
-fakedata.c <- data.frame(wl = 300:700, fakedata1[,-1], fakedata2[,-1])
+fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
 fakedata.c <- as.rspec(fakedata.c)
 
 # segment classification analysis
-seg.vis <- vismodel(fakedata.c, visual = 'segment', achromatic = 'all')
-seg.fdc <- colspace(seg.vis, space = 'segment')
+seg.vis <- vismodel(fakedata.c, visual = "segment", achromatic = "all")
+seg.fdc <- colspace(seg.vis, space = "segment")
 
 # plot results
 plot(seg.fdc, col = spec2rgb(fakedata.c))
@@ -1045,10 +1075,10 @@ Specialised colorspace models such as the colour-hexagon, coc space, CIELAB and 
  
 ```{r}
 # Model flower colours according to a honeybee
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green")
+hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
-# Estimate color distances. No need to specify relative receptor densities, noise etc., 
+# Estimate color distances. No need to specify relative receptor densities, noise etc.,
 # which only apply in the case of receptor-noise modelling
 dist.flowers <- coldist(hex.flowers)
 head(dist.flowers)
@@ -1064,11 +1094,11 @@ As of version `1.0`, the `codist` function is no longer limited to di-, tri- or 
 # Create an arbitrary visual phenotype with 10 photoreceptors
 fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-# Convert to percentages, just to color the plot 
+# Convert to percentages, just to color the plot
 fakemantisshrimp.colors <- fakemantisshrimp * 100
-fakemantisshrimp.colors[, 'wl'] <- fakemantisshrimp[, 'wl']
- 
-plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = 'Absorbance')
+fakemantisshrimp.colors[, "wl"] <- fakemantisshrimp[, "wl"]
+
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = "Absorbance")
 
 # Run visual model and calculate color distances
 vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
@@ -1080,7 +1110,7 @@ head(JND.fms)
 
 # Classes and Attributes
 
-To enable the comprehensive workflow of `pavo`, we've implemented an expanded class system. Spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing funcitons, or explicitly convert an object using `as.rspec`. The results of `vismodel` are objects of class `vismodel` and the results of `colspace` are, unsurprisingly, objects of class `colspace`. Both of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colorspace). These are easily viewed using the `summary` function (on any `rspec`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.  
+To enable the comprehensive workflow of `pavo`, we've implemented an expanded class system. Spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing funcitons, or explicitly convert an object using `as.rspec`. Similary, images will be of calss `rimg` when imported via `getimg`, or if converted using `as.rimg`. The results of `vismodel` are objects of class `vismodel` and the results of `colspace` are, unsurprisingly, objects of class `colspace`. Most of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colorspace). These are easily viewed using the `summary` function (on any `rspec`, `rimg`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.  
 
 # Final Thoughts
 
