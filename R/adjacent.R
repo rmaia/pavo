@@ -7,7 +7,7 @@
 #' a colour-class. Preferably the result of \code{\link{classify}}.
 #' @param xpts an integer specifying the number of sample points, or grid-sampling
 #' density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
-#' Y-axis sampling density is calculated automatically from this, to maintain an even 
+#' Y-axis sampling density is calculated automatically from this, to maintain an even
 #' grid spacing.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
@@ -73,7 +73,7 @@
 #'   }
 #'
 #' @export
-#' 
+#'
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom utils object.size
 #'
@@ -92,7 +92,7 @@
 #'
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
 #' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
-#' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: 
+#' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis:
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution.
 
@@ -151,20 +151,19 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
            Either specify xscale or use procimg() to set a scale for each image.")
     }
   }
-  
+
   ## Sampling density
   if (!multi_image) {
-  
-    if(is.null(xpts)) 
+    if (is.null(xpts)) {
       xpts <- ncol(classimg)
-      
+    }
   } else if (multi_image) {
-    
-    if(!is.null(xpts)) 
+    if (!is.null(xpts)) {
       xpts <- as.list(rep(xpts, length(classimg)))
-    if(is.null(xpts))
+    }
+    if (is.null(xpts)) {
       xpts <- lapply(1:length(classimg), function(x) ncol(classimg[[x]]))
-    
+    }
   }
 
   if (multi_image) { # Multiple images
@@ -189,10 +188,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
           coldists_i = coldists
         ))
     )
-    
+
     # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
     allNms <- unique(unlist(lapply(outdata, names)))
-    outdata <- do.call(rbind, c(lapply(outdata, function(x) data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names=FALSE))
+    outdata <- do.call(rbind, c(lapply(outdata, function(x) data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
 
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
@@ -251,10 +250,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
   # Subsample (does nothing if x_pts = ncols, default)
-    subclass <- classimg_i[
-      seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
-      seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
-    ]
+  subclass <- classimg_i[
+    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
+    seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
+  ]
 
   # Exclude background, if specified
   if (!is.null(bkgID_i) && bkg.include_i == FALSE) {
@@ -278,7 +277,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
 
   # Single colour check
-  single_col <- ifelse (n_class == 1, TRUE, FALSE) 
+  single_col <- ifelse(n_class == 1, TRUE, FALSE)
 
   # All row transitions
   rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
@@ -467,9 +466,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       # Chromatic calcs
       if ("dS" %in% names(offdiagprop)) {
         m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
-
         s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
-
         cv_dS <- s_dS / m_dS
       } else {
         m_dS <- s_dS <- cv_dS <- NA
@@ -477,14 +474,13 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
       # Achromatic calcs
       if ("dL" %in% names(offdiagprop)) {
-        m_dL <- weightmean(offdiagprop$dl, offdiagprop$N)
+        m_dL <- weightmean(offdiagprop$dL, offdiagprop$N)
         s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
         cv_dL <- s_dL / m_dL
       } else {
         m_dL <- s_dL <- cv_dL <- NA
       }
     } else {
-      # Or should the default be weights of 1?
       m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
     }
   }
