@@ -107,7 +107,7 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
 
     vsmallest <- overlapVol / min(vol1, vol2)
 
-    vboth <- overlapVol / (sum(vol1, vol2) - overlapVol)
+    vboth <- overlapVol / (vol1 + vol2 - overlapVol)
 
     res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
   }
