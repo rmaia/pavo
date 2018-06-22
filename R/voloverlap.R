@@ -7,9 +7,9 @@
 #'
 #' @export
 #'
-#' @param tcsres1,tcsres2 (required) data frame, possibly a result from the [colspace()]
+#' @param colsp1,colsp2 (required) data frame, possibly a result from the [colspace()]
 #' function, containing
-#' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
+#' values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)
 #' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`)
 #' @param interactive logical. If `TRUE`, uses the rgl engine for interactive plotting;
 #' if `FALSE` then a static plot is generated.
@@ -73,27 +73,25 @@
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3))
 #' }
 #'
-#' @author Rafael Maia \email{rm72@@zips.uakron.edu}, with code from Sebastien Villeger
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color
 #' in a tetrahedral color space: A phylogenetic analysis of new world buntings. The
 #' American Naturalist, 171(6), 755-776.
 #' @references Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of
 #' egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
-#' @references Villeger, S., Novack-Gottshall, P. M., & Mouillot, D. (2011). The
-#' multidimensionality of the niche reveals functional diversity changes in benthic
-#' marine biotas across geological time. Ecology Letters, 14(6), 561-568.
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
-voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
+voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
                        montecarlo = FALSE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
-  dat1 <- as.matrix(tcsres1[, c("x", "y", "z")])
 
-  dat2 <- as.matrix(tcsres2[, c("x", "y", "z")])
+  dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
+
+  dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
 
   over <- intersectn(dat1, dat2)
 
@@ -188,8 +186,8 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
         rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
       }
 
-      tcsvol(tcsres1, col = col[1], fill = FALSE)
-      tcsvol(tcsres2, col = col[2], fill = FALSE)
+      tcsvol(colsp1, col = col[1], fill = FALSE)
+      tcsvol(colsp2, col = col[2], fill = FALSE)
 
       if (!montecarlo) {
         if (dim(Voverlap)[1] > 3) {
@@ -218,10 +216,7 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
     }
 
     if (!interactive) {
-      plotrange <- apply(rbind(
-        tcsres1[, c("x", "y", "z")],
-        tcsres2[, c("x", "y", "z")]
-      ), 2, range)
+      plotrange <- apply(rbind(colsp1[, c("x", "y", "z")], colsp2[, c("x", "y", "z")]), 2, range)
 
       if (length(fill) < 3) {
         if (dim(Voverlap)[1] > 3) {
@@ -230,15 +225,15 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
             xlim = plotrange[, "x"], ylim = plotrange[, "y"],
             zlim = plotrange[, "z"], lwd = lwd, ...
           )
-          vol(tcsres1, col = col[1], fill = fill, lwd = lwd, new = FALSE)
-          vol(tcsres2, col = col[2], fill = fill, lwd = lwd, new = FALSE)
+          vol(colsp1, col = col[1], fill = fill, lwd = lwd, new = FALSE)
+          vol(colsp2, col = col[2], fill = fill, lwd = lwd, new = FALSE)
         } else {
-          vol(tcsres1,
+          vol(colsp1,
             col = col[1], lwd = lwd, new = new, fill = fill,
             xlim = plotrange[, "x"], ylim = plotrange[, "y"],
             zlim = plotrange[, "z"], ...
           )
-          vol(tcsres2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
+          vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
         }
       }
     }
