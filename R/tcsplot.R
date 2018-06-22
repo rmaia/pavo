@@ -86,19 +86,18 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
     
     # can't figure out how to change the character type
     
-    ttv = ttvertex
+    ttv <- ttvertex
     
-    cu = t(col2rgb('#984EA3')) / 255
-    cs = t(col2rgb('#377EB8')) / 255
-    cm = t(col2rgb('#4DAF4A')) / 255
-    cl = t(col2rgb('#E41A1C')) / 255
+    cu <- '#984EA3'
+    cs <- '#377EB8'
+    cm <- '#4DAF4A'
+    cl <- '#E41A1C'
     
     rgl::plot3d(unlist(ttv[c('xu','xs','xm','xl')]),
     		unlist(ttv[c('yu','ys','ym','yl')]),
     		unlist(ttv[c('zu','zs','zm','zl')]), type = 's', lit = F,
     		radius = vertexsize, box = F, axes = F, xlab = '', ylab = '', zlab = '',
-    		col = c(rgb(cu[1], cu[2], cu[3]), rgb(cs[1], cs[2], cs[3]), 
-    		rgb(cm[1], cm[2], cm[3]), rgb(cl[1], cl[2], cl[3])))
+    		col = c(cu, cs, cm, cl))
     
     rgl::segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], 
       color = lcol, lwd = lwd)

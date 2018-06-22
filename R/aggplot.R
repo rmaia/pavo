@@ -110,7 +110,7 @@ if (is.null(arg$lwd))
   lwd <- 1
 
 if (length(lwd) < ncol(cntplotspecs))
-   lwd <- rep(lwd, ncol(cntplotspecs))
+  lwd <- rep(lwd, ncol(cntplotspecs))
 
 # coloring for overlay plot & others
 if (!is.null(arg$lty))
@@ -120,7 +120,7 @@ if (is.null(arg$lty))
   lty <- 1
 
 if (length(lty) < ncol(cntplotspecs))
-   lty <- rep(lty, ncol(cntplotspecs))
+  lty <- rep(lty, ncol(cntplotspecs))
 
 if (length(shadecol) < ncol(cntplotspecs))
   shadecol <- rep(shadecol, ncol(cntplotspecs))
@@ -145,8 +145,7 @@ if (is.null(shadecol))
 if(is.null(lcol))
   lcol <- col_list
  
- shadecol = rgb(t(col2rgb(shadecol))/255, alpha=alpha)
- lcol = rgb(t(col2rgb(lcol))/255)
+ shadecol <- rgb(t(col2rgb(shadecol))/255, alpha=alpha)
 
 # plot polygons first...
 

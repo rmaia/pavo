@@ -51,15 +51,15 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   if(is.null(arg$pch))
     arg$pch <- 19  
   if(is.null(arg$xlim))
-    arg$xlim  = c(-12, 12)
+    arg$xlim <- c(-12, 12)
   if(is.null(arg$ylim))
-    arg$ylim  = c(-12, 12)
+    arg$ylim <- c(-12, 12)
   if(is.null(arg$xlab))
-    arg$xlab = ''
+    arg$xlab <- ''
   if(is.null(arg$ylab))
-    arg$ylab = ''
+    arg$ylab <- ''
   if(is.null(arg$bty))
-    arg$bty = 'n'
+    arg$bty <- 'n'
   
   # Plot
   arg$x <- cocdata$x

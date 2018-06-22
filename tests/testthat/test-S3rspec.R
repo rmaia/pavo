@@ -27,7 +27,7 @@ test_that("summary.rspec", {
   expect_error(summary(sicalis, wlmax = 1000), "wlmax is larger")
 
   # Test one spectrum rspec object
-  one_spec = sicalis[, c(1, 2)]
+  one_spec <- sicalis[, c(1, 2)]
   
   expect_equal(dim(summary(one_spec)), c(1, 23))
   
