@@ -55,7 +55,7 @@ subset.rspec <- function (x, subset, ...) {
   }
 
   # We don't drop the "wl" column if it exists, no matter what subset says.
-  res = x[, unique(c(wl_index, subsample))]
+  res <- x[, unique(c(wl_index, subsample))]
 
   class(res) <- c("rspec", "data.frame")
   

@@ -8,6 +8,8 @@ r_build_args:
 r_check_args: 
 r_packages: rmarkdown
 # warnings_are_errors: false
+after_success:
+  - Rscript -e 'goodpractice::gp(checks = "lintr_assignment_linter")'
 notifications:
   email:
     on_success: never

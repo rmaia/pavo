@@ -128,7 +128,7 @@ mtext("Wavelength (nm)", side=1, outer=T, line=1)
 mtext("Reflectance (%)", side=2, outer=T, line=1)	
 }
 
-	nextplot = 2
+	nextplot <- 2
 		while (nextplot < ncol(bloc)+1) { 						
 			lines (rspecdata[,1],bloc[,nextplot],cex=0.1)
 			nextplot<- nextplot+1}

@@ -60,8 +60,8 @@ jndrot <- function(jnd2xyzres, center=c('mean', 'achro'), ref1='l', ref2='u', ax
   vectormag <- function(x) sqrt(sum(x^2))
   vectornorm <- function(x) matrix(as.numeric(x/vectormag(x)), ncol=1)
   vectorcross <- function(a,b){
-    i = c(2,3,1)
-    j = c(3,1,2)
+    i <- c(2,3,1)
+    j <- c(3,1,2)
     a[i]*b[j] - a[j]*b[i]
   }
   

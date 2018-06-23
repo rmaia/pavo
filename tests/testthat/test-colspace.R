@@ -35,8 +35,8 @@ test_that("Relative quantum catches", {
   names(di) <- c('wl', 'l', 's')
 
   di_vis <- vismodel(flowers, visual = di)
-  di_vis_norel = vismodel(flowers, visual = di, relative = FALSE)
-  di_vis_noreldf = as.data.frame(di_vis_norel)
+  di_vis_norel <- vismodel(flowers, visual = di, relative = FALSE)
+  di_vis_noreldf <- as.data.frame(di_vis_norel)
 
   expect_warning(colspace(di_vis_norel), "not relative")
   expect_warning(colspace(di_vis_noreldf), "not relative")
@@ -49,8 +49,8 @@ test_that("Relative quantum catches", {
   names(tri) <- c('wl', 'l', 'm' ,'s')
 
   tri_vis <- vismodel(flowers, visual = tri)
-  tri_vis_norel = vismodel(flowers, visual = tri, relative = FALSE)
-  tri_vis_noreldf = as.data.frame(tri_vis_norel)
+  tri_vis_norel <- vismodel(flowers, visual = tri, relative = FALSE)
+  tri_vis_noreldf <- as.data.frame(tri_vis_norel)
 
   expect_warning(colspace(tri_vis_norel), "not relative")
   expect_warning(colspace(tri_vis_noreldf), "not relative")

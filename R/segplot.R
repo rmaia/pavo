@@ -56,15 +56,15 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   if(is.null(arg$pch))
     arg$pch <- 19  
   if(is.null(arg$xlim))
-    arg$xlim  = c(-1, 1)
+    arg$xlim <- c(-1, 1)
   if(is.null(arg$ylim))
-    arg$ylim  = c(-1, 1)
+    arg$ylim <- c(-1, 1)
   if(is.null(arg$xlab))
-    arg$xlab = ' '
+    arg$xlab <- ' '
   if(is.null(arg$ylab))
-    arg$ylab = ' '
-  arg$bty = 'n'
-  arg$axes = FALSE
+    arg$ylab <- ' '
+  arg$bty <- 'n'
+  arg$axes <- FALSE
     
 # Plot
   arg$x <- segdata$MS

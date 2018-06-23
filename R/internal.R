@@ -255,7 +255,7 @@ bloc2d <- function(coord1, coord2){
 #####################
 
 huedisp <- function(tcsres){
-  ind=t(combn(nrow(tcsres),2))
+  ind <- t(combn(nrow(tcsres),2))
   apply(ind,1, function(x)
 	 acos((cos(tcsres[x[1],'h.phi'])*cos(tcsres[x[2],'h.phi'])*cos(tcsres[x[1],'h.theta'] -
 	 tcsres[x[2],'h.theta'])) + (sin(tcsres[x[1],'h.phi'])*sin(tcsres[x[2],'h.phi'])))

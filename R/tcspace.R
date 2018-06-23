@@ -115,8 +115,8 @@ tcspace <- function(vismodeldata){
   # S&P suggest values with reflectance lower than a treshold (0.05) not have 
   # hue & r. not implemented.
   
-  r.vec<- sqrt(x*x + y*y + z*z)
-  r.vec[r.vec==0] = NaN
+  r.vec <- sqrt(x*x + y*y + z*z)
+  r.vec[r.vec==0] <- NaN
   
   
   h.theta<- atan2(y,x)

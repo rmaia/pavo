@@ -32,8 +32,7 @@
 #'  visual systems and the evolution of color patterns: Sensory processing illuminates 
 #'  signal evolution. Evolution, 59(8), 1795-1818.
 
-projplot = function(tcsdata, ...)
-{
+projplot <- function(tcsdata, ...) {
 
 #oPar <- par(no.readonly=TRUE)
 oPar <- par('mar')
@@ -46,8 +45,8 @@ on.exit(par(oPar))
     # dat <- tcsdata
     # }
 
-points.theta=tcsdata[,'h.theta']
-points.phi=tcsdata[,'h.phi']
+points.theta <- tcsdata[,'h.theta']
+points.phi <- tcsdata[,'h.phi']
 
 n <- length(points.theta)
 
