@@ -275,10 +275,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     linback <- grepl(paste0(inback, collapse = "|"), rownames(segs))
 
     segments(
-      segs[linback, 1, drop = F],
-      segs[linback, 2, drop = F],
-      segs[linback, 3, drop = F],
-      segs[linback, 4, drop = F],
+      segs[linback, 1, drop = FALSE],
+      segs[linback, 2, drop = FALSE],
+      segs[linback, 3, drop = FALSE],
+      segs[linback, 4, drop = FALSE],
       lwd = out.lwd, col = out.lcol
     )
 
@@ -397,10 +397,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   # add tetrahedron lines and vertices in front of the points
   if (tetrahedron) {
     segments(
-      segs[!linback, 1, drop = F],
-      segs[!linback, 2, drop = F],
-      segs[!linback, 3, drop = F],
-      segs[!linback, 4, drop = F],
+      segs[!linback, 1, drop = FALSE],
+      segs[!linback, 2, drop = FALSE],
+      segs[!linback, 3, drop = FALSE],
+      segs[!linback, 4, drop = FALSE],
       lwd = out.lwd, col = out.lcol
     )
 

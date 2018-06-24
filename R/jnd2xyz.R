@@ -90,7 +90,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
   references <- attr(coldistres, "resref")
   references <- references[intersect(
-    grep("jnd2xyzrrf", references$patch1, invert = T),
+    grep("jnd2xyzrrf", references$patch1, invert = TRUE),
     grep("jnd2xyzrrf", references$patch2)
   ), ]
 

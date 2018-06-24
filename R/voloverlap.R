@@ -202,8 +202,8 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
         rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
       }
 
-      tcsvol(tcsres1, col = col[1], fill = F)
-      tcsvol(tcsres2, col = col[2], fill = F)
+      tcsvol(tcsres1, col = col[1], fill = FALSE)
+      tcsvol(tcsres2, col = col[2], fill = FALSE)
 
       if (!montecarlo) {
         if (dim(Voverlap)[1] > 3) {
@@ -215,17 +215,17 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
       if (montecarlo) {
         rgl::spheres3d(samples[which(invol1 & !invol2), ],
           type = "s",
-          lit = F, radius = psize, col = col[1]
+          lit = FALSE, radius = psize, col = col[1]
         )
         rgl::spheres3d(samples[which(invol2 & !invol1), ],
           type = "s",
-          lit = F, radius = psize, col = col[2]
+          lit = FALSE, radius = psize, col = col[2]
         )
 
         if (s_inboth > 0) {
           rgl::spheres3d(samples[which(invol1 & invol2), ],
             type = "s",
-            lit = F, radius = psize, col = col[3]
+            lit = FALSE, radius = psize, col = col[3]
           )
         }
       }

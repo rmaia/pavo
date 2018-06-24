@@ -116,7 +116,8 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
     }else{
 
       # read in raw file
-      raw <- scan(file = ff, what = '', quiet = T, dec = decimal, sep = '\n', skipNul = TRUE)
+      raw <- scan(file = ff, what = '', quiet = TRUE, 
+                  dec = decimal, sep = '\n', skipNul = TRUE)
 
       # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
       if(length(grep('Begin Calibration Data', raw)) > 0)
