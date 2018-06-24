@@ -123,7 +123,7 @@ if (nplots >= 7 & nplots < 9)
 if (nplots >= 9)
   par(mfrow=c(3,4), mar = c(5, 4, 0.5, 0.5) + 0.1)
 if (nplots > 12)
-  par(ask=T)
+  par(ask=TRUE)
 
 arg <- list(...)
 
@@ -223,14 +223,14 @@ for (i in 1:nplots) {
   if (scale=='free')
     arg$ylim <- NULL
   if (i %% 12 == 0) {
-    mtext(arg$xlab, side=1, outer=T, line=1)
-    mtext(arg$ylab, side=2, outer=T, line=1)	
+    mtext(arg$xlab, side=1, outer=TRUE, line=1)
+    mtext(arg$ylab, side=2, outer=TRUE, line=1)	
   }
 }
 
 if (i %% 12 != 0){
-  mtext(arg$xlab, side=1, outer=T, line=1)
-  mtext(arg$ylab, side=2, outer=T, line=1)
+  mtext(arg$xlab, side=1, outer=TRUE, line=1)
+  mtext(arg$ylab, side=2, outer=TRUE, line=1)
 }
 
 # do we need this still?

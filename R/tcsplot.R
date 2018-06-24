@@ -95,8 +95,9 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
     
     rgl::plot3d(unlist(ttv[c('xu','xs','xm','xl')]),
     		unlist(ttv[c('yu','ys','ym','yl')]),
-    		unlist(ttv[c('zu','zs','zm','zl')]), type = 's', lit = F,
-    		radius = vertexsize, box = F, axes = F, xlab = '', ylab = '', zlab = '',
+    		unlist(ttv[c('zu','zs','zm','zl')]), type = 's', lit = FALSE,
+    		radius = vertexsize, box = FALSE, axes = FALSE, 
+    		xlab = '', ylab = '', zlab = '',
     		col = c(cu, cs, cm, cl))
     
     rgl::segments3d(ttv[c('xu','xs')], ttv[c('yu','ys')], ttv[c('zu','zs')], 
@@ -113,10 +114,10 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
       color = lcol, lwd = lwd)
     
     if(achro == TRUE)
-      rgl::spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = F)
+      rgl::spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = FALSE)
     
     rgl::spheres3d(tcsdata[,c('x', 'y', 'z')], 
-      radius = size, color = col, alpha = alpha, lit = F)
+      radius = size, color = col, alpha = alpha, lit = FALSE)
     
     if(floor){
       vertices <- c( 
@@ -127,7 +128,7 @@ tcsplot<- function(tcsdata, size = 0.02, alpha = 1, col = 'black',
       				)
       indices <- c(1, 2, 3, 4)
       
-     rgl::wire3d(rgl::qmesh3d(vertices, indices), lit = F)
+     rgl::wire3d(rgl::qmesh3d(vertices, indices), lit = FALSE)
     	}
     	
     if(hspin)

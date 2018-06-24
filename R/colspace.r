@@ -89,7 +89,7 @@ colspace <- function(vismodeldata,
                      space = c('auto', 'di', 'tri', 'tcs', 'hexagon', 'coc', 'categorical', 'ciexyz', 'cielab', 'cielch', 'segment'), qcatch=NULL)
   {
   
-  space2 <- try(match.arg(space), silent = T)
+  space2 <- try(match.arg(space), silent = TRUE)
 
   if(inherits(space2, 'try-error'))
     stop('Invalid colorspace selected')

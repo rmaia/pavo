@@ -124,8 +124,8 @@ plot(rspecdata[,1],bloc[, 1],cex=0.1,ylim=c(yaxismin,yaxismax+5),xlab="Wavelengt
 	title(titlenames[i])
 
 if(i %% numplots == 0){
-mtext("Wavelength (nm)", side=1, outer=T, line=1)
-mtext("Reflectance (%)", side=2, outer=T, line=1)	
+mtext("Wavelength (nm)", side=1, outer=TRUE, line=1)
+mtext("Reflectance (%)", side=2, outer=TRUE, line=1)	
 }
 
 	nextplot <- 2
@@ -137,8 +137,8 @@ mtext("Reflectance (%)", side=2, outer=T, line=1)
 	}
   
 if (i %% numplots != 0){
-mtext("Wavelength (nm)", side=1, outer=T, line=1)
-mtext("Reflectance (%)", side=2, outer=T, line=1)
+mtext("Wavelength (nm)", side=1, outer=TRUE, line=1)
+mtext("Reflectance (%)", side=2, outer=TRUE, line=1)
 }
 
 }

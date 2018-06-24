@@ -155,12 +155,12 @@ vismodel <- function(rspecdata,
     warning(paste("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them."))
   }
 
-  visual2 <- try(match.arg(visual), silent = T)
+  visual2 <- try(match.arg(visual), silent = TRUE)
   sens <- vissyst
-  achromatic2 <- try(match.arg(achromatic), silent = T)
-  illum2 <- try(match.arg(illum), silent = T)
-  bg2 <- try(match.arg(bkg), silent = T)
-  tr2 <- try(match.arg(trans), silent = T)
+  achromatic2 <- try(match.arg(achromatic), silent = TRUE)
+  illum2 <- try(match.arg(illum), silent = TRUE)
+  bg2 <- try(match.arg(bkg), silent = TRUE)
+  tr2 <- try(match.arg(trans), silent = TRUE)
 
   if (class(achromatic2) == "try-error") {
     if (is.logical(achromatic)) {

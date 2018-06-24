@@ -49,7 +49,7 @@
 #'  Internationale de l Eclairage.
 
 cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
-  space2 <- try(match.arg(space), silent = T)
+  space2 <- try(match.arg(space), silent = TRUE)
   if (inherits(space2, "try-error")) {
     space <- "XYZ"
   }

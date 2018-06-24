@@ -9,7 +9,8 @@ r_check_args:
 r_packages: rmarkdown
 # warnings_are_errors: false
 after_success:
-  - Rscript -e 'goodpractice::gp(checks = "lintr_assignment_linter")'
+  - Rscript -e 'goodpractice::gp(checks = c("lintr_assignment_linter",
+                                            "truefalse_not_tf"))'
 notifications:
   email:
     on_success: never

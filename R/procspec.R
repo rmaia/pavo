@@ -162,11 +162,11 @@ procspec <- function(rspecdata, opt = c(
     wl_ind <- match(wl_bin, wl)
     rspecdata <- as.data.frame(rspecdata)
     rspecdata <- sapply(1:length(wl_ind), function(z)
-      apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = F], 2, median, na.rm = TRUE),
+      apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = FALSE], 2, median, na.rm = TRUE),
     simplify = FALSE
     )
 
-    rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = T))
+    rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = TRUE))
     rspecdata <- as.data.frame(cbind(wl_bin, rspecdata))
     applied <- c(applied, paste("binned spectra to ", bw, "-nm intervals\n", sep = ""))
   } else {

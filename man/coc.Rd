@@ -14,7 +14,7 @@ with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
 
-\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate 
+\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
  the remaining variables.
 
 \code{x}, \code{y}: coordinates for the points in coc space
@@ -31,7 +31,7 @@ in the color opponent coding model of hymenopteran vision.
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 coc.flowers <- colspace(vis.flowers, space = 'coc')
-} 
+}
 
 }
 \references{
