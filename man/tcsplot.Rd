@@ -13,8 +13,8 @@ tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
 
 tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
-tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1, grid = T,
-  fill = T, lwd = 1)
+tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1, grid = TRUE,
+  fill = TRUE, lwd = 1)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
