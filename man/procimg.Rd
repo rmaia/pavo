@@ -4,7 +4,8 @@
 \alias{procimg}
 \title{Process images}
 \usage{
-procimg(image, scaledist = NULL)
+procimg(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
+  refinements = 1L, plotnew = FALSE)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
@@ -12,6 +13,20 @@ stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{scaledist}{an integer specifying the length of the scale
 in the image(s), if desired.}
+
+\item{select_focal}{allows the user to interactively specify the focal object in
+an image by clicking around its outline. The xy-coordinates of the resulting
+polygon are saved as an attribute, for use in genrating a masking layer
+in further analyses. This is particularly useful when backgrounds are complex,
+(e.g. in natural settings) in which case backgrounds and objects cannot be
+readily separated by simple k-means clustering.}
+
+\item{smooth}{should the polygon specified when \code{select_focal = TRUE} be smoothed
+using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
+
+\item{refinements}{the number of smoothing iterations, when \code{smooth = TRUE}.}
+
+\item{plotnew}{Should plots be opened in a new window? Defaults to \code{FALSE}.}
 }
 \value{
 an image array, or list containing images, for use in further
@@ -31,6 +46,10 @@ snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 snakes <- procimg(snakes, scale = 100)
 }
 
+}
+\references{
+Chaikin, G. 1974. An algorithm for high speed curve generation.
+Computer Graphics and Image Processing 3, 346-349.
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}
