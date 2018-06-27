@@ -14,7 +14,7 @@ with columns representing quantum catches).}
 
 \item{space}{Which colorspace/model to use. Options are:
 \itemize{
-   \item \code{auto}: if data is a result from \code{vismodel},
+   \item \code{auto}: if data is a result from \code{vismodel}, 
    applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
    cones, respectively.
    \item \code{di}: dichromatic colourspace. See \code{\link{dispace}} for details.
@@ -46,8 +46,8 @@ data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
 
-# Colour hexagon
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
+# Colour hexagon 
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
@@ -70,25 +70,25 @@ cat.flowers <- colspace(vis.flowers, space = 'categorical')
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
 
-Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
+Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
    using MATLAB. John Wiley & Sons.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
+   based on photoreceptor excitations as a generalized representation of 
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
-Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-   component of flower reflections, and the colour perception of Hymenoptera.
+Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
+   component of flower reflections, and the colour perception of Hymenoptera. 
    Vision research, 34(11), 1489-1508.
 
 Troje N. (1993). Spectral categories in the learning behaviour
  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
@@ -98,8 +98,8 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
 Backhaus W. (1991). Color opponent coding in the visual system
  of the honeybee. Vision Research, 31, 1381-1397.
 
-Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
+Endler, J. A. (1990) On the measurement and classification of 
+color in studies of animal color patterns. Biological Journal of the Linnean 
 Society, 41, 315-352.
 }
 \author{

@@ -9,8 +9,8 @@ segplot(segdata, labels = TRUE, lab.cex = 0.9, out.lwd = 1, out.lty = 1,
   2), square = TRUE, ...)
 }
 \arguments{
-\item{segdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{segspace} function, containing values for 'LM' and 'MS'
+\item{segdata}{(required) a data frame, possibly a result from the \code{colspace} 
+or \code{segspace} function, containing values for 'LM' and 'MS' 
 as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
@@ -40,8 +40,8 @@ plot(seg.flowers)
 
 }
 \references{
-Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
+Endler, J. A. (1990) On the measurement and classification of 
+color in studies of animal color patterns. Biological Journal of the Linnean 
 Society, 41, 315-352.
 }
 \author{

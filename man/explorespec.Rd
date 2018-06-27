@@ -9,7 +9,7 @@ explorespec(rspecdata, by = NULL, scale = c("equal", "free"),
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
-that has wavelength range in the first column, named 'wl', and spectral measurements in the
+that has wavelength range in the first column, named 'wl', and spectral measurements in the 
 remaining columns.}
 
 \item{by}{number of spectra to include in each graph (defaults to 1)}
@@ -18,7 +18,7 @@ remaining columns.}
 the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.}
 
 \item{legpos}{legend position control. Either a vector containing \code{x} and \code{y} coordinates
-or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"},
+or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"}, 
 \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} and \code{"center"}.}
 
 \item{...}{additional parameters to be passed to plot}
@@ -27,7 +27,7 @@ or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{
 Spectral curve plots
 }
 \description{
-Plots one or multiple spectral curves in the same graph to rapidly
+Plots one or multiple spectral curves in the same graph to rapidly 
 compare groups of spectra.
 }
 \note{

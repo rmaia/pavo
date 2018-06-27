@@ -17,7 +17,7 @@ tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1, grid = TRUE,
   fill = TRUE, lwd = 1)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace} 
 function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
 
 \item{size}{size of the points in the plot (defaults to 0.02)}
@@ -52,9 +52,9 @@ is not saved properly if exported using \code{rgl.postscript})(defaults to \code
 \item{grid.alpha}{transparecny of the volume polygon grid lines}
 }
 \value{
-\code{tcsplot} creates a 3D plot using functions of the package \code{rgl},
-based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
-(left button: rotate along 'z' axis; right button: rotate along 'x' axis;
+\code{tcsplot} creates a 3D plot using functions of the package \code{rgl}, 
+based on openGL capabilities. Plot is interactive and can be manipulated with the mouse 
+(left button: rotate along 'z' axis; right button: rotate along 'x' axis; 
 third button: zoom). \code{tcsvol} creates polygon based on points, determining the volume
 occupied by them in the colorspace. \code{tcspoints} adds points to the plot. Points are
 currently plotted only as spheres to maintain export capabilities.
@@ -65,7 +65,7 @@ using functions of the package \code{rgl}, based on openGL capabilities.
 \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
 }
 \description{
-Produces an interactive 3D plot of a tetrahedral
+Produces an interactive 3D plot of a tetrahedral 
 colorspace using OpenGL capabilities.
 
 Plots points in a tetrahedral color space
@@ -79,13 +79,13 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 plot(tcs.sicalis, size = 0.005)
-rgl.postscript('testplot.pdf',fmt='pdf')
+rgl.postscript('testplot.pdf',fmt='pdf') 
 rgl.snapshot('testplot.png')
 
 # For adding points
 patch <- rep(c('C', 'T', 'B'), 7)
-tcs.crown <- subset(tcs.sicalis, 'C')
-tcs.breast <- subset(tcs.sicalis, 'B')
+tcs.crown <- subset(tcs.sicalis, 'C') 
+tcs.breast <- subset(tcs.sicalis, 'B') 
 plot(tcs.crown, col ='blue')
 points(tcs.breast, col ='red')
 
@@ -96,15 +96,15 @@ vol(tcs.sicalis)
 
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \seealso{
-\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
+\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}}, 
 \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
 }
 \author{

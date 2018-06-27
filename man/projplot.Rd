@@ -19,7 +19,7 @@ containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled 
 containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).}
 }
 \value{
-\code{projplot} creates a 2D plot  of color points projected from the tetrahedron
+\code{projplot} creates a 2D plot  of color points projected from the tetrahedron 
 to its encapsulating sphere, and is ideal to visualize differences in hue.
 
 \code{projpoints} creates points in a projection color space plot
@@ -40,17 +40,17 @@ relationships within latitudes without distortion.
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7)))
+projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7))) 
 }
 
 }
 \references{
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal
- visual systems and the evolution of color patterns: Sensory processing illuminates
+Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal 
+ visual systems and the evolution of color patterns: Sensory processing illuminates 
  signal evolution. Evolution, 59(8), 1795-1818.
 }
 \author{
