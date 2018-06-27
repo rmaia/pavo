@@ -116,21 +116,21 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, pl
   #
   ## Multiple images ##
   # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
-  #       (length(kcols) > 1 && interactive = FALSE)
+  #       (length(kcols) > 1 && interactive == FALSE)
   # (2) Single k (or multiple identical k), with a reference image.
   #       (length(kcols) == 1 && !is.null(refID) && interactive = FALSE)
   # (3) Single k (or multiple identical k), without a reference image, so the centres & assignments will vary between images.
   #       (length(kcols) == 1 && is.null(refID) && interactive = FALSE)
-  # (4) Single k (or multiple identical k), with interactively-specified centres, and a single reference image.
-  #       (length(kcols) == 1 && !is.null(refID) && interactive == TRUE)
-  # (5) Multiple k (identical or not), with interactively-specified centres for each image.
+  # (4) Single or identical k (don't need to be pre-specified when interactive), with interactively-specified centres, and a single reference image.
+  #       (!is.null(refID) && interactive == TRUE)
+  # (5) Multiple k (identical or not, don't need to be specified), with interactively-specified centres for each image.
   #       (is.null(refID) && interactive == TRUE)
   #
   ## Single image ##
   # (1) Single k
   #      (length(kcols) == 1)
   # (2) Single k, with interactive centre
-  #      (length(kcols) == 1 && interactive = TRUE)
+  #      (interactive == TRUE)
 
   ## Multiple images  ##
   if (multi_image) {

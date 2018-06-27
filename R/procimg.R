@@ -11,7 +11,7 @@
 #' polygon are saved as an attribute, for use in genrating a masking layer
 #' in further analyses. This is particularly useful when backgrounds are complex,
 #' (e.g. in natural settings) in which case backgrounds and objects cannot be
-#' readily separated by simple k-means clustering. 
+#' readily separated by simple k-means clustering.
 #' @param smooth should the polygon specified when \code{select_focal = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param refinements the number of smoothing iterations, when \code{smooth = TRUE}.
@@ -37,7 +37,7 @@
 #' @references Chaikin, G. 1974. An algorithm for high speed curve generation.
 #' Computer Graphics and Image Processing 3, 346-349.
 
-procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE, 
+procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
                     refinements = 1L, plotnew = FALSE) {
 
   ## Checks
@@ -49,25 +49,24 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
   if (multi_image) { # Multiple images
 
     ## Scale ##
-    if (plotnew) dev.new(noRStudioGD = TRUE)
     if (is.numeric(scaledist)) {
+      if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in 1:length(image)) {
         attr(image[[i]], "scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist)
       }
       if (plotnew) dev.off()
-      
-      ## Select outline of focal stimulus ##
+    }
+
+    ## Select outline of focal stimulus ##
+    if (select_focal) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
-      if (select_focal) {
-        for (i in 1:length(image)) {
+      for (i in 1:length(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
         attr(image[[i]], "outline") <- outliner(image[[i]], smooth, refinements)
-        }
       }
       if (plotnew) dev.off()
-      
     }
   } else if (!multi_image) {
 
@@ -78,7 +77,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
       attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist)
     }
     if (plotnew) dev.off()
-    
+
     ## Select outline of focal stimulus ##
     if (plotnew) dev.new(noRStudioGD = TRUE)
     if (select_focal) {
