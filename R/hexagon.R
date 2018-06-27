@@ -90,7 +90,7 @@ hexagon <- function(vismodeldata) {
     dat <- dat[, 1:3]
     names(dat) <- c("s", "m", "l")
 
-    if (round(sum(rowSums(dat / apply(dat, 1, sum)))) == dim(dat)[1]) {
+    if (isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
       stop("Quantum catches are relative, which is not required in the hexagon model.", call. = FALSE)
     }
   }

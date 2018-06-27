@@ -139,7 +139,7 @@ outliner <- function(image_i, smooth_i, refinements_i) {
   # Get coordinates
   xy <- locator(type = "p", col = "red", lwd = 2)
   xy <- cbind(xy$x, xy$y)
-  #xy <- rbind(xy, xy[1, ])
+  xy <- rbind(xy, xy[1, ])
 
   # Smooth coordinates (Chaikin’s corner cutting)
   if (smooth_i) {

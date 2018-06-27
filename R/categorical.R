@@ -71,7 +71,8 @@ categorical <- function(vismodeldata) {
     dat <- dat[, 1:4]
     names(dat) <- c("u", "s", "m", "l")
 
-    if (round(sum(rowSums(dat / apply(dat, 1, sum)))) != dim(dat)[1]) {
+    # Check that all rows sum to 1 (taking into account R floating point issue)
+    if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
       # dat <- dat/apply(dat, 1, sum)
       warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
       # attr(vismodeldata,'relative') <- TRUE

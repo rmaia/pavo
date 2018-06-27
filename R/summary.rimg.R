@@ -27,7 +27,7 @@
 #' }
 #'
 
-summary.rimg <- function(object, plot = FALSE, ...) {
+summary.rimg <- function(object, plot = FALSE,...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 
   if (multi_image) {

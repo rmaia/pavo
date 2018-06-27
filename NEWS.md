@@ -27,7 +27,8 @@ MINOR FEATURES AND BUG FIXES
 * spec2rgb() now takes into account the 390-400 nm wavelength range into account when possible
 * as.rspec() no longer fails with tibbles
 * bin option of procspec() now works for all values of bins
-
+* non-relative quantum catches from dataframe object were not correctly scaled
+in "di", "tri", "categorical" and "coc" colspaces
 pavo 1.3.1
 ------------------------------------------------------------------------------
 
