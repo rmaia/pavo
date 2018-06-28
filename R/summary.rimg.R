@@ -19,7 +19,7 @@
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio_class <- classify(papilio, n_cols = 4)
+#' papilio_class <- classify(papilio, kcols = 4)
 #' summary(papilio_class)
 #'
 #' # Plot the colour-classified image alongside the colour class palette
@@ -60,39 +60,18 @@ summary.rimg <- function(object, plot = FALSE,...) {
 summary_main <- function(object, plot, ...) {
   if (plot) {
     object2 <- as.matrix(t(apply(object, 2, rev)))
-
-    # Defaults for image plot
-    arg <- list(...)
-    if (is.null(arg$xlab)) arg$xlab <- "x"
-    if (is.null(arg$ylab)) arg$ylab <- "y"
-    if (is.null(arg$main)) arg$main <- attr(object, "imgname")
-    if (is.null(arg$useRaster)) arg$useRaster <- TRUE
-    if (is.null(arg$col)) arg$col <- rgb(attr(object, "classRGB"))
-    if (is.null(arg$asp)) arg$asp <- dim(object)[1] / dim(object)[2]
-    if (is.null(arg$xlim)) {
-      padrow <- round(nrow(object2) * 0.02)
-      arg$xlim <- c(0 - padrow, nrow(object2) + padrow)
-    }
-    if (is.null(arg$ylim)) {
-      padcol <- round(ncol(object2) * 0.02)
-      arg$ylim <- c(0 - padcol, ncol(object2) + padcol)
-    }
-
-    arg$x <- 1:nrow(object2)
-    arg$y <- 1:ncol(object2)
-    arg$z <- object2
-
+    
     # Plotting
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
-
-    # Main
-    do.call(image, arg)
+    
+    defaultimageplot(imagedata = object2, rawimage = object, ...)
 
     # Palette
-    image(1:length(arg$col), 1, as.matrix(1:length(arg$col)),
-      col = arg$col,
-      xlab = paste("Colour class IDs:", paste(1:length(arg$col), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
+    natpalette <- rgb(attr(object, "classRGB"))
+    image(1:length(natpalette), 1, as.matrix(1:length(natpalette)),
+      col = natpalette,
+      xlab = paste("Colour class IDs:", paste(1:length(natpalette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
     )
   } else {
     attr(object, "classRGB")

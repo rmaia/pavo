@@ -112,6 +112,7 @@ defaultimageplot <- function(imagedata, rawimage, ...) {
   if (is.null(arg$main)) arg$main <- attr(rawimage, "imgname")
   if (is.null(arg$asp)) arg$asp <- dim(rawimage)[1] / dim(rawimage)[2]
   if (is.null(arg$useRaster)) arg$useRaster <- TRUE
+  if (is.null(arg$col)) arg$col <- rgb(attr(rawimage, "classRGB"))
   if (is.null(arg$xlim)) {
     padrow <- round(nrow(imagedata) * 0.02)
     arg$xlim <- c(0 - padrow, nrow(imagedata) + padrow)
@@ -119,10 +120,6 @@ defaultimageplot <- function(imagedata, rawimage, ...) {
   if (is.null(arg$ylim)) {
     padcol <- round(ncol(imagedata) * 0.02)
     arg$ylim <- c(0 - padcol, ncol(imagedata) + padcol)
-  }
-  if (is.null(arg$col)) {
-    values <- attr(rawimage, "classRGB")
-    arg$col <- rgb(values)
   }
 
   # Main plot
