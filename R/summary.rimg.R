@@ -65,7 +65,7 @@ summary_main <- function(object, plot, ...) {
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
     
-    defaultimageplot(imagedata = object2, rawimage = object, ...)
+    defaultimageplot(object2, object, ...)
 
     # Palette
     natpalette <- rgb(attr(object, "classRGB"))

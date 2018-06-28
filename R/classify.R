@@ -21,6 +21,7 @@
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
+#' @param ... additional graphical parameters when \code{interactive = TRUE}. Also see \code{\link{par}}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
 #' class classifications at each pixel location. The RGB values corresponding to
@@ -50,7 +51,8 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, plotnew = FALSE, cores = getOption("mc.cores", 2L)) {
+classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, 
+                     plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
 
   ## Checks
   # Single or multiple images?
@@ -178,9 +180,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, pl
       )
 
       if (plotnew) dev.new(noRStudioGD = TRUE)
+      
+      defaultrasterImageplot(refimg, ...)
 
-      plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y", asp = dim(refimg)[1] / dim(refimg)[2])
-      rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
       if (!is.null(kcols)) {
         message(paste("Select the", kcols, "focal colours"))
         reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
@@ -231,12 +233,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, pl
 
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        plot(c(1, dim(imgdat[[i]])[2]), c(1, dim(imgdat[[i]])[1]),
-          type = "n",
-          xlab = "x",
-          ylab = "y"
-        )
-        rasterImage(imgdat[[i]], 1, 1, dim(imgdat[[i]])[2], dim(imgdat[[i]])[1])
+        defaultrasterImageplot(imgdat[[i]], ...)
+        
         if (!is.null(n_cols_test)) {
           message(paste0("Select the ", kcols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
           reference <- as.data.frame(locator(type = "p", col = "red", n = kcols[[i]]))
@@ -308,8 +306,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, pl
       while (i <= 1) {
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        plot(c(1, dim(refimg)[2]), c(1, dim(refimg)[1]), type = "n", xlab = "x", ylab = "y")
-        rasterImage(refimg, 1, 1, dim(refimg)[2], dim(refimg)[1])
+        defaultrasterImageplot(refimg, ...)
+        
         if (!is.null(kcols)) {
           message(paste("Select the", kcols, "focal colours."))
           reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
@@ -326,6 +324,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, pl
         silent = TRUE
         )
 
+        # Error controls
         if (class(ref_centers) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
           i <- i

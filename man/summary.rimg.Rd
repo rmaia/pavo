@@ -24,7 +24,7 @@ Returns the attributes of the colour-classified matrix generated from \code{\lin
 \examples{
 \dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio_class <- classify(papilio, n_cols = 4)
+papilio_class <- classify(papilio, kcols = 4)
 summary(papilio_class)
 
 # Plot the colour-classified image alongside the colour class palette
