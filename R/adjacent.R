@@ -76,6 +76,7 @@
 #'
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom utils object.size
+#' @importFrom sp point.in.polygon
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -492,4 +493,18 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   fin <- as.data.frame(fin)
 
   fin
+}
+
+polymask <- function(classimg, poly) {
+  
+  imglong <- data.frame(expand.grid(1:ncol(classimg), 1:nrow(classimg)), z = c(classimg))
+  names(imglong) <- c("x", "y", "z")
+
+  inpoly <- point.in.polygon(imglong$x, imglong$y, poly$x, poly$y, mode.checked=FALSE)  # todo: replace with base
+
+  arse <- matrix(data = inpoly, ncol(classimg), nrow(classimg))
+  arse2 <- apply(as.matrix(arse), 1, rev)
+  classimg[which(arse2==1)] <- NA
+  
+  classimg
 }
