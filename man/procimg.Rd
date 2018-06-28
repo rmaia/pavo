@@ -5,7 +5,7 @@
 \title{Process images}
 \usage{
 procimg(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
-  refinements = 1L, plotnew = FALSE)
+  refinements = 1L, plotnew = FALSE, ...)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
@@ -27,6 +27,8 @@ using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 \item{refinements}{the number of smoothing iterations, when \code{smooth = TRUE}.}
 
 \item{plotnew}{Should plots be opened in a new window? Defaults to \code{FALSE}.}
+
+\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
 an image array, or list containing images, for use in further

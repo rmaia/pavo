@@ -4,20 +4,11 @@
 \alias{classplot}
 \title{Plot colour-classified images}
 \usage{
-classplot(x, xpts = NULL, grid.col = "red", grid.cex = 1, ...)
+classplot(x, ...)
 }
 \arguments{
 \item{x}{(required) colour-classified image data, or a list thereof. Preferably
 the result of \code{\link{classify}}.}
-
-\item{xpts}{an optional integer specifying the number of sample points (grid
-sampling density) along the x axis, with the resulting sampling grid being
-plotted atop the sample image. Useful for planning the sampling density prior
-to adjacency analysis .}
-
-\item{grid.col}{the colour of sampling-grid points.}
-
-\item{grid.cex}{the size of sampling-grid points.}
 
 \item{...}{additional graphical parameters passed to \code{\link{image}}.}
 }

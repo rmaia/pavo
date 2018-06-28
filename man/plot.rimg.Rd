@@ -32,7 +32,7 @@ plot(papilio_class)
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 plot(snakes)
-snakes_class <- classify(snakes, n_cols = 3)
+snakes_class <- classify(snakes, kcols = 3)
 plot(snakes_class)
 }
 

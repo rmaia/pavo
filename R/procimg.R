@@ -16,6 +16,7 @@
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param refinements the number of smoothing iterations, when \code{smooth = TRUE}.
 #' @param plotnew Should plots be opened in a new window? Defaults to \code{FALSE}.
+#' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
 #' @return an image array, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
@@ -38,7 +39,7 @@
 #' Computer Graphics and Image Processing 3, 346-349.
 
 procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
-                    refinements = 1L, plotnew = FALSE) {
+                    refinements = 1L, plotnew = FALSE, ...) {
 
   ## Checks
   multi_image <- inherits(image, "list") # Single or multiple images?
@@ -53,7 +54,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in 1:length(image)) {
-        attr(image[[i]], "scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist)
+        attr(image[[i]], "scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist, ...)
       }
       if (plotnew) dev.off()
     }
@@ -64,7 +65,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
       for (i in 1:length(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
-        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, refinements)
+        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, refinements, ...)
       }
       if (plotnew) dev.off()
     }
@@ -74,7 +75,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
     if (plotnew) dev.new(noRStudioGD = TRUE)
     if (is.numeric(scaledist)) {
       message("Scale calibration: Select both ends of the scale.")
-      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist)
+      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, ...)
     }
     if (plotnew) dev.off()
 
@@ -83,7 +84,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
     if (select_focal) {
       message("Select the outline of focal stimulus, and press [esc] when complete.
               The first and last points will be automatically connected.")
-      attr(image, "outline") <- outliner(image, smooth, refinements)
+      attr(image, "outline") <- outliner(image, smooth, refinements, ...)
     }
     if (plotnew) dev.off()
   }
@@ -97,6 +98,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param scaledist_i (required) an integer specifying the length of the scale
 #' in the image.
+#' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
 #' @keywords internal
 #'
@@ -106,9 +108,10 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
 #' @return an image, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
-scaler <- function(image_i, scaledist_i) {
-  plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
-  rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
+scaler <- function(image_i, scaledist_i, ...) {
+  
+  # Plot
+  defaultrasterImageplot(image_i, ...)
 
   reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
   pixdist <- as.integer(dist(round(reference)))
@@ -124,17 +127,17 @@ scaler <- function(image_i, scaledist_i) {
 #' @param smooth_i should the polygon specified when \code{select_focal = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param refinements_i the number of smoothing iterations, when \code{smooth = TRUE}.
+#' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
 #' @keywords internal
 #'
 #' @return an image, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
-outliner <- function(image_i, smooth_i, refinements_i) {
+outliner <- function(image_i, smooth_i, refinements_i, ...) {
 
   # Plot
-  plot(c(1, dim(image_i)[1]), c(1, dim(image_i)[2]), type = "n", xlab = "x", ylab = "y")
-  rasterImage(image_i, 1, 1, dim(image_i)[1], dim(image_i)[2])
+  defaultrasterImageplot(image_i, ...)
 
   # Get coordinates
   xy <- locator(type = "p", col = "red", lwd = 2)

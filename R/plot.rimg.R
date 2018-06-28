@@ -23,7 +23,7 @@
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' plot(snakes)
-#' snakes_class <- classify(snakes, n_cols = 3)
+#' snakes_class <- classify(snakes, kcols = 3)
 #' plot(snakes_class)
 #' }
 #'
@@ -60,40 +60,12 @@ rawplot <- function(x, ...) {
   multi_image <- inherits(x, "list") # Single or multiple images?
 
   if (multi_image) { # Multiple images
-
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
-      x2 <- x[[i]]
-
-      # Defaults
-      arg <- list(...)
-      if (is.null(arg$xlab)) arg$xlab <- "x"
-      if (is.null(arg$ylab)) arg$ylab <- "y"
-      if (is.null(arg$main)) arg$main <- attr(x[[i]], "imgname")
-      if (is.null(arg$type)) arg$type <- "n"
-      if (is.null(arg$asp)) arg$asp <- dim(x2)[1] / dim(x2)[2]
-
-      arg$x <- c(1, dim(x2)[2])
-      arg$y <- c(1, dim(x2)[1])
-
-      do.call(plot, arg)
-      rasterImage(x2, 1, 1, dim(x2)[2], dim(x2)[1])
+      defaultrasterImageplot(x[[i]], ...)
     }
   } else if (!multi_image) { # Single image
-
-    # Defaults
-    arg <- list(...)
-    if (is.null(arg$xlab)) arg$xlab <- "x"
-    if (is.null(arg$ylab)) arg$ylab <- "y"
-    if (is.null(arg$main)) arg$main <- attr(x, "imgname")
-    if (is.null(arg$type)) arg$type <- "n"
-    if (is.null(arg$asp)) arg$asp <- dim(x)[1] / dim(x)[2]
-
-    arg$x <- c(1, dim(x)[2])
-    arg$y <- c(1, dim(x)[1])
-
-    do.call(plot, arg)
-    rasterImage(x, 1, 1, dim(x)[2], dim(x)[1])
+    defaultrasterImageplot(x, ...)
   }
 }
 
@@ -101,12 +73,6 @@ rawplot <- function(x, ...) {
 #'
 #' @param x (required) colour-classified image data, or a list thereof. Preferably
 #' the result of \code{\link{classify}}.
-#' @param xpts an optional integer specifying the number of sample points (grid
-#' sampling density) along the x axis, with the resulting sampling grid being
-#' plotted atop the sample image. Useful for planning the sampling density prior
-#' to adjacency analysis .
-#' @param grid.col the colour of sampling-grid points.
-#' @param grid.cex the size of sampling-grid points.
 #' @param ... additional graphical parameters passed to \code{\link{image}}.
 #'
 #' @keywords internal
@@ -114,7 +80,7 @@ rawplot <- function(x, ...) {
 #' @importFrom grDevices rgb
 #' @importFrom graphics image points
 #'
-classplot <- function(x, xpts = NULL, grid.col = "red", grid.cex = 1, ...) {
+classplot <- function(x, ...) {
 
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
@@ -127,88 +93,59 @@ classplot <- function(x, xpts = NULL, grid.col = "red", grid.cex = 1, ...) {
   }
 
   if (multi_image) { # Multiple images
-
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
       imgdat2 <- x_trans[[i]]
-
-      # Defaults
-      arg <- list(...)
-      if (is.null(arg$xlab)) arg$xlab <- "x"
-      if (is.null(arg$ylab)) arg$ylab <- "y"
-      if (is.null(arg$main)) arg$main <- attr(x[[i]], "imgname")
-      if (is.null(arg$asp)) arg$asp <- dim(x[[i]])[1] / dim(x[[i]])[2]
-      if (is.null(arg$useRaster)) arg$useRaster <- TRUE
-      if (is.null(arg$xlim)) {
-        padrow <- round(nrow(imgdat2) * 0.02)
-        arg$xlim <- c(0 - padrow, nrow(imgdat2) + padrow)
-      }
-      if (is.null(arg$ylim)) {
-        padcol <- round(ncol(imgdat2) * 0.02)
-        arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
-      }
-      if (is.null(arg$col)) {
-        values <- attr(x[[i]], "classRGB")
-        arg$col <- rgb(values)
-      }
-
-      # Main plot
-      arg$x <- 1:nrow(imgdat2)
-      arg$y <- 1:ncol(imgdat2)
-      arg$z <- imgdat2
-
-      do.call(image, arg)
-
-      # Visualise the sampling grid
-      if (!is.null(xpts)) {
-        grid <- expand.grid(
-          seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / xpts),
-          seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / xpts)
-        )
-
-        names(grid) <- c("y", "x")
-        points(grid, col = grid.col, pch = 16, cex = grid.cex)
-      }
+      defaultimageplot(imgdat2, x[[i]], ...)
     }
   } else if (!multi_image) { # Single image
-
-    # Defaults
-    arg <- list(...)
-
-    if (is.null(arg$xlab)) arg$xlab <- "x"
-    if (is.null(arg$ylab)) arg$ylab <- "y"
-    if (is.null(arg$main)) arg$main <- attr(x, "imgname")
-    if (is.null(arg$useRaster)) arg$useRaster <- TRUE
-    if (is.null(arg$asp)) arg$asp <- dim(x)[1] / dim(x)[2]
-    if (is.null(arg$xlim)) {
-      padrow <- round(nrow(imgdat2) * 0.02)
-      arg$xlim <- c(0 - padrow, nrow(imgdat2) + padrow)
-    }
-    if (is.null(arg$ylim)) {
-      padcol <- round(ncol(imgdat2) * 0.02)
-      arg$ylim <- c(0 - padcol, ncol(imgdat2) + padcol)
-    }
-    if (is.null(arg$col)) {
-      values <- attr(x, "classRGB")
-      arg$col <- rgb(values)
-    }
-
-    # Main plot
-    arg$x <- 1:nrow(imgdat2)
-    arg$y <- 1:ncol(imgdat2)
-    arg$z <- imgdat2
-
-    do.call(image, arg)
-
-    # Visualise the sampling grid
-    if (!is.null(xpts)) {
-      grid <- expand.grid(
-        seq(from = 1, to = nrow(imgdat2), by = nrow(imgdat2) / xpts),
-        seq(from = 1, to = ncol(imgdat2), by = ncol(imgdat2) / xpts)
-      )
-
-      names(grid) <- c("y", "x")
-      points(grid, col = grid.col, pch = 16, cex = grid.cex)
-    }
+    defaultimageplot(imgdat2, x, ...)
   }
+}
+
+defaultimageplot <- function(imagedata, rawimage, ...) {
+
+  # Defaults
+  arg <- list(...)
+  if (is.null(arg$xlab)) arg$xlab <- "x"
+  if (is.null(arg$ylab)) arg$ylab <- "y"
+  if (is.null(arg$main)) arg$main <- attr(rawimage, "imgname")
+  if (is.null(arg$asp)) arg$asp <- dim(rawimage)[1] / dim(rawimage)[2]
+  if (is.null(arg$useRaster)) arg$useRaster <- TRUE
+  if (is.null(arg$xlim)) {
+    padrow <- round(nrow(imagedata) * 0.02)
+    arg$xlim <- c(0 - padrow, nrow(imagedata) + padrow)
+  }
+  if (is.null(arg$ylim)) {
+    padcol <- round(ncol(imagedata) * 0.02)
+    arg$ylim <- c(0 - padcol, ncol(imagedata) + padcol)
+  }
+  if (is.null(arg$col)) {
+    values <- attr(rawimage, "classRGB")
+    arg$col <- rgb(values)
+  }
+
+  # Main plot
+  arg$x <- 1:nrow(imagedata)
+  arg$y <- 1:ncol(imagedata)
+  arg$z <- imagedata
+
+  do.call(image, arg)
+}
+
+defaultrasterImageplot <- function(imagedata, ...) {
+
+  # Defaults
+  arg <- list(...)
+  if (is.null(arg$xlab)) arg$xlab <- "x"
+  if (is.null(arg$ylab)) arg$ylab <- "y"
+  if (is.null(arg$main)) arg$main <- attr(imagedata, "imgname")
+  if (is.null(arg$type)) arg$type <- "n"
+  if (is.null(arg$asp)) arg$asp <- dim(imagedata)[1] / dim(imagedata)[2]
+
+  arg$x <- c(1, dim(imagedata)[2])
+  arg$y <- c(1, dim(imagedata)[1])
+
+  do.call(plot, arg)
+  rasterImage(imagedata, 1, 1, dim(imagedata)[2], dim(imagedata)[1])
 }

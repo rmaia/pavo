@@ -4,7 +4,7 @@
 \alias{outliner}
 \title{Internal function for selecting focal-stimulus outline}
 \usage{
-outliner(image_i, smooth_i, refinements_i)
+outliner(image_i, smooth_i, refinements_i, ...)
 }
 \arguments{
 \item{image_i}{(required) image data. Either a single image, or a series of images
@@ -14,6 +14,8 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
 \item{refinements_i}{the number of smoothing iterations, when \code{smooth = TRUE}.}
+
+\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
 an image, or list containing images, for use in further

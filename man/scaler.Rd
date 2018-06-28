@@ -4,7 +4,7 @@
 \alias{scaler}
 \title{Internal function for calibrating image scale}
 \usage{
-scaler(image_i, scaledist_i)
+scaler(image_i, scaledist_i, ...)
 }
 \arguments{
 \item{image_i}{(required) image data. Either a single image, or a series of images
@@ -12,6 +12,8 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 
 \item{scaledist_i}{(required) an integer specifying the length of the scale
 in the image.}
+
+\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
 an image, or list containing images, for use in further
