@@ -6,13 +6,13 @@
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
 #' @param scaledist an integer specifying the length of the scale
 #' in the image(s), if desired.
-#' @param select_focal allows the user to interactively specify the focal object in
+#' @param outline allows the user to interactively specify the focal object in
 #' an image by clicking around its outline. The xy-coordinates of the resulting
-#' polygon are saved as an attribute, for use in genrating a masking layer
-#' in further analyses. This is particularly useful when backgrounds are complex,
-#' (e.g. in natural settings) in which case backgrounds and objects cannot be
-#' readily separated by simple k-means clustering.
-#' @param smooth should the polygon specified when \code{select_focal = TRUE} be smoothed
+#' polygon are saved as an attribute, for use in genrating a masking layer &
+#' separating animals/plants from backgrounds in further analyses. This is particularly 
+#' useful when backgrounds are complex, (e.g. in natural settings) in which case 
+#' backgrounds and objects cannot be readily separated by simple k-means clustering.
+#' @param smooth should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param refinements the number of smoothing iterations, when \code{smooth = TRUE}.
 #' @param plotnew Should plots be opened in a new window? Defaults to \code{FALSE}.
@@ -38,12 +38,12 @@
 #' @references Chaikin, G. 1974. An algorithm for high speed curve generation.
 #' Computer Graphics and Image Processing 3, 346-349.
 
-procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
+procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
                     refinements = 1L, plotnew = FALSE, ...) {
 
   ## Checks
   multi_image <- inherits(image, "list") # Single or multiple images?
-  if (is.null(scaledist) & !select_focal) {
+  if (is.null(scaledist) & !outline) {
     stop("No options selected.")
   }
 
@@ -60,7 +60,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
     }
 
     ## Select outline of focal stimulus ##
-    if (select_focal) {
+    if (outline) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
       for (i in 1:length(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
@@ -81,7 +81,7 @@ procimg <- function(image, scaledist = NULL, select_focal = FALSE, smooth = FALS
 
     ## Select outline of focal stimulus ##
     if (plotnew) dev.new(noRStudioGD = TRUE)
-    if (select_focal) {
+    if (outline) {
       message("Select the outline of focal stimulus, and press [esc] when complete.
               The first and last points will be automatically connected.")
       attr(image, "outline") <- outliner(image, smooth, refinements, ...)
@@ -124,7 +124,7 @@ scaler <- function(image_i, scaledist_i, ...) {
 #'
 #' @param image_i (required) image data. Either a single image, or a series of images
 #' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param smooth_i should the polygon specified when \code{select_focal = TRUE} be smoothed
+#' @param smooth_i should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param refinements_i the number of smoothing iterations, when \code{smooth = TRUE}.
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.

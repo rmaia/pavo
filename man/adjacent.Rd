@@ -29,10 +29,10 @@ colour-class ID numbers. Ignored if the focal object and background has been ide
 \code{\link{procimg}}.}
 
 \item{exclude}{The portion of the image to be excluded from the analysis, if any.
-If excluding the focal object, its outline must first have been idenfitied using 
+If excluding the focal object, its outline must first have been idenfitied using
 \code{\link{procimg}}. If excluding the image background it must either have been
-identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
-the colour-class ID's corresponding to the background can be specified using 
+identified using \code{\link{procspec}}, or if it is relatively homogeneous,
+the colour-class ID's corresponding to the background can be specified using
 bkgID.}
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)

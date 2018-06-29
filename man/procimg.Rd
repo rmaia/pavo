@@ -4,7 +4,7 @@
 \alias{procimg}
 \title{Process images}
 \usage{
-procimg(image, scaledist = NULL, select_focal = FALSE, smooth = FALSE,
+procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
   refinements = 1L, plotnew = FALSE, ...)
 }
 \arguments{
@@ -14,12 +14,12 @@ stored in a list. Preferably the result of \code{\link{getimg}}.}
 \item{scaledist}{an integer specifying the length of the scale
 in the image(s), if desired.}
 
-\item{select_focal}{allows the user to interactively specify the focal object in
+\item{outline}{allows the user to interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
-polygon are saved as an attribute, for use in genrating a masking layer
-in further analyses. This is particularly useful when backgrounds are complex,
-(e.g. in natural settings) in which case backgrounds and objects cannot be
-readily separated by simple k-means clustering.}
+polygon are saved as an attribute, for use in genrating a masking layer &
+separating animals/plants from backgrounds in further analyses. This is particularly 
+useful when backgrounds are complex, (e.g. in natural settings) in which case 
+backgrounds and objects cannot be readily separated by simple k-means clustering.}
 
 \item{smooth}{should the polygon specified when \code{select_focal = TRUE} be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}

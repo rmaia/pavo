@@ -13,16 +13,16 @@
 #' Y-axis sampling density is calculated automatically from this, to maintain an even
 #' grid spacing.
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
-#' If excluding the focal object, its outline must first have been idenfitied using 
+#' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
-#' identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
-#' the colour-class ID's corresponding to the background can be specified using 
+#' identified using \code{\link{procspec}}, or if it is relatively homogeneous,
+#' the colour-class ID's corresponding to the background can be specified using
 #' bkgID.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers. Ignored if the focal object and background has been identified using
-#' \code{\link{procimg}}. 
+#' \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1'
@@ -99,9 +99,8 @@
 #' and fitness. Methods in Ecology and Evolution.
 
 adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
-                     exclude = c('none', 'background', 'object'), coldists = NULL, 
+                     exclude = c("none", "background", "object"), coldists = NULL,
                      cores = getOption("mc.cores", 2L)) {
-
   exclude2 <- match.arg(exclude)
 
   ## Checks
@@ -125,18 +124,18 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
   }
 
   # Exclusion checks
-  if ('background' %in% exclude2) {
-    if (is.null(bkgID) && is.null(attr(classimg, 'outline'))){
+  if ("background" %in% exclude2) {
+    if (is.null(bkgID) && is.null(attr(classimg, "outline"))) {
       stop("Background cannot be excluded without specifying a focal object outline 
             (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
     }
   }
-  if ('object' %in% exclude2) {
-    if (is.null(attr(classimg, 'outline'))){
+  if ("object" %in% exclude2) {
+    if (is.null(attr(classimg, "outline"))) {
       stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
     }
   }
-  
+
   # if (multi_image) {
   #   n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
   # } else {
@@ -237,10 +236,10 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{procimg}}.
 #' @param exclude2_i The portion of the image to be excluded from the analysis, if any.
-#' If excluding the focal object, its outline must first have been idenfitied using 
+#' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
-#' identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
-#' the colour-class ID's corresponding to the background can be specified using 
+#' identified using \code{\link{procspec}}, or if it is relatively homogeneous,
+#' the colour-class ID's corresponding to the background can be specified using
 #' bkgID.
 #' @param bkgID_i an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
@@ -258,7 +257,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = TRUE, coldists_i = NULL) {
+adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = NULL, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
   # Scales
@@ -277,7 +276,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   ]
 
   # Exclude selection, if specified
-  if ('background' %in% exclude2_i) {
+  if ("background" %in% exclude2_i) {
     # Complex backgrounds
     if (bkgoutline == TRUE) {
       # NA everything *outside* the outlined polyogn
@@ -293,7 +292,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
     }
   }
-  if ('object' %in% exclude2_i) {
+  if ("object" %in% exclude2_i) {
     # Complex backgrounds only
     if (bkgoutline == TRUE) {
       # NA everything *inside* the outlined polyogn
@@ -315,47 +314,12 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   # Single colour check
   single_col <- ifelse(n_class == 1, TRUE, FALSE)
 
-  # All row transitions
-  rt_temp <- lapply(1:nrow(subclass), function(x) table(paste0(head(as.numeric(subclass[x, ]), -1), ".", tail(as.numeric(subclass[x, ]), -1))))
-  rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
-  rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
-  rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
-  rowtrans <- data.frame(
-    "c1" = rnames[seq(1, length(rnames), 2)],
-    "c2" = rnames[seq(2, length(rnames), 2)],
-    "N" = rt[, 2]
-  )
-
-  # All column transitions
-  subclass_trans <- as.data.frame(t(subclass))
-  ct_temp <- lapply(1:nrow(subclass_trans), function(x) table(paste0(head(as.numeric(subclass_trans[x, ]), -1), ".", tail(as.numeric(subclass_trans[x, ]), -1))))
-  ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
-  ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
-  cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names
-  coltrans <- data.frame(
-    "c1" = cnames[seq(1, length(cnames), 2)],
-    "c2" = cnames[seq(2, length(cnames), 2)],
-    "N" = ct[, 2]
-  )
-
-  # Sort
-  rowtrans[, 1:2] <- as.data.frame(t(apply(rowtrans[, 1:2], 1, sort)))
-  coltrans[, 1:2] <- as.data.frame(t(apply(coltrans[, 1:2], 1, sort)))
-
-  # Aggregate
-  rowtrans2 <- aggregate(rowtrans$N ~ rowtrans$c1 + rowtrans$c2, FUN = sum)
-  names(rowtrans2) <- c("c1", "c2", "N")
-  coltrans2 <- aggregate(coltrans$N ~ coltrans$c1 + coltrans$c2, FUN = sum)
-  names(coltrans2) <- c("c1", "c2", "N")
-
-  # All raw transitions
-  transitions <- rbind(rowtrans2, coltrans2)
-  transitions <- aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
-  names(transitions) <- c("c1", "c2", "N")
+  # Transitions
+  transitions <- transitioncalc(subclass)
 
   # Raw diag/offdiag
-  diag <- subset(transitions, c1 == c2)
-  offdiag <- subset(transitions, c1 != c2)
+  diag <- subset(transitions[["all"]], c1 == c2)
+  offdiag <- subset(transitions[["all"]], c1 != c2)
 
   # Proportion diag/offdiag
   diagprop <- diag
@@ -367,15 +331,15 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   if (single_col) { # TODO: Fix this evil hack
     k <- n_class
-    N <- sum(transitions$N)
+    N <- sum(transitions[["all"]]$N)
     n_off <- m_r <- m_c <- m <- t <- 0
     A <- Obs <- E <- d_t_o <- d_t_r <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
 
     p <- data.frame(t(freq$rel_freq))
     names(p) <- paste0("p_", freq$Var1)
 
-    q <- data.frame(t(transitions$N / sum(transitions$N)))
-    names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
+    q <- data.frame(t(transitions[["all"]]$N / sum(transitions[["all"]]$N)))
+    names(q) <- paste0("q_", transitions[["all"]]$c1, "_", transitions[["all"]]$c2)
 
     Sc <- 1 / sum(freq$rel_freq^2)
     Jc <- Sc
@@ -385,23 +349,23 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     k <- n_class
 
     # Grand total transitions
-    N <- sum(transitions$N)
+    N <- sum(transitions[["all"]]$N)
 
     # Total off-diagonal (class-change) transitions
     n_off <- sum(offdiag$N)
 
     # Row transition density (mean transitions / row)
-    if (nrow(subset(rowtrans2, c1 != c2)) == 0) {
+    if (nrow(subset(transitions[["row"]], c1 != c2)) == 0) {
       m_r <- Inf
     } else {
-      m_r <- (sum(subset(rowtrans2, c1 != c2)["N"]) / n_y) / xscale_i
+      m_r <- (sum(subset(transitions[["row"]], c1 != c2)["N"]) / n_y) / xscale_i
     }
 
     # Col transition density (mean transitions / scaled unit)
-    if (nrow(subset(coltrans2, c1 != c2)) == 0) {
+    if (nrow(subset(transitions[["col"]], c1 != c2)) == 0) {
       m_c <- Inf
     } else {
-      m_c <- (sum(subset(coltrans2, c1 != c2)["N"]) / n_x) / y_scale
+      m_c <- (sum(subset(transitions[["col"]], c1 != c2)["N"]) / n_x) / y_scale
     }
 
     # Transition density (mean transitions / scale)
@@ -415,8 +379,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     names(p) <- paste0("p_", freq$Var1)
 
     # Total transition frequencies
-    q <- data.frame(t(transitions$N / sum(transitions$N)))
-    names(q) <- paste0("q_", transitions$c1, "_", transitions$c2)
+    q <- data.frame(t(transitions[["all"]]$N / sum(transitions[["all"]]$N)))
+    names(q) <- paste0("q_", transitions[["all"]]$c1, "_", transitions[["all"]]$c2)
 
     # Observed off-diagonal transitions
     Obs <- data.frame(t(offdiag$N))
@@ -468,18 +432,42 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     Jt <- St / (k * (k - 1) / 2)
 
     ## Things involving the background
-    if('background' %in% exclude2_i){
-      if (bkgoutline){
-        B <- Rt <- Rab <- NA  # TODO
-      }else if (!bkgoutline) {
-  
+    if ("none" %in% exclude2_i) {
+
+      ## Outlined background version ##
+      if (bkgoutline) {
+
+        # Animal only
+        anim <- polymask(subclass, attr(classimg_i, "outline"), "outside")
+        anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
+        animtrans <- transitioncalc(anim)
+
+        # Bkg only
+        bkgonly <- polymask(subclass, attr(classimg_i, "outline"), "inside")
+        bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
+        bkgtrans <- transitioncalc(bkgonly)
+
+        # Animal/background transition ratio
+        B <- sum(subset(animtrans[["all"]], c1 != c2)["N"]) /
+          sum(subset(transitions[["all"]], c1 != c2)["N"])
+
+        # Animal/background transition diversity ratios Rt & Rab
+        St_aa <- 1 / sum((subset(animtrans[["all"]], c1 != c2)["N"] / sum(subset(animtrans[["all"]], c1 != c2)["N"]))^2)
+        St_bb <- 1 / sum((subset(bkgtrans[["all"]], c1 != c2)["N"] / sum(subset(bkgtrans[["all"]], c1 != c2)["N"]))^2)
+
+        Rt <- St_aa / St
+        Rab <- St_aa / St_bb
+
+        ## bkgID version ##
+      } else if (!is.null(bkgID_i)) {
+
         # Animal/background transition ratio
         O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
         O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
         subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
         O_a_b <- offdiag[!subb, ]
         B <- sum(O_a_a$N) / sum(O_a_b$N)
-  
+
         # Animal/background transition diversity ratios Rt & Rab
         q_a_a <- q
         q_a_b <- q
@@ -491,11 +479,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         }
         q_a_a <- q_a_a / sum(q_a_a)
         q_b_b <- q_b_b / sum(q_b_b)
-  
+
         Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
         Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
-    }
-      }else {
+      }
+    } else {
       B <- Rt <- Rab <- NA
     }
 
@@ -536,17 +524,17 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
 
 #' Manipulate classified image data that fall inside/outside a polygon
-#' 
+#'
 #' @param imagedat data.
 #' @param poly xy polygon coordinates.
 #' @param alterWhich manipulate values inside or outside the polygon.
-#' 
+#'
 #' @importFrom sp point.in.polygon
-#' 
+#'
 #' @keywords internal
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#' 
+#'
 polymask <- function(imagedat, poly, alterWhich = c("inside", "outside")) {
   imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
@@ -564,4 +552,52 @@ polymask <- function(imagedat, poly, alterWhich = c("inside", "outside")) {
     imagedat[which(maskmat == 0)] <- NA
   }
   imagedat
+}
+
+transitioncalc <- function(classimgdat) {
+  transout <- list()
+
+  # All row transitions
+  rt_temp <- lapply(1:nrow(classimgdat), function(x) table(paste0(head(as.numeric(classimgdat[x, ]), -1), ".", tail(as.numeric(classimgdat[x, ]), -1))))
+  rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
+  rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
+  rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
+  rowtrans <- data.frame(
+    "c1" = rnames[seq(1, length(rnames), 2)],
+    "c2" = rnames[seq(2, length(rnames), 2)],
+    "N" = rt[, 2]
+  )
+
+  # All column transitions
+  classimgdat_trans <- as.data.frame(t(classimgdat))
+  ct_temp <- lapply(1:nrow(classimgdat_trans), function(x) table(paste0(head(as.numeric(classimgdat_trans[x, ]), -1), ".", tail(as.numeric(classimgdat_trans[x, ]), -1))))
+  ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
+  ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
+  cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names
+  coltrans <- data.frame(
+    "c1" = cnames[seq(1, length(cnames), 2)],
+    "c2" = cnames[seq(2, length(cnames), 2)],
+    "N" = ct[, 2]
+  )
+
+  # Sort
+  rowtrans[, 1:2] <- as.data.frame(t(apply(rowtrans[, 1:2], 1, sort)))
+  coltrans[, 1:2] <- as.data.frame(t(apply(coltrans[, 1:2], 1, sort)))
+
+  # Aggregate
+  rowtrans2 <- aggregate(rowtrans$N ~ rowtrans$c1 + rowtrans$c2, FUN = sum)
+  names(rowtrans2) <- c("c1", "c2", "N")
+  coltrans2 <- aggregate(coltrans$N ~ coltrans$c1 + coltrans$c2, FUN = sum)
+  names(coltrans2) <- c("c1", "c2", "N")
+
+  # All raw transitions
+  transitions <- rbind(rowtrans2, coltrans2)
+  transitions <- aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
+  names(transitions) <- c("c1", "c2", "N")
+
+  transout[["col"]] <- coltrans2
+  transout[["row"]] <- rowtrans2
+  transout[["all"]] <- transitions
+
+  transout
 }
