@@ -273,6 +273,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     # Names & attributes
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
+      attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
       attr(outdata[[i]], "state") <- "colclass"
       if (length(kcols) > 1) {
         attr(outdata[[i]], "k") <- kcols[[i]]
@@ -347,6 +348,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       attr(outdata, "k") <- nrow(reference)
     }
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
+    attr(outdata, "outline") <- attr(imgdat, "outline")
     attr(outdata, "state") <- "colclass"
   }
 

@@ -56,6 +56,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     attr(imgdat, "scale") <- NULL
     attr(imgdat, "k") <- NULL
     attr(imgdat, "state") <- "raw"
+    attr(image, "outline") <- NULL
     class(imgdat) <- c("rimg", "array")
 
     # Otherwise it's a directory of images
@@ -104,6 +105,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       attr(imgdat[[i]], "scale") <- NULL
       attr(imgdat[[i]], "state") <- "raw"
       attr(imgdat[[i]], "k") <- NULL
+      attr(imgdat[[i]], "outline") <- NULL
       class(imgdat[[i]]) <- c("rimg", "array")
     }
     # The list itself needs attributes

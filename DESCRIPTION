@@ -33,7 +33,7 @@ Imports:
     plot3D,
     readbitmap,
     stats,
-    dplyr
+    sp
 Suggests:
     rgl,
     xml2,

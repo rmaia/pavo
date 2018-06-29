@@ -46,6 +46,7 @@ as.rimg <- function(object) {
   attr(object, "imgname") <- "img"
   attr(object, "scale") <- NULL
   attr(object, "k") <- NULL
+  attr(object, "outline") <- NULL
 
   object
 }

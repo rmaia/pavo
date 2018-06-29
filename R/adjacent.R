@@ -15,12 +15,10 @@
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
-#' colour-class ID numbers.
-#' @param bkg.include logical; should the colour classes specified by \code{bkgID}
-#' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-#' members of the colour classes specified in \code{bkgID_i} will be excluded, which
-#' may give undesired results if elements are shared between the background and focal
-#' stimulus.
+#' colour-class ID numbers. Ignored if the focal object has been identified using
+#' \code{\link{procimg}}. 
+#' @param bkg.include logical; should the background be excluded from the analyses? 
+#' Defaults to \code{FALSE}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1'
@@ -76,7 +74,6 @@
 #'
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom utils object.size
-#' @importFrom sp point.in.polygon
 #'
 #' @examples \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -121,14 +118,18 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   # Background
-  if (multi_image) {
-    n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
-  } else {
-    n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
+  if (bkg.include == FALSE) {
+    if (is.null(bkgID) && is.null(attr(classimg, 'outline'))){
+      stop("Background cannot be excluded without specifying a focal object outline (e.g. using procimg()),
+           or one or more colour-class ID's via the argument bkgID.")
+    }
   }
-  if (bkg.include == FALSE && is.null(bkgID)) {
-    stop("Background cannot be excluded without specifying one or more ID's via the argument bkgID.")
-  }
+  
+  # if (multi_image) {
+  #   n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
+  # } else {
+  #   n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
+  # }
   # if(bkg.include == FALSE && length(bkgID) - n_class < 1)                        #FIX
   #   stop('No colour classes remaining.')
 
@@ -250,6 +251,12 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
+  # Simple or 'complex' background?
+  bkgoutline <- ifelse(is.null(attr(classimg_i, "outline")),
+    FALSE,
+    TRUE
+  )
+
   # Subsample (does nothing if x_pts = ncols, default)
   subclass <- classimg_i[
     seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
@@ -257,15 +264,21 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   ]
 
   # Exclude background, if specified
-  if (!is.null(bkgID_i) && bkg.include_i == FALSE) {
-
-    # Render selected classes NA
-    for (i in 1:length(bkgID_i)) {
-      subclass[subclass == bkgID_i[[i]]] <- NA
+  if (bkg.include_i == FALSE) {
+    # Complex backgrounds
+    if (bkgoutline == TRUE) {
+      # NA everything outside the outlined polyogn
+      subclass <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
+      # Subset matrix to include only rows with at least one non-NA transition
+      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
+    } else {
+      # bkgID-based version
+      for (i in 1:length(bkgID_i)) {
+        subclass[subclass == bkgID_i[[i]]] <- NA
+      }
+      # Subset matrix to include only rows with at least one non-NA transition
+      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
     }
-
-    # Subset matrix to include only rows with at least one non-NA transition
-    subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
   }
 
   # Summary info
@@ -495,16 +508,34 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   fin
 }
 
-polymask <- function(classimg, poly) {
-  
-  imglong <- data.frame(expand.grid(1:ncol(classimg), 1:nrow(classimg)), z = c(classimg))
+
+#' Manipulate classified image data that fall inside/outside a polygon
+#' 
+#' @param imagedat data.
+#' @param poly xy polygon coordinates.
+#' @param alterWhich manipulate values inside or outside the polygon.
+#' 
+#' @importFrom sp point.in.polygon
+#' 
+#' @keywords internal
+#' 
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#' 
+polymask <- function(imagedat, poly, alterWhich = c("inside", "outside")) {
+  imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
-  inpoly <- point.in.polygon(imglong$x, imglong$y, poly$x, poly$y, mode.checked=FALSE)  # todo: replace with base
+  inpoly <- point.in.polygon(imglong$x, imglong$y, poly$x, poly$y, mode.checked = FALSE) # todo: replace with base
 
-  arse <- matrix(data = inpoly, ncol(classimg), nrow(classimg))
-  arse2 <- apply(as.matrix(arse), 1, rev)
-  classimg[which(arse2==1)] <- NA
-  
-  classimg
+  maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
+  maskmat <- apply(as.matrix(maskmat), 1, rev)
+  if (alterWhich == "inside") {
+    imagedat[which(maskmat == 1)] <- NA
+    imagedat[which(maskmat == 2)] <- NA
+    imagedat[which(maskmat == 3)] <- NA
+  }
+  if (alterWhich == "outside") {
+    imagedat[which(maskmat == 0)] <- NA
+  }
+  imagedat
 }

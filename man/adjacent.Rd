@@ -24,13 +24,11 @@ in preferred units. Not required, and ignored, if image scales have been set via
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
-colour-class ID numbers.}
+colour-class ID numbers. Ignored if the focal object has been identified using
+\code{\link{procimg}}.}
 
-\item{bkg.include}{logical; should the colour classes specified by \code{bkgID}
-be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-members of the colour classes specified in \code{bkgID_i} will be excluded, which
-may give undesired results if elements are shared between the background and focal
-stimulus.}
+\item{bkg.include}{logical; should the background be excluded from the analyses? 
+Defaults to \code{FALSE}.}
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
