@@ -21,7 +21,7 @@ separating animals/plants from backgrounds in further analyses. This is particul
 useful when backgrounds are complex, (e.g. in natural settings) in which case 
 backgrounds and objects cannot be readily separated by simple k-means clustering.}
 
-\item{smooth}{should the polygon specified when \code{select_focal = TRUE} be smoothed
+\item{smooth}{should the polygon specified when \code{outline = TRUE} be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
 \item{refinements}{the number of smoothing iterations, when \code{smooth = TRUE}.}

@@ -4,6 +4,7 @@
 #' object.
 #'
 #' @param object (required) a three-dimensional array containing RGB values.
+#' @param name the name of the image.
 #'
 #' @return an object of class \code{rimg} for use in further \code{pavo}
 #' functions
@@ -30,7 +31,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-as.rimg <- function(object) {
+as.rimg <- function(object, name = 'img') {
   if (!is.array(object)) {
     stop("Object must be an array.")
   }
@@ -43,7 +44,7 @@ as.rimg <- function(object) {
   # Attributes
   class(object) <- c("rimg", "array")
   attr(object, "state") <- "raw"
-  attr(object, "imgname") <- "img"
+  attr(object, "imgname") <- name
   attr(object, "scale") <- NULL
   attr(object, "k") <- NULL
   attr(object, "outline") <- NULL

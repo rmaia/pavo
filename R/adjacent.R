@@ -482,9 +482,12 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
         Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
         Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
+        
+      } else {
+      
+        B <- Rt <- Rab <- NA
+
       }
-    } else {
-      B <- Rt <- Rab <- NA
     }
 
     # Boundary strength (Endler et al. 2018)

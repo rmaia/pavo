@@ -4,10 +4,12 @@
 \alias{as.rimg}
 \title{Convert data to an rimg object}
 \usage{
-as.rimg(object)
+as.rimg(object, name = "img")
 }
 \arguments{
 \item{object}{(required) a three-dimensional array containing RGB values.}
+
+\item{name}{the name of the image.}
 }
 \value{
 an object of class \code{rimg} for use in further \code{pavo}
