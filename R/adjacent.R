@@ -6,7 +6,7 @@
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
-#' in preferred units. Not required, and ignored, if image scales have been set via
+#' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
 #' @param xpts an integer specifying the number of sample points, or grid-sampling
 #' density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
@@ -137,12 +137,13 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
     }
   }
 
+  #FIX
   # if (multi_image) {
   #   n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
   # } else {
   #   n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
   # }
-  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)                        #FIX
+  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)                        
   #   stop('No colour classes remaining.')
 
   ## Setting scales

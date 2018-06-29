@@ -76,23 +76,6 @@
 #' color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L)
 #' contrast in the cielab model.
 #'
-#' @section Note on previous versions:
-#' previous versions of \code{coldist} calculated receptor noise using the arguments
-#' \code{v} for the individual cone noise-to-signal ratio and \code{n1,n2,n3,n4} for
-#' the relative cone densities. These arguments have been replaced by \code{weber} and
-#' \code{n}, which takes a vector of relative cone densities. \code{weber.ref} allows
-#' the user to specify which receptor to use as the reference to obtain the
-#' desired Weber fraction, and \code{coldist} calculates internally the value of \code{v}
-#' to be used when calculating the Weber fraction for the remaining cones.
-#'
-#' This allows a more explicit choice of Weber fraction, without the need to find the
-#' right value of \code{v} to use in order to obtain the desired signal-to-noise ratio. Furthermore,
-#' by allowing \code{n} to be entered as a vector, \code{coldist} can now handle visual
-#' systems with more than four photoreceptors.
-#'
-#' In addition, the achromatic noise is calculated based on the \code{weber.achro}
-#' argument directly, and not based on \code{v} and \code{n4} as before.
-#'
 #' @export
 #'
 #' @examples \dontrun{
@@ -150,8 +133,7 @@
 coldist <- function(modeldata,
                     noise = c("neural", "quantum"), subset = NULL,
                     achro = FALSE, qcatch = NULL,
-                    n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest", weber.achro = 0.1,
-                    v, n1, n2, n3, n4) {
+                    n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest", weber.achro = 0.1) {
 
   ##################################
   # START RECEPTOR NOISE FUNCTIONS #

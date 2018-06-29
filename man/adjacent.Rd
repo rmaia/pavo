@@ -14,7 +14,7 @@ x and y correspond to pixel coordinates, and z is a numeric code specifying
 a colour-class. Preferably the result of \code{\link{classify}}.}
 
 \item{xscale}{(required) an integer specifying the true length of the x-axis,
-in preferred units. Not required, and ignored, if image scales have been set via
+in preferred units. Not required, and ignored, only if image scales have been set via
 \code{\link{procimg}}.}
 
 \item{xpts}{an integer specifying the number of sample points, or grid-sampling
