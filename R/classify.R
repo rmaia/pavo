@@ -274,6 +274,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
       attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
+      attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
+      attr(outdata[[i]], "raw_scale") <- attr(imgdat[[i]], "raw_scale")
       attr(outdata[[i]], "state") <- "colclass"
       if (length(kcols) > 1) {
         attr(outdata[[i]], "k") <- kcols[[i]]
@@ -349,11 +351,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     }
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
     attr(outdata, "outline") <- attr(imgdat, "outline")
-    attr(outdata, "state") <- "colclass"
-  }
-
-  if (!is.null(attr(imgdat, "px_scale"))) {
     attr(outdata, "px_scale") <- attr(imgdat, "px_scale")
+    attr(outdata, "raw_scale") <- attr(imgdat, "raw_scale")
+    attr(outdata, "state") <- "colclass"
   }
 
   outdata

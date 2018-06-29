@@ -11,8 +11,8 @@ procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
 \item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
-\item{scaledist}{an integer specifying the length of the scale
-in the image(s), if desired.}
+\item{scaledist}{an integer, or vector equal in length to the number of images, 
+specifying the length of the scale in the image(s).}
 
 \item{outline}{allows the user to interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
@@ -41,11 +41,11 @@ Manually specify the scale of images.
 \dontrun{
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-papilio <- procimg(papilio, scale = 10)
+papilio <- procimg(papilio, scaledist = 10)
 
-# Multiple images. Assign a scale an specify the nuber of colours present.
+# Assign individual scales to each image.
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes <- procimg(snakes, scale = 100)
+snakes <- procimg(snakes, scaledist = c(10, 14))
 }
 
 }

@@ -87,7 +87,7 @@
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes_class <- classify(snakes, kcols = 3)
-#' snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = 50)
+#' snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -101,6 +101,7 @@
 adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
                      exclude = c("none", "background", "object"), coldists = NULL,
                      cores = getOption("mc.cores", 2L)) {
+  
   exclude2 <- match.arg(exclude)
 
   ## Checks
@@ -157,8 +158,10 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
   } else if (multi_image) {
     if (!is.null(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale)) {
+    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
       xscale <- as.list(rep(xscale, length(classimg)))
+    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
+      xscale <- xscale
     } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and one or more images are uncalibrated.
            Either specify xscale or use procimg() to set a scale for each image.")

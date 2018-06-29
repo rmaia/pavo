@@ -53,7 +53,8 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
 
     # Attributes
     attr(imgdat, "imgname") <- sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
-    attr(imgdat, "scale") <- NULL
+    attr(imgdat, "px_scale") <- NULL
+    attr(imgdat, "raw_scale") <- NULL
     attr(imgdat, "k") <- NULL
     attr(imgdat, "state") <- "raw"
     attr(image, "outline") <- NULL
@@ -102,7 +103,8 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     # Attributes
     for (i in 1:length(file_names)) {
       attr(imgdat[[i]], "imgname") <- imgnames[i]
-      attr(imgdat[[i]], "scale") <- NULL
+      attr(imgdat[[i]], "px_scale") <- NULL
+      attr(imgdat[[i]], "raw_scale") <- NULL
       attr(imgdat[[i]], "state") <- "raw"
       attr(imgdat[[i]], "k") <- NULL
       attr(imgdat[[i]], "outline") <- NULL

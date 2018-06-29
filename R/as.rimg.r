@@ -45,7 +45,8 @@ as.rimg <- function(object, name = 'img') {
   class(object) <- c("rimg", "array")
   attr(object, "state") <- "raw"
   attr(object, "imgname") <- name
-  attr(object, "scale") <- NULL
+  attr(object, "px_scale") <- NULL
+  attr(object, "raw_scale") <- NULL
   attr(object, "k") <- NULL
   attr(object, "outline") <- NULL
 

@@ -4,8 +4,8 @@
 #'
 #' @param image (required) image data. Either a single image array, or a number of images
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
-#' @param scaledist an integer specifying the length of the scale
-#' in the image(s), if desired.
+#' @param scaledist an integer, or vector equal in length to the number of images, 
+#' specifying the length of the scale in the image(s).
 #' @param outline allows the user to interactively specify the focal object in
 #' an image by clicking around its outline. The xy-coordinates of the resulting
 #' polygon are saved as an attribute, for use in genrating a masking layer &
@@ -26,11 +26,11 @@
 #' @examples \dontrun{
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-#' papilio <- procimg(papilio, scale = 10)
+#' papilio <- procimg(papilio, scaledist = 10)
 #'
-#' # Multiple images. Assign a scale an specify the nuber of colours present.
+#' # Assign individual scales to each image.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes <- procimg(snakes, scale = 100)
+#' snakes <- procimg(snakes, scaledist = c(10, 14))
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -48,13 +48,21 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
   }
 
   if (multi_image) { # Multiple images
-
-    ## Scale ##
+    
+    ## Scale setting ##
     if (is.numeric(scaledist)) {
+      
+      # Formatting
+      if(length(scaledist) == 1)
+        scaledist <- as.list(rep(scaledist, length(image)))
+      if(length(scaledist) > 1 && length(scaledist) != length(image))
+        stop('Number of scales provided greater than one, but unequal to the the number of images. Provide a single scale to be recycled, or one per image.')
+      
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in 1:length(image)) {
-        attr(image[[i]], "scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist, ...)
+        attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], ...)
+        attr(image[[i]], "raw_scale") <- scaledist[[i]]
       }
       if (plotnew) dev.off()
     }
@@ -76,6 +84,7 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
     if (is.numeric(scaledist)) {
       message("Scale calibration: Select both ends of the scale.")
       attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, ...)
+      attr(image, "raw_scale") <- scaledist
     }
     if (plotnew) dev.off()
 

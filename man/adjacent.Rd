@@ -100,7 +100,7 @@ papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 snakes_class <- classify(snakes, kcols = 3)
-snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = 50)
+snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
 }
 
 }
