@@ -5,7 +5,7 @@
 \title{Main function for adjacency analysis}
 \usage{
 adjacent_main(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
-  bkg.include_i = TRUE, coldists_i = NULL)
+  exclude2_i = TRUE, coldists_i = NULL)
 }
 \arguments{
 \item{classimg_i}{(required) an xyz image matrix, or list of matrices, in which
@@ -25,11 +25,12 @@ pertaining to the background. Examine the attributes of, or call \code{summary} 
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
 colour-class ID numbers.}
 
-\item{bkg.include_i}{logical; should the colour classes specified by \code{bkgID_i}
-be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-members of the colour classes specified in \code{bkgID_i} will be excluded, which
-may give undesired results if elements are shared between the background and focal
-stimulus.}
+\item{exclude2_i}{The portion of the image to be excluded from the analysis, if any.
+If excluding the focal object, its outline must first have been idenfitied using 
+\code{\link{procimg}}. If excluding the image background it must either have been
+identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
+the colour-class ID's corresponding to the background can be specified using 
+bkgID.}
 
 \item{coldists_i}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns

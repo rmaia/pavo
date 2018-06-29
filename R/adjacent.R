@@ -5,20 +5,24 @@
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
+#' @param xscale (required) an integer specifying the true length of the x-axis,
+#' in preferred units. Not required, and ignored, if image scales have been set via
+#' \code{\link{procimg}}.
 #' @param xpts an integer specifying the number of sample points, or grid-sampling
 #' density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
 #' Y-axis sampling density is calculated automatically from this, to maintain an even
 #' grid spacing.
-#' @param xscale (required) an integer specifying the true length of the x-axis,
-#' in preferred units. Not required, and ignored, if image scales have been set via
-#' \code{\link{procimg}}.
+#' @param exclude The portion of the image to be excluded from the analysis, if any.
+#' If excluding the focal object, its outline must first have been idenfitied using 
+#' \code{\link{procimg}}. If excluding the image background it must either have been
+#' identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
+#' the colour-class ID's corresponding to the background can be specified using 
+#' bkgID.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
-#' colour-class ID numbers. Ignored if the focal object has been identified using
+#' colour-class ID numbers. Ignored if the focal object and background has been identified using
 #' \code{\link{procimg}}. 
-#' @param bkg.include logical; should the background be excluded from the analyses? 
-#' Defaults to \code{FALSE}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1'
@@ -94,8 +98,11 @@
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution.
 
-adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
-                     bkg.include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L)) {
+adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
+                     exclude = c('none', 'background', 'object'), coldists = NULL, 
+                     cores = getOption("mc.cores", 2L)) {
+
+  exclude2 <- match.arg(exclude)
 
   ## Checks
   # Single or multiple images?
@@ -117,11 +124,16 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
     # Need to sort?
   }
 
-  # Background
-  if (bkg.include == FALSE) {
+  # Exclusion checks
+  if ('background' %in% exclude2) {
     if (is.null(bkgID) && is.null(attr(classimg, 'outline'))){
-      stop("Background cannot be excluded without specifying a focal object outline (e.g. using procimg()),
-           or one or more colour-class ID's via the argument bkgID.")
+      stop("Background cannot be excluded without specifying a focal object outline 
+            (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
+    }
+  }
+  if ('object' %in% exclude2) {
+    if (is.null(attr(classimg, 'outline'))){
+      stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
     }
   }
   
@@ -177,7 +189,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
-          bkg.include_i = bkg.include,
+          exclude2_i = exclude2,
           coldists_i = coldists
         ),
       mc.cores = cores
@@ -186,7 +198,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
-          bkg.include_i = bkg.include,
+          exclude2_i = exclude2,
           coldists_i = coldists
         ))
     )
@@ -205,7 +217,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       xpts_i = xpts,
       xscale_i = xscale,
       bkgID_i = bkgID,
-      bkg.include_i = bkg.include,
+      exclude2_i = exclude2,
       coldists_i = coldists
     )
     rownames(outdata) <- attr(classimg, "imgname")
@@ -224,15 +236,16 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #' @param xscale_i (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, if image scales have been set via
 #' \code{\link{procimg}}.
+#' @param exclude2_i The portion of the image to be excluded from the analysis, if any.
+#' If excluding the focal object, its outline must first have been idenfitied using 
+#' \code{\link{procimg}}. If excluding the image background it must either have been
+#' identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
+#' the colour-class ID's corresponding to the background can be specified using 
+#' bkgID.
 #' @param bkgID_i an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers.
-#' @param bkg.include_i logical; should the colour classes specified by \code{bkgID_i}
-#' be excluded from the analyses? Defaults to \code{FALSE}. Note that if \code{TRUE}, ALL
-#' members of the colour classes specified in \code{bkgID_i} will be excluded, which
-#' may give undesired results if elements are shared between the background and focal
-#' stimulus.
 #' @param coldists_i An data.frame or matrix specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, with the remaining
@@ -245,7 +258,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, bkg.include_i = TRUE, coldists_i = NULL) {
+adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = TRUE, coldists_i = NULL) {
   c1 <- c2 <- NULL
 
   # Scales
@@ -263,11 +276,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
   ]
 
-  # Exclude background, if specified
-  if (bkg.include_i == FALSE) {
+  # Exclude selection, if specified
+  if ('background' %in% exclude2_i) {
     # Complex backgrounds
     if (bkgoutline == TRUE) {
-      # NA everything outside the outlined polyogn
+      # NA everything *outside* the outlined polyogn
       subclass <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
       # Subset matrix to include only rows with at least one non-NA transition
       subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
@@ -276,6 +289,15 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       for (i in 1:length(bkgID_i)) {
         subclass[subclass == bkgID_i[[i]]] <- NA
       }
+      # Subset matrix to include only rows with at least one non-NA transition
+      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
+    }
+  }
+  if ('object' %in% exclude2_i) {
+    # Complex backgrounds only
+    if (bkgoutline == TRUE) {
+      # NA everything *inside* the outlined polyogn
+      subclass <- polymask(classimg_i, attr(classimg_i, "outline"), "inside")
       # Subset matrix to include only rows with at least one non-NA transition
       subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
     }
@@ -446,30 +468,34 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     Jt <- St / (k * (k - 1) / 2)
 
     ## Things involving the background
-    if (!is.null(bkgID_i) && bkg.include_i == TRUE) {
-
-      # Animal/background transition ratio
-      O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
-      O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
-      subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
-      O_a_b <- offdiag[!subb, ]
-      B <- sum(O_a_a$N) / sum(O_a_b$N)
-
-      # Animal/background transition diversity ratios Rt & Rab
-      q_a_a <- q
-      q_a_b <- q
-      q_b_b <- q
-      animID <- setdiff(1:k, bkgID_i)
-      for (i in 1:length(bkgID_i)) {
-        q_a_a <- q_a_a[, !grepl(bkgID_i[i], names(q_a_a))] # Animal background transitions
-        q_b_b <- q_b_b[, !grepl(animID[i], names(q_b_b))] # Background background transitions
-      }
-      q_a_a <- q_a_a / sum(q_a_a)
-      q_b_b <- q_b_b / sum(q_b_b)
-
-      Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
-      Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
-    } else {
+    if('background' %in% exclude2_i){
+      if (bkgoutline){
+        B <- Rt <- Rab <- NA  # TODO
+      }else if (!bkgoutline) {
+  
+        # Animal/background transition ratio
+        O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
+        O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
+        subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
+        O_a_b <- offdiag[!subb, ]
+        B <- sum(O_a_a$N) / sum(O_a_b$N)
+  
+        # Animal/background transition diversity ratios Rt & Rab
+        q_a_a <- q
+        q_a_b <- q
+        q_b_b <- q
+        animID <- setdiff(1:k, bkgID_i)
+        for (i in 1:length(bkgID_i)) {
+          q_a_a <- q_a_a[, !grepl(bkgID_i[i], names(q_a_a))] # Animal background transitions
+          q_b_b <- q_b_b[, !grepl(animID[i], names(q_b_b))] # Background background transitions
+        }
+        q_a_a <- q_a_a / sum(q_a_a)
+        q_b_b <- q_b_b / sum(q_b_b)
+  
+        Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
+        Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
+    }
+      }else {
       B <- Rt <- Rab <- NA
     }
 

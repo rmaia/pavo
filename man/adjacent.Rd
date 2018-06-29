@@ -4,31 +4,36 @@
 \alias{adjacent}
 \title{Run an adjacency analysis}
 \usage{
-adjacent(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
-  bkg.include = TRUE, coldists = NULL, cores = getOption("mc.cores", 2L))
+adjacent(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
+  exclude = c("none", "background", "object"), coldists = NULL,
+  cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
 x and y correspond to pixel coordinates, and z is a numeric code specifying
 a colour-class. Preferably the result of \code{\link{classify}}.}
 
+\item{xscale}{(required) an integer specifying the true length of the x-axis,
+in preferred units. Not required, and ignored, if image scales have been set via
+\code{\link{procimg}}.}
+
 \item{xpts}{an integer specifying the number of sample points, or grid-sampling
 density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
 Y-axis sampling density is calculated automatically from this, to maintain an even
 grid spacing.}
 
-\item{xscale}{(required) an integer specifying the true length of the x-axis,
-in preferred units. Not required, and ignored, if image scales have been set via
-\code{\link{procimg}}.}
-
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,
 the result of \code{\link{classify}} to visualise the RGB values corresponding to
-colour-class ID numbers. Ignored if the focal object has been identified using
+colour-class ID numbers. Ignored if the focal object and background has been identified using
 \code{\link{procimg}}.}
 
-\item{bkg.include}{logical; should the background be excluded from the analyses? 
-Defaults to \code{FALSE}.}
+\item{exclude}{The portion of the image to be excluded from the analysis, if any.
+If excluding the focal object, its outline must first have been idenfitied using 
+\code{\link{procimg}}. If excluding the image background it must either have been
+identified using \code{\link{procspec}}, or if it is relatively homogeneous, 
+the colour-class ID's corresponding to the background can be specified using 
+bkgID.}
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
