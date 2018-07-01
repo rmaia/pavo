@@ -170,12 +170,14 @@ qn.ttdistcalcachro <- function(f1,f2, qn1, qn2, weber.achro){
 
 # 2d Euclidean distance
 euc2d <- function(coord1, coord2){
-  as.numeric(round(sqrt(abs(coord1['x'] - coord2['x'])^2 + abs(coord1['y'] - coord2['y'])^2), 7))
+  as.numeric(round(sqrt((coord1['x'] - coord2['x'])^2 +
+                        (coord1['y'] - coord2['y'])^2), 7))
 }
 
 # 2d Euclidean distance in segment space
 seg2d <- function(coord1, coord2){
-  as.numeric(round(sqrt(abs(coord1['MS'] - coord2['MS'])^2 + abs(coord1['LM'] - coord2['LM'])^2), 7))
+  as.numeric(round(sqrt((coord1['MS'] - coord2['MS'])^2 +
+                        (coord1['LM'] - coord2['LM'])^2), 7))
 }
 
 # Achromatic contrast in segment space
@@ -195,8 +197,9 @@ achrolab <- function(coord1, coord2){
 
 # 2d Euclidean distances in CIELAB
 lab2d <- function(coord1, coord2){
-                     as.numeric(round(sqrt(abs(coord1['L'] - coord2['L'])^2 + abs(coord1['a'] - coord2['a'])^2 +
-                                         abs(coord1['b'] - coord2['b'])^2), 7))
+                     as.numeric(round(sqrt((coord1['L'] - coord2['L'])^2 +
+                                           (coord1['a'] - coord2['a'])^2 +
+                                           (coord1['b'] - coord2['b'])^2), 7))
 }
 
 # CIE2000 colour distance for CIELCh (LOLWAT)
