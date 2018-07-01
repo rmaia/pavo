@@ -30,49 +30,71 @@
 summary.rimg <- function(object, plot = FALSE, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 
-  if (multi_image) {
-    if (plot) {
-      for (i in 1:length(object)) {
-        readline(prompt = "Press [enter] for next plot.")
-        summary_main(object[[i]], plot, ...)
+  if ("colclass" %in% attr(object, "state")) {
+    if (multi_image) {
+      if (plot) {
+        for (i in 1:length(object)) {
+          readline(prompt = "Press [enter] for next plot.")
+          summary_main(object[[i]], plot, ...)
+        }
+      } else {
+        out <- lapply(1:length(object), function(x) data.frame(
+            ID = attr(object[[x]], "imgname"),
+            col_ID = seq(1:nrow(attr(object[[x]], "classRGB"))),
+            attr(object[[x]], "classRGB")
+          ))
+        do.call(rbind, out)
       }
-    } else {
-      out <- lapply(1:length(object), function(x) data.frame(
-          ID = attr(object[[x]], "imgname"),
-          col_ID = seq(1:nrow(attr(object[[x]], "classRGB"))),
-          attr(object[[x]], "classRGB")
-        ))
-      do.call(rbind, out)
+    } else if (!multi_image) {
+      if (plot) {
+        summary_main(object, plot, ...)
+      } else {
+        data.frame(
+          ID = attr(object, "imgname"),
+          col_ID = seq(1:nrow(attr(object, "classRGB"))),
+          attr(object, "classRGB")
+        )
+      }
     }
-  } else if (!multi_image) {
-    if (plot) {
-      summary_main(object, plot, ...)
-    } else {
-      data.frame(
-        ID = attr(object, "imgname"),
-        col_ID = seq(1:nrow(attr(object, "classRGB"))),
-        attr(object, "classRGB")
-      )
+  }else if ("raw" %in% attr(object, "state")){
+    if (multi_image) {
+      if (plot) {
+        for (i in 1:length(object)) {
+          readline(prompt = "Press [enter] for next plot.")
+          defaultrasterImageplot(object[[i]], ...)
+        }
+      } else {
+        out <- lapply(1:length(object), function(x) data.frame(ID = attr(object[[x]], "imgname")))
+        
+        do.call(rbind, out)
+      }
+    } else if (!multi_image) {
+      if (plot) {
+        defaultrasterImageplot(object, ...)
+      } else {
+        data.frame(ID = attr(object, "imgname"))
+      }
     }
   }
 }
 
 summary_main <- function(img, plot, ...) {
   if (plot) {
-    
+
     # Plotting
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
-    
+
     defaultimageplot(img, ...)
 
     # Palette
     arg <- list(...)
-    if(!is.null(arg$col))
+    if (!is.null(arg$col)) {
       palette <- arg$col
-    else
+    } else {
       palette <- rgb(attr(img, "classRGB"))
-    
+    }
+
     image(1:length(palette), 1, as.matrix(1:length(palette)),
       col = palette,
       xlab = paste("Colour class IDs:", paste(1:length(palette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"

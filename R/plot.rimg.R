@@ -96,6 +96,7 @@ classplot <- function(x, ...) {
   }
 }
 
+## For colour-classified images
 defaultimageplot <- function(rawimage, ...) {
 
   # Transform to present the damn correct orientation
@@ -126,6 +127,7 @@ defaultimageplot <- function(rawimage, ...) {
   do.call(image, arg)
 }
 
+## For raw images
 defaultrasterImageplot <- function(imagedata, ...) {
 
   # Defaults
