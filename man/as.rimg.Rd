@@ -9,7 +9,7 @@ as.rimg(object, name = "img")
 \arguments{
 \item{object}{(required) a three-dimensional array containing RGB values.}
 
-\item{name}{the name of the image or images.}
+\item{name}{the name(s) of the image(s).}
 }
 \value{
 an object of class \code{rimg} for use in further \code{pavo}
@@ -36,6 +36,7 @@ is.rimg(fake)
 # Convert to rspec object
 fake2 <- as.rimg(fake)
 is.rimg(fake2)
+
 }
 
 }

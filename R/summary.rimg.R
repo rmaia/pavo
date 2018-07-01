@@ -59,7 +59,6 @@ summary.rimg <- function(object, plot = FALSE, ...) {
 
 summary_main <- function(img, plot, ...) {
   if (plot) {
-    #img_trans <- as.matrix(t(apply(img, 2, rev)))
     
     # Plotting
     par(mfrow = c(1, 2))

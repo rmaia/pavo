@@ -4,7 +4,7 @@
 #' object.
 #'
 #' @param object (required) a three-dimensional array containing RGB values.
-#' @param name the name of the image or images.
+#' @param name the name(s) of the image(s).
 #'
 #' @return an object of class \code{rimg} for use in further \code{pavo}
 #' functions
@@ -27,41 +27,51 @@
 #' # Convert to rspec object
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
+#'
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object, name = "img") {
-
-  attrgive <- function(x) {
-    # Attributes
-    class(x) <- c("rimg", "array")
-    attr(x, "state") <- "raw"
-    attr(x, "imgname") <- name
-    attr(x, "px_scale") <- NULL
-    attr(x, "raw_scale") <- NULL
-    attr(x, "k") <- NULL
-    attr(x, "outline") <- NULL
-    x
-  }
-
-  if (is.list(object)) {
+  
+  if (!inherits(object, "rimg")) {
     
-    object <- lapply(1:length(object), function(j) attrgive(object[[j]]))
-
-    # The list itself needs attributes
-    class(object) <- c("rimg", "list")
-    attr(object, "state") <- "raw"
-    
-  } else {
-    if (!is.array(object)) {
-      stop("Object must be an array.")
+    attrgive <- function(x, name2 = name) {
+      # Attributes
+      class(x) <- c("rimg", "array")
+      attr(x, "state") <- "raw"
+      attr(x, "imgname") <- name2
+      attr(x, "px_scale") <- NULL
+      attr(x, "raw_scale") <- NULL
+      attr(x, "k") <- NULL
+      attr(x, "outline") <- NULL
+      x
     }
-    object <- attrgive(object)
 
-    # Duplicate channels if grayscale
-    if (is.na(dim(object)[3])) {
-      imgdat <- replicate(3, object, simplify = "array")
+    if (is.list(object)) {
+
+      # Attributes
+      if (length(name) == 1) name <- rep(name, length(object))
+      object <- lapply(1:length(object), function(j) attrgive(object[[j]], name[[j]]))
+
+      # Duplicate channels if grayscale
+      for (i in 1:length(object)) {
+        if (is.na(dim(object[[i]])[3])) {
+          object[[i]] <- replicate(3, object[[i]], simplify = "array")
+        }
+      }
+
+      # The list itself needs attributes
+      class(object) <- c("rimg", "list")
+      attr(object, "state") <- "raw"
+    } else {
+      if (!is.array(object)) stop("Object must be an array.")
+
+      # Attributes
+      object <- attrgive(object)
+
+      # Duplicate channels if grayscale
+      if (is.na(dim(object)[3])) imgdat <- replicate(3, object, simplify = "array")
     }
   }
 

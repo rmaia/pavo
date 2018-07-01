@@ -46,19 +46,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
     imgdat <- read.bitmap(imgpath)
 
-    # Duplicate channels if grayscale
-    if (is.na(dim(imgdat)[3])) {
-      imgdat <- replicate(3, imgdat, simplify = "array")
-    }
-
-    # Attributes
-    attr(imgdat, "imgname") <- sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
-    attr(imgdat, "px_scale") <- NULL
-    attr(imgdat, "raw_scale") <- NULL
-    attr(imgdat, "k") <- NULL
-    attr(imgdat, "state") <- "raw"
-    attr(image, "outline") <- NULL
-    class(imgdat) <- c("rimg", "array")
+    imgdat <- as.rimg(imgdat, name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Otherwise it's a directory of images
   } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
@@ -93,26 +81,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
       imgdat <- lapply(1:length(file_names), function(x) read.bitmap(files[x]))
     }
 
-    # Duplicate channels if grayscale
-    for (i in 1:length(imgdat)) {
-      if (is.na(dim(imgdat[[i]])[3])) {
-        imgdat[[i]] <- replicate(3, imgdat[[i]], simplify = "array")
-      }
-    }
-
-    # Attributes
-    for (i in 1:length(file_names)) {
-      attr(imgdat[[i]], "imgname") <- imgnames[i]
-      attr(imgdat[[i]], "px_scale") <- NULL
-      attr(imgdat[[i]], "raw_scale") <- NULL
-      attr(imgdat[[i]], "state") <- "raw"
-      attr(imgdat[[i]], "k") <- NULL
-      attr(imgdat[[i]], "outline") <- NULL
-      class(imgdat[[i]]) <- c("rimg", "array")
-    }
-    # The list itself needs attributes
-    class(imgdat) <- c("rimg", "list")
-    attr(imgdat, "state") <- "raw"
+    imgdat <- as.rimg(imgdat, imgnames)
 
     # Simplify if it's a single image  (TODO LESS SHITE)
     if (length(imgdat) == 1) {

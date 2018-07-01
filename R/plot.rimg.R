@@ -85,13 +85,6 @@ classplot <- function(x, ...) {
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  # # Reformat & rotate to account for the silliness of image()
-  # if (multi_image) {
-  #   x_trans <- lapply(1:length(x), function(y) as.matrix(t(apply(x[[y]], 2, rev))))
-  # } else if (!multi_image) {
-  #   imgdat2 <- as.matrix(t(apply(x, 2, rev)))
-  # }
-
   if (multi_image) { # Multiple images
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
