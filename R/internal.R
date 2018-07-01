@@ -3,52 +3,51 @@
 # loadrgl <- function(){
 # # load RGL, and attempt install if not found
 # if (!require('rgl',character.only = TRUE))
-  # {
-  # message('package ', dQuote('rgl'), ' not found; attempting install...')
-  # install.packages('rgl',dep=TRUE)
+# {
+# message('package ', dQuote('rgl'), ' not found; attempting install...')
+# install.packages('rgl',dep=TRUE)
 
-  # if(!require('rgl',character.only = TRUE))
-    # stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
-    # }
+# if(!require('rgl',character.only = TRUE))
+# stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
+# }
 # }
 
 #####################
 # SUMMARY VARIABLES #
 #####################
 
-huedisp <- function(tcsres){
-  ind <- t(combn(nrow(tcsres),2))
-  apply(ind,1, function(x)
-	 acos((cos(tcsres[x[1],'h.phi'])*cos(tcsres[x[2],'h.phi'])*cos(tcsres[x[1],'h.theta'] -
-	 tcsres[x[2],'h.theta'])) + (sin(tcsres[x[1],'h.phi'])*sin(tcsres[x[2],'h.phi'])))
-     )
+huedisp <- function(tcsres) {
+  ind <- t(combn(nrow(tcsres), 2))
+  apply(ind, 1, function(x)
+    acos((cos(tcsres[x[1], "h.phi"]) * cos(tcsres[x[2], "h.phi"]) * cos(tcsres[x[1], "h.theta"] -
+      tcsres[x[2], "h.theta"])) + (sin(tcsres[x[1], "h.phi"]) * sin(tcsres[x[2], "h.phi"]))))
 }
 
 
-tcssum <- function(tcsres){
+tcssum <- function(tcsres) {
   # centroid
-  centroid <- colMeans(tcsres[c('u','s','m','l')])
+  centroid <- colMeans(tcsres[c("u", "s", "m", "l")])
 
   # color span
-  colspan.m <- mean(dist(tcsres[,c('x','y','z')]))
-  colspan.v <- var(dist(tcsres[,c('x','y','z')]))
+  colspan.m <- mean(dist(tcsres[, c("x", "y", "z")]))
+  colspan.v <- var(dist(tcsres[, c("x", "y", "z")]))
 
   # color volume
-  if(nrow(tcsres)>3)
-       {
-       c.vol <- convhulln(tcsres[,c('x','y','z')],"FA")$vol
-       }else{
-         c.vol<-NA}
+  if (nrow(tcsres) > 3) {
+    c.vol <- convhulln(tcsres[, c("x", "y", "z")], "FA")$vol
+  } else {
+    c.vol <- NA
+  }
 
   # relative color volume
-  if(nrow(tcsres)>3)
-       {
-       # Exact formula for the volume of a regular tetrahedron inscribed in a
-       # circle of radius (3/4)
-       tot.c.vol <- (3/sqrt(6))^3 / (6*sqrt(2))
-       rel.c.vol <- c.vol/tot.c.vol
-       }else{
-         rel.c.vol<-NA}
+  if (nrow(tcsres) > 3) {
+    # Exact formula for the volume of a regular tetrahedron inscribed in a
+    # circle of radius (3/4)
+    tot.c.vol <- (3 / sqrt(6))^3 / (6 * sqrt(2))
+    rel.c.vol <- c.vol / tot.c.vol
+  } else {
+    rel.c.vol <- NA
+  }
 
   # hue disparity
   hdisp.m <- mean(huedisp(tcsres))
@@ -56,12 +55,14 @@ tcssum <- function(tcsres){
 
   # summary of achieved chroma
   mean.ra <- mean(tcsres$r.achieved)
-  max.ra  <-  max(tcsres$r.achieved)
+  max.ra <- max(tcsres$r.achieved)
 
-  res.c <- c(centroid,c.vol, rel.c.vol, colspan.m,colspan.v,hdisp.m, hdisp.v, mean.ra,max.ra)
-  names(res.c) <- c('centroid.u', 'centroid.s', 'centroid.m', 'centroid.l',
-                  'c.vol', 'rel.c.vol', 'colspan.m', 'colspan.v', 'huedisp.m', 'huedisp.v',
-                  'mean.ra', 'max.ra')
+  res.c <- c(centroid, c.vol, rel.c.vol, colspan.m, colspan.v, hdisp.m, hdisp.v, mean.ra, max.ra)
+  names(res.c) <- c(
+    "centroid.u", "centroid.s", "centroid.m", "centroid.l",
+    "c.vol", "rel.c.vol", "colspan.m", "colspan.v", "huedisp.m", "huedisp.v",
+    "mean.ra", "max.ra"
+  )
 
   res.c
 }
@@ -71,33 +72,36 @@ tcssum <- function(tcsres){
 
 # Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
 # in the colour hexagon
-angle360 <- function(x, y){
-
-  theta <- 90 - (atan2(y, x) * (180/pi))
-  if(theta < 0)
+angle360 <- function(x, y) {
+  theta <- 90 - (atan2(y, x) * (180 / pi))
+  if (theta < 0) {
     theta <- theta + 360
+  }
 
   theta
-
 }
 
 # Calculate the coarse hexagon sector
-coarse_sec <- function(x){
-  if(isTRUE(x == 0))
-    return('achro')
-  if(isTRUE(x >= 30 && x < 90))
-    return('bluegreen')
-  if(isTRUE(x >= 90 && x < 150))
-    return('green')
-  if(isTRUE(x >= 150 && x < 210))
-    return('uvgreen')
-  if(isTRUE(x >= 210 && x < 270))
-    return('uv')
-  if(isTRUE(x >= 270 && x < 330))
-    return('uvblue')
-  if(isTRUE(x >= 330 || x < 30))
-    return('blue')
+coarse_sec <- function(x) {
+  if (isTRUE(x == 0)) {
+    return("achro")
+  }
+  if (isTRUE(x >= 30 && x < 90)) {
+    return("bluegreen")
+  }
+  if (isTRUE(x >= 90 && x < 150)) {
+    return("green")
+  }
+  if (isTRUE(x >= 150 && x < 210)) {
+    return("uvgreen")
+  }
+  if (isTRUE(x >= 210 && x < 270)) {
+    return("uv")
+  }
+  if (isTRUE(x >= 270 && x < 330)) {
+    return("uvblue")
+  }
+  if (isTRUE(x >= 330 || x < 30)) {
+    return("blue")
+  }
 }
-
-
-
