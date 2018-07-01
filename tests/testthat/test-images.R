@@ -21,7 +21,7 @@ test_that("Basic", {
   expect_equal(fake_adjacent$m, ((fake_adjacent$m_r + fake_adjacent$m_c) / 2))
 
   ## Multiple images
-  fake2 <- list(fake, fake)
+  fake2 <- as.rimg(list(fake, fake))
   attr(fake2[[1]], "imgname") <- "fake_01"
   attr(fake2[[2]], "imgname") <- "fake_02"
   fake_IDs <- data.frame(

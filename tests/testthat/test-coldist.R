@@ -4,12 +4,6 @@ context("coldist")
 test_that("Errors", {
   data(flowers)
 
-  expect_error(coldist(vismodel(flowers), v = 0.2), "deprecated")
-  expect_error(coldist(vismodel(flowers), n1 = 1), "deprecated")
-  expect_error(coldist(vismodel(flowers), n2 = 2), "deprecated")
-  expect_error(coldist(vismodel(flowers), n3 = 2), "deprecated")
-  expect_error(coldist(vismodel(flowers), n4 = 4), "deprecated")
-
   expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3, 4, 5), achro = FALSE), "different length")
   expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3), achro = FALSE), "different length")
 })

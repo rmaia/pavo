@@ -85,26 +85,29 @@ classplot <- function(x, ...) {
   ## Checks
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  # Reformat & rotate to account for the silliness of image()
-  if (multi_image) {
-    x_trans <- lapply(1:length(x), function(y) as.matrix(t(apply(x[[y]], 2, rev))))
-  } else if (!multi_image) {
-    imgdat2 <- as.matrix(t(apply(x, 2, rev)))
-  }
+  # # Reformat & rotate to account for the silliness of image()
+  # if (multi_image) {
+  #   x_trans <- lapply(1:length(x), function(y) as.matrix(t(apply(x[[y]], 2, rev))))
+  # } else if (!multi_image) {
+  #   imgdat2 <- as.matrix(t(apply(x, 2, rev)))
+  # }
 
   if (multi_image) { # Multiple images
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
-      imgdat2 <- x_trans[[i]]
-      defaultimageplot(imgdat2, x[[i]], ...)
+      #imgdat2 <- x_trans[[i]]
+      defaultimageplot(x[[i]], ...)
     }
   } else if (!multi_image) { # Single image
-    defaultimageplot(imgdat2, x, ...)
+    defaultimageplot(x, ...)
   }
 }
 
-defaultimageplot <- function(imagedata, rawimage, ...) {
+defaultimageplot <- function(rawimage, ...) {
 
+  # Transform to present the damn correct orientation
+  imagedata <- as.matrix(t(apply(rawimage, 2, rev))) 
+  
   # Defaults
   arg <- list(...)
   if (is.null(arg$xlab)) arg$xlab <- "x"

@@ -66,8 +66,6 @@
 #' 	objects of class \code{vismodel}.
 #' }
 #'
-#' @param n1,n2,n3,n4,v deprecated arguments. see below.
-#'
 #' @return A data frame containing up to 4 columns.
 #' The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
@@ -379,16 +377,6 @@ coldist <- function(modeldata,
   #######################
   # END OTHER DISTANCES #
   #######################
-
-  # check deprecated arguments
-  if (!missing(v)) {
-    stop("argument v is deprecated, please use weber instead. see ?coldist for more information.", call. = FALSE)
-  }
-
-  if (!missing(n1) || !missing(n2) || !missing(n3) || !missing(n4)) {
-    stop("arguments n1, n2, n3 and n4 are deprecated, please use n instead. see ?coldist for more information.", call. = FALSE)
-  }
-
 
   noise <- match.arg(noise)
 

@@ -125,7 +125,11 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
 scaler <- function(image_i, scaledist_i, ...) {
   
   # Plot
-  defaultrasterImageplot(image_i, ...)
+  if(attr(image_i, 'state') == 'raw')
+    defaultrasterImageplot(image_i, ...)
+  else if(attr(image_i, 'state') == 'colclass'){
+    defaultimageplot(image_i, ...)
+  }
 
   reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
   pixdist <- as.integer(dist(round(reference)))
@@ -151,7 +155,11 @@ scaler <- function(image_i, scaledist_i, ...) {
 outliner <- function(image_i, smooth_i, refinements_i, ...) {
 
   # Plot
-  defaultrasterImageplot(image_i, ...)
+  if(attr(image_i, 'state') == 'raw')
+    defaultrasterImageplot(image_i, ...)
+  else if(attr(image_i, 'state') == 'colclass')
+    defaultimageplot(image_i, ...)
+    
 
   # Get coordinates
   xy <- locator(type = "p", col = "red", lwd = 2)

@@ -76,8 +76,6 @@ categorical, segment, and cie models).}
  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
-
-\item{n1, n2, n3, n4, v}{deprecated arguments. see below.}
 }
 \value{
 A data frame containing up to 4 columns.

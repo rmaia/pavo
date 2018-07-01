@@ -31,24 +31,39 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-as.rimg <- function(object, name = 'img') {
-  if (!is.array(object)) {
-    stop("Object must be an array.")
+as.rimg <- function(object, name = "img") {
+
+  attrgive <- function(x) {
+    # Attributes
+    class(x) <- c("rimg", "array")
+    attr(x, "state") <- "raw"
+    attr(x, "imgname") <- name
+    attr(x, "px_scale") <- NULL
+    attr(x, "raw_scale") <- NULL
+    attr(x, "k") <- NULL
+    attr(x, "outline") <- NULL
+    x
   }
 
-  # Duplicate channels if grayscale
-  if (is.na(dim(object)[3])) {
-    imgdat <- replicate(3, object, simplify = "array")
-  }
+  if (is.list(object)) {
+    
+    object <- lapply(1:length(object), function(j) attrgive(object[[j]]))
 
-  # Attributes
-  class(object) <- c("rimg", "array")
-  attr(object, "state") <- "raw"
-  attr(object, "imgname") <- name
-  attr(object, "px_scale") <- NULL
-  attr(object, "raw_scale") <- NULL
-  attr(object, "k") <- NULL
-  attr(object, "outline") <- NULL
+    # The list itself needs attributes
+    class(object) <- c("rimg", "list")
+    attr(object, "state") <- "raw"
+    
+  } else {
+    if (!is.array(object)) {
+      stop("Object must be an array.")
+    }
+    object <- attrgive(object)
+
+    # Duplicate channels if grayscale
+    if (is.na(dim(object)[3])) {
+      imgdat <- replicate(3, object, simplify = "array")
+    }
+  }
 
   object
 }
