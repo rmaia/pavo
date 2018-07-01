@@ -17,8 +17,7 @@
 #####################
 
 huedisp <- function(tcsres) {
-  ind <- t(combn(nrow(tcsres), 2))
-  apply(ind, 1, function(x)
+  combn(nrow(tcsres), 2, function(x)
     acos((cos(tcsres[x[1], "h.phi"]) * cos(tcsres[x[2], "h.phi"]) * cos(tcsres[x[1], "h.theta"] -
       tcsres[x[2], "h.theta"])) + (sin(tcsres[x[1], "h.phi"]) * sin(tcsres[x[2], "h.phi"]))))
 }
@@ -32,20 +31,19 @@ tcssum <- function(tcsres) {
   colspan.m <- mean(dist(tcsres[, c("x", "y", "z")]))
   colspan.v <- var(dist(tcsres[, c("x", "y", "z")]))
 
-  # color volume
   if (nrow(tcsres) > 3) {
+    # color volume
     c.vol <- convhulln(tcsres[, c("x", "y", "z")], "FA")$vol
-  } else {
-    c.vol <- NA
-  }
 
-  # relative color volume
-  if (nrow(tcsres) > 3) {
     # Exact formula for the volume of a regular tetrahedron inscribed in a
     # circle of radius (3/4)
     tot.c.vol <- (3 / sqrt(6))^3 / (6 * sqrt(2))
+
+    # relative color volume
     rel.c.vol <- c.vol / tot.c.vol
+
   } else {
+    c.vol <- NA
     rel.c.vol <- NA
   }
 
@@ -57,7 +55,12 @@ tcssum <- function(tcsres) {
   mean.ra <- mean(tcsres$r.achieved)
   max.ra <- max(tcsres$r.achieved)
 
-  res.c <- c(centroid, c.vol, rel.c.vol, colspan.m, colspan.v, hdisp.m, hdisp.v, mean.ra, max.ra)
+  res.c <- c(centroid,
+             c.vol, rel.c.vol,
+             colspan.m, colspan.v,
+             hdisp.m, hdisp.v,
+             mean.ra, max.ra)
+
   names(res.c) <- c(
     "centroid.u", "centroid.s", "centroid.m", "centroid.l",
     "c.vol", "rel.c.vol", "colspan.m", "colspan.v", "huedisp.m", "huedisp.v",
