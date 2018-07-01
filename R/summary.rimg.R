@@ -79,6 +79,6 @@ summary_main <- function(img, plot, ...) {
       xlab = paste("Colour class IDs:", paste(1:length(palette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
     )
   } else {
-    attr(object, "classRGB")
+    attr(img, "classRGB")
   }
 }
