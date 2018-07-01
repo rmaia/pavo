@@ -9,7 +9,7 @@ as.rimg(object, name = "img")
 \arguments{
 \item{object}{(required) a three-dimensional array containing RGB values.}
 
-\item{name}{the name of the image.}
+\item{name}{the name of the image or images.}
 }
 \value{
 an object of class \code{rimg} for use in further \code{pavo}

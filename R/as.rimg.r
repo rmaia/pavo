@@ -4,7 +4,7 @@
 #' object.
 #'
 #' @param object (required) a three-dimensional array containing RGB values.
-#' @param name the name of the image.
+#' @param name the name of the image or images.
 #'
 #' @return an object of class \code{rimg} for use in further \code{pavo}
 #' functions

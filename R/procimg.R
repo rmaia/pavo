@@ -42,6 +42,11 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
                     refinements = 1L, plotnew = FALSE, ...) {
 
   ## Checks
+  if(!'rimg' %in% class(image)){
+    warning('Attempting to coerce image to class rimg.')
+    image <- as.rimg(image)
+  }
+    
   multi_image <- inherits(image, "list") # Single or multiple images?
   if (is.null(scaledist) & !outline) {
     stop("No options selected.")

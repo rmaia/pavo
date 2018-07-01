@@ -55,6 +55,12 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
 
   ## Checks
+  # class
+  if(!'rimg' %in% class(imgdat)){
+    warning('Attempting to coerce image to class rimg.')
+    imgdat <- as.rimg(imgdat)
+  }
+  
   # Single or multiple images?
   multi_image <- inherits(imgdat, "list")
 
