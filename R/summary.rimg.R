@@ -27,7 +27,7 @@
 #' }
 #'
 
-summary.rimg <- function(object, plot = FALSE,...) {
+summary.rimg <- function(object, plot = FALSE, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 
   if (multi_image) {
@@ -57,21 +57,26 @@ summary.rimg <- function(object, plot = FALSE,...) {
   }
 }
 
-summary_main <- function(object, plot, ...) {
+summary_main <- function(img, plot, ...) {
   if (plot) {
-    object2 <- as.matrix(t(apply(object, 2, rev)))
+    img_trans <- as.matrix(t(apply(img, 2, rev)))
     
     # Plotting
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
     
-    defaultimageplot(object2, object, ...)
+    defaultimageplot(img_trans, img, ...)
 
     # Palette
-    natpalette <- rgb(attr(object, "classRGB"))
-    image(1:length(natpalette), 1, as.matrix(1:length(natpalette)),
-      col = natpalette,
-      xlab = paste("Colour class IDs:", paste(1:length(natpalette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
+    arg <- list(...)
+    if(!is.null(arg$col))
+      palette <- arg$col
+    else
+      palette <- rgb(attr(img, "classRGB"))
+    
+    image(1:length(palette), 1, as.matrix(1:length(palette)),
+      col = palette,
+      xlab = paste("Colour class IDs:", paste(1:length(palette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
     )
   } else {
     attr(object, "classRGB")
