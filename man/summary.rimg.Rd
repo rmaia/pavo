@@ -29,6 +29,11 @@ summary(papilio_class)
 
 # Plot the colour-classified image alongside the colour class palette
 summary(papilio_class, plot = TRUE)
+
+# Multiple images
+snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+snakes_class <- classify(snakes, kcols = 3)
+summary(snakes_class, plot = TRUE)
 }
 
 }

@@ -24,13 +24,18 @@
 #'
 #' # Plot the colour-classified image alongside the colour class palette
 #' summary(papilio_class, plot = TRUE)
+#' 
+#' # Multiple images
+#' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+#' snakes_class <- classify(snakes, kcols = 3)
+#' summary(snakes_class, plot = TRUE)
 #' }
 #'
 
 summary.rimg <- function(object, plot = FALSE, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 
-  if ("colclass" %in% attr(object, "state")) {
+  if ("colclass" %in% attr(object[[1]], "state")) {
     if (multi_image) {
       if (plot) {
         for (i in 1:length(object)) {
@@ -56,7 +61,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
         )
       }
     }
-  }else if ("raw" %in% attr(object, "state")){
+  }else if ("raw" %in% attr(object[[1]], "state")){
     if (multi_image) {
       if (plot) {
         for (i in 1:length(object)) {

@@ -33,7 +33,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object, name = "img") {
-#  if (!inherits(object, "rimg")) {
+  if (!inherits(object, "rimg")) {
     attrgiver <- function(x, name2 = name) {
       # Attributes
       class(x) <- c("rimg", "array")
@@ -48,7 +48,7 @@ as.rimg <- function(object, name = "img") {
 
     rescaler <- function(x) {
       if (any(x > 1)) {
-        message('Rescaling values to [0,1]')
+        message("Rescaling values to [0,1]")
         for (i in 1:dim(x)[3]) {
           x[, , i] <- x[, , i] / 255
         }
@@ -80,15 +80,14 @@ as.rimg <- function(object, name = "img") {
 
       # Duplicate channels if grayscale
       if (is.na(dim(object)[3])) imgdat <- replicate(3, object, simplify = "array")
-      
+
       # Rescale RGB to [0,1] if need be
       object <- rescaler(object)
-      
+
       # Attributes
       object <- attrgiver(object)
-
     }
-#  }
+  }
 
   object
 }
