@@ -103,7 +103,7 @@ trispace <- function(vismodeldata) {
   y <- (sqrt(2) / sqrt(3)) * (s - ((l + m) / 2))
 
   # colorimetrics
-  r.vec <- sqrt((abs(x)) ^ 2 + (abs(y) ^ 2))
+  r.vec <- sqrt(x^2 + y^2)
   h.theta <- atan2(y, x)
 
   res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, row.names = rownames(dat))
