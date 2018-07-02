@@ -146,7 +146,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   ## Setting scales
   # Single image
   if (!multi_image) {
-    if (!is.null(attr(classimg, "px_scale"))) {
+    if (!is.na(attr(classimg, "px_scale"))) {
       xscale <- attr(classimg, "px_scale") * dim(classimg)[2]
     } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and image data are uncalibrated. Either
@@ -154,13 +154,13 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     }
     ## Multi images
   } else if (multi_image) {
-    if (!is.null(attr(classimg[[1]], "px_scale"))) {
+    if (!is.na(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
+    } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
       xscale <- as.list(rep(xscale, length(classimg)))
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
+    } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
       xscale <- xscale
-    } else if (is.null(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
+    } else if (is.na(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and one or more images are uncalibrated.
            Either specify xscale or use procimg() to set a scale for each image.")
     }
@@ -260,12 +260,12 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #'
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = NULL, coldists_i = NULL) {
   c1 <- c2 <- NULL
-
+  
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
   # Simple or 'complex' background?
-  bkgoutline <- ifelse(is.null(attr(classimg_i, "outline")),
+  bkgoutline <- ifelse(is.na(attr(classimg_i, "outline")),
     FALSE,
     TRUE
   )
@@ -297,7 +297,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     }
   }
   
-  # Subsample (does nothing if x_pts = ncols, default)
+  # Subsample (does nothing if x_pts = ncols, default)   # What if greater than dimensions of data??
   subclass <- classimg_i[
     seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
     seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)

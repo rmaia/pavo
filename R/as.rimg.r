@@ -39,10 +39,10 @@ as.rimg <- function(object, name = "img") {
       class(x) <- c("rimg", "array")
       attr(x, "state") <- "raw"
       attr(x, "imgname") <- name2
-      attr(x, "px_scale") <- NULL
-      attr(x, "raw_scale") <- NULL
-      attr(x, "k") <- NULL
-      attr(x, "outline") <- NULL
+      attr(x, "px_scale") <- NA
+      attr(x, "raw_scale") <- NA
+      attr(x, "k") <- NA
+      attr(x, "outline") <- NA
       x
     }
 
@@ -59,7 +59,8 @@ as.rimg <- function(object, name = "img") {
     if (is.list(object)) {
 
       # Attributes
-      if (length(name) == 1) name <- rep(name, length(object))
+      if (length(name) == 1) 
+        name <- rep(name, length(object))
       object <- lapply(1:length(object), function(j) attrgiver(object[[j]], name[[j]]))
 
       # Duplicate channels if grayscale
@@ -76,10 +77,13 @@ as.rimg <- function(object, name = "img") {
       class(object) <- c("rimg", "list")
       attr(object, "state") <- "raw"
     } else {
-      if (!is.array(object)) stop("Object must be an array.")
+
+      if (!is.array(object)) 
+        stop("Object must be an array.")
 
       # Duplicate channels if grayscale
-      if (is.na(dim(object)[3])) imgdat <- replicate(3, object, simplify = "array")
+      if (is.na(dim(object)[3])) 
+        object <- replicate(3, object, simplify = "array")
 
       # Rescale RGB to [0,1] if need be
       object <- rescaler(object)
