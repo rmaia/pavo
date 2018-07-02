@@ -101,7 +101,6 @@
 adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
                      exclude = c("none", "background", "object"), coldists = NULL,
                      cores = getOption("mc.cores", 2L)) {
-  
   exclude2 <- match.arg(exclude)
 
   ## Checks
@@ -137,13 +136,13 @@ adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
     }
   }
 
-  #FIX
+  # FIX
   # if (multi_image) {
   #   n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
   # } else {
   #   n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
   # }
-  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)                        
+  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)
   #   stop('No colour classes remaining.')
 
   ## Setting scales
@@ -486,12 +485,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
         Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
         Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
-        
       } else {
-      
         B <- Rt <- Rab <- NA
-
       }
+    } else {
+      B <- Rt <- Rab <- NA
     }
 
     # Boundary strength (Endler et al. 2018)
