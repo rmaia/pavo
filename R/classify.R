@@ -57,7 +57,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   ## Checks
   # class
   if(!'rimg' %in% class(imgdat)){
-    warning('Attempting to coerce image to class rimg.')
+    message('Attempting to coerce image to class rimg.')
     imgdat <- as.rimg(imgdat)
   }
   
@@ -114,7 +114,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
       # Can't have a reference image when k's vary
       if (length(unique(kcols)) > 1 && !is.null(refID)) {
-        warning("Cannot use reference image when kcols varies between images. Ignoring refID.")
+        message("Cannot use reference image when kcols varies between images. Ignoring refID.")
         refID <- NULL
       }
     }
@@ -381,6 +381,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 #'
 classify_main <- function(imgdat_i, n_cols_i) {
   
+  #if(method == 'kmeans'){
+    
   ## Dimensions
   imgdim <- dim(imgdat_i)
   
@@ -409,6 +411,52 @@ classify_main <- function(imgdat_i, n_cols_i) {
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
+  
+  #}
+  
+  # if(method == 'hierarchical'){
+  #   
+  #   ## Dimensions
+  #   imgdim <- dim(imgdat_i)
+  #   
+  #   #Using the whole image is overkill, especially for large files.
+  #   #Therefore, create a grid from which extract the colors
+  #   xgrid <- ceiling(seq(1, imgdim[1], length.out = 50))
+  #   ygrid <- ceiling(seq(1, imgdim[2], length.out = 50))
+  #   pixels <- expand.grid(xgrid, ygrid)
+  #   
+  #   # Assign RGB channels to data frame
+  #   imgRGB <- data.frame(
+  #     x = rep(imgdim[1]:1, imgdim[2]),
+  #     y = rep(1:imgdim[2], each = imgdim[1]),
+  #     R = as.vector(imgdat_i[, , 1]),
+  #     G = as.vector(imgdat_i[, , 2]),
+  #     B = as.vector(imgdat_i[, , 3])
+  #   )
+  #   pixels$redVals <- apply(pixels, 1, function(x){return(img[x[1], x[2], ][1])})
+  #   pixels$greenVals <- apply(pixels, 1, function(x){return(img[x[1], x[2], ][2])})
+  #   pixels$blueVals <- apply(pixels, 1, function(x){return(img[x[1] ,x[2], ][3])})
+  #   
+  #   # Euclidian distances of the pixels.
+  #   distMat <- dist(pixels[, 3:5], method = 'euclidean')
+  #   
+  #   # Group
+  #   x <- hclust(distMat,method = 'complete')
+  #   
+  #   # Assign to k-groups
+  #   pixels$groups <- cutree(x, k = 2)
+  #   imgRGB$groups <- cutree(x, k = 2)
+  #   
+  #   # Take mean RGBs
+  #   redGroup <- tapply(pixels$redVals, pixels$groups, mean)
+  #   greenGroup <- tapply(pixels$greenVals, pixels$groups, mean)
+  #   blueGroup <- tapply(pixels$blueVals, pixels$groups, mean)
+  #   
+  #   # Output
+  #   groupCols <- data.frame(gp = 1:ncols, red = redGroup, green = greenGroup, blue=blueGroup)
+  #   groupCols$hexCode <- rgb(red = groupCols$red, green = groupCols$green, blue = groupCols$blue, alpha = 1, maxColorValue = 1)
+  #   
+  # }
   
   outmat
 }

@@ -33,10 +33,8 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object, name = "img") {
-  
-  if (!inherits(object, "rimg")) {
-    
-    attrgive <- function(x, name2 = name) {
+#  if (!inherits(object, "rimg")) {
+    attrgiver <- function(x, name2 = name) {
       # Attributes
       class(x) <- c("rimg", "array")
       attr(x, "state") <- "raw"
@@ -48,11 +46,21 @@ as.rimg <- function(object, name = "img") {
       x
     }
 
+    rescaler <- function(x) {
+      if (any(x > 1)) {
+        message('Rescaling values to [0,1]')
+        for (i in 1:dim(x)[3]) {
+          x[, , i] <- x[, , i] / 255
+        }
+      }
+      x
+    }
+
     if (is.list(object)) {
 
       # Attributes
       if (length(name) == 1) name <- rep(name, length(object))
-      object <- lapply(1:length(object), function(j) attrgive(object[[j]], name[[j]]))
+      object <- lapply(1:length(object), function(j) attrgiver(object[[j]], name[[j]]))
 
       # Duplicate channels if grayscale
       for (i in 1:length(object)) {
@@ -61,19 +69,26 @@ as.rimg <- function(object, name = "img") {
         }
       }
 
+      # Rescale RGB to [0,1] if need be
+      object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
+
       # The list itself needs attributes
       class(object) <- c("rimg", "list")
       attr(object, "state") <- "raw"
     } else {
       if (!is.array(object)) stop("Object must be an array.")
 
-      # Attributes
-      object <- attrgive(object)
-
       # Duplicate channels if grayscale
       if (is.na(dim(object)[3])) imgdat <- replicate(3, object, simplify = "array")
+      
+      # Rescale RGB to [0,1] if need be
+      object <- rescaler(object)
+      
+      # Attributes
+      object <- attrgiver(object)
+
     }
-  }
+#  }
 
   object
 }

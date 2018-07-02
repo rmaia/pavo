@@ -4,7 +4,7 @@
 \alias{adjacent}
 \title{Run an adjacency analysis}
 \usage{
-adjacent(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
+adjacent(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   exclude = c("none", "background", "object"), coldists = NULL,
   cores = getOption("mc.cores", 2L))
 }
@@ -17,10 +17,8 @@ a colour-class. Preferably the result of \code{\link{classify}}.}
 in preferred units. Not required, and ignored, only if image scales have been set via
 \code{\link{procimg}}.}
 
-\item{xpts}{an integer specifying the number of sample points, or grid-sampling
-density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
-Y-axis sampling density is calculated automatically from this, to maintain an even
-grid spacing.}
+\item{xpts}{an integer specifying the number of sample points along the x-axis, from which 
+the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid).}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background. Examine the attributes of, or call \code{summary} on,

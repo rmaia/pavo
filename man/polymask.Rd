@@ -4,7 +4,8 @@
 \alias{polymask}
 \title{Manipulate classified image data that fall inside/outside a polygon}
 \usage{
-polymask(imagedat, poly, alterWhich = c("inside", "outside"))
+polymask(imagedat, poly, alterWhich = c("outside", "inside"),
+  replacement = NA)
 }
 \arguments{
 \item{imagedat}{data.}
@@ -12,6 +13,8 @@ polymask(imagedat, poly, alterWhich = c("inside", "outside"))
 \item{poly}{xy polygon coordinates.}
 
 \item{alterWhich}{manipulate values inside or outside the polygon.}
+
+\item{replacement}{the replacement value.}
 }
 \description{
 Manipulate classified image data that fall inside/outside a polygon

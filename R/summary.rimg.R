@@ -97,7 +97,7 @@ summary_main <- function(img, plot, ...) {
 
     image(1:length(palette), 1, as.matrix(1:length(palette)),
       col = palette,
-      xlab = paste("Colour class IDs:", paste(1:length(palette), collapse = ", ")), ylab = "", xaxt = "n", yaxt = "n"
+      xlab = paste("Colour class IDs: 1 -", length(palette)), ylab = "", xaxt = "n", yaxt = "n"
     )
   } else {
     attr(img, "classRGB")

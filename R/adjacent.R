@@ -8,10 +8,8 @@
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points, or grid-sampling
-#' density, along the x axis. Defaults to the size of the x-dimension (i.e. every pixel).
-#' Y-axis sampling density is calculated automatically from this, to maintain an even
-#' grid spacing.
+#' @param xpts an integer specifying the number of sample points along the x-axis, from which 
+#' the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid). 
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
@@ -98,7 +96,7 @@
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. Methods in Ecology and Evolution.
 
-adjacent <- function(classimg, xscale = NULL, xpts = NULL, bkgID = NULL,
+adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
                      exclude = c("none", "background", "object"), coldists = NULL,
                      cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
@@ -272,38 +270,38 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     TRUE
   )
 
-  # Subsample (does nothing if x_pts = ncols, default)
-  subclass <- classimg_i[
-    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
-    seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
-  ]
-
   # Exclude selection, if specified
   if ("background" %in% exclude2_i) {
     # Complex backgrounds
     if (bkgoutline == TRUE) {
       # NA everything *outside* the outlined polyogn
-      subclass <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
+      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
       # Subset matrix to include only rows with at least one non-NA transition
-      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
+      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
     } else {
       # bkgID-based version
       for (i in 1:length(bkgID_i)) {
-        subclass[subclass == bkgID_i[[i]]] <- NA
+        classimg_i[classimg_i == bkgID_i[[i]]] <- NA
       }
       # Subset matrix to include only rows with at least one non-NA transition
-      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
+      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
     }
   }
   if ("object" %in% exclude2_i) {
     # Complex backgrounds only
     if (bkgoutline == TRUE) {
       # NA everything *inside* the outlined polyogn
-      subclass <- polymask(classimg_i, attr(classimg_i, "outline"), "inside")
+      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "inside")
       # Subset matrix to include only rows with at least one non-NA transition
-      subclass <- subclass[rowSums(!is.na(subclass)) > 1, colSums(!is.na(subclass)) > 1]
+      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
     }
   }
+  
+  # Subsample (does nothing if x_pts = ncols, default)
+  subclass <- classimg_i[
+    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
+    seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
+    ]
 
   # Summary info
   pt_scale <- xscale_i / xpts_i # distance between grid sample points in user-specified units
@@ -533,6 +531,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 #' @param imagedat data.
 #' @param poly xy polygon coordinates.
 #' @param alterWhich manipulate values inside or outside the polygon.
+#' @param replacement the replacement value.
 #'
 #' @importFrom sp point.in.polygon
 #'
@@ -540,7 +539,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-polymask <- function(imagedat, poly, alterWhich = c("inside", "outside")) {
+polymask <- function(imagedat, poly, alterWhich = c("outside", 'inside'), replacement = NA) {
   imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
@@ -549,12 +548,12 @@ polymask <- function(imagedat, poly, alterWhich = c("inside", "outside")) {
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
   maskmat <- apply(as.matrix(maskmat), 1, rev)
   if (alterWhich == "inside") {
-    imagedat[which(maskmat == 1)] <- NA
-    imagedat[which(maskmat == 2)] <- NA
-    imagedat[which(maskmat == 3)] <- NA
+    imagedat[which(maskmat == 1)] <- replacement
+    imagedat[which(maskmat == 2)] <- replacement
+    imagedat[which(maskmat == 3)] <- replacement
   }
   if (alterWhich == "outside") {
-    imagedat[which(maskmat == 0)] <- NA
+    imagedat[which(maskmat == 0)] <- replacement
   }
   imagedat
 }
