@@ -17,14 +17,15 @@ a colour-class. Preferably the result of \code{\link{classify}}.}
 in preferred units. Not required, and ignored, only if image scales have been set via
 \code{\link{procimg}}.}
 
-\item{xpts}{an integer specifying the number of sample points along the x-axis, from which 
+\item{xpts}{an integer specifying the number of sample points along the x-axis, from which
 the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid).}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
-pertaining to the background. Examine the attributes of, or call \code{summary} on,
-the result of \code{\link{classify}} to visualise the RGB values corresponding to
-colour-class ID numbers. Ignored if the focal object and background has been identified using
-\code{\link{procimg}}.}
+pertaining to the background alone, for relatively homogneeous and uniquely-identified backgrounds
+(e.g. the matte background of pinned specimens). Examine the attributes of, or 
+call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB 
+values corresponding to colour-class ID numbers. Ignored if the focal object 
+and background has been identified using \code{\link{procimg}}.}
 
 \item{exclude}{The portion of the image to be excluded from the analysis, if any.
 If excluding the focal object, its outline must first have been idenfitied using
@@ -98,7 +99,7 @@ papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 snakes_class <- classify(snakes, kcols = 3)
-snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
+snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
 }
 
 }

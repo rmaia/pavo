@@ -112,7 +112,8 @@ test_that("adjacency", {
   # Single
   fake_class <- classify(imgfake, kcols = 2)
   
-  fake_adjacent <- adjacent(fake_class, xpts = 100, xscale = 10)
+  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10)
+  expect_message(adjacent(fake_class, xpts = 123, xscale = 10), 'grid-sampling density')
   expect_equal(fake_adjacent$k, 2)
   expect_equal(fake_adjacent$E_1_2, 2 * fake_adjacent$n_off * fake_adjacent$p_1 * fake_adjacent$p_2)
   expect_equal(round(fake_adjacent$p_1, 1), round(fake_adjacent$p_2, 1))
@@ -122,7 +123,8 @@ test_that("adjacency", {
   
   # Multiple
   fake2_class <- classify(imgfakes, kcols = 2)
-  fake2_adjacent <- adjacent(fake2_class, xpts = 250, xscale = 150)
+  fake2_adjacent <- adjacent(fake2_class, xpts = 10, xscale = 150)
+  expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), 'grid-sampling density')
   expect_equal(fake2_adjacent$k, c(2, 2))
   expect_equal(fake2_adjacent$E_1_2, 2 * fake2_adjacent$n_off * fake2_adjacent$p_1 * fake2_adjacent$p_2)
   expect_equal(round(fake2_adjacent$p_1, 1), round(fake2_adjacent$p_2, 1))

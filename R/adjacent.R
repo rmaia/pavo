@@ -8,8 +8,8 @@
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points along the x-axis, from which 
-#' the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid). 
+#' @param xpts an integer specifying the number of sample points along the x-axis, from which
+#' the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid).
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
@@ -17,10 +17,11 @@
 #' the colour-class ID's corresponding to the background can be specified using
 #' bkgID.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
-#' pertaining to the background. Examine the attributes of, or call \code{summary} on,
-#' the result of \code{\link{classify}} to visualise the RGB values corresponding to
-#' colour-class ID numbers. Ignored if the focal object and background has been identified using
-#' \code{\link{procimg}}.
+#' pertaining to the background alone, for relatively homogneeous and uniquely-identified backgrounds
+#' (e.g. the matte background of pinned specimens). Examine the attributes of, or 
+#' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB 
+#' values corresponding to colour-class ID numbers. Ignored if the focal object 
+#' and background has been identified using \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1'
@@ -30,8 +31,7 @@
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
-#' @return a data frame of summary variables. Only variables with at least
-#' one non-NA value are returned:
+#' @return a data frame of summary variables:
 #' \itemize{
 #'   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
 #'   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.
@@ -85,7 +85,7 @@
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes_class <- classify(snakes, kcols = 3)
-#' snakes_adj2 <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
+#' snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -111,8 +111,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       stop("Too few columns present in 'coldists' data.frame.")
     }
     if (!all(c("c1", "c2") %in% names(coldists))) {
-      warning("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns
-              contain colour-category IDs.")
+      warning("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
       names(coldists)[1:2] <- c("c1", "c2")
     }
     if (!any(c("dS", "dL") %in% names(coldists))) {
@@ -124,8 +123,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   # Exclusion checks
   if ("background" %in% exclude2) {
     if (is.null(bkgID) && is.null(attr(classimg, "outline"))) {
-      stop("Background cannot be excluded without specifying a focal object outline 
-            (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
+      stop("Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
     }
   }
   if ("object" %in% exclude2) {
@@ -149,8 +147,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     if (!is.na(attr(classimg, "px_scale"))) {
       xscale <- attr(classimg, "px_scale") * dim(classimg)[2]
     } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
-      stop("Required argument xscale is missing, and image data are uncalibrated. Either
-         specify xscale or use procimg() to set a scale.")
+      stop("Required argument xscale is missing, and image data are uncalibrated. Either specify xscale or use procimg() to set a scale.")
     }
     ## Multi images
   } else if (multi_image) {
@@ -161,22 +158,21 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
       xscale <- xscale
     } else if (is.na(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
-      stop("Required argument xscale is missing, and one or more images are uncalibrated.
-           Either specify xscale or use procimg() to set a scale for each image.")
+      stop("Required argument xscale is missing, and one or more images are uncalibrated. Either specify xscale or use procimg() to set a scale for each image.")
     }
   }
 
   ## Sampling density
-  if (!multi_image) {
-    if (is.null(xpts)) {
-      xpts <- ncol(classimg)
+  if (multi_image) {
+    if (any(xpts > unlist(lapply(1:length(classimg), function(x) dim(classimg[[x]])[1:2])))) {
+      message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
+      xpts <- min(unlist(lapply(1:length(classimg), function(x) dim(classimg[[x]])[1:2])))
     }
-  } else if (multi_image) {
-    if (!is.null(xpts)) {
-      xpts <- as.list(rep(xpts, length(classimg)))
-    }
-    if (is.null(xpts)) {
-      xpts <- lapply(1:length(classimg), function(x) ncol(classimg[[x]]))
+    xpts <- as.list(rep(xpts, length(classimg)))
+  } else if (!multi_image) {
+    if (any(xpts > dim(classimg)[1:2])) {
+      message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest image dimension.")
+      xpts <- min(dim(classimg)[1:2])
     }
   }
 
@@ -205,7 +201,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 
     # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
     allNms <- unique(unlist(lapply(outdata, names)))
-    outdata <- do.call(rbind, c(lapply(outdata, function(x) data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
+    outdata <- do.call(rbind, c(lapply(outdata, function(x)
+      data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
 
     for (i in 1:nrow(outdata)) {
       rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
@@ -260,7 +257,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #'
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = NULL, coldists_i = NULL) {
   c1 <- c2 <- NULL
-  
+
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
 
@@ -296,18 +293,17 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
     }
   }
-  
-  # Subsample (does nothing if x_pts = ncols, default)   # What if greater than dimensions of data??
+
+  # Square-grid subsample
   subclass <- classimg_i[
-    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
+    seq(1, nrow(classimg_i), nrow(classimg_i) / xpts_i), # previously  seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i)
     seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
-    ]
+  ]
 
   # Summary info
   pt_scale <- xscale_i / xpts_i # distance between grid sample points in user-specified units
   n_x <- ncol(subclass) # n columns
   n_y <- nrow(subclass) # n rows
-  # n_area <- sum(rowSums(!is.na(subclass))) # total number of non-NA pixels
   n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
@@ -539,7 +535,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-polymask <- function(imagedat, poly, alterWhich = c("outside", 'inside'), replacement = NA) {
+polymask <- function(imagedat, poly, alterWhich = c("outside", "inside"), replacement = NA) {
   imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
