@@ -88,7 +88,6 @@ classplot <- function(x, ...) {
   if (multi_image) { # Multiple images
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
-      #imgdat2 <- x_trans[[i]]
       defaultimageplot(x[[i]], ...)
     }
   } else if (!multi_image) { # Single image
