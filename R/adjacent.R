@@ -18,9 +18,9 @@
 #' bkgID.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background alone, for relatively homogneeous and uniquely-identified backgrounds
-#' (e.g. the matte background of pinned specimens). Examine the attributes of, or 
-#' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB 
-#' values corresponding to colour-class ID numbers. Ignored if the focal object 
+#' (e.g. the matte background of pinned specimens). Examine the attributes of, or
+#' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
+#' values corresponding to colour-class ID numbers. Ignored if the focal object
 #' and background has been identified using \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
@@ -102,8 +102,31 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   exclude2 <- match.arg(exclude)
 
   ## Checks
+
   # Single or multiple images?
   multi_image <- inherits(classimg, "list")
+
+  # Class/structure
+  if (!multi_image) {
+    if (!'rimg' %in% class(classimg)){
+      message("Image is not of class 'rimg'; attempting to coerce.")
+      classimg <- as.rimg(classimg)
+    }
+  } else if (multi_image) {
+    if(any(unlist(lapply(1:length(classimg), function(x) !'rimg' %in% class(classimg[[x]]))))){
+      message("One or more images are not of class 'rimg'; attempting to coerce.")
+      classimg <- lapply(1:length(classimg), function(x) as.rimg(classimg[[x]]))
+    }
+  }
+  
+  # Colour-classified
+  if (!multi_image) {
+    if (attr(classimg, "state") != "colclass")
+      stop("Image has not yet been colour-classified. See classify().")
+  } else if (multi_image) {
+    if (any(unlist(lapply(1:length(classimg), function(x) attr(classimg[[x]], "state"))) != "colclass"))
+      stop("One or more images has not yet been colour-classified. See classify().")
+  }
 
   # Coldists formatting (individual/multiple? todo)
   if (!is.null(coldists)) {
@@ -111,7 +134,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       stop("Too few columns present in 'coldists' data.frame.")
     }
     if (!all(c("c1", "c2") %in% names(coldists))) {
-      warning("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
+      message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
       names(coldists)[1:2] <- c("c1", "c2")
     }
     if (!any(c("dS", "dL") %in% names(coldists))) {

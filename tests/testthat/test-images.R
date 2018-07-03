@@ -63,6 +63,8 @@ test_that("classify", {
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c('fake_01', 'fake_02'))
   
   # Single
+  expect_error(classify(1, kcols = fake_IDs), 'array')
+  
   fake_class <- classify(imgfake, kcols = 2)
   expect_equal(dim(fake_class), c(10, 10))
   expect_true(is.rimg(fake_class))
@@ -72,6 +74,9 @@ test_that("classify", {
     ID = c("fake_02.png", "fake_01.jpg"),
     k = c(2, 2)
   )
+  
+  expect_error(classify(list(1, 1), kcols = fake_IDs), 'array')
+  
   fake2_class <- classify(imgfakes, kcols = fake_IDs)
   expect_true(is.rimg(fake2_class))
   expect_true(is.rimg(fake2_class[[1]]))
@@ -111,6 +116,7 @@ test_that("adjacency", {
   
   # Single
   fake_class <- classify(imgfake, kcols = 2)
+  expect_error(adjacent(10, xpts = 10, xscale = 10), 'array')
   
   fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), 'grid-sampling density')
@@ -123,6 +129,8 @@ test_that("adjacency", {
   
   # Multiple
   fake2_class <- classify(imgfakes, kcols = 2)
+  expect_error(adjacent(list(10, 10), xpts = 10, xscale = 10), 'array')
+  
   fake2_adjacent <- adjacent(fake2_class, xpts = 10, xscale = 150)
   expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), 'grid-sampling density')
   expect_equal(fake2_adjacent$k, c(2, 2))

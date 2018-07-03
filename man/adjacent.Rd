@@ -22,9 +22,9 @@ the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background alone, for relatively homogneeous and uniquely-identified backgrounds
-(e.g. the matte background of pinned specimens). Examine the attributes of, or 
-call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB 
-values corresponding to colour-class ID numbers. Ignored if the focal object 
+(e.g. the matte background of pinned specimens). Examine the attributes of, or
+call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
+values corresponding to colour-class ID numbers. Ignored if the focal object
 and background has been identified using \code{\link{procimg}}.}
 
 \item{exclude}{The portion of the image to be excluded from the analysis, if any.
@@ -45,8 +45,7 @@ for visual modelling with spectral data.}
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 }
 \value{
-a data frame of summary variables. Only variables with at least
-one non-NA value are returned:
+a data frame of summary variables:
 \itemize{
   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.

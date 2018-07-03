@@ -55,14 +55,22 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
   
   ## Checks
-  # class
-  if(!'rimg' %in% class(imgdat)){
-    message('Attempting to coerce image to class rimg.')
-    imgdat <- as.rimg(imgdat)
-  }
   
   # Single or multiple images?
   multi_image <- inherits(imgdat, "list")
+  
+  # Class/structure
+  if (!multi_image) {
+    if (!'rimg' %in% class(imgdat)){
+      message("Image is not of class 'rimg'; attempting to coerce.")
+      imgdat <- as.rimg(imgdat)
+    }
+  } else if (multi_image) {
+    if(any(unlist(lapply(1:length(imgdat), function(x) !'rimg' %in% class(imgdat[[x]]))))){
+      message("One or more images are not of class 'rimg'; attempting to coerce.")
+      imgdat <- lapply(1:length(imgdat), function(x) as.rimg(imgdat[[x]]))
+    }
+  }
   
   # Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
