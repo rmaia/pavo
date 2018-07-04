@@ -35,6 +35,7 @@ Suggests:
     rgl,
     xml2,
     testthat,
-    knitr
+    knitr,
+    covr
 VignetteBuilder: knitr
 RoxygenNote: 6.0.1
