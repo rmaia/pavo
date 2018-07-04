@@ -23,7 +23,7 @@ Author: Rafael Maia [aut, cre],
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
 Depends:
-    R(>= 3.0)
+    R(>= 3.0.0)
 Imports:
     rcdd,
     mapproj,

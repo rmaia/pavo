@@ -2,15 +2,15 @@
 % Please edit documentation in R/summary.rimg.R
 \name{summary.rimg}
 \alias{summary.rimg}
-\title{Colour-classified image summary}
+\title{Image summary}
 \usage{
 \method{summary}{rimg}(object, plot = FALSE, ...)
 }
 \arguments{
-\item{object}{(required) Results of \code{\link{classify}}.}
+\item{object}{(required) an image of class rimg, or list thereof.}
 
-\item{plot}{logical; plot both the image and the colours corresponding to colour class
-categories side-by-side? Defaults to \code{FALSE}.}
+\item{plot}{logical; plot the image and, if the image is color-classified, the colours 
+corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.}
 
 \item{...}{additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.}
 }
@@ -19,7 +19,7 @@ Either the RGB values of the k-means centres from the colour-classified image,
 or a plot of both the image and specified colours (when \code{plot = TRUE}.
 }
 \description{
-Returns the attributes of the colour-classified matrix generated from \code{\link{classify}}.
+Returns the attributes of, and optionally plots, an image.
 }
 \examples{
 \dontrun{

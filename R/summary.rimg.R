@@ -1,10 +1,10 @@
-#' Colour-classified image summary
+#' Image summary
 #'
-#' Returns the attributes of the colour-classified matrix generated from \code{\link{classify}}.
+#' Returns the attributes of, and optionally plots, an image.
 #'
-#' @param object (required) Results of \code{\link{classify}}.
-#' @param plot logical; plot both the image and the colours corresponding to colour class
-#' categories side-by-side? Defaults to \code{FALSE}.
+#' @param object (required) an image of class rimg, or list thereof.
+#' @param plot logical; plot the image and, if the image is color-classified, the colours 
+#' corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.
 #' @param ... additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.
 #'
 #' @return Either the RGB values of the k-means centres from the colour-classified image,

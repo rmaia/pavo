@@ -5,11 +5,12 @@
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param kcols the number of discrete colour classes present in the input image(s).
-#' Can be an integer when only a single image is present or if kcols is identical for all
+#' Can be an integer when only a single image is present, or if kcols is identical for all
 #' images. When passing a list of images, \code{kcols} can also be a vector the same length
 #' as \code{imgdat}, or a data.frame with two columns specifying image file names and
-#' corresponding kcols.
-#' @param refID the numeric identifier of a 'reference' image, for use when passing
+#' corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE}, 
+#' and kcols will be inferred from the number of selections.
+#' @param refID the optional numeric index of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
@@ -21,7 +22,8 @@
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
-#' @param ... additional graphical parameters when \code{interactive = TRUE}. Also see \code{\link{par}}.
+#' @param ... additional graphical parameters when \code{interactive = TRUE}. 
+#' Also see \code{\link{par}}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
 #' class classifications at each pixel location. The RGB values corresponding to
@@ -44,9 +46,9 @@
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
 #'
-#' # Multiple images
+#' # Multiple images, with interactive classification and a reference image
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes_class <- classify(snakes, interactive = TRUE, plotnew = TRUE)
+#' snakes_class <- classify(snakes, refID = 1, interactive = TRUE)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}

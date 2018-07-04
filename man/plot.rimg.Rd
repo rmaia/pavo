@@ -7,26 +7,23 @@
 \method{plot}{rimg}(x, ...)
 }
 \arguments{
-\item{x}{(required) unprocessed or colour-classified image data, or a list thereof.
-Preferably the result of \code{\link{classify}}.}
+\item{x}{(required) an image of class rimg, or list thereof.}
 
-\item{...}{additional graphical parameters. See \code{\link{rawplot}} for unprocessed
-image plotting, and \code{\link{classplot}} for colour-classified image plots.
-Also see \code{\link{par}}.}
+\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
 a image plot or plots.
 }
 \description{
 Plot unprocessed or colour-classified image data. If the
-input data is a list of classified image data, images will be stepped through
+images are in a list, they will be stepped through
 one by one.
 }
 \examples{
 \dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 plot(papilio)
-papilio_class <- classify(papilio, n_cols = 4)
+papilio_class <- classify(papilio, kcols = 4)
 plot(papilio_class)
 
 # Multiple images

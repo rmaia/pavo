@@ -1,4 +1,12 @@
-pavo 1.3.2 (development)
+pavo 2.0.0 (development)
+------------------------------------------------------------------------------
+
+* See publication and vignette for detailed description of changes.
+
+NEW FEATURES
+* new image-based workflow for the analysis of colour pattern geometry  
+
+pavo 1.3.2
 ------------------------------------------------------------------------------
 NEW FEATURES
 
@@ -29,6 +37,7 @@ MINOR FEATURES AND BUG FIXES
 * bin option of procspec() now works for all values of bins
 * non-relative quantum catches from dataframe object were not correctly scaled
 in "di", "tri", "categorical" and "coc" colspaces
+
 pavo 1.3.1
 ------------------------------------------------------------------------------
 

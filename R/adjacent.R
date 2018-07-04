@@ -8,17 +8,18 @@
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points along the x-axis, from which
-#' the square grid sampling density is calculated. Defaults to 100 (i.e for a 100 x 100 grid).
+#' @param xpts an integer specifying the number of sample points along the x and y axes, 
+#' from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100 
+#' x 100 grid), though this should be carefully considered.
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
 #' identified using \code{\link{procspec}}, or if it is relatively homogeneous,
-#' the colour-class ID's corresponding to the background can be specified using
-#' bkgID.
+#' the colour-class ID's uniquely corresponding to the background can be specified using
+#' \code{bkgID}.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
-#' pertaining to the background alone, for relatively homogneeous and uniquely-identified backgrounds
-#' (e.g. the matte background of pinned specimens). Examine the attributes of, or
+#' pertaining to the background alone, for relatively homogeneous and uniquely-identified 
+#' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
 #' values corresponding to colour-class ID numbers. Ignored if the focal object
 #' and background has been identified using \code{\link{procimg}}.
@@ -50,9 +51,9 @@
 #'     transitions) transitions \emph{i} and \emph{j}, such that \code{sum(t_i_j) = 1}.
 #'   \item \code{'m'}: The overall transition density (mean transitions),
 #'     in units specified in the argument \code{xscale}.
-#'   \item \code{'m_r'}: The row transition density (mean row transitions),
+#'   \item \code{'m_r'}: The row-wise transition density (mean row transitions),
 #'     in user-specified units.
-#'   \item \code{'m_c'}: The column transition density (mean column transitions),
+#'   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
 #'     in user-specified units.
 #'   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
 #'   \item \code{'B'}: The animal/background transition ratio.
@@ -142,6 +143,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     }
     # Need to sort?
   }
+  
+  # Outline formatting
+  
 
   # Exclusion checks
   if ("background" %in% exclude2) {
@@ -623,4 +627,19 @@ transitioncalc <- function(classimgdat) {
   transout[["all"]] <- transitions
 
   transout
+}
+
+weightmean <- function(x, wt) {
+  s <- which(is.finite(x * wt))
+  wt <- wt[s]
+  x <- x[s]
+  sum(wt * x) / sum(wt)
+}
+
+weightsd <- function(x, wt) {
+  s <- which(is.finite(x + wt))
+  wt <- wt[s]
+  x <- x[s]
+  xbar <- weightmean(x, wt)
+  sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
 }
