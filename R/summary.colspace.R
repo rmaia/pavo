@@ -47,7 +47,6 @@
 #' summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))}
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
@@ -55,46 +54,47 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-summary.colspace <- function(object, by = NULL, ...) {
-  if (is.null(attr(object, "clrsp"))) {
-    message("Cannot return full colspace summary on subset data")
+summary.colspace <- function(object, by = NULL, ...){
+
+  if(is.null(attr(object, 'clrsp'))){
+    message('Cannot return full colspace summary on subset data')
     return(summary(as.data.frame(object)))
   }
 
-  cat(
-    "Colorspace & visual model options:\n",
-    "* Colorspace:", attr(object, "clrsp"), "\n",
-    "* Quantal catch:", attr(object, "qcatch"), "\n",
-    "* Visual system, chromatic:", attr(object, "visualsystem.chromatic"), "\n",
-    "* Visual system, achromatic:", attr(object, "visualsystem.achromatic"), "\n",
-    "* Illuminant:", attr(object, "illuminant"), "\n",
-    "* Background:", attr(object, "background"), "\n",
-    "* Relative:", attr(object, "relative"), "\n", "\n"
+  cat("Colorspace & visual model options:\n",
+      '* Colorspace:', attr(object, 'clrsp'), '\n',
+      '* Quantal catch:', attr(object, 'qcatch'), '\n',
+      '* Visual system, chromatic:', attr(object,'visualsystem.chromatic'), '\n',
+      '* Visual system, achromatic:', attr(object,'visualsystem.achromatic'), '\n',
+      '* Illuminant:', attr(object,'illuminant'), '\n',
+      '* Background:', attr(object,'background'), '\n',
+      '* Relative:', attr(object, 'relative'), '\n', '\n'
   )
 
-  if (attr(object, "clrsp") != "tcs") summary.data.frame(object)
+  if(attr(object, 'clrsp') != 'tcs') summary.data.frame(object)
 
-  if (attr(object, "clrsp") == "tcs") {
-    if (!is.null(by)) {
-      if (length(by) == 1) {
-        by.many <- by
-        by <- rep(1:(dim(object)[1] / by), each = by)
-        by <- factor(by,
-          labels = row.names(object)[seq(1, length(row.names(object)), by = by.many)]
-        )
-      }
+  if(attr(object, 'clrsp') == 'tcs'){
+
+    if(!is.null(by)){
+
+        if(length(by) == 1){
+          by.many <- by
+          by <- rep(1:(dim(object)[1]/by), each = by)
+          by <- factor(by,
+            labels = row.names(object)[seq(1, length(row.names(object)), by = by.many)])
+          }
 
       by <- factor(by)
       res.c <- data.frame(t(sapply(levels(by), function(z) tcssum(object[which(by == z), ]))))
       row.names(res.c) <- levels(by)
-    } else {
-      res.c <- data.frame(t(tcssum(object)))
-      row.names(res.c) <- "all.points"
-    }
 
-    if (NA %in% res.c$cvol) {
-      warning("Not enough points to calculate volume", call. = FALSE)
-    }
+      }else{
+        res.c <- data.frame(t(tcssum(object)))
+        row.names(res.c) <- 'all.points'
+        }
+
+    if(any(is.na(res.c$c.vol)))
+      warning('Not enough points to calculate volume', call. = FALSE)
 
     res.c
   }

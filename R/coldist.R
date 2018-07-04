@@ -285,13 +285,17 @@ coldist <- function(modeldata,
   }
 
 
-  ################################
-  # END RECEPTOR NOISE FUNCTIONS #
-  ################################
+# 2d Euclidean distance
+euc2d <- function(coord1, coord2){
+  as.numeric(round(sqrt((coord1['x'] - coord2['x'])^2 +
+                        (coord1['y'] - coord2['y'])^2), 7))
+}
 
-  #########################
-  # START OTHER DISTANCES #
-  #########################
+# 2d Euclidean distance in segment space
+seg2d <- function(coord1, coord2){
+  as.numeric(round(sqrt((coord1['MS'] - coord2['MS'])^2 +
+                        (coord1['LM'] - coord2['LM'])^2), 7))
+}
 
 
   # 2d Euclidean distance
@@ -304,10 +308,12 @@ coldist <- function(modeldata,
     as.numeric(round(sqrt(abs(coord1["MS"] - coord2["MS"])^2 + abs(coord1["LM"] - coord2["LM"])^2), 7))
   }
 
-  # Achromatic contrast in segment space
-  achroseg <- function(coord1, coord2) {
-    as.numeric(abs(coord1["B"] - coord2["B"]))
-  }
+# 2d Euclidean distances in CIELAB
+lab2d <- function(coord1, coord2){
+                     as.numeric(round(sqrt((coord1['L'] - coord2['L'])^2 +
+                                           (coord1['a'] - coord2['a'])^2 +
+                                           (coord1['b'] - coord2['b'])^2), 7))
+}
 
   # Achromatic 'green' receptor contrast in the hexagon
   achrohex <- function(coord1, coord2) {

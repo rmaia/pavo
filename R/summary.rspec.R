@@ -63,9 +63,9 @@
 #' S6 (Contrast): Rmax - Rmin. Because it uses both Rmin and Rmax, this measure may be
 #' sensitive to spectral noise. REF 5, 6
 #'
-#' S7 (Spectral saturation): Relative reflectance between the area around the peak with
-#' reflectance equal to or larger to half of that of the peak (an approximation to the
-#' full-width at half maxima. See Montgomerie (2006) for details). Somewhat sensitive
+#' S7 (Spectral saturation): Difference between the relative reflectance before and after
+#' the wavelength at which reflectance is halfway between its minimum (Rmin) 
+#' and its maximum (Rmax). Somewhat sensitive
 #' to noise and can be misleading when more than one maxima and/or minima are present.
 #' REF 3, 9
 #'
