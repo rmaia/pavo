@@ -14,3 +14,4 @@ todo.txt
 ^cran-comments\.md$
 ^docs$
 ^_pkgdown\.yml$
+^codecov\.yml$
