@@ -90,6 +90,10 @@ trispace <- function(vismodeldata) {
     s <- dat[, "s"]
     m <- dat[, "m"]
     l <- dat[, "l"]
+  } else if(all(c("X", "Y", "Z") %in% names(dat))){
+    s <- dat[, "Z"]
+    m <- dat[, "Y"]
+    l <- dat[, "X"]
   } else {
     warning("Could not find columns named ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first three columns instead.", call. = FALSE)
     s <- dat[, 1]

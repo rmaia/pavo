@@ -32,6 +32,8 @@ MINOR FEATURES AND BUG FIXES
 in "di", "tri", "categorical" and "coc" colspaces
 * fixed a bug in colspace where it would incorrectly infer a preference for 
 a general trichromatic space, when a cie model is more appropriate
+* fixed a bug so that cie color matching functions can be more easily be used in
+a general trichromatic space (i.e. maxwell triangle)
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
