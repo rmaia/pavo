@@ -17,12 +17,12 @@ a colour-class. Preferably the result of \code{\link{classify}}.}
 in preferred units. Not required, and ignored, only if image scales have been set via
 \code{\link{procimg}}.}
 
-\item{xpts}{an integer specifying the number of sample points along the x and y axes, 
-from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100 
+\item{xpts}{an integer specifying the number of sample points along the x and y axes,
+from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100
 x 100 grid), though this should be carefully considered.}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
-pertaining to the background alone, for relatively homogeneous and uniquely-identified 
+pertaining to the background alone, for relatively homogeneous and uniquely-identified
 backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
 values corresponding to colour-class ID numbers. Ignored if the focal object

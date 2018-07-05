@@ -15,7 +15,7 @@ stored in a list. preferably the result of \code{\link{getimg}}.}
 Can be an integer when only a single image is present, or if kcols is identical for all
 images. When passing a list of images, \code{kcols} can also be a vector the same length
 as \code{imgdat}, or a data.frame with two columns specifying image file names and
-corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE}, 
+corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE},
 and kcols will be inferred from the number of selections.}
 
 \item{refID}{the optional numeric index of a 'reference' image, for use when passing
@@ -34,7 +34,7 @@ Defaults to \code{FALSE}.}
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
 
-\item{...}{additional graphical parameters when \code{interactive = TRUE}. 
+\item{...}{additional graphical parameters when \code{interactive = TRUE}.
 Also see \code{\link{par}}.}
 }
 \value{

@@ -8,7 +8,7 @@
 #' Can be an integer when only a single image is present, or if kcols is identical for all
 #' images. When passing a list of images, \code{kcols} can also be a vector the same length
 #' as \code{imgdat}, or a data.frame with two columns specifying image file names and
-#' corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE}, 
+#' corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE},
 #' and kcols will be inferred from the number of selections.
 #' @param refID the optional numeric index of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
@@ -22,7 +22,7 @@
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
-#' @param ... additional graphical parameters when \code{interactive = TRUE}. 
+#' @param ... additional graphical parameters when \code{interactive = TRUE}.
 #' Also see \code{\link{par}}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
@@ -53,51 +53,51 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE, 
+classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
-  
+
   ## Checks
-  
+
   # Single or multiple images?
   multi_image <- inherits(imgdat, "list")
-  
+
   # Class/structure
   if (!multi_image) {
-    if (!'rimg' %in% class(imgdat)){
+    if (!"rimg" %in% class(imgdat)) {
       message("Image is not of class 'rimg'; attempting to coerce.")
       imgdat <- as.rimg(imgdat)
     }
   } else if (multi_image) {
-    if(any(unlist(lapply(1:length(imgdat), function(x) !'rimg' %in% class(imgdat[[x]]))))){
+    if (any(unlist(lapply(1:length(imgdat), function(x) !"rimg" %in% class(imgdat[[x]]))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
       imgdat <- lapply(1:length(imgdat), function(x) as.rimg(imgdat[[x]]))
     }
   }
-  
+
   # Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
-  
+
   # k checking.
   if (!is.null(kcols)) {
-    
+
     # If kcols is a 2-col data frame/matrix
     if (!is.vector(kcols)) {
-      
+
       # TODO more safety
       if (ncol(kcols) > 2) {
         warning("More than two columns included in kcols. Taking the first two columns only.")
         kcols <- as.data.frame(kcols[, 1:2])
       }
-      
+
       # Identify the name of the column containing file names
       id_col <- names(kcols[lapply(kcols, class) != "numeric"])
-      
+
       # Remove file extensions if present
       kcols[[id_col]] <- file_path_sans_ext(kcols[[id_col]])
-      
+
       # Extract image names from image data
       imageIDs <- data.frame(
         names = unlist(lapply(
@@ -106,10 +106,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         )),
         stringsAsFactors = FALSE
       )
-      
+
       # Reorder user-supplied kcols to match order of images
       kcols <- kcols[match(imageIDs[, 1], kcols[[id_col]]), ]
-      
+
       # Extract kcols
       kcols <- as.numeric(unlist(kcols[lapply(kcols, class) == "numeric"]))
     }
@@ -129,7 +129,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
     }
   }
-  
+
   #### So your options/configurations for classification are:
   #
   ## Multiple images ##
@@ -149,39 +149,39 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   #      (length(kcols) == 1)
   # (2) Single k, with interactive centre
   #      (interactive == TRUE)
-  
+
   ## Multiple images  ##
   if (multi_image) {
     imgsize <- format(object.size(imgdat), units = "Mb")
-    
+
     ## (1) Multiple k, no reference image ##
     if (length(kcols) > 1 && interactive == FALSE) {
       ifelse(imgsize < 100,
-             outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
-             outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
       )
-      
+
       ## (2) Single k, with reference image ##
     } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
       ifelse(imgsize < 100,
-             outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
-             outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       )
-      
+
       ## (3) Single k, no reference image ##
     } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
       ifelse(imgsize < 100,
-             outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
-             outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
       )
-      
+
       ## (4) Single k, interactively specified centre, with reference image ##
     } else if (!is.null(refID) && interactive == TRUE) {
-      
+
       # Reference image
       refimg <- imgdat[[refID]]
-      
+
       # Transformed image data (TODO: SIMPLIFY)
       reftrans <- array(c(
         as.matrix(t(apply(refimg[, , 1], 2, rev))),
@@ -194,11 +194,11 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         3
       )
       )
-      
+
       if (plotnew) dev.new(noRStudioGD = TRUE)
-      
+
       defaultrasterImageplot(refimg, ...)
-      
+
       if (!is.null(kcols)) {
         message(paste("Select the", kcols, "focal colours"))
         reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
@@ -207,17 +207,17 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         reference <- as.data.frame(locator(type = "p", col = "red"))
         kcols <- nrow(reference)
       }
-      
+
       if (plotnew) dev.off()
-      
+
       ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
       names(ref_centers) <- c("R", "G", "B")
-      
+
       ifelse(imgsize < 100,
-             outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
-             outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
       )
-      
+
       ## (5) Multiple k, with interactively-specified centres for each image. ##
     } else if (is.null(refID) && interactive == TRUE) {
       if (length(kcols) == 1) {
@@ -229,11 +229,11 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       } else {
         n_cols_test <- FALSE
       }
-      
+
       centers <- list()
       i <- 1
       while (i <= length(imgdat)) {
-        
+
         # Transformed image data (TODO: SIMPLIFY)
         reftrans <- array(c(
           as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))),
@@ -246,11 +246,11 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
           3
         )
         )
-        
+
         if (plotnew) dev.new(noRStudioGD = TRUE)
-        
+
         defaultrasterImageplot(imgdat[[i]], ...)
-        
+
         if (!is.null(n_cols_test)) {
           message(paste0("Select the ", kcols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
           reference <- as.data.frame(locator(type = "p", col = "red", n = kcols[[i]]))
@@ -260,7 +260,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
           kcols[[i]] <- nrow(reference)
         }
         if (plotnew) dev.off()
-        
+
         ref_centers <- try(do.call(rbind, lapply(
           1:nrow(reference),
           function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
@@ -268,7 +268,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         silent = TRUE
         )
         centers[[i]] <- ref_centers
-        
+
         if (class(centers[[i]]) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
           i <- i
@@ -281,11 +281,11 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         }
       }
       ifelse(imgsize < 100,
-             outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
-             outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
+        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
+        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
       )
     }
-    
+
     # Names & attributes
     for (i in 1:length(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
@@ -301,13 +301,13 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     }
     class(outdata) <- c("rimg", "list")
   }
-  
+
   ## Single image ##
   if (!multi_image) {
     if (interactive == TRUE) {
       # Reference (only present) image
       refimg <- imgdat
-      
+
       # Transformed image data (TODO: SIMPLIFY)
       reftrans <- array(c(
         as.matrix(t(apply(imgdat[, , 1], 2, rev))),
@@ -320,13 +320,13 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         3
       )
       )
-      
+
       i <- 1
       while (i <= 1) {
         if (plotnew) dev.new(noRStudioGD = TRUE)
-        
+
         defaultrasterImageplot(refimg, ...)
-        
+
         if (!is.null(kcols)) {
           message(paste("Select the", kcols, "focal colours."))
           reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
@@ -335,14 +335,14 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
           reference <- as.data.frame(locator(type = "p", col = "red"))
         }
         if (plotnew) dev.off()
-        
+
         ref_centers <- try(do.call(rbind, lapply(
           1:nrow(reference),
           function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
         )),
         silent = TRUE
         )
-        
+
         # Error controls
         if (class(ref_centers) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
@@ -355,7 +355,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
           i <- i + 1
         }
       }
-      
+
       outdata <- classify_main(imgdat, ref_centers)
     } else {
       outdata <- classify_main(imgdat, kcols)
@@ -371,7 +371,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     attr(outdata, "raw_scale") <- attr(imgdat, "raw_scale")
     attr(outdata, "state") <- "colclass"
   }
-  
+
   outdata
 }
 
@@ -390,12 +390,12 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 classify_main <- function(imgdat_i, n_cols_i) {
-  
-  #if(method == 'kmeans'){
-    
+
+  # if(method == 'kmeans'){
+
   ## Dimensions
   imgdim <- dim(imgdat_i)
-  
+
   # Assign RGB channels to data frame
   imgRGB <- data.frame(
     x = rep(imgdim[1]:1, imgdim[2]),
@@ -404,37 +404,37 @@ classify_main <- function(imgdat_i, n_cols_i) {
     G = as.vector(imgdat_i[, , 2]),
     B = as.vector(imgdat_i[, , 3])
   )
-  
+
   # Cluster analysis
   kMeans <- kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
-  
+
   # Tidy & format as image matrix
   cmbn <- cbind(imgRGB, kMeans$cluster)
   names(cmbn) <- c("x", "y", "ch1", "ch2", "ch3", "class")
-  
+
   outmat2 <- as.data.frame.matrix(xtabs(class ~ x + y, data = cmbn))
-  
+
   # Rotate to match original orientation
   outmat <- rev(t(apply(outmat2, 1, rev)))
   dim(outmat) <- dim(outmat2)
-  
+
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
-  
-  #}
-  
+
+  # }
+
   # if(method == 'hierarchical'){
-  #   
+  #
   #   ## Dimensions
   #   imgdim <- dim(imgdat_i)
-  #   
+  #
   #   #Using the whole image is overkill, especially for large files.
   #   #Therefore, create a grid from which extract the colors
   #   xgrid <- ceiling(seq(1, imgdim[1], length.out = 50))
   #   ygrid <- ceiling(seq(1, imgdim[2], length.out = 50))
   #   pixels <- expand.grid(xgrid, ygrid)
-  #   
+  #
   #   # Assign RGB channels to data frame
   #   imgRGB <- data.frame(
   #     x = rep(imgdim[1]:1, imgdim[2]),
@@ -446,27 +446,27 @@ classify_main <- function(imgdat_i, n_cols_i) {
   #   pixels$redVals <- apply(pixels, 1, function(x){return(img[x[1], x[2], ][1])})
   #   pixels$greenVals <- apply(pixels, 1, function(x){return(img[x[1], x[2], ][2])})
   #   pixels$blueVals <- apply(pixels, 1, function(x){return(img[x[1] ,x[2], ][3])})
-  #   
+  #
   #   # Euclidian distances of the pixels.
   #   distMat <- dist(pixels[, 3:5], method = 'euclidean')
-  #   
+  #
   #   # Group
   #   x <- hclust(distMat,method = 'complete')
-  #   
+  #
   #   # Assign to k-groups
   #   pixels$groups <- cutree(x, k = 2)
   #   imgRGB$groups <- cutree(x, k = 2)
-  #   
+  #
   #   # Take mean RGBs
   #   redGroup <- tapply(pixels$redVals, pixels$groups, mean)
   #   greenGroup <- tapply(pixels$greenVals, pixels$groups, mean)
   #   blueGroup <- tapply(pixels$blueVals, pixels$groups, mean)
-  #   
+  #
   #   # Output
   #   groupCols <- data.frame(gp = 1:ncols, red = redGroup, green = greenGroup, blue=blueGroup)
   #   groupCols$hexCode <- rgb(red = groupCols$red, green = groupCols$green, blue = groupCols$blue, alpha = 1, maxColorValue = 1)
-  #   
+  #
   # }
-  
+
   outmat
 }

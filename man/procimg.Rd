@@ -11,14 +11,14 @@ procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
 \item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
-\item{scaledist}{an integer, or vector equal in length to the number of images, 
+\item{scaledist}{an integer, or numeric vector equal in length to the number of images,
 specifying the length of the scale in the image(s).}
 
 \item{outline}{allows the user to interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
 polygon are saved as an attribute, for use in genrating a masking layer &
-separating animals/plants from backgrounds in further analyses. This is particularly 
-useful when backgrounds are complex, (e.g. in natural settings) in which case 
+separating animals/plants from backgrounds in further analyses. This is particularly
+useful when backgrounds are complex, (e.g. in natural settings) in which case
 backgrounds and objects cannot be readily separated by simple k-means clustering.}
 
 \item{smooth}{should the polygon specified when \code{outline = TRUE} be smoothed
@@ -26,7 +26,7 @@ using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
 \item{refinements}{the number of smoothing iterations, when \code{smooth = TRUE}.}
 
-\item{plotnew}{Should plots be opened in a new window? Defaults to \code{FALSE}.}
+\item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }

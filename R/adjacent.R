@@ -8,8 +8,8 @@
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points along the x and y axes, 
-#' from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100 
+#' @param xpts an integer specifying the number of sample points along the x and y axes,
+#' from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100
 #' x 100 grid), though this should be carefully considered.
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
@@ -18,7 +18,7 @@
 #' the colour-class ID's uniquely corresponding to the background can be specified using
 #' \code{bkgID}.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
-#' pertaining to the background alone, for relatively homogeneous and uniquely-identified 
+#' pertaining to the background alone, for relatively homogeneous and uniquely-identified
 #' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
 #' values corresponding to colour-class ID numbers. Ignored if the focal object
@@ -109,24 +109,26 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 
   # Class/structure
   if (!multi_image) {
-    if (!'rimg' %in% class(classimg)){
+    if (!"rimg" %in% class(classimg)) {
       message("Image is not of class 'rimg'; attempting to coerce.")
       classimg <- as.rimg(classimg)
     }
   } else if (multi_image) {
-    if(any(unlist(lapply(1:length(classimg), function(x) !'rimg' %in% class(classimg[[x]]))))){
+    if (any(unlist(lapply(1:length(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
       classimg <- lapply(1:length(classimg), function(x) as.rimg(classimg[[x]]))
     }
   }
-  
+
   # Colour-classified
   if (!multi_image) {
-    if (attr(classimg, "state") != "colclass")
+    if (attr(classimg, "state") != "colclass") {
       stop("Image has not yet been colour-classified. See classify().")
+    }
   } else if (multi_image) {
-    if (any(unlist(lapply(1:length(classimg), function(x) attr(classimg[[x]], "state"))) != "colclass"))
+    if (any(unlist(lapply(1:length(classimg), function(x) attr(classimg[[x]], "state"))) != "colclass")) {
       stop("One or more images has not yet been colour-classified. See classify().")
+    }
   }
 
   # Coldists formatting (individual/multiple? todo)
@@ -143,9 +145,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     }
     # Need to sort?
   }
-  
+
   # Outline formatting
-  
+
 
   # Exclusion checks
   if ("background" %in% exclude2) {

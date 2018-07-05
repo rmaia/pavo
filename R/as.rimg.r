@@ -57,13 +57,11 @@ as.rimg <- function(object, name = "img") {
     }
 
     if (is.list(object)) {
-      
+
       # Array check
-      if(any(unlist(lapply(1:length(object), function(x) !is.array(object[[x]])))))
+      if (any(unlist(lapply(1:length(object), function(x) !is.array(object[[x]]))))) {
         stop("Images must be an array.")
-      
-      # Drop dimensions with only 1 level (useful for cimg objects from imager)
-      #object <- lapply(1:length(object), function(j) drop(object[[j]]))
+      }
 
       # Duplicate channels if grayscale
       for (i in 1:length(object)) {
@@ -74,7 +72,7 @@ as.rimg <- function(object, name = "img") {
 
       # Rescale RGB to [0,1] if need be
       object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
-      
+
       # Attributes
       if (length(name) == 1) {
         name <- rep(name, length(object))
@@ -84,23 +82,21 @@ as.rimg <- function(object, name = "img") {
       # The list itself needs attributes
       class(object) <- c("rimg", "list")
       attr(object, "state") <- "raw"
-      
     } else {
 
       # Array check
-      if (!is.array(object)) 
+      if (!is.array(object)) {
         stop("Images must be an array.")
-      
-      # Drop dimensions with only 1 level (useful for cimg objects from imager)
-      #object <- drop(object)
+      }
 
       # Duplicate channels if grayscale
-      if (is.na(dim(object)[3])) 
+      if (is.na(dim(object)[3])) {
         object <- replicate(3, object, simplify = "array")
+      }
 
       # Rescale RGB to [0,1] if need be
       object <- rescaler(object)
-      
+
       # Attributes
       object <- attrgiver(object)
     }
