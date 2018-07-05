@@ -14,6 +14,7 @@ NEW FEATURES
 * added the visual system of _Ctenophorous ornatus_, the (trichromatic) ornate dragon lizard
 
 MAJOR CHANGES
+
 * getspecf (and the argument fast = TRUE in getspec) have been deprecated
 * summary.rspec() returned incorrect values for S7. If you use S7, please re-run
 your analyses
@@ -37,6 +38,10 @@ MINOR FEATURES AND BUG FIXES
 * bin option of procspec() now works for all values of bins
 * non-relative quantum catches from dataframe object were not correctly scaled
 in "di", "tri", "categorical" and "coc" colspaces
+* fixed a bug in colspace where it would incorrectly infer a preference for 
+a general trichromatic space, when a cie model is more appropriate
+* fixed a bug so that cie color matching functions can be more easily be used in
+a general trichromatic space (i.e. maxwell triangle)
 
 pavo 1.3.1
 ------------------------------------------------------------------------------
