@@ -1,6 +1,7 @@
-#' Run an adjacency analysis
+#' Run an adjacency/boundary strength analysis
 #'
-#' Calculate summary variables from the adjacency analysis (Endler 2012 & Endler et al. 2018).
+#' Calculate summary variables from the adjacency (Endler 2012) and 
+#' boundary-strength (Endler et al. 2018) analyses.
 #'
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying

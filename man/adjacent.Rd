@@ -2,7 +2,7 @@
 % Please edit documentation in R/adjacent.R
 \name{adjacent}
 \alias{adjacent}
-\title{Run an adjacency analysis}
+\title{Run an adjacency/boundary strength analysis}
 \usage{
 adjacent(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   exclude = c("none", "background", "object"), coldists = NULL,
@@ -88,7 +88,8 @@ a data frame of summary variables:
   }
 }
 \description{
-Calculate summary variables from the adjacency analysis (Endler 2012 & Endler et al. 2018).
+Calculate summary variables from the adjacency (Endler 2012) and 
+boundary-strength (Endler et al. 2018) analyses.
 }
 \examples{
 \dontrun{
