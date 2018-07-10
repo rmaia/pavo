@@ -2,9 +2,9 @@ Package: pavo
 Description: A cohesive framework for parsing, analyzing and organizing color from spectral data.
 Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
-Version: 1.4
+Version: 1.4.0
 License: GPL (>= 2)
-Date: 2017-11-17
+Date: 2018-06-10
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Thomas", "White", role = "aut",

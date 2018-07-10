@@ -56,9 +56,9 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
 
   dat <- vismodeldata
 
-  X <- dat$X
-  Y <- dat$Y
-  Z <- dat$Z
+  X <- dat[,names(dat) %in% c('X', 'cie2_X', 'cie10_X')]
+  Y <- dat[,names(dat) %in% c('Y', 'cie2_Y', 'cie10_Y')]
+  Z <- dat[,names(dat) %in% c('Z', 'cie2_Z', 'cie10_Z')]
 
   # Coordinates in the chosen CIE space
   if (space == "XYZ") {
@@ -71,9 +71,9 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
     # re-grab original sensitivity and illuminant data.
     S <- attr(dat, "data.visualsystem.chromatic")
     illum <- attr(dat, "data.illuminant") # Illuminant
-    Xn <- sum(rep(1, 401) * S[, 1] * illum)
-    Yn <- sum(rep(1, 401) * S[, 2] * illum)
-    Zn <- sum(rep(1, 401) * S[, 3] * illum)
+    Xn <- sum(S[, 1] * illum)
+    Yn <- sum(S[, 2] * illum)
+    Zn <- sum(S[, 3] * illum)
     # Xn = 94.811
     # Yn = 100
     # Zn = 107.304
