@@ -5,8 +5,8 @@
 \title{Run an adjacency/boundary strength analysis}
 \usage{
 adjacent(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
-  exclude = c("none", "background", "object"), coldists = NULL,
-  cores = getOption("mc.cores", 2L))
+  polygon = NULL, exclude = c("none", "background", "object"),
+  coldists = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
@@ -27,6 +27,10 @@ backgrounds (e.g. the matte background of pinned specimens). Examine the attribu
 call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
 values corresponding to colour-class ID numbers. Ignored if the focal object
 and background has been identified using \code{\link{procimg}}.}
+
+\item{polygon}{a data.frame of x-y coordinates delineating a closed polygon that
+separates the focal object from the background. Not required, and ignored, if the
+focal object outline is specified using \code{\link{procimg}}.}
 
 \item{exclude}{The portion of the image to be excluded from the analysis, if any.
 If excluding the focal object, its outline must first have been idenfitied using
@@ -51,13 +55,6 @@ a data frame of summary variables:
   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.
   \item \code{'n_off'}: The total off-diagonal transitions.
-  \item \code{'Obs_i_j'}: The observed number of off-diagonal (class-change)
-    transitions, such that \code{sum(Obs_i_j) = n_off}.
-  \item \code{'E_i_j'}: The expected number of off-diagonal (class-change)
-    transitions, where \code{E_i_j = 2 x n_off x p_i x p_j}.
-  \item \code{'d_t_o'}: The absolute deviation from expected off-diagonal (class-change)
-    transitions, calculated on the observed transition matrix, where
-    d_t_o = sum(abs(O_i_j - E_i_j)).
   \item \code{'p_i'}: The overall frequency of colour class \emph{i}.
   \item \code{'q_i_j'}: The frequency of transitions between \emph{all} colour classes
    \emph{i} and \emph{j}, such that \code{sum(q_i_j) = 1}.
@@ -88,7 +85,7 @@ a data frame of summary variables:
   }
 }
 \description{
-Calculate summary variables from the adjacency (Endler 2012) and 
+Calculate summary variables from the adjacency (Endler 2012) and
 boundary-strength (Endler et al. 2018) analyses.
 }
 \examples{

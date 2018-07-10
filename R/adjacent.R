@@ -1,6 +1,6 @@
 #' Run an adjacency/boundary strength analysis
 #'
-#' Calculate summary variables from the adjacency (Endler 2012) and 
+#' Calculate summary variables from the adjacency (Endler 2012) and
 #' boundary-strength (Endler et al. 2018) analyses.
 #'
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
@@ -24,6 +24,9 @@
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
 #' values corresponding to colour-class ID numbers. Ignored if the focal object
 #' and background has been identified using \code{\link{procimg}}.
+#' @param polygon a data.frame of x-y coordinates delineating a closed polygon that
+#' separates the focal object from the background. Not required, and ignored, if the
+#' focal object outline is specified using \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should specify all possible combinations of colour category ID's, and be named 'c1'
@@ -38,13 +41,6 @@
 #'   \item \code{'k'}: The number of user-specified colour and/or luminance classes.
 #'   \item \code{'N'}: The grand total (sum of diagonal and off-diagonal) transitions.
 #'   \item \code{'n_off'}: The total off-diagonal transitions.
-#'   \item \code{'Obs_i_j'}: The observed number of off-diagonal (class-change)
-#'     transitions, such that \code{sum(Obs_i_j) = n_off}.
-#'   \item \code{'E_i_j'}: The expected number of off-diagonal (class-change)
-#'     transitions, where \code{E_i_j = 2 x n_off x p_i x p_j}.
-#'   \item \code{'d_t_o'}: The absolute deviation from expected off-diagonal (class-change)
-#'     transitions, calculated on the observed transition matrix, where
-#'     d_t_o = sum(abs(O_i_j - E_i_j)).
 #'   \item \code{'p_i'}: The overall frequency of colour class \emph{i}.
 #'   \item \code{'q_i_j'}: The frequency of transitions between \emph{all} colour classes
 #'    \emph{i} and \emph{j}, such that \code{sum(q_i_j) = 1}.
@@ -99,8 +95,8 @@
 #' and fitness. bioRxiv.
 
 adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
-                     exclude = c("none", "background", "object"), coldists = NULL,
-                     cores = getOption("mc.cores", 2L)) {
+                     polygon = NULL, exclude = c("none", "background", "object"),
+                     coldists = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
 
   ## Checks
@@ -148,7 +144,28 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   }
 
   # Outline formatting
-
+  if (!is.null(polygon)) {
+    if (!multi_image) {
+      if (!all(c("x", "y") %in% names(polygon))) {
+        message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
+        polygon <- data.frame(x = polygon[, 1], y = polygon[, 2])
+      }
+      if (!is.na(attr(object, "outline"))) {
+        attr(object, "outline") <- polygon
+      }
+    } else if (multi_image) {
+      if (length(polygon) != length(classimg)) {
+        stop("The list of polygons must be equal in number to the list of images.")
+      }
+      if (!all(c("x", "y") %in% names(unlist(polygon)))) {
+        message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
+        polygon <- lapply(1:length(polygon), function(x) data.frame(x = polygon[[x]][, 1], y = polygon[[x]][, 2]))
+      }
+      if (all(unlist(lapply(1:length(classimg), function(x) !is.na(attr(object, "outline")))))) {
+        object <- lapply(1:length(classimg), function(x) attr(object[[x]], "outline") <- polygon[[x]])
+      }
+    }
+  }
 
   # Exclusion checks
   if ("background" %in% exclude2) {
@@ -543,7 +560,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   }
 
   # Output
-  fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
+  fin <- data.frame(k, N, n_off, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
+  # fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
   # fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
   fin <- as.data.frame(fin)

@@ -12,7 +12,8 @@ procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
 stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{scaledist}{an integer, or numeric vector equal in length to the number of images,
-specifying the length of the scale in the image(s).}
+specifying the length of the scale in the image(s). Image(s) will then be presented,
+and the user asked to select either end of the scale corresponding to the input value.}
 
 \item{outline}{allows the user to interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
@@ -35,7 +36,7 @@ an image array, or list containing images, for use in further
 \code{pavo} functions, with scales stored as an attribute.
 }
 \description{
-Manually specify the scale of images.
+Specify the scale of images, and define focal objects.
 }
 \examples{
 \dontrun{

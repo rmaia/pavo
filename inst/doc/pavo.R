@@ -602,7 +602,7 @@ plot(butterflies[[2]])
 set.seed(5)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----
 
 # Note that we could simply feed the entire image list to summary, rather than 
 # specifying each image individually, and the images would progress automatically 
