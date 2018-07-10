@@ -5,7 +5,7 @@
 \title{Process images}
 \usage{
 procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
-  refinements = 1L, plotnew = FALSE, ...)
+  iterations = 1L, plotnew = FALSE, ...)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
@@ -24,7 +24,7 @@ backgrounds and objects cannot be readily separated by simple k-means clustering
 \item{smooth}{should the polygon specified when \code{outline = TRUE} be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
-\item{refinements}{the number of smoothing iterations, when \code{smooth = TRUE}.}
+\item{iterations}{the number of smoothing iterations, when \code{smooth = TRUE}.}
 
 \item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 

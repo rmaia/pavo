@@ -1,8 +1,11 @@
 ## ---- echo=FALSE, warning=FALSE, results='hide', message=FALSE-----------
 library(pavo)
 
+## ---- echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '85%'----
+knitr::include_graphics('fig/workflow.png')
+
 ## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
-#specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+# specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 
 ## ---- echo=TRUE, eval=FALSE, results='hide', include=TRUE----------------
@@ -555,4 +558,94 @@ vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro =
 JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
 head(JND.fms)
+
+## ---- eval = FALSE-------------------------------------------------------
+#  butterflies <- getimg("~/pavo/vignette_data/images/")
+#  # 2  files found; importing images
+#  # |================================================================================| 100%, ETA 00:00
+
+## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
+# specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+
+## ------------------------------------------------------------------------
+is.rimg(butterflies)
+str(butterflies[[1]])
+str(butterflies[[2]])
+
+## ------------------------------------------------------------------------
+fakeimg <- array(c(
+  matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+  matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+  matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)),
+  dim = c(12, 8, 3)
+)
+fake_rimg <- as.rimg(fakeimg)
+is.rimg(fake_rimg)
+str(fake_rimg)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Raw images of our butterflies_"----
+
+# Note the plot titles are taken from the file names, and can be overridden.
+plot(butterflies[[1]])
+
+plot(butterflies[[2]])
+
+
+## ---- eval = FALSE-------------------------------------------------------
+#  butterflies <- procimg(butterflies, scaledist = 100)
+
+## ---- eval = FALSE-------------------------------------------------------
+#  butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
+
+## ------------------------------------------------------------------------
+set.seed(5)
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----
+
+# Note that we could simply feed the entire image list to summary, rather than 
+# specifying each image individually, and the images would progress automatically 
+# with user input.
+summary(butterflies_class[[1]], plot = TRUE)
+
+summary(butterflies_class[[2]], plot = TRUE)
+
+
+## ---- eval = FALSE-------------------------------------------------------
+#  # Automatic classification.
+#  butterflies_class <- classify(butterflies, kcols = c(4, 3))
+#  
+#  # Automatic classification using a reference image
+#  butterflies_class <- classify(butterflies, kcols = c(4, 3))
+#  
+#  # Classification using interactively-specified centres for each image, with no
+#  # need to specify kcols (since it will be inferred from the numbers of colours selected)
+#  butterflies_class <- classify(butterflies, interactive = TRUE)
+#  
+#  # Classification using interactively-specified centres for the single reference image.
+#  butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
+
+## ------------------------------------------------------------------------
+butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
+
+head(butterflies_adj)
+
+## ------------------------------------------------------------------------
+
+# Create a fake matrix of pairwise color- and luminance distances between all 
+# color patten elements, as might be attained through visual modelling of spectral data.
+distances <- data.frame(c1 = c(1, 1, 2),
+                        c2 = c(2, 3, 3),
+                        dS = c(3.6, 5.1, 4.4),
+                        dL = c(1.1, 2.5, 3.2))
+
+# Take a look
+distances
+
+# Now feed this information into the adjacency analysis using the less-colorful 
+# of our two images, for convenience (though this could be readily extended to 
+# include a list of images along with a list of distances)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances)
+
 

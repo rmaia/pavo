@@ -14,7 +14,7 @@
 #' backgrounds and objects cannot be readily separated by simple k-means clustering.
 #' @param smooth should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
-#' @param refinements the number of smoothing iterations, when \code{smooth = TRUE}.
+#' @param iterations the number of smoothing iterations, when \code{smooth = TRUE}.
 #' @param plotnew should plots be opened in a new window? Defaults to \code{FALSE}.
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
@@ -39,7 +39,7 @@
 #' Computer Graphics and Image Processing 3, 346-349.
 
 procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
-                    refinements = 1L, plotnew = FALSE, ...) {
+                    iterations = 1L, plotnew = FALSE, ...) {
 
   ## Checks
   if (!"rimg" %in% class(image)) {
@@ -88,7 +88,7 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
       for (i in 1:length(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
-        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, refinements, ...)
+        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, iterations, ...)
       }
       if (plotnew) dev.off()
     }
@@ -108,7 +108,7 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
     if (outline) {
       message("Select the outline of focal stimulus, and press [esc] when complete.
               The first and last points will be automatically connected.")
-      attr(image, "outline") <- outliner(image, smooth, refinements, ...)
+      attr(image, "outline") <- outliner(image, smooth, iterations, ...)
     }
     if (plotnew) dev.off()
   }
@@ -154,7 +154,7 @@ scaler <- function(image_i, scaledist_i, ...) {
 #' stored in a list. preferably the result of \code{\link{getimg}}.
 #' @param smooth_i should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
-#' @param refinements_i the number of smoothing iterations, when \code{smooth = TRUE}.
+#' @param iterations_i the number of smoothing iterations, when \code{smooth = TRUE}.
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
 #' @keywords internal
@@ -162,7 +162,7 @@ scaler <- function(image_i, scaledist_i, ...) {
 #' @return an image, or list containing images, for use in further
 #' \code{pavo} functions, with scales stored as an attribute.
 #'
-outliner <- function(image_i, smooth_i, refinements_i, ...) {
+outliner <- function(image_i, smooth_i, iterations_i, ...) {
 
   # Plot
   if (attr(image_i, "state") == "raw") {
@@ -178,7 +178,7 @@ outliner <- function(image_i, smooth_i, refinements_i, ...) {
 
   # Smooth coordinates (Chaikin’s corner cutting)
   if (smooth_i) {
-    for (i in seq.int(refinements_i)) {
+    for (i in seq.int(iterations_i)) {
       n_pts <- nrow(xy)
       qr <- matrix(NA_real_,
         nrow = 2 * (n_pts - 1) + 1,

@@ -28,7 +28,13 @@ library(pavo)
 
 Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
 
-# Spectral Dataset Description
+```{r, echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '85%'}
+knitr::include_graphics('fig/workflow.png')
+```
+
+# Organizing Spectral Data
+
+## Spectral Dataset Description
 
 The spectral data used in this example are available from [github](http://github.com) by clicking [here](https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip). You can download and extract it to follow the vignette.
 
@@ -36,18 +42,16 @@ The data consist of reflectance spectra, obtained using Avantes equipment and so
 
 In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See help for more information `help(package = "pavo")`.
 
-# Organizing Spectral Data
-
 ## Importing
 
-The first thing we need to do is import the spectral data into R using the function `getspec()`. Since the spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also has a **fast algorithm** that speeds up importing spectra, which will only work when all files have the same format. `getspec`  attempts to use it first, and if it fails, it will switch to the old algorithm (the slow version can also be chosen with the argument `fast = FALSE`). A final issue with the  data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call. 
+The first thing we need to do is import the spectral data into R using the function `getspec()`. Since the spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call. 
 
 `getspec` also allows the use of **parallel processing** to speed up importing large datasets. This is controlled by the `cores` argument. If set to 1, single threading will be used **(parallel processing not available in Windows, only Linux/Unix and Mac)**.
 
 The files were downloaded and placed in a directory called `/pavo/vignette_data`. By default, `getspec` will search for files in the current folder, but a different one can be specified:
 
 ```{r, echo=FALSE, eval=TRUE, results='hide', include=FALSE}
-#specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+# specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
 ```
 
@@ -847,7 +851,6 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
-
 **Summary variables for groups of points** 
 
 Another advantage of colorspace models is that they allow for the calculation of useful summary statistics of groups of points, such
@@ -1088,7 +1091,7 @@ the chromatic constrasts `dS` and achromatic contrasts `dL` are expressed as Euc
 
 #### Distances in N-Dimensions
 
-As of version `1.0`, the `codist` function is no longer limited to di-, tri- or tetrachromatic visual systems. The function has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
+The `codist` function is no longer limited to di-, tri- or tetrachromatic visual systems. The function has been generalised, and can now calculate color distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"}
 # Create an arbitrary visual phenotype with 10 photoreceptors
@@ -1108,20 +1111,166 @@ JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 head(JND.fms)
 ```
 
+# Organizing Spatial (image) Data
+
+We first import our images with `getimg`, which functions in a similar manner to `getspec`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. 
+
+```{r, eval = FALSE}
+butterflies <- getimg("~/pavo/vignette_data/images/")
+# 2  files found; importing images
+# |================================================================================| 100%, ETA 00:00
+```
+
+```{r, echo=FALSE, eval=TRUE, results='hide', include=FALSE}
+# specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+```
+
+When `pavo` imports imges, it created a multidimensional object of class `rimg`, which inherits from the `array` class. If more than one image is imported, then these `rimg` objects are stored as elements in a list. All image-based functions in `pavo` are capable of working with such `rimg` lists, which allows for a more convenient and tidy high-throughput workflow. `rimg` objects also have a number of identifying attributes, drawn on by image-processing functions, which can be readily inspected. 
+
+```{r}
+is.rimg(butterflies)
+str(butterflies[[1]])
+str(butterflies[[2]])
+```
+
+If you already have images loaded into R, you can convert them to `rimg` objects using `as.rimg`. The function will attempt to interpret a multidimensional array as an RGB image with values ranging between [0, 1], and imbue it with the custom attributes of an `rimg`. We can see this by creating a fake array, before converting it.
+
+```{r}
+fakeimg <- array(c(
+  matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+  matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+  matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)),
+  dim = c(12, 8, 3)
+)
+fake_rimg <- as.rimg(fakeimg)
+is.rimg(fake_rimg)
+str(fake_rimg)
+```
+
+# Visualising Image Data
+
+## The `plot` and `summary` Functions
+
+Thanks to the underlying class system of `pavo`, the generic functions `plot` and `summary` recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to `plot`, for example, prints our images. Note that while we call our images individually below (for convenient printing in the vignette), we could simply feed the entire list of images to `plot` and it would automatically step through each image in the list upon user input.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Raw images of our butterflies_"}
+
+# Note the plot titles are taken from the file names, and can be overridden.
+plot(butterflies[[1]])
+
+plot(butterflies[[2]])
+
+```
+
+The `summary` function offers some summary information about images or lists of images as we might expect. If we specify `plot = TRUE` however, the function instead plots the image. When such images have been color-classified this also plots the images' colour pallete alongside (see below). This is an extremely useful diagnotistic tool when classifying images, as it allows us to see how well the classification algorithm has performed in clustering color pattern elements into discrete color categories. As with all plots, the function takes all standard plot arguments (see `?par`), such as custom colors, which again can be diagnostically useful.   
+
+# Processing Image Data
+
+## Setting Scales and Defining Objects 
+
+Images often require some post-capture processing, depending on the intended use, and `pavo` offers some useful options via `procimg`. The functionality of `procimg` is currently limited to only that functionality which might be directly relevant to the analyses currently implemented, as we assume any major processing and quality-checking (e.g. image rotation and color correction) is undertaken by the user beforehand. This also minimises overlap with existing R packages for image processing such as `imager` and `magick`, though we stongly encourage users to explore said packages should one prefer to keep the entire imaage-analysis and processing workflow within R.
+
+The two functions of `procimg` are currently (1) setting an image scale, and (2) distinguishing the focal object from its background. Both of these options are interactive, meaning that we are presented with the focal image and must select points on it using the mouse. If setting a scale, we specify a scale in our preferred units via `scaledist`, and the click the endpoints of the scale within the image (which could be a formal scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
+
+```{r, eval = FALSE}
+butterflies <- procimg(butterflies, scaledist = 100)
+```
+
+Distinguishing a focal object from its background is important in cases where we are analysing a broader visual scene, particularly when the background is highly heterogeneous, such as an animal in nature, and cannot be classified into a homogeneous block and thus identified more simply (see below). To define the object and background we specify `outline = TRUE`, which will result in being asked to click around the outline of the focal object in each image, which is then converted to a polygon --- the xy coordinates of which are saved as an attribute. It is often useful to slight smooth the resulting polygon, which can be done with Chaikin's corner-cuting algorithm by specifying a number of `refinements`. Chaikin's algorithm works by iteratively replacing every point by two new points 1/4 of the way to the next. The argument `iterations` specifies the number of corner cutting iterations to apply, and the default value of 1 offers a subtle smoothing effect.
+
+```{r, eval = FALSE}
+butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
+```
+
+Both of these options can be specified in a single call to `procimg`, and the `pavo 2.0` publication offers a useful example of such processing, which are difficult illustrate here due to its interactive nature.
+
+## Image Color-Classification
+
+The classification of RGB images into discrete color-classes is an essential step on the road to several analyses, and this is carried out in `pavo` via `classify`. The function currently implements k-means clustering which, although an 'unsupervised' methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colors in each (estimated beforehand, perhaps through visual modelling to predict the number of discriminable colors), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`.  
+
+```{r}
+set.seed(5)
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"}
+
+# Note that we could simply feed the entire image list to summary, rather than 
+# specifying each image individually, and the images would progress automatically 
+# with user input.
+summary(butterflies_class[[1]], plot = TRUE)
+
+summary(butterflies_class[[2]], plot = TRUE)
+
+```
+
+There are other options available, which may be of particular use when the classification process is not producing the results that might be expected _a priori_. If analysing similar images with homologous colour patterns (e.g. individuals within a species), we could specify a single 'reference' image to be initially classified, using `refID`, with the RGB centers identified in this reference image used as pre-specified cluster centres in subsequent images. This helps to ensure that homologous pattern elements are reliably identified and classified between images. The `classify` function also offers an interactive option, via `interactive = TRUE`, wherein we can interactively click on representative colors within an image (or images individually), with the RGB values then used as cluster centers. This is particularly useful when images are being erroneously classified, since the standard k-means process randomly selects initial centers and so may (by chance) miss smaller patches, or confuse similar colors. By specifying the intial RGB centers interactively, it can be easier for the process to distinguish or 'pull apart' colours in such circumstances. Ultimately, there are several combinations of options availble during classification. For our butterflies, for example, we could use any of the following (though some would be very ill-advised):
+
+```{r, eval = FALSE}
+# Automatic classification.
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+# Automatic classification using a reference image
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+# Classification using interactively-specified centres for each image, with no 
+# need to specify kcols (since it will be inferred from the numbers of colours selected)
+butterflies_class <- classify(butterflies, interactive = TRUE)
+
+# Classification using interactively-specified centres for the single reference image.
+butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
+```
+
+# Analyzing Image Data
+
+## Adjacency and Boundary Strength Analyses
+
+The adjacency (Endler 2012) and boundary strength (Endler et al. 2018) analyses offer a powerful method for quantiying various features of color pattern geometry. Briefly, the process entails classifying the pixels of images into a number of discrete colour classes, using `classify` as described above, before sampling the now-classified image with a square grid or user-specified density. The column-wise and row-wise colour-class transitions between adjacent points are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel` and `coldist`, then this can also be incorporated to derive several measures of the salience of patch boundaries. 
+
+In `pavo`, this is all carried out through the `adjacent` function, which takes several arguments that should be well understood. For our butterflies, we'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the color-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg`, as above, and ignore this argument).
+
+```{r}
+butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
+
+head(butterflies_adj)
+```
+
+The output is a suite of statistics describing color pattern geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between color categories 3 and 4, for an image that contains only 3 color categories). Others may result when we do not give `adjacent` enough information, such as the color-distances reqired to calculate the boundary-strength statistics. If we do give the function this information, we can see that those final variables now contain sensible output. 
+
+```{r}
+
+# Create a fake matrix of pairwise color- and luminance distances between all 
+# color patten elements, as might be attained through visual modelling of spectral data.
+distances <- data.frame(c1 = c(1, 1, 2),
+                        c2 = c(2, 3, 3),
+                        dS = c(3.6, 5.1, 4.4),
+                        dL = c(1.1, 2.5, 3.2))
+
+# Take a look
+distances
+
+# Now feed this information into the adjacency analysis using the less-colorful 
+# of our two images, for convenience (though this could be readily extended to 
+# include a list of images along with a list of distances)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances)
+
+```
+
 # Classes and Attributes
 
 To enable the comprehensive workflow of `pavo`, we've implemented an expanded class system. Spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing funcitons, or explicitly convert an object using `as.rspec`. Similary, images will be of calss `rimg` when imported via `getimg`, or if converted using `as.rimg`. The results of `vismodel` are objects of class `vismodel` and the results of `colspace` are, unsurprisingly, objects of class `colspace`. Most of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colorspace). These are easily viewed using the `summary` function (on any `rspec`, `rimg`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.  
 
 # Final Thoughts
 
-We hope to have demonstrated the flexibility of `pavo` when it comes to importing, processing, exploring, visualizing and analyzing spectral data. Our aim was to provide a cohesive, start-to-finish workflow of spectral data color analysis _within_ `R`, without the need for additional software. Though our examples have broadly focused on bird reflectance data and visual models, `pavo` should be easily extended to any taxon of interest, including the possibility of modeling sensitivity curves through the `sensmodel` function.
+We hope to have demonstrated the flexibility of `pavo` when it comes to importing, processing, exploring, visualizing and analyzing spectral and spatial data. Our aim was to provide a cohesive, start-to-finish workflow of color pattern analysis with `R`, without the need for additional software. Though our examples have broadly focused on bird reflectance data and visual models, `pavo` should be easily extended to any taxon of interest, including the possibility of modeling sensitivity curves through the `sensmodel` function.
 
 For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly. 
 
 # Citation of methods implemented in `pavo`
 
 Most of the methods implemented in `pavo` have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables ("objective colourimetrics") and their particular relation to signal production and perception, see Andersson & Prager (2006) and Montgomerie (2006). Visual models based on photon catches and receptor noise are detailed in Vorobyev & Osorio (1998) and Vorobyev et al. (1998), and photoreceptor sensitivity curve estimation in Govardovskii (2000) and Hart & Vorobyev (2005). For
-tetrahedral colourspace model implementations and variable calculations, see Endler & Mielke (2005) and Stoddard & Prum (2008), and for colour volume overlap see Stoddard & Prum (2008) and Stoddard & Stevens (2011). Users of the functions that apply these methods must cite the original sources as appropriate, along with `pavo`.
+tetrahedral colourspace model implementations and variable calculations, see Endler & Mielke (2005) and Stoddard & Prum (2008), and for colour volume overlap see Stoddard & Prum (2008) and Stoddard & Stevens (2011). Adjacency and boundary strength analyses are described in Endler (2012) and Endler et al. (2018). Users of the functions that apply these methods must cite the original sources as appropriate, along with `pavo`.
 
 # Acknowledgments
 
@@ -1147,6 +1296,10 @@ Endler J. A. On the measurement and classification of colour in studies of anima
 
 Endler J. A. and Mielke P. W., Comparing entire colour patterns as birds see them. _Biological Journal Of The Linnean Society_, 86(4):405–431, 2005.
 
+Endler, J. A. (2012). A framework for analysing colour pattern geometry: adjacent colours. _Biological Journal Of The Linnean Society_, 86(4), 405-431.
+
+Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis: Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour and fitness. _bioRxiv_.
+
 Goldsmith T. H. Optimization, constraint, and history in the evolution of eyes. _Quarterly Review Of Biology_, 65(3):281–322, 1990.
 
 Gomez D. AVICOL, a program to analyse spectrometric data., 2006. Last update January 2012.
@@ -1154,6 +1307,8 @@ Gomez D. AVICOL, a program to analyse spectrometric data., 2006. Last update Jan
 Govardovskii V. I., Fyhrquist N., Reuter T., Kuzmin D. G., and Donner K. In search of the visual pigment template. _Visual Neuroscience_, 17(4):509–528, 2000.
 
 Hart N.S., and Vorobyev M. Modelling oil droplet absorption spectra and spectral sensitivities of bird cone photoreceptors. _Journal of Comparative Physiology A: Neuroethology, Sensory, Neural, and Behavioral Physiology_, 191(4):381–392, 2005.
+
+Maia, R., White, T. E., (2018) Comparing colors using visual models. _Behavioral Ecology_, ary017 doi: 10.1093/beheco/ary017.
 
 Montgomerie R. Analyzing colors. In K. J. Mcgraw and G. E. Hill, editors, _Bird Coloration_ Vol. I, pages 90–147. Harvard Univ. Press Cambridge, MA, 2006.
 

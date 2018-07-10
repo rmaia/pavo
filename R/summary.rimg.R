@@ -34,8 +34,13 @@
 
 summary.rimg <- function(object, plot = FALSE, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
+  
+  if(multi_image)
+    state <- attr(object[[1]], "state")
+  else
+    state <- attr(object, "state")
 
-  if ("colclass" %in% attr(object[[1]], "state")) {
+  if ("colclass" %in% state) {
     if (multi_image) {
       if (plot) {
         for (i in 1:length(object)) {
@@ -61,7 +66,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
         )
       }
     }
-  }else if ("raw" %in% attr(object[[1]], "state")){
+  }else if ("raw" %in% state){
     if (multi_image) {
       if (plot) {
         for (i in 1:length(object)) {
