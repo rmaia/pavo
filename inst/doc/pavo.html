@@ -1743,15 +1743,15 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <a class="sourceLine" id="cb187-2" data-line-number="2"><span class="co"># color patten elements, as might be attained through visual modelling of spectral data.</span></a>
 <a class="sourceLine" id="cb187-3" data-line-number="3">distances &lt;-<span class="st"> </span><span class="kw">data.frame</span>(<span class="dt">c1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>),</a>
 <a class="sourceLine" id="cb187-4" data-line-number="4">                        <span class="dt">c2 =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>),</a>
-<a class="sourceLine" id="cb187-5" data-line-number="5">                        <span class="dt">dS =</span> <span class="kw">c</span>(<span class="fl">3.6</span>, <span class="fl">5.1</span>, <span class="fl">4.4</span>),</a>
+<a class="sourceLine" id="cb187-5" data-line-number="5">                        <span class="dt">dS =</span> <span class="kw">c</span>(<span class="fl">10.6</span>, <span class="fl">5.1</span>, <span class="fl">4.4</span>),</a>
 <a class="sourceLine" id="cb187-6" data-line-number="6">                        <span class="dt">dL =</span> <span class="kw">c</span>(<span class="fl">1.1</span>, <span class="fl">2.5</span>, <span class="fl">3.2</span>))</a>
 <a class="sourceLine" id="cb187-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb187-8" data-line-number="8"><span class="co"># Take a look</span></a>
 <a class="sourceLine" id="cb187-9" data-line-number="9">distances</a></code></pre></div>
-<pre><code>##   c1 c2  dS  dL
-## 1  1  2 3.6 1.1
-## 2  1  3 5.1 2.5
-## 3  2  3 4.4 3.2</code></pre>
+<pre><code>##   c1 c2   dS  dL
+## 1  1  2 10.6 1.1
+## 2  1  3  5.1 2.5
+## 3  2  3  4.4 3.2</code></pre>
 <div class="sourceCode" id="cb189"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb189-1" data-line-number="1"><span class="co"># Now feed this information into the adjacency analysis using the less-colorful </span></a>
 <a class="sourceLine" id="cb189-2" data-line-number="2"><span class="co"># of our two images, for convenience (though this could be readily extended to </span></a>
 <a class="sourceLine" id="cb189-3" data-line-number="3"><span class="co"># include a list of images along with a list of distances)</span></a>
@@ -1762,10 +1762,10 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 ## papilio 0.1728894 0.01150754 0.04704774 0.2109045 0.1072591 0.1754453
 ##             t_2_3          m    m_r        m_c        A        B       Sc
 ## papilio 0.7172955 0.07201872 0.0778 0.06623744 1.174562 2.537263 2.424033
-##               St        Jc        Jt       Rt      Rab     m_dS      s_dS
-## papilio 1.795982 0.8080109 0.5986606 0.920899 1.410652 4.437004 0.5880201
+##               St        Jc        Jt       Rt      Rab     m_dS     s_dS
+## papilio 1.795982 0.8080109 0.5986606 0.920899 1.410652 5.187818 2.845423
 ##             cv_dS     m_dL      s_dL     cv_dL
-## papilio 0.1325264 2.851944 0.9939308 0.3485099</code></pre>
+## papilio 0.5484817 2.851944 0.9939308 0.3485099</code></pre>
 </div>
 </div>
 <div id="classes-and-attributes" class="section level1">

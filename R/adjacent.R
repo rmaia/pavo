@@ -127,32 +127,46 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       stop("One or more images has not yet been colour-classified. See classify().")
     }
   }
-
-  # Coldists formatting (individual/multiple? todo)
+  
+  ## Coldists formatting
   if (!is.null(coldists)) {
-    if (ncol(coldists) < 3) {
-      stop("Too few columns present in 'coldists' data.frame.")
+    # Single images
+    if (!multi_image) {
+      if (!all(c("c1", "c2") %in% names(coldists))) {
+        message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
+        names(coldists)[1:2] <- c("c1", "c2")
+      }
+      if (!any(c("dS", "dL") %in% names(coldists))) {
+        stop("No columns named 'dS' or 'dL' in coldists.")
+      }
+    # Multi images
+    } else if (multi_image) {
+      if(!is.list(coldists)){
+        message('Reusing single set of coldists for multiple images.')
+        coldists <- rep(coldists, length(classimg))
+      }
+      if (!all(c("c1", "c2") %in% names(unlist(coldists)))) {
+        message("Cannot find columns named 'c1', 'c2' in list of coldists. Assuming first two columns contain colour-category IDs.")
+        coldists <- lapply(1:length(coldists), function(x) names(coldists[[x]])[1:2] = c('c1', 'c2'))
+        }
+      if (any(unlist(lapply(1:length(coldists), function(x) !any(c("dS", "dL") %in% names(coldists[[x]])))))) {
+        stop("No columns named 'dS' or 'dL' in coldists.")
+      }
     }
-    if (!all(c("c1", "c2") %in% names(coldists))) {
-      message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
-      names(coldists)[1:2] <- c("c1", "c2")
-    }
-    if (!any(c("dS", "dL") %in% names(coldists))) {
-      stop("No columns named 'dS' and/or 'dL' in coldists.")
-    }
-    # Need to sort?
   }
 
-  # Outline formatting
+  ## Outline formatting
   if (!is.null(polygon)) {
+    # Single images
     if (!multi_image) {
       if (!all(c("x", "y") %in% names(polygon))) {
         message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
         polygon <- data.frame(x = polygon[, 1], y = polygon[, 2])
       }
-      if (!is.na(attr(object, "outline"))) {
-        attr(object, "outline") <- polygon
+      if (is.na(attr(classimg, "outline"))) {
+        attr(classimg, "outline") <- polygon
       }
+    # Multi images
     } else if (multi_image) {
       if (length(polygon) != length(classimg)) {
         stop("The list of polygons must be equal in number to the list of images.")
@@ -161,13 +175,13 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
         message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
         polygon <- lapply(1:length(polygon), function(x) data.frame(x = polygon[[x]][, 1], y = polygon[[x]][, 2]))
       }
-      if (all(unlist(lapply(1:length(classimg), function(x) !is.na(attr(object, "outline")))))) {
-        object <- lapply(1:length(classimg), function(x) attr(object[[x]], "outline") <- polygon[[x]])
+      if (all(unlist(lapply(1:length(classimg), function(x) is.na(attr(classimg, "outline")))))) {
+        classimg <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "outline") <- polygon[[x]])
       }
     }
   }
 
-  # Exclusion checks
+  ## Exclusion checks
   if ("background" %in% exclude2) {
     if (is.null(bkgID) && is.null(attr(classimg, "outline"))) {
       stop("Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
@@ -196,7 +210,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
       stop("Required argument xscale is missing, and image data are uncalibrated. Either specify xscale or use procimg() to set a scale.")
     }
-    ## Multi images
+    # Multi images
   } else if (multi_image) {
     if (!is.na(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
@@ -233,7 +247,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           exclude2_i = exclude2,
-          coldists_i = coldists
+          coldists_i = coldists[[x]]
         ),
       mc.cores = cores
       ),
@@ -242,7 +256,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           exclude2_i = exclude2,
-          coldists_i = coldists
+          coldists_i = coldists[[x]]
         ))
     )
 
@@ -251,9 +265,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     outdata <- do.call(rbind, c(lapply(outdata, function(x)
       data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
 
-    for (i in 1:nrow(outdata)) {
-      rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
-    }
+    for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
+    
   } else if (!multi_image) { # Single image
 
     outdata <- adjacent_main(

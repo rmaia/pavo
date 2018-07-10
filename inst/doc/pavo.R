@@ -637,7 +637,7 @@ head(butterflies_adj)
 # color patten elements, as might be attained through visual modelling of spectral data.
 distances <- data.frame(c1 = c(1, 1, 2),
                         c2 = c(2, 3, 3),
-                        dS = c(3.6, 5.1, 4.4),
+                        dS = c(10.6, 5.1, 4.4),
                         dL = c(1.1, 2.5, 3.2))
 
 # Take a look
