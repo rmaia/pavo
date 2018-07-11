@@ -41,8 +41,9 @@ the colour-class ID's uniquely corresponding to the background can be specified 
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should specify all possible combinations of colour category ID's, and be named 'c1'
-and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL
+should be named 'c1' and 'c2', and specify all possible combinations of colour 
+category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...), 
+with the remaining columns named dS (for chromatic distances) and/or dL
 (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 for visual modelling with spectral data.}
 

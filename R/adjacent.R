@@ -29,8 +29,9 @@
 #' focal object outline is specified using \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should specify all possible combinations of colour category ID's, and be named 'c1'
-#' and 'c2', with the remaining columns named dS (for chromatic distances) and/or dL
+#' should be named 'c1' and 'c2', and specify all possible combinations of colour 
+#' category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...), 
+#' with the remaining columns named dS (for chromatic distances) and/or dL
 #' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 #' for visual modelling with spectral data.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
@@ -320,6 +321,9 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
+  
+  # Color names
+  colournames <- attr(classimg_i, 'colnames')
 
   # Simple or 'complex' background?
   bkgoutline <- ifelse(is.na(attr(classimg_i, "outline")),
@@ -367,12 +371,13 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
+  freq$Var1 <- colournames$name[as.numeric(as.character(freq$Var1))]
 
   # Single colour check
   single_col <- ifelse(n_class == 1, TRUE, FALSE)
 
   # Transitions
-  transitions <- transitioncalc(subclass)
+  transitions <- transitioncalc(subclass, colournames)
 
   # Raw diag/offdiag
   diag <- subset(transitions[["all"]], c1 == c2)
@@ -548,6 +553,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
     # Boundary strength (Endler et al. 2018)
     if (!is.null(coldists_i)) {
+      # Name-match check. Could be more robust.
+      if(!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
+              c(as.character(coldists_i$c1), as.character(coldists_i$c2))))
+        stop('Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.')
+        
       offdiagprop <- merge(offdiagprop, coldists_i)
 
       # Chromatic calcs
@@ -615,7 +625,7 @@ polymask <- function(imagedat, poly, alterWhich = c("outside", "inside"), replac
   imagedat
 }
 
-transitioncalc <- function(classimgdat) {
+transitioncalc <- function(classimgdat, colornames) {
   transout <- list()
 
   # All row transitions
@@ -655,7 +665,21 @@ transitioncalc <- function(classimgdat) {
   transitions <- rbind(rowtrans2, coltrans2)
   transitions <- aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
   names(transitions) <- c("c1", "c2", "N")
-
+  
+  # Rename
+  for(i in unique(c(transitions$c1, transitions$c2))){
+    transitions$c1[transitions$c1 == i] <- colornames[i,]
+    transitions$c2[transitions$c2 == i] <- colornames[i,]
+  }
+  for(i in unique(c(coltrans2$c1, coltrans2$c2))){
+    coltrans2$c1[coltrans2$c1 == i] <- colornames[i,]
+    coltrans2$c2[coltrans2$c2 == i] <- colornames[i,]
+  }
+  for(i in unique(c(rowtrans2$c1, rowtrans2$c2))){
+    rowtrans2$c1[rowtrans2$c1 == i] <- colornames[i,]
+    rowtrans2$c2[rowtrans2$c2 == i] <- colornames[i,]
+  }
+    
   transout[["col"]] <- coltrans2
   transout[["row"]] <- rowtrans2
   transout[["all"]] <- transitions

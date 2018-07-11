@@ -110,15 +110,27 @@ test_that("adjacency", {
   ),
   dim = c(100, 100, 3)
   ))
+  
+  distances <- data.frame(c1 = 'clr1',
+                          c2 = 'clr2',
+                          dS = 10,
+                          dL = 1)
+  distances2 <- data.frame(c1 = 'wrong_1',
+                          c2 = 'clr2',
+                          dS = 10,
+                          dL = 1)
 
   # Single
   fake_class <- classify(imgfake, kcols = 2)
   expect_error(adjacent(10, xpts = 10, xscale = 10), "array")
-
-  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10)
+  expect_error(adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances2), "do not match")
+  
+  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake_adjacent$k, 2)
-  expect_equal(round(fake_adjacent$p_1, 1), round(fake_adjacent$p_2, 1))
+  expect_equal(fake_adjacent$m_dS, 10)
+  expect_equal(fake_adjacent$m_dL, 1)
+  expect_equal(round(fake_adjacent$p_clr1, 1), round(fake_adjacent$p_clr2, 1))
   expect_equal(fake_adjacent$A, (fake_adjacent$m_r / fake_adjacent$m_c))
   expect_gt(fake_adjacent$N, fake_adjacent$n_off)
   expect_equal(fake_adjacent$m, ((fake_adjacent$m_r + fake_adjacent$m_c) / 2))
@@ -130,7 +142,7 @@ test_that("adjacency", {
   fake2_adjacent <- adjacent(fake2_class, xpts = 10, xscale = 150)
   expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake2_adjacent$k, c(2, 2))
-  expect_equal(round(fake2_adjacent$p_1, 1), round(fake2_adjacent$p_2, 1))
+  expect_equal(round(fake2_adjacent$p_clr1, 1), round(fake2_adjacent$p_clr2, 1))
   expect_equal(fake2_adjacent$A, (fake2_adjacent$m_r / fake2_adjacent$m_c))
   expect_gt(fake2_adjacent$N[1], fake2_adjacent$n_off[1])
   expect_equal(fake2_adjacent$m, ((fake2_adjacent$m_r + fake2_adjacent$m_c) / 2))
@@ -139,9 +151,9 @@ test_that("adjacency", {
   fake3_class <- classify(img1col, kcols = 1)
   fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
   expect_equal(fake3_adjacent$k, 1)
-  expect_equal(fake3_adjacent$p_1, 1)
-  expect_equal(fake3_adjacent$q_1_1, 1)
-  expect_equal(fake3_adjacent$q_1_1, 1)
+  expect_equal(fake3_adjacent$p_clr1, 1)
+  expect_equal(fake3_adjacent$q_clr1_clr1, 1)
+  expect_equal(fake3_adjacent$q_clr1_clr1, 1)
   expect_equal(fake3_adjacent$m, 0)
   expect_equal(fake3_adjacent$Sc, 1)
 })

@@ -43,6 +43,7 @@ as.rimg <- function(object, name = "img") {
       attr(x, "raw_scale") <- NA
       attr(x, "k") <- NA
       attr(x, "outline") <- NA
+      attr(x, "colnames") <- NA
       x
     }
 

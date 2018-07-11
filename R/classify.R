@@ -421,6 +421,7 @@ classify_main <- function(imgdat_i, n_cols_i) {
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
+  attr(outmat, "colnames") <- data.frame(name = paste0('clr', 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
 
   # }
 
