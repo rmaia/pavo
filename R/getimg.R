@@ -32,16 +32,19 @@
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getOption("mc.cores", 2L)) {
 
-  ## Checks
-  # Allowed extensions
+  ## ------------------------------ Checks ------------------------------ ##
+  
+  ## Allowed extensions
   ext <- c("jpg", "jpeg", "png", "bmp")
 
-  # Cores
+  ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
-
+  
+  ## ------------------------------ Main ------------------------------ ##
+  
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
     imgdat <- read.bitmap(imgpath)

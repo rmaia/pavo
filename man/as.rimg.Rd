@@ -2,9 +2,12 @@
 % Please edit documentation in R/as.rimg.r
 \name{as.rimg}
 \alias{as.rimg}
+\alias{is.rimg}
 \title{Convert data to an rimg object}
 \usage{
 as.rimg(object, name = "img")
+
+is.rimg(object)
 }
 \arguments{
 \item{object}{(required) a three-dimensional array containing RGB values.}
@@ -14,6 +17,8 @@ as.rimg(object, name = "img")
 \value{
 an object of class \code{rimg} for use in further \code{pavo}
 functions
+
+a logical value indicating whether the object is of class \code{rimg}
 }
 \description{
 Converts an array containing RGB image data data to an \code{rimg}

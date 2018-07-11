@@ -2,7 +2,7 @@
 % Please edit documentation in R/adjacent.R
 \name{polymask}
 \alias{polymask}
-\title{Manipulate classified image data that fall inside/outside a polygon}
+\title{Internal function for manipulating classified image data that fall inside/outside a polygon}
 \usage{
 polymask(imagedat, poly, alterWhich = c("outside", "inside"),
   replacement = NA)
@@ -17,7 +17,7 @@ polymask(imagedat, poly, alterWhich = c("outside", "inside"),
 \item{replacement}{the replacement value.}
 }
 \description{
-Manipulate classified image data that fall inside/outside a polygon
+Internal function for manipulating classified image data that fall inside/outside a polygon
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

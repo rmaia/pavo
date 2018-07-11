@@ -42,16 +42,20 @@
 procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
                     iterations = 1L, plotnew = FALSE, ...) {
 
-  ## Checks
+  ## ------------------------------ Checks ------------------------------ ##
+  
+  ## Class
   if (!"rimg" %in% class(image)) {
     warning("Attempting to coerce image to class rimg.")
     image <- as.rimg(image)
   }
 
+  ## Options
   if (is.null(scaledist) & !outline) {
     stop("No options selected.")
   }
 
+  ## Scale
   if (!is.null(scaledist)) {
     if (!is.numeric(scaledist)) {
       message("Attempting to coerce scaledist to numeric.")
@@ -61,6 +65,8 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
 
   multi_image <- inherits(image, "list") # Single or multiple images?
 
+  ## ------------------------------ Main ------------------------------ ##
+  
   if (multi_image) { # Multiple images
 
     ## Scale setting ##
@@ -117,22 +123,9 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
   image
 }
 
-#' Internal function for calibrating image scale
-#'
-#' @param image_i (required) image data. Either a single image, or a series of images
-#' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param scaledist_i (required) an integer specifying the length of the scale
-#' in the image.
-#' @param ... additional graphical parameters. Also see \code{\link{par}}.
-#'
-#' @keywords internal
-#'
+# Internal function for calibrating image scale
 #' @importFrom graphics plot rasterImage locator
 #' @importFrom stats dist
-#'
-#' @return an image, or list containing images, for use in further
-#' \code{pavo} functions, with scales stored as an attribute.
-#'
 scaler <- function(image_i, scaledist_i, ...) {
 
   # Plot
@@ -149,20 +142,7 @@ scaler <- function(image_i, scaledist_i, ...) {
   output
 }
 
-#' Internal function for selecting focal-stimulus outline
-#'
-#' @param image_i (required) image data. Either a single image, or a series of images
-#' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param smooth_i should the polygon specified when \code{outline = TRUE} be smoothed
-#' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
-#' @param iterations_i the number of smoothing iterations, when \code{smooth = TRUE}.
-#' @param ... additional graphical parameters. Also see \code{\link{par}}.
-#'
-#' @keywords internal
-#'
-#' @return an image, or list containing images, for use in further
-#' \code{pavo} functions, with scales stored as an attribute.
-#'
+# Internal function for selecting focal-stimulus outline
 outliner <- function(image_i, smooth_i, iterations_i, ...) {
 
   # Plot

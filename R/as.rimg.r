@@ -106,13 +106,8 @@ as.rimg <- function(object, name = "img") {
   object
 }
 
-#' Check if data is an rimg object.
-#'
-#' @param object (required) a three-dimensional array containing RGB values.
-#' @rdname is.rimg
-#' @return a logical value indicating whether the object is of class
-#' \code{rimg}
-
+#' @rdname as.rimg
+#' @return a logical value indicating whether the object is of class \code{rimg}
 is.rimg <- function(object) {
   inherits(object, "rimg")
 }

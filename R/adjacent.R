@@ -117,13 +117,15 @@
 #' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis:
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 #' and fitness. bioRxiv.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
+#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
 
-  ## Checks
+  ## ------------------------------ Checks ------------------------------ ##
 
   # Single or multiple images?
   multi_image <- inherits(classimg, "list")
@@ -288,6 +290,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     }
   }
 
+  ## ------------------------------ Main ------------------------------ ##
+
   if (multi_image) { # Multiple images
 
     imgsize <- format(object.size(classimg), units = "Mb")
@@ -335,47 +339,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   outdata
 }
 
-#' Main function for adjacency analysis
-#'
-#' @param classimg_i (required) an xyz image matrix, or list of matrices, in which
-#' x and y correspond to pixel coordinates, and z is a numeric code specifying
-#' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param xpts_i (required) an integer specifying the number of sample points, or grid-sampling
-#' density, along the x axis. Y-axis sampling density is calculated automatically
-#' from this, to maintain an even grid spacing.
-#' @param xscale_i (required) an integer specifying the true length of the x-axis,
-#' in preferred units. Not required, and ignored, if image scales have been set via
-#' \code{\link{procimg}}.
-#' @param exclude2_i The portion of the image to be excluded from the analysis, if any.
-#' If excluding the focal object, its outline must first have been idenfitied using
-#' \code{\link{procimg}}. If excluding the image background it must either have been
-#' identified using \code{\link{procspec}}, or if it is relatively homogeneous,
-#' the colour-class ID's corresponding to the background can be specified using
-#' bkgID.
-#' @param bkgID_i an integer or vector specifying the colour-class ID number(s) of
-#' pertaining to the background. Examine the attributes of, or call \code{summary} on,
-#' the result of \code{\link{classify}} to visualise the RGB values corresponding to
-#' colour-class ID numbers.
-#' @param coldists_i A data.frame specifying the visually-modelled chromatic (dS)
-#' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should be named 'c1' and 'c2', and specify all possible combinations of colour
-#' category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...),
-#' with the remaining columns named dS (for chromatic distances) and/or dL
-#' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
-#' for visual modelling with spectral data.
-#' @param hsl_i data.frame specifying the hue, saturation, and luminance of color patch elements,
-#' as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
-#' column, named 'patch', should contain color category ID's (NOTE: default ID's follow the convention
-#' 'clr1, 'clr2', ...), with the remain columns specifying one or more of 'hue' (hue angle),
-#' 'sat', and/or 'lum'.
-#'
-#' @keywords internal
-#'
+
 #' @importFrom stats na.omit aggregate
 #' @importFrom utils head tail
-#'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#'
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
                           exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL) {
   c1 <- c2 <- NULL
@@ -664,10 +630,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
       # Hue
       if ("hue" %in% names(freq)) {
-        if(any(freq$hue > 2 * pi)){  # Convert to radians if need be
-          message('Hue angles converted to radians')
-          freq$hue <- freq$hue * (pi/180)
-        }  
+        if (any(freq$hue > 2 * pi)) { # Convert to radians if need be
+          message("Hue angles converted to radians")
+          freq$hue <- freq$hue * (pi / 180)
+        }
         m_hue <- circmean(freq$hue)
         s_hue <- circsd(freq$hue)
         var_hue <- circvar(freq$hue)
@@ -714,7 +680,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 }
 
 
-#' Manipulate classified image data that fall inside/outside a polygon
+#' Internal function for manipulating classified image data that fall inside/outside a polygon
 #'
 #' @param imagedat data.
 #' @param poly xy polygon coordinates.
@@ -746,6 +712,7 @@ polymask <- function(imagedat, poly, alterWhich = c("outside", "inside"), replac
   imagedat
 }
 
+# Transition calculator
 transitioncalc <- function(classimgdat, colornames) {
   transout <- list()
 
@@ -823,28 +790,26 @@ weightsd <- function(x, wt) {
   sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
 }
 
-circmean <- function(x) 
-{
+circmean <- function(x) {
   sinr <- sum(sin(x))
   cosr <- sum(cos(x))
   circmean <- atan2(sinr, cosr)
   circmean
 }
 
-circsd <- function (x) 
-{
-    n <- length(x)   
-    sinr <- sum(sin(x))
-    cosr <- sum(cos(x))
-    result <- sqrt(sinr^2 + cosr^2)/n
-    circsd <- sqrt(-2*log(result))
-    circsd
+circsd <- function(x) {
+  n <- length(x)
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  result <- sqrt(sinr^2 + cosr^2) / n
+  circsd <- sqrt(-2 * log(result))
+  circsd
 }
 
-circvar <- function (x){ 
-n <- length(x)   
-sinr <- sum(sin(x))
-cosr <- sum(cos(x))
-circvar <- 1 - (sqrt(sinr^2 + cosr^2)/n)
-circvar
+circvar <- function(x) {
+  n <- length(x)
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  circvar <- 1 - (sqrt(sinr^2 + cosr^2) / n)
+  circvar
 }

@@ -133,6 +133,9 @@ adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
 Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis:
 Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
 and fitness. bioRxiv.
+
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
+ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

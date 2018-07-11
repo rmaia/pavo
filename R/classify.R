@@ -56,12 +56,12 @@
 classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
 
-  ## Checks
+  ## ------------------------------ Checks ------------------------------ ##
 
-  # Single or multiple images?
+  ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
 
-  # Class/structure
+  ## Class/structure
   if (!multi_image) {
     if (!"rimg" %in% class(imgdat)) {
       message("Image is not of class 'rimg'; attempting to coerce.")
@@ -74,13 +74,13 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     }
   }
 
-  # Cores
+  ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
 
-  # k checking.
+  ## k structure
   if (!is.null(kcols)) {
 
     # If kcols is a 2-col data frame/matrix
@@ -129,7 +129,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
     }
   }
-
+  
+  ## ------------------------------ Main ------------------------------ ##
+  
   #### So your options/configurations for classification are:
   #
   ## Multiple images ##
@@ -375,20 +377,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   outdata
 }
 
-#' Main function for identifying colour classes in an image for adjacency analyses
-#'
-#' @param imgdat_i (required) image data. Either a single image, or a series of images
-#' stored in a list. preferably the result of \code{\link{getimg}}.
-#' @param n_cols_i (required) either an integer, or vector the same length as imgdat (if
-#' passing a list of images), specifying the number of discrete colour classes present
-#' in an image, for k-means clustering.
-#'
-#' @keywords internal
-#'
-#' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
-#' class classifications at each pixel location. The RGB values corresponding to
-#' k-means centres (i.e. colour classes) are stored as object attributes.
-#'
+# Main function for identifying colour classes in an image for adjacency analyses
 classify_main <- function(imgdat_i, n_cols_i) {
 
   # if(method == 'kmeans'){
