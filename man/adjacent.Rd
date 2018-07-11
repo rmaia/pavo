@@ -92,8 +92,8 @@ a data frame of summary variables:
 }
 \description{
 Calculate summary variables from the adjacency (Endler 2012) and
-boundary-strength (Endler et al. 2018) and overall-pattern contrast
-(Endler & Mielke 2005) analyses.
+boundary-strength (Endler et al. 2018) analyses, along with overall pattern 
+contrast (Endler & Mielke 2005).
 }
 \examples{
 \dontrun{
@@ -102,7 +102,7 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, kcols = 4)
 papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
-# Single image, with fake color distances and hsl values
+# Single image, with (fake) color distances and hsl values
 # Fake color distances
 distances <- data.frame(c1 = c('clr1', 'clr1', 'clr1', 'clr2', 'clr2', 'clr3'),
                         c2 = c('clr2', 'clr3', 'clr4', 'clr3', 'clr4', 'clr4'),

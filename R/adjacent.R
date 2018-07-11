@@ -1,8 +1,8 @@
 #' Run an adjacency/boundary strength analysis
 #'
 #' Calculate summary variables from the adjacency (Endler 2012) and
-#' boundary-strength (Endler et al. 2018) and overall-pattern contrast
-#' (Endler & Mielke 2005) analyses.
+#' boundary-strength (Endler et al. 2018) analyses, along with overall pattern 
+#' contrast (Endler & Mielke 2005).
 #'
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
@@ -87,7 +87,7 @@
 #' papilio_class <- classify(papilio, kcols = 4)
 #' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 #'
-#' # Single image, with fake color distances and hsl values
+#' # Single image, with (fake) color distances and hsl values
 #' # Fake color distances
 #' distances <- data.frame(c1 = c('clr1', 'clr1', 'clr1', 'clr2', 'clr2', 'clr3'),
 #'                         c2 = c('clr2', 'clr3', 'clr4', 'clr3', 'clr4', 'clr4'),
@@ -127,10 +127,10 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 
   ## ------------------------------ Checks ------------------------------ ##
 
-  # Single or multiple images?
+  ## Single or multiple images?
   multi_image <- inherits(classimg, "list")
 
-  # Class/structure
+  ## Class/structure
   if (!multi_image) {
     if (!"rimg" %in% class(classimg)) {
       message("Image is not of class 'rimg'; attempting to coerce.")
@@ -143,7 +143,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     }
   }
 
-  # Colour-classified
+  ## Colour-classified
   if (!multi_image) {
     if (attr(classimg, "state") != "colclass") {
       stop("Image has not yet been colour-classified. See classify().")
@@ -245,15 +245,6 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
     }
   }
-
-  # FIX
-  # if (multi_image) {
-  #   n_class <- length(na.omit(unique(c(as.matrix((classimg[[1]]))))))
-  # } else {
-  #   n_class <- length(na.omit(unique(c(as.matrix((classimg))))))
-  # }
-  # if(bkg.include == FALSE && length(bkgID) - n_class < 1)
-  #   stop('No colour classes remaining.')
 
   ## Setting scales
   # Single image
@@ -418,8 +409,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
   ## Summary variables  ##
-
-  if (single_col) { # TODO: Fix this evil hack
+  if (single_col) { # TODO: Fix this evil single-colour hack
     k <- n_class
     N <- sum(transitions[["all"]]$N)
     n_off <- m_r <- m_c <- m <- t <- 0
@@ -503,21 +493,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
     d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
 
-    # Permutation test
-    L <- t(cumsum(t(p))) # Cumulative probabilities
-
-    # permutator <- function(){
-    # randpair <- cbind(sample(c(1:k), size = N, replace = TRUE, prob = p), sample(c(1:k), size = N, replace = TRUE, prob = p))
-    # randpair <- t(apply(randpair, 1, sort))
-    # perm <- subset(aggregate(randpair[,1] ~ ., randpair, FUN = length), V1 != V2)
-    # names(perm) <- c('c1', 'c2', 'N')
-    # perm$exp <- NA
-    # for (i in 1:nrow(perm)) {
-    #   perm$exp[i] <- 2 * sum(perm[,3]) * freq$rel_freq[perm[i, 1]] * freq$rel_freq[perm[i, 2]]
-    # }
-    # sum(abs(perm$N - perm$exp))  # permuted
-    # }
-    # permutated <- unlist(pbmclapply(1:n.boot, function(x) foo(), mc.cores = cores))
+    # Cumulative probabilities
+    L <- t(cumsum(t(p))) 
 
     # Off-diagonal transition frequencies
     t <- data.frame(t(offdiagprop$N))
@@ -680,39 +657,28 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 }
 
 
-#' Internal function for manipulating classified image data that fall inside/outside a polygon
-#'
-#' @param imagedat data.
-#' @param poly xy polygon coordinates.
-#' @param alterWhich manipulate values inside or outside the polygon.
-#' @param replacement the replacement value.
-#'
+# Internal function for masking color-classified image data that fall inside/outside a polygon
 #' @importFrom sp point.in.polygon
-#'
-#' @keywords internal
-#'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#'
-polymask <- function(imagedat, poly, alterWhich = c("outside", "inside"), replacement = NA) {
+polymask <- function(imagedat, polygon, alter_which = c("outside", "inside"), replacement_value = NA) {
   imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
-  inpoly <- point.in.polygon(imglong$x, imglong$y, poly$x, poly$y, mode.checked = FALSE) # todo: replace with base
+  inpoly <- point.in.polygon(imglong$x, imglong$y, polygon$x, polygon$y, mode.checked = FALSE) # todo: replace with base
 
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
   maskmat <- apply(as.matrix(maskmat), 1, rev)
-  if (alterWhich == "inside") {
-    imagedat[which(maskmat == 1)] <- replacement
-    imagedat[which(maskmat == 2)] <- replacement
-    imagedat[which(maskmat == 3)] <- replacement
+  if (alter_which == "inside") {
+    imagedat[which(maskmat == 1)] <- replacement_value
+    imagedat[which(maskmat == 2)] <- replacement_value
+    imagedat[which(maskmat == 3)] <- replacement_value
   }
-  if (alterWhich == "outside") {
-    imagedat[which(maskmat == 0)] <- replacement
+  if (alter_which == "outside") {
+    imagedat[which(maskmat == 0)] <- replacement_value
   }
   imagedat
 }
 
-# Transition calculator
+## Transition calculator
 transitioncalc <- function(classimgdat, colornames) {
   transout <- list()
 
@@ -773,43 +739,4 @@ transitioncalc <- function(classimgdat, colornames) {
   transout[["all"]] <- transitions
 
   transout
-}
-
-weightmean <- function(x, wt) {
-  s <- which(is.finite(x * wt))
-  wt <- wt[s]
-  x <- x[s]
-  sum(wt * x) / sum(wt)
-}
-
-weightsd <- function(x, wt) {
-  s <- which(is.finite(x + wt))
-  wt <- wt[s]
-  x <- x[s]
-  xbar <- weightmean(x, wt)
-  sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
-}
-
-circmean <- function(x) {
-  sinr <- sum(sin(x))
-  cosr <- sum(cos(x))
-  circmean <- atan2(sinr, cosr)
-  circmean
-}
-
-circsd <- function(x) {
-  n <- length(x)
-  sinr <- sum(sin(x))
-  cosr <- sum(cos(x))
-  result <- sqrt(sinr^2 + cosr^2) / n
-  circsd <- sqrt(-2 * log(result))
-  circsd
-}
-
-circvar <- function(x) {
-  n <- length(x)
-  sinr <- sum(sin(x))
-  cosr <- sum(cos(x))
-  circvar <- 1 - (sqrt(sinr^2 + cosr^2) / n)
-  circvar
 }
