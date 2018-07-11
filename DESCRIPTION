@@ -16,11 +16,6 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     person("Pierre-Paul", "Bitton", role = "aut",
     email = "bittonp@uwindsor.ca")
     )
-Author: Rafael Maia [aut, cre],
-    Thomas White [aut],
-    Hugo Gruson [aut]
-    Chad Eliason [aut],
-    Pierre-Paul Bitton [aut]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
 Depends:
