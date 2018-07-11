@@ -9,17 +9,18 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "rm72@zips.uakron.edu"),
     person("Thomas", "White", role = "aut",
     email = "thomas.white026@gmail.com"),
+    person("Hugo", "Gruson", role = "aut",
+    email = "hugo.gruson+R@normalesup.org"),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca"),
-    person("Hugo", "Gruson", role = "ctb",
-    email = "hugo.gruson+R@normalesup.org"))
+    email = "bittonp@uwindsor.ca")
+    )
 Author: Rafael Maia [aut, cre],
     Thomas White [aut],
+    Hugo Gruson [aut]
     Chad Eliason [aut],
-    Pierre-Paul Bitton [aut],
-    Hugo Gruson [ctb]
+    Pierre-Paul Bitton [aut]
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 URL: http://rafaelmaia.net/pavo/
 Depends:

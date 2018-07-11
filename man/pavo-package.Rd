@@ -22,13 +22,9 @@ Useful links:
 Authors:
 \itemize{
   \item Thomas White \email{thomas.white026@gmail.com}
+  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org}
   \item Chad Eliason \email{cme16@zips.uakron.edu}
   \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
-}
-
-Other contributors:
-\itemize{
-  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} [contributor]
 }
 
 }
