@@ -1236,7 +1236,7 @@ butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID =
 head(butterflies_adj)
 ```
 
-The output is a suite of statistics describing color pattern geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between color categories 3 and 4, for an image that contains only 3 color categories). Others may result when we do not give `adjacent` enough information, such as the color-distances reqired to calculate the boundary-strength statistics. If we do give the function this information, we can see that those final variables now contain sensible output. 
+The output is a suite of statistics describing color pattern geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between color categories 3 and 4, for an image that contains only 3 color categories). Others may result when we do not give `adjacent` enough information, such as the color-distances reqired to calculate the boundary-strength statistics, or the colormetrics required for overal pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output. 
 
 ```{r}
 
@@ -1250,10 +1250,20 @@ distances <- data.frame(c1 = c('clr1', 'clr1', 'clr2'),
 # Take a look
 distances
 
+# And our fake hue angles (in radians), saturation, and luminance values, for each
+# color pattern element
+hsl_vals <- data.frame(patch = c('clr1', 'clr2', 'clr3'),
+                       hue = c(1.2, 2.2, 1.6),
+                       lum = c(10, 5, 7),
+                       sat = c(3.5, 1.1, 6.3))
+
+# Take a look
+hsl_vals
+
 # Now feed this information into the adjacency analysis using the less-colorful 
 # of our two images, for convenience (though this could be readily extended to 
-# include a list of images along with a list of distances)
-adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances)
+# include a list of images along with a list of distances and hsl values)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
 
 ```
 

@@ -119,17 +119,23 @@ test_that("adjacency", {
                           c2 = 'clr2',
                           dS = 10,
                           dL = 1)
+  hsl_vals <- data.frame(patch = c('clr1', 'clr2'),
+                         hue = c(1.4, 0.2),
+                         lum = c(10, 5),
+                         sat = c(3.5, 1.1))
 
   # Single
   fake_class <- classify(imgfake, kcols = 2)
   expect_error(adjacent(10, xpts = 10, xscale = 10), "array")
   expect_error(adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances2), "do not match")
   
-  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances)
+  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances, hsl = hsl_vals)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake_adjacent$k, 2)
   expect_equal(fake_adjacent$m_dS, 10)
   expect_equal(fake_adjacent$m_dL, 1)
+  expect_equal(fake_adjacent$cv_sat, fake_adjacent$s_sat / fake_adjacent$m_sat)
+  expect_equal(fake_adjacent$cv_lum, fake_adjacent$s_lum / fake_adjacent$m_lum)
   expect_equal(round(fake_adjacent$p_clr1, 1), round(fake_adjacent$p_clr2, 1))
   expect_equal(fake_adjacent$A, (fake_adjacent$m_r / fake_adjacent$m_c))
   expect_gt(fake_adjacent$N, fake_adjacent$n_off)

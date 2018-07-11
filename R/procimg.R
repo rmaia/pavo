@@ -7,7 +7,7 @@
 #' @param scaledist an integer, or numeric vector equal in length to the number of images,
 #' specifying the length of the scale in the image(s). Image(s) will then be presented,
 #' and the user asked to select either end of the scale corresponding to the input value.
-#' @param outline allows the user to interactively specify the focal object in
+#' @param outline interactively specify the focal object in
 #' an image by clicking around its outline. The xy-coordinates of the resulting
 #' polygon are saved as an attribute, for use in genrating a masking layer &
 #' separating animals/plants from backgrounds in further analyses. This is particularly

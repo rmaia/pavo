@@ -643,9 +643,19 @@ distances <- data.frame(c1 = c('clr1', 'clr1', 'clr2'),
 # Take a look
 distances
 
+# And our fake hue angles (in radians), saturation, and luminance values, for each
+# color pattern element
+hsl_vals <- data.frame(patch = c('clr1', 'clr2', 'clr3'),
+                       hue = c(1.2, 2.2, 1.6),
+                       lum = c(10, 5, 7),
+                       sat = c(3.5, 1.1, 6.3))
+
+# Take a look
+hsl_vals
+
 # Now feed this information into the adjacency analysis using the less-colorful 
 # of our two images, for convenience (though this could be readily extended to 
-# include a list of images along with a list of distances)
-adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances)
+# include a list of images along with a list of distances and hsl values)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
 
 

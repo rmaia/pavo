@@ -6,7 +6,7 @@
 \usage{
 adjacent(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
   polygon = NULL, exclude = c("none", "background", "object"),
-  coldists = NULL, cores = getOption("mc.cores", 2L))
+  coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz image matrix, or list of matrices, in which
@@ -41,11 +41,17 @@ the colour-class ID's uniquely corresponding to the background can be specified 
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should be named 'c1' and 'c2', and specify all possible combinations of colour 
-category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...), 
+should be named 'c1' and 'c2', and specify all possible combinations of colour
+category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...),
 with the remaining columns named dS (for chromatic distances) and/or dL
 (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 for visual modelling with spectral data.}
+
+\item{hsl}{data.frame specifying the hue, saturation, and luminance of color patch elements,
+as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
+column, named 'patch', should contain color category ID's (NOTE: default ID's follow the convention
+'clr1, 'clr2', ...), with the remain columns specifying one or more of 'hue' (angle, in radians),
+'sat', and/or 'lum'.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
@@ -77,23 +83,41 @@ a data frame of summary variables:
   \code{Rt = St_a_a / St_a_b}.
   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
   \code{Rt = St_a_a / St_b_b}.
-  \item \code{'m_dS'}: weighted mean of the chromatic boundary strength.
-  \item \code{'s_dS'}: weighted standard deviation of the chromatic boundary strength.
-  \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic boundary strength.
-  \item \code{'m_dL'}: weighted mean of the achromatic boundary strength.
-  \item \code{'s_dL'}: weighted standard deviation of the achromatic boundary strength.
-  \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic boundary strength.
+  \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of variation of the chromatic boundary strength.
+  \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of variation of the achromatic boundary strength.
+  \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of overall pattern hue (in radians).
+  \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient variation of overall pattern saturation.
+  \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient variation of overall pattern luminance.
   }
 }
 \description{
 Calculate summary variables from the adjacency (Endler 2012) and
-boundary-strength (Endler et al. 2018) analyses.
+boundary-strength (Endler et al. 2018) and overall-pattern contrast
+(Endler & Mielke 2005) analyses.
 }
 \examples{
 \dontrun{
+# Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, kcols = 4)
 papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
+
+# Single image, with fake color distances and hsl values
+# Fake color distances
+distances <- data.frame(c1 = c('clr1', 'clr1', 'clr1', 'clr2', 'clr2', 'clr3'),
+                        c2 = c('clr2', 'clr3', 'clr4', 'clr3', 'clr4', 'clr4'),
+                        dS = c(5, 3, 5, 2, 6, 3),
+                        dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
+
+# Fake hue, saturation, luminance values
+hsl_vals <- data.frame(patch = c('clr1', 'clr2', 'clr3', 'clr4'),
+                       hue = c(1.5, 2.2, 1.0, 0.5),
+                       lum = c(10, 5, 7, 3),
+                       sat = c(3.5, 1.1, 6.3, 1.3))
+
+# Full analysis
+papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100,
+                        coldists = distances, hsl = hsl_vals)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))

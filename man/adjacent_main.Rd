@@ -5,7 +5,7 @@
 \title{Main function for adjacency analysis}
 \usage{
 adjacent_main(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
-  exclude2_i = NULL, coldists_i = NULL)
+  exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL)
 }
 \arguments{
 \item{classimg_i}{(required) an xyz image matrix, or list of matrices, in which
@@ -32,10 +32,19 @@ identified using \code{\link{procspec}}, or if it is relatively homogeneous,
 the colour-class ID's corresponding to the background can be specified using
 bkgID.}
 
-\item{coldists_i}{An data.frame or matrix specifying the visually-modelled chromatic (dS)
+\item{coldists_i}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should specify all possible combinations of colour category ID's, with the remaining
-columns named dS (for chromatic distances) and/or dL (for achromatic distances).}
+should be named 'c1' and 'c2', and specify all possible combinations of colour
+category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...),
+with the remaining columns named dS (for chromatic distances) and/or dL
+(for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
+for visual modelling with spectral data.}
+
+\item{hsl_i}{data.frame specifying the hue, saturation, and luminance of color patch elements,
+as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
+column, named 'patch', should contain color category ID's (NOTE: default ID's follow the convention
+'clr1, 'clr2', ...), with the remain columns specifying one or more of 'hue' (hue angle),
+'sat', and/or 'lum'.}
 }
 \description{
 Main function for adjacency analysis

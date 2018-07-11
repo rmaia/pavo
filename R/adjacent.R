@@ -1,7 +1,8 @@
 #' Run an adjacency/boundary strength analysis
 #'
 #' Calculate summary variables from the adjacency (Endler 2012) and
-#' boundary-strength (Endler et al. 2018) analyses.
+#' boundary-strength (Endler et al. 2018) and overall-pattern contrast
+#' (Endler & Mielke 2005) analyses.
 #'
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
@@ -29,11 +30,16 @@
 #' focal object outline is specified using \code{\link{procimg}}.
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should be named 'c1' and 'c2', and specify all possible combinations of colour 
-#' category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...), 
+#' should be named 'c1' and 'c2', and specify all possible combinations of colour
+#' category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...),
 #' with the remaining columns named dS (for chromatic distances) and/or dL
 #' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 #' for visual modelling with spectral data.
+#' @param hsl data.frame specifying the hue, saturation, and luminance of color patch elements,
+#' as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
+#' column, named 'patch', should contain color category ID's (NOTE: default ID's follow the convention
+#' 'clr1, 'clr2', ...), with the remain columns specifying one or more of 'hue' (angle, in radians),
+#' 'sat', and/or 'lum'.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
 #'
@@ -63,12 +69,11 @@
 #'   \code{Rt = St_a_a / St_a_b}.
 #'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
 #'   \code{Rt = St_a_a / St_b_b}.
-#'   \item \code{'m_dS'}: weighted mean of the chromatic boundary strength.
-#'   \item \code{'s_dS'}: weighted standard deviation of the chromatic boundary strength.
-#'   \item \code{'cv_dS'}: weighted coefficient of variation of the chromatic boundary strength.
-#'   \item \code{'m_dL'}: weighted mean of the achromatic boundary strength.
-#'   \item \code{'s_dL'}: weighted standard deviation of the achromatic boundary strength.
-#'   \item \code{'cv_dL'}: weighted coefficient of variation of the achromatic boundary strength.
+#'   \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of variation of the chromatic boundary strength.
+#'   \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of variation of the achromatic boundary strength.
+#'   \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of overall pattern hue (in radians).
+#'   \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient variation of overall pattern saturation.
+#'   \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient variation of overall pattern luminance.
 #'   }
 #'
 #' @export
@@ -77,9 +82,27 @@
 #' @importFrom utils object.size
 #'
 #' @examples \dontrun{
+#' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
 #' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
+#'
+#' # Single image, with fake color distances and hsl values
+#' # Fake color distances
+#' distances <- data.frame(c1 = c('clr1', 'clr1', 'clr1', 'clr2', 'clr2', 'clr3'),
+#'                         c2 = c('clr2', 'clr3', 'clr4', 'clr3', 'clr4', 'clr4'),
+#'                         dS = c(5, 3, 5, 2, 6, 3),
+#'                         dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
+#'
+#' # Fake hue, saturation, luminance values
+#' hsl_vals <- data.frame(patch = c('clr1', 'clr2', 'clr3', 'clr4'),
+#'                        hue = c(1.5, 2.2, 1.0, 0.5),
+#'                        lum = c(10, 5, 7, 3),
+#'                        sat = c(3.5, 1.1, 6.3, 1.3))
+#'
+#' # Full analysis
+#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100,
+#'                         coldists = distances, hsl = hsl_vals)
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
@@ -97,7 +120,7 @@
 
 adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
-                     coldists = NULL, cores = getOption("mc.cores", 2L)) {
+                     coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
 
   ## Checks
@@ -128,7 +151,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       stop("One or more images has not yet been colour-classified. See classify().")
     }
   }
-  
+
   ## Coldists formatting
   if (!is.null(coldists)) {
     # Single images
@@ -140,18 +163,45 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       if (!any(c("dS", "dL") %in% names(coldists))) {
         stop("No columns named 'dS' or 'dL' in coldists.")
       }
-    # Multi images
+      # Multi images
     } else if (multi_image) {
-      if(!is.list(coldists)){
-        message('Reusing single set of coldists for multiple images.')
+      if (!is.list(coldists)) {
+        message("Reusing single set of coldists for multiple images.")
         coldists <- rep(coldists, length(classimg))
       }
       if (!all(c("c1", "c2") %in% names(unlist(coldists)))) {
         message("Cannot find columns named 'c1', 'c2' in list of coldists. Assuming first two columns contain colour-category IDs.")
-        coldists <- lapply(1:length(coldists), function(x) names(coldists[[x]])[1:2] = c('c1', 'c2'))
-        }
+        coldists <- lapply(1:length(coldists), function(x) names(coldists[[x]])[1:2] <- c("c1", "c2"))
+      }
       if (any(unlist(lapply(1:length(coldists), function(x) !any(c("dS", "dL") %in% names(coldists[[x]])))))) {
         stop("No columns named 'dS' or 'dL' in coldists.")
+      }
+    }
+  }
+
+  ## HSL formatting
+  if (!is.null(hsl)) {
+    # Single images
+    if (!multi_image) {
+      if (!"patch" %in% names(hsl)) {
+        message("Cannot find columns named 'patch' in hsl Assuming first columns contain colour-category IDs.")
+        names(hsl)[1] <- "patch"
+      }
+      if (!any(c("hue", "sat", "lum") %in% names(hsl))) {
+        stop("No columns named 'hue', 'sat' or 'lum' in hsl.")
+      }
+      # Multi images
+    } else if (multi_image) {
+      if (!is.list(hsl)) {
+        message("Reusing single set of hsl values for multiple images.")
+        hsl <- rep(hsl, length(classimg))
+      }
+      if (!all("patch" %in% names(unlist(hsl)))) {
+        message("Cannot find column named 'patch' in list of hsl values. Assuming first column contains colour-category IDs.")
+        hsl <- lapply(1:length(hsl), function(x) names(hsl[[x]])[1] <- "patch")
+      }
+      if (any(unlist(lapply(1:length(hsl), function(x) !any(c("hue", "sat", "lum") %in% names(hsl[[x]])))))) {
+        stop("No columns named 'hue', 'sat', or 'lum' in hsl")
       }
     }
   }
@@ -167,7 +217,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       if (is.na(attr(classimg, "outline"))) {
         attr(classimg, "outline") <- polygon
       }
-    # Multi images
+      # Multi images
     } else if (multi_image) {
       if (length(polygon) != length(classimg)) {
         stop("The list of polygons must be equal in number to the list of images.")
@@ -248,7 +298,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           exclude2_i = exclude2,
-          coldists_i = coldists[[x]]
+          coldists_i = coldists[[x]],
+          hsl_i = hsl[[x]]
         ),
       mc.cores = cores
       ),
@@ -257,7 +308,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           exclude2_i = exclude2,
-          coldists_i = coldists[[x]]
+          coldists_i = coldists[[x]],
+          hsl_i = hsl[[x]]
         ))
     )
 
@@ -267,7 +319,6 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
 
     for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
-    
   } else if (!multi_image) { # Single image
 
     outdata <- adjacent_main(
@@ -276,7 +327,8 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       xscale_i = xscale,
       bkgID_i = bkgID,
       exclude2_i = exclude2,
-      coldists_i = coldists
+      coldists_i = coldists,
+      hsl_i = hsl
     )
     rownames(outdata) <- attr(classimg, "imgname")
   }
@@ -304,10 +356,18 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #' pertaining to the background. Examine the attributes of, or call \code{summary} on,
 #' the result of \code{\link{classify}} to visualise the RGB values corresponding to
 #' colour-class ID numbers.
-#' @param coldists_i An data.frame or matrix specifying the visually-modelled chromatic (dS)
+#' @param coldists_i A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should specify all possible combinations of colour category ID's, with the remaining
-#' columns named dS (for chromatic distances) and/or dL (for achromatic distances).
+#' should be named 'c1' and 'c2', and specify all possible combinations of colour
+#' category ID's (NOTE: default ID's follow the convention 'clr1, 'clr2', ...),
+#' with the remaining columns named dS (for chromatic distances) and/or dL
+#' (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
+#' for visual modelling with spectral data.
+#' @param hsl_i data.frame specifying the hue, saturation, and luminance of color patch elements,
+#' as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
+#' column, named 'patch', should contain color category ID's (NOTE: default ID's follow the convention
+#' 'clr1, 'clr2', ...), with the remain columns specifying one or more of 'hue' (hue angle),
+#' 'sat', and/or 'lum'.
 #'
 #' @keywords internal
 #'
@@ -316,14 +376,15 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL, exclude2_i = NULL, coldists_i = NULL) {
+adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
+                          exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL) {
   c1 <- c2 <- NULL
 
   # Scales
   y_scale <- xscale_i / (ncol(classimg_i) / nrow(classimg_i))
-  
+
   # Color names
-  colournames <- attr(classimg_i, 'colnames')
+  colournames <- attr(classimg_i, "colnames")
 
   # Simple or 'complex' background?
   bkgoutline <- ifelse(is.na(attr(classimg_i, "outline")),
@@ -370,8 +431,9 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   n_y <- nrow(subclass) # n rows
   n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
+  names(freq) <- c("patch", "Freq")
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
-  freq$Var1 <- colournames$name[as.numeric(as.character(freq$Var1))]
+  freq$patch <- colournames$name[as.numeric(as.character(freq$patch))]
 
   # Single colour check
   single_col <- ifelse(n_class == 1, TRUE, FALSE)
@@ -398,13 +460,27 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     A <- Obs <- E <- d_t_o <- d_t_r <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
 
     p <- data.frame(t(freq$rel_freq))
-    names(p) <- paste0("p_", freq$Var1)
+    names(p) <- paste0("p_", freq$patch)
 
     q <- data.frame(t(transitions[["all"]]$N / sum(transitions[["all"]]$N)))
     names(q) <- paste0("q_", transitions[["all"]]$c1, "_", transitions[["all"]]$c2)
 
     Sc <- 1 / sum(freq$rel_freq^2)
     Jc <- Sc
+
+    if (!is.null(hsl_i)) {
+      if ("hue" %in% names(hsl_i)) m_hue <- hsl_i$hue
+      if ("sat" %in% names(hsl_i)) m_sat <- hsl_i$sat
+      if ("lum" %in% names(hsl_i)) m_lum <- hsl_i$lum
+
+      s_hue <- var_hue <- NA
+      s_sat <- cv_sat <- NA
+      s_lum <- cv_lum <- NA
+    } else {
+      m_hue <- s_hue <- var_hue <- NA
+      m_sat <- s_sat <- cv_sat <- NA
+      m_lum <- s_lum <- cv_lum <- NA
+    }
   } else {
 
     # n colour classes
@@ -438,7 +514,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
     # Colour class proportions
     p <- data.frame(t(freq$rel_freq))
-    names(p) <- paste0("p_", freq$Var1)
+    names(p) <- paste0("p_", freq$patch)
 
     # Total transition frequencies
     q <- data.frame(t(transitions[["all"]]$N / sum(transitions[["all"]]$N)))
@@ -451,7 +527,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     # Expected frequency of off-diagonal transitions
     offdiag$exp <- NA
     for (i in 1:nrow(offdiag)) {
-      offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$Var1 == offdiag[i, 1]] * freq$rel_freq[freq$Var1 == offdiag[i, 2]]
+      offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$patch == offdiag[i, 1]] * freq$rel_freq[freq$patch == offdiag[i, 2]]
     }
     E <- data.frame(t(offdiag$exp))
     names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
@@ -554,10 +630,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     # Boundary strength (Endler et al. 2018)
     if (!is.null(coldists_i)) {
       # Name-match check. Could be more robust.
-      if(!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
-              c(as.character(coldists_i$c1), as.character(coldists_i$c2))))
-        stop('Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.')
-        
+      if (!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
+        c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
+        stop("Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.")
+      }
+
       offdiagprop <- merge(offdiagprop, coldists_i)
 
       # Chromatic calcs
@@ -580,10 +657,54 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     } else {
       m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
     }
+
+    # Overall pattern contrasts (Endler & Mielke 2005)
+    if (!is.null(hsl_i)) {
+      freq <- merge(freq, hsl_i)
+
+      # Hue
+      if ("hue" %in% names(freq)) {
+        if(any(freq$hue > 2 * pi)){  # Convert to radians if need be
+          message('Hue angles converted to radians')
+          freq$hue <- freq$hue * (pi/180)
+        }  
+        m_hue <- circmean(freq$hue)
+        s_hue <- circsd(freq$hue)
+        var_hue <- circvar(freq$hue)
+      } else {
+        m_hue <- s_hue <- var_hue <- NA
+      }
+
+      # Saturation
+      if ("sat" %in% names(freq)) {
+        m_sat <- weightmean(freq$sat, freq$rel_freq)
+        s_sat <- weightsd(freq$sat, freq$rel_freq)
+        cv_sat <- s_sat / m_sat
+      } else {
+        m_sat <- s_sat <- cv_sat <- NA
+      }
+
+      # Luminance
+      if ("lum" %in% names(freq)) {
+        m_lum <- weightmean(freq$lum, freq$rel_freq)
+        s_lum <- weightsd(freq$lum, freq$rel_freq)
+        cv_lum <- s_lum / m_lum
+      } else {
+        m_lum <- s_lum <- cv_lum <- NA
+      }
+    } else {
+      m_hue <- s_hue <- var_hue <- NA
+      m_sat <- s_sat <- cv_sat <- NA
+      m_lum <- s_lum <- cv_lum <- NA
+    }
   }
 
   # Output
-  fin <- data.frame(k, N, n_off, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
+  fin <- data.frame(
+    k, N, n_off, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt,
+    Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL, m_hue, s_hue, var_hue,
+    m_sat, s_sat, cv_sat, m_lum, s_lum, cv_lum
+  )
   # fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
   # fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
@@ -665,21 +786,21 @@ transitioncalc <- function(classimgdat, colornames) {
   transitions <- rbind(rowtrans2, coltrans2)
   transitions <- aggregate(transitions$N ~ transitions$c1 + transitions$c2, FUN = sum)
   names(transitions) <- c("c1", "c2", "N")
-  
+
   # Rename
-  for(i in unique(c(transitions$c1, transitions$c2))){
-    transitions$c1[transitions$c1 == i] <- colornames[i,]
-    transitions$c2[transitions$c2 == i] <- colornames[i,]
+  for (i in unique(c(transitions$c1, transitions$c2))) {
+    transitions$c1[transitions$c1 == i] <- colornames[i, ]
+    transitions$c2[transitions$c2 == i] <- colornames[i, ]
   }
-  for(i in unique(c(coltrans2$c1, coltrans2$c2))){
-    coltrans2$c1[coltrans2$c1 == i] <- colornames[i,]
-    coltrans2$c2[coltrans2$c2 == i] <- colornames[i,]
+  for (i in unique(c(coltrans2$c1, coltrans2$c2))) {
+    coltrans2$c1[coltrans2$c1 == i] <- colornames[i, ]
+    coltrans2$c2[coltrans2$c2 == i] <- colornames[i, ]
   }
-  for(i in unique(c(rowtrans2$c1, rowtrans2$c2))){
-    rowtrans2$c1[rowtrans2$c1 == i] <- colornames[i,]
-    rowtrans2$c2[rowtrans2$c2 == i] <- colornames[i,]
+  for (i in unique(c(rowtrans2$c1, rowtrans2$c2))) {
+    rowtrans2$c1[rowtrans2$c1 == i] <- colornames[i, ]
+    rowtrans2$c2[rowtrans2$c2 == i] <- colornames[i, ]
   }
-    
+
   transout[["col"]] <- coltrans2
   transout[["row"]] <- rowtrans2
   transout[["all"]] <- transitions
@@ -700,4 +821,30 @@ weightsd <- function(x, wt) {
   x <- x[s]
   xbar <- weightmean(x, wt)
   sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
+}
+
+circmean <- function(x) 
+{
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  circmean <- atan2(sinr, cosr)
+  circmean
+}
+
+circsd <- function (x) 
+{
+    n <- length(x)   
+    sinr <- sum(sin(x))
+    cosr <- sum(cos(x))
+    result <- sqrt(sinr^2 + cosr^2)/n
+    circsd <- sqrt(-2*log(result))
+    circsd
+}
+
+circvar <- function (x){ 
+n <- length(x)   
+sinr <- sum(sin(x))
+cosr <- sum(cos(x))
+circvar <- 1 - (sqrt(sinr^2 + cosr^2)/n)
+circvar
 }
