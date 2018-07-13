@@ -1,10 +1,8 @@
 pavo 2.0.0 (development)
 ------------------------------------------------------------------------------
 
-* See publication and vignette for detailed description of changes.
-
 NEW FEATURES
-* entirely new image-based workflow for the analysis of colour pattern geometry  
+* image-based workflow for the combined analysis of colour and pattern geometry  
 
 pavo 1.4.0
 ------------------------------------------------------------------------------
