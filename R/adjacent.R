@@ -1,7 +1,7 @@
 #' Run an adjacency/boundary strength analysis
 #'
 #' Calculate summary variables from the adjacency (Endler 2012) and
-#' boundary-strength (Endler et al. 2018) analyses, along with overall pattern 
+#' boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 #' contrast (Endler & Mielke 2005).
 #'
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
@@ -10,9 +10,9 @@
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points along the x and y axes,
-#' from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100
-#' x 100 grid), though this should be carefully considered.
+#' @param xpts an integer specifying the number of sample points along the x axis,
+#' from which the sampling grid is constructed. Defaults to 100 (e.g. a 100 x 100 grid,
+#' for a square image), though this should be carefully considered.
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
@@ -60,11 +60,11 @@
 #'   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
 #'     in user-specified units.
 #'   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
-#'   \item \code{'B'}: The animal/background transition ratio.
 #'   \item \code{'Sc'}: Simpson colour class diversity.
 #'   \item \code{'St'}: Simpson transition diversity.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+#'   \item \code{'B'}: The animal/background transition ratio.
 #'   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
 #'   \code{Rt = St_a_a / St_a_b}.
 #'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
@@ -335,6 +335,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #' @importFrom utils head tail
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
                           exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL) {
+  
+  ## ------------------------------ Summarising ------------------------------ ##
+  
   c1 <- c2 <- NULL
 
   # Scales
@@ -344,41 +347,32 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   colournames <- attr(classimg_i, "colnames")
 
   # Simple or 'complex' background?
-  bkgoutline <- ifelse(is.na(attr(classimg_i, "outline")),
-    FALSE,
-    TRUE
-  )
+  bkgoutline <- any(!is.na(attr(classimg_i, "outline")))
 
   # Exclude selection, if specified
   if ("background" %in% exclude2_i) {
     # Complex backgrounds
     if (bkgoutline == TRUE) {
       # NA everything *outside* the outlined polyogn
-      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
-      # Subset matrix to include only rows with at least one non-NA transition
-      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
+      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside", replacement_value = 999)
     } else {
       # bkgID-based version
       for (i in 1:length(bkgID_i)) {
-        classimg_i[classimg_i == bkgID_i[[i]]] <- NA
+        classimg_i[classimg_i == bkgID_i[[i]]] <- 999
       }
-      # Subset matrix to include only rows with at least one non-NA transition
-      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
     }
   }
   if ("object" %in% exclude2_i) {
     # Complex backgrounds only
     if (bkgoutline == TRUE) {
       # NA everything *inside* the outlined polyogn
-      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "inside")
-      # Subset matrix to include only rows with at least one non-NA transition
-      classimg_i <- classimg_i[rowSums(!is.na(classimg_i)) > 1, colSums(!is.na(classimg_i)) > 1]
+      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "inside", replacement_value = 999)
     }
   }
 
-  # Square-grid subsample
+  # Grid subsample
   subclass <- classimg_i[
-    seq(1, nrow(classimg_i), nrow(classimg_i) / xpts_i), # previously  seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i)
+    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
     seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
   ]
 
@@ -386,14 +380,15 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   pt_scale <- xscale_i / xpts_i # distance between grid sample points in user-specified units
   n_x <- ncol(subclass) # n columns
   n_y <- nrow(subclass) # n rows
-  n_class <- length(na.omit(unique(c(as.matrix((subclass)))))) # n color classes
+  n_class <- sum(unique(c(as.matrix((subclass)))) != 999) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
+  freq <- freq[!freq$Var1 %in% 999, ] # remove dummy data if need be
   names(freq) <- c("patch", "Freq")
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
   freq$patch <- colournames$name[as.numeric(as.character(freq$patch))]
 
   # Single colour check
-  single_col <- ifelse(n_class == 1, TRUE, FALSE)
+  single_col <- n_class == 1
 
   # Transitions
   transitions <- transitioncalc(subclass, colournames)
@@ -408,7 +403,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   offdiagprop <- offdiag
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
-  ## Summary variables  ##
+  ## ------------------------------ Main ------------------------------ ##
+  
+  ## ------- Adjacency (Endler 2012) ------- ##
+  
   if (single_col) { # TODO: Fix this evil single-colour hack
     k <- n_class
     N <- sum(transitions[["all"]]$N)
@@ -494,7 +492,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
 
     # Cumulative probabilities
-    L <- t(cumsum(t(p))) 
+    L <- t(cumsum(t(p)))
 
     # Off-diagonal transition frequencies
     t <- data.frame(t(offdiagprop$N))
@@ -513,21 +511,45 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     Jt <- St / (k * (k - 1) / 2)
 
     ## Things involving the background
-    if ("none" %in% exclude2_i) {
+    if ("none" %in% exclude2_i && any(bkgoutline, !is.null(bkgID_i))) {
 
-      ## Outlined background version ##
+      # Animal only
       if (bkgoutline) {
+        anim <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
+      } else if (!is.null(bkgID_i)) {
+        anim <- classimg_i
+        for (i in 1:length(bkgID_i)) anim[anim == bkgID_i[[i]]] <- 999
+      }
+      # anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
+      anim <- anim[
+        seq(1, nrow(anim), nrow(anim) / xpts_i),
+        seq(1, ncol(anim), ncol(anim) / xpts_i)
+      ]
+      animtrans <- transitioncalc(anim, colournames)
 
-        # Animal only
-        anim <- polymask(subclass, attr(classimg_i, "outline"), "outside")
-        anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
-        animtrans <- transitioncalc(anim)
+      # Bkg only
+      if (bkgoutline) {
+        bkgonly <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
+      } else if (!is.null(bkgID_i)) {
+        bkgonly <- classimg_i
+        for (i in 1:length(bkgID_i)) bkgonly[bkgonly == bkgID_i[[i]]] <- 999
+      }
+      # bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
+      bkgonly <- bkgonly[
+        seq(1, nrow(bkgonly), nrow(bkgonly) / xpts_i),
+        seq(1, ncol(bkgonly), ncol(bkgonly) / xpts_i)
+      ]
+      bkgtrans <- transitioncalc(bkgonly, colournames)
 
-        # Bkg only
-        bkgonly <- polymask(subclass, attr(classimg_i, "outline"), "inside")
-        bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
-        bkgtrans <- transitioncalc(bkgonly)
+      # Check if class-change transitions actually exist
+      if (nrow(subset(animtrans[["all"]], c1 != c2)) > 0 && nrow(subset(bkgtrans[["all"]], c1 != c2)) > 0) {
+        exist <- TRUE
+      } else {
+        exist <- FALSE
+      }
 
+      # Summary bkg metrics
+      if (exist) { # Only meaningful if class-chage transitions exist
         # Animal/background transition ratio
         B <- sum(subset(animtrans[["all"]], c1 != c2)["N"]) /
           sum(subset(transitions[["all"]], c1 != c2)["N"])
@@ -535,73 +557,51 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         # Animal/background transition diversity ratios Rt & Rab
         St_aa <- 1 / sum((subset(animtrans[["all"]], c1 != c2)["N"] / sum(subset(animtrans[["all"]], c1 != c2)["N"]))^2)
         St_bb <- 1 / sum((subset(bkgtrans[["all"]], c1 != c2)["N"] / sum(subset(bkgtrans[["all"]], c1 != c2)["N"]))^2)
-
         Rt <- St_aa / St
         Rab <- St_aa / St_bb
-
-        ## bkgID version ##
-      } else if (!is.null(bkgID_i)) {
-
-        # Animal/background transition ratio
-        O_a_a <- offdiag[!offdiag$c1 %in% bkgID_i, ]
-        O_a_a <- O_a_a[!O_a_a$c2 %in% bkgID_i, ]
-        subb <- paste(offdiag$c1, offdiag$c2, sep = ":") %in% paste(O_a_a[1], O_a_a[2], sep = ":")
-        O_a_b <- offdiag[!subb, ]
-        B <- sum(O_a_a$N) / sum(O_a_b$N)
-
-        # Animal/background transition diversity ratios Rt & Rab
-        q_a_a <- q
-        q_a_b <- q
-        q_b_b <- q
-        animID <- setdiff(1:k, bkgID_i)
-        for (i in 1:length(bkgID_i)) {
-          q_a_a <- q_a_a[, !grepl(bkgID_i[i], names(q_a_a))] # Animal background transitions
-          q_b_b <- q_b_b[, !grepl(animID[i], names(q_b_b))] # Background background transitions
-        }
-        q_a_a <- q_a_a / sum(q_a_a)
-        q_b_b <- q_b_b / sum(q_b_b)
-
-        Rt <- (1 / sum(q_a_a^2)) / (1 / sum(q_a_b^2))
-        Rab <- (1 / sum(q_a_a^2)) / (1 / sum(q_b_b^2))
       } else {
-        B <- Rt <- Rab <- NA
+        B <- Rt <- Rab <- Inf
       }
     } else {
       B <- Rt <- Rab <- NA
     }
 
-    # Boundary strength (Endler et al. 2018)
+    ## ------- Boundary strength (Endler et al. 2018) ------- ##
+    
     if (!is.null(coldists_i)) {
-      # Name-match check. Could be more robust.
-      if (!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
-        c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
-        stop("Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.")
-      }
+      if (nrow(offdiag) > 0) {  # No point if there are no class-change transitions
+        # Name-match check. Could be more robust.
+        if (!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
+          c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
+          stop("Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.")
+        }
 
-      offdiagprop <- merge(offdiagprop, coldists_i)
+        offdiagprop <- merge(offdiagprop, coldists_i)
 
-      # Chromatic calcs
-      if ("dS" %in% names(offdiagprop)) {
-        m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
-        s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
-        cv_dS <- s_dS / m_dS
-      } else {
-        m_dS <- s_dS <- cv_dS <- NA
-      }
+        # Chromatic calcs
+        if ("dS" %in% names(offdiagprop)) {
+          m_dS <- weightmean(offdiagprop$dS, offdiagprop$N)
+          s_dS <- weightsd(offdiagprop$dS, offdiagprop$N)
+          cv_dS <- s_dS / m_dS
+        } else {
+          m_dS <- s_dS <- cv_dS <- NA
+        }
 
-      # Achromatic calcs
-      if ("dL" %in% names(offdiagprop)) {
-        m_dL <- weightmean(offdiagprop$dL, offdiagprop$N)
-        s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
-        cv_dL <- s_dL / m_dL
-      } else {
-        m_dL <- s_dL <- cv_dL <- NA
+        # Achromatic calcs
+        if ("dL" %in% names(offdiagprop)) {
+          m_dL <- weightmean(offdiagprop$dL, offdiagprop$N)
+          s_dL <- weightsd(offdiagprop$dL, offdiagprop$N)
+          cv_dL <- s_dL / m_dL
+        } else {
+          m_dL <- s_dL <- cv_dL <- NA
+        }
       }
     } else {
       m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
     }
 
-    # Overall pattern contrasts (Endler & Mielke 2005)
+    ## ------- Overall pattern contrasts (Endler & Mielke 2005) ------- ##
+    
     if (!is.null(hsl_i)) {
       freq <- merge(freq, hsl_i)
 
@@ -644,12 +644,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
   # Output
   fin <- data.frame(
-    k, N, n_off, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt,
+    k, N, n_off, p, q, t, m, m_r, m_c, A, Sc, St, Jc, Jt, B, Rt,
     Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL, m_hue, s_hue, var_hue,
     m_sat, s_sat, cv_sat, m_lum, s_lum, cv_lum
   )
-  # fin <- data.frame(k, N, n_off, Obs, E, d_t_o, p, q, t, m, m_r, m_c, A, B, Sc, St, Jc, Jt, Rt, Rab, m_dS, s_dS, cv_dS, m_dL, s_dL, cv_dL)
-  # fin <- Filter(function(x)!all(is.na(x)), fin)  # Ditch columns that are all NA
 
   fin <- as.data.frame(fin)
 
@@ -685,7 +683,6 @@ transitioncalc <- function(classimgdat, colornames) {
   # All row transitions
   rt_temp <- lapply(1:nrow(classimgdat), function(x) table(paste0(head(as.numeric(classimgdat[x, ]), -1), ".", tail(as.numeric(classimgdat[x, ]), -1))))
   rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
-  rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
   rowtrans <- data.frame(
     "c1" = rnames[seq(1, length(rnames), 2)],
@@ -697,7 +694,6 @@ transitioncalc <- function(classimgdat, colornames) {
   classimgdat_trans <- as.data.frame(t(classimgdat))
   ct_temp <- lapply(1:nrow(classimgdat_trans), function(x) table(paste0(head(as.numeric(classimgdat_trans[x, ]), -1), ".", tail(as.numeric(classimgdat_trans[x, ]), -1))))
   ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
-  ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names
   coltrans <- data.frame(
     "c1" = cnames[seq(1, length(cnames), 2)],
@@ -733,6 +729,13 @@ transitioncalc <- function(classimgdat, colornames) {
     rowtrans2$c1[rowtrans2$c1 == i] <- colornames[i, ]
     rowtrans2$c2[rowtrans2$c2 == i] <- colornames[i, ]
   }
+
+  # Ditch any excluded colours (999's, via NA's in name)
+  coltrans2 <- coltrans2[apply(coltrans2, 1, function(x) !any(is.na(x))), ]
+  if (nrow(coltrans2) == 0) coltrans2[1, ] <- NA
+  rowtrans2 <- rowtrans2[apply(rowtrans2, 1, function(x) !any(is.na(x))), ]
+  if (nrow(rowtrans2) == 0) rowtrans2[1, ] <- NA
+  transitions <- transitions[apply(transitions, 1, function(x) !any(is.na(x))), ]
 
   transout[["col"]] <- coltrans2
   transout[["row"]] <- rowtrans2

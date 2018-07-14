@@ -51,6 +51,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
         out <- lapply(1:length(object), function(x) data.frame(
             ID = attr(object[[x]], "imgname"),
             col_ID = seq(1:nrow(attr(object[[x]], "classRGB"))),
+            col_name = attr(object[[x]], "colnames"),
             attr(object[[x]], "classRGB")
           ))
         do.call(rbind, out)
@@ -60,8 +61,9 @@ summary.rimg <- function(object, plot = FALSE, ...) {
         summary_main(object, plot, ...)
       } else {
         data.frame(
-          ID = attr(object, "imgname"),
+          img_ID = attr(object, "imgname"),
           col_ID = seq(1:nrow(attr(object, "classRGB"))),
+          col_name = attr(object, "colnames"),
           attr(object, "classRGB")
         )
       }

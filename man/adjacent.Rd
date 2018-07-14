@@ -17,9 +17,9 @@ a colour-class. Preferably the result of \code{\link{classify}}.}
 in preferred units. Not required, and ignored, only if image scales have been set via
 \code{\link{procimg}}.}
 
-\item{xpts}{an integer specifying the number of sample points along the x and y axes,
-from which the square sampling grid is constructed. Defaults to 100 (i.e for a 100
-x 100 grid), though this should be carefully considered.}
+\item{xpts}{an integer specifying the number of sample points along the x axis,
+from which the sampling grid is constructed. Defaults to 100 (e.g. a 100 x 100 grid,
+for a square image), though this should be carefully considered.}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background alone, for relatively homogeneous and uniquely-identified
@@ -74,11 +74,11 @@ a data frame of summary variables:
   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
     in user-specified units.
   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
-  \item \code{'B'}: The animal/background transition ratio.
   \item \code{'Sc'}: Simpson colour class diversity.
   \item \code{'St'}: Simpson transition diversity.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
+  \item \code{'B'}: The animal/background transition ratio.
   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
   \code{Rt = St_a_a / St_a_b}.
   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
@@ -92,7 +92,7 @@ a data frame of summary variables:
 }
 \description{
 Calculate summary variables from the adjacency (Endler 2012) and
-boundary-strength (Endler et al. 2018) analyses, along with overall pattern 
+boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 contrast (Endler & Mielke 2005).
 }
 \examples{

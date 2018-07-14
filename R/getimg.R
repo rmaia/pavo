@@ -87,9 +87,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     imgdat <- as.rimg(imgdat, imgnames)
 
     # Simplify if it's a single image  (TODO LESS SHITE)
-    if (length(imgdat) == 1) {
-      imgdat <- as.array(imgdat[[1]])
-    }
+    if (length(imgdat) == 1) imgdat <- as.rimg(imgdat[[1]])
   }
   imgdat
 }

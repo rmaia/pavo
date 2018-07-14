@@ -129,7 +129,7 @@ test_that("adjacency", {
   expect_error(adjacent(10, xpts = 10, xscale = 10), "array")
   expect_error(adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances2), "do not match")
   
-  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances, hsl = hsl_vals)
+  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake_adjacent$k, 2)
   expect_equal(fake_adjacent$m_dS, 10)
