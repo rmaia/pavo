@@ -162,4 +162,36 @@ test_that("adjacency", {
   expect_equal(fake3_adjacent$q_clr1_clr1, 1)
   expect_equal(fake3_adjacent$m, 0)
   expect_equal(fake3_adjacent$Sc, 1)
+  
+  ## Checkerboard (known values)
+  distances <- data.frame(c1 = 'clr1',
+                          c2 = 'clr2',
+                          dS = 10,
+                          dL = 20)
+  
+  hsl_vals <- data.frame(patch = c('clr1', 'clr2'),
+                         hue = c(1, 2),
+                         lum = c(1, 10),
+                         sat = c(1, 6))
+  set.seed(1)
+  checker <- getimg(system.file("testdata/images/validation/checkerboard.png", package = 'pavo'))
+  checker_class <- classify(checker, kcols = 2)
+  checker_adj <- adjacent(checker_class, xscale = 10, xpts = 220, coldists = distances, hsl = hsl_vals)
+  expect_equal(checker_adj$k, 2)
+  expect_equal(checker_adj$N, (219*220)*2)
+  expect_equal(checker_adj$p_clr2, 0.52)
+  expect_equal(checker_adj$p_clr1, 0.48)
+  expect_equal(checker_adj$t_clr1_clr2, 1)
+  expect_equal(checker_adj$m, 0.4)
+  expect_equal(checker_adj$m_r, 0.4)
+  expect_equal(checker_adj$m_c, 0.4)
+  expect_equal(checker_adj$A, 1)
+  expect_equal(checker_adj$St, 1)
+  expect_equal(checker_adj$Jt, 1)
+  expect_equal(checker_adj$m_dS, 10)
+  expect_equal(checker_adj$m_dL, 20)
+  expect_equal(checker_adj$m_hue, 1.5)
+  expect_equal(checker_adj$m_sat, 3.6)
+  expect_equal(checker_adj$m_lum, 5.68)
+
 })
