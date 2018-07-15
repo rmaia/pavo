@@ -1,4 +1,10 @@
-pavo 1.4
+pavo 2.0.0 (development)
+------------------------------------------------------------------------------
+
+NEW FEATURES
+* image-based workflow for the combined analysis of colour and pattern geometry  
+
+pavo 1.4.0
 ------------------------------------------------------------------------------
 NEW FEATURES
 

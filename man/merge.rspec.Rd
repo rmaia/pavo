@@ -13,7 +13,7 @@
 }
 \value{
 an object of class \code{rspec} for use with \code{pavo} functions.
-Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the 
+Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the
 \code{by} argument if one is specified.
 }
 \description{

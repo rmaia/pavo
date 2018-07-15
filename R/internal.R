@@ -1,17 +1,3 @@
-# #' @export loadrgl
-
-# loadrgl <- function(){
-# # load RGL, and attempt install if not found
-# if (!require('rgl',character.only = TRUE))
-# {
-# message('package ', dQuote('rgl'), ' not found; attempting install...')
-# install.packages('rgl',dep=TRUE)
-
-# if(!require('rgl',character.only = TRUE))
-# stop(dQuote('rgl'), " package is required and could not be installed; please install and try again")
-# }
-# }
-
 #####################
 # SUMMARY VARIABLES #
 #####################
@@ -41,7 +27,6 @@ tcssum <- function(tcsres) {
 
     # relative color volume
     rel.c.vol <- c.vol / tot.c.vol
-
   } else {
     c.vol <- NA
     rel.c.vol <- NA
@@ -55,11 +40,13 @@ tcssum <- function(tcsres) {
   mean.ra <- mean(tcsres$r.achieved)
   max.ra <- max(tcsres$r.achieved)
 
-  res.c <- c(centroid,
-             c.vol, rel.c.vol,
-             colspan.m, colspan.v,
-             hdisp.m, hdisp.v,
-             mean.ra, max.ra)
+  res.c <- c(
+    centroid,
+    c.vol, rel.c.vol,
+    colspan.m, colspan.v,
+    hdisp.m, hdisp.v,
+    mean.ra, max.ra
+  )
 
   names(res.c) <- c(
     "centroid.u", "centroid.s", "centroid.m", "centroid.l",
@@ -71,7 +58,7 @@ tcssum <- function(tcsres) {
 }
 
 # TODO (Tom): These are a couple of functions that do what should be simple things in an
-# ugly way because my maths/programming is bad. Needs to be fixed.
+# ugly way because my maths/programming is bad.
 
 # Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
 # in the colour hexagon
@@ -107,4 +94,45 @@ coarse_sec <- function(x) {
   if (isTRUE(x >= 330 || x < 30)) {
     return("blue")
   }
+}
+
+## Weighted stats
+weightmean <- function(x, wt) {
+  s <- which(is.finite(x * wt))
+  wt <- wt[s]
+  x <- x[s]
+  sum(wt * x) / sum(wt)
+}
+
+weightsd <- function(x, wt) {
+  s <- which(is.finite(x + wt))
+  wt <- wt[s]
+  x <- x[s]
+  xbar <- weightmean(x, wt)
+  sqrt(sum(wt * (x - xbar)^2) * (sum(wt) / (sum(wt)^2 - sum(wt^2))))
+}
+
+## Circular statistics
+circmean <- function(x) {
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  circmean <- atan2(sinr, cosr)
+  circmean
+}
+
+circsd <- function(x) {
+  n <- length(x)
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  result <- sqrt(sinr^2 + cosr^2) / n
+  circsd <- sqrt(-2 * log(result))
+  circsd
+}
+
+circvar <- function(x) {
+  n <- length(x)
+  sinr <- sum(sin(x))
+  cosr <- sum(cos(x))
+  circvar <- 1 - (sqrt(sinr^2 + cosr^2) / n)
+  circvar
 }

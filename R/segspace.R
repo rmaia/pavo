@@ -91,12 +91,12 @@ segspace <- function(vismodeldata){
   
   B <- dat$lum
   
-# LM/MS
+  # LM/MS
   
   LM <- Q4 - Q2
   MS <- Q3 - Q1
   
-# Colormetrics
+  # Colormetrics
   C <- sqrt(LM^2 + MS^2)
   H <- asin(MS/C) * (180/pi)
   

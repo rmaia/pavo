@@ -11,14 +11,14 @@ sensmodel(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
 \item{peaksens}{(required) a vector with peak sensitivities for the cones to
 model.}
 
-\item{range}{a vector of length 2 for the range over which to calculate the spectral 
+\item{range}{a vector of length 2 for the range over which to calculate the spectral
 sensitivities (defaults to 300nm to 700nm).}
 
 \item{lambdacut}{a vector of same length as peaksens that lists the cut-off wavelength
 value for oil droplets. Needs either \code{Bmid} or \code{oiltype} to also be entered.
 See Hart and Vorobyev (2005).}
 
-\item{Bmid}{a vector of same length as peaksens that lists the gradient of line 
+\item{Bmid}{a vector of same length as peaksens that lists the gradient of line
 tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005).}
 
 \item{oiltype}{a list of same length as peaksens that lists the oil droplet types
@@ -29,12 +29,12 @@ Bmid based on the regression equations found in Hart ad Vorobyev (2005).}
 See Govardovskii et al.(2000) (defaults to \code{TRUE}).}
 
 \item{om}{a vector of same length as \code{range1}-\code{range2} that contains ocular media transmission data.
-If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using 
+If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using
 values from Hart et al. (2005), or user-defined values.}
 
 \item{integrate}{logical. If \code{TRUE}, each curve is transformed to have a total area
 under the curve of 1 (best for visual models; defaults to \code{TRUE}). NOTE:
-integration is applied before any effects of ocular media are considered, for 
+integration is applied before any effects of ocular media are considered, for
 compatibility with visual model procedures.}
 }
 \value{
@@ -47,7 +47,7 @@ according to the models of Govardovskii et al. (2000) and Hart & Vorobyev (2005)
 \examples{
 \dontrun{
 # Blue tit visual system based on Hart et al (2000)
-bluesens <- sensmodel(c(371,448,502,563), beta = F, lambdacut = c(330, 413, 507, 572), 
+bluesens <- sensmodel(c(371,448,502,563), beta = F, lambdacut = c(330, 413, 507, 572),
 oiltype = c("T", "C", "Y","R"), om = TRUE)
 
 # Danio aequipinnatus based on Govardovskii et al. (2000)
@@ -56,15 +56,15 @@ daniosens <- sensmodel(c(357, 411, 477, 569))
 
 }
 \references{
-Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000. 
+Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000.
 In search of the visual pigment template. Visual Neuroscience 17:509-528
 
 Hart NS, and Vorobyev M. 2005. modeling oil droplet absorption
 spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 Comparative Physiology A. 191: 381-392
 
-Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual pigments, 
-oil droplets, ocular media and cone photoreceptor distribution in two species of 
+Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual pigments,
+oil droplets, ocular media and cone photoreceptor distribution in two species of
 passerine bird: the blue tit (Parus caeruleus L) and the blackbird (Turdus merula L). J Comp
 Physiol A 186:375-387
 }

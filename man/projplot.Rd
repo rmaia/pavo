@@ -22,7 +22,7 @@ containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled 
 \code{projplot} creates a 2D plot  of color points projected from the tetrahedron 
 to its encapsulating sphere, and is ideal to visualize differences in hue.
 
-\code{projpoints} creates points in a projection color space plot 
+\code{projpoints} creates points in a projection color space plot
 produced by \code{projplot}.
 }
 \description{

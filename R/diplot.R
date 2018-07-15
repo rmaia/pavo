@@ -56,7 +56,8 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey", achro
 
   # Blank plot w/ segment
   plot(
-    0, type = "n", xlim = c(-1 / sqrt(2), 1 / sqrt(2)), ylim = c(-0.5, 0.5),
+    0,
+    type = "n", xlim = c(-1 / sqrt(2), 1 / sqrt(2)), ylim = c(-0.5, 0.5),
     bty = "n", axes = FALSE, xlab = " ", ylab = " "
   )
   segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)

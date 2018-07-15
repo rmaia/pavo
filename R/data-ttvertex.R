@@ -1,7 +1,7 @@
 #' vertex for the tetrahedral color space
 #'
 #' internal data for plotting devices.
-#' 
+#'
 #' @name ttvertex
 #' @docType data
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

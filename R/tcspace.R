@@ -43,20 +43,20 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tcspace <- function(vismodeldata){
-
+  
   dat <- vismodeldata
   
   # if object is vismodel:
   if('vismodel' %in% attr(dat, 'class')){
-  
-  # check if tetrachromat
+    
+    # check if tetrachromat
     if(attr(dat, 'conenumb') < 4)
       stop('vismodel input is not tetrachromatic', call.=FALSE)
-  
+    
     if(attr(dat, 'conenumb') > 4)
       warning('vismodel input is not tetrachromatic, considering first four receptors only', call.=FALSE)
     
-  # check if relative
+    # check if relative
     if(!attr(dat, 'relative')){
       dat <- dat[, 1:4]
       dat <- dat/apply(dat, 1, sum)
@@ -64,27 +64,27 @@ tcspace <- function(vismodeldata){
       warning("Quantum catch are not relative, and have been transformed", call.=FALSE)
       attr(vismodeldata,'relative') <- TRUE
     }
-      
+    
   }
   
   # if not, check if it has more (or less) than 4 columns
   
   if(!('vismodel' %in% attr(dat, 'class'))){
-  
+    
     if(ncol(dat) < 4)
       stop('Input data is not a ',  dQuote('vismodel'), ' object and has fewer than four columns', call.=FALSE)	
     if(ncol(dat) == 4)
       warning('Input data is not a ', dQuote('vismodel'), ' object; treating columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
-  
+    
     if(ncol(dat) > 4)
       warning('Input data is not a ', dQuote('vismodel'), ' object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ', dQuote('u'),', ',  dQuote('s'),', ',  dQuote('m'),', and ', dQuote('l'), ' receptors, respectively', call.=FALSE)
-      
-      dat <- dat[, 1:4]
-      names(dat) <- c('u', 's', 'm', 'l')
     
-    	dat <- dat/apply(dat, 1, sum)
-    	warning('Quantum catch have been transformed to be relative (sum of 1)', call.=FALSE)
-    	attr(vismodeldata,'relative') <- TRUE
+    dat <- dat[, 1:4]
+    names(dat) <- c('u', 's', 'm', 'l')
+    
+    dat <- dat/apply(dat, 1, sum)
+    warning('Quantum catch have been transformed to be relative (sum of 1)', call.=FALSE)
+    attr(vismodeldata,'relative') <- TRUE
     
   }
   
@@ -149,9 +149,9 @@ tcspace <- function(vismodeldata){
   l.r<-r.vec*cosalpha.l
   
   res.p <- data.frame(u, s, m, l, u.r , s.r, m.r, l.r, 
-                    x, y, z, h.theta, h.phi, 
-                    r.vec, r.max, r.achieved,
-                    row.names=rownames(dat))
+                      x, y, z, h.theta, h.phi, 
+                      r.vec, r.max, r.achieved,
+                      row.names=rownames(dat))
   
   res <- res.p
   class(res) <- c('colspace', 'data.frame')
@@ -172,5 +172,5 @@ tcspace <- function(vismodeldata){
   attr(res, 'data.visualsystem.achromatic') <- attr(vismodeldata, 'data.visualsystem.achromatic')
   attr(res, 'data.background') <- attr(vismodeldata, 'data.background')
   
-res
+  res
 }

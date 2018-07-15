@@ -13,14 +13,14 @@ tcspoints<- function(tcsdata, size = 0.02, col = 'black', alpha = 1){
   
   if(attr(tcsdata, 'clrsp') != 'tcs') stop("object is not in tetrahedral color space")
   
-    # check if rgl is installed and loaded
+  # check if rgl is installed and loaded
   if (!requireNamespace("rgl", quietly = TRUE))
     stop(dQuote('rgl'),' package needed for this function to work. Please install it.',
-      call. = FALSE)
-      
+         call. = FALSE)
+  
   if(!isNamespaceLoaded("rgl"))
     requireNamespace("rgl")
   
   rgl::spheres3d(tcsdata[, c('x', 'y', 'z')], 
-    radius = size, color = col, lit = FALSE, alpha = alpha)
+                 radius = size, color = col, lit = FALSE, alpha = alpha)
 }

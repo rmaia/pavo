@@ -39,7 +39,7 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
                     tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12), 
                     achro = FALSE, achrosize = 0.8, achrocol = 'grey',
                     margins = c(1,1,2,2), square=TRUE, ...){ 
-    
+  
   par(mar=margins)
   
   if(square) 
@@ -47,7 +47,7 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   
   arg <- list(...)
   
-# Set defaults
+  # Set defaults
   if(is.null(arg$pch))
     arg$pch <- 19  
   if(is.null(arg$xlim))
@@ -77,7 +77,7 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   
   # remove plot-specific args, add points after the stuff is drawn
   arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
-  'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
+        'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
   do.call(points, arg)
   
   # Category labels (todo: make this more flexible/robust?)

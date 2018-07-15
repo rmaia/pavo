@@ -6,7 +6,7 @@
 \title{Reflectance spectra from a suite of native Australian flowers, collected
 around Cairns, Queensland.}
 \description{
-dataset containing reflectance measurements from 36 native 
+dataset containing reflectance measurements from 36 native
 Australian angiosperm species, indicated by column names.
 }
 \author{

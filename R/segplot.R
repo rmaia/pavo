@@ -38,7 +38,7 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
                     tick.loc = c(-1, -0.5, 0.5, 1),
                     margins = c(1, 1, 2, 2), square = TRUE, ...){ 
   
-# Check if object is of class colorspace and tetrachromat
+  # Check if object is of class colorspace and tetrachromat
   if(!('colspace' %in% attr(segdata, 'class')) & is.element(FALSE, c('LM', 'MS') %in% names(segdata)))
     stop('object is not of class ', dQuote('colspace'), ', and does not contain LM, MS segment data')
   
@@ -52,7 +52,7 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   if(square) 
     par(pty = 's')
   
-# Set defaults
+  # Set defaults
   if(is.null(arg$pch))
     arg$pch <- 19  
   if(is.null(arg$xlim))
@@ -65,8 +65,8 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
     arg$ylab <- ' '
   arg$bty <- 'n'
   arg$axes <- FALSE
-    
-# Plot
+  
+  # Plot
   arg$x <- segdata$MS
   arg$y <- segdata$LM
   
@@ -74,27 +74,27 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   axis(1, at = tick.loc, pos = 0, cex.axis = 0.8)  # todo - best way to handle user specs?
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
   
-# Segment edge coordinates
+  # Segment edge coordinates
   segX <- c(0, 1, 0, -1, 0)
   segY <- c(1, 0, -1, 0, 1)
   segout <- data.frame(segX, segY)
   
-# Segplot outline
+  # Segplot outline
   for(x in 1:length(segX)){
     segments(segX[x], segY[x], segX[x + 1], segY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)      
   }
   
-# Remove plot-specific args, add points after the stuff is drawn
+  # Remove plot-specific args, add points after the stuff is drawn
   arg[c('type', 'xlim', 'ylim', 'log', 'main', 'sub', 'xlab', 'ylab', 
         'ann', 'axes', 'frame.plot', 'panel.first', 'panel.last', 'asp')] <- NULL
   do.call(points, arg)
   
-# Category labels (todo: make this more flexible/robust?)
+  # Category labels (todo: make this more flexible/robust?)
   if(labels == TRUE){
     text(x = 0, y = 1.05, labels = 'S4', cex = lab.cex)
     text(x = 0, y = -1.05, labels = 'S2', cex = lab.cex)
     text(x = 1.05, y = 0, labels = 'S3', cex = lab.cex)
     text(x = -1.05, y = 0, labels = 'S1', cex = lab.cex)
   }
-
+  
 }

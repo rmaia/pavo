@@ -9,13 +9,13 @@
 \arguments{
 \item{x}{(required) an object of class \code{colspace}.}
 
-\item{...}{additional graphical options, which vary by modeled \code{space}. Refer 
-to their individual documentation: 
-\itemize{ 
+\item{...}{additional graphical options, which vary by modeled \code{space}. Refer
+to their individual documentation:
+\itemize{
       \item \code{\link{diplot}}: dichromat space
       \item \code{\link{triplot}}: trichromat space
       \item \code{\link{tetraplot}}: tetrahedral space
-      \item \code{\link{catplot}}: categorical space 
+      \item \code{\link{catplot}}: categorical space
       \item \code{\link{hexplot}}: colour hexagon
       \item \code{\link{cocplot}}: colour-opponent-coding space
       \item \code{\link{cieplot}}: cie spaces
@@ -39,8 +39,8 @@ vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
 plot(di.flowers)
 
-# Colour hexagon 
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, 
+# Colour hexagon
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 plot(hex.flowers, sectors = 'coarse')
@@ -58,7 +58,7 @@ tcsplot(tcs.sicalis, size = 0.005)
 ## Add points to interactive tetrahedron
 patch <- rep(c('C','T','B'), 7)
 tcs.crown <- subset(tcs.sicalis, 'C')
-tcs.breast <- subset(tcs.sicalis, 'B') 
+tcs.breast <- subset(tcs.sicalis, 'B')
 tcsplot(tcs.crown, col ='blue')
 tcspoints(tcs.breast, col ='red')
 
@@ -72,25 +72,25 @@ tcsvol(tcs.sicalis)
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.
 
-Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
    using MATLAB. John Wiley & Sons.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
-Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
-   component of flower reflections, and the colour perception of Hymenoptera. 
+Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
+   component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.
 
 Troje N. (1993). Spectral categories in the learning behaviour
  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
-Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns 
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision

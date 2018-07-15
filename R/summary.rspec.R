@@ -159,189 +159,189 @@
 #' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
-summary.rspec <- function (object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
+summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
+  wl_index <- which(names(object) == "wl")
+  wl <- object[, wl_index]
+  # object <- object[,-wl_index]
 
-wl_index <- which(names(object)=='wl')
-wl <- object[,wl_index]
-# object <- object[,-wl_index]
+  # set WL min & max
+  lambdamin <- max(wlmin, min(wl))
+  lambdamax <- min(wlmax, max(wl))
 
-# set WL min & max
-lambdamin <- max(wlmin, min(wl))
-lambdamax <- min(wlmax, max(wl))
+  if (!is.null(wlmin) && lambdamin > wlmin) {
+    stop("wlmin is smaller than the range of spectral data")
+  }
+  if (!is.null(wlmax) && lambdamax < wlmax) {
+    stop("wlmax is larger than the range of spectral data")
+  }
 
-if (!is.null(wlmin) && lambdamin > wlmin)
-  stop("wlmin is smaller than the range of spectral data")
-if (!is.null(wlmax) && lambdamax < wlmax)
-  stop("wlmax is larger than the range of spectral data")
+  # restrict to range of wlmin:wlmax
+  object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
+  wl <- object[, wl_index]
 
-# restrict to range of wlmin:wlmax
-object <- object[which(wl==lambdamin):which(wl==lambdamax),]
-wl <- object[,wl_index]
-
-select <- (1:ncol(object))[-wl_index]
-# object <- object[,-wl_index]
-object <- object[ , select, drop=FALSE]
-
-
-output.mat <- matrix(nrow=ncol(object), ncol=23)
-
-# Three measures of brightness
-B1 <- sapply(object, sum)
-
-B2 <- sapply(object, mean)
-
-B3 <- sapply(object, max)
-
-Rmin <- sapply(object, min)
-
-Rmid <- (B3 + Rmin) / 2
-
-# Chromas
-
-# Red
-if(lambdamin <= 605 & lambdamax >= 700){
-  Redchromamat <- object[which(wl==605):which(wl==700), , drop = FALSE] # red 605-700nm inclusive
-  Redchroma <- colSums(Redchromamat)/B1 # S1 red
-  output.mat[, 9] <- Redchroma
-}else{
-  warning('cannot calculate red chroma; wavelength range not between 605 and 700 nm', call.=FALSE)
-}
-
-# Yellow
-if(lambdamin <= 550 & lambdamax >= 625){
-  Yellowchromamat <- object[which(wl==550):which(wl==625), , drop = FALSE] #yellow 550-625nm
-  Yellowchroma <- colSums(Yellowchromamat)/B1 # S1 yellow
-  output.mat[, 8] <- Yellowchroma
-}else{
-  warning('cannot calculate yellow chroma; wavelength range not between 550 and 625 nm', call.=FALSE)
-}
-
-# Green
-if(lambdamin <= 510 & lambdamax >= 605){
-  Greenchromamat <- object[which(wl==510):which(wl==605), , drop = FALSE] # green 510-605nm inlusive
-  Greenchroma <- colSums(Greenchromamat)/B1 # S1 green
-  output.mat[, 7] <- Greenchroma
-  }else{
-  warning('cannot calculate green chroma; wavelength range not between 510 and 605 nm', call.=FALSE)
-}
-
-# Blue
-if(lambdamin <= 400 & lambdamax >= 510){
-  Bluechromamat <- object[which(wl==400):which(wl==510), , drop = FALSE] # blue 400-510nm inclusive
-  Bluechroma <- colSums(Bluechromamat)/B1 # S1 blue
-  output.mat[, 6] <- Bluechroma
-  }else{
-  warning('cannot calculate blue chroma; wavelength range not between 400 and 510 nm', call.=FALSE)
-}
-
-# UV
-if(lambdamin <= 400 & lambdamax >=400){
-  UVchromamat <- object[which(wl==lambdamin):which(wl==400), , drop = FALSE]
-  UVchroma <- colSums(UVchromamat)/B1 # S1 UV
-  output.mat [, 4] <- UVchroma
-  }else{
-  warning('cannot calculate UV chroma; wavelength range not below 400 nm', call.=FALSE)
-}
-
-if(lambdamin > 300 & lambdamin < 400){
-  warning(paste('Minimum wavelength is', lambdamin,'; UV-related variables may not be meaningful'), call.=FALSE)
-}
-
-# Violet
-if(lambdamin <= 415 & lambdamax >= 415){
-  Vchromamat <- object[which(wl==lambdamin):which(wl==415), , drop = FALSE]
-  Vchroma <- colSums(Vchromamat)/B1 # S1 Violet
-  output.mat[, 5] <- Vchroma
-}else{
-  warning('cannot calculate violet chroma; wavelength below 415 nm', call.=FALSE)
-}
-
-# lambda Rmax hue
-H1 <- wl[max.col(t(object), ties.method='first')]
-
-# Segment-based variables
-
-segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
-
-Q1 <- which(wl==segmts[1]):which(wl==segmts[2])
-Q2 <- which(wl==segmts[2]):which(wl==segmts[3])
-Q3 <- which(wl==segmts[3]):which(wl==segmts[4])
-Q4 <- which(wl==segmts[4]):which(wl==segmts[5])
-
-S5R <- colSums(object[Q4, , drop = FALSE])
-S5Y <- colSums(object[Q3, , drop = FALSE])
-S5G <- colSums(object[Q2, , drop = FALSE])
-S5B <- colSums(object[Q1, , drop = FALSE])
-
-S5 <- sqrt((S5R-S5G)^2+(S5Y-S5B)^2)
-
-H4 <- atan2(S5Y-S5B, S5R-S5G)
-
-# Carotenoid chroma
-
-R450 <- as.numeric(object[which(wl==450), ])
-R700 <- as.numeric(object[which(wl==700), ])
-Carotchroma <- (R450-R700)/R700
-
-# H3
-index_Rmid <- sapply(1:ncol(object), function(x) {
-  which.min(abs(object[,x] - Rmid[x]))
-})
-H3 <- wl[index_Rmid]
-
-# S7
-
-S7 <- sapply(1:ncol(object), function(col) {
-  spec <- object[,col]
-  index_Rmid_spec <- index_Rmid[col]
-  spec_low <- spec[1:index_Rmid_spec]
-  spec_high <- spec[index_Rmid_spec:length(spec)]
-
-  return(sum(spec_low) - sum(spec_high))
-
-})
-
-S7 <- S7/B1
+  select <- (1:ncol(object))[-wl_index]
+  # object <- object[,-wl_index]
+  object <- object[, select, drop = FALSE]
 
 
-# S3
-S3 <- sapply(1:ncol(object), function(col) {
-  spec <- object[,col]
-  H1_spec <- H1[col]
-  sum(spec[wl>=(H1_spec-50) & wl<=(H1_spec+50)])
-})
-S3 <- S3/B1
+  output.mat <- matrix(nrow = ncol(object), ncol = 23)
 
-# Spectral saturation
-S2 <- B3/Rmin #S2
+  # Three measures of brightness
+  B1 <- sapply(object, sum)
 
-S6 <- B3-Rmin # S6
+  B2 <- sapply(object, mean)
 
-S8 <- S6/B2 # S8
+  B3 <- sapply(object, max)
 
-# H2
-diffsmooth <- apply(object,2,diff)
+  Rmin <- sapply(object, min)
 
-# Spectra that are monotically increasing or decreasing
-incr <- apply(diffsmooth,2,min) > 0
-decr <- apply(diffsmooth,2,max) < 0
+  Rmid <- (B3 + Rmin) / 2
 
-lambdabmaxneg <- wl[apply(diffsmooth,2,which.min)] #H2
-lambdabmaxneg[incr] <- NA
+  # Chromas
 
-# S4
-bmaxneg <- abs(apply(diffsmooth,2,min)) #S4
-bmaxneg[incr] <- NA
+  # Red
+  if (lambdamin <= 605 & lambdamax >= 700) {
+    Redchromamat <- object[which(wl == 605):which(wl == 700), , drop = FALSE] # red 605-700nm inclusive
+    Redchroma <- colSums(Redchromamat) / B1 # S1 red
+    output.mat[, 9] <- Redchroma
+  } else {
+    warning("cannot calculate red chroma; wavelength range not between 605 and 700 nm", call. = FALSE)
+  }
 
-# S10
-S10 <- S8*bmaxneg #S10
+  # Yellow
+  if (lambdamin <= 550 & lambdamax >= 625) {
+    Yellowchromamat <- object[which(wl == 550):which(wl == 625), , drop = FALSE] # yellow 550-625nm
+    Yellowchroma <- colSums(Yellowchromamat) / B1 # S1 yellow
+    output.mat[, 8] <- Yellowchroma
+  } else {
+    warning("cannot calculate yellow chroma; wavelength range not between 550 and 625 nm", call. = FALSE)
+  }
 
-# H5
-lambdabmax <- wl[apply(diffsmooth,2,which.max)] #H5
-lambdabmax[decr] <- NA
+  # Green
+  if (lambdamin <= 510 & lambdamax >= 605) {
+    Greenchromamat <- object[which(wl == 510):which(wl == 605), , drop = FALSE] # green 510-605nm inlusive
+    Greenchroma <- colSums(Greenchromamat) / B1 # S1 green
+    output.mat[, 7] <- Greenchroma
+  } else {
+    warning("cannot calculate green chroma; wavelength range not between 510 and 605 nm", call. = FALSE)
+  }
+
+  # Blue
+  if (lambdamin <= 400 & lambdamax >= 510) {
+    Bluechromamat <- object[which(wl == 400):which(wl == 510), , drop = FALSE] # blue 400-510nm inclusive
+    Bluechroma <- colSums(Bluechromamat) / B1 # S1 blue
+    output.mat[, 6] <- Bluechroma
+  } else {
+    warning("cannot calculate blue chroma; wavelength range not between 400 and 510 nm", call. = FALSE)
+  }
+
+  # UV
+  if (lambdamin <= 400 & lambdamax >= 400) {
+    UVchromamat <- object[which(wl == lambdamin):which(wl == 400), , drop = FALSE]
+    UVchroma <- colSums(UVchromamat) / B1 # S1 UV
+    output.mat [, 4] <- UVchroma
+  } else {
+    warning("cannot calculate UV chroma; wavelength range not below 400 nm", call. = FALSE)
+  }
+
+  if (lambdamin > 300 & lambdamin < 400) {
+    warning(paste("Minimum wavelength is", lambdamin, "; UV-related variables may not be meaningful"), call. = FALSE)
+  }
+
+  # Violet
+  if (lambdamin <= 415 & lambdamax >= 415) {
+    Vchromamat <- object[which(wl == lambdamin):which(wl == 415), , drop = FALSE]
+    Vchroma <- colSums(Vchromamat) / B1 # S1 Violet
+    output.mat[, 5] <- Vchroma
+  } else {
+    warning("cannot calculate violet chroma; wavelength below 415 nm", call. = FALSE)
+  }
+
+  # lambda Rmax hue
+  H1 <- wl[max.col(t(object), ties.method = "first")]
+
+  # Segment-based variables
+
+  segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
+
+  Q1 <- which(wl == segmts[1]):which(wl == segmts[2])
+  Q2 <- which(wl == segmts[2]):which(wl == segmts[3])
+  Q3 <- which(wl == segmts[3]):which(wl == segmts[4])
+  Q4 <- which(wl == segmts[4]):which(wl == segmts[5])
+
+  S5R <- colSums(object[Q4, , drop = FALSE])
+  S5Y <- colSums(object[Q3, , drop = FALSE])
+  S5G <- colSums(object[Q2, , drop = FALSE])
+  S5B <- colSums(object[Q1, , drop = FALSE])
+
+  S5 <- sqrt((S5R - S5G)^2 + (S5Y - S5B)^2)
+
+  H4 <- atan2(S5Y - S5B, S5R - S5G)
+
+  # Carotenoid chroma
+
+  R450 <- as.numeric(object[which(wl == 450), ])
+  R700 <- as.numeric(object[which(wl == 700), ])
+  Carotchroma <- (R450 - R700) / R700
+
+  # H3
+  index_Rmid <- sapply(1:ncol(object), function(x) {
+    which.min(abs(object[, x] - Rmid[x]))
+  })
+  H3 <- wl[index_Rmid]
+
+  # S7
+
+  S7 <- sapply(1:ncol(object), function(col) {
+    spec <- object[, col]
+    index_Rmid_spec <- index_Rmid[col]
+    spec_low <- spec[1:index_Rmid_spec]
+    spec_high <- spec[index_Rmid_spec:length(spec)]
+
+    return(sum(spec_low) - sum(spec_high))
+  })
+
+  S7 <- S7 / B1
 
 
-# Add remaining variables to output
+  # S3
+  S3 <- sapply(1:ncol(object), function(col) {
+    spec <- object[, col]
+    H1_spec <- H1[col]
+    sum(spec[wl >= (H1_spec - 50) & wl <= (H1_spec + 50)])
+  })
+  S3 <- S3 / B1
+
+  # Spectral saturation
+  S2 <- B3 / Rmin # S2
+
+  S6 <- B3 - Rmin # S6
+
+  S8 <- S6 / B2 # S8
+
+  # H2
+  diffsmooth <- apply(object, 2, diff)
+
+  # Spectra that are monotically increasing or decreasing
+  incr <- apply(diffsmooth, 2, min) > 0
+  decr <- apply(diffsmooth, 2, max) < 0
+
+  lambdabmaxneg <- wl[apply(diffsmooth, 2, which.min)] # H2
+  lambdabmaxneg[incr] <- NA
+
+  # S4
+  bmaxneg <- abs(apply(diffsmooth, 2, min)) # S4
+  bmaxneg[incr] <- NA
+
+  # S10
+  S10 <- S8 * bmaxneg # S10
+
+  # H5
+  lambdabmax <- wl[apply(diffsmooth, 2, which.max)] # H5
+  lambdabmax[decr] <- NA
+
+
+  # Add remaining variables to output
 
   output.mat[, 1] <- B1
   output.mat[, 2] <- B2
@@ -361,29 +361,31 @@ lambdabmax[decr] <- NA
   output.mat[, 22] <- H4
   output.mat[, 23] <- lambdabmax
 
-# PPB added S1v and S1Y
+  # PPB added S1v and S1Y
 
 
-color.var <- data.frame(output.mat, row.names=names(object))
+  color.var <- data.frame(output.mat, row.names = names(object))
 
-names(color.var) <- c("B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G",
-                      "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8",
-                      "S9", "S10", "H1", "H2", "H3", "H4", "H5")
+  names(color.var) <- c(
+    "B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G",
+    "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8",
+    "S9", "S10", "H1", "H2", "H3", "H4", "H5"
+  )
 
-colvarnames <- names(color.var)
+  colvarnames <- names(color.var)
 
-if(is.logical(subset)){
-  if(subset){
-    color.var <- color.var[c('B2','S8', 'H1')]
+  if (is.logical(subset)) {
+    if (subset) {
+      color.var <- color.var[c("B2", "S8", "H1")]
+    }
+  } else {
+    # check if any color variables selected don't exist
+    if (all(subset %in% colvarnames)) {
+      color.var <- color.var[subset]
+    } else {
+      stop(paste("Names in", dQuote("subset"), "do not match color variable names"))
+    }
   }
-}else{
-  #check if any color variables selected don't exist
-  if(all(subset %in% colvarnames)){
-    color.var <- color.var[subset]
-  }else{
-    stop(paste('Names in', dQuote('subset'), 'do not match color variable names'))
-  }
-}
 
-color.var
+  color.var
 }

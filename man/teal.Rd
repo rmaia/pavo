@@ -3,10 +3,10 @@
 \docType{data}
 \name{teal}
 \alias{teal}
-\title{Angle-resolved reflectance data for the iridescent wing patch of a male green-winged 
+\title{Angle-resolved reflectance data for the iridescent wing patch of a male green-winged
 teal (Anas carolinensis)}
 \description{
-dataset containing reflectance measurements from the wing patch of 
+dataset containing reflectance measurements from the wing patch of
 a single male at different incident angles (15-75 degrees in 5-degree increments).
 }
 \author{

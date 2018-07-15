@@ -85,7 +85,7 @@ summary.colspace <- function(object, by = NULL, ...){
           }
 
       by <- factor(by)
-      res.c <- data.frame(t(sapply(levels(by),function(z) tcssum(object[which(by == z),]))))
+      res.c <- data.frame(t(sapply(levels(by), function(z) tcssum(object[which(by == z), ]))))
       row.names(res.c) <- levels(by)
 
       }else{
