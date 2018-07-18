@@ -178,3 +178,4 @@ outliner <- function(image_i, smooth_i, iterations_i, ...) {
 
   xy
 }
+

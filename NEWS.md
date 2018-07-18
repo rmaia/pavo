@@ -4,6 +4,10 @@ pavo 2.0.0 (development)
 NEW FEATURES
 * image-based workflow for the combined analysis of colour and pattern geometry  
 
+MINOR FEATURES AND BUG FIXES 
+* CIELAB values have been rescaled, and are expressed in the more standard range:
+L [0,100], ab [-128,127]
+
 pavo 1.4.0
 ------------------------------------------------------------------------------
 NEW FEATURES

@@ -157,13 +157,13 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
       arg$col <- 1
     }
     if (is.null(arg$xlim)) {
-      arg$xlim <- c(-12.8, 12.7) / zoom
+      arg$xlim <- c(-128, 127) / zoom
     }
     if (is.null(arg$ylim)) {
-      arg$ylim <- c(-12.8, 12.7) / zoom
+      arg$ylim <- c(-128, 127) / zoom
     }
     if (is.null(arg$zlim)) {
-      arg$zlim <- c(0, 10) / zoom
+      arg$zlim <- c(0, 100) / zoom
     }
 
     col <- arg["col"]
@@ -185,7 +185,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 
     # LAB plot axis line vertices
     verts <- matrix(
-      c(0, 0, 0, 0, 0, 10, -12.8, 0, 5, 12.7, 0, 5, 0, -12.8, 5, 0, 12.7, 5),
+      c(0, 0, 0, 0, 0, 100, -128, 0, 50, 127, 0, 50, 0, -128, 50, 0, 127, 50),
       ncol = 3, byrow = TRUE,
       dimnames = list(paste0(rep(c("L", "a", "b"), each = 2), 1:2), c("x", "y", "z"))
     )
@@ -195,7 +195,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     # Text label locations
 
     txtlab <- matrix(
-      c(0, 0, 10.4, -14, 0, 5, 0, -15, 5),
+      c(0, 0, 104, -140, 0, 50, 0, -150, 50),
       ncol = 3, byrow = TRUE,
       dimnames = list(c("tL", "ta", "tb"), c("x", "y", "z"))
     )

@@ -70,6 +70,9 @@ as.rimg <- function(object, name = "img") {
           object[[i]] <- replicate(3, object[[i]], simplify = "array")
         }
       }
+      
+      # 3D maximum
+      #object <- lapply(1:length(object), function(j) object[[j]][,,1:3])
 
       # Rescale RGB to [0,1] if need be
       object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
@@ -94,6 +97,9 @@ as.rimg <- function(object, name = "img") {
       if (is.na(dim(object)[3])) {
         object <- replicate(3, object, simplify = "array")
       }
+      
+      # 3D maximum
+      #object <- object[,,1:3]
 
       # Rescale RGB to [0,1] if need be
       object <- rescaler(object)

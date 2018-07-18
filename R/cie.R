@@ -74,6 +74,7 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
     Xn <- sum(S[, 1] * illum)
     Yn <- sum(S[, 2] * illum)
     Zn <- sum(S[, 3] * illum)
+    #Xn <- Yn <- Zn <- 65535
     # Xn = 94.811
     # Yn = 100
     # Zn = 107.304
@@ -93,6 +94,11 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
     }
     a <- 500 * (f(X / Xn) - f(Y / Yn))
     b <- 200 * (f(Y / Yn) - f(Z / Zn))
+    
+    # Rescale
+    L <- L*10
+    a <- a*10
+    b <- b*10
 
     # LCh calculator
     C <- sqrt(a^2 + b^2)
