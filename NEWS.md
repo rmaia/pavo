@@ -2,10 +2,12 @@ pavo 2.0.0 (development)
 ------------------------------------------------------------------------------
 
 NEW FEATURES
-* image-based workflow for the combined analysis of colour and pattern geometry  
+* image-based workflow for the combined analysis of colour and pattern geometry
+* added the visual systems of the (trichromatic) jumping spider _Habronattus pyrrithrix_
+and the (trichromatic) triggerfish _Rhinecanthus aculeatus_
 
 MINOR FEATURES AND BUG FIXES 
-* CIELAB values have been rescaled, and are expressed in the more standard range:
+* cieLAB values have been rescaled, and are expressed in the more standard range:
 L [0,100], ab [-128,127]
 
 pavo 1.4.0

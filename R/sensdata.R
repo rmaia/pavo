@@ -21,6 +21,8 @@
 #' \item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
 #' \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
 #' \item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
+#' \item \code{'habronattus'}: Jumping spider \emph{Habronattus pyrrithrix}.
+#' \item \code{'rhinecanthus'}: Triggerfish \emph{Rhinecanthus aculeatus}.
 #' }
 #' @param achromatic the sensitivity data used to calculate luminance (achromatic)
 #'  receptor stimulation. Options are:
@@ -31,6 +33,7 @@
 #'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
 #'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
 #'  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+#'  \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
 #' }
 #' @param illum illuminants. Options are:
 #' \itemize{
@@ -65,7 +68,7 @@
 #' # Plot the honeybee's receptors
 #' sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 #'
-#' # Plot the vverage UV vs V avian receptors
+#' # Plot the average UV vs V avian receptors
 #' sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance', plot = TRUE)
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
@@ -79,8 +82,11 @@
 #'
 
 sensdata <- function(
-                     visual = c("none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis", "canis", "cie2", "cie10", "musca"),
-                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1"),
+                     visual = c(
+                       "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
+                       "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"
+                     ),
+                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc"),
                      illum = c("none", "all", "bluesky", "D65", "forestshade"),
                      trans = c("none", "all", "bluetit", "blackbird"),
                      bkg = c("none", "all", "green"),
@@ -97,7 +103,7 @@ sensdata <- function(
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
     if (isTRUE("all" %in% visual2)) {
-      visual2 <- c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "canis", "cie2", "cie10", "musca")
+      visual2 <- c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus")
     }
     sens <- as.data.frame(vissyst)
     S <- as.data.frame(subset(sens, select = grepl(paste(visual2, collapse = "|"), names(sens))))
@@ -107,7 +113,7 @@ sensdata <- function(
   # Achromatic receptor
   if (!isTRUE("none" %in% achro2)) {
     if (isTRUE("all" %in% achro2)) {
-      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1")
+      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc")
     }
     sens <- as.data.frame(vissyst)
     achro <- as.data.frame(subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens))))
