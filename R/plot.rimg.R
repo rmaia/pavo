@@ -50,6 +50,26 @@ plot.rimg <- function(x, ...) {
   }
 }
 
+## For raw images
+defaultrasterImageplot <- function(imagedata, ...) {
+  
+  # Defaults
+  arg <- list(...)
+  if (is.null(arg$xlab)) arg$xlab <- "x"
+  if (is.null(arg$ylab)) arg$ylab <- "y"
+  if (is.null(arg$main)) arg$main <- attr(imagedata, "imgname")
+  if (is.null(arg$type)) arg$type <- "n"
+  if (is.null(arg$asp)) arg$asp <- dim(imagedata)[1] / dim(imagedata)[2]
+  # if (is.null(arg$xlim)) arg$xlim <- c(0, dim(imagedata)[2])
+  # if (is.null(arg$ylim)) arg$ylim <- c(0, dim(imagedata)[1])
+  
+  arg$x <- c(1, dim(imagedata)[2])
+  arg$y <- c(1, dim(imagedata)[1])
+  
+  do.call(plot, arg)
+  rasterImage(imagedata, 1, 1, dim(imagedata)[2], dim(imagedata)[1])
+}
+
 ## For colour-classified images
 defaultimageplot <- function(rawimage, ...) {
 
@@ -79,22 +99,4 @@ defaultimageplot <- function(rawimage, ...) {
   arg$z <- imagedata
 
   do.call(image, arg)
-}
-
-## For raw images
-defaultrasterImageplot <- function(imagedata, ...) {
-
-  # Defaults
-  arg <- list(...)
-  if (is.null(arg$xlab)) arg$xlab <- "x"
-  if (is.null(arg$ylab)) arg$ylab <- "y"
-  if (is.null(arg$main)) arg$main <- attr(imagedata, "imgname")
-  if (is.null(arg$type)) arg$type <- "n"
-  if (is.null(arg$asp)) arg$asp <- dim(imagedata)[1] / dim(imagedata)[2]
-
-  arg$x <- c(1, dim(imagedata)[2])
-  arg$y <- c(1, dim(imagedata)[1])
-
-  do.call(plot, arg)
-  rasterImage(imagedata, 1, 1, dim(imagedata)[2], dim(imagedata)[1])
 }
