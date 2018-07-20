@@ -4,6 +4,11 @@
 #'
 #' @param image (required) image data. Either a single image array, or a number of images
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
+#' @param resize an integer specifying the scaling factor for linearly
+#' resizing images, if so desired. E.g. 0.5 to half the size of an image, or 2 to
+#' doubling it.
+#' @param rotate an integer specifying the angle of image rotation, in degrees. Images
+#' are rotated around the centre, and linearly interpolated. 
 #' @param scaledist an integer, or numeric vector equal in length to the number of images,
 #' specifying the length of the scale in the image(s). Image(s) will then be presented,
 #' and the user asked to select either end of the scale corresponding to the input value.
@@ -24,14 +29,16 @@
 #'
 #' @export
 #'
+#' @importFrom imager imresize
+#'
 #' @examples \dontrun{
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio <- procimg(papilio, scaledist = 10)
 #'
-#' # Assign individual scales to each image.
+#' # Assign individual scales to each image, after slightly reducing their size.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' snakes <- procimg(snakes, scaledist = c(10, 14))
+#' snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -39,37 +46,58 @@
 #' @references Chaikin, G. 1974. An algorithm for high speed curve generation.
 #' Computer Graphics and Image Processing 3, 346-349.
 
-procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
-                    iterations = 1L, plotnew = FALSE, ...) {
+procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL, 
+                    outline = FALSE, smooth = FALSE, iterations = 1L, plotnew = FALSE, ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
-  
+
   ## Class
   if (!"rimg" %in% class(image)) {
-    warning("Attempting to coerce image to class rimg.")
-    image <- as.rimg(image)
+    message("Attempting to coerce image to class rimg.")
+    if("cimg" %in% class(image))
+      image <- cimg2rimg(image)
+    else
+      image <- as.rimg(image)
   }
 
   ## Options
-  if (is.null(scaledist) & !outline) {
+  if (is.null(scaledist) & !outline & is.null(resize)) {
     stop("No options selected.")
-  }
-
-  ## Scale
-  if (!is.null(scaledist)) {
-    if (!is.numeric(scaledist)) {
-      message("Attempting to coerce scaledist to numeric.")
-      scaledist <- is.numeric(scaledist)
-    }
   }
 
   multi_image <- inherits(image, "list") # Single or multiple images?
 
   ## ------------------------------ Main ------------------------------ ##
-  
+
   if (multi_image) { # Multiple images
 
-    ## Scale setting ##
+    ## Resize ##
+    if (attr(image[[1]], "state") == "colclass" && is.numeric(resize)) {
+      message('Cannot resize colour-classified images.')
+      resize = NULL
+    }
+    if (is.numeric(resize)) {
+      imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
+      image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
+      image <- lapply(1:length(image), function(x) imresize(image[[x]], resize))
+      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
+      class(image) <- c('rimg', 'list')
+    }
+    
+    ## Rotate ##
+    if (attr(image[[1]], "state") == "colclass" && is.numeric(rotate)) {
+      message('Cannot rotate colour-classified images.')
+      rotate = NULL
+    }
+    if (is.numeric(rotate)) {
+      imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
+      image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
+      image <- lapply(1:length(image), function(x) imrotate(image[[x]], rotate))
+      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
+      class(image) <- c('rimg', 'list')
+    }
+
+    ## Scale ##
     if (is.numeric(scaledist)) {
 
       # Formatting
@@ -89,7 +117,7 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
       if (plotnew) dev.off()
     }
 
-    ## Select outline of focal stimulus ##
+    ## Select outline ##
     if (outline) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
       for (i in 1:length(image)) {
@@ -100,6 +128,30 @@ procimg <- function(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
       if (plotnew) dev.off()
     }
   } else if (!multi_image) {
+
+    ## Resize ##
+    if (attr(image, "state") == "colclass" && is.numeric(resize)) {
+      message('Cannot resize colour-classified images.')
+      resize = NULL
+    }
+    if (is.numeric(resize)) {
+      imgname <- attr(image, "imgname")
+      image <- rimg2cimg(image)
+      image <- imresize(image, resize)
+      image <- cimg2rimg(image, imgname)
+    }
+    
+    ## Rotate ##
+    if (attr(image, "state") == "colclass" && is.numeric(rotate)) {
+      message('Cannot rotate colour-classified images.')
+      rotate = NULL
+    }
+    if (is.numeric(rotate)) {
+      imgname <- attr(image, "imgname")
+      image <- rimg2cimg(image)
+      image <- imrotate(image, rotate)
+      image <- cimg2rimg(image, imgname)
+    }
 
     ## Scale ##
     if (plotnew) dev.new(noRStudioGD = TRUE)
@@ -130,9 +182,9 @@ scaler <- function(image_i, scaledist_i, ...) {
 
   # Plot
   if (attr(image_i, "state") == "raw") {
-    defaultrasterImageplot(image_i, ...)
+    plot(image_i, axes = TRUE, col = NULL, ...)
   } else if (attr(image_i, "state") == "colclass") {
-    defaultimageplot(image_i, ...)
+    plot(image_i, axes = TRUE, col = NULL, ...)
   }
 
   reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
@@ -147,9 +199,9 @@ outliner <- function(image_i, smooth_i, iterations_i, ...) {
 
   # Plot
   if (attr(image_i, "state") == "raw") {
-    defaultrasterImageplot(image_i, ...)
+    plot(image_i, axes = TRUE, col = NULL, ...)
   } else if (attr(image_i, "state") == "colclass") {
-    defaultimageplot(image_i, ...)
+    plot(image_i, axes = TRUE, col= NULL, ...)
   }
 
   # Get coordinates
@@ -178,4 +230,3 @@ outliner <- function(image_i, smooth_i, iterations_i, ...) {
 
   xy
 }
-

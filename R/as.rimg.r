@@ -70,9 +70,9 @@ as.rimg <- function(object, name = "img") {
           object[[i]] <- replicate(3, object[[i]], simplify = "array")
         }
       }
-      
+
       # 3D maximum
-      #object <- lapply(1:length(object), function(j) object[[j]][,,1:3])
+      object <- lapply(1:length(object), function(j) object[[j]][, , 1:3])
 
       # Rescale RGB to [0,1] if need be
       object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
@@ -97,9 +97,9 @@ as.rimg <- function(object, name = "img") {
       if (is.na(dim(object)[3])) {
         object <- replicate(3, object, simplify = "array")
       }
-      
+
       # 3D maximum
-      #object <- object[,,1:3]
+      object <- object[, , 1:3]
 
       # Rescale RGB to [0,1] if need be
       object <- rescaler(object)
@@ -116,4 +116,56 @@ as.rimg <- function(object, name = "img") {
 #' @return a logical value indicating whether the object is of class \code{rimg}
 is.rimg <- function(object) {
   inherits(object, "rimg")
+}
+
+#' Convert images between class rimg and cimg
+#'
+#' Conveniently convert single objects of class \code{rimg} and \code{cimg} (from the
+#' package \code{imager}, which contains a suite of useful image-processing
+#' capabilities).
+#'
+#' @param image an object of class \code{rimg} or \code{cimg}.
+#' @param name the name(s) of the image(s).
+#'
+#' @return an image of the specified class
+#'
+#' @note Attributes (e.g. scales, color-classes) will not be preserved following
+#' conversion from class \code{rimg}, so it's best to use early in the analysis workflow.
+#'
+#' @examples \dontrun{
+#' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+#'
+#' # From class rimg to cimg
+#' papilio_cimg <- rimg2cimg(papilio)
+#' class(papilio_cimg)
+#'
+#' # From class cimg to rimg
+#' papilio_rimg <- cimg2rimg(papilio_cimg)
+#' class(papilio_rimg)
+#' }
+#'
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#' @name img_conversion
+#'
+NULL
+
+#' @rdname img_conversion
+#' @import imager
+#'
+#' @export
+#'
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+rimg2cimg <- function(image) {
+  image <- suppressWarnings(imager::as.cimg(image, cc = 3))
+  image
+}
+
+#' @rdname img_conversion
+#'
+#' @export
+#'
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+cimg2rimg <- function(image, name = "img") {
+  image <- as.rimg(drop(as.array(image)), name = name)
+  image
 }

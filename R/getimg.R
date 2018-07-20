@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @importFrom pbmcapply pbmclapply
-#' @importFrom readbitmap read.bitmap
+#' @importFrom imager load.image mirror imrotate
 #'
 #' @examples \dontrun{
 #' # Single image
@@ -33,7 +33,7 @@
 getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getOption("mc.cores", 2L)) {
 
   ## ------------------------------ Checks ------------------------------ ##
-  
+
   ## Allowed extensions
   ext <- c("jpg", "jpeg", "png", "bmp")
 
@@ -42,14 +42,14 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     cores <- 1
     message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
-  
+
   ## ------------------------------ Main ------------------------------ ##
-  
+
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    imgdat <- read.bitmap(imgpath)
+    imgdat <- load.image(imgpath)
 
-    imgdat <- as.rimg(imgdat, name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Otherwise it's a directory of images
   } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
@@ -70,7 +70,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     imgnames <- gsub(extensions, "", file_names)
 
     # Stop if max size estimated to exceed available memory
-    imgsize <- prod(dim(read.bitmap(files[1])))
+    imgsize <- prod(dim(load.image(files[1])))
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
@@ -78,16 +78,18 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.2) {
-      imgdat <- pbmclapply(1:length(file_names), function(x) read.bitmap(files[x]), mc.cores = cores)
+      imgdat <- pbmclapply(1:length(file_names), function(x) load.image(files[x]), mc.cores = cores)
+      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
       message("Image data too large for parallel-processing, reverting to single-core processing.")
-      imgdat <- lapply(1:length(file_names), function(x) read.bitmap(files[x]))
+      imgdat <- lapply(1:length(file_names), function(x) load.image(files[x]))
+      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     }
 
     imgdat <- as.rimg(imgdat, imgnames)
 
     # Simplify if it's a single image  (TODO LESS SHITE)
-    if (length(imgdat) == 1) imgdat <- as.rimg(imgdat[[1]])
+    if (length(imgdat) == 1) imgdat <- cimg2rimg(imgdat[[1]])
   }
   imgdat
 }

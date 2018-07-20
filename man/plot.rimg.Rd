@@ -4,10 +4,15 @@
 \alias{plot.rimg}
 \title{Plot unprocessed or colour-classified images}
 \usage{
-\method{plot}{rimg}(x, ...)
+\method{plot}{rimg}(x, axes = TRUE, col = NULL, ...)
 }
 \arguments{
 \item{x}{(required) an image of class rimg, or list thereof.}
+
+\item{axes}{should axes be drawn? (defaults to \code{TRUE})}
+
+\item{col}{optional vector of colours when plotting colour-classified images. 
+Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).}
 
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }

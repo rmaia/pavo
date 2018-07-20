@@ -1,6 +1,6 @@
 # `pavo`
 
-### an R package for spectral color analysis
+### An R package for the spectral and spatial analysis of color patterns
 ### Currently maintained by [Rafael Maia](https://github.com/rmaia), [Thomas White](https://github.com/thomased), and [Hugo Gruson](https://github.com/bisaloo).
 
 [![cran version](http://www.r-pkg.org/badges/version/pavo)](https://cran.r-project.org/package=pavo/)  ![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)  [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)  [![Coverage status](https://codecov.io/gh/rmaia/pavo/branch/master/graph/badge.svg)](https://codecov.io/github/rmaia/pavo?branch=master)  

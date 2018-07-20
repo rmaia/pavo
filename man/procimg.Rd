@@ -4,12 +4,20 @@
 \alias{procimg}
 \title{Process images}
 \usage{
-procimg(image, scaledist = NULL, outline = FALSE, smooth = FALSE,
-  iterations = 1L, plotnew = FALSE, ...)
+procimg(image, resize = NULL, rotate = NULL, scaledist = NULL,
+  outline = FALSE, smooth = FALSE, iterations = 1L, plotnew = FALSE,
+  ...)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
+
+\item{resize}{an integer specifying the scaling factor for linearly
+resizing images, if so desired. E.g. 0.5 to half the size of an image, or 2 to
+doubling it.}
+
+\item{rotate}{an integer specifying the angle of image rotation, in degrees. Images
+are rotated around the centre, and linearly interpolated.}
 
 \item{scaledist}{an integer, or numeric vector equal in length to the number of images,
 specifying the length of the scale in the image(s). Image(s) will then be presented,
@@ -44,9 +52,9 @@ Specify the scale of images, and define focal objects.
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio <- procimg(papilio, scaledist = 10)
 
-# Assign individual scales to each image.
+# Assign individual scales to each image, after slightly reducing their size.
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-snakes <- procimg(snakes, scaledist = c(10, 14))
+snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
 }
 
 }

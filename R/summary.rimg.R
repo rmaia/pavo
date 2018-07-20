@@ -5,6 +5,9 @@
 #' @param object (required) an image of class rimg, or list thereof.
 #' @param plot logical; plot the image and, if the image is color-classified, the colours 
 #' corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.
+#' @param axes should axes be drawn when \code{plot = TRUE}? (defaults to \code{TRUE}).
+#' @param col optional vector of colours when plotting colour-classified images with \code{plot = TRUE}. 
+#' Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).
 #' @param ... additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.
 #'
 #' @return Either the RGB values of the k-means centres from the colour-classified image,
@@ -32,7 +35,7 @@
 #' }
 #'
 
-summary.rimg <- function(object, plot = FALSE, ...) {
+summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
   
   if(multi_image)
@@ -45,7 +48,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
       if (plot) {
         for (i in 1:length(object)) {
           readline(prompt = "Press [enter] for next plot.")
-          summary_main(object[[i]], plot, ...)
+          summary_main(object[[i]], plot, axes = axes, col = col, ...)
         }
       } else {
         out <- lapply(1:length(object), function(x) data.frame(
@@ -58,7 +61,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
       }
     } else if (!multi_image) {
       if (plot) {
-        summary_main(object, plot, ...)
+        summary_main(object, plot, axes = axes, col = col, ...)
       } else {
         data.frame(
           img_ID = attr(object, "imgname"),
@@ -73,7 +76,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
       if (plot) {
         for (i in 1:length(object)) {
           readline(prompt = "Press [enter] for next plot.")
-          defaultrasterImageplot(object[[i]], ...)
+          plot(object[[i]], axes = axes, ...)
         }
       } else {
         out <- lapply(1:length(object), function(x) data.frame(ID = attr(object[[x]], "imgname")))
@@ -82,7 +85,7 @@ summary.rimg <- function(object, plot = FALSE, ...) {
       }
     } else if (!multi_image) {
       if (plot) {
-        defaultrasterImageplot(object, ...)
+        plot(object, axes = axes, ...)
       } else {
         data.frame(ID = attr(object, "imgname"))
       }
@@ -90,19 +93,18 @@ summary.rimg <- function(object, plot = FALSE, ...) {
   }
 }
 
-summary_main <- function(img, plot, ...) {
+summary_main <- function(img, plot, axes, col, ...) {
   if (plot) {
 
     # Plotting
     par(mfrow = c(1, 2))
     on.exit(par(mfrow = c(1, 1)))
 
-    defaultimageplot(img, ...)
+    plot(img, axes = axes, col = col, ...)
 
     # Palette
-    arg <- list(...)
-    if (!is.null(arg$col)) {
-      palette <- arg$col
+    if (!is.null(col)) {
+      palette <- col
     } else {
       palette <- rgb(attr(img, "classRGB"))
     }

@@ -107,7 +107,7 @@
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes_class <- classify(snakes, kcols = 3)
-#' snakes_adj <- adjacent(snakes_class, xpts = 250, xscale = c(50, 55))
+#' snakes_adj <- adjacent(snakes_class, xpts = 120, xscale = c(50, 55))
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}

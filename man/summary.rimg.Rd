@@ -4,13 +4,18 @@
 \alias{summary.rimg}
 \title{Image summary}
 \usage{
-\method{summary}{rimg}(object, plot = FALSE, ...)
+\method{summary}{rimg}(object, plot = FALSE, axes = TRUE, col = NULL, ...)
 }
 \arguments{
 \item{object}{(required) an image of class rimg, or list thereof.}
 
 \item{plot}{logical; plot the image and, if the image is color-classified, the colours 
 corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.}
+
+\item{axes}{should axes be drawn when \code{plot = TRUE}? (defaults to \code{TRUE}).}
+
+\item{col}{optional vector of colours when plotting colour-classified images with \code{plot = TRUE}. 
+Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).}
 
 \item{...}{additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.}
 }

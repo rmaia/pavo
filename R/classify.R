@@ -129,9 +129,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
     }
   }
-  
+
   ## ------------------------------ Main ------------------------------ ##
-  
+
   #### So your options/configurations for classification are:
   #
   ## Multiple images ##
@@ -158,7 +158,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
     ## (1) Multiple k, no reference image ##
     if (length(kcols) > 1 && interactive == FALSE) {
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
@@ -167,7 +167,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       ## (2) Single k, with reference image ##
     } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
@@ -175,7 +175,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       ## (3) Single k, no reference image ##
     } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
@@ -188,21 +188,22 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       refimg <- imgdat[[refID]]
 
       # Transformed image data (TODO: SIMPLIFY)
-      reftrans <- array(c(
-        as.matrix(t(apply(refimg[, , 1], 2, rev))),
-        as.matrix(t(apply(refimg[, , 2], 2, rev))),
-        as.matrix(t(apply(refimg[, , 3], 2, rev)))
-      ),
-      dim = c(
-        dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[1],
-        dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[2],
-        3
-      )
-      )
+      # reftrans <- array(c(
+      #   as.matrix(t(apply(refimg[, , 1], 2, rev))),
+      #   as.matrix(t(apply(refimg[, , 2], 2, rev))),
+      #   as.matrix(t(apply(refimg[, , 3], 2, rev)))
+      # ),
+      # dim = c(
+      #   dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[1],
+      #   dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[2],
+      #   3
+      # )
+      # )
 
       if (plotnew) dev.new(noRStudioGD = TRUE)
 
-      defaultrasterImageplot(refimg, ...)
+      #defaultrasterImageplot(refimg, ...)
+      plot(refimg, ...)
 
       if (!is.null(kcols)) {
         message(paste("Select the", kcols, "focal colours"))
@@ -215,10 +216,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       if (plotnew) dev.off()
 
-      ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))))
+      ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))))
       names(ref_centers) <- c("R", "G", "B")
 
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
@@ -241,21 +242,22 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       while (i <= length(imgdat)) {
 
         # Transformed image data (TODO: SIMPLIFY)
-        reftrans <- array(c(
-          as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))),
-          as.matrix(t(apply(imgdat[[i]][, , 2], 2, rev))),
-          as.matrix(t(apply(imgdat[[i]][, , 3], 2, rev)))
-        ),
-        dim = c(
-          dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[1],
-          dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[2],
-          3
-        )
-        )
+        # reftrans <- array(c(
+        #   as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))),
+        #   as.matrix(t(apply(imgdat[[i]][, , 2], 2, rev))),
+        #   as.matrix(t(apply(imgdat[[i]][, , 3], 2, rev)))
+        # ),
+        # dim = c(
+        #   dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[1],
+        #   dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[2],
+        #   3
+        # )
+        # )
 
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        defaultrasterImageplot(imgdat[[i]], ...)
+        #defaultrasterImageplot(imgdat[[i]], ...)
+        plot(imgdat[[i]], ...)
 
         if (!is.null(n_cols_test)) {
           message(paste0("Select the ", kcols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
@@ -269,7 +271,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
         ref_centers <- try(do.call(rbind, lapply(
           1:nrow(reference),
-          function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
+          function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
         )),
         silent = TRUE
         )
@@ -286,7 +288,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
           i <- i + 1
         }
       }
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       ifelse(imgsize < 100,
         outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
         outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
@@ -316,23 +318,24 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       refimg <- imgdat
 
       # Transformed image data (TODO: SIMPLIFY)
-      reftrans <- array(c(
-        as.matrix(t(apply(imgdat[, , 1], 2, rev))),
-        as.matrix(t(apply(imgdat[, , 2], 2, rev))),
-        as.matrix(t(apply(imgdat[, , 3], 2, rev)))
-      ),
-      dim = c(
-        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[1],
-        dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[2],
-        3
-      )
-      )
+      # reftrans <- array(c(
+      #   as.matrix(t(apply(imgdat[, , 1], 2, rev))),
+      #   as.matrix(t(apply(imgdat[, , 2], 2, rev))),
+      #   as.matrix(t(apply(imgdat[, , 3], 2, rev)))
+      # ),
+      # dim = c(
+      #   dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[1],
+      #   dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[2],
+      #   3
+      # )
+      # )
 
       i <- 1
       while (i <= 1) {
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        defaultrasterImageplot(refimg, ...)
+        #defaultrasterImageplot(refimg, ...)
+        plot(refimg, ...)
 
         if (!is.null(kcols)) {
           message(paste("Select the", kcols, "focal colours."))
@@ -345,7 +348,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
         ref_centers <- try(do.call(rbind, lapply(
           1:nrow(reference),
-          function(x) as.data.frame(t(reftrans[reference$x[x], reference$y[x], 1:3]))
+          function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))
         )),
         silent = TRUE
         )
@@ -363,10 +366,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         }
       }
 
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       outdata <- classify_main(imgdat, ref_centers)
     } else {
-      message('Image classification in progress...')
+      message("Image classification in progress...")
       outdata <- classify_main(imgdat, kcols)
     }
     if (!is.null(kcols)) {
@@ -406,16 +409,18 @@ classify_main <- function(imgdat_i, n_cols_i) {
   cmbn <- cbind(imgRGB, kMeans$cluster)
   names(cmbn) <- c("x", "y", "ch1", "ch2", "ch3", "class")
 
-  outmat2 <- as.data.frame.matrix(xtabs(class ~ x + y, data = cmbn))
-
+  outmat3 <- as.data.frame.matrix(xtabs(class ~ x + y, data = cmbn))
+  
   # Rotate to match original orientation
-  outmat <- rev(t(apply(outmat2, 1, rev)))
-  dim(outmat) <- dim(outmat2)
+  outmat2 <- rev(t(apply(outmat3, 1, rev)))
+  dim(outmat2) <- dim(outmat3)
+  outmat1 <- as.matrix(rev(as.data.frame(outmat2)))
+  outmat <- apply(t(outmat1), 2, rev)
 
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
-  attr(outmat, "colnames") <- data.frame(name = paste0('clr', 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
+  attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
 
   outmat
 }
