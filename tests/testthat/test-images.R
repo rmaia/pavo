@@ -111,15 +111,15 @@ test_that("adjacency", {
   dim = c(100, 100, 3)
   ))
   
-  distances <- data.frame(c1 = 'clr1',
-                          c2 = 'clr2',
+  distances <- data.frame(c1 = 1,
+                          c2 = 2,
                           dS = 10,
                           dL = 1)
-  distances2 <- data.frame(c1 = 'wrong_1',
-                          c2 = 'clr2',
+  distances2 <- data.frame(c1 = 'wrong',
+                          c2 = 2,
                           dS = 10,
                           dL = 1)
-  hsl_vals <- data.frame(patch = c('clr1', 'clr2'),
+  hsl_vals <- data.frame(patch = 1:2,
                          hue = c(1.4, 0.2),
                          lum = c(10, 5),
                          sat = c(3.5, 1.1))
@@ -136,7 +136,7 @@ test_that("adjacency", {
   expect_equal(fake_adjacent$m_dL, 1)
   expect_equal(fake_adjacent$cv_sat, fake_adjacent$s_sat / fake_adjacent$m_sat)
   expect_equal(fake_adjacent$cv_lum, fake_adjacent$s_lum / fake_adjacent$m_lum)
-  expect_equal(round(fake_adjacent$p_clr1, 1), round(fake_adjacent$p_clr2, 1))
+  expect_equal(round(fake_adjacent$p_1, 1), round(fake_adjacent$p_2, 1))
   expect_equal(fake_adjacent$A, (fake_adjacent$m_r / fake_adjacent$m_c))
   expect_gt(fake_adjacent$N, fake_adjacent$n_off)
   expect_equal(fake_adjacent$m, ((fake_adjacent$m_r + fake_adjacent$m_c) / 2))
@@ -148,7 +148,7 @@ test_that("adjacency", {
   fake2_adjacent <- adjacent(fake2_class, xpts = 10, xscale = 150)
   expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake2_adjacent$k, c(2, 2))
-  expect_equal(round(fake2_adjacent$p_clr1, 1), round(fake2_adjacent$p_clr2, 1))
+  expect_equal(round(fake2_adjacent$p_1, 1), round(fake2_adjacent$p_2, 1))
   expect_equal(fake2_adjacent$A, (fake2_adjacent$m_r / fake2_adjacent$m_c))
   expect_gt(fake2_adjacent$N[1], fake2_adjacent$n_off[1])
   expect_equal(fake2_adjacent$m, ((fake2_adjacent$m_r + fake2_adjacent$m_c) / 2))
@@ -157,19 +157,19 @@ test_that("adjacency", {
   fake3_class <- classify(img1col, kcols = 1)
   fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
   expect_equal(fake3_adjacent$k, 1)
-  expect_equal(fake3_adjacent$p_clr1, 1)
-  expect_equal(fake3_adjacent$q_clr1_clr1, 1)
-  expect_equal(fake3_adjacent$q_clr1_clr1, 1)
+  expect_equal(fake3_adjacent$p_1, 1)
+  expect_equal(fake3_adjacent$q_1_1, 1)
+  expect_equal(fake3_adjacent$q_1_1, 1)
   expect_equal(fake3_adjacent$m, 0)
   expect_equal(fake3_adjacent$Sc, 1)
   
   ## Checkerboard (known values)
-  distances <- data.frame(c1 = 'clr1',
-                          c2 = 'clr2',
+  distances <- data.frame(c1 = 1,
+                          c2 = 2,
                           dS = 10,
                           dL = 20)
   
-  hsl_vals <- data.frame(patch = c('clr1', 'clr2'),
+  hsl_vals <- data.frame(patch = 1:2,
                          hue = c(1, 2),
                          lum = c(1, 10),
                          sat = c(1, 6))
@@ -179,9 +179,9 @@ test_that("adjacency", {
   checker_adj <- adjacent(checker_class, xscale = 10, xpts = 220, coldists = distances, hsl = hsl_vals)
   expect_equal(checker_adj$k, 2)
   expect_equal(checker_adj$N, (219*220)*2)
-  expect_equal(checker_adj$p_clr2, 0.52)
-  expect_equal(checker_adj$p_clr1, 0.48)
-  expect_equal(checker_adj$t_clr1_clr2, 1)
+  expect_equal(checker_adj$p_2, 0.52)
+  expect_equal(checker_adj$p_1, 0.48)
+  expect_equal(checker_adj$t_1_2, 1)
   expect_equal(checker_adj$m, 0.4)
   expect_equal(checker_adj$m_r, 0.4)
   expect_equal(checker_adj$m_c, 0.4)

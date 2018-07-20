@@ -314,7 +314,7 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
       data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
     
     # Reshuffle column order
-    namemove <- which(colnames(snakes_adj)=="m"):which(colnames(snakes_adj)=="cv_lum")
+    namemove <- which(colnames(outdata)=="m"):which(colnames(outdata)=="cv_lum")
     outdata <- outdata[, c((1:ncol(outdata))[-namemove], namemove)]
 
     for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")

@@ -635,8 +635,8 @@ head(butterflies_adj)
 
 # Create a fake matrix of pairwise color- and luminance distances between all 
 # color patten elements, as might be attained through visual modelling of spectral data.
-distances <- data.frame(c1 = c('clr1', 'clr1', 'clr2'),
-                        c2 = c('clr2', 'clr3', 'clr3'),
+distances <- data.frame(c1 = c(1, 1, 2),
+                        c2 = c(2, 3, 3),
                         dS = c(10.6, 5.1, 4.4),
                         dL = c(1.1, 2.5, 3.2))
 
@@ -645,7 +645,7 @@ distances
 
 # And our fake hue angles (in radians), saturation, and luminance values, for each
 # color pattern element
-hsl_vals <- data.frame(patch = c('clr1', 'clr2', 'clr3'),
+hsl_vals <- data.frame(patch = 1:3,
                        hue = c(1.2, 2.2, 1.6),
                        lum = c(10, 5, 7),
                        sat = c(3.5, 1.1, 6.3))

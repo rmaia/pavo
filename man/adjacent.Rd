@@ -110,7 +110,7 @@ distances <- data.frame(c1 = c(1, 1, 1, 2, 2, 3),
                         dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
 
 # Fake hue, saturation, luminance values
-hsl_vals <- data.frame(patch = c(1:4),
+hsl_vals <- data.frame(patch = 1:4,
                        hue = c(1.5, 2.2, 1.0, 0.5),
                        lum = c(10, 5, 7, 3),
                        sat = c(3.5, 1.1, 6.3, 1.3))
