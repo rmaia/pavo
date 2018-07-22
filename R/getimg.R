@@ -9,8 +9,9 @@
 #' included in the search? (defaults to \code{FALSE}).
 #' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
 #' \code{2}.
-#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
-#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
+#' @param cores number of cores to be used in parallel processing. If \code{1}, or 
+#' if totale image sizes exceed 200 mb in memory, parallel computing will not be used. 
+#' Defaults to \code{getOption("mc.cores", 2L)}.
 #'
 #' @return a array, or list of arrays, of class \code{rimg}, containing image data
 #' for use in further \code{pavo} functions.
@@ -30,7 +31,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getOption("mc.cores", 2L)) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getOption("mc.cores", 2L)) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -50,6 +51,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     imgdat <- load.image(imgpath)
 
     imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    
+    # Warn of slowness if dimensions are large
+    if((dim(imgdat)[1] * dim(imgdat)[2]) > (1000*1000))
+      message("Image dimensions are relatively large, consider reducing image size with procimg() for faster performance.")
 
     # Otherwise it's a directory of images
   } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
@@ -75,13 +80,17 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 2, cores = getO
     if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
     }
+    
+    # Warn of slowness if size is large
+    if (totalsize > 0.2)
+      message('Total size of images exceeds 200 mb in memory, which may result in slowed performance. Consider resizing images with procimg() prior to analysis, if speed is a priority.')
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.2) {
       imgdat <- pbmclapply(1:length(file_names), function(x) load.image(files[x]), mc.cores = cores)
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
-      message("Image data too large for parallel-processing, reverting to single-core processing.")
+      #message("Image data too large for parallel-processing, reverting to single-core processing.")
       imgdat <- lapply(1:length(file_names), function(x) load.image(files[x]))
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     }

@@ -241,22 +241,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       i <- 1
       while (i <= length(imgdat)) {
 
-        # Transformed image data (TODO: SIMPLIFY)
-        # reftrans <- array(c(
-        #   as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))),
-        #   as.matrix(t(apply(imgdat[[i]][, , 2], 2, rev))),
-        #   as.matrix(t(apply(imgdat[[i]][, , 3], 2, rev)))
-        # ),
-        # dim = c(
-        #   dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[1],
-        #   dim(as.matrix(t(apply(imgdat[[i]][, , 1], 2, rev))))[2],
-        #   3
-        # )
-        # )
-
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        #defaultrasterImageplot(imgdat[[i]], ...)
         plot(imgdat[[i]], ...)
 
         if (!is.null(n_cols_test)) {
@@ -317,24 +303,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       # Reference (only present) image
       refimg <- imgdat
 
-      # Transformed image data (TODO: SIMPLIFY)
-      # reftrans <- array(c(
-      #   as.matrix(t(apply(imgdat[, , 1], 2, rev))),
-      #   as.matrix(t(apply(imgdat[, , 2], 2, rev))),
-      #   as.matrix(t(apply(imgdat[, , 3], 2, rev)))
-      # ),
-      # dim = c(
-      #   dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[1],
-      #   dim(as.matrix(t(apply(imgdat[, , 1], 2, rev))))[2],
-      #   3
-      # )
-      # )
-
       i <- 1
       while (i <= 1) {
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
-        #defaultrasterImageplot(refimg, ...)
         plot(refimg, ...)
 
         if (!is.null(kcols)) {
