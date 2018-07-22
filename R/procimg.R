@@ -29,7 +29,7 @@
 #'
 #' @export
 #'
-#' @importFrom imager imresize
+#' @importFrom imager imresize imrotate
 #'
 #' @examples \dontrun{
 #' # Single image

@@ -18,7 +18,7 @@
 #' @export
 #'
 #' @importFrom pbmcapply pbmclapply
-#' @importFrom imager load.image mirror imrotate
+#' @importFrom imager load.image
 #'
 #' @examples \dontrun{
 #' # Single image
