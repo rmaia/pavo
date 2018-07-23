@@ -26,13 +26,20 @@ test_that("getspec", {
   expect_is(proc, "rspec")
   expect_length(proc, 4)
 
+  trm <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "TRM"))
+  expect_is(trm, "rspec")
+  # avantes.TRM and avantes2.TRM don't use the same wavelengths. The import 
+  # should be able to handle this.
+  expect_length(trm, 3)
+
   csv <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "csv", sep = ","))
   expect_is(csv, "rspec")
   expect_length(csv, 2)
 
   ## Error handling
-  # should fail completely
-  expect_error(getspec(system.file("testdata", package = "pavo"), ext = "TRM", sep = ""))
+  # should fail completely; ROH files only have scope data, which are not imported by getspec
+  expect_error(getspec(system.file("testdata", package = "pavo"), ext = "ROH"),
+               "Could not import spectra")
 
   # should partly succeed (1/2)
   expect_warning(getspec(system.file("testdata", package = "pavo"), ext = "txt"), "Could not import")
