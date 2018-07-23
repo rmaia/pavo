@@ -1,7 +1,7 @@
 ## ---- echo=FALSE, warning=FALSE, results='hide', message=FALSE-----------
 library(pavo)
 
-## ---- echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '85%'----
+## ---- echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '70%', dpi = 72----
 knitr::include_graphics('fig/workflow.png')
 
 ## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
@@ -41,12 +41,12 @@ head(fakedat.new)
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 head(as.rspec(fakedat, whichwl = 3))
 
-## ---- echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=5----
+## ---- echo=TRUE, eval=TRUE, fig.align='center', fig.height=3, fig.width=4----
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
 plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l", xlab = "wl")
 
-## ---- echo=TRUE, eval=TRUE, fig.align='center', fig.height=4, fig.width=5----
+## ---- echo=TRUE, eval=TRUE, fig.align='center', fig.height=3, fig.width=4----
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
 
 plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l")
@@ -71,7 +71,7 @@ specs.tanager <- subset(specs, "tanager")
 specs.parakeet <- subset(specs, "parakeet")
 specs.new <- merge(specs.tanager, specs.parakeet)
 
-## ---- label=explorespecfig, fig=TRUE, include=TRUE, fig.align='center', fig.width=7, fig.height=5.5, fig.cap="_Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels_"----
+## ---- label=explorespecfig, fig=TRUE, include=TRUE, fig.align='center', fig.width=6, fig.height=4.5, fig.cap="_Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels_"----
 # 36 spectra plus the first (wl) column
 explorespec(specs[, 1:37], by = 3, lwd = 2) 
 
@@ -90,10 +90,10 @@ sppspec <- aggspec(mspecs, by = spp, FUN = mean)
 round(sppspec[1:5, ], 2)
 explorespec(sppspec, by = 6, lwd = 3)
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center'----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'----
 plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 4, ask = FALSE)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=5, fig.align='center', fig.cap="_Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet_"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet_"----
 spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
 plot(sppspec[, 5] ~ sppspec[, 1],
   type = "l", lwd = 10, col = "grey",
@@ -161,7 +161,7 @@ testspecs <- as.rspec(cbind(c(300:700), refl))
 testspecs.fix1 <- procspec(testspecs, fixneg = "addmin")
 testspecs.fix2 <- procspec(testspecs, fixneg = "zero")
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.align='center', fig.cap="_Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.align='center', fig.cap="_Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)._"----
 # Plot it
 par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 layout(cbind(c(1, 1), c(2, 3)), widths = c(2, 1, 1))
@@ -178,12 +178,12 @@ abline(h = 0, lty = 3)
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color._"----
 par(mar = c(4, 4, 2, 2))
 data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=7, fig.align='center', fig.cap="_Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance_"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=5.5, fig.align='center', fig.cap="_Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance_"----
 teal.norm <- procspec(teal, opt = c("min", "max"))
 par(mfrow = c(1, 2), mar = c(2, 2, 2, 2), oma = c(2, 2, 0, 0))
 
@@ -196,7 +196,7 @@ mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 angles <- seq(15, 70, by = 5)
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=5, fig.align='center', fig.cap="_Heatmap plot for angle-resolved reflectance measurements of the green-winged teal._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Heatmap plot for angle-resolved reflectance measurements of the green-winged teal._"----
 teal.sm <- procspec(teal, opt = c("smooth"))
 
 plot(teal.sm,
@@ -205,7 +205,7 @@ plot(teal.sm,
   las = 1, useRaster = TRUE
 )
 
-## ---- fig=TRUE, include=TRUE, fig.width=8, fig.height=4, fig.align='center', fig.cap="_Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale_"----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.align='center', fig.cap="_Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale_"----
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colors
@@ -236,19 +236,16 @@ summary(spec.sm, subset = c('B1', 'B2', 'B3'))
 ## ---- echo=FALSE, eval=TRUE----------------------------------------------
 round(summary(spec.sm, subset = c('B1', 'B2', 'B3')), 2)
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=7, fig.align='center', fig.cap="_Plots from `peakshape`_"----
-par(mfrow = c(2, 3), mar = c(5, 4, 0.5, 0.5) + 0.1)
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Plots from `peakshape`_"----
+par(mfrow = c(2, 3))
 peakshape(spec.sm, plot = TRUE)
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm_"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm_"----
 peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
 ## ----echo=TRUE, eval=TRUE------------------------------------------------
 musca_sense <- sensdata(visual = "musca", achromatic = "md.r1")
 head(musca_sense)
-
-## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The visual sensitivities of the muscoid fly Musca domestica._"----
-sensdata(visual = 'musca', achromatic = 'md.r1', plot = TRUE, ylab = 'Absorbance')
 
 ## ---- echo=TRUE, eval=TRUE, results='hide'-------------------------------
 vismod1 <- vismodel(sppspec,
@@ -263,7 +260,7 @@ round(vismod1, 4)
 ## ---- echo=TRUE, eval=TRUE-----------------------------------------------
 summary(vismod1)
 
-## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=6, fig.align='center', fig.cap="_Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)._"----
+## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=6, fig.height=5, fig.align='center', fig.cap="_Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)._"----
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
 layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
 
@@ -373,10 +370,10 @@ fakedata.cd <- coldist(fakedata.vm,
 fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = "l", axis1 = c(1, 0, 0), ref2 = NULL)
 head(fakedata.cc)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Spectral data in a receptor noise-corrected colorspace_"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.align='center', fig.cap="_Spectral data in a receptor noise-corrected colorspace_"----
 plot(fakedata.cc, theta = 55, phi = 25, col = spec2rgb(fakedata.c))
 
-## ----fig=TRUE, include=TRUE, fig.width=7.2, fig.height=5, fig.align='center', fig.cap="_The flower dataset_"----
+## ----fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_The flower dataset_"----
 data(flowers)
 
 flowercols <- spec2rgb(flowers)
@@ -391,7 +388,7 @@ di.flowers <- colspace(vis.flowers, space = 'di')
 
 head(di.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in a dichromatic colorspace, as modelled according to a canid visual system._"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.align='center', fig.cap="_Flowers in a dichromatic colorspace, as modelled according to a canid visual system._"----
 plot(di.flowers, col = flowercols) 
 
 ## ------------------------------------------------------------------------
@@ -401,7 +398,7 @@ tri.flowers <- colspace(vis.flowers, space = 'tri')
 
 head(tri.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in a Maxwell triangle, considering a honeybee visual system._"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.align='center', fig.cap="_Floral reflectance in a Maxwell triangle, considering a honeybee visual system._"----
 plot(tri.flowers, pch = 21, bg = flowercols) 
 
 ## ------------------------------------------------------------------------
@@ -411,10 +408,10 @@ tetra.flowers <- colspace(vis.flowers, space = "tcs")
 
 head(tetra.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.height=6, fig.height=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective_"----
+## ---- fig=TRUE, include=TRUE, fig.height=5, fig.width=5, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective_"----
 plot(tetra.flowers, pch = 21, bg = flowercols, perspective = TRUE, range = c(1, 2), cex = 0.5)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"----
+## ---- fig=TRUE, include=TRUE, fig.height=4, fig.width=6, fig.align='center', fig.cap="_Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit._"----
 par(mfrow = c(1, 2), pty = "s")
 plot(tetra.flowers, pch = 21, bg = flowercols)
 axistetra(x = 0, y = 1.8)
@@ -424,9 +421,8 @@ axistetra(x = 0, y = 1.8)
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Projection plot from a tetrahedral color space._"----
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_`aggplot` of the `sicalis` data (blue: crown, red: throat, green: breast)_"----
+## ------------------------------------------------------------------------
 data(sicalis)
-aggplot(sicalis, by=rep(c('C','T','B'), 7), legend = TRUE)
 
 ## ---- echo=TRUE, eval=TRUE, fig.show='hide'------------------------------
 par(mfrow = c(1, 2), pty = "s")
@@ -452,7 +448,7 @@ hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
 head(hex.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"----
 plot(hex.flowers, sectors = 'coarse', pch = 21, bg = flowercols)
 
 ## ------------------------------------------------------------------------
@@ -462,7 +458,7 @@ coc.flowers <- colspace(vis.flowers, space = "coc")
 
 head(coc.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee._"----
 plot(coc.flowers, pch = 21, bg = flowercols, yaxt = "n")
 
 ## ------------------------------------------------------------------------
@@ -472,14 +468,14 @@ vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRU
 ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 head(ciexyz.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location._"----
 plot(ciexyz.flowers, pch = 21, bg = flowercols) 
 
 ## ------------------------------------------------------------------------
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_CIELAB._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_CIELAB._"----
 plot(cielab.flowers, pch = 21, bg = flowercols) 
 
 ## ------------------------------------------------------------------------
@@ -490,10 +486,10 @@ cat.flowers <- colspace(vis.flowers, space = 'categorical')
 
 head(cat.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers in the categorical colorspace of Troje (1993)._"----
 plot(cat.flowers, pch = 21, bg = flowercols) 
 
-## ---- fig=TRUE, eval=TRUE, include=TRUE, results = 'hide', fig.width=7, fig.height=5, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
+## ---- fig=TRUE, eval=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.align='center', fig.cap="_Idealized reflectance spectra and their projection on the axes of segment classification_"----
 fakedata1 <- sapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
@@ -542,7 +538,7 @@ hex.flowers <- colspace(vis.flowers, space = "hexagon")
 dist.flowers <- coldist(hex.flowers)
 head(dist.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=6, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.align='center', fig.cap="_Visual system of a pretend mantis shrimp with 10 cones_"----
 # Create an arbitrary visual phenotype with 10 photoreceptors
 fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
@@ -584,7 +580,7 @@ fake_rimg <- as.rimg(fakeimg)
 is.rimg(fake_rimg)
 str(fake_rimg)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_Raw images of our butterflies_"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.align='center', fig.cap="_Raw images of our butterflies_"----
 
 # Note the plot titles are taken from the file names, and can be overridden.
 plot(butterflies[[1]])
@@ -604,10 +600,9 @@ butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----
 
-# Note that we could simply feed the entire image list to summary, rather than 
-# specifying each image individually, and the images would progress automatically 
+# Note that we could simply feed the list of images to summary, rather than 
+# specifying individual images, and they would progress automatically 
 # with user input.
-summary(butterflies_class[[1]], plot = TRUE)
 
 summary(butterflies_class[[2]], plot = TRUE)
 
@@ -623,7 +618,8 @@ summary(butterflies_class[[2]], plot = TRUE)
 #  # need to specify kcols (since it will be inferred from the numbers of colours selected)
 #  butterflies_class <- classify(butterflies, interactive = TRUE)
 #  
-#  # Classification using interactively-specified centres for the single reference image.
+#  # Classification using interactively-specified centres for the single reference image
+#  # (here, the first in the list).
 #  butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 
 ## ------------------------------------------------------------------------

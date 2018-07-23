@@ -51,11 +51,11 @@ test_that("classify", {
 
   # Images
   imgfake <- as.rimg(array(c(
-    matrix(c(1, 1, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 1, 1), nrow = 10, ncol = 10)
+    matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+    matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+    matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
   ),
-  dim = c(10, 10, 3)
+  dim = c(12, 8, 3)
   ))
 
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
@@ -64,7 +64,7 @@ test_that("classify", {
   expect_error(classify(1, kcols = fake_IDs), "array")
 
   fake_class <- classify(imgfake, kcols = 2)
-  expect_equal(dim(fake_class), c(10, 10))
+  expect_equal(dim(fake_class), c(8, 12))
   expect_true(is.rimg(fake_class))
 
   ## Multiple
@@ -79,26 +79,26 @@ test_that("classify", {
   expect_true(is.rimg(fake2_class))
   expect_true(is.rimg(fake2_class[[1]]))
   expect_true(is.rimg(fake2_class[[2]]))
-  expect_equal(dim(fake2_class[[1]]), c(10, 10))
-  expect_equal(dim(fake2_class[[2]]), c(10, 10))
+  expect_equal(dim(fake2_class[[1]]), c(8, 12))
+  expect_equal(dim(fake2_class[[2]]), c(8, 12))
 
   fake2_class2 <- classify(imgfakes, kcols = fake_IDs, refID = 1)
   expect_true(is.rimg(fake2_class2))
   expect_true(is.rimg(fake2_class2[[1]]))
   expect_true(is.rimg(fake2_class2[[2]]))
-  expect_equal(dim(fake2_class2[[1]]), c(10, 10))
-  expect_equal(dim(fake2_class2[[2]]), c(10, 10))
+  expect_equal(dim(fake2_class2[[1]]), c(8, 12))
+  expect_equal(dim(fake2_class2[[2]]), c(8, 12))
 })
 
 test_that("adjacency", {
 
   # Images
   imgfake <- as.rimg(array(c(
-    matrix(c(1, 1, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 1, 1), nrow = 10, ncol = 10)
+    matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+    matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+    matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
   ),
-  dim = c(10, 10, 3)
+  dim = c(12, 8, 3)
   ))
 
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
@@ -125,19 +125,23 @@ test_that("adjacency", {
                          sat = c(3.5, 1.1))
 
   # Single
+  set.seed(1234)
   fake_class <- classify(imgfake, kcols = 2)
+  fake_class_90 <- classify(procimg(imgfake, rotate = 90), kcols = 2)
   expect_error(adjacent(10, xpts = 10, xscale = 10), "array")
   expect_error(adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances2), "do not match")
   
-  fake_adjacent <- adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
+  fake_adjacent <- adjacent(fake_class, xpts = 8, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
+  fake_adjacent_90 <- adjacent(fake_class_90, xpts = 8, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), "grid-sampling density")
+  expect_gt(fake_adjacent$m_r, fake_adjacent_90$m_c)
+  expect_equal(fake_adjacent[, ncol(fake_adjacent):(ncol(fake_adjacent)-8)], fake_adjacent_90[, ncol(fake_adjacent):(ncol(fake_adjacent)-8)])
   expect_equal(fake_adjacent$k, 2)
   expect_equal(fake_adjacent$m_dS, 10)
   expect_equal(fake_adjacent$m_dL, 1)
   expect_equal(fake_adjacent$cv_sat, fake_adjacent$s_sat / fake_adjacent$m_sat)
   expect_equal(fake_adjacent$cv_lum, fake_adjacent$s_lum / fake_adjacent$m_lum)
   expect_equal(round(fake_adjacent$p_1, 1), round(fake_adjacent$p_2, 1))
-  expect_equal(fake_adjacent$A, (fake_adjacent$m_r / fake_adjacent$m_c))
   expect_gt(fake_adjacent$N, fake_adjacent$n_off)
   expect_equal(fake_adjacent$m, ((fake_adjacent$m_r + fake_adjacent$m_c) / 2))
 
@@ -149,7 +153,6 @@ test_that("adjacency", {
   expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake2_adjacent$k, c(2, 2))
   expect_equal(round(fake2_adjacent$p_1, 1), round(fake2_adjacent$p_2, 1))
-  expect_equal(fake2_adjacent$A, (fake2_adjacent$m_r / fake2_adjacent$m_c))
   expect_gt(fake2_adjacent$N[1], fake2_adjacent$n_off[1])
   expect_equal(fake2_adjacent$m, ((fake2_adjacent$m_r + fake2_adjacent$m_c) / 2))
 
@@ -189,6 +192,7 @@ test_that("adjacency", {
   expect_equal(checker_adj$St, 1)
   expect_equal(checker_adj$Jt, 1)
   expect_equal(checker_adj$m_dS, 10)
+  expect_equal(checker_adj$A, (checker_adj$m_r / checker_adj$m_c))
   expect_equal(checker_adj$m_dL, 20)
   expect_equal(checker_adj$m_hue, 1.5)
   expect_equal(checker_adj$m_sat, 3.6)

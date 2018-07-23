@@ -224,7 +224,7 @@ getspec <- function(where = getwd(), ext = 'txt', lim = c(300, 700), decimal = "
   
   # Negative value check
   if(length(final[final < 0]) > 0){
-    warning(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."), call.=FALSE)
+    message(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."), call.=FALSE)
   }
   
   final

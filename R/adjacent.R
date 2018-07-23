@@ -468,7 +468,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     m <- (m_r + m_c) / 2
 
     # Transition aspect ratio (< 1 = wide, > 1 = tall)
-    A <- m_r / m_c
+    if(m_c == Inf || m_r == Inf)
+      A <- Inf
+    else
+      A <- m_r / m_c
 
     # Colour class proportions
     p <- data.frame(t(freq$rel_freq))

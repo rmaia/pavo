@@ -63,7 +63,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Options
-  if (is.null(scaledist) & !outline & is.null(resize)) {
+  if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate)) {
     stop("No options selected.")
   }
 
