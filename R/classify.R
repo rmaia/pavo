@@ -18,6 +18,7 @@
 #' When \code{TRUE}, the user is asked to click a number of points (equal to \code{kcols},
 #' if specified, otherwise user-determined) that represent the distinct colours of interest.
 #' If a reference image is specified, it will be the only image presented.
+#' @param col the color of the marker points, when \code{interactive = TRUE}.
 #' @param plotnew Should plots be opened in a new window when \code{interactive = TRUE}?
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
@@ -54,7 +55,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
-                     plotnew = FALSE, cores = getOption("mc.cores", 2L), ...) {
+                     plotnew = FALSE, col = 'red', cores = getOption("mc.cores", 2L), ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -207,10 +208,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       if (!is.null(kcols)) {
         message(paste("Select the", kcols, "focal colours"))
-        reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
+        reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
       } else if (is.null(kcols)) {
         message(paste0("Select the focal colours in image ", attr(refimg, "imgname"), ", and press [esc] to continue."))
-        reference <- as.data.frame(locator(type = "p", col = "red"))
+        reference <- as.data.frame(locator(type = "p", col = col))
         kcols <- nrow(reference)
       }
 
@@ -247,10 +248,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
         if (!is.null(n_cols_test)) {
           message(paste0("Select the ", kcols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
-          reference <- as.data.frame(locator(type = "p", col = "red", n = kcols[[i]]))
+          reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
         } else if (is.null(n_cols_test)) {
           message(paste0("Select the focal colours in image ", attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."))
-          reference <- as.data.frame(locator(type = "p", col = "red"))
+          reference <- as.data.frame(locator(type = "p", col = col))
           kcols[[i]] <- nrow(reference)
         }
         if (plotnew) dev.off()
@@ -311,10 +312,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
         if (!is.null(kcols)) {
           message(paste("Select the", kcols, "focal colours."))
-          reference <- as.data.frame(locator(type = "p", col = "red", n = kcols))
+          reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
         } else if (is.null(kcols)) {
           message(paste("Select the focal colours, and press [esc] to continue."))
-          reference <- as.data.frame(locator(type = "p", col = "red"))
+          reference <- as.data.frame(locator(type = "p", col = col))
         }
         if (plotnew) dev.off()
 

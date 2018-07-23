@@ -18,6 +18,7 @@
 #' separating animals/plants from backgrounds in further analyses. This is particularly
 #' useful when backgrounds are complex, (e.g. in natural settings) in which case
 #' backgrounds and objects cannot be readily separated by simple k-means clustering.
+#' @param col the color of the marker points and/or line, when using interactive options.
 #' @param smooth should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
 #' @param iterations the number of smoothing iterations, when \code{smooth = TRUE}.
@@ -47,7 +48,8 @@
 #' Computer Graphics and Image Processing 3, 346-349.
 
 procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL, 
-                    outline = FALSE, smooth = FALSE, iterations = 1L, plotnew = FALSE, ...) {
+                    outline = FALSE, smooth = FALSE, iterations = 1L, col = 'red', 
+                    plotnew = FALSE, ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -111,7 +113,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in 1:length(image)) {
-        attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], ...)
+        attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], col = col, ...)
         attr(image[[i]], "raw_scale") <- scaledist[[i]]
       }
       if (plotnew) dev.off()
@@ -123,7 +125,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       for (i in 1:length(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
-        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, iterations, ...)
+        attr(image[[i]], "outline") <- outliner(image[[i]], smooth, iterations, col = col, ...)
       }
       if (plotnew) dev.off()
     }
@@ -157,7 +159,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (plotnew) dev.new(noRStudioGD = TRUE)
     if (is.numeric(scaledist)) {
       message("Scale calibration: Select both ends of the scale.")
-      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, ...)
+      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, col = col, ...)
       attr(image, "raw_scale") <- scaledist
     }
     if (plotnew) dev.off()
@@ -167,7 +169,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (outline) {
       message("Select the outline of focal stimulus, and press [esc] when complete.
               The first and last points will be automatically connected.")
-      attr(image, "outline") <- outliner(image, smooth, iterations, ...)
+      attr(image, "outline") <- outliner(image, smooth, iterations, col = col, ...)
     }
     if (plotnew) dev.off()
   }
@@ -178,7 +180,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 # Internal function for calibrating image scale
 #' @importFrom graphics plot rasterImage locator
 #' @importFrom stats dist
-scaler <- function(image_i, scaledist_i, ...) {
+scaler <- function(image_i, scaledist_i, col, ...) {
 
   # Plot
   if (attr(image_i, "state") == "raw") {
@@ -187,7 +189,7 @@ scaler <- function(image_i, scaledist_i, ...) {
     plot(image_i, axes = TRUE, col = NULL, ...)
   }
 
-  reference <- as.data.frame(locator(type = "l", col = "red", n = 2))
+  reference <- as.data.frame(locator(type = "l", col = col, n = 2))
   pixdist <- as.integer(dist(round(reference)))
   output <- scaledist_i / pixdist
 
@@ -195,7 +197,7 @@ scaler <- function(image_i, scaledist_i, ...) {
 }
 
 # Internal function for selecting focal-stimulus outline
-outliner <- function(image_i, smooth_i, iterations_i, ...) {
+outliner <- function(image_i, smooth_i, iterations_i, col, ...) {
 
   # Plot
   if (attr(image_i, "state") == "raw") {
@@ -205,7 +207,7 @@ outliner <- function(image_i, smooth_i, iterations_i, ...) {
   }
 
   # Get coordinates
-  xy <- locator(type = "p", col = "red", lwd = 2)
+  xy <- locator(type = "p", col = col, lwd = 2)
   xy <- cbind(xy$x, xy$y)
   xy <- rbind(xy, xy[1, ])
 

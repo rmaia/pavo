@@ -5,7 +5,7 @@
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
 classify(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
-  plotnew = FALSE, cores = getOption("mc.cores", 2L), ...)
+  plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
@@ -30,6 +30,8 @@ If a reference image is specified, it will be the only image presented.}
 
 \item{plotnew}{Should plots be opened in a new window when \code{interactive = TRUE}?
 Defaults to \code{FALSE}.}
+
+\item{col}{the color of the marker points, when \code{interactive = TRUE}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
