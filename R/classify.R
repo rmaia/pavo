@@ -32,7 +32,7 @@
 #' @export
 #'
 #' @importFrom pbmcapply pbmclapply
-#' @importFrom stats kmeans xtabs
+#' @importFrom stats kmeans
 #' @importFrom utils object.size
 #' @importFrom grDevices dev.new
 #' @importFrom tools file_path_sans_ext
@@ -367,8 +367,6 @@ classify_main <- function(imgdat_i, n_cols_i) {
 
   # Assign RGB channels to data frame
   imgRGB <- data.frame(
-    x = rep(imgdim[1]:1, imgdim[2]),
-    y = rep(1:imgdim[2], each = imgdim[1]),
     R = as.vector(imgdat_i[, , 1]),
     G = as.vector(imgdat_i[, , 2]),
     B = as.vector(imgdat_i[, , 3])
@@ -378,16 +376,12 @@ classify_main <- function(imgdat_i, n_cols_i) {
   kMeans <- kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
 
   # Tidy & format as image matrix
-  cmbn <- cbind(imgRGB, kMeans$cluster)
-  names(cmbn) <- c("x", "y", "ch1", "ch2", "ch3", "class")
-
-  outmat3 <- as.data.frame.matrix(xtabs(class ~ x + y, data = cmbn))
+  outmat3 <- matrix(kMeans$cluster, nrow = imgdim[1])
   
   # Rotate to match original orientation
-  outmat2 <- rev(t(apply(outmat3, 1, rev)))
+  outmat2 <- rev(t(apply(outmat3, 1, rev)))  # mirror
   dim(outmat2) <- dim(outmat3)
-  outmat1 <- as.matrix(rev(as.data.frame(outmat2)))
-  outmat <- apply(t(outmat1), 2, rev)
+  outmat <- t(apply(outmat2, 2, rev))  # rotate 90
 
   # Attributes
   class(outmat) <- c("rimg", "matrix")

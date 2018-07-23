@@ -86,7 +86,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getO
       message('Total size of images exceeds 200 mb in memory, which may result in slowed performance. Consider resizing images with procimg() prior to analysis, if speed is a priority.')
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
-    if (totalsize < 0.2) {
+    if (totalsize < 0.1) {
       imgdat <- pbmclapply(1:length(file_names), function(x) load.image(files[x]), mc.cores = cores)
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
