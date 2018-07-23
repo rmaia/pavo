@@ -92,7 +92,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getO
       imgdat <- pbmclapply(1:length(file_names), function(x) load.image(files[x]), mc.cores = cores)
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
-      # message("Image data too large for parallel-processing, reverting to single-core processing.")
       imgdat <- lapply(1:length(file_names), function(x) load.image(files[x]))
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     }
