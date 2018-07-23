@@ -13,7 +13,7 @@ Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.}
 
-\item{by}{(required) a vector containing indicating the group to wich each row from
+\item{by}{(required) a vector containing indicating the group to which each row from
 the object belongs to.}
 
 \item{boot.n}{number of bootstrap replicates (defaults to 1000)}

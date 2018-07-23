@@ -435,7 +435,7 @@ round(summary(spec.sm, subset = c('B1', 'B2', 'B3')), 2)
 
 ### Peak Shape Descriptors
 
-Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the `summary` function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak's properties. The `peakshape` function identifies the peak location (`H1`),  returns the reflectance at that point (`B3`), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwith of that interval (the Full Width at Half Maximum, or `FWHM`). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
+Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the `summary` function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak's properties. The `peakshape` function identifies the peak location (`H1`),  returns the reflectance at that point (`B3`), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or `FWHM`). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
 
 If this all sounds too esoteric, fear not: `peakshape` has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (`HWHM.l` and `HWHM.r`) is the FWHM:
 
@@ -492,7 +492,7 @@ head(musca_sense)
 
 Numerous models have been developed to understand how colors are perceived and discriminated by an individual's or species' visual system (Described in detail in Endler 1990; Renoult et al. 2015; Vorobyev 1998). In essence, these models take into  account the receptor sensitivity of the different receptors that make the visual system in question and quantify how a given color would stimulate those receptors individually, and their combined effect on the perception of color. These models also have an important component of assuming and interpreting the chromatic component of color (hue and saturation) to be processed independently of the achromatic (brightness, or luminance) component. This provides a flexible framework allowing for a tiered model construction, in which information on aspects such as different illumination sources, backgrounds, and visual systems can be considered and compared.
 
-To apply any such model, we first need to quantify receotor excitation and then consider how the signal is being processed, while possibly considering the relative density of different cones and the noise-to-signal ratio.
+To apply any such model, we first need to quantify receptor excitation and then consider how the signal is being processed, while possibly considering the relative density of different cones and the noise-to-signal ratio.
 
 To quantify the stimulation of cones by the emitted color, we will use the `pavo` function `vismodel`. This function takes an `rspec` dataframe as a minimal input, and the user can either select from the available options or input its own data for the additional arguments in the function:
 
@@ -568,7 +568,7 @@ sapply(vismod.idi, function(x) round(x, 4))
 
 ### The Receptor Noise Model
 
-The receptor-noise limited model of Vorobyev (1998, 2001) offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discimination of colors is fundamentally limited by photoreceptor noise. Color distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$  ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
+The receptor-noise limited model of Vorobyev (1998, 2001) offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discrimination of colors is fundamentally limited by photoreceptor noise. Color distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$  ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
 
 $$w_i = \frac{v_i}{\sqrt{n_i}}$$
 
@@ -761,7 +761,7 @@ The output contains values for the relative stimulation of shot- and long-wavele
 plot(di.flowers, col = flowercols) 
 ```
 
-For our trichromatic viewer we can use the honeybee _Apis melifera_, one of the most significant and widespread pollinators. We'll also transform our quantum catches according to Fechner's law by specifying `qcatch = 'fi'`, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the `scale` argument. 
+For our trichromatic viewer we can use the honeybee _Apis mellifera_, one of the most significant and widespread pollinators. We'll also transform our quantum catches according to Fechner's law by specifying `qcatch = 'fi'`, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the `scale` argument. 
 
 ```{r}
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'fi', scale = 10000)
@@ -879,7 +879,7 @@ hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 head(hex.flowers)
 ```
 
-Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additoinal measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
+Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hegaon model also outputs two additional measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.  
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.align='center', fig.cap="_Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors._"}
 plot(hex.flowers, sectors = 'coarse', pch = 21, bg = flowercols)
@@ -1233,7 +1233,7 @@ butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID =
 head(butterflies_adj)
 ```
 
-The output is a suite of statistics describing color pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between color categories 3 and 4, for an image that contains only 3 color categories). Others may result when we do not give `adjacent` enough information, such as the color-distances reqired to calculate the boundary-strength statistics, or the colormetrics required for overal pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output. 
+The output is a suite of statistics describing color pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between color categories 3 and 4, for an image that contains only 3 color categories). Others may result when we do not give `adjacent` enough information, such as the color-distances required to calculate the boundary-strength statistics, or the colormetrics required for overal pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output. 
 
 ```{r}
 

@@ -16,7 +16,7 @@
 #' @export
 
 
-legendtetra <- function(x=0.8, y=1.2, ...) {
+legendtetra <- function(x = 0.8, y = 1.2, ...) {
   arg <- list(...)
 
   arg$x <- grconvertX(x, "npc")

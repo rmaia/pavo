@@ -3,10 +3,10 @@
 #' Returns the attributes of, and optionally plots, an image.
 #'
 #' @param object (required) an image of class rimg, or list thereof.
-#' @param plot logical; plot the image and, if the image is color-classified, the colours 
+#' @param plot logical; plot the image and, if the image is color-classified, the colours
 #' corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.
 #' @param axes should axes be drawn when \code{plot = TRUE}? (defaults to \code{TRUE}).
-#' @param col optional vector of colours when plotting colour-classified images with \code{plot = TRUE}. 
+#' @param col optional vector of colours when plotting colour-classified images with \code{plot = TRUE}.
 #' Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).
 #' @param ... additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.
 #'
@@ -27,7 +27,7 @@
 #'
 #' # Plot the colour-classified image alongside the colour class palette
 #' summary(papilio_class, plot = TRUE)
-#' 
+#'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes_class <- classify(snakes, kcols = 3)
@@ -37,11 +37,12 @@
 
 summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
-  
-  if(multi_image)
+
+  if (multi_image) {
     state <- attr(object[[1]], "state")
-  else
+  } else {
     state <- attr(object, "state")
+  }
 
   if ("colclass" %in% state) {
     if (multi_image) {
@@ -71,7 +72,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
         )
       }
     }
-  }else if ("raw" %in% state){
+  } else if ("raw" %in% state) {
     if (multi_image) {
       if (plot) {
         for (i in 1:length(object)) {
@@ -80,7 +81,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
         }
       } else {
         out <- lapply(1:length(object), function(x) data.frame(ID = attr(object[[x]], "imgname")))
-        
+
         do.call(rbind, out)
       }
     } else if (!multi_image) {

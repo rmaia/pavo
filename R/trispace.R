@@ -90,7 +90,7 @@ trispace <- function(vismodeldata) {
     s <- dat[, "s"]
     m <- dat[, "m"]
     l <- dat[, "l"]
-  } else if(all(c("X", "Y", "Z") %in% names(dat))){
+  } else if (all(c("X", "Y", "Z") %in% names(dat))) {
     s <- dat[, "Z"]
     m <- dat[, "Y"]
     l <- dat[, "X"]

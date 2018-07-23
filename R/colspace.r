@@ -88,46 +88,46 @@
 colspace <- function(vismodeldata,
                      space = c("auto", "di", "tri", "tcs", "hexagon", "coc", "categorical", "ciexyz", "cielab", "cielch", "segment"), qcatch = NULL) {
   space2 <- try(match.arg(space), silent = TRUE)
-  
+
   if (inherits(space2, "try-error")) {
     stop("Invalid colorspace selected")
   }
-  
+
   if (space2 == "auto") {
     if (all(c("X", "Y", "Z") %in% names(vismodeldata))) {
       res <- cie(vismodeldata, "XYZ")
     } else {
       res <-
         switch(as.character(attr(vismodeldata, "conenumb")),
-               "2" = dispace(vismodeldata),
-               "3" = trispace(vismodeldata),
-               "4" = tcspace(vismodeldata),
-               "seg" = segspace(vismodeldata)
+          "2" = dispace(vismodeldata),
+          "3" = trispace(vismodeldata),
+          "4" = tcspace(vismodeldata),
+          "seg" = segspace(vismodeldata)
         )
     }
   } else {
     res <-
       switch(space2,
-             "di" = dispace(vismodeldata),
-             "tri" = trispace(vismodeldata),
-             "hexagon" = hexagon(vismodeldata),
-             "tcs" = tcspace(vismodeldata),
-             "coc" = coc(vismodeldata),
-             "categorical" = categorical(vismodeldata),
-             "ciexyz" = cie(vismodeldata, "XYZ"),
-             "cielab" = cie(vismodeldata, "LAB"),
-             "cielch" = cie(vismodeldata, "LCh"),
-             "segment" = segspace(vismodeldata)
+        "di" = dispace(vismodeldata),
+        "tri" = trispace(vismodeldata),
+        "hexagon" = hexagon(vismodeldata),
+        "tcs" = tcspace(vismodeldata),
+        "coc" = coc(vismodeldata),
+        "categorical" = categorical(vismodeldata),
+        "ciexyz" = cie(vismodeldata, "XYZ"),
+        "cielab" = cie(vismodeldata, "LAB"),
+        "cielch" = cie(vismodeldata, "LCh"),
+        "segment" = segspace(vismodeldata)
       )
   }
-  
+
   # include achromatic if there is any
   if (!is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
     if (attr(vismodeldata, "visualsystem.achromatic") != "none") {
       res$lum <- vismodeldata$lum
     }
   }
-  
+
   # check qcatch if user-defined input
   if (is.null(attr(res, "qcatch"))) {
     if (is.null(qcatch)) {
@@ -136,7 +136,7 @@ colspace <- function(vismodeldata,
     }
     attr(res, "qcatch") <- qcatch
   }
-  
+
   # check relative if user-defined input
   if (is.null(attr(res, "relative"))) {
     attr(res, "relative") <- FALSE
@@ -145,6 +145,6 @@ colspace <- function(vismodeldata,
       attr(res, "relative") <- TRUE
     }
   }
-  
+
   res
 }

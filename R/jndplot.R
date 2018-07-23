@@ -57,8 +57,8 @@
 
 
 jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
-                    arrow.labels = TRUE, arrow.col="darkgrey", arrow.p = 1, labels.cex = 1,
-                    margin="recommended", square = TRUE, ...) {
+                    arrow.labels = TRUE, arrow.col = "darkgrey", arrow.p = 1, labels.cex = 1,
+                    margin = "recommended", square = TRUE, ...) {
   if (achro) {
     if (!"lum" %in% colnames(x)) {
       stop('"achro" is set to TRUE but data does not have a "lum" column.')

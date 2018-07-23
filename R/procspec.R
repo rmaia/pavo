@@ -62,27 +62,27 @@
 #'  University Press, Cambridge, Massachusetts.
 
 procspec <- function(rspecdata, opt = c(
-  "none", "smooth", "maximum", "minimum",
-  "bin", "sum", "center"
-),
-fixneg = c("none", "addmin", "zero"),
-span = 0.25, bins = 20) {
+                       "none", "smooth", "maximum", "minimum",
+                       "bin", "sum", "center"
+                     ),
+                     fixneg = c("none", "addmin", "zero"),
+                     span = 0.25, bins = 20) {
   opt <- match.arg(opt, several.ok = TRUE)
-  
+
   fixneg <- match.arg(fixneg)
-  
+
   applied <- "processing options applied:\n"
-  
+
   if (any(opt == "none")) {
     opt <- "none" # remove other opt arguments (so they are not called further on, but still allowing for fixneg to work)
-    
+
     if (fixneg == "none") {
       stop("No processing options selected")
     }
   }
-  
+
   wl_index <- which(names(rspecdata) == "wl")
-  
+
   if (length(wl_index > 0)) {
     wl <- rspecdata[, wl_index]
     rspecdata <- as.data.frame(rspecdata[-wl_index])
@@ -91,9 +91,9 @@ span = 0.25, bins = 20) {
     rspecdata <- as.data.frame(rspecdata)
     wl <- 1:nrow(rspecdata)
   }
-  
+
   nam <- names(rspecdata)
-  
+
   if (any(opt == "smooth")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) {
       loess.smooth(
@@ -104,16 +104,16 @@ span = 0.25, bins = 20) {
     })
     applied <- c(applied, paste("smoothing spectra with a span of", span, "\n"))
   }
-  
+
   # if (any(opt=='smooth')&method=='spline')
   # rspecdata <- sapply(names(rspecdata), function(z){smooth.spline(x = wl, y = rspecdata[, z],
   # spar = spar)$y})
-  
+
   # if (any(opt=='smooth')&method=='loess')
   # rspecdata <- sapply(names(rspecdata), function(z){loess.smooth(x = wl, y = rspecdata[, z],
   # span = span, degree = 2, family = "gaussian",
   # evaluation = length(wl))$y})
-  
+
   if (fixneg == "addmin") {
     adm <- function(x) {
       if (min(x) < 0) {
@@ -127,33 +127,33 @@ span = 0.25, bins = 20) {
     rspecdata <- round(tempspc, 6)
     applied <- c(applied, "Negative value correction: added min to all reflectance\n")
   }
-  
+
   if (fixneg == "zero") {
     rspecdata[rspecdata < 0 ] <- 0
     applied <- c(applied, "Negative value correction: converted negative values to zero\n")
   }
-  
-  
+
+
   if (any(opt == "minimum")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
   }
-  
+
   if (any(opt == "maximum")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
   }
-  
+
   if (any(opt == "sum")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z]))
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
-  
+
   if (any(opt == "center")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z]))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
-  
+
   # Calculate medians according to # of bins specified for use in PCA
   # Method follows Cuthill et al. (1999)
   if (any(opt == "bin")) {
@@ -163,21 +163,21 @@ span = 0.25, bins = 20) {
     rspecdata <- as.data.frame(rspecdata)
     rspecdata <- sapply(1:length(wl_ind), function(z)
       apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = FALSE], 2, median, na.rm = TRUE),
-      simplify = FALSE
+    simplify = FALSE
     )
-    
+
     rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = TRUE))
     rspecdata <- as.data.frame(cbind(wl_bin, rspecdata))
     applied <- c(applied, paste("binned spectra to ", bw, "-nm intervals\n", sep = ""))
   } else {
     rspecdata <- as.data.frame(cbind(wl, rspecdata))
   }
-  
+
   names(rspecdata) <- c("wl", nam)
   class(rspecdata) <- c("rspec", "data.frame")
-  
+
   applied <- c(applied, "\n")
   message(applied)
-  
+
   rspecdata
 }

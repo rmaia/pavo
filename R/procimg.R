@@ -8,7 +8,7 @@
 #' resizing images, if so desired. E.g. 0.5 to half the size of an image, or 2 to
 #' doubling it.
 #' @param rotate an integer specifying the angle of image rotation, in degrees. Images
-#' are rotated around the centre, and linearly interpolated. 
+#' are rotated around the centre, and linearly interpolated.
 #' @param scaledist an integer, or numeric vector equal in length to the number of images,
 #' specifying the length of the scale in the image(s). Image(s) will then be presented,
 #' and the user asked to select either end of the scale corresponding to the input value.
@@ -47,8 +47,8 @@
 #' @references Chaikin, G. 1974. An algorithm for high speed curve generation.
 #' Computer Graphics and Image Processing 3, 346-349.
 
-procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL, 
-                    outline = FALSE, smooth = FALSE, iterations = 1L, col = 'red', 
+procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
+                    outline = FALSE, smooth = FALSE, iterations = 1L, col = "red",
                     plotnew = FALSE, ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -56,10 +56,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   ## Class
   if (!"rimg" %in% class(image)) {
     message("Attempting to coerce image to class rimg.")
-    if("cimg" %in% class(image))
+    if ("cimg" %in% class(image)) {
       image <- cimg2rimg(image)
-    else
+    } else {
       image <- as.rimg(image)
+    }
   }
 
   ## Options
@@ -75,28 +76,28 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
     ## Resize ##
     if (attr(image[[1]], "state") == "colclass" && is.numeric(resize)) {
-      message('Cannot resize colour-classified images.')
-      resize = NULL
+      message("Cannot resize colour-classified images.")
+      resize <- NULL
     }
     if (is.numeric(resize)) {
       imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
       image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
       image <- lapply(1:length(image), function(x) imresize(image[[x]], resize))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
-      class(image) <- c('rimg', 'list')
+      class(image) <- c("rimg", "list")
     }
-    
+
     ## Rotate ##
     if (attr(image[[1]], "state") == "colclass" && is.numeric(rotate)) {
-      message('Cannot rotate colour-classified images.')
-      rotate = NULL
+      message("Cannot rotate colour-classified images.")
+      rotate <- NULL
     }
     if (is.numeric(rotate)) {
       imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
       image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
       image <- lapply(1:length(image), function(x) imrotate(image[[x]], rotate))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
-      class(image) <- c('rimg', 'list')
+      class(image) <- c("rimg", "list")
     }
 
     ## Scale ##
@@ -133,8 +134,8 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
     ## Resize ##
     if (attr(image, "state") == "colclass" && is.numeric(resize)) {
-      message('Cannot resize colour-classified images.')
-      resize = NULL
+      message("Cannot resize colour-classified images.")
+      resize <- NULL
     }
     if (is.numeric(resize)) {
       imgname <- attr(image, "imgname")
@@ -142,11 +143,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       image <- imresize(image, resize)
       image <- cimg2rimg(image, imgname)
     }
-    
+
     ## Rotate ##
     if (attr(image, "state") == "colclass" && is.numeric(rotate)) {
-      message('Cannot rotate colour-classified images.')
-      rotate = NULL
+      message("Cannot rotate colour-classified images.")
+      rotate <- NULL
     }
     if (is.numeric(rotate)) {
       imgname <- attr(image, "imgname")
@@ -203,7 +204,7 @@ outliner <- function(image_i, smooth_i, iterations_i, col, ...) {
   if (attr(image_i, "state") == "raw") {
     plot(image_i, axes = TRUE, col = NULL, ...)
   } else if (attr(image_i, "state") == "colclass") {
-    plot(image_i, axes = TRUE, col= NULL, ...)
+    plot(image_i, axes = TRUE, col = NULL, ...)
   }
 
   # Get coordinates

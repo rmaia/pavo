@@ -27,7 +27,7 @@ sensdata(visual = c("none", "all", "avg.uv", "avg.v", "bluetit",
 \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{'ctenophorus'}: Ornate dragon lizatd \emph{Ctenophorus ornatus}.
+\item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
 \item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
 \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
 \item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.

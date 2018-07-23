@@ -34,7 +34,7 @@ remaining columns.}
 \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{'ctenophorus'}: Ornate dragon lizatd \emph{Ctenophorus ornatus}.
+\item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
 \item \code{'musca'}: Housefly \emph{Musca domestica}.
 \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus}.
 \item \code{'segment'}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).

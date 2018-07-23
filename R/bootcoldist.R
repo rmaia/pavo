@@ -7,7 +7,7 @@
 #'  Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
 #'  independently calculated quantum catches, in the form of a data frame with
 #'  columns representing photoreceptors.
-#' @param by (required) a vector containing indicating the group to wich each row from
+#' @param by (required) a vector containing indicating the group to which each row from
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
@@ -35,14 +35,14 @@
 #'  Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
 
 
-bootcoldist <- function(vismodeldata, by, boot.n=1000, alpha=0.95,
+bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
                         cores = getOption("mc.cores", 2L), ...) {
   if (!any(c("colspace", "vismodel") %in% class(vismodeldata))) {
     stop('object must be a "vismodel" or "colspace" result', call. = FALSE)
   }
 
   # geometric mean
-  gmean <- function(x, na.rm=TRUE, zero.propagate = FALSE) {
+  gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
     if (any(x < 0, na.rm = TRUE)) {
       return(NaN)
     }

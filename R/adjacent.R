@@ -31,13 +31,13 @@
 #' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should be named 'c1' and 'c2', and specify all possible combinations of colour
-#' category ID numbers (viewable by calling \code{summary(image, plot = TRUE)} on 
-#' a colour classified image), with the remaining columns named dS (for chromatic distances) 
+#' category ID numbers (viewable by calling \code{summary(image, plot = TRUE)} on
+#' a colour classified image), with the remaining columns named dS (for chromatic distances)
 #' and/or dL (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 #' for visual modelling with spectral data.
 #' @param hsl data.frame specifying the hue, saturation, and luminance of color patch elements,
 #' as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
-#' column, named 'patch', should contain color category ID numbers, with the remain 
+#' column, named 'patch', should contain color category ID numbers, with the remain
 #' columns specifying one or more of 'hue' (angle, in radians), sat', and/or 'lum'.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
@@ -100,7 +100,7 @@
 #                        lum = c(10, 5, 7, 3),
 #                        sat = c(3.5, 1.1, 6.3, 1.3))
 #'
-#' # Full analysis, including the white background's ID 
+#' # Full analysis, including the white background's ID
 # papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
 #                         coldists = distances, hsl = hsl_vals)
 #'
@@ -312,9 +312,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
     allNms <- unique(unlist(lapply(outdata, names)))
     outdata <- do.call(rbind, c(lapply(outdata, function(x)
       data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
-    
+
     # Reshuffle column order
-    namemove <- which(colnames(outdata)=="m"):which(colnames(outdata)=="cv_lum")
+    namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
     outdata <- outdata[, c((1:ncol(outdata))[-namemove], namemove)]
 
     for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
@@ -339,9 +339,9 @@ adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
 #' @importFrom utils head tail
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
                           exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL) {
-  
+
   ## ------------------------------ Summarising ------------------------------ ##
-  
+
   c1 <- c2 <- NULL
 
   # Scales
@@ -408,9 +408,9 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
 
   ## ------------------------------ Main ------------------------------ ##
-  
+
   ## ------- Adjacency (Endler 2012) ------- ##
-  
+
   if (single_col) { # TODO: Fix this evil single-colour hack
     k <- n_class
     N <- sum(transitions[["all"]]$N)
@@ -468,10 +468,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     m <- (m_r + m_c) / 2
 
     # Transition aspect ratio (< 1 = wide, > 1 = tall)
-    if(m_c == Inf || m_r == Inf)
+    if (m_c == Inf || m_r == Inf) {
       A <- Inf
-    else
+    } else {
       A <- m_r / m_c
+    }
 
     # Colour class proportions
     p <- data.frame(t(freq$rel_freq))
@@ -574,9 +575,9 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     }
 
     ## ------- Boundary strength (Endler et al. 2018) ------- ##
-    
+
     if (!is.null(coldists_i)) {
-      if (nrow(offdiag) > 0) {  # No point if there are no class-change transitions
+      if (nrow(offdiag) > 0) { # No point if there are no class-change transitions
         # Name-match check. Could be more robust.
         if (!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
           c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
@@ -608,7 +609,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     }
 
     ## ------- Overall pattern contrasts (Endler & Mielke 2005) ------- ##
-    
+
     if (!is.null(hsl_i)) {
       freq <- merge(freq, hsl_i)
 

@@ -18,8 +18,8 @@ included in the search? (defaults to \code{FALSE}).}
 \item{max.size}{maximum size of all images to be allowed in memory, in GB. Defaults to
 \code{2}.}
 
-\item{cores}{number of cores to be used in parallel processing. If \code{1}, or 
-if totale image sizes exceed 200 mb in memory, parallel computing will not be used. 
+\item{cores}{number of cores to be used in parallel processing. If \code{1}, or
+if total image sizes exceed 200 mb in memory, parallel computing will not be used.
 Defaults to \code{getOption("mc.cores", 2L)}.}
 }
 \value{

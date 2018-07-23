@@ -42,14 +42,14 @@ the colour-class ID's uniquely corresponding to the background can be specified 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
 should be named 'c1' and 'c2', and specify all possible combinations of colour
-category ID numbers (viewable by calling \code{summary(image, plot = TRUE)} on 
-a colour classified image), with the remaining columns named dS (for chromatic distances) 
+category ID numbers (viewable by calling \code{summary(image, plot = TRUE)} on
+a colour classified image), with the remaining columns named dS (for chromatic distances)
 and/or dL (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 for visual modelling with spectral data.}
 
 \item{hsl}{data.frame specifying the hue, saturation, and luminance of color patch elements,
 as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
-column, named 'patch', should contain color category ID numbers, with the remain 
+column, named 'patch', should contain color category ID numbers, with the remain
 columns specifying one or more of 'hue' (angle, in radians), sat', and/or 'lum'.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
@@ -107,7 +107,7 @@ papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
 # Fake hue, saturation, luminance values
 
-# Full analysis, including the white background's ID 
+# Full analysis, including the white background's ID
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))

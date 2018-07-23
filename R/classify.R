@@ -55,7 +55,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
-                     plotnew = FALSE, col = 'red', cores = getOption("mc.cores", 2L), ...) {
+                     plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -203,7 +203,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       if (plotnew) dev.new(noRStudioGD = TRUE)
 
-      #defaultrasterImageplot(refimg, ...)
+      # defaultrasterImageplot(refimg, ...)
       plot(refimg, ...)
 
       if (!is.null(kcols)) {
@@ -241,7 +241,6 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       centers <- list()
       i <- 1
       while (i <= length(imgdat)) {
-
         if (plotnew) dev.new(noRStudioGD = TRUE)
 
         plot(imgdat[[i]], ...)
@@ -378,16 +377,16 @@ classify_main <- function(imgdat_i, n_cols_i) {
 
   # Tidy & format as image matrix
   outmat3 <- matrix(kMeans$cluster, nrow = imgdim[1])
-  
+
   # Rotate to match original orientation
-  outmat2 <- rev(t(apply(outmat3, 1, rev)))  # mirror
+  outmat2 <- rev(t(apply(outmat3, 1, rev))) # mirror
   dim(outmat2) <- dim(outmat3)
-  outmat <- t(apply(outmat2, 2, rev))  # rotate 90
+  outmat <- t(apply(outmat2, 2, rev)) # rotate 90
 
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
-  #attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
+  # attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
   attr(outmat, "colnames") <- data.frame(name = 1:nrow(kMeans$centers))
 
   outmat

@@ -64,7 +64,7 @@
 #' sensitive to spectral noise. REF 5, 6
 #'
 #' S7 (Spectral saturation): Difference between the relative reflectance before and after
-#' the wavelength at which reflectance is halfway between its minimum (Rmin) 
+#' the wavelength at which reflectance is halfway between its minimum (Rmin)
 #' and its maximum (Rmax). Somewhat sensitive
 #' to noise and can be misleading when more than one maxima and/or minima are present.
 #' REF 3, 9
