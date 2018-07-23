@@ -3,7 +3,7 @@
 #' Finds and imports spectra files from a folder. Currently works
 #' for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
 #' USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
-#' Avantes (after exporting).
+#' Avantes (before or after exporting).
 #'
 #' @param where (required) folder in which files are located.
 #' @param ext file extension to be searched for, without the "."
@@ -118,6 +118,11 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # function.
 
       tempframe <- parse_procspec(ff)
+
+    } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = TRUE)) {
+      
+      tempframe <- parse_avantes(ff)
+      
     } else {
 
       # read in raw file

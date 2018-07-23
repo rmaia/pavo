@@ -5,6 +5,7 @@ NEW FEATURES
 * image-based workflow for the combined analysis of colour and pattern geometry
 * added the visual systems of the (trichromatic) jumping spider _Habronattus pyrrithrix_
 and the (trichromatic) triggerfish _Rhinecanthus aculeatus_
+* getspec() can now read Avantes binary files (`.TRM` files)
 
 MINOR FEATURES AND BUG FIXES 
 * cieLAB values have been rescaled, and are expressed in the more standard range:
