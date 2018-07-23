@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Deprecated function(s) in the pavo package — pavo-deprecated" />
+
+<meta property="og:description" content="These functions are provided for compatibility with older version of
+the pavo package. They may eventually be completely removed." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +60,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,21 +96,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Deprecated function(s) in the pavo package</h1>
+    
+    <div class="hidden name"><code>pavo-deprecated.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>These functions are provided for compatibility with older version of
-the pavo package.  They may eventually be completely
-removed.</p>
+the pavo package. They may eventually be completely removed.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>tcs</span>(<span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -104,14 +125,14 @@ removed.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     
-    <table><tr><td>
-  <code>tcs</code> </td>
-<td> now a synonym for <code><a href='colspace.html'>colspace</a></code></td>
-</tr><tr><td>
-  <code>segclass</code> </td>
-<td> now a synonym for 
-  <code><a href='vismodel.html'>vismodel(..., visual = "segment")</a></code></td>
-</tr></table>
+    <table class='table'>
+<tr><td><code>tcs</code></td><td>now a synonym for <code><a href='colspace.html'>colspace</a></code></td></tr>
+<tr><td><code>segclass</code></td><td>now a synonym for
+  <code><a href='vismodel.html'>vismodel(..., visual = "segment")</a></code></td></tr>
+<tr><td><code>getspecf</code></td><td>removed, use <code><a href='getspec.html'>getspec</a></code></td></tr>
+<tr><td><code>getspecf2</code></td><td>removed, use <code><a href='getspec.html'>getspec</a></code></td></tr>
+<tr><td></td><td><code>tcs</code></td></tr>
+</table>
     
 
   </div>
@@ -128,15 +149,18 @@ removed.</p>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

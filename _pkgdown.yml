@@ -4,10 +4,14 @@ reference:
   contents:
   - '`aggspec`'
   - '`as.rspec`'
+  - '`as.rimg`'
+  - '`cimg2rimg`'
   - '`getspec`'
   - '`irrad2flux`'
   - '`merge.rspec`'
+  - '`procimg`'
   - '`procspec`'
+  - '`rimg2cimg`'
   - '`spec2rgb`'
   - '`subset.rspec`'
 
@@ -19,6 +23,7 @@ reference:
   - '`explorespec`'
   - '`legendtetra`'
   - '`plot.colspace`'
+  - '`plot.rimg`'
   - '`plot.rspec`'
   - '`plotsmooth`'
   - '`points.colspace`'
@@ -29,7 +34,9 @@ reference:
 - title: Analysis
   desc: "Functions for analysing spectral data"
   contents:
+  - '`adjacent`'
   - '`bootcoldist`'
+  - '`classify`'
   - '`coldist`'
   - '`colspace`'
   - '`jnd2xyz`'
@@ -38,6 +45,7 @@ reference:
   - '`segspace`'
   - '`sensmodel`'
   - '`summary.colspace`'
+  - '`summary.rimg`'
   - '`summary.rspec`'
   - '`summary.vismodel`'
   - '`vismodel`'

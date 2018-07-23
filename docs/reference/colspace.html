@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Model spectra in a colorspace — colspace" />
+
+<meta property="og:description" content="Models reflectance spectra in a colorspace. For information on plotting arguments
+and graphical parameters, see plot.colspace." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +60,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,21 +96,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Model spectra in a colorspace</h1>
+    
+    <div class="hidden name"><code>colspace.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Models reflectance spectra in a colorspace. For information on plotting arguments
 and graphical parameters, see <code><a href='plot.colspace.html'>plot.colspace</a></code>.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>colspace</span>(<span class='no'>vismodeldata</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"auto"</span>, <span class='st'>"di"</span>, <span class='st'>"tri"</span>, <span class='st'>"tcs"</span>, <span class='st'>"hexagon"</span>, <span class='st'>"coc"</span>,
   <span class='st'>"categorical"</span>, <span class='st'>"ciexyz"</span>, <span class='st'>"cielab"</span>, <span class='st'>"cielch"</span>, <span class='st'>"segment"</span>), <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -104,7 +126,7 @@ with columns representing quantum catches).</p></td>
     <tr>
       <th>space</th>
       <td><p>Which colorspace/model to use. Options are:</p><ul>
-<li><p><code>auto</code>: if data is a result from <code>vismodel</code>, 
+<li><p><code>auto</code>: if data is a result from <code>vismodel</code>,
    applies <code>di</code>, <code>tri</code> or <code>tcs</code> if input visual model had two, three or four
    cones, respectively.</p></li>
 <li><p><code>di</code>: dichromatic colourspace. See <code><a href='dispace.html'>dispace</a></code> for details.
@@ -132,28 +154,28 @@ an output from <code><a href='vismodel.html'>vismodel</a></code>. Must be <code>
 
     <p>Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.</p>
-<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
    using MATLAB. John Wiley &amp; Sons.</p>
 <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
-<p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
-   component of flower reflections, and the colour perception of Hymenoptera. 
+<p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
+   component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.</p>
 <p>Troje N. (1993). Spectral categories in the learning behaviour
  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
-<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns 
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
 <p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
    - behavioural tests and physiological concepts. Biological Reviews, 78,
    81 - 118.</p>
 <p>Backhaus W. (1991). Color opponent coding in the visual system
  of the honeybee. Vision Research, 31, 1381-1397.</p>
-<p>Endler, J. A. (1990) On the measurement and classification of 
-color in studies of animal color patterns. Biological Journal of the Linnean 
+<p>Endler, J. A. (1990) On the measurement and classification of
+color in studies of animal color patterns. Biological Journal of the Linnean
 Society, 41, 315-352.</p>
     
 
@@ -165,7 +187,7 @@ Society, 41, 315-352.</p>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'canis'</span>)
 <span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'di'</span>)
 
-<span class='co'># Colour hexagon </span>
+<span class='co'># Colour hexagon</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                         <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'l'</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>'green'</span>)
 <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'hexagon'</span>)
@@ -206,15 +228,18 @@ Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.co
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

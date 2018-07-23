@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Trichromatic colour space — trispace" />
+
+<meta property="og:description" content="Calculates coordinates and colorimetric variables that represent reflectance spectra
+in a trichromatic chromaticity space." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +60,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,20 +96,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Trichromatic colour space</h1>
+    
+    <div class="hidden name"><code>trispace.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Calculates coordinates and colorimetric variables that represent reflectance spectra
 in a trichromatic chromaticity space.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>trispace</span>(<span class='no'>vismodeldata</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -104,27 +126,23 @@ with three columns named 's', 'm', 'l', representing a trichromatic viewer).</p>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code>colspace</code> consisting of the following columns:
-
-<code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate 
- the remaining variables.
-
-<code>x</code>, <code>y</code>: cartesian coordinates for the points in the
- Maxwell triangle.
-
-<code>h.theta</code>: angle theta, in radians, determining the hue of the color.
-
-<code>r.vec</code>: the r vector (saturation, distance from the center).</p>
+    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p>
+<p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
+ the remaining variables.</p>
+<p><code>x</code>, <code>y</code>: cartesian coordinates for the points in the
+ Maxwell triangle.</p>
+<p><code>h.theta</code>: angle theta, in radians, determining the hue of the color.</p>
+<p><code>r.vec</code>: the r vector (saturation, distance from the center).</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed) 
+    <p>Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
  Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.</p>
-<p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision - 
+<p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
  behavioural tests and physiological concepts. Biological Reviews, 78,
  81 - 118.</p>
-<p>MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing 
- cone excitation by stimuli of equal luminance. Journal of the Optical 
+<p>MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
+ cone excitation by stimuli of equal luminance. Journal of the Optical
  Society of America, 69, 1183-1186.</p>
     
 
@@ -157,15 +175,18 @@ Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.co
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

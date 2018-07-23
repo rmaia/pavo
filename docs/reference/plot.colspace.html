@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Plot spectra in a colourspace — plot.colspace" />
+
+<meta property="og:description" content="Plots reflectance spectra in the appropriate colorspace." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +59,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,20 +95,24 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot spectra in a colourspace</h1>
+    
+    <div class="hidden name"><code>plot.colspace.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Plots reflectance spectra in the appropriate colorspace.</p>
     
+    </div>
 
     <pre class="usage"><span class='co'># S3 method for colspace</span>
 <span class='fu'>plot</span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -100,7 +121,7 @@
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional graphical options, which vary by modeled <code>space</code>. Refer 
+      <td><p>additional graphical options, which vary by modeled <code>space</code>. Refer
 to their individual documentation:</p><ul>
 <li><p><code><a href='diplot.html'>diplot</a></code>: dichromat space</p></li>
 <li><p><code><a href='triplot.html'>triplot</a></code>: trichromat space</p></li>
@@ -122,20 +143,20 @@ to their individual documentation:</p><ul>
 
     <p>Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
    Transactions of the Optical Society, 33(3), 73-134.</p>
-<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science 
+<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
    using MATLAB. John Wiley &amp; Sons.</p>
 <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
-<p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a 
-   component of flower reflections, and the colour perception of Hymenoptera. 
+<p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
+   component of flower reflections, and the colour perception of Hymenoptera.
    Vision research, 34(11), 1489-1508.</p>
 <p>Troje N. (1993). Spectral categories in the learning behaviour
  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
-<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns 
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
 <p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
    - behavioural tests and physiological concepts. Biological Reviews, 78,
@@ -145,7 +166,7 @@ to their individual documentation:</p><ul>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>plot</code></p>
+    <div class='dont-index'><p><code>plot</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -158,7 +179,7 @@ to their individual documentation:</p><ul>
 <span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'di'</span>)
 <span class='fu'>plot</span>(<span class='no'>di.flowers</span>)
 
-<span class='co'># Colour hexagon </span>
+<span class='co'># Colour hexagon</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                         <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'l'</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>'green'</span>)
 <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'hexagon'</span>)
@@ -214,15 +235,18 @@ Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

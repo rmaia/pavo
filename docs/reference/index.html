@@ -18,13 +18,22 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Function reference" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +56,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,313 +92,352 @@
       
       </header>
 
-      <div class="row">
-  <div class="col-md-9">
+<div class="row">
+  <div class="contents col-md-9">
     <div class="page-header">
-      <h1>
-        Reference
-        <small>version&nbsp;1.3.1</small>
-      </h1>
+      <h1>Reference</h1>
     </div>
 
-    <div class="contents">
-      <table class="ref-index">
+    <table class="ref-index">
 
-      <colgroup>
-        <col class="alias" />
-        <col class="title" />
-      </colgroup>
+    <colgroup>
+      
+      <col class="alias" />
+      <col class="title" />
+    </colgroup>
 
-      <tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-processing-and-organisation" class="hasAnchor"><a href="#section-processing-and-organisation" class="anchor"></a>Processing and Organisation</h2>
-            <p class="section-desc"><p>Functions for importing and processing spectral data</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="aggspec.html">aggspec</a></code> </p>
-          </td>
-          <td><p>Aggregate reflectance spectra</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="as.rspec.html">as.rspec</a></code> <code><a href="as.rspec.html">is.rspec</a></code> </p>
-          </td>
-          <td><p>Convert data to an rspec object</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="getspec.html">getspec</a></code> </p>
-          </td>
-          <td><p>Import spectra files</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="irrad2flux.html">irrad2flux</a></code> <code><a href="irrad2flux.html">flux2irrad</a></code> </p>
-          </td>
-          <td><p>Converts between irradiance and photon (quantum) flux</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="merge.rspec.html">merge</a></code> </p>
-          </td>
-          <td><p>Merge two rspec objects</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="procspec.html">procspec</a></code> </p>
-          </td>
-          <td><p>Process spectra</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="spec2rgb.html">spec2rgb</a></code> </p>
-          </td>
-          <td><p>Spectrum to rgb color conversion</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="subset.rspec.html">subset</a></code> </p>
-          </td>
-          <td><p>Subset rspec, vismodel, and colspace objects</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-visualisation" class="hasAnchor"><a href="#section-visualisation" class="anchor"></a>Visualisation</h2>
-            <p class="section-desc"><p>Functions for visualising spectral data, including the results of visual modelling</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="aggplot.html">aggplot</a></code> </p>
-          </td>
-          <td><p>Plot aggregated reflectance spectra</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="axistetra.html">axistetra</a></code> </p>
-          </td>
-          <td><p>Plot reference axes in a static tetrahedral colorspace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="explorespec.html">explorespec</a></code> </p>
-          </td>
-          <td><p>Plot spectral curves</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="legendtetra.html">legendtetra</a></code> </p>
-          </td>
-          <td><p>Add legend to a static tetrahedral colorspace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.colspace.html">plot</a></code> </p>
-          </td>
-          <td><p>Plot spectra in a colourspace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plot.rspec.html">plot</a></code> </p>
-          </td>
-          <td><p>Plot spectra</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="plotsmooth.html">plotsmooth</a></code> </p>
-          </td>
-          <td><p>Plot loess smoothed curves</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="points.colspace.html">points</a></code> </p>
-          </td>
-          <td><p>Plot points in a colorspace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="projplot.html">projplot</a></code> <code><a href="projplot.html">projpoints</a></code> </p>
-          </td>
-          <td><p>Hue projection plot</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sensdata.html">sensdata</a></code> </p>
-          </td>
-          <td><p>Retrieve or plot in-built data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="tcsplot.html">tcsplot</a></code> <code><a href="tcsplot.html">tcspoints</a></code> <code><a href="tcsplot.html">tcsvol</a></code> </p>
-          </td>
-          <td><p>Interactive plot of a tetrahedral colorspace</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-analysis" class="hasAnchor"><a href="#section-analysis" class="anchor"></a>Analysis</h2>
-            <p class="section-desc"><p>Functions for analysing spectral data</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bootcoldist.html">bootcoldist</a></code> </p>
-          </td>
-          <td><p>Bootstrap colour distance confidence intervals</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="coldist.html">coldist</a></code> </p>
-          </td>
-          <td><p>Color distances</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="colspace.html">colspace</a></code> </p>
-          </td>
-          <td><p>Model spectra in a colorspace</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="jnd2xyz.html">jnd2xyz</a></code> </p>
-          </td>
-          <td><p>Convert JND distances into perceptually-corrected Cartesian coordinates</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="jndrot.html">jndrot</a></code> </p>
-          </td>
-          <td><p>Rotate Cartesian coordinates obtained from <code>jnd2xyz</code></p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="peakshape.html">peakshape</a></code> </p>
-          </td>
-          <td><p>Peak shape descriptors</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="segspace.html">segspace</a></code> </p>
-          </td>
-          <td><p>Segment classification</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sensmodel.html">sensmodel</a></code> </p>
-          </td>
-          <td><p>modeling spectral sensitivity</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summary.colspace.html">summary</a></code> </p>
-          </td>
-          <td><p>Colorspace data summary</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summary.rspec.html">summary</a></code> </p>
-          </td>
-          <td><p>Colorimetric variables</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="summary.vismodel.html">summary</a></code> </p>
-          </td>
-          <td><p>Visual model summary</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="vismodel.html">vismodel</a></code> </p>
-          </td>
-          <td><p>Visual models</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="vol.html">vol</a></code> </p>
-          </td>
-          <td><p>Plot a tetrahedral color space</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="voloverlap.html">voloverlap</a></code> </p>
-          </td>
-          <td><p>Color volume overlap</p></td>
-        </tr>
-      </tbody><tbody>
-        <tr>
-          <th colspan="2">
-            <h2 id="section-misc" class="hasAnchor"><a href="#section-misc" class="anchor"></a>Misc</h2>
-            <p class="section-desc"><p>Assorted functions containing example and internally-used data</p></p>
-          </th>
-        </tr>
-        <tr>
-          <!--  -->
-          <td>
-            <p><code><a href="bgandilum.html">bgandilum</a></code> </p>
-          </td>
-          <td><p>Default background and illuminant data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="flowers.html">flowers</a></code> </p>
-          </td>
-          <td><p>Reflectance spectra from a suite of native Australian flowers, collected
+    <tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-processing-and-organisation" class="hasAnchor"><a href="#section-processing-and-organisation" class="anchor"></a>Processing and Organisation</h2>
+          <p class="section-desc"><p>Functions for importing and processing spectral data</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="aggspec.html">aggspec()</a></code> </p>
+        </td>
+        <td><p>Aggregate reflectance spectra</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.rspec.html">as.rspec()</a></code> <code><a href="as.rspec.html">is.rspec()</a></code> </p>
+        </td>
+        <td><p>Convert data to an rspec object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="as.rimg.html">as.rimg()</a></code> <code><a href="as.rimg.html">is.rimg()</a></code> </p>
+        </td>
+        <td><p>Convert data to an rimg object</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="img_conversion.html">rimg2cimg()</a></code> <code><a href="img_conversion.html">cimg2rimg()</a></code> </p>
+        </td>
+        <td><p>Convert images between class rimg and cimg</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="getspec.html">getspec()</a></code> </p>
+        </td>
+        <td><p>Import spectra files</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="irrad2flux.html">irrad2flux()</a></code> <code><a href="irrad2flux.html">flux2irrad()</a></code> </p>
+        </td>
+        <td><p>Converts between irradiance and photon (quantum) flux</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="merge.rspec.html">merge(<i>&lt;rspec&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Merge two rspec objects</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="procimg.html">procimg()</a></code> </p>
+        </td>
+        <td><p>Process images</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="procspec.html">procspec()</a></code> </p>
+        </td>
+        <td><p>Process spectra</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="spec2rgb.html">spec2rgb()</a></code> </p>
+        </td>
+        <td><p>Spectrum to rgb color conversion</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="subset.rspec.html">subset(<i>&lt;rspec&gt;</i>)</a></code> <code><a href="subset.rspec.html">subset(<i>&lt;colspace&gt;</i>)</a></code> <code><a href="subset.rspec.html">subset(<i>&lt;vismodel&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Subset rspec, vismodel, and colspace objects</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-visualisation" class="hasAnchor"><a href="#section-visualisation" class="anchor"></a>Visualisation</h2>
+          <p class="section-desc"><p>Functions for visualising spectral data, including the results of visual modelling</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="aggplot.html">aggplot()</a></code> </p>
+        </td>
+        <td><p>Plot aggregated reflectance spectra</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="axistetra.html">axistetra()</a></code> </p>
+        </td>
+        <td><p>Plot reference axes in a static tetrahedral colorspace</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="explorespec.html">explorespec()</a></code> </p>
+        </td>
+        <td><p>Plot spectral curves</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="legendtetra.html">legendtetra()</a></code> </p>
+        </td>
+        <td><p>Add legend to a static tetrahedral colorspace</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.colspace.html">plot(<i>&lt;colspace&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot spectra in a colourspace</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.rimg.html">plot(<i>&lt;rimg&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot unprocessed or colour-classified images</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plot.rspec.html">plot(<i>&lt;rspec&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot spectra</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="plotsmooth.html">plotsmooth()</a></code> </p>
+        </td>
+        <td><p>Plot loess smoothed curves</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="points.colspace.html">points(<i>&lt;colspace&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Plot points in a colorspace</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="projplot.html">projplot()</a></code> <code><a href="projplot.html">projpoints()</a></code> </p>
+        </td>
+        <td><p>Hue projection plot</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sensdata.html">sensdata()</a></code> </p>
+        </td>
+        <td><p>Retrieve or plot in-built data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="tcsplot.html">tcsplot()</a></code> <code><a href="tcsplot.html">tcspoints()</a></code> <code><a href="tcsplot.html">tcsvol()</a></code> </p>
+        </td>
+        <td><p>Interactive plot of a tetrahedral colorspace</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-analysis" class="hasAnchor"><a href="#section-analysis" class="anchor"></a>Analysis</h2>
+          <p class="section-desc"><p>Functions for analysing spectral data</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="adjacent.html">adjacent()</a></code> </p>
+        </td>
+        <td><p>Run an adjacency/boundary strength analysis</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="bootcoldist.html">bootcoldist()</a></code> </p>
+        </td>
+        <td><p>Bootstrap colour distance confidence intervals</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="classify.html">classify()</a></code> </p>
+        </td>
+        <td><p>Identify colour classes in an image for adjacency analyses</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="coldist.html">coldist()</a></code> </p>
+        </td>
+        <td><p>Color distances</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="colspace.html">colspace()</a></code> </p>
+        </td>
+        <td><p>Model spectra in a colorspace</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="jnd2xyz.html">jnd2xyz()</a></code> </p>
+        </td>
+        <td><p>Convert JND distances into perceptually-corrected Cartesian coordinates</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="jndrot.html">jndrot()</a></code> </p>
+        </td>
+        <td><p>Rotate Cartesian coordinates obtained from <code>jnd2xyz</code></p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="peakshape.html">peakshape()</a></code> </p>
+        </td>
+        <td><p>Peak shape descriptors</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="segspace.html">segspace()</a></code> </p>
+        </td>
+        <td><p>Segment classification</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sensmodel.html">sensmodel()</a></code> </p>
+        </td>
+        <td><p>modeling spectral sensitivity</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.colspace.html">summary(<i>&lt;colspace&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Colorspace data summary</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.rimg.html">summary(<i>&lt;rimg&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Image summary</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.rspec.html">summary(<i>&lt;rspec&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Colorimetric variables</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="summary.vismodel.html">summary(<i>&lt;vismodel&gt;</i>)</a></code> </p>
+        </td>
+        <td><p>Visual model summary</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vismodel.html">vismodel()</a></code> </p>
+        </td>
+        <td><p>Visual models</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vol.html">vol()</a></code> </p>
+        </td>
+        <td><p>Plot a tetrahedral color space</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="voloverlap.html">voloverlap()</a></code> </p>
+        </td>
+        <td><p>Color volume overlap</p></td>
+      </tr>
+    </tbody><tbody>
+      <tr>
+        <th colspan="2">
+          <h2 id="section-misc" class="hasAnchor"><a href="#section-misc" class="anchor"></a>Misc</h2>
+          <p class="section-desc"><p>Assorted functions containing example and internally-used data</p></p>
+        </th>
+      </tr>
+      <tr>
+        
+        <td>
+          <p><code><a href="bgandilum.html">bgandilum</a></code> </p>
+        </td>
+        <td><p>Default background and illuminant data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="flowers.html">flowers</a></code> </p>
+        </td>
+        <td><p>Reflectance spectra from a suite of native Australian flowers, collected
 around Cairns, Queensland.</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pavo-deprecated.html">tcs</a></code> </p>
-          </td>
-          <td><p>Deprecated function(s) in the pavo package</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="pavo-package.html">.PlotTetraEnv</a></code> </p>
-          </td>
-          <td><p>pavo: analyzing color data in R</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="sicalis.html">sicalis</a></code> </p>
-          </td>
-          <td><p>Spectral curves from three body regions of Stripe-Tailed Yellow Finch 
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pavo-deprecated.html">tcs()</a></code> </p>
+        </td>
+        <td><p>Deprecated function(s) in the pavo package</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="pavo-package.html">pavo-package</a></code> </p>
+        </td>
+        <td><p>pavo: Perceptual Analysis, Visualization and Organization of Spectral Color
+Data in R</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="sicalis.html">sicalis</a></code> </p>
+        </td>
+        <td><p>Spectral curves from three body regions of Stripe-Tailed Yellow Finch
 (<em>Sicalis citrina</em>) males</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="teal.html">teal</a></code> </p>
-          </td>
-          <td><p>Angle-resolved reflectance data for the iridescent wing patch of a male green-winged 
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="teal.html">teal</a></code> </p>
+        </td>
+        <td><p>Angle-resolved reflectance data for the iridescent wing patch of a male green-winged
 teal (Anas carolinensis)</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="transmissiondata.html">transmissiondata</a></code> </p>
-          </td>
-          <td><p>Default ocular transmission data</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="ttvertex.html">ttvertex</a></code> </p>
-          </td>
-          <td><p>vertex for the tetrahedral color space</p></td>
-        </tr><tr>
-          <!--  -->
-          <td>
-            <p><code><a href="vissyst.html">vissyst</a></code> </p>
-          </td>
-          <td><p>Animal visual systems data</p></td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="transmissiondata.html">transmissiondata</a></code> </p>
+        </td>
+        <td><p>Default ocular transmission data</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="ttvertex.html">ttvertex</a></code> </p>
+        </td>
+        <td><p>vertex for the tetrahedral color space</p></td>
+      </tr><tr>
+        
+        <td>
+          <p><code><a href="vissyst.html">vissyst</a></code> </p>
+        </td>
+        <td><p>Animal visual systems data</p></td>
+      </tr>
+    </tbody>
+    </table>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -400,15 +453,18 @@ teal (Anas carolinensis)</p></td>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

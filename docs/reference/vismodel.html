@@ -18,13 +18,26 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Visual models — vismodel" />
+
+<meta property="og:description" content="Calculates quantum catches at each photoreceptor. Both raw and relative values
+can be returned, for use in a suite of colorspace and non-colorspace models." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +60,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,71 +96,79 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Visual models</h1>
+    
+    <div class="hidden name"><code>vismodel.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
-    <p>Calculates quantum catches at each photoreceptor. Both raw and relative values 
+    <p>Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colorspace and non-colorspace models.</p>
     
+    </div>
 
-    <pre class="usage"><span class='fu'>vismodel</span>(<span class='no'>rspecdata</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>,
-  <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>),
-  <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"ml"</span>, <span class='st'>"l"</span>, <span class='st'>"md.r1"</span>,
-  <span class='st'>"all"</span>), <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>),
-  <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>), <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span>),
-  <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"green"</span>), <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>vismodel</span>(<span class='no'>rspecdata</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"ctenophorus"</span>,
+  <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>,
+  <span class='st'>"habronattus"</span>, <span class='st'>"rhinecanthus"</span>), <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>,
+  <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"ml"</span>, <span class='st'>"l"</span>, <span class='st'>"all"</span>), <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"bluesky"</span>,
+  <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>),
+  <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ideal"</span>, <span class='st'>"green"</span>),
+  <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
       <td><p>(required) a data frame, possibly an object of class <code>rspec</code>
-that has wavelength range in the first column, named 'wl', and spectral measurements in the 
+that has wavelength range in the first column, named 'wl', and spectral measurements in the
 remaining columns.</p></td>
     </tr>
     <tr>
       <th>visual</th>
       <td><p>the visual system to be used. Options are:</p><ul>
-<li><p>a data frame such as one produced containing by <code>sensmodel</code>, containing 
-   user-defined sensitivity data for the receptors involved in colour vision. 
-   The data frame must contain a <code>'wl'</code> column with the range of wavelengths included, 
+<li><p>a data frame such as one produced containing by <code>sensmodel</code>, containing
+   user-defined sensitivity data for the receptors involved in colour vision.
+   The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
    and the sensitivity for each other cone as a column.</p></li>
-<li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em> visual system.</p></li>
+<li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em>.</p></li>
 <li><p><code>'avg.uv'</code>: average avian UV system.</p></li>
 <li><p><code>'avg.v'</code>: average avian V system.</p></li>
-<li><p><code>'bluetit'</code>: Blue tit <em>Cyanistes caeruleus</em> visual system.</p></li>
-<li><p><code>'canis'</code>: Canid <em>Canis familiaris</em> visual system.</p></li>
-<li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human 
- colour vision. Functions are linear transformations of the 2-degree cone fundamentals 
+<li><p><code>'bluetit'</code>: Blue tit <em>Cyanistes caeruleus</em>.</p></li>
+<li><p><code>'canis'</code>: Canid <em>Canis familiaris</em>.</p></li>
+<li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human
+ colour vision. Functions are linear transformations of the 2-degree cone fundamentals
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human 
- colour vision. Functions are linear transformations of the 10-degree cone fundamentals 
+<li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human
+ colour vision. Functions are linear transformations of the 10-degree cone fundamentals
  of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
-<li><p><code>'musca'</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
-<li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
+<li><p><code>'ctenophorus'</code>: Ornate dragon lizatd <em>Ctenophorus ornatus</em>.</p></li>
+<li><p><code>'musca'</code>: Housefly <em>Musca domestica</em>.</p></li>
+<li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em>.</p></li>
 <li><p><code>'segment'</code>: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).</p></li>
-<li><p><code>'star'</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
+<li><p><code>'star'</code>: Starling <em>Sturnus vulgaris</em>.</p></li>
+<li><p><code>'habronattus'</code>: Jumping spider <em>Habronattus pyrrithrix</em>.</p></li>
+<li><p><code>'rhinecanthus'</code>: Triggerfish <em>Rhinecanthus aculeatus</em>.</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>achromatic</th>
       <td><p>the sensitivity data to be used to calculate luminance (achromatic)
- receptor stimulation. Either a vector containing the sensitivity for a single receptor, 
+ receptor stimulation. Either a vector containing the sensitivity for a single receptor,
  or one of the options:</p><ul>
-<li><p><code>'none'</code>: no achromatic stimulation calculated</p></li>
-<li><p><code>'bt.dc'</code>: Blue tit <em>Cyanistes caeruleus</em> double cone</p></li>
-<li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone</p></li>
-<li><p><code>'st.dc'</code>: Starling <em>Sturnus vulgaris</em> double cone</p></li>
-<li><p><code>'md.r1'</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor</p></li>
-<li><p><code>'ml'</code>: the summed response of the two longest-wavelength photoreceptors</p></li>
-<li><p><code>'l'</code>: the longest-wavelength photoreceptor</p></li>
-<li><p><code>'all'</code>: the summed response of all photoreceptors</p></li>
+<li><p><code>'none'</code>: no achromatic stimulation calculated.</p></li>
+<li><p><code>'bt.dc'</code>: Blue tit <em>Cyanistes caeruleus</em> double cone.</p></li>
+<li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone.</p></li>
+<li><p><code>'st.dc'</code>: Starling <em>Sturnus vulgaris</em> double cone.</p></li>
+<li><p><code>'md.r1'</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor.</p></li>
+<li><p><code>'ra.dc'</code>: Triggerfish <em>Rhinecanthus aculeatus</em> double cone.</p></li>
+<li><p><code>'ml'</code>: the summed response of the two longest-wavelength photoreceptors.</p></li>
+<li><p><code>'l'</code>: the longest-wavelength photoreceptor.</p></li>
+<li><p><code>'all'</code>: the summed response of all photoreceptors.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -159,9 +185,9 @@ remaining columns.</p></td>
       <td><p>either a vector containing the ocular or environmental transmission
 spectra, or one of the options:</p><ul>
 <li><p><code>'ideal'</code>: homogeneous transmission of 1 across all wavelengths (default)</p></li>
-<li><p><code>'bluetit'</code>: blue tit <em>Cyanistes caeruleus</em> 
+<li><p><code>'bluetit'</code>: blue tit <em>Cyanistes caeruleus</em>
 ocular transmission (from Hart et al. 2000).</p></li>
-<li><p><code>'blackbird'</code>: blackbird <em>Turdus merula</em> 
+<li><p><code>'blackbird'</code>: blackbird <em>Turdus merula</em>
 ocular transmission (from Hart et al. 2000).</p></li>
 </ul></td>
     </tr>
@@ -176,7 +202,7 @@ ocular transmission (from Hart et al. 2000).</p></li>
     </tr>
     <tr>
       <th>bkg</th>
-      <td><p>background spectrum. Note that this will have no effect when <code>vonkries = FALSE</code>. 
+      <td><p>background spectrum. Note that this will have no effect when <code>vonkries = FALSE</code>.
 Either a vector containing the spectral data, or one of the options:</p><ul>
 <li><p><code>'ideal'</code>: homogeneous illuminance of 1 across all wavelengths (default).</p></li>
 <li><p><code>'green'</code>: green foliage.</p></li>
@@ -189,7 +215,7 @@ Either a vector containing the spectral data, or one of the options:</p><ul>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>a value by which the illuminant will be multiplied. Useful for when the 
+      <td><p>a value by which the illuminant will be multiplied. Useful for when the
  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
  and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
  are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
@@ -204,35 +230,37 @@ space model? Defaults to <code>TRUE</code>).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>An object of class <code>vismodel</code> containing the photon catches for each of the 
+    <p>An object of class <code>vismodel</code> containing the photon catches for each of the
  photoreceptors considered. Information on the parameters used in the calculation are also
  stored and can be called using the <code>summary.vismodel</code> function.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &amp; Cuthill, I. 
- (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative 
+    <p>Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &amp; Cuthill, I.
+ (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
  Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.</p>
-<p>Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000). 
+<p>Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000).
 Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
-species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird 
-(Turdus merula L.).
- Journal of Comparative Physiology A, 186, 375-387.</p>
-<p>Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress 
+species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird
+(Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.</p>
+<p>Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
  In Retinal And Eye Research, 20(5), 675-703.</p>
-<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage 
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings. 
+<p>Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
+ Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
+ Lizard, Ctenophorus ornatus.</p>
+<p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
+ color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
  The American Naturalist, 171(6), 755-776.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns 
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
 <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of 
+   based on photoreceptor excitations as a generalized representation of
    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
-<p>Stockman, A., &amp; Sharpe, L. T. (2000). Spectral sensitivities of 
- the middle- and long-wavelength sensitive cones derived from measurements in 
+<p>Stockman, A., &amp; Sharpe, L. T. (2000). Spectral sensitivities of
+ the middle- and long-wavelength sensitive cones derived from measurements in
  observers of known genotype. Vision Research, 40, 1711-1737.</p>
-<p>CIE (2006). Fundamental chromaticity diagram with physiological axes. 
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission 
+<p>CIE (2006). Fundamental chromaticity diagram with physiological axes.
+ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
  Internationale de l' Eclairage.</p>
     
 
@@ -278,15 +306,18 @@ Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.co
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+

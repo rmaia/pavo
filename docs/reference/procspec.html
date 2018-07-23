@@ -18,13 +18,25 @@
 <!-- Font Awesome icons -->
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 
+<!-- clipboard.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script>
+
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
-<script src="../jquery.sticky-kit.min.js"></script>
 <script src="../pkgdown.js"></script>
-  
-  
+
+
+
+<meta property="og:title" content="Process spectra — procspec" />
+
+<meta property="og:description" content="Applies normalization and/or smoothing to spectra for further analysis or plotting." />
+<meta name="twitter:card" content="summary" />
+
+
+
 <!-- mathjax -->
 <script src='https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
 
@@ -47,30 +59,35 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">pavo</a>
+      <span class="navbar-brand">
+        <a class="navbar-link" href="../index.html">pavo</a>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">2.0.0</span>
+      </span>
     </div>
+
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="..//index.html">
+  <a href="../index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get Started</a>
+  <a href="../articles/pavo.html">Get started</a>
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li>
-  <a href="../news/index.html">News</a>
+  <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
         
       </ul>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -78,21 +95,25 @@
       
       </header>
 
-      <div class="row">
+<div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Process spectra</h1>
+    
+    <div class="hidden name"><code>procspec.Rd</code></div>
     </div>
 
+    <div class="ref-description">
     
     <p>Applies normalization and/or smoothing to spectra for further analysis or plotting.</p>
     
+    </div>
 
     <pre class="usage"><span class='fu'>procspec</span>(<span class='no'>rspecdata</span>, <span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"smooth"</span>, <span class='st'>"maximum"</span>, <span class='st'>"minimum"</span>, <span class='st'>"bin"</span>,
   <span class='st'>"sum"</span>, <span class='st'>"center"</span>), <span class='kw'>fixneg</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"none"</span>, <span class='st'>"addmin"</span>, <span class='st'>"zero"</span>), <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
     
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
@@ -106,16 +127,16 @@ spectra to process.</p></td>
       <td><p>what type of processing options to apply. User can select multiple options
            by providing a vector. Possibilities are:</p><ul>
 <li><p><code>"none"</code> does not perform any processing (default).</p></li>
-<li><p><code>"smooth"</code> applies LOESS smoothing to each spectrum using 
+<li><p><code>"smooth"</code> applies LOESS smoothing to each spectrum using
                      <code>loess.smooth</code>. Optimal smoothing parameter
                      can be assessed by using <code><a href='plotsmooth.html'>plotsmooth</a></code>.</p></li>
 <li><p><code>"minimum"</code> subtracts the minimum from each individual spectra.</p></li>
 <li><p><code>"maxmimum"</code> divides each spectrum by its maximum value.</p></li>
 <li><p><code>"sum"</code> divides each spectrum by summed values.</p></li>
-<li><p><code>"bin"</code> bins each spectrum into specified wavelength ranges. User should
-                                 specify.</p></li>
-<li><p><code>"center"</code> centers individual spectra by subtracting mean reflectance from 
-                     all values.</p></li>
+<li><p><code>"bin"</code> bins each spectrum into the specified number of bins.
+                     <code>bins</code> argument must be set.</p></li>
+<li><p><code>"center"</code> centers individual spectra by subtracting mean
+                     reflectance from all values.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -123,9 +144,10 @@ spectra to process.</p></td>
       <td><p>how to handle negative values. Possibilities are:</p><ul>
 <li><p><code>"none"</code> does not perform negative value correction (default).</p></li>
 <li><p><code>"zero"</code> sets all negative values to zero.</p></li>
-<li><p><code>"addmin"</code> adds the absolute value of the maximally negative values of each
-                          spectra to the reflectance at all other wavelengths (setting
-                          the minimum value to zero, but scaling other values accordingly).</p></li>
+<li><p><code>"addmin"</code> adds the absolute value of the maximally negative
+                     values of each spectra to the reflectance at all other
+                     wavelengths (setting the minimum value to zero, but
+                     scaling other values accordingly).</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -136,10 +158,6 @@ spectra to process.</p></td>
       <th>bins</th>
       <td><p>sets the number of equally sized wavelength bins for <code>opt = "bin"</code>.</p></td>
     </tr>
-    <tr>
-      <th>...</th>
-      <td><p>ignored.</p></td>
-    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
@@ -148,16 +166,16 @@ spectra to process.</p></td>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Cuthill, I., Bennett, A. T. D., Partridge, J. &amp; Maier, E. 1999. 
- Plumage reflectance and the objective assessment of avian sexual dichromatism. 
+    <p>Cuthill, I., Bennett, A. T. D., Partridge, J. &amp; Maier, E. 1999.
+ Plumage reflectance and the objective assessment of avian sexual dichromatism.
  The American Naturalist, 153, 183-200.</p>
-<p>Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, 
- K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard 
+<p>Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
+ K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
  University Press, Cambridge, Massachusetts.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p><code>loess.smooth</code></p>
+    <div class='dont-index'><p><code>loess.smooth</code>, <code><a href='plotsmooth.html'>plotsmooth</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -198,15 +216,18 @@ Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://hadley.github.io/pkgdown/">pkgdown</a>.</p>
+  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
 </div>
 
       </footer>
    </div>
 
+  
+
   </body>
 </html>
+
