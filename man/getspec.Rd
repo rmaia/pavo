@@ -44,7 +44,7 @@ Reflectance values are interpolated to the nearest wavelength integer.
 Finds and imports spectra files from a folder. Currently works
 for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
 USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
-Avantes (after exporting).
+Avantes (before or after exporting).
 }
 \examples{
 \dontrun{
