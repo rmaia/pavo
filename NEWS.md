@@ -10,6 +10,8 @@ and the (trichromatic) triggerfish _Rhinecanthus aculeatus_
 MINOR FEATURES AND BUG FIXES 
 * cieLAB values have been rescaled, and are expressed in the more standard range:
 L [0,100], ab [-128,127]
+* getspec() has an additional argument `ignore.case` set to `TRUE` by default
+to ignore case in file extension matching
 
 pavo 1.4.0
 ------------------------------------------------------------------------------
