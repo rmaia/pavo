@@ -53,7 +53,8 @@ column, named 'patch', should contain color category ID numbers, with the remain
 columns specifying one or more of 'hue' (angle, in radians), sat', and/or 'lum'.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
+computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
+available on Windows.}
 }
 \value{
 a data frame of summary variables:

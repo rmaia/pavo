@@ -22,7 +22,8 @@
 #' @param plotnew Should plots be opened in a new window when \code{interactive = TRUE}?
 #' Defaults to \code{FALSE}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
-#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.
+#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
+#'  available on Windows.
 #' @param ... additional graphical parameters when \code{interactive = TRUE}.
 #' Also see \code{\link{par}}.
 #'
@@ -78,7 +79,6 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
-    message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
 
   ## k structure

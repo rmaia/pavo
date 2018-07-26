@@ -34,7 +34,8 @@ Defaults to \code{FALSE}.}
 \item{col}{the color of the marker points, when \code{interactive = TRUE}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}.}
+computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
+available on Windows.}
 
 \item{...}{additional graphical parameters when \code{interactive = TRUE}.
 Also see \code{\link{par}}.}

@@ -7,11 +7,13 @@
 #' within a folder are fine.
 #' @param subdir should subdirectories within the \code{where} folder be
 #' included in the search? (defaults to \code{FALSE}).
+#' @param subdir.names should subdirectory path be included in the name of the
+#' images? (defaults to \code{FALSE}).
 #' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
-#' \code{2}.
+#' \code{1}.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, or
 #' if total image sizes exceed 200 mb in memory, parallel computing will not be used.
-#' Defaults to \code{getOption("mc.cores", 2L)}.
+#' Defaults to \code{getOption("mc.cores", 2L)}. Not available on Windows.
 #'
 #' @return a array, or list of arrays, of class \code{rimg}, containing image data
 #' for use in further \code{pavo} functions.
@@ -31,7 +33,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getOption("mc.cores", 2L)) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.size = 1, cores = getOption("mc.cores", 2L)) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -41,7 +43,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getO
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
-    message('Parallel processing not available in Windows; "cores" set to 1\n')
   }
 
   ## ------------------------------ Main ------------------------------ ##
@@ -61,11 +62,21 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getO
   } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
 
     # Set allowed file extensions
-    extensions <- paste0("\\.", ext, "$", collapse = "|")
+    extension <- paste0("\\.", ext, "$", collapse = "|")
 
     # File names
-    file_names <- list.files(imgpath, pattern = extensions, recursive = subdir, include.dirs = subdir)
+    file_names <- list.files(imgpath, pattern = extension, recursive = subdir, include.dirs = subdir)
     files <- paste(imgpath, "/", file_names, sep = "")
+
+    if (subdir.names) {
+      file_names <- gsub(extension, "", file_names)
+    } else {
+      file_names <- gsub(extension, "", basename(file_names))
+    }
+
+    if (length(file_names) == 0) {
+      stop("No files found at specified location.")
+    }
 
     message(length(files), " files found; importing images.")
 
@@ -73,7 +84,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, max.size = 1, cores = getO
       stop("No .jpg, .jpeg, .png, or .bmp files found in specified location.")
     }
 
-    imgnames <- gsub(extensions, "", file_names)
+    imgnames <- gsub(extension, "", file_names)
 
     # Stop if max size estimated to exceed available memory
     imgsize <- prod(dim(load.image(files[1])))

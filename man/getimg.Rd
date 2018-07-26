@@ -4,8 +4,8 @@
 \alias{getimg}
 \title{Import image data}
 \usage{
-getimg(imgpath = getwd(), subdir = FALSE, max.size = 1,
-  cores = getOption("mc.cores", 2L))
+getimg(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
+  max.size = 1, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{imgpath}{(required) either the full path to a given image (including extension),
@@ -15,12 +15,15 @@ within a folder are fine.}
 \item{subdir}{should subdirectories within the \code{where} folder be
 included in the search? (defaults to \code{FALSE}).}
 
+\item{subdir.names}{should subdirectory path be included in the name of the
+images? (defaults to \code{FALSE}).}
+
 \item{max.size}{maximum size of all images to be allowed in memory, in GB. Defaults to
-\code{2}.}
+\code{1}.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, or
 if total image sizes exceed 200 mb in memory, parallel computing will not be used.
-Defaults to \code{getOption("mc.cores", 2L)}.}
+Defaults to \code{getOption("mc.cores", 2L)}. Not available on Windows.}
 }
 \value{
 a array, or list of arrays, of class \code{rimg}, containing image data
