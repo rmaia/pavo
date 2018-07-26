@@ -36,7 +36,7 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
     if (attr(x, "state") == "raw") {
       defaultrasterImageplot(x, axes = axes, ...)
     } else if (attr(x, "state") == "colclass") {
-      defaultimageplot(x, axes = axes, col = col, ...)
+      defaultrasterImageplot(x, axes = axes, col = col, ...)
     }
   } else if (multi_image) {
     if (attr(x[[1]], "state") == "raw") {
@@ -47,7 +47,7 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
     } else if (attr(x[[1]], "state") == "colclass") {
       for (i in 1:length(x)) {
         readline(prompt = "Press [enter] for next plot")
-        defaultimageplot(x[[i]], axes = axes, col = col, ...)
+        defaultrasterImageplot(x[[i]], axes = axes, col = col, ...)
       }
     }
   }
@@ -57,10 +57,37 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
 #' @import imager
 #' @importFrom grDevices as.raster
 #' @importFrom graphics box plot.new plot.window
-defaultrasterImageplot <- function(imagedata, axes, ...) {
+defaultrasterImageplot <- function(imagedata, axes, col, ...) {
   if (missing(axes)) axes <- TRUE
 
-  imagedata2 <- suppressWarnings(as.raster(as.cimg(imagedata, cc = 3)))
+  if (attr(imagedata, "state") == "colclass") {
+
+    # Transform again
+    img3 <- rev(t(apply(imagedata, 1, rev))) # mirror
+    dim(img3) <- dim(imagedata)
+    img <- t(apply(img3, 2, rev)) # rotate 90
+
+    # Reconstitute image
+    if (!is.null(col)) {
+      rgbs <- as.data.frame(t(col2rgb(col)/255))
+      names(rgbs) <- c('R', 'G', 'B')
+    } else {
+      rgbs <- attr(imagedata, "classRGB")
+    }
+    R <- G <- B <- img
+    for (i in 1:nrow(rgbs)) R[which(R == row.names(rgbs)[i])] <- rgbs$R[i]
+    for (i in 1:nrow(rgbs)) G[which(G == row.names(rgbs)[i])] <- rgbs$G[i]
+    for (i in 1:nrow(rgbs)) B[which(B == row.names(rgbs)[i])] <- rgbs$B[i]
+
+    imageout <- array(dim = c(dim(img)[1], dim(img)[2], 3))
+    imageout[, , 1] <- R
+    imageout[, , 2] <- G
+    imageout[, , 3] <- B
+
+    imagedata2 <- suppressWarnings(as.raster(as.cimg(imageout, cc = 3)))
+  } else {
+    imagedata2 <- suppressWarnings(as.raster(as.cimg(imagedata, cc = 3)))
+  }
 
   # Defaults
   arg <- list(...)
@@ -85,28 +112,28 @@ defaultrasterImageplot <- function(imagedata, axes, ...) {
 }
 
 ## For colour-classified images
-defaultimageplot <- function(rawimage, axes, col = NULL, ...) {
-
-  # Transform to present the damn correct orientation
-  imagedata <- as.matrix(t(apply(rawimage, 2, rev)))
-
-  # Defaults
-  arg <- list(...)
-  if (is.null(arg$xlab)) arg$xlab <- "x"
-  if (is.null(arg$ylab)) arg$ylab <- "y"
-  if (is.null(arg$main)) arg$main <- attr(rawimage, "imgname")
-  if (is.null(arg$asp)) arg$asp <- ncol(imagedata) / nrow(imagedata)
-  if (is.null(arg$xlim)) arg$xlim <- c(1, nrow(imagedata))
-  if (is.null(arg$ylim)) arg$ylim <- c(ncol(imagedata), 1)
-  if (is.null(col)) col <- rgb(attr(rawimage, "classRGB"))
-
-  plot.new()
-  do.call(plot.window, arg)
-  if (axes) {
-    axis(1)
-    axis(2)
-    box()
-  }
-  title(arg$main, xlab = arg$xlab, ylab = arg$ylab)
-  image(1:nrow(imagedata), 1:ncol(imagedata), imagedata, add = TRUE, useRaster = TRUE, col = col)
-}
+# defaultimageplot <- function(rawimage, axes, col = NULL, ...) {
+# 
+#   # Transform to present the damn correct orientation
+#   imagedata <- as.matrix(t(apply(rawimage, 2, rev)))
+# 
+#   # Defaults
+#   arg <- list(...)
+#   if (is.null(arg$xlab)) arg$xlab <- "x"
+#   if (is.null(arg$ylab)) arg$ylab <- "y"
+#   if (is.null(arg$main)) arg$main <- attr(rawimage, "imgname")
+#   if (is.null(arg$asp)) arg$asp <- ncol(imagedata) / nrow(imagedata)
+#   if (is.null(arg$xlim)) arg$xlim <- c(1, nrow(imagedata))
+#   if (is.null(arg$ylim)) arg$ylim <- c(ncol(imagedata), 1)
+#   if (is.null(col)) col <- rgb(attr(rawimage, "classRGB"))
+# 
+#   plot.new()
+#   do.call(plot.window, arg)
+#   if (axes) {
+#     axis(1)
+#     axis(2)
+#     box()
+#   }
+#   title(arg$main, xlab = arg$xlab, ylab = arg$ylab)
+#   image(1:nrow(imagedata), 1:ncol(imagedata), imagedata, add = TRUE, useRaster = TRUE, col = col)
+# }
