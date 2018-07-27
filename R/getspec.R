@@ -59,8 +59,14 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
 
   # get file names
   file_names <- list.files(where, pattern = extension, ignore.case = ignore.case,
-                           recursive = subdir, include.dirs = subdir)
-  files <- paste(where, "/", file_names, sep = "")
+			   recursive = subdir, include.dirs = subdir)
+  nb_files <- length(file_names)
+
+  if (nb_files == 0) {
+    stop('No files found. Try a different extension value for argument "ext"')
+  }
+
+  files <- paste0(where, "/", file_names)
 
   if (subdir.names) {
     file_names <- gsub(extension, "", file_names, ignore.case = ignore.case)
@@ -68,19 +74,15 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
     file_names <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
   }
 
-  if (length(file_names) == 0) {
-    stop('No files found. Try a different extension value for argument "ext"')
-  }
-
   # Wavelength range
   range <- seq(lim[1], lim[2])
 
   # Build shell of final output
-  final <- matrix(nrow = length(range), ncol = length(file_names) + 1)
+  final <- matrix(nrow = length(range), ncol = nb_files + 1)
   final[, 1] <- range
 
   # vector of corrupt files
-  corrupt <- rep(FALSE, length(files))
+  corrupt <- rep(FALSE, nb_files)
 
   # define separators
   seps <- paste0(c("\\\t|\\;| ", sep), collapse = "|\\")
@@ -95,7 +97,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
     message('Parallel processing not available in Windows; "cores" set to 1.\n')
   }
 
-  if (length(files) <= cores) {
+  if (nb_files <= cores) {
     cores <- 1
   }
 
@@ -113,7 +115,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   }
 
   # message with number of spectra files being imported
-  message(length(files), " files found; importing spectra:")
+  message(nb_files, " files found; importing spectra:")
 
   gsp <- function(ff) {
     if (grepl("\\.ProcSpec$", ff, ignore.case = ignore.case)) {
@@ -135,7 +137,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       )
 
       # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
-      if (length(grep("Begin Calibration Data", raw)) > 0) {
+      if (any(grepl("Begin Calibration Data", raw))) {
         raw <- raw[1:grep("Begin Calibration Data", raw) - 1]
       }
 
@@ -214,7 +216,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   if (any(unlist(lapply(tmp, is.null)))) {
     whichfailed <- which(unlist(lapply(tmp, is.null)))
     # stop if all files are corrupt
-    if (!length(whichfailed) < length(files)) {
+    if (length(whichfailed) == nb_files) {
       stop("Could not import spectra, check input files and function arguments", call. = FALSE)
     }
 
@@ -242,8 +244,8 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   }
 
   # Negative value check
-  if (length(final[final < 0]) > 0) {
-    message("\nThe spectral data contain", length(final[final < 0]), "negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.")
+  if (any(final < 0, na.rm = TRUE)) {
+    message("\nThe spectral data contain", sum(final < 0, na.rm = TRUE), "negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.")
   }
 
   final
