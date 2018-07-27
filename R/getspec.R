@@ -174,13 +174,8 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       tempframe <- rawsplit[, c(1, dim(rawsplit)[2])]
     }
 
-    # interpolate
-    interp <- do.call(cbind, approx(tempframe[, 1], tempframe[, 2], xout = range))
-
-    # add to final table
-    # final[, i+1] <- interp[, 2]
-
-    interp[, 2]
+    # return interpolated spec
+    interp <- approx(tempframe[, 1], tempframe[, 2], xout = range)$y
 
     # setTxtProgressBar(progbar, i)
   }
