@@ -77,10 +77,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   # Wavelength range
   range <- seq(lim[1], lim[2])
 
-  # Build shell of final output
-  final <- matrix(nrow = length(range), ncol = nb_files + 1)
-  final[, 1] <- range
-
   # define separators
   seps <- paste0(c("\\\t|\\;| ", sep), collapse = "|\\")
 
