@@ -69,9 +69,9 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   files <- paste0(where, "/", file_names)
 
   if (subdir.names) {
-    file_names <- gsub(extension, "", file_names, ignore.case = ignore.case)
+    specnames <- gsub(extension, "", file_names, ignore.case = ignore.case)
   } else {
-    file_names <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
+    specnames <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
   }
 
   # Wavelength range
@@ -195,8 +195,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       error = function(e) NULL,
       warning = function(e) NULL
     ), mc.cores = cores)
-
-  specnames <- gsub(extension, "", file_names)
 
   if (any(unlist(lapply(tmp, is.null)))) {
     whichfailed <- which(unlist(lapply(tmp, is.null)))
