@@ -81,9 +81,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   final <- matrix(nrow = length(range), ncol = nb_files + 1)
   final[, 1] <- range
 
-  # vector of corrupt files
-  corrupt <- rep(FALSE, nb_files)
-
   # define separators
   seps <- paste0(c("\\\t|\\;| ", sep), collapse = "|\\")
 
@@ -143,14 +140,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
 
       # ToDo we can actually use this raw string to import metadata if we want
 
-      # TEMPORARY PLACEHOLDER TO DEAL WITH NaN & Inf VALUES IN SPEC
-      # remove NaN & inf
-      #    if(length(grep('\\tnan', raw)) + length(grep('\\tinf', raw)) > 0){
-      #      raw <- gsub('\\tnan', '\t0.0', raw)
-      #      raw <- gsub('\\tinf', '\t0.0', raw)
-      #      corrupt <- TRUE
-      #    }
-
       # substitute separators for a single value to be used in split
       raw <- gsub(seps, ";", raw)
 
@@ -191,10 +180,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
 
     # interpolate
     interp <- do.call(cbind, approx(tempframe[, 1], tempframe[, 2], xout = range))
-
-    # check if there are any NA left, assign as corrupt if so
-    # if(any(is.na(interp)))
-    #  corrupt[i] <- TRUE
 
     # add to final table
     # final[, i+1] <- interp[, 2]
@@ -237,11 +222,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   colnames(final) <- c("wl", specnames)
   final <- as.data.frame(final)
   class(final) <- c("rspec", "data.frame")
-
-  if (any(corrupt)) {
-    cat("\n")
-    warning("the following files contain character elements within wavelength and/or reflectance values: - check for corrupt or otherwise poorly exported files. Verify values returned.")
-  }
 
   # Negative value check
   if (any(final < 0, na.rm = TRUE)) {
