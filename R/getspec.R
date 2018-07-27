@@ -140,7 +140,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       raw <- gsub(seps, ";", raw)
 
       # remove multiply occuring split character
-      raw <- gsub(paste0("(;)\\1+"), "\\1", raw)
+      raw <- gsub(";+", ";", raw)
 
       # remove split character from first or last occurence
       raw <- gsub("^;|;$", "", raw)
