@@ -165,7 +165,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # raw <- raw[!grepl('[A-Da-dF-Zf-z]', raw)]
 
       # exclude any line that doesn't start with a number
-      scinum <- "-?[[:digit:]]+\\.?[[:digit:]]*((E|e)(-|+)?[[:digit:]]+)?"
+      scinum <- "-?[[:digit:]]+\\.?[[:digit:]]*((E|e)(-|\\+)?[[:digit:]]+)?"
       raw <- raw[grepl(paste0("^", scinum, ";"), raw)]
 
       # split on separators
