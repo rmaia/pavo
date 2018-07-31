@@ -36,9 +36,10 @@ test_that("getspec", {
   # should be able to handle this.
   expect_length(trm, 3)
 
+  # Test csv import and scientific format regex
   csv <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "csv", sep = ","))
   expect_is(csv, "rspec")
-  expect_length(csv, 2)
+  expect_length(csv, 3)
 
   ## Error handling
   # should fail completely; ROH files only have scope data, which are not imported by getspec

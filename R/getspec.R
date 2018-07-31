@@ -59,28 +59,23 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
 
   # get file names
   file_names <- list.files(where, pattern = extension, ignore.case = ignore.case,
-                           recursive = subdir, include.dirs = subdir)
-  files <- paste(where, "/", file_names, sep = "")
+			   recursive = subdir, include.dirs = subdir)
+  nb_files <- length(file_names)
 
-  if (subdir.names) {
-    file_names <- gsub(extension, "", file_names, ignore.case = ignore.case)
-  } else {
-    file_names <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
+  if (nb_files == 0) {
+    stop('No files found. Try a different extension value for argument "ext"')
   }
 
-  if (length(file_names) == 0) {
-    stop('No files found. Try a different extension value for argument "ext"')
+  files <- paste0(where, "/", file_names)
+
+  if (subdir.names) {
+    specnames <- gsub(extension, "", file_names, ignore.case = ignore.case)
+  } else {
+    specnames <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
   }
 
   # Wavelength range
   range <- seq(lim[1], lim[2])
-
-  # Build shell of final output
-  final <- matrix(nrow = length(range), ncol = length(file_names) + 1)
-  final[, 1] <- range
-
-  # vector of corrupt files
-  corrupt <- rep(FALSE, length(files))
 
   # define separators
   seps <- paste0(c("\\\t|\\;| ", sep), collapse = "|\\")
@@ -95,7 +90,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
     message('Parallel processing not available in Windows; "cores" set to 1.\n')
   }
 
-  if (length(files) <= cores) {
+  if (nb_files <= cores) {
     cores <- 1
   }
 
@@ -113,7 +108,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   }
 
   # message with number of spectra files being imported
-  message(length(files), " files found; importing spectra:")
+  message(nb_files, " files found; importing spectra:")
 
   gsp <- function(ff) {
     if (grepl("\\.ProcSpec$", ff, ignore.case = ignore.case)) {
@@ -135,25 +130,17 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       )
 
       # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
-      if (length(grep("Begin Calibration Data", raw)) > 0) {
+      if (any(grepl("Begin Calibration Data", raw))) {
         raw <- raw[1:grep("Begin Calibration Data", raw) - 1]
       }
 
       # ToDo we can actually use this raw string to import metadata if we want
 
-      # TEMPORARY PLACEHOLDER TO DEAL WITH NaN & Inf VALUES IN SPEC
-      # remove NaN & inf
-      #    if(length(grep('\\tnan', raw)) + length(grep('\\tinf', raw)) > 0){
-      #      raw <- gsub('\\tnan', '\t0.0', raw)
-      #      raw <- gsub('\\tinf', '\t0.0', raw)
-      #      corrupt <- TRUE
-      #    }
-
       # substitute separators for a single value to be used in split
       raw <- gsub(seps, ";", raw)
 
       # remove multiply occuring split character
-      raw <- gsub(paste0("(;)\\1+"), "\\1", raw)
+      raw <- gsub(";+", ";", raw)
 
       # remove split character from first or last occurence
       raw <- gsub("^;|;$", "", raw)
@@ -165,7 +152,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # raw <- raw[!grepl('[A-Da-dF-Zf-z]', raw)]
 
       # exclude any line that doesn't start with a number
-      scinum <- "-?[[:digit:]]+\\.?[[:digit:]]*((E|e)(-|+)?[[:digit:]]+)?"
+      scinum <- "-?[[:digit:]]+\\.?[[:digit:]]*((E|e)(-|\\+)?[[:digit:]]+)?"
       raw <- raw[grepl(paste0("^", scinum, ";"), raw)]
 
       # split on separators
@@ -187,17 +174,8 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       tempframe <- rawsplit[, c(1, dim(rawsplit)[2])]
     }
 
-    # interpolate
-    interp <- do.call(cbind, approx(tempframe[, 1], tempframe[, 2], xout = range))
-
-    # check if there are any NA left, assign as corrupt if so
-    # if(any(is.na(interp)))
-    #  corrupt[i] <- TRUE
-
-    # add to final table
-    # final[, i+1] <- interp[, 2]
-
-    interp[, 2]
+    # return interpolated spec
+    interp <- approx(tempframe[, 1], tempframe[, 2], xout = range)$y
 
     # setTxtProgressBar(progbar, i)
   }
@@ -209,12 +187,10 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       warning = function(e) NULL
     ), mc.cores = cores)
 
-  specnames <- gsub(extension, "", file_names)
-
   if (any(unlist(lapply(tmp, is.null)))) {
     whichfailed <- which(unlist(lapply(tmp, is.null)))
     # stop if all files are corrupt
-    if (!length(whichfailed) < length(files)) {
+    if (length(whichfailed) == nb_files) {
       stop("Could not import spectra, check input files and function arguments", call. = FALSE)
     }
 
@@ -236,14 +212,9 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   final <- as.data.frame(final)
   class(final) <- c("rspec", "data.frame")
 
-  if (any(corrupt)) {
-    cat("\n")
-    warning("the following files contain character elements within wavelength and/or reflectance values: - check for corrupt or otherwise poorly exported files. Verify values returned.")
-  }
-
   # Negative value check
-  if (length(final[final < 0]) > 0) {
-    message(paste("\nThe spectral data contain ", length(final[final < 0]), " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."), call. = FALSE)
+  if (any(final < 0, na.rm = TRUE)) {
+    message("\nThe spectral data contain", sum(final < 0, na.rm = TRUE), "negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.")
   }
 
   final
