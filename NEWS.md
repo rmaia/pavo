@@ -12,6 +12,8 @@ MINOR FEATURES AND BUG FIXES
 L [0,100], ab [-128,127]
 * getspec() has an additional argument `ignore.case` set to `TRUE` by default
 to ignore case in file extension matching
+* fix a bug where getspec() would sometimes fail with files including numbers in
+scientific format
 
 pavo 1.4.0
 ------------------------------------------------------------------------------
