@@ -20,11 +20,12 @@ to their individual documentation:
       \item \code{\link{cocplot}}: colour-opponent-coding space
       \item \code{\link{cieplot}}: cie spaces
       \item \code{\link{segplot}}: segment analysis space
+      \item \code{\link{jndplot}}: perceptual, 'noise corrected' space (for the results of \code{\link{jnd2xyz}})
       }
       Also see \code{\link{par}}.}
 }
 \value{
-A 2D colorspace plot appropriate to the input data.
+A colorspace plot appropriate to the input data.
 }
 \description{
 Plots reflectance spectra in the appropriate colorspace.

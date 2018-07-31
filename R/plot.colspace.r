@@ -14,10 +14,11 @@
 #'        \item \code{\link{cocplot}}: colour-opponent-coding space
 #'        \item \code{\link{cieplot}}: cie spaces
 #'        \item \code{\link{segplot}}: segment analysis space
+#'        \item \code{\link{jndplot}}: perceptual, 'noise corrected' space (for the results of \code{\link{jnd2xyz}})
 #'        }
 #'        Also see \code{\link{par}}.
 #'
-#' @return A 2D colorspace plot appropriate to the input data.
+#' @return A colorspace plot appropriate to the input data.
 #'
 #' @examples \dontrun{
 #' data(flowers)
