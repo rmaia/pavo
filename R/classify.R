@@ -188,22 +188,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       # Reference image
       refimg <- imgdat[[refID]]
 
-      # Transformed image data (TODO: SIMPLIFY)
-      # reftrans <- array(c(
-      #   as.matrix(t(apply(refimg[, , 1], 2, rev))),
-      #   as.matrix(t(apply(refimg[, , 2], 2, rev))),
-      #   as.matrix(t(apply(refimg[, , 3], 2, rev)))
-      # ),
-      # dim = c(
-      #   dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[1],
-      #   dim(as.matrix(t(apply(refimg[, , 1], 2, rev))))[2],
-      #   3
-      # )
-      # )
-
       if (plotnew) dev.new(noRStudioGD = TRUE)
 
-      # defaultrasterImageplot(refimg, ...)
       plot(refimg, ...)
 
       if (!is.null(kcols)) {
@@ -214,6 +200,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         reference <- as.data.frame(locator(type = "p", col = col))
         kcols <- nrow(reference)
       }
+      tag_loc <- reference
 
       if (plotnew) dev.off()
 
@@ -239,6 +226,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
 
       centers <- list()
+      tag_loc <- list()
       i <- 1
       while (i <= length(imgdat)) {
         if (plotnew) dev.new(noRStudioGD = TRUE)
@@ -262,6 +250,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         silent = TRUE
         )
         centers[[i]] <- ref_centers
+        tag_loc[[i]] <- reference
 
         if (class(centers[[i]]) == "try-error") {
           message("One or more coorodinates out-of bounds. Try again.")
@@ -288,6 +277,15 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
       attr(outdata[[i]], "raw_scale") <- attr(imgdat[[i]], "raw_scale")
       attr(outdata[[i]], "state") <- "colclass"
+      if (interactive) {
+        if (!is.null(refID)) {
+          attr(outdata[[refID]], "tag_loc") <- tag_loc
+        } else if (is.null(refID)) {
+          attr(outdata[[i]], "tag_loc") <- tag_loc[[i]]
+        }
+      } else {
+        attr(outdata[[i]], "tag_loc") <- NA
+      }
       if (length(kcols) > 1) {
         attr(outdata[[i]], "k") <- kcols[[i]]
       } else {
@@ -349,6 +347,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     } else if (is.null(kcols)) {
       attr(outdata, "k") <- nrow(reference)
     }
+    if(interactive)
+      attr(outdata, "tag_loc") <- reference
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
     attr(outdata, "outline") <- attr(imgdat, "outline")
     attr(outdata, "px_scale") <- attr(imgdat, "px_scale")
@@ -388,6 +388,7 @@ classify_main <- function(imgdat_i, n_cols_i) {
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
   # attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
   attr(outmat, "colnames") <- data.frame(name = 1:nrow(kMeans$centers))
+  attr(outmat, "tag_loc") <- NA
 
   outmat
 }

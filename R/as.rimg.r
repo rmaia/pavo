@@ -44,6 +44,7 @@ as.rimg <- function(object, name = "img") {
       attr(x, "k") <- NA
       attr(x, "outline") <- NA
       attr(x, "colnames") <- NA
+      attr(x, "tag_loc") <- NA
       x
     }
 
