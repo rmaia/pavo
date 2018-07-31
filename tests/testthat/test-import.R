@@ -26,9 +26,13 @@ test_that("getspec", {
   expect_is(proc, "rspec")
   expect_length(proc, 4)
 
+  # getspec should ignore the case of the ext argument by default
+  proccase <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "procspec"))
+  expect_identical(proccase, proc)
+
   trm <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "TRM"))
   expect_is(trm, "rspec")
-  # avantes.TRM and avantes2.TRM don't use the same wavelengths. The import 
+  # avantes.TRM and avantes2.TRM don't use the same wavelengths. The import
   # should be able to handle this.
   expect_length(trm, 3)
 
@@ -45,4 +49,8 @@ test_that("getspec", {
   expect_warning(getspec(system.file("testdata", package = "pavo"), ext = "txt"), "Could not import")
   oceanview <- suppressWarnings(getspec(system.file("testdata", package = "pavo"), ext = "txt"))
   expect_is(oceanview, "rspec")
+
+  # should fail if ignore.case is set to FALSE and user don't use correct case
+  expect_error(getspec(system.file("testdata", package = "pavo"), ext = "procspec", ignore.case = FALSE),
+               "No files found.")
 })

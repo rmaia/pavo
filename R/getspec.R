@@ -20,6 +20,8 @@
 #' spectra? (defaults to \code{FALSE}).
 #' @param cores Number of cores to be used. If greater than 1, import will use
 #'  parallel processing (not available in Windows).
+#' @param ignore.case Logical. Should the extension search be case insensitive?
+#' (defaults to TRUE)
 #' @param fast deprecated argument. use \code{cores} for parallel processing
 #'  instead.
 #' @return A data frame, of class \code{rspec}, containing individual imported
@@ -45,7 +47,7 @@
 
 getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
                     sep = NULL, subdir = FALSE, subdir.names = FALSE,
-                    cores = getOption("mc.cores", 2L), fast) {
+                    cores = getOption("mc.cores", 2L), ignore.case = TRUE, fast) {
 
   # check deprecated arguments
   if (!missing(fast)) {
@@ -56,13 +58,14 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   extension <- paste0("\\.", ext, "$", collapse = "|")
 
   # get file names
-  file_names <- list.files(where, pattern = extension, recursive = subdir, include.dirs = subdir)
+  file_names <- list.files(where, pattern = extension, ignore.case = ignore.case,
+                           recursive = subdir, include.dirs = subdir)
   files <- paste(where, "/", file_names, sep = "")
 
   if (subdir.names) {
-    file_names <- gsub(extension, "", file_names)
+    file_names <- gsub(extension, "", file_names, ignore.case = ignore.case)
   } else {
-    file_names <- gsub(extension, "", basename(file_names))
+    file_names <- gsub(extension, "", basename(file_names), ignore.case = ignore.case)
   }
 
   if (length(file_names) == 0) {
@@ -97,7 +100,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   }
 
   # if ProcSpec, check if xml2 is installed and loaded
-  if (any(grepl("\\.ProcSpec$", files))) {
+  if (any(grepl("\\.ProcSpec$", files, ignore.case = ignore.case))) {
     if (!requireNamespace("xml2", quietly = TRUE)) {
       stop('"xml2" package needed for to import .ProcSpec files. Please install it.',
         call. = FALSE
@@ -113,16 +116,16 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   message(length(files), " files found; importing spectra:")
 
   gsp <- function(ff) {
-    if (grepl("\\.ProcSpec$", ff)) {
+    if (grepl("\\.ProcSpec$", ff, ignore.case = ignore.case)) {
       # ProcSpec files differ too much from the other formats and need their own
       # function.
 
       tempframe <- parse_procspec(ff)
 
-    } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = TRUE)) {
-      
+    } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = ignore.case)) {
+
       tempframe <- parse_avantes(ff)
-      
+
     } else {
 
       # read in raw file
