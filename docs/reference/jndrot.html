@@ -126,27 +126,27 @@ center ("achro") or the data centroid ("mean", the default)?</p></td>
     </tr>
     <tr>
       <th>ref1</th>
-      <td><p>the cone to be used as a the first reference. May be NULL 
+      <td><p>the cone to be used as a the first reference. May be NULL
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for <code>coldist</code>. Defaults to 'l'.</p></td>
     </tr>
     <tr>
       <th>ref2</th>
-      <td><p>the cone to be used as a the second reference.May be NULL 
+      <td><p>the cone to be used as a the second reference.May be NULL
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for <code>coldist</code>. Defaults to 'u'.
 (only used if data has 3 dimensions).</p></td>
     </tr>
     <tr>
       <th>axis1</th>
-      <td><p>A vector of length 3 composed of 0's and 1's, with 
+      <td><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
 that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
 Ignored if <code>ref1</code> is NULL (in 3-dimensional case only)</p></td>
     </tr>
     <tr>
       <th>axis2</th>
-      <td><p>A vector of length 3 composed of 0's and 1's, with 
+      <td><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
 that the rotation aligns with the z axis (only used if data has 3 dimensions).
 Ignored if <code>ref2</code> is NULL (in 3-dimensional case only)</p></td>

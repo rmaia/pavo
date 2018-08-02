@@ -14,7 +14,7 @@ stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{resize}{an integer specifying the scaling factor for linearly
 resizing images, if so desired. E.g. 0.5 to half the size of an image, or 2 to
-doubling it.}
+double it.}
 
 \item{rotate}{an integer specifying the angle of image rotation, in degrees. Images
 are rotated around the centre, and linearly interpolated.}

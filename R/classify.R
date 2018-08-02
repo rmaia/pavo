@@ -347,8 +347,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     } else if (is.null(kcols)) {
       attr(outdata, "k") <- nrow(reference)
     }
-    if(interactive)
+    if (interactive) {
       attr(outdata, "tag_loc") <- reference
+    }
     attr(outdata, "imgname") <- attr(imgdat, "imgname")
     attr(outdata, "outline") <- attr(imgdat, "outline")
     attr(outdata, "px_scale") <- attr(imgdat, "px_scale")

@@ -7,12 +7,12 @@
 #' @param classimg (required) an xyz image matrix, or list of matrices, in which
 #' x and y correspond to pixel coordinates, and z is a numeric code specifying
 #' a colour-class. Preferably the result of \code{\link{classify}}.
+#' @param xpts (required) an integer specifying the number of sample points along the x axis,
+#' from which the evenly-spaced sampling grid is constructed. Defaults to 100, though
+#' this should be carefully considered.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param xpts an integer specifying the number of sample points along the x axis,
-#' from which the sampling grid is constructed. Defaults to 100 (e.g. a 100 x 100 grid,
-#' for a square image), though this should be carefully considered.
 #' @param exclude The portion of the image to be excluded from the analysis, if any.
 #' If excluding the focal object, its outline must first have been idenfitied using
 #' \code{\link{procimg}}. If excluding the image background it must either have been
@@ -37,8 +37,8 @@
 #' for visual modelling with spectral data.
 #' @param hsl data.frame specifying the hue, saturation, and luminance of color patch elements,
 #' as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
-#' column, named 'patch', should contain color category ID numbers, with the remain
-#' columns specifying one or more of 'hue' (angle, in radians), sat', and/or 'lum'.
+#' column, named 'patch', should contain color category ID numbers, with the remaining
+#' columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.
 #' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
 #'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
 #'  available on Windows.
@@ -83,6 +83,7 @@
 #'
 #' @examples \dontrun{
 #' set.seed(153)
+#' 
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
@@ -102,8 +103,8 @@
 #'                        sat = c(3.5, 1.1, 6.3, 1.3))
 #'
 #' # Full analysis, including the white background's ID
-# papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
-#                         coldists = distances, hsl = hsl_vals)
+#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
+#'                         coldists = distances, hsl = hsl_vals)
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
@@ -121,7 +122,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-adjacent <- function(classimg, xscale = NULL, xpts = 100, bkgID = NULL,
+adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)

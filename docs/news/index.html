@@ -107,10 +107,13 @@
 <li>image-based workflow for the combined analysis of colour and pattern geometry</li>
 <li>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em>
 </li>
+<li>getspec() can now read Avantes binary files (<code>.TRM</code> files)</li>
 </ul>
 <p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
 <li>cieLAB values have been rescaled, and are expressed in the more standard range: L [0,100], ab [-128,127]</li>
+<li>getspec() has an additional argument <code>ignore.case</code> set to <code>TRUE</code> by default to ignore case in file extension matching</li>
+<li>fix a bug where getspec() would sometimes fail with files including numbers in scientific format</li>
 </ul>
 </div>
     <div id="pavo-1-4-0" class="section level2">

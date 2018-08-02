@@ -26,9 +26,11 @@ parse_avantes <- function(filename) {
   # Translation into R by Hugo Gruson
 
   if (!grepl("\\.(abs|trm|roh)$", filename, ignore.case = TRUE)) {
-    stop("Unsupported file format. Please provide a file with either ",
-         "ABS, TRM or ROH ",
-         "file extension.")
+    stop(
+      "Unsupported file format. Please provide a file with either ",
+      "ABS, TRM or ROH ",
+      "file extension."
+    )
   }
 
   f <- file(filename, "rb")
@@ -64,20 +66,22 @@ parse_avantes <- function(filename) {
   triggersource <- readBin(f, "numeric", 1, 4)
   triggersourcetype <- readBin(f, "numeric", 1, 4)
   NTC1 <- readBin(f, "numeric", 1, 4) # onboard temp in degrees Celsius
-  NTC2 <- readBin(f, "numeric",1, 4) # NTC2 in Volt (not connected)
+  NTC2 <- readBin(f, "numeric", 1, 4) # NTC2 in Volt (not connected)
   Thermistor <- readBin(f, "numeric", 1, 4) # detector temp in degr Celsius (only TEC, NIR)
   dummy3 <- readBin(f, "numeric", 1, 4)
 
   # Data
   if (grepl("\\.(abs|trm)$", filename, ignore.case = TRUE)) {
-    data <- readBin(f, "numeric", 3*(ipixlast - ipixfirst + 1), 4)
-    data <- setNames(data.frame(matrix(data, ncol = 3, byrow = TRUE)),
-                     c("scope", "reference", "dark"))
-  } else {# scope mode
-    data = data.frame(
-      "scope"     = readBin(f, "numeric", ipixlast - ipixfirst + 1, 4),
+    data <- readBin(f, "numeric", 3 * (ipixlast - ipixfirst + 1), 4)
+    data <- setNames(
+      data.frame(matrix(data, ncol = 3, byrow = TRUE)),
+      c("scope", "reference", "dark")
+    )
+  } else { # scope mode
+    data <- data.frame(
+      "scope" = readBin(f, "numeric", ipixlast - ipixfirst + 1, 4),
       "reference" = NA,
-      "dark"      = NA
+      "dark" = NA
     )
   }
 
@@ -91,10 +95,10 @@ parse_avantes <- function(filename) {
   len <- nrow(data)
 
   data$wl <- rep_len(WLIntercept, len) +
-    WLX1 * seq(0, len-1) +
-    WLX2 * seq(0, len-1)^2 +
-    WLX3 * seq(0, len-1)^3 +
-    WLX4 * seq(0, len-1)^4
+    WLX1 * seq(0, len - 1) +
+    WLX2 * seq(0, len - 1)^2 +
+    WLX3 * seq(0, len - 1)^3 +
+    WLX4 * seq(0, len - 1)^4
 
   data$spec <- (data$scope - data$dark) / (data$reference - data$dark) * 100
 

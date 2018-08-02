@@ -43,8 +43,10 @@ test_that("getspec", {
 
   ## Error handling
   # should fail completely; ROH files only have scope data, which are not imported by getspec
-  expect_error(getspec(system.file("testdata", package = "pavo"), ext = "ROH"),
-               "Could not import spectra")
+  expect_error(
+    getspec(system.file("testdata", package = "pavo"), ext = "ROH"),
+    "Could not import spectra"
+  )
 
   # should partly succeed (1/2)
   expect_warning(getspec(system.file("testdata", package = "pavo"), ext = "txt"), "Could not import")
@@ -52,6 +54,8 @@ test_that("getspec", {
   expect_is(oceanview, "rspec")
 
   # should fail if ignore.case is set to FALSE and user don't use correct case
-  expect_error(getspec(system.file("testdata", package = "pavo"), ext = "procspec", ignore.case = FALSE),
-               "No files found.")
+  expect_error(
+    getspec(system.file("testdata", package = "pavo"), ext = "procspec", ignore.case = FALSE),
+    "No files found."
+  )
 })

@@ -35,7 +35,7 @@
 <meta property="og:description" content="Finds and imports spectra files from a folder. Currently works
 for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
 USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
-Avantes (after exporting)." />
+Avantes (before or after exporting)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -111,13 +111,13 @@ Avantes (after exporting)." />
     <p>Finds and imports spectra files from a folder. Currently works
 for reflectance files generated in Ocean Optics SpectraSuite (USB2000,
 USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
-Avantes (after exporting).</p>
+Avantes (before or after exporting).</p>
     
     </div>
 
     <pre class="usage"><span class='fu'>getspec</span>(<span class='kw'>where</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"txt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>300</span>, <span class='fl'>700</span>), <span class='kw'>decimal</span> <span class='kw'>=</span> <span class='st'>"."</span>,
   <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>), <span class='no'>fast</span>)</pre>
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>), <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>fast</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -160,6 +160,11 @@ spectra? (defaults to <code>FALSE</code>).</p></td>
       <th>cores</th>
       <td><p>Number of cores to be used. If greater than 1, import will use
 parallel processing (not available in Windows).</p></td>
+    </tr>
+    <tr>
+      <th>ignore.case</th>
+      <td><p>Logical. Should the extension search be case insensitive?
+(defaults to TRUE)</p></td>
     </tr>
     <tr>
       <th>fast</th>

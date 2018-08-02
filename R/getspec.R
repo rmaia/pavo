@@ -58,8 +58,10 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   extension <- paste0("\\.", ext, "$", collapse = "|")
 
   # get file names
-  file_names <- list.files(where, pattern = extension, ignore.case = ignore.case,
-			   recursive = subdir, include.dirs = subdir)
+  file_names <- list.files(where,
+    pattern = extension, ignore.case = ignore.case,
+    recursive = subdir, include.dirs = subdir
+  )
   nb_files <- length(file_names)
 
   if (nb_files == 0) {
@@ -116,11 +118,8 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # function.
 
       tempframe <- parse_procspec(ff)
-
     } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = ignore.case)) {
-
       tempframe <- parse_avantes(ff)
-
     } else {
 
       # read in raw file
@@ -214,8 +213,10 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
 
   # Negative value check
   if (any(final < 0, na.rm = TRUE)) {
-    message("\nThe spectral data contain ", sum(final < 0, na.rm = TRUE),
-            " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.")
+    message(
+      "\nThe spectral data contain ", sum(final < 0, na.rm = TRUE),
+      " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
+    )
   }
 
   final

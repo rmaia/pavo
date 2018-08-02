@@ -109,8 +109,8 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>getimg</span>(<span class='kw'>imgpath</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>max.size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>))</pre>
+    <pre class="usage"><span class='fu'>getimg</span>(<span class='kw'>imgpath</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>max.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -127,15 +127,20 @@ within a folder are fine.</p></td>
 included in the search? (defaults to <code>FALSE</code>).</p></td>
     </tr>
     <tr>
+      <th>subdir.names</th>
+      <td><p>should subdirectory path be included in the name of the
+images? (defaults to <code>FALSE</code>).</p></td>
+    </tr>
+    <tr>
       <th>max.size</th>
       <td><p>maximum size of all images to be allowed in memory, in GB. Defaults to
-<code>2</code>.</p></td>
+<code>1</code>.</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>number of cores to be used in parallel processing. If <code>1</code>, or 
-if totale image sizes exceed 200 mb in memory, parallel computing will not be used. 
-Defaults to <code>getOption("mc.cores", 2L)</code>.</p></td>
+      <td><p>number of cores to be used in parallel processing. If <code>1</code>, or
+if total image sizes exceed 200 mb in memory, parallel computing will not be used.
+Defaults to <code>getOption("mc.cores", 2L)</code>. Not available on Windows.</p></td>
     </tr>
     </table>
     
