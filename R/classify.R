@@ -62,6 +62,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
+  
+  # Need options
+  if (!interactive && is.null(kcols))
+    stop('Either kcols must be specified, or interactive classification used (via interactive = TRUE)')
 
   ## Class/structure
   if (!multi_image) {
