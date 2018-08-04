@@ -61,7 +61,8 @@ test_that("classify", {
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
 
   # Single
-  expect_error(classify(1, kcols = fake_IDs), "array")
+  expect_error(classify(1, kcols = 1), "array")
+  expect_error(classify(imgfake), "kcols")
 
   fake_class <- classify(imgfake, kcols = 2)
   expect_equal(dim(fake_class), c(8, 12))
