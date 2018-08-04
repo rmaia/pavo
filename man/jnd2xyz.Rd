@@ -4,9 +4,9 @@
 \alias{jnd2xyz}
 \title{Convert JND distances into perceptually-corrected Cartesian coordinates}
 \usage{
-jnd2xyz(coldistres, center = TRUE, rotate = TRUE, rotcenter = c("mean",
-  "achro"), ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0,
-  1))
+jnd2xyz(coldistres, center = TRUE, rotate = TRUE,
+  rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u",
+  axis1 = c(1, 1, 0), axis2 = c(0, 0, 1))
 }
 \arguments{
 \item{coldistres}{(required) the output from a \code{coldist} call.}

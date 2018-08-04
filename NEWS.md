@@ -14,6 +14,7 @@ L [0,100], ab [-128,127]
 to ignore case in file extension matching
 * fix a bug where getspec() would sometimes fail with files including numbers in
 scientific format
+* add a new option in tetraplot() to add cone names (u,s,m,l)
 
 pavo 1.4.0
 ------------------------------------------------------------------------------

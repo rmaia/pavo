@@ -4,8 +4,8 @@
 \alias{getspec}
 \title{Import spectra files}
 \usage{
-getspec(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
-  sep = NULL, subdir = FALSE, subdir.names = FALSE,
+getspec(where = getwd(), ext = "txt", lim = c(300, 700),
+  decimal = ".", sep = NULL, subdir = FALSE, subdir.names = FALSE,
   cores = getOption("mc.cores", 2L), ignore.case = TRUE, fast)
 }
 \arguments{

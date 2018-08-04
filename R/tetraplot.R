@@ -20,14 +20,16 @@
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.
 #' @param achro logical. Should the achromatic center be plotted? (defaults to \code{TRUE})
 #' @param achro.line logical. Should the achromatic line be plotted? (defaults to \code{FALSE})
-#' @param achro.col, achro.size, achro.lwd, achro.lty graphical parameters for the achromatic coordinates.
+#' @param achro.col,achro.size,achro.lwd,achro.lty graphical parameters for the achromatic coordinates.
 #' @param tetrahedron logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})
 #' @param vert.cex size of the points at the vertices (defaults to 1).
-#' @param out.lwd, out.lcol graphical parameters for the tetrahedral outline.
+#' @param out.lwd,out.lcol graphical parameters for the tetrahedral outline.
 #' @param margin vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).
 #' @param type accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
 #' the base of the tetrahedron.
-#' @param view, scale.y, axis, grid deprecated arguments.
+#' @param labels logical. Should the name of each cone be printed next to the
+#' corresponding vertex?
+#' @param view,scale.y,axis,grid deprecated arguments.
 #'
 #' @return \code{tetraplot} creates a 3D plot.
 #'
@@ -66,7 +68,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       range = c(1, 2), r = 1e6, zoom = 1,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-                      margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid, vertexsize, ...) {
+                      margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid, vertexsize, labels = FALSE, ...) {
 
   # check deprecated arguments view, scale.y, axis, grid
   if (!missing(view)) {
@@ -85,8 +87,9 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     stop('argument "vertexsize" is deprecated, please use "vert.cex" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
   }
 
-  trange <- function(x, newmin, newmax)
+  trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
+  }
 
   # get arguments
   arg <- list(...)
@@ -409,6 +412,13 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
       cex = psize[names(vinback)[!vinback]], col = NULL,
       bg = vcols[names(vinback)[!vinback]]
     )
+
+    if (labels) {
+      text(x = tcoord[c("u", "s", "m", "l"), "x"] + sign(tcoord[c("u", "s", "m", "l"), "x"]) * 5e-8,
+           y = tcoord[c("u", "s", "m", "l"), "y"] + sign(tcoord[c("u", "s", "m", "l"), "y"]) * 5e-8,
+           labels = c("u", "s", "m", "l"))
+    }
+
   }
 
 
