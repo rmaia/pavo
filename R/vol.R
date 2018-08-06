@@ -10,7 +10,7 @@
 #' @param new logical. Should a new plot be started or draw over an open plot?
 #' (defaults to FALSE)
 #' @param view,scale.y,axis deprecated arguments.
-#' @param ... additional graphical options. See \code{link{polygon}} and \code{\link{tetraplot}}.
+#' @param ... additional graphical options. See \code{\link{polygon}} and \code{\link{tetraplot}}.
 #'
 #' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot.
 #'

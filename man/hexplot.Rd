@@ -4,8 +4,8 @@
 \alias{hexplot}
 \title{Plot a colour hexagon}
 \usage{
-hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none", "fine",
-  "coarse"), sec.col = "grey", out.lwd = 1, out.lty = 1,
+hexplot(hexdata, achro = TRUE, labels = TRUE, sectors = c("none",
+  "fine", "coarse"), sec.col = "grey", out.lwd = 1, out.lty = 1,
   out.lcol = "black", labels.cex = 1, achrosize = 0.8,
   achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...)
 }

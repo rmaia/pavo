@@ -7,14 +7,15 @@
 \title{Interactive plot of a tetrahedral colorspace}
 \usage{
 tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
-  vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",
-  lwd = 1, lcol = "lightgrey", new = FALSE, hspin = FALSE,
-  vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE)
+  vertexsize = 0.02, achro = TRUE, achrosize = 0.01,
+  achrocol = "grey", lwd = 1, lcol = "lightgrey", new = FALSE,
+  hspin = FALSE, vspin = FALSE, floor = TRUE, grid = TRUE,
+  fill = TRUE)
 
 tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
-tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1, grid = TRUE,
-  fill = TRUE, lwd = 1)
+tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
+  grid = TRUE, fill = TRUE, lwd = 1)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
@@ -78,7 +79,7 @@ Produces a 3D convex hull in tetrahedral color space
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-plot(tcs.sicalis, size = 0.005)
+tcsplot(tcs.sicalis, size = 0.005)
 rgl.postscript('testplot.pdf',fmt='pdf')
 rgl.snapshot('testplot.png')
 
@@ -86,12 +87,12 @@ rgl.snapshot('testplot.png')
 patch <- rep(c('C', 'T', 'B'), 7)
 tcs.crown <- subset(tcs.sicalis, 'C')
 tcs.breast <- subset(tcs.sicalis, 'B')
-plot(tcs.crown, col ='blue')
-points(tcs.breast, col ='red')
+tcsplot(tcs.crown, col ='blue')
+tcspoints(tcs.breast, col ='red')
 
 # For plotting convex hull
-plot(tcs.sicalis, col = 'blue', size = 0.005)
-vol(tcs.sicalis)
+tcsplot(tcs.sicalis, col = 'blue', size = 0.005)
+tcsvol(tcs.sicalis)
 }
 
 }

@@ -37,7 +37,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' plot(tcs.sicalis, size = 0.005)
+#' tcsplot(tcs.sicalis, size = 0.005)
 #' rgl.postscript('testplot.pdf',fmt='pdf')
 #' rgl.snapshot('testplot.png')
 #'
@@ -45,12 +45,12 @@
 #' patch <- rep(c('C', 'T', 'B'), 7)
 #' tcs.crown <- subset(tcs.sicalis, 'C')
 #' tcs.breast <- subset(tcs.sicalis, 'B')
-#' plot(tcs.crown, col ='blue')
-#' points(tcs.breast, col ='red')
+#' tcsplot(tcs.crown, col ='blue')
+#' tcspoints(tcs.breast, col ='red')
 #'
 #' # For plotting convex hull
-#' plot(tcs.sicalis, col = 'blue', size = 0.005)
-#' vol(tcs.sicalis)
+#' tcsplot(tcs.sicalis, col = 'blue', size = 0.005)
+#' tcsvol(tcs.sicalis)
 #' }
 #'
 #' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
