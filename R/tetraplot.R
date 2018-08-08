@@ -3,8 +3,6 @@
 #' Produces a static 3D tetrahedral plot.
 #'
 #'
-# #' @usage plot(tcsdata, ...)
-#'
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace}
 #' or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
 #' coordinates as columns (labeled as such).
@@ -29,7 +27,6 @@
 #' the base of the tetrahedron.
 #' @param labels logical. Should the name of each cone be printed next to the
 #' corresponding vertex?
-#' @param view,scale.y,axis,grid deprecated arguments.
 #'
 #' @return \code{tetraplot} creates a 3D plot.
 #'
@@ -43,9 +40,9 @@
 #'
 #' }
 #'
-#' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
-#' \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
+#' @seealso \code{\link{plot.colspace}},\code{\link[plot3D]{scatter3D}},
 #'
+#' @author Hugo Gruson \email{hugo.gruson@@normalesup.org}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Chad Eliason \email{cme16@zips.uakron.edu}
@@ -54,9 +51,7 @@
 #'
 #' @keywords internal
 #'
-#' @importFrom grDevices trans3d dev.off pdf
-#' @importFrom graphics grconvertX grconvertY
-#' @importFrom plot3D perspbox
+#' @import plot3D
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
 #'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
@@ -64,46 +59,22 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
-                      range = c(1, 2), r = 1e6, zoom = 1,
-                      achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
-                      tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-                      margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid, vertexsize, labels = FALSE, ...) {
+tetraplot <- function(tcsdata,
+                      theta = 45, phi = 10,
+                      perspective = FALSE, range = c(1, 2),
+                      r = 1e6, zoom = 1,
+                      achro = TRUE, achro.col = "grey", achro.size = 1,
+                      achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
+                      tetrahedron = TRUE,
+                      vert.cex = 1, vert.range = c(1, 2),
+                      out.lwd = 1, out.lcol = "darkgrey",
+                      marginal = FALSE,
+                      margin = c(2, 2, 2, 2),
+                      type = "p", ...) {
 
-  # check deprecated arguments view, scale.y, axis, grid
-  if (!missing(view)) {
-    stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(scale.y)) {
-    stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(axis)) {
-    stop('argument "axis" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(grid)) {
-    stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(vertexsize)) {
-    stop('argument "vertexsize" is deprecated, please use "vert.cex" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
+  space = 1
 
-  trange <- function(x, newmin, newmax) {
-    (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
-  }
-
-  # get arguments
-  arg <- list(...)
-
-  if (is.null(arg$col)) arg$col <- 1
-  if (is.null(arg$cex)) arg$cex <- 1
-  if (is.null(arg$pch)) arg$pch <- 19
-  if (is.null(arg$xlab)) arg$xlab <- "x"
-  if (is.null(arg$ylab)) arg$ylab <- "y"
-  if (is.null(arg$zlab)) arg$zlab <- "z"
-
-  col <- arg$col
-  arg$col <- NULL
-
+  par(mar = margin, pty = "s")
 
   # tetrahedron vertices
   verts <- matrix(c(
@@ -116,313 +87,69 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   dimnames = list(c("u", "s", "m", "l"), c("x", "y", "z"))
   )
 
-  # combinations of vertices to make facets
-  sides <- verts[combn(1:4, 2), ]
-  rownames(sides) <- paste0(
-    rep(
-      do.call(paste0, data.frame(t(combn(c("u", "s", "m", "l"), 2)))),
-      each = 2
-    ),
-    c(".1", ".2")
-  )
+  pmat <- scatter3D(tcsdata$x, tcsdata$y, tcsdata$z,
+                    colvar = NULL, pch = 16,
+                    phi = phi, theta = theta,
+                    xlim = range(verts[, 1]) + c(-space, 0),
+                    ylim = range(verts[, 2]) + c(0, space),
+                    zlim = range(verts[, 3]) + c(-space, 0),
+                    r = r,
+                    bty = "g", xlab = "", ylab = "", zlab = "")
 
-  plims <- any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))
-
-  # if no limits are given, estimate based on tetrahedron or tcsdataa limits
-  if (plims) {
-
-    # first check if all xyzlim are null
-    if (!all(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))) {
-      stop('"xlim", "ylim" and "zlim" must either all be NULL or all be vectors of length 2', call. = FALSE)
-    }
-
-    if (tetrahedron) {
-      arg$xlim <- range(verts[, "x"]) / zoom
-      arg$ylim <- range(verts[, "y"]) / zoom
-      arg$zlim <- range(verts[, "z"]) / zoom
-    } else {
-      arg$xlim <- range(tcsdata[, "x"])
-      arg$ylim <- range(tcsdata[, "y"])
-      arg$zlim <- range(tcsdata[, "z"])
-    }
+  if (achro) {
+    scatter3D(x = 0, y = 0, z = 0,
+              col = achro.col, bg = achro.col, pch = 22, size = achro.size,
+              add = TRUE)
   }
 
-  # draw blank 3d plot
-  # Using persp directly creates a white rectangle that cannot be removed. So
-  # we have to use perspbox instead.
-  M <- do.call(perspbox, c(list(
-    x = arg$xlim,
-    y = arg$ylim,
-    z = diag(2) * arg$zlim,
-    r = r, box = FALSE, theta = theta, phi = phi
-  ), arg))
-
-  # position of points in projected space
-  allcoords <- as.matrix(rbind(
-    tcsdata[, c("x", "y", "z")],
-    verts[, c("x", "y", "z")],
-    achro = c(0, 0, 0),
-    achrbot = c(0, 0, -0.25)
-  ))
-
-  tcoord <- cbind(allcoords, 1) %*% M
-  tcoord[, 1] <- tcoord[, 1] / tcoord[, 4]
-  tcoord[, 2] <- tcoord[, 2] / tcoord[, 4]
-  colnames(tcoord) <- c("x", "y", "depth", "scale")
-
-  # Empty plot
-  argblank <- arg
-
-  # CRAN won't accept triple : arguments and persp.default is not exported,
-  # so we need to pass arguments by hand
-  perspargs <- c(
-    "x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab",
-    "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border",
-    "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", ""
-  )
-
-  argblank[perspargs] <- NULL
-  argblank$xlim <- tcoord["achro", "x"] + c(-1, 1) * max(abs(tcoord["achro", "x"] - tcoord[, "x"])) / zoom
-  argblank$ylim <- tcoord["achro", "y"] + c(-1, 1) * max(abs(tcoord["achro", "y"] - tcoord[, "y"])) / zoom
-  # argblank$ylim <- range(tcoord[,'y'])
-  argblank$x <- tcoord
-  argblank$type <- "n"
-  argblank$bty <- "n"
-  argblank$xaxt <- "n"
-  argblank$yaxt <- "n"
-  argblank$ylab <- ""
-  argblank$xlab <- ""
-
-  if (!plims) {
-    prange <- cbind(x = arg$xlim, y = arg$ylim, z = arg$zlim, 1) %*% M
-    prange[, 1] <- prange[, 1] / prange[, 4]
-    prange[, 2] <- prange[, 2] / prange[, 4]
-
-    argblank$xlim <- prange[, 1]
-    argblank$ylim <- prange[, 2]
+  if (achro.line) {
+    lines3D(x = c(0, 0),
+            y = c(0, 0),
+            z = c(-0.25, 0.75),
+            col = achro.col, lty = achro.lty, lwd = achro.lwd,
+            add = TRUE)
   }
-
-
-  par(mar = margin, pty = "s", new = TRUE)
-  do.call(plot, argblank)
-
-  # Get point coordinates
-  xy <- tcoord[rownames(tcoord) %in% rownames(tcsdata), c("x", "y"), drop = FALSE]
-
-  # get depth vector
-  if (tetrahedron) {
-    dvals <- tcoord[, "depth"]
-  } else {
-    dvals <- tcoord[!rownames(tcoord) %in% c("u", "s", "m", "l"), "depth"]
-  }
-
-  # transform depth vector
-  dvals <- trange(dvals, range[1], range[2])
-
-  # square root so it scales by area
-  dvals <- sqrt(dvals)
-  dvals <- trange(dvals, range[1], range[2])
-
-  maxdatad <- max(dvals[names(dvals) %in% rownames(tcsdata)])
-  mindatad <- min(dvals[names(dvals) %in% rownames(tcsdata)])
-
-  # turn depth vector to point size
-  psize <- dvals * arg$cex
-
-  vrange <- vert.cex * vert.range
-  psize[c("u", "s", "m", "l")] <- trange(psize[c("u", "s", "m", "l")], vrange[1], vrange[2])
-
-  # distort if ranges are not the same for points and vertices
-  if (!identical(range, vert.range)) {
-    psize[names(psize) %in% rownames(tcsdata)] <-
-      trange(psize[names(psize) %in% rownames(tcsdata)], range[1], range[2])
-  }
-
-
-  if (!perspective) {
-    psize[] <- arg$cex
-    psize[c("u", "s", "m", "l")] <- vert.cex
-  }
-
-
-  # add tetrahedron lines and vertices behind the data
 
   if (tetrahedron) {
-
-    # vertice colors
-    vcols <- setNames(
-      c("darkorchid1", "cornflowerblue", "mediumseagreen", "firebrick1"),
-      rownames(verts)
-    )
-
-    # tetrahedron sides
-    xytet <- cbind(sides, 1) %*% M
-    xytet[, 1] <- xytet[, 1] / xytet[, 4]
-    xytet[, 2] <- xytet[, 2] / xytet[, 4]
-    colnames(xytet) <- c("x", "y", "depth", "scale")
-
-    segs <- cbind(xytet[c(1, 3, 5, 7, 9, 11), c("x", "y")], xytet[c(2, 4, 6, 8, 10, 12), c("x", "y")])
-
-    # which vertex are behind data
-    vinback <- dvals[c("u", "s", "m", "l")] < mindatad
-
-    # sort segments by proximity
-    combdist <- setNames(
-      apply(combn(dvals[c("u", "s", "m", "l")], 2), 2, sum),
-      apply(combn(names(dvals[c("u", "s", "m", "l")]), 2), 2, paste0, collapse = "")
-    )
-
-    # get 3 most in back
-    inback <- names(sort(combdist, )[1:3])
-
-    linback <- grepl(paste0(inback, collapse = "|"), rownames(segs))
-
-    segments(
-      segs[linback, 1, drop = FALSE],
-      segs[linback, 2, drop = FALSE],
-      segs[linback, 3, drop = FALSE],
-      segs[linback, 4, drop = FALSE],
-      lwd = out.lwd, col = out.lcol
-    )
-
-    # add vertices behind tetrahedron
-
-    points(tcoord[names(vinback)[vinback], c("x", "y"), drop = FALSE],
-      pch = 21,
-      cex = psize[names(vinback)[vinback]], col = NULL,
-      bg = vcols[names(vinback)[vinback]]
-    )
+    lines3D(x = verts[c(1, 2, 3, 4, 1, 3, 1, 2, 4), 1],
+            y = verts[c(1, 2, 3, 4, 1, 3, 1, 2, 4), 2],
+            z = verts[c(1, 2, 3, 4, 1, 3, 1, 2, 4), 3],
+            lwd = out.lwd, col = out.lcol,
+            add = TRUE)
+    scatter3D(x = verts[, 1],
+              y = verts[, 2],
+              z = verts[, 3],
+              colvar = NULL,
+              col = c("darkorchid1", "cornflowerblue", "mediumseagreen", "firebrick1"),
+              colkey = FALSE,
+              pch = 19,
+              add = TRUE)
   }
 
-
-  # add achromatic center if it is behind the data
-  if (achro && dvals["achro"] < maxdatad) {
-    points(tcoord["achro", c("x", "y"), drop = FALSE],
-      col = NULL, bg = achro.col,
-      pch = 22, cex = psize["achro"] * achro.size
-    )
+  if (marginal) {
+    YZ <- trans3D(x = rep(-space, nrow(tcsdata)),
+                  y = tcsdata$y,
+                  z = tcsdata$z,
+                  pmat = pmat)
+    scatter2D(YZ$x, YZ$y,
+              col = "#E69F0055", pch = 16,
+              add = TRUE)
+    XZ <- trans3D(x = tcsdata$x,
+                  y = rep(space, nrow(tcsdata)),
+                  z = tcsdata$z,
+                  pmat = pmat)
+    scatter2D(XZ$x, XZ$y,
+              col = "#56B4E955", pch = 16,
+              add = TRUE)
+    XY <- trans3D(x = tcsdata$x,
+                  y = tcsdata$y,
+                  z = rep(-space, nrow(tcsdata)),
+                  pmat = pmat)
+    scatter2D(XY$x, XY$y,
+              col = "#009E7355", pch = 16,
+              add = TRUE)
   }
 
-  # add achromatic line if behind the data
-  if (achro.line && dvals["achro"] < maxdatad) {
-    lines(tcoord[c("achrbot", "u"), c("x", "y"), drop = FALSE], col = achro.col, lty = achro.lty, lwd = achro.lwd)
-  }
+#  assign("last_plot.tetra", pmat, envir = .PlotTetraEnv)
 
-  ######################
-  # add tcsdata points #
-  ######################
-  argpoints <- arg
-  argpoints[perspargs] <- NULL
-
-  argpoints$col <- col
-  if (is.null(argpoints$bg)) argpoints$bg <- col
-  argpoints$cex <- psize[names(psize) %in% rownames(tcsdata)]
-  argpoints$x <- xy
-
-  # ATTRIBUTES THAT RELATE TO POINTS:
-  # pch, cex, col, bg ...?
-  if (length(argpoints$col) < dim(argpoints$x)[1]) {
-    if (dim(argpoints$x)[1] %% length(argpoints$col) > 0) {
-      warning('data object length is not a multiple of "col"', call. = FALSE)
-    }
-
-    argpoints$col <- rep(argpoints$col, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
-  }
-
-  if (length(argpoints$bg) < dim(argpoints$x)[1]) {
-    if (dim(argpoints$x)[1] %% length(argpoints$bg) > 0) {
-      warning('data object length is not a multiple of "bg"', call. = FALSE)
-    }
-
-    argpoints$bg <- rep(argpoints$bg, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
-  }
-
-  if (length(argpoints$cex) < dim(argpoints$x)[1]) {
-    if (dim(argpoints$x)[1] %% length(argpoints$cex) > 0) {
-      warning('data object length is not a multiple of "cex"', call. = FALSE)
-    }
-
-    argpoints$cex <- rep(argpoints$cex, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
-  }
-
-  if (length(argpoints$pch) < dim(argpoints$x)[1]) {
-    if (dim(argpoints$x)[1] %% length(argpoints$pch) > 0) {
-      warning('data object length is not a multiple of "pch"', call. = FALSE)
-    }
-
-    argpoints$pch <- rep(argpoints$pch, dim(argpoints$x)[1])[seq(dim(argpoints$x)[1])]
-  }
-
-  # sort points by distance
-  ptorder <- order(dvals[rownames(tcsdata)])
-
-  if (length(argpoints$x) > 2) argpoints$x <- argpoints$x[ptorder, ]
-  argpoints$col <- argpoints$col[ptorder]
-  argpoints$bg <- argpoints$bg[ptorder]
-  argpoints$cex <- argpoints$cex[ptorder]
-  argpoints$pch <- argpoints$pch[ptorder]
-
-  if ("l" %in% type) {
-    # calculate bottom of the points
-    botpoints <- as.matrix(tcsdata[, c("x", "y", "z")])
-    botpoints[, "z"] <- -0.25
-    botpoints <- cbind(botpoints, 1) %*% M
-    botpoints[, 1] <- botpoints[, 1] / botpoints[, 4]
-    botpoints[, 2] <- botpoints[, 2] / botpoints[, 4]
-    colnames(botpoints) <- c("x", "y", "depth", "scale")
-
-    arghl <- argpoints
-    arghl$x <- NULL
-    arghl$x0 <- xy[, "x"]
-    arghl$y0 <- xy[, "y"]
-    arghl$x1 <- botpoints[, "x"]
-    arghl$y1 <- botpoints[, "y"]
-    do.call(segments, arghl)
-  }
-
-  if ("p" %in% type) {
-    do.call(points, argpoints)
-  }
-
-  # add achromatic center if it is in front of the data
-  if (achro && dvals["achro"] > maxdatad) {
-    points(tcoord["achro", c("x", "y"), drop = FALSE],
-      col = NULL, bg = achro.col,
-      pch = 22, cex = psize["achro"] * achro.size
-    )
-  }
-
-  # add achromatic line if in front of the data
-  if (achro.line && dvals["achro"] > maxdatad) {
-    lines(tcoord[c("achrbot", "u"), c("x", "y"), drop = FALSE], col = achro.col, lty = achro.lty, lwd = achro.lwd)
-  }
-
-  # add tetrahedron lines and vertices in front of the points
-  if (tetrahedron) {
-    segments(
-      segs[!linback, 1, drop = FALSE],
-      segs[!linback, 2, drop = FALSE],
-      segs[!linback, 3, drop = FALSE],
-      segs[!linback, 4, drop = FALSE],
-      lwd = out.lwd, col = out.lcol
-    )
-
-    points(tcoord[names(vinback)[!vinback], c("x", "y"), drop = FALSE],
-      pch = 21,
-      cex = psize[names(vinback)[!vinback]], col = NULL,
-      bg = vcols[names(vinback)[!vinback]]
-    )
-
-    if (labels) {
-      text(
-        x = tcoord[c("u", "s", "m", "l"), "x"] + sign(tcoord[c("u", "s", "m", "l"), "x"]) * 5e-8,
-        y = tcoord[c("u", "s", "m", "l"), "y"] + sign(tcoord[c("u", "s", "m", "l"), "y"]) * 5e-8,
-        labels = c("u", "s", "m", "l")
-      )
-    }
-  }
-
-
-  # Save plot info
-  assign("last_plot.tetra", M, envir = .PlotTetraEnv)
 }
