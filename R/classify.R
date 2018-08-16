@@ -28,7 +28,7 @@
 #' Also see \code{\link{par}}.
 #'
 #' @return A matrix, or list of matrices, of class \code{rimg} containing the colour
-#' class classifications at each pixel location. The RGB values corresponding to
+#' class classifications ID at each pixel location. The RGB values corresponding to
 #' k-means centres (i.e. colour classes) are stored as object attributes.
 #'
 #' @export

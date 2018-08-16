@@ -25,7 +25,7 @@ and the user asked to select either end of the scale corresponding to the input 
 
 \item{outline}{interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
-polygon are saved as an attribute, for use in genrating a masking layer &
+closed polygon are saved as an attribute, for use in genrating a masking layer &
 separating animals/plants from backgrounds in further analyses. This is particularly
 useful when backgrounds are complex, (e.g. in natural settings) in which case
 backgrounds and objects cannot be readily separated by simple k-means clustering.}
@@ -42,11 +42,11 @@ using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
-an image array, or list containing images, for use in further
-\code{pavo} functions, with scales stored as an attribute.
+an image, or list of images, for use in further
+\code{pavo} functions.
 }
 \description{
-Specify the scale of images, and define focal objects.
+Specify scales, resize, and/or define focal objects within images.
 }
 \examples{
 \dontrun{

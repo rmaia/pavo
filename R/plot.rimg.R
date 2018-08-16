@@ -10,7 +10,7 @@
 #' Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
-#' @return a image plot or plots.
+#' @return a image plot.
 #'
 #' @export
 #'

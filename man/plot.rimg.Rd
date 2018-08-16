@@ -17,7 +17,7 @@ Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colo
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
-a image plot or plots.
+a image plot.
 }
 \description{
 Plot unprocessed or colour-classified image data. If the

@@ -15,7 +15,7 @@
 #' if total image sizes exceed 200 mb in memory, parallel computing will not be used.
 #' Defaults to \code{getOption("mc.cores", 2L)}. Not available on Windows.
 #'
-#' @return a array, or list of arrays, of class \code{rimg}, containing image data
+#' @return a image, or list of images, of class \code{rimg},
 #' for use in further \code{pavo} functions.
 #'
 #' @export

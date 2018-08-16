@@ -26,7 +26,7 @@ if total image sizes exceed 200 mb in memory, parallel computing will not be use
 Defaults to \code{getOption("mc.cores", 2L)}. Not available on Windows.}
 }
 \value{
-a array, or list of arrays, of class \code{rimg}, containing image data
+a image, or list of images, of class \code{rimg},
 for use in further \code{pavo} functions.
 }
 \description{
