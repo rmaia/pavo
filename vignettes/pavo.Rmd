@@ -81,6 +81,7 @@ If you already have multiple spectra in a single data frame that you'd like to u
 ```{r, echo=TRUE, eval=TRUE}
 # Create some fake reflectance data with wavelength column arbitrarily titled
 # and not first in the data frame:
+set.seed(1612215)
 fakedat <- data.frame(
   refl1 = rnorm(n = 801),
   refl2 = rnorm(n = 801),
