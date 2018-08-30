@@ -1,8 +1,10 @@
-## ---- echo=FALSE, warning=FALSE, results='hide', message=FALSE-----------
-library(pavo)
-
 ## ---- echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '70%', dpi = 72----
 knitr::include_graphics('fig/workflow.png')
+
+## ---- echo=TRUE, warning=FALSE, results='hide', message=FALSE------------
+# Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
+library(pavo)
+set.seed(1612217)
 
 ## ---- echo=FALSE, eval=TRUE, results='hide', include=FALSE---------------
 # specs <- getspec(system.file("extdata", package = "pavo"), ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
@@ -595,7 +597,7 @@ plot(butterflies[[2]])
 #  butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 
 ## ------------------------------------------------------------------------
-set.seed(5)
+#set.seed(5)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----

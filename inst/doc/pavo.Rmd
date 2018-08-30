@@ -12,10 +12,6 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r, echo=FALSE, warning=FALSE, results='hide', message=FALSE}
-library(pavo)
-```
-
 # Introduction
 
 `pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial color data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualization and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
@@ -26,10 +22,18 @@ library(pavo)
 2. **Analyze** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 3. **Visualize** the output, with multiple options provided for exploration and analysis.
 
-Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
+Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo). 
 
 ```{r, echo = FALSE, fig.cap = "_A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage._", out.width = '70%', dpi = 72}
 knitr::include_graphics('fig/workflow.png')
+```
+
+Let's begin by loading the package.
+
+```{r, echo=TRUE, warning=FALSE, results='hide', message=FALSE}
+# Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
+library(pavo)
+set.seed(1612217)
 ```
 
 # Organizing Spectral Data
@@ -1187,7 +1191,7 @@ All of these options can be simultaneously specified in a single call to `procim
 The segmentation of RGB images into discrete color-classes is an essential step on the road to several analyses, and this is carried out in `pavo` via `classify`. The function currently implements k-means clustering which, although an 'unsupervised' methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colors in each (an important step to be closely considered beforehand beforehand, often through visual modelling to estimate the number of discriminable colors), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.   
 
 ```{r}
-set.seed(5)
+#set.seed(5)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 ```
 
