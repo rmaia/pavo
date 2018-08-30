@@ -66,7 +66,7 @@
       <h1>pavo</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2018-08-02</h4>
+            <h4 class="date">2018-08-30</h4>
       
       
       <div class="hidden name"><code>pavo.Rmd</code></div>
@@ -140,13 +140,13 @@
 <a class="sourceLine" id="cb8-6" data-line-number="6">  <span class="dt">wavelength =</span> <span class="kw">seq</span>(<span class="dv">300</span>, <span class="dv">700</span>, <span class="dt">by =</span> <span class="fl">.5</span>)</a>
 <a class="sourceLine" id="cb8-7" data-line-number="7">)</a>
 <a class="sourceLine" id="cb8-8" data-line-number="8"><span class="kw">head</span>(fakedat)</a></code></pre></div>
-<pre><code>##        refl1      refl2 wavelength
-## 1 -0.2717738 -1.1492521      300.0
-## 2 -1.6251267 -0.8761062      300.5
-## 3 -1.1064699 -0.9822639      301.0
-## 4 -2.6062657 -0.9572897      301.5
-## 5 -0.1132692  0.4250670      302.0
-## 6  1.4418470 -1.8073797      302.5</code></pre>
+<pre><code>##        refl1       refl2 wavelength
+## 1  0.8374899 -0.05249138      300.0
+## 2  0.2527621  0.85527833      300.5
+## 3  0.1134501  0.41464640      301.0
+## 4 -1.0493139  0.93132595      301.5
+## 5  1.6956411  0.15561069      302.0
+## 6 -0.7521044  0.60951493      302.5</code></pre>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat)</a></code></pre></div>
 <pre><code>## [1] FALSE</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1">fakedat.new &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat)</a></code></pre></div>
@@ -154,22 +154,22 @@
 <div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="../reference/as.rspec.html">is.rspec</a></span>(fakedat.new)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw">head</span>(fakedat.new)</a></code></pre></div>
-<pre><code>##    wl      refl1        refl2
-## 1 300 -0.2717738 -1.149252091
-## 2 301 -1.1064699 -0.982263943
-## 3 302 -0.1132692  0.425067046
-## 4 303  0.9369455  0.212588236
-## 5 304 -1.4559128  1.304499096
-## 6 305  0.5060648  0.006948132</code></pre>
+<pre><code>##    wl      refl1       refl2
+## 1 300  0.8374899 -0.05249138
+## 2 301  0.1134501  0.41464640
+## 3 302  1.6956411  0.15561069
+## 4 303  0.4665528 -0.14511391
+## 5 304 -0.4073117 -0.76738452
+## 6 305  0.3033306  1.02221692</code></pre>
 <p>As can be seen, <code>as.rspec</code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1"><span class="kw">head</span>(<span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">whichwl =</span> <span class="dv">3</span>))</a></code></pre></div>
-<pre><code>##    wl      refl1        refl2
-## 1 300 -0.2717738 -1.149252091
-## 2 301 -1.1064699 -0.982263943
-## 3 302 -0.1132692  0.425067046
-## 4 303  0.9369455  0.212588236
-## 5 304 -1.4559128  1.304499096
-## 6 305  0.5060648  0.006948132</code></pre>
+<pre><code>##    wl      refl1       refl2
+## 1 300  0.8374899 -0.05249138
+## 2 301  0.1134501  0.41464640
+## 3 302  1.6956411  0.15561069
+## 4 303  0.4665528 -0.14511391
+## 5 304 -0.4073117 -0.76738452
+## 6 305  0.3033306  1.02221692</code></pre>
 <p>Finally, the <code>lim</code> argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn’t contain this information (and hence you cannot specify the column with <code>whichwl</code> or automatically find the column with <code>as.rspec</code>). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with <code>lim</code>:</p>
 <div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</a></code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
@@ -1370,7 +1370,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <div class="sourceCode" id="cb166"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb166-1" data-line-number="1"><span class="kw"><a href="../reference/as.rimg.html">is.rimg</a></span>(butterflies)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb168"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb168-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>##  'rimg' num [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  rimg [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "h_melpomene"
 ##  - attr(*, "px_scale")= logi NA
@@ -1380,7 +1380,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 ##  - attr(*, "colnames")= logi NA
 ##  - attr(*, "tag_loc")= logi NA</code></pre>
 <div class="sourceCode" id="cb170"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb170-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code>##  'rimg' num [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  rimg [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "papilio"
 ##  - attr(*, "px_scale")= logi NA
@@ -1400,7 +1400,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <a class="sourceLine" id="cb172-8" data-line-number="8"><span class="kw"><a href="../reference/as.rimg.html">is.rimg</a></span>(fake_rimg)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb174"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb174-1" data-line-number="1"><span class="kw">str</span>(fake_rimg)</a></code></pre></div>
-<pre><code>##  'rimg' num [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
+<pre><code>##  rimg [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "img"
 ##  - attr(*, "px_scale")= logi NA

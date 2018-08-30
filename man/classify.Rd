@@ -10,13 +10,13 @@ classify(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
-stored in a list. preferably the result of \code{\link{getimg}}.}
+stored in a list. Preferably the result of \code{\link{getimg}}.}
 
 \item{kcols}{the number of discrete colour classes present in the input image(s).
-Can be an integer when only a single image is present, or if kcols is identical for all
+Can be a single integer when only a single image is present, or if kcols is identical for all
 images. When passing a list of images, \code{kcols} can also be a vector the same length
 as \code{imgdat}, or a data.frame with two columns specifying image file names and
-corresponding kcols. Can be optionally disregarded when \code{interactive = TRUE},
+corresponding kcols. Can optionally be disregarded when \code{interactive = TRUE},
 and kcols will be inferred from the number of selections.}
 
 \item{refID}{the optional numeric index of a 'reference' image, for use when passing

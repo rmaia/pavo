@@ -137,7 +137,7 @@ functions</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='co'># Generate some fake reflectance data</span>
+<span class='co'># Generate some fake image data</span>
 <span class='no'>fake</span> <span class='kw'>&lt;-</span> <span class='fu'>array</span>(<span class='fu'>c</span>(
 <span class='fu'>as.matrix</span>(<span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>0.2</span>, <span class='fl'>0.4</span>, <span class='fl'>0.6</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>250</span>)),
 <span class='fu'>as.matrix</span>(<span class='fu'>rep</span>(<span class='fu'>c</span>(<span class='fl'>0.4</span>, <span class='fl'>0.7</span>, <span class='fl'>0.8</span>), <span class='kw'>each</span> <span class='kw'>=</span> <span class='fl'>250</span>)),
@@ -145,10 +145,10 @@ functions</p>
 <span class='kw'>dim</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>750</span>, <span class='fl'>750</span>, <span class='fl'>3</span>))
 <span class='fu'>head</span>(<span class='no'>fakedat</span>)
 
-<span class='co'># Determine if is rspec object</span>
+<span class='co'># Determine if is rimg object</span>
 <span class='fu'>is.rimg</span>(<span class='no'>fake</span>)
 
-<span class='co'># Convert to rspec object</span>
+<span class='co'># Convert to rimg object</span>
 <span class='no'>fake2</span> <span class='kw'>&lt;-</span> <span class='fu'>as.rimg</span>(<span class='no'>fake</span>)
 <span class='fu'>is.rimg</span>(<span class='no'>fake2</span>)
 

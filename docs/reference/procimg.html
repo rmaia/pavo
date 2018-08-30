@@ -32,7 +32,7 @@
 
 <meta property="og:title" content="Process images — procimg" />
 
-<meta property="og:description" content="Specify the scale of images, and define focal objects." />
+<meta property="og:description" content="Specify scales, resize, and/or define focal objects within images." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -105,7 +105,7 @@
 
     <div class="ref-description">
     
-    <p>Specify the scale of images, and define focal objects.</p>
+    <p>Specify scales, resize, and/or define focal objects within images.</p>
     
     </div>
 
@@ -142,7 +142,7 @@ and the user asked to select either end of the scale corresponding to the input 
       <th>outline</th>
       <td><p>interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
-polygon are saved as an attribute, for use in genrating a masking layer &amp;
+closed polygon are saved as an attribute, for use in genrating a masking layer &amp;
 separating animals/plants from backgrounds in further analyses. This is particularly
 useful when backgrounds are complex, (e.g. in natural settings) in which case
 backgrounds and objects cannot be readily separated by simple k-means clustering.</p></td>
@@ -172,8 +172,8 @@ using Chaikin's corner-cuting algorithm? Defaults to <code>FALSE</code>.</p></td
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>an image array, or list containing images, for use in further
-<code>pavo</code> functions, with scales stored as an attribute.</p>
+    <p>an image, or list of images, for use in further
+<code>pavo</code> functions.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 

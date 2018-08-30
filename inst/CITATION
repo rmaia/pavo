@@ -1,17 +1,12 @@
-citHeader("To cite package pavo in publications use:")
+citHeader("To cite package pavo (>2.0) in publications use:")
 
 citEntry(entry="Article",
-    title = "pavo: an R Package for the analysis, visualization and organization of spectral data",
+    title = "pavo 2.0: new tools for the spectral and spatial analysis of colour in R",
     author = personList(as.person("Rafael Maia"),
-    as.person("Chad M. Eliason"),
-    as.person("Pierre-Paul Bitton"),
-    as.person("Stephanie M. Doucet"),
-    as.person("Matthew D. Shawkey")
+    as.person("Hugo Gruson"),
+    as.person("John A. Endler"),
+    as.person("Thomas E. White")
     ),
-	journal = "Methods in Ecology and Evolution",
-  year = "2013",
-	volume = "4",
-  issue = "10",
-	pages = "609-613",
-  doi = "10.1111/2041-210X.12069",
-  textVersion = "Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013. pavo: an R Package for the analysis, visualization and organization of spectral data. Methods in Ecology and Evolution 4(10):609-613. doi: 10.1111/2041-210X.12069")
+	journal = "bioRxiv",
+  year = "2018",
+  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2018. pavo 2.0: new tools for the spectral and spatial analysis of colour in R. bioRxiv.")

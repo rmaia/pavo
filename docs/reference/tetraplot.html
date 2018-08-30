@@ -111,10 +111,11 @@
 
     <pre class="usage"><span class='fu'>tetraplot</span>(<span class='no'>tcsdata</span>, <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>perspective</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>achro.col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>achro.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro.line</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>achro.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>achro.lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>tetrahedron</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vert.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>vert.range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
-  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='no'>view</span>, <span class='no'>scale.y</span>, <span class='no'>axis</span>, <span class='no'>grid</span>, <span class='no'>vertexsize</span>, <span class='no'>...</span>)</pre>
+  <span class='kw'>achro.col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>achro.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro.line</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>achro.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>achro.lty</span> <span class='kw'>=</span> <span class='fl'>3</span>, <span class='kw'>tetrahedron</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vert.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>vert.range</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>2</span>), <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>,
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>, <span class='no'>view</span>, <span class='no'>scale.y</span>, <span class='no'>axis</span>, <span class='no'>grid</span>,
+  <span class='no'>vertexsize</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -158,8 +159,8 @@ See <code>persp</code> for details.</p></td>
       <td><p>logical. Should the achromatic center be plotted? (defaults to <code>TRUE</code>)</p></td>
     </tr>
     <tr>
-      <th>achro.col, </th>
-      <td><p>achro.size, achro.lwd, achro.lty graphical parameters for the achromatic coordinates.</p></td>
+      <th>achro.col, achro.size, achro.lwd, achro.lty</th>
+      <td><p>graphical parameters for the achromatic coordinates.</p></td>
     </tr>
     <tr>
       <th>achro.line</th>
@@ -174,8 +175,8 @@ See <code>persp</code> for details.</p></td>
       <td><p>size of the points at the vertices (defaults to 1).</p></td>
     </tr>
     <tr>
-      <th>out.lwd, </th>
-      <td><p>out.lcol graphical parameters for the tetrahedral outline.</p></td>
+      <th>out.lwd, out.lcol</th>
+      <td><p>graphical parameters for the tetrahedral outline.</p></td>
     </tr>
     <tr>
       <th>margin</th>
@@ -187,8 +188,13 @@ See <code>persp</code> for details.</p></td>
 the base of the tetrahedron.</p></td>
     </tr>
     <tr>
-      <th>view, </th>
-      <td><p>scale.y, axis, grid deprecated arguments.</p></td>
+      <th>view, scale.y, axis, grid</th>
+      <td><p>deprecated arguments.</p></td>
+    </tr>
+    <tr>
+      <th>labels</th>
+      <td><p>logical. Should the name of each cone be printed next to the
+corresponding vertex?</p></td>
     </tr>
     </table>
     

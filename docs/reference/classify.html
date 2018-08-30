@@ -110,7 +110,8 @@
     </div>
 
     <pre class="usage"><span class='fu'>classify</span>(<span class='no'>imgdat</span>, <span class='kw'>kcols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>refID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'>getOption</span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>),
+  <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,7 +169,7 @@ Also see <code>par</code>.</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A matrix, or list of matrices, of class <code>rimg</code> containing the colour
-class classifications at each pixel location. The RGB values corresponding to
+class classifications ID at each pixel location. The RGB values corresponding to
 k-means centres (i.e. colour classes) are stored as object attributes.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
