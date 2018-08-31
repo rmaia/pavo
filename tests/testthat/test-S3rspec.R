@@ -14,7 +14,7 @@ test_that("summary.rspec", {
   data(sicalis)
 
   expect_equal(dim(summary(sicalis)), c(21, 23))
-  expect_known_hash(summary(sicalis), "445ac7b9b5")
+  expect_known_hash(summary(sicalis), "66129550f3")
 
   # Subset
   expect_named(summary(sicalis, subset = TRUE), c("B2", "S8", "H1"))
