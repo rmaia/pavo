@@ -81,7 +81,7 @@ REF 3, 9
 S8 (Chroma): (Rmax - Rmin)/B2. Because it uses both Rmin and Rmax, this measure may be
 sensitive to spectral noise. REF 3, 13
 
-S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color
+S9 (Carotenoid chroma): (R700 - R450)/R700. Should only be used when the color
 of the surface is clearly due to carotenoid pigmentation and R450 is lower than
 R700. Could be sensitive to noise. REF 8
 

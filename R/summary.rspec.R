@@ -72,7 +72,7 @@
 #' S8 (Chroma): (Rmax - Rmin)/B2. Because it uses both Rmin and Rmax, this measure may be
 #' sensitive to spectral noise. REF 3, 13
 #'
-#' S9 (Carotenoid chroma): (R450 - R700)/R700. Should only be used when the color
+#' S9 (Carotenoid chroma): (R700 - R450)/R700. Should only be used when the color
 #' of the surface is clearly due to carotenoid pigmentation and R450 is lower than
 #' R700. Could be sensitive to noise. REF 8
 #'
@@ -282,7 +282,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   R450 <- as.numeric(object[which(wl == 450), ])
   R700 <- as.numeric(object[which(wl == 700), ])
-  Carotchroma <- (R450 - R700) / R700
+  Carotchroma <- (R700 - R450) / R700
 
   # H3
   index_Rmid <- sapply(1:ncol(object), function(x) {
