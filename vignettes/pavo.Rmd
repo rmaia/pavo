@@ -1191,7 +1191,6 @@ All of these options can be simultaneously specified in a single call to `procim
 The segmentation of RGB images into discrete color-classes is an essential step on the road to several analyses, and this is carried out in `pavo` via `classify`. The function currently implements k-means clustering which, although an 'unsupervised' methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colors in each (an important step to be closely considered beforehand beforehand, often through visual modelling to estimate the number of discriminable colors), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.   
 
 ```{r}
-#set.seed(5)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 ```
 

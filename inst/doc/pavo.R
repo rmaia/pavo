@@ -597,7 +597,6 @@ plot(butterflies[[2]])
 #  butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 
 ## ------------------------------------------------------------------------
-#set.seed(5)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.align='center', fig.cap="_The k-means classified images of our butterflies, along with their identified color palettes_"----

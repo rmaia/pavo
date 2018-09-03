@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason" />
 
-<meta name="date" content="2018-08-30" />
+<meta name="date" content="2018-09-03" />
 
 <title>pavo</title>
 
@@ -22,7 +22,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; }
+a.sourceLine:empty { height: 1.2em; position: absolute; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -35,11 +35,13 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; left: -4em; }
+  { position: relative; }
+pre.numberSource a.sourceLine:empty
+  { position: absolute; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: relative; left: -1em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all; display: inline-block;
+    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -278,7 +280,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">pavo</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</em></h4>
-<h4 class="date"><em>2018-08-30</em></h4>
+<h4 class="date"><em>2018-09-03</em></h4>
 
 
 <div id="TOC">
@@ -713,7 +715,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 <em>Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance</em>
 </p>
 </div>
-<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”&quot;) this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
+<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”“) this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
 </div>
 <div id="the-heatmap-option" class="section level3">
 <h3>The <code>heatmap</code> Option</h3>
@@ -780,12 +782,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 ## robin    5741.39 14.32 37.86 0.09 0.10 0.14 0.27 0.27 0.51  9.13 0.30   NA
 ## tanager  8515.25 21.24 30.48 0.20 0.24 0.26 0.32 0.24 0.22  3.23 0.33 0.17
 ##               S5    S6    S7   S8    S9  S10  H1  H2  H3   H4  H5
-## cardinal 4003.47 45.77 -0.21 2.04 -0.84 0.41 700 419 587 0.02 581
-## jacana   3314.02 46.21 -0.31 1.92 -0.73 0.10 700 593 529 0.72 468
-## oriole   5233.01 50.42 -0.58 2.22 -0.92 0.19 700 382 551 0.41 544
-## parakeet 1894.02 24.02  0.67 1.60 -0.59 0.44 572 618 634 0.98 506
-## robin    2532.41 33.71 -0.11 2.35 -0.81   NA 700  NA 593 0.42 631
-## tanager  1106.47 21.03 -0.79 0.99  0.05 0.17 557 594 362 1.53 518</code></pre>
+## cardinal 4003.47 45.77 -0.21 2.04  0.84 0.41 700 419 587 0.02 581
+## jacana   3314.02 46.21 -0.31 1.92  0.73 0.10 700 593 529 0.72 468
+## oriole   5233.01 50.42 -0.58 2.22  0.92 0.19 700 382 551 0.41 544
+## parakeet 1894.02 24.02  0.67 1.60  0.59 0.44 572 618 634 0.98 506
+## robin    2532.41 33.71 -0.11 2.35  0.81   NA 700  NA 593 0.42 631
+## tanager  1106.47 21.03 -0.79 0.99 -0.05 0.17 557 594 362 1.53 518</code></pre>
 <p><code>summary</code> also takes an additional argument <code>subset</code> which if changed from the default <code>FALSE</code> to <code>TRUE</code> will return only the most commonly used colorimetrics (Andersson 2006). <code>summary</code> can also take a vector of color variable names, which can be used to filter the results</p>
 <div class="sourceCode" id="cb78"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb78-1" data-line-number="1"><span class="kw">summary</span>(spec.sm, <span class="dt">subset =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <pre><code>##             B2   S8  H1
@@ -1263,7 +1265,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <em>Projection plot from a tetrahedral color space.</em>
 </p>
 </div>
-<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”&quot;, or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
+<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”“, or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
 <div class="sourceCode" id="cb121"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb121-1" data-line-number="1"><span class="kw">data</span>(sicalis)</a></code></pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colorspace (note the option <code>plot</code> for plotting of the volumes:</p>
 <div class="sourceCode" id="cb122"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb122-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pty =</span> <span class="st">&quot;s&quot;</span>)</a>
@@ -1595,7 +1597,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <div class="sourceCode" id="cb167"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb167-1" data-line-number="1"><span class="kw">is.rimg</span>(butterflies)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb169"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb169-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>##  'rimg' num [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  rimg [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;h_melpomene&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1605,7 +1607,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 ##  - attr(*, &quot;colnames&quot;)= logi NA
 ##  - attr(*, &quot;tag_loc&quot;)= logi NA</code></pre>
 <div class="sourceCode" id="cb171"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb171-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code>##  'rimg' num [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  rimg [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;papilio&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1625,7 +1627,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <a class="sourceLine" id="cb173-8" data-line-number="8"><span class="kw">is.rimg</span>(fake_rimg)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw">str</span>(fake_rimg)</a></code></pre></div>
-<pre><code>##  'rimg' num [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
+<pre><code>##  rimg [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;img&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1675,8 +1677,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
 <div id="image-color-classification" class="section level2">
 <h2>Image Color-Classification</h2>
 <p>The segmentation of RGB images into discrete color-classes is an essential step on the road to several analyses, and this is carried out in <code>pavo</code> via <code>classify</code>. The function currently implements k-means clustering which, although an ‘unsupervised’ methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colors in each (an important step to be closely considered beforehand beforehand, often through visual modelling to estimate the number of discriminable colors), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using <code>kcols</code>, before visualising the results with <code>summary</code>. The <code>summary</code> function, with <code>plot = TRUE</code>, is also particularly useful for understanding the colour-class labels, or ID’s, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting ‘false’ colours for plotting through the <code>col</code> argument.</p>
-<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1"><span class="co">#set.seed(5)</span></a>
-<a class="sourceLine" id="cb181-2" data-line-number="2">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, <span class="dt">kcols =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb181"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb181-1" data-line-number="1">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, <span class="dt">kcols =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>## Image classification in progress...</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="co"># Note that we could simply feed the list of images to summary, rather than </span></a>
 <a class="sourceLine" id="cb183-2" data-line-number="2"><span class="co"># specifying individual images, and they would progress automatically </span></a>
@@ -1716,7 +1717,7 @@ V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / 
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:03
+  |============================                           |  50%, ETA 00:02
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb187"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb187-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>

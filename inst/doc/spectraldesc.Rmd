@@ -7,7 +7,7 @@ output:
 bibliography: table_montgomerie.bib
 csl: open-biology.csl
 vignette: >
-  %\VignetteIndexEntry{spectral shape descriptors}
+  %\VignetteIndexEntry{spectral descriptors}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---
