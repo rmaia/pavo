@@ -79,6 +79,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/spectraldesc.html">Spectral shape descriptors</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -119,15 +131,15 @@
     <tr>
       <th>imgdat</th>
       <td><p>(required) image data. Either a single image, or a series of images
-stored in a list. preferably the result of <code><a href='getimg.html'>getimg</a></code>.</p></td>
+stored in a list. Preferably the result of <code><a href='getimg.html'>getimg</a></code>.</p></td>
     </tr>
     <tr>
       <th>kcols</th>
       <td><p>the number of discrete colour classes present in the input image(s).
-Can be an integer when only a single image is present, or if kcols is identical for all
+Can be a single integer when only a single image is present, or if kcols is identical for all
 images. When passing a list of images, <code>kcols</code> can also be a vector the same length
 as <code>imgdat</code>, or a data.frame with two columns specifying image file names and
-corresponding kcols. Can be optionally disregarded when <code>interactive = TRUE</code>,
+corresponding kcols. Can optionally be disregarded when <code>interactive = TRUE</code>,
 and kcols will be inferred from the number of selections.</p></td>
     </tr>
     <tr>

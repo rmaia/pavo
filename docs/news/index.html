@@ -76,6 +76,18 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/spectraldesc.html">Spectral shape descriptors</a>
+    </li>
+  </ul>
+</li>
 <li>
   <a href="../news/index.html">Changelog</a>
 </li>
@@ -107,14 +119,17 @@
 <li>image-based workflow for the combined analysis of colour and pattern geometry</li>
 <li>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em>
 </li>
-<li>getspec() can now read Avantes binary files (<code>.TRM</code> files)</li>
+<li>
+<code><a href="../reference/getspec.html">getspec()</a></code> can now read Avantes binary files (<code>.TRM</code> files)</li>
 </ul>
 <p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
+<li>Carotenoid chroma (S9) in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> has been fixed to (R700 - R450)/R700. This gives the same result as before but with a flipped sign, and better reflects the original formula in the literature.</li>
 <li>cieLAB values have been rescaled, and are expressed in the more standard range: L [0,100], ab [-128,127]</li>
-<li>getspec() has an additional argument <code>ignore.case</code> set to <code>TRUE</code> by default to ignore case in file extension matching</li>
-<li>fix a bug where getspec() would sometimes fail with files including numbers in scientific format</li>
-<li>add a new option in tetraplot() to add cone names (u,s,m,l)</li>
+<li>
+<code><a href="../reference/getspec.html">getspec()</a></code> has an additional argument <code>ignore.case</code> set to <code>TRUE</code> by default to ignore case in file extension matching</li>
+<li>fix a bug where <code><a href="../reference/getspec.html">getspec()</a></code> would sometimes fail with files including numbers in scientific format</li>
+<li>add a new option in <code><a href="../reference/tetraplot.html">tetraplot()</a></code> to add cone names (u,s,m,l)</li>
 </ul>
 </div>
     <div id="pavo-1-4-0" class="section level2">
@@ -122,35 +137,42 @@
 <a href="#pavo-1-4-0" class="anchor"></a>pavo 1.4.0</h2>
 <p>NEW FEATURES</p>
 <ul>
-<li>getspec() can now read OceanOptics <code>.ProcSpec</code> files</li>
+<li>
+<code><a href="../reference/getspec.html">getspec()</a></code> can now read OceanOptics <code>.ProcSpec</code> files</li>
 <li>added the visual system of <em>Ctenophorous ornatus</em>, the (trichromatic) ornate dragon lizard</li>
 </ul>
 <p>MAJOR CHANGES</p>
 <ul>
-<li>getspecf (and the argument fast = TRUE in getspec) have been deprecated</li>
-<li>summary.rspec() returned incorrect values for S7. If you use S7, please re-run your analyses</li>
+<li>
+<code><a href="../reference/pavo-deprecated.html">getspecf()</a></code> (and the argument <code>fast = TRUE</code> in <code><a href="../reference/getspec.html">getspec()</a></code>) have been deprecated</li>
+<li>
+<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> returned incorrect values for S7. If you use S7, please re-run your analyses</li>
 </ul>
 <p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
-<li>summary.rspec() now properly outputs <code>NA</code> for monotonically decreasing spectra</li>
-<li>fixed warning when subset.rspec was provided with a logical vector</li>
-<li>fixed harmless warning when summary.colspace() was used on a tcs object</li>
 <li>
-<code>by</code> argument in merge.rspec() is no longer ignored</li>
-<li>fixed bug in voloverlap() when plot = TRUE</li>
-<li>fixed bug in vismodel() when transmission has more than one column</li>
-<li>fixed bug in vismodel() that applied von Kries correction to achromatic channel</li>
-<li>added argument fill=FALSE in voloverlap()</li>
-<li>fixed bug in jndplot() when suppressing the plotting of arrows</li>
-<li>better handling of subset data when using summary.colspace() and summary.vismodel()</li>
-<li>fixed bug in coldist() when <code>noise = "quantum"</code> and <code>achro = TRUE</code> were used</li>
-<li>fixed bug in jndplot() when <code>arrow = "none"</code> and <code>achro = TRUE</code>
+<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> now properly outputs <code>NA</code> for monotonically decreasing spectra</li>
+<li>fixed warning when <code><a href="../reference/subset.rspec.html">subset.rspec()</a></code> was provided with a logical vector</li>
+<li>fixed harmless warning when <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> was used on a tcs object</li>
+<li>
+<code>by</code> argument in <code><a href="../reference/merge.rspec.html">merge.rspec()</a></code> is no longer ignored</li>
+<li>fixed bug in <code><a href="../reference/voloverlap.html">voloverlap()</a></code> when plot = TRUE</li>
+<li>fixed bug in <code><a href="../reference/vismodel.html">vismodel()</a></code> when transmission has more than one column</li>
+<li>fixed bug in <code><a href="../reference/vismodel.html">vismodel()</a></code> that applied von Kries correction to achromatic channel</li>
+<li>added argument <code>fill=FALSE</code> in <code><a href="../reference/voloverlap.html">voloverlap()</a></code>
 </li>
-<li>spec2rgb() now takes into account the 390-400 nm wavelength range into account when possible</li>
-<li>as.rspec() no longer fails with tibbles</li>
-<li>bin option of procspec() now works for all values of bins</li>
+<li>fixed bug in <code><a href="../reference/jndplot.html">jndplot()</a></code> when suppressing the plotting of arrows</li>
+<li>better handling of subset data when using summary.colspace() and summary.vismodel()</li>
+<li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when <code>noise = "quantum"</code> and <code>achro = TRUE</code> were used</li>
+<li>fixed bug in <code><a href="../reference/jndplot.html">jndplot()</a></code> when <code>arrow = "none"</code> and <code>achro = TRUE</code>
+</li>
+<li>
+<code><a href="../reference/spec2rgb.html">spec2rgb()</a></code> now takes into account the 390-400 nm wavelength range into account when possible</li>
+<li>
+<code><a href="../reference/as.rspec.html">as.rspec()</a></code> no longer fails with tibbles</li>
+<li>bin option of <code><a href="../reference/procspec.html">procspec()</a></code> now works for all values of bins</li>
 <li>non-relative quantum catches from dataframe object were not correctly scaled in “di”, “tri”, “categorical” and “coc” colspaces</li>
-<li>fixed a bug in colspace where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
+<li>fixed a bug in <code><a href="../reference/colspace.html">colspace()</a></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
 <li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e. maxwell triangle)</li>
 </ul>
 </div>
@@ -159,13 +181,14 @@
 <a href="#pavo-1-3-1" class="anchor"></a>pavo 1.3.1</h2>
 <p>NEW FUNCTIONS</p>
 <ul>
-<li>bootcoldist() uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
+<li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
 </ul>
 <p>MINOR FEATURES AND BUG FIXES</p>
 <ul>
-<li>fixed bug in coldist() when fewer samples than the number of photoreceptors</li>
-<li>fixed bug in getspec() that would cause it to crash with errors</li>
-<li>fixed bug in tetraplot() when saving images</li>
+<li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when fewer samples than the number of photoreceptors</li>
+<li>fixed bug in <code><a href="../reference/getspec.html">getspec()</a></code> that would cause it to crash with errors</li>
+<li>fixed bug in <code><a href="../reference/tetraplot.html">tetraplot()</a></code> when saving images</li>
 </ul>
 </div>
     <div id="pavo-1-3-0" class="section level2">
@@ -223,8 +246,7 @@
 <a href="#pavo-1-1-0" class="anchor"></a>pavo 1.1.0</h2>
 <p>NEW FUNCTIONS</p>
 <ul>
-<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace()<br>
-are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
+<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
 <li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
 </ul>
 <p>MINOR FEATURES AND BUG FIXES</p>

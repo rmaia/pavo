@@ -1,6 +1,7 @@
-pandoc: 2.1.2
+pandoc: 2.2.3.2
 pkgdown: 1.1.0
 pkgdown_sha: ~
 articles:
   pavo: pavo.html
+  spectraldesc: spectraldesc.html
 
