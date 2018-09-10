@@ -12,7 +12,8 @@
 \item{axes}{should axes be drawn? (defaults to \code{TRUE})}
 
 \item{col}{optional vector of colours when plotting colour-classified images.
-Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).}
+Defaults to the mean RGB values of the k-means centres (i.e. the average 'original' 
+colours).}
 
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }

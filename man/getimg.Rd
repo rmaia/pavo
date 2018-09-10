@@ -10,9 +10,9 @@ getimg(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 \arguments{
 \item{imgpath}{(required) either the full path to a given image (including extension),
 or the path to a folder in which multiple image files are located. Mixed file formats
-within a folder are fine.}
+within a folder are accepted.}
 
-\item{subdir}{should subdirectories within the \code{where} folder be
+\item{subdir}{should subdirectories within the \code{imgpath} folder be
 included in the search? (defaults to \code{FALSE}).}
 
 \item{subdir.names}{should subdirectory path be included in the name of the

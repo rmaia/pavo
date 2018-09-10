@@ -2,7 +2,7 @@
 % Please edit documentation in R/adjacent.R
 \name{adjacent}
 \alias{adjacent}
-\title{Run an adjacency/boundary strength analysis}
+\title{Run an adjacency and boundary strength analysis}
 \usage{
 adjacent(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   polygon = NULL, exclude = c("none", "background", "object"),
@@ -32,24 +32,28 @@ and background has been identified using \code{\link{procimg}}.}
 separates the focal object from the background. Not required, and ignored, if the
 focal object outline is specified using \code{\link{procimg}}.}
 
-\item{exclude}{The portion of the image to be excluded from the analysis, if any.
-If excluding the focal object, its outline must first have been idenfitied using
-\code{\link{procimg}}. If excluding the image background it must either have been
-identified using \code{\link{procspec}}, or if it is relatively homogeneous,
-the colour-class ID's uniquely corresponding to the background can be specified using
-\code{bkgID}.}
+\item{exclude}{the portion of the image to be excluded from the analysis, if any.
+\itemize{
+\item \code{'none'}: default
+\item \code{'background'}: exclude everything \emph{outside} the closed polygon specified
+using \code{\link{procimg}}, or the argument \code{polygon}. Alternatively, if
+the background is relatively homogeneous the colour-class ID(s) uniquely corresponding
+to the background can be specified via \code{bkgID}, and subsequently excluded.
+\item \code{'object'}: exclude everything \emph{inside} the closed polygon specified
+using \code{\link{procimg}}, or the argument \code{polygon}.
+}}
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should be named 'c1' and 'c2', and specify all possible combinations of colour
-category ID numbers (viewable by calling \code{summary(image, plot = TRUE)} on
+should be named 'c1' and 'c2', and specify all possible combinations of numeric 
+colour-class ID's (viewable by calling \code{summary(image, plot = TRUE)} on
 a colour classified image), with the remaining columns named dS (for chromatic distances)
 and/or dL (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
 for visual modelling with spectral data.}
 
 \item{hsl}{data.frame specifying the hue, saturation, and luminance of color patch elements,
 as might be estimated via \code{\link{vismodel}} and \code{\link{colspace}}. The first
-column, named 'patch', should contain color category ID numbers, with the remaining
+column, named 'patch', should contain numeric color category IDs, with the remaining
 columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.}
 
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
@@ -74,20 +78,30 @@ a data frame of summary variables:
   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
     in user-specified units.
   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
-  \item \code{'Sc'}: Simpson colour class diversity.
-  \item \code{'St'}: Simpson transition diversity.
+  \item \code{'Sc'}: Simpson colour class diversity, \code{Sc = 1/(sum(p_i^2))}. If 
+  all colour and luminance classes are equal in relative area, then \code{Sc = k}.  
+  \item \code{'St'}: Simpson transition diversity, \code{St = 1/sum(t_i_j^2)}.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
+  \code{Jc = Sc/k}.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
-  \item \code{'B'}: The animal/background transition ratio.
+  \code{Jt = St/(k*(k-1)/2)}.
+  \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change 
+  transitions entirely within the focal object and those involving the object and background, 
+  \code{B = sum(O_a_a / O_a_b)}.
   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
   \code{Rt = St_a_a / St_a_b}.
   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
   \code{Rt = St_a_a / St_b_b}.
-  \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of variation of the chromatic boundary strength.
-  \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of variation of the achromatic boundary strength.
-  \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of overall pattern hue (in radians).
-  \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient variation of overall pattern saturation.
-  \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient variation of overall pattern luminance.
+  \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of 
+  variation of the chromatic boundary strength.
+  \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of 
+  variation of the achromatic boundary strength.
+  \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of 
+  overall pattern hue (in radians).
+  \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient 
+  variation of overall pattern saturation.
+  \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient 
+  variation of overall pattern luminance.
   }
 }
 \description{

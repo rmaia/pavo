@@ -16,12 +16,12 @@
 #' an image by clicking around its outline. The xy-coordinates of the resulting
 #' closed polygon are saved as an attribute, for use in genrating a masking layer &
 #' separating animals/plants from backgrounds in further analyses. This is particularly
-#' useful when backgrounds are complex, (e.g. in natural settings) in which case
-#' backgrounds and objects cannot be readily separated by simple k-means clustering.
+#' useful when backgrounds are complex, such as in natural settings.
 #' @param col the color of the marker points and/or line, when using interactive options.
 #' @param smooth should the polygon specified when \code{outline = TRUE} be smoothed
 #' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
-#' @param iterations the number of smoothing iterations, when \code{smooth = TRUE}.
+#' @param iterations the number of smoothing iterations, when \code{smooth = TRUE}. 
+#' Defaults to \code{1}.
 #' @param plotnew should plots be opened in a new window? Defaults to \code{FALSE}.
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'

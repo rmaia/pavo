@@ -8,7 +8,7 @@
 #' Can be a single integer when only a single image is present, or if kcols is identical for all
 #' images. When passing a list of images, \code{kcols} can also be a vector the same length
 #' as \code{imgdat}, or a data.frame with two columns specifying image file names and
-#' corresponding kcols. Can optionally be disregarded when \code{interactive = TRUE},
+#' corresponding kcols. This argument can optionally be disregarded when \code{interactive = TRUE},
 #' and kcols will be inferred from the number of selections.
 #' @param refID the optional numeric index of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified

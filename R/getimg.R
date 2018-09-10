@@ -4,8 +4,8 @@
 #'
 #' @param imgpath (required) either the full path to a given image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
-#' within a folder are fine.
-#' @param subdir should subdirectories within the \code{where} folder be
+#' within a folder are accepted.
+#' @param subdir should subdirectories within the \code{imgpath} folder be
 #' included in the search? (defaults to \code{FALSE}).
 #' @param subdir.names should subdirectory path be included in the name of the
 #' images? (defaults to \code{FALSE}).
