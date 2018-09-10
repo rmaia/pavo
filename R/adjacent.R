@@ -83,7 +83,7 @@
 #'
 #' @examples \dontrun{
 #' set.seed(153)
-#' 
+#'
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)

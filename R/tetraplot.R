@@ -414,11 +414,12 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     )
 
     if (labels) {
-      text(x = tcoord[c("u", "s", "m", "l"), "x"] + sign(tcoord[c("u", "s", "m", "l"), "x"]) * 5e-8,
-           y = tcoord[c("u", "s", "m", "l"), "y"] + sign(tcoord[c("u", "s", "m", "l"), "y"]) * 5e-8,
-           labels = c("u", "s", "m", "l"))
+      text(
+        x = tcoord[c("u", "s", "m", "l"), "x"] + sign(tcoord[c("u", "s", "m", "l"), "x"]) * 5e-8,
+        y = tcoord[c("u", "s", "m", "l"), "y"] + sign(tcoord[c("u", "s", "m", "l"), "y"]) * 5e-8,
+        labels = c("u", "s", "m", "l")
+      )
     }
-
   }
 
 
