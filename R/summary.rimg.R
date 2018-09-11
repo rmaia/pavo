@@ -60,7 +60,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
           ))
         do.call(rbind, out)
       }
-    } else if (!multi_image) {
+    } else {
       if (plot) {
         summary_main(object, plot, axes = axes, col = col, ...)
       } else {
@@ -84,7 +84,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
 
         do.call(rbind, out)
       }
-    } else if (!multi_image) {
+    } else {
       if (plot) {
         plot(object, axes = axes, ...)
       } else {

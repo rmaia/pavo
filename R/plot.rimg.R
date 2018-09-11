@@ -35,7 +35,7 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
 
   if (!multi_image) {
     defaultrasterImageplot(x, axes = axes, col = col, ...)
-  } else if (multi_image) {
+  } else {
     for (i in 1:length(x)) {
       readline(prompt = "Press [enter] for next plot")
       defaultrasterImageplot(x[[i]], axes = axes, col = col, ...)

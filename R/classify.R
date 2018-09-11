@@ -74,7 +74,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       message("Image is not of class 'rimg'; attempting to coerce.")
       imgdat <- as.rimg(imgdat)
     }
-  } else if (multi_image) {
+  } else {
     if (any(unlist(lapply(1:length(imgdat), function(x) !"rimg" %in% class(imgdat[[x]]))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
       imgdat <- lapply(1:length(imgdat), function(x) as.rimg(imgdat[[x]]))
@@ -219,7 +219,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       )
 
       ## (5) Multiple k, with interactively-specified centres for each image. ##
-    } else if (is.null(refID) && interactive == TRUE) {
+    } else if (is.null(refID) && interactive) {
       if (length(kcols) == 1) {
         kcols <- rep(kcols, length(imgdat))
       }
@@ -285,7 +285,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       if (interactive) {
         if (!is.null(refID)) {
           attr(outdata[[refID]], "tag_loc") <- tag_loc
-        } else if (is.null(refID)) {
+        } else {
           attr(outdata[[i]], "tag_loc") <- tag_loc[[i]]
         }
       } else {
@@ -302,7 +302,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   ## Single image ##
   if (!multi_image) {
-    if (interactive == TRUE) {
+    if (interactive) {
       # Reference (only present) image
       refimg <- imgdat
 

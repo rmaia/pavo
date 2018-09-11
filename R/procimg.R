@@ -130,7 +130,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       }
       if (plotnew) dev.off()
     }
-  } else if (!multi_image) {
+  } else {
 
     ## Resize ##
     if (attr(image, "state") == "colclass" && is.numeric(resize)) {

@@ -59,7 +59,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
     }
 
     # Otherwise it's a directory of images
-  } else if (!grepl(paste(ext, collapse = "|"), imgpath)) {
+  } else {
 
     # Set allowed file extensions
     extension <- paste0("\\.", ext, "$", collapse = "|")

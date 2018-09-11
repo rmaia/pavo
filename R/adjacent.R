@@ -157,7 +157,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       message("Image is not of class 'rimg'; attempting to coerce.")
       classimg <- as.rimg(classimg)
     }
-  } else if (multi_image) {
+  } else {
     if (any(unlist(lapply(1:length(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
       classimg <- lapply(1:length(classimg), function(x) as.rimg(classimg[[x]]))
@@ -169,7 +169,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
     if (attr(classimg, "state") != "colclass") {
       stop("Image has not yet been colour-classified. See classify().")
     }
-  } else if (multi_image) {
+  } else {
     if (any(unlist(lapply(1:length(classimg), function(x) attr(classimg[[x]], "state"))) != "colclass")) {
       stop("One or more images has not yet been colour-classified. See classify().")
     }
@@ -187,7 +187,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         stop("No columns named 'dS' or 'dL' in coldists.")
       }
       # Multi images
-    } else if (multi_image) {
+    } else {
       if (!is.list(coldists)) {
         message("Reusing single set of coldists for multiple images.")
         coldists <- rep(coldists, length(classimg))
@@ -214,7 +214,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         stop("No columns named 'hue', 'sat' or 'lum' in hsl.")
       }
       # Multi images
-    } else if (multi_image) {
+    } else {
       if (!is.list(hsl)) {
         message("Reusing single set of hsl values for multiple images.")
         hsl <- rep(hsl, length(classimg))
@@ -241,7 +241,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         attr(classimg, "outline") <- polygon
       }
       # Multi images
-    } else if (multi_image) {
+    } else {
       if (length(polygon) != length(classimg)) {
         stop("The list of polygons must be equal in number to the list of images.")
       }
@@ -276,7 +276,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       stop("Required argument xscale is missing, and image data are uncalibrated. Either specify xscale or use procimg() to set a scale.")
     }
     # Multi images
-  } else if (multi_image) {
+  } else {
     if (!is.na(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
     } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
@@ -295,7 +295,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       xpts <- min(unlist(lapply(1:length(classimg), function(x) dim(classimg[[x]])[1:2])))
     }
     xpts <- as.list(rep(xpts, length(classimg)))
-  } else if (!multi_image) {
+  } else {
     if (any(xpts > dim(classimg)[1:2])) {
       message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest image dimension.")
       xpts <- min(dim(classimg)[1:2])
@@ -339,7 +339,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
     outdata <- outdata[, c((1:ncol(outdata))[-namemove], namemove)]
 
     for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
-  } else if (!multi_image) { # Single image
+  } else { # Single image
 
     outdata <- adjacent_main(
       classimg_i = classimg,
@@ -377,7 +377,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   # Exclude selection, if specified
   if ("background" %in% exclude2_i) {
     # Complex backgrounds
-    if (bkgoutline == TRUE) {
+    if (bkgoutline) {
       # NA everything *outside* the outlined polyogn
       classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside", replacement_value = 999)
     } else {
@@ -389,7 +389,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   }
   if ("object" %in% exclude2_i) {
     # Complex backgrounds only
-    if (bkgoutline == TRUE) {
+    if (bkgoutline) {
       # NA everything *inside* the outlined polyogn
       classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "inside", replacement_value = 999)
     }
