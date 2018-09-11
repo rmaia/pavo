@@ -549,8 +549,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       }
       # anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
       anim <- anim[
-        seq(1, nrow(anim), nrow(anim) / xpts_i),
-        seq(1, ncol(anim), ncol(anim) / xpts_i)
+        seq(1, nrow(anim), length.out = xpts_i),
+        seq(1, ncol(anim), length.out = xpts_i)
       ]
       animtrans <- transitioncalc(anim, colournames)
 
@@ -563,8 +563,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       }
       # bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
       bkgonly <- bkgonly[
-        seq(1, nrow(bkgonly), nrow(bkgonly) / xpts_i),
-        seq(1, ncol(bkgonly), ncol(bkgonly) / xpts_i)
+        seq(1, nrow(bkgonly), length.out = xpts_i),
+        seq(1, ncol(bkgonly), length.out = xpts_i)
       ]
       bkgtrans <- transitioncalc(bkgonly, colournames)
 
