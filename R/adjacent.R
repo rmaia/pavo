@@ -382,9 +382,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside", replacement_value = 999)
     } else {
       # bkgID-based version
-      for (i in 1:length(bkgID_i)) {
-        classimg_i[classimg_i == bkgID_i[[i]]] <- 999
-      }
+      classimg_i[classimg_i %in% bkgID_i] <- 999
     }
   }
   if ("object" %in% exclude2_i) {
@@ -407,7 +405,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   n_y <- nrow(subclass) # n rows
   n_class <- sum(unique(c(as.matrix((subclass)))) != 999) # n color classes
   freq <- as.data.frame(table(as.matrix(subclass))) # raw class frequencies
-  freq <- freq[!freq$Var1 %in% 999, ] # remove dummy data if need be
+  freq <- freq[freq$Var1 != 999, ] # remove dummy data if need be
   names(freq) <- c("patch", "Freq")
   freq$rel_freq <- freq$Freq / sum(freq$Freq) # proportion class frequency
   freq$patch <- colournames$name[as.numeric(as.character(freq$patch))]
@@ -547,7 +545,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         anim <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
       } else if (!is.null(bkgID_i)) {
         anim <- classimg_i
-        for (i in 1:length(bkgID_i)) anim[anim == bkgID_i[[i]]] <- 999
+        anim[anim %in% bkgID_i] <- 999
       }
       # anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
       anim <- anim[
@@ -561,7 +559,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         bkgonly <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
       } else if (!is.null(bkgID_i)) {
         bkgonly <- classimg_i
-        for (i in 1:length(bkgID_i)) bkgonly[bkgonly == bkgID_i[[i]]] <- 999
+        bkgonly[bkgonly %in% bkgID_i] <- 999
       }
       # bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
       bkgonly <- bkgonly[
