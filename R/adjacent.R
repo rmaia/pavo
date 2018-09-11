@@ -279,12 +279,12 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   } else {
     if (!is.na(attr(classimg[[1]], "px_scale"))) {
       xscale <- lapply(classimg, function(x) attr(x, "px_scale") * dim(x)[2])
-    } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
-      xscale <- as.list(rep(xscale, length(classimg)))
-    } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
-      xscale <- xscale
-    } else if (is.na(attr(classimg[[1]], "px_scale")) && is.null(xscale)) {
+    } else if (is.null(xscale)) {
       stop("Required argument xscale is missing, and one or more images are uncalibrated. Either specify xscale or use procimg() to set a scale for each image.")
+    } else if (length(xscale) <= 1) {
+      xscale <- as.list(rep(xscale, length(classimg)))
+    } else if (length(xscale) == length(classimg)) {
+      xscale <- xscale
     }
   }
 
