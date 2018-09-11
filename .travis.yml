@@ -1,4 +1,8 @@
 language: r
+r:
+  - oldrel
+  - release
+  - devel
 cache: packages
 addons:
   apt:
@@ -7,11 +11,6 @@ addons:
 r_build_args: 
 r_check_args: 
 r_packages: rmarkdown
-jobs:
-  include:
-  - r: oldrel
-  - r: release
-  - r: devel
 # warnings_are_errors: false
 after_success:
   - Rscript -e 'goodpractice::gp(checks = c("lintr_assignment_linter", "truefalse_not_tf"))'
