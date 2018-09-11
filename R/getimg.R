@@ -66,7 +66,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
     # File names
     file_names <- list.files(imgpath, pattern = extension, recursive = subdir, include.dirs = subdir)
-    files <- paste(imgpath, "/", file_names, sep = "")
+    files <- paste0(imgpath, "/", file_names)
 
     if (subdir.names) {
       file_names <- gsub(extension, "", file_names)
@@ -79,10 +79,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
     }
 
     message(length(files), " files found; importing images.")
-
-    if (length(file_names) == 0) {
-      stop("No .jpg, .jpeg, .png, or .bmp files found in specified location.")
-    }
 
     imgnames <- gsub(extension, "", file_names)
 
