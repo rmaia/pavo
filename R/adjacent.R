@@ -568,15 +568,9 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       ]
       bkgtrans <- transitioncalc(bkgonly, colournames)
 
+      # Summary bkg metrics. Only meaningful if class-chage transitions exist
       # Check if class-change transitions actually exist
       if (nrow(subset(animtrans[["all"]], c1 != c2)) > 0 && nrow(subset(bkgtrans[["all"]], c1 != c2)) > 0) {
-        exist <- TRUE
-      } else {
-        exist <- FALSE
-      }
-
-      # Summary bkg metrics
-      if (exist) { # Only meaningful if class-chage transitions exist
         # Animal/background transition ratio
         B <- sum(subset(animtrans[["all"]], c1 != c2)["N"]) /
           sum(subset(transitions[["all"]], c1 != c2)["N"])
