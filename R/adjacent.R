@@ -760,11 +760,15 @@ transitioncalc <- function(classimgdat, colornames) {
   }
 
   # Ditch any excluded colours (999's, via NA's in name)
-  coltrans2 <- coltrans2[apply(coltrans2, 1, function(x) !any(is.na(x))), ]
-  if (nrow(coltrans2) == 0) coltrans2[1, ] <- NA
-  rowtrans2 <- rowtrans2[apply(rowtrans2, 1, function(x) !any(is.na(x))), ]
-  if (nrow(rowtrans2) == 0) rowtrans2[1, ] <- NA
-  transitions <- transitions[apply(transitions, 1, function(x) !any(is.na(x))), ]
+  coltrans2 <- na.omit(coltrans2)
+  if (nrow(coltrans2) == 0) {
+    coltrans2[1, ] <- NA
+  }
+  rowtrans2 <- na.omit(rowtrans2)
+  if (nrow(rowtrans2) == 0) {
+    rowtrans2[1, ] <- NA
+  }
+  transitions <- na.omit(transitions)
 
   transout[["col"]] <- coltrans2
   transout[["row"]] <- rowtrans2
