@@ -75,9 +75,9 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       imgdat <- as.rimg(imgdat)
     }
   } else {
-    if (any(unlist(lapply(1:length(imgdat), function(x) !"rimg" %in% class(imgdat[[x]]))))) {
+    if (any(unlist(lapply(imgdat, function(x) !"rimg" %in% class(x))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
-      imgdat <- lapply(1:length(imgdat), function(x) as.rimg(imgdat[[x]]))
+      imgdat <- lapply(imgdat, function(x) as.rimg(x))
     }
   }
 
@@ -107,8 +107,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       # Extract image names from image data
       imageIDs <- data.frame(
         names = unlist(lapply(
-          1:length(imgdat),
-          function(x) attr(imgdat[[x]], "imgname")
+          imgdat,
+          function(x) attr(x, "imgname")
         )),
         stringsAsFactors = FALSE
       )
@@ -175,16 +175,16 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
       message("Image classification in progress...")
       ifelse(imgsize < 100,
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+        outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
+        outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
       )
 
       ## (3) Single k, no reference image ##
     } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
       message("Image classification in progress...")
       ifelse(imgsize < 100,
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols), mc.cores = cores),
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols))
+        outdata <- pbmclapply(imgdat, function(x) classify_main(x, kcols), mc.cores = cores),
+        outdata <- lapply(imgdat, function(x) classify_main(x, kcols))
       )
 
       ## (4) Single k, interactively specified centre, with reference image ##
@@ -214,8 +214,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       message("Image classification in progress...")
       ifelse(imgsize < 100,
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers), mc.cores = cores),
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], ref_centers))
+        outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
+        outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
       )
 
       ## (5) Multiple k, with interactively-specified centres for each image. ##

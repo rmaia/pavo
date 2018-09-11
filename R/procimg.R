@@ -80,9 +80,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       resize <- NULL
     }
     if (is.numeric(resize)) {
-      imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
-      image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
-      image <- lapply(1:length(image), function(x) imresize(image[[x]], resize))
+      imgnames <- lapply(image, function(x) attr(x, "imgname"))
+      image <- lapply(image, function(x) rimg2cimg(x))
+      image <- lapply(image, function(x) imresize(x, resize))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
@@ -93,9 +93,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       rotate <- NULL
     }
     if (is.numeric(rotate)) {
-      imgnames <- lapply(1:length(image), function(x) attr(image[[x]], "imgname"))
-      image <- lapply(1:length(image), function(x) rimg2cimg(image[[x]]))
-      image <- lapply(1:length(image), function(x) imrotate(image[[x]], rotate))
+      imgnames <- lapply(image, function(x) attr(x, "imgname"))
+      image <- lapply(image, function(x) rimg2cimg(x))
+      image <- lapply(image, function(x) imrotate(x, rotate))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }

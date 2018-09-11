@@ -170,7 +170,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       stop("Image has not yet been colour-classified. See classify().")
     }
   } else {
-    if (any(unlist(lapply(1:length(classimg), function(x) attr(classimg[[x]], "state"))) != "colclass")) {
+    if (any(unlist(lapply(classimg, function(x) attr(x, "state"))) != "colclass")) {
       stop("One or more images has not yet been colour-classified. See classify().")
     }
   }
@@ -194,9 +194,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       }
       if (!all(c("c1", "c2") %in% names(unlist(coldists)))) {
         message("Cannot find columns named 'c1', 'c2' in list of coldists. Assuming first two columns contain colour-category IDs.")
-        coldists <- lapply(1:length(coldists), function(x) names(coldists[[x]])[1:2] <- c("c1", "c2"))
+        coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
       }
-      if (any(unlist(lapply(1:length(coldists), function(x) !any(c("dS", "dL") %in% names(coldists[[x]])))))) {
+      if (any(unlist(coldists, function(x) !any(c("dS", "dL") %in% names(x))))) {
         stop("No columns named 'dS' or 'dL' in coldists.")
       }
     }
@@ -223,7 +223,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         message("Cannot find column named 'patch' in list of hsl values. Assuming first column contains colour-category IDs.")
         hsl <- lapply(1:length(hsl), function(x) names(hsl[[x]])[1] <- "patch")
       }
-      if (any(unlist(lapply(1:length(hsl), function(x) !any(c("hue", "sat", "lum") %in% names(hsl[[x]])))))) {
+      if (any(unlist(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x))))) {
         stop("No columns named 'hue', 'sat', or 'lum' in hsl")
       }
     }
@@ -247,9 +247,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       }
       if (!all(c("x", "y") %in% names(unlist(polygon)))) {
         message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
-        polygon <- lapply(1:length(polygon), function(x) data.frame(x = polygon[[x]][, 1], y = polygon[[x]][, 2]))
+        polygon <- lapply(polygon, function(x) data.frame(x = x[, 1], y = x[, 2]))
       }
-      if (all(unlist(lapply(1:length(classimg), function(x) is.na(attr(classimg, "outline")))))) {
+      if (all(unlist(lapply(classimg, function(x) is.na(attr(x, "outline")))))) {
         classimg <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "outline") <- polygon[[x]])
       }
     }
@@ -278,7 +278,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
     # Multi images
   } else {
     if (!is.na(attr(classimg[[1]], "px_scale"))) {
-      xscale <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "px_scale") * dim(classimg[[x]])[2])
+      xscale <- lapply(classimg, function(x) attr(x, "px_scale") * dim(x)[2])
     } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) <= 1) {
       xscale <- as.list(rep(xscale, length(classimg)))
     } else if (is.na(attr(classimg[[1]], "px_scale")) && !is.null(xscale) && length(xscale) == length(classimg)) {
@@ -290,9 +290,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
 
   ## Sampling density
   if (multi_image) {
-    if (any(xpts > unlist(lapply(1:length(classimg), function(x) dim(classimg[[x]])[1:2])))) {
+    if (any(xpts > unlist(lapply(classimg, function(x) dim(x)[1:2])))) {
       message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
-      xpts <- min(unlist(lapply(1:length(classimg), function(x) dim(classimg[[x]])[1:2])))
+      xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
     }
     xpts <- as.list(rep(xpts, length(classimg)))
   } else {

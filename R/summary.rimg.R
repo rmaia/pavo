@@ -47,16 +47,16 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
   if ("colclass" %in% state) {
     if (multi_image) {
       if (plot) {
-        for (i in 1:length(object)) {
+        for (i in object) {
           readline(prompt = "Press [enter] for next plot.")
-          summary_main(object[[i]], plot, axes = axes, col = col, ...)
+          summary_main(i, plot, axes = axes, col = col, ...)
         }
       } else {
-        out <- lapply(1:length(object), function(x) data.frame(
-            ID = attr(object[[x]], "imgname"),
-            col_ID = seq(1:nrow(attr(object[[x]], "classRGB"))),
-            col_name = attr(object[[x]], "colnames"),
-            attr(object[[x]], "classRGB")
+        out <- lapply(object, function(x) data.frame(
+            ID = attr(x, "imgname"),
+            col_ID = seq(1:nrow(attr(x, "classRGB"))),
+            col_name = attr(x, "colnames"),
+            attr(x, "classRGB")
           ))
         do.call(rbind, out)
       }
@@ -75,12 +75,12 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
   } else if ("raw" %in% state) {
     if (multi_image) {
       if (plot) {
-        for (i in 1:length(object)) {
+        for (i in object) {
           readline(prompt = "Press [enter] for next plot.")
-          plot(object[[i]], axes = axes, ...)
+          plot(i, axes = axes, ...)
         }
       } else {
-        out <- lapply(1:length(object), function(x) data.frame(ID = attr(object[[x]], "imgname")))
+        out <- lapply(object, function(x) data.frame(ID = attr(x, "imgname")))
 
         do.call(rbind, out)
       }
