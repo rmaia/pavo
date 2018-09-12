@@ -434,7 +434,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     k <- n_class
     N <- sum(transitions[["all"]]$N)
     n_off <- m_r <- m_c <- m <- t <- 0
-    A <- Obs <- E <- d_t_o <- d_t_r <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
+    A <- St <- Jt <- B <- Rt <- Rab <- m_dS <- s_dS <- cv_dS <- m_dL <- s_dL <- cv_dL <- NA
 
     p <- data.frame(t(freq$rel_freq))
     names(p) <- paste0("p_", freq$patch)
@@ -501,26 +501,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     q <- data.frame(t(transitions[["all"]]$N / sum(transitions[["all"]]$N)))
     names(q) <- paste0("q_", transitions[["all"]]$c1, "_", transitions[["all"]]$c2)
 
-    # Observed off-diagonal transitions
-    Obs <- data.frame(t(offdiag$N))
-    names(Obs) <- paste0("Obs_", offdiag$c1, "_", offdiag$c2)
-
-    # Expected frequency of off-diagonal transitions
-    offdiag$exp <- NA
-    for (i in 1:nrow(offdiag)) {
-      offdiag$exp[i] <- 2 * n_off * freq$rel_freq[freq$patch == offdiag[i, 1]] * freq$rel_freq[freq$patch == offdiag[i, 2]]
-    }
-    E <- data.frame(t(offdiag$exp))
-    names(E) <- paste0("E_", offdiag$c1, "_", offdiag$c2)
-
-    # Deviations
-    d_t_o <- sum(abs(offdiag$N - offdiag$exp)) # observed
-
-    d_t_r <- sum(abs(offdiag$N - offdiag$exp)) # permuted
-
-    # Cumulative probabilities
-    L <- t(cumsum(t(p)))
-
     # Off-diagonal transition frequencies
     t <- data.frame(t(offdiagprop$N))
     names(t) <- paste0("t_", offdiagprop$c1, "_", offdiagprop$c2)
@@ -547,7 +527,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         anim <- classimg_i
         anim[anim %in% bkgID_i] <- 999
       }
-      # anim <- anim[rowSums(!is.na(anim)) > 1, colSums(!is.na(anim)) > 1]
       anim <- anim[
         seq(1, nrow(anim), length.out = xpts_i),
         seq(1, ncol(anim), length.out = xpts_i)
@@ -561,7 +540,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         bkgonly <- classimg_i
         bkgonly[bkgonly %in% bkgID_i] <- 999
       }
-      # bkgonly <- bkgonly[rowSums(!is.na(bkgonly)) > 1, colSums(!is.na(bkgonly)) > 1]
       bkgonly <- bkgonly[
         seq(1, nrow(bkgonly), length.out = xpts_i),
         seq(1, ncol(bkgonly), length.out = xpts_i)
