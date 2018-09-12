@@ -471,14 +471,14 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
     # Row transition density (mean transitions / row)
     if (nrow(subset(transitions[["row"]], c1 != c2)) == 0) {
-      m_r <- Inf
+      m_r <- 0
     } else {
       m_r <- (sum(subset(transitions[["row"]], c1 != c2)["N"]) / n_y) / xscale_i
     }
 
     # Col transition density (mean transitions / scaled unit)
     if (nrow(subset(transitions[["col"]], c1 != c2)) == 0) {
-      m_c <- Inf
+      m_c <- 0
     } else {
       m_c <- (sum(subset(transitions[["col"]], c1 != c2)["N"]) / n_x) / y_scale
     }
@@ -487,11 +487,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     m <- (m_r + m_c) / 2
 
     # Transition aspect ratio (< 1 = wide, > 1 = tall)
-    if (m_c == Inf || m_r == Inf) {
-      A <- Inf
-    } else {
-      A <- m_r / m_c
-    }
+    A <- m_r / m_c
 
     # Colour class proportions
     p <- data.frame(t(freq$rel_freq))
