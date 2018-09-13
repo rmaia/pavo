@@ -1103,7 +1103,7 @@ butterflies <- procimg(butterflies, scaledist = 100)
 
 Distinguishing a focal object from its background is important in cases where we are analysing a broader visual scene, particularly when the background is highly heterogeneous, such as an animal in nature, and cannot be classified into a homogeneous block and identified more simply (see below). To define the object and background we specify `outline = TRUE`, which will result in being asked to click around the outline of the focal object in each image, which is then converted to a polygon --- the xy coordinates of which are saved as an attribute. It is often useful to slightly smooth the resulting polygon, which can be done with Chaikin's corner-cutting algorithm by specifying a number of `refinements`. Chaikin's algorithm works by iteratively replacing every point by two new points 1/4 of the way to the next. The argument `iterations` specifies the number of corner cutting iterations to apply, and the default value of 1 offers a subtle smoothing effect.
 
-```{r}
+```{r, eval=FALSE}
 butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
 
