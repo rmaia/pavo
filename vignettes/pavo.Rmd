@@ -1109,15 +1109,17 @@ Images often require some post-capture processing, depending on the intended use
 
 ## Setting Scales and Defining Objects 
 
-The functionality of `procimg` is currently centered on (1) rotating and resizing images, (2) setting an image scale, and (3) distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, which resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Functions (2) and (3), in contrast, are both interactive, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
+The functionality of `procimg` is currently centered on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, which resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. The latter functions, in contrast, are both interactive, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
-```{r}
+```{r, eval = FALSE}
+# Interactively specify the real-world scale of the image. Here 100 mm.
 butterflies <- procimg(butterflies, scaledist = 100)
 ```
 
 Distinguishing a focal object from its background is important in cases where we are analysing a broader visual scene, particularly when the background is highly heterogeneous, such as an animal in nature, and cannot be classified into a homogeneous block and identified more simply (see below). To define the object and background we specify `outline = TRUE`, which will result in being asked to click around the outline of the focal object in each image, which is then converted to a polygon --- the xy coordinates of which are saved as an attribute. It is often useful to slightly smooth the resulting polygon, which can be done with Chaikin's corner-cutting algorithm by specifying a number of `refinements`. Chaikin's algorithm works by iteratively replacing every point by two new points 1/4 of the way to the next. The argument `iterations` specifies the number of corner cutting iterations to apply, and the default value of 1 offers a subtle smoothing effect.
 
 ```{r, eval=FALSE}
+# Interactively specify a smoothed polygon around the focal objects
 butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
 
@@ -1148,7 +1150,7 @@ There are other options available, which may be of particular use when the class
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 # Automatic classification using a reference image
-butterflies_class <- classify(butterflies, kcols = c(4, 3))
+butterflies_class <- classify(butterflies, , refID = 1, kcols = c(4, 3))
 ```
 
 ```{r, eval = FALSE}
