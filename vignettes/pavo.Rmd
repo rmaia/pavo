@@ -50,7 +50,7 @@ set.seed(1612217)
 
 ## Spectral Dataset Description
 
-The spectral data used in this example are available from [github](http://github.com) by clicking [here](https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip). You can download and extract it to follow the vignette.
+The raw spectral data used in this example are available from [github](http://github.com) by clicking [here](https://github.com/rmaia/pavo/blob/master/vignette_data/vignette_data.zip). You can download and extract it to follow the vignette exactly. Alternately, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below). 
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
@@ -58,15 +58,23 @@ In addition, `pavo` includes three datasets that can be called with the `data` f
 
 ## Importing
 
-The first thing we need to do is import the spectral data into R using the function `getspec()`. Since the spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call. 
+The first thing we need to do is import spectral data into R using the function `getspec()`. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
-`getspec` also allows the use of **parallel processing** to speed up importing large datasets. This is controlled by the `cores` argument. If set to 1, single threading will be used **(parallel processing not available in Windows, only Linux/Unix and Mac)**.
+If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/vignette_data`, you might execute the following command and see this output:
 
-The files were downloaded and placed in a directory called `/pavo/vignette_data`. By default, `getspec` will search for files in the current folder, but a different one can be specified:
-
-```{r, results='hide', include=TRUE}
-specs <- getspec("../vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+```{r, echo=TRUE, eval=FALSE, results='hide', include=TRUE}
+specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+# 213  files found; importing spectra
+# |================================================================================| 100%, ETA 00:00
 ```
+
+For convenience, however, we've included the spectra as an RData file in the package installation, and so will simply load it directly.
+
+```{r}
+specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
+```
+
+And we can inspect the resulting object:
 
 ```{r}
 specs[1:10, 1:4]
