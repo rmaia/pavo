@@ -22,7 +22,7 @@
 <style type="text/css">
 a.sourceLine { display: inline-block; line-height: 1.25; }
 a.sourceLine { pointer-events: none; color: inherit; text-decoration: inherit; }
-a.sourceLine:empty { height: 1.2em; position: absolute; }
+a.sourceLine:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode { white-space: pre; position: relative; }
 div.sourceCode { margin: 1em 0; }
@@ -35,13 +35,11 @@ code.sourceCode { white-space: pre-wrap; }
 a.sourceLine { text-indent: -1em; padding-left: 1em; }
 }
 pre.numberSource a.sourceLine
-  { position: relative; }
-pre.numberSource a.sourceLine:empty
-  { position: absolute; }
+  { position: relative; left: -4em; }
 pre.numberSource a.sourceLine::before
   { content: attr(data-line-number);
-    position: absolute; left: -5em; text-align: right; vertical-align: baseline;
-    border: none; pointer-events: all;
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; pointer-events: all; display: inline-block;
     -webkit-touch-callout: none; -webkit-user-select: none;
     -khtml-user-select: none; -moz-user-select: none;
     -ms-user-select: none; user-select: none;
@@ -717,7 +715,7 @@ Overlay plot of the teal angle-dependent reflectance with colors of each curve b
 Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance
 </p>
 </div>
-<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”“) this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
+<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”&quot;) this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
 </div>
 <div id="the-heatmap-option" class="section level3">
 <h3>The <code>heatmap</code> Option</h3>
@@ -1224,7 +1222,7 @@ Flowers in a tetrahedral colorspace, with varied orientations and perspectives, 
 Projection plot from a tetrahedral color space.
 </p>
 </div>
-<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”“, or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
+<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”&quot;, or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">data</span>(sicalis)</a></code></pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colorspace (note the option <code>plot</code> for plotting of the volumes):</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pty =</span> <span class="st">&quot;s&quot;</span>)</a>
@@ -1574,7 +1572,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <div class="sourceCode" id="cb176"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb176-1" data-line-number="1"><span class="kw">is.rimg</span>(butterflies)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb178"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb178-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>##  rimg [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  'rimg' num [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;h_melpomene&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1584,7 +1582,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 ##  - attr(*, &quot;colnames&quot;)= logi NA
 ##  - attr(*, &quot;tag_loc&quot;)= logi NA</code></pre>
 <div class="sourceCode" id="cb180"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb180-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code>##  rimg [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  'rimg' num [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;papilio&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1604,7 +1602,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <a class="sourceLine" id="cb182-8" data-line-number="8"><span class="kw">is.rimg</span>(fake_rimg)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb184"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb184-1" data-line-number="1"><span class="kw">str</span>(fake_rimg)</a></code></pre></div>
-<pre><code>##  rimg [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
+<pre><code>##  'rimg' num [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
 ##  - attr(*, &quot;state&quot;)= chr &quot;raw&quot;
 ##  - attr(*, &quot;imgname&quot;)= chr &quot;img&quot;
 ##  - attr(*, &quot;px_scale&quot;)= logi NA
@@ -1690,7 +1688,7 @@ The k-means classified images of our butterflies, along with their identified co
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:02
+  |============================                           |  50%, ETA 00:03
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>
