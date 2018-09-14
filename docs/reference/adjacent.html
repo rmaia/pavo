@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Run an adjacency/boundary strength analysis — adjacent • pavo</title>
+<title>Run an adjacency and boundary strength analysis — adjacent • pavo</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Run an adjacency/boundary strength analysis — adjacent" />
+<meta property="og:title" content="Run an adjacency and boundary strength analysis — adjacent" />
 
 <meta property="og:description" content="Calculate summary variables from the adjacency (Endler 2012) and
 boundary-strength (Endler et al. 2018) analyses, along with overall pattern
@@ -112,7 +112,7 @@ contrast (Endler &amp;amp; Mielke 2005)." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Run an adjacency/boundary strength analysis</h1>
+    <h1>Run an adjacency and boundary strength analysis</h1>
     
     <div class="hidden name"><code>adjacent.Rd</code></div>
     </div>
@@ -167,19 +167,22 @@ focal object outline is specified using <code><a href='procimg.html'>procimg</a>
     </tr>
     <tr>
       <th>exclude</th>
-      <td><p>The portion of the image to be excluded from the analysis, if any.
-If excluding the focal object, its outline must first have been idenfitied using
-<code><a href='procimg.html'>procimg</a></code>. If excluding the image background it must either have been
-identified using <code><a href='procspec.html'>procspec</a></code>, or if it is relatively homogeneous,
-the colour-class ID's uniquely corresponding to the background can be specified using
-<code>bkgID</code>.</p></td>
+      <td><p>the portion of the image to be excluded from the analysis, if any.</p><ul>
+<li><p><code>'none'</code>: default</p></li>
+<li><p><code>'background'</code>: exclude everything <em>outside</em> the closed polygon specified
+using <code><a href='procimg.html'>procimg</a></code>, or the argument <code>polygon</code>. Alternatively, if
+the background is relatively homogeneous the colour-class ID(s) uniquely corresponding
+to the background can be specified via <code>bkgID</code>, and subsequently excluded.</p></li>
+<li><p><code>'object'</code>: exclude everything <em>inside</em> the closed polygon specified
+using <code><a href='procimg.html'>procimg</a></code>, or the argument <code>polygon</code>.</p></li>
+</ul></td>
     </tr>
     <tr>
       <th>coldists</th>
       <td><p>A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should be named 'c1' and 'c2', and specify all possible combinations of colour
-category ID numbers (viewable by calling <code>summary(image, plot = TRUE)</code> on
+should be named 'c1' and 'c2', and specify all possible combinations of numeric 
+colour-class ID's (viewable by calling <code>summary(image, plot = TRUE)</code> on
 a colour classified image), with the remaining columns named dS (for chromatic distances)
 and/or dL (for achromatic distances). See <code><a href='vismodel.html'>vismodel</a></code> and <code><a href='colspace.html'>colspace</a></code>
 for visual modelling with spectral data.</p></td>
@@ -188,7 +191,7 @@ for visual modelling with spectral data.</p></td>
       <th>hsl</th>
       <td><p>data.frame specifying the hue, saturation, and luminance of color patch elements,
 as might be estimated via <code><a href='vismodel.html'>vismodel</a></code> and <code><a href='colspace.html'>colspace</a></code>. The first
-column, named 'patch', should contain color category ID numbers, with the remaining
+column, named 'patch', should contain numeric color category IDs, with the remaining
 columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.</p></td>
     </tr>
     <tr>
@@ -217,20 +220,30 @@ available on Windows.</p></td>
 <li><p><code>'m_c'</code>: The column-wise transition density (mean column transitions),
     in user-specified units.</p></li>
 <li><p><code>'A'</code>: The transition aspect ratio (&lt; 1 = wide, &gt; 1 = tall).</p></li>
-<li><p><code>'Sc'</code>: Simpson colour class diversity.</p></li>
-<li><p><code>'St'</code>: Simpson transition diversity.</p></li>
-<li><p><code>'Jc'</code>: Simpson colour class diversity relative to its achievable maximum.</p></li>
-<li><p><code>'Jt'</code>: Simpson transition diversity relative to its achievable maximum.</p></li>
-<li><p><code>'B'</code>: The animal/background transition ratio.</p></li>
+<li><p><code>'Sc'</code>: Simpson colour class diversity, <code>Sc = 1/(sum(p_i^2))</code>. If 
+  all colour and luminance classes are equal in relative area, then <code>Sc = k</code>.</p></li>
+<li><p><code>'St'</code>: Simpson transition diversity, <code>St = 1/sum(t_i_j^2)</code>.</p></li>
+<li><p><code>'Jc'</code>: Simpson colour class diversity relative to its achievable maximum.
+  <code>Jc = Sc/k</code>.</p></li>
+<li><p><code>'Jt'</code>: Simpson transition diversity relative to its achievable maximum.
+  <code>Jt = St/(k*(k-1)/2)</code>.</p></li>
+<li><p><code>'B'</code>: The animal/background transition ratio, or the ratio of class-change 
+  transitions entirely within the focal object and those involving the object and background, 
+  <code>B = sum(O_a_a / O_a_b)</code>.</p></li>
 <li><p><code>'Rt'</code>: Ratio of animal-animal and animal-background transition diversities,
   <code>Rt = St_a_a / St_a_b</code>.</p></li>
 <li><p><code>'Rab'</code>: Ratio of animal-animal and background-background transition diversities,
   <code>Rt = St_a_a / St_b_b</code>.</p></li>
-<li><p><code>'m_dS', 's_dS', 'cv_dS'</code>: weighted mean, sd, and coefficient of variation of the chromatic boundary strength.</p></li>
-<li><p><code>'m_dL', 's_dL', 'cv_dL'</code>: weighted mean, sd, and coefficient of variation of the achromatic boundary strength.</p></li>
-<li><p><code>'m_hue', 's_hue', 'var_hue'</code>: circular mean, sd, and variance of overall pattern hue (in radians).</p></li>
-<li><p><code>'m_sat', 's_sat', 'cv_sat'</code>: weighted mean, sd, and coefficient variation of overall pattern saturation.</p></li>
-<li><p><code>'m_lum', 's_lum', 'cv_lum'</code>: weighted mean, sd, and coefficient variation of overall pattern luminance.</p></li>
+<li><p><code>'m_dS', 's_dS', 'cv_dS'</code>: weighted mean, sd, and coefficient of 
+  variation of the chromatic boundary strength.</p></li>
+<li><p><code>'m_dL', 's_dL', 'cv_dL'</code>: weighted mean, sd, and coefficient of 
+  variation of the achromatic boundary strength.</p></li>
+<li><p><code>'m_hue', 's_hue', 'var_hue'</code>: circular mean, sd, and variance of 
+  overall pattern hue (in radians).</p></li>
+<li><p><code>'m_sat', 's_sat', 'cv_sat'</code>: weighted mean, sd, and coefficient 
+  variation of overall pattern saturation.</p></li>
+<li><p><code>'m_lum', 's_lum', 'cv_lum'</code>: weighted mean, sd, and coefficient 
+  variation of overall pattern luminance.</p></li>
 </ul>
 
     

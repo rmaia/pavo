@@ -156,8 +156,7 @@ and the user asked to select either end of the scale corresponding to the input 
 an image by clicking around its outline. The xy-coordinates of the resulting
 closed polygon are saved as an attribute, for use in genrating a masking layer &amp;
 separating animals/plants from backgrounds in further analyses. This is particularly
-useful when backgrounds are complex, (e.g. in natural settings) in which case
-backgrounds and objects cannot be readily separated by simple k-means clustering.</p></td>
+useful when backgrounds are complex, such as in natural settings.</p></td>
     </tr>
     <tr>
       <th>smooth</th>
@@ -166,7 +165,8 @@ using Chaikin's corner-cuting algorithm? Defaults to <code>FALSE</code>.</p></td
     </tr>
     <tr>
       <th>iterations</th>
-      <td><p>the number of smoothing iterations, when <code>smooth = TRUE</code>.</p></td>
+      <td><p>the number of smoothing iterations, when <code>smooth = TRUE</code>. 
+Defaults to <code>1</code>.</p></td>
     </tr>
     <tr>
       <th>col</th>
