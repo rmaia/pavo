@@ -507,7 +507,7 @@ JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 head(JND.fms)
 
 ## ------------------------------------------------------------------------
-butterflies <- getimg("../vignette_data/images/")
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
 
 ## ------------------------------------------------------------------------
 is.rimg(butterflies)

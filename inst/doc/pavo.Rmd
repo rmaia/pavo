@@ -1061,7 +1061,7 @@ head(JND.fms)
 We first import our images with `getimg`, which functions in a similar manner to `getspec`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. 
 
 ```{r}
-butterflies <- getimg("../vignette_data/images/")
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
 ```
 
 When `pavo` imports images, it created a multidimensional object of class `rimg`, which inherits from the `array` class. If more than one image is imported, then these `rimg` objects are stored as elements in a list. All image-based functions in `pavo` are capable of working with such `rimg` lists, which allows for a more convenient and tidy high-throughput workflow. Note that while `pavo` will allow you to load, manipulate, and analyse as many images as your computer's memory allows, it will throw a message if the total size of images in memory is greater than ca. 200mb, as this will result in noticeably slowed performance (everything will still work, it will just be slow). This may be ameliorated by reducing the size of individual images, such as through `procimg()`, or by processing images in smaller batches. All `rimg` objects have a number of identifying attributes, drawn on by image-processing functions, which can be readily inspected. 
