@@ -13,17 +13,17 @@ vignette: >
 ---
 
 
-<style>
-<!-- Put all captions in italics -->
+<style type="text/css">
+/* Put all captions in italics */
 .caption {
   font-style: italic;
 }
-<!-- Center all figures. This is actually better than using knitr::opts_chunk 
-because the code is only written once in the output -->
+/* Center all figures. This is actually better than using knitr::opts_chunk
+because the code is only written once in the output */
 .figure {
   text-align: center;
 }
-<!-- Auto-wrap long code line -->
+/* Auto-wrap long code line */
 code.sourceCode {
   white-space: pre-wrap;
 }
