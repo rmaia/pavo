@@ -32,6 +32,7 @@ Imports:
     stats,
     sp
 Suggests:
+    spelling,
     rgl,
     xml2,
     testthat,
@@ -39,3 +40,4 @@ Suggests:
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+Language: en-GB
