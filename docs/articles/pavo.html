@@ -78,7 +78,7 @@
       <h1>pavo</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2018-09-14</h4>
+            <h4 class="date">2018-09-15</h4>
       
       
       <div class="hidden name"><code>pavo.Rmd</code></div>
@@ -88,8 +88,18 @@
     
     
 <style>
+<!-- Put all captions in italics -->
 .caption {
   font-style: italic;
+}
+<!-- Center all figures. This is actually better than using knitr::opts_chunk 
+because the code is only written once in the output -->
+.figure {
+  text-align: center;
+}
+<!-- Auto-wrap long code line -->
+code.sourceCode {
+  white-space: pre-wrap;
 }
 </style>
 <div id="introduction" class="section level1">
@@ -106,7 +116,7 @@
 <strong>Visualize</strong> the output, with multiple options provided for exploration and analysis.</li>
 </ol>
 <p>Below we will show the main functions in the package in example workflows. The development version of <code>pavo</code> can be found on <a href="https://github.com/rmaia/pavo">github</a>.</p>
-<div class="figure" style="text-align: center">
+<div class="figure">
 <img src="../../../../../../Dropbox%20(Sydney%20Uni)/notes/research/projects/pavo/vignettes/fig/workflow.png" alt="A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage." width="70%"><p class="caption">
 A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.
 </p>
@@ -197,14 +207,14 @@ A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>))</a></code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] <span class="op">~</span><span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">"l"</span>, <span class="dt">xlab =</span> <span class="st">"wl"</span>)</a></code></pre></div>
-<p><img src="pavo_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="pavo_files/figure-html/unnamed-chunk-9-1.png" width="384"></p>
 <p>We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (<code>as.rspec</code> will warn you when wavelengths in the data are not present in the range specified with <code>lim</code>), otherwise <code>as.rspec</code> will assume that wavelengths exist when in fact they may not. For example, if we set <code>lim = c(300, 1000)</code> and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:</p>
 <div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">fakedat.new2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/as.rspec.html">as.rspec</a></span>(fakedat, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">1000</span>))</a></code></pre></div>
 <pre><code>## wavelengths found in column 3</code></pre>
 <pre><code>## Warning in as.rspec(fakedat, lim = c(300, 1000)): Specified wavelength
 ## limits outside of actual data. Check 'lim' argument.</code></pre>
 <div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb28-1" data-line-number="1"><span class="kw">plot</span>(fakedat.new2[, <span class="dv">2</span>] <span class="op">~</span><span class="st"> </span>fakedat.new2[, <span class="dv">1</span>], <span class="dt">type =</span> <span class="st">"l"</span>)</a></code></pre></div>
-<p><img src="pavo_files/figure-html/unnamed-chunk-11-1.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="pavo_files/figure-html/unnamed-chunk-10-1.png" width="384"></p>
 </div>
 <div id="subsetting-and-merging-spectral-data" class="section level2">
 <h2 class="hasAnchor">
@@ -248,7 +258,7 @@ A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of
 <p>As previously described, our data (contained in the <code>specs</code> object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function <code>explorespec</code> provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument <code>specreps</code>, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:</p>
 <div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb34-1" data-line-number="1"><span class="co"># 36 spectra plus the first (wl) column</span></a>
 <a class="sourceLine" id="cb34-2" data-line-number="2"><span class="kw"><a href="../reference/explorespec.html">explorespec</a></span>(specs[, <span class="dv">1</span><span class="op">:</span><span class="dv">37</span>], <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">lwd =</span> <span class="dv">2</span>) </a></code></pre></div>
-<div class="figure" style="text-align: center">
+<div class="figure">
 <img src="pavo_files/figure-html/explorespecfig-1.png" alt="Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels" width="576"><p class="caption">
 Result from <code>explorespec</code>, showing the three measurements for each individual cardinal in separate panels
 </p>
@@ -287,7 +297,7 @@ Result from <code>explorespec</code>, showing the three measurements for each in
 <p>Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted “spikes”" in reflectance curves. The <code>pavo</code> function <code>procspec</code> can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the <code>loess.smooth</code> function in <code>R</code>, wrapped in the <code>opt="smooth"</code> argument of <code>procspec</code>.</p>
 <p>But first, let’s use the <code>plotsmooth</code> function to determine a suitable smoothing parameter (<code>span</code>). This function allows you to set a minimum and maximum smoothing parameter to try and plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.</p>
 <div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb43-1" data-line-number="1"><span class="kw"><a href="../reference/plotsmooth.html">plotsmooth</a></span>(sppspec, <span class="dt">minsmooth =</span> <span class="fl">0.05</span>, <span class="dt">maxsmooth =</span> <span class="fl">0.5</span>, <span class="dt">curves =</span> <span class="dv">4</span>, <span class="dt">ask =</span> <span class="ot">FALSE</span>)</a></code></pre></div>
-<p><img src="pavo_files/figure-html/unnamed-chunk-17-1.png" width="576" style="display: block; margin: auto;"></p>
+<p><img src="pavo_files/figure-html/unnamed-chunk-16-1.png" width="576" style="display: block; margin: auto;"></p>
 <p>From the resulting plot, we can see that <code>span = 0.2</code> is the minimum amount of smoothing to remove spectral noise while preserving the original spectral shape. Based on this value, we will now use the <code>opt</code> argument in <code>procspec</code> to smooth data for further plotting and analysis.</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1">spec.sm &lt;-<span class="st"> </span><span class="kw"><a href="../reference/procspec.html">procspec</a></span>(sppspec, <span class="dt">opt =</span> <span class="st">"smooth"</span>, <span class="dt">span =</span> <span class="fl">0.2</span>)</a></code></pre></div>
 <pre><code>## processing options applied:
@@ -297,8 +307,8 @@ Result from <code>explorespec</code>, showing the three measurements for each in
 <a class="sourceLine" id="cb46-3" data-line-number="3">  <span class="dt">xlab =</span> <span class="st">"Wavelength (nm)"</span>, <span class="dt">ylab =</span> <span class="st">"Reflectance (%)"</span></a>
 <a class="sourceLine" id="cb46-4" data-line-number="4">)</a>
 <a class="sourceLine" id="cb46-5" data-line-number="5"><span class="kw">lines</span>(spec.sm[, <span class="dv">5</span>] <span class="op">~</span><span class="st"> </span>sppspec[, <span class="dv">1</span>], <span class="dt">col =</span> <span class="st">"red"</span>, <span class="dt">lwd =</span> <span class="dv">2</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-18-1.png" alt="Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet" width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-17-1.png" alt="Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet" width="480"><p class="caption">
 Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet
 </p>
 </div>
@@ -328,8 +338,8 @@ Result for raw (grey line) and smoothed (red line) reflectance data for the para
 <a class="sourceLine" id="cb53-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb53-13" data-line-number="13"><span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb53-14" data-line-number="14"><span class="kw">mtext</span>(<span class="st">"Reflectance (%)"</span>, <span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-20-1.png" alt="Results for min (left), max (center), and both normalizations (right)" width="672"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-19-1.png" alt="Results for min (left), max (center), and both normalizations (right)" width="672"><p class="caption">
 Results for min (left), max (center), and both normalizations (right)
 </p>
 </div>
@@ -369,8 +379,8 @@ Results for min (left), max (center), and both normalizations (right)
 <a class="sourceLine" id="cb59-12" data-line-number="12"><span class="kw">abline</span>(<span class="dt">h =</span> <span class="dv">0</span>, <span class="dt">lty =</span> <span class="dv">2</span>)</a>
 <a class="sourceLine" id="cb59-13" data-line-number="13"><span class="kw">plot</span>(sppspec, <span class="dt">select =</span> sel, <span class="dt">type =</span> <span class="st">"s"</span>, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(sppspec))</a>
 <a class="sourceLine" id="cb59-14" data-line-number="14"><span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-23-1.png" alt="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities)." width="672"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-22-1.png" alt="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities)." width="672"><p class="caption">
 Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities).
 </p>
 </div>
@@ -405,8 +415,8 @@ Plot of PC1 loading versus wavelength (left) and species mean spectra sorted ver
 <a class="sourceLine" id="cb66-13" data-line-number="13"></a>
 <a class="sourceLine" id="cb66-14" data-line-number="14"><span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb66-15" data-line-number="15"><span class="kw">mtext</span>(<span class="st">"Reflectance (%)"</span>, <span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-25-1.png" alt="Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-24-1.png" alt="Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)." width="480"><p class="caption">
 Plots showing original reflectance curve including negative values (left) and two processed curves using <code>fixneg = addmin</code> (top right) and <code>fixneg = zero</code> (bottom right).
 </p>
 </div>
@@ -438,8 +448,8 @@ Plots showing original reflectance curve including negative values (left) and tw
 <div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb67-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mar =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">2</span>, <span class="dv">2</span>))</a>
 <a class="sourceLine" id="cb67-2" data-line-number="2"><span class="kw">data</span>(teal)</a>
 <a class="sourceLine" id="cb67-3" data-line-number="3"><span class="kw">plot</span>(teal, <span class="dt">type =</span> <span class="st">"o"</span>, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(teal))</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-26-1.png" alt="Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-25-1.png" alt="Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color." width="480"><p class="caption">
 Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color.
 </p>
 </div>
@@ -459,12 +469,12 @@ Overlay plot of the teal angle-dependent reflectance with colors of each curve b
 <a class="sourceLine" id="cb70-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb70-6" data-line-number="6"><span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> T, <span class="dt">line =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb70-7" data-line-number="7"><span class="kw">mtext</span>(<span class="st">"Cumulative reflectance (A.U.)"</span>, <span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">outer =</span> T, <span class="dt">line =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-27-1.png" alt="Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance" width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-26-1.png" alt="Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance" width="384"><p class="caption">
 Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance
 </p>
 </div>
-<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”“) this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
+<p>Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the <code>select</code> argument in <code>plot.rspec</code>. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first (“why is my first spec number 2?”") this preserves subsetting hierarchy: using <code>plot(teal, select = 2)</code> will show the same spectra that would be selected if you use <code>teal[ ,2]</code>.</p>
 </div>
 <div id="the-heatmap-option" class="section level3">
 <h3 class="hasAnchor">
@@ -480,8 +490,8 @@ Stack plot of the raw (left) and normalized (right) teal angle-dependent reflect
 <a class="sourceLine" id="cb74-3" data-line-number="3">  <span class="dt">ylab =</span> <span class="kw">expression</span>(<span class="kw">paste</span>(<span class="st">"Incident angle ("</span>, degree, <span class="st">")"</span>)),</a>
 <a class="sourceLine" id="cb74-4" data-line-number="4">  <span class="dt">las =</span> <span class="dv">1</span>, <span class="dt">useRaster =</span> <span class="ot">TRUE</span></a>
 <a class="sourceLine" id="cb74-5" data-line-number="5">)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-29-1.png" alt="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-28-1.png" alt="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal." width="480"><p class="caption">
 Heatmap plot for angle-resolved reflectance measurements of the green-winged teal.
 </p>
 </div>
@@ -502,8 +512,8 @@ Heatmap plot for angle-resolved reflectance measurements of the green-winged tea
 <a class="sourceLine" id="cb75-8" data-line-number="8">  <span class="dt">FUN.error =</span> <span class="cf">function</span>(x) <span class="kw">sd</span>(x) <span class="op">/</span><span class="st"> </span><span class="kw">sqrt</span>(<span class="kw">length</span>(x)),</a>
 <a class="sourceLine" id="cb75-9" data-line-number="9">  <span class="dt">lcol =</span> <span class="dv">1</span>, <span class="dt">shadecol =</span> <span class="st">"grey"</span>, <span class="dt">alpha =</span> <span class="fl">0.7</span></a>
 <a class="sourceLine" id="cb75-10" data-line-number="10">)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-30-1.png" alt="Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale" width="576"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-29-1.png" alt="Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale" width="576"><p class="caption">
 Example plots created using <code>aggplot</code>. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale
 </p>
 </div>
@@ -539,8 +549,8 @@ Example plots created using <code>aggplot</code>. Left: using median, standard d
 <p>If this all sounds too esoteric, fear not: <code>peakshape</code> has the option of returning plots indicating what it’s calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (<code>HWHM.l</code> and <code>HWHM.r</code>) is the FWHM:</p>
 <div class="sourceCode" id="cb79"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb79-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">2</span>, <span class="dv">3</span>))</a>
 <a class="sourceLine" id="cb79-2" data-line-number="2"><span class="kw"><a href="../reference/peakshape.html">peakshape</a></span>(spec.sm, <span class="dt">plot =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-34-1.png" alt="Plots from `peakshape`" width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-33-1.png" alt="Plots from `peakshape`" width="480"><p class="caption">
 Plots from <code>peakshape</code>
 </p>
 </div>
@@ -553,8 +563,8 @@ Plots from <code>peakshape</code>
 ## 6  tanager 30.48108 557  281    195     86      Yes</code></pre>
 <p>As it can be seen, the variable FWHM is meaningless if the curve doesn’t have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Above figure, last panel). In this case, it’s useful to set wavelength limits when calculating the FWHM by using the <code>lim</code> argument. <code>peakshape</code> also offers a <code>select</code> argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw"><a href="../reference/peakshape.html">peakshape</a></span>(spec.sm, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">lim =</span> <span class="kw">c</span>(<span class="dv">300</span>, <span class="dv">500</span>), <span class="dt">plot =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-35-1.png" alt="Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm" width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-34-1.png" alt="Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm" width="480"><p class="caption">
 Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 nm
 </p>
 </div>
@@ -726,16 +736,16 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <a class="sourceLine" id="cb89-12" data-line-number="12"></a>
 <a class="sourceLine" id="cb89-13" data-line-number="13"><span class="kw">mtext</span>(<span class="st">"Wavelength (nm)"</span>, <span class="dt">side =</span> <span class="dv">1</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a>
 <a class="sourceLine" id="cb89-14" data-line-number="14"><span class="kw">mtext</span>(<span class="st">"Reflectance (%)"</span>, <span class="dt">side =</span> <span class="dv">2</span>, <span class="dt">outer =</span> <span class="ot">TRUE</span>, <span class="dt">line =</span> <span class="dv">1</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-39-1.png" alt="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)." width="576"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-38-1.png" alt="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)." width="576"><p class="caption">
 Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets).
 </p>
 </div>
 <p>As described above, <code>vismodel</code> also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function <code>sensmodel</code>, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in Govardovskii et al. (2000) and Hart &amp; Vorobyev (2005). <code>sensmodel</code> takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modeled. Let’s model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:</p>
 <div class="sourceCode" id="cb90"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb90-1" data-line-number="1">idealizeddichromat &lt;-<span class="st"> </span><span class="kw"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="kw">c</span>(<span class="dv">350</span>, <span class="dv">650</span>))</a>
 <a class="sourceLine" id="cb90-2" data-line-number="2"><span class="kw">plot</span>(idealizeddichromat, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(idealizeddichromat), <span class="dt">ylab =</span> <span class="st">"Absorbance"</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-40-1.png" alt="Idealized dichromat photoreceptors created using `sensmodel`." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-39-1.png" alt="Idealized dichromat photoreceptors created using `sensmodel`." width="480"><p class="caption">
 Idealized dichromat photoreceptors created using <code>sensmodel</code>.
 </p>
 </div>
@@ -867,8 +877,8 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## X6  31.912643 -23.368560 -24.79660 1.532744</code></pre>
 <p>which you can then plot as well:</p>
 <div class="sourceCode" id="cb112"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb112-1" data-line-number="1"><span class="kw">plot</span>(fakedata.cc, <span class="dt">theta =</span> <span class="dv">55</span>, <span class="dt">phi =</span> <span class="dv">25</span>, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(fakedata.c))</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-47-1.png" alt="Spectral data in a receptor noise-corrected colorspace" width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-46-1.png" alt="Spectral data in a receptor noise-corrected colorspace" width="384"><p class="caption">
 Spectral data in a receptor noise-corrected colorspace
 </p>
 </div>
@@ -914,8 +924,8 @@ Spectral data in a receptor noise-corrected colorspace
 ## Faradaya_splendida    0.23166580 0.7683342  0.37948187 0.37948187</code></pre>
 <p>The output contains values for the relative stimulation of shot- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.</p>
 <div class="sourceCode" id="cb117"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb117-1" data-line-number="1"><span class="kw">plot</span>(di.flowers, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)) </a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-50-1.png" alt="Flowers in a dichromatic colorspace, as modelled according to a canid visual system." width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-49-1.png" alt="Flowers in a dichromatic colorspace, as modelled according to a canid visual system." width="384"><p class="caption">
 Flowers in a dichromatic colorspace, as modelled according to a canid visual system.
 </p>
 </div>
@@ -941,8 +951,8 @@ Flowers in a dichromatic colorspace, as modelled according to a canid visual sys
 ## Faradaya_splendida    -0.08308452 -1.1811377 0.08981733</code></pre>
 <p>As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, as well as the ‘hue angle’ <code>h.theta</code> and distance from the origin (<code>r.vec</code>).</p>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">plot</span>(tri.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)) </a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-52-1.png" alt="Floral reflectance in a Maxwell triangle, considering a honeybee visual system." width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-51-1.png" alt="Floral reflectance in a Maxwell triangle, considering a honeybee visual system." width="384"><p class="caption">
 Floral reflectance in a Maxwell triangle, considering a honeybee visual system.
 </p>
 </div>
@@ -983,8 +993,8 @@ Floral reflectance in a Maxwell triangle, considering a honeybee visual system.
 <p>Tetrahedral data (via <code><a href="../reference/colspace.html">colspace(space = 'tcs')</a></code>) may be visualised in an <em>interactive</em> plot by using <code>tcsplot</code>, along with the accessory functions <code>tcspoints</code> and <code>tcsvol</code> for adding points and convex hulls, respectively. As of version <code>1.0</code>, <code>pavo</code> also includes a <em>static</em> tetrahedral plot. As with other colorspace plots there are a number of associated graphical options, though the <code>theta</code> and <code>phi</code> arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.</p>
 <p>When plotting the tetrahedral colorspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments <code>perspective = TRUE</code> and controlling the size range with the <code>range</code> argument. Several other options control the appearance of this plot, you can check these using <code><a href="../reference/plot.colspace.html">?plot.colspace</a></code> or <code><a href="../reference/tetraplot.html">?tetraplot</a></code></p>
 <div class="sourceCode" id="cb123"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb123-1" data-line-number="1"><span class="kw">plot</span>(tetra.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers), <span class="dt">perspective =</span> <span class="ot">TRUE</span>, <span class="dt">range =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-54-1.png" alt="Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective" width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-53-1.png" alt="Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective" width="480"><p class="caption">
 Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective
 </p>
 </div>
@@ -1000,19 +1010,19 @@ Flowers in a tetrahedral colorspace modelled using the visual phenotype of the b
 <a class="sourceLine" id="cb124-3" data-line-number="3"><span class="kw"><a href="../reference/axistetra.html">axistetra</a></span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="fl">1.8</span>)</a>
 <a class="sourceLine" id="cb124-4" data-line-number="4"><span class="kw">plot</span>(tetra.flowers, <span class="dt">theta =</span> <span class="dv">110</span>, <span class="dt">phi =</span> <span class="dv">10</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a>
 <a class="sourceLine" id="cb124-5" data-line-number="5"><span class="kw"><a href="../reference/axistetra.html">axistetra</a></span>(<span class="dt">x =</span> <span class="dv">0</span>, <span class="dt">y =</span> <span class="fl">1.8</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-55-1.png" alt="Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="576"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-54-1.png" alt="Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="576"><p class="caption">
 Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit.
 </p>
 </div>
 <p>For tetrahedral models, another plotting option available is <code>projplot</code>, which projects color points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.</p>
 <div class="sourceCode" id="cb125"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb125-1" data-line-number="1"><span class="kw"><a href="../reference/projplot.html">projplot</a></span>(tetra.flowers, <span class="dt">pch =</span> <span class="dv">20</span>, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-56-1.png" alt="Projection plot from a tetrahedral color space." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-55-1.png" alt="Projection plot from a tetrahedral color space." width="480"><p class="caption">
 Projection plot from a tetrahedral color space.
 </p>
 </div>
-<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”“, or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
+<p>Finally, a useful function for tetrahedral models is <code>voloverlap</code>, which calculates the overlap in tetrahedral color volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”", or to test for mimetism, dichromatism, etc. (Stoddard &amp; Prum 2011). To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
 <div class="sourceCode" id="cb126"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb126-1" data-line-number="1"><span class="kw">data</span>(sicalis)</a></code></pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colorspace (note the option <code>plot</code> for plotting of the volumes):</p>
 <div class="sourceCode" id="cb127"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb127-1" data-line-number="1"><span class="kw">par</span>(<span class="dt">mfrow =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pty =</span> <span class="st">"s"</span>)</a>
@@ -1023,7 +1033,7 @@ Projection plot from a tetrahedral color space.
 <pre><code>##           vol1         vol2   overlapvol vsmallest      vboth
 ## 1 5.183721e-06 6.281511e-06 6.904074e-07 0.1331876 0.06407598</code></pre>
 <div class="sourceCode" id="cb129"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb129-1" data-line-number="1"><span class="kw"><a href="../reference/voloverlap.html">voloverlap</a></span>(tcs.sicalis.T, tcs.sicalis.C, <span class="dt">plot =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<p><img src="pavo_files/figure-html/unnamed-chunk-58-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="pavo_files/figure-html/unnamed-chunk-57-1.png" width="700"></p>
 <pre><code>##           vol1         vol2 overlapvol vsmallest vboth
 ## 1 5.183721e-06 4.739152e-06          0         0     0</code></pre>
 <p><code>voverlap</code> gives the volume (<span class="math inline">\(V\)</span>) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: <span class="math display">\[V_{smallest} = V_{overlap} / V_{smallest}\]</span> and <span class="math display">\[V_{both} = V_{overlap} / (V_A + V_B)\]</span>. Thus, if one of the volumes is entirely contained in the other, <code>vsmallest</code> will equal 1.</p>
@@ -1075,8 +1085,8 @@ Projection plot from a tetrahedral color space.
 ## Faradaya_splendida     70.02119 0.3667853       70  bluegreen 0.3351008</code></pre>
 <p>Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hexagon model also outputs two additional measures of of subjective ‘bee-hue’; <code>sec.fine</code> and <code>sec.coarse</code>. <code>sec.fine</code> describes the location of stimuli within one of 36 ‘hue sectors’ that are specified by radially dissecting the hexagon in 10-degree increments. <code>sec.coarse</code> follows a similar principle, though here the hexagon is divided into only five ‘bee-hue’ sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying <code>sectors = 'coarse</code> or <code>sectors = 'fine'</code> in a call to <code>plot</code> after modelling.</p>
 <div class="sourceCode" id="cb137"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb137-1" data-line-number="1"><span class="kw">plot</span>(hex.flowers, <span class="dt">sectors =</span> <span class="st">'coarse'</span>, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-62-1.png" alt="Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-61-1.png" alt="Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors." width="480"><p class="caption">
 Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors.
 </p>
 </div>
@@ -1108,8 +1118,8 @@ Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlai
 ## Faradaya_splendida     3.922638</code></pre>
 <p>The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in <code>r.vec</code>, it contains no associated measure of hue.</p>
 <div class="sourceCode" id="cb140"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb140-1" data-line-number="1"><span class="kw">plot</span>(coc.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers), <span class="dt">yaxt =</span> <span class="st">"n"</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-64-1.png" alt="Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-63-1.png" alt="Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee." width="480"><p class="caption">
 Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee.
 </p>
 </div>
@@ -1143,8 +1153,8 @@ Flowers in the color-opponent-coding space of Backhaus (1991), as modelling acco
 ## Faradaya_splendida    0.17865248</code></pre>
 <p>The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling</p>
 <div class="sourceCode" id="cb144"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb144-1" data-line-number="1"><span class="kw">plot</span>(ciexyz.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)) </a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-67-1.png" alt="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-66-1.png" alt="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location." width="480"><p class="caption">
 Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location.
 </p>
 </div>
@@ -1185,8 +1195,8 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 ## Faradaya_splendida     41.517115</code></pre>
 <p>Our output now contains the tristimulus <code>XYZ</code> values, as well as their <code>Lab</code> counterparts, which are coordinates in the <code>Lab</code> space. These can also be visualised in three-dimensional <code>Lab</code> space by calling <code>plot</code>:</p>
 <div class="sourceCode" id="cb147"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb147-1" data-line-number="1"><span class="kw">plot</span>(cielab.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)) </a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-69-1.png" alt="CIELAB." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-68-1.png" alt="CIELAB." width="480"><p class="caption">
 CIELAB.
 </p>
 </div>
@@ -1219,8 +1229,8 @@ CIELAB.
 ## Faradaya_splendida    -0.4673092     p-y- 0.5431968</code></pre>
 <p>And it is simply the signs of these differences that define the four possible fly-color categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.</p>
 <div class="sourceCode" id="cb151"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb151-1" data-line-number="1"><span class="kw">plot</span>(cat.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers)) </a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-72-1.png" alt="Flowers in the categorical colorspace of Troje (1993)." width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-71-1.png" alt="Flowers in the categorical colorspace of Troje (1993)." width="480"><p class="caption">
 Flowers in the categorical colorspace of Troje (1993).
 </p>
 </div>
@@ -1275,8 +1285,8 @@ Flowers in the categorical colorspace of Troje (1993).
 <a class="sourceLine" id="cb164-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb164-5" data-line-number="5"><span class="co"># plot results</span></a>
 <a class="sourceLine" id="cb164-6" data-line-number="6"><span class="kw">plot</span>(seg.fdc, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(fakedata.c))</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-73-1.png" alt="Idealized reflectance spectra and their projection on the axes of segment classification" width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-72-1.png" alt="Idealized reflectance spectra and their projection on the axes of segment classification" width="384"><p class="caption">
 Idealized reflectance spectra and their projection on the axes of segment classification
 </p>
 </div>
@@ -1325,8 +1335,8 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <a class="sourceLine" id="cb170-6" data-line-number="6">fakemantisshrimp.colors[, <span class="st">"wl"</span>] &lt;-<span class="st"> </span>fakemantisshrimp[, <span class="st">"wl"</span>]</a>
 <a class="sourceLine" id="cb170-7" data-line-number="7"></a>
 <a class="sourceLine" id="cb170-8" data-line-number="8"><span class="kw">plot</span>(fakemantisshrimp, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(fakemantisshrimp.colors), <span class="dt">lwd =</span> <span class="dv">2</span>, <span class="dt">ylab =</span> <span class="st">"Absorbance"</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-76-1.png" alt="Visual system of a pretend mantis shrimp with 10 cones" width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-75-1.png" alt="Visual system of a pretend mantis shrimp with 10 cones" width="384"><p class="caption">
 Visual system of a pretend mantis shrimp with 10 cones
 </p>
 </div>
@@ -1357,7 +1367,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <div class="sourceCode" id="cb175"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb175-1" data-line-number="1"><span class="kw"><a href="../reference/as.rimg.html">is.rimg</a></span>(butterflies)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb177"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb177-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">1</span>]])</a></code></pre></div>
-<pre><code>##  rimg [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  'rimg' num [1:500, 1:340, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "h_melpomene"
 ##  - attr(*, "px_scale")= logi NA
@@ -1367,7 +1377,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 ##  - attr(*, "colnames")= logi NA
 ##  - attr(*, "tag_loc")= logi NA</code></pre>
 <div class="sourceCode" id="cb179"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb179-1" data-line-number="1"><span class="kw">str</span>(butterflies[[<span class="dv">2</span>]])</a></code></pre></div>
-<pre><code>##  rimg [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
+<pre><code>##  'rimg' num [1:500, 1:398, 1:3] 1 1 1 1 1 1 1 1 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "papilio"
 ##  - attr(*, "px_scale")= logi NA
@@ -1387,7 +1397,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <a class="sourceLine" id="cb181-8" data-line-number="8"><span class="kw"><a href="../reference/as.rimg.html">is.rimg</a></span>(fake_rimg)</a></code></pre></div>
 <pre><code>## [1] TRUE</code></pre>
 <div class="sourceCode" id="cb183"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb183-1" data-line-number="1"><span class="kw">str</span>(fake_rimg)</a></code></pre></div>
-<pre><code>##  rimg [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
+<pre><code>##  'rimg' num [1:12, 1:8, 1:3] 1 1 0 0 1 1 0 0 1 1 ...
 ##  - attr(*, "state")= chr "raw"
 ##  - attr(*, "imgname")= chr "img"
 ##  - attr(*, "px_scale")= logi NA
@@ -1406,8 +1416,8 @@ Visual system of a pretend mantis shrimp with 10 cones
 <p>Thanks to the underlying class system of <code>pavo</code>, the generic functions <code>plot</code> and <code>summary</code> recognise and respond to image-data in an appropriate manner, as is the case with spectral data. A quick call to <code>plot</code>, for example, prints our images. Note that while we call an image individually below (for convenient printing in the vignette), we could simply feed the entire list of images to <code>plot</code> and it would automatically step through each image in the list upon user input.</p>
 <div class="sourceCode" id="cb185"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb185-1" data-line-number="1"><span class="co"># Note the plot titles are taken from the file names, and can be overridden.</span></a>
 <a class="sourceLine" id="cb185-2" data-line-number="2"><span class="kw">plot</span>(butterflies[[<span class="dv">1</span>]])</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-80-1.png" alt="Raw images of our butterflies" width="384"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-79-1.png" alt="Raw images of our butterflies" width="384"><p class="caption">
 Raw images of our butterflies
 </p>
 </div>
@@ -1444,8 +1454,8 @@ Raw images of our butterflies
 <a class="sourceLine" id="cb190-3" data-line-number="3"><span class="co"># with user input.</span></a>
 <a class="sourceLine" id="cb190-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb190-5" data-line-number="5"><span class="kw">summary</span>(butterflies_class[[<span class="dv">2</span>]], <span class="dt">plot =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
-<div class="figure" style="text-align: center">
-<img src="pavo_files/figure-html/unnamed-chunk-84-1.png" alt="The k-means classified images of our butterflies, along with their identified color palettes" width="480"><p class="caption">
+<div class="figure">
+<img src="pavo_files/figure-html/unnamed-chunk-83-1.png" alt="The k-means classified images of our butterflies, along with their identified color palettes" width="480"><p class="caption">
 The k-means classified images of our butterflies, along with their identified color palettes
 </p>
 </div>

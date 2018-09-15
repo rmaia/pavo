@@ -12,13 +12,20 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
-```{r echo=FALSE}
-knitr::opts_chunk$set(fig.align='center') 
-```
 
 <style>
+<!-- Put all captions in italics -->
 .caption {
   font-style: italic;
+}
+<!-- Center all figures. This is actually better than using knitr::opts_chunk 
+because the code is only written once in the output -->
+.figure {
+  text-align: center;
+}
+<!-- Auto-wrap long code line -->
+code.sourceCode {
+  white-space: pre-wrap;
 }
 </style>
 

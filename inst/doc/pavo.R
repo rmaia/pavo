@@ -1,6 +1,3 @@
-## ----echo=FALSE----------------------------------------------------------
-knitr::opts_chunk$set(fig.align='center') 
-
 ## ---- echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '70%', dpi = 72----
 knitr::include_graphics('fig/workflow.png')
 
