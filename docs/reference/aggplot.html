@@ -187,8 +187,13 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Load reflectance data</span>
 <span class='fu'>data</span>(<span class='no'>sicalis</span>)
+
+<span class='co'># Create grouping variable based on spec names</span>
 <span class='no'>bysic</span> <span class='kw'>&lt;-</span> <span class='fu'>gsub</span>(<span class='st'>"^ind[0-9]."</span>,<span class='st'>''</span>, <span class='fu'>names</span>(<span class='no'>sicalis</span>)[-<span class='fl'>1</span>])
+
+<span class='co'># Plot using various error functions and options</span>
 <span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>)
 <span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>FUN.error</span><span class='kw'>=</span><span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'>quantile</span>(<span class='no'>x</span>, <span class='fu'>c</span>(<span class='fl'>0.0275</span>,<span class='fl'>0.975</span>)))
 <span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>shade</span> <span class='kw'>=</span> <span class='fu'><a href='spec2rgb.html'>spec2rgb</a></span>(<span class='no'>sicalis</span>), <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='fl'>1</span>)

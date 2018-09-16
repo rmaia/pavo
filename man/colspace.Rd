@@ -43,25 +43,25 @@ and graphical parameters, see \code{\link{plot.colspace}}.
 \dontrun{
 data(flowers)
 
-# Dichromat
+# A dichromat in a segment colourspace
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
 
-# Colour hexagon
+# Honeybee in the colour hexagon
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
-# Trichromat
+# A trichromat in a Maxwell triangle
 vis.flowers <- vismodel(flowers, visual = 'apis')
 tri.flowers <- colspace(vis.flowers, space = 'tri')
 plot(tri.flowers)
 
-# Tetrachromat
+# A tetrachromat in a tetrahedral colourspace
 vis.flowers <- vismodel(flowers, visual = 'bluetit')
 tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 
-# Categorical
+# A housefly in the categorical colourspace
 vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
 }

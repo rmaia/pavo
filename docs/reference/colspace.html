@@ -196,25 +196,25 @@ Society, 41, 315-352.</p>
     <pre class="examples"><span class='co'># NOT RUN {</span>
 <span class='fu'>data</span>(<span class='no'>flowers</span>)
 
-<span class='co'># Dichromat</span>
+<span class='co'># A dichromat in a segment colourspace</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'canis'</span>)
 <span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'di'</span>)
 
-<span class='co'># Colour hexagon</span>
+<span class='co'># Honeybee in the colour hexagon</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>'Ei'</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
                         <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'l'</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>'green'</span>)
 <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'hexagon'</span>)
 
-<span class='co'># Trichromat</span>
+<span class='co'># A trichromat in a Maxwell triangle</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'apis'</span>)
 <span class='no'>tri.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'tri'</span>)
 <span class='fu'>plot</span>(<span class='no'>tri.flowers</span>)
 
-<span class='co'># Tetrachromat</span>
+<span class='co'># A tetrachromat in a tetrahedral colourspace</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'bluetit'</span>)
 <span class='no'>tcs.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'tcs'</span>)
 
-<span class='co'># Categorical</span>
+<span class='co'># A housefly in the categorical colourspace</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'musca'</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>'md.r1'</span>)
 <span class='no'>cat.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>colspace</span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'categorical'</span>)
 <span class='co'># }</span><div class='input'>

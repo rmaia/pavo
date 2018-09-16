@@ -72,6 +72,10 @@ Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
 Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
  K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
  University Press, Cambridge, Massachusetts.
+
+White, T. E., Dalrymple, R. L., Noble D. W. A., O'Hanlon, J. C.,
+Zurek, D. B., Umbers, K. D. L. 2015. Reproducible research in the study
+of biological coloration. Animal Behaviour, 106, 51-57.
 }
 \seealso{
 \code{\link{loess.smooth}}, \code{\link{plotsmooth}}

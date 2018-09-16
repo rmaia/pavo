@@ -60,6 +60,9 @@
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
 #'  K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
 #'  University Press, Cambridge, Massachusetts.
+#' @references White, T. E., Dalrymple, R. L., Noble D. W. A., O'Hanlon, J. C.,
+#' Zurek, D. B., Umbers, K. D. L. 2015. Reproducible research in the study
+#' of biological coloration. Animal Behaviour, 106, 51-57.
 
 procspec <- function(rspecdata, opt = c(
                        "none", "smooth", "maximum", "minimum",
@@ -105,15 +108,6 @@ procspec <- function(rspecdata, opt = c(
     applied <- c(applied, paste("smoothing spectra with a span of", span, "\n"))
   }
 
-  # if (any(opt=='smooth')&method=='spline')
-  # rspecdata <- sapply(names(rspecdata), function(z){smooth.spline(x = wl, y = rspecdata[, z],
-  # spar = spar)$y})
-
-  # if (any(opt=='smooth')&method=='loess')
-  # rspecdata <- sapply(names(rspecdata), function(z){loess.smooth(x = wl, y = rspecdata[, z],
-  # span = span, degree = 2, family = "gaussian",
-  # evaluation = length(wl))$y})
-
   if (fixneg == "addmin") {
     adm <- function(x) {
       if (min(x) < 0) {
@@ -132,7 +126,6 @@ procspec <- function(rspecdata, opt = c(
     rspecdata[rspecdata < 0 ] <- 0
     applied <- c(applied, "Negative value correction: converted negative values to zero\n")
   }
-
 
   if (any(opt == "minimum")) {
     rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))

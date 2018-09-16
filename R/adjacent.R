@@ -96,6 +96,7 @@
 #' @importFrom utils object.size
 #'
 #' @examples \dontrun{
+#' # Set a seed, for reproducibility
 #' set.seed(153)
 #'
 #' # Single image

@@ -111,6 +111,7 @@ contrast (Endler & Mielke 2005).
 }
 \examples{
 \dontrun{
+# Set a seed, for reproducibility
 set.seed(153)
 
 # Single image
