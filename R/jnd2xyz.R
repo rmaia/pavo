@@ -40,7 +40,7 @@
 #' @references Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams.
 #' Behavioral Ecology, 23, 723-728.
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
-#' Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
+#' Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
 jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
