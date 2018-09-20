@@ -25,14 +25,14 @@ and the user asked to select either end of the scale corresponding to the input 
 
 \item{outline}{interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
-closed polygon are saved as an attribute, for use in genrating a masking layer &
+closed polygon are saved as an attribute, for use in generating a masking layer &
 separating animals/plants from backgrounds in further analyses. This is particularly
 useful when backgrounds are complex, such as in natural settings.}
 
 \item{smooth}{should the polygon specified when \code{outline = TRUE} be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
-\item{iterations}{the number of smoothing iterations, when \code{smooth = TRUE}. 
+\item{iterations}{the number of smoothing iterations, when \code{smooth = TRUE}.
 Defaults to \code{1}.}
 
 \item{col}{the color of the marker points and/or line, when using interactive options.}
