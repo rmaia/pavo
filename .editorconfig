@@ -1,0 +1,11 @@
+[*]
+end_of_line = lf
+insert_final_newline = true
+
+[*.R]
+indent_style = space
+indent_size = 2
+# this cannot be safely set for Rmd files because two trailing 
+# whitespaces can be used to create a linebreak in markdown
+trim_trailing_whitespace = true 
+
