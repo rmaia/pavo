@@ -110,7 +110,7 @@ multidimensionality of the niche reveals functional diversity changes in benthic
 marine biotas across geological time. Ecology Letters, 14(6), 561-568.
 
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
- Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
+ Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}, with code from Sebastien Villeger

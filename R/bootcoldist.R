@@ -32,7 +32,7 @@
 #' @importFrom stats aggregate
 #'
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
-#'  Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
+#'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,

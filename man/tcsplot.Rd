@@ -4,7 +4,7 @@
 \alias{tcsplot}
 \alias{tcspoints}
 \alias{tcsvol}
-\title{Interactive plot of a tetrahedral colorspace}
+\title{Interactive plot of a tetrahedral colourspace}
 \usage{
 tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
   vertexsize = 0.02, achro = TRUE, achrosize = 0.01,
@@ -31,9 +31,9 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{achro}{plot a point at the origin? (defaults to \code{TRUE})}
 
-\item{achrosize}{size of the point in the achromatic center}
+\item{achrosize}{size of the point in the achromatic centre}
 
-\item{achrocol}{color of the point in the achromatic center}
+\item{achrocol}{color of the point in the achromatic centre}
 
 \item{lwd, lcol}{graphical parameters for the edges of the tetrahedron.}
 
@@ -50,7 +50,7 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 \item{fill}{if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
 is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).}
 
-\item{grid.alpha}{transparecny of the volume polygon grid lines}
+\item{grid.alpha}{transparency of the volume polygon grid lines}
 }
 \value{
 \code{tcsplot} creates a 3D plot using functions of the package \code{rgl},

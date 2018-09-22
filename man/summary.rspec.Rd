@@ -142,7 +142,7 @@ ornaments, and a trade-off between agonistic and epigamic signaling in a widowbi
 Naturalist 160:683-691.
 
 4- Delhey, K., A. Johnsen, A. Peters, S. Andersson, and B. Kempenaers. 2003. Paternity analysis reveals
-opposing selection pressures on crown coloration in the blue tit (parus caeruleus). Proceedings
+opposing selection pressures on crown coloration in the blue tit (Parus caeruleus). Proceedings
 of the Royal Society B 270:2057-2063.
 
 5- Keyser, A. and G. Hill. 1999. Condition-dependent variation in the blue-ultraviolet coloration of a
@@ -152,7 +152,7 @@ structurally based plumage ornament. Proceedings of the Royal Society B 266:771-
 male blue grosbeaks. Behavioural Ecology 11:202-209.
 
 7- Ornborg, J., S. Andersson, S. Griffith, and B. Sheldon. 2002. Seasonal changes in a ultraviolet
-structural colour signal in blue tits, parus caeruleus. Biological Journal of the Linnean Society
+structural colour signal in blue tits, Parus caeruleus. Biological Journal of the Linnean Society
 76:237-245.
 
 8- Peters, A., A. Denk, K. Delhey, and B. Kempenaers. 2004. Carotenoid-based bill colour as an

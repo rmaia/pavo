@@ -2,12 +2,14 @@ pavo 2.0.0
 ------------------------------------------------------------------------------
 
 NEW FEATURES
+
 * image-based workflow for the combined analysis of colour and pattern geometry
 * added the visual systems of the (trichromatic) jumping spider _Habronattus pyrrithrix_
 and the (trichromatic) triggerfish _Rhinecanthus aculeatus_
 * `getspec()` can now read Avantes binary files (`.TRM` files)
 
 MINOR FEATURES AND BUG FIXES
+
 * Carotenoid chroma (S9) in `summary.rspec()` has been fixed to (R700 - R450)/R700.
 This gives the same result as before but with a flipped sign, and better reflects
 the original formula in the literature.
