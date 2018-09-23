@@ -16,3 +16,4 @@ todo.txt
 ^_pkgdown\.yml$
 ^codecov\.yml$
 LICENSE.md
+^.*\.pdf$
