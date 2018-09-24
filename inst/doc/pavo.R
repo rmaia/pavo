@@ -74,7 +74,7 @@ specs.new <- merge(specs.tanager, specs.parakeet)
 
 ## ---- label=explorespecfig, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.cap="Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels"----
 # 36 spectra plus the first (wl) column
-explorespec(specs[, 1:37], by = 3, lwd = 2) 
+explorespec(specs[, 1:37], by = 3, lwd = 2)
 
 ## ------------------------------------------------------------------------
 mspecs <- aggspec(specs, by = 3, FUN = mean)
@@ -90,7 +90,7 @@ table(spp)
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
 round(sppspec[1:5, ], 2)
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.align='center'----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5----------------
 plotsmooth(sppspec, minsmooth = 0.05, maxsmooth = 0.5, curves = 4, ask = FALSE)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Result for raw (grey line) and smoothed (red line) reflectance data for the parakeet"----
@@ -102,12 +102,12 @@ plot(sppspec[, 5] ~ sppspec[, 1],
 lines(spec.sm[, 5] ~ sppspec[, 1], col = "red", lwd = 2)
 
 ## ---- results='hide'-----------------------------------------------------
-# Run some different normalizations
+# Run some different normalisations
 specs.max <- procspec(sppspec, opt = "max")
 specs.min <- procspec(sppspec, opt = "min")
 specs.str <- procspec(sppspec, opt = c("min", "max")) # multiple options
 
-## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Results for min (left), max (center), and both normalizations (right)"----
+## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Results for min (left), max (centre), and both normalisations (right)"----
 # Plot results
 par(mfrow = c(1, 3), mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
@@ -137,7 +137,7 @@ summary(pca1)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities)."----
 
-# Generate colors from spectra
+# Generate colours from spectra
 colr <- spec2rgb(sppspec)
 wls <- as.numeric(colnames(spec.bin))
 
@@ -178,7 +178,7 @@ abline(h = 0, lty = 3)
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Overlay plot of the teal angle-dependent reflectance with colors of each curve being an approximation of the perceived color."----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Overlay plot of the teal angle-dependent reflectance with colours of each curve being an approximation of the perceived colour."----
 par(mar = c(4, 4, 2, 2))
 data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
@@ -205,10 +205,10 @@ plot(teal.sm,
   las = 1, useRaster = TRUE
 )
 
-## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and colored lines. Right: using mean, standard error, and greyscale"----
+## ---- fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale"----
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
-# Plot using median and standard deviation, default colors
+# Plot using median and standard deviation, default colours
 aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend = TRUE)
 
 # Plot using mean and standard error, in greyscale
@@ -315,7 +315,7 @@ fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
 fakedata.c <- as.rspec(fakedata.c)
 
 ## ------------------------------------------------------------------------
-# Visual model and color distances
+# Visual model and colour distances
 fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achro = TRUE)
 fakedata.cd <- coldist(fakedata.vm,
   noise = "neural", n = c(1, 2, 2, 4),
@@ -326,7 +326,7 @@ fakedata.cd <- coldist(fakedata.vm,
 fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = "l", axis1 = c(1, 0, 0), ref2 = NULL)
 head(fakedata.cc)
 
-## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Spectral data in a receptor noise-corrected colorspace"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Spectral data in a receptor noise-corrected colourspace"----
 plot(fakedata.cc, theta = 55, phi = 25, col = spec2rgb(fakedata.c))
 
 ## ------------------------------------------------------------------------
@@ -341,8 +341,8 @@ di.flowers <- colspace(vis.flowers, space = 'di')
 
 head(di.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Flowers in a dichromatic colorspace, as modelled according to a canid visual system."----
-plot(di.flowers, col = spec2rgb(flowers)) 
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Flowers in a dichromatic colourspace, as modelled according to a canid visual system."----
+plot(di.flowers, col = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'fi', scale = 10000)
@@ -352,7 +352,7 @@ tri.flowers <- colspace(vis.flowers, space = 'tri')
 head(tri.flowers)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Floral reflectance in a Maxwell triangle, considering a honeybee visual system."----
-plot(tri.flowers, pch = 21, bg = spec2rgb(flowers)) 
+plot(tri.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, visual = "bluetit", qcatch = "fi", scale = 10000)
@@ -361,17 +361,17 @@ tetra.flowers <- colspace(vis.flowers, space = "tcs")
 
 head(tetra.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.height=5, fig.width=5, fig.cap="Flowers in a tetrahedral colorspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective"----
+## ---- fig=TRUE, include=TRUE, fig.height=5, fig.width=5, fig.cap="Flowers in a tetrahedral colourspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective"----
 plot(tetra.flowers, pch = 21, bg = spec2rgb(flowers), perspective = TRUE, range = c(1, 2), cex = 0.5)
 
-## ---- fig=TRUE, include=TRUE, fig.height=4, fig.width=6, fig.cap="Flowers in a tetrahedral colorspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit."----
+## ---- fig=TRUE, include=TRUE, fig.height=4, fig.width=6, fig.cap="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit."----
 par(mfrow = c(1, 2), pty = "s")
 plot(tetra.flowers, pch = 21, bg = spec2rgb(flowers))
 axistetra(x = 0, y = 1.8)
 plot(tetra.flowers, theta = 110, phi = 10, pch = 21, bg = spec2rgb(flowers))
 axistetra(x = 0, y = 1.8)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Projection plot from a tetrahedral color space."----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Projection plot from a tetrahedral colour space."----
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
@@ -396,7 +396,7 @@ hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 
 head(hex.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers as modelled in the hymenopteran color hexagon of Chittka (1992), overlain with coarse bee-hue sectors."----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors."----
 plot(hex.flowers, sectors = 'coarse', pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
@@ -406,7 +406,7 @@ coc.flowers <- colspace(vis.flowers, space = "coc")
 
 head(coc.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the color-opponent-coding space of Backhaus (1991), as modelling according to the honeybee."----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling according to the honeybee."----
 plot(coc.flowers, pch = 21, bg = spec2rgb(flowers), yaxt = "n")
 
 ## ------------------------------------------------------------------------
@@ -416,15 +416,15 @@ vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRU
 ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 head(ciexyz.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colors based on their relative location."----
-plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers)) 
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location."----
+plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="CIELAB."----
-plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers)) 
+plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
 vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
@@ -434,8 +434,8 @@ cat.flowers <- colspace(vis.flowers, space = 'categorical')
 
 head(cat.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the categorical colorspace of Troje (1993)."----
-plot(cat.flowers, pch = 21, bg = spec2rgb(flowers)) 
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the categorical colourspace of Troje (1993)."----
+plot(cat.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"----
 fakedata1 <- sapply(
@@ -481,7 +481,7 @@ head(coldist(tetra.flowers))
 vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green")
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
-# Estimate color distances. No need to specify relative receptor densities, noise etc.,
+# Estimate colour distances. No need to specify relative receptor densities, noise etc.,
 # which only apply in the case of receptor-noise modelling
 dist.flowers <- coldist(hex.flowers)
 head(dist.flowers)
@@ -490,13 +490,13 @@ head(dist.flowers)
 # Create an arbitrary visual phenotype with 10 photoreceptors
 fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 
-# Convert to percentages, just to color the plot
-fakemantisshrimp.colors <- fakemantisshrimp * 100
-fakemantisshrimp.colors[, "wl"] <- fakemantisshrimp[, "wl"]
+# Convert to percentages, just to colour the plot
+fakemantisshrimp.colours <- fakemantisshrimp * 100
+fakemantisshrimp.colours[, "wl"] <- fakemantisshrimp[, "wl"]
 
-plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colors), lwd = 2, ylab = "Absorbance")
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, ylab = "Absorbance")
 
-# Run visual model and calculate color distances
+# Run visual model and calculate colour distances
 vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
 
 JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
@@ -539,10 +539,10 @@ plot(butterflies[[1]])
 ## ------------------------------------------------------------------------
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="The k-means classified images of our butterflies, along with their identified color palettes"----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="The k-means classified images of our butterflies, along with their identified colour palettes"----
 
-# Note that we could simply feed the list of images to summary, rather than 
-# specifying individual images, and they would progress automatically 
+# Note that we could simply feed the list of images to summary, rather than
+# specifying individual images, and they would progress automatically
 # with user input.
 
 summary(butterflies_class[[2]], plot = TRUE)
@@ -570,8 +570,8 @@ butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID =
 head(butterflies_adj)
 
 ## ------------------------------------------------------------------------
-# Create a fake matrix of pairwise color- and luminance distances between all 
-# color patten elements, as might be attained through visual modelling of spectral data.
+# Create a fake matrix of pairwise colour- and luminance distances between all
+# colour patten elements, as might be attained through visual modelling of spectral data.
 distances <- data.frame(c1 = c(1, 1, 2),
                         c2 = c(2, 3, 3),
                         dS = c(10.6, 5.1, 4.4),
@@ -581,7 +581,7 @@ distances <- data.frame(c1 = c(1, 1, 2),
 distances
 
 # And our fake hue angles (in radians), saturation, and luminance values, for each
-# color pattern element
+# colour pattern element
 hsl_vals <- data.frame(patch = 1:3,
                        hue = c(1.2, 2.2, 1.6),
                        lum = c(10, 5, 7),
@@ -590,8 +590,8 @@ hsl_vals <- data.frame(patch = 1:3,
 # Take a look
 hsl_vals
 
-# Now feed this information into the adjacency analysis using the less-colorful 
-# of our two images, for convenience (though this could be readily extended to 
+# Now feed this information into the adjacency analysis using the less-colourful
+# of our two images, for convenience (though this could be readily extended to
 # include a list of images along with a list of distances and hsl values)
 adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
 

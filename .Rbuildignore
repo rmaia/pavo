@@ -17,3 +17,4 @@ todo.txt
 ^codecov\.yml$
 LICENSE.md
 ^.*\.pdf$
+.editorconfig

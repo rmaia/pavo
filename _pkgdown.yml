@@ -7,6 +7,7 @@ reference:
   - '`as.rimg`'
   - '`cimg2rimg`'
   - '`getspec`'
+  - '`getimg`'
   - '`irrad2flux`'
   - '`merge.rspec`'
   - '`procimg`'
