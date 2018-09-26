@@ -153,12 +153,16 @@ is.rimg <- function(object) {
 NULL
 
 #' @rdname img_conversion
-#' @import imager
 #'
 #' @export
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 rimg2cimg <- function(image) {
+  ## Check for imager
+  if (!requireNamespace("imager", quietly = TRUE)) {
+    stop("Package \"imager\" needed for conversion to cimg. Please install it.",
+          call. = FALSE)
+  }
   image <- suppressWarnings(imager::as.cimg(image, cc = 3))
   image
 }

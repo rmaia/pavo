@@ -30,8 +30,6 @@
 #'
 #' @export
 #'
-#' @importFrom imager imresize imrotate
-#'
 #' @examples \dontrun{
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
@@ -67,6 +65,14 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate)) {
     stop("No options selected.")
   }
+  
+  ## Check for imager if rotating or resizing
+  if (!is.null(resize) || !is.null(resize)){
+    if (!requireNamespace("imager", quietly = TRUE)) {
+      stop("Package \"imager\" needed for image resizing and rotation. Please install it.",
+           call. = FALSE)
+    }
+  }
 
   multi_image <- inherits(image, "list") # Single or multiple images?
 
@@ -82,7 +88,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (is.numeric(resize)) {
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
-      image <- lapply(image, function(x) imresize(x, resize))
+      image <- lapply(image, function(x) imager::imresize(x, resize))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
@@ -95,7 +101,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (is.numeric(rotate)) {
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
-      image <- lapply(image, function(x) imrotate(x, rotate))
+      image <- lapply(image, function(x) imager::imrotate(x, rotate))
       image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
@@ -140,7 +146,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (is.numeric(resize)) {
       imgname <- attr(image, "imgname")
       image <- rimg2cimg(image)
-      image <- imresize(image, resize)
+      image <- imager::imresize(image, resize)
       image <- cimg2rimg(image, imgname)
     }
 
@@ -152,7 +158,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (is.numeric(rotate)) {
       imgname <- attr(image, "imgname")
       image <- rimg2cimg(image)
-      image <- imrotate(image, rotate)
+      image <- imager::imrotate(image, rotate)
       image <- cimg2rimg(image, imgname)
     }
 

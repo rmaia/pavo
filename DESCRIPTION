@@ -28,11 +28,12 @@ Imports:
     pbmcapply,
     utils,
     plot3D,
-    imager,
     stats,
-    sp
+    sp,
+    readbitmap
 Suggests:
     spelling,
+    imager,
     rgl,
     xml2,
     testthat,
