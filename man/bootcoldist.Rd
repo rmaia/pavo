@@ -45,5 +45,5 @@ Uses a bootstrap procedure to generate confidence intervals
 }
 \references{
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
- Behavioral Ecology, ary017 doi: 10.1093/beheco/ary017.
+ Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 }

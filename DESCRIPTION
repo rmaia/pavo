@@ -28,10 +28,12 @@ Imports:
     pbmcapply,
     utils,
     plot3D,
-    imager,
     stats,
-    sp
+    sp,
+    readbitmap
 Suggests:
+    spelling,
+    imager,
     rgl,
     xml2,
     testthat,
@@ -39,3 +41,4 @@ Suggests:
     covr
 VignetteBuilder: knitr
 RoxygenNote: 6.1.0
+Language: en-GB

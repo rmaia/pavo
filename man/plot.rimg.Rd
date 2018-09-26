@@ -18,7 +18,7 @@ colours).}
 \item{...}{additional graphical parameters. Also see \code{\link{par}}.}
 }
 \value{
-a image plot.
+an image plot.
 }
 \description{
 Plot unprocessed or colour-classified image data. If the

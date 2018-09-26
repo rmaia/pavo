@@ -11,7 +11,7 @@
 #' colours).
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
-#' @return a image plot.
+#' @return an image plot.
 #'
 #' @export
 #'
@@ -44,7 +44,6 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
 }
 
 ## For raw images
-#' @import imager
 #' @importFrom grDevices as.raster
 #' @importFrom graphics box plot.new plot.window
 defaultrasterImageplot <- function(imagedata, axes, col, ...) {
@@ -74,9 +73,14 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
 
     imageout <- array(c(R, G, B), dim = c(dim(img)[1], dim(img)[2], 3))
 
-    imagedata2 <- suppressWarnings(as.raster(as.cimg(imageout, cc = 3)))
+    imagedata2 <- suppressWarnings(as.raster(imageout))
+    imagedata2 <- mirrorx(imagedata2)
+    imagedata2 <- apply(t(as.matrix(imagedata2)),2,rev)
   } else if (attr(imagedata, "state") == "raw") {
-    imagedata2 <- suppressWarnings(as.raster(as.cimg(imagedata, cc = 3)))
+    imagedata2 <- as.rimg(imagedata)
+    imagedata2 <- mirrorx(imagedata2)
+    imagedata2 <- rot90(imagedata2)
+    imagedata2 <- suppressWarnings(as.raster(imagedata2))
   }
 
   # Defaults

@@ -21,7 +21,6 @@
 #' @export
 #'
 #' @importFrom pbmcapply pbmclapply
-#' @importFrom imager load.image
 #'
 #' @examples \dontrun{
 #' # Single image
@@ -49,8 +48,8 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    imgdat <- load.image(imgpath)
-
+    # imgdat <- load.image(imgpath)
+    imgdat <- grabimg(imgpath)
     imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Warn of slowness if dimensions are large
@@ -83,7 +82,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
     imgnames <- gsub(extension, "", file_names)
 
     # Stop if max size estimated to exceed available memory
-    imgsize <- prod(dim(load.image(files[1])))
+    imgsize <- prod(dim(grabimg(files[1])))
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
@@ -96,17 +95,60 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.1) {
-      imgdat <- pbmclapply(1:length(file_names), function(x) load.image(files[x]), mc.cores = cores)
+      imgdat <- pbmclapply(1:length(file_names), function(x) grabimg(files[x]), mc.cores = cores)
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
-      imgdat <- lapply(1:length(file_names), function(x) load.image(files[x]))
+      imgdat <- lapply(1:length(file_names), function(x) grabimg(files[x]))
       imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
     }
 
     imgdat <- as.rimg(imgdat, imgnames)
 
-    # Simplify if it's a single image  (TODO LESS SHITE)
+    # Simplify if it's a single image
     if (length(imgdat) == 1) imgdat <- cimg2rimg(imgdat[[1]])
   }
   imgdat
+}
+
+## Grab images
+#' @import readbitmap
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+grabimg <- function(file) {
+  bmp <- read.bitmap(file)
+  if (!is.null(attr(bmp, "header"))) {
+    bmp <- bmp / 255
+  }
+  if (length(dim(bmp)) == 3) {
+    bmp <- mirrorx(bmp)
+    bmp <- rot90(bmp)
+  }
+  else {
+    dim(bmp) <- c(dim(bmp), 1, 1)
+    bmp <- replicate(3, bmp, simplify = "array")
+    bmp <- mirrorx(bmp)
+    bmp <- rot90(bmp)
+  }
+  bmp
+}
+
+# Rotate matrices 90-degrees
+rot90 <- function(x) {
+  nrowA <- dim(x)[1]
+  ncolA <- dim(x)[2]
+  permVec <- c(2, 1, 3:length(dim(x)))
+  rotA <- aperm(x, permVec)
+  rotA <- rotA[ncolA:1, , ]
+  rotA
+}
+
+# Mirror matrices about x axis
+mirrorx <- function(x) {
+  if (length(dim(x)) == 3) {
+    for (i in 1:dim(x)[3]) {
+      x[, , i] <- x[, , i][, ncol(x[, , i]):1]
+    }
+  } else {
+    x <- x[, ncol(x):1]
+  }
+  x
 }

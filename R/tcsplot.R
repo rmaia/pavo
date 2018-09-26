@@ -1,4 +1,4 @@
-#' Interactive plot of a tetrahedral colorspace
+#' Interactive plot of a tetrahedral colourspace
 #'
 #' Produces an interactive 3D plot of a tetrahedral
 #' colorspace using OpenGL capabilities.
@@ -13,15 +13,15 @@
 #' @param alpha transparency of points (or volume fill in \code{tcsvol})
 #' @param vertexsize size of the points at the vertices
 #' @param achro plot a point at the origin? (defaults to \code{TRUE})
-#' @param achrosize size of the point in the achromatic center
-#' @param achrocol color of the point in the achromatic center
+#' @param achrosize size of the point in the achromatic centre
+#' @param achrocol color of the point in the achromatic centre
 #' @param lwd,lcol graphical parameters for the edges of the tetrahedron.
 #' @param new should a new 3D plot be called (defaults to \code{FALSE})?
 #' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})
 #' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})
 #' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})
 #' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})
-#' @param grid.alpha transparecny of the volume polygon grid lines
+#' @param grid.alpha transparency of the volume polygon grid lines
 #' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
 #' is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).
 #'

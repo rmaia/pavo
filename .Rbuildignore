@@ -6,7 +6,6 @@ manuscript/
 R_temp/
 references/
 toydata/
-vignette/
 vignette_data/
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -16,3 +15,6 @@ todo.txt
 ^docs$
 ^_pkgdown\.yml$
 ^codecov\.yml$
+LICENSE.md
+^.*\.pdf$
+.editorconfig

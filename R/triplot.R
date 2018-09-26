@@ -1,4 +1,4 @@
-#' Plot a maxwell triangle
+#' Plot a Maxwell triangle
 #'
 #' Produces a Maxwell triangle plot.
 #'
