@@ -18,7 +18,14 @@ A set of functions and tools for the analysis of color data in a unified framewo
   
 ## Citing pavo
 
-The manuscript describing the package has been published and is free to access: 
+The manuscripts describing the package has been published and are free to access: 
+
+\> v. 2.0
+
+Maia R, Gruson H, Endler JA, White TE 2018 **pavo 2.0: new tools for the spectral 
+and spatial analysis of colour in R**. bioRxiv. [doi: 10.1101/427658](https://doi.org/10.1101/427658)
+
+< v. 2.0
 
 Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013. 
 **pavo: an R Package for the analysis, visualization and organization of spectral data.** 
