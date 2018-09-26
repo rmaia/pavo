@@ -1,3 +1,11 @@
+pavo 2.1.0
+------------------------------------------------------------------------------
+
+MINOR FEATURES AND BUG FIXES
+
+* `imager` is no longer a dependency, and is only loaded if using some features 
+of `procimg()`.
+
 pavo 2.0.0
 ------------------------------------------------------------------------------
 

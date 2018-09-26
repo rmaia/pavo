@@ -118,12 +118,11 @@ grabimg <- function(file) {
   if (!is.null(attr(bmp, "header"))) {
     bmp <- bmp / 255
   }
-  if (length(dim(bmp)) == 3) {
+  if (length(dim(bmp)) == 3) {  # 3 channels (colour)
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
   }
-  else {
-    dim(bmp) <- c(dim(bmp), 1, 1)
+  else {  # 1 channel (B&W), duplicate to 3d for classification convenience
     bmp <- replicate(3, bmp, simplify = "array")
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
@@ -133,11 +132,9 @@ grabimg <- function(file) {
 
 # Rotate matrices 90-degrees
 rot90 <- function(x) {
-  nrowA <- dim(x)[1]
-  ncolA <- dim(x)[2]
   permVec <- c(2, 1, 3:length(dim(x)))
   rotA <- aperm(x, permVec)
-  rotA <- rotA[ncolA:1, , ]
+  rotA <- rotA[dim(x)[2]:1, , ]
   rotA
 }
 

@@ -73,10 +73,12 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
 
     imageout <- array(c(R, G, B), dim = c(dim(img)[1], dim(img)[2], 3))
 
+    # Convert and transform
     imagedata2 <- suppressWarnings(as.raster(imageout))
     imagedata2 <- mirrorx(imagedata2)
     imagedata2 <- apply(t(as.matrix(imagedata2)),2,rev)
   } else if (attr(imagedata, "state") == "raw") {
+    # Convert and transform
     imagedata2 <- as.rimg(imagedata)
     imagedata2 <- mirrorx(imagedata2)
     imagedata2 <- rot90(imagedata2)
