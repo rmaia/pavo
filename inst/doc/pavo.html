@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason" />
 
-<meta name="date" content="2018-09-26" />
+<meta name="date" content="2018-09-27" />
 
 <title>pavo</title>
 
@@ -278,7 +278,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">pavo</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</em></h4>
-<h4 class="date"><em>2018-09-26</em></h4>
+<h4 class="date"><em>2018-09-27</em></h4>
 
 
 <div id="TOC">
@@ -1522,7 +1522,7 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:00
+  |============================                           |  50%, ETA 00:01
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <p>When <code>pavo</code> imports images, it created a multidimensional object of class <code>rimg</code>, which inherits from the <code>array</code> class. If more than one image is imported, then these <code>rimg</code> objects are stored as elements in a list. All image-based functions in <code>pavo</code> are capable of working with such <code>rimg</code> lists, which allows for a more convenient and tidy high-throughput workflow. Note that while <code>pavo</code> will allow you to load, manipulate, and analyse as many images as your computer’s memory allows, it will throw a message if the total size of images in memory is greater than ca. 200mb, as this will result in noticeably slowed performance (everything will still work, it will just be slow). This may be ameliorated by reducing the size of individual images, such as through <code>procimg()</code>, or by processing images in smaller batches. All <code>rimg</code> objects have a number of identifying attributes, drawn on by image-processing functions, which can be readily inspected.</p>
@@ -1641,7 +1641,7 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:04
+  |============================                           |  50%, ETA 00:05
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb199"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb199-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>

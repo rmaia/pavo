@@ -3,8 +3,10 @@ pavo 2.1.0
 
 MINOR FEATURES AND BUG FIXES
 
-* `imager` is no longer a dependency, and is only loaded if using some features 
-of `procimg()`.
+* the package `imager` is no longer a dependency, and is only loaded if using some 
+features of `procimg()`.
+* the package `mapproj` is no longer a dependency, and is only loaded if using 
+`projplot()`.
 
 pavo 2.0.0
 ------------------------------------------------------------------------------

@@ -2,8 +2,6 @@
 #'
 #' Produces a 2D projection plot of points in a color space
 #'
-#' @import mapproj
-#'
 #' @param tcsdata (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
 #' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
 #' @param ... additional parameters to be passed to the plotting of data points.
@@ -34,16 +32,15 @@
 
 projplot <- function(tcsdata, ...) {
 
+  # Check for mapproj
+  if (!requireNamespace("mapproj", quietly = TRUE)) {
+    stop("Package \"mapproj\" needed for projection plots. Please install it.",
+         call. = FALSE)
+  }
+  
   # oPar <- par(no.readonly=TRUE)
   oPar <- par("mar")
   on.exit(par(oPar))
-
-  # no longer tcs object
-  # if(class(tcsdata)=='tcs'){
-  # dat <- tcsdata$tcs
-  # }else{
-  # dat <- tcsdata
-  # }
 
   points.theta <- tcsdata[, "h.theta"]
   points.phi <- tcsdata[, "h.phi"]
@@ -72,7 +69,7 @@ projplot <- function(tcsdata, ...) {
 
   # map projection coordinates
 
-  mp <- mapproject(coords.theta, coords.phi, projection = "mollweide")
+  mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
 
   mp.v.theta <- mp$x[1:9]
   mp.v.phi <- mp$y[1:9]
@@ -93,7 +90,7 @@ projplot <- function(tcsdata, ...) {
     xlim = c(-2, 2), ylim = c(-1, 1)
   )
 
-  map.grid(c(-180, 180, -90, 90), labels = FALSE, col = "grey")
+  mapproj::map.grid(c(-180, 180, -90, 90), labels = FALSE, col = "grey")
 
   points(mp.v.phi ~ mp.v.theta, pch = 20, cex = 1.5, col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu)))
 

@@ -23,7 +23,6 @@ Depends:
     R(>= 2.10)
 Imports:
     rcdd,
-    mapproj,
     geometry,
     pbmcapply,
     utils,
@@ -34,6 +33,7 @@ Imports:
 Suggests:
     spelling,
     imager,
+    mapproj,
     rgl,
     xml2,
     testthat,

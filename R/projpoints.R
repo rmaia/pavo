@@ -13,14 +13,12 @@
 #' @export
 
 projpoints <- function(tcsres, ...) {
-
-  # no longer tcs object
-  # if(class(tcsres)=='tcs'){
-  # dat <- tcsres$tcs
-  # }else{
-  # dat <- tcsres
-  # }
-
+  
+  # Check for mapproj
+  if (!requireNamespace("mapproj", quietly = TRUE)) {
+    stop("Package \"mapproj\" needed for projection plots. Please install it.",
+         call. = FALSE)
+  }
 
   points.theta <- tcsres[, "h.theta"]
   points.phi <- tcsres[, "h.phi"]
@@ -49,7 +47,7 @@ projpoints <- function(tcsres, ...) {
 
   # map projection coordinates
 
-  mp <- mapproject(coords.theta, coords.phi, projection = "mollweide")
+  mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
 
   mp.v.theta <- mp$x[1:9]
   mp.v.phi <- mp$y[1:9]

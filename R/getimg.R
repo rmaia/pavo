@@ -48,8 +48,8 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    # imgdat <- load.image(imgpath)
-    imgdat <- grabimg(imgpath)
+     imgdat <- imager::load.image(imgpath)
+    #imgdat <- grabimg(imgpath)
     imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Warn of slowness if dimensions are large
