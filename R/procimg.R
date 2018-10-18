@@ -67,7 +67,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
   
   ## Check for imager if rotating or resizing
-  if (!is.null(resize) || !is.null(resize)){
+  if (!is.null(resize) || !is.null(rotate)){
     if (!requireNamespace("imager", quietly = TRUE)) {
       stop("Package \"imager\" needed for image resizing and rotation. Please install it.",
            call. = FALSE)
