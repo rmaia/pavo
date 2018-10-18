@@ -18,7 +18,8 @@ Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
     email = "bittonp@uwindsor.ca")
     )
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
-URL: http://rafaelmaia.net/pavo/
+URL: http://rafaelmaia.net/pavo/, https://github.com/rmaia/pavo/
+BugReports: https://github.com/rmaia/pavo/issues
 Depends:
     R(>= 2.10)
 Imports:
