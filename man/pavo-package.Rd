@@ -13,18 +13,20 @@ A cohesive framework for parsing, analyzing and organizing color from spectral d
 Useful links:
 \itemize{
   \item \url{http://rafaelmaia.net/pavo/}
+  \item \url{https://github.com/rmaia/pavo/}
+  \item Report bugs at \url{https://github.com/rmaia/pavo/issues}
 }
 
 }
 \author{
-\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu}
+\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu} (0000-0002-7563-9795)
 
 Authors:
 \itemize{
-  \item Thomas White \email{thomas.white026@gmail.com}
-  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org}
+  \item Thomas White \email{thomas.white026@gmail.com} (0000-0001-8493-9450)
+  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} (0000-0002-4094-1476)
   \item Chad Eliason \email{cme16@zips.uakron.edu}
-  \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+  \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca} (0000-0001-5984-2331)
 }
 
 }
