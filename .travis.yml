@@ -6,8 +6,11 @@ r:
 cache: packages
 addons:
   apt:
+    sources:
+    - sourceline: 'ppa:opencpu/imagemagick'
     packages:
     - libgmp3-dev
+    - libmagick++-dev
 r_build_args: 
 r_check_args: 
 r_packages: rmarkdown
