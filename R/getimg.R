@@ -111,13 +111,12 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 }
 
 ## Grab images
-#' @import readbitmap
+#' @importFrom magick image_read
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 grabimg <- function(file) {
-  bmp <- read.bitmap(file)
-  if (!is.null(attr(bmp, "header"))) {
-    bmp <- bmp / 255
-  }
+
+  bmp <- magick2rimg(image_read(file))
+
   if (length(dim(bmp)) == 3) {  # 3 channels (colour)
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)

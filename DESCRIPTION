@@ -29,11 +29,10 @@ Imports:
     plot3D,
     stats,
     sp,
-    readbitmap
+    magick
 Suggests:
     spelling,
     imager,
-    magick,
     mapproj,
     rgl,
     xml2,
