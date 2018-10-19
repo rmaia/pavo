@@ -33,6 +33,7 @@ Imports:
 Suggests:
     spelling,
     imager,
+    magick,
     mapproj,
     rgl,
     xml2,

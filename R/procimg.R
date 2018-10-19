@@ -65,11 +65,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate)) {
     stop("No options selected.")
   }
-  
-  ## Check for imager if rotating or resizing
+
+  ## Check for magick if rotating or resizing
   if (!is.null(resize) || !is.null(rotate)){
-    if (!requireNamespace("imager", quietly = TRUE)) {
-      stop("Package \"imager\" needed for image resizing and rotation. Please install it.",
+    if (!requireNamespace("magick", quietly = TRUE)) {
+      stop("Package \"magick\" needed for image resizing and rotation. Please install it.",
            call. = FALSE)
     }
   }
@@ -87,9 +87,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     if (is.numeric(resize)) {
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
-      image <- lapply(image, function(x) rimg2cimg(x))
-      image <- lapply(image, function(x) imager::imresize(x, resize))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
+      image <- rimg2magick(image)
+      image <- magick::image_scale(image, paste0(resize * 100, "%"))
+      image <- magick2rimg(image, name = imgnames)
       class(image) <- c("rimg", "list")
     }
 
@@ -100,9 +100,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     if (is.numeric(rotate)) {
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
-      image <- lapply(image, function(x) rimg2cimg(x))
-      image <- lapply(image, function(x) imager::imrotate(x, rotate))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
+      image <- img2magick(image)
+      image <- magick::image_rotate(image, rotate)
+      image <- magick2rimg(image)
       class(image) <- c("rimg", "list")
     }
 
@@ -145,9 +145,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     if (is.numeric(resize)) {
       imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imresize(image, resize)
-      image <- cimg2rimg(image, imgname)
+      image <- rimg2magick(image)
+      image <- magick::image_scale(image, paste0(resize * 100, "%"))
+      image <- magick2rimg(image, imgname)
     }
 
     ## Rotate ##
@@ -157,9 +157,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     if (is.numeric(rotate)) {
       imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imrotate(image, rotate)
-      image <- cimg2rimg(image, imgname)
+      image <- rimg2magick(image)
+      image <- magick::rotate(image, rotate)
+      image <- magick2rimg(image, imgname)
     }
 
     ## Scale ##

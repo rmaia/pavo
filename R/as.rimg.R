@@ -176,3 +176,25 @@ cimg2rimg <- function(image, name = "img") {
   image <- as.rimg(drop(as.array(image)), name = name)
   image
 }
+
+#' @rdname img_conversion
+#'
+#' @export
+#'
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+rimg2magick <- function(image) {
+
+  do.call(c, lapply(image, magick::image_read))
+
+}
+
+#' @rdname img_conversion
+#'
+#' @export
+#'
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+magick2rimg <- function(image, name = "img") {
+
+  as.rimg(lapply(image, function(img) as.integer(image_data(img))), name = name)
+
+}
