@@ -190,6 +190,8 @@ rimg2magick <- function(image) {
 
 #' @rdname img_conversion
 #'
+#' @importFrom magick image_data
+#'
 #' @export
 #'
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}

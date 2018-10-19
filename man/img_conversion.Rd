@@ -4,11 +4,17 @@
 \alias{img_conversion}
 \alias{rimg2cimg}
 \alias{cimg2rimg}
+\alias{rimg2magick}
+\alias{magick2rimg}
 \title{Convert images between class rimg and cimg}
 \usage{
 rimg2cimg(image)
 
 cimg2rimg(image, name = "img")
+
+rimg2magick(image)
+
+magick2rimg(image, name = "img")
 }
 \arguments{
 \item{image}{an object of class \code{rimg} or \code{cimg}.}
@@ -19,9 +25,10 @@ cimg2rimg(image, name = "img")
 an image of the specified class
 }
 \description{
-Conveniently convert single objects of class \code{rimg} and \code{cimg} (from the
-package \code{imager}, which contains a suite of useful image-processing
-capabilities).
+Conveniently convert single objects of class \code{rimg} and \code{cimg}
+(from the package \code{imager}), or \code{rimg} and \code{magick}. Both
+\code{imager} and \code{magick} contain a suite of useful image-processing
+capabilities
 }
 \note{
 Attributes (e.g. scales, color-classes) will not be preserved following
@@ -44,7 +51,5 @@ class(papilio_rimg)
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}
 
-Thomas E. White \email{thomas.white026@gmail.com}
-
-Thomas E. White \email{thomas.white026@gmail.com}
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 }
