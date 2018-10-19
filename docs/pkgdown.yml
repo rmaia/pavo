@@ -1,6 +1,6 @@
-pandoc: 2.2.3.2
+pandoc: 1.19.2.4
 pkgdown: 1.1.0.9000
-pkgdown_sha: b62fef53d0a5633adea58b9c503d35e465a9af43
+pkgdown_sha: 930a4d65b59266ffcf1c74ee0141d188b22f150a
 articles:
   pavo: pavo.html
   spectraldesc: spectraldesc.html

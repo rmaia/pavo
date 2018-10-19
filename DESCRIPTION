@@ -7,18 +7,23 @@ License: GPL (>= 2)
 Date: 2018-09-28
 Encoding: UTF-8
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
-    email = "rm72@zips.uakron.edu"),
+    email = "rm72@zips.uakron.edu",
+    comment = c(ORCID = "0000-0002-7563-9795")),
     person("Thomas", "White", role = "aut",
-    email = "thomas.white026@gmail.com"),
+    email = "thomas.white026@gmail.com",
+    comment = c(ORCID = "0000-0001-8493-9450")),
     person("Hugo", "Gruson", role = "aut",
-    email = "hugo.gruson+R@normalesup.org"),
+    email = "hugo.gruson+R@normalesup.org",
+    comment = c(ORCID = "0000-0002-4094-1476")),
     person("Chad", "Eliason", role = "aut",
     email = "cme16@zips.uakron.edu"),
     person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca")
+    email = "bittonp@uwindsor.ca",
+    comment = c(ORCID = "0000-0001-5984-2331"))
     )
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
-URL: http://rafaelmaia.net/pavo/
+URL: http://rafaelmaia.net/pavo/, https://github.com/rmaia/pavo/
+BugReports: https://github.com/rmaia/pavo/issues
 Depends:
     R(>= 2.10)
 Imports:
