@@ -66,14 +66,6 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     stop("No options selected.")
   }
 
-  ## Check for magick if rotating or resizing
-  if (!is.null(resize) || !is.null(rotate)){
-    if (!requireNamespace("magick", quietly = TRUE)) {
-      stop("Package \"magick\" needed for image resizing and rotation. Please install it.",
-           call. = FALSE)
-    }
-  }
-
   multi_image <- inherits(image, "list") # Single or multiple images?
 
   ## ------------------------------ Main ------------------------------ ##
