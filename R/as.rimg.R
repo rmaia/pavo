@@ -123,9 +123,10 @@ is.rimg <- function(object) {
 
 #' Convert images between class rimg and cimg
 #'
-#' Conveniently convert single objects of class \code{rimg} and \code{cimg} (from the
-#' package \code{imager}, which contains a suite of useful image-processing
-#' capabilities).
+#' Conveniently convert single objects of class \code{rimg} and \code{cimg}
+#' (from the package \code{imager}), or \code{rimg} and \code{magick}. Both
+#' \code{imager} and \code{magick} contain a suite of useful image-processing
+#' capabilities
 #'
 #' @param image an object of class \code{rimg} or \code{cimg}.
 #' @param name the name(s) of the image(s).
@@ -148,6 +149,8 @@ is.rimg <- function(object) {
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+#'
 #' @name img_conversion
 #'
 NULL
@@ -156,7 +159,6 @@ NULL
 #'
 #' @export
 #'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 rimg2cimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
@@ -171,7 +173,6 @@ rimg2cimg <- function(image) {
 #'
 #' @export
 #'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 cimg2rimg <- function(image, name = "img") {
   image <- as.rimg(drop(as.array(image)), name = name)
   image
@@ -181,7 +182,6 @@ cimg2rimg <- function(image, name = "img") {
 #'
 #' @export
 #'
-#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 rimg2magick <- function(image) {
 
   do.call(c, lapply(image, magick::image_read))
@@ -194,7 +194,6 @@ rimg2magick <- function(image) {
 #'
 #' @export
 #'
-#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 magick2rimg <- function(image, name = "img") {
 
   as.rimg(lapply(image, function(img) as.integer(image_data(img))), name = name)
