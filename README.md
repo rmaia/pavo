@@ -24,7 +24,7 @@ The manuscripts describing the package has been published and are free to access
 
 \> v. 2.0
 
-Maia R, Gruson H, Endler JA, White TE 2018 **pavo 2.0: new tools for the spectral 
+Maia R., Gruson H., Endler J.A. and White T.E. 2018 **pavo 2.0: new tools for the spectral 
 and spatial analysis of colour in R**. bioRxiv. [doi: 10.1101/427658](https://doi.org/10.1101/427658)
 
 < v. 2.0
