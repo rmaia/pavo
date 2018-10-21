@@ -1,4 +1,5 @@
-# `pavo`:  An `R` package for the spectral and spatial analysis of color patterns
+# `pavo`
+## An `R` package for the spectral and spatial analysis of color patterns
 
 [![cran version](http://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
 [![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
