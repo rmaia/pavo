@@ -65,3 +65,12 @@ reference:
   - '`transmissiondata`'
   - '`ttvertex`'
   - '`vissyst`'
+
+template:
+  params:
+    docsearch:
+      api_key: 1988255e7e235678bc3c7f1b86b9ecc5
+      index_name: rafaelmaia_pavo
+
+development:
+  mode: unreleased

@@ -32,6 +32,12 @@
 <script src="../pkgdown.js"></script>
 
 
+<!-- docsearch -->
+<script src="../docsearch.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link href="../docsearch.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
+
 
 <meta property="og:title" content="pavo: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R — pavo-package" />
@@ -66,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">2.1.0</span>
+        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.1.0</span>
       </span>
     </div>
 
@@ -110,6 +116,12 @@
 </li>
       </ul>
       
+      <form class="navbar-form navbar-right" role="search">
+        <div class="form-group">
+          <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
+        </div>
+      </form>
+      
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
 </div><!--/.navbar -->
@@ -152,14 +164,14 @@
 
     <h2>Author</h2>
     
-<strong>Maintainer</strong>: Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a>
+<strong>Maintainer</strong>: Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a> (0000-0002-7563-9795)
 
 Authors:
 <ul>
-<li><p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p></li>
-<li><p>Hugo Gruson <a href='mailto:hugo.gruson+R@normalesup.org'>hugo.gruson+R@normalesup.org</a></p></li>
+<li><p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a> (0000-0001-8493-9450)</p></li>
+<li><p>Hugo Gruson <a href='mailto:hugo.gruson+R@normalesup.org'>hugo.gruson+R@normalesup.org</a> (0000-0002-4094-1476)</p></li>
 <li><p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p></li>
-<li><p>Pierre-Paul Bitton <a href='mailto:bittonp@uwindsor.ca'>bittonp@uwindsor.ca</a></p></li>
+<li><p>Pierre-Paul Bitton <a href='mailto:bittonp@uwindsor.ca'>bittonp@uwindsor.ca</a> (0000-0001-5984-2331)</p></li>
 </ul>
 
 
@@ -179,6 +191,23 @@ Authors:
    </div>
 
   
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script>
+  docsearch({
+    
+    
+    apiKey: '1988255e7e235678bc3c7f1b86b9ecc5',
+    indexName: 'rafaelmaia_pavo',
+    inputSelector: 'input#search-input.form-control',
+    transformData: function(hits) {
+      return hits.map(function (hit) {
+        hit.url = updateHitURL(hit);
+        return hit;
+      });
+    }
+  });
+</script>
+
 
   </body>
 </html>
