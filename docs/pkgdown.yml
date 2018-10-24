@@ -4,4 +4,7 @@ pkgdown_sha: 930a4d65b59266ffcf1c74ee0141d188b22f150a
 articles:
   pavo: pavo.html
   spectraldesc: spectraldesc.html
+urls:
+  reference: http://rafaelmaia.net/pavo/reference
+  article: http://rafaelmaia.net/pavo/articles
 
