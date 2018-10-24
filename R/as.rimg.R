@@ -35,6 +35,10 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object, name = "img") {
+  UseMethod("as.rimg")
+}
+
+as.rimg.default <- function(object, name = "img") {
   if (!inherits(object, "rimg")) {
     attrgiver <- function(x, name2 = name) {
       # Attributes
@@ -163,39 +167,52 @@ rimg2cimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
     stop("Package \"imager\" needed for conversion to cimg. Please install it.",
-          call. = FALSE)
+         call. = FALSE)
   }
   image <- suppressWarnings(imager::as.cimg(image, cc = 3))
   image
 }
 
-#' @rdname img_conversion
+#' @rdname as.rimg
 #'
 #' @export
 #'
-cimg2rimg <- function(image, name = "img") {
-  image <- as.rimg(drop(as.array(image)), name = name)
-  image
+as.rimg.cimg <- function(image, name = "img") {
+  as.rimg.default(drop(as.array(image)), name = name)
 }
 
 #' @rdname img_conversion
+#'
+#' @importFrom magick image_flop
+#' @importFrom magick image_read
+#' @importFrom magick image_rotate
 #'
 #' @export
 #'
 rimg2magick <- function(image) {
 
-  do.call(c, lapply(image, magick::image_read))
+  image = do.call(c, lapply(image, image_read))
+
+  image = image_rotate(image, 90)
+
+  image = image_flop(image)
 
 }
 
-#' @rdname img_conversion
+#' @rdname as.rimg
 #'
 #' @importFrom magick image_data
+#' @importFrom magick image_flop
+#' @importFrom magick image_rotate
 #'
 #' @export
 #'
-magick2rimg <- function(image, name = "img") {
+`as.rimg.magick-image` <- function(image, name = "img") {
 
-  as.rimg(lapply(image, function(img) as.integer(image_data(img))), name = name)
+  image = image_rotate(image, -90)
+
+  image = image_flop(image)
+
+  as.rimg.default(lapply(image, function(img) as.integer(image_data(img))), name = name)
 
 }

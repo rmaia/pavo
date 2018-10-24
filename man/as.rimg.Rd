@@ -3,11 +3,17 @@
 \name{as.rimg}
 \alias{as.rimg}
 \alias{is.rimg}
+\alias{as.rimg.cimg}
+\alias{as.rimg.magick-image}
 \title{Convert data to an rimg object}
 \usage{
 as.rimg(object, name = "img")
 
 is.rimg(object)
+
+\method{as.rimg}{cimg}(image, name = "img")
+
+\method{as.rimg}{magick-image}(image, name = "img")
 }
 \arguments{
 \item{object}{(required) a three-dimensional array containing RGB values.}
