@@ -2,21 +2,21 @@
   "index_name": "rafaelmaia_pavo",
   "start_urls": [
     {
-      "url": "/index.html",
+      "url": "http://rafaelmaia.net/pavo/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "/reference",
+      "url": "http://rafaelmaia.net/pavo/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "/articles",
+      "url": "http://rafaelmaia.net/pavo/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "/sitemap.xml"
+    "http://rafaelmaia.net/pavo/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
