@@ -7,16 +7,8 @@
 #' @param cocdata (required) a data frame, possibly a result from the \code{colspace}
 #' or \code{categorical} function, containing values for 'x' and 'y' coordinates
 #' as columns (labeled as such).
-#' @param labels plot axis labels? Defaults to \code{TRUE}.
-#' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
-#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).
-#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).
-#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE}).
 #' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes.
-#' @param margins margins for the plot.
-#' @param square logical. Should the aspect ratio of the plot be held to 1:1?
-#' (defaults to \code{TRUE}).
-#' @param ... additional graphical options. See \code{\link{par}}.
+#' @inheritParams triplot
 #'
 #' @examples
 #' \dontrun{
@@ -32,8 +24,7 @@
 #'
 #' @keywords internal
 #'
-#' @references Backhaus W. (1991). Color opponent coding in the visual system
-#'  of the honeybee. Vision Research, 31, 1381-1397.
+#' @inherit coc references
 
 cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
                     tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12),

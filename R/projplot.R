@@ -23,12 +23,7 @@
 #' projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7)))
 #' }
 #'
-#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
-#'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-#'  The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., Westcott, D., Madden, J., & Robson, T. (2005). Animal
-#'  visual systems and the evolution of color patterns: Sensory processing illuminates
-#'  signal evolution. Evolution, 59(8), 1795-1818.
+#' @inherit tcspace references
 
 projplot <- function(tcsdata, ...) {
 
@@ -37,7 +32,7 @@ projplot <- function(tcsdata, ...) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
          call. = FALSE)
   }
-  
+
   # oPar <- par(no.readonly=TRUE)
   oPar <- par("mar")
   on.exit(par(oPar))

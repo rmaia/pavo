@@ -2,6 +2,11 @@
 #'
 #' Produces a 3D convex hull in tetrahedral color space
 #'
+#' @param grid.alpha transparency of the volume polygon grid lines
+#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})
+#' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
+#' is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).
+#'
 #' @return \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
 #'
 #' @rdname tcsplot

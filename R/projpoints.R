@@ -2,9 +2,6 @@
 #'
 #' Adds points to a tetrahedral colorspace projection
 #'
-#' @param tcsres (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
-#' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
-#'
 #' @return \code{projpoints} creates points in a projection color space plot
 #' produced by \code{projplot}.
 #'
@@ -12,16 +9,16 @@
 #'
 #' @export
 
-projpoints <- function(tcsres, ...) {
-  
+projpoints <- function(tcsdata, ...) {
+
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
          call. = FALSE)
   }
 
-  points.theta <- tcsres[, "h.theta"]
-  points.phi <- tcsres[, "h.phi"]
+  points.theta <- tcsdata[, "h.theta"]
+  points.phi <- tcsdata[, "h.phi"]
 
   n <- length(points.theta)
 
