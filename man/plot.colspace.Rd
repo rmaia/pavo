@@ -100,6 +100,10 @@ Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
 
 Backhaus W. (1991). Color opponent coding in the visual system
  of the honeybee. Vision Research, 31, 1381-1397.
+
+Endler, J. A. (1990) On the measurement and classification of
+color in studies of animal color patterns. Biological Journal of the Linnean
+Society, 41, 315-352.
 }
 \seealso{
 \code{\link{plot}}

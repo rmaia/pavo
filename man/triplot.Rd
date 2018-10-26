@@ -15,11 +15,11 @@ as columns (labeled as such).}
 
 \item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
-\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?.}
+\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8).}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
 \item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
@@ -28,7 +28,7 @@ as columns (labeled as such).}
 \item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
-(defaults to \code{TRUE})}
+(defaults to \code{TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
@@ -45,12 +45,16 @@ plot(tri.flowers)
 
 }
 \references{
-Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
-   - behavioural tests and physiological concepts. Biological Reviews, 78,
-   81 - 118.
+Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
+ Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 
-Neumeyer C (1980) Simultaneous color contrast in the honeybee.
- Journal of comparative physiology, 139(3), 165-176.
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
+ behavioural tests and physiological concepts. Biological Reviews, 78,
+ 81 - 118.
+
+MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
+ cone excitation by stimuli of equal luminance. Journal of the Optical
+ Society of America, 69, 1183-1186.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

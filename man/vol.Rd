@@ -8,7 +8,9 @@ vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
   view, scale.y, axis, ...)
 }
 \arguments{
-\item{tcsdata}{(required) object of class \code{colspace}.}
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
+or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
+coordinates as columns (labeled as such).}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
 

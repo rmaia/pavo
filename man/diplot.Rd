@@ -23,12 +23,16 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 
 \item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 
-\item{out.lwd, out.lcol, out.lty}{graphical parameters for the segment.}
+\item{out.lwd}{graphical parameters for the plot outline.}
+
+\item{out.lcol}{graphical parameters for the plot outline.}
+
+\item{out.lty}{graphical parameters for the plot outline.}
 
 \item{margins}{margins for the plot.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
-(defaults to \code{TRUE})}
+(defaults to \code{TRUE}).}
 
 \item{...}{additional graphical options. See \code{\link{par}}.}
 }
@@ -45,9 +49,9 @@ plot(di.flowers)
 
 }
 \references{
-Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
-   - behavioural tests and physiological concepts. Biological Reviews, 78,
-   81 - 118.
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
+ behavioural tests and physiological concepts. Biological Reviews, 78,
+ 81 - 118.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}
