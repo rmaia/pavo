@@ -266,7 +266,7 @@ head(spec.bin)
 spec.bin <- t(spec.bin) # transpose so wavelength are variables for the PCA
 colnames(spec.bin) <- spec.bin[1, ] # names variables as wavelength bins
 spec.bin <- spec.bin[-1, ] # remove 'wl' column
-pca1 <- prcomp(spec.bin, scale = TRUE)
+pca1 <- prcomp(spec.bin, scale. = TRUE)
 ```
 
 ```{r}
@@ -287,7 +287,7 @@ sel <- match(names(sort(sel)), names(sppspec))
 
 # Plot results
 par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
-plot(pca1$r[, 1] ~ wls, type = "l", ylab = "PC1 loading")
+plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
 plot(sppspec, select = sel, type = "s", col = spec2rgb(sppspec))
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
@@ -603,13 +603,13 @@ $$\Delta L = \frac{\Delta f}{w}$$
 
 ```{r}
 coldist(vismod1,
-  noise = "neural", achro = TRUE, n = c(1, 2, 2, 4),
+  noise = "neural", achromatic = TRUE, n = c(1, 2, 2, 4),
   weber = 0.1, weber.achro = 0.1
 )
 coldist(vismod.idi, n = c(1, 2), weber = 0.1)
 ```
 
-Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achro = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
+Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achromatic = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
 
 `coldist` also has a `subset` argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). `subset` can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:
 
@@ -659,10 +659,10 @@ fakedata.c <- as.rspec(fakedata.c)
 
 ```{r}
 # Visual model and colour distances
-fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achro = TRUE)
+fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achromatic = TRUE)
 fakedata.cd <- coldist(fakedata.vm,
   noise = "neural", n = c(1, 2, 2, 4),
-  weber = 0.1, achro = TRUE
+  weber = 0.1, achromatic = TRUE
 )
 
 # Converting to Cartesian coordinates
@@ -816,7 +816,7 @@ The hexagon colour space of Chittka (1992) is a generalised colour-opponent mode
 In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel`. including the optional use of a 'green' vegetation background. Note that although this is a colourspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model.
 
 ```{r}
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
 ```
 
 We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
@@ -943,7 +943,7 @@ The categorical colour vision model of Troje (1993) is a model of dipteran visio
 We'll use the visual systems of the muscoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors.
 
 ```{r}
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achromatic = 'none', relative = TRUE)
 ```
 
 Our call to `colspace` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
@@ -1029,7 +1029,7 @@ Specialised colourspace models such as the colour-hexagon, coc space, CIELAB and
 
 ```{r}
 # Model flower colours according to a honeybee
-vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green")
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
 # Estimate colour distances. No need to specify relative receptor densities, noise etc.,
@@ -1055,7 +1055,7 @@ fakemantisshrimp.colours[, "wl"] <- fakemantisshrimp[, "wl"]
 plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, ylab = "Absorbance")
 
 # Run visual model and calculate colour distances
-vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achromatic = FALSE)
 
 JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
