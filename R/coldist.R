@@ -99,11 +99,11 @@
 #' # Dichromat
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
-#' didist.flowers <- coldist(vis.flowers)
+#' didist.flowers <- coldist(vis.flowers, n = c(1, 2))
 #'
 #' # Trichromat
 #' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
-#' tridist.flowers <- coldist(vis.flowers)
+#' tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
 #'
 #' # Trichromat, color-hexagon model (euclidean distances)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',

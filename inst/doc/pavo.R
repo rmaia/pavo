@@ -1,3 +1,11 @@
+## ----include = FALSE-----------------------------------------------------
+# Do not use partial matching
+options(
+   warnPartialMatchDollar = TRUE,
+   warnPartialMatchArgs = TRUE,
+   warnPartialMatchAttr = TRUE
+)
+
 ## ---- echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '70%', dpi = 72----
 knitr::include_graphics('fig/workflow.png')
 
@@ -130,7 +138,7 @@ head(spec.bin)
 spec.bin <- t(spec.bin) # transpose so wavelength are variables for the PCA
 colnames(spec.bin) <- spec.bin[1, ] # names variables as wavelength bins
 spec.bin <- spec.bin[-1, ] # remove 'wl' column
-pca1 <- prcomp(spec.bin, scale = TRUE)
+pca1 <- prcomp(spec.bin, scale. = TRUE)
 
 ## ------------------------------------------------------------------------
 summary(pca1)
@@ -147,7 +155,7 @@ sel <- match(names(sort(sel)), names(sppspec))
 
 # Plot results
 par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
-plot(pca1$r[, 1] ~ wls, type = "l", ylab = "PC1 loading")
+plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
 plot(sppspec, select = sel, type = "s", col = spec2rgb(sppspec))
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
@@ -274,7 +282,7 @@ vismod.idi
 
 ## ------------------------------------------------------------------------
 coldist(vismod1,
-  noise = "neural", achro = TRUE, n = c(1, 2, 2, 4),
+  noise = "neural", achromatic = TRUE, n = c(1, 2, 2, 4),
   weber = 0.1, weber.achro = 0.1
 )
 coldist(vismod.idi, n = c(1, 2), weber = 0.1)
@@ -316,10 +324,10 @@ fakedata.c <- as.rspec(fakedata.c)
 
 ## ------------------------------------------------------------------------
 # Visual model and colour distances
-fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achro = TRUE)
+fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achromatic = TRUE)
 fakedata.cd <- coldist(fakedata.vm,
   noise = "neural", n = c(1, 2, 2, 4),
-  weber = 0.1, achro = TRUE
+  weber = 0.1, achromatic = TRUE
 )
 
 # Converting to Cartesian coordinates
@@ -389,7 +397,7 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 summary(tetra.flowers)
 
 ## ------------------------------------------------------------------------
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
 
 ## ------------------------------------------------------------------------
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
@@ -427,7 +435,7 @@ head(cielab.flowers)
 plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achromatic = 'none', relative = TRUE)
 
 ## ------------------------------------------------------------------------
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
@@ -478,7 +486,7 @@ head(coldist(tetra.flowers))
 
 ## ------------------------------------------------------------------------
 # Model flower colours according to a honeybee
-vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green")
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
 # Estimate colour distances. No need to specify relative receptor densities, noise etc.,
@@ -497,7 +505,7 @@ fakemantisshrimp.colours[, "wl"] <- fakemantisshrimp[, "wl"]
 plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, ylab = "Absorbance")
 
 # Run visual model and calculate colour distances
-vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achro = FALSE)
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achromatic = FALSE)
 
 JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 
