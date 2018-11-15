@@ -2,9 +2,6 @@
 #'
 #' Produces a static 3D tetrahedral plot.
 #'
-#'
-# #' @usage plot(tcsdata, ...)
-#'
 #' @param tcsdata (required) a data frame, possibly a result from the \code{colspace}
 #' or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
 #' coordinates as columns (labeled as such).

@@ -13,7 +13,7 @@ cocplot(cocdata, labels = TRUE, labels.cex = 0.9, tick.loc = c(-12,
 or \code{categorical} function, containing values for 'x' and 'y' coordinates
 as columns (labeled as such).}
 
-\item{labels}{plot axis labels? Defaults to \code{TRUE}.}
+\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
 
 \item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
 

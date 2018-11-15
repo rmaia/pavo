@@ -9,8 +9,7 @@
 tcsplot(tcsdata, size = 0.02, alpha = 1, col = "black",
   vertexsize = 0.02, achro = TRUE, achrosize = 0.01,
   achrocol = "grey", lwd = 1, lcol = "lightgrey", new = FALSE,
-  hspin = FALSE, vspin = FALSE, floor = TRUE, grid = TRUE,
-  fill = TRUE)
+  hspin = FALSE, vspin = FALSE, floor = TRUE)
 
 tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
@@ -19,7 +18,8 @@ tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
-function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
+or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
+coordinates as columns (labeled as such).}
 
 \item{size}{size of the points in the plot (defaults to 0.02)}
 
@@ -29,7 +29,7 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{vertexsize}{size of the points at the vertices}
 
-\item{achro}{plot a point at the origin? (defaults to \code{TRUE})}
+\item{achro}{logical. Should the achromatic center be plotted? (defaults to \code{TRUE})}
 
 \item{achrosize}{size of the point in the achromatic centre}
 
@@ -45,12 +45,12 @@ function, containing values for the 'x', 'y' and 'z' coordinates as columns (lab
 
 \item{floor}{if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})}
 
+\item{grid.alpha}{transparency of the volume polygon grid lines}
+
 \item{grid}{if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})}
 
 \item{fill}{if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
 is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).}
-
-\item{grid.alpha}{transparency of the volume polygon grid lines}
 }
 \value{
 \code{tcsplot} creates a 3D plot using functions of the package \code{rgl},

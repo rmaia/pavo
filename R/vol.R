@@ -3,7 +3,7 @@
 #' Produces a 3D convex hull in tetrahedral color space when plotting a
 #' non-interactive tetrahedral plot.
 #'
-#' @param tcsdata (required) object of class \code{colspace}.
+#' @inheritParams tcsplot
 #' @param alpha transparency of volume (if \code{fill = TRUE}).
 #' @param grid logical. if \code{TRUE} (default), draws the polygon outline defined by the points.
 #' @param fill logical. if \code{TRUE} (default), fills the volume defined by the points.

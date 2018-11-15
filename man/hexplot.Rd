@@ -27,13 +27,17 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 
 \item{sec.col}{line colour of hue sector dividers. Defaults to \code{'grey'}.}
 
-\item{out.lwd, out.lcol, out.lty}{graphical parameters for hexagon outline.}
+\item{out.lwd}{graphical parameters for the plot outline.}
 
-\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE})}
+\item{out.lty}{graphical parameters for the plot outline.}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)}
+\item{out.lcol}{graphical parameters for the plot outline.}
 
-\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to grey)}
+\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
+
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
 \item{margins}{margins for the plot.}
 

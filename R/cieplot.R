@@ -51,11 +51,8 @@
 #' @importFrom grDevices trans3d
 #' @importFrom plot3D perspbox
 #'
-#' @references Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-#'    Transactions of the Optical Society, 33(3), 73-134.
-#' @references Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-#'    using MATLAB. John Wiley & Sons.
-#'
+#' @inherit cie references
+
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,

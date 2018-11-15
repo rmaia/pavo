@@ -6,13 +6,11 @@
 # #' @import rgl
 # #' @importFrom rgl spheres3d rgl.postscript rgl.snapshot rgl.material
 #'
-#' @param tcsdata (required) a data frame, possibly a result from the \code{colspace}
-#' function, containing values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
+#' @inheritParams tetraplot
 #' @param size size of the points in the plot (defaults to 0.02)
 #' @param col color of the points in the plot (defaults to black)
 #' @param alpha transparency of points (or volume fill in \code{tcsvol})
 #' @param vertexsize size of the points at the vertices
-#' @param achro plot a point at the origin? (defaults to \code{TRUE})
 #' @param achrosize size of the point in the achromatic centre
 #' @param achrocol color of the point in the achromatic centre
 #' @param lwd,lcol graphical parameters for the edges of the tetrahedron.
@@ -20,10 +18,6 @@
 #' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})
 #' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})
 #' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})
-#' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})
-#' @param grid.alpha transparency of the volume polygon grid lines
-#' @param fill if \code{TRUE}, fills the volume occupied by points (WARNING: transparency
-#' is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).
 #'
 #' @return \code{tcsplot} creates a 3D plot using functions of the package \code{rgl},
 #' based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
@@ -60,18 +54,15 @@
 #'
 #' @export
 #'
-#' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
-#'  color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-#'  The American Naturalist, 171(6), 755-776.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
-#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @inherit tcspace references
+
 
 # ToDo: Add option to not plot tetrahedron
 
 tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
                     vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",
                     lwd = 1, lcol = "lightgrey", new = FALSE, hspin = FALSE,
-                    vspin = FALSE, floor = TRUE, grid = TRUE, fill = TRUE) {
+                    vspin = FALSE, floor = TRUE) {
 
   # check if rgl is installed and loaded
   if (!requireNamespace("rgl", quietly = TRUE)) {

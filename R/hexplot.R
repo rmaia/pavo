@@ -2,28 +2,17 @@
 #'
 #' Produces a colour hexagon plot.
 #'
-# #' @usage plot(hexdata, ...)
-#'
 #' @param hexdata (required) a data frame, possibly a result from the \code{colspace}
 #'  or \code{hexagon}
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
-#' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
-#' @param labels plot verticy labels? Defaults to \code{TRUE}.
 #' @param sectors plot the bee-hue sector dividers? Options are:
 #'    \itemize{
 #'        \item \code{'none'}: No sectors (default)
 #'        \item \code{'fine'}: 36 10-degree sectors
 #'        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
 #'        }
-#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE})
 #' @param sec.col line colour of hue sector dividers. Defaults to \code{'grey'}.
-#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to 0.8)
-#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to grey)
-#' @param out.lwd,out.lcol,out.lty graphical parameters for hexagon outline.
-#' @param margins margins for the plot.
-#' @param square logical. Should the aspect ratio of the plot be held to 1:1?
-#' (defaults to \code{TRUE}).
-#' @param ... additional graphical options. See \code{\link{par}}.
+#' @inheritParams triplot
 #'
 #' @examples
 #' \dontrun{
@@ -40,12 +29,7 @@
 #'
 #' @keywords internal
 #'
-#' @references Chittka L. (1992). The colour hexagon: a chromaticity diagram
-#'    based on photoreceptor excitations as a generalized representation of
-#'    colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
-#' @references Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-#'    component of flower reflections, and the colour perception of Hymenoptera.
-#'    Vision research, 34(11), 1489-1508.
+#' @inherit hexagon references
 
 hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     sectors = c("none", "fine", "coarse"), sec.col = "grey",

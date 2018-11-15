@@ -65,6 +65,14 @@ Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
 
 Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
    using MATLAB. John Wiley & Sons.
+
+Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of
+ the middle- and long-wavelength sensitive cones derived from measurements in
+ observers of known genotype. Vision Research, 40, 1711-1737.
+
+CIE (2006). Fundamental chromaticity diagram with physiological axes.
+ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
+ Internationale de l Eclairage.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

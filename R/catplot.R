@@ -8,8 +8,7 @@
 #'  or \code{categorical} function, containing values for 'x' and 'y' coordinates
 #'  as columns (labeled as such).
 #' @param labels plot category labels inside? Defaults to \code{TRUE}.
-#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE}).
-#' @param ... additional graphical options. See \code{\link{par}}.
+#' @inheritParams triplot
 #'
 #' @examples
 #' \dontrun{
@@ -25,8 +24,7 @@
 #'
 #' @keywords internal
 #'
-#' @references Troje N. (1993). Spectral categories in the learning behaviour
-#'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+#' @inherit categorical references
 
 catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
 
