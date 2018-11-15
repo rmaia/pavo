@@ -22,7 +22,7 @@
 #'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector
 #'  must match the labels of the input samples, but partial matching (and regular expressions)
 #'  are supported.
-#' @param achro Logical. If \code{TRUE}, last column of the data frame is used to calculate
+#' @param achromatic Logical. If \code{TRUE}, last column of the data frame is used to calculate
 #'  the achromatic contrast, with noise based on the Weber fraction given by the argument
 #'  \code{weber.achro}.
 #'  If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it
@@ -50,7 +50,7 @@
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 #' categorical, segment, and cie models).
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when
-#'  \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
+#'  \code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 #' categorical, segment, and cie models).
 #' @param noise how the noise will be calculated. (Ignored for \code{colspace} objects
@@ -149,7 +149,7 @@
 
 coldist <- function(modeldata,
                     noise = c("neural", "quantum"), subset = NULL,
-                    achro = FALSE, qcatch = NULL,
+                    achromatic = FALSE, qcatch = NULL,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest", weber.achro = 0.1,
                     v, n1, n2, n3, n4) {
 
@@ -457,12 +457,12 @@ coldist <- function(modeldata,
   # Pre-processing for vismodel objects
   if ("vismodel" %in% class(modeldata)) {
 
-    # set achro=FALSE if visual model has achro='none'
+    # set achromatic=FALSE if visual model has achromatic='none'
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
-      if (achro) {
-        warning(paste("achro=TRUE but visual model was calculated with achro=", dQuote("none"), "; achromatic contrast not calculated."), call. = FALSE)
+      if (achromatic) {
+        warning(paste("achromatic=TRUE but visual model was calculated with achromatic=", dQuote("none"), "; achromatic contrast not calculated."), call. = FALSE)
       }
-      achro <- FALSE
+      achromatic <- FALSE
     }
 
     # initial checks...
@@ -520,15 +520,16 @@ coldist <- function(modeldata,
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
 
-    if (achro == FALSE) {
+    if (achromatic) {
+      ncone <- dim(dat)[2] - 1
+      warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"), call. = FALSE)
+    }
+    else {
       ncone <- dim(dat)[2]
       warning(paste("number of cones not specified; assumed to be", ncone), call. = FALSE)
     }
 
-    if (achro == TRUE) {
-      ncone <- dim(dat)[2] - 1
-      warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"), call. = FALSE)
-    }
+
   }
 
   # Prepare output
@@ -540,7 +541,7 @@ coldist <- function(modeldata,
 
   res[, "dS"] <- NA
 
-  if (achro) {
+  if (achromatic) {
     res[, "dL"] <- NA
   }
 
@@ -605,7 +606,7 @@ coldist <- function(modeldata,
       ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
     ), stringsAsFactors = FALSE)
     resref[, "dS"] <- NA
-    if (achro) {
+    if (achromatic) {
       resref[, "dL"] <- NA
     }
 
@@ -636,7 +637,7 @@ coldist <- function(modeldata,
     }
 
 
-    if (achro) {
+    if (achromatic) {
       if (noise == "neural") {
         res[, "dL"] <- unlist(lapply(seq(nrow(res)), function(x)
           ttdistcalcachro(
@@ -675,7 +676,7 @@ coldist <- function(modeldata,
       }
 
       if (dim(dat)[2] <= as.numeric(ncone)) {
-        warning("achro is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
+        warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
   }
@@ -689,28 +690,28 @@ coldist <- function(modeldata,
   if ("colspace" %in% class(modeldata)) {
     if (attr(modeldata, "clrsp") == "hexagon") {
       res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         res[, "dL"] <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
       }
     }
 
     if (attr(modeldata, "clrsp") == "segment") {
       res[, "dS"] <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         res[, "dL"] <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
       }
     }
 
     if (attr(modeldata, "clrsp") == "categorical") {
       res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         warning("Achromatic contrast not calculated in the categorical model", call. = FALSE)
       }
     }
 
     if (attr(modeldata, "clrsp") == "CIELAB") {
       res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
       }
     }
@@ -718,14 +719,14 @@ coldist <- function(modeldata,
     if (attr(modeldata, "clrsp") == "CIELCh") {
       # res[, 'dS'] <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
       res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
       }
     }
 
     if (attr(modeldata, "clrsp") == "coc") {
       res[, "dS"] <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
-      if (achro == TRUE) {
+      if (achromatic) {
         warning("Achromatic contrast not calculated in the color-opponent-coding space", call. = FALSE)
       }
     }

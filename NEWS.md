@@ -2,6 +2,9 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* the `achro` argument in `coldist()` has been changed for `achromatic` to
+better match the arguments from `vismodel()`. Older scripts that use `achro` 
+should not be affected and still work as before.
 * the package `imager` is no longer a dependency, and is only loaded if using some 
 features of `procimg()`.
 * the package `mapproj` is no longer a dependency, and is only loaded if using 
