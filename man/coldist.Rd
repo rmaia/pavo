@@ -5,8 +5,9 @@
 \title{Color distances}
 \usage{
 coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
-  achro = FALSE, qcatch = NULL, n = c(1, 2, 2, 4), weber = 0.1,
-  weber.ref = "longest", weber.achro = 0.1, v, n1, n2, n3, n4)
+  achromatic = FALSE, qcatch = NULL, n = c(1, 2, 2, 4),
+  weber = 0.1, weber.ref = "longest", weber.achro = 0.1, v, n1, n2,
+  n3, n4)
 }
 \arguments{
 \item{modeldata}{(required) quantum catch color data. Can be the result
@@ -31,7 +32,7 @@ length 1 or 2 can be provided, indicating which samples are desired. The subset 
 must match the labels of the input samples, but partial matching (and regular expressions)
 are supported.}
 
-\item{achro}{Logical. If \code{TRUE}, last column of the data frame is used to calculate
+\item{achromatic}{Logical. If \code{TRUE}, last column of the data frame is used to calculate
 the achromatic contrast, with noise based on the Weber fraction given by the argument
 \code{weber.achro}.
 If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it
@@ -73,7 +74,7 @@ categorical, segment, and cie models).}
 categorical, segment, and cie models).}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when
- \code{achro = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
+ \code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
 
