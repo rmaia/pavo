@@ -21,7 +21,7 @@
 #' dim = c(750, 750, 3))
 #'
 #' # Inspect it
-#' head(fakedat)
+#' head(fake)
 #'
 #' # Determine if is rimg object
 #' is.rimg(fake)
