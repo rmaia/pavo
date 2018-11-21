@@ -7,7 +7,8 @@
 \title{pavo: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R}
 \description{
-A cohesive framework for parsing, analyzing and organizing color from spectral data.
+A cohesive framework for parsing, analyzing and organizing color
+    from spectral data.
 }
 \seealso{
 Useful links:
