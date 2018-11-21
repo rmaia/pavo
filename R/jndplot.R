@@ -534,22 +534,12 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
         lpos <- trans3d(labelpos[, 1], labelpos[, 2], labelpos[, 3], P)
 
-        text(lbl[1],
-          x = lpos$x[1], y = lpos$y[1], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[2],
-          x = lpos$x[2], y = lpos$y[2], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[3],
-          x = lpos$x[3], y = lpos$y[3], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[4],
-          x = lpos$x[4], y = lpos$y[4], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
+        for (i in 1:4) {
+          text(lbl[i],
+               x = lpos$x[i], y = lpos$y[i], xpd = TRUE,
+               cex = labels.cex, col = arrow.col
+          )
+        }
       }
     }
 
