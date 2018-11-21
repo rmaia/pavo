@@ -10,12 +10,10 @@
 #' @inheritParams cocplot
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'segment', achromatic = 'all')
 #' seg.flowers <- colspace(vis.flowers, space = 'segment')
 #' plot(seg.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

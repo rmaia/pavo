@@ -33,13 +33,11 @@ Calculates coordinates and colorimetric variables that represent reflectance spe
 in either the CIEXYZ (1931), CIELAB (1971), or CIELCH (1971) colourspaces.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 flowers.cielch <- colspace(vis.flowers, space = 'cielch')
-}
 
 }
 \references{

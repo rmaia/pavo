@@ -15,11 +15,10 @@
 #' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 #' tri.flowers <- colspace(vis.flowers, space = 'tri')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

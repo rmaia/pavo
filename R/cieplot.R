@@ -28,7 +28,6 @@
 #' @param ... Additional graphical options. See \code{\link{par}}.
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #'
 #' # CIEXYZ
@@ -39,7 +38,6 @@
 #' #CIELAB
 #' lab.flowers <- colspace(vis.flowers, space = 'cielab')
 #' plot(lab.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

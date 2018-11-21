@@ -30,15 +30,13 @@
 #'
 #' @return \code{tetraplot} creates a 3D plot.
 #'
-#' @examples \dontrun{
+#' @examples
 #'
 #' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' plot(tcs.sicalis)
-#'
-#' }
 #'
 #' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
 #' \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}

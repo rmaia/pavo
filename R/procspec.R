@@ -39,7 +39,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(teal)
 #' plot(teal, select = 10)
 #'
@@ -50,7 +50,6 @@
 #' # Normalize to max of unity
 #' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
 #' plot(teal.max, select = 10)
-#' }
 #'
 #' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
 #'

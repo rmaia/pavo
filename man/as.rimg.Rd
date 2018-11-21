@@ -25,7 +25,6 @@ Converts an array containing RGB image data data to an \code{rimg}
 object.
 }
 \examples{
-\dontrun{
 
 # Generate some fake image data
 fake <- array(c(
@@ -43,8 +42,6 @@ is.rimg(fake)
 # Convert to rimg object and check again
 fake2 <- as.rimg(fake)
 is.rimg(fake2)
-
-}
 
 }
 \author{

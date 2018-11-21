@@ -10,12 +10,11 @@
 #' @param labels plot verticy labels? Defaults to \code{TRUE}.
 #' @inheritParams triplot
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
 #' di.flowers <- colspace(vis.flowers, space = 'di')
 #' plot(di.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

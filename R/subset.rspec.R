@@ -17,7 +17,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis)
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
@@ -28,7 +28,6 @@
 #' subset(tcs.sicalis, "C")[, 1:5]
 #' subset(sicalis, c("B","C"))
 #' subset(sicalis, "T", invert=TRUE)
-#' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 

@@ -13,11 +13,10 @@
 #' @return \code{x}: the coordinate of the stimulus along a segment
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
 #' di.flowers <- colspace(vis.flowers, space = 'di')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

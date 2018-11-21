@@ -24,11 +24,10 @@
 #' @return \code{r.achieved}: the relative r distance from the achromatic center, in
 #'  relation to the maximum distance achievable (\code{r.vec/r.max}).
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

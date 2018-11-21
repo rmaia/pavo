@@ -95,7 +95,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Dichromat
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
@@ -126,7 +126,6 @@
 #' tetradist.sicalis.n <- coldist(col.sicalis)
 #'
 #' tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

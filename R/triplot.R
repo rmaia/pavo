@@ -16,12 +16,11 @@
 #' (defaults to \code{TRUE}).
 #' @param ... additional graphical options. See \code{\link{par}}.
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis')
 #' tri.flowers <- colspace(vis.flowers, space = 'tri')
 #' plot(tri.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

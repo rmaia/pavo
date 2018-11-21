@@ -30,7 +30,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio <- procimg(papilio, scaledist = 10)
@@ -38,7 +38,6 @@
 #' # Assign individual scales to each image, after slightly reducing their size.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
-#' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
@@ -65,7 +64,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate)) {
     stop("No options selected.")
   }
-  
+
   ## Check for imager if rotating or resizing
   if (!is.null(resize) || !is.null(rotate)){
     if (!requireNamespace("imager", quietly = TRUE)) {

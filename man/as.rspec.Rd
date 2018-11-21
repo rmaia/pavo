@@ -36,7 +36,6 @@ Converts data frames or matrices containing spectral data to \code{rspec}
 object
 }
 \examples{
-\dontrun{
 
 # Generate some fake reflectance data
 fakedat <- data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401))
@@ -48,7 +47,7 @@ is.rspec(fakedat)
 # Convert to rspec object
 fakedat2 <- as.rspec(fakedat)
 is.rspec(fakedat2)
-head(fakedat2)}
+head(fakedat2)
 
 }
 \author{

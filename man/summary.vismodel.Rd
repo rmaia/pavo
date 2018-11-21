@@ -19,11 +19,10 @@ default \code{data.frame} summary
 Returns the attributes used when calculating a visual model using \code{vismodel}
 }
 \examples{
-\dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 summary(vis.sicalis)
-}
+
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998).

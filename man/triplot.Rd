@@ -36,12 +36,10 @@ as columns (labeled as such).}
 Produces a Maxwell triangle plot.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis')
 tri.flowers <- colspace(vis.flowers, space = 'tri')
 plot(tri.flowers)
-}
 
 }
 \references{

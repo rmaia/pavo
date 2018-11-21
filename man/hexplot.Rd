@@ -50,13 +50,11 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
 Produces a colour hexagon plot.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
                         vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 plot(hex.flowers)
-}
 
 }
 \references{

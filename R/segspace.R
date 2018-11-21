@@ -17,11 +17,10 @@
 #'
 #' @keywords internal
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
 #' seg.sic <- colspace(vis.sic, space = 'segment')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}

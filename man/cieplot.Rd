@@ -45,7 +45,6 @@ when \code{space = 'cielab'}.}
 Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 }
 \examples{
-\dontrun{
 data(flowers)
 
 # CIEXYZ
@@ -56,7 +55,6 @@ plot(xyz.flowers)
 #CIELAB
 lab.flowers <- colspace(vis.flowers, space = 'cielab')
 plot(lab.flowers)
-}
 
 }
 \references{

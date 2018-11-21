@@ -34,10 +34,9 @@ compare groups of spectra.
 Number of plots presented per page depends on the number of graphs produced.
 }
 \examples{
-\dontrun{
 data(sicalis)
 explorespec(sicalis, 3)
-explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))}
+explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))
 
 }
 \author{

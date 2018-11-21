@@ -41,14 +41,13 @@ Note: bounds should be set wide enough to incorporate all minima in spectra. Smo
 spectra using \code{\link{procspec}} is also recommended.
 }
 \examples{
-\dontrun{
 data(teal)
 peakshape(teal, select = 3)
 peakshape(teal, select = 10)
 
 # Use wavelength bounds to narrow in on peak of interest
 peakshape(teal, select = 10, lim=c(400, 550))
-}
+
 }
 \seealso{
 \code{\link{procspec}}

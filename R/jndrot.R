@@ -7,12 +7,11 @@
 #' center ("achro") or the data centroid ("mean", the default)?
 #' @inheritParams jnd2xyz
 
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' jndrot(jnd2xyz(cd.flowers))
-#' }
 #'
 #' @author Rafael Maia \email{rm72@zips.uakron.edu}
 #'

@@ -64,7 +64,7 @@
 #' @return An object of class \code{rspec} (when \code{plot = FALSE}), containing
 #' a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Plot the honeybee's receptors
 #' sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 #'
@@ -73,7 +73,6 @@
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c('cie2', 'cie10'))
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

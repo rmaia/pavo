@@ -32,9 +32,9 @@
 #'
 #' @importFrom pbmcapply pbmclapply
 #'
-#' @examples \dontrun{
-#' getspec('examplespec/', lim = c(400, 900))
-#' getspec('examplespec/', ext = 'ttt')}
+#' @examples
+#' getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
+#' getspec(system.file("testdata", package = "pavo"), ext = 'ttt')
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}

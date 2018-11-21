@@ -90,7 +90,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Dichromat (dingo)
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -105,7 +105,6 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -332,8 +331,8 @@ vismodel <- function(rspecdata,
   if (tr2 != "ideal" & visual == "user-defined") {
     if ("sensmod" %in% class(fullS)) {
       if (attr(fullS, "om")) {
-        warning('The visual system being used appears to already incorporate ocular transmission. 
-                Using anything other than trans = "ideal" means ocular media effects 
+        warning('The visual system being used appears to already incorporate ocular transmission.
+                Using anything other than trans = "ideal" means ocular media effects
                 are being applied a second time.', call. = FALSE)
       }
     }

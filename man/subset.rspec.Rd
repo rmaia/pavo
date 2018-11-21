@@ -35,7 +35,6 @@ matches \emph{either} condition will be included. It's a union, not an
 intersect.
 }
 \examples{
-\dontrun{
 data(sicalis)
 vis.sicalis <- vismodel(sicalis)
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
@@ -46,7 +45,6 @@ subset(vis.sicalis, "C")
 subset(tcs.sicalis, "C")[, 1:5]
 subset(sicalis, c("B","C"))
 subset(sicalis, "T", invert=TRUE)
-}
 
 }
 \author{

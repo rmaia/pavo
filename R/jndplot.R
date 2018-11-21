@@ -42,13 +42,12 @@
 #'
 #' @keywords internal
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' propxyz <- jnd2xyz(cd.flowers)
 #' plot(propxyz)
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

@@ -26,12 +26,11 @@
 #' that the rotation aligns with the z axis (only used if data has 3 dimensions).
 #' Ignored if \code{ref2} is NULL (in 3-dimensional case only)
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' jnd2xyz(cd.flowers)
-#' }
 #'
 #' @author Rafael Maia \email{rm72@zips.uakron.edu}
 #'

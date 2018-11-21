@@ -40,12 +40,10 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 Produces a dichromat segment plot.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
 plot(di.flowers)
-}
 
 }
 \references{

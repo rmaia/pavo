@@ -28,7 +28,7 @@
 #' @param qcatch Which quantal catch metric is being inputted. Only used when input data is NOT
 #' an output from \code{\link{vismodel}}. Must be \code{Qi}, \code{fi} or \code{Ei}.
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #'
 #' # A dichromat in a segment colourspace
@@ -52,7 +52,6 @@
 #' # A housefly in the categorical colourspace
 #' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}

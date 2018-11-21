@@ -50,9 +50,8 @@ USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
 Avantes (before or after exporting).
 }
 \examples{
-\dontrun{
-getspec('examplespec/', lim = c(400, 900))
-getspec('examplespec/', ext = 'ttt')}
+getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
+getspec(system.file("testdata", package = "pavo"), ext = 'ttt')
 
 }
 \references{

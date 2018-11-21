@@ -114,7 +114,6 @@ Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colorspace and non-colorspace models.
 }
 \examples{
-\dontrun{
 # Dichromat (dingo)
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -129,7 +128,6 @@ tri.flowers <- colspace(vis.flowers, space = 'tri')
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-}
 
 }
 \references{

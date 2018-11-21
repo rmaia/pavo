@@ -20,10 +20,10 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' explorespec(sicalis, 3)
-#' explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))}
+#' explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))
 #'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 

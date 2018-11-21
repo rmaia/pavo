@@ -22,7 +22,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(teal)
 #'
 #' # Average every two spectra
@@ -34,7 +34,6 @@
 #' teal.sset2 <- aggspec(teal, by = ind)
 #'
 #' plot(teal.sset2)
-#' }
 #'
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.

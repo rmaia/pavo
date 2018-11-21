@@ -116,7 +116,6 @@ argument directly, and not based on \code{v} and \code{n4} as before.
 }
 
 \examples{
-\dontrun{
 # Dichromat
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
@@ -147,7 +146,6 @@ col.sicalis <- colspace(vis.sicalis)
 tetradist.sicalis.n <- coldist(col.sicalis)
 
 tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
-}
 
 }
 \references{

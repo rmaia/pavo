@@ -14,11 +14,9 @@
 #' @return \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
