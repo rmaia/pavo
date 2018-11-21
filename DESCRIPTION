@@ -27,23 +27,23 @@ BugReports: https://github.com/rmaia/pavo/issues
 Depends:
     R(>= 2.10)
 Imports:
-    rcdd,
     geometry,
     pbmcapply,
-    utils,
     plot3D,
-    stats,
+    readbitmap,
+    rcdd,
     sp,
-    readbitmap
+    stats,
+    utils
 Suggests:
-    spelling,
+    covr,
     imager,
+    knitr,
     mapproj,
     rgl,
-    xml2,
+    spelling,
     testthat,
-    knitr,
-    covr
+    xml2
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Language: en-GB
