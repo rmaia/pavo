@@ -18,6 +18,10 @@
 #'
 #' @export
 #'
+#' @importFrom geometry convhulln
+#'
+#' @importFrom grDevices trans3d
+#'
 
 vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
                 new = FALSE, view, scale.y, axis, ...) {

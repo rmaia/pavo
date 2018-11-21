@@ -9,6 +9,7 @@ huedisp <- function(tcsres) {
 }
 
 
+#' @importFrom geometry convhulln
 tcssum <- function(tcsres) {
   # centroid
   centroid <- colMeans(tcsres[c("u", "s", "m", "l")])

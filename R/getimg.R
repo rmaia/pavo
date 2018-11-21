@@ -111,7 +111,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 }
 
 ## Grab images
-#' @import readbitmap
+#' @importFrom readbitmap read.bitmap
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 grabimg <- function(file) {
   bmp <- read.bitmap(file)

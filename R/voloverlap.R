@@ -3,7 +3,11 @@
 #' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space.
 #'
-#' @import rcdd
+#' @importFrom rcdd d2q q2d scdd
+#'
+#' @importFrom geometry convhulln
+#'
+#' @importFrom stats runif
 #'
 #' @export
 #'

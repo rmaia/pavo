@@ -2,8 +2,6 @@
 #'
 #' Returns the attributes of \code{colspace} objects.
 #'
-#' @import geometry
-#'
 #' @param object (required) a \code{colspace} object.
 #' @param by when the input is in \code{tcs} colorspace, \code{by} is either
 #'  a single value specifying the range of color points for which
