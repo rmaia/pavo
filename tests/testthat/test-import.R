@@ -59,3 +59,10 @@ test_that("getspec", {
     "No files found."
   )
 })
+
+
+test_that("getimg", {
+  expect_s3_class(getimg(system.file("testdata", "images", "formats", package = "pavo")),
+                  "rimg")
+
+})
