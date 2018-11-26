@@ -167,7 +167,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
   }
 
-  # stack curves along y-axis
+  # Stack curves along y-axis
   if (type == "stack") {
     arg$type <- "l"
     if (is.null(arg$ylab)) {

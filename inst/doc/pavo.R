@@ -53,7 +53,7 @@ head(as.rspec(fakedat, whichwl = 3))
 ## ---- fig.height=3, fig.width=4------------------------------------------
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
-plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l", xlab = "wl")
+plot(refl1 ~ wl, type = "l", data = fakedat.new2)
 
 ## ---- fig.height=3, fig.width=4------------------------------------------
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 1000))
@@ -129,15 +129,15 @@ plot(specs.str[, 5] ~ c(300:700), type = "l", xlab = "", ylab = "")
 abline(h = c(0, 1), lty = 2)
 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
-mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
+mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 
 ## ---- results='hide'-----------------------------------------------------
-# pca analysis
+# PCA analysis
 spec.bin <- procspec(sppspec, opt = c("bin", "center"))
 head(spec.bin)
 spec.bin <- t(spec.bin) # transpose so wavelength are variables for the PCA
-colnames(spec.bin) <- spec.bin[1, ] # names variables as wavelength bins
-spec.bin <- spec.bin[-1, ] # remove 'wl' column
+colnames(spec.bin) <- spec.bin[1, ]  # names variables as wavelength bins
+spec.bin <- spec.bin[-1, ]  # remove 'wl' column
 pca1 <- prcomp(spec.bin, scale. = TRUE)
 
 ## ------------------------------------------------------------------------
@@ -152,12 +152,13 @@ wls <- as.numeric(colnames(spec.bin))
 # Rank specs by PC1
 sel <- rank(pca1$x[, 1])
 sel <- match(names(sort(sel)), names(sppspec))
+#sel <- names(sppspec)[sel]
 
 # Plot results
 par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
 plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
-plot(sppspec, select = sel, type = "s", col = spec2rgb(sppspec))
+plot(sppspec, select = sel, type = "s", col = colr)
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 
 ## ---- results='hide'-----------------------------------------------------
@@ -205,8 +206,10 @@ mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 angles <- seq(15, 70, by = 5)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal."----
+# Smooth the spectral data
 teal.sm <- procspec(teal, opt = c("smooth"))
 
+# Plot it as a heatmap
 plot(teal.sm,
   type = "h", varying = angles,
   ylab = expression(paste("Incident angle (", degree, ")")),
@@ -217,13 +220,16 @@ plot(teal.sm,
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colours
-aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend = TRUE)
+aggplot(mspecs, spp, 
+        FUN.center = median, 
+        ylim = c(0, 70),
+        alpha = 0.3, legend = TRUE)
 
 # Plot using mean and standard error, in greyscale
 aggplot(mspecs, spp,
-  FUN.error = function(x) sd(x) / sqrt(length(x)),
-  lcol = 1, shadecol = "grey", alpha = 0.7
-)
+        ylim = c(0, 70),
+        FUN.error = function(x) sd(x) / sqrt(length(x)),
+        lcol = 1, shadecol = "grey", alpha = 0.7)
 
 ## ---- results='hide'-----------------------------------------------------
 summary(spec.sm)
@@ -245,6 +251,25 @@ peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 ## ----echo=TRUE-----------------------------------------------------------
 musca_sense <- sensdata(visual = "musca", achromatic = "md.r1")
 head(musca_sense)
+
+## ----echo = FALSE, results = 'asis'--------------------------------------
+vistab <- data.frame(phenotype = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "ctenophorus", "canis", "musca", "cie2",
+                                   "cie10", "segment", "habronattus", "rhinecanthus"),
+                     description = c("average ultraviolet-sensitive avian (tetrachromat)",
+                                     "average violet-sensitive avian (tetrachromat)",
+                                     "The blue tit _Cyanistes caeruleus_ (tetrachromat)",
+                                     "The starling _Sturnus vulgaris_ (tetrachromat)",
+                                     "The peafowl _Pavo cristatus_ (tetrachromat)",
+                                     "The honeybee _Apis mellifera_ (trichromat)",
+                                     "The ornate dragon lizard _Ctenophorus ornatus_ (trichromat)",
+                                     "The canid _Canis familiaris_ (dichromat)",
+                                     "The housefly _Musca domestica_ (tetrachromat)",
+                                     "2-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "10-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "A generic 'viewer' with broad sensitivities for use in the segment analysis of Endler (1990) (tetrachromat)",
+                                     "The jumping spider _Habronattus pyrrithrix_ (trichromat)",
+                                     "The triggerfish _Rhinecanthus aculeatus_ (trichromat)"))
+knitr::kable(vistab, caption = "Built-in visual phenotypes available in pavo")
 
 ## ---- results='hide'-----------------------------------------------------
 vismod1 <- vismodel(sppspec,
@@ -431,7 +456,7 @@ plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers))
 cielab.flowers <- colspace(vis.flowers, space = 'cielab')
 head(cielab.flowers)
 
-## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="CIELAB."----
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance spectra represented in the CIELab model of human colour sensation."----
 plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ------------------------------------------------------------------------

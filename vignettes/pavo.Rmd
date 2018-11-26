@@ -69,11 +69,11 @@ The raw spectral data used in this example are available from the package repori
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
-In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See help for more information `help(package = "pavo")`.
+In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more informationl; via `?teal`, `?sicalis`, and `?flowers`.
 
 ## Importing
 
-The first thing we need to do is import spectral data into R using the function `getspec()`. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` does recursive sampling, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
+The first thing we need to do is import spectral data into R using the function `getspec()`. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
 If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/vignette_data`, you might execute the following command and see this output:
 
@@ -129,12 +129,12 @@ As can be seen, `as.rspec` renames the column containing wavelengths, sets it as
 head(as.rspec(fakedat, whichwl = 3))
 ```
 
-Finally, the `lim` argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn't contain this information (and hence you cannot specify the column with `whichwl` or automatically find the column with `as.rspec`). Additionally, it may be useful to focus on a subset of wavelength. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with `lim`:
+Finally, the `lim` argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn't contain this information (and hence you cannot specify the column with `whichwl` or automatically find the column with `as.rspec`). Additionally, it may be useful to focus on a subset of wavelengths. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with `lim`:
 
 ```{r, fig.height=3, fig.width=4}
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
-plot(fakedat.new2[, 2] ~ fakedat.new2[, 1], type = "l", xlab = "wl")
+plot(refl1 ~ wl, type = "l", data = fakedat.new2)
 ```
 
 We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (`as.rspec` will warn you when wavelengths in the data are not present in the range specified with `lim`), otherwise `as.rspec` will assume that wavelengths exist when in fact they may not. For example, if we set `lim = c(300, 1000)` and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:
@@ -186,7 +186,7 @@ Note that this re-combined file (`specs.new`) has only a single `wl` column with
 
 ## Averaging Spectra
 
-As previously described, our data (contained in the `specs` object) constitutes of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function `explorespec` provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument `specreps`, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
+As previously described, our data (contained in the `specs` object) consists of multiple individuals, and each was measured three times, as is common to avoid measurement bias. A good way to visualize the repeatability of our measurements is to plot the spectra of each individual separately. The function `explorespec` provides an easy way of doing so. You may specify the number of spectra to be plotted in the same panel using the argument `specreps`, and the function will adjust the number of panels per page accordingly. We will exemplify this function using only the 12 cardinal individuals measured:
 
 ```{r, label=explorespecfig, fig=TRUE, include=TRUE, fig.width=6, fig.height=4.5, fig.cap="Result from `explorespec`, showing the three measurements for each individual cardinal in separate panels"}
 # 36 spectra plus the first (wl) column
@@ -219,7 +219,7 @@ round(sppspec[1:5, ], 2)
 
 ## Normalizing and Smoothing Spectra
 
-Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes"" in reflectance curves. The `pavo` function `procspec` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth` function in `R`, wrapped in the `opt="smooth"` argument of `procspec`.
+Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The `pavo` function `procspec` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth` function in `R`, wrapped in the `opt="smooth"` argument of `procspec`.
 
 But first, let's use the `plotsmooth` function to determine a suitable smoothing parameter (`span`). This function allows you to set a minimum and maximum smoothing parameter to try and plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
 
@@ -261,20 +261,20 @@ plot(specs.str[, 5] ~ c(300:700), type = "l", xlab = "", ylab = "")
 abline(h = c(0, 1), lty = 2)
 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
-mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
+mtext("Normalised reflectance (%)", side = 2, outer = TRUE, line = 1)
 ```
 
 ## Binning and PCA Analysis of Spectral Shape
 
-Another intended usage of `procspec` is preparation of spectral data for variable reduction (for example, using Principal Component Analysis, or PCA). Following Cuthill et al. (1999), we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
+Another intended usage of `procspec` is preparation of spectral data for dimensionality reduction (for example, using Principal Component Analysis, or PCA). Following Cuthill et al. (1999), we can use `opt = 'center'` to centre spectra to have a mean reflectance of zero (thus removing brightness as a dominant variable in the PCA) and then bin the spectra into user-defined bins (using the `opt = 'bin'` argument) to obtain a dataframe suitable for the PCA.
 
 ```{r, results='hide'}
-# pca analysis
+# PCA analysis
 spec.bin <- procspec(sppspec, opt = c("bin", "center"))
 head(spec.bin)
 spec.bin <- t(spec.bin) # transpose so wavelength are variables for the PCA
-colnames(spec.bin) <- spec.bin[1, ] # names variables as wavelength bins
-spec.bin <- spec.bin[-1, ] # remove 'wl' column
+colnames(spec.bin) <- spec.bin[1, ]  # names variables as wavelength bins
+spec.bin <- spec.bin[-1, ]  # remove 'wl' column
 pca1 <- prcomp(spec.bin, scale. = TRUE)
 ```
 
@@ -282,7 +282,7 @@ pca1 <- prcomp(spec.bin, scale. = TRUE)
 summary(pca1)
 ```
 
-As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the relative amount of long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot` function.
+As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot` function.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities)."}
 
@@ -293,12 +293,13 @@ wls <- as.numeric(colnames(spec.bin))
 # Rank specs by PC1
 sel <- rank(pca1$x[, 1])
 sel <- match(names(sort(sel)), names(sppspec))
+#sel <- names(sppspec)[sel]
 
 # Plot results
 par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
 plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
-plot(sppspec, select = sel, type = "s", col = spec2rgb(sppspec))
+plot(sppspec, select = sel, type = "s", col = colr)
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 ```
 
@@ -377,7 +378,7 @@ mtext("Wavelength (nm)", side = 1, outer = T, line = 1)
 mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 ```
 
-Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?"") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
+Note that in the above figure, the y axis to the right includes the index of each spectrum. This makes it easier to identify and subset specific spectra or groups of spectra using the `select` argument in `plot.rspec`. Note also that the first index is actually 2, preserving the sequence in the original dataset (since the first column is wavelength). Though this may seem confusing at first ("why is my first spec number 2?") this preserves subsetting hierarchy: using `plot(teal, select = 2)` will show the same spectra that would be selected if you use `teal[ ,2]`.
 
 ### The `heatmap` Option
 
@@ -390,8 +391,10 @@ angles <- seq(15, 70, by = 5)
 Next, we will smooth the data with `procspec` and plot as a false colour map (heatmap):
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal."}
+# Smooth the spectral data
 teal.sm <- procspec(teal, opt = c("smooth"))
 
+# Plot it as a heatmap
 plot(teal.sm,
   type = "h", varying = angles,
   ylab = expression(paste("Incident angle (", degree, ")")),
@@ -409,13 +412,16 @@ These plots can be very useful to observe changes over time, for example, or any
 par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
 
 # Plot using median and standard deviation, default colours
-aggplot(mspecs, spp, FUN.center = median, alpha = 0.3, legend = TRUE)
+aggplot(mspecs, spp, 
+        FUN.center = median, 
+        ylim = c(0, 70),
+        alpha = 0.3, legend = TRUE)
 
 # Plot using mean and standard error, in greyscale
 aggplot(mspecs, spp,
-  FUN.error = function(x) sd(x) / sqrt(length(x)),
-  lcol = 1, shadecol = "grey", alpha = 0.7
-)
+        ylim = c(0, 70),
+        FUN.error = function(x) sd(x) / sqrt(length(x)),
+        lcol = 1, shadecol = "grey", alpha = 0.7)
 ```
 
 # Analyzing Spectral Data
@@ -430,7 +436,7 @@ Second, reflectance spectra can be analysed by accounting for the visual system 
 
 ### Colourimetric Variables
 
-Obtaining colourimetric variables (peratining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in Montgomerie (2006). Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
+Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in Montgomerie (2006). Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
 
 The description and formulas for these variables can be found by running `?summary.rspec`.
 
@@ -470,7 +476,7 @@ peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
 
 ### Overview
 
-As of version `1.0`, all visual and colourspace modelling and plotting options are wrapped into four main function: `vismodel`, `colspace`, `coldist`, and `plot`. As detailed below, these functions cover the basic processes common to most modelling approaches. Namely, the estimation of quantum catches, their conversion to an appropriate space, estimating the distances between samples, and visualising the results. As a brief example, a typical workflow for modelling might use:
+All visual and colourspace modelling and plotting options are wrapped into four main function: `vismodel`, `colspace`, `coldist`, and `plot`. As detailed below, these functions cover the basic processes common to most modelling approaches. Namely, the estimation of quantum catches, their conversion to an appropriate space, estimating the distances between samples, and visualising the results. As a brief example, a typical workflow for modelling might use:
 
 1. `vismodel` to estimate photoreceptor quantum catches. The assumptions of visual models may differ dramatically, so be sure to select options that are appropriate for your intended use.
 2. `colspace` to convert the results of `vismodel` (or user-provided quantum catches) into points in a given colourspace, specified with the `space` argument. If no `space` argument is provided, `colspace` will automatically select the di-, tri- or tetrahedral colourspace, depending on the nature of the input data. The result of `colspace` will be an object of class `colspace` (that inherits from `data.frame`), and will contain the location of stimuli in the selected space along with any associated colour variables.
@@ -488,7 +494,29 @@ head(musca_sense)
 
 ### Visual Phenotypes
 
-`pavo` contains numerous di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessible via the `vismodel()` argument `visual`:
+`pavo` contains numerous di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessible via the `vismodel()` argument `visual`, and include:
+
+```{r echo = FALSE, results = 'asis'}
+vistab <- data.frame(phenotype = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "ctenophorus", "canis", "musca", "cie2",
+                                   "cie10", "segment", "habronattus", "rhinecanthus"),
+                     description = c("average ultraviolet-sensitive avian (tetrachromat)",
+                                     "average violet-sensitive avian (tetrachromat)",
+                                     "The blue tit _Cyanistes caeruleus_ (tetrachromat)",
+                                     "The starling _Sturnus vulgaris_ (tetrachromat)",
+                                     "The peafowl _Pavo cristatus_ (tetrachromat)",
+                                     "The honeybee _Apis mellifera_ (trichromat)",
+                                     "The ornate dragon lizard _Ctenophorus ornatus_ (trichromat)",
+                                     "The canid _Canis familiaris_ (dichromat)",
+                                     "The housefly _Musca domestica_ (tetrachromat)",
+                                     "2-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "10-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "A generic 'viewer' with broad sensitivities for use in the segment analysis of Endler (1990) (tetrachromat)",
+                                     "The jumping spider _Habronattus pyrrithrix_ (trichromat)",
+                                     "The triggerfish _Rhinecanthus aculeatus_ (trichromat)"))
+knitr::kable(vistab, caption = "Built-in visual phenotypes available in pavo")
+```
+
+:
   : `avg.uv` average ultraviolet-sensitive avian (tetrachromat)
   : `avg.v` average violet-sensitive avian (tetrachromat)
   : `bluetit` The blue tit _Cyanistes caeruleus_ (tetrachromat)
@@ -510,7 +538,7 @@ Numerous models have been developed to understand how colours are perceived and 
 
 To apply any such model, we first need to quantify receptor excitation and then consider how the signal is being processed, while possibly considering the relative density of different cones and the noise-to-signal ratio.
 
-To quantify the stimulation of cones by the emitted colour, we will use the `pavo` function `vismodel`. This function takes an `rspec` dataframe as a minimal input, and the user can either select from the available options or input its own data for the additional arguments in the function:
+To quantify the stimulation of cones by the emitted colour, we will use the `pavo` function `vismodel`. This function takes an `rspec` dataframe as a minimal input, and the user can either select from the available options or input their own data for the additional arguments in the function:
 
 - `visual`: the visual system to be used. Available inbuilt options are detailed above, or the user may include their own dataframe, with the first column being the wavelength range and the following columns being the absorbance at each wavelength for each cone type (see below for an example).
 - `achromatic`: Either a receptor's sensitivity data (available options include the blue tit, chicken, and starling double-cones, and the housefly's R1-6 receptor), which can also be user-defined as above; or the longest-wavelength receptor, the sum of the two longest-wavelength receptors, or the sum of all receptors can be used. Alternatively, `none` can be specified for no achromatic stimulation calculation.
@@ -576,7 +604,7 @@ vismod.idi
 
 ### The Receptor Noise Model
 
-The receptor-noise limited model of Vorobyev (1998, 2001) offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discrimination of colours is fundamentally limited by photoreceptor noise. colour distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$ ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
+The receptor-noise limited (RNL) model of Vorobyev (1998, 2001) offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discrimination of colours is fundamentally limited by photoreceptor noise. Colour distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$ ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
 
 $$w_i = \frac{v_i}{\sqrt{n_i}}$$
 
@@ -704,7 +732,7 @@ head(flowers[1:4])
 
 #### Di-, Tri-, and Tetrachromatic Colourspaces
 
-As of version `1.0`, `pavo` has expanded modelling and visualisation capabilities for generic di- and trichromatic spaces, uniting these approaches in a cohesive workflow. As with most colourspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colourspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colourspace automatically). For di- tri- and tetrachromatic spaces, `colspace` calculates the coordinates of stimuli as:
+`pavo` has extensive modelling and visualisation capabilities for generic di-, tri-, and tetra-chromatic spaces, uniting these approaches in a cohesive workflow. As with most colourspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel` function, before converting each set of values to a location in colourspace by using the `space` argument in `colspace` (the function can also be set to try to detect the dimensionality of the colourspace automatically). For di- tri- and tetrachromatic spaces, `colspace` calculates the coordinates of stimuli as:
 
 **Dichromats:**
 $$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
@@ -730,7 +758,7 @@ di.flowers <- colspace(vis.flowers, space = 'di')
 head(di.flowers)
 ```
 
-The output contains values for the relative stimulation of shot- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.
+The output contains values for the relative stimulation of short- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Flowers in a dichromatic colourspace, as modelled according to a canid visual system."}
 plot(di.flowers, col = spec2rgb(flowers))
@@ -762,7 +790,7 @@ tetra.flowers <- colspace(vis.flowers, space = "tcs")
 head(tetra.flowers)
 ```
 
-Tetrahedral data (via `colspace(space = 'tcs')`) may be visualised in an _interactive_ plot by using `tcsplot`, along with the accessory functions `tcspoints` and `tcsvol` for adding points and convex hulls, respectively. As of version `1.0`, `pavo` also includes a _static_ tetrahedral plot. As with other colourspace plots there are a number of associated graphical options, though the `theta` and `phi` arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.
+Tetrahedral data (via `colspace(space = 'tcs')`) may be plotted in a standard _static_ tetrahedron by using `plot()`, or can be visualised as part of an _interactive_ tetrahedron by using `tcsplot()` with the accessory functions `tcspoints()` and `tcsvol()` for adding points and convex hulls, respectively. As with other colourspace plots there are a number of associated graphical options, though the `theta` and `phi` arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.
 
 When plotting the tetrahedral colourspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments `perspective = TRUE` and controlling the size range with the `range` argument. Several other options control the appearance of this plot, you can check these using `?plot.colspace` or `?tetraplot`
 
@@ -789,7 +817,7 @@ For tetrahedral models, another plotting option available is `projplot`, which p
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 ```
 
-Finally, a useful function for tetrahedral models is `voloverlap`, which calculates the overlap in tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches"", or to test for mimetism, dichromatism, etc. (Stoddard & Prum 2011). To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
+Finally, a useful function for tetrahedral models is `voloverlap`, which calculates the overlap in tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. (Stoddard & Prum 2011). To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
 
 ```{r}
 data(sicalis)
@@ -806,7 +834,7 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
-`voverlap` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$V_{smallest} = V_{overlap} / V_{smallest}$$ and $$V_{both} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
+The function `voloverlap` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\mathtt{vsmallest} = V_{overlap} / min(V_A, V_B)$$ and $$\mathtt{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
 
 So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
 
@@ -850,8 +878,8 @@ plot(hex.flowers, sectors = 'coarse', pch = 21, bg = spec2rgb(flowers))
 
 The colour opponent coding (coc) space is an earlier hymenopteran visual model (Backhaus 1991) which, although now seldom used in favour of the hexagon, may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
 
-$$A = -9.86E_g + 7.70E_b + 2.16E_g$$
-$$B = -5.17E_g + 20.25E_b - 15.08E_g$$
+$$A = -9.86E_u + 7.70E_b + 2.16E_g$$
+$$B = -5.17E_u + 20.25E_b - 15.08E_g$$
 
 Where $E_i$ is the excitation value (quantum catch) in photoreceptor $i$.
 
@@ -904,7 +932,7 @@ The output is simply the tristimulus values and chromaticity coordinates of stim
 plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers))
 ```
 
-The `Lab` space is a more recent development, and is a colour-opponent model that attempts to mimic the nonlinear responses of the human eye. The `Lab` space is also calibrated (unlike the `XYZ` space) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _perceived_ as more different that two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two colour-opponent dimensions designated *a* and *b*. The `colspace` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
+The `Lab` space is a more recent development, and is a colour-opponent model that attempts to mimic the nonlinear responses of the human eye. The `Lab` space is also calibrated (unlike the `XYZ` space) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _perceived_ as more different than two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two colour-opponent dimensions designated *a* and *b*. The `colspace` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
 
 $$
 L=\begin{cases}
@@ -941,7 +969,7 @@ head(cielab.flowers)
 
 Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`:
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="CIELAB."}
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance spectra represented in the CIELab model of human colour sensation."}
 plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers))
 ```
 
@@ -1124,7 +1152,7 @@ Images often require some post-capture processing, depending on the intended use
 
 ## Setting Scales and Defining Objects
 
-The functionality of `procimg` is currently centred on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, which resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. The latter functions, in contrast, are both interactive, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
+The functionality of `procimg` is currently centred on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
 ```{r, eval = FALSE}
 # Interactively specify the real-world scale of the image. Here 100 mm.
@@ -1138,7 +1166,7 @@ Distinguishing a focal object from its background is important in cases where we
 butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
 
-All of these options can be simultaneously specified in a single call to `procimg`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult illustrate here due to their interactive nature.
+All of these options can be simultaneously specified in a single call to `procimg`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult illustrate to here due to their interactive nature.
 
 ## Image Colour-Classification
 
@@ -1192,7 +1220,7 @@ butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID =
 head(butterflies_adj)
 ```
 
-The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give `adjacent` enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.
+The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function's help file (`?adjacent`) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give `adjacent` enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.
 
 ```{r}
 # Create a fake matrix of pairwise colour- and luminance distances between all
