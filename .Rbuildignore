@@ -18,3 +18,4 @@ todo.txt
 LICENSE.md
 ^.*\.pdf$
 .editorconfig
+.covrignore

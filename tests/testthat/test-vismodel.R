@@ -39,3 +39,11 @@ test_that("Warnings", {
   expect_warning(vismodel(flowers, visual = "bluetit", achro = test_matrix), "Achromatic is a matrix")
   expect_silent(vismodel(flowers, visual = "bluetit", achro = FALSE))
 })
+
+test_that("Summary", {
+  data(sicalis)
+  vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+  summary(vis.sicalis)
+  
+  
+})
