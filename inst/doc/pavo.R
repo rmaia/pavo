@@ -152,13 +152,12 @@ wls <- as.numeric(colnames(spec.bin))
 # Rank specs by PC1
 sel <- rank(pca1$x[, 1])
 sel <- match(names(sort(sel)), names(sppspec))
-#sel <- names(sppspec)[sel]
 
 # Plot results
-par(mfrow = c(1, 2), mar = c(2, 4, 2, 2), oma = c(2, 0, 0, 0))
+par(mfrow = c(1, 2), mar = c(2, 4, 2, 5), oma = c(2, 0, 0, 0))
 plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
-plot(sppspec, select = sel, type = "s", col = colr)
+plot(sppspec, select = sel, labels.stack = names(sppspec)[sel], type = "s", col = colr)
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 
 ## ---- results='hide'-----------------------------------------------------
@@ -192,7 +191,7 @@ par(mar = c(4, 4, 2, 2))
 data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
 
-## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=5.5, fig.cap="Stack plot of the raw (left) and normalized (right) teal angle-dependent reflectance"----
+## ---- fig=TRUE, include=TRUE, fig.width=4, fig.height=5.5, fig.cap="Stacked plot of the raw (left) and normalized (right) teal angle-dependent reflectance"----
 teal.norm <- procspec(teal, opt = c("min", "max"))
 par(mfrow = c(1, 2), mar = c(2, 2, 2, 2), oma = c(2, 2, 0, 0))
 
@@ -206,6 +205,7 @@ mtext("Cumulative reflectance (A.U.)", side = 2, outer = T, line = 1)
 angles <- seq(15, 70, by = 5)
 
 ## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Heatmap plot for angle-resolved reflectance measurements of the green-winged teal."----
+
 # Smooth the spectral data
 teal.sm <- procspec(teal, opt = c("smooth"))
 

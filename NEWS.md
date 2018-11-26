@@ -9,6 +9,8 @@ should not be affected and still work as before.
 features of `procimg()`.
 * the package `mapproj` is no longer a dependency, and is only loaded if using 
 `projplot()`.
+* added the argument `labels.stack` to `plot.rspec`, which allows the use of 
+custom spectra labels in stacked plots.
 
 # pavo 2.0.0
 
