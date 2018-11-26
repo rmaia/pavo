@@ -97,13 +97,13 @@ procspec <- function(rspecdata, opt = c(
   nam <- names(rspecdata)
 
   if (any(opt == "smooth")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) {
+    rspecdata <- vapply(1:ncol(rspecdata), function(z) {
       loess.smooth(
         x = wl,
         y = as.data.frame(rspecdata[, z]), span = span, degree = 2,
         family = "gaussian", evaluation = length(wl)
       )$y
-    })
+    }, numeric(nrow(rspecdata)))
     applied <- c(applied, paste("smoothing spectra with a span of", span, "\n"))
   }
 
@@ -115,7 +115,7 @@ procspec <- function(rspecdata, opt = c(
         x
       }
     }
-    tempspc <- data.frame(sapply(1:ncol(rspecdata), function(z) adm(rspecdata[, z])))
+    tempspc <- data.frame(vapply(1:ncol(rspecdata), function(z) adm(rspecdata[, z])), numeric(nrow(rspecdata)))
     names(tempspc) <- names(rspecdata)
     rspecdata <- round(tempspc, 6)
     applied <- c(applied, "Negative value correction: added min to all reflectance\n")
@@ -127,22 +127,30 @@ procspec <- function(rspecdata, opt = c(
   }
 
   if (any(opt == "minimum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))
+    rspecdata <- vapply(1:ncol(rspecdata), 
+                        function(z) rspecdata[, z] - min(rspecdata[, z]),
+                        numeric(nrow(rspecdata)))
     applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
   }
 
   if (any(opt == "maximum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z]))
+    rspecdata <- vapply(1:ncol(rspecdata), 
+                        function(z) rspecdata[, z] / max(rspecdata[, z]),
+                        numeric(nrow(rspecdata)))
     applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
   }
 
   if (any(opt == "sum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z]))
+    rspecdata <- vapply(1:ncol(rspecdata), 
+                        function(z) rspecdata[, z] / sum(rspecdata[, z]),
+                        numeric(nrow(rspecdata)))
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
 
   if (any(opt == "center")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z]))
+    rspecdata <- vapply(1:ncol(rspecdata), 
+                        function(z) rspecdata[, z] - mean(rspecdata[, z]),
+                        numeric(nrow(rspecdata)))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
@@ -153,9 +161,9 @@ procspec <- function(rspecdata, opt = c(
     wl_bin <- seq(min(wl), by = bw, length.out = bins)
     wl_ind <- match(wl_bin, wl)
     rspecdata <- as.data.frame(rspecdata)
-    rspecdata <- sapply(1:length(wl_ind), function(z)
+    rspecdata <- vapply(1:length(wl_ind), function(z)
       apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = FALSE], 2, median, na.rm = TRUE),
-    simplify = FALSE
+    numeric(ncol(rspecdata))
     )
 
     rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = TRUE))

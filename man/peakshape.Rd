@@ -42,6 +42,7 @@ spectra using \code{\link{procspec}} is also recommended.
 }
 \examples{
 data(teal)
+
 peakshape(teal, select = 3)
 peakshape(teal, select = 10)
 

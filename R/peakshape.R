@@ -30,6 +30,7 @@
 #'
 #' @examples
 #' data(teal)
+#' 
 #' peakshape(teal, select = 3)
 #' peakshape(teal, select = 10)
 #'
@@ -40,10 +41,6 @@
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL,
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
-
-  # if (length(select) > 1)
-  #   par(mfrow=c(2,2)) else
-  #   par(mfrow=c(1,1))
 
   nms <- names(rspecdata)
 
@@ -75,17 +72,17 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   rspecdata <- as.data.frame(rspecdata[, select, drop = FALSE])
 
-
   wlrange <- lim[1]:lim[2]
-
 
   rspecdata2 <- rspecdata[(which(wl == lim[1])):(which(wl == lim[2])), , drop = FALSE] # working wl range
   Yi <- apply(rspecdata2, 2, max) # max refls
   Yj <- apply(rspecdata2, 2, min) # min refls
   Yk <- apply(rspecdata, 2, min) # min refls, whole spectrum
-  Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x] == Yi[x])) # lambda_max index
+  Xi <- vapply(1:ncol(rspecdata2), 
+               function(x) which(rspecdata2[, x] == Yi[x]), 
+               numeric(1)) # lambda_max index
   # CE edit: test if any wls have equal reflectance values
-  dblpeaks <- sapply(Xi, length)
+  dblpeaks <- vapply(Xi, length, numeric(1))
   dblpeak.nms <- nms[select][dblpeaks > 1]
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum

@@ -10,7 +10,7 @@ projplot(tcsdata, ...)
 projpoints(tcsdata, ...)
 }
 \arguments{
-\item{tcsdata}{(required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
+\item{tcsdata}{(required) tetrahedral color space coordinates, possibly a result from \code{\link{colspace}},
 containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).}
 
 \item{...}{additional parameters to be passed to the plotting of data points.}
@@ -23,7 +23,7 @@ to its encapsulating sphere, and is ideal to visualize differences in hue.
 produced by \code{projplot}.
 }
 \description{
-Produces a 2D projection plot of points in a color space
+Produces a 2D projection plot of points in a tetrahedral color space
 
 Adds points to a tetrahedral colorspace projection
 }
