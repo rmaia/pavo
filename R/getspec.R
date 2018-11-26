@@ -22,8 +22,6 @@
 #'  parallel processing (not available in Windows).
 #' @param ignore.case Logical. Should the extension search be case insensitive?
 #' (defaults to TRUE)
-#' @param fast deprecated argument. use \code{cores} for parallel processing
-#'  instead.
 #' @return A data frame, of class \code{rspec}, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
@@ -47,12 +45,7 @@
 
 getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
                     sep = NULL, subdir = FALSE, subdir.names = FALSE,
-                    cores = getOption("mc.cores", 2L), ignore.case = TRUE, fast) {
-
-  # check deprecated arguments
-  if (!missing(fast)) {
-    stop('argument "fast" is deprecated. see ?getspec for more information.', call. = FALSE)
-  }
+                    cores = getOption("mc.cores", 2L), ignore.case = TRUE) {
 
   # allow multiple extensions
   extension <- paste0("\\.", ext, "$", collapse = "|")

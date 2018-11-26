@@ -26,7 +26,6 @@
 #' the base of the tetrahedron.
 #' @param labels logical. Should the name of each cone be printed next to the
 #' corresponding vertex?
-#' @param view,scale.y,axis,grid deprecated arguments.
 #'
 #' @return \code{tetraplot} creates a 3D plot.
 #'
@@ -63,24 +62,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       range = c(1, 2), r = 1e6, zoom = 1,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-                      margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid, vertexsize, labels = FALSE, ...) {
-
-  # check deprecated arguments view, scale.y, axis, grid
-  if (!missing(view)) {
-    stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(scale.y)) {
-    stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(axis)) {
-    stop('argument "axis" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(grid)) {
-    stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(vertexsize)) {
-    stop('argument "vertexsize" is deprecated, please use "vert.cex" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
+                      margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...) {
 
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin

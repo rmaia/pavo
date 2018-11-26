@@ -6,7 +6,7 @@
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
   out.lty = 1, theta = 45, phi = 10, r = 1e+06, zoom = 1,
-  box = FALSE, margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...)
+  box = FALSE, margin = c(0, 0, 0, 0), ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{colspace}
@@ -37,8 +37,6 @@ when \code{space = 'cielab'}.}
 \item{margin}{vector of four numbers specifying drawing margins for CIELAB plot
 (defaults to c(0,0,0,0))}
 
-\item{view, }{scale.y, axis, grid deprecated arguments.}
-
 \item{...}{Additional graphical options. See \code{\link{par}}.}
 }
 \description{
@@ -52,7 +50,7 @@ vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRU
 xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 plot(xyz.flowers)
 
-#CIELAB
+# CIELAB
 lab.flowers <- colspace(vis.flowers, space = 'cielab')
 plot(lab.flowers)
 

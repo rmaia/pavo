@@ -11,6 +11,7 @@ features of `procimg()`.
 `projplot()`.
 * added the argument `labels.stack` to `plot.rspec`, which allows the use of 
 custom spectra labels in stacked plots.
+* all deprecated functions and arguments have now been fully removed.
 
 # pavo 2.0.0
 
