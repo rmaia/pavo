@@ -115,7 +115,9 @@ procspec <- function(rspecdata, opt = c(
         x
       }
     }
-    tempspc <- data.frame(vapply(1:ncol(rspecdata), function(z) adm(rspecdata[, z])), numeric(nrow(rspecdata)))
+    tempspc <- data.frame(vapply(1:ncol(rspecdata), 
+                                 function(z) adm(rspecdata[, z]), 
+                                 FUN.VALUE = numeric(nrow(rspecdata))))
     names(tempspc) <- names(rspecdata)
     rspecdata <- round(tempspc, 6)
     applied <- c(applied, "Negative value correction: added min to all reflectance\n")
