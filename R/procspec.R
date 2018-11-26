@@ -48,7 +48,7 @@
 #' plot(teal.sm, select = 10)
 #'
 #' # Normalize to max of unity
-#' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
+#' teal.max <- procspec(teal, opt = c('max'))
 #' plot(teal.max, select = 10)
 #'
 #' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
