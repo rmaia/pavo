@@ -59,7 +59,6 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
 
   # try to automatically find wavelength column. for increasing wavelengths,
   # expect a perfect correlation between lambda values and column indices
-  # ind <- sapply(1:ncol(object), function(x) {sd(diff(object[,x]))})
   ind <- apply(object, 2, function(x) {
     cor(x, 1:nrow(object))
   })

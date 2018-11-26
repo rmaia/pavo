@@ -43,7 +43,9 @@ Plots reflectance spectra in different arrangements.
 data(teal)
 plot(teal, type = 'overlay')
 plot(teal, type = 'stack')
-plot(teal, type = 'heatmap')}
+plot(teal, type = 'heatmap')
+
+}
 
 }
 \seealso{

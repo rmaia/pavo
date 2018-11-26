@@ -103,13 +103,13 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     c(".1", ".2")
   )
 
-  plims <- any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))
+  plims <- any(vapply(list(arg$xlim, arg$ylim, arg$zlim), is.null, logical(1)))
 
   # if no limits are given, estimate based on tetrahedron or tcsdataa limits
   if (plims) {
 
     # first check if all xyzlim are null
-    if (!all(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))) {
+    if (!all(vapply(list(arg$xlim, arg$ylim, arg$zlim), is.null, logical(1)))) {
       stop('"xlim", "ylim" and "zlim" must either all be NULL or all be vectors of length 2', call. = FALSE)
     }
 

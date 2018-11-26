@@ -149,13 +149,13 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
 
     sindex <- 1:dim(samples)[1]
 
-    newvol1 <- sapply(sindex, function(x) convhulln(rbind(dat1, samples[x, ]), "FA")$vol)
-    newvol2 <- sapply(sindex, function(x) convhulln(rbind(dat2, samples[x, ]), "FA")$vol)
+    newvol1 <- vapply(sindex, function(x) convhulln(rbind(dat1, samples[x, ]), "FA")$vol, numeric(1))
+    newvol2 <- vapply(sindex, function(x) convhulln(rbind(dat2, samples[x, ]), "FA")$vol, numeric(1))
 
     # points that are within each volume
 
-    invol1 <- sapply(newvol1, function(x) isTRUE(x <= vol1))
-    invol2 <- sapply(newvol2, function(x) isTRUE(x <= vol2))
+    invol1 <- vapply(newvol1, function(x) isTRUE(x <= vol1), logical(1))
+    invol2 <- vapply(newvol2, function(x) isTRUE(x <= vol2), logical(1))
 
     # how many points are in each category
 

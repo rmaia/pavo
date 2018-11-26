@@ -412,7 +412,7 @@ coldist <- function(modeldata,
     qcatch <- attr(modeldata, "qcatch")
     ncone <- as.character(attr(modeldata, "conenumb"))
 
-    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
+    dat <- as.matrix(modeldata[, vapply(modeldata, is.numeric, logical(1))])
 
     if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
       # transform or stop if Qi not appropriate

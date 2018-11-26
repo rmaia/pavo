@@ -28,7 +28,7 @@ Applies the fly categorical colour vision model of Troje (1993)
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
+vis.flowers <- vismodel(flowers, visual = 'musca', achromatic = 'md.r1')
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
 
 }

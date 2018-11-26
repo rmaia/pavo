@@ -319,18 +319,20 @@ coldist(vismod1, subset = 'cardinal')
 coldist(vismod1, subset = c('cardinal', 'jacana'))
 
 ## ------------------------------------------------------------------------
-fakedata1 <- sapply(
+fakedata1 <- vapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
       dnorm(300:700, x, 30),
       dnorm(300:700, x + 400, 30)
-    ))
+    )),
+    numeric(401)
 )
 
 # Creating idealized specs with varying saturation
-fakedata2 <- sapply(
+fakedata2 <- vapply(
   c(500, 300, 150, 105, 75, 55, 40, 30),
-  function(x) dnorm(300:700, 550, x)
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
 )
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
@@ -471,18 +473,19 @@ head(cat.flowers)
 plot(cat.flowers, pch = 21, bg = spec2rgb(flowers))
 
 ## ---- fig=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"----
-fakedata1 <- sapply(
+fakedata1 <- vapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
       dnorm(300:700, x, 30),
       dnorm(300:700, x + 400, 30)
-    ))
+    )), numeric(401)
 )
 
 # creating idealized specs with varying saturation
-fakedata2 <- sapply(
+fakedata2 <- vapply(
   c(500, 300, 150, 105, 75, 55, 40, 30),
-  function(x) dnorm(300:700, 550, x)
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
 )
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))

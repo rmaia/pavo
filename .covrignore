@@ -3,8 +3,10 @@ R/catplot.R
 R/cieplot.R
 R/cocplot.R
 R/diplot.R
+R/explorespec.R
 R/hexplot.R
 R/jndplot.R
+R/legendtetra.R
 R/plot.rspec.R
 R/plot.rimg.R
 R/plot.colspace.R

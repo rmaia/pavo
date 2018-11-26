@@ -35,8 +35,7 @@ spec2rgb <- function(rspecdata, alpha = 1) {
     stop("No wavelengths supplied; no default")
   }
 
-  # this should be changed later (interpolate?)
-
+  # This should be changed later (interpolate?)
   if (min(wl) > 400 | max(wl) < 700) {
     stop("wavelength range does not capture the full visible range (400 to 700)")
   }
@@ -46,14 +45,11 @@ spec2rgb <- function(rspecdata, alpha = 1) {
   names_rspecdata <- names(rspecdata)
   rspecdata <- as.matrix(rspecdata)
 
-  # TEMP: cie2 or cie10?
-  # sens <- ciexyz[,1:4] #cie2
+  # Note: cie2 or cie10?
   sens <- ciexyz[, c(1, 5:7)] # cie10
 
   sens <- as.matrix(sens[match(wl, sens$wl), ])
 
-  # P2 <- sapply(1:ncol(rspecdata), function(x) rspecdata[, x] / sum(rspecdata[, x]))  # normalize to sum of 1
-  # P2 <- rspecdata
   P2 <- rspecdata / 100 # scale to proportion of incident light
 
   # Convolute

@@ -29,7 +29,9 @@
 #' data(teal)
 #' plot(teal, type = 'overlay')
 #' plot(teal, type = 'stack')
-#' plot(teal, type = 'heatmap')}
+#' plot(teal, type = 'heatmap')
+#' 
+#' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -108,12 +110,14 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
 
     Index <- approx(varying, n = n)$y
-    dat <- sapply(1:nrow(x), function(z) {
+    
+    dat <- vapply(1:nrow(x), function(z) {
       approx(
-        x = varying, y = x[z, ],
+        x = varying, 
+        y = x[z, ],
         n = n
       )$y
-    })
+    }, numeric(length(Index)))
 
     arg$x <- wl
     arg$y <- Index

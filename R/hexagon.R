@@ -108,9 +108,9 @@ hexagon <- function(vismodeldata) {
 
   # colorimetrics
   r.vec <- sqrt(x^2 + y^2)
-  h.theta <- sapply(1:length(x), function(i) angle360(x[i], y[i]))
+  h.theta <- vapply(1:length(x), function(i) angle360(x[i], y[i]), numeric(1))
   sec.fine <- round(floor(h.theta / 10), 0) * 10
-  sec.coarse <- sapply(1:length(x), function(x) coarse_sec(h.theta[x]))
+  sec.coarse <- vapply(1:length(x), function(x) coarse_sec(h.theta[x]), character(1))
 
   res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
   # res.p <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))

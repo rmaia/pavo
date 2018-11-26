@@ -15,7 +15,7 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
+#' vis.flowers <- vismodel(flowers, visual = 'musca', achromatic = 'md.r1')
 #' cat.flowers <- colspace(vis.flowers, space = 'categorical')
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -112,7 +112,7 @@ categorical <- function(vismodeldata) {
 
   res.p <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
 
-  res.p$category <- sapply(1:nrow(res.p), function(x) colcat(res.p[x, ]))
+  res.p$category <- vapply(1:nrow(res.p), function(x) colcat(res.p[x, ]), character(1))
   res.p$r.vec <- sqrt(res.p$x^2 + res.p$y^2)
 
   res <- res.p

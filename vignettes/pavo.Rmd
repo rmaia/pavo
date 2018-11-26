@@ -665,18 +665,20 @@ coldist(vismod1, subset = c('cardinal', 'jacana'))
 You can convert distances in JND back to Cartesian position coordinates with the function `jnd2xyz`. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:
 
 ```{r}
-fakedata1 <- sapply(
+fakedata1 <- vapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
       dnorm(300:700, x, 30),
       dnorm(300:700, x + 400, 30)
-    ))
+    )),
+    numeric(401)
 )
 
 # Creating idealized specs with varying saturation
-fakedata2 <- sapply(
+fakedata2 <- vapply(
   c(500, 300, 150, 105, 75, 55, 40, 30),
-  function(x) dnorm(300:700, 550, x)
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
 )
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
@@ -1018,18 +1020,19 @@ Where $Qi$ represent the interquantile distances (e.g. $Q1=ultraviolet$, $Q2=blu
 The segment classification model is obtained through the `colspace()` argument `space = 'segment'`, following initial modelling with `vismodel()`. The example below uses idealized reflectance spectra to illustrate how the avian colour space defined from the segment classification maps to the human colour wheel:
 
 ```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"}
-fakedata1 <- sapply(
+fakedata1 <- vapply(
   seq(100, 500, by = 20),
   function(x) rowSums(cbind(
       dnorm(300:700, x, 30),
       dnorm(300:700, x + 400, 30)
-    ))
+    )), numeric(401)
 )
 
 # creating idealized specs with varying saturation
-fakedata2 <- sapply(
+fakedata2 <- vapply(
   c(500, 300, 150, 105, 75, 55, 40, 30),
-  function(x) dnorm(300:700, 550, x)
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
 )
 
 fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
