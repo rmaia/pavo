@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason" />
 
-<meta name="date" content="2018-11-26" />
+<meta name="date" content="2018-11-27" />
 
 <title>pavo</title>
 
@@ -278,7 +278,7 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">pavo</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</em></h4>
-<h4 class="date"><em>2018-11-26</em></h4>
+<h4 class="date"><em>2018-11-27</em></h4>
 
 
 <div id="TOC">
@@ -397,8 +397,8 @@ A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of
 <div id="importing" class="section level2">
 <h2>Importing</h2>
 <p>The first thing we need to do is import spectral data into R using the function <code>getspec()</code>. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the <code>.ttt</code> extension. Further, the data is organized in subdirectories for each species. <code>getspec</code> will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. <code>getspec</code> also uses parallel processing when the argument <code>cores</code> is set to a number greater than <code>1</code> (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.</p>
-<p>If, for example, the raw spectral files were downloaded and placed in a directory called <code>/pavo/vignette_data</code>, you might execute the following command and see this output:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">specs &lt;-<span class="st"> </span><span class="kw">getspec</span>(<span class="st">&quot;~/pavo/vignette_data/&quot;</span>, <span class="dt">ext =</span> <span class="st">&quot;ttt&quot;</span>, <span class="dt">decimal =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">subdir =</span> <span class="ot">TRUE</span>, <span class="dt">subdir.names =</span> <span class="ot">FALSE</span>)</a>
+<p>If, for example, the raw spectral files were downloaded and placed in a directory called <code>/pavo/data_external/vignette</code>, you might execute the following command and see this output:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">specs &lt;-<span class="st"> </span><span class="kw">getspec</span>(<span class="st">&quot;~/pavo/data_external/vignette&quot;</span>, <span class="dt">ext =</span> <span class="st">&quot;ttt&quot;</span>, <span class="dt">decimal =</span> <span class="st">&quot;,&quot;</span>, <span class="dt">subdir =</span> <span class="ot">TRUE</span>, <span class="dt">subdir.names =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="co"># 213  files found; importing spectra</span></a>
 <a class="sourceLine" id="cb2-3" data-line-number="3"><span class="co"># |================================================================================| 100%, ETA 00:00</span></a></code></pre></div>
 <p>For convenience, however, we’ve included the spectra as an RData file in the package installation, and so will simply load it directly.</p>
@@ -2087,9 +2087,8 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 <a class="sourceLine" id="cb234-2" data-line-number="2">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, <span class="dt">kcols =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</a></code></pre></div>
 <pre><code>## Image classification in progress...</code></pre>
 <div class="sourceCode" id="cb236"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb236-1" data-line-number="1"><span class="co"># Automatic classification using a reference image</span></a>
-<a class="sourceLine" id="cb236-2" data-line-number="2">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, , <span class="dt">refID =</span> <span class="dv">1</span>, <span class="dt">kcols =</span> <span class="kw">c</span>(<span class="dv">4</span>, <span class="dv">3</span>))</a></code></pre></div>
-<pre><code>## Cannot use reference image when kcols varies between images. Ignoring refID.
-## Image classification in progress...</code></pre>
+<a class="sourceLine" id="cb236-2" data-line-number="2">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, <span class="dt">refID =</span> <span class="dv">1</span>, <span class="dt">kcols =</span> <span class="dv">3</span>)</a></code></pre></div>
+<pre><code>## Image classification in progress...</code></pre>
 <div class="sourceCode" id="cb238"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb238-1" data-line-number="1"><span class="co"># Classification using interactively-specified centres for each image, with no</span></a>
 <a class="sourceLine" id="cb238-2" data-line-number="2"><span class="co"># need to specify kcols (since it will be inferred from the numbers of colours selected)</span></a>
 <a class="sourceLine" id="cb238-3" data-line-number="3">butterflies_class &lt;-<span class="st"> </span><span class="kw">classify</span>(butterflies, <span class="dt">interactive =</span> <span class="ot">TRUE</span>)</a>
@@ -2114,30 +2113,24 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>
-<pre><code>##             k     N n_off       p_1       p_2       p_3        p_4
-## h_melpomene 4 54064  5106 0.0406250 0.3409926 0.5833456 0.03503676
-## papilio     3 63241  4387 0.2390566 0.5607233 0.2002201         NA
-##                  q_1_1      q_1_2     q_2_2       q_2_3     q_3_3
-## h_melpomene 0.02683856 0.01827464 0.3073025 0.018644569 0.5649231
-## papilio     0.20918392 0.01283977 0.5483942 0.007163075 0.1730523
-##                   q_1_4      q_2_4     q_3_4       q_4_4     t_1_2
-## h_melpomene 0.009803196 0.03469962 0.0130216 0.006492305 0.1934978
-## papilio              NA         NA        NA          NA 0.1850923
-##                 t_2_3     t_1_4     t_2_4    t_3_4      q_1_3     t_1_3
-## h_melpomene 0.1974148 0.1037995 0.3674109 0.137877         NA        NA
-## papilio     0.1032596        NA        NA       NA 0.04936671 0.7116481
-##                      m        m_r        m_c        A       Sc       St
-## h_melpomene 0.09386029 0.08768382 0.10003676 0.876516 2.176534 4.146123
-## papilio     0.06894056 0.07836478 0.05951633 1.316694 2.429267 1.813682
-##                    Jc        Jt         B        Rt Rab m_dS s_dS cv_dS
-## h_melpomene 0.5441336 0.6910205 0.9267528 0.5883616   1   NA   NA    NA
-## papilio     0.8097558 0.6045606 0.1253704 0.5513647   1   NA   NA    NA
-##             m_dL s_dL cv_dL m_hue s_hue var_hue m_sat s_sat cv_sat m_lum
-## h_melpomene   NA   NA    NA    NA    NA      NA    NA    NA     NA    NA
-## papilio       NA   NA    NA    NA    NA      NA    NA    NA     NA    NA
-##             s_lum cv_lum
-## h_melpomene    NA     NA
-## papilio        NA     NA</code></pre>
+<pre><code>##             k     N n_off       p_1        p_2       p_3     q_1_1
+## h_melpomene 3 54064  4106 0.5833824 0.06496324 0.3516544 0.5649600
+## papilio     3 63241  4387 0.5607233 0.20022013 0.2390566 0.5483942
+##                   q_1_2      q_2_2      q_1_3      q_2_3     q_3_3
+## h_melpomene 0.010728026 0.03786253 0.02093815 0.04428085 0.3212304
+## papilio     0.007163075 0.17305229 0.01283977 0.04936671 0.2091839
+##                 t_1_2     t_1_3     t_2_3          m        m_r        m_c
+## h_melpomene 0.1412567 0.2756941 0.5830492 0.07547794 0.06933824 0.08161765
+## papilio     0.1032596 0.1850923 0.7116481 0.06894056 0.07836478 0.05951633
+##                     A       Sc       St        Jc        Jt         B
+## h_melpomene 0.8495495 2.135766 2.294067 0.7119221 0.7646890 0.7433025
+## papilio     1.3166937 2.429267 1.813682 0.8097558 0.6045606 0.8527468
+##                    Rt Rab m_dS s_dS cv_dS m_dL s_dL cv_dL m_hue s_hue
+## h_melpomene 0.4359071   1   NA   NA    NA   NA   NA    NA    NA    NA
+## papilio     0.5513647   1   NA   NA    NA   NA   NA    NA    NA    NA
+##             var_hue m_sat s_sat cv_sat m_lum s_lum cv_lum
+## h_melpomene      NA    NA    NA     NA    NA    NA     NA
+## papilio          NA    NA    NA     NA    NA    NA     NA</code></pre>
 <p>The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function’s help file (<code>?adjacent</code>) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is <code>NA</code>, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give <code>adjacent</code> enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.</p>
 <div class="sourceCode" id="cb243"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb243-1" data-line-number="1"><span class="co"># Create a fake matrix of pairwise colour- and luminance distances between all</span></a>
 <a class="sourceLine" id="cb243-2" data-line-number="2"><span class="co"># colour patten elements, as might be attained through visual modelling of spectral data.</span></a>
@@ -2169,35 +2162,25 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 <a class="sourceLine" id="cb247-2" data-line-number="2"><span class="co"># of our two images, for convenience (though this could be readily extended to</span></a>
 <a class="sourceLine" id="cb247-3" data-line-number="3"><span class="co"># include a list of images along with a list of distances and hsl values)</span></a>
 <a class="sourceLine" id="cb247-4" data-line-number="4"><span class="kw">adjacent</span>(butterflies_class[[<span class="dv">2</span>]], <span class="dt">xscale =</span> <span class="dv">200</span>, <span class="dt">xpts =</span> <span class="dv">200</span>, <span class="dt">bkgID =</span> <span class="dv">1</span>, <span class="dt">coldists =</span> distances, <span class="dt">hsl =</span> hsl_vals)</a></code></pre></div>
-<pre><code>## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'
-
-## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'
-
-## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'
-
-## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'
-
-## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'
-
-## Warning in seq.default(along = x): partial argument match of 'along' to
-## 'along.with'</code></pre>
-<pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1      q_1_2
-## papilio 3 63241  4387 0.2390566 0.5607233 0.2002201 0.2091839 0.01283977
-##             q_2_2      q_1_3       q_2_3     q_3_3     t_1_2     t_1_3
-## papilio 0.5483942 0.04936671 0.007163075 0.1730523 0.1850923 0.7116481
+<pre><code>## Using single set of coldists for all images.</code></pre>
+<pre><code>## Using single set of hsl values for all images.</code></pre>
+<pre><code>## 
+  |                                                             
+  |                                                       |   0%, ETA NA
+  |                                                             
+  |=======================================================| 100%, ETA 00:00</code></pre>
+<pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1       q_1_2
+## papilio 3 63241  4387 0.5607233 0.2002201 0.2390566 0.5483942 0.007163075
+##             q_2_2      q_1_3      q_2_3     q_3_3     t_1_2     t_1_3
+## papilio 0.1730523 0.01283977 0.04936671 0.2091839 0.1032596 0.1850923
 ##             t_2_3          m        m_r        m_c        A       Sc
-## papilio 0.1032596 0.06894056 0.07836478 0.05951633 1.316694 2.429267
+## papilio 0.7116481 0.06894056 0.07836478 0.05951633 1.316694 2.429267
 ##               St        Jc        Jt         B        Rt Rab     m_dS
-## papilio 1.813682 0.8097558 0.6045606 0.1253704 0.5513647   1 6.045726
-##             s_dS     cv_dS     m_dL      s_dL     cv_dL    m_hue     s_hue
-## papilio 3.255664 0.5385067 2.313152 0.9184739 0.3970658 1.663715 0.4154308
-##           var_hue    m_sat    s_sat   cv_sat    m_lum   s_lum    cv_lum
-## papilio 0.0826731 2.714881 2.666422 0.982151 6.595723 2.68164 0.4065726</code></pre>
+## papilio 1.813682 0.8097558 0.6045606 0.8527468 0.5513647   1 5.169774
+##             s_dS     cv_dS    m_dL      s_dL     cv_dL    m_hue     s_hue
+## papilio 2.780084 0.5377573 2.85359 0.9745272 0.3415092 1.663715 0.4154308
+##           var_hue   m_sat    s_sat    cv_sat   m_lum   s_lum  cv_lum
+## papilio 0.0826731 3.68883 2.255009 0.6113073 8.28173 2.67326 0.32279</code></pre>
 </div>
 </div>
 <div id="classes-and-attributes" class="section level1">

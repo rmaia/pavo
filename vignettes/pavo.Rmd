@@ -1196,7 +1196,7 @@ There are other options available, which may be of particular use when the class
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 # Automatic classification using a reference image
-butterflies_class <- classify(butterflies, , refID = 1, kcols = c(4, 3))
+butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
 ```
 
 ```{r, eval = FALSE}

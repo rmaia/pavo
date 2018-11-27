@@ -94,12 +94,16 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     }
     kcols <- parse_kcols(kcols, imgdat)
   }
+  
+  ## If it's a single image, store it in a list for processing convenience,
+  ## before converting it back at the end
+  if(!multi_image)
+    imgdat <- list(imgdat)
 
   ## ------------------------------ Main ------------------------------ ##
 
   #### So your options/configurations for classification are:
-  #
-  ## Multiple images ##
+  
   # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
   #       (length(kcols) > 1 && interactive == FALSE)
   # (2) Single k (or multiple identical k), with a reference image.
@@ -110,15 +114,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   #       (!is.null(refID) && interactive == TRUE)
   # (5) Multiple k (identical or not, don't need to be specified), with interactively-specified centres for each image.
   #       (is.null(refID) && interactive == TRUE)
-  #
-  ## Single image ##
-  # (1) Single k
-  #      (length(kcols) == 1)
-  # (2) Single k, with interactive centre
-  #      (interactive == TRUE)
 
-  ## Multiple images  ##
-  if (multi_image) {
     imgsize <- format(object.size(imgdat), units = "Mb")
 
     ## (1) Multiple k, no reference image ##
@@ -256,73 +252,14 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         attr(outdata[[i]], "k") <- kcols
       }
     }
-    class(outdata) <- c("rimg", "list")
+    
+    if(multi_image)
+      class(outdata) <- c("rimg", "list")
+    else
+      outdata <- outdata[[1]]
+      
+    outdata
   }
-
-  ## Single image ##
-  if (!multi_image) {
-    if (interactive) {
-      # Reference (only present) image
-      refimg <- imgdat
-
-      i <- 1
-      while (i <= 1) {
-        if (plotnew) dev.new(noRStudioGD = TRUE)
-
-        plot(refimg, ...)
-
-        if (!is.null(kcols)) {
-          message(paste("Select the", kcols, "focal colours."))
-          reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
-        } else if (is.null(kcols)) {
-          message(paste("Select the focal colours, and press [esc] to continue."))
-          reference <- as.data.frame(locator(type = "p", col = col))
-        }
-        if (plotnew) dev.off()
-
-        ref_centers <- try(do.call(rbind, lapply(
-          seq_len(nrow(reference)),
-          function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))
-        )),
-        silent = TRUE
-        )
-
-        # Error controls
-        if (class(ref_centers) == "try-error") {
-          message("One or more coorodinates out-of bounds. Select again.")
-          i <- i
-        } else if (any(duplicated(ref_centers))) {
-          message("Duplicate colours specified. Select again.")
-          i <- i
-        } else {
-          names(ref_centers) <- c("R", "G", "B")
-          i <- i + 1
-        }
-      }
-
-      message("Image classification in progress...")
-      outdata <- classify_main(imgdat, ref_centers)
-    } else {
-      message("Image classification in progress...")
-      outdata <- classify_main(imgdat, kcols)
-    }
-    if (!is.null(kcols)) {
-      attr(outdata, "k") <- kcols
-    } else if (is.null(kcols)) {
-      attr(outdata, "k") <- nrow(reference)
-    }
-    if (interactive) {
-      attr(outdata, "tag_loc") <- reference
-    }
-    attr(outdata, "imgname") <- attr(imgdat, "imgname")
-    attr(outdata, "outline") <- attr(imgdat, "outline")
-    attr(outdata, "px_scale") <- attr(imgdat, "px_scale")
-    attr(outdata, "raw_scale") <- attr(imgdat, "raw_scale")
-    attr(outdata, "state") <- "colclass"
-  }
-
-  outdata
-}
 
 # Main function for identifying colour classes in an image for adjacency analyses
 classify_main <- function(imgdat_i, n_cols_i) {

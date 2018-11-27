@@ -15,7 +15,7 @@ library(pavo)
 set.seed(1612217)
 
 ## ---- echo=TRUE, eval=FALSE, results='hide', include=TRUE----------------
-#  specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+#  specs <- getspec("~/pavo/data_external/vignette", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 #  # 213  files found; importing spectra
 #  # |================================================================================| 100%, ETA 00:00
 
@@ -589,7 +589,7 @@ summary(butterflies_class[[2]], plot = TRUE)
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 # Automatic classification using a reference image
-butterflies_class <- classify(butterflies, , refID = 1, kcols = c(4, 3))
+butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
 
 ## ---- eval = FALSE-------------------------------------------------------
 #  # Classification using interactively-specified centres for each image, with no

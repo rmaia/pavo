@@ -45,7 +45,7 @@ using \code{\link{procimg}}, or the argument \code{polygon}.
 
 \item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
-should be named 'c1' and 'c2', and specify all possible combinations of numeric 
+should be named 'c1' and 'c2', and specify all possible combinations of numeric
 colour-class ID's (viewable by calling \code{summary(image, plot = TRUE)} on
 a colour classified image), with the remaining columns named dS (for chromatic distances)
 and/or dL (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
@@ -78,29 +78,29 @@ a data frame of summary variables:
   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
     in user-specified units.
   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
-  \item \code{'Sc'}: Simpson colour class diversity, \code{Sc = 1/(sum(p_i^2))}. If 
-  all colour and luminance classes are equal in relative area, then \code{Sc = k}.  
+  \item \code{'Sc'}: Simpson colour class diversity, \code{Sc = 1/(sum(p_i^2))}. If
+  all colour and luminance classes are equal in relative area, then \code{Sc = k}.
   \item \code{'St'}: Simpson transition diversity, \code{St = 1/sum(t_i_j^2)}.
   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
   \code{Jc = Sc/k}.
   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
   \code{Jt = St/(k*(k-1)/2)}.
-  \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change 
-  transitions entirely within the focal object and those involving the object and background, 
+  \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change
+  transitions entirely within the focal object and those involving the object and background,
   \code{B = sum(O_a_a / O_a_b)}.
   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
   \code{Rt = St_a_a / St_a_b}.
   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
   \code{Rt = St_a_a / St_b_b}.
-  \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of 
+  \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of
   variation of the chromatic boundary strength.
-  \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of 
+  \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of
   variation of the achromatic boundary strength.
-  \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of 
+  \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of
   overall pattern hue (in radians).
-  \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient 
+  \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient
   variation of overall pattern saturation.
-  \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient 
+  \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient
   variation of overall pattern luminance.
   }
 }
@@ -121,20 +121,10 @@ papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
 # Single image, with (fake) color distances and hsl values
 # Fake color distances
-distances <- data.frame(c1 = c(1, 1, 1, 2, 2, 3),
-                        c2 = c(2, 3, 4, 3, 4, 4),
-                        dS = c(5.3, 3.5, 5.7, 2.9, 6.1, 3.2),
-                        dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
 
 # Fake hue, saturation, luminance values
-hsl_vals <- data.frame(patch = seq_len(4),
-                       hue = c(1.5, 2.2, 1.0, 0.5),
-                       lum = c(10, 5, 7, 3),
-                       sat = c(3.5, 1.1, 6.3, 1.3))
 
 # Full analysis, including the white background's ID
-papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
-                        coldists = distances, hsl = hsl_vals)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))

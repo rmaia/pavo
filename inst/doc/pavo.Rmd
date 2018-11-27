@@ -75,10 +75,10 @@ In addition, `pavo` includes three datasets that can be called with the `data` f
 
 The first thing we need to do is import spectral data into R using the function `getspec()`. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec` also uses parallel processing when the argument `cores` is set to a number greater than `1` (currently available only on Linux and Mac). A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
-If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/vignette_data`, you might execute the following command and see this output:
+If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/data_external/vignette`, you might execute the following command and see this output:
 
 ```{r, echo=TRUE, eval=FALSE, results='hide', include=TRUE}
-specs <- getspec("~/pavo/vignette_data/", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
+specs <- getspec("~/pavo/data_external/vignette", ext = "ttt", decimal = ",", subdir = TRUE, subdir.names = FALSE)
 # 213  files found; importing spectra
 # |================================================================================| 100%, ETA 00:00
 ```
@@ -1196,7 +1196,7 @@ There are other options available, which may be of particular use when the class
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
 # Automatic classification using a reference image
-butterflies_class <- classify(butterflies, , refID = 1, kcols = c(4, 3))
+butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
 ```
 
 ```{r, eval = FALSE}
