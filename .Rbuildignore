@@ -2,6 +2,7 @@ revdep/
 webvignette/
 examplespec/
 ms_data/
+data_external/
 manuscript/
 R_temp/
 references/

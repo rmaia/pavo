@@ -1,7 +1,0 @@
-plot(getspec('github/pavo/examplespec', ext='ttt'))
-plot(getspec('github/pavo/examplespec', ext='txt'))
-plot(getspec('github/pavo/examplespec', ext='IRR'))
-plot(getspec('github/pavo/examplespec', ext='Master.Transmission'))
-plot(getspec('github/pavo/examplespec', ext='JazIrrad'))
-plot(getspec('github/pavo/examplespec', ext='jaz'))
-plot(getspec('github/pavo/examplespec', ext='txt', subdir=))
