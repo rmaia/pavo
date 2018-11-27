@@ -37,7 +37,6 @@
 #' @importFrom stats kmeans
 #' @importFrom utils object.size
 #' @importFrom grDevices dev.new
-#' @importFrom tools file_path_sans_ext
 #'
 #' @note Since the \code{kmeans} process draws on random numbers to find initial
 #' cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproducible
@@ -86,54 +85,14 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     cores <- 1
   }
 
-  ## k structure
+  ## kcols
   if (!is.null(kcols)) {
-
-    # If kcols is a 2-col data frame/matrix
-    if (!is.vector(kcols)) {
-
-      # TODO more safety
-      if (ncol(kcols) > 2) {
-        warning("More than two columns included in kcols. Taking the first two columns only.")
-        kcols <- as.data.frame(kcols[, 1:2])
-      }
-
-      # Identify the name of the column containing file names
-      id_col <- names(kcols[lapply(kcols, class) != "numeric"])
-
-      # Remove file extensions if present
-      kcols[[id_col]] <- file_path_sans_ext(kcols[[id_col]])
-
-      # Extract image names from image data
-      imageIDs <- data.frame(
-        names = unlist(lapply(
-          imgdat,
-          function(x) attr(x, "imgname")
-        )),
-        stringsAsFactors = FALSE
-      )
-
-      # Reorder user-supplied kcols to match order of images
-      kcols <- kcols[match(imageIDs[, 1], kcols[[id_col]]), ]
-
-      # Extract kcols
-      kcols <- as.numeric(unlist(kcols[lapply(kcols, class) == "numeric"]))
+    # Can't have a reference image when k's vary
+    if (length(unique(kcols)) > 1 && !is.null(refID)) {
+      message("Cannot use reference image when kcols varies between images. Ignoring refID.")
+      refID <- NULL
     }
-    if (length(kcols) > 1) {
-      # Must have k's for each image
-      if (length(kcols) < length(imgdat)) {
-        stop("When supplying more than one value, the length of kcols must equal the number of images.")
-      }
-      # Reduce to single integer if multiple k's are all the same
-      if (length(unique(kcols)) == 1) {
-        kcols <- kcols[1]
-      }
-      # Can't have a reference image when k's vary
-      if (length(unique(kcols)) > 1 && !is.null(refID)) {
-        message("Cannot use reference image when kcols varies between images. Ignoring refID.")
-        refID <- NULL
-      }
-    }
+    kcols <- parse_kcols(kcols, imgdat)
   }
 
   ## ------------------------------ Main ------------------------------ ##
@@ -392,9 +351,56 @@ classify_main <- function(imgdat_i, n_cols_i) {
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
-  #attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
+  # attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
   attr(outmat, "colnames") <- data.frame(name = seq_len(nrow(kMeans$centers)))
   attr(outmat, "tag_loc") <- NA
 
   outmat
+}
+
+## k structure parser
+#' @importFrom tools file_path_sans_ext
+parse_kcols <- function(kcols_i, imgdat_i) {
+
+  # If kcols is a 2-col data frame/matrix
+  if (!is.vector(kcols_i)) {
+
+    # TODO more safety
+    if (ncol(kcols_i) > 2) {
+      warning("More than two columns included in kcols. Taking the first two columns only.")
+      kcols_i <- as.data.frame(kcols_i[, 1:2])
+    }
+
+    # Identify the name of the column containing file names
+    id_col <- names(kcols_i[lapply(kcols_i, class) != "numeric"])
+
+    # Remove file extensions if present
+    kcols_i[[id_col]] <- file_path_sans_ext(kcols_i[[id_col]])
+
+    # Extract image names from image data
+    imageIDs <- data.frame(
+      names = unlist(lapply(
+        imgdat_i,
+        function(x) attr(x, "imgname")
+      )),
+      stringsAsFactors = FALSE
+    )
+
+    # Reorder user-supplied kcols to match order of images
+    kcols_i <- kcols_i[match(imageIDs[, 1], kcols_i[[id_col]]), ]
+
+    # Extract kcols
+    kcols_i <- as.numeric(unlist(kcols_i[lapply(kcols_i, class) == "numeric"]))
+  }
+  if (length(kcols_i) > 1) {
+    # Must have k's for each image
+    if (length(kcols_i) < length(imgdat_i)) {
+      stop("When supplying more than one value, the length of kcols must equal the number of images.")
+    }
+    # Reduce to single integer if multiple k's are all the same
+    if (length(unique(kcols_i)) == 1) {
+      kcols_i <- kcols_i[1]
+    }
+  }
+  kcols_i
 }

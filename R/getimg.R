@@ -111,7 +111,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
 ## Grab images
 #' @importFrom readbitmap read.bitmap
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 grabimg <- function(file) {
   bmp <- read.bitmap(file)
   if (!is.null(attr(bmp, "header"))) {
@@ -129,7 +128,7 @@ grabimg <- function(file) {
   bmp
 }
 
-# Rotate matrices 90-degrees
+## Rotate matrices 90-degrees
 rot90 <- function(x) {
   permVec <- c(2, 1, 3:length(dim(x)))
   rotA <- aperm(x, permVec)
@@ -137,7 +136,7 @@ rot90 <- function(x) {
   rotA
 }
 
-# Mirror matrices about x axis
+## Mirror matrices about x axis
 mirrorx <- function(x) {
   if (length(dim(x)) == 3) {
     for (i in seq_len(dim(x)[3])) {
