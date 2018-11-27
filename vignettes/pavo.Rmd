@@ -65,7 +65,7 @@ set.seed(1612217)
 
 ## Spectral Dataset Description
 
-The raw spectral data used in this example are available from the package reporitory on [github](http://github.com), located [here](https://github.com/rmaia/pavo/blob/master/vignette_data). You can download and extract it to follow the vignette exactly. Alternately, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
+The raw spectral data used in this example are available from the package reporitory on [github](http://github.com), located [here](https://github.com/rmaia/pavo/blob/master/data_external/vignette). You can download and extract it to follow the vignette exactly. Alternately, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
@@ -614,7 +614,7 @@ $$w_i = \sqrt{\frac{v_i^2}{\sqrt{n_i}} + \frac{2}{Q_a+Q_b}}$$
 
 where $a$ and $b$ refer to the two colour signals being compared. Note that when the values of $Q_a$ and $Q_b$ are very high, the second portion of the equation tends to zero, and the both formulas should yield similar results. Hence, it is important that the quantum catch are calculated in the appropriate illuminant scale, as described above.
 
-colour distances are obtained by weighting the Euclidean distance of the photoreceptor quantum catches by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just Noticeable Differences (JNDs), where distances over a certain threshold (usually 1) are considered to be discernible under the conditions considered (e.g., backgrounds, illumination). The equations used in these calculations are:
+Colour distances are obtained by weighting the Euclidean distance of the photoreceptor quantum catches by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just Noticeable Differences (JNDs), where distances over a certain threshold (usually 1) are considered to be discernible under the conditions considered (e.g., backgrounds, illumination). The equations used in these calculations are:
 
 For dichromats:
 $$\Delta S = \sqrt{\frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}}$$
