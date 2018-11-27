@@ -548,7 +548,7 @@ To quantify the stimulation of cones by the emitted colour, we will use the `pav
   * `Qi`: The receptor quantum catches, calculated for receptor $i$ as:
     $$Q_i = \int_\lambda{R_i(\lambda)S(\lambda)I(\lambda)d\lambda}$$
     Where $\lambda$ denotes the wavelength, $R_i(\lambda)$ the spectral sensitivity of receptor $i$, $S(\lambda)$ the reflectance spectrum of the colour, and $I(\lambda)$ the illuminant spectrum.
-  * `fi`: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch i.e. $f_i = ln(Q_i)$
+  * `fi`: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch i.e. $f_i = \ln(Q_i)$
   * `Ei`: the hyperbolic transform (a simplification of the Michaelis–Menton photoreceptor equation), where $$E_i = \frac{Q_i}{Q_i + 1}$$.
 - `bkg`: The background being considered. By default, it considers an idealized background (i.e. wavelength-independent influence of the background on colour). A vector of same length as the wavelength range being considered can also be used as the input.
 - `vonkries`: a logical argument which determines if the von Kries transformation (which normalizes receptor quantum catches to the background, thus accounting for receptor adaptation) is to be applied (defaults to `FALSE`). If `TRUE`, $Q_i$ is multiplied by a constant $k$, which describes the von Kries transformation: $$k_i = \frac{1}{\int_\lambda R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda}$$ Where $S^b$ denotes the reflectance spectra of the background.
@@ -903,13 +903,13 @@ plot(coc.flowers, pch = 21, bg = spec2rgb(flowers), yaxt = "n")
 
 The CIE (International Commission on Illumination) colourspaces are a suite of models of human colour vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space and its cylindrical CIE LCh transformation. Tristimulus values in XYZ space are calculated as:
 
-$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
-$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
-$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
+$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
+$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
 
 where _x_, _y_, and _z_ are the trichromatic colour matching functions for a 'standard colourimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
 
-$$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)d\lambda}}$$
+$$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)\,d\lambda}}$$
 
 and the chromaticity coordinates of stimuli are calculated as
 
@@ -958,9 +958,9 @@ $$
 
 Here, $X_n, Y_n, Z_n$ are neutral point values to model visual adaptation, calculated as:
 
-$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)d\lambda}$$
-$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)d\lambda}$$
-$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)d\lambda}$$
+$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
+$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
+$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
 
 when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
 
