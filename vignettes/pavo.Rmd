@@ -39,6 +39,10 @@ options(
 )
 ```
 
+[pavo_repo]: https://github.com/rmaia/pavo
+
+[data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+
 # Introduction
 
 `pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
@@ -49,7 +53,7 @@ options(
 2. **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 3. **Visualise** the output, with multiple options provided for exploration and analysis.
 
-Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github](https://github.com/rmaia/pavo).
+Below we will show the main functions in the package in example workflows. The development version of `pavo` can be found on [github][pavo_repo].
 
 ```{r, echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '70%', dpi = 72}
 knitr::include_graphics('fig/workflow.png')
@@ -67,7 +71,7 @@ set.seed(1612217)
 
 ## Spectral Dataset Description
 
-The raw spectral data used in this example are available from the package reporitory on [github](http://github.com), located [here](https://github.com/rmaia/pavo/blob/master/data_external/vignette). You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
+The raw spectral data used in this example are available from the package reporitory on [github][pavo_repo], located [here][data_location]. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
 
 The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
 
@@ -1106,7 +1110,7 @@ head(JND.fms)
 
 # Organizing Spatial (image) Data
 
-We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here](https://github.com/rmaia/pavo/blob/master/vignette_data), but are included in the package installation for convenience.
+We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
 
 ```{r}
 butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
