@@ -58,7 +58,7 @@ explorespec <- function(rspecdata, by = NULL, scale = c("equal", "free"), legpos
   # i.e. if by=3, average every 3 consecutive data of "data"
   if (length(by) == 1) {
     nms <- names(rspecdata)[seq(1, length(names(rspecdata)), by = by)]
-    by <- rep(1:(length(rspecdata) / by), each = by)
+    by <- rep(seq_len(length(rspecdata) / by), each = by)
   }
   # check: does data have the same number of columns as the by vector?
   # TODO: this is actually alright if you are not plotting by a character vector
@@ -157,7 +157,7 @@ explorespec <- function(rspecdata, by = NULL, scale = c("equal", "free"), legpos
 
 
   # Do the plotting
-  for (i in 1:nplots) {
+  for (i in seq_len(nplots)) {
     if (numby == 1) {
       bloc <- data.frame(rspecdata[i])
     } else {

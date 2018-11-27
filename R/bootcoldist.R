@@ -141,12 +141,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   names(bygroup) <- unique(by)
 
   # create vectors of indices to sample
-  its <- lapply(samplesizes, function(x) sample(1:x, x * boot.n, replace = TRUE))
+  its <- lapply(samplesizes, function(x) sample(seq_len(x), x * boot.n, replace = TRUE))
 
   # use the indices from its to sample from the data
   # returns a list with length = number of by
   # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
-  bootsamples <- lapply(1:length(bygroup), function(x) bygroup[[x]][its[[x]], ])
+  bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
 
 
   # next, split by bootstrap replicate
@@ -154,12 +154,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   #
   # list with length = number of by
   # and values = index for the bootstrap replicate that sample belongs to
-  bootindex <- lapply(samplesizes, function(x) as.character(rep(1:boot.n, each = x)))
+  bootindex <- lapply(samplesizes, function(x) as.character(rep(seq_len(boot.n), each = x)))
 
   # use the index to break samples into bootstrap replicates
   # returns a list with length = number of by
   # each entry is itself a list with length = number of replicates
-  bootbygroup <- lapply(1:length(bygroup), function(x) {
+  bootbygroup <- lapply(seq_along(bygroup), function(x) {
     lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]] == z, ])
   })
 
@@ -172,7 +172,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   # now "split and merge"
   # creating a list with length = number of bootstrap replicates
   # and rows in each entry = mean per group in that replicate
-  bootgrouped <- lapply(1:boot.n, function(x)
+  bootgrouped <- lapply(seq_len(boot.n), function(x)
     do.call(rbind, lapply(groupcolmeans, "[", x, )))
 
   # ...name the rows by group

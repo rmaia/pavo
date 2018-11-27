@@ -52,7 +52,7 @@ trispace <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      dat <- dat[, 1:3]
+      dat <- dat[, seq_len(3)]
       dat <- dat / apply(dat, 1, sum)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
@@ -74,7 +74,7 @@ trispace <- function(vismodeldata) {
       warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than three columns; treating the first three columns as standardized quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
     }
 
-    dat <- dat[, 1:3]
+    dat <- dat[, seq_len(3)]
     names(dat) <- c("s", "m", "l")
 
     # Check that all rows sum to 1 (taking into account R floating point issue)

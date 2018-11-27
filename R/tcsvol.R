@@ -30,11 +30,11 @@ tcsvol <- function(tcsdata, col = "black", alpha = 0.2,
 
   vol <- t(convhulln(tcsdata[, c("x", "y", "z")], options = "FA")$hull)
   coords <- tcsdata[, c("x", "y", "z")]
-  listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
+  listvol <- split(vol, rep(seq_len(ncol(vol)), each = nrow(vol)))
   ppairs <- do.call(rbind, lapply(listvol, function(x) t(combn(x, 2))))
 
   if (grid) {
-    for (i in 1:nrow(ppairs)) {
+    for (i in seq_len(nrow(ppairs))) {
       rgl::segments3d(coords[ppairs[i, ], "x"],
         coords[ppairs[i, ], "y"],
         coords[ppairs[i, ], "z"],

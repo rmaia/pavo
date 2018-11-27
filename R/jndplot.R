@@ -534,7 +534,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
         lpos <- trans3d(labelpos[, 1], labelpos[, 2], labelpos[, 3], P)
 
-        for (i in 1:4) {
+        for (i in seq_len(4)) {
           text(lbl[i],
                x = lpos$x[i], y = lpos$y[i], xpd = TRUE,
                cex = labels.cex, col = arrow.col

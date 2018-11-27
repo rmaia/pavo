@@ -20,7 +20,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7)))
+#' projplot(tcs.sicalis, pch = 16, col = setNames(rep(seq_len(3), 7), rep(c('C', 'T', 'B'), 7)))
 #'
 #' @inherit tcspace references
 
@@ -65,11 +65,11 @@ projplot <- function(tcsdata, ...) {
 
   mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
 
-  mp.v.theta <- mp$x[1:9]
-  mp.v.phi <- mp$y[1:9]
+  mp.v.theta <- mp$x[seq_len(9)]
+  mp.v.phi <- mp$y[seq_len(9)]
 
-  mp.p.theta <- mp$x[-c(1:9)]
-  mp.p.phi <- mp$y[-c(1:9)]
+  mp.p.theta <- mp$x[-c(seq_len(9))]
+  mp.p.phi <- mp$y[-c(seq_len(9))]
 
   # plot
 

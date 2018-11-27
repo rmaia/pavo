@@ -54,7 +54,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
       } else {
         out <- lapply(object, function(x) data.frame(
             ID = attr(x, "imgname"),
-            col_ID = seq(1:nrow(attr(x, "classRGB"))),
+            col_ID = seq(seq_len(nrow(attr(x, "classRGB")))),
             col_name = attr(x, "colnames"),
             attr(x, "classRGB")
           ))
@@ -66,7 +66,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
       } else {
         data.frame(
           img_ID = attr(object, "imgname"),
-          col_ID = seq(1:nrow(attr(object, "classRGB"))),
+          col_ID = seq(seq_len(nrow(attr(object, "classRGB")))),
           col_name = attr(object, "colnames"),
           attr(object, "classRGB")
         )
@@ -110,7 +110,7 @@ summary_main <- function(img, plot, axes, col, ...) {
       palette <- rgb(attr(img, "classRGB"))
     }
 
-    image(1:length(palette), 1, as.matrix(1:length(palette)),
+    image(seq_along(palette), 1, as.matrix(seq_along(palette)),
       col = palette,
       xlab = paste("Colour class IDs: 1 -", length(palette)), ylab = "", xaxt = "n", yaxt = "n"
     )

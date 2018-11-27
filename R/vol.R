@@ -29,7 +29,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
 
   vol <- t(convhulln(tcsdata[, c("x", "y", "z")], options = "FA")$hull)
   coords <- tcsdata[, c("x", "y", "z")]
-  listvol <- split(vol, rep(1:ncol(vol), each = nrow(vol)))
+  listvol <- split(vol, rep(seq_len(ncol(vol)), each = nrow(vol)))
   ppairs <- do.call(rbind, lapply(listvol, function(x) t(combn(x, 2))))
 
   # check if there is a plot
@@ -129,7 +129,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   arg[perspargs] <- NULL
 
 
-  for (i in 1:ncol(vol)) {
+  for (i in seq_len(ncol(vol))) {
     arg$x <- flatcoords[vol[, i], "x"]
     arg$y <- flatcoords[vol[, i], "y"]
 

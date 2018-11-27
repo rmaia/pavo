@@ -51,7 +51,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     wl <- x[, wl_index]
   } else {
     haswl <- FALSE
-    wl <- 1:nrow(x)
+    wl <- seq_len(nrow(x))
     warning("No wavelengths provided; using arbitrary index values")
   }
 
@@ -60,10 +60,10 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     select <- which(select == "TRUE")
   }
   if (is.null(select) & haswl == TRUE) {
-    select <- (1:ncol(x))[-wl_index]
+    select <- (seq_len(ncol(x)))[-wl_index]
   }
   if (is.null(select) & haswl == FALSE) {
-    select <- 1:ncol(x)
+    select <- seq_len(ncol(x))
   }
 
   x <- as.data.frame(x[select]) # CE: removed comma before select
@@ -87,7 +87,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       arg$ylab <- "Index"
     }
     if (is.null(varying)) {
-      varying <- 1:ncol(x)
+      varying <- seq_len(ncol(x))
       print("No varying vector supplied; using arbitrary values")
     }
     if (is.null(arg$ylim)) {
@@ -111,7 +111,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
     Index <- approx(varying, n = n)$y
     
-    dat <- vapply(1:nrow(x), function(z) {
+    dat <- vapply(seq_len(nrow(x)), function(z) {
       approx(
         x = varying, 
         y = x[z, ],
@@ -129,7 +129,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # coloring for overlay plot & others
   if (length(arg$col) < ncol(x)) {
     arg$col <- rep(arg$col, ncol(x))
-    arg$col <- arg$col[1:ncol(x)]
+    arg$col <- arg$col[seq_len(ncol(x))]
   }
 
   if (any(names(arg$col) %in% names(x))) {
@@ -139,7 +139,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # line types for overlay plot & others
   if (length(arg$lty) < ncol(x)) {
     arg$lty <- rep(arg$lty, ncol(x))
-    arg$lty <- arg$lty[1:ncol(x)]
+    arg$lty <- arg$lty[seq_len(ncol(x))]
   }
 
   if (any(names(arg$lty) %in% names(x))) {

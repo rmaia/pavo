@@ -112,7 +112,7 @@
 #'                         dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
 #'
 #' # Fake hue, saturation, luminance values
-#' hsl_vals <- data.frame(patch = 1:4,
+#' hsl_vals <- data.frame(patch = seq_len(4),
 #'                        hue = c(1.5, 2.2, 1.0, 0.5),
 #'                        lum = c(10, 5, 7, 3),
 #'                        sat = c(3.5, 1.1, 6.3, 1.3))
@@ -159,9 +159,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       classimg <- as.rimg(classimg)
     }
   } else {
-    if (any(unlist(lapply(1:length(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
+    if (any(unlist(lapply(seq_along(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
-      classimg <- lapply(1:length(classimg), function(x) as.rimg(classimg[[x]]))
+      classimg <- lapply(seq_along(classimg), function(x) as.rimg(classimg[[x]]))
     }
   }
 
@@ -222,7 +222,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       }
       if (!all("patch" %in% names(unlist(hsl)))) {
         message("Cannot find column named 'patch' in list of hsl values. Assuming first column contains colour-category IDs.")
-        hsl <- lapply(1:length(hsl), function(x) names(hsl[[x]])[1] <- "patch")
+        hsl <- lapply(seq_along(hsl), function(x) names(hsl[[x]])[1] <- "patch")
       }
       if (any(unlist(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x))))) {
         stop("No columns named 'hue', 'sat', or 'lum' in hsl")
@@ -251,7 +251,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         polygon <- lapply(polygon, function(x) data.frame(x = x[, 1], y = x[, 2]))
       }
       if (all(unlist(lapply(classimg, function(x) is.na(attr(x, "outline")))))) {
-        classimg <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "outline") <- polygon[[x]])
+        classimg <- lapply(seq_along(classimg), function(x) attr(classimg[[x]], "outline") <- polygon[[x]])
       }
     }
   }
@@ -310,7 +310,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
     imgsize <- format(object.size(classimg), units = "Mb")
 
     ifelse(imgsize < 100,
-      outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+      outdata <- pbmclapply(seq_along(classimg), function(x) adjacent_main(classimg[[x]],
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
@@ -320,7 +320,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
         ),
       mc.cores = cores
       ),
-      outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+      outdata <- lapply(seq_along(classimg), function(x) adjacent_main(classimg[[x]],
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
@@ -337,9 +337,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
 
     # Reshuffle column order
     namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
-    outdata <- outdata[, c((1:ncol(outdata))[-namemove], namemove)]
+    outdata <- outdata[, c((seq_len(ncol(outdata)))[-namemove], namemove)]
 
-    for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
+    for (i in seq_len(nrow(outdata))) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
   } else { # Single image
 
     outdata <- adjacent_main(
@@ -654,7 +654,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 # Internal function for masking color-classified image data that fall inside/outside a polygon
 #' @importFrom sp point.in.polygon
 polymask <- function(imagedat, polygon, alter_which = c("outside", "inside"), replacement_value = NA) {
-  imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
+  imglong <- data.frame(expand.grid(seq_len(ncol(imagedat)), seq_len(nrow(imagedat))), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
   inpoly <- point.in.polygon(imglong$x, imglong$y, polygon$x, polygon$y, mode.checked = FALSE) # todo: replace with base
@@ -677,7 +677,7 @@ transitioncalc <- function(classimgdat, colornames) {
   transout <- list()
 
   # All row transitions
-  rt_temp <- lapply(1:nrow(classimgdat), function(x) table(paste0(head(as.numeric(classimgdat[x, ]), -1), ".", tail(as.numeric(classimgdat[x, ]), -1))))
+  rt_temp <- lapply(seq_len(nrow(classimgdat)), function(x) table(paste0(head(as.numeric(classimgdat[x, ]), -1), ".", tail(as.numeric(classimgdat[x, ]), -1))))
   rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
   rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
@@ -689,7 +689,7 @@ transitioncalc <- function(classimgdat, colornames) {
 
   # All column transitions
   classimgdat_trans <- as.data.frame(t(classimgdat))
-  ct_temp <- lapply(1:nrow(classimgdat_trans), function(x) table(paste0(head(as.numeric(classimgdat_trans[x, ]), -1), ".", tail(as.numeric(classimgdat_trans[x, ]), -1))))
+  ct_temp <- lapply(seq_len(nrow(classimgdat_trans)), function(x) table(paste0(head(as.numeric(classimgdat_trans[x, ]), -1), ".", tail(as.numeric(classimgdat_trans[x, ]), -1))))
   ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
   ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names

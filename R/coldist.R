@@ -177,7 +177,7 @@ coldist <- function(modeldata,
 
     # f_d and f_e
 
-    deltaqiqj <- lapply(1:length(num1), function(y)
+    deltaqiqj <- lapply(seq_along(num1), function(y)
       t(apply(res, 1, function(x)
         dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
 
@@ -236,7 +236,7 @@ coldist <- function(modeldata,
 
     # get those combinations of ei and prod(ei)^2
 
-    num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+    num1 <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z)
       apply(n1combs, 2, function(x) prod(e[z, x])^2)))
     colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
 
@@ -245,7 +245,7 @@ coldist <- function(modeldata,
 
     # f_d and f_e
 
-    deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
+    deltaqiqj <- lapply(seq_len(dim(n1combs)[2]), function(y)
       t(apply(res, 1, function(x)
         dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
 
@@ -271,7 +271,7 @@ coldist <- function(modeldata,
     # all n-1 combinations
     dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
 
-    den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+    den <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z)
       apply(dcombs, 2, function(x) prod(e[z, x])^2)))
     colnames(den) <- apply(dcombs, 2, paste, collapse = "")
 
@@ -553,7 +553,7 @@ coldist <- function(modeldata,
   }
 
   if (usereceptornoisemodel) {
-    dat2 <- dat[, 1:as.numeric(ncone), drop = FALSE]
+    dat2 <- dat[, seq_len(as.numeric(ncone)), drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep = ""), call. = FALSE)
 
@@ -609,7 +609,7 @@ coldist <- function(modeldata,
     }
 
     if (noise == "quantum") {
-      qndat2 <- qndat[, 1:as.numeric(ncone)]
+      qndat2 <- qndat[, seq_len(as.numeric(ncone))]
       res[, "dS"] <- newreceptornoise.quantum(
         dat = dat2, n = n, weber = weber,
         weber.ref = weber.ref, res = res, qndat = qndat2
@@ -749,7 +749,7 @@ coldist <- function(modeldata,
     subsamp <- unique(c(condition1, condition2))
 
     res <- res[subsamp, ]
-    row.names(res) <- 1:dim(res)[1]
+    row.names(res) <- seq_len(dim(res)[1])
   }
 
   if (exists("resref", inherits = FALSE)) {

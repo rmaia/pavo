@@ -71,11 +71,11 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     errplotspecs <- as.data.frame(errplotspecs[, -wl_index_err])
   } else {
     haswl <- FALSE
-    wl <- 1:nrow(rspecdata)
+    wl <- seq_len(nrow(rspecdata))
     warning("No wavelengths provided; using arbitrary index values")
   }
 
-  indexsub <- 1:dim(cntplotspecs)[2]
+  indexsub <- seq_len(dim(cntplotspecs)[2])
 
   if (as.integer(dim(errplotspecs)[1] / 2) == as.integer(dim(cntplotspecs)[1]) &&
     as.integer(dim(errplotspecs)[1] %% 2) == 0) {

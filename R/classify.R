@@ -166,8 +166,8 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     if (length(kcols) > 1 && interactive == FALSE) {
       message("Image classification in progress...")
       ifelse(imgsize < 100,
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
+        outdata <- pbmclapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
+        outdata <- lapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
       )
 
       ## (2) Single k, with reference image ##
@@ -209,7 +209,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       if (plotnew) dev.off()
 
-      ref_centers <- do.call(rbind, lapply(1:nrow(reference), function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))))
+      ref_centers <- do.call(rbind, lapply(seq_len(nrow(reference)), function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))))
       names(ref_centers) <- c("R", "G", "B")
 
       message("Image classification in progress...")
@@ -249,7 +249,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         if (plotnew) dev.off()
 
         ref_centers <- try(do.call(rbind, lapply(
-          1:nrow(reference),
+          seq_len(nrow(reference)),
           function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
         )),
         silent = TRUE
@@ -270,13 +270,13 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       }
       message("Image classification in progress...")
       ifelse(imgsize < 100,
-        outdata <- pbmclapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
-        outdata <- lapply(1:length(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
+        outdata <- pbmclapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
+        outdata <- lapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
       )
     }
 
     # Names & attributes
-    for (i in 1:length(outdata)) {
+    for (i in seq_along(outdata)) {
       attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
       attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
       attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
@@ -322,7 +322,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         if (plotnew) dev.off()
 
         ref_centers <- try(do.call(rbind, lapply(
-          1:nrow(reference),
+          seq_len(nrow(reference)),
           function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))
         )),
         silent = TRUE
@@ -393,7 +393,7 @@ classify_main <- function(imgdat_i, n_cols_i) {
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
   #attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
-  attr(outmat, "colnames") <- data.frame(name = 1:nrow(kMeans$centers))
+  attr(outmat, "colnames") <- data.frame(name = seq_len(nrow(kMeans$centers)))
   attr(outmat, "tag_loc") <- NA
 
   outmat

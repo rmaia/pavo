@@ -46,7 +46,7 @@ segspace <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      dat <- dat[, 1:4]
+      dat <- dat[, seq_len(4)]
       dat <- dat / apply(dat, 1, sum)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
@@ -68,7 +68,7 @@ segspace <- function(vismodeldata) {
       warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively", call. = FALSE)
     }
 
-    dat <- dat[, 1:4]
+    dat <- dat[, seq_len(4)]
     names(dat) <- c("S1", "S2", "S3", "S4")
 
     dat <- dat / apply(dat, 1, sum)

@@ -56,7 +56,7 @@ tcspace <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      dat <- dat[, 1:4]
+      dat <- dat[, seq_len(4)]
       dat <- dat / apply(dat, 1, sum)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
@@ -78,7 +78,7 @@ tcspace <- function(vismodeldata) {
       warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
     }
 
-    dat <- dat[, 1:4]
+    dat <- dat[, seq_len(4)]
     names(dat) <- c("u", "s", "m", "l")
 
     dat <- dat / apply(dat, 1, sum)

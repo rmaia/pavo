@@ -177,7 +177,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
   wl <- object[, wl_index]
 
-  select <- (1:ncol(object))[-wl_index]
+  select <- (seq_len(ncol(object)))[-wl_index]
   object <- object[, select, drop = FALSE]
   output.mat <- matrix(nrow = ncol(object), ncol = 23)
 
@@ -280,17 +280,17 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   Carotchroma <- (R700 - R450) / R700
 
   # H3
-  index_Rmid <- vapply(1:ncol(object), function(x) {
+  index_Rmid <- vapply(seq_len(ncol(object)), function(x) {
     which.min(abs(object[, x] - Rmid[x]))
   }, numeric(1))
   H3 <- wl[index_Rmid]
 
   # S7
 
-  S7 <- vapply(1:ncol(object), function(col) {
+  S7 <- vapply(seq_len(ncol(object)), function(col) {
     spec <- object[, col]
     index_Rmid_spec <- index_Rmid[col]
-    spec_low <- spec[1:index_Rmid_spec]
+    spec_low <- spec[seq_len(index_Rmid_spec)]
     spec_high <- spec[index_Rmid_spec:length(spec)]
 
     return(sum(spec_low) - sum(spec_high))
@@ -300,7 +300,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
 
   # S3
-  S3 <- vapply(1:ncol(object), function(col) {
+  S3 <- vapply(seq_len(ncol(object)), function(col) {
     spec <- object[, col]
     H1_spec <- H1[col]
     sum(spec[wl >= (H1_spec - 50) & wl <= (H1_spec + 50)])

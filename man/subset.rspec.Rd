@@ -42,7 +42,7 @@ tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 # Subset all 'crown' patches (C in file names)
 head(subset(sicalis, "C"))
 subset(vis.sicalis, "C")
-subset(tcs.sicalis, "C")[, 1:5]
+subset(tcs.sicalis, "C")[, seq_len(5)]
 subset(sicalis, c("B","C"))
 subset(sicalis, "T", invert=TRUE)
 

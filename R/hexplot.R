@@ -98,18 +98,18 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   }
 
   # Hexagon outline
-  for (x in 1:length(hexX)) {
+  for (x in seq_along(hexX)) {
     segments(hexX[x], hexY[x], hexX[x + 1], hexY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
   }
 
   # Hexagon sectors
   if (sectors == "coarse") {
-    for (x in 1:length(secX))
+    for (x in seq_along(secX))
       segments(0, 0, secX[x], secY[x], col = sec.col)
   }
 
   if (sectors == "fine") {
-    for (x in 1:length(secX_c))
+    for (x in seq_along(secX_c))
       segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
   }
 

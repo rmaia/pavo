@@ -78,7 +78,7 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   segout <- data.frame(segX, segY)
 
   # Segplot outline
-  for (x in 1:length(segX)) {
+  for (x in seq_along(segX)) {
     segments(segX[x], segY[x], segX[x + 1], segY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
   }
 

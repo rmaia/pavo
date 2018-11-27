@@ -50,7 +50,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     wl <- rspecdata[, wl_index]
   } else {
     haswl <- FALSE
-    wl <- 1:nrow(rspecdata)
+    wl <- seq_len(nrow(rspecdata))
     warning("No wavelengths provided; using arbitrary index values", call. = FALSE)
   }
 
@@ -64,10 +64,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     select <- which(select == "TRUE")
   }
   if (is.null(select) & haswl == TRUE) {
-    select <- (1:ncol(rspecdata))[-wl_index]
+    select <- (seq_len(ncol(rspecdata)))[-wl_index]
   }
   if (is.null(select) & haswl == FALSE) {
-    select <- 1:ncol(rspecdata)
+    select <- seq_len(ncol(rspecdata))
   }
 
   rspecdata <- as.data.frame(rspecdata[, select, drop = FALSE])
@@ -78,7 +78,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   Yi <- apply(rspecdata2, 2, max) # max refls
   Yj <- apply(rspecdata2, 2, min) # min refls
   Yk <- apply(rspecdata, 2, min) # min refls, whole spectrum
-  Xi <- vapply(1:ncol(rspecdata2), 
+  Xi <- vapply(seq_len(ncol(rspecdata2)), 
                function(x) which(rspecdata2[, x] == Yi[x]), 
                numeric(1)) # lambda_max index
   # CE edit: test if any wls have equal reflectance values
@@ -95,14 +95,11 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     Yj <- Yk
   }
 
-  fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
-  sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
+  fsthalf <- lapply(seq_len(ncol(rspecdata2)), function(x) rspecdata2[seq_len(Xi[x]), x])
+  sndhalf <- lapply(seq_len(ncol(rspecdata2)), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2 # reflectance midpoint
-  fstHM <- sapply(1:length(fsthalf), function(x) which.min(abs(fsthalf[[x]] - halfmax[x])))
-  sndHM <- sapply(1:length(sndhalf), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])))
-
-
-
+  fstHM <- sapply(seq_len(length(fsthalf)), function(x) which.min(abs(fsthalf[[x]] - halfmax[x])))
+  sndHM <- sapply(seq_len(length(sndhalf)), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])))
 
   if (any(Yj > Yk)) {
     warning(paste("Consider fixing ", dQuote("lim"), " in spectra with ", dQuote("incl.min"), " marked ", dQuote("No"), " to incorporate all minima in spectral curves", sep = ""), call. = FALSE)
@@ -135,8 +132,6 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
     incl.min = c("Yes", "No")[as.numeric(Yj > Yk) + 1]
   )
-
-  # row.names(out) <- nms[select]
 
   out
 }

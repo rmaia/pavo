@@ -88,7 +88,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
       image <- lapply(image, function(x) imager::imresize(x, resize))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
+      image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
 
@@ -101,7 +101,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
       image <- lapply(image, function(x) imager::imrotate(x, rotate))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
+      image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
 
@@ -118,7 +118,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
-      for (i in 1:length(image)) {
+      for (i in seq_along(image)) {
         attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], col = col, ...)
         attr(image[[i]], "raw_scale") <- scaledist[[i]]
       }
@@ -128,7 +128,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     ## Select outline ##
     if (outline) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
-      for (i in 1:length(image)) {
+      for (i in seq_along(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
         attr(image[[i]], "outline") <- outliner(image[[i]], smooth, iterations, col = col, ...)

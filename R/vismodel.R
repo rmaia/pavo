@@ -431,7 +431,7 @@ vismodel <- function(rspecdata,
   # scale illuminant
   illum <- illum * scale
 
-  indices <- 1:dim(S)[2]
+  indices <- seq_len(dim(S)[2])
 
   # Filter specs by transmission
 

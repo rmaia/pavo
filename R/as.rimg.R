@@ -51,7 +51,7 @@ as.rimg <- function(object, name = "img") {
     rescaler <- function(x) {
       if (any(x > 1)) {
         message("Rescaling values to [0,1]")
-        for (i in 1:dim(x)[3]) {
+        for (i in seq_len(dim(x)[3])) {
           x[, , i] <- x[, , i] / 255
         }
       }
@@ -61,28 +61,28 @@ as.rimg <- function(object, name = "img") {
     if (is.list(object)) {
 
       # Array check
-      if (any(unlist(lapply(1:length(object), function(x) !is.array(object[[x]]))))) {
+      if (any(unlist(lapply(seq_along(object), function(x) !is.array(object[[x]]))))) {
         stop("Images must be an array.")
       }
 
       # Duplicate channels if grayscale
-      for (i in 1:length(object)) {
+      for (i in seq_along(object)) {
         if (is.na(dim(object[[i]])[3])) {
           object[[i]] <- replicate(3, object[[i]], simplify = "array")
         }
       }
 
       # 3D maximum
-      object <- lapply(1:length(object), function(j) object[[j]][, , 1:3])
+      object <- lapply(seq_along(object), function(j) object[[j]][, , 1:3])
 
       # Rescale RGB to [0,1] if need be
-      object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
+      object <- lapply(seq_along(object), function(j) rescaler(object[[j]]))
 
       # Attributes
       if (length(name) == 1) {
         name <- rep(name, length(object))
       }
-      object <- lapply(1:length(object), function(j) attrgiver(object[[j]], name[[j]]))
+      object <- lapply(seq_along(object), function(j) attrgiver(object[[j]], name[[j]]))
 
       # The list itself needs attributes
       class(object) <- c("rimg", "list")

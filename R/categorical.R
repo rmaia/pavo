@@ -44,11 +44,7 @@ categorical <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      # dat <- dat[, 1:4]
-      # dat <- dat/apply(dat, 1, sum)
-      # class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
-      # attr(vismodeldata,'relative') <- TRUE
     }
   }
 
@@ -112,7 +108,7 @@ categorical <- function(vismodeldata) {
 
   res.p <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
 
-  res.p$category <- vapply(1:nrow(res.p), function(x) colcat(res.p[x, ]), character(1))
+  res.p$category <- vapply(seq_len(nrow(res.p)), function(x) colcat(res.p[x, ]), character(1))
   res.p$r.vec <- sqrt(res.p$x^2 + res.p$y^2)
 
   res <- res.p

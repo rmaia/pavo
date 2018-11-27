@@ -78,7 +78,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
-    wl_id <- sapply(1:length(by), function(x) which(by[[x]] == "wl")) # extract wl columns
+    wl_id <- sapply(seq_along(by), function(x) which(by[[x]] == "wl")) # extract wl columns
     # remove 'wl' column from each vector in list
     if (any(sapply(wl_id, length) != 0)) {
       id <- which(sapply(wl_id, length) != 0)
@@ -100,7 +100,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # i.e. if by=3, average every 3 consecutive data of "data"
   if (length(by) == 1) {
     by0 <- names(y)[seq(1, length(names(y)), by = by)]
-    by <- rep(1:(length(y) / by), each = by)
+    by <- rep(seq_len(length(y) / by), each = by)
   }
   # END RM EDIT 1
 

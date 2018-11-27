@@ -94,7 +94,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   )
 
   # combinations of vertices to make facets
-  sides <- verts[combn(1:4, 2), ]
+  sides <- verts[combn(seq_len(4), 2), ]
   rownames(sides) <- paste0(
     rep(
       do.call(paste0, data.frame(t(combn(c("u", "s", "m", "l"), 2)))),
@@ -250,7 +250,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     )
 
     # get 3 most in back
-    inback <- names(sort(combdist, )[1:3])
+    inback <- names(sort(combdist, )[seq_len(3)])
 
     linback <- grepl(paste0(inback, collapse = "|"), rownames(segs))
 

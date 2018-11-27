@@ -73,7 +73,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
 
 
-  for (i in 1:length(peaksens)) {
+  for (i in seq_along(peaksens)) {
 
     # Sensitivities w/o oil droplets
     peak <- 1 / (exp(69.7 * (.8795 + .0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / (range[1]:range[2]))))

@@ -47,7 +47,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    #imgdat <- imager::load.image(imgpath)
+    # imgdat <- imager::load.image(imgpath)
     imgdat <- grabimg(imgpath)
     imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
@@ -94,11 +94,11 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.1) {
-      imgdat <- pbmclapply(1:length(file_names), function(x) grabimg(files[x]), mc.cores = cores)
-      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- pbmclapply(seq_along(file_names), function(x) grabimg(files[x]), mc.cores = cores)
+      imgdat <- lapply(seq_along(imgdat), function(x) drop(as.array(imgdat[[x]])))
     } else {
-      imgdat <- lapply(1:length(file_names), function(x) grabimg(files[x]))
-      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- lapply(seq_along(file_names), function(x) grabimg(files[x]))
+      imgdat <- lapply(seq_along(imgdat), function(x) drop(as.array(imgdat[[x]])))
     }
 
     imgdat <- as.rimg(imgdat, imgnames)
@@ -117,11 +117,11 @@ grabimg <- function(file) {
   if (!is.null(attr(bmp, "header"))) {
     bmp <- bmp / 255
   }
-  if (length(dim(bmp)) == 3) {  # 3 channels (colour)
+  if (length(dim(bmp)) == 3) { # 3 channels (colour)
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
   }
-  else {  # 1 channel (B&W), duplicate to 3d for classification convenience
+  else { # 1 channel (B&W), duplicate to 3d for classification convenience
     bmp <- replicate(3, bmp, simplify = "array")
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
@@ -140,7 +140,7 @@ rot90 <- function(x) {
 # Mirror matrices about x axis
 mirrorx <- function(x) {
   if (length(dim(x)) == 3) {
-    for (i in 1:dim(x)[3]) {
+    for (i in seq_len(dim(x)[3])) {
       x[, , i] <- x[, , i][, ncol(x[, , i]):1]
     }
   } else {

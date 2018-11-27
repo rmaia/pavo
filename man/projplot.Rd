@@ -36,7 +36,7 @@ relationships within latitudes without distortion.
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7)))
+projplot(tcs.sicalis, pch = 16, col = setNames(rep(seq_len(3), 7), rep(c('C', 'T', 'B'), 7)))
 
 }
 \references{

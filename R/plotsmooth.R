@@ -38,11 +38,11 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
 
   if (specnum == 1) {
     titlenames <- titlenames [2]
-    rspecdata <- rspecdata[, 1:(specnum + 1)]
+    rspecdata <- rspecdata[, seq_len(specnum + 1)]
   }
 
   if (specnum > 1) {
-    rspecdata <- rspecdata[, 1:(specnum + 1)]
+    rspecdata <- rspecdata[, seq_len(specnum + 1)]
     titlenames <- titlenames[2:dim(rspecdata)[2]]
   }
 
@@ -64,7 +64,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
 
   inc <- (maxsmooth - minsmooth) / (curves - 2)
 
-  for (i in 1:nplots) {
+  for (i in seq_len(nplots)) {
     plotdata[, ((i - 1) * curves) + 1] <- rspecdata[, i + 1]
 
     plotdata[, ((i - 1) * curves) + 2] <-
@@ -80,7 +80,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
         evaluation = length(wl), degree = 2, family = "gaussian"
       )$y + ((curves - 1) * 5)
 
-    for (j in 1:(curves - 3)) {
+    for (j in seq_len(curves - 3)) {
       plotdata[, ((i - 1) * curves) + 2 + j] <-
         loess.smooth(wl, rspecdata [, i + 1],
           span = (minsmooth + (inc * j)),
@@ -121,7 +121,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
 
   par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
-  for (i in 1:nplots) {
+  for (i in seq_len(nplots)) {
     bloc <- plotdata[, (((i - 1) * curves) + 1):(i * curves)]
 
     yaxismin <- min(bloc)

@@ -60,7 +60,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   # try to automatically find wavelength column. for increasing wavelengths,
   # expect a perfect correlation between lambda values and column indices
   ind <- apply(object, 2, function(x) {
-    cor(x, 1:nrow(object))
+    cor(x, seq_len(nrow(object)))
   })
 
   if (!is.null(whichwl)) {
@@ -81,7 +81,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
       "Check output carefully!"
     )
   } else {
-    wl <- 1:nrow(object)
+    wl <- seq_len(nrow(object))
     warning(
       "No wavelengths found or whichwl not provided; ",
       "using arbitrary index values"
