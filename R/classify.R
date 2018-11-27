@@ -131,22 +131,20 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         function(x) classify_main(imgdat[[x]], kcols[[x]])
       )
     )
-
+  
+  } else if (length(kcols) == 1 && interactive == FALSE) {
+    
     ## (2) Single k, with reference image ##
-  } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
-    ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
+    if(!is.null(refID))
+      ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
+    else
+      ref_centers <- kcols
+      
+    ## (3) Single k, no reference image ##
     message("Image classification in progress...")
     ifelse(imgsize < 100,
       outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
       outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
-    )
-
-    ## (3) Single k, no reference image ##
-  } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
-    message("Image classification in progress...")
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(imgdat, function(x) classify_main(x, kcols), mc.cores = cores),
-      outdata <- lapply(imgdat, function(x) classify_main(x, kcols))
     )
 
   } else if (interactive) {
