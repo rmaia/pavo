@@ -121,10 +121,20 @@ papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
 
 # Single image, with (fake) color distances and hsl values
 # Fake color distances
+distances <- data.frame(c1 = c(1, 1, 1, 2, 2, 3),
+                        c2 = c(2, 3, 4, 3, 4, 4),
+                        dS = c(5.3, 3.5, 5.7, 2.9, 6.1, 3.2),
+                        dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
 
 # Fake hue, saturation, luminance values
+hsl_vals <- data.frame(patch = seq_len(4),
+                       hue = c(1.5, 2.2, 1.0, 0.5),
+                       lum = c(10, 5, 7, 3),
+                       sat = c(3.5, 1.1, 6.3, 1.3))
 
 # Full analysis, including the white background's ID
+papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
+                        coldists = distances, hsl = hsl_vals)
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))

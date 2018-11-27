@@ -24,7 +24,6 @@
 
 vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
                 new = FALSE, ...) {
-
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") stop("object is not in tetrahedral color space")
 
   vol <- t(convhulln(tcsdata[, c("x", "y", "z")], options = "FA")$hull)

@@ -63,7 +63,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
                       margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...) {
-
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
   }

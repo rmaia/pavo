@@ -94,16 +94,17 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     }
     kcols <- parse_kcols(kcols, imgdat)
   }
-  
+
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
-  if(!multi_image)
+  if (!multi_image) {
     imgdat <- list(imgdat)
+  }
 
   ## ------------------------------ Main ------------------------------ ##
 
   #### So your options/configurations for classification are:
-  
+
   # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
   #       (length(kcols) > 1 && interactive == FALSE)
   # (2) Single k (or multiple identical k), with a reference image.
@@ -115,151 +116,176 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   # (5) Multiple k (identical or not, don't need to be specified), with interactively-specified centres for each image.
   #       (is.null(refID) && interactive == TRUE)
 
-    imgsize <- format(object.size(imgdat), units = "Mb")
+  imgsize <- format(object.size(imgdat), units = "Mb")
 
-    ## (1) Multiple k, no reference image ##
-    if (length(kcols) > 1 && interactive == FALSE) {
-      message("Image classification in progress...")
-      ifelse(imgsize < 100,
-        outdata <- pbmclapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]), mc.cores = cores),
-        outdata <- lapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], kcols[[x]]))
+  ## (1) Multiple k, no reference image ##
+  if (length(kcols) > 1 && interactive == FALSE) {
+    message("Image classification in progress...")
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(seq_along(imgdat),
+        function(x) classify_main(imgdat[[x]], kcols[[x]]),
+        mc.cores = cores
+      ),
+      outdata <- lapply(
+        seq_along(imgdat),
+        function(x) classify_main(imgdat[[x]], kcols[[x]])
       )
+    )
 
-      ## (2) Single k, with reference image ##
-    } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
-      ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
-      message("Image classification in progress...")
-      ifelse(imgsize < 100,
-        outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
-        outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
-      )
+    ## (2) Single k, with reference image ##
+  } else if (length(kcols) == 1 && !is.null(refID) && interactive == FALSE) {
+    ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
+    message("Image classification in progress...")
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
+      outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
+    )
 
-      ## (3) Single k, no reference image ##
-    } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
-      message("Image classification in progress...")
-      ifelse(imgsize < 100,
-        outdata <- pbmclapply(imgdat, function(x) classify_main(x, kcols), mc.cores = cores),
-        outdata <- lapply(imgdat, function(x) classify_main(x, kcols))
-      )
+    ## (3) Single k, no reference image ##
+  } else if (length(kcols) == 1 && is.null(refID) && interactive == FALSE) {
+    message("Image classification in progress...")
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(imgdat, function(x) classify_main(x, kcols), mc.cores = cores),
+      outdata <- lapply(imgdat, function(x) classify_main(x, kcols))
+    )
 
-      ## (4) Single k, interactively specified centre, with reference image ##
-    } else if (!is.null(refID) && interactive == TRUE) {
+    ## (4) Single k, interactively specified centre, with reference image ##
+  } else if (!is.null(refID) && interactive == TRUE) {
 
-      # Reference image
-      refimg <- imgdat[[refID]]
+    # Reference image
+    refimg <- imgdat[[refID]]
 
+    if (plotnew) dev.new(noRStudioGD = TRUE)
+
+    plot(refimg, ...)
+
+    if (!is.null(kcols)) {
+      message(paste("Select the", kcols, "focal colours"))
+      reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
+    } else if (is.null(kcols)) {
+      message(paste0(
+        "Select the focal colours in image ",
+        attr(refimg, "imgname"), ", and press [esc] to continue."
+      ))
+      reference <- as.data.frame(locator(type = "p", col = col))
+      kcols <- nrow(reference)
+    }
+    tag_loc <- reference
+
+    if (plotnew) dev.off()
+
+    ref_centers <- do.call(rbind, lapply(
+      seq_len(nrow(reference)),
+      function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))
+    ))
+    names(ref_centers) <- c("R", "G", "B")
+
+    message("Image classification in progress...")
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
+      outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
+    )
+
+    ## (5) Multiple k, with interactively-specified centres for each image. ##
+  } else if (is.null(refID) && interactive) {
+    if (length(kcols) == 1) {
+      kcols <- rep(kcols, length(imgdat))
+    }
+    if (is.null(kcols)) {
+      n_cols_test <- NULL
+      kcols <- rep(NA, length(imgdat))
+    } else {
+      n_cols_test <- FALSE
+    }
+
+    centers <- list()
+    tag_loc <- list()
+    i <- 1
+    while (i <= length(imgdat)) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
 
-      plot(refimg, ...)
+      plot(imgdat[[i]], ...)
 
-      if (!is.null(kcols)) {
-        message(paste("Select the", kcols, "focal colours"))
-        reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
-      } else if (is.null(kcols)) {
-        message(paste0("Select the focal colours in image ", attr(refimg, "imgname"), ", and press [esc] to continue."))
+      if (!is.null(n_cols_test)) {
+        message(paste0(
+          "Select the ", kcols[[i]], " focal colours in image ",
+          attr(imgdat[[i]], "imgname", ".")
+        ))
+        reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
+      } else if (is.null(n_cols_test)) {
+        message(paste0(
+          "Select the focal colours in image ",
+          attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."
+        ))
         reference <- as.data.frame(locator(type = "p", col = col))
-        kcols <- nrow(reference)
+        kcols[[i]] <- nrow(reference)
       }
-      tag_loc <- reference
-
       if (plotnew) dev.off()
 
-      ref_centers <- do.call(rbind, lapply(seq_len(nrow(reference)), function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))))
-      names(ref_centers) <- c("R", "G", "B")
-
-      message("Image classification in progress...")
-      ifelse(imgsize < 100,
-        outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
-        outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
+      ref_centers <- try(do.call(rbind, lapply(
+        seq_len(nrow(reference)),
+        function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
+      )),
+      silent = TRUE
       )
+      centers[[i]] <- ref_centers
+      tag_loc[[i]] <- reference
 
-      ## (5) Multiple k, with interactively-specified centres for each image. ##
-    } else if (is.null(refID) && interactive) {
-      if (length(kcols) == 1) {
-        kcols <- rep(kcols, length(imgdat))
-      }
-      if (is.null(kcols)) {
-        n_cols_test <- NULL
-        kcols <- rep(NA, length(imgdat))
+      if (class(centers[[i]]) == "try-error") {
+        message("One or more coorodinates out-of bounds. Try again.")
+        i <- i
+      } else if (any(duplicated(centers[[i]]))) {
+        message("Duplicate colours specified. Try again.")
+        i <- i
       } else {
-        n_cols_test <- FALSE
-      }
-
-      centers <- list()
-      tag_loc <- list()
-      i <- 1
-      while (i <= length(imgdat)) {
-        if (plotnew) dev.new(noRStudioGD = TRUE)
-
-        plot(imgdat[[i]], ...)
-
-        if (!is.null(n_cols_test)) {
-          message(paste0("Select the ", kcols[[i]], " focal colours in image ", attr(imgdat[[i]], "imgname", ".")))
-          reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
-        } else if (is.null(n_cols_test)) {
-          message(paste0("Select the focal colours in image ", attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."))
-          reference <- as.data.frame(locator(type = "p", col = col))
-          kcols[[i]] <- nrow(reference)
-        }
-        if (plotnew) dev.off()
-
-        ref_centers <- try(do.call(rbind, lapply(
-          seq_len(nrow(reference)),
-          function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
-        )),
-        silent = TRUE
-        )
-        centers[[i]] <- ref_centers
-        tag_loc[[i]] <- reference
-
-        if (class(centers[[i]]) == "try-error") {
-          message("One or more coorodinates out-of bounds. Try again.")
-          i <- i
-        } else if (any(duplicated(centers[[i]]))) {
-          message("Duplicate colours specified. Try again.")
-          i <- i
-        } else {
-          names(centers[[i]]) <- c("R", "G", "B")
-          i <- i + 1
-        }
-      }
-      message("Image classification in progress...")
-      ifelse(imgsize < 100,
-        outdata <- pbmclapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]), mc.cores = cores),
-        outdata <- lapply(seq_along(imgdat), function(x) classify_main(imgdat[[x]], centers[[x]]))
-      )
-    }
-
-    # Names & attributes
-    for (i in seq_along(outdata)) {
-      attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
-      attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
-      attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
-      attr(outdata[[i]], "raw_scale") <- attr(imgdat[[i]], "raw_scale")
-      attr(outdata[[i]], "state") <- "colclass"
-      if (interactive) {
-        if (!is.null(refID)) {
-          attr(outdata[[refID]], "tag_loc") <- tag_loc
-        } else {
-          attr(outdata[[i]], "tag_loc") <- tag_loc[[i]]
-        }
-      } else {
-        attr(outdata[[i]], "tag_loc") <- NA
-      }
-      if (length(kcols) > 1) {
-        attr(outdata[[i]], "k") <- kcols[[i]]
-      } else {
-        attr(outdata[[i]], "k") <- kcols
+        names(centers[[i]]) <- c("R", "G", "B")
+        i <- i + 1
       }
     }
-    
-    if(multi_image)
-      class(outdata) <- c("rimg", "list")
-    else
-      outdata <- outdata[[1]]
-      
-    outdata
+    message("Image classification in progress...")
+    ifelse(imgsize < 100,
+      outdata <- pbmclapply(seq_along(imgdat),
+        function(x) classify_main(imgdat[[x]], centers[[x]]),
+        mc.cores = cores
+      ),
+      outdata <- lapply(
+        seq_along(imgdat),
+        function(x) classify_main(imgdat[[x]], centers[[x]])
+      )
+    )
   }
+
+  # Names & attributes
+  for (i in seq_along(outdata)) {
+    attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
+    attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
+    attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
+    attr(outdata[[i]], "raw_scale") <- attr(imgdat[[i]], "raw_scale")
+    attr(outdata[[i]], "state") <- "colclass"
+    if (interactive) {
+      if (!is.null(refID)) {
+        attr(outdata[[refID]], "tag_loc") <- tag_loc
+      } else {
+        attr(outdata[[i]], "tag_loc") <- tag_loc[[i]]
+      }
+    } else {
+      attr(outdata[[i]], "tag_loc") <- NA
+    }
+    if (length(kcols) > 1) {
+      attr(outdata[[i]], "k") <- kcols[[i]]
+    } else {
+      attr(outdata[[i]], "k") <- kcols
+    }
+  }
+
+  if (multi_image) {
+    class(outdata) <- c("rimg", "list")
+  } else {
+    outdata <- outdata[[1]]
+  }
+
+  outdata
+}
 
 # Main function for identifying colour classes in an image for adjacency analyses
 classify_main <- function(imgdat_i, n_cols_i) {

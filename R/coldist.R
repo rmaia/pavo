@@ -377,7 +377,8 @@ coldist <- function(modeldata,
       mh <- (coord2["h"] + coord1["h"] - 360) / 2
     }
 
-    t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
+    t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) +
+      (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
 
     sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
     sC <- 1 + 0.045 * mC
@@ -446,7 +447,10 @@ coldist <- function(modeldata,
     # set achromatic=FALSE if visual model has achromatic='none'
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
       if (achromatic) {
-        warning(paste("achromatic=TRUE but visual model was calculated with achromatic=", dQuote("none"), "; achromatic contrast not calculated."), call. = FALSE)
+        warning(paste(
+          "achromatic=TRUE but visual model was calculated with achromatic=",
+          dQuote("none"), "; achromatic contrast not calculated."
+        ), call. = FALSE)
       }
       achromatic <- FALSE
     }
@@ -514,8 +518,6 @@ coldist <- function(modeldata,
       ncone <- dim(dat)[2]
       warning(paste("number of cones not specified; assumed to be", ncone), call. = FALSE)
     }
-
-
   }
 
   # Prepare output

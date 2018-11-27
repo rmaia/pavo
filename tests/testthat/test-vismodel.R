@@ -42,8 +42,6 @@ test_that("Warnings", {
 
 test_that("Summary", {
   data(sicalis)
-  vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+  vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
   summary(vis.sicalis)
-  
-  
 })

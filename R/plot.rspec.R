@@ -19,23 +19,23 @@
 #' @param n number of bins with which to interpolate colors and \code{varying} for the
 #' heatplot.
 #' @param labels.stack a vector of labels for the stacked spectra when using \code{type = stack}.
-#' Defaults to the numeric column ID's.   
+#' Defaults to the numeric column ID's.
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
 #'
 #' @export
 #'
 #' @examples \dontrun{
-#' 
+#'
 #' data(teal)
 #' plot(teal, type = 'overlay')
 #' plot(teal, type = 'stack')
 #' plot(teal, type = 'heatmap')
-#' 
+#'
 #' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
-#' 
+#'
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
 # TODO: add argument for padding region between x in stack plot
@@ -110,10 +110,10 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
 
     Index <- approx(varying, n = n)$y
-    
+
     dat <- vapply(seq_len(nrow(x)), function(z) {
       approx(
-        x = varying, 
+        x = varying,
         y = x[z, ],
         n = n
       )$y
@@ -211,10 +211,11 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
     yend <- tail(x2, 1)
     yloc <- ymins + yend
-    
-    if(is.null(labels.stack))
+
+    if (is.null(labels.stack)) {
       labels.stack <- rev(select)
-    
+    }
+
     axis(side = 4, at = yloc, labels = labels.stack, las = 1)
   }
 }

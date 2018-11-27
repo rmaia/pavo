@@ -60,11 +60,19 @@ dispace <- function(vismodeldata) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than two columns", call. = FALSE)
     }
     if (ncol(dat) == 2) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as standardized quantum catch for ", dQuote("s"), " and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as standardized quantum catch for ",
+        dQuote("s"), " and ", dQuote("l"), " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 2) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than two columns; treating the first two columns as standardized quantum catch for ", dQuote("s"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than two columns; treating the first two columns as standardized quantum catch for ",
+        dQuote("s"), ", and ", dQuote("l"), " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     dat <- dat[, 1:2]
@@ -82,7 +90,10 @@ dispace <- function(vismodeldata) {
     s <- dat[, "s"]
     l <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("s"), ", and ", dQuote("l"), ", using first two columns instead.", call. = FALSE)
+    warning("Could not find columns named ", dQuote("s"), ", and ",
+      dQuote("l"), ", using first two columns instead.",
+      call. = FALSE
+    )
     s <- dat[, 1]
     l <- dat[, 2]
   }

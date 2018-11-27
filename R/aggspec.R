@@ -108,7 +108,11 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # check: does data have the same number of columns as the by vector?
 
   if (dim(y)[2] != length(by)) {
-    stop(paste("\n", dQuote(deparse(substitute(by))), "is not of same length as columns in", dQuote(deparse(substitute(data)))))
+    stop(paste(
+      "\n", dQuote(deparse(substitute(by))),
+      "is not of same length as columns in",
+      dQuote(deparse(substitute(data)))
+    ))
   }
 
   # END RM EDIT 3

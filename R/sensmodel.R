@@ -130,7 +130,10 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     if (!is.null(om)) {
       if (length(om) == 1) {
         if (om == "bird") {
-          T.e <- log(8.928 * 10^-13 * (range[1]:range[2])^5 - 2.595 * 10^-9 * (range[1]:range[2])^4 + 3.006 * 10^-6 * (range[1]:range[2])^3 - .001736 * (range[1]:range[2])^2 + .5013 * (range[1]:range[2]) - 55.56)
+          T.e <- log(8.928 * 10^-13 * (range[1]:range[2])^5 - 2.595 * 10^-9 *
+            (range[1]:range[2])^4 + 3.006 * 10^-6 *
+            (range[1]:range[2])^3 - .001736 * (range[1]:range[2])^2 + .5013 *
+            (range[1]:range[2]) - 55.56)
           T.e[which(T.e < 0)] <- 0
           peak <- peak * T.e
         }

@@ -236,7 +236,10 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
     }
 
     if (!interactive) {
-      plotrange <- apply(rbind(tcsres1[, c("x", "y", "z")], tcsres2[, c("x", "y", "z")]), 2, range)
+      plotrange <- apply(rbind(
+        tcsres1[, c("x", "y", "z")],
+        tcsres2[, c("x", "y", "z")]
+      ), 2, range)
 
       if (length(fill) < 3) {
         if (dim(Voverlap)[1] > 3) {

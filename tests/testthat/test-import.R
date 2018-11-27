@@ -62,7 +62,8 @@ test_that("getspec", {
 
 
 test_that("getimg", {
-  expect_s3_class(getimg(system.file("testdata", "images", "formats", package = "pavo")),
-                  "rimg")
-
+  expect_s3_class(
+    getimg(system.file("testdata", "images", "formats", package = "pavo")),
+    "rimg"
+  )
 })

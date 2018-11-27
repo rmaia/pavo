@@ -58,14 +58,26 @@ segspace <- function(vismodeldata) {
 
   if (!("vismodel" %in% attr(dat, "class"))) {
     if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
+      stop("Input data is not a ", dQuote("vismodel"),
+        " object and has fewer than four columns",
+        call. = FALSE
+      )
     }
     if (ncol(dat) == 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as unstandardized quantum catch for ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as unstandardized quantum catch for ",
+        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
+        " segments, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ",
+        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively",
+        call. = FALSE
+      )
     }
 
     dat <- dat[, seq_len(4)]
@@ -82,7 +94,11 @@ segspace <- function(vismodeldata) {
     Q3 <- dat[, "S3"]
     Q4 <- dat[, "S4"]
   } else {
-    warning("Could not find columns named ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), ", using first four columns instead.", call. = FALSE)
+    warning("Could not find columns named ",
+      dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
+      ", using first four columns instead.",
+      call. = FALSE
+    )
     Q1 <- dat[, 1]
     Q2 <- dat[, 2]
     Q3 <- dat[, 3]

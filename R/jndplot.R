@@ -536,8 +536,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
         for (i in seq_len(4)) {
           text(lbl[i],
-               x = lpos$x[i], y = lpos$y[i], xpd = TRUE,
-               cex = labels.cex, col = arrow.col
+            x = lpos$x[i], y = lpos$y[i], xpd = TRUE,
+            cex = labels.cex, col = arrow.col
           )
         }
       }

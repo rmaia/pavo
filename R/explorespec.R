@@ -27,7 +27,9 @@
 #'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-explorespec <- function(rspecdata, by = NULL, scale = c("equal", "free"), legpos = "topright", ...) {
+explorespec <- function(rspecdata, by = NULL,
+                        scale = c("equal", "free"),
+                        legpos = "topright", ...) {
 
   # oPar <- par(no.readonly=TRUE)
   oPar <- par("mar", "oma", "ask", "mfrow")

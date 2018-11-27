@@ -92,7 +92,11 @@ tcspace <- function(vismodeldata) {
     m <- dat[, "m"]
     l <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first four columns instead.", call. = FALSE)
+    warning("Could not find columns named ",
+      dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+      ", using first four columns instead.",
+      call. = FALSE
+    )
     u <- dat[, 1]
     s <- dat[, 2]
     m <- dat[, 3]

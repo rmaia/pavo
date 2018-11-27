@@ -159,7 +159,8 @@ rimg2cimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
     stop("Package \"imager\" needed for conversion to cimg. Please install it.",
-          call. = FALSE)
+      call. = FALSE
+    )
   }
   image <- suppressWarnings(imager::as.cimg(image, cc = 3))
   image

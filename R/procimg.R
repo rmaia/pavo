@@ -66,10 +66,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Check for imager if rotating or resizing
-  if (!is.null(resize) || !is.null(rotate)){
+  if (!is.null(resize) || !is.null(rotate)) {
     if (!requireNamespace("imager", quietly = TRUE)) {
       stop("Package \"imager\" needed for image resizing and rotation. Please install it.",
-           call. = FALSE)
+        call. = FALSE
+      )
     }
   }
 
@@ -119,7 +120,10 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
       for (i in seq_along(image)) {
-        attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], col = col, ...)
+        attr(image[[i]], "px_scale") <- scaler(
+          image_i = image[[i]],
+          scaledist_i = scaledist[[i]], col = col, ...
+        )
         attr(image[[i]], "raw_scale") <- scaledist[[i]]
       }
       if (plotnew) dev.off()

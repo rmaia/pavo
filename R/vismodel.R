@@ -440,12 +440,24 @@ vismodel <- function(rspecdata,
   # calculate Qi
   if (substr(visual2, 1, 3) == "cie") { # Slightly different for CIE
     K <- 100 / colSums(S[2] * illum)
-    Qi <- data.frame(vapply(indices, function(x) colSums(y * S[, x] * illum) * K, numeric(length(y))))
+    Qi <- data.frame(vapply(
+      indices,
+      function(x) colSums(y * S[, x] * illum) * K,
+      numeric(length(y))
+    ))
   } else if (visual == "segment") { # Slightly different for segment
     B <- apply(y, 2, sum)
-    Qi <- data.frame(vapply(indices, function(x) colSums(y * S[, x] * illum) * B, numeric(length(y))))
+    Qi <- data.frame(vapply(
+      indices,
+      function(x) colSums(y * S[, x] * illum) * B,
+      numeric(length(y))
+    ))
   } else {
-    Qi <- data.frame(vapply(indices, function(x) colSums(y * S[, x] * illum), numeric(length(y))))
+    Qi <- data.frame(vapply(
+      indices,
+      function(x) colSums(y * S[, x] * illum),
+      numeric(length(y))
+    ))
   }
 
   # in case rspecdata only has one spectrum

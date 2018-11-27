@@ -61,11 +61,21 @@ coc <- function(vismodeldata) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
     }
     if (ncol(dat) == 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+        " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than three columns; treating the first three columns as quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than three columns; treating the first three columns as quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+        " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     dat <- dat[, 1:3]
@@ -81,7 +91,10 @@ coc <- function(vismodeldata) {
     m <- dat[, "m"]
     l <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first three columns instead.", call. = FALSE)
+    warning("Could not find columns named ", dQuote("s"), ", ", dQuote("m"), ", and ",
+      dQuote("l"), ", using first three columns instead.",
+      call. = FALSE
+    )
     s <- dat[, 1]
     m <- dat[, 2]
     l <- dat[, 3]

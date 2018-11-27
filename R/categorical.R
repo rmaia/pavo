@@ -52,14 +52,27 @@ categorical <- function(vismodeldata) {
 
   if (!("vismodel" %in% attr(dat, "class"))) {
     if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
+      stop("Input data is not a ", dQuote("vismodel"),
+        " object and has fewer than four columns",
+        call. = FALSE
+      )
     }
     if (ncol(dat) == 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as standardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as standardized quantum catch for ",
+        dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+        " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as standardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than four columns; treating the first four columns as standardized quantum catch for ",
+        dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+        " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     dat <- dat[, 1:4]
@@ -79,7 +92,10 @@ categorical <- function(vismodeldata) {
     R8p <- dat[, "m"]
     R8y <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first four columns instead.", call. = FALSE)
+    warning("Could not find columns named ", dQuote("u"), ", ", dQuote("s"), ", ",
+      dQuote("m"), ", and ", dQuote("l"), ", using first four columns instead.",
+      call. = FALSE
+    )
     R7p <- dat[, 1]
     R7y <- dat[, 2]
     R8p <- dat[, 3]

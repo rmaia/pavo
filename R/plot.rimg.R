@@ -7,7 +7,7 @@
 #' @param x (required) an image of class rimg, or list thereof.
 #' @param axes should axes be drawn? (defaults to \code{TRUE})
 #' @param col optional vector of colours when plotting colour-classified images.
-#' Defaults to the mean RGB values of the k-means centres (i.e. the average 'original' 
+#' Defaults to the mean RGB values of the k-means centres (i.e. the average 'original'
 #' colours).
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
@@ -76,7 +76,7 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
     # Convert and transform
     imagedata2 <- suppressWarnings(as.raster(imageout))
     imagedata2 <- mirrorx(imagedata2)
-    imagedata2 <- apply(t(as.matrix(imagedata2)),2,rev)
+    imagedata2 <- apply(t(as.matrix(imagedata2)), 2, rev)
   } else if (attr(imagedata, "state") == "raw") {
     # Convert and transform
     imagedata2 <- as.rimg(imagedata)

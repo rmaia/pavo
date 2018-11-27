@@ -76,11 +76,20 @@ hexagon <- function(vismodeldata) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
     }
     if (ncol(dat) == 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+        " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than three columns; treating the first three columns as quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than three columns; treating the first three columns as quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     dat <- dat[, 1:3]

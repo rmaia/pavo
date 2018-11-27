@@ -31,7 +31,8 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.size = 1, cores = getOption("mc.cores", 2L)) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
+                   max.size = 1, cores = getOption("mc.cores", 2L)) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -49,7 +50,9 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
     # imgdat <- imager::load.image(imgpath)
     imgdat <- grabimg(imgpath)
-    imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    imgdat <- as.rimg(drop(as.array(imgdat)),
+      name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
+    )
 
     # Warn of slowness if dimensions are large
     if ((dim(imgdat)[1] * dim(imgdat)[2]) > (1000 * 1000)) {
@@ -63,7 +66,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
     extension <- paste0("\\.", ext, "$", collapse = "|")
 
     # File names
-    file_names <- list.files(imgpath, pattern = extension, recursive = subdir, include.dirs = subdir)
+    file_names <- list.files(imgpath,
+      pattern = extension,
+      recursive = subdir, include.dirs = subdir
+    )
     files <- paste0(imgpath, "/", file_names)
 
     if (subdir.names) {

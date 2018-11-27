@@ -29,7 +29,8 @@ projplot <- function(tcsdata, ...) {
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # oPar <- par(no.readonly=TRUE)
@@ -86,7 +87,10 @@ projplot <- function(tcsdata, ...) {
 
   mapproj::map.grid(c(-180, 180, -90, 90), labels = FALSE, col = "grey")
 
-  points(mp.v.phi ~ mp.v.theta, pch = 20, cex = 1.5, col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu)))
+  points(mp.v.phi ~ mp.v.theta,
+    pch = 20, cex = 1.5,
+    col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu))
+  )
 
   points(mp.p.phi ~ mp.p.theta, ...)
 }
