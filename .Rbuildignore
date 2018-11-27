@@ -20,3 +20,5 @@ LICENSE.md
 ^.*\.pdf$
 .editorconfig
 .covrignore
+CONTRIBUTING.md
+CONDUCT.md

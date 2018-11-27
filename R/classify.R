@@ -149,54 +149,18 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       outdata <- lapply(imgdat, function(x) classify_main(x, kcols))
     )
 
+  } else if (interactive) {
+    
     ## (4) Single k, interactively specified centre, with reference image ##
-  } else if (!is.null(refID) && interactive == TRUE) {
+    if(!is.null(refID))
+       imgdat <- list(imgdat[[refID]])
 
-    # Reference image
-    refimg <- imgdat[[refID]]
-
-    if (plotnew) dev.new(noRStudioGD = TRUE)
-
-    plot(refimg, ...)
-
-    if (!is.null(kcols)) {
-      message(paste("Select the", kcols, "focal colours"))
-      reference <- as.data.frame(locator(type = "p", col = col, n = kcols))
-    } else if (is.null(kcols)) {
-      message(paste0(
-        "Select the focal colours in image ",
-        attr(refimg, "imgname"), ", and press [esc] to continue."
-      ))
-      reference <- as.data.frame(locator(type = "p", col = col))
-      kcols <- nrow(reference)
-    }
-    tag_loc <- reference
-
-    if (plotnew) dev.off()
-
-    ref_centers <- do.call(rbind, lapply(
-      seq_len(nrow(reference)),
-      function(x) as.data.frame(t(refimg[reference$x[x], reference$y[x], 1:3]))
-    ))
-    names(ref_centers) <- c("R", "G", "B")
-
-    message("Image classification in progress...")
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
-      outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
-    )
-
-    ## (5) Multiple k, with interactively-specified centres for each image. ##
-  } else if (is.null(refID) && interactive) {
+    ## (5) Multiple k, with interactively-specified centres for each image. ##    
     if (length(kcols) == 1) {
-      kcols <- rep(kcols, length(imgdat))
+      kcols <- rep(list(kcols), length(imgdat))
     }
-    if (is.null(kcols)) {
-      n_cols_test <- NULL
-      kcols <- rep(NA, length(imgdat))
-    } else {
-      n_cols_test <- FALSE
-    }
+    if (is.null(kcols))
+      kcols <- rep(list(512), length(imgdat))
 
     centers <- list()
     tag_loc <- list()
@@ -206,20 +170,13 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
       plot(imgdat[[i]], ...)
 
-      if (!is.null(n_cols_test)) {
-        message(paste0(
-          "Select the ", kcols[[i]], " focal colours in image ",
-          attr(imgdat[[i]], "imgname", ".")
-        ))
-        reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
-      } else if (is.null(n_cols_test)) {
         message(paste0(
           "Select the focal colours in image ",
           attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."
         ))
-        reference <- as.data.frame(locator(type = "p", col = col))
+        reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
         kcols[[i]] <- nrow(reference)
-      }
+    
       if (plotnew) dev.off()
 
       ref_centers <- try(do.call(rbind, lapply(
@@ -242,6 +199,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
         i <- i + 1
       }
     }
+      
     message("Image classification in progress...")
     ifelse(imgsize < 100,
       outdata <- pbmclapply(seq_along(imgdat),
@@ -283,7 +241,6 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   } else {
     outdata <- outdata[[1]]
   }
-
   outdata
 }
 
