@@ -177,65 +177,29 @@ vismodel <- function(rspecdata,
   }
 
   qcatch <- match.arg(qcatch)
-
-  # Defaults for CIE-specific stuff. Bit ugly - better way to do this?
-  if (substr(visual2, 1, 3) == "cie") {
-    if (!vonkries) {
+  
+  # Model-specific defaults
+  if(substr(visual2, 1, 3) == "cie"){
+    if(!vonkries || relative || !identical(achromatic2, 'none') || !identical(qcatch, "Qi")){
       vonkries <- TRUE
-      warning("cie system chosen, overriding vonkries to TRUE", call. = FALSE)
-    }
-
-    if (relative) {
       relative <- FALSE
-      warning("cie system chosen, overriding relative to FALSE", call. = FALSE)
-    }
-
-    if (achromatic2 != "none") {
-      achromatic2 <- "none"
-      warning("cie system chosen, overriding achromatic to none", call. = FALSE)
-    }
-
-    if (qcatch != "Qi") {
-      qcatch <- "Qi"
-      warning("cie system chosen, overriding qcatch to Qi", call. = FALSE)
+      achromatic2 <- 'none'
+      qcatch <- 'Qi'
+      warning('cie system chosen, overriding incompatible parameters.', call. = FALSE)
     }
   }
 
-  # Defaults for segment analysis stuff.
   if (visual2 == "segment") {
-    if (vonkries) {
+    if(vonkries || !relative || !identical(achromatic2, "all") || identical(qcatch, "Qi") ||
+       !identical(bg2, "ideal") || !identical(tr2, "ideal") || identical(illum2, "ideal")){
       vonkries <- FALSE
-      warning("segment analysis chosen, overriding vonkries to FALSE", call. = FALSE)
-    }
-
-    if (!relative) {
       relative <- TRUE
-      warning("segment analysis chosen, overriding relative to TRUE", call. = FALSE)
-    }
-
-    if (achromatic2 != "all") {
       achromatic2 <- "all"
-      warning("segment analysis chosen, overriding achromatic to all", call. = FALSE)
-    }
-
-    if (qcatch != "Qi") {
       qcatch <- "Qi"
-      warning("segment analysis chosen, overriding qcatch to Qi", call. = FALSE)
-    }
-
-    if (bg2 != "ideal") {
       bg2 <- "ideal"
-      warning("segment analysis chosen, overriding bkg to ideal", call. = FALSE)
-    }
-
-    if (tr2 != "ideal") {
       tr2 <- "ideal"
-      warning("segment analysis chosen, overriding trans to ideal", call. = FALSE)
-    }
-
-    if (illum2 != "ideal") {
       illum2 <- "ideal"
-      warning("segment analysis chosen, overriding illum to ideal", call. = FALSE)
+      warning('segment analysis chosen, overriding incompatible parameters.', call. = FALSE)
     }
   }
 
