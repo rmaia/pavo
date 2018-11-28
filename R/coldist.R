@@ -403,6 +403,19 @@ coldist <- function(modeldata,
     }
   }
 
+  # Subsetting samples
+
+  if (length(subset) > 2) {
+    stop("Too many subsetting conditions; one or two allowed.", call. = FALSE)
+  }
+  else if (length(subset) == 1) {
+    modeldata <- modeldata[grepl(subset, rownames(modeldata)),]
+  }
+  else if (length(subset) == 2) {
+    modeldata <- modeldata[grepl(subset[1], rownames(modeldata)),]
+    modeldata <- modeldata[grepl(subset[2], rownames(modeldata)),]
+  }
+
   # Pre-processing for colspace objects
   if ("colspace" %in% class(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
@@ -692,38 +705,6 @@ coldist <- function(modeldata,
 
       res[, "dS"] <- apply(pairsid, 1, function(x) chrom_dist(dat[x[1], ], dat[x[2], ]))
     }
-  }
-
-  # Subsetting samples
-
-  if (length(subset) > 2) {
-    stop("Too many subsetting conditions; one or two allowed.", call. = FALSE)
-  }
-
-  if (length(subset) == 1) {
-    condition1 <- grep(subset, res$patch1)
-    condition2 <- grep(subset, res$patch2)
-
-    subsamp <- unique(c(condition1, condition2))
-
-    res <- res[subsamp, ]
-  }
-
-  if (length(subset) == 2) {
-    condition1 <- intersect(
-      grep(subset[1], res$patch1),
-      grep(subset[2], res$patch2)
-    )
-
-    condition2 <- intersect(
-      grep(subset[2], res$patch1),
-      grep(subset[1], res$patch2)
-    )
-
-    subsamp <- unique(c(condition1, condition2))
-
-    res <- res[subsamp, ]
-    row.names(res) <- seq_len(dim(res)[1])
   }
 
   if (exists("resref", inherits = FALSE)) {
