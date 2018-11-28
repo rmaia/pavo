@@ -452,7 +452,7 @@ coldist <- function(modeldata,
 
     # initial checks...
     if (attr(modeldata, "qcatch") == "Ei") {
-      stop("Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
     }
 
     if (attr(modeldata, "relative")) {
