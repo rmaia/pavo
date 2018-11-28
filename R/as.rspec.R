@@ -75,7 +75,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
     name <- name[-wl_index]
     message("wavelengths found in column ", wl_index)
   } else if (!is.null(lim)) {
-    wl <- seq(lim[1], lim[2], length = nrow(object))
+    wl <- seq(lim[1], lim[2], length.out = nrow(object))
     warning(
       "No wavelengths contained in dataset, using user-specified range. ",
       "Check output carefully!"
