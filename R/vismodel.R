@@ -307,10 +307,7 @@ vismodel <- function(rspecdata,
     trans <- trans[, 2]
     warning("Transmission is an rspec object; first spectrum (",
       dQuote(transwhichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
