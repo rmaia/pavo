@@ -33,7 +33,6 @@
 #'
 #' @export
 #'
-#' @importFrom pbmcapply pbmclapply
 #' @importFrom stats kmeans
 #' @importFrom utils object.size
 #' @importFrom grDevices dev.new
@@ -61,6 +60,12 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
+  
+  ## If it's a single image, store it in a list for processing convenience,
+  ## before converting it back at the end
+  if (!multi_image) {
+    imgdat <- list(imgdat)
+  }
 
   # Need options
   if (!interactive && is.null(kcols)) {
@@ -68,17 +73,10 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   }
 
   ## Class/structure
-  if (!multi_image) {
-    if (!"rimg" %in% class(imgdat)) {
-      message("Image is not of class 'rimg'; attempting to coerce.")
-      imgdat <- as.rimg(imgdat)
-    }
-  } else {
     if (any(unlist(lapply(imgdat, function(x) !"rimg" %in% class(x))))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
       imgdat <- lapply(imgdat, function(x) as.rimg(x))
     }
-  }
 
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
@@ -95,86 +93,61 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
     kcols <- parse_kcols(kcols, imgdat)
   }
 
-  ## If it's a single image, store it in a list for processing convenience,
-  ## before converting it back at the end
-  if (!multi_image) {
-    imgdat <- list(imgdat)
-  }
-
   ## ------------------------------ Main ------------------------------ ##
 
   #### So your options/configurations for classification are:
 
-  # (1) Multiple different k's, no reference image (note: cannot have reference image - controlled above).
-  #       (length(kcols) > 1 && interactive == FALSE)
-  # (2) Single k (or multiple identical k), with a reference image.
-  #       (length(kcols) == 1 && !is.null(refID) && interactive = FALSE)
-  # (3) Single k (or multiple identical k), without a reference image, so the centres & assignments will vary between images.
-  #       (length(kcols) == 1 && is.null(refID) && interactive = FALSE)
-  # (4) Single or identical k (don't need to be pre-specified when interactive), with interactively-specified centres, and a single reference image.
-  #       (!is.null(refID) && interactive == TRUE)
-  # (5) Multiple k (identical or not, don't need to be specified), with interactively-specified centres for each image.
-  #       (is.null(refID) && interactive == TRUE)
+  # (1) Non-interactive, no reference image.
+  # (2) Non-interactive, with a reference image.
+  # (3) Interactive, no reference image.
+  # (4) Interctive, with a reference image
 
-  imgsize <- format(object.size(imgdat), units = "Mb")
+  # Image size check to avoid pbmc bug when faced with large objects
+  if (format(object.size(imgdat), units = "Mb") < 100) {
+    parallel <- TRUE
+  } else {
+    parallel <- FALSE
+  }
 
-  ## (1) Multiple k, no reference image ##
-  if (length(kcols) > 1 && interactive == FALSE) {
-    message("Image classification in progress...")
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(seq_along(imgdat),
-        function(x) classify_main(imgdat[[x]], kcols[[x]]),
-        mc.cores = cores
-      ),
-      outdata <- lapply(
-        seq_along(imgdat),
-        function(x) classify_main(imgdat[[x]], kcols[[x]])
-      )
-    )
-  
-  } else if (length(kcols) == 1 && interactive == FALSE) {
-    
-    ## (2) Single k, with reference image ##
-    if(!is.null(refID))
-      ref_centers <- attr(classify_main(imgdat[[refID]], kcols), "classRGB") # k means centers of ref image
-    else
-      ref_centers <- kcols
-      
-    ## (3) Single k, no reference image ##
-    message("Image classification in progress...")
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(imgdat, function(x) classify_main(x, ref_centers), mc.cores = cores),
-      outdata <- lapply(imgdat, function(x) classify_main(x, ref_centers))
-    )
-
-  } else if (interactive) {
-    
-    ## (4) Single k, interactively specified centre, with reference image ##
-    if(!is.null(refID))
-       imgdat <- list(imgdat[[refID]])
-
-    ## (5) Multiple k, with interactively-specified centres for each image. ##    
-    if (length(kcols) == 1) {
-      kcols <- rep(list(kcols), length(imgdat))
+  if (!interactive) {
+    if (!is.null(refID)) { ## (2) Single k, with reference image ##
+      ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]]), "classRGB")
+      ref_centers <- rep(list(ref_centers), length(imgdat))
     }
-    if (is.null(kcols))
+    else { ## (1) Non-interactive, with a reference image. ##
+      ref_centers <- kcols
+    }
+
+    # Classify
+    message("Image classification in progress...")
+    outdata <- classifier(imgdat, ref_centers, parallel, cores)
+  } else if (interactive) {
+
+    ## (3) Interactive, no reference image. ##
+    if (is.null(kcols)) {
       kcols <- rep(list(512), length(imgdat))
+    }
 
     centers <- list()
     tag_loc <- list()
-    i <- 1
+    if (!is.null(refID)) {
+      i <- refID
+    } else {
+      i <- 1
+    }
+
     while (i <= length(imgdat)) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
 
       plot(imgdat[[i]], ...)
 
-        message(paste0(
-          "Select the focal colours in image ",
-          attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."
-        ))
-        reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
-        kcols[[i]] <- nrow(reference)
-    
+      message(paste0(
+        "Select the focal colours in image ",
+        attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."
+      ))
+      reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
+      kcols[[i]] <- nrow(reference)
+
       if (plotnew) dev.off()
 
       ref_centers <- try(do.call(rbind, lapply(
@@ -186,29 +159,28 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
       centers[[i]] <- ref_centers
       tag_loc[[i]] <- reference
 
+      # Error prevention
       if (class(centers[[i]]) == "try-error") {
         message("One or more coorodinates out-of bounds. Try again.")
         i <- i
       } else if (any(duplicated(centers[[i]]))) {
         message("Duplicate colours specified. Try again.")
         i <- i
+      } else if (!is.null(refID)) {
+        ## (4) Interctive, with a reference image. ##
+        names(centers[[i]]) <- c("R", "G", "B")
+        centers <- rep(list(centers[[i]]), length(imgdat))
+        tag_loc <- rep(list(tag_loc[[i]]), length(imgdat))
+        i <- length(imgdat) + 1
       } else {
         names(centers[[i]]) <- c("R", "G", "B")
         i <- i + 1
       }
     }
-      
+
+    # Classify
     message("Image classification in progress...")
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(seq_along(imgdat),
-        function(x) classify_main(imgdat[[x]], centers[[x]]),
-        mc.cores = cores
-      ),
-      outdata <- lapply(
-        seq_along(imgdat),
-        function(x) classify_main(imgdat[[x]], centers[[x]])
-      )
-    )
+    outdata <- classifier(imgdat, centers, parallel, cores)
   }
 
   # Names & attributes
@@ -239,6 +211,19 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   } else {
     outdata <- outdata[[1]]
   }
+  outdata
+}
+
+# Wrapper for main classify function to handle parallel/single core
+#' @importFrom pbmcapply pbmclapply
+classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2) {
+  ifelse(parallel_i2,
+    outdata <- pbmclapply(seq_along(imgdat_i2),
+      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]]),
+      mc.cores = cores_i2
+    ),
+    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]]))
+  )
   outdata
 }
 
@@ -315,10 +300,11 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     if (length(kcols_i) < length(imgdat_i)) {
       stop("When supplying more than one value, the length of kcols must equal the number of images.")
     }
-    # Reduce to single integer if multiple k's are all the same
-    if (length(unique(kcols_i)) == 1) {
-      kcols_i <- kcols_i[1]
-    }
   }
+  # Return a list of identical kcols if only one is supplied
+  if (length(kcols_i) == 1 && length(imgdat_i) > 1) {
+    kcols_i <- rep(kcols_i, length(imgdat_i))
+  }
+
   kcols_i
 }
