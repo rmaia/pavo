@@ -311,17 +311,19 @@ coldist <- function(modeldata,
 
   # 2d Euclidean distance
   euc2d <- function(coord1, coord2) {
-    dist(coord1[c("x", "y")], coord2[c("x", "y")])
+    as.numeric(round(sqrt((coord1["x"] - coord2["x"])^2 +
+      (coord1["y"] - coord2["y"])^2), 7))
   }
 
   # 2d Euclidean distance in segment space
   seg2d <- function(coord1, coord2, achrom) {
-    dist(coord1[c("MS", "LM")], coord2[c("MS", "LM")])
+    as.numeric(round(sqrt((coord1["MS"] - coord2["MS"])^2 +
+      (coord1["LM"] - coord2["LM"])^2), 7))
   }
 
   # Achromatic contrast in segment space
   achroseg <- function(coord1, coord2) {
-    dist(coord1["B"], coord2["B"], method = "manhattan")
+    as.numeric(abs(coord1["B"] - coord2["B"]))
   }
 
   # Achromatic 'green' receptor contrast in the hexagon
@@ -331,17 +333,19 @@ coldist <- function(modeldata,
 
   # Achromatic contrast in cielab
   achrolab <- function(coord1, coord2) {
-    dist(coord1["L"], coord2["L"], method = "manhattan")
+    as.numeric(abs(coord1["L"] - coord2["L"]))
   }
 
   # 2d Euclidean distances in CIELAB
   lab2d <- function(coord1, coord2) {
-    dist(coord1[c("L", "a", "b")], coord2[c("L", "a", "b")])
+    as.numeric(round(sqrt((coord1["L"] - coord2["L"])^2 +
+      (coord1["a"] - coord2["a"])^2 +
+      (coord1["b"] - coord2["b"])^2), 7))
   }
 
   # Manhattan distance
   bloc2d <- function(coord1, coord2) {
-    dist(coord1[c("x", "y")], coord2[c("x", "y")], method = "manhattan")
+    as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
   }
 
   # CIE2000 colour distance for CIELCh
