@@ -154,16 +154,19 @@ coldist <- function(modeldata,
   ##################################
 
   newreceptornoise.neural <- function(dat, n, weber, weber.ref, res) {
+
+    cnames <- colnames(dat)
+
     reln <- n / sum(n)
     v <- weber * sqrt(reln[weber.ref])
-    e <- setNames(v / sqrt(reln), colnames(dat))
+    e <- setNames(v / sqrt(reln), cnames)
 
     #############
     # NUMERATOR #
     #############
 
     # all n-2 combinations (first part numerator)
-    n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
+    n1combs <- combn(cnames, dim(dat)[2] - 2)
 
     # get those combinations of ei and prod(ei)^2
 
@@ -173,7 +176,7 @@ coldist <- function(modeldata,
     )
 
     # remaining 2 combinations (second part numerator)
-    n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
+    n2combs <- apply(n1combs, 2, function(x) cnames[ !cnames %in% x ])
 
     # f_d and f_e
 
@@ -200,7 +203,7 @@ coldist <- function(modeldata,
     ###############
 
     # all n-1 combinations
-    dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
+    dcombs <- combn(cnames, dim(dat)[2] - 1)
 
     den <- setNames(
       apply(dcombs, 2, function(x) prod(e[x])),
@@ -219,12 +222,16 @@ coldist <- function(modeldata,
 
 
   newreceptornoise.quantum <- function(dat, n, weber, weber.ref, res, qndat) {
+
+    cnames <- colnames(dat)
+
     reln <- n / sum(n)
     v <- weber * sqrt(reln[weber.ref])
 
-    ept1 <- setNames(v^2 / reln, colnames(dat))
+    ept1 <- setNames(v^2 / reln, cnames)
     ept2 <- 2 / t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ]))
     e <- sqrt(sweep(ept2, 2, ept1, "+"))
+
 
 
     #############
@@ -232,7 +239,7 @@ coldist <- function(modeldata,
     #############
 
     # all n-2 combinations (first part numerator)
-    n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
+    n1combs <- combn(cnames, dim(dat)[2] - 2)
 
     # get those combinations of ei and prod(ei)^2
 
@@ -241,7 +248,7 @@ coldist <- function(modeldata,
     colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
 
     # remaining 2 combinations (second part numerator)
-    n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
+    n2combs <- apply(n1combs, 2, function(x) cnames[ !cnames %in% x ])
 
     # f_d and f_e
 
@@ -269,7 +276,7 @@ coldist <- function(modeldata,
     ###############
 
     # all n-1 combinations
-    dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
+    dcombs <- combn(cnames, dim(dat)[2] - 1)
 
     den <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z)
       apply(dcombs, 2, function(x) prod(e[z, x]))))
