@@ -146,10 +146,10 @@ rot90 <- function(x) {
 mirrorx <- function(x) {
   if (length(dim(x)) == 3) {
     for (i in seq_len(dim(x)[3])) {
-      x[, , i] <- x[, , i][, ncol(x[, , i]):1]
+      x[, , i] <- x[, , i][, rev(seq_len(ncol(x[, , i])))]
     }
   } else {
-    x <- x[, ncol(x):1]
+    x <- x[, rev(seq_len(ncol(x)))]
   }
   x
 }

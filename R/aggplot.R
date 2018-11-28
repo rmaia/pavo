@@ -36,7 +36,7 @@
 #' # Plot using various error functions and options
 #' aggplot(sicalis, bysic)
 #' aggplot(sicalis, bysic, FUN.error=function(x) quantile(x, c(0.0275,0.975)))
-#' aggplot(sicalis, bysic, shade = spec2rgb(sicalis), lcol = 1)
+#' aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
 #' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x)))
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu},
@@ -79,14 +79,15 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
 
   if (as.integer(dim(errplotspecs)[1] / 2) == as.integer(dim(cntplotspecs)[1]) &&
     as.integer(dim(errplotspecs)[1] %% 2) == 0) {
-    polygon_data <- sapply(indexsub, function(x)
+    polygon_data <- vapply(indexsub, function(x)
       c(
         errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 1, x],
         rev(errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 0, x])
-      ))
+      ), numeric(nrow(errplotspecs)))
   } else {
-    polygon_data <- sapply(indexsub, function(x)
-      c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])))
+    polygon_data <- vapply(indexsub, function(x)
+      c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])), 
+      numeric(nrow(errplotspecs)*2))
   }
 
 

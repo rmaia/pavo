@@ -52,7 +52,7 @@ bysic <- gsub("^ind[0-9].",'', names(sicalis)[-1])
 # Plot using various error functions and options
 aggplot(sicalis, bysic)
 aggplot(sicalis, bysic, FUN.error=function(x) quantile(x, c(0.0275,0.975)))
-aggplot(sicalis, bysic, shade = spec2rgb(sicalis), lcol = 1)
+aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
 aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x)))
 
 }

@@ -87,8 +87,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   dblpeak.nms <- nms[select][dblpeaks > 1]
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum
-    Xi <- sapply(Xi, "[[", 1)
-    warning(paste("Multiple wavelengths have the same reflectance value (", paste(dblpeak.nms, collapse = ", "), "). Using first peak found. Please check the data or try smoothing.", sep = ""), call. = FALSE)
+    Xi <- vapply(Xi, "[[", 1, numeric(1))
+    warning(paste("Multiple wavelengths have the same reflectance value (", 
+                  paste(dblpeak.nms, collapse = ", "), "). Using first peak found. Please check the data or try smoothing.", sep = ""), 
+            call. = FALSE)
   }
   # end CE edit
 
@@ -99,8 +101,8 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   fsthalf <- lapply(seq_len(ncol(rspecdata2)), function(x) rspecdata2[seq_len(Xi[x]), x])
   sndhalf <- lapply(seq_len(ncol(rspecdata2)), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
   halfmax <- (Yi + Yj) / 2 # reflectance midpoint
-  fstHM <- sapply(seq_len(length(fsthalf)), function(x) which.min(abs(fsthalf[[x]] - halfmax[x])))
-  sndHM <- sapply(seq_len(length(sndhalf)), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])))
+  fstHM <- vapply(seq_len(length(fsthalf)), function(x) which.min(abs(fsthalf[[x]] - halfmax[x])), numeric(1))
+  sndHM <- vapply(seq_len(length(sndhalf)), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])), numeric(1))
 
   if (any(Yj > Yk)) {
     warning(paste("Consider fixing ", dQuote("lim"), " in spectra with ", dQuote("incl.min"), " marked ", dQuote("No"), " to incorporate all minima in spectral curves", sep = ""), call. = FALSE)

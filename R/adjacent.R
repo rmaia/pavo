@@ -291,9 +291,9 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
   allNms <- unique(unlist(lapply(outdata, names)))
   outdata <- do.call(rbind, c(lapply(outdata, function(x)
-    data.frame(c(x, sapply(
+    data.frame(c(x, vapply(
       setdiff(allNms, names(x)),
-      function(y) NA
+      function(y) NA, logical(1)
     )))), make.row.names = FALSE))
 
   # Reshuffle column order

@@ -78,10 +78,11 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
-    wl_id <- sapply(seq_along(by), function(x) which(by[[x]] == "wl")) # extract wl columns
+    print('yay')
+    wl_id <- vapply(seq_along(by), function(x) which(by[[x]] == "wl"), numeric(1)) # extract wl columns
     # remove 'wl' column from each vector in list
-    if (any(sapply(wl_id, length) != 0)) {
-      id <- which(sapply(wl_id, length) != 0)
+    if (any(vapply(wl_id, length, numeric(1)) != 0)) {
+      id <- which(vapply(wl_id, length, numeric(1)) != 0)
       by[id] <- lapply(by[id], "[", -unlist(wl_id)[id])
     }
     # check that wl column is the same for all vectors

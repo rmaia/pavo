@@ -183,7 +183,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       arg$ylab <- "Cumulative reflectance (arb. units)"
     }
 
-    x2 <- as.data.frame(x[, c(ncol(x):1)])
+    x2 <- as.data.frame(x[, c(rev(seq_len(ncol(x))))])
     if (length(select) == 1) {
       y <- max(x2)
     } else {
