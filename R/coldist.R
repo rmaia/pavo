@@ -18,8 +18,8 @@
 #'  \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
 #'    channel is proportional to the logarithm of the quantum catch)
 #'  }
-#' @param subset If only some of the comparisons should be returned, a character vector of
-#'  length 1 or 2 can be provided, indicating which samples are desired. The subset vector
+#' @param subset If only some of the comparisons should be returned, a character vector
+#'  can be provided, indicating which samples are desired. The subset vector
 #'  must match the labels of the input samples, but partial matching (and regular expressions)
 #'  are supported.
 #' @param achromatic Logical. If \code{TRUE}, last column of the data frame is used to calculate
@@ -405,15 +405,9 @@ coldist <- function(modeldata,
 
   # Subsetting samples
 
-  if (length(subset) > 2) {
-    stop("Too many subsetting conditions; one or two allowed.", call. = FALSE)
-  }
-  else if (length(subset) == 1) {
+  if (!is.null(subset)) {
+    subset <- paste(subset, collapse = "|")
     modeldata <- modeldata[grepl(subset, rownames(modeldata)),]
-  }
-  else if (length(subset) == 2) {
-    modeldata <- modeldata[grepl(subset[1], rownames(modeldata)),]
-    modeldata <- modeldata[grepl(subset[2], rownames(modeldata)),]
   }
 
   # Pre-processing for colspace objects
