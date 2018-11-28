@@ -395,7 +395,7 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
-  lengthn <- as.character(length(n))
+  lengthn <- length(n)
 
   if (noise == "quantum") {
     if (!any(c("vismodel", "colspace") %in% class(modeldata))) {
@@ -406,7 +406,7 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if ("colspace" %in% class(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
-    ncone <- as.character(attr(modeldata, "conenumb"))
+    ncone <- attr(modeldata, "conenumb")
 
     dat <- as.matrix(modeldata[, vapply(modeldata, is.numeric, logical(1))])
 
@@ -415,7 +415,7 @@ coldist <- function(modeldata,
       qcatch <- attr(modeldata, "qcatch")
 
       if (lengthn != ncone) {
-        stop(paste("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", sep = ""), call. = FALSE)
+        stop("vector of relative cone densities (", dQuote("n"), ") is different from the number of cones in the visual model data", call. = FALSE)
       }
       dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
       dat <- switch(qcatch,
@@ -442,10 +442,10 @@ coldist <- function(modeldata,
     # set achromatic=FALSE if visual model has achromatic='none'
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
       if (achromatic) {
-        warning(paste(
+        warning(
           "achromatic=TRUE but visual model was calculated with achromatic=",
-          dQuote("none"), "; achromatic contrast not calculated."
-        ), call. = FALSE)
+          dQuote("none"), "; achromatic contrast not calculated.",
+          call. = FALSE)
       }
       achromatic <- FALSE
     }
@@ -478,10 +478,10 @@ coldist <- function(modeldata,
     )
 
     # choose receptor noise model depending on visual system
-    ncone <- as.character(attr(modeldata, "conenumb"))
+    ncone <- attr(modeldata, "conenumb")
 
     if (lengthn != ncone) {
-      stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep = ""), call. = FALSE)
+      stop("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", call. = FALSE)
     }
 
     rownames(dat) <- rownames(modeldata)
@@ -507,11 +507,11 @@ coldist <- function(modeldata,
 
     if (achromatic) {
       ncone <- dim(dat)[2] - 1
-      warning(paste("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)"), call. = FALSE)
+      warning("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)", call. = FALSE)
     }
     else {
       ncone <- dim(dat)[2]
-      warning(paste("number of cones not specified; assumed to be", ncone), call. = FALSE)
+      warning("number of cones not specified; assumed to be", ncone, call. = FALSE)
     }
   }
 
@@ -552,11 +552,16 @@ coldist <- function(modeldata,
   if (usereceptornoisemodel) {
     dat2 <- dat[, seq_len(as.numeric(ncone)), drop = FALSE]
 
-    if (is.numeric(weber.ref) && weber.ref > length(n)) stop(paste("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", sep = ""), call. = FALSE)
+    if (is.numeric(weber.ref) && weber.ref > length(n)) {
+      stop("reference cone class for the empirical estimate of the Weber fraction (", dQuote("weber ref"), ") is greater than the length of vector of relative cone densities (", dQuote("n"), ")", call. = FALSE)
+    }
+    else if (weber.ref == "longest") {
+      weber.ref <- length(n)
+    }
 
-    if (weber.ref == "longest") weber.ref <- length(n)
-
-    if (length(n) != dim(dat2)[2]) stop(paste("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", sep = ""), call. = FALSE)
+    if (length(n) != dim(dat2)[2]) {
+      stop("vector of relative cone densities (", dQuote("n"), ") has a different length than the number of cones (columns) used for the visual model", call. = FALSE)
+    }
 
 
     # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
