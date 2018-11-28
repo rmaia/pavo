@@ -124,21 +124,21 @@ tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
 
 # Trichromat, color-hexagon model (euclidean distances)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',
-                        relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+                        relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 hexdist.flowers <- coldist(hex.flowers)
 
 # Trichromat, color-opponent-coding model (manhattan distances)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 coc.flowers <- colspace(vis.flowers, space = 'coc')
-hexdist.flowers <- coldist(coc.flowers)
+cocdist.flowers <- coldist(coc.flowers)
 
 # Tetrachromat
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
-# This will also work, but give you several warnings you shouldn't ignore!!
+# This will also work, but give you several warnings you shouldn't ignore!
 col.sicalis <- colspace(vis.sicalis)
 tetradist.sicalis.n <- coldist(col.sicalis)
 

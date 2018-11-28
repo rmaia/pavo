@@ -1922,13 +1922,13 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 <pre><code>## Warning in seq.default(along = x): partial argument match of 'along' to
 ## 'along.with'</code></pre>
 <pre><code>## Warning: Quantum catch are relative, distances may not be meaningful</code></pre>
-<pre><code>##                  patch1              patch2        dS
-## 1 Goodenia_heterophylla Goodenia_geniculata 0.4389066
-## 2 Goodenia_heterophylla   Goodenia_gracilis 1.4421739
-## 3 Goodenia_heterophylla    Xyris_operculata 0.3859043
-## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1383047
-## 5 Goodenia_heterophylla  Faradaya_splendida 0.3640816
-## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2588980</code></pre>
+<pre><code>##                  patch1              patch2 dS
+## 1 Goodenia_heterophylla Goodenia_geniculata NA
+## 2 Goodenia_heterophylla   Goodenia_gracilis NA
+## 3 Goodenia_heterophylla    Xyris_operculata NA
+## 4 Goodenia_heterophylla       Eucalyptus_sp NA
+## 5 Goodenia_heterophylla  Faradaya_splendida NA
+## 6 Goodenia_heterophylla  Gaultheria_hispida NA</code></pre>
 <p>Specialised colourspace models such as the colour-hexagon, coc space, CIELAB and CIELCh models have their own distance measures, which are returned be default when run through <code>coldist()</code>. Be sure to read the <code>?coldist</code> documentation, and the original publications, to understand what is being returned. As an example, if we run the results of colour-hexagon modelling through <code>coldist()</code>:</p>
 <div class="sourceCode" id="cb206"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb206-1" data-line-number="1"><span class="co"># Model flower colours according to a honeybee</span></a>
 <a class="sourceLine" id="cb206-2" data-line-number="2">vis.flowers &lt;-<span class="st"> </span><span class="kw">vismodel</span>(flowers, <span class="dt">visual =</span> <span class="st">&quot;apis&quot;</span>, <span class="dt">qcatch =</span> <span class="st">&quot;Ei&quot;</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">vonkries =</span> <span class="ot">TRUE</span>, <span class="dt">achromatic =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">bkg =</span> <span class="st">&quot;green&quot;</span>)</a></code></pre></div>
@@ -1991,7 +1991,7 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:01
+  |============================                           |  50%, ETA 00:00
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <p>When <code>pavo</code> imports images, it created a multidimensional object of class <code>rimg</code>, which inherits from the <code>array</code> class. If more than one image is imported, then these <code>rimg</code> objects are stored as elements in a list. All image-based functions in <code>pavo</code> are capable of working with such <code>rimg</code> lists, which allows for a more convenient and tidy high-throughput workflow. Note that while <code>pavo</code> will allow you to load, manipulate, and analyse as many images as your computer’s memory allows, it will throw a message if the total size of images in memory is greater than ca. 200mb, as this will result in noticeably slowed performance (everything will still work, it will just be slow). This may be ameliorated by reducing the size of individual images, such as through <code>procimg()</code>, or by processing images in smaller batches. All <code>rimg</code> objects have a number of identifying attributes, drawn on by image-processing functions, which can be readily inspected.</p>
@@ -2109,7 +2109,7 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:03
+  |============================                           |  50%, ETA 00:02
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb241"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb241-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>

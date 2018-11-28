@@ -22,7 +22,7 @@ test_that("Equivalent", {
   )
 
   expect_equal(
-    coldist(vismodel(flowers, relative = FALSE), achro = FALSE),
+    coldist(vismodel(flowers, relative = FALSE), achromatic = FALSE),
     suppressWarnings(coldist(colspace(vismodel(flowers, relative = FALSE)), achro = FALSE)),
     check.attributes = FALSE
   )

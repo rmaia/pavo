@@ -105,21 +105,21 @@
 #'
 #' # Trichromat, color-hexagon model (euclidean distances)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',
-#'                         relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
+#'                         relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
 #' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' hexdist.flowers <- coldist(hex.flowers)
 #'
 #' # Trichromat, color-opponent-coding model (manhattan distances)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 #' coc.flowers <- colspace(vis.flowers, space = 'coc')
-#' hexdist.flowers <- coldist(coc.flowers)
+#' cocdist.flowers <- coldist(coc.flowers)
 #'
 #' # Tetrachromat
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
 #'
-#' # This will also work, but give you several warnings you shouldn't ignore!!
+#' # This will also work, but give you several warnings you shouldn't ignore!
 #' col.sicalis <- colspace(vis.sicalis)
 #' tetradist.sicalis.n <- coldist(col.sicalis)
 #'
@@ -309,7 +309,6 @@ coldist <- function(modeldata,
   # START OTHER DISTANCES #
   #########################
 
-
   # 2d Euclidean distance
   euc2d <- function(coord1, coord2) {
     as.numeric(round(sqrt((coord1["x"] - coord2["x"])^2 +
@@ -317,7 +316,7 @@ coldist <- function(modeldata,
   }
 
   # 2d Euclidean distance in segment space
-  seg2d <- function(coord1, coord2) {
+  seg2d <- function(coord1, coord2, achrom) {
     as.numeric(round(sqrt((coord1["MS"] - coord2["MS"])^2 +
       (coord1["LM"] - coord2["LM"])^2), 7))
   }
@@ -344,21 +343,26 @@ coldist <- function(modeldata,
       (coord1["b"] - coord2["b"])^2), 7))
   }
 
-  # CIE2000 colour distance for CIELCh (LOLWAT)
+  # Manhattan distance
+  bloc2d <- function(coord1, coord2) {
+    as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
+  }
+  
+  # CIE2000 colour distance for CIELCh
   cie2000 <- function(coord1, coord2) {
-
+    
     # Lightness difference
     dL <- coord2["L"] - coord1["L"]
-
+    
     # Mean lightness
     mL <- (coord2["L"] + coord1["L"]) / 2
-
+    
     # Chroma difference
     dC <- coord2["C"] - coord1["C"]
-
+    
     # Mean chroma
     mC <- (coord2["C"] + coord1["C"]) / 2
-
+    
     # Hue difference
     if (coord1["h"] - coord2["h"] <= 180) {
       dh <- coord2["h"] - coord1["h"]
@@ -367,7 +371,7 @@ coldist <- function(modeldata,
     } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
       dh <- coord2["h"] + coord1["h"] - 360
     }
-
+    
     # Mean hue
     if (abs(coord2["h"] - coord1["h"]) <= 180) {
       mh <- (coord2["h"] + coord1["h"]) / 2
@@ -376,22 +380,17 @@ coldist <- function(modeldata,
     } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
       mh <- (coord2["h"] + coord1["h"] - 360) / 2
     }
-
+    
     t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) +
       (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
-
+    
     sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
     sC <- 1 + 0.045 * mC
     sH <- 1 + 0.015 * mC * t
-
+    
     Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
-
+    
     as.numeric(round(sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))), 7)
-  }
-
-  # Manhattan distance
-  bloc2d <- function(coord1, coord2) {
-    as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
   }
 
   #######################
@@ -624,7 +623,6 @@ coldist <- function(modeldata,
       )
     }
 
-
     if (achromatic) {
       if (noise == "neural") {
         res[, "dL"] <- unlist(lapply(seq(nrow(res)), function(x)
@@ -676,48 +674,22 @@ coldist <- function(modeldata,
   #######################
 
   if ("colspace" %in% class(modeldata)) {
-    if (attr(modeldata, "clrsp") == "hexagon") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
-      }
-    }
+    if(any(c('hexagon', 'segment', 'categorical', 'CIELAB', 'CIELCh', 'coc') %in% attr(modeldata, "clrsp"))){
+    chrom_dist <- switch(attr(modeldata, "clrsp"),
+                         "hexagon" = euc2d,
+                         "segment" = seg2d,
+                         "categorical" = euc2d,
+                         "CIELAB" = lab2d,
+                         "CIELCh" = lab2d,
+                         "coc" = bloc2d)
+    achro_dist <- switch(attr(modeldata, "clrsp"),
+                         "hexagon" = achrohex,
+                         "segment" = achroseg,
+                         "CIELAB" = achrolab,
+                         "CIELCh" = achrolab)
 
-    if (attr(modeldata, "clrsp") == "segment") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "categorical") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        warning("Achromatic contrast not calculated in the categorical model", call. = FALSE)
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "CIELAB") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "CIELCh") {
-      # res[, 'dS'] <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
-      res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "coc") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        warning("Achromatic contrast not calculated in the color-opponent-coding space", call. = FALSE)
-      }
-    }
+    res[, "dS"] <- apply(pairsid, 1, function(x) chrom_dist(dat[x[1], ], dat[x[2], ]))
+    } 
   }
 
   nams2 <- with(res, unique(c(patch1, patch2)))
