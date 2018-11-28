@@ -495,7 +495,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     P <- do.call(perspbox, plotarg)
 
 
-    # add arrows
+    # Add arrows and labels
     if (arrow != "none") {
       astart <- trans3d(
         rep(arrowstart[, colstouse[1]], 4),
@@ -509,7 +509,6 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         arrowpos[, colstouse[3]], P
       )
 
-
       arrowarg <- arg
       arrowarg <- arrowarg[names(as.list(args(arrows)))]
       arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
@@ -520,11 +519,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
       arrowarg$y1 <- aend$y
       arrowarg$col <- arrow.col
 
-
       do.call(arrows, arrowarg)
-    }
 
-    if (arrow != "none") {
       if (arrow.labels) {
         if (achro) {
           lbl <- c("S", "M", "L", "lum")
