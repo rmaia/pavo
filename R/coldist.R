@@ -347,22 +347,22 @@ coldist <- function(modeldata,
   bloc2d <- function(coord1, coord2) {
     as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
   }
-  
+
   # CIE2000 colour distance for CIELCh
   cie2000 <- function(coord1, coord2) {
-    
+
     # Lightness difference
     dL <- coord2["L"] - coord1["L"]
-    
+
     # Mean lightness
     mL <- (coord2["L"] + coord1["L"]) / 2
-    
+
     # Chroma difference
     dC <- coord2["C"] - coord1["C"]
-    
+
     # Mean chroma
     mC <- (coord2["C"] + coord1["C"]) / 2
-    
+
     # Hue difference
     if (coord1["h"] - coord2["h"] <= 180) {
       dh <- coord2["h"] - coord1["h"]
@@ -371,7 +371,7 @@ coldist <- function(modeldata,
     } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
       dh <- coord2["h"] + coord1["h"] - 360
     }
-    
+
     # Mean hue
     if (abs(coord2["h"] - coord1["h"]) <= 180) {
       mh <- (coord2["h"] + coord1["h"]) / 2
@@ -380,16 +380,16 @@ coldist <- function(modeldata,
     } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
       mh <- (coord2["h"] + coord1["h"] - 360) / 2
     }
-    
+
     t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) +
       (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
-    
+
     sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
     sC <- 1 + 0.045 * mC
     sH <- 1 + 0.015 * mC * t
-    
+
     Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
-    
+
     as.numeric(round(sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))), 7)
   }
 
@@ -668,28 +668,29 @@ coldist <- function(modeldata,
   }
 
 
-
   #######################
   # Other Visual Models #
   #######################
 
   if ("colspace" %in% class(modeldata)) {
-    if(any(c('hexagon', 'segment', 'categorical', 'CIELAB', 'CIELCh', 'coc') %in% attr(modeldata, "clrsp"))){
-    chrom_dist <- switch(attr(modeldata, "clrsp"),
-                         "hexagon" = euc2d,
-                         "segment" = seg2d,
-                         "categorical" = euc2d,
-                         "CIELAB" = lab2d,
-                         "CIELCh" = lab2d,
-                         "coc" = bloc2d)
-    achro_dist <- switch(attr(modeldata, "clrsp"),
-                         "hexagon" = achrohex,
-                         "segment" = achroseg,
-                         "CIELAB" = achrolab,
-                         "CIELCh" = achrolab)
+    if (any(c("hexagon", "segment", "categorical", "CIELAB", "CIELCh", "coc") %in% attr(modeldata, "clrsp"))) {
+      chrom_dist <- switch(attr(modeldata, "clrsp"),
+        "hexagon" = euc2d,
+        "segment" = seg2d,
+        "categorical" = euc2d,
+        "CIELAB" = lab2d,
+        "CIELCh" = lab2d,
+        "coc" = bloc2d
+      )
+      achro_dist <- switch(attr(modeldata, "clrsp"),
+        "hexagon" = achrohex,
+        "segment" = achroseg,
+        "CIELAB" = achrolab,
+        "CIELCh" = achrolab
+      )
 
-    res[, "dS"] <- apply(pairsid, 1, function(x) chrom_dist(dat[x[1], ], dat[x[2], ]))
-    } 
+      res[, "dS"] <- apply(pairsid, 1, function(x) chrom_dist(dat[x[1], ], dat[x[2], ]))
+    }
   }
 
   nams2 <- with(res, unique(c(patch1, patch2)))
