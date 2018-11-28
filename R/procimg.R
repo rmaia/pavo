@@ -74,11 +74,13 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
   }
 
-  multi_image <- inherits(image, "list") # Single or multiple images?
+  ## If it's a single image, store it in a list for processing convenience,
+  ## before converting it back at the end
+  if (!inherits(image, "list")) {
+    image <- list(image)
+  }
 
   ## ------------------------------ Main ------------------------------ ##
-
-  if (multi_image) { # Multiple images
 
     ## Resize ##
     if (attr(image[[1]], "state") == "colclass" && is.numeric(resize)) {
@@ -139,50 +141,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       }
       if (plotnew) dev.off()
     }
-  } else {
-
-    ## Resize ##
-    if (attr(image, "state") == "colclass" && is.numeric(resize)) {
-      message("Cannot resize colour-classified images.")
-      resize <- NULL
-    }
-    if (is.numeric(resize)) {
-      imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imresize(image, resize)
-      image <- cimg2rimg(image, imgname)
-    }
-
-    ## Rotate ##
-    if (attr(image, "state") == "colclass" && is.numeric(rotate)) {
-      message("Cannot rotate colour-classified images.")
-      rotate <- NULL
-    }
-    if (is.numeric(rotate)) {
-      imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imrotate(image, rotate)
-      image <- cimg2rimg(image, imgname)
-    }
-
-    ## Scale ##
-    if (plotnew) dev.new(noRStudioGD = TRUE)
-    if (is.numeric(scaledist)) {
-      message("Scale calibration: Select both ends of the scale.")
-      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, col = col, ...)
-      attr(image, "raw_scale") <- scaledist
-    }
-    if (plotnew) dev.off()
-
-    ## Select outline of focal stimulus ##
-    if (plotnew) dev.new(noRStudioGD = TRUE)
-    if (outline) {
-      message("Select the outline of focal stimulus, and press [esc] when complete.
-              The first and last points will be automatically connected.")
-      attr(image, "outline") <- outliner(image, smooth, iterations, col = col, ...)
-    }
-    if (plotnew) dev.off()
-  }
+  
+  if(length(image) == 1)
+    image <- image[[1]]
 
   image
 }
