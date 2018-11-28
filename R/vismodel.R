@@ -156,8 +156,8 @@ vismodel <- function(rspecdata,
   y <- rspecdata[, -wl_index, drop = FALSE]
 
   # Negative value check
-  if (length(y[y < 0]) > 0) {
-    warning(paste("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them."))
+  if (any(y < 0)) {
+    warning("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them.")
   }
 
   visual2 <- try(match.arg(visual), silent = TRUE)
@@ -177,7 +177,7 @@ vismodel <- function(rspecdata,
   }
 
   qcatch <- match.arg(qcatch)
-  
+
   # Model-specific defaults
   if(substr(visual2, 1, 3) == "cie"){
     if(!vonkries || relative || !identical(achromatic2, 'none') || !identical(qcatch, "Qi")){
@@ -305,7 +305,7 @@ vismodel <- function(rspecdata,
   if ("rspec" %in% class(trans)) {
     transwhichused <- names(trans)[2]
     trans <- trans[, 2]
-    warning(paste("Transmission is an rspec object; first spectrum (",
+    warning("Transmission is an rspec object; first spectrum (",
       dQuote(transwhichused), ") has been used (remaining columns ignored)",
       sep = ""
     )
@@ -318,12 +318,9 @@ vismodel <- function(rspecdata,
     !"rspec" %in% class(trans)) {
     transgwhichused <- names(trans)[1]
     trans <- trans[, 1]
-    warning(paste("Transmission is a matrix or data frame; first column (",
+    warning("Transmission is a matrix or data frame; first column (",
       dQuote(transgwhichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
@@ -332,12 +329,9 @@ vismodel <- function(rspecdata,
   if ("rspec" %in% class(bkg)) {
     bkgwhichused <- names(bkg)[2]
     bkg <- bkg[, 2]
-    warning(paste("Background is an rspec object; first spectrum (",
+    warning("Background is an rspec object; first spectrum (",
       dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
@@ -345,12 +339,9 @@ vismodel <- function(rspecdata,
     !"rspec" %in% class(bkg)) {
     bkgwhichused <- names(bkg)[1]
     bkg <- bkg[, 1]
-    warning(paste("Background is a matrix or data frame; first column (",
+    warning("Background is a matrix or data frame; first column (",
       dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
@@ -370,12 +361,9 @@ vismodel <- function(rspecdata,
   if ("rspec" %in% class(illum)) {
     whichused <- names(illum)[2]
     illum <- illum[, 2]
-    warning(paste("Illuminant is an rspec object; first spectrum (",
+    warning("Illuminant is an rspec object; first spectrum (",
       dQuote(whichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
@@ -383,12 +371,9 @@ vismodel <- function(rspecdata,
     !"rspec" %in% class(illum)) {
     whichused <- names(illum)[1]
     illum <- illum[, 1]
-    warning(paste("Illuminant is a matrix or data frame; first column (",
+    warning("Illuminant is a matrix or data frame; first column (",
       dQuote(whichused), ") has been used (remaining columns ignored)",
-      sep = ""
-    )
-    ,
-    call. = FALSE
+      call. = FALSE
     )
   }
 
@@ -446,12 +431,9 @@ vismodel <- function(rspecdata,
     if ("rspec" %in% class(achromatic)) {
       whichused <- names(achromatic)[2]
       achromatic <- achromatic[, 2]
-      warning(paste("Achromatic is an rspec object; first spectrum (",
+      warning("Achromatic is an rspec object; first spectrum (",
         dQuote(whichused), ") has been used (remaining columns ignored)",
-        sep = ""
-      )
-      ,
-      call. = FALSE
+        call. = FALSE
       )
     }
 
@@ -459,12 +441,9 @@ vismodel <- function(rspecdata,
       !"rspec" %in% class(achromatic)) {
       whichused <- names(achromatic)[1]
       achromatic <- achromatic[, 1]
-      warning(paste("Achromatic is a matrix or data frame; first column (",
+      warning("Achromatic is a matrix or data frame; first column (",
         dQuote(whichused), ") has been used (remaining columns ignored)",
-        sep = ""
-      )
-      ,
-      call. = FALSE
+        call. = FALSE
       )
     }
 

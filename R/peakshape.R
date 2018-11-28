@@ -88,8 +88,8 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum
     Xi <- vapply(Xi, "[[", 1, numeric(1))
-    warning(paste("Multiple wavelengths have the same reflectance value (", 
-                  paste(dblpeak.nms, collapse = ", "), "). Using first peak found. Please check the data or try smoothing.", sep = ""), 
+    warning("Multiple wavelengths have the same reflectance value (",
+            paste(dblpeak.nms, collapse = ", "), "). Using first peak found. Please check the data or try smoothing.",
             call. = FALSE)
   }
   # end CE edit
@@ -105,7 +105,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   sndHM <- vapply(seq_len(length(sndhalf)), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])), numeric(1))
 
   if (any(Yj > Yk)) {
-    warning(paste("Consider fixing ", dQuote("lim"), " in spectra with ", dQuote("incl.min"), " marked ", dQuote("No"), " to incorporate all minima in spectral curves", sep = ""), call. = FALSE)
+    warning("Consider fixing ", dQuote("lim"), " in spectra with ", dQuote("incl.min"), " marked ", dQuote("No"), " to incorporate all minima in spectral curves", call. = FALSE)
   }
 
   Xa <- wlrange[fstHM]

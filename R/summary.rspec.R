@@ -378,7 +378,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
     if (all(subset %in% colvarnames)) {
       color.var <- color.var[subset]
     } else {
-      stop(paste("Names in", dQuote("subset"), "do not match color variable names"))
+      stop("Names in ", dQuote("subset"), " do not match color variable names")
     }
   }
 
