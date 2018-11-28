@@ -168,7 +168,7 @@ coldist <- function(modeldata,
     # get those combinations of ei and prod(ei)^2
 
     num1 <- setNames(
-      apply(n1combs, 2, function(x) prod(e[x])^2),
+      apply(n1combs, 2, function(x) prod(e[x])),
       apply(n1combs, 2, paste, collapse = "")
     )
 
@@ -185,7 +185,7 @@ coldist <- function(modeldata,
 
     # (f_d-f_e)^2
 
-    num2 <- do.call("cbind", lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z)^2)))
+    num2 <- do.call("cbind", lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z))))
 
     # (e_abc)^2*(f_d-f_e)^2
 
@@ -193,7 +193,7 @@ coldist <- function(modeldata,
 
     # sum numerator
 
-    numerator <- rowSums(etimesq)
+    numerator <- rowSums(etimesq^2)
 
     ###############
     # DENOMINATOR #
@@ -203,11 +203,11 @@ coldist <- function(modeldata,
     dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
 
     den <- setNames(
-      apply(dcombs, 2, function(x) prod(e[x])^2),
+      apply(dcombs, 2, function(x) prod(e[x])),
       apply(dcombs, 2, paste, collapse = "")
     )
 
-    denominator <- sum(den)
+    denominator <- sum(den^2)
 
     ###########
     # DELTA S #
@@ -237,7 +237,7 @@ coldist <- function(modeldata,
     # get those combinations of ei and prod(ei)^2
 
     num1 <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z)
-      apply(n1combs, 2, function(x) prod(e[z, x])^2)))
+      apply(n1combs, 2, function(x) prod(e[z, x]))))
     colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
 
     # remaining 2 combinations (second part numerator)
@@ -254,7 +254,7 @@ coldist <- function(modeldata,
     # (f_d-f_e)^2
 
     num2 <- do.call("cbind", lapply(deltaqiqj, function(x)
-      apply(x, 1, function(z) diff(z)^2)))
+      apply(x, 1, function(z) diff(z))))
 
     # (e_abc)^2*(f_d-f_e)^2
 
@@ -262,7 +262,7 @@ coldist <- function(modeldata,
 
     # sum numerator
 
-    numerator <- rowSums(etimesq)
+    numerator <- rowSums(etimesq^2)
 
     ###############
     # DENOMINATOR #
@@ -272,10 +272,10 @@ coldist <- function(modeldata,
     dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
 
     den <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z)
-      apply(dcombs, 2, function(x) prod(e[z, x])^2)))
+      apply(dcombs, 2, function(x) prod(e[z, x]))))
     colnames(den) <- apply(dcombs, 2, paste, collapse = "")
 
-    denominator <- rowSums(den)
+    denominator <- rowSums(den^2)
 
     ###########
     # DELTA S #
