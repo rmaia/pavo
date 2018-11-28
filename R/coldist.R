@@ -188,7 +188,7 @@ coldist <- function(modeldata,
 
     # (f_d-f_e)^2
 
-    num2 <- do.call("cbind", lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z))))
+    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))
 
     # (e_abc)^2*(f_d-f_e)^2
 
@@ -260,8 +260,7 @@ coldist <- function(modeldata,
 
     # (f_d-f_e)^2
 
-    num2 <- do.call("cbind", lapply(deltaqiqj, function(x)
-      apply(x, 1, function(z) diff(z))))
+    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))
 
     # (e_abc)^2*(f_d-f_e)^2
 
