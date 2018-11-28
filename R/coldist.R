@@ -190,13 +190,7 @@ coldist <- function(modeldata,
 
     num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))
 
-    # (e_abc)^2*(f_d-f_e)^2
-
-    etimesq <- num2 %*% diag(num1)
-
-    # sum numerator
-
-    numerator <- rowSums(etimesq^2)
+    numerator <- c(num2^2 %*% num1^2)
 
     ###############
     # DENOMINATOR #
