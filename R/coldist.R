@@ -507,11 +507,11 @@ coldist <- function(modeldata,
 
     if (achromatic) {
       ncone <- dim(dat)[2] - 1
-      warning("number of cones not specified; assumed to be", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)", call. = FALSE)
+      warning("number of cones not specified; assumed to be ", ncone, "(last column ignored for chromatic contrast, used only for achromatic contrast)", call. = FALSE)
     }
     else {
       ncone <- dim(dat)[2]
-      warning("number of cones not specified; assumed to be", ncone, call. = FALSE)
+      warning("number of cones not specified; assumed to be ", ncone, call. = FALSE)
     }
   }
 
@@ -693,8 +693,6 @@ coldist <- function(modeldata,
       res[, "dS"] <- apply(pairsid, 1, function(x) chrom_dist(dat[x[1], ], dat[x[2], ]))
     }
   }
-
-  nams2 <- with(res, unique(c(patch1, patch2)))
 
   # Subsetting samples
 
