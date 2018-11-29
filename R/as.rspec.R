@@ -13,6 +13,12 @@
 #' TRUE).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
 #' \code{c(300, 700)}).
+#' @inheritParams approx
+#'
+#' @note The option \code{rule = 2} is useful when the actual wavelength range
+#' for your data starts a few nanometers away from the range required by
+#' \code{\link{vismodel}} but it can generate bogus data in other situations and
+#' should be used with caution
 #'
 #' @return an object of class \code{rspec} for use in further \code{pavo}
 #' functions
@@ -35,7 +41,8 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
-as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
+as.rspec <- function(object, whichwl = NULL,
+                     interp = TRUE, rule = 1, lim = NULL) {
 
   # tibble dodge
   if ("tbl_df" %in% attr(object, "class")) object <- data.frame(object)
@@ -45,7 +52,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   } else {
     stop("object must be a data frame or matrix")
   }
-  
+
   if (length(object[is.na(object)]) > 0) {
     message(
       "\nThe spectral data contain ", length(object[is.na(object)]),
@@ -128,7 +135,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   # Interpolation & data-trimming
   if (interp) {
     object <- apply(object, 2, function(col) {
-      approx(x = wl, y = col, xout = l1:l2)$y
+      approx(x = wl, y = col, xout = l1:l2, rule = rule)$y
     })
     wl <- seq(l1, l2)
   }

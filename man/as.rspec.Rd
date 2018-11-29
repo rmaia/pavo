@@ -5,7 +5,8 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL)
+as.rspec(object, whichwl = NULL, interp = TRUE, rule = 1,
+  lim = NULL)
 
 is.rspec(object)
 }
@@ -34,6 +35,12 @@ a logical value indicating whether the object is of class
 \description{
 Converts data frames or matrices containing spectral data to \code{rspec}
 object
+}
+\note{
+The option \code{rule = 2} is useful when the actual wavelength range
+for your data starts a few nanometers away from the range required by
+\code{\link{vismodel}} but it can generate bogus data in other situations and
+should be used with caution
 }
 \examples{
 
