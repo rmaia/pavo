@@ -12,7 +12,8 @@ features of `procimg()`.
 * added the argument `labels.stack` to `plot.rspec`, which allows the use of 
 custom spectra labels in stacked plots.
 * all deprecated functions and arguments have now been fully removed.
-* `as.rspec()` now accepts both numeric and character vectors to identify the wavelength column.  
+* `as.rspec()` now accepts both numeric and character vectors to identify the wavelength column using `whichwl`.  
+* Reference images in `classify()` can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).  
 * numerous under-the-hood changes for stability and speed, with thanks to 
 three reviewers and an associate editor at MEE.
 

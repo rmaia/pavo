@@ -588,8 +588,8 @@ summary(butterflies_class[[2]], plot = TRUE)
 # Automatic classification.
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
-# Automatic classification using a reference image
-butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
+# Automatic classification using a reference image, identified by name.
+butterflies_class <- classify(butterflies, refID = 'h_melpomene', kcols = 3)
 
 ## ---- eval = FALSE-------------------------------------------------------
 #  # Classification using interactively-specified centres for each image, with no
@@ -597,7 +597,8 @@ butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
 #  butterflies_class <- classify(butterflies, interactive = TRUE)
 #  
 #  # Classification using interactively-specified centres for the single reference image
-#  # (here, the first in the list).
+#  # (here, the first in the list). We could also specify reference image using it's name,
+#  # as above.
 #  butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 
 ## ------------------------------------------------------------------------

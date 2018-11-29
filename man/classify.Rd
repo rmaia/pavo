@@ -19,7 +19,7 @@ as \code{imgdat}, or a data.frame with two columns specifying image file names a
 corresponding kcols. This argument can optionally be disregarded when \code{interactive = TRUE},
 and kcols will be inferred from the number of selections.}
 
-\item{refID}{the optional numeric index of a 'reference' image, for use when passing
+\item{refID}{either the numeric index or name of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
 in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.}
@@ -55,15 +55,13 @@ cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproduc
 cluster ID's are desired between runs.
 }
 \examples{
-\dontrun{
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images, with interactive classification and a reference image
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#snakes_class <- classify(snakes, refID = 1, interactive = TRUE)
-}
+#snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 
 }
 \author{

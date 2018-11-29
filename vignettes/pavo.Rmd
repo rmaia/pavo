@@ -1201,8 +1201,8 @@ There are other options available, which may be of particular use when the class
 # Automatic classification.
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
 
-# Automatic classification using a reference image
-butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
+# Automatic classification using a reference image, identified by name.
+butterflies_class <- classify(butterflies, refID = 'h_melpomene', kcols = 3)
 ```
 
 ```{r, eval = FALSE}
@@ -1211,7 +1211,8 @@ butterflies_class <- classify(butterflies, refID = 1, kcols = 3)
 butterflies_class <- classify(butterflies, interactive = TRUE)
 
 # Classification using interactively-specified centres for the single reference image
-# (here, the first in the list).
+# (here, the first in the list). We could also specify reference image using it's name, 
+# as above.
 butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 ```
 

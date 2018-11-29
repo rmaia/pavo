@@ -10,7 +10,7 @@
 #' as \code{imgdat}, or a data.frame with two columns specifying image file names and
 #' corresponding kcols. This argument can optionally be disregarded when \code{interactive = TRUE},
 #' and kcols will be inferred from the number of selections.
-#' @param refID the optional numeric index of a 'reference' image, for use when passing
+#' @param refID either the numeric index or name of a 'reference' image, for use when passing
 #' a list of images. Other images will be k-means classified using centres identified
 #' in the single reference image, thus helping to ensure that homologous pattern elements
 #' will be reliably classified between images, if so desired.
@@ -41,15 +41,14 @@
 #' cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproducible
 #' cluster ID's are desired between runs.
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
 #'
 #' # Multiple images, with interactive classification and a reference image
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' #snakes_class <- classify(snakes, refID = 1, interactive = TRUE)
-#' }
+#' #snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
@@ -60,6 +59,15 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
+  
+  ## Convert refID to numeric identifier
+  if(!is.null(refID)){
+if (is.character(refID)) {
+      refID <- which(unlist(lapply(seq_along(imgdat), function(x) attr(imgdat[[x]],"imgname"))) == refID)
+      if(length(refID) == 0)
+        stop("No image found with that name, specify another reference image using refID.")
+    }
+  }
   
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
