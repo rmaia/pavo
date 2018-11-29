@@ -241,10 +241,10 @@ vismodel <- function(rspecdata,
 
   # Check if wavelength range matches
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
-    !inherits(visual2, "try-error")) {
-    stop("wavelength range in spectra and visual system data do not match - spectral
-         data must range between 300 and 700 nm in 1-nm intervals. Consider
-         interpolating using as.rspec().")
+      !inherits(visual2, "try-error")) {
+    stop("wavelength range in spectra and visual system data do not match - ",
+         "spectral data must range between 300 and 700 nm in 1-nm intervals.",
+         "Consider interpolating using as.rspec().")
   }
 
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
@@ -295,9 +295,12 @@ vismodel <- function(rspecdata,
   if (tr2 != "ideal" & visual == "user-defined") {
     if ("sensmod" %in% class(fullS)) {
       if (attr(fullS, "om")) {
-        warning('The visual system being used appears to already incorporate ocular transmission.
-                Using anything other than trans = "ideal" means ocular media effects
-                are being applied a second time.', call. = FALSE)
+        warning(
+          'The visual system being used appears to already incorporate ocular ',
+          'transmission. Using anything other than trans = "ideal", means ',
+          'ocular media effects are being applied a second time.',
+          call. = FALSE
+        )
       }
     }
   }
@@ -306,18 +309,18 @@ vismodel <- function(rspecdata,
     transwhichused <- names(trans)[2]
     trans <- trans[, 2]
     warning("Transmission is an rspec object; first spectrum (",
-      dQuote(transwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(transwhichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
   if ("data.frame" %in% class(trans) | "matrix" %in% class(trans) &
-    !"rspec" %in% class(trans)) {
+      !"rspec" %in% class(trans)) {
     transgwhichused <- names(trans)[1]
     trans <- trans[, 1]
     warning("Transmission is a matrix or data frame; first column (",
-      dQuote(transgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(transgwhichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
@@ -327,18 +330,18 @@ vismodel <- function(rspecdata,
     bkgwhichused <- names(bkg)[2]
     bkg <- bkg[, 2]
     warning("Background is an rspec object; first spectrum (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
   if ("data.frame" %in% class(bkg) | "matrix" %in% class(bkg) &
-    !"rspec" %in% class(bkg)) {
+      !"rspec" %in% class(bkg)) {
     bkgwhichused <- names(bkg)[1]
     bkg <- bkg[, 1]
     warning("Background is a matrix or data frame; first column (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
@@ -359,18 +362,18 @@ vismodel <- function(rspecdata,
     whichused <- names(illum)[2]
     illum <- illum[, 2]
     warning("Illuminant is an rspec object; first spectrum (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(whichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
   if ("data.frame" %in% class(illum) | "matrix" %in% class(illum) &
-    !"rspec" %in% class(illum)) {
+      !"rspec" %in% class(illum)) {
     whichused <- names(illum)[1]
     illum <- illum[, 1]
     warning("Illuminant is a matrix or data frame; first column (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
+            dQuote(whichused), ") has been used (remaining columns ignored)",
+            call. = FALSE
     )
   }
 
@@ -429,18 +432,18 @@ vismodel <- function(rspecdata,
       whichused <- names(achromatic)[2]
       achromatic <- achromatic[, 2]
       warning("Achromatic is an rspec object; first spectrum (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(whichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     }
 
     if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic) &
-      !"rspec" %in% class(achromatic)) {
+        !"rspec" %in% class(achromatic)) {
       whichused <- names(achromatic)[1]
       achromatic <- achromatic[, 1]
       warning("Achromatic is a matrix or data frame; first column (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(whichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     }
 
