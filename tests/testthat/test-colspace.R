@@ -65,25 +65,15 @@ test_that("Relative quantum catches", {
 test_that("Output regression", {
   data(flowers)
   
-    expect_known_hash(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), 
-                      "f1527dab25fc11e0a4bef20572fcc531")  # dispace
-    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', achromatic = 'l')), 
-                      "39aaa44796c300354e6d2ce516a28881")  # trispace
-    expect_known_hash(colspace(vismodel(flowers, visual = 'bluetit', achromatic = 'ch.dc')), 
-                      "e65fb49b00f438fcda447b0f86e00c54")  # tcs
-    expect_known_hash(colspace(vismodel(flowers, visual = 'musca', achro = 'md.r1'), space = 'categorical'), 
-                      "10c6cd96db76366310829119324968d2")  # categorical
-    expect_known_hash(colspace(vismodel(flowers, visual = 'segment', achromatic = 'bt.dc'), space = 'segment'), 
-                      "1030bfa096ebd9b05cd1a2edda607227")  # segment
-    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE, achromatic = 'l'), space = 'coc'),
-                      "9cb10da64d40cd4a04da6ffa527fa2af")  # coc
-    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', qcatch = 'Ei', vonkries = TRUE, relative = FALSE, achromatic = 'l'), space = 'hexagon'), 
-                      "7cf8755d84552694996b765d6b880e85")  # hexagon
-    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'ciexyz'), 
-                      "1faeee0d09a86da1e73fbcd3c33c8cf0")  # ciexyz
-    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielab'), 
-                      "7e80adf85876f5a431ed2efb522b28bc")  # cielab
-    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch'), 
-                      "beeb4c34b03b69af4e49788aa8cb6e15")  # cielch
+    expect_known_hash(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), "f1527dab25")  # dispace
+    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', achromatic = 'l')), "39aaa44796")  # trispace
+    expect_known_hash(colspace(vismodel(flowers, visual = 'bluetit', achromatic = 'ch.dc')), "e65fb49b00")  # tcs
+    expect_known_hash(colspace(vismodel(flowers, visual = 'musca', achro = 'md.r1'), space = 'categorical'), "10c6cd96db")  # categorical
+    expect_known_hash(colspace(vismodel(flowers, visual = 'segment', achromatic = 'bt.dc'), space = 'segment'), "1030bfa096")  # segment
+    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE, achromatic = 'l'), space = 'coc'), "9cb10da64d")  # coc
+    expect_known_hash(colspace(vismodel(flowers, visual = 'apis', qcatch = 'Ei', vonkries = TRUE, relative = FALSE, achromatic = 'l'), space = 'hexagon'), "7cf8755d84")  # hexagon
+    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'ciexyz'), "1faeee0d09")  # ciexyz
+    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielab'), "7e80adf858")  # cielab
+    expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch'), "beeb4c34b0")  # cielch
 
 })
