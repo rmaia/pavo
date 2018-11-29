@@ -13,7 +13,7 @@
 #' TRUE).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
 #' \code{c(300, 700)}).
-#' @inheritParams approx
+#' @inheritParams stats::approx
 #'
 #' @note The option \code{rule = 2} is useful when the actual wavelength range
 #' for your data starts a few nanometers away from the range required by
@@ -42,7 +42,7 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL,
-                     interp = TRUE, rule = 1, lim = NULL) {
+                     interp = TRUE, lim = NULL, rule = 1)  {
 
   # tibble dodge
   if ("tbl_df" %in% attr(object, "class")) object <- data.frame(object)

@@ -5,8 +5,8 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-as.rspec(object, whichwl = NULL, interp = TRUE, rule = 1,
-  lim = NULL)
+as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL,
+  rule = 1)
 
 is.rspec(object)
 }
@@ -24,6 +24,13 @@ TRUE).}
 
 \item{lim}{vector specifying wavelength range to interpolate over (e.g.
 \code{c(300, 700)}).}
+
+\item{rule}{an integer (of length 1 or 2) describing how interpolation
+    is to take place outside the interval [\code{min(x)}, \code{max(x)}].
+    If \code{rule} is \code{1} then \code{NA}s are returned for such
+    points and if it is \code{2}, the value at the closest data extreme
+    is used.  Use, e.g., \code{rule = 2:1}, if the left and right side
+    extrapolation should differ.}
 }
 \value{
 an object of class \code{rspec} for use in further \code{pavo}
