@@ -5,8 +5,8 @@
 #'
 #' @param object (required) a data frame or matrix containing spectra to
 #' process.
-#' @param whichwl a numeric or character vector specifying which column contains 
-#' wavelengths. If NULL (default), function searches for column containing equally 
+#' @param whichwl a numeric or character vector specifying which column contains
+#' wavelengths. If NULL (default), function searches for column containing equally
 #' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 #' \code{whichwl} is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
@@ -109,16 +109,7 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
       )
     }
   }
-  
-  # NA check
-  if (length(object[is.na(object)]) > 0) {
-    message(
-      "\nThe spectral data contain ", length(object[is.na(object)]),
-      " NA's(s) which have been converted to 0, though the raw data should be reviewed closely."
-    )
-    object[is.na(object)] <- 0
-  }
-  
+
   # Negative value check
   if (any(object < 0, na.rm = TRUE)) {
     message(
@@ -130,10 +121,8 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   # Interpolation & data-trimming
   if (interp) {
     object <- apply(object, 2, function(col) {
-      approx(x = wl, y = col, xout = l1:l2, rule = 2)$y
+      approx(x = wl, y = col, xout = l1:l2)$y
     })
-    # rule=2 gives value at nearest point instead of giving NAs in the case of
-    # the user inputting wls that start at, say, 300.1nm
     wl <- seq(l1, l2)
   }
 
