@@ -7,7 +7,7 @@ output:
 bibliography: refs.bib
 csl: open-biology.csl
 vignette: >
-  %\VignetteIndexEntry{spectral shape descriptors}
+  %\VignetteIndexEntry{Spectral Shape Descriptors}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

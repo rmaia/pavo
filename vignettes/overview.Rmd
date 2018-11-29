@@ -1,0 +1,75 @@
+---
+title: "overview"
+author: "Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+bibliography: main.bib
+csl: open-biology.csl
+vignette: >
+  %\VignetteIndexEntry{(1) Overview}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+<style type="text/css">
+/* Put all captions in italics */
+.caption {
+  font-style: italic;
+}
+/* Center all figures. This is actually better than using knitr::opts_chunk
+because the code is only written once in the output */
+.figure {
+  text-align: center;
+}
+/* Auto-wrap long code line */
+code.sourceCode {
+  white-space: pre-wrap;
+}
+</style>
+
+```{r include = FALSE}
+# Do not use partial matching
+options(
+   warnPartialMatchDollar = FALSE,
+   warnPartialMatchArgs = FALSE,
+   warnPartialMatchAttr = FALSE
+)
+```
+
+[pavo_repo]: https://github.com/rmaia/pavo
+
+[data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+
+# Overview
+
+`pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
+
+`pavo` was written with the following workflow in mind:
+
+1. **Organise** data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).
+2. **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
+3. **Visualise** the output, with multiple options provided for exploration and analysis.
+
+In the included vignettes we begin by detailing the [importing, processing and visualisation](importing_processing.html) of spectral and image data, before moving on to discussion of the [flexible analyses](analysing.html) of such data that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
+
+# Classes and Attributes
+
+To enable the comprehensive workflow of `pavo`, we've implemented an expanded class system. Spectra will be of class `rspec` as long as we use one of `pavo`'s spectral import or processing functions, or explicitly convert an object using `as.rspec()`. Similarly, images will be of class `rimg` when imported via `getimg()`, or if converted using `as.rimg()`. The results of `vismodel()` are objects of class `vismodel` and the results of `colspace()` are, unsurprisingly, objects of class `colspace`. Most of these classes inherit from `data.frame`, and contain a suite of attributes that describe the object's characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colourspace). These are easily viewed using the `summary` function (on any `rspec`, `rimg`, `vismodel`, or `colspace` object), which will return the attributes and summary data (where appropriate) in a readable format.
+
+# Suggestions and Assistance
+
+For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly.
+
+# Citation of methods implemented in `pavo`
+
+Most of the methods implemented in `pavo` have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables ("objective colourimetrics") and their particular relation to signal production and perception, see @Andersson2006 and @Montgomerie2006. Visual models based on photon catches and receptor noise are detailed in @Vorobyev1998 and @Vorobyev1998, and photoreceptor sensitivity curve estimation in @Govardovskii2000 and @Hart2005. For tetrahedral colourspace model implementations and variable calculations, see @Endler2005 and @Stoddard2008, and for colour volume overlap see @Stoddard2008 and @Stoddard2011. Adjacency and boundary strength analyses are described in @Endler2012 and @Endler2018, while overall pattern contrast is detailed in @Endler2005. Users of the functions that apply these methods must cite the original sources as appropriate, along with `pavo` itself.
+
+# Acknowledgments
+
+We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of `pavo`'s capabilities.
+
+# References
+
