@@ -6,7 +6,8 @@
 \usage{
 coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
   achromatic = FALSE, qcatch = NULL, n = c(1, 2, 2, 4),
-  weber = 0.1, weber.ref = "longest", weber.achro = 0.1)
+  weber = 0.1, weber.ref = "longest", weber.achro = 0.1, v, n1, n2,
+  n3, n4)
 }
 \arguments{
 \item{modeldata}{(required) quantum catch color data. Can be the result
@@ -76,6 +77,8 @@ categorical, segment, and cie models).}
  \code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
+
+\item{n1, n2, n3, n4, v}{deprecated arguments. see below.}
 }
 \value{
 A data frame containing up to 4 columns.
@@ -113,6 +116,7 @@ argument directly, and not based on \code{v} and \code{n4} as before.
 }
 
 \examples{
+\dontrun{
 # Dichromat
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
@@ -124,25 +128,26 @@ tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
 
 # Trichromat, color-hexagon model (euclidean distances)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',
-                        relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
+                        relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
 hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 hexdist.flowers <- coldist(hex.flowers)
 
 # Trichromat, color-opponent-coding model (manhattan distances)
 vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
 coc.flowers <- colspace(vis.flowers, space = 'coc')
-cocdist.flowers <- coldist(coc.flowers)
+hexdist.flowers <- coldist(coc.flowers)
 
 # Tetrachromat
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
-# This will also work, but give you several warnings you shouldn't ignore!
+# This will also work, but give you several warnings you shouldn't ignore!!
 col.sicalis <- colspace(vis.sicalis)
 tetradist.sicalis.n <- coldist(col.sicalis)
 
 tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
+}
 
 }
 \references{

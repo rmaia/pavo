@@ -13,8 +13,8 @@ is.rspec(object)
 \item{object}{(required) a data frame or matrix containing spectra to
 process.}
 
-\item{whichwl}{a numeric or character vector specifying which column contains 
-wavelengths. If NULL (default), function searches for column containing equally 
+\item{whichwl}{a numeric or character vector specifying which column contains
+wavelengths. If NULL (default), function searches for column containing equally
 spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 \code{whichwl} is not given, returns arbitrary index values.}
 
