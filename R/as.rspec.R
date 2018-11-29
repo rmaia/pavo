@@ -5,9 +5,9 @@
 #'
 #' @param object (required) a data frame or matrix containing spectra to
 #' process.
-#' @param whichwl specifies which column contains wavelengths. If NULL
-#' (default), function searches for column containing equally spaced numbers
-#' and sets it as wavelengths "wl". If no wavelengths are found or
+#' @param whichwl a numeric or character vector specifying which column contains 
+#' wavelengths. If NULL (default), function searches for column containing equally 
+#' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 #' \code{whichwl} is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
 #' TRUE).
@@ -64,7 +64,11 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   })
 
   if (!is.null(whichwl)) {
-    wl_index <- whichwl
+    if (is.numeric(whichwl)) {
+      wl_index <- whichwl
+    } else if (is.character(whichwl)) {
+      wl_index <- which(colnames(object) == whichwl)
+    }
     wl <- object[, wl_index]
     object <- object[, -wl_index, drop = FALSE]
     name <- name[-wl_index]

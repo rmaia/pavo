@@ -132,7 +132,7 @@ head(fakedat.new)
 As can be seen, `as.rspec()` renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an `rspec` object. Note that the same output is returned with specifying `whichwl = 3`:
 
 ```{r}
-head(as.rspec(fakedat, whichwl = 3))
+head(as.rspec(fakedat, whichwl = 'wavelength'))
 ```
 
 Finally, the `lim` argument allows you to specify the range of wavelengths contained in the input dataset. This is useful either in the case that the dataset doesn't contain this information (and hence you cannot specify the column with `whichwl` or automatically find the column with `as.rspec()`). Additionally, it may be useful to focus on a subset of wavelengths. In our example, the wavelengths ranged from 300 to 700 nm, however you could also specify a restricted range of wavelengths with `lim`:

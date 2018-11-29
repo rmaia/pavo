@@ -48,7 +48,7 @@ is.rspec(fakedat.new)
 head(fakedat.new)
 
 ## ------------------------------------------------------------------------
-head(as.rspec(fakedat, whichwl = 3))
+head(as.rspec(fakedat, whichwl = 'wavelength'))
 
 ## ---- fig.height=3, fig.width=4------------------------------------------
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
