@@ -132,6 +132,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     apply(y[which(by == z)], 1, FUN)
   })
 
+  print(by0)
   colnames(dat) <- unique(by0)
 
   if (trim) {

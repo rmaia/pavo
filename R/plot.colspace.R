@@ -61,7 +61,7 @@
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
-#' @author Chad Eliason \email{cme16@zips.uakron.edu}
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
 #' @importFrom graphics plot.default segments text
 #' @importFrom stats setNames

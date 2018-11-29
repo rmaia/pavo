@@ -109,6 +109,23 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
       )
     }
   }
+  
+  # NA check
+  if (length(object[is.na(object)]) > 0) {
+    message(
+      "\nThe spectral data contain ", length(object[is.na(object)]),
+      " NA's(s) which have been converted to 0, though the raw data should be reviewed closely."
+    )
+    object[is.na(object)] <- 0
+  }
+  
+  # Negative value check
+  if (any(object < 0, na.rm = TRUE)) {
+    message(
+      "\nThe spectral data contain ", sum(object < 0, na.rm = TRUE),
+      " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
+    )
+  }
 
   # Interpolation & data-trimming
   if (interp) {
