@@ -45,6 +45,13 @@ as.rspec <- function(object, whichwl = NULL, interp = TRUE, lim = NULL) {
   } else {
     stop("object must be a data frame or matrix")
   }
+  
+  if (length(object[is.na(object)]) > 0) {
+    message(
+      "\nThe spectral data contain ", length(object[is.na(object)]),
+      " NA's(s), which should be reviewed closely."
+    )
+  }
 
   # How to handle wavelength column.
   # Possible conditions for wavelength column:
