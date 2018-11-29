@@ -234,18 +234,14 @@ coldist <- function(modeldata,
     sqrt(numerator / denominator) # DELTA S
   }
 
-  # Achromatic functions
-  ttdistcalcachro <- function(f1, f2, weber.achro) {
+  # Achromatic function
+  ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
     dq1 <- f1[length(f1)] - f2[length(f1)]
     dq1 <- as.numeric(dq1)
-    w <- weber.achro
-    round(abs(dq1 / w), 7)
-  }
-
-  qn.ttdistcalcachro <- function(f1, f2, qn1, qn2, weber.achro) {
-    dq1 <- f1[length(f1)] - f2[length(f1)]
-    dq1 <- as.numeric(dq1)
-    w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
+    if(is.null(qn1))
+      w <- weber.achro
+    else
+      w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
     round(abs(dq1 / w), 7)
   }
 
@@ -601,7 +597,7 @@ coldist <- function(modeldata,
 
       if (noise == "quantum") {
         res[, "dL"] <- unlist(lapply(seq(nrow(res)), function(x)
-          qn.ttdistcalcachro(
+          ttdistcalcachro(
             f1 = dat[res[x, 1], ], f2 = dat[res[x, 2], ],
             qn1 = qndat[res[x, 1], ], qn2 = qndat[res[x, 2], ], weber.achro = weber.achro
           )))
@@ -612,7 +608,7 @@ coldist <- function(modeldata,
 
         qnref <- exp(visref)
         resref[, "dL"] <- unlist(lapply(seq(nrow(resref)), function(x)
-          qn.ttdistcalcachro(
+          ttdistcalcachro(
             f1 = visref[resref[x, 1], ], f2 = visref[resref[x, 2], ],
             qn1 = qnref[resref[x, 1], ], qn2 = qnref[resref[x, 2], ], weber.achro = weber.achro
           )))
