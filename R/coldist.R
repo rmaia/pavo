@@ -179,13 +179,13 @@ coldist <- function(modeldata,
     if (is.null(qndat)) {
       # get those combinations of ei and prod(ei)^2
       num1 <- setNames(
-        apply(n1combs, 2, function(x) prod(e[x])^2),
+        apply(n1combs, 2, function(x) prod(e[x])),
         apply(n1combs, 2, paste, collapse = "")
       )
     } else {
       # get those combinations of ei and prod(ei)^2
       num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(n1combs, 2, function(x) prod(e[z, x])^2)))
+        apply(n1combs, 2, function(x) prod(e[z, x]))))
       colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
     }
 
@@ -199,8 +199,7 @@ coldist <- function(modeldata,
     names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
 
     # (f_d-f_e)^2
-    num2 <- do.call("cbind", lapply(deltaqiqj, function(x) apply(x, 1, function(z) diff(z)^2)))
-    # num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))  # Hugo edit - TBC
+    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))
 
     # (e_abc)^2*(f_d-f_e)^2
     if (is.null(qndat)) {
@@ -210,7 +209,7 @@ coldist <- function(modeldata,
     }
 
     # sum numerator
-    numerator <- rowSums(etimesq)
+    numerator <- rowSums(etimesq^2)
 
     ###############
     # DENOMINATOR #
@@ -221,15 +220,15 @@ coldist <- function(modeldata,
 
     if (is.null(qndat)) {
       den <- setNames(
-        apply(dcombs, 2, function(x) prod(e[x])^2),
+        apply(dcombs, 2, function(x) prod(e[x])),
         apply(dcombs, 2, paste, collapse = "")
       )
-      denominator <- sum(den)
+      denominator <- sum(den^2)
     } else {
       den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(dcombs, 2, function(x) prod(e[z, x])^2)))
+        apply(dcombs, 2, function(x) prod(e[z, x]))))
       colnames(den) <- apply(dcombs, 2, paste, collapse = "")
-      denominator <- rowSums(den)
+      denominator <- rowSums(den^2)
     }
     sqrt(numerator / denominator) # DELTA S
   }
