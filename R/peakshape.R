@@ -80,19 +80,19 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   rspecdata2 <- rspecdata[wl>=lim[1] & wl<=lim[2], , drop = FALSE]
 
-  Yi <- apply(rspecdata2, 2, max) # max refls
+  Bmax <- apply(rspecdata2, 2, max) # max refls
 
   if (absolute.min) {
-    Yj <- apply(rspecdata, 2, min) # min refls, whole spectrum
+    Bmin <- apply(rspecdata, 2, min) # min refls, whole spectrum
   } else {
-    Yj <- apply(rspecdata2, 2, min) # min refls
+    Bmin <- apply(rspecdata2, 2, min) # min refls
   }
 
-  halfmax <- (Yi + Yj) / 2 # reflectance midpoint
+  halfmax <- (Bmax + Bmin) / 2 # reflectance midpoint
 
   Xi <- vapply(
     seq_along(rspecdata2),
-    function(x) which(rspecdata2[, x] == Yi[x]),
+    function(x) which(rspecdata2[, x] == Bmax[x]),
     numeric(1)
   ) # lambda_max index
   dblpeaks <- vapply(Xi, length, numeric(1))
@@ -145,7 +145,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   }
 
   data.frame(
-    id = nms[select], B3 = as.numeric(Yi), H1 = hue,
+    id = nms[select], B3 = as.numeric(Bmax), H1 = hue,
     FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue
   )
 }
