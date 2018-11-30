@@ -11,6 +11,7 @@ features of `procimg()`.
 `projplot()`.
 * added the argument `labels.stack` to `plot.rspec`, which allows the use of 
 custom spectra labels in stacked plots.
+* users now receive a warning when interpolating beyond the limits of the data using `as.rspec`, and can control the behaviour with the new argument `exceed.limits`. 
 * all deprecated functions and arguments have now been fully removed.
 * `as.rspec()` now accepts both numeric and character vectors to identify the wavelength column using `whichwl`.  
 * Reference images in `classify()` can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).  
