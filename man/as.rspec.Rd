@@ -6,7 +6,7 @@
 \title{Convert data to an rspec object}
 \usage{
 as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL,
-  rule = 1)
+  exceed.range = TRUE)
 
 is.rspec(object)
 }
@@ -25,12 +25,11 @@ TRUE).}
 \item{lim}{vector specifying wavelength range to interpolate over (e.g.
 \code{c(300, 700)}).}
 
-\item{rule}{an integer (of length 1 or 2) describing how interpolation
-    is to take place outside the interval [\code{min(x)}, \code{max(x)}].
-    If \code{rule} is \code{1} then \code{NA}s are returned for such
-    points and if it is \code{2}, the value at the closest data extreme
-    is used.  Use, e.g., \code{rule = 2:1}, if the left and right side
-    extrapolation should differ.}
+\item{exceed.range}{logical. Should data be interpolated to the limits specified
+by \code{lim} if \code{lim} exceeds the range of the actual data? Useful, and relatively safe,
+when the data range falls slightly within \code{lim} (e.g. 300.1 - 699 nm), but will
+produce spurious results if \code{lim} far exceeds the range of input data.
+Defaults to \code{TRUE}.}
 }
 \value{
 an object of class \code{rspec} for use in further \code{pavo}
@@ -42,12 +41,6 @@ a logical value indicating whether the object is of class
 \description{
 Converts data frames or matrices containing spectral data to \code{rspec}
 object
-}
-\note{
-The option \code{rule = 2} is useful when the actual wavelength range
-for your data starts a few nanometers away from the range required by
-\code{\link{vismodel}} but it can generate bogus data in other situations and
-should be used with caution
 }
 \examples{
 

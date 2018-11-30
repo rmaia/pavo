@@ -13,12 +13,11 @@
 #' TRUE).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
 #' \code{c(300, 700)}).
-#' @inheritParams stats::approx
-#'
-#' @note The option \code{rule = 2} is useful when the actual wavelength range
-#' for your data starts a few nanometers away from the range required by
-#' \code{\link{vismodel}} but it can generate bogus data in other situations and
-#' should be used with caution
+#' @param exceed.range logical. Should data be interpolated to the limits specified
+#' by \code{lim} if \code{lim} exceeds the range of the actual data? Useful, and relatively safe,
+#' when the data range falls slightly within \code{lim} (e.g. 300.1 - 699 nm), but will
+#' produce spurious results if \code{lim} far exceeds the range of input data.
+#' Defaults to \code{TRUE}.
 #'
 #' @return an object of class \code{rspec} for use in further \code{pavo}
 #' functions
@@ -42,7 +41,7 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 as.rspec <- function(object, whichwl = NULL,
-                     interp = TRUE, lim = NULL, rule = 1)  {
+                     interp = TRUE, lim = NULL, exceed.range = TRUE) {
 
   # tibble dodge
   if ("tbl_df" %in% attr(object, "class")) object <- data.frame(object)
@@ -117,10 +116,12 @@ as.rspec <- function(object, whichwl = NULL,
     l1 <- lim[1]
     l2 <- lim[2]
     if (l1.dat > lim[1] || l2.dat < lim[2]) {
-      warning(
-        "Specified wavelength limits outside of actual data. ",
-        "Check 'lim' argument."
-      )
+      if (exceed.range) {
+        warning(
+          "Interpolating beyond the range of actual data. ",
+          "Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour."
+        )
+      }
     }
   }
 
@@ -133,6 +134,7 @@ as.rspec <- function(object, whichwl = NULL,
   }
 
   # Interpolation & data-trimming
+  ifelse(exceed.range, rule <- 2, rule <- 1)
   if (interp) {
     object <- apply(object, 2, function(col) {
       approx(x = wl, y = col, xout = l1:l2, rule = rule)$y

@@ -20,8 +20,8 @@ test_that("as.rspec", {
   expect_equivalent(flowers3, as.rspec(flowers3))
 
   # With rule = 2, missing values outside of range are generated
-  expect_equal(nrow(flowers3)+1, nrow(as.rspec(flowers3, lim = c(300,700), rule = 2)))
-  expect_warning(as.rspec(flowers3, lim = c(300,700), rule = 2), "outside of")
+  expect_equal(nrow(flowers3)+1, nrow(as.rspec(flowers3, lim = c(300,700), exceed.range = TRUE)))
+  expect_warning(as.rspec(flowers3, lim = c(300,700), exceed.range = TRUE), "beyond the range")
 })
 
 test_that("summary.rspec", {
