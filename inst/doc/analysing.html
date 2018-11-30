@@ -12,7 +12,7 @@
 
 <meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason" />
 
-<meta name="date" content="2018-11-29" />
+<meta name="date" content="2018-12-01" />
 
 <title>Analysing data</title>
 
@@ -278,12 +278,12 @@ code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61
 
 <h1 class="title toc-ignore">Analysing data</h1>
 <h4 class="author"><em>Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</em></h4>
-<h4 class="date"><em>2018-11-29</em></h4>
+<h4 class="date"><em>2018-12-01</em></h4>
 
 
 <div id="TOC">
 <ul>
-<li><a href="#analyzing-spectral-data">Analyzing Spectral Data</a><ul>
+<li><a href="#analysing-spectral-data">Analysing Spectral Data</a><ul>
 <li><a href="#spectral-dataset-description">Spectral Dataset Description</a></li>
 <li><a href="#overview">Overview</a></li>
 <li><a href="#spectral-shape-analysis">Spectral Shape Analysis</a><ul>
@@ -338,13 +338,13 @@ code.sourceCode {
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="co"># Load the package, and set a global random-number seed for the reproducible generation of fake data later on.</span></a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(pavo)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">set.seed</span>(<span class="dv">1612217</span>)</a></code></pre></div>
-<div id="analyzing-spectral-data" class="section level1">
-<h1>Analyzing Spectral Data</h1>
+<div id="analysing-spectral-data" class="section level1">
+<h1>Analysing Spectral Data</h1>
 <div id="spectral-dataset-description" class="section level2">
 <h2>Spectral Dataset Description</h2>
-<p>The raw spectral data used in this example are available from the package reporitory on <a href="https://github.com/rmaia/pavo">github</a>, located <a href="https://github.com/rmaia/pavo/blob/master/data_external/vignette">here</a>. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).</p>
+<p>The raw spectral data used in this example are available from the package repository on <a href="https://github.com/rmaia/pavo">github</a>, located <a href="https://github.com/rmaia/pavo/blob/master/data_external/vignette">here</a>. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).</p>
 <p>The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal <em>Cardinalis cardinalis</em>, Wattled Jacana <em>Jacana jacana</em>, Baltimore Oriole <em>Icterus galbula</em>, Peach-fronted Parakeet <em>Aratinga aurea</em>, American Robin <em>Turdus migratorius</em>, and Sayaca Tanager <em>Thraupis sayaca</em>. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility <code>pavo</code> offers, as we’ll see below.</p>
-<p>In addition, <code>pavo</code> includes three datasets that can be called with the <code>data</code> function. <code>data(teal)</code>, <code>data(sicalis)</code>, and <code>data(flowers)</code> will all be used in this vignette. See the help files for each dataset for more informationl; via <code>?teal</code>, <code>?sicalis</code>, and <code>?flowers</code>.</p>
+<p>In addition, <code>pavo</code> includes three datasets that can be called with the <code>data</code> function. <code>data(teal)</code>, <code>data(sicalis)</code>, and <code>data(flowers)</code> will all be used in this vignette. See the help files for each dataset for more information; via <code>?teal</code>, <code>?sicalis</code>, and <code>?flowers</code>.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1">specs &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">system.file</span>(<span class="st">&quot;extdata/specsdata.rda&quot;</span>, <span class="dt">package =</span> <span class="st">&quot;pavo&quot;</span>))</a>
 <a class="sourceLine" id="cb2-2" data-line-number="2">mspecs &lt;-<span class="st"> </span><span class="kw">aggspec</span>(specs, <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">FUN =</span> mean)</a></code></pre></div>
 <pre><code>##  [1] &quot;cardinal.0001&quot; &quot;cardinal.0004&quot; &quot;cardinal.0007&quot; &quot;cardinal.0010&quot;
