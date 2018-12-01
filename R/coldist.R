@@ -199,7 +199,7 @@ coldist <- function(modeldata,
     names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
 
     # (f_d-f_e)^2
-    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[,1] - x[,2]))
+    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
 
     # (e_abc)^2*(f_d-f_e)^2
     if (is.null(qndat)) {
@@ -237,10 +237,11 @@ coldist <- function(modeldata,
   ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
     dq1 <- f1[length(f1)] - f2[length(f1)]
     dq1 <- as.numeric(dq1)
-    if(is.null(qn1))
+    if (is.null(qn1)) {
       w <- weber.achro
-    else
+    } else {
       w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
+    }
     round(abs(dq1 / w), 7)
   }
 
@@ -619,61 +620,34 @@ coldist <- function(modeldata,
     }
   }
 
-
-
   #######################
   # Other Visual Models #
   #######################
 
-  if ("colspace" %in% class(modeldata)) {
-    if (attr(modeldata, "clrsp") == "hexagon") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "segment") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achroseg(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "categorical") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        warning("Achromatic contrast not calculated in the categorical model", call. = FALSE)
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "CIELAB") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "CIELCh") {
-      # res[, 'dS'] <- apply(pairsid, 1, function(x) cie2000(dat[x[1], ], dat[x[2], ]))
-      res[, "dS"] <- apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        res[, "dL"] <- apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ]))
-      }
-    }
-
-    if (attr(modeldata, "clrsp") == "coc") {
-      res[, "dS"] <- apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
-      if (achromatic) {
-        warning("Achromatic contrast not calculated in the color-opponent-coding space", call. = FALSE)
-      }
+  if(any(c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc") %in% attr(modeldata, "clrsp"))){
+    res[, "dS"] <- switch(attr(modeldata, "clrsp"),
+      "hexagon" = ,
+      "categorical" = apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ])),
+      "CIELAB" = ,
+      "CIELch" = apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ])),
+      "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+      "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+    )
+    if (achromatic) {
+      res[, "dL"] <- switch(attr(modeldata, "clrsp"),
+        "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
+        "categorical" = NA,
+        "CIELAB" = ,
+        "CIELch" = apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ])),
+        "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+        "coc" = NA
+      )
     }
   }
 
   nams2 <- with(res, unique(c(patch1, patch2)))
 
   # Subsetting samples
-
   if (length(subset) > 2) {
     stop("Too many subsetting conditions; one or two allowed.", call. = FALSE)
   }
@@ -681,9 +655,7 @@ coldist <- function(modeldata,
   if (length(subset) == 1) {
     condition1 <- grep(subset, res$patch1)
     condition2 <- grep(subset, res$patch2)
-
     subsamp <- unique(c(condition1, condition2))
-
     res <- res[subsamp, ]
   }
 
@@ -699,7 +671,6 @@ coldist <- function(modeldata,
     )
 
     subsamp <- unique(c(condition1, condition2))
-
     res <- res[subsamp, ]
     row.names(res) <- 1:dim(res)[1]
   }

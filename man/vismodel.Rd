@@ -129,7 +129,7 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 
-# Tetrachromat (starling), receptor-noise model 
+# Tetrachromat (starling), receptor-noise model
 data(sicalis)
 vis.star <- vismodel(sicalis, visual = 'star', achromatic = 'bt.dc', relative = FALSE)
 dist.star <- coldist(vis.star, achromatic = TRUE)
