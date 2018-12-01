@@ -138,7 +138,7 @@ fakedata.c <- as.rspec(fakedata.c)
 
 ## ------------------------------------------------------------------------
 # Visual model and colour distances
-fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achromatic = TRUE)
+fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achromatic = 'all')
 fakedata.cd <- coldist(fakedata.vm,
   noise = "neural", n = c(1, 2, 2, 4),
   weber = 0.1, achromatic = TRUE

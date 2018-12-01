@@ -105,6 +105,11 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+#' 
+#' # Tetrachromat (starling), receptor-noise model 
+#' data(sicalis)
+#' vis.star <- vismodel(sicalis, visual = 'star', achromatic = 'bt.dc', relative = FALSE)
+#' dist.star <- coldist(vis.star, achromatic = TRUE)
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
@@ -227,14 +232,12 @@ vismodel <- function(rspecdata,
     visual <- "user-defined"
   }
 
-  conenumb <- dim(S)[2]
+  # Save cone numer
+  ifelse(identical(visual2, "segment"),
+         conenumb <- "seg",
+         conenumb <- dim(S)[2])
 
-  if (visual2 == "segment") {
-    conenumb <- "seg"
-  }
-
-  # transform from percentages to proportions according to Vorobyev 2003
-
+  # ttransform from percentages to proportions (Vorobyev 2003)
   if (max(y) > 1) {
     y <- y / 100
   }
@@ -264,7 +267,6 @@ vismodel <- function(rspecdata,
   if (illum2 == "ideal") {
     illum <- rep(1, dim(rspecdata)[1])
   }
-
 
   if (!inherits(bg2, "try-error")) {
     if (is.null(bkg)) stop("chosen background is NULL")
@@ -324,8 +326,6 @@ vismodel <- function(rspecdata,
     )
   }
 
-
-
   if ("rspec" %in% class(bkg)) {
     bkgwhichused <- names(bkg)[2]
     bkg <- bkg[, 2]
@@ -345,19 +345,17 @@ vismodel <- function(rspecdata,
     )
   }
 
-
-  # scale background from percentage to proportion
+  # Scale background from percentage to proportion
   if (max(bkg) > 1) {
     bkg <- bkg / 100
   }
 
-  # scale transmission from percentage to proportion
+  # Scale transmission from percentage to proportion
   if (max(trans) > 1) {
     trans <- trans / 100
   }
 
-  # is the illuminant a matrix, dataframe or rspec?
-
+  # Is the illuminant a matrix, dataframe or rspec?
   if ("rspec" %in% class(illum)) {
     whichused <- names(illum)[2]
     illum <- illum[, 2]
@@ -377,16 +375,14 @@ vismodel <- function(rspecdata,
     )
   }
 
-  # scale illuminant
+  # Scale illuminant
   illum <- illum * scale
-
-  indices <- seq_len(dim(S)[2])
-
+  
   # Filter specs by transmission
-
   y <- y * trans
 
-  # calculate Qi
+  # Calculate Qi
+  indices <- seq_len(dim(S)[2])
   if (substr(visual2, 1, 3) == "cie") { # Slightly different for CIE
     K <- 100 / colSums(S[2] * illum)
     Qi <- data.frame(vapply(
@@ -409,8 +405,7 @@ vismodel <- function(rspecdata,
     ))
   }
 
-  # in case rspecdata only has one spectrum
-
+  # In case rspecdata only has one spectrum
   if (dim(Qi)[2] < 2) {
     Qi <- data.frame(t(Qi))
     rownames(Qi) <- names(y)
@@ -419,15 +414,13 @@ vismodel <- function(rspecdata,
   names(Qi) <- names(S)
 
 
-  # calculate achromatic contrast
+  # Achromatic contrast
 
-  # user-defined achromatic receptor
-
+  # Process user-defined achromatic receptor
   if (inherits(achromatic2, "try-error")) {
     achromatic2 <- "user-defined"
 
-    # is achromatic a matrix, dataframe or rspec?
-
+    # Is achromatic a matrix, dataframe or rspec?
     if ("rspec" %in% class(achromatic)) {
       whichused <- names(achromatic)[2]
       achromatic <- achromatic[, 2]
@@ -446,35 +439,23 @@ vismodel <- function(rspecdata,
               call. = FALSE
       )
     }
-
-    L <- achromatic
-    lum <- colSums(y * L * illum)
-    Qi <- data.frame(cbind(Qi, lum))
   }
 
-  # using one of the predefined receptors
-  if (any(c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc") %in% achromatic2)) {
-    L <- sens[, grep(achromatic2, names(sens))]
-    lum <- colSums(y * L * illum)
-    Qi <- data.frame(cbind(Qi, lum))
-  }
-
-  if (achromatic2 == "ml") {
-    L <- rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])])
-    lum <- colSums(y * L * illum)
-    Qi <- data.frame(cbind(Qi, lum))
-  }
-
-  if (achromatic2 == "l") {
-    L <- S[, dim(S)[2]]
-    lum <- colSums(y * L * illum)
-    Qi <- data.frame(cbind(Qi, lum))
-  }
-
-  if (achromatic2 == "all") {
-    L <- rowSums(S)
-    lum <- colSums(y * L * illum)
-    Qi <- data.frame(cbind(Qi, lum))
+  # Calculate
+  if(any(c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", 'ml', 'l', 'all', "user-defined") %in% achromatic2)){
+  L <- switch(achromatic2,
+              'bt.dc' = ,
+              'ch.dc' = ,
+              'st.dc' = ,
+              'md.r1' = ,
+              'ra.dc' = sens[, grep(achromatic2, names(sens))],
+              'ml' = rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])]),
+              'l' = S[, dim(S)[2]],
+              'all' = rowSums(S),
+              "user-defined" = achromatic
+              )
+  lum <- colSums(y * L * illum)
+  Qi <- data.frame(cbind(Qi, lum))
   }
 
   if (achromatic2 == "segment") {
@@ -487,17 +468,14 @@ vismodel <- function(rspecdata,
   }
 
   # von Kries correction (constant adapting background)
-
   vk <- "(von Kries color correction not applied)"
 
-  # quantum catch normalized to the background (qi = k*Qi)
-
+  # Quantum catch normalized to the background (qi = k*Qi)
   if (vonkries) {
     if (!is.null(lum)) {
       S <- data.frame(cbind(S, L))
       uncqi <- Qi[, "lum"]
     }
-
     if (substr(visual, 1, 3) == "cie") {
       k <- 1 / (colSums(S * bkg * illum) * K)
       Qi <- data.frame(t(t(Qi) * k))

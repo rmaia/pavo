@@ -708,7 +708,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a class="sourceLine" id="cb40-7" data-line-number="7">fakedata.c &lt;-<span class="st"> </span><span class="kw">as.rspec</span>(fakedata.c)</a></code></pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
 <div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb42-1" data-line-number="1"><span class="co"># Visual model and colour distances</span></a>
-<a class="sourceLine" id="cb42-2" data-line-number="2">fakedata.vm &lt;-<span class="st"> </span><span class="kw">vismodel</span>(fakedata.c, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">achromatic =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb42-2" data-line-number="2">fakedata.vm &lt;-<span class="st"> </span><span class="kw">vismodel</span>(fakedata.c, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">achromatic =</span> <span class="st">'all'</span>)</a>
 <a class="sourceLine" id="cb42-3" data-line-number="3">fakedata.cd &lt;-<span class="st"> </span><span class="kw">coldist</span>(fakedata.vm,</a>
 <a class="sourceLine" id="cb42-4" data-line-number="4">  <span class="dt">noise =</span> <span class="st">&quot;neural&quot;</span>, <span class="dt">n =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>),</a>
 <a class="sourceLine" id="cb42-5" data-line-number="5">  <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">achromatic =</span> <span class="ot">TRUE</span></a>
@@ -718,12 +718,12 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a class="sourceLine" id="cb42-9" data-line-number="9">fakedata.cc &lt;-<span class="st"> </span><span class="kw">jnd2xyz</span>(fakedata.cd, <span class="dt">ref1 =</span> <span class="st">&quot;l&quot;</span>, <span class="dt">axis1 =</span> <span class="kw">c</span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">ref2 =</span> <span class="ot">NULL</span>)</a>
 <a class="sourceLine" id="cb42-10" data-line-number="10"><span class="kw">head</span>(fakedata.cc)</a></code></pre></div>
 <pre><code>##             x          y         z      lum
-## X1 -26.165302   3.692783 -17.71718 1.533258
-## X2 -11.212399  -2.085407 -27.97937 1.533258
-## X3   3.076291  -7.441594 -37.76761 1.533258
-## X4  16.523287 -12.475488 -46.33606 1.533255
-## X5  25.812150 -17.848152 -40.71621 1.533213
-## X6  31.912643 -23.368560 -24.79660 1.532744</code></pre>
+## X1 -26.165302   3.692783 -17.71718 1.430788
+## X2 -11.212399  -2.085407 -27.97937 2.315951
+## X3   3.076291  -7.441594 -37.76761 3.621349
+## X4  16.523287 -12.475488 -46.33606 4.341465
+## X5  25.812150 -17.848152 -40.71621 4.444027
+## X6  31.912643 -23.368560 -24.79660 4.046863</code></pre>
 <p>which you can then plot as well:</p>
 <div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb44-1" data-line-number="1"><span class="kw">plot</span>(fakedata.cc, <span class="dt">theta =</span> <span class="dv">55</span>, <span class="dt">phi =</span> <span class="dv">25</span>, <span class="dt">col =</span> <span class="kw">spec2rgb</span>(fakedata.c))</a></code></pre></div>
 <div class="figure">
@@ -1234,7 +1234,7 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
   |                                                             
   |                                                       |   0%, ETA NA
   |                                                             
-  |============================                           |  50%, ETA 00:03
+  |============================                           |  50%, ETA 00:02
   |                                                             
   |=======================================================| 100%, ETA 00:00</code></pre>
 <div class="sourceCode" id="cb120"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb120-1" data-line-number="1"><span class="kw">head</span>(butterflies_adj)</a></code></pre></div>
