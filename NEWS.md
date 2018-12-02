@@ -17,6 +17,9 @@ custom spectra labels in stacked plots.
 * Reference images in `classify()` can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).  
 * numerous under-the-hood changes for stability and speed, with thanks to 
 three reviewers and an associate editor at MEE.
+* `peakshape()` uses a completely different algorithm to find the FWHM. It now
+works as expected for spectra with multiple peaks. See PR #137 for a detailed 
+overview of the changes.
 
 # pavo 2.0.0
 
