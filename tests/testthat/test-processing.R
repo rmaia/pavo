@@ -75,3 +75,13 @@ test_that("Procspec", {
     c(24, 22)
   )
 })
+
+test_that("Aggregation", {
+  data(teal)
+  
+  ind <- rep(c('a', 'b'), times = 6)
+  expect_equal(dim(aggspec(teal, by = ind)), 
+               dim(aggspec(teal, by = 6)), 
+               c(401, 3))
+  
+})

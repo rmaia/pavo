@@ -78,7 +78,6 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
-    print('yay')
     wl_id <- vapply(seq_along(by), function(x) which(by[[x]] == "wl"), numeric(1)) # extract wl columns
     # remove 'wl' column from each vector in list
     if (any(vapply(wl_id, length, numeric(1)) != 0)) {
@@ -132,7 +131,6 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     apply(y[which(by == z)], 1, FUN)
   })
 
-  print(by0)
   colnames(dat) <- unique(by0)
 
   if (trim) {

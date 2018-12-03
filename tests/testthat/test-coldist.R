@@ -48,3 +48,15 @@ test_that("Options", {
     achro = TRUE
   ), 4)
 })
+
+test_that("jnd transform", {
+  data(flowers)
+  
+  vis.flowers <- vismodel(flowers, visual = 'apis')
+  cd.flowers <- coldist(vis.flowers, n = c(1, 1, 1))
+  
+  expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
+  expect_equal(dim(coldist(vismodel(flowers))), c(630, 3))
+  
+})
+  
