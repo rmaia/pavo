@@ -66,17 +66,16 @@ test_that("Output regression", {
   library(digest)
   data(flowers)
   
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all'))), "7d024dad7f1feced295559d7fd444943e180e210")  # dispace
-  
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), "f1527dab25")  
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'apis', achromatic = 'l')), "39aaa44796")  # trispace
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'bluetit', achromatic = 'ch.dc')), "e65fb49b00")  # tcs
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'musca', achro = 'md.r1'), space = 'categorical'), "10c6cd96db")  # categorical
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'segment', achromatic = 'bt.dc'), space = 'segment'), "1030bfa096")  # segment
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE, achromatic = 'l'), space = 'coc'), "9cb10da64d")  # coc
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'apis', qcatch = 'Ei', vonkries = TRUE, relative = FALSE, achromatic = 'l'), space = 'hexagon'), "7cf8755d84")  # hexagon
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'ciexyz'), "1faeee0d09")  # ciexyz
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielab'), "7e80adf858")  # cielab
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch'), "beeb4c34b0")  # cielch
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all'))), "7d024dad7f1feced295559d7fd444943e180e210")  # dispace
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'apis', achromatic = 'l'))), "2e4866f9d317995124830657a4d53d7041a5443c")  # trispace
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'bluetit', achromatic = 'ch.dc'))), "e8c76d5a7665067b14b6822d151ae92f80b640ee")  # tcs
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'musca', achro = 'md.r1'), space = 'categorical')), "a7ccd08c94ebdb45001b54a15eb8263cd5b2550a")  # categorical
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'segment', achromatic = 'bt.dc'), space = 'segment')), "7c2b932002f772b91a310c14c71e4a60a00cdd2d")  # segment
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE, achromatic = 'l'), space = 'coc')), "8aff94ca6f00a16aa1b2a462bdad814fb8ebcaa1")  # coc
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'apis', qcatch = 'Ei', vonkries = TRUE, relative = FALSE, achromatic = 'l'), space = 'hexagon')), "8d78ae80e697548ddf30f6bb906b6162172375f2")  # hexagon
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'ciexyz')), "959b29494ec390d964118e217f59d3ba86c47a1e")  # ciexyz
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielab')), "9858e3ac93193dd0e8aa792b1deac2db8df9171a")  # cielab
+  expect_equal(sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "1146137e125167d95410a4316deca286f7dc9727")  # cielch
+ 
 
 })
