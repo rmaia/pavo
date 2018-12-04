@@ -104,7 +104,8 @@ sensdata <- function(
     if (isTRUE("all" %in% visual2)) {
       visual2 <- c(
         "avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis",
-        "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"
+        "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus",
+        "ctenophorus"
       )
     }
     sens <- as.data.frame(vissyst)
