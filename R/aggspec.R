@@ -51,6 +51,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     y <- rspecdata[, -wl_index, drop = FALSE]
   } else {
     y <- rspecdata
+    wl <- 300:700
   }
 
   if (is.null(by)) {

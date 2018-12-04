@@ -82,6 +82,10 @@ test_that("Aggregation", {
   ind <- rep(c('a', 'b'), times = 6)
   expect_equal(dim(aggspec(teal, by = ind)), 
                dim(aggspec(teal, by = 6)), 
+               dim(aggspec(teal[,-1], by = ind)),
                c(401, 3))
+  
+  expect_equal(dim(aggspec(teal)), c(401, 2))
+  
   
 })
