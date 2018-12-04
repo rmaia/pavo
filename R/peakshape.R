@@ -84,7 +84,11 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   Bmin <- apply(rspecdata2, 2, min) # min refls
   Bmin_all <- apply(rspecdata, 2, min) # min refls, whole spectrum
 
-  halfmax <- ifelse(absolute.min, (Bmax + Bmin_all)/2, (Bmax + Bmin)/2)
+  if (absolute.min) {
+    halfmax <- (Bmax + Bmin_all)/2
+  } else {
+    halfmax <- (Bmax + Bmin)/2
+  }
 
   Xi <- vapply(
     seq_along(rspecdata2),
@@ -107,7 +111,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   FWHM_lims <- sapply(seq_len(ncol(rspecdata2)), function(x) {
     # Start at H1 and find first value below halfmax
     fstHM <- match(FALSE, hilo[seq(Xi[x], 1, -1), x])
-    sndHM <- match(FALSE, hilo[Xi[x]:nrow(rspecdata), x])
+    sndHM <- match(FALSE, hilo[Xi[x]:nrow(rspecdata2), x])
     return(c(fstHM, sndHM))
   })
 
