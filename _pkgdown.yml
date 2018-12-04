@@ -45,7 +45,6 @@ reference:
   - '`jnd2xyz`'
   - '`jndrot`'
   - '`peakshape`'
-  - '`segspace`'
   - '`sensmodel`'
   - '`summary.colspace`'
   - '`summary.rimg`'
