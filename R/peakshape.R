@@ -81,14 +81,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   rspecdata2 <- rspecdata[wl>=lim[1] & wl<=lim[2], , drop = FALSE]
 
   Bmax <- apply(rspecdata2, 2, max) # max refls
+  Bmin <- apply(rspecdata2, 2, min) # min refls
+  Bmin_all <- apply(rspecdata, 2, min) # min refls, whole spectrum
 
-  if (absolute.min) {
-    Bmin <- apply(rspecdata, 2, min) # min refls, whole spectrum
-  } else {
-    Bmin <- apply(rspecdata2, 2, min) # min refls
-  }
-
-  halfmax <- (Bmax + Bmin) / 2 # reflectance midpoint
+  halfmax <- ifelse(absolute.min, (Bmax + Bmin_all)/2, (Bmax + Bmin)/2)
 
   Xi <- vapply(
     seq_along(rspecdata2),
@@ -115,7 +111,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     return(c(fstHM, sndHM))
   })
 
-  if (any(Yj > Yk)) {
+  if (any(Bmin > Bmin_all)) {
     warning("Consider fixing ", dQuote("lim"), " in spectra with ",
             Quote("incl.min"), " marked ", dQuote("No"),
             " to incorporate all minima in spectral curves",
@@ -146,6 +142,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   data.frame(
     id = nms[select], B3 = as.numeric(Bmax), H1 = hue,
-    FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue
+    FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
+    incl.min = c("Yes", "No")[as.numeric(Bmin > Bmin_all) + 1]
   )
 }
