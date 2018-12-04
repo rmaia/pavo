@@ -63,9 +63,12 @@ test_that("Relative quantum catches", {
 })
 
 test_that("Output regression", {
+  library(digest)
   data(flowers)
   
-    # expect_known_hash(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), "f1527dab25")  # dispace
+  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all'))), "7d024dad7f1feced295559d7fd444943e180e210")  # dispace
+  
+    # expect_known_hash(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), "f1527dab25")  
     # expect_known_hash(colspace(vismodel(flowers, visual = 'apis', achromatic = 'l')), "39aaa44796")  # trispace
     # expect_known_hash(colspace(vismodel(flowers, visual = 'bluetit', achromatic = 'ch.dc')), "e65fb49b00")  # tcs
     # expect_known_hash(colspace(vismodel(flowers, visual = 'musca', achro = 'md.r1'), space = 'categorical'), "10c6cd96db")  # categorical

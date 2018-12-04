@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+
+<meta charset="utf-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="generator" content="pandoc" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason" />
+
+<meta name="date" content="2018-12-05" />
+
+<title>overview</title>
+
+
+
+
+
+
+<style type="text/css">body {
+background-color: #fff;
+margin: 1em auto;
+max-width: 700px;
+overflow: visible;
+padding-left: 2em;
+padding-right: 2em;
+font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+font-size: 14px;
+line-height: 1.35;
+}
+#header {
+text-align: center;
+}
+#TOC {
+clear: both;
+margin: 0 0 10px 10px;
+padding: 4px;
+width: 400px;
+border: 1px solid #CCCCCC;
+border-radius: 5px;
+background-color: #f6f6f6;
+font-size: 13px;
+line-height: 1.3;
+}
+#TOC .toctitle {
+font-weight: bold;
+font-size: 15px;
+margin-left: 5px;
+}
+#TOC ul {
+padding-left: 40px;
+margin-left: -1.5em;
+margin-top: 5px;
+margin-bottom: 5px;
+}
+#TOC ul ul {
+margin-left: -2em;
+}
+#TOC li {
+line-height: 16px;
+}
+table {
+margin: 1em auto;
+border-width: 1px;
+border-color: #DDDDDD;
+border-style: outset;
+border-collapse: collapse;
+}
+table th {
+border-width: 2px;
+padding: 5px;
+border-style: inset;
+}
+table td {
+border-width: 1px;
+border-style: inset;
+line-height: 18px;
+padding: 5px 5px;
+}
+table, table th, table td {
+border-left-style: none;
+border-right-style: none;
+}
+table thead, table tr.even {
+background-color: #f7f7f7;
+}
+p {
+margin: 0.5em 0;
+}
+blockquote {
+background-color: #f6f6f6;
+padding: 0.25em 0.75em;
+}
+hr {
+border-style: solid;
+border: none;
+border-top: 1px solid #777;
+margin: 28px 0;
+}
+dl {
+margin-left: 0;
+}
+dl dd {
+margin-bottom: 13px;
+margin-left: 13px;
+}
+dl dt {
+font-weight: bold;
+}
+ul {
+margin-top: 0;
+}
+ul li {
+list-style: circle outside;
+}
+ul ul {
+margin-bottom: 0;
+}
+pre, code {
+background-color: #f7f7f7;
+border-radius: 3px;
+color: #333;
+white-space: pre-wrap; 
+}
+pre {
+border-radius: 3px;
+margin: 5px 0px 10px 0px;
+padding: 10px;
+}
+pre:not([class]) {
+background-color: #f7f7f7;
+}
+code {
+font-family: Consolas, Monaco, 'Courier New', monospace;
+font-size: 85%;
+}
+p > code, li > code {
+padding: 2px 0px;
+}
+div.figure {
+text-align: center;
+}
+img {
+background-color: #FFFFFF;
+padding: 2px;
+border: 1px solid #DDDDDD;
+border-radius: 3px;
+border: 1px solid #CCCCCC;
+margin: 0 5px;
+}
+h1 {
+margin-top: 0;
+font-size: 35px;
+line-height: 40px;
+}
+h2 {
+border-bottom: 4px solid #f7f7f7;
+padding-top: 10px;
+padding-bottom: 2px;
+font-size: 145%;
+}
+h3 {
+border-bottom: 2px solid #f7f7f7;
+padding-top: 10px;
+font-size: 120%;
+}
+h4 {
+border-bottom: 1px solid #f7f7f7;
+margin-left: 8px;
+font-size: 105%;
+}
+h5, h6 {
+border-bottom: 1px solid #ccc;
+font-size: 105%;
+}
+a {
+color: #0033dd;
+text-decoration: none;
+}
+a:hover {
+color: #6666ff; }
+a:visited {
+color: #800080; }
+a:visited:hover {
+color: #BB00BB; }
+a[href^="http:"] {
+text-decoration: underline; }
+a[href^="https:"] {
+text-decoration: underline; }
+
+code > span.kw { color: #555; font-weight: bold; } 
+code > span.dt { color: #902000; } 
+code > span.dv { color: #40a070; } 
+code > span.bn { color: #d14; } 
+code > span.fl { color: #d14; } 
+code > span.ch { color: #d14; } 
+code > span.st { color: #d14; } 
+code > span.co { color: #888888; font-style: italic; } 
+code > span.ot { color: #007020; } 
+code > span.al { color: #ff0000; font-weight: bold; } 
+code > span.fu { color: #900; font-weight: bold; }  code > span.er { color: #a61717; background-color: #e3d2d2; } 
+</style>
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">overview</h1>
+<h4 class="author"><em>Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</em></h4>
+<h4 class="date"><em>2018-12-05</em></h4>
+
+
+<div id="TOC">
+<ul>
+<li><a href="#overview">Overview</a></li>
+<li><a href="#classes-and-attributes">Classes and Attributes</a></li>
+<li><a href="#suggestions-and-assistance">Suggestions and Assistance</a></li>
+<li><a href="#citation-of-methods-implemented-in-pavo">Citation of methods implemented in <code>pavo</code></a></li>
+<li><a href="#acknowledgments">Acknowledgments</a></li>
+<li><a href="#references">References</a></li>
+</ul>
+</div>
+
+<style type="text/css">
+/* Put all captions in italics */
+.caption {
+  font-style: italic;
+}
+/* Center all figures. This is actually better than using knitr::opts_chunk
+because the code is only written once in the output */
+.figure {
+  text-align: center;
+}
+/* Auto-wrap long code line */
+code.sourceCode {
+  white-space: pre-wrap;
+}
+</style>
+<div id="overview" class="section level1">
+<h1>Overview</h1>
+<p><code>pavo</code> is an <code>R</code> package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.</p>
+<p><code>pavo</code> was written with the following workflow in mind:</p>
+<ol style="list-style-type: decimal">
+<li><strong>Organise</strong> data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).</li>
+<li><strong>Analyse</strong> the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.</li>
+<li><strong>Visualise</strong> the output, with multiple options provided for exploration and analysis.</li>
+</ol>
+<p>In the included vignettes we begin by detailing the <a href="importing_processing.html">importing, processing and visualisation</a> of spectral and image data, before moving on to discussion of the <a href="analysing.html">flexible analyses</a> of such data that <code>pavo</code> allows. Our hope is to demonstrate the flexibility of <code>pavo</code>, and to provide a cohesive, reproducible workflow for colour pattern analysis within <code>R</code>. As always, the development version of <code>pavo</code> can be found on <a href="https://github.com/rmaia/pavo">github</a>, while the stable release is available via CRAN.</p>
+</div>
+<div id="classes-and-attributes" class="section level1">
+<h1>Classes and Attributes</h1>
+<p>To enable the comprehensive workflow of <code>pavo</code>, we’ve implemented an expanded class system. Spectra will be of class <code>rspec</code> as long as we use one of <code>pavo</code>’s spectral import or processing functions, or explicitly convert an object using <code>as.rspec()</code>. Similarly, images will be of class <code>rimg</code> when imported via <code>getimg()</code>, or if converted using <code>as.rimg()</code>. The results of <code>vismodel()</code> are objects of class <code>vismodel</code> and the results of <code>colspace()</code> are, unsurprisingly, objects of class <code>colspace</code>. Most of these classes inherit from <code>data.frame</code>, and contain a suite of attributes that describe the object’s characteristics (e.g. options used in visual modelling such as the selected visual system and illuminant, and properties of the modelled colourspace). These are easily viewed using the <code>summary</code> function (on any <code>rspec</code>, <code>rimg</code>, <code>vismodel</code>, or <code>colspace</code> object), which will return the attributes and summary data (where appropriate) in a readable format.</p>
+</div>
+<div id="suggestions-and-assistance" class="section level1">
+<h1>Suggestions and Assistance</h1>
+<p>For suggestions, assistance and/or bug reports, we suggest getting in touch via ‘gitter’ at <a href="https://gitter.im/r-pavo/help" class="uri">https://gitter.im/r-pavo/help</a>, which is essentially a public chat room for all things pavo. If you have a bug to report, we’d appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project’s <a href="https://github.com/rmaia/pavo">github page</a>, or to make a pull-request directly.</p>
+</div>
+<div id="citation-of-methods-implemented-in-pavo" class="section level1">
+<h1>Citation of methods implemented in <code>pavo</code></h1>
+<p>Most of the methods implemented in <code>pavo</code> have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables (“objective colourimetrics”) and their particular relation to signal production and perception, see <strong>???</strong> and <span class="citation">[1]</span>. Visual models based on photon catches and receptor noise are detailed in <span class="citation">[2]</span> and <span class="citation">[2]</span>, and photoreceptor sensitivity curve estimation in <span class="citation">[3]</span> and <span class="citation">[4]</span>. For tetrahedral colourspace model implementations and variable calculations, see <span class="citation">[5]</span> and <span class="citation">[6]</span>, and for colour volume overlap see <span class="citation">[6]</span> and <span class="citation">[7]</span>. Adjacency and boundary strength analyses are described in <span class="citation">[8]</span> and <span class="citation">[9]</span>, while overall pattern contrast is detailed in <span class="citation">[5]</span>. Users of the functions that apply these methods must cite the original sources as appropriate, along with <code>pavo</code> itself.</p>
+</div>
+<div id="acknowledgments" class="section level1">
+<h1>Acknowledgments</h1>
+<p>We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of <code>pavo</code>’s capabilities.</p>
+</div>
+<div id="references" class="section level1 unnumbered">
+<h1>References</h1>
+<div id="refs" class="references">
+<div id="ref-Montgomerie2006">
+<p>1. Montgomerie R. 2006 Analyzing Colors. In <em>Bird Coloration, Volume 1: Mechanisms and Measurements</em> (eds GE Hill, KJ McGraw), p. 640. Harvard University Press. </p>
+</div>
+<div id="ref-Vorobyev1998">
+<p>2. Vorobyev M, Osorio DC, Bennett ATD, Marshall NJ, Cuthill IC. 1998 Tetrachromacy, oil droplets and bird plumage colours. <em>J Comp Physiol A</em> <strong>183</strong>, 621–633. (doi:<a href="https://doi.org/10.1007/s003590050286">10.1007/s003590050286</a>)</p>
+</div>
+<div id="ref-Govardovskii2000">
+<p>3. Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG, Donner K. 2000 In search of the visual pigment template. <em>Visual Neuroscience</em> <strong>17</strong>, 509–528.</p>
+</div>
+<div id="ref-Hart2005">
+<p>4. Hart NS, Vorobyev M. 2005 Modelling oil droplet absorption spectra and spectral sensitivities of bird cone photoreceptors. <em>J Comp Physiol A</em> <strong>191</strong>, 381–392. (doi:<a href="https://doi.org/10.1007/s00359-004-0595-3">10.1007/s00359-004-0595-3</a>)</p>
+</div>
+<div id="ref-Endler2005">
+<p>5. Endler JA, Mielke PW. 2005 Comparing entire colour patterns as birds see them. <em>Biol J Linn Soc</em> <strong>86</strong>, 405–431. (doi:<a href="https://doi.org/10.1111/j.1095-8312.2005.00540.x">10.1111/j.1095-8312.2005.00540.x</a>)</p>
+</div>
+<div id="ref-Stoddard2008">
+<p>6. Stoddard MC, Prum RO. 2008 Evolution of avian plumage color in a tetrahedral color space: A phylogenetic analysis of New World buntings. <em>The American Naturalist</em> <strong>171</strong>, 755–776. (doi:<a href="https://doi.org/10.1086/587526">10.1086/587526</a>)</p>
+</div>
+<div id="ref-Stoddard2011">
+<p>7. Stoddard MC, Stevens M. 2011 Avian vision and the evolution of egg color mimicry in the common cuckoo. <em>Evolution</em> <strong>65</strong>, 2004–2013. (doi:<a href="https://doi.org/10.1111/j.1558-5646.2011.01262.x">10.1111/j.1558-5646.2011.01262.x</a>)</p>
+</div>
+<div id="ref-Endler2012">
+<p>8. Endler JA. 2012 A framework for analysing colour pattern geometry: Adjacent colours. <em>Biol J Linn Soc</em> <strong>107</strong>, 233–253. (doi:<a href="https://doi.org/10.1111/j.1095-8312.2012.01937.x">10.1111/j.1095-8312.2012.01937.x</a>)</p>
+</div>
+<div id="ref-Endler2018">
+<p>9. Endler JA, Cole GL, Kranz AM. 2018 Boundary strength analysis: Combining colour pattern geometry and coloured patch visual properties for use in predicting behaviour and fitness. <em>Methods in Ecology and Evolution</em> (doi:<a href="https://doi.org/10.1111/2041-210X.13073">10.1111/2041-210X.13073</a>)</p>
+</div>
+</div>
+</div>
+
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>

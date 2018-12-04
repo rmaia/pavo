@@ -1,0 +1,822 @@
+---
+title: "Analysing data"
+author: "Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason"
+date: "`r Sys.Date()`"
+output:
+  rmarkdown::html_vignette:
+    toc: true
+    toc_depth: 4
+bibliography: main.bib
+csl: open-biology.csl
+vignette: >
+  %\VignetteIndexEntry{(3) Analysing Data}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+<style type="text/css">
+/* Put all captions in italics */
+.caption {
+  font-style: italic;
+}
+/* Center all figures. This is actually better than using knitr::opts_chunk
+because the code is only written once in the output */
+.figure {
+  text-align: center;
+}
+/* Auto-wrap long code line */
+code.sourceCode {
+  white-space: pre-wrap;
+}
+</style>
+
+```{r include = FALSE}
+# Do not use partial matching
+options(
+   warnPartialMatchDollar = FALSE,
+   warnPartialMatchArgs = FALSE,
+   warnPartialMatchAttr = FALSE
+)
+```
+
+[pavo_repo]: https://github.com/rmaia/pavo
+
+[data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+
+Let's again begin by loading the package.
+
+```{r, warning=FALSE, results='hide', message=FALSE}
+# Load the package, and set a global random-number seed for the reproducible generation of fake data later on.
+library(pavo)
+set.seed(1612217)
+```
+
+# Analysing Spectral Data
+
+## Spectral Dataset Description
+
+The raw spectral data used in this example are available from the package repository on [github][pavo_repo], located [here][data_location]. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).
+
+The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal _Cardinalis cardinalis_, Wattled Jacana _Jacana jacana_, Baltimore Oriole _Icterus galbula_, Peach-fronted Parakeet _Aratinga aurea_, American Robin _Turdus migratorius_, and Sayaca Tanager _Thraupis sayaca_. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility `pavo` offers, as we'll see below.
+
+In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
+
+```{r}
+specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
+mspecs <- aggspec(specs, by = 3, FUN = mean)
+spp <- gsub('\\.[0-9].*$', '', names(mspecs))[-1]
+sppspec <- aggspec(mspecs, by = spp, FUN = mean)
+spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
+```
+
+## Overview
+
+`pavo` offers two main approaches for spectral data analysis. First, colour variables can be calculated based on the shape of the reflectance spectra. By using special `R` classes for spectra data frame objects, this can easily be done using the `summary` function with an `rspec` object (see below). The function `peakshape()` also returns descriptors for individual peaks in spectral curves, as outlined below.
+
+Second, reflectance spectra can be analysed by accounting for the visual system receiving the colour signal, therefore representing reflectance spectra as perceived colours. To that end, we have implemented a suite of visual models and colourspaces including; the receptor-noise limited model of model of @Vorobyev1998, @Endler1990's segment classification method, flexible di- tri- and tetra-chromatic colourspaces, the Hexagon model of @Chittka1992, the colour-opponent coding space of @Backhaus1991, CIELAB and CIEXYZ spaces, and the categorical model of @Troje1992.
+
+## Spectral Shape Analysis
+
+### Colourimetric Variables
+
+Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in `pavo`. Since reflectance spectra is stored in an object of class `rspec`, the `summary` function recognizes the object as such and extracts 23 variables, as outlined in @Montgomerie2006. Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.
+
+The description and formulas for these variables can be found by running `?summary.rspec`.
+
+```{r, results='hide'}
+summary(spec.sm)
+```
+
+`summary` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics @Andersson2006. `summary` can also take a vector of colour variable names, which can be used to filter the results
+
+```{r, results='hide'}
+summary(spec.sm, subset = TRUE)
+```
+
+```{r, results='hide'}
+# Extract only brightness variables
+summary(spec.sm, subset = c('B1', 'B2', 'B3'))
+```
+
+### Peak Shape Descriptors
+
+Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the `summary` function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak's properties. The `peakshape()` function identifies the peak location (`H1`), returns the reflectance at that point (`B3`), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or `FWHM`). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.
+
+If this all sounds too esoteric, fear not: `peakshape()` has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (`HWHM.l` and `HWHM.r`) is the FWHM:
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Plots from `peakshape`"}
+par(mfrow = c(2, 3))
+peakshape(spec.sm, plot = TRUE)
+```
+
+As it can be seen, the variable FWHM is meaningless if the curve doesn't have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Above figure, last panel). In this case, it's useful to set wavelength limits when calculating the FWHM by using the `lim` argument. `peakshape` also offers a `select` argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm"}
+peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
+```
+
+## Visual Modelling
+
+### Overview
+
+All visual and colourspace modelling and plotting options are wrapped into four main function: `vismodel()`, `colspace()`, `coldist()`, and `plot`. As detailed below, these functions cover the basic processes common to most modelling approaches. Namely, the estimation of quantum catches, their conversion to an appropriate space, estimating the distances between samples, and visualising the results. As a brief example, a typical workflow for modelling might use:
+
+1. `vismodel()` to estimate photoreceptor quantum catches. The assumptions of visual models may differ dramatically, so be sure to select options that are appropriate for your intended use.
+2. `colspace()` to convert the results of `vismodel()` (or user-provided quantum catches) into points in a given colourspace, specified with the `space` argument. If no `space` argument is provided, `colspace()` will automatically select the di-, tri- or tetrahedral colourspace, depending on the nature of the input data. The result of `colspace()` will be an object of class `colspace` (that inherits from `data.frame`), and will contain the location of stimuli in the selected space along with any associated colour variables.
+3. `coldist()` to estimate the colour distances between points in a colourspace (if the input is from `colspace`), or the 'perceptual', noise-weighted distances in the receptor-noise limited model (if the input is from `vismodel()` where `relative = FALSE`).
+4. `plot` the output. `plot` will automatically select the appropriate visualisation based on the input `colspace` object, and will also accept various graphical parameters depending on the colourspace (see `?plot.colspace` and links therein for details).
+
+### Accessing and Plotting In-built Spectral Data
+
+All in-built spectral data in `pavo` can be easily retrieved and/or plotted via the `sensdata()` function. These data can be visualised directly by including `plot = TRUE`, or assigned to an object for subsequent use, as in:
+
+```{r echo=TRUE}
+musca_sense <- sensdata(visual = "musca", achromatic = "md.r1")
+head(musca_sense)
+```
+
+### Visual Phenotypes
+
+`pavo` contains numerous di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessible via the `vismodel()` argument `visual`, and include:
+
+```{r echo = FALSE, results = 'asis'}
+vistab <- data.frame(phenotype = c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "ctenophorus", "canis", "musca", "cie2",
+                                   "cie10", "segment", "habronattus", "rhinecanthus"),
+                     description = c("average ultraviolet-sensitive avian (tetrachromat)",
+                                     "average violet-sensitive avian (tetrachromat)",
+                                     "The blue tit _Cyanistes caeruleus_ (tetrachromat)",
+                                     "The starling _Sturnus vulgaris_ (tetrachromat)",
+                                     "The peafowl _Pavo cristatus_ (tetrachromat)",
+                                     "The honeybee _Apis mellifera_ (trichromat)",
+                                     "The ornate dragon lizard _Ctenophorus ornatus_ (trichromat)",
+                                     "The canid _Canis familiaris_ (dichromat)",
+                                     "The housefly _Musca domestica_ (tetrachromat)",
+                                     "2-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "10-degree colour matching functions for CIE models of human colour vision (trichromat)",
+                                     "A generic 'viewer' with broad sensitivities for use in the segment analysis of Endler (1990) (tetrachromat)",
+                                     "The jumping spider _Habronattus pyrrithrix_ (trichromat)",
+                                     "The triggerfish _Rhinecanthus aculeatus_ (trichromat)"))
+knitr::kable(vistab, caption = "Built-in visual phenotypes available in pavo")
+```
+
+### Estimating Quantum Catch
+
+Numerous models have been developed to understand how colours are perceived and discriminated by an individual's or species' visual system (described in detail in @Endler1990; @Renoult2015; @Vorobyev1998). In essence, these models take into account the receptor sensitivity of the different receptors that make the visual system in question and quantify how a given colour would stimulate those receptors individually, and their combined effect on the perception of colour. These models also have an important component of assuming and interpreting the chromatic component of colour (hue and saturation) to be processed independently of the achromatic (brightness, or luminance) component. This provides a flexible framework allowing for a tiered model construction, in which information on aspects such as different illumination sources, backgrounds, and visual systems can be considered and compared.
+
+To apply any such model, we first need to quantify receptor excitation and then consider how the signal is being processed, while possibly considering the relative density of different cones and the noise-to-signal ratio.
+
+To quantify the stimulation of cones by the emitted colour, we will use the `pavo` function `vismodel()`. This function takes an `rspec` dataframe as a minimal input, and the user can either select from the available options or input their own data for the additional arguments in the function:
+
+- `visual`: the visual system to be used. Available inbuilt options are detailed above, or the user may include their own dataframe, with the first column being the wavelength range and the following columns being the absorbance at each wavelength for each cone type (see below for an example).
+- `achromatic`: Either a receptor's sensitivity data (available options include the blue tit, chicken, and starling double-cones, and the housefly's R1-6 receptor), which can also be user-defined as above; or the longest-wavelength receptor, the sum of the two longest-wavelength receptors, or the sum of all receptors can be used. Alternatively, `none` can be specified for no achromatic stimulation calculation.
+- `illum`: The illuminant being considered. By default, it considers an ideal white illuminant, but implemented options are a blue sky, standard daylight, and forest shade illuminants. A vector of same length as the wavelength range being considered can also be used as the input.
+- `trans`: Models of the effects of light transmission (e.g. through noisy environments or ocular filters). The argument defaults to `ideal` (i.e. no effect), though users can also use the built-in options of `bluetit` or `blackbird` to model the ocular transmission of blue tits/blackbirds, or specify a user-defined vector containing transmission spectra.
+- `qcatch`: This argument determines what photon catch data should be returned
+  * `Qi`: The receptor quantum catches, calculated for receptor $i$ as:
+    $$Q_i = \int_\lambda{R_i(\lambda)S(\lambda)I(\lambda)d\lambda}$$
+    Where $\lambda$ denotes the wavelength, $R_i(\lambda)$ the spectral sensitivity of receptor $i$, $S(\lambda)$ the reflectance spectrum of the colour, and $I(\lambda)$ the illuminant spectrum.
+  * `fi`: The receptor quantum catches transformed according to Fechner's law, in which the signal of the receptor is proportional to the logarithm of the quantum catch i.e. $f_i = \ln(Q_i)$
+  * `Ei`: the hyperbolic transform (a simplification of the Michaelis–Menton photoreceptor equation), where $$E_i = \frac{Q_i}{Q_i + 1}$$.
+- `bkg`: The background being considered. By default, it considers an idealized background (i.e. wavelength-independent influence of the background on colour). A vector of same length as the wavelength range being considered can also be used as the input.
+- `vonkries`: a logical argument which determines if the von Kries transformation (which normalizes receptor quantum catches to the background, thus accounting for receptor adaptation) is to be applied (defaults to `FALSE`). If `TRUE`, $Q_i$ is multiplied by a constant $k$, which describes the von Kries transformation: $$k_i = \frac{1}{\int_\lambda R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda}$$ Where $S^b$ denotes the reflectance spectra of the background.
+- `scale`: This argument defines how the illuminant should be scaled. The scale of the illuminant is critical of receptor noise models in which the signal intensity influences the noise (see Receptor noise section, below). Illuminant curves should be in units of $\mu mol.s^{-1}.m^{-2}$ in order to yield physiologically meaningful results. (Some software return illuminant information values in $\mu Watt.cm^{-2}$, and must be converted to $\mu mol.s^{-1}.m^{-2}$. This can be done by using the `irrad2flux` and `flux2irrad` functions.) Therefore, if the user-specified illuminant curves are _not_ in these units (i.e. are measured proportional to a white standard, for example), the `scale` parameter can be used as a multiplier to yield curves that are at least a reasonable approximation of the illuminant value. Commonly used values are **500** for dim conditions and **10,000** for bright conditions.
+- `relative`: If `TRUE`, it will make the cone stimulations relative to their sum. This is appropriate for colourspace models such as the avian tetrahedral colourspace (@Goldsmith1990, @Stoddard2008; For the photon catch and neural noise model, it is important to set `relative = FALSE`).
+
+All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.
+
+```{r, results='hide'}
+vismod1 <- vismodel(sppspec,
+  visual = "avg.uv", achromatic = "bt.dc",
+  illum = "D65", relative = FALSE
+)
+vismod1
+```
+
+Since there are multiple parameters that can be used to customize the output of `vismodel`, as detailed above, for convenience these can be returned by using `summary` in a `vismodel` object:
+
+```{r}
+summary(vismod1)
+```
+
+We can visualize what vismodel is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:
+
+```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=6, fig.height=5, fig.cap="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)."}
+par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
+layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
+
+sppspecol <- as.character(spec2rgb(sppspec))
+
+for (i in 1:6) {
+  par(mar = c(2, 2, 2, 2))
+  plot(sppspec, select = i + 1, col = sppspecol[i], lwd = 3, ylim = c(0, 100))
+  par(mar = c(4.1, 2.5, 2.5, 2))
+  barplot(as.matrix(vismod1[i, 1:4]), yaxt = "n", col = "black")
+}
+
+mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
+mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
+```
+
+As described above, `vismodel` also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function `sensmodel`, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in @Govardovskii2000 and @Hart2005. `sensmodel` takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Idealized dichromat photoreceptors created using `sensmodel`."}
+idealizeddichromat <- sensmodel(c(350, 650))
+plot(idealizeddichromat, col = spec2rgb(idealizeddichromat), ylab = "Absorbance")
+```
+
+```{r, results='hide'}
+vismod.idi <- vismodel(sppspec, visual = idealizeddichromat, relative = FALSE)
+vismod.idi
+```
+
+### The Receptor Noise Model
+
+The receptor-noise limited (RNL) model of @Vorobyev1998, @Vorobyev2001 offers a basis for estimating the 'perceptual' distance between coloured stimuli (depending on available physiological and behavioural data), and assumes that the simultaneous discrimination of colours is fundamentally limited by photoreceptor noise. Colour distances under the RNL model can be calculated by using the inverse of the noise-to-signal ratio, known as the Weber fraction ($w_i$ for each cone $i$). The Weber fraction can be calculated from the noise-to-signal ratio of cone $i$ ($v_i$) and the relative number of receptor cells of type $i$ within the receptor field ($n_i$):
+
+$$w_i = \frac{v_i}{\sqrt{n_i}}$$
+
+$w_i$ is the value used for the noise when considering only neural noise mechanisms. Alternatively, the model can consider that the intensity of the colour signal itself contributes to the noise (photoreceptor, or quantum, noise). In this case, the noise for a receptor $i$ is calculated as:
+
+$$w_i = \sqrt{\frac{v_i^2}{\sqrt{n_i}} + \frac{2}{Q_a+Q_b}}$$
+
+where $a$ and $b$ refer to the two colour signals being compared. Note that when the values of $Q_a$ and $Q_b$ are very high, the second portion of the equation tends to zero, and the both formulas should yield similar results. Hence, it is important that the quantum catch are calculated in the appropriate illuminant scale, as described above.
+
+Colour distances are obtained by weighting the Euclidean distance of the photoreceptor quantum catches by the Weber fraction of the cones ($\Delta S$). These measurements are in units of Just Noticeable Differences (JNDs), where distances over a certain threshold (usually 1) are considered to be discernible under the conditions considered (e.g., backgrounds, illumination). The equations used in these calculations are:
+
+For dichromats:
+$$\Delta S = \sqrt{\frac{(\Delta f_1 - \Delta f_2)^2}{w_1^2+w_2^2}}$$
+
+For trichromats:
+$$\Delta S = \sqrt{\frac{w_1^2(\Delta f_3 - \Delta f_2)^2 + w_2^2(\Delta f_3 - \Delta f_1)^2 +
+w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}$$
+
+For tetrachromats:
+$$\Delta S =
+\sqrt{(w_1w_2)^2(\Delta f_4 - \Delta f_3)^2 + (w_1w_3)^2(\Delta f_4 - \Delta f_2)^2 +
+(w_1w_4)^2(\Delta f_3 - \Delta f_2)^2 + \\ (w_2w_3)^2(\Delta f_4 - \Delta f_1)^2 +
+(w_2w_4)^2(\Delta f_3 - \Delta f_1)^2 + (w_3w_4)^2(\Delta f_2 - \Delta f_1)^2 / \\
+((w_1w_2w_3)^2 + (w_1w_2w_4)^2 + (w_1w_3w_4)^2 + (w_2w_3w_4)^2)}$$
+
+For the chromatic contrast. The achromatic contrast ($\Delta L$) can be calculated based on the double cone or the receptor (or combination of receptors) responsible for chromatic processing by the equation:
+
+$$\Delta L = \frac{\Delta f}{w}$$
+
+#### Perceptual Distances with `coldist()`
+
+`pavo` implements the noise-weighted colour distance calculations in the function `coldist()`, assuming that raw receptor quantum catches are provided (via `relative = FALSE` in `vismodel()`). For the achromatic contrast, `coldist()` uses `n4` to calculate $w$ for the achromatic contrast. Note that even if $Q_i$ is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by `vismodel` as an input. In this case, the argument `qcatch` should be used to inform the function if $Q_i$ or $f_i$ values are being used (note that if the input to `coldist()` is an object generated using the `vismodel()` function, this argument is ignored.) The type of noise to be calculated can be selected from the `coldist()` argument `noise` (which accepts either `"neural"` or `"quantum"`).
+
+```{r}
+coldist(vismod1,
+  noise = "neural", achromatic = TRUE, n = c(1, 2, 2, 4),
+  weber = 0.1, weber.achro = 0.1
+)
+coldist(vismod.idi, n = c(1, 2), weber = 0.1)
+```
+
+Where `dS` is the chromatic contrast ($\Delta S$) and `dL` is the achromatic contrast ($\Delta L$). Note that, by default, `achromatic = FALSE`, so `dL` isn't included in the second result (this is to maintain consistency since, in the `vismodel()` function, the `achromatic` argument defaults to `none`). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.
+
+`coldist()` also has a `subset` argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). `subset` can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:
+
+```{r, results = 'hide'}
+coldist(vismod1, subset = 'cardinal')
+```
+
+to:
+
+```{r, results='hide'}
+coldist(vismod1, subset = c('cardinal', 'jacana'))
+```
+
+#### Converting receptor noise-corrected distances to Cartesian coordinates
+
+You can convert distances in JND back to Cartesian position coordinates with the function `jnd2xyz()`. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:
+
+```{r}
+fakedata1 <- vapply(
+  seq(100, 500, by = 20),
+  function(x) rowSums(cbind(
+      dnorm(300:700, x, 30),
+      dnorm(300:700, x + 400, 30)
+    )),
+    numeric(401)
+)
+
+# Creating idealized specs with varying saturation
+fakedata2 <- vapply(
+  c(500, 300, 150, 105, 75, 55, 40, 30),
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
+)
+
+fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
+fakedata1 <- procspec(fakedata1, "max")
+fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
+fakedata2 <- procspec(fakedata2, "sum")
+fakedata2 <- procspec(fakedata2, "min")
+
+# Converting reflectance to percentage
+fakedata1[, -1] <- fakedata1[, -1] * 100
+fakedata2[, -1] <- fakedata2[, -1] / max(fakedata2[, -1]) * 100
+
+# Combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
+fakedata.c <- as.rspec(fakedata.c)
+```
+
+```{r}
+# Visual model and colour distances
+fakedata.vm <- vismodel(fakedata.c, relative = FALSE, achromatic = 'all')
+fakedata.cd <- coldist(fakedata.vm,
+  noise = "neural", n = c(1, 2, 2, 4),
+  weber = 0.1, achromatic = TRUE
+)
+
+# Converting to Cartesian coordinates
+fakedata.cc <- jnd2xyz(fakedata.cd, ref1 = "l", axis1 = c(1, 0, 0), ref2 = NULL)
+head(fakedata.cc)
+```
+
+which you can then plot as well:
+
+```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Spectral data in a receptor noise-corrected colourspace"}
+plot(fakedata.cc, theta = 55, phi = 25, col = spec2rgb(fakedata.c))
+```
+
+The axes in this colourspace are in JND units. For more information on these functions, see `?jnd2xyz`, `?jndrot` and `?jndplot`.
+
+
+### Colourspaces
+
+Another general, flexible representation of stimuli is the colour space model. In such approaches, photon catches are expressed in relative values (so that the quantum catches of all receptors involved in chromatic discrimination sum to 1). The maximum stimulation of each cone $n$ is placed at the vertex of a $(n-1)$-dimensional polygon that encompasses all theoretical colours that can be perceived by that visual system. For the avian visual system comprised of 4 cones, for example, all colours can be placed somewhere in the volume of a tetrahedron, in which each of the four vertices represents the maximum stimulation of that particular cone type.
+
+Though these models do not account for receptor noise (and thus do not allow an estimate of JNDs), they presents several advantages. First, they make for a very intuitive representation of colour points accounting for attributes of the colour vision of the signal receiver. Second, they allow for the calculation of several interesting variables that represent colour. For example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-red) and the z axis (UV); saturation can be estimated as the distance of the point from the achromatic centre.
+
+`data(flowers)` is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species, which we'll use to illustrate for the following colourspace modelling.
+
+```{r}
+data(flowers)
+
+head(flowers[1:4])
+```
+
+#### Di-, Tri-, and Tetrachromatic Colourspaces
+
+`pavo` has extensive modelling and visualisation capabilities for generic di-, tri-, and tetra-chromatic spaces, uniting these approaches in a cohesive workflow. As with most colourspace models, we first estimate relative quantum catches with various assumptions by using the `vismodel()` function, before converting each set of values to a location in colourspace by using the `space` argument in `colspace()` (the function can also be set to try to detect the dimensionality of the colourspace automatically). For di- tri- and tetrachromatic spaces, `colspace()` calculates the coordinates of stimuli as:
+
+**Dichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_s)$$
+
+**Trichromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+
+**Tetrachromats:**
+$$x = \frac{1}{\sqrt{2}}(Q_l - Q_m)$$
+$$y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})$$
+$$z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})$$
+
+Where Q~u~, Q~s~, Q~m~, and Q~l~ refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.
+
+For a dichromatic example, we can model our floral reflectance data using the visual system of the domestic dog _Canis familiaris_, which has two cones with maximal sensitivity near 440 and 560 nm.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'canis')
+
+di.flowers <- colspace(vis.flowers, space = 'di')
+
+head(di.flowers)
+```
+
+The output contains values for the relative stimulation of short- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.
+
+```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Flowers in a dichromatic colourspace, as modelled according to a canid visual system."}
+plot(di.flowers, col = spec2rgb(flowers))
+```
+
+For our trichromatic viewer we can use the honeybee _Apis mellifera_, one of the most significant and widespread pollinators. We'll also transform our quantum catches according to Fechner's law by specifying `qcatch = 'fi'`, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the `scale` argument.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'fi', scale = 10000)
+
+tri.flowers <- colspace(vis.flowers, space = 'tri')
+
+head(tri.flowers)
+```
+
+As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, as well as the 'hue angle' `h.theta` and distance from the origin (`r.vec`).
+
+```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Floral reflectance in a Maxwell triangle, considering a honeybee visual system."}
+plot(tri.flowers, pch = 21, bg = spec2rgb(flowers))
+```
+
+Finally, we'll draw on the blue tit's visual system to model our floral reflectance spectra in a tetrahedral space, again using log-transformed quantum catches and assuming bright viewing conditions.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = "bluetit", qcatch = "fi", scale = 10000)
+
+tetra.flowers <- colspace(vis.flowers, space = "tcs")
+
+head(tetra.flowers)
+```
+
+Tetrahedral data (via `colspace(space = 'tcs')`) may be plotted in a standard _static_ tetrahedron by using `plot()`, or can be visualised as part of an _interactive_ tetrahedron by using `tcsplot()` with the accessory functions `tcspoints()` and `tcsvol()` for adding points and convex hulls, respectively. As with other colourspace plots there are a number of associated graphical options, though the `theta` and `phi` arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.
+
+When plotting the tetrahedral colourspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments `perspective = TRUE` and controlling the size range with the `range` argument. Several other options control the appearance of this plot, you can check these using `?plot.colspace` or `?tetraplot`
+
+```{r, fig=TRUE, include=TRUE, fig.height=5, fig.width=5, fig.cap="Flowers in a tetrahedral colourspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective"}
+plot(tetra.flowers, pch = 21, bg = spec2rgb(flowers), perspective = TRUE, range = c(1, 2), cex = 0.5)
+```
+
+Two additional functions may help with tetrahedral colourspace plotting:
+
+  * `axistetra()` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
+  * `legendtetra()` allows you to add a legend to a plot.
+
+```{r, fig=TRUE, include=TRUE, fig.height=4, fig.width=6, fig.cap="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit."}
+par(mfrow = c(1, 2), pty = "s")
+plot(tetra.flowers, pch = 21, bg = spec2rgb(flowers))
+axistetra(x = 0, y = 1.8)
+plot(tetra.flowers, theta = 110, phi = 10, pch = 21, bg = spec2rgb(flowers))
+axistetra(x = 0, y = 1.8)
+```
+
+For tetrahedral models, another plotting option available is `projplot`, which projects colour points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Projection plot from a tetrahedral colour space."}
+projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
+```
+
+Finally, a useful function for tetrahedral models is `voloverlap()`, which calculates the overlap in tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. @Stoddard2011. To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
+
+```{r}
+data(sicalis)
+```
+
+We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colourspace (note the option `plot` for plotting of the volumes):
+
+```{r}
+par(mfrow = c(1, 2), pty = "s")
+tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
+tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
+tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
+voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
+```
+
+The function `voloverlap()` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\mathtt{vsmallest} = V_{overlap} / min(V_A, V_B)$$ and $$\mathtt{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
+
+So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
+
+**Summary variables for groups of points**
+
+Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied, the mean and variance of hue span and the mean saturation. In `pavo`, the result of a `colspace()` call is an object of class `colspace`, and thus these summary statistics can be calculated simply by calling `summary`. Note that the `summary` call can also take a `by` vector of group identities, so that the variables are calculated for each group separately:
+
+```{r}
+summary(tetra.flowers)
+```
+
+#### The Colour Hexagon
+
+The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved @Briscoe2001. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.
+
+In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel()`. including the optional use of a 'green' vegetation background. Note that although this is a colourspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE, achromatic = 'l', bkg = 'green')
+```
+
+We can then apply the hexagon model in `colspace`, which will convert our photoreceptor 'excitation values' to coordinates in the hexagon according to:
+
+$$x = \frac{\sqrt{3}}{2(E_g + E_{uv})}$$
+
+$$y = E_b - 0.5(E_{uv} + E_g)$$
+
+```{r}
+hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+
+head(hex.flowers)
+```
+
+Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hexagon model also outputs two additional measures of of subjective 'bee-hue'; `sec.fine` and `sec.coarse`. `sec.fine` describes the location of stimuli within one of 36 'hue sectors' that are specified by radially dissecting the hexagon in 10-degree increments. `sec.coarse` follows a similar principle, though here the hexagon is divided into only five 'bee-hue' sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying `sectors = 'coarse` or `sectors = 'fine'` in a call to `plot` after modelling.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors."}
+plot(hex.flowers, sectors = 'coarse', pch = 21, bg = spec2rgb(flowers))
+```
+
+#### The Colour Opponent Coding (COC) Space
+
+The colour opponent coding (coc) space is an earlier hymenopteran visual model @Backhaus1991 which, although now seldom used in favour of the hexagon, may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies `A` and `B` coordinates based on empirically-derived weights for the output from each photoreceptor:
+
+$$A = -9.86E_u + 7.70E_b + 2.16E_g$$
+$$B = -5.17E_u + 20.25E_b - 15.08E_g$$
+
+Where $E_i$ is the excitation value (quantum catch) in photoreceptor $i$.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, bkg = "green")
+
+coc.flowers <- colspace(vis.flowers, space = "coc")
+
+head(coc.flowers)
+```
+
+The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in `r.vec`, it contains no associated measure of hue.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling according to the honeybee."}
+plot(coc.flowers, pch = 21, bg = spec2rgb(flowers), yaxt = "n")
+```
+
+#### CIE Spaces
+
+The CIE (International Commission on Illumination) colourspaces are a suite of models of human colour vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space and its cylindrical CIE LCh transformation. Tristimulus values in XYZ space are calculated as:
+
+$$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
+$$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
+$$Z = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
+
+where _x_, _y_, and _z_ are the trichromatic colour matching functions for a 'standard colourimetric viewer'. These functions are designed to describe an average human's chromatic response within a specified viewing arc in the fovea (to account for the uneven distribution of cones across eye). `pavo` includes both the CIE 2-degree and the modern 10-degree standard observer, which can be selected in the `visual` option in the `vismodel` function. In these equations, k is the normalising factor
+
+$$k = \frac{100}{\int_{300}^{700}{I(\lambda)\bar{y}(\lambda)\,d\lambda}}$$
+
+and the chromaticity coordinates of stimuli are calculated as
+
+$$x = \frac{X}{X + Y + Z}$$
+$$y = \frac{Y}{X + Y + Z}$$
+$$z = \frac{Z}{X + Y + Z} = 1 - x - y$$
+
+For modelling in both XYZ and LAB spaces, here we'll use the CIE 10-degree standard observer, and assume a `D65` 'standard daylight' illuminant. Again, although they are colourspace models, we need to set `relative = FALSE` to return raw quantum catch estimates, `vonkries = TRUE` to account for the required normalising factor (as above), and `achromatic = 'none'` since there is no applicable way to estimate luminance in the CIE models. As with all models that have particular requirements, `vismodel()` will output warnings and/or errors if unusual or non-standard arguments are specified.
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE, achromatic = 'none')
+```
+
+```{r}
+ciexyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+head(ciexyz.flowers)
+```
+
+The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location."}
+plot(ciexyz.flowers, pch = 21, bg = spec2rgb(flowers))
+```
+
+The `Lab` space is a more recent development, and is a colour-opponent model that attempts to mimic the nonlinear responses of the human eye. The `Lab` space is also calibrated (unlike the `XYZ` space) such that Euclidean distances between points represent relative perceptual distances. This means that two stimuli that are farther apart in `Lab` space should be _perceived_ as more different than two closer points. As the name suggests, the dimensions of the `Lab` space are *L*ightness (i.e. subjective brightness), along with two colour-opponent dimensions designated *a* and *b*. The `colspace()` function, when `space = cielab`, simply converts points from the `XYZ` model according to:
+
+$$
+L=\begin{cases}
+116\left(\frac{Y}{Y_n}\right)^\frac{1}{3} & \text{if } \frac{Y}{Y_n} > 0.008856 \\
+903.3\left(\frac{Y}{Y_n}\right) & \text{if } \frac{Y}{Y_n} \leq 0.008856
+\end{cases}
+$$
+
+$$a = 500\left(f\left(\frac{X}{X_n}\right) - f\left(\frac{Y}{Y_n}\right)\right)$$
+
+$$b = 500\left(f\left(\frac{Y}{Y_n}\right) - f\left(\frac{Z}{Z_n}\right)\right)$$
+
+where
+
+$$
+f(x)=\begin{cases}
+x^\frac{1}{3} & \text{if } x > 0.008856 \\
+7.787x + \frac{4}{29} & \text{if } x \leq 0.008856
+\end{cases}
+$$
+
+Here, $X_n, Y_n, Z_n$ are neutral point values to model visual adaptation, calculated as:
+
+$$X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
+$$Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
+$$Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}$$
+
+when $R_n(\lambda)$ is a perfect diffuse reflector (i.e. 1).
+
+```{r}
+cielab.flowers <- colspace(vis.flowers, space = 'cielab')
+head(cielab.flowers)
+```
+
+Our output now contains the tristimulus `XYZ` values, as well as their `Lab` counterparts, which are coordinates in the `Lab` space. These can also be visualised in three-dimensional `Lab` space by calling `plot`:
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Floral reflectance spectra represented in the CIELab model of human colour sensation."}
+plot(cielab.flowers, pch = 21, bg = spec2rgb(flowers))
+```
+
+#### Categorical Fly Colourspace
+
+The categorical colour vision model of @Troje1993 is a model of dipteran vision, based on behavioural data from the blowfly _Lucilia_ sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 & R8 'pale' and 'yellow' subtypes), and further posits that colour vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colours are perceptually grouped into one of four colour categories, and that flies are unable to distinguish between colours that fall within the same category.
+
+We'll use the visual systems of the muscoid fly _Musca domestica_, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors.
+
+```{r}
+vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achromatic = 'none', relative = TRUE)
+```
+
+Our call to `colspace()` will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between 'pale' (R7p - R8p) and 'yellow' (R7y - R8y) photoreceptor pairs:
+
+$$x = R7_p - R8_p$$
+
+$$y = R7_y - R8_y$$
+
+```{r}
+cat.flowers <- colspace(vis.flowers, space = 'categorical')
+
+head(cat.flowers)
+```
+
+And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Flowers in the categorical colourspace of Troje (1993)."}
+plot(cat.flowers, pch = 21, bg = spec2rgb(flowers))
+```
+
+#### Segment Classification
+
+The segment classification analysis @Endler1990 does not assume any particular visual system, but instead tries to classify colours in a manner that captures common properties of many vertebrate (and some invertebrate) visual systems. In essence, it breaks down the reflectance spectrum region of interest into four equally-spaced regions, measuring the relative signal along those regions. This approximates a tetrachromatic system with ultraviolet, short, medium, and long-wavelength sensitive photoreceptors.
+
+Though somewhat simplistic, this model captures many of the properties of other, more complex visual models, but without many of the additional assumptions these make. It also provides results in a fairly intuitive colour space, in which the angle corresponds to hue and the distance from the centre corresponds to chroma (Figure below; in fact, variables `S5` and `H4` from `summary.rspec()` are calculated from these relative segments).
+Note that, while a segment analysis ranging from 300 or 400 nm to 700 nm corresponds quite closely to the human visual system colour wheel, any wavelength range can be analysed in this way, returning a 360° hue space delimited by the range used.
+
+The segment differences or "opponents" are calculated as:
+
+$$LM = \frac{ R_\lambda \sum_{\lambda={Q4}} R_\lambda - \sum_{\lambda={Q2}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}$$
+$$MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}$$
+
+Where $Qi$ represent the interquantile distances (e.g. $Q1=ultraviolet$, $Q2=blue$, $Q3=green$ and $Q4=red$)
+
+The segment classification model is obtained through the `colspace()` argument `space = 'segment'`, following initial modelling with `vismodel()`. The example below uses idealized reflectance spectra to illustrate how the avian colour space defined from the segment classification maps to the human colour wheel:
+
+```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=4, fig.height=4, fig.cap="Idealized reflectance spectra and their projection on the axes of segment classification"}
+fakedata1 <- vapply(
+  seq(100, 500, by = 20),
+  function(x) rowSums(cbind(
+      dnorm(300:700, x, 30),
+      dnorm(300:700, x + 400, 30)
+    )), numeric(401)
+)
+
+# creating idealized specs with varying saturation
+fakedata2 <- vapply(
+  c(500, 300, 150, 105, 75, 55, 40, 30),
+  function(x) dnorm(300:700, 550, x),
+  numeric(401)
+)
+
+fakedata1 <- as.rspec(data.frame(wl = 300:700, fakedata1))
+fakedata1 <- procspec(fakedata1, "max")
+fakedata2 <- as.rspec(data.frame(wl = 300:700, fakedata2))
+fakedata2 <- procspec(fakedata2, "sum")
+fakedata2 <- procspec(fakedata2, "min")
+
+# converting reflectance to percentage
+fakedata1[, -1] <- fakedata1[, -1] * 100
+fakedata2[, -1] <- fakedata2[, -1] / max(fakedata2[, -1]) * 100
+
+# combining and converting to rspec
+fakedata.c <- data.frame(wl = 300:700, fakedata1[, -1], fakedata2[, -1])
+fakedata.c <- as.rspec(fakedata.c)
+
+# segment classification analysis
+seg.vis <- vismodel(fakedata.c, visual = "segment", achromatic = "all")
+seg.fdc <- colspace(seg.vis, space = "segment")
+
+# plot results
+plot(seg.fdc, col = spec2rgb(fakedata.c))
+```
+
+#### Colourspace Distances with `coldist`
+
+Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in `R` using the `coldist()` function on the `colspace()` output:
+
+```{r}
+head(coldist(tetra.flowers))
+```
+
+Specialised colourspace models such as the colour-hexagon, coc space, CIELAB and CIELCh models have their own distance measures, which are returned be default when run through `coldist()`. Be sure to read the `?coldist` documentation, and the original publications, to understand what is being returned. As an example, if we run the results of colour-hexagon modelling through `coldist()`:
+
+```{r}
+# Model flower colours according to a honeybee
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
+hex.flowers <- colspace(vis.flowers, space = "hexagon")
+
+# Estimate colour distances. No need to specify relative receptor densities, noise etc.,
+# which only apply in the case of receptor-noise modelling
+dist.flowers <- coldist(hex.flowers)
+head(dist.flowers)
+```
+
+the chromatic contrasts `dS` and achromatic contrasts `dL` are expressed as Euclidean distances in the hexagon, known as 'hexagon units' @Chittka1992. If we had instead used the colour-opponent coding space the units would have been city-bloc distances, while in the CIELAB model the distances would be derived from the CIE colour-distance formula (2000).
+
+#### Distances in N-Dimensions
+
+The `coldist()` function is no longer limited to di-, tri- or tetrachromatic visual systems. The function has been generalised, and can now calculate colour distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature's extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren't largely implemented elsewhere, we recommend caution and validation of results prior to publication.
+
+```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=4, fig.cap="Visual system of a pretend mantis shrimp with 10 cones"}
+# Create an arbitrary visual phenotype with 10 photoreceptors
+fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
+
+# Convert to percentages, just to colour the plot
+fakemantisshrimp.colours <- fakemantisshrimp * 100
+fakemantisshrimp.colours[, "wl"] <- fakemantisshrimp[, "wl"]
+
+plot(fakemantisshrimp, col = spec2rgb(fakemantisshrimp.colours), lwd = 2, ylab = "Absorbance")
+
+# Run visual model and calculate colour distances
+vm.fms <- vismodel(flowers, visual = fakemantisshrimp, relative = FALSE, achromatic = FALSE)
+
+JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
+
+head(JND.fms)
+```
+
+# Analyzing Image Data
+
+We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
+
+```{r}
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+```
+
+## Image Colour-Classification
+
+The segmentation of RGB images into discrete colour-classes is an essential step on the road to several analyses, and this is carried out in `pavo` via `classify()`. The function currently implements k-means clustering which, although an 'unsupervised' methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each (an important step to be closely considered beforehand beforehand, often through visual modelling to estimate the number of discriminable colours), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.
+
+```{r}
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+```
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="The k-means classified images of our butterflies, along with their identified colour palettes"}
+
+# Note that we could simply feed the list of images to summary, rather than
+# specifying individual images, and they would progress automatically
+# with user input.
+
+summary(butterflies_class[[2]], plot = TRUE)
+
+```
+
+There are other options available, which may be of particular use when the classification process is not producing the results that might be expected _a priori_. If analysing similar images with homologous colour patterns (e.g. individuals within a species), we could specify a single 'reference' image in a list to be initially classified, using `refID`, with the RGB centres identified in this reference image used as pre-specified cluster centres in subsequent images. This helps to ensure that homologous pattern elements are reliably identified and classified between images. The `classify()` function also offers an interactive option, via `interactive = TRUE`, wherein we can interactively click on representative colours within an image (or images individually), with the RGB values then used as cluster centres. This is particularly useful when images are being erroneously classified, since the standard k-means process randomly selects initial centres and so may (by chance) miss smaller patches, or confuse similar colours. By specifying the initial RGB centres interactively, it can be easier for the process to distinguish or 'pull apart' colours in such circumstances. Ultimately, there are several combinations of options available during classification, which are also documented in the help file. For our butterflies, for example, we could use any of the following (though some would be very ill-advised):
+
+```{r}
+# Automatic classification.
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+# Automatic classification using a reference image, identified by name.
+butterflies_class <- classify(butterflies, refID = 'h_melpomene', kcols = 3)
+```
+
+```{r, eval = FALSE}
+# Classification using interactively-specified centres for each image, with no
+# need to specify kcols (since it will be inferred from the numbers of colours selected)
+butterflies_class <- classify(butterflies, interactive = TRUE)
+
+# Classification using interactively-specified centres for the single reference image
+# (here, the first in the list). We could also specify reference image using it's name, 
+# as above.
+butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
+```
+
+## Adjacency and Boundary Strength Analyses, and Overall Pattern Contrasts
+
+The adjacency (@Endler2012) and boundary strength (@Endler2018) analyses offer a powerful method for quantifying various features of colour pattern geometry. Briefly, the process entails classifying the pixels of images into a number of discrete colour classes, using `classify()` as described above, before sampling the now-classified image with an evenly spaced grid of user-specified density. The column-wise and row-wise colour-class transitions between adjacent points are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel()` and `coldist()`, then this can also be incorporated to derive several measures of the salience of patch boundaries (@Endler2018). Finally, if estimates of hue, saturation, and/or brightness are known for each discrete colour in a pattern, then these can be included through the `hsl` argument for general, area-weighted measures of overall pattern contrast (@Endler2005).
+
+In `pavo`, this is all carried out through the `adjacent()` function, which takes several arguments that should be well understood. For our butterflies, we'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg()`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg()`, as above, and ignore this argument).
+
+```{r}
+butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
+
+head(butterflies_adj)
+```
+
+The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function's help file (`?adjacent`) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give `adjacent()` enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.
+
+```{r}
+# Create a fake matrix of pairwise colour- and luminance distances between all
+# colour patten elements, as might be attained through visual modelling of spectral data.
+distances <- data.frame(c1 = c(1, 1, 2),
+                        c2 = c(2, 3, 3),
+                        dS = c(10.6, 5.1, 4.4),
+                        dL = c(1.1, 2.5, 3.2))
+
+# Take a look
+distances
+
+# And our fake hue angles (in radians), saturation, and luminance values, for each
+# colour pattern element
+hsl_vals <- data.frame(patch = 1:3,
+                       hue = c(1.2, 2.2, 1.6),
+                       lum = c(10, 5, 7),
+                       sat = c(3.5, 1.1, 6.3))
+
+# Take a look
+hsl_vals
+
+# Now feed this information into the adjacency analysis using the less-colourful
+# of our two images, for convenience (though this could be readily extended to
+# include a list of images along with a list of distances and hsl values)
+adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
+```
+
+
+# References
+

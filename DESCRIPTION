@@ -43,7 +43,8 @@ Suggests:
     rgl,
     spelling,
     testthat,
-    xml2
+    xml2,
+    digest
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Language: en-GB
