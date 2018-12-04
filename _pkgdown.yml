@@ -54,17 +54,12 @@ reference:
   - '`vol`'
   - '`voloverlap`'
 
-- title: Misc
-  desc: "Assorted functions containing example and internally-used data"
+- title: Data
+  desc: "Included example datasets"
   contents:
-  - '`bgandilum`'
   - '`flowers`'
-  - '`pavo-package`'
   - '`sicalis`'
   - '`teal`'
-  - '`transmissiondata`'
-  - '`ttvertex`'
-  - '`vissyst`'
 
 template:
   params:
