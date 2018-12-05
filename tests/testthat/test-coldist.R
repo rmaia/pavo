@@ -64,9 +64,13 @@ test_that("bootcoldist", {
   library(digest)
   data(sicalis)
   
-  vm <- vismodel(sicalis, visual = 'apis', achro = 'all')
+  vm <- vismodel(sicalis, visual = 'apis', achro = 'l')
   gr <- gsub("ind..", "", rownames(vm))
-  expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "f0ab08ddf3fef952dda9529d3d13b9795c8a42b3")
+  expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "67116b67a619e14189e65807a039be1fac6a4077")
+  
+  vm2 <- vismodel(sicalis, achro = 'bt.dc')
+  gr2 <- gsub("ind..", "", rownames(vm2))
+  expect_equal(digest::sha1(bootcoldist(vm2, by = gr2, n = c(1, 2, 3, 1), weber = 0.1, weber.achro = 0.1, cores = 1)), "409ddb7e2231f8a4e854efc218168b239c68d2f5")
   
 })
   
