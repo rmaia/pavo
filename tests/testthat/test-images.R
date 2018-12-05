@@ -47,6 +47,24 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimggrey))
 })
 
+test_that("procimg", {
+  
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  
+  # Resize
+  expect_equal(dim(procimg(papilio, resize = 0.5))[1:2], dim(papilio)[1:2]/2)
+  
+  # Messages/Errors
+  expect_message(procimg(classify(papilio, kcols = 3), resize = 2), "Cannot resize")
+  expect_message(procimg(classify(papilio, kcols = 3), rotate = 90), "Cannot rotate")
+  expect_error(procimg(papilio), "options")
+  class(papilio) <- 'array'
+  expect_message(procimg(papilio, "coerce"))
+  class(papilio) <- 'cimg'
+  expect_message(procimg(papilio, "coerce"))
+})
+
+
 test_that("classify", {
 
   # Images
@@ -208,4 +226,16 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_hue, 1.5)
   expect_equal(checker_adj$m_sat, 3.6)
   expect_equal(checker_adj$m_lum, 5.68)
+})
+
+test_that("summary", {
+  library(digest)
+  
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  papilio_class <- classify(papilio, kcols = 4)
+  
+  expect_equal(digest::sha1(summary(papilio)), "2e7fcf14cdc1c1d90b911f2139f56b51ff3916cd")
+  expect_equal(digest::sha1(summary(papilio_class)), "9360b19d8128886c1d8c7c97f3613f7c4f2cd503")
+  
+  
 })

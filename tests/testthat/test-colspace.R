@@ -62,6 +62,18 @@ test_that("Relative quantum catches", {
   )
 })
 
+test_that("Overlap", {
+  library(digest)
+  data(sicalis)
+  tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
+  tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
+  tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
+  
+  expect_equal(digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B)), "f672fc8acc169a38839d7060001bf7d70df0a646")
+  expect_equal(digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.C)), "ab32fc883dda7f3b010e754e04b130d23f327d50")
+})
+
+    
 test_that("Output regression", {
   library(digest)
   data(flowers)
