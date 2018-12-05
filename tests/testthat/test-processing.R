@@ -77,6 +77,7 @@ test_that("Procspec", {
 })
 
 test_that("Aggregation", {
+  library(digest)
   data(teal)
   
   ind <- rep(c('a', 'b'), times = 6)
@@ -85,5 +86,16 @@ test_that("Aggregation", {
   expect_equal(dim(aggspec(teal[,-1], by = ind)), c(401, 3))
   expect_equal(dim(aggspec(teal)), c(401, 2))
   
+  teal1 <- teal[, c(1, 3:5)]
+  teal2 <- teal[, c(1, 2, 6:12)]
+  expect_equal(digest::sha1(merge(teal1, teal2, by = 'wl')), "3e6f9764b7b567176e9be4a0f616c59075a3b03b")
+  
+  data(sicalis)
+  vis.sicalis <- vismodel(sicalis)
+  tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+
+  # Subset all 'crown' patches (C in file names)
+  expect_equal(digest::sha1(subset(vis.sicalis, "C")),  "df58525a36ec7df9cce6d234e8fa4ad55d67b481")
+  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE)), "3666588f654cf988cd2b12f39f00bbee7aaeae4a") 
   
 })

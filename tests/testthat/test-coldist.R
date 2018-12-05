@@ -59,4 +59,14 @@ test_that("jnd transform", {
   expect_equal(dim(coldist(vismodel(flowers))), c(630, 3))
   
 })
+
+test_that("bootcoldist", {
+  library(digest)
+  data(sicalis)
+  
+  vm <- vismodel(sicalis, visual = 'apis', achro = 'all')
+  gr <- gsub("ind..", "", rownames(vm))
+  expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "f0ab08ddf3fef952dda9529d3d13b9795c8a42b3")
+  
+})
   

@@ -76,6 +76,7 @@ test_that("Output regression", {
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'ciexyz')), "959b29494ec390d964118e217f59d3ba86c47a1e")  # ciexyz
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielab')), "9858e3ac93193dd0e8aa792b1deac2db8df9171a")  # cielab
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "1146137e125167d95410a4316deca286f7dc9727")  # cielch
- 
+
+  expect_equal(digest::sha1(summary(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch'))), "8d9c05ec7ae28b219c4c56edbce6a721bd68af82")
 
 })

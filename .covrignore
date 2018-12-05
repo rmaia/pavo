@@ -1,4 +1,5 @@
 R/aggplot.R
+R/axistetra.R
 R/catplot.R
 R/cieplot.R
 R/cocplot.R
