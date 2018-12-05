@@ -235,7 +235,6 @@ test_that("summary", {
   papilio_class <- classify(papilio, kcols = 4)
   
   expect_equal(digest::sha1(summary(papilio)), "2e7fcf14cdc1c1d90b911f2139f56b51ff3916cd")
-  expect_equal(digest::sha1(summary(papilio_class)), "9360b19d8128886c1d8c7c97f3613f7c4f2cd503")
-  
+  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
   
 })

@@ -99,3 +99,20 @@ test_that("Aggregation", {
   expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE)), "3666588f654cf988cd2b12f39f00bbee7aaeae4a") 
   
 })
+
+test_that("Convert", {
+  # Flux/irrad
+  illum <- sensdata(illum = 'forestshade')
+  expect_equal(round(sum(irrad2flux(illum)[2]), 3), 6.618)
+  expect_equal(round(sum(flux2irrad(illum)[2]), 3), 3174.87)
+  
+  # Errors
+  class(illum) <- 'data.frame'
+  expect_error(irrad2flux(illum), 'rspec')
+  expect_error(flux2irrad(illum), 'rspec')
+  
+  # RGB
+  data(teal)
+  expect_equivalent(spec2rgb(teal)[1], "#1CB55EFF")
+})
+

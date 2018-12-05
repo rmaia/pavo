@@ -63,14 +63,15 @@ test_that("Relative quantum catches", {
 })
 
 test_that("Overlap", {
-  library(digest)
   data(sicalis)
   tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
   tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
   
-  expect_equal(digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B)), "f672fc8acc169a38839d7060001bf7d70df0a646")
-  expect_equal(digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.C)), "ab32fc883dda7f3b010e754e04b130d23f327d50")
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B)), 5), 0.19728)
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C)), 7), 9.9e-06)
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, montecarlo = TRUE)[1:2]), 5), 1e-05)
+  
 })
 
     
@@ -90,5 +91,7 @@ test_that("Output regression", {
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "1146137e125167d95410a4316deca286f7dc9727")  # cielch
 
   expect_equal(digest::sha1(summary(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch'))), "8d9c05ec7ae28b219c4c56edbce6a721bd68af82")
+  expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
+  expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
 
 })
