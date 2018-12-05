@@ -61,12 +61,13 @@ test_that("jnd transform", {
 })
 
 test_that("bootcoldist", {
-  #library(digest)
+  library(digest)
+  set.seed(11023)
   data(sicalis)
 
   vm <- vismodel(sicalis, visual = 'apis', achro = 'l')
   gr <- gsub("ind..", "", rownames(vm))
-  #expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "67116b67a619e14189e65807a039be1fac6a4077")
+  expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "67116b67a619e14189e65807a039be1fac6a4077")
   expect_equal(dim(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), c(3, 6))
   
 })
