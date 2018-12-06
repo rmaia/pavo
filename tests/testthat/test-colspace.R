@@ -90,6 +90,19 @@ test_that("Errors/messages", {
   expect_warning(colspace(cbind(vis.flowers, vis.flowers[,3]), space = 'categorical'), 'undefined')
   expect_error(colspace(vis.flowers[1:3], space = 'categorical'), 'fewer')
   
+  # Segment
+  vis.flowers <- vismodel(flowers, visual = 'segment')
+  names(vis.flowers)[1] <- 'Nada'
+  expect_warning(colspace(vis.flowers, space = 'segment'), 'named')
+  expect_error(colspace(vismodel(flowers, visual = 'apis'), space = 'segment'), 'tetrachromatic')
+  expect_warning(colspace(vismodel(flowers, visual = 'segment', relative = FALSE), space = 'segment'), 'overriding')
+  
+  vis.flowers <- vismodel(flowers, visual = 'segment')
+  class(vis.flowers) <- 'data.frame'
+  expect_error(colspace(vis.flowers[1:3], space = 'segment'), 'fewer')
+  expect_warning(colspace(vis.flowers, space = 'segment'), 'vismodel')
+  expect_warning(colspace(vis.flowers, space = 'segment'), 'transformed')
+  
 })
 
 test_that("Output regression", {

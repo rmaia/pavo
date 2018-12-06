@@ -43,15 +43,6 @@ segspace <- function(vismodeldata) {
     if (attr(dat, "conenumb") != "seg" & attr(dat, "conenumb") > 4) {
       warning("vismodel input is not tetrachromatic, considering first four columns only", call. = FALSE)
     }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
-      dat <- dat[, seq_len(4)]
-      dat <- dat / apply(dat, 1, sum)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
   }
 
   # if not, check if it has more (or less) than 4 columns
@@ -105,7 +96,10 @@ segspace <- function(vismodeldata) {
     Q4 <- dat[, 4]
   }
 
-  B <- dat$lum
+  if(!is.null(dat$lum))
+    B <- dat$lum
+  else
+    B <- NA
 
   # LM/MS
 
