@@ -162,7 +162,9 @@ vismodel <- function(rspecdata,
 
   # Negative value check
   if (any(y < 0)) {
-    warning("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them.")
+    warning("The spectral data contain ", length(y[y < 0]),
+            " negative value(s), which may produce unexpected results. ",
+            "Consider using procspec() to correct them.")
   }
 
   visual2 <- try(match.arg(visual), silent = TRUE)
@@ -173,11 +175,9 @@ vismodel <- function(rspecdata,
   tr2 <- try(match.arg(trans), silent = TRUE)
 
   if (class(achromatic2) == "try-error") {
-    if (is.logical(achromatic)) {
-      if (FALSE %in% achromatic) {
-        achromatic <- "none"
-        achromatic2 <- "none"
-      }
+    if (isFALSE(achromatic)) {
+      achromatic <- "none"
+      achromatic2 <- "none"
     }
   }
 
@@ -389,11 +389,9 @@ vismodel <- function(rspecdata,
   if (visual == "segment") B <- apply(y, 2, sum)
 
   # Calculate Qi
-  Qi <- data.frame(vapply(
-    seq_len(dim(S)[2]),
-    function(x) colSums(y * S[, x] * illum) * B * K,
-    numeric(length(y))
-  ))
+  Qi <- data.frame(
+    crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
+  )
 
   # In case rspecdata only has one spectrum
   if (dim(Qi)[2] < 2) {
@@ -404,7 +402,7 @@ vismodel <- function(rspecdata,
   names(Qi) <- names(S)
 
   # Achromatic contrast
-  
+
   # Process user-defined achromatic receptor
   if (inherits(achromatic2, "try-error")) {
     achromatic2 <- "user-defined"
@@ -467,11 +465,10 @@ vismodel <- function(rspecdata,
     }
     if (substr(visual, 1, 3) == "cie") {
       k <- 1 / (colSums(S * bkg * illum) * K)
-      Qi <- data.frame(t(t(Qi) * k))
     } else {
       k <- 1 / (colSums(S * bkg * illum))
-      Qi <- data.frame(t(t(Qi) * k))
     }
+    Qi <- data.frame(t(t(Qi) * k))
     vk <- "(von Kries color correction applied)"
     if (!is.null(lum)) {
       Qi[, "lum"] <- uncqi
