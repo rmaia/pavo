@@ -18,6 +18,9 @@ custom spectra labels in stacked plots.
 * fixed a bug in `aggspec()` when wavelength column was previously removed by the user.
 * numerous under-the-hood changes for stability and speed, with thanks to 
 three reviewers and an associate editor at MEE.
+* `peakshape()` uses a completely different algorithm to find the FWHM. It now
+works as expected for spectra with multiple peaks. See PR #137 for a detailed 
+overview of the changes.
 
 # pavo 2.0.0
 
