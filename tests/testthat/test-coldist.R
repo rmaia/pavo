@@ -6,6 +6,7 @@ test_that("Errors", {
 
   expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3, 4, 5), achro = FALSE), "different length")
   expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3), achro = FALSE), "different length")
+  expect_error(coldist(vismodel(flowers, relative = FALSE), subset = c('Goodenia', 'Xyris', "Eucalyptus"), achro = FALSE), "Too many")
 })
 
 test_that("Equivalent", {
@@ -51,13 +52,33 @@ test_that("Options", {
 
 test_that("jnd transform", {
   data(flowers)
+  library(digest)
   
   vis.flowers <- vismodel(flowers, visual = 'apis')
   cd.flowers <- coldist(vis.flowers, n = c(1, 1, 1))
+  jnd.flowers <- jnd2xyz(cd.flowers)
   
+  expect_equal(digest::sha1(jndrot(jnd2xyz(coldist(vismodel(flowers, achromatic = 'bt.dc', relative = FALSE), achromatic = TRUE)))), "494011011cd570e76cbd0209bbe41fc4830794e3")
+  
+  
+  # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
   expect_equal(dim(coldist(vismodel(flowers))), c(630, 3))
   
+  rownames(attr(jnd.flowers, 'resref'))[4] <- 'nope'
+  expect_error(jndrot(jnd.flowers), 'does not match')
+  
+  class(jnd.flowers) <- 'data.frame'
+  expect_error(jndrot(jnd.flowers), 'jnd2xyz')
+  
+  
+})
+
+test_that("Output regression", {
+  library(digest)
+  data(flowers)
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), n = c(1, 2), achromatic = TRUE, subset = 'Hibbertia_acicularis')), "52608948cbe4c304909499bbfe09c4694c8e1377")  # dispace
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'apis', achromatic = 'all', relative = FALSE, vonkries = TRUE), space = 'hexagon'), n = c(1, 2), achromatic = TRUE, subset = c('Hibbertia_acicularis', 'Grevillea_buxifolia'))), "7cb1b6cf1fdf586413dd954b476fa7cd27d6f283")  # dispace
 })
 
 test_that("bootcoldist", {
@@ -71,4 +92,3 @@ test_that("bootcoldist", {
   expect_equal(dim(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), c(3, 6))
   
 })
-  

@@ -54,5 +54,9 @@ peakshape(teal, select = 10, lim=c(400, 550))
 \code{\link{procspec}}
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}, Rafael Maia \email{rm72@zips.uakron.edu}
+Chad Eliason \email{cme16@zips.uakron.edu}
+
+Rafael Maia \email{rm72@zips.uakron.edu}
+
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 }

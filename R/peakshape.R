@@ -117,7 +117,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   if (any(Bmin > Bmin_all)) {
     warning("Consider fixing ", dQuote("lim"), " in spectra with ",
-            Quote("incl.min"), " marked ", dQuote("No"),
+            dQuote("incl.min"), " marked ", dQuote("No"),
             " to incorporate all minima in spectral curves",
             call. = FALSE)
   }

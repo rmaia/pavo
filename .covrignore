@@ -8,9 +8,11 @@ R/explorespec.R
 R/hexplot.R
 R/jndplot.R
 R/legendtetra.R
+R/parse_procspec.R
 R/plot.rspec.R
 R/plot.rimg.R
 R/plot.colspace.R
+R/procimg.R
 R/aggplot.R
 R/points.colspace.R
 R/aggplot.R

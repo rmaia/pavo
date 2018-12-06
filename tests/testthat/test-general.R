@@ -27,14 +27,16 @@ test_that("Class assignment", {
 
 test_that("plot utilities", {
   data(sicalis)
-  # expect_known_hash(spec2rgb(sicalis), "0d3e41a7b6")
-
   expect_error(spec2rgb(sicalis[300:nrow(sicalis), ]), "full visible range")
   expect_error(spec2rgb(sicalis[, -1]), "No wavelengths supplied")
 })
 
 test_that("sensdata", {
-  
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata('all', 'all'))))
+})
+
+test_that("peakshape", {
+  data(flowers)
   
+  expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(916, 3317))
 })

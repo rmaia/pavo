@@ -103,6 +103,46 @@ test_that("Errors/messages", {
   expect_warning(colspace(vis.flowers, space = 'segment'), 'vismodel')
   expect_warning(colspace(vis.flowers, space = 'segment'), 'transformed')
   
+  # Coc
+  expect_error(colspace(vismodel(flowers, visual = 'canis'), space = 'coc'), 'trichromatic')
+  fak <- sensmodel(c(300, 400, 500, 600))  
+  expect_warning(colspace(vismodel(flowers, visual = fak, relative = FALSE, qcatch = 'Ei', vonkries = TRUE), space = 'coc'), 'first')
+  expect_warning(colspace(vismodel(flowers, visual = fak, relative = FALSE, qcatch = 'Ei', vonkries = TRUE), space = 'coc'), 'trichromatic')
+  expect_error(colspace(vismodel(flowers, visual = 'apis', relative = TRUE, qcatch = 'Ei', vonkries = TRUE), space = 'coc'), 'relative')
+  expect_error(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Qi', vonkries = TRUE), space = 'coc'), 'hyperbolically')
+  expect_error(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = FALSE), space = 'coc'), 'von-Kries')
+  
+  vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE)
+  class(vis.flowers) <- 'data.frame'
+  
+  expect_error(colspace(vis.flowers[1:2], space = 'coc'), 'fewer than three')
+  expect_warning(colspace(vis.flowers, space = 'coc'), 'treating columns as')
+  expect_warning(colspace(cbind(vis.flowers, vis.flowers[,2]), space = 'coc'), 'has more than three')
+  
+  vis.flowers <- vismodel(flowers, visual = 'apis', relative = TRUE, qcatch = 'Ei', vonkries = TRUE)
+  class(vis.flowers) <- 'data.frame'
+  expect_error(colspace(vis.flowers, space = 'coc'), 'relative')
+  
+  # Hexagon
+  expect_error(colspace(vismodel(flowers, visual = 'canis'), space = 'hexagon'), 'trichromatic')
+  fak <- sensmodel(c(300, 400, 500, 600))  
+  expect_error(colspace(vismodel(flowers, visual = 'apis', relative = TRUE), space = 'hexagon'), 'relative')
+  expect_warning(colspace(vismodel(flowers, visual = fak, relative = FALSE), space = 'hexagon'), 'first three')
+  expect_warning(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, vonkries = FALSE), space = 'hexagon'), 'hyperbolically')
+  expect_warning(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, vonkries = FALSE), space = 'hexagon'), 'von-Kries')
+  
+  vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', vonkries = TRUE)
+  class(vis.flowers) <- 'data.frame'
+  names(vis.flowers)[1] <- 'a'
+  
+  expect_error(colspace(vis.flowers[1:2], space = 'hexagon'), 'fewer than three')
+  expect_warning(colspace(vis.flowers, space = 'hexagon'), 'treating columns as')
+  expect_warning(colspace(cbind(vis.flowers, vis.flowers[,2]), space = 'hexagon'), 'has more than three')
+  
+  vis.flowers <- vismodel(flowers, visual = 'apis', relative = TRUE, qcatch = 'Ei', vonkries = TRUE)
+  class(vis.flowers) <- 'data.frame'
+  expect_error(colspace(vis.flowers, space = 'hexagon'), 'relative')
+  
 })
 
 test_that("Output regression", {
