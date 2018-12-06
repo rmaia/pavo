@@ -45,3 +45,17 @@ test_that("Summary", {
   vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
   summary(vis.sicalis)
 })
+
+test_that("Sensmodel", {
+
+  expect_equivalent(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'Y', 'R'))[,-1]), c(1, 1, 1))
+  expect_equivalent(round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'T', 'P'), beta = FALSE, integrate = FALSE, om = 'bird')[,-1]), 4), 68.271)
+  
+  # Errors  
+  expect_error(sensmodel(c(300, 400, 500), lambdacut = 400), "must be included")
+  expect_error(sensmodel(c(300, 400, 500), lambdacut = 400, Bmid = 450), "length")
+  expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = 't'), "length")
+  expect_error(sensmodel(c(300, 400, 500), Bmid = c(350, 450, 550)), "provided together")
+  expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), Bmid = c(350, 450, 550), oiltype = 't'), "only 2")
+
+})

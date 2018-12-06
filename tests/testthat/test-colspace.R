@@ -74,7 +74,24 @@ test_that("Overlap", {
   
 })
 
-    
+test_that("Errors/messages", {
+  data(flowers)
+  
+  # Categorical
+  expect_error(colspace(vismodel(flowers, visual = 'apis'), space = 'categorical'), 'tetrachromatic')
+  expect_warning(colspace(vismodel(flowers, visual = sensmodel(c(300, 400, 500, 600, 700))), space = 'categorical'), 'first four')
+  expect_warning(colspace(vismodel(flowers, visual = sensmodel(c(300, 400, 500, 600, 700))), space = 'categorical'), 'not find')
+  expect_warning(colspace(vismodel(flowers, visual = 'musca', relative = FALSE), space = 'categorical'), 'relative')
+  
+  vis.flowers <- vismodel(flowers, visual = 'musca')
+  class(vis.flowers) <- 'data.frame'
+  expect_warning(colspace(vis.flowers, space = 'categorical'), 'vismodel')
+  expect_warning(colspace(cbind(vis.flowers, vis.flowers[,3]), space = 'categorical'), 'vismodel')
+  expect_warning(colspace(cbind(vis.flowers, vis.flowers[,3]), space = 'categorical'), 'undefined')
+  expect_error(colspace(vis.flowers[1:3], space = 'categorical'), 'fewer')
+  
+})
+
 test_that("Output regression", {
   library(digest)
   data(flowers)
