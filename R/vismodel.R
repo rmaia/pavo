@@ -244,7 +244,7 @@ vismodel <- function(rspecdata,
   }
 
   # Check if wavelength range matches
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
+  if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
     !inherits(visual2, "try-error")) {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
@@ -253,7 +253,7 @@ vismodel <- function(rspecdata,
     )
   }
 
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
+  if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
     stop("wavelength range in spectra and visual system data do not match")
   }
 
@@ -316,10 +316,7 @@ vismodel <- function(rspecdata,
       dQuote(transwhichused), ") has been used (remaining columns ignored)",
       call. = FALSE
     )
-  }
-
-  if ("data.frame" %in% class(trans) | "matrix" %in% class(trans) &
-    !"rspec" %in% class(trans)) {
+  } else if ("data.frame" %in% class(trans) | "matrix" %in% class(trans)) {
     transgwhichused <- names(trans)[1]
     trans <- trans[, 1]
     warning("Transmission is a matrix or data frame; first column (",
@@ -335,10 +332,7 @@ vismodel <- function(rspecdata,
       dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
       call. = FALSE
     )
-  }
-
-  if ("data.frame" %in% class(bkg) | "matrix" %in% class(bkg) &
-    !"rspec" %in% class(bkg)) {
+  } else if ("data.frame" %in% class(bkg) | "matrix" %in% class(bkg)) {
     bkgwhichused <- names(bkg)[1]
     bkg <- bkg[, 1]
     warning("Background is a matrix or data frame; first column (",
@@ -365,10 +359,7 @@ vismodel <- function(rspecdata,
       dQuote(whichused), ") has been used (remaining columns ignored)",
       call. = FALSE
     )
-  }
-
-  if ("data.frame" %in% class(illum) | "matrix" %in% class(illum) &
-    !"rspec" %in% class(illum)) {
+  } else if ("data.frame" %in% class(illum) | "matrix" %in% class(illum)) {
     whichused <- names(illum)[1]
     illum <- illum[, 1]
     warning("Illuminant is a matrix or data frame; first column (",
@@ -415,10 +406,7 @@ vismodel <- function(rspecdata,
         dQuote(whichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
-    }
-
-    if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic) &
-      !"rspec" %in% class(achromatic)) {
+    } else if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic)) {
       whichused <- names(achromatic)[1]
       achromatic <- achromatic[, 1]
       warning("Achromatic is a matrix or data frame; first column (",
