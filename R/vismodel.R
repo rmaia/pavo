@@ -169,7 +169,8 @@ vismodel <- function(rspecdata,
 
   visual2 <- tryCatch(
     match.arg(visual),
-    error = function(e) "user-defined")
+    error = function(e) "user-defined"
+  )
   sens <- vissyst
   achromatic2 <- tryCatch(
     match.arg(achromatic),
@@ -305,74 +306,29 @@ vismodel <- function(rspecdata,
     }
   }
 
-  if ("rspec" %in% class(trans)) {
-    transwhichused <- names(trans)[2]
-    trans <- trans[, 2]
-    warning("Transmission is an rspec object; first spectrum (",
-      dQuote(transwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  } else if ("data.frame" %in% class(trans) | "matrix" %in% class(trans)) {
-    transgwhichused <- names(trans)[1]
-    trans <- trans[, 1]
-    warning("Transmission is a matrix or data frame; first column (",
-      dQuote(transgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
-  if ("rspec" %in% class(bkg)) {
-    bkgwhichused <- names(bkg)[2]
-    bkg <- bkg[, 2]
-    warning("Background is an rspec object; first spectrum (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  } else if ("data.frame" %in% class(bkg) | "matrix" %in% class(bkg)) {
-    bkgwhichused <- names(bkg)[1]
-    bkg <- bkg[, 1]
-    warning("Background is a matrix or data frame; first column (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
-  # Is the illuminant a matrix, dataframe or rspec?
-  if ("rspec" %in% class(illum)) {
-    whichused <- names(illum)[2]
-    illum <- illum[, 2]
-    warning("Illuminant is an rspec object; first spectrum (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  } else if ("data.frame" %in% class(illum) | "matrix" %in% class(illum)) {
-    whichused <- names(illum)[1]
-    illum <- illum[, 1]
-    warning("Illuminant is a matrix or data frame; first column (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
-  # Process user-defined achromatic receptor
-  if (achromatic2 == "user-defined") {
-    # Is achromatic a matrix, dataframe or rspec?
-    if ("rspec" %in% class(achromatic)) {
-      whichused <- names(achromatic)[2]
-      achromatic <- achromatic[, 2]
-      warning("Achromatic is an rspec object; first spectrum (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
+  prepare_userdefined <- function(df) {
+    if ("rspec" %in% class(df)) {
+      dfwhichused <- names(df)[2]
+      df <- df[, 2]
+      warning(deparse(substitute(df)), " is an rspec object; first spectrum (",
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
-    } else if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic)) {
-      whichused <- names(achromatic)[1]
-      achromatic <- achromatic[, 1]
-      warning("Achromatic is a matrix or data frame; first column (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
+    } else if ("data.frame" %in% class(df) | "matrix" %in% class(df)) {
+      dfwhichused <- names(df)[1]
+      df <- df[, 1]
+      warning(deparse(substitute(df)), " is a matrix or data frame; first column (",
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
     }
+    return(df)
   }
+
+  trans      <- prepare_userdefined(trans)
+  bkg        <- prepare_userdefined(bkg)
+  illum      <- prepare_userdefined(illum)
+  achromatic <- prepare_userdefined(achromatic)
 
   # Transform from percentages to proportions (Vorobyev 2003)
   if (max(y) > 1) {
