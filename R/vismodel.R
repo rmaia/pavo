@@ -250,11 +250,6 @@ vismodel <- function(rspecdata,
     conenumb <- dim(S)[2]
   )
 
-  # ttransform from percentages to proportions (Vorobyev 2003)
-  if (max(y) > 1) {
-    y <- y / 100
-  }
-
   # Check if wavelength range matches
   if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
       visual2 == "user-defined") {
@@ -342,16 +337,6 @@ vismodel <- function(rspecdata,
     )
   }
 
-  # Scale background from percentage to proportion
-  if (max(bkg) > 1) {
-    bkg <- bkg / 100
-  }
-
-  # Scale transmission from percentage to proportion
-  if (max(trans) > 1) {
-    trans <- trans / 100
-  }
-
   # Is the illuminant a matrix, dataframe or rspec?
   if ("rspec" %in% class(illum)) {
     whichused <- names(illum)[2]
@@ -367,6 +352,41 @@ vismodel <- function(rspecdata,
       dQuote(whichused), ") has been used (remaining columns ignored)",
       call. = FALSE
     )
+  }
+
+  # Process user-defined achromatic receptor
+  if (achromatic2 == "user-defined") {
+    # Is achromatic a matrix, dataframe or rspec?
+    if ("rspec" %in% class(achromatic)) {
+      whichused <- names(achromatic)[2]
+      achromatic <- achromatic[, 2]
+      warning("Achromatic is an rspec object; first spectrum (",
+        dQuote(whichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
+      )
+    } else if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic)) {
+      whichused <- names(achromatic)[1]
+      achromatic <- achromatic[, 1]
+      warning("Achromatic is a matrix or data frame; first column (",
+        dQuote(whichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
+      )
+    }
+  }
+
+  # Transform from percentages to proportions (Vorobyev 2003)
+  if (max(y) > 1) {
+    y <- y / 100
+  }
+
+  # Scale background from percentage to proportion
+  if (max(bkg) > 1) {
+    bkg <- bkg / 100
+  }
+
+  # Scale transmission from percentage to proportion
+  if (max(trans) > 1) {
+    trans <- trans / 100
   }
 
   # Scale illuminant
@@ -394,26 +414,6 @@ vismodel <- function(rspecdata,
   names(Qi) <- names(S)
 
   # Achromatic contrast
-
-  # Process user-defined achromatic receptor
-  if (achromatic2 == "user-defined") {
-    # Is achromatic a matrix, dataframe or rspec?
-    if ("rspec" %in% class(achromatic)) {
-      whichused <- names(achromatic)[2]
-      achromatic <- achromatic[, 2]
-      warning("Achromatic is an rspec object; first spectrum (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    } else if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic)) {
-      whichused <- names(achromatic)[1]
-      achromatic <- achromatic[, 1]
-      warning("Achromatic is a matrix or data frame; first column (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    }
-  }
 
   # Calculate lum
   if (any(c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined") %in% achromatic2)) {
