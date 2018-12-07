@@ -461,8 +461,6 @@ vismodel <- function(rspecdata,
   fi <- log(Qi) # fechner law (signal ~ log quantum catch)
   Ei <- Qi / (Qi + 1) # hyperbolic transform
 
-  matrix(apply(Qi, 2, min), nrow = dim(Qi)[2], ncol = dim(Qi)[2], byrow = TRUE)
-
   # Convert to relative
   if (relative) {
     Qi[, !names(Qi) %in% "lum"] <- Qi[, !names(Qi) %in% "lum"] / rowSums(Qi[, !names(Qi) %in% "lum"])
