@@ -458,18 +458,16 @@ vismodel <- function(rspecdata,
     }
   }
 
-  fi <- log(Qi) # fechner law (signal ~ log quantum catch)
-  Ei <- Qi / (Qi + 1) # hyperbolic transform
+  # Output
+  res <- switch(qcatch,
+                Qi = Qi,
+                fi = log(Qi),
+                Ei = Qi / (Qi + 1))
 
   # Convert to relative
   if (relative) {
-    Qi[, !names(Qi) %in% "lum"] <- Qi[, !names(Qi) %in% "lum"] / rowSums(Qi[, !names(Qi) %in% "lum"])
-    fi[, !names(fi) %in% "lum"] <- fi[, !names(fi) %in% "lum"] / rowSums(fi[, !names(fi) %in% "lum"])
-    Ei[, !names(Ei) %in% "lum"] <- Ei[, !names(Ei) %in% "lum"] / rowSums(Ei[, !names(Ei) %in% "lum"])
+    res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(Qi) %in% "lum"])
   }
-
-  # Output
-  res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
   class(res) <- c("vismodel", "data.frame")
 
