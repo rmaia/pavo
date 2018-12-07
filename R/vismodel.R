@@ -167,24 +167,31 @@ vismodel <- function(rspecdata,
             "Consider using procspec() to correct them.")
   }
 
-  visual2 <- try(match.arg(visual), silent = TRUE)
+  visual2 <- tryCatch(
+    match.arg(visual),
+    error = function(e) "user-defined")
   sens <- vissyst
-  achromatic2 <- try(match.arg(achromatic), silent = TRUE)
-  illum2 <- try(match.arg(illum), silent = TRUE)
-  bg2 <- try(match.arg(bkg), silent = TRUE)
+  achromatic2 <- tryCatch(
+    match.arg(achromatic),
+    error = function(e) ifelse(isFALSE(achromatic), "none", "user-defined"))
+  )
+  illum2 <- tryCatch(
+    match.arg(illum),
+    error = function(e) "user-defined"
+  )
+  bg2 <- tryCatch(
+    match.arg(bkg),
+    error = function(e) "user-defined"
+  )
   if (is.null(bkg)) {
     stop("chosen background is NULL")
   }
-  tr2 <- try(match.arg(trans), silent = TRUE)
+  tr2 <- tryCatch(
+    match.arg(trans),
+    error = function(e) "user-defined"
+  )
   if (is.null(trans)) {
     stop("chosen transmission is NULL")
-  }
-
-  if (class(achromatic2) == "try-error") {
-    if (isFALSE(achromatic)) {
-      achromatic <- "none"
-      achromatic2 <- "none"
-    }
   }
 
   qcatch <- match.arg(qcatch)
@@ -226,16 +233,15 @@ vismodel <- function(rspecdata,
     S[wl %in% segmts[4]:segmts[5], 4] <- 1
 
     sens_wl <- wl
-  } else if (!inherits(visual2, "try-error")) {
+  } else if (visual2 == "user-defined") {
+    S <- visual[, names(visual) != "wl"]
+    sens_wl <- visual[, "wl"]
+    fullS <- visual
+  } else {
     visual <- match.arg(visual)
     S <- sens[, grep(visual, names(sens))]
     names(S) <- gsub(paste0(visual, "."), "", names(S))
     sens_wl <- sens[, "wl"]
-  } else {
-    S <- visual[, names(visual) != "wl"]
-    sens_wl <- visual[, "wl"]
-    fullS <- visual
-    visual <- "user-defined"
   }
 
   # Save cone numer
@@ -251,7 +257,7 @@ vismodel <- function(rspecdata,
 
   # Check if wavelength range matches
   if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
-    !inherits(visual2, "try-error")) {
+      visual2 == "user-defined") {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
       "spectral data must range between 300 and 700 nm in 1-nm intervals.",
@@ -267,22 +273,16 @@ vismodel <- function(rspecdata,
 
   bgil <- bgandilum
 
-  if (!inherits(illum2, "try-error")) {
+  if (illum2 != "user-defined") {
     illum <- bgil[, grep(illum2, names(bgil))]
-  } else {
-    illum2 <- "user-defined"
   }
-
   if (illum2 == "ideal") {
     illum <- rep(1, dim(rspecdata)[1])
   }
 
-  if (!inherits(bg2, "try-error")) {
+  if (bg2 != "user-defined") {
     bkg <- bgil[, grep(bg2, names(bgil))]
-  } else {
-    bg2 <- "user-defined"
   }
-
   if (bg2 == "ideal") {
     bkg <- rep(1, dim(rspecdata)[1])
   }
@@ -290,12 +290,9 @@ vismodel <- function(rspecdata,
   # Defining ocular transmission
   trdat <- transmissiondata
 
-  if (!inherits(tr2, "try-error")) {
+  if (tr2 != "user-defined") {
     trans <- trdat[, grep(tr2, names(trdat))]
-  } else {
-    tr2 <- "user-defined"
   }
-
   if (tr2 == "ideal") {
     trans <- rep(1, dim(rspecdata)[1])
   }
@@ -399,9 +396,7 @@ vismodel <- function(rspecdata,
   # Achromatic contrast
 
   # Process user-defined achromatic receptor
-  if (inherits(achromatic2, "try-error")) {
-    achromatic2 <- "user-defined"
-
+  if (achromatic2 == "user-defined") {
     # Is achromatic a matrix, dataframe or rspec?
     if ("rspec" %in% class(achromatic)) {
       whichused <- names(achromatic)[2]
@@ -486,9 +481,9 @@ vismodel <- function(rspecdata,
 
   # Descriptive attributes
   attr(res, "qcatch") <- qcatch
-  attr(res, "visualsystem.chromatic") <- visual
+  attr(res, "visualsystem.chromatic") <- visual2
   attr(res, "visualsystem.achromatic") <- achromatic2
-  attr(res, "illuminant") <- paste(illum2, ", scale = ", scale, " ", vk, sep = "")
+  attr(res, "illuminant") <- paste0(illum2, ", scale = ", scale, " ", vk)
   attr(res, "background") <- bg2
   attr(res, "transmission") <- tr2
   attr(res, "relative") <- relative
