@@ -450,11 +450,7 @@ vismodel <- function(rspecdata,
       S <- data.frame(cbind(S, L))
       uncqi <- Qi[, "lum"]
     }
-    if (substr(visual, 1, 3) == "cie") {
-      k <- 1 / (colSums(S * bkg * illum) * K)
-    } else {
-      k <- 1 / (colSums(S * bkg * illum))
-    }
+    k <- 1 / (colSums(S * bkg * illum) * K)
     Qi <- data.frame(t(t(Qi) * k))
     vk <- "(von Kries color correction applied)"
     if (!is.null(lum)) {
