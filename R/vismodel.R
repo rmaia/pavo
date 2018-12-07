@@ -173,7 +173,7 @@ vismodel <- function(rspecdata,
   sens <- vissyst
   achromatic2 <- tryCatch(
     match.arg(achromatic),
-    error = function(e) ifelse(isFALSE(achromatic), "none", "user-defined"))
+    error = function(e) ifelse(isFALSE(achromatic), "none", "user-defined")
   )
   illum2 <- tryCatch(
     match.arg(illum),
@@ -397,8 +397,12 @@ vismodel <- function(rspecdata,
 
   # Model-specific modifiers, if need be
   B <- K <- 1
-  if (substr(visual2, 1, 3) == "cie") K <- 100 / colSums(S[2] * illum)
-  if (visual == "segment") B <- apply(y, 2, sum)
+  if (substr(visual2, 1, 3) == "cie") {
+    K <- 100 / colSums(S[2] * illum)
+  }
+  if (visual == "segment") {
+    B <- apply(y, 2, sum)
+  }
 
   # Calculate Qi
   Qi <- data.frame(
