@@ -1,7 +1,7 @@
 #' Plot loess smoothed curves
 #'
-#' Plots curves with various levels of loess smoothing to help determine what
-#' loess parameters are best for the data.
+#' Plots spectral curves with various levels of loess smoothing to help decide which
+#' loess parameters are best for subsequently smoothing the data (e.g. via \code{procspec}).
 #'
 #' @param rspecdata (required) a data frame, possibly of class \code{rspec}, which
 #' contains a column containing a wavelength range , named 'wl', and spectra data in
@@ -18,21 +18,18 @@
 #'
 #' @examples \dontrun{
 #' data(sicalis)
-#' plotsmooth(sicalis,0.05,0.1,7,6)
+#' plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
 #' }
 #'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, 
+                       curves = 5, specnum = 0, ask = TRUE) {
 
-plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5, specnum = 0, ask = TRUE) {
-
-  # oPar <- par(no.readonly=TRUE)
   oPar <- par("mfrow", "ask", "mar", "oma")
   on.exit(par(oPar))
 
   curves <- curves + 1
-
-  if (curves == 1) stop("No curves to compare (curves = 1)")
 
   titlenames <- names(rspecdata[, 2:dim(rspecdata)[2]])
 
@@ -52,8 +49,6 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
   nplots <- ncol(rspecdata) - 1
 
   plotdata <- matrix(nrow = dim(rspecdata)[1], ncol = nplots * curves)
-
-
 
   legnames <- as.character(seq(minsmooth, maxsmooth, by = (maxsmooth - minsmooth) / (curves - 2)))
   legnames <- sprintf("%.4s", legnames)
@@ -120,16 +115,21 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
   # all below does not work yet
 
   par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
-
+  
+  col_list <- c(
+    "#000000", "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+    "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
+  )
+  
   for (i in seq_len(nplots)) {
     bloc <- plotdata[, (((i - 1) * curves) + 1):(i * curves)]
+    cols <- col_list[1:curves]
 
     yaxismin <- min(bloc)
     yaxismax <- max(bloc)
 
-
     plot(rspecdata[, 1], bloc[, 1], cex = 0.1, ylim = c(yaxismin, yaxismax + 5), xlab = "Wavelength (nm)", ylab = "% Reflectance")
-    legend(rspecdata[1, 1] - 20, yaxismax + 6, legend = legnames, cex = 0.7, bty = "n", xjust = 0)
+    legend(rspecdata[1, 1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
     title(titlenames[i])
 
     if (i %% numplots == 0) {
@@ -139,7 +139,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, curves = 5
 
     nextplot <- 2
     while (nextplot < ncol(bloc) + 1) {
-      lines(rspecdata[, 1], bloc[, nextplot], cex = 0.1)
+      lines(rspecdata[, 1], bloc[, nextplot], cex = 0.1, col = cols[nextplot])
       nextplot <- nextplot + 1
     }
   }

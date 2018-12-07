@@ -31,7 +31,6 @@ explorespec <- function(rspecdata, by = NULL,
                         scale = c("equal", "free"),
                         legpos = "topright", ...) {
 
-  # oPar <- par(no.readonly=TRUE)
   oPar <- par("mar", "oma", "ask", "mfrow")
   on.exit(par(oPar))
 
@@ -79,13 +78,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   # number of 'by' groups
   numby <- length(levels(by))
-
-  # by <- as.numeric(by)
-
   if (numby <= 0) stop("Invalid by value") # is this needed anymore?
-
-  # nplots <- ceiling(dim(rspecdata)[2] / numby)
-
   nplots <- numby
 
   ##### end CE edit
