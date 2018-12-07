@@ -172,7 +172,13 @@ vismodel <- function(rspecdata,
   achromatic2 <- try(match.arg(achromatic), silent = TRUE)
   illum2 <- try(match.arg(illum), silent = TRUE)
   bg2 <- try(match.arg(bkg), silent = TRUE)
+  if (is.null(bkg)) {
+    stop("chosen background is NULL")
+  }
   tr2 <- try(match.arg(trans), silent = TRUE)
+  if (is.null(trans)) {
+    stop("chosen transmission is NULL")
+  }
 
   if (class(achromatic2) == "try-error") {
     if (isFALSE(achromatic)) {
@@ -223,10 +229,10 @@ vismodel <- function(rspecdata,
   } else if (!inherits(visual2, "try-error")) {
     visual <- match.arg(visual)
     S <- sens[, grep(visual, names(sens))]
-    names(S) <- gsub(paste(visual, ".", sep = ""), "", names(S))
+    names(S) <- gsub(paste0(visual, "."), "", names(S))
     sens_wl <- sens[, "wl"]
   } else {
-    S <- visual[, -which(names(visual) == "wl")]
+    S <- visual[, names(visual) != "wl"]
     sens_wl <- visual[, "wl"]
     fullS <- visual
     visual <- "user-defined"
@@ -272,7 +278,6 @@ vismodel <- function(rspecdata,
   }
 
   if (!inherits(bg2, "try-error")) {
-    if (is.null(bkg)) stop("chosen background is NULL")
     bkg <- bgil[, grep(bg2, names(bgil))]
   } else {
     bg2 <- "user-defined"
@@ -286,7 +291,6 @@ vismodel <- function(rspecdata,
   trdat <- transmissiondata
 
   if (!inherits(tr2, "try-error")) {
-    if (is.null(trans)) stop("chosen transmission is NULL")
     trans <- trdat[, grep(tr2, names(trdat))]
   } else {
     tr2 <- "user-defined"
