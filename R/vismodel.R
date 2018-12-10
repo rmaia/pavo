@@ -293,7 +293,7 @@ vismodel <- function(rspecdata,
     trans <- rep(1, dim(rspecdata)[1])
   }
 
-  if (tr2 != "ideal" & visual == "user-defined") {
+  if (tr2 != "ideal" & visual2 == "user-defined") {
     if ("sensmod" %in% class(fullS)) {
       if (attr(fullS, "om")) {
         warning(
@@ -356,7 +356,7 @@ vismodel <- function(rspecdata,
   if (substr(visual2, 1, 3) == "cie") {
     K <- 100 / colSums(S[2] * illum)
   }
-  if (visual == "segment") {
+  if (visual2 == "segment") {
     B <- apply(y, 2, sum)
   }
 
