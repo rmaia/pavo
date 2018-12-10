@@ -46,7 +46,7 @@ dispace <- function(vismodeldata) {
     # check if relative
     if (!attr(dat, "relative")) {
       dat <- dat[, 1:2]
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat / rowSums(dat)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE

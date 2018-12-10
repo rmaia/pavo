@@ -74,7 +74,7 @@ segspace <- function(vismodeldata) {
     dat <- dat[, seq_len(4)]
     names(dat) <- c("S1", "S2", "S3", "S4")
 
-    dat <- dat / apply(dat, 1, sum)
+    dat <- dat / rowSums(dat)
     warning("Quantum catch have been transformed to be relative (sum of 1)", call. = FALSE)
     attr(vismodeldata, "relative") <- TRUE
   }
