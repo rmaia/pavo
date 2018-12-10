@@ -174,7 +174,7 @@ vismodel <- function(rspecdata,
   sens <- vissyst
   achromatic2 <- tryCatch(
     match.arg(achromatic),
-    error = function(e) ifelse(isFALSE(achromatic), "none", "user-defined")
+    error = function(e) ifelse(is.logical(achromatic) && !achromatic, "none", "user-defined"))
   )
   illum2 <- tryCatch(
     match.arg(illum),
@@ -252,7 +252,7 @@ vismodel <- function(rspecdata,
   )
 
   # Check if wavelength range matches
-  if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
       visual2 == "user-defined") {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
@@ -261,7 +261,7 @@ vismodel <- function(rspecdata,
     )
   }
 
-  if (isFALSE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
     stop("wavelength range in spectra and visual system data do not match")
   }
 
