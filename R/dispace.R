@@ -80,7 +80,7 @@ dispace <- function(vismodeldata) {
 
     # Check that all rows sum to 1 (taking into account R floating point issue)
     if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat / rowSums(dat)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
     }

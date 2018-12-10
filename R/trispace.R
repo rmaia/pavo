@@ -53,7 +53,7 @@ trispace <- function(vismodeldata) {
     # check if relative
     if (!attr(dat, "relative")) {
       dat <- dat[, seq_len(3)]
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat / rowSums(dat)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
