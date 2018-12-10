@@ -174,7 +174,7 @@ vismodel <- function(rspecdata,
   sens <- vissyst
   achromatic2 <- tryCatch(
     match.arg(achromatic),
-    error = function(e) ifelse(is.logical(achromatic) && !achromatic, "none", "user-defined"))
+    error = function(e) ifelse(is.logical(achromatic) && !achromatic, "none", "user-defined")
   )
   illum2 <- tryCatch(
     match.arg(illum),
