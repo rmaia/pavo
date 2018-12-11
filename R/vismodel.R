@@ -8,7 +8,7 @@
 #'  remaining columns.
 #' @param qcatch Which quantal catch metric to return. Options are:
 #' \itemize{
-#' \item \code{'Qi'}: Quantum catch for each photoreceptor
+#' \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
 #' \item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
 #'  channel is proportional to the logarithm of the quantum catch)
 #' \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
@@ -20,7 +20,7 @@
 #'    The data frame must contain a \code{'wl'} column with the range of wavelengths included,
 #'    and the sensitivity for each other cone as a column.
 #' \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
-#' \item \code{'avg.uv'}: average avian UV system.
+#' \item \code{'avg.uv'}: average avian UV system (default).
 #' \item \code{'avg.v'}: average avian V system.
 #' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 #' \item \code{'canis'}: Canid \emph{Canis familiaris}.
@@ -42,7 +42,7 @@
 #'  receptor stimulation. Either a vector containing the sensitivity for a single receptor,
 #'  or one of the options:
 #' \itemize{
-#'  \item \code{'none'}: no achromatic stimulation calculated.
+#'  \item \code{'none'}: no achromatic stimulation calculated (default).
 #' 	\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
 #'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
 #'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
