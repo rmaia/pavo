@@ -182,9 +182,9 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   output.mat <- matrix(nrow = ncol(object), ncol = 23)
 
   # Three measures of brightness
-  B1 <- vapply(object, sum, numeric(1))
+  B1 <- colSums(object)
 
-  B2 <- vapply(object, mean, numeric(1))
+  B2 <- colMeans(object)
 
   B3 <- vapply(object, max, numeric(1))
 
