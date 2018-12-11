@@ -148,20 +148,12 @@ procspec <- function(rspecdata, opt = c(
   }
 
   if (any(opt == "sum")) {
-    rspecdata <- vapply(
-      seq_len(ncol(rspecdata)),
-      function(z) rspecdata[, z] / sum(rspecdata[, z]),
-      numeric(nrow(rspecdata))
-    )
+    rspecdata <- t(t(rspecdata) / colSums(rspecdata))
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
 
   if (any(opt == "center")) {
-    rspecdata <- vapply(
-      seq_len(ncol(rspecdata)),
-      function(z) rspecdata[, z] - mean(rspecdata[, z]),
-      numeric(nrow(rspecdata))
-    )
+    rspecdata <- t(t(rspecdata) / colMeans(rspecdata))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
