@@ -376,7 +376,7 @@ vismodel <- function(rspecdata,
   # Achromatic contrast
 
   # Calculate lum
-  if (any(c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined") %in% achromatic2)) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
       "bt.dc" = ,
       "ch.dc" = ,
