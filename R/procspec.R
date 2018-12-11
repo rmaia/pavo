@@ -153,7 +153,7 @@ procspec <- function(rspecdata, opt = c(
   }
 
   if (any(opt == "center")) {
-    rspecdata <- t(t(rspecdata) / colMeans(rspecdata))
+    rspecdata <- t(t(rspecdata) - colMeans(rspecdata))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
