@@ -357,7 +357,7 @@ vismodel <- function(rspecdata,
     K <- 100 / colSums(S[2] * illum)
   }
   if (visual2 == "segment") {
-    B <- apply(y, 2, sum)
+    B <- colSums(y)
   }
 
   # Calculate Qi
