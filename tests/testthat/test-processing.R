@@ -88,15 +88,15 @@ test_that("Aggregation", {
   
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
-  expect_equal(digest::sha1(merge(teal1, teal2, by = 'wl')), "3e6f9764b7b567176e9be4a0f616c59075a3b03b")
+  expect_equal(digest::sha1(merge(teal1, teal2, by = 'wl'), digits = 4), "a2072eee8242dbad1774712fa50cd53d6d8d8978")
   
   data(sicalis)
   vis.sicalis <- vismodel(sicalis)
   tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 
   # Subset all 'crown' patches (C in file names)
-  expect_equal(digest::sha1(subset(vis.sicalis, "C")),  "df58525a36ec7df9cce6d234e8fa4ad55d67b481")
-  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE)), "3666588f654cf988cd2b12f39f00bbee7aaeae4a") 
+  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4),  "fac9de4d69bf66f262dc09dd05b9d274266fb398")
+  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "8cf8078dd22a0d7be9aebed447ce9122ef36f72f") 
   
 })
 

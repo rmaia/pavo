@@ -237,8 +237,8 @@ test_that("summary", {
   snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
   snakes_class <- classify(snakes, kcols = 3)
   
-  expect_equal(digest::sha1(summary(papilio)), "2e7fcf14cdc1c1d90b911f2139f56b51ff3916cd")
-  expect_equal(digest::sha1(summary(snakes)), "5bef95707174ca2816f08023e7a41c6572969d1a")
+  expect_equal(digest::sha1(summary(papilio), digits = 4), "261b24d0d720036a973549b2cfba1665680f3cfc")
+  expect_equal(digest::sha1(summary(snakes), digits = 4), "2ec7acae69e5812b0544d347b37b7dcdc55b1517")
   expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
   expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
   
