@@ -101,12 +101,11 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.1) {
       imgdat <- pbmclapply(files, grabimg, mc.cores = cores)
-      imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     } else {
       imgdat <- lapply(files, grabimg)
-      imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     }
 
+    imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     imgdat <- as.rimg(imgdat, imgnames)
 
     # Simplify if it's a single image
