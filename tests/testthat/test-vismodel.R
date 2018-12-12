@@ -17,7 +17,8 @@ test_that("Output is in expected range", {
   expect_true(m.di$l > m.di$s)
 
   m.fly <- vismodel(red, relative = FALSE, visual = "musca", achromatic = "l", scale = 10000)
-  expect_true(m.fly$l > m.fly$m && m.fly$m > m.fly$s && m.fly$s > m.fly$u && m.fly$lum == m.fly$l)
+  expect_true(m.fly$l > m.fly$m && m.fly$m > m.fly$s && m.fly$s > m.fly$u)
+  expect_equal(m.fly$l, m.fly$lum)
 })
 
 test_that("Warnings", {
@@ -33,10 +34,10 @@ test_that("Warnings", {
   test_rspec <- as.rspec(flowers[1:2])
   test_matrix <- as.matrix(flowers[1:2])
 
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "Illuminant is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "Illuminant is a matrix")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "Achromatic is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "Achromatic is a matrix")
+  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec")
+  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
+  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec")
+  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
   expect_silent(vismodel(flowers, visual = "bluetit", achromatic = FALSE))
 })
 
@@ -50,8 +51,8 @@ test_that("Sensmodel", {
 
   expect_equivalent(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'Y', 'R'))[,-1]), c(1, 1, 1))
   expect_equivalent(round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'T', 'P'), beta = FALSE, integrate = FALSE, om = 'bird')[,-1]), 4), 68.271)
-  
-  # Errors  
+
+  # Errors
   expect_error(sensmodel(c(300, 400, 500), lambdacut = 400), "must be included")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = 400, Bmid = 450), "length")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = 't'), "length")

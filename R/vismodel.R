@@ -307,17 +307,20 @@ vismodel <- function(rspecdata,
   }
 
   prepare_userdefined <- function(df) {
+
+    dfname <- deparse(substitute(df))
+
     if ("rspec" %in% class(df)) {
       dfwhichused <- names(df)[2]
       df <- df[, 2]
-      warning(deparse(substitute(df)), " is an rspec object; first spectrum (",
+      warning(dfname, " is an rspec object; first spectrum (",
         dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
     } else if ("data.frame" %in% class(df) | "matrix" %in% class(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
-      warning(deparse(substitute(df)), " is a matrix or data frame; first column (",
+      warning(dfname, " is a matrix or data frame; first column (",
         dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
