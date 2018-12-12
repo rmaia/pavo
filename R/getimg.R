@@ -100,11 +100,11 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.1) {
-      imgdat <- pbmclapply(seq_along(file_names), function(x) grabimg(files[x]), mc.cores = cores)
-      imgdat <- lapply(seq_along(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- pbmclapply(files, grabimg, mc.cores = cores)
+      imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     } else {
-      imgdat <- lapply(seq_along(file_names), function(x) grabimg(files[x]))
-      imgdat <- lapply(seq_along(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- lapply(files, grabimg)
+      imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     }
 
     imgdat <- as.rimg(imgdat, imgnames)
