@@ -8,7 +8,7 @@
 #'  remaining columns.
 #' @param qcatch Which quantal catch metric to return. Options are:
 #' \itemize{
-#' \item \code{'Qi'}: Quantum catch for each photoreceptor
+#' \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
 #' \item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
 #'  channel is proportional to the logarithm of the quantum catch)
 #' \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
@@ -20,7 +20,7 @@
 #'    The data frame must contain a \code{'wl'} column with the range of wavelengths included,
 #'    and the sensitivity for each other cone as a column.
 #' \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
-#' \item \code{'avg.uv'}: average avian UV system.
+#' \item \code{'avg.uv'}: average avian UV system (default).
 #' \item \code{'avg.v'}: average avian V system.
 #' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 #' \item \code{'canis'}: Canid \emph{Canis familiaris}.
@@ -42,7 +42,7 @@
 #'  receptor stimulation. Either a vector containing the sensitivity for a single receptor,
 #'  or one of the options:
 #' \itemize{
-#'  \item \code{'none'}: no achromatic stimulation calculated.
+#'  \item \code{'none'}: no achromatic stimulation calculated (default).
 #' 	\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
 #'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
 #'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
@@ -162,23 +162,37 @@ vismodel <- function(rspecdata,
 
   # Negative value check
   if (any(y < 0)) {
-    warning("The spectral data contain ", length(y[y < 0]), " negative value(s), which may produce unexpected results. Consider using procspec() to correct them.")
+    warning("The spectral data contain ", length(y[y < 0]),
+            " negative value(s), which may produce unexpected results. ",
+            "Consider using procspec() to correct them.")
   }
 
-  visual2 <- try(match.arg(visual), silent = TRUE)
+  visual2 <- tryCatch(
+    match.arg(visual),
+    error = function(e) "user-defined"
+  )
   sens <- vissyst
-  achromatic2 <- try(match.arg(achromatic), silent = TRUE)
-  illum2 <- try(match.arg(illum), silent = TRUE)
-  bg2 <- try(match.arg(bkg), silent = TRUE)
-  tr2 <- try(match.arg(trans), silent = TRUE)
-
-  if (class(achromatic2) == "try-error") {
-    if (is.logical(achromatic)) {
-      if (FALSE %in% achromatic) {
-        achromatic <- "none"
-        achromatic2 <- "none"
-      }
-    }
+  achromatic2 <- tryCatch(
+    match.arg(achromatic),
+    error = function(e) ifelse(is.logical(achromatic) && !achromatic, "none", "user-defined")
+  )
+  illum2 <- tryCatch(
+    match.arg(illum),
+    error = function(e) "user-defined"
+  )
+  bg2 <- tryCatch(
+    match.arg(bkg),
+    error = function(e) "user-defined"
+  )
+  if (is.null(bkg)) {
+    stop("chosen background is NULL")
+  }
+  tr2 <- tryCatch(
+    match.arg(trans),
+    error = function(e) "user-defined"
+  )
+  if (is.null(trans)) {
+    stop("chosen transmission is NULL")
   }
 
   qcatch <- match.arg(qcatch)
@@ -220,16 +234,15 @@ vismodel <- function(rspecdata,
     S[wl %in% segmts[4]:segmts[5], 4] <- 1
 
     sens_wl <- wl
-  } else if (!inherits(visual2, "try-error")) {
-    visual <- match.arg(visual)
-    S <- sens[, grep(visual, names(sens))]
-    names(S) <- gsub(paste(visual, ".", sep = ""), "", names(S))
-    sens_wl <- sens[, "wl"]
-  } else {
-    S <- visual[, -which(names(visual) == "wl")]
+  } else if (visual2 == "user-defined") {
+    S <- visual[, names(visual) != "wl"]
     sens_wl <- visual[, "wl"]
     fullS <- visual
-    visual <- "user-defined"
+  } else {
+    visual <- match.arg(visual)
+    S <- sens[, grep(visual, names(sens))]
+    names(S) <- gsub(paste0(visual, "."), "", names(S))
+    sens_wl <- sens[, "wl"]
   }
 
   # Save cone numer
@@ -238,14 +251,9 @@ vismodel <- function(rspecdata,
     conenumb <- dim(S)[2]
   )
 
-  # ttransform from percentages to proportions (Vorobyev 2003)
-  if (max(y) > 1) {
-    y <- y / 100
-  }
-
   # Check if wavelength range matches
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
-    !inherits(visual2, "try-error")) {
+      visual2 == "user-defined") {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
       "spectral data must range between 300 and 700 nm in 1-nm intervals.",
@@ -261,23 +269,16 @@ vismodel <- function(rspecdata,
 
   bgil <- bgandilum
 
-  if (!inherits(illum2, "try-error")) {
+  if (illum2 != "user-defined") {
     illum <- bgil[, grep(illum2, names(bgil))]
-  } else {
-    illum2 <- "user-defined"
   }
-
   if (illum2 == "ideal") {
     illum <- rep(1, dim(rspecdata)[1])
   }
 
-  if (!inherits(bg2, "try-error")) {
-    if (is.null(bkg)) stop("chosen background is NULL")
+  if (bg2 != "user-defined") {
     bkg <- bgil[, grep(bg2, names(bgil))]
-  } else {
-    bg2 <- "user-defined"
   }
-
   if (bg2 == "ideal") {
     bkg <- rep(1, dim(rspecdata)[1])
   }
@@ -285,18 +286,14 @@ vismodel <- function(rspecdata,
   # Defining ocular transmission
   trdat <- transmissiondata
 
-  if (!inherits(tr2, "try-error")) {
-    if (is.null(trans)) stop("chosen transmission is NULL")
+  if (tr2 != "user-defined") {
     trans <- trdat[, grep(tr2, names(trdat))]
-  } else {
-    tr2 <- "user-defined"
   }
-
   if (tr2 == "ideal") {
     trans <- rep(1, dim(rspecdata)[1])
   }
 
-  if (tr2 != "ideal" & visual == "user-defined") {
+  if (tr2 != "ideal" & visual2 == "user-defined") {
     if ("sensmod" %in% class(fullS)) {
       if (attr(fullS, "om")) {
         warning(
@@ -309,42 +306,36 @@ vismodel <- function(rspecdata,
     }
   }
 
-  if ("rspec" %in% class(trans)) {
-    transwhichused <- names(trans)[2]
-    trans <- trans[, 2]
-    warning("Transmission is an rspec object; first spectrum (",
-      dQuote(transwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
+  prepare_userdefined <- function(df) {
+
+    dfname <- deparse(substitute(df))
+
+    if ("rspec" %in% class(df)) {
+      dfwhichused <- names(df)[2]
+      df <- df[, 2]
+      warning(dfname, " is an rspec object; first spectrum (",
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
+      )
+    } else if ("data.frame" %in% class(df) | "matrix" %in% class(df)) {
+      dfwhichused <- names(df)[1]
+      df <- df[, 1]
+      warning(dfname, " is a matrix or data frame; first column (",
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
+      )
+    }
+    return(df)
   }
 
-  if ("data.frame" %in% class(trans) | "matrix" %in% class(trans) &
-    !"rspec" %in% class(trans)) {
-    transgwhichused <- names(trans)[1]
-    trans <- trans[, 1]
-    warning("Transmission is a matrix or data frame; first column (",
-      dQuote(transgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
+  trans      <- prepare_userdefined(trans)
+  bkg        <- prepare_userdefined(bkg)
+  illum      <- prepare_userdefined(illum)
+  achromatic <- prepare_userdefined(achromatic)
 
-  if ("rspec" %in% class(bkg)) {
-    bkgwhichused <- names(bkg)[2]
-    bkg <- bkg[, 2]
-    warning("Background is an rspec object; first spectrum (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
-  if ("data.frame" %in% class(bkg) | "matrix" %in% class(bkg) &
-    !"rspec" %in% class(bkg)) {
-    bkgwhichused <- names(bkg)[1]
-    bkg <- bkg[, 1]
-    warning("Background is a matrix or data frame; first column (",
-      dQuote(bkgwhichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
+  # Transform from percentages to proportions (Vorobyev 2003)
+  if (max(y) > 1) {
+    y <- y / 100
   }
 
   # Scale background from percentage to proportion
@@ -357,26 +348,6 @@ vismodel <- function(rspecdata,
     trans <- trans / 100
   }
 
-  # Is the illuminant a matrix, dataframe or rspec?
-  if ("rspec" %in% class(illum)) {
-    whichused <- names(illum)[2]
-    illum <- illum[, 2]
-    warning("Illuminant is an rspec object; first spectrum (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
-  if ("data.frame" %in% class(illum) | "matrix" %in% class(illum) &
-    !"rspec" %in% class(illum)) {
-    whichused <- names(illum)[1]
-    illum <- illum[, 1]
-    warning("Illuminant is a matrix or data frame; first column (",
-      dQuote(whichused), ") has been used (remaining columns ignored)",
-      call. = FALSE
-    )
-  }
-
   # Scale illuminant
   illum <- illum * scale
 
@@ -385,15 +356,17 @@ vismodel <- function(rspecdata,
 
   # Model-specific modifiers, if need be
   B <- K <- 1
-  if (substr(visual2, 1, 3) == "cie") K <- 100 / colSums(S[2] * illum)
-  if (visual == "segment") B <- apply(y, 2, sum)
+  if (substr(visual2, 1, 3) == "cie") {
+    K <- 100 / colSums(S[2] * illum)
+  }
+  if (visual2 == "segment") {
+    B <- colSums(y)
+  }
 
   # Calculate Qi
-  Qi <- data.frame(vapply(
-    seq_len(dim(S)[2]),
-    function(x) colSums(y * S[, x] * illum) * B * K,
-    numeric(length(y))
-  ))
+  Qi <- data.frame(
+    crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
+  )
 
   # In case rspecdata only has one spectrum
   if (dim(Qi)[2] < 2) {
@@ -404,34 +377,9 @@ vismodel <- function(rspecdata,
   names(Qi) <- names(S)
 
   # Achromatic contrast
-  
-  # Process user-defined achromatic receptor
-  if (inherits(achromatic2, "try-error")) {
-    achromatic2 <- "user-defined"
-
-    # Is achromatic a matrix, dataframe or rspec?
-    if ("rspec" %in% class(achromatic)) {
-      whichused <- names(achromatic)[2]
-      achromatic <- achromatic[, 2]
-      warning("Achromatic is an rspec object; first spectrum (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    }
-
-    if ("data.frame" %in% class(achromatic) | "matrix" %in% class(achromatic) &
-      !"rspec" %in% class(achromatic)) {
-      whichused <- names(achromatic)[1]
-      achromatic <- achromatic[, 1]
-      warning("Achromatic is a matrix or data frame; first column (",
-        dQuote(whichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    }
-  }
 
   # Calculate lum
-  if (any(c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined") %in% achromatic2)) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
       "bt.dc" = ,
       "ch.dc" = ,
@@ -465,41 +413,32 @@ vismodel <- function(rspecdata,
       S <- data.frame(cbind(S, L))
       uncqi <- Qi[, "lum"]
     }
-    if (substr(visual, 1, 3) == "cie") {
-      k <- 1 / (colSums(S * bkg * illum) * K)
-      Qi <- data.frame(t(t(Qi) * k))
-    } else {
-      k <- 1 / (colSums(S * bkg * illum))
-      Qi <- data.frame(t(t(Qi) * k))
-    }
+    k <- 1 / (colSums(S * bkg * illum) * K)
+    Qi <- data.frame(t(t(Qi) * k))
     vk <- "(von Kries color correction applied)"
     if (!is.null(lum)) {
       Qi[, "lum"] <- uncqi
     }
   }
 
-  fi <- log(Qi) # fechner law (signal ~ log quantum catch)
-  Ei <- Qi / (Qi + 1) # hyperbolic transform
-
-  matrix(apply(Qi, 2, min), nrow = dim(Qi)[2], ncol = dim(Qi)[2], byrow = TRUE)
+  # Output
+  res <- switch(qcatch,
+                Qi = Qi,
+                fi = log(Qi),
+                Ei = Qi / (Qi + 1))
 
   # Convert to relative
   if (relative) {
-    Qi[, !names(Qi) %in% "lum"] <- Qi[, !names(Qi) %in% "lum"] / rowSums(Qi[, !names(Qi) %in% "lum"])
-    fi[, !names(fi) %in% "lum"] <- fi[, !names(fi) %in% "lum"] / rowSums(fi[, !names(fi) %in% "lum"])
-    Ei[, !names(Ei) %in% "lum"] <- Ei[, !names(Ei) %in% "lum"] / rowSums(Ei[, !names(Ei) %in% "lum"])
+    res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(Qi) %in% "lum"])
   }
-
-  # Output
-  res <- switch(qcatch, Qi = Qi, fi = fi, Ei = Ei)
 
   class(res) <- c("vismodel", "data.frame")
 
   # Descriptive attributes
   attr(res, "qcatch") <- qcatch
-  attr(res, "visualsystem.chromatic") <- visual
+  attr(res, "visualsystem.chromatic") <- visual2
   attr(res, "visualsystem.achromatic") <- achromatic2
-  attr(res, "illuminant") <- paste(illum2, ", scale = ", scale, " ", vk, sep = "")
+  attr(res, "illuminant") <- paste0(illum2, ", scale = ", scale, " ", vk)
   attr(res, "background") <- bg2
   attr(res, "transmission") <- tr2
   attr(res, "relative") <- relative

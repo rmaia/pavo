@@ -20,7 +20,6 @@ test_that("Output regression", {
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'musca', achro = 'md.r1', relative = FALSE)), digits = 4),  "3fcd2c3eb74ed4e6d2e505b2c207ca558f287d16")
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', bkg = 'green', vonkries = TRUE, achromatic = 'l')), digits = 4),  "e1dc6128b9c4ce47a0664394f0e453e53ba6c9db")
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'cie10')), digits = 4),  "38c06f479375903ba566d9fd7187f9efcf134761")
-
 })
 
 test_that("Warnings", {
@@ -36,10 +35,10 @@ test_that("Warnings", {
   test_rspec <- as.rspec(flowers[1:2])
   test_matrix <- as.matrix(flowers[1:2])
 
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "Illuminant is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "Illuminant is a matrix")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "Achromatic is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "Achromatic is a matrix")
+  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec")
+  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
+  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec")
+  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
   expect_silent(vismodel(flowers, visual = "bluetit", achromatic = FALSE))
 })
 
@@ -53,8 +52,8 @@ test_that("Sensmodel", {
 
   expect_equivalent(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'Y', 'R'))[,-1]), c(1, 1, 1))
   expect_equivalent(round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c('C', 'T', 'P'), beta = FALSE, integrate = FALSE, om = 'bird')[,-1]), 4), 68.271)
-  
-  # Errors  
+
+  # Errors
   expect_error(sensmodel(c(300, 400, 500), lambdacut = 400), "must be included")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = 400, Bmid = 450), "length")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = 't'), "length")
