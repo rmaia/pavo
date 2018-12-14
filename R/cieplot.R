@@ -19,6 +19,8 @@
 #' @param box logical. Should the plot area box and axes be plotted? (defaults to `FALSE`)
 #' @param margin vector of four numbers specifying drawing margins for CIELAB plot
 #'   (defaults to c(0,0,0,0))
+#' @param ciebg should the colour background be plotted for CIEXYZ plot?
+#' (defaults to \code{TRUE})
 #' @inheritParams triplot
 #'
 #' @examples
@@ -41,13 +43,14 @@
 #'
 #' @importFrom grDevices trans3d
 #' @importFrom plot3D perspbox
+#' @importFrom magick image_read
 #'
 #' @inherit cie references
 
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
-                    margin = c(0, 0, 0, 0), ...) {
+                    margin = c(0, 0, 0, 0), ciebg = TRUE, ...) {
   arg <- list(...)
 
   # CIEXYZ
@@ -105,6 +108,11 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     arg$y <- ciedata$y
 
     do.call(plot, c(arg, type = "n"))
+
+    if (ciebg) {
+      bg <- image_read(system.file("ciebg.png", package = "pavo"))
+      rasterImage(bg, min(monox), min(monoy), max(monox), max(monoy))
+    }
 
     if (mono == TRUE) {
       polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)

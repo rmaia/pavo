@@ -6,7 +6,7 @@
 \usage{
 cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
   out.lty = 1, theta = 45, phi = 10, r = 1e+06, zoom = 1,
-  box = FALSE, margin = c(0, 0, 0, 0), ...)
+  box = FALSE, margin = c(0, 0, 0, 0), ciebg = TRUE, ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
@@ -39,6 +39,9 @@ when \code{space = "cielab"}.}
 
 \item{margin}{vector of four numbers specifying drawing margins for CIELAB plot
 (defaults to c(0,0,0,0))}
+
+\item{ciebg}{should the colour background be plotted for CIEXYZ plot?
+(defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

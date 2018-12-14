@@ -28,3 +28,4 @@ LICENSE.md
 CONTRIBUTING.md
 CONDUCT.md
 ^revdep$
+^inst/ciebg\.svg$
