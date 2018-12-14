@@ -59,7 +59,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
-  
+
   ## Convert refID to numeric identifier
   if(!is.null(refID)){
 if (is.character(refID)) {
@@ -68,7 +68,7 @@ if (is.character(refID)) {
         stop("No image found with that name, specify another reference image using refID.")
     }
   }
-  
+
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
   if (!multi_image) {
@@ -81,9 +81,9 @@ if (is.character(refID)) {
   }
 
   ## Class/structure
-    if (any(unlist(lapply(imgdat, function(x) !"rimg" %in% class(x))))) {
+    if (!all(unlist(lapply(imgdat, is.rimg)))) {
       message("One or more images are not of class 'rimg'; attempting to coerce.")
-      imgdat <- lapply(imgdat, function(x) as.rimg(x))
+      imgdat <- lapply(imgdat, as.rimg)
     }
 
   ## Cores
