@@ -159,7 +159,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   }
 
   ## Class/structure
-  if (any(unlist(lapply(seq_along(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
+  if (!all(unlist(lapply(classimg, is.rimg)))) {
     message("One or more images are not of class 'rimg'; attempting to coerce.")
     classimg <- lapply(seq_along(classimg), function(x) as.rimg(classimg[[x]]))
   }
@@ -175,21 +175,14 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       message("Using single set of coldists for all images.")
       coldists <- rep(list(coldists), length(classimg))
     }
-    if (!all(unlist(lapply(
-      seq_along(coldists),
-      function(x) c("c1", "c2") %in% names(coldists[[x]])
-    )))) {
+    if (!all(unlist(lapply(coldists, function(x) c("c1", "c2") %in% names(x))))) {
       message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
       coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
     }
-    if (any(unlist(lapply(
-      seq_along(coldists),
-      function(x) !any(c("dS", "dL") %in% names(coldists[[x]]))
-    )))) {
+    if (any(unlist(lapply(coldists, function(x) !any(c("dS", "dL") %in% names(x)))))) {
       stop("One or more set of coldists without columns labelled either 'dS' or 'dL'.")
     }
   }
-  # }
 
   ## HSL formatting
   if (!is.null(hsl)) {
@@ -197,17 +190,11 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
       message("Using single set of hsl values for all images.")
       hsl <- rep(list(hsl), length(classimg))
     }
-    if (!all(unlist(lapply(
-      seq_along(hsl),
-      function(x) "patch" %in% names(hsl[[x]])
-    )))) {
+    if (!all(unlist(lapply(hsl, function(x) "patch" %in% names(x))))) {
       message("Cannot find column named 'patch' one or more set of hsl values. Assuming first column contains colour-category ID's")
       hsl <- lapply(hsl, function(x) names(x)[1] <- "patch")
     }
-    if (any(unlist(lapply(
-      seq_along(hsl),
-      function(x) !any(c("hue", "sat", "lum") %in% names(hsl[[x]]))
-    )))) {
+    if (any(unlist(lapply(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x)))))) {
       stop("One or more sets of hsl values without columns labelled either 'hue', 'sat', or 'lum'.")
     }
   }
