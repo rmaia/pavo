@@ -4,18 +4,19 @@
 \alias{adjacent}
 \title{Run an adjacency and boundary strength analysis}
 \usage{
-adjacent(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
+adjacent(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   polygon = NULL, exclude = c("none", "background", "object"),
   coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
-\item{classimg}{(required) an xyz image matrix, or list of matrices, in which
-x and y correspond to pixel coordinates, and z is a numeric code specifying
-a colour-class. Preferably the result of \code{\link{classify}}.}
+\item{classimg}{(required) an xyz matrix, or list of matrices, in which
+x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code 
+specifying a colour-class. Preferably the result of \code{\link{classify}}, or constructed
+from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).}
 
-\item{xpts}{(required) an integer specifying the number of sample points along the x axis,
-from which the evenly-spaced sampling grid is constructed. Defaults to 100, though
-this should be carefully considered.}
+\item{xpts}{an integer specifying the number of sample points along the x axis,
+from which the evenly-spaced sampling grid is constructed (if required). Defaults 
+to the smallest dimension of \code{classimg}, though this should be carefully considered.}
 
 \item{xscale}{(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, only if image scales have been set via
@@ -25,14 +26,14 @@ in preferred units. Not required, and ignored, only if image scales have been se
 pertaining to the background alone, for relatively homogeneous and uniquely-identified
 backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
-values corresponding to colour-class ID numbers. Ignored if the focal object
-and background has been identified using \code{\link{procimg}}.}
+values corresponding to colour-class ID numbers for classified images. Ignored 
+if the focal object and background has been identified using \code{\link{procimg}}.}
 
 \item{polygon}{a data.frame of x-y coordinates delineating a closed polygon that
 separates the focal object from the background. Not required, and ignored, if the
 focal object outline is specified using \code{\link{procimg}}.}
 
-\item{exclude}{the portion of the image to be excluded from the analysis, if any.
+\item{exclude}{the portion of the scene to be excluded from the analysis, if any.
 \itemize{
 \item \code{'none'}: default
 \item \code{'background'}: exclude everything \emph{outside} the closed polygon specified
@@ -43,7 +44,7 @@ to the background can be specified via \code{bkgID}, and subsequently excluded.
 using \code{\link{procimg}}, or the argument \code{polygon}.
 }}
 
-\item{coldists}{A data.frame specifying the visually-modelled chromatic (dS)
+\item{coldists}{a data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two columns
 should be named 'c1' and 'c2', and specify all possible combinations of numeric
 colour-class ID's (viewable by calling \code{summary(image, plot = TRUE)} on
@@ -117,7 +118,7 @@ set.seed(153)
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, kcols = 4)
-papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
+papilio_adj <- adjacent(papilio_class, xscale = 100)
 
 # Single image, with (fake) color distances and hsl values
 # Fake color distances
@@ -133,7 +134,7 @@ hsl_vals <- data.frame(patch = seq_len(4),
                        sat = c(3.5, 1.1, 6.3, 1.3))
 
 # Full analysis, including the white background's ID
-papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
+papilio_adj <- adjacent(papilio_class, xscale = 100, bkgID = 1,
                         coldists = distances, hsl = hsl_vals)
 
 # Multiple images

@@ -61,11 +61,12 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   multi_image <- inherits(imgdat, "list")
 
   ## Convert refID to numeric identifier
-  if(!is.null(refID)){
-if (is.character(refID)) {
-      refID <- which(unlist(lapply(seq_along(imgdat), function(x) attr(imgdat[[x]],"imgname"))) == refID)
-      if(length(refID) == 0)
+  if (!is.null(refID)) {
+    if (is.character(refID)) {
+      refID <- which(unlist(lapply(seq_along(imgdat), function(x) attr(imgdat[[x]], "imgname"))) == refID)
+      if (length(refID) == 0) {
         stop("No image found with that name, specify another reference image using refID.")
+      }
     }
   }
 
@@ -81,10 +82,10 @@ if (is.character(refID)) {
   }
 
   ## Class/structure
-    if (!all(unlist(lapply(imgdat, is.rimg)))) {
-      message("One or more images are not of class 'rimg'; attempting to coerce.")
-      imgdat <- lapply(imgdat, as.rimg)
-    }
+  if (!all(unlist(lapply(imgdat, is.rimg)))) {
+    message("One or more images are not of class 'rimg'; attempting to coerce.")
+    imgdat <- lapply(imgdat, as.rimg)
+  }
 
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {

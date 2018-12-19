@@ -4,16 +4,17 @@
 #' boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 #' contrast (Endler & Mielke 2005).
 #'
-#' @param classimg (required) an xyz image matrix, or list of matrices, in which
-#' x and y correspond to pixel coordinates, and z is a numeric code specifying
-#' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param xpts (required) an integer specifying the number of sample points along the x axis,
-#' from which the evenly-spaced sampling grid is constructed. Defaults to 100, though
-#' this should be carefully considered.
+#' @param classimg (required) an xyz matrix, or list of matrices, in which
+#' x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code 
+#' specifying a colour-class. Preferably the result of \code{\link{classify}}, or constructed
+#' from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).
+#' @param xpts an integer specifying the number of sample points along the x axis,
+#' from which the evenly-spaced sampling grid is constructed (if required). Defaults 
+#' to the smallest dimension of \code{classimg}, though this should be carefully considered.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param exclude the portion of the image to be excluded from the analysis, if any.
+#' @param exclude the portion of the scene to be excluded from the analysis, if any.
 #' \itemize{
 #' \item \code{'none'}: default
 #' \item \code{'background'}: exclude everything \emph{outside} the closed polygon specified
@@ -27,12 +28,12 @@
 #' pertaining to the background alone, for relatively homogeneous and uniquely-identified
 #' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
-#' values corresponding to colour-class ID numbers. Ignored if the focal object
-#' and background has been identified using \code{\link{procimg}}.
+#' values corresponding to colour-class ID numbers for classified images. Ignored 
+#' if the focal object and background has been identified using \code{\link{procimg}}.
 #' @param polygon a data.frame of x-y coordinates delineating a closed polygon that
 #' separates the focal object from the background. Not required, and ignored, if the
 #' focal object outline is specified using \code{\link{procimg}}.
-#' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
+#' @param coldists a data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
 #' should be named 'c1' and 'c2', and specify all possible combinations of numeric
 #' colour-class ID's (viewable by calling \code{summary(image, plot = TRUE)} on
@@ -102,7 +103,7 @@
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
-#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
+#' papilio_adj <- adjacent(papilio_class, xscale = 100)
 #'
 #' # Single image, with (fake) color distances and hsl values
 #' # Fake color distances
@@ -118,7 +119,7 @@
 #'                        sat = c(3.5, 1.1, 6.3, 1.3))
 #'
 #' # Full analysis, including the white background's ID
-#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
+#' papilio_adj <- adjacent(papilio_class, xscale = 100, bkgID = 1,
 #'                         coldists = distances, hsl = hsl_vals)
 #'
 #' # Multiple images
@@ -137,7 +138,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
+adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
@@ -146,6 +147,11 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
 
   ## Single or multiple images?
   multi_image <- inherits(classimg, "list")
+  
+  # Prepare if it's user-generated, and not the result of classify() 
+  # if(!inherits(rimg, "list")){
+  # 
+  # }
 
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
@@ -160,7 +166,7 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
 
   ## Class/structure
   if (!all(unlist(lapply(classimg, is.rimg)))) {
-    message("One or more images are not of class 'rimg'; attempting to coerce.")
+    message("One or more image matrices are not of class 'rimg'; attempting to coerce.")
     classimg <- lapply(seq_along(classimg), function(x) as.rimg(classimg[[x]]))
   }
 
@@ -244,6 +250,10 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
     message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
     xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
   }
+  # Set to smallest dimension by default
+  if(is.null(xpts))
+    xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
+  
   xpts <- as.list(rep(xpts, length(classimg)))
 
   ## ------------------------------ Main ------------------------------ ##

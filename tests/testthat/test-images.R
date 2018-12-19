@@ -45,6 +45,13 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimgfake))
   expect_true(is.rimg(rimgfake2))
   expect_true(is.rimg(rimggrey))
+  
+  # as.rimg can handle user-classified images
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  papilio_class <- classify(papilio, kcols = 4)
+  pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
+  expect_true(is.rimg(pap2))
+  expect_equal(papilio_class, pap2, check.attributes = FALSE)
 })
 
 test_that("procimg", {
@@ -226,6 +233,17 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_hue, 1.5)
   expect_equal(checker_adj$m_sat, 3.6)
   expect_equal(checker_adj$m_lum, 5.68)
+  
+  # Can handle user-classified images
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  papilio_class <- classify(papilio, kcols = 4)
+  papilio_adj <- adjacent(papilio_class, xscale = 100)
+  
+  pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)), name = 'papilio')
+  pap2_adj <- adjacent(pap2, xscale = 100)
+  
+  expect_identical(papilio_adj, pap2_adj)
+  
 })
 
 test_that("summary", {
