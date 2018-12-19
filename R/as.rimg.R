@@ -58,59 +58,49 @@ as.rimg <- function(object, name = "img") {
       x
     }
 
-    if (is.list(object)) {
-
-      # Array check
-      if (any(unlist(lapply(seq_along(object), function(x) !is.array(object[[x]]))))) {
-        stop("Images must be an array.")
-      }
-
-      # Duplicate channels if grayscale
-      for (i in seq_along(object)) {
-        if (is.na(dim(object[[i]])[3])) {
-          object[[i]] <- replicate(3, object[[i]], simplify = "array")
-        }
-      }
-
-      # 3D maximum
-      object <- lapply(seq_along(object), function(j) object[[j]][, , 1:3])
-
-      # Rescale RGB to [0,1] if need be
-      object <- lapply(seq_along(object), function(j) rescaler(object[[j]]))
-
-      # Attributes
-      if (length(name) == 1) {
-        name <- rep(name, length(object))
-      }
-      object <- lapply(seq_along(object), function(j) attrgiver(object[[j]], name[[j]]))
-
-      # The list itself needs attributes
-      class(object) <- c("rimg", "list")
-      attr(object, "state") <- "raw"
+    # Control flow for multi-images
+    if (!inherits(object, "list")) {
+      object2 <- list(object)
     } else {
-
-      # Array check
-      if (!is.array(object)) {
-        stop("Images must be an array.")
-      }
-
-      # Duplicate channels if grayscale
-      if (is.na(dim(object)[3])) {
-        object <- replicate(3, object, simplify = "array")
-      }
-
-      # 3D maximum
-      object <- object[, , 1:3]
-
-      # Rescale RGB to [0,1] if need be
-      object <- rescaler(object)
-
-      # Attributes
-      object <- attrgiver(object)
+      object2 <- object
     }
-  }
 
-  object
+    # Array check
+    if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
+      stop("Images must be an array.")
+    }
+
+    # Duplicate channels if grayscale
+    for (i in seq_along(object2)) {
+      if (is.na(dim(object2[[i]])[3])) {
+        object2[[i]] <- replicate(3, object2[[i]], simplify = "array")
+      }
+    }
+
+    # 3D maximum
+    object2 <- lapply(seq_along(object2), function(j) object2[[j]][, , 1:3])
+
+    # Rescale RGB to [0,1] if need be
+    object2 <- lapply(seq_along(object2), function(j) rescaler(object2[[j]]))
+
+    # Attributes
+    if (length(name) == 1) {
+      name <- rep(name, length(object2))
+    }
+    object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]]))
+
+    # The list itself needs attributes
+    class(object2) <- c("rimg", "list")
+    attr(object2, "state") <- "raw"
+
+    if (!inherits(object, "list")) {
+      object2[[1]]
+    } else {
+      object2
+    }
+  } else {
+    object
+  }
 }
 
 #' @rdname as.rimg
