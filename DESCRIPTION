@@ -43,6 +43,7 @@ Suggests:
     rgl,
     spelling,
     testthat,
+    mclust,
     xml2,
     digest
 VignetteBuilder: knitr
