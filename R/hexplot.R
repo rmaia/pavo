@@ -61,7 +61,6 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   # Hexagon edge coordinates
   hexX <- c(0, -0.886, -0.886, 0, 0.886, 0.886, 0)
   hexY <- c(1, 0.5, -0.5, -1, -0.5, 0.5, 1)
-  hexout <- data.frame(hexX, hexY)
 
   # Hue sector divider coordinates
   # Coarse (45-degree)
