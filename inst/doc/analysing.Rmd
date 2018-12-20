@@ -729,7 +729,11 @@ JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 head(JND.fms)
 ```
 
-# Analyzing Image Data
+# Analyzing Spatial Data
+
+`pavo` now allows for the combined analysis of spectral data (as above) and spatial data (as below). Note that 'spatial' data of course include images, but may also include spatially-sampled _spectra_, as explored in the examples below. Thus while much of the below deals with image-based processing and analysis, images are not necessary for many spatial analyses and indeed may perform worse than spectrally-based analyses in some cases. 
+
+## Image-based colour classification
 
 We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the funtion to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
 
@@ -737,9 +741,9 @@ We first import our images with `getimg()`, which functions in a similar manner 
 butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
 ```
 
-## Image Colour-Classification
+The segmentation of RGB images into discrete colour-classes is an useful step on the road to several analyses, and this is carried out in `pavo` via `classify()`. The function currently implements k-means clustering which, and offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each, and allow the k-means clustering algorithm to do its work. **Note that the specification of _k_, the number of discrete colours in an image, is a crucial step to be estimated _a priori_ beforehand**, typically through the use of visual modelling to estimate the number of discriminable colours in an 'objective' manner. There are a suite of possible ways in which this may be achieved, though, with one detailed below as part of example 2.
 
-The segmentation of RGB images into discrete colour-classes is an essential step on the road to several analyses, and this is carried out in `pavo` via `classify()`. The function currently implements k-means clustering which, although an 'unsupervised' methods of image segmentation, offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each (an important step to be closely considered beforehand beforehand, often through visual modelling to estimate the number of discriminable colours), and allow the k-means clustering algorithm to do its work. Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.
+Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using `kcols`, before visualising the results with `summary`. The `summary` function, with `plot = TRUE`, is also particularly useful for understanding the colour-class labels, or ID's, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting 'false' colours for plotting through the `col` argument.
 
 ```{r}
 butterflies_class <- classify(butterflies, kcols = c(4, 3))
@@ -750,12 +754,11 @@ butterflies_class <- classify(butterflies, kcols = c(4, 3))
 # Note that we could simply feed the list of images to summary, rather than
 # specifying individual images, and they would progress automatically
 # with user input.
-
 summary(butterflies_class[[2]], plot = TRUE)
 
 ```
 
-There are other options available, which may be of particular use when the classification process is not producing the results that might be expected _a priori_. If analysing similar images with homologous colour patterns (e.g. individuals within a species), we could specify a single 'reference' image in a list to be initially classified, using `refID`, with the RGB centres identified in this reference image used as pre-specified cluster centres in subsequent images. This helps to ensure that homologous pattern elements are reliably identified and classified between images. The `classify()` function also offers an interactive option, via `interactive = TRUE`, wherein we can interactively click on representative colours within an image (or images individually), with the RGB values then used as cluster centres. This is particularly useful when images are being erroneously classified, since the standard k-means process randomly selects initial centres and so may (by chance) miss smaller patches, or confuse similar colours. By specifying the initial RGB centres interactively, it can be easier for the process to distinguish or 'pull apart' colours in such circumstances. Ultimately, there are several combinations of options available during classification, which are also documented in the help file. For our butterflies, for example, we could use any of the following (though some would be very ill-advised):
+There are other options available, which may be of particular use when the classification process is not producing the results that might be expected. If analysing similar images with homologous colour patterns (e.g. individuals within a species), we could specify a single 'reference' image in a list to be initially classified, using `refID`, with the RGB centres identified in this reference image used as pre-specified cluster centres in subsequent images. This helps to ensure that homologous pattern elements are reliably identified and classified between images. The `classify()` function also offers an interactive option, via `interactive = TRUE`, wherein we can interactively click on representative colours within an image (or images individually), with the RGB values then used as cluster centres. This is particularly useful when images are being erroneously classified, since the standard k-means process randomly selects initial centres and so may (by chance) miss smaller patches, or confuse similar colours. By specifying the initial RGB centres interactively, it can be easier for the process to distinguish or 'pull apart' colours in such circumstances. Ultimately, there are several combinations of options available during classification, which are also documented in the help file. For our butterflies, for example, we could use any of the following (though some would be very ill-advised):
 
 ```{r}
 # Automatic classification.
@@ -778,9 +781,11 @@ butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 
 ## Adjacency and Boundary Strength Analyses, and Overall Pattern Contrasts
 
-The adjacency (@Endler2012) and boundary strength (@Endler2018) analyses offer a powerful method for quantifying various features of colour pattern geometry. Briefly, the process entails classifying the pixels of images into a number of discrete colour classes, using `classify()` as described above, before sampling the now-classified image with an evenly spaced grid of user-specified density. The column-wise and row-wise colour-class transitions between adjacent points are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel()` and `coldist()`, then this can also be incorporated to derive several measures of the salience of patch boundaries (@Endler2018). Finally, if estimates of hue, saturation, and/or brightness are known for each discrete colour in a pattern, then these can be included through the `hsl` argument for general, area-weighted measures of overall pattern contrast (@Endler2005).
+The adjacency (@Endler2012) and boundary strength (@Endler2018) analyses offer a powerful method for quantifying various features of colour pattern geometry. Briefly, the process entails classifying grid-sampled locations within a visual scene into a number of discrete colour classes. This may be achieved using `classify()` as described above before sampling the now-classified image, and/or by taking grid-sampled reflectance spectra across a visual scene, visually modelling and clustering the results (as per 'method 1' in @Endler2012, example below). The column-wise and row-wise colour-class transitions between adjacent points within this grid are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel()` and `coldist()`, then this can also be incorporated to derive several measures of the salience of patch boundaries (@Endler2018). Finally, if estimates of hue, saturation, and/or brightness are known for each discrete colour in a pattern, then these can be included through the `hsl` argument for general, area-weighted measures of overall pattern contrast (@Endler2005). In `pavo`, this is all carried out through the `adjacent()` function, which takes several arguments that should be well understood. 
 
-In `pavo`, this is all carried out through the `adjacent()` function, which takes several arguments that should be well understood. For our butterflies, we'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg()`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg()`, as above, and ignore this argument).
+### Example 1 (simple): mounted butterflies 
+
+We'll begin with a simple example using mounted butterflies. We'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg()`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg()`, as above, and ignore this argument).
 
 ```{r}
 butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
@@ -790,7 +795,7 @@ head(butterflies_adj)
 
 The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function's help file (`?adjacent`) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is `NA`, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give `adjacent()` enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.
 
-```{r}
+```{r, message=FALSE}
 # Create a fake matrix of pairwise colour- and luminance distances between all
 # colour patten elements, as might be attained through visual modelling of spectral data.
 distances <- data.frame(c1 = c(1, 1, 2),
@@ -817,6 +822,73 @@ hsl_vals
 adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
 ```
 
+### Example 2 (complex): whole visual environments
+
+Of course colour patterns are not always so simple, and we may want to analyse the spatial geometry of more complex or subtle scenes. In such cases, it may be preferable to largely forego image-based clustering and classification altogether and instead use spectral data directly in an adjacency-style analysis (as per 'method 1' in @Endler2012). One such approach would have us take spectral measurements across a patch in an evenly-spaced grid
+
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement."}
+
+# Load up our image of a camouflaged lizard
+lizard <- getimg(system.file("testdata/images/vig/", package = 'pavo'))
+
+# Take a look at it
+par(mfrow = c(1, 2))
+plot(lizard)
+
+# And overlay a simple 'sampling grid' that might guide us as to where we should collect
+# our reflectance measurements. Note that the grid here is likely too coarse to capture the necessary detail,
+# though the sampling density is something to be closely considered on a case-by-case basis
+plot(lizard)
+points(expand.grid(seq(0, dim(lizard)[1], 25), seq(0, dim(lizard)[1], 25)), pch = 16, col = 'red')
+```
+
+For the sake of this example we'll simulate 100 reflectance spectra, as though we had collected them following the above grid. We'll do this by creating four very similar groups of of 25 spectra, which will also allow us to get a sense of how our clustering methods perform. Of course real spectra will be more variable, but the same principles apply.
+
+```{r, message=FALSE}
+set.seed(12352)  # For reprodicubility
+
+# Generate some fake spectra that were grid-sampled across our scene
+fakescene <- cbind(
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 320, 330), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 440, 450), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 550, 560), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 650, 660), 20)))
+  )
+
+# Convert them to rspce objects
+fakescene <- as.rspec(data.frame(wl = 300:700, fakescene))
+```
+
+Now instead of calling `cluster()` on the image and arbitrarily selecting `kcols` (which would likely be quite inaccurate due to the complexity of the scene), we can visually model the spectra, calculate the colour-distances between them, and cluster the results into a data-image that can be fed directly into `adjacent()`. Below we'll use model-based clustering, but there are numerous possible approaches that we might take here, which should be closely considered with reference to the original methods' publications.
+
+```{r, message=FALSE}
+# Visually model our spectra in a tetrahedral model of the blue tit, specifying
+# relative = FALSE so that we can estimate noise-calibrated distances.
+vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale = 10000)
+
+# Calculate noise-weighted distances, before converting them to xyz coordinates
+# in noise-corrected colourspace.
+jnd.fakescene <- jnd2xyz(coldist(vis.fakescene))
+
+# Load up a library and use model-based clustering to estimate the number of discrete
+# colours present in our sample.
+library(mclust)
+fit.fakescene <- Mclust(jnd.fakescene)
+summary(fit.fakescene)
+#plot(fit.fakescene)  # Requires user-input
+```
+
+This approach has clearly identified four distinct colour patches, as we simulated. To be able to feed this information directly in to `adjacent()` we need to arrange the now-classified spectral data into a xyz data-image matrix, in which `x` and `y` coordinates specify the location of the sample in our scene, and the z values at each location specify the colour-class, or group, into which each sample has been classified (an integer). Conveniently enough, that particular clustering method offers the data's classification as output, so we can simply rearrange it into our original 10 x 10 sampling matrix before passing it to `adjacent()`.
+
+```{r, message=FALSE}
+# Rearrange the data into a colour-classified image matrix, and take a look at it.
+# Note that is the same structure as the output of 'classify()'.
+mat.fakescene <- matrix(as.numeric(unlist(fit.fakescene['classification'])), 10, 10)
+head(mat.fakescene)
+
+# Run the adjacency analysis
+adjacent(mat.fakescene, xscale = 200)
+```
 
 # References
 

@@ -337,7 +337,6 @@ butterflies_class <- classify(butterflies, kcols = c(4, 3))
 # Note that we could simply feed the list of images to summary, rather than
 # specifying individual images, and they would progress automatically
 # with user input.
-
 summary(butterflies_class[[2]], plot = TRUE)
 
 
@@ -363,7 +362,7 @@ butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID =
 
 head(butterflies_adj)
 
-## ------------------------------------------------------------------------
+## ---- message=FALSE------------------------------------------------------
 # Create a fake matrix of pairwise colour- and luminance distances between all
 # colour patten elements, as might be attained through visual modelling of spectral data.
 distances <- data.frame(c1 = c(1, 1, 2),
@@ -388,4 +387,58 @@ hsl_vals
 # of our two images, for convenience (though this could be readily extended to
 # include a list of images along with a list of distances and hsl values)
 adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
+
+## ---- fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement."----
+
+# Load up our image of a camouflaged lizard
+lizard <- getimg(system.file("testdata/images/vig/", package = 'pavo'))
+
+# Take a look at it
+par(mfrow = c(1, 2))
+plot(lizard)
+
+# And overlay a simple 'sampling grid' that might guide us as to where we should collect
+# our reflectance measurements. Note that the grid here is likely too coarse to capture the necessary detail,
+# though the sampling density is something to be closely considered on a case-by-case basis
+plot(lizard)
+points(expand.grid(seq(0, dim(lizard)[1], 25), seq(0, dim(lizard)[1], 25)), pch = 16, col = 'red')
+
+## ---- message=FALSE------------------------------------------------------
+set.seed(12352)  # For reprodicubility
+
+# Generate some fake spectra that were grid-sampled across our scene
+fakescene <- cbind(
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 320, 330), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 440, 450), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 550, 560), 20))),
+  do.call(cbind, lapply(1:25, function(x) dnorm(300:700, runif(1, 650, 660), 20)))
+  )
+
+# Convert them to rspce objects
+fakescene <- as.rspec(data.frame(wl = 300:700, fakescene))
+
+## ---- message=FALSE------------------------------------------------------
+# Visually model our spectra in a tetrahedral model of the blue tit, specifying
+# relative = FALSE so that we can estimate noise-calibrated distances.
+vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale = 10000)
+
+# Calculate noise-weighted distances, before converting them to xyz coordinates
+# in noise-corrected colourspace.
+jnd.fakescene <- jnd2xyz(coldist(vis.fakescene))
+
+# Load up a library and use model-based clustering to estimate the number of discrete
+# colours present in our sample.
+library(mclust)
+fit.fakescene <- Mclust(jnd.fakescene)
+summary(fit.fakescene)
+#plot(fit.fakescene)  # Requires user-input
+
+## ---- message=FALSE------------------------------------------------------
+# Rearrange the data into a colour-classified image matrix, and take a look at it.
+# Note that is the same structure as the output of 'classify()'.
+mat.fakescene <- matrix(as.numeric(unlist(fit.fakescene['classification'])), 10, 10)
+head(mat.fakescene)
+
+# Run the adjacency analysis
+adjacent(mat.fakescene, xscale = 200)
 
