@@ -49,7 +49,7 @@ scientific format
 ## NEW FEATURES
 
 * `getspec()` can now read OceanOptics `.ProcSpec` files
-* added the visual system of _Ctenophorous ornatus_, the (trichromatic) ornate dragon lizard
+* added the visual system of _Ctenophorus ornatus_, the (trichromatic) ornate dragon lizard
 
 ## MAJOR CHANGES
 
@@ -201,13 +201,13 @@ are also now compatible with coldist() for the estimation of Euclidean colour-di
 
 ## BUG FIXES
 
-* fixed bug in calculaiton of dichromat contrast in coldist()
+* fixed bug in calculation of dichromat contrast in coldist()
 
 # pavo 0.5-5
 
 ## MINOR FEATURES AND BUG FIXES
 
-* fixed bug in calculaiton of H3 in summary.rspec()
+* fixed bug in calculation of H3 in summary.rspec()
 
 # pavo 0.5-4
 
@@ -306,7 +306,7 @@ are also now compatible with coldist() for the estimation of Euclidean colour-di
 
 * explorespec() "free" argument fixed
 * summary.rspec() S5 variable fixed; segments now divided by B1 (brightness-independent measure of saturation)
-* summary.rspec() checks for positive values when bmaxneg is caluclated, returns NA
+* summary.rspec() checks for positive values when bmaxneg is calculated, returns NA
 * tcs() accepts "v" cone class
 * aggspec() fixed matching of names
 * procspec() works with rspec objects that include a single reflectance spectrum
