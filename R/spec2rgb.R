@@ -25,7 +25,8 @@
 
 spec2rgb <- function(rspecdata, alpha = 1) {
 
-  XYZ <- vismodel(rspecdata, visual = "cie10", vonkries = TRUE, relative = FALSE)
+  XYZ <- vismodel(rspecdata, visual = "cie10", illum = "D65",
+                  vonkries = TRUE, relative = FALSE)
 
   rgb1 <- convertColor(XYZ, from = "XYZ", to = "sRGB")
 
