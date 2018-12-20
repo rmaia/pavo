@@ -358,8 +358,19 @@ butterflies_class <- classify(butterflies, refID = 'h_melpomene', kcols = 3)
 #  butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 
 ## ------------------------------------------------------------------------
+
+# Load up our images
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+
+# Automatically classify discrete colour patches (as confirmed by spectral modelling)
+# using k-means clustering, with values of 'k' that have been validated a priori.
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+# Run the adjacency analysis, subsampling the image in a 200x200 grid, and excluding
+# the white background.
 butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
 
+# Take a look
 head(butterflies_adj)
 
 ## ---- message=FALSE------------------------------------------------------
@@ -383,7 +394,7 @@ hsl_vals <- data.frame(patch = 1:3,
 # Take a look
 hsl_vals
 
-# Now feed this information into the adjacency analysis using the less-colourful
+# Now feed this information into the adjacency analysis using the 'less-colourful'
 # of our two images, for convenience (though this could be readily extended to
 # include a list of images along with a list of distances and hsl values)
 adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)

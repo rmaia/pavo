@@ -731,7 +731,7 @@ head(JND.fms)
 
 # Analyzing Spatial Data
 
-`pavo` now allows for the combined analysis of spectral data (as above) and spatial data (as below). Note that 'spatial' data of course include images, but may also include spatially-sampled _spectra_, as explored in the examples below. Thus while much of the below deals with image-based processing and analysis, images are not necessary for many spatial analyses and indeed may perform worse than spectrally-based analyses in some cases. 
+`pavo` now allows for the combined analysis of spectral data and spatial data. Note that 'spatial' data of course include images, but may also draw on spatially-sampled _spectra_, as explored below. Thus while much of the below deals with image-based processing and analysis, images are not necessary for many spatial analyses and indeed may perform worse than spectrally-based analyses in some cases. Further, **image data should seldom be used without input from spectral measurements**. Even in the simple butterfly example below, users should first validate the presence and number of discrete colours in a patch via spectral measurement and visual modelling (i.e. the 'spectral' information), which is then augmented by image-based clustering of these _a priori_ identified patches to extract the 'spatial' information. Using uncalibrated images alone for inferences about colour pattern perception may well yield unreliable results, given the radical differences between human (camera) and non-human animal perception.
 
 ## Image-based colour classification
 
@@ -785,11 +785,22 @@ The adjacency (@Endler2012) and boundary strength (@Endler2018) analyses offer a
 
 ### Example 1 (simple): mounted butterflies 
 
-We'll begin with a simple example using mounted butterflies. We'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg()`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg()`, as above, and ignore this argument).
+We'll begin with a simple example using mounted butterflies, by first loading and classifying our images in the manner outlined above. For the adjacency analysis proper, we'll specify a full x-dimension scale of 200 mm using `xscale` (which could be ignored if we specify scales using `procimg()`), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use `procimg()`, as above, and ignore this argument).
 
 ```{r}
+
+# Load up our images
+butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+
+# Automatically classify discrete colour patches (as confirmed by spectral modelling)
+# using k-means clustering, with values of 'k' that have been validated a priori.
+butterflies_class <- classify(butterflies, kcols = c(4, 3))
+
+# Run the adjacency analysis, subsampling the image in a 200x200 grid, and excluding
+# the white background.
 butterflies_adj <- adjacent(butterflies_class, xscale = 200, xpts = 200, bkgID = 1)
 
+# Take a look
 head(butterflies_adj)
 ```
 
@@ -816,7 +827,7 @@ hsl_vals <- data.frame(patch = 1:3,
 # Take a look
 hsl_vals
 
-# Now feed this information into the adjacency analysis using the less-colourful
+# Now feed this information into the adjacency analysis using the 'less-colourful'
 # of our two images, for convenience (though this could be readily extended to
 # include a list of images along with a list of distances and hsl values)
 adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists = distances, hsl = hsl_vals)
@@ -889,6 +900,8 @@ head(mat.fakescene)
 # Run the adjacency analysis
 adjacent(mat.fakescene, xscale = 200)
 ```
+
+The output reflects several aspects of our simulated dataset, which is reassuring. There are four colour classes (`k`= 4) or equal proportion (`p_x`), 180 transitions in total (`N`, 9 transitions per row/column x 10 rows/columns), and the colour diversity (`Sc`) equals `k`, and relative colour diversity (`Jc`) equals 1, since all colours occur in equal proportions.
 
 # References
 
