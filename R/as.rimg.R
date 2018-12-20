@@ -65,8 +65,17 @@ as.rimg <- function(object, name = "img") {
     } else {
       object2 <- object
     }
+    
+    # Is it already colour-classified by the user?
+    # Tricky to distinguish between single-dimension (greyscale) RGB & a 
+    # colour-classified matrix. Best I've got atm.
+    is.whole <- function(x){is.numeric(x) && floor(x) == x}
+    if(inherits(object2[[1]], "matrix") && max(object2[[1]]) < 12 && is.whole(object2[[1]]))
+      colclass = TRUE
+    else
+      colclass = FALSE
 
-    if (!inherits(object, "matrix")) { # Not a matrix (which would be user-generated 'colclass')
+    if (!colclass) {
 
       # Array check
       if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
@@ -95,7 +104,7 @@ as.rimg <- function(object, name = "img") {
       # The list itself needs attributes
       class(object2) <- c("rimg", "list")
       attr(object2, "state") <- "raw"
-    } else if (inherits(object, "matrix")) { # It's a user-generated classified image
+    } else if (colclass) {
 
       # Attributes
       if (length(name) == 1) {
