@@ -63,12 +63,13 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   }
   arg$bty <- "n"
   arg$axes <- FALSE
+  arg$type <- "n"
 
   # Plot
   arg$x <- segdata$MS
   arg$y <- segdata$LM
 
-  do.call(plot, c(arg, type = "n"))
+  do.call(plot, arg)
   axis(1, at = tick.loc, pos = 0, cex.axis = 0.8) # todo - best way to handle user specs?
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 
