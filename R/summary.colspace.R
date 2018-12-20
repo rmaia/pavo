@@ -89,7 +89,7 @@ summary.colspace <- function(object, by = NULL, ...) {
       row.names(res.c) <- "all.points"
     }
 
-    if (any(is.na(res.c$c.vol))) {
+    if (anyNA(res.c$c.vol)) {
       warning("Not enough points to calculate volume", call. = FALSE)
     }
 
