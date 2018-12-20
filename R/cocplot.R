@@ -60,8 +60,9 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   arg$x <- cocdata$x
   arg$y <- cocdata$y
   arg$axes <- FALSE
+  arg$type <- "n"
 
-  do.call(plot, c(arg, type = "n"))
+  do.call(plot, arg)
   axis(1, at = tick.loc, pos = 0, cex.axis = 0.8) # todo - best way to handle user specs?
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 

@@ -82,7 +82,6 @@ summary.colspace <- function(object, by = NULL, ...) {
       }
 
       by <- factor(by)
-      print('yes')
       res.c <- data.frame(t(sapply(levels(by), function(z) tcssum(object[which(by == z), ]))))
       row.names(res.c) <- levels(by)
     } else {
@@ -90,7 +89,7 @@ summary.colspace <- function(object, by = NULL, ...) {
       row.names(res.c) <- "all.points"
     }
 
-    if (any(is.na(res.c$c.vol))) {
+    if (anyNA(res.c$c.vol)) {
       warning("Not enough points to calculate volume", call. = FALSE)
     }
 

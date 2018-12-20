@@ -100,27 +100,13 @@ explorespec <- function(rspecdata, by = NULL,
     yaxismult <- c(0.9, 1.8)
   }
 
-  if (nplots == 1) {
-    par(mfrow = c(1, 1))
+  if (nplots <= 16) {
+    par(mfrow = n2mfrow(nplots))
   }
-  if (nplots == 2) {
-    par(mfrow = c(1, 2), mar = c(5, 4, 4, 0.5) + 0.1)
-  }
-  if (nplots > 2 & nplots < 5) {
-    par(mfrow = c(2, 2), mar = c(5, 4, 0.5, 0.5) + 0.1)
-  }
-  if (nplots >= 5 & nplots < 7) {
-    par(mfrow = c(2, 3), mar = c(5, 4, 0.5, 0.5) + 0.1)
-  }
-  if (nplots >= 7 & nplots < 9) {
-    par(mfrow = c(2, 4), mar = c(5, 4, 0.5, 0.5) + 0.1)
-  }
-  if (nplots >= 9) {
-    par(mfrow = c(3, 4), mar = c(5, 4, 0.5, 0.5) + 0.1)
-  }
-  if (nplots > 12) {
+  else {
     par(ask = TRUE)
   }
+
 
   arg <- list(...)
 
