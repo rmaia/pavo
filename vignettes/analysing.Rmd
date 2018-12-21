@@ -870,9 +870,9 @@ fakescene <- cbind(
 fakescene <- as.rspec(data.frame(wl = 300:700, fakescene))
 ```
 
-Now instead of calling `cluster()` on the image and arbitrarily selecting `kcols` (which would likely be quite inaccurate due to the complexity of the scene), we can visually model the spectra, calculate the colour-distances between them, and cluster the results into a data-image that can be fed directly into `adjacent()`. Below we'll use model-based clustering, but there are numerous possible approaches that we might take here, which should be closely considered with reference to the original methods' publications.
+Now instead of calling `cluster()` on the image and arbitrarily selecting `kcols` (which would likely be quite inaccurate due to the complexity of the scene), we can visually model the spectra, calculate the colour-distances between them, and cluster the results into a data-image that can be fed directly into `adjacent()`. Below we'll use a centroid-based 'hartigan' clustering method via the package `NbClust`, but there are numerous possible approaches that might be used, which should be closely considered with reference to the original methods' publications.
 
-```{r, message=FALSE}
+```{r, fig=FALSE, message=FALSE}
 # Visually model our spectra in a tetrahedral model of the blue tit, specifying
 # relative = FALSE so that we can estimate noise-calibrated distances.
 vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale = 10000)
@@ -881,20 +881,27 @@ vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale
 # in noise-corrected colourspace.
 jnd.fakescene <- jnd2xyz(coldist(vis.fakescene))
 
-# Load up a library and use model-based clustering to estimate the number of discrete
+# Create a distance matrix, for clustering
+jnd.mat <- dist(jnd.fakescene, method = 'euclidean', diag = FALSE)
+
+# Zero all distance < 1 ('just noticeable distance', in this model), which corresponds
+# to a theoretical threshold of discrimination in the receptor-noise limited
+# model.
+jnd.mat[which(jnd.mat < 1)] <- 0
+
+# Load up a library and use k-means clustering to estimate the number of discrete
 # colours present in our sample.
-library(mclust)
-fit.fakescene <- Mclust(jnd.fakescene)
-summary(fit.fakescene)
-#plot(fit.fakescene)  # Requires user-input
+library(NbClust)
+clust <- NbClust(jnd.fakescene, diss = jnd.mat, distance = NULL, method = 'centroid', index = 'hartigan')
+clust$Best.nc
 ```
 
-This approach has clearly identified four distinct colour patches, as we simulated. To be able to feed this information directly in to `adjacent()` we need to arrange the now-classified spectral data into a xyz data-image matrix, in which `x` and `y` coordinates specify the location of the sample in our scene, and the z values at each location specify the colour-class, or group, into which each sample has been classified (an integer). Conveniently enough, that particular clustering method offers the data's classification as output, so we can simply rearrange it into our original 10 x 10 sampling matrix before passing it to `adjacent()`.
+This approach has identified four distinct colour patches, as simulated. To be able to feed this information directly in to `adjacent()` we need to arrange the now-classified spectral data into a xyz data-image matrix, in which `x` and `y` coordinates specify the location of the sample in our scene, and the z values at each location specify the colour-class, or group, into which each sample has been classified (an integer). Many clustering packages offers the data's classification as output in some form, so we can simply rearrange it into our original 10 x 10 sampling matrix before passing it to `adjacent()`.
 
 ```{r, message=FALSE}
 # Rearrange the data into a colour-classified image matrix, and take a look at it.
 # Note that is the same structure as the output of 'classify()'.
-mat.fakescene <- matrix(as.numeric(unlist(fit.fakescene['classification'])), 10, 10)
+mat.fakescene <- matrix(as.numeric(unlist(clust$Best.partition)), 10, 10)
 head(mat.fakescene)
 
 # Run the adjacency analysis

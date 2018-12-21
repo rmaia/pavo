@@ -428,7 +428,7 @@ fakescene <- cbind(
 # Convert them to rspce objects
 fakescene <- as.rspec(data.frame(wl = 300:700, fakescene))
 
-## ---- message=FALSE------------------------------------------------------
+## ---- fig=FALSE, message=FALSE-------------------------------------------
 # Visually model our spectra in a tetrahedral model of the blue tit, specifying
 # relative = FALSE so that we can estimate noise-calibrated distances.
 vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale = 10000)
@@ -437,17 +437,24 @@ vis.fakescene <- vismodel(fakescene, visual = 'bluetit', relative = FALSE, scale
 # in noise-corrected colourspace.
 jnd.fakescene <- jnd2xyz(coldist(vis.fakescene))
 
-# Load up a library and use model-based clustering to estimate the number of discrete
+# Create a distance matrix, for clustering
+jnd.mat <- dist(jnd.fakescene, method = 'euclidean', diag = FALSE)
+
+# Zero all distance < 1 ('just noticeable distance', in this model), which corresponds
+# to a theoretical threshold of discrimination in the receptor-noise limited
+# model.
+jnd.mat[which(jnd.mat < 1)] <- 0
+
+# Load up a library and use k-means clustering to estimate the number of discrete
 # colours present in our sample.
-library(mclust)
-fit.fakescene <- Mclust(jnd.fakescene)
-summary(fit.fakescene)
-#plot(fit.fakescene)  # Requires user-input
+library(NbClust)
+clust <- NbClust(jnd.fakescene, diss = jnd.mat, distance = NULL, method = 'centroid', index = 'hartigan')
+clust$Best.nc
 
 ## ---- message=FALSE------------------------------------------------------
 # Rearrange the data into a colour-classified image matrix, and take a look at it.
 # Note that is the same structure as the output of 'classify()'.
-mat.fakescene <- matrix(as.numeric(unlist(fit.fakescene['classification'])), 10, 10)
+mat.fakescene <- matrix(as.numeric(unlist(clust$Best.partition)), 10, 10)
 head(mat.fakescene)
 
 # Run the adjacency analysis
