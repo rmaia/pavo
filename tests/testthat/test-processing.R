@@ -113,6 +113,6 @@ test_that("Convert", {
   
   # RGB
   data(teal)
-  expect_equivalent(spec2rgb(teal)[1], "#1CB55EFF")
+  expect_equivalent(spec2rgb(teal)[1], "#24B461FF")
 })
 
