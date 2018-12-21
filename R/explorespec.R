@@ -19,6 +19,8 @@
 #' @note Number of plots presented per page depends on the number of graphs produced.
 #'
 #' @export
+#' 
+#' @importFrom grDevices n2mfrow
 #'
 #' @examples
 #' data(sicalis)
@@ -127,15 +129,10 @@ explorespec <- function(rspecdata, by = NULL,
     arg$ylim <- c(min(rspecdata), max(rspecdata)) * yaxismult
   }
 
-
-
-
   # TODO: should be able to deal with this if there are NAs in the by vector
   if (anyNA(by)) {
     warning("NA values in by vector. please check.")
   }
-
-
 
   # Do the plotting
   for (i in seq_len(nplots)) {
