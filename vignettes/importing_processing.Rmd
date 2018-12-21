@@ -7,7 +7,6 @@ output:
     toc: true
     toc_depth: 4
 bibliography: main.bib
-csl: open-biology.csl
 vignette: >
   %\VignetteIndexEntry{(2) Importing, Processing, and Visualising Data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -209,7 +208,7 @@ round(sppspec[1:5, ], 2)
 
 ## Normalizing and Smoothing Spectra
 
-Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The `pavo` function `procspec()` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth` function in `R`, wrapped in the `opt="smooth"` argument of `procspec()`.
+Data obtained from spectrometers often requires further processing before analysis and/or publication. For example, electrical noise can produce unwanted "spikes" in reflectance curves. The `pavo` function `procspec()` can handle a variety of processing techniques. For example, the reflectance curve from the parakeet is noisy in the short (300-400 nm) and long (650-700 nm) wavelength ranges (see Figure below, black line). To eliminate this noise, we will use local regression smoothing implemented by the `loess.smooth()` function in `R`, wrapped in the `opt="smooth"` argument of `procspec()`.
 
 But first, let's use the `plotsmooth()` function to determine a suitable smoothing parameter (`span`). This function allows you to set a minimum and maximum smoothing parameter to try and plots the resulting curves against the unsmoothed (raw) data in a convenient multipanel figure.
 

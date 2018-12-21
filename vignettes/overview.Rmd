@@ -7,7 +7,6 @@ output:
     toc: true
     toc_depth: 4
 bibliography: main.bib
-csl: open-biology.csl
 vignette: >
   %\VignetteIndexEntry{(1) Overview}
   %\VignetteEngine{knitr::rmarkdown}

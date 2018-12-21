@@ -7,7 +7,6 @@ output:
     toc: true
     toc_depth: 4
 bibliography: main.bib
-csl: open-biology.csl
 vignette: >
   %\VignetteIndexEntry{(3) Analysing Data}
   %\VignetteEngine{knitr::rmarkdown}
@@ -73,7 +72,7 @@ spec.sm <- procspec(sppspec, opt = "smooth", span = 0.2)
 
 `pavo` offers two main approaches for spectral data analysis. First, colour variables can be calculated based on the shape of the reflectance spectra. By using special `R` classes for spectra data frame objects, this can easily be done using the `summary` function with an `rspec` object (see below). The function `peakshape()` also returns descriptors for individual peaks in spectral curves, as outlined below.
 
-Second, reflectance spectra can be analysed by accounting for the visual system receiving the colour signal, therefore representing reflectance spectra as perceived colours. To that end, we have implemented a suite of visual models and colourspaces including; the receptor-noise limited model of model of @Vorobyev1998, @Endler1990's segment classification method, flexible di- tri- and tetra-chromatic colourspaces, the Hexagon model of @Chittka1992, the colour-opponent coding space of @Backhaus1991, CIELAB and CIEXYZ spaces, and the categorical model of @Troje1992.
+Second, reflectance spectra can be analysed by accounting for the visual system receiving the colour signal, therefore representing reflectance spectra as perceived colours. To that end, we have implemented a suite of visual models and colourspaces including; the receptor-noise limited model of model of @Vorobyev1998, @Endler1990's segment classification method, flexible di- tri- and tetra-chromatic colourspaces, the Hexagon model of @Chittka1992, the colour-opponent coding space of @Backhaus1991, CIELAB and CIEXYZ spaces, and the categorical model of @Troje1993.
 
 ## Spectral Shape Analysis
 
@@ -87,7 +86,7 @@ The description and formulas for these variables can be found by running `?summa
 summary(spec.sm)
 ```
 
-`summary` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics @Andersson2006. `summary` can also take a vector of colour variable names, which can be used to filter the results
+`summary` also takes an additional argument `subset` which if changed from the default `FALSE` to `TRUE` will return only the most commonly used colourimetrics [@Andersson2006]. `summary` can also take a vector of colour variable names, which can be used to filter the results
 
 ```{r, results='hide'}
 summary(spec.sm, subset = TRUE)
@@ -109,7 +108,7 @@ par(mfrow = c(2, 3))
 peakshape(spec.sm, plot = TRUE)
 ```
 
-As it can be seen, the variable FWHM is meaningless if the curve doesn't have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Above figure, last panel). In this case, it's useful to set wavelength limits when calculating the FWHM by using the `lim` argument. `peakshape` also offers a `select` argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:
+As it can be seen, the variable FWHM is meaningless if the curve doesn't have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. The half-width can also be erroneously calculated when there are two peaks, as can be seen in the case of the Tanager (Above figure, last panel). In this case, it's useful to set wavelength limits when calculating the FWHM by using the `lim` argument. `peakshape()` also offers a `select` argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm"}
 peakshape(spec.sm, select = 2, lim = c(300, 500), plot = TRUE)
@@ -161,7 +160,7 @@ knitr::kable(vistab, caption = "Built-in visual phenotypes available in pavo")
 
 ### Estimating Quantum Catch
 
-Numerous models have been developed to understand how colours are perceived and discriminated by an individual's or species' visual system (described in detail in @Endler1990; @Renoult2015; @Vorobyev1998). In essence, these models take into account the receptor sensitivity of the different receptors that make the visual system in question and quantify how a given colour would stimulate those receptors individually, and their combined effect on the perception of colour. These models also have an important component of assuming and interpreting the chromatic component of colour (hue and saturation) to be processed independently of the achromatic (brightness, or luminance) component. This provides a flexible framework allowing for a tiered model construction, in which information on aspects such as different illumination sources, backgrounds, and visual systems can be considered and compared.
+Numerous models have been developed to understand how colours are perceived and discriminated by an individual's or species' visual system (described in detail in @Endler1990; @Renoult2017; @Vorobyev1998). In essence, these models take into account the receptor sensitivity of the different receptors that make the visual system in question and quantify how a given colour would stimulate those receptors individually, and their combined effect on the perception of colour. These models also have an important component of assuming and interpreting the chromatic component of colour (hue and saturation) to be processed independently of the achromatic (brightness, or luminance) component. This provides a flexible framework allowing for a tiered model construction, in which information on aspects such as different illumination sources, backgrounds, and visual systems can be considered and compared.
 
 To apply any such model, we first need to quantify receptor excitation and then consider how the signal is being processed, while possibly considering the relative density of different cones and the noise-to-signal ratio.
 
@@ -179,8 +178,8 @@ To quantify the stimulation of cones by the emitted colour, we will use the `pav
   * `Ei`: the hyperbolic transform (a simplification of the Michaelis–Menton photoreceptor equation), where $$E_i = \frac{Q_i}{Q_i + 1}$$.
 - `bkg`: The background being considered. By default, it considers an idealized background (i.e. wavelength-independent influence of the background on colour). A vector of same length as the wavelength range being considered can also be used as the input.
 - `vonkries`: a logical argument which determines if the von Kries transformation (which normalizes receptor quantum catches to the background, thus accounting for receptor adaptation) is to be applied (defaults to `FALSE`). If `TRUE`, $Q_i$ is multiplied by a constant $k$, which describes the von Kries transformation: $$k_i = \frac{1}{\int_\lambda R_i(\lambda)S^b(\lambda)I(\lambda)d\lambda}$$ Where $S^b$ denotes the reflectance spectra of the background.
-- `scale`: This argument defines how the illuminant should be scaled. The scale of the illuminant is critical of receptor noise models in which the signal intensity influences the noise (see Receptor noise section, below). Illuminant curves should be in units of $\mu mol.s^{-1}.m^{-2}$ in order to yield physiologically meaningful results. (Some software return illuminant information values in $\mu Watt.cm^{-2}$, and must be converted to $\mu mol.s^{-1}.m^{-2}$. This can be done by using the `irrad2flux` and `flux2irrad` functions.) Therefore, if the user-specified illuminant curves are _not_ in these units (i.e. are measured proportional to a white standard, for example), the `scale` parameter can be used as a multiplier to yield curves that are at least a reasonable approximation of the illuminant value. Commonly used values are **500** for dim conditions and **10,000** for bright conditions.
-- `relative`: If `TRUE`, it will make the cone stimulations relative to their sum. This is appropriate for colourspace models such as the avian tetrahedral colourspace (@Goldsmith1990, @Stoddard2008; For the photon catch and neural noise model, it is important to set `relative = FALSE`).
+- `scale`: This argument defines how the illuminant should be scaled. The scale of the illuminant is critical of receptor noise models in which the signal intensity influences the noise (see Receptor noise section, below). Illuminant curves should be in units of $\mu mol.s^{-1}.m^{-2}$ in order to yield physiologically meaningful results. (Some software return illuminant information values in $\mu Watt.cm^{-2}$, and must be converted to $\mu mol.s^{-1}.m^{-2}$. This can be done by using the `irrad2flux()` and `flux2irrad()` functions.) Therefore, if the user-specified illuminant curves are _not_ in these units (i.e. are measured proportional to a white standard, for example), the `scale` parameter can be used as a multiplier to yield curves that are at least a reasonable approximation of the illuminant value. Commonly used values are **500** for dim conditions and **10,000** for bright conditions.
+- `relative`: If `TRUE`, it will make the cone stimulations relative to their sum. This is appropriate for colourspace models such as the avian tetrahedral colourspace [@Goldsmith1990, @Stoddard2008]. For the photon catch and neural noise model, it is important to set `relative = FALSE`.
 
 All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.
 
@@ -192,13 +191,13 @@ vismod1 <- vismodel(sppspec,
 vismod1
 ```
 
-Since there are multiple parameters that can be used to customize the output of `vismodel`, as detailed above, for convenience these can be returned by using `summary` in a `vismodel` object:
+Since there are multiple parameters that can be used to customize the output of `vismodel()`, as detailed above, for convenience these can be returned by using `summary` in a `vismodel` object:
 
 ```{r}
 summary(vismod1)
 ```
 
-We can visualize what vismodel is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:
+We can visualise what `vismodel()` is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:
 
 ```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=6, fig.height=5, fig.cap="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)."}
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
@@ -263,7 +262,7 @@ $$\Delta L = \frac{\Delta f}{w}$$
 
 #### Perceptual Distances with `coldist()`
 
-`pavo` implements the noise-weighted colour distance calculations in the function `coldist()`, assuming that raw receptor quantum catches are provided (via `relative = FALSE` in `vismodel()`). For the achromatic contrast, `coldist()` uses `n4` to calculate $w$ for the achromatic contrast. Note that even if $Q_i$ is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by `vismodel` as an input. In this case, the argument `qcatch` should be used to inform the function if $Q_i$ or $f_i$ values are being used (note that if the input to `coldist()` is an object generated using the `vismodel()` function, this argument is ignored.) The type of noise to be calculated can be selected from the `coldist()` argument `noise` (which accepts either `"neural"` or `"quantum"`).
+`pavo` implements the noise-weighted colour distance calculations in the function `coldist()`, assuming that raw receptor quantum catches are provided (via `relative = FALSE` in `vismodel()`). For the achromatic contrast, `coldist()` uses `n4` to calculate $w$ for the achromatic contrast. Note that even if $Q_i$ is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by `vismodel()` as an input. In this case, the argument `qcatch` should be used to inform the function if $Q_i$ or $f_i$ values are being used (note that if the input to `coldist()` is an object generated using the `vismodel()` function, this argument is ignored.) The type of noise to be calculated can be selected from the `coldist()` argument `noise` (which accepts either `"neural"` or `"quantum"`).
 
 ```{r}
 coldist(vismod1,
@@ -477,7 +476,7 @@ summary(tetra.flowers)
 
 #### The Colour Hexagon
 
-The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved @Briscoe2001. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.
+The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@Briscoe2001]. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.
 
 In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and `pavo` will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in `vismodel()`. including the optional use of a 'green' vegetation background. Note that although this is a colourspace model, we specific `relative = FALSE` to return raw (albeit transformed) quantum catches, as required for the model.
 
@@ -705,7 +704,7 @@ dist.flowers <- coldist(hex.flowers)
 head(dist.flowers)
 ```
 
-the chromatic contrasts `dS` and achromatic contrasts `dL` are expressed as Euclidean distances in the hexagon, known as 'hexagon units' @Chittka1992. If we had instead used the colour-opponent coding space the units would have been city-bloc distances, while in the CIELAB model the distances would be derived from the CIE colour-distance formula (2000).
+the chromatic contrasts `dS` and achromatic contrasts `dL` are expressed as Euclidean distances in the hexagon, known as 'hexagon units' [@Chittka1992]. If we had instead used the colour-opponent coding space the units would have been city-bloc distances, while in the CIELAB model the distances would be derived from the CIE colour-distance formula (2000).
 
 #### Distances in N-Dimensions
 
@@ -781,7 +780,7 @@ butterflies_class <- classify(butterflies, refID = 1, interactive = TRUE)
 
 ## Adjacency and Boundary Strength Analyses, and Overall Pattern Contrasts
 
-The adjacency (@Endler2012) and boundary strength (@Endler2018) analyses offer a powerful method for quantifying various features of colour pattern geometry. Briefly, the process entails classifying grid-sampled locations within a visual scene into a number of discrete colour classes. This may be achieved using `classify()` as described above before sampling the now-classified image, and/or by taking grid-sampled reflectance spectra across a visual scene, visually modelling and clustering the results (as per 'method 1' in @Endler2012, example below). The column-wise and row-wise colour-class transitions between adjacent points within this grid are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel()` and `coldist()`, then this can also be incorporated to derive several measures of the salience of patch boundaries (@Endler2018). Finally, if estimates of hue, saturation, and/or brightness are known for each discrete colour in a pattern, then these can be included through the `hsl` argument for general, area-weighted measures of overall pattern contrast (@Endler2005). In `pavo`, this is all carried out through the `adjacent()` function, which takes several arguments that should be well understood. 
+The adjacency [@Endler2012] and boundary strength [@Endler2018] analyses offer a powerful method for quantifying various features of colour pattern geometry. Briefly, the process entails classifying grid-sampled locations within a visual scene into a number of discrete colour classes. This may be achieved using `classify()` as described above before sampling the now-classified image, and/or by taking grid-sampled reflectance spectra across a visual scene, visually modelling and clustering the results (as per 'method 1' in @Endler2012, example below). The column-wise and row-wise colour-class transitions between adjacent points within this grid are then tallied, and from this a suite of summary statistics on pattern structure --- from simple colour proportions, through to colour diversity and pattern complexity --- are estimated. If the colour 'distance' between adjacent colour classes is known, such as might be estimated using spectral data for receptor-noise modelling via `vismodel()` and `coldist()`, then this can also be incorporated to derive several measures of the salience of patch boundaries [@Endler2018]. Finally, if estimates of hue, saturation, and/or brightness are known for each discrete colour in a pattern, then these can be included through the `hsl` argument for general, area-weighted measures of overall pattern contrast [@Endler2005]. In `pavo`, this is all carried out through the `adjacent()` function, which takes several arguments that should be well understood. 
 
 ### Example 1 (simple): mounted butterflies 
 
