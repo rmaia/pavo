@@ -25,12 +25,6 @@ test_that("Class assignment", {
   expect_is(col.hex, "colspace")
 })
 
-test_that("plot utilities", {
-  data(sicalis)
-  expect_error(spec2rgb(sicalis[300:nrow(sicalis), ]), "full visible range")
-  expect_error(spec2rgb(sicalis[, -1]), "No wavelengths supplied")
-})
-
 test_that("sensdata", {
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata('all', 'all'))))
 })

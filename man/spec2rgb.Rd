@@ -2,39 +2,34 @@
 % Please edit documentation in R/spec2rgb.R
 \name{spec2rgb}
 \alias{spec2rgb}
-\title{Spectrum to rgb color conversion}
+\title{Spectrum to rgb colour conversion}
 \usage{
 spec2rgb(rspecdata, alpha = 1)
 }
 \arguments{
-\item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec},
-with a column with wavelength data, named 'wl', and the remaining column containing
-spectra to process.}
+\item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
+that has wavelength range in the first column, named 'wl', and spectral measurements in the
+remaining columns.}
 
 \item{alpha}{alpha value to use for colors (defaults to 1, opaque).}
 }
 \value{
-A character vector of class \code{spec2rgb} consisting of hexadecimal color values
+A character vector consisting of hexadecimal colour values
 for passing to further plotting functions.
 }
 \description{
-Calculates rgb values from spectra based on human color matching functions.
+Calculates rgb values from spectra based on human colour matching functions.
 }
 \examples{
 data(teal)
 spec2rgb(teal)
 
-# Plot data using estimated perceived color
+# Plot data using estimated perceived colour
 plot(teal, col = spec2rgb(teal), type = 'o')
 
 }
 \references{
 CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
-
-Color matching functions obtained from Colour and Vision Research Laboratory
-online data repository at \url{http://www.cvrl.org/}.
-
-\url{http://www.cs.rit.edu/~ncs/color/t_spectr.html}.
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}
