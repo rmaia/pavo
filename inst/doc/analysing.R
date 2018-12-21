@@ -72,7 +72,7 @@ summary(vismod1)
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
 layout(rbind(c(2, 1, 4, 3, 6, 5), c(1, 1, 3, 3, 5, 5), c(8, 7, 10, 9, 12, 11), c(7, 7, 9, 9, 11, 11)))
 
-sppspecol <- as.character(spec2rgb(sppspec))
+sppspecol <- spec2rgb(sppspec)
 
 for (i in 1:6) {
   par(mar = c(2, 2, 2, 2))

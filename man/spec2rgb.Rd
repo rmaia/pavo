@@ -32,5 +32,7 @@ plot(teal, col = spec2rgb(teal), type = 'o')
 CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
 }
 \author{
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
+
 Chad Eliason \email{cme16@zips.uakron.edu}
 }

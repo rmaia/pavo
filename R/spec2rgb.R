@@ -17,6 +17,7 @@
 #' # Plot data using estimated perceived colour
 #' plot(teal, col = spec2rgb(teal), type = 'o')
 #'
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
 #' @references CIE(1932). Commission Internationale de l'Eclairage Proceedings, 1931. Cambridge: Cambridge University Press.
@@ -27,9 +28,13 @@ spec2rgb <- function(rspecdata, alpha = 1) {
 
   XYZ <- vismodel(rspecdata, visual = "cie10", illum = "D65",
                   vonkries = TRUE, relative = FALSE)
+  
+  Lab <- colspace(XYZ, space = 'cielab')
 
   rgb1 <- convertColor(XYZ, from = "XYZ", to = "sRGB")
+  rgb2 <- convertColor(Lab[4:6], from = "Lab", to = "sRGB")
 
+  #rgb(rgb2, alpha = alpha, names = rownames(Lab))
   rgb(rgb1, alpha = alpha, names = rownames(XYZ))
 
 }
