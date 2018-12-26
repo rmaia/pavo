@@ -344,13 +344,13 @@ coldist <- function(modeldata,
   lengthn <- as.character(length(n))
 
   if (noise == "quantum") {
-    if (!any(c("vismodel", "colspace") %in% class(modeldata))) {
+    if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
       stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
     }
   }
 
   # Pre-processing for colspace objects
-  if ("colspace" %in% class(modeldata)) {
+  if (is.colspace(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
     ncone <- as.character(attr(modeldata, "conenumb"))
 
@@ -386,7 +386,7 @@ coldist <- function(modeldata,
   }
 
   # Pre-processing for vismodel objects
-  if ("vismodel" %in% class(modeldata)) {
+  if (is.vismodel(modeldata)) {
 
     # Set achromatic=FALSE if visual model has achromatic='none'
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
@@ -497,7 +497,7 @@ coldist <- function(modeldata,
   if (is.null(attr(modeldata, "clrsp"))) usereceptornoisemodel <- TRUE
 
   # this covers colspace
-  if ("colspace" %in% class(modeldata)) {
+  if (is.colspace(modeldata)) {
     if (!attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "coc", "segment")) {
       usereceptornoisemodel <- TRUE
     }
@@ -605,7 +605,7 @@ coldist <- function(modeldata,
   # Other Visual Models #
   #######################
 
-  if (any(c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc") %in% attr(modeldata, "clrsp"))) {
+  if (isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))) {
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "hexagon" = ,
                           "categorical" = apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ])),

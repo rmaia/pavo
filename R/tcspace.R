@@ -43,7 +43,7 @@ tcspace <- function(vismodeldata) {
   dat <- vismodeldata
 
   # if object is vismodel:
-  if ("vismodel" %in% attr(dat, "class")) {
+  if (is.vismodel(dat)) {
 
     # check if tetrachromat
     if (attr(dat, "conenumb") < 4) {
@@ -65,8 +65,7 @@ tcspace <- function(vismodeldata) {
   }
 
   # if not, check if it has more (or less) than 4 columns
-
-  if (!("vismodel" %in% attr(dat, "class"))) {
+  else {
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
     }

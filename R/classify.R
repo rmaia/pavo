@@ -284,7 +284,7 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     }
 
     # Identify the name of the column containing file names
-    id_col <- names(kcols_i[lapply(kcols_i, class) != "numeric"])
+    id_col <- names(kcols_i[!vapply(kcols_i, is.numeric, logical(1))])
 
     # Remove file extensions if present
     kcols_i[[id_col]] <- file_path_sans_ext(kcols_i[[id_col]])
@@ -302,7 +302,7 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     kcols_i <- kcols_i[match(imageIDs[, 1], kcols_i[[id_col]]), ]
 
     # Extract kcols
-    kcols_i <- as.numeric(unlist(kcols_i[lapply(kcols_i, class) == "numeric"]))
+    kcols_i <- as.numeric(unlist(kcols_i[vapply(kcols_i, is.numeric, logical(1))]))
   }
   if (length(kcols_i) > 1) {
     # Must have k's for each image
