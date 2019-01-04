@@ -15,7 +15,7 @@
 #' coldist2mat(cd.flowers)[['dS']]
 #' coldist2mat(cd.flowers)[['dL']]
 #'
-#' @author Rafael Maia \email{rm72@zips.uakron.edu}
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
 #'

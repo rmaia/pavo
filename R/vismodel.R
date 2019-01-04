@@ -310,14 +310,14 @@ vismodel <- function(rspecdata,
 
     dfname <- deparse(substitute(df))
 
-    if ("rspec" %in% class(df)) {
+    if (is.rspec(df)) {
       dfwhichused <- names(df)[2]
       df <- df[, 2]
       warning(dfname, " is an rspec object; first spectrum (",
         dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
-    } else if ("data.frame" %in% class(df) | "matrix" %in% class(df)) {
+    } else if (is.data.frame(df) | is.matrix(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
       warning(dfname, " is a matrix or data frame; first column (",

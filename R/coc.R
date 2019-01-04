@@ -30,7 +30,7 @@ coc <- function(vismodeldata) {
   dat <- vismodeldata
 
   # if object is vismodel:
-  if ("vismodel" %in% attr(dat, "class")) {
+  if (is.vismodel(dat)) {
 
     # check if trichromat
     if (attr(dat, "conenumb") < 3) {
@@ -55,10 +55,10 @@ coc <- function(vismodeldata) {
   }
 
   # if not, check if it has more (or less) than 3 columns
-
-  if (!("vismodel" %in% attr(dat, "class"))) {
+  else {
     if (ncol(dat) < 3) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
+      stop("Input data is not a ", dQuote("vismodel"),
+           " object and has fewer than three columns", call. = FALSE)
     }
     if (ncol(dat) == 3) {
       warning("Input data is not a ", dQuote("vismodel"),

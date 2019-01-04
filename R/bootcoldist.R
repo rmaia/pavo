@@ -37,7 +37,7 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
                         cores = getOption("mc.cores", 2L), ...) {
-  if (!any(c("colspace", "vismodel") %in% class(vismodeldata))) {
+  if (!is.vismodel(vismodeldata) && !is.colspace(vismodeldata)) {
     stop('object must be a "vismodel" or "colspace" result', call. = FALSE)
   }
 
