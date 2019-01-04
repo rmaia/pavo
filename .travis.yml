@@ -17,7 +17,7 @@ addons:
     - libglu1-mesa-dev
     - pngquant
 before_script:
-  - Rscript -e 'remotes::install_cran(c("covr", "spelling"))'
+  - Rscript -e 'remotes::install_cran(c("covr", "spelling", "vdiffr"))'
 after_success:
   - Rscript -e 'goodpractice::gp(checks = c("lintr_assignment_linter", "truefalse_not_tf", "rcmdcheck_partial_argument_match"))'
   - Rscript -e 'covr::codecov()'

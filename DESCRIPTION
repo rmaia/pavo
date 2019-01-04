@@ -56,7 +56,7 @@ Suggests:
     NbClust,
     rgl,
     rmarkdown,
-    testthat,
+    testthat
 VignetteBuilder: 
     knitr
 Encoding: UTF-8

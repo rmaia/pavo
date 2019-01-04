@@ -31,3 +31,5 @@ CONDUCT.md
 ^inst/ciebg\.svg$
 ^inst/linear_visible_spectrum\.svg$
 ^Dockerfile$
+^tests/figs/
+^tests/testthat/test-plots.R$
