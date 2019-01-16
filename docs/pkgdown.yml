@@ -1,8 +1,10 @@
-pandoc: 1.19.2.1
-pkgdown: 1.1.0.9000
-pkgdown_sha: 0ae2388584778328225595bdd201546039e1fc33
+pandoc: '2.5'
+pkgdown: 1.3.0
+pkgdown_sha: ~
 articles:
-  pavo: pavo.html
+  analysing: analysing.html
+  importing_processing: importing_processing.html
+  overview: overview.html
   spectraldesc: spectraldesc.html
 urls:
   reference: http://rafaelmaia.net/pavo/reference

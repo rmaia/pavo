@@ -88,6 +88,12 @@
     <loc>http://rafaelmaia.net/pavo/reference/irrad2flux.html</loc>
   </url>
   <url>
+    <loc>http://rafaelmaia.net/pavo/reference/is.colspace.html</loc>
+  </url>
+  <url>
+    <loc>http://rafaelmaia.net/pavo/reference/is.vismodel.html</loc>
+  </url>
+  <url>
     <loc>http://rafaelmaia.net/pavo/reference/jnd2xyz.html</loc>
   </url>
   <url>
@@ -107,9 +113,6 @@
   </url>
   <url>
     <loc>http://rafaelmaia.net/pavo/reference/parse_procspec.html</loc>
-  </url>
-  <url>
-    <loc>http://rafaelmaia.net/pavo/reference/pavo-deprecated.html</loc>
   </url>
   <url>
     <loc>http://rafaelmaia.net/pavo/reference/pavo-package.html</loc>
@@ -211,7 +214,13 @@
     <loc>http://rafaelmaia.net/pavo/reference/voloverlap.html</loc>
   </url>
   <url>
-    <loc>http://rafaelmaia.net/pavo/articles/pavo.html</loc>
+    <loc>http://rafaelmaia.net/pavo/articles/analysing.html</loc>
+  </url>
+  <url>
+    <loc>http://rafaelmaia.net/pavo/articles/importing_processing.html</loc>
+  </url>
+  <url>
+    <loc>http://rafaelmaia.net/pavo/articles/overview.html</loc>
   </url>
   <url>
     <loc>http://rafaelmaia.net/pavo/articles/spectraldesc.html</loc>

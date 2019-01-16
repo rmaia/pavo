@@ -8,20 +8,18 @@
 
 <title>Convert JND distances into perceptually-corrected Cartesian coordinates — jnd2xyz • pavo</title>
 
-<link rel="shortcut icon" type="image/x-icon" href="../favicon.ico">
-
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.1/clipboard.min.js" integrity="sha256-hIvIxeqhGZF+VVeM55k0mJvWpQ6gTkWk3Emc+NmowYA=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
 <!-- sticky kit -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
@@ -33,7 +31,7 @@
 
 <!-- docsearch -->
 <script src="../docsearch.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous" />
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
@@ -47,7 +45,8 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
 
 
 <!-- mathjax -->
-<script src='https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" integrity="sha256-nvJJv9wWKEm88qvoQl9ekL2J+k/RWIsaSScxxlsrv8k=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/config/TeX-AMS-MML_HTMLorMML.js" integrity="sha256-84DKXVJXs0/F8OTMzX4UR909+jtl4G7SPypPavF+GfA=" crossorigin="anonymous"></script>
 
 <!--[if lt IE 9]>
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
@@ -71,7 +70,7 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.1.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.1.0</span>
       </span>
     </div>
 
@@ -84,9 +83,6 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
   </a>
 </li>
 <li>
-  <a href="../articles/pavo.html">Get started</a>
-</li>
-<li>
   <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
@@ -96,6 +92,15 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
     <span class="caret"></span>
   </a>
   <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/analysing.html">Analysing data</a>
+    </li>
+    <li>
+      <a href="../articles/importing_processing.html">Importing and Processing Data</a>
+    </li>
+    <li>
+      <a href="../articles/overview.html">overview</a>
+    </li>
     <li>
       <a href="../articles/spectraldesc.html">Spectral shape descriptors</a>
     </li>
@@ -144,8 +149,8 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     </div>
 
     <pre class="usage"><span class='fu'>jnd2xyz</span>(<span class='no'>coldistres</span>, <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rotcenter</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>), <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>,
-  <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</pre>
+  <span class='kw'>rotcenter</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>), <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>,
+  <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>), <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>))</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -206,12 +211,45 @@ Behavioral Ecology, ary017 doi: <a href='http://doi.org/10.1093/beheco/ary017'>1
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'>data</span>(<span class='no'>flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>flowers</span>)
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
-<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)
-<span class='fu'>jnd2xyz</span>(<span class='no'>cd.flowers</span>)
-<span class='co'># }</span><div class='input'>
+<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='input'><span class='fu'>jnd2xyz</span>(<span class='no'>cd.flowers</span>)</div><div class='output co'>#&gt;                                     x           y           z
+#&gt; Goodenia_heterophylla      1.53718118 -5.46159458   7.0514924
+#&gt; Goodenia_geniculata       -0.59310315 -2.65363603  -6.4010132
+#&gt; Goodenia_gracilis         -5.35249990 11.57575094 -22.9160486
+#&gt; Xyris_operculata           3.16707188 -1.34474081  -3.8107457
+#&gt; Eucalyptus_sp             -0.03134485 -3.32415657   3.2303526
+#&gt; Faradaya_splendida        -1.29639206  0.46232996  -2.7868330
+#&gt; Gaultheria_hispida         2.50443028 -4.15752823  -1.9683611
+#&gt; Geitonoplesium_cymosum     8.60482980 -7.04418816   8.3554048
+#&gt; Euryomyrtus_ramosissima   -2.05359168 -0.37250955   5.1435291
+#&gt; Genista_linifolia         -0.58649346 -1.81156877  -2.3301504
+#&gt; Genista_monspessulana     -0.14356310 -3.20065722  -2.8881030
+#&gt; Geranium_sp                7.78622533  6.78399481  11.3644393
+#&gt; Glycine_clandestina       -0.12166618 -2.82133147  -4.9021716
+#&gt; Gompholobium_ecostatum_1   2.32014969  0.01343586   5.9004073
+#&gt; Gompholobium_ecostatum_2  -0.35597946 -2.19758735  -6.2491817
+#&gt; Gompholobium_grandiflorum -3.21092428  4.62986466  -6.6125576
+#&gt; Gompholobium_huegelii      0.74658571 -1.85959598   6.5006043
+#&gt; Gompholobium_virgatum      1.64743911 -1.26454780   6.2822410
+#&gt; Gonocarpus_humilis         0.12111582 -3.92547632  -3.4985432
+#&gt; Gonocarpus_teucrioides    -0.10675135 -2.22322988   2.3336963
+#&gt; Hibbertia_obtusifolia     -0.52778583 -1.45422302  -1.8375439
+#&gt; Zieria_arborescens        -4.71335405  9.56162650   9.4440349
+#&gt; Goodenia_lanata           -4.52523519  7.81353151 -13.6100744
+#&gt; Goodenia_ovata            -3.57431799 10.83505159  10.3387120
+#&gt; Goodenia_rotundifolia      2.98213580 -6.44640439   6.1896101
+#&gt; Grevillea_buxifolia        2.59032352 -3.64441651   1.6394104
+#&gt; Grevillea_steiglitziana   -4.71094829  5.35795883  -0.6206625
+#&gt; Grevillea_oleoides        -0.10128482 -3.18245178  -4.3953309
+#&gt; Gymnostachys_anceps       -4.88100844 10.57079928  -9.2576390
+#&gt; Hakea_actites              1.28591187 -6.46308298   8.7478471
+#&gt; Hardenbergia_violaceae    -1.56087094  0.54787062  -3.1446578
+#&gt; Hibbertia_acicularis       0.05050284 -3.55267520   2.0046822
+#&gt; Hibbertia_bracteata        7.58267580 -2.46048123   1.5050828
+#&gt; Hibbertia_empetrifolia    -4.03056849  8.40782674   9.5245585
+#&gt; Hibbertia_procumbens       0.11607407 -3.47828825  -0.6629848
+#&gt; Hibbertia_linearis        -0.56496920 -2.21566927  -7.6635029</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
@@ -225,26 +263,23 @@ Behavioral Ecology, ary017 doi: <a href='http://doi.org/10.1093/beheco/ary017'>1
     </ul>
 
     <h2>Author</h2>
-    
-Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a>
-
+    <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
   </div>
 </div>
 
       <footer>
       <div class="copyright">
-  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, Chad Eliason, Pierre-Paul Bitton.</p>
+  <p>Developed by Rafael Maia, Thomas White, Hugo Gruson, John Endler, Chad Eliason, Pierre-Paul Bitton.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="http://pkgdown.r-lib.org/">pkgdown</a>.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
    </div>
 
   
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.js" integrity="sha256-GKvGqXDznoRYHCwKXGnuchvKSwmx9SRMrZOTh2g4Sb0=" crossorigin="anonymous"></script>
 <script>
   docsearch({
     
