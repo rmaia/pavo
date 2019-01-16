@@ -43,19 +43,18 @@ Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013.
   
 ## Install
 
-this is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
+This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
 
 If you want to install the bleeding edge version of `pavo`, you can:
 
-* use Hadley Wickham's [devtools](https://github.com/r-lib/devtools):
+* use the [`remotes`](https://github.com/r-lib/remotes) package:
 
 ```r     
-install.packages('devtools')
-devtools::install_github('rmaia/pavo')
-require(pavo)
+# install.packages('remotes')
+remotes::install_github('rmaia/pavo')
 ```
 
-* download files from github and install using `$R CMD INSTALL` or, from within R:
+* download files from GitHub and install using `$R CMD INSTALL` or, from within R:
 
 ```r
 install.packages(path, type='source', repos=NULL)
