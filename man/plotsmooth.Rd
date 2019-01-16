@@ -26,13 +26,13 @@ remaining columns.}
 Series of plot with curves processed with varying level of loess smoothing
 }
 \description{
-Plots curves with various levels of loess smoothing to help determine what
-loess parameters are best for the data.
+Plots spectral curves with various levels of loess smoothing to help decide which
+loess parameters are best for subsequently smoothing the data (e.g. via \code{procspec}).
 }
 \examples{
 \dontrun{
 data(sicalis)
-plotsmooth(sicalis,0.05,0.1,7,6)
+plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
 }
 
 }

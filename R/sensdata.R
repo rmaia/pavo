@@ -64,7 +64,7 @@
 #' @return An object of class \code{rspec} (when \code{plot = FALSE}), containing
 #' a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Plot the honeybee's receptors
 #' sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 #'
@@ -73,7 +73,6 @@
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c('cie2', 'cie10'))
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -103,7 +102,11 @@ sensdata <- function(
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
     if (isTRUE("all" %in% visual2)) {
-      visual2 <- c("avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus")
+      visual2 <- c(
+        "avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis",
+        "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus",
+        "ctenophorus"
+      )
     }
     sens <- as.data.frame(vissyst)
     S <- as.data.frame(subset(sens, select = grepl(paste(visual2, collapse = "|"), names(sens))))

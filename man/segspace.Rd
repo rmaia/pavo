@@ -26,11 +26,9 @@ of the four segments.
 Calculates segment classification measures as defined in Endler (1990).
 }
 \examples{
-\dontrun{
 data(sicalis)
 vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
 seg.sic <- colspace(vis.sic, space = 'segment')
-}
 
 }
 \references{

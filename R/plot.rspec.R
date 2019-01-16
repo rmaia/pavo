@@ -18,23 +18,30 @@
 #' @param varying a numeric vector giving values for y-axis in \code{heatplot}.
 #' @param n number of bins with which to interpolate colors and \code{varying} for the
 #' heatplot.
+#' @param labels.stack a vector of labels for the stacked spectra when using \code{type = stack}.
+#' Defaults to the numeric column ID's.
 #' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
 #'
 #' @export
 #'
 #' @examples \dontrun{
+#'
 #' data(teal)
 #' plot(teal, type = 'overlay')
 #' plot(teal, type = 'stack')
-#' plot(teal, type = 'heatmap')}
+#' plot(teal, type = 'heatmap')
+#'
+#' }
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @author Thomas White \email{thomas.white026@@gmail.com}
+#'
 #' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
 
 # TODO: add argument for padding region between x in stack plot
 
 plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap"),
-                       varying = NULL, n = 100, ...) {
+                       varying = NULL, n = 100, labels.stack = NULL, ...) {
   type <- match.arg(type)
 
   # make wavelength vector
@@ -44,7 +51,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     wl <- x[, wl_index]
   } else {
     haswl <- FALSE
-    wl <- 1:nrow(x)
+    wl <- seq_len(nrow(x))
     warning("No wavelengths provided; using arbitrary index values")
   }
 
@@ -53,10 +60,10 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     select <- which(select == "TRUE")
   }
   if (is.null(select) & haswl == TRUE) {
-    select <- (1:ncol(x))[-wl_index]
+    select <- (seq_len(ncol(x)))[-wl_index]
   }
   if (is.null(select) & haswl == FALSE) {
-    select <- 1:ncol(x)
+    select <- seq_len(ncol(x))
   }
 
   x <- as.data.frame(x[select]) # CE: removed comma before select
@@ -80,7 +87,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       arg$ylab <- "Index"
     }
     if (is.null(varying)) {
-      varying <- 1:ncol(x)
+      varying <- seq_len(ncol(x))
       print("No varying vector supplied; using arbitrary values")
     }
     if (is.null(arg$ylim)) {
@@ -103,12 +110,14 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
 
     Index <- approx(varying, n = n)$y
-    dat <- sapply(1:nrow(x), function(z) {
+
+    dat <- vapply(seq_len(nrow(x)), function(z) {
       approx(
-        x = varying, y = x[z, ],
+        x = varying,
+        y = x[z, ],
         n = n
       )$y
-    })
+    }, numeric(length(Index)))
 
     arg$x <- wl
     arg$y <- Index
@@ -120,7 +129,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # coloring for overlay plot & others
   if (length(arg$col) < ncol(x)) {
     arg$col <- rep(arg$col, ncol(x))
-    arg$col <- arg$col[1:ncol(x)]
+    arg$col <- arg$col[seq_len(ncol(x))]
   }
 
   if (any(names(arg$col) %in% names(x))) {
@@ -130,7 +139,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # line types for overlay plot & others
   if (length(arg$lty) < ncol(x)) {
     arg$lty <- rep(arg$lty, ncol(x))
-    arg$lty <- arg$lty[1:ncol(x)]
+    arg$lty <- arg$lty[seq_len(ncol(x))]
   }
 
   if (any(names(arg$lty) %in% names(x))) {
@@ -167,14 +176,14 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
   }
 
-  # stack curves along y-axis
+  # Stack curves along y-axis
   if (type == "stack") {
     arg$type <- "l"
     if (is.null(arg$ylab)) {
       arg$ylab <- "Cumulative reflectance (arb. units)"
     }
 
-    x2 <- as.data.frame(x[, c(ncol(x):1)])
+    x2 <- as.data.frame(x[, c(rev(seq_len(ncol(x))))])
     if (length(select) == 1) {
       y <- max(x2)
     } else {
@@ -202,7 +211,11 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
     yend <- tail(x2, 1)
     yloc <- ymins + yend
-    axis(side = 4, at = yloc, labels = rev(select), las = 1)
-    #  abline(h=ymins, lty=3)
+
+    if (is.null(labels.stack)) {
+      labels.stack <- rev(select)
+    }
+
+    axis(side = 4, at = yloc, labels = labels.stack, las = 1)
   }
 }

@@ -4,16 +4,17 @@
 #' boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 #' contrast (Endler & Mielke 2005).
 #'
-#' @param classimg (required) an xyz image matrix, or list of matrices, in which
-#' x and y correspond to pixel coordinates, and z is a numeric code specifying
-#' a colour-class. Preferably the result of \code{\link{classify}}.
-#' @param xpts (required) an integer specifying the number of sample points along the x axis,
-#' from which the evenly-spaced sampling grid is constructed. Defaults to 100, though
-#' this should be carefully considered.
+#' @param classimg (required) an xyz matrix, or list of matrices, in which
+#' x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code 
+#' specifying a colour-class. Preferably the result of \code{\link{classify}}, or constructed
+#' from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).
+#' @param xpts an integer specifying the number of sample points along the x axis,
+#' from which the evenly-spaced sampling grid is constructed (if required). Defaults 
+#' to the smallest dimension of \code{classimg}, though this should be carefully considered.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' \code{\link{procimg}}.
-#' @param exclude the portion of the image to be excluded from the analysis, if any.
+#' @param exclude the portion of the scene to be excluded from the analysis, if any.
 #' \itemize{
 #' \item \code{'none'}: default
 #' \item \code{'background'}: exclude everything \emph{outside} the closed polygon specified
@@ -27,14 +28,14 @@
 #' pertaining to the background alone, for relatively homogeneous and uniquely-identified
 #' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
-#' values corresponding to colour-class ID numbers. Ignored if the focal object
-#' and background has been identified using \code{\link{procimg}}.
+#' values corresponding to colour-class ID numbers for classified images. Ignored 
+#' if the focal object and background has been identified using \code{\link{procimg}}.
 #' @param polygon a data.frame of x-y coordinates delineating a closed polygon that
 #' separates the focal object from the background. Not required, and ignored, if the
 #' focal object outline is specified using \code{\link{procimg}}.
-#' @param coldists A data.frame specifying the visually-modelled chromatic (dS)
+#' @param coldists a data.frame specifying the visually-modelled chromatic (dS)
 #' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should be named 'c1' and 'c2', and specify all possible combinations of numeric 
+#' should be named 'c1' and 'c2', and specify all possible combinations of numeric
 #' colour-class ID's (viewable by calling \code{summary(image, plot = TRUE)} on
 #' a colour classified image), with the remaining columns named dS (for chromatic distances)
 #' and/or dL (for achromatic distances). See \code{\link{vismodel}} and \code{\link{colspace}}
@@ -64,29 +65,29 @@
 #'   \item \code{'m_c'}: The column-wise transition density (mean column transitions),
 #'     in user-specified units.
 #'   \item \code{'A'}: The transition aspect ratio (< 1 = wide, > 1 = tall).
-#'   \item \code{'Sc'}: Simpson colour class diversity, \code{Sc = 1/(sum(p_i^2))}. If 
-#'   all colour and luminance classes are equal in relative area, then \code{Sc = k}.  
+#'   \item \code{'Sc'}: Simpson colour class diversity, \code{Sc = 1/(sum(p_i^2))}. If
+#'   all colour and luminance classes are equal in relative area, then \code{Sc = k}.
 #'   \item \code{'St'}: Simpson transition diversity, \code{St = 1/sum(t_i_j^2)}.
 #'   \item \code{'Jc'}: Simpson colour class diversity relative to its achievable maximum.
 #'   \code{Jc = Sc/k}.
 #'   \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
 #'   \code{Jt = St/(k*(k-1)/2)}.
-#'   \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change 
-#'   transitions entirely within the focal object and those involving the object and background, 
+#'   \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change
+#'   transitions entirely within the focal object and those involving the object and background,
 #'   \code{B = sum(O_a_a / O_a_b)}.
 #'   \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
 #'   \code{Rt = St_a_a / St_a_b}.
 #'   \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
 #'   \code{Rt = St_a_a / St_b_b}.
-#'   \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of 
+#'   \item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of
 #'   variation of the chromatic boundary strength.
-#'   \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of 
+#'   \item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of
 #'   variation of the achromatic boundary strength.
-#'   \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of 
+#'   \item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of
 #'   overall pattern hue (in radians).
-#'   \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient 
+#'   \item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient
 #'   variation of overall pattern saturation.
-#'   \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient 
+#'   \item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient
 #'   variation of overall pattern luminance.
 #'   }
 #'
@@ -102,7 +103,7 @@
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio_class <- classify(papilio, kcols = 4)
-#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100)
+#' papilio_adj <- adjacent(papilio_class, xscale = 100)
 #'
 #' # Single image, with (fake) color distances and hsl values
 #' # Fake color distances
@@ -112,13 +113,13 @@
 #'                         dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6))
 #'
 #' # Fake hue, saturation, luminance values
-#' hsl_vals <- data.frame(patch = 1:4,
+#' hsl_vals <- data.frame(patch = seq_len(4),
 #'                        hue = c(1.5, 2.2, 1.0, 0.5),
 #'                        lum = c(10, 5, 7, 3),
 #'                        sat = c(3.5, 1.1, 6.3, 1.3))
 #'
 #' # Full analysis, including the white background's ID
-#' papilio_adj <- adjacent(papilio_class, xpts = 150, xscale = 100, bkgID = 1,
+#' papilio_adj <- adjacent(papilio_class, xscale = 100, bkgID = 1,
 #'                         coldists = distances, hsl = hsl_vals)
 #'
 #' # Multiple images
@@ -137,7 +138,7 @@
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
+adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
   exclude2 <- match.arg(exclude)
@@ -146,6 +147,17 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
 
   ## Single or multiple images?
   multi_image <- inherits(classimg, "list")
+  
+  # Prepare if it's user-generated, and not the result of classify() 
+  # if(!inherits(rimg, "list")){
+  # 
+  # }
+
+  ## If it's a single image, store it in a list for processing convenience,
+  ## before converting it back at the end
+  if (!multi_image) {
+    classimg <- list(classimg)
+  }
 
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
@@ -153,106 +165,60 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   }
 
   ## Class/structure
-  if (!multi_image) {
-    if (!"rimg" %in% class(classimg)) {
-      message("Image is not of class 'rimg'; attempting to coerce.")
-      classimg <- as.rimg(classimg)
-    }
-  } else {
-    if (any(unlist(lapply(1:length(classimg), function(x) !"rimg" %in% class(classimg[[x]]))))) {
-      message("One or more images are not of class 'rimg'; attempting to coerce.")
-      classimg <- lapply(1:length(classimg), function(x) as.rimg(classimg[[x]]))
-    }
+  if (!all(unlist(lapply(classimg, is.rimg)))) {
+    message("One or more image matrices are not of class 'rimg'; attempting to coerce.")
+    classimg <- lapply(seq_along(classimg), function(x) as.rimg(classimg[[x]]))
   }
 
   ## Colour-classified
-  if (!multi_image) {
-    if (attr(classimg, "state") != "colclass") {
-      stop("Image has not yet been colour-classified. See classify().")
-    }
-  } else {
-    if (any(unlist(lapply(classimg, function(x) attr(x, "state"))) != "colclass")) {
-      stop("One or more images has not yet been colour-classified. See classify().")
-    }
+  if (any(unlist(lapply(classimg, function(x) attr(x, "state"))) != "colclass")) {
+    stop("One or more images has not yet been colour-classified. See classify().")
   }
 
   ## Coldists formatting
   if (!is.null(coldists)) {
-    # Single images
-    if (!multi_image) {
-      if (!all(c("c1", "c2") %in% names(coldists))) {
-        message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
-        names(coldists)[1:2] <- c("c1", "c2")
-      }
-      if (!any(c("dS", "dL") %in% names(coldists))) {
-        stop("No columns named 'dS' or 'dL' in coldists.")
-      }
-      # Multi images
-    } else {
-      if (!is.list(coldists)) {
-        message("Reusing single set of coldists for multiple images.")
-        coldists <- rep(coldists, length(classimg))
-      }
-      if (!all(c("c1", "c2") %in% names(unlist(coldists)))) {
-        message("Cannot find columns named 'c1', 'c2' in list of coldists. Assuming first two columns contain colour-category IDs.")
-        coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
-      }
-      if (any(unlist(coldists, function(x) !any(c("dS", "dL") %in% names(x))))) {
-        stop("No columns named 'dS' or 'dL' in coldists.")
-      }
+    if (!inherits(coldists, "list")) {
+      message("Using single set of coldists for all images.")
+      coldists <- rep(list(coldists), length(classimg))
+    }
+    if (!all(unlist(lapply(coldists, function(x) c("c1", "c2") %in% names(x))))) {
+      message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
+      coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
+    }
+    if (any(unlist(lapply(coldists, function(x) !any(c("dS", "dL") %in% names(x)))))) {
+      stop("One or more set of coldists without columns labelled either 'dS' or 'dL'.")
     }
   }
 
   ## HSL formatting
   if (!is.null(hsl)) {
-    # Single images
-    if (!multi_image) {
-      if (!"patch" %in% names(hsl)) {
-        message("Cannot find columns named 'patch' in hsl Assuming first columns contain colour-category IDs.")
-        names(hsl)[1] <- "patch"
-      }
-      if (!any(c("hue", "sat", "lum") %in% names(hsl))) {
-        stop("No columns named 'hue', 'sat' or 'lum' in hsl.")
-      }
-      # Multi images
-    } else {
-      if (!is.list(hsl)) {
-        message("Reusing single set of hsl values for multiple images.")
-        hsl <- rep(hsl, length(classimg))
-      }
-      if (!all("patch" %in% names(unlist(hsl)))) {
-        message("Cannot find column named 'patch' in list of hsl values. Assuming first column contains colour-category IDs.")
-        hsl <- lapply(1:length(hsl), function(x) names(hsl[[x]])[1] <- "patch")
-      }
-      if (any(unlist(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x))))) {
-        stop("No columns named 'hue', 'sat', or 'lum' in hsl")
-      }
+    if (!inherits(hsl, "list")) {
+      message("Using single set of hsl values for all images.")
+      hsl <- rep(list(hsl), length(classimg))
+    }
+    if (!all(unlist(lapply(hsl, function(x) "patch" %in% names(x))))) {
+      message("Cannot find column named 'patch' one or more set of hsl values. Assuming first column contains colour-category ID's")
+      hsl <- lapply(hsl, function(x) names(x)[1] <- "patch")
+    }
+    if (any(unlist(lapply(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x)))))) {
+      stop("One or more sets of hsl values without columns labelled either 'hue', 'sat', or 'lum'.")
     }
   }
 
   ## Outline formatting
   if (!is.null(polygon)) {
-    # Single images
-    if (!multi_image) {
-      if (!all(c("x", "y") %in% names(polygon))) {
-        message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
-        polygon <- data.frame(x = polygon[, 1], y = polygon[, 2])
-      }
-      if (is.na(attr(classimg, "outline"))) {
-        attr(classimg, "outline") <- polygon
-      }
-      # Multi images
-    } else {
-      if (length(polygon) != length(classimg)) {
-        stop("The list of polygons must be equal in number to the list of images.")
-      }
-      if (!all(c("x", "y") %in% names(unlist(polygon)))) {
-        message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
-        polygon <- lapply(polygon, function(x) data.frame(x = x[, 1], y = x[, 2]))
-      }
-      if (all(unlist(lapply(classimg, function(x) is.na(attr(x, "outline")))))) {
-        classimg <- lapply(1:length(classimg), function(x) attr(classimg[[x]], "outline") <- polygon[[x]])
-      }
+    if (length(polygon) != length(classimg)) {
+      stop("One polygon per image is required.")
+    }
+    if (!all(c("x", "y") %in% names(unlist(polygon)))) {
+      message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
+      polygon <- lapply(polygon, function(x) data.frame(x = x[, 1], y = x[, 2]))
+    }
+    if (all(unlist(lapply(classimg, function(x) is.na(attr(x, "outline")))))) {
+      classimg <- lapply(
+        seq_along(classimg),
+        function(x) attr(classimg[[x]], "outline") <- polygon[[x]]
+      )
     }
   }
 
@@ -269,48 +235,34 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
   }
 
   ## Setting scales
-  # Single image
-  if (!multi_image) {
-    if (!is.na(attr(classimg, "px_scale"))) {
-      xscale <- attr(classimg, "px_scale") * dim(classimg)[2]
-    } else if (is.null(attr(classimg, "px_scale")) && is.null(xscale)) {
-      stop("Required argument xscale is missing, and image data are uncalibrated. Either specify xscale or use procimg() to set a scale.")
-    }
-    # Multi images
-  } else {
-    if (!is.na(attr(classimg[[1]], "px_scale"))) {
-      xscale <- lapply(classimg, function(x) attr(x, "px_scale") * dim(x)[2])
-    } else if (is.null(xscale)) {
-      stop("Required argument xscale is missing, and one or more images are uncalibrated. Either specify xscale or use procimg() to set a scale for each image.")
-    } else if (length(xscale) <= 1) {
-      xscale <- as.list(rep(xscale, length(classimg)))
-    } else if (length(xscale) == length(classimg)) {
-      xscale <- xscale
-    }
+  if (!is.na(attr(classimg[[1]], "px_scale"))) {
+    xscale <- lapply(classimg, function(x) attr(x, "px_scale") * dim(x)[2])
+  } else if (is.null(xscale)) {
+    stop("Required argument xscale is missing, and one or more images are uncalibrated. Either specify xscale or use procimg() to set a scale for each image.")
+  } else if (length(xscale) <= 1) {
+    xscale <- as.list(rep(xscale, length(classimg)))
+  } else if (length(xscale) == length(classimg)) {
+    xscale <- xscale
   }
 
   ## Sampling density
-  if (multi_image) {
-    if (any(xpts > unlist(lapply(classimg, function(x) dim(x)[1:2])))) {
-      message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
-      xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
-    }
-    xpts <- as.list(rep(xpts, length(classimg)))
-  } else {
-    if (any(xpts > dim(classimg)[1:2])) {
-      message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest image dimension.")
-      xpts <- min(dim(classimg)[1:2])
-    }
+  if (any(xpts > unlist(lapply(classimg, function(x) dim(x)[1:2])))) {
+    message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
+    xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
   }
+  # Set to smallest dimension by default
+  if(is.null(xpts))
+    xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
+  
+  xpts <- as.list(rep(xpts, length(classimg)))
 
   ## ------------------------------ Main ------------------------------ ##
 
-  if (multi_image) { # Multiple images
+  imgsize <- format(object.size(classimg), units = "Mb")
 
-    imgsize <- format(object.size(classimg), units = "Mb")
-
-    ifelse(imgsize < 100,
-      outdata <- pbmclapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+  ifelse(imgsize < 100,
+    outdata <- pbmcapply::pbmclapply(seq_along(classimg),
+      function(x) adjacent_main(classimg[[x]],
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
@@ -319,40 +271,39 @@ adjacent <- function(classimg, xpts = 100, xscale = NULL, bkgID = NULL,
           hsl_i = hsl[[x]]
         ),
       mc.cores = cores
-      ),
-      outdata <- lapply(1:length(classimg), function(x) adjacent_main(classimg[[x]],
+    ),
+    outdata <- lapply(
+      seq_along(classimg),
+      function(x) adjacent_main(classimg[[x]],
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
           exclude2_i = exclude2,
           coldists_i = coldists[[x]],
           hsl_i = hsl[[x]]
-        ))
+        )
     )
+  )
 
-    # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
-    allNms <- unique(unlist(lapply(outdata, names)))
-    outdata <- do.call(rbind, c(lapply(outdata, function(x)
-      data.frame(c(x, sapply(setdiff(allNms, names(x)), function(y) NA)))), make.row.names = FALSE))
+  # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
+  allNms <- unique(unlist(lapply(outdata, names)))
+  outdata <- do.call(rbind, c(lapply(outdata, function(x)
+    data.frame(c(x, vapply(
+      setdiff(allNms, names(x)),
+      function(y) NA, logical(1)
+    )))), make.row.names = FALSE))
 
-    # Reshuffle column order
-    namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
-    outdata <- outdata[, c((1:ncol(outdata))[-namemove], namemove)]
+  # Reshuffle column order
+  namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
+  outdata <- outdata[, c((seq_len(ncol(outdata)))[-namemove], namemove)]
 
-    for (i in 1:nrow(outdata)) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
-  } else { # Single image
+  for (i in seq_len(nrow(outdata))) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
 
-    outdata <- adjacent_main(
-      classimg_i = classimg,
-      xpts_i = xpts,
-      xscale_i = xscale,
-      bkgID_i = bkgID,
-      exclude2_i = exclude2,
-      coldists_i = coldists,
-      hsl_i = hsl
-    )
-    rownames(outdata) <- attr(classimg, "imgname")
+  # Single image
+  if (length(outdata) == 1) {
+    outdata <- outdata[[1]]
   }
+
   outdata
 }
 
@@ -380,7 +331,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     # Complex backgrounds
     if (bkgoutline) {
       # NA everything *outside* the outlined polyogn
-      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "outside", replacement_value = 999)
+      classimg_i <- polymask(classimg_i,
+        attr(classimg_i, "outline"),
+        "outside",
+        replacement_value = 999
+      )
     } else {
       # bkgID-based version
       classimg_i[classimg_i %in% bkgID_i] <- 999
@@ -390,7 +345,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     # Complex backgrounds only
     if (bkgoutline) {
       # NA everything *inside* the outlined polyogn
-      classimg_i <- polymask(classimg_i, attr(classimg_i, "outline"), "inside", replacement_value = 999)
+      classimg_i <- polymask(classimg_i,
+        attr(classimg_i, "outline"),
+        "inside",
+        replacement_value = 999
+      )
     }
   }
 
@@ -401,7 +360,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   ]
 
   # Summary info
-  pt_scale <- xscale_i / xpts_i # distance between grid sample points in user-specified units
+  pt_scale <- xscale_i / xpts_i # distance between grid points in user-specified units
   n_x <- ncol(subclass) # n columns
   n_y <- nrow(subclass) # n rows
   n_class <- sum(unique(c(as.matrix((subclass)))) != 999) # n color classes
@@ -545,14 +504,17 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
       # Summary bkg metrics. Only meaningful if class-chage transitions exist
       # Check if class-change transitions actually exist
-      if (nrow(subset(animtrans[["all"]], c1 != c2)) > 0 && nrow(subset(bkgtrans[["all"]], c1 != c2)) > 0) {
+      if (nrow(subset(animtrans[["all"]], c1 != c2)) > 0 &&
+        nrow(subset(bkgtrans[["all"]], c1 != c2)) > 0) {
         # Animal/background transition ratio
         B <- sum(subset(animtrans[["all"]], c1 != c2)["N"]) /
           sum(subset(transitions[["all"]], c1 != c2)["N"])
 
         # Animal/background transition diversity ratios Rt & Rab
-        St_aa <- 1 / sum((subset(animtrans[["all"]], c1 != c2)["N"] / sum(subset(animtrans[["all"]], c1 != c2)["N"]))^2)
-        St_bb <- 1 / sum((subset(bkgtrans[["all"]], c1 != c2)["N"] / sum(subset(bkgtrans[["all"]], c1 != c2)["N"]))^2)
+        St_aa <- 1 / sum((subset(animtrans[["all"]], c1 != c2)["N"] /
+          sum(subset(animtrans[["all"]], c1 != c2)["N"]))^2)
+        St_bb <- 1 / sum((subset(bkgtrans[["all"]], c1 != c2)["N"] /
+          sum(subset(bkgtrans[["all"]], c1 != c2)["N"]))^2)
         Rt <- St_aa / St
         Rab <- St_aa / St_bb
       } else {
@@ -653,8 +615,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
 # Internal function for masking color-classified image data that fall inside/outside a polygon
 #' @importFrom sp point.in.polygon
-polymask <- function(imagedat, polygon, alter_which = c("outside", "inside"), replacement_value = NA) {
-  imglong <- data.frame(expand.grid(1:ncol(imagedat), 1:nrow(imagedat)), z = c(imagedat))
+polymask <- function(imagedat,
+                     polygon,
+                     alter_which = c("outside", "inside"),
+                     replacement_value = NA) {
+  imglong <- data.frame(expand.grid(seq_len(ncol(imagedat)), seq_len(nrow(imagedat))), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
   inpoly <- point.in.polygon(imglong$x, imglong$y, polygon$x, polygon$y, mode.checked = FALSE) # todo: replace with base
@@ -677,7 +642,13 @@ transitioncalc <- function(classimgdat, colornames) {
   transout <- list()
 
   # All row transitions
-  rt_temp <- lapply(1:nrow(classimgdat), function(x) table(paste0(head(as.numeric(classimgdat[x, ]), -1), ".", tail(as.numeric(classimgdat[x, ]), -1))))
+  rt_temp <- lapply(
+    seq_len(nrow(classimgdat)),
+    function(x) table(paste0(
+        head(as.numeric(classimgdat[x, ]), -1),
+        ".", tail(as.numeric(classimgdat[x, ]), -1)
+      ))
+  )
   rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
   rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
@@ -689,7 +660,13 @@ transitioncalc <- function(classimgdat, colornames) {
 
   # All column transitions
   classimgdat_trans <- as.data.frame(t(classimgdat))
-  ct_temp <- lapply(1:nrow(classimgdat_trans), function(x) table(paste0(head(as.numeric(classimgdat_trans[x, ]), -1), ".", tail(as.numeric(classimgdat_trans[x, ]), -1))))
+  ct_temp <- lapply(
+    seq_len(nrow(classimgdat_trans)),
+    function(x) table(paste0(
+        head(as.numeric(classimgdat_trans[x, ]), -1),
+        ".", tail(as.numeric(classimgdat_trans[x, ]), -1)
+      ))
+  )
   ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
   ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names

@@ -1,7 +1,12 @@
+^Meta$
+^doc$
+^CODE_OF_CONDUCT\.md$
+^\.github$
 revdep/
 webvignette/
 examplespec/
 ms_data/
+data_external/
 manuscript/
 R_temp/
 references/
@@ -18,3 +23,6 @@ todo.txt
 LICENSE.md
 ^.*\.pdf$
 .editorconfig
+.covrignore
+CONTRIBUTING.md
+CONDUCT.md

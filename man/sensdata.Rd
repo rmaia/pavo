@@ -85,7 +85,6 @@ a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 
 Retrieve (as an rspec object) or plot pavo's in-built spectral data.
 }
 \examples{
-\dontrun{
 # Plot the honeybee's receptors
 sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
 
@@ -94,7 +93,6 @@ sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance', plot = TRUE)
 
 # Retrieve the CIE colour matching functions as an rspec object
 ciedat <- sensdata(visual = c('cie2', 'cie10'))
-}
 
 }
 \author{

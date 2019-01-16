@@ -42,13 +42,12 @@
 #'
 #' @keywords internal
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' propxyz <- jnd2xyz(cd.flowers)
 #' plot(propxyz)
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
@@ -496,7 +495,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     P <- do.call(perspbox, plotarg)
 
 
-    # add arrows
+    # Add arrows and labels
     if (arrow != "none") {
       astart <- trans3d(
         rep(arrowstart[, colstouse[1]], 4),
@@ -510,7 +509,6 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         arrowpos[, colstouse[3]], P
       )
 
-
       arrowarg <- arg
       arrowarg <- arrowarg[names(as.list(args(arrows)))]
       arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
@@ -521,11 +519,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
       arrowarg$y1 <- aend$y
       arrowarg$col <- arrow.col
 
-
       do.call(arrows, arrowarg)
-    }
 
-    if (arrow != "none") {
       if (arrow.labels) {
         if (achro) {
           lbl <- c("S", "M", "L", "lum")
@@ -535,22 +530,12 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
         lpos <- trans3d(labelpos[, 1], labelpos[, 2], labelpos[, 3], P)
 
-        text(lbl[1],
-          x = lpos$x[1], y = lpos$y[1], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[2],
-          x = lpos$x[2], y = lpos$y[2], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[3],
-          x = lpos$x[3], y = lpos$y[3], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
-        text(lbl[4],
-          x = lpos$x[4], y = lpos$y[4], xpd = TRUE,
-          cex = labels.cex, col = arrow.col
-        )
+        for (i in seq_len(4)) {
+          text(lbl[i],
+            x = lpos$x[i], y = lpos$y[i], xpd = TRUE,
+            cex = labels.cex, col = arrow.col
+          )
+        }
       }
     }
 

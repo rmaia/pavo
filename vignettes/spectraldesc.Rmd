@@ -1,13 +1,13 @@
 ---
 title: "Spectral shape descriptors"
-author: "Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason"
+author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output: 
   rmarkdown::html_vignette:
 bibliography: refs.bib
 csl: open-biology.csl
 vignette: >
-  %\VignetteIndexEntry{spectral shape descriptors}
+  %\VignetteIndexEntry{Spectral Shape Descriptors}
   %\VignetteEngine{knitr::rmarkdown}
   \usepackage[utf8]{inputenc}
 ---

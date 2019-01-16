@@ -20,7 +20,6 @@ Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to t
 Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object.
 }
 \examples{
-\dontrun{
 
 # Load and split dataset into 2 sections
 data(teal)
@@ -31,8 +30,6 @@ head(teal.mer)
 par(mfrow = c(1, 2))
 plot(teal.mer)
 plot(teal)
-
-}
 
 }
 \seealso{

@@ -80,8 +80,8 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 tcsplot(tcs.sicalis, size = 0.005)
-rgl.postscript('testplot.pdf',fmt='pdf')
-rgl.snapshot('testplot.png')
+rgl::rgl.postscript('testplot.pdf',fmt='pdf')
+rgl::rgl.snapshot('testplot.png')
 
 # For adding points
 patch <- rep(c('C', 'T', 'B'), 7)

@@ -26,19 +26,16 @@
 #' the base of the tetrahedron.
 #' @param labels logical. Should the name of each cone be printed next to the
 #' corresponding vertex?
-#' @param view,scale.y,axis,grid deprecated arguments.
 #'
 #' @return \code{tetraplot} creates a 3D plot.
 #'
-#' @examples \dontrun{
+#' @examples
 #'
 #' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' plot(tcs.sicalis)
-#'
-#' }
 #'
 #' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
 #' \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
@@ -65,25 +62,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       range = c(1, 2), r = 1e6, zoom = 1,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-                      margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid, vertexsize, labels = FALSE, ...) {
-
-  # check deprecated arguments view, scale.y, axis, grid
-  if (!missing(view)) {
-    stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(scale.y)) {
-    stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(axis)) {
-    stop('argument "axis" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(grid)) {
-    stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-  if (!missing(vertexsize)) {
-    stop('argument "vertexsize" is deprecated, please use "vert.cex" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-  }
-
+                      margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...) {
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
   }
@@ -114,7 +93,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   )
 
   # combinations of vertices to make facets
-  sides <- verts[combn(1:4, 2), ]
+  sides <- verts[combn(seq_len(4), 2), ]
   rownames(sides) <- paste0(
     rep(
       do.call(paste0, data.frame(t(combn(c("u", "s", "m", "l"), 2)))),
@@ -123,13 +102,13 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     c(".1", ".2")
   )
 
-  plims <- any(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))
+  plims <- any(vapply(list(arg$xlim, arg$ylim, arg$zlim), is.null, logical(1)))
 
   # if no limits are given, estimate based on tetrahedron or tcsdataa limits
   if (plims) {
 
     # first check if all xyzlim are null
-    if (!all(sapply(list(arg$xlim, arg$ylim, arg$zlim), is.null))) {
+    if (!all(vapply(list(arg$xlim, arg$ylim, arg$zlim), is.null, logical(1)))) {
       stop('"xlim", "ylim" and "zlim" must either all be NULL or all be vectors of length 2', call. = FALSE)
     }
 
@@ -270,7 +249,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     )
 
     # get 3 most in back
-    inback <- names(sort(combdist, )[1:3])
+    inback <- names(sort(combdist, )[seq_len(3)])
 
     linback <- grepl(paste0(inback, collapse = "|"), rownames(segs))
 

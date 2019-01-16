@@ -15,11 +15,10 @@
 #' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
 #' @return \code{r.vec}: the r vector (saturation, distance from the center).
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 #' tri.flowers <- colspace(vis.flowers, space = 'tri')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -40,7 +39,7 @@ trispace <- function(vismodeldata) {
   dat <- vismodeldata
 
   # if object is vismodel:
-  if ("vismodel" %in% attr(dat, "class")) {
+  if (is.vismodel(dat)) {
 
     # check if trichromat
     if (attr(dat, "conenumb") < 3) {
@@ -53,8 +52,8 @@ trispace <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      dat <- dat[, 1:3]
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat[, seq_len(3)]
+      dat <- dat / rowSums(dat)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
@@ -63,24 +62,32 @@ trispace <- function(vismodeldata) {
 
   # if not, check if it has more (or less) than 3 columns
 
-  if (!("vismodel" %in% attr(dat, "class"))) {
+  else {
     if (ncol(dat) < 3) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
     }
     if (ncol(dat) == 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as standardized quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as standardized quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 3) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than three columns; treating the first three columns as standardized quantum catch for ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than three columns; treating the first three columns as standardized quantum catch for ",
+        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
+        call. = FALSE
+      )
     }
 
-    dat <- dat[, 1:3]
+    dat <- dat[, seq_len(3)]
     names(dat) <- c("s", "m", "l")
 
     # Check that all rows sum to 1 (taking into account R floating point issue)
     if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat / rowSums(dat)
       warning("Quantum catch are not relative, and have been transformed.", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
     }

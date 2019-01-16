@@ -11,7 +11,7 @@
 #'
 #' @export as.rimg is.rimg
 #'
-#' @examples \dontrun{
+#' @examples
 #'
 #' # Generate some fake image data
 #' fake <- array(c(
@@ -30,12 +30,11 @@
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
 #'
-#' }
-#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 as.rimg <- function(object, name = "img") {
-  if (!inherits(object, "rimg")) {
+  if (!inherits(object, "rimg")) { # Not already 'rimg'
+
     attrgiver <- function(x, name2 = name) {
       # Attributes
       class(x) <- c("rimg", "array")
@@ -53,66 +52,86 @@ as.rimg <- function(object, name = "img") {
     rescaler <- function(x) {
       if (any(x > 1)) {
         message("Rescaling values to [0,1]")
-        for (i in 1:dim(x)[3]) {
+        for (i in seq_len(dim(x)[3])) {
           x[, , i] <- x[, , i] / 255
         }
       }
       x
     }
 
-    if (is.list(object)) {
+    # Control flow for multi-images
+    if (!inherits(object, "list")) {
+      object2 <- list(object)
+    } else {
+      object2 <- object
+    }
+    
+    # Is it already colour-classified by the user?
+    # Tricky to distinguish between single-dimension (greyscale) RGB & a 
+    # colour-classified matrix. Best I've got atm.
+    is.whole <- function(x){is.numeric(x) && floor(x) == x}
+    if(inherits(object2[[1]], "matrix") && max(object2[[1]]) < 30 && is.whole(object2[[1]]))
+      colclass = TRUE
+    else
+      colclass = FALSE
+
+    if (!colclass) {
 
       # Array check
-      if (any(unlist(lapply(1:length(object), function(x) !is.array(object[[x]]))))) {
+      if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
         stop("Images must be an array.")
       }
 
       # Duplicate channels if grayscale
-      for (i in 1:length(object)) {
-        if (is.na(dim(object[[i]])[3])) {
-          object[[i]] <- replicate(3, object[[i]], simplify = "array")
+      for (i in seq_along(object2)) {
+        if (is.na(dim(object2[[i]])[3])) {
+          object2[[i]] <- replicate(3, object2[[i]], simplify = "array")
         }
       }
 
       # 3D maximum
-      object <- lapply(1:length(object), function(j) object[[j]][, , 1:3])
+      object2 <- lapply(seq_along(object2), function(j) object2[[j]][, , 1:3])
 
       # Rescale RGB to [0,1] if need be
-      object <- lapply(1:length(object), function(j) rescaler(object[[j]]))
+      object2 <- lapply(seq_along(object2), function(j) rescaler(object2[[j]]))
 
       # Attributes
       if (length(name) == 1) {
-        name <- rep(name, length(object))
+        name <- rep(name, length(object2))
       }
-      object <- lapply(1:length(object), function(j) attrgiver(object[[j]], name[[j]]))
+      object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]]))
 
       # The list itself needs attributes
-      class(object) <- c("rimg", "list")
-      attr(object, "state") <- "raw"
-    } else {
-
-      # Array check
-      if (!is.array(object)) {
-        stop("Images must be an array.")
-      }
-
-      # Duplicate channels if grayscale
-      if (is.na(dim(object)[3])) {
-        object <- replicate(3, object, simplify = "array")
-      }
-
-      # 3D maximum
-      object <- object[, , 1:3]
-
-      # Rescale RGB to [0,1] if need be
-      object <- rescaler(object)
+      class(object2) <- c("rimg", "list")
+      attr(object2, "state") <- "raw"
+    } else if (colclass) {
 
       # Attributes
-      object <- attrgiver(object)
+      if (length(name) == 1) {
+        name <- rep(name, length(object2))
+      }
+      object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]]))  # names
+      for (i in seq_along(object2)) attr(object2[[i]], 'state') <- 'colclass'  # classification state
+      for (i in seq_along(object2)) attr(object2[[i]], 'k') <- length(table(object2[[i]]))  # kcols
+      for (i in seq_along(object2)) attr(object2[[i]], 'class') <- c('rimg', 'matrix')  # class
+      for (i in seq_along(object2)) attr(object2[[i]], 'colnames') <- data.frame(name = 1:length(table(object2[[i]])))  # colour-category names (in progress)
+      for (i in seq_along(object2)) attr(object2[[i]], 'classRGB') <- data.frame(R = rep(NA, length(table(object2[[i]]))),
+                                                                                 G = rep(NA, length(table(object2[[i]]))),
+                                                                                 B = rep(NA, length(table(object2[[i]]))))  
+      # The list itself needs attributes
+      class(object2) <- c("rimg", "list")
+      attr(object2, "state") <- "colclass"
     }
+    # Output
+    if (!inherits(object, "list")) {
+      object2[[1]]
+    } else {
+      object2
+    }
+  # Just output the original, if already 'rimg'
+  } else {
+    object
   }
-
-  object
 }
 
 #' @rdname as.rimg
@@ -161,7 +180,8 @@ rimg2cimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
     stop("Package \"imager\" needed for conversion to cimg. Please install it.",
-          call. = FALSE)
+      call. = FALSE
+    )
   }
   image <- suppressWarnings(imager::as.cimg(image, cc = 3))
   image

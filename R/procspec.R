@@ -39,7 +39,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(teal)
 #' plot(teal, select = 10)
 #'
@@ -48,9 +48,8 @@
 #' plot(teal.sm, select = 10)
 #'
 #' # Normalize to max of unity
-#' teal.max <- procspec(teal, opt = c('max'), span = 0.25)
+#' teal.max <- procspec(teal, opt = c('max'))
 #' plot(teal.max, select = 10)
-#' }
 #'
 #' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
 #'
@@ -92,19 +91,19 @@ procspec <- function(rspecdata, opt = c(
   } else {
     warning("No wavelengths supplied; using arbitrary values")
     rspecdata <- as.data.frame(rspecdata)
-    wl <- 1:nrow(rspecdata)
+    wl <- seq_len(nrow(rspecdata))
   }
 
   nam <- names(rspecdata)
 
   if (any(opt == "smooth")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) {
+    rspecdata <- vapply(seq_len(ncol(rspecdata)), function(z) {
       loess.smooth(
         x = wl,
         y = as.data.frame(rspecdata[, z]), span = span, degree = 2,
         family = "gaussian", evaluation = length(wl)
       )$y
-    })
+    }, numeric(nrow(rspecdata)))
     applied <- c(applied, paste("smoothing spectra with a span of", span, "\n"))
   }
 
@@ -116,7 +115,10 @@ procspec <- function(rspecdata, opt = c(
         x
       }
     }
-    tempspc <- data.frame(sapply(1:ncol(rspecdata), function(z) adm(rspecdata[, z])))
+    tempspc <- data.frame(vapply(seq_len(ncol(rspecdata)),
+      function(z) adm(rspecdata[, z]),
+      FUN.VALUE = numeric(nrow(rspecdata))
+    ))
     names(tempspc) <- names(rspecdata)
     rspecdata <- round(tempspc, 6)
     applied <- c(applied, "Negative value correction: added min to all reflectance\n")
@@ -128,22 +130,30 @@ procspec <- function(rspecdata, opt = c(
   }
 
   if (any(opt == "minimum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - min(rspecdata[, z]))
+    rspecdata <- vapply(
+      seq_len(ncol(rspecdata)),
+      function(z) rspecdata[, z] - min(rspecdata[, z]),
+      numeric(nrow(rspecdata))
+    )
     applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
   }
 
   if (any(opt == "maximum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / max(rspecdata[, z]))
+    rspecdata <- vapply(
+      seq_len(ncol(rspecdata)),
+      function(z) rspecdata[, z] / max(rspecdata[, z]),
+      numeric(nrow(rspecdata))
+    )
     applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
   }
 
   if (any(opt == "sum")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] / sum(rspecdata[, z]))
+    rspecdata <- t(t(rspecdata) / colSums(rspecdata))
     applied <- c(applied, "Scaling spectra to a total area of 1\n")
   }
 
   if (any(opt == "center")) {
-    rspecdata <- sapply(1:ncol(rspecdata), function(z) rspecdata[, z] - mean(rspecdata[, z]))
+    rspecdata <- t(t(rspecdata) - colMeans(rspecdata))
     applied <- c(applied, "Centering spectra to a mean of zero\n")
   }
 
@@ -154,9 +164,10 @@ procspec <- function(rspecdata, opt = c(
     wl_bin <- seq(min(wl), by = bw, length.out = bins)
     wl_ind <- match(wl_bin, wl)
     rspecdata <- as.data.frame(rspecdata)
-    rspecdata <- sapply(1:length(wl_ind), function(z)
-      apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = FALSE], 2, median, na.rm = TRUE),
-    simplify = FALSE
+    rspecdata <- vapply(
+      seq_along(wl_ind), function(z)
+        apply(rspecdata[wl_ind[z]:(wl_ind[z] + bw), , drop = FALSE], 2, median, na.rm = TRUE),
+      numeric(ncol(rspecdata))
     )
 
     rspecdata <- data.frame(matrix(unlist(rspecdata), nrow = bins, byrow = TRUE))

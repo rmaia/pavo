@@ -1,7 +1,7 @@
-citHeader("To cite package pavo (>2.0) in publications use:")
+citHeader("To cite package pavo in publications use:")
 
 citEntry(entry="Article",
-    title = "pavo 2.0: new tools for the spectral and spatial analysis of colour in R",
+    title = "pavo 2: new tools for the spectral and spatial analysis of colour in R",
     author = personList(as.person("Rafael Maia"),
     as.person("Hugo Gruson"),
     as.person("John A. Endler"),
@@ -9,4 +9,4 @@ citEntry(entry="Article",
     ),
 	journal = "bioRxiv",
   year = "2018",
-  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2018. pavo 2.0: new tools for the spectral and spatial analysis of colour in R. bioRxiv.")
+  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2018. pavo 2: new tools for the spectral and spatial analysis of colour in R. bioRxiv.")

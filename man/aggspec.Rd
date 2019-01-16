@@ -31,7 +31,6 @@ Combines spectra (by taking the average, for example) according to
 an index or a vector of identities.
 }
 \examples{
-\dontrun{
 data(teal)
 
 # Average every two spectra
@@ -43,7 +42,6 @@ ind <- rep(c('a', 'b'), times = 6)
 teal.sset2 <- aggspec(teal, by = ind)
 
 plot(teal.sset2)
-}
 
 }
 \references{

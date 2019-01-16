@@ -36,12 +36,10 @@ Ignored if \code{ref2} is NULL (in 3-dimensional case only)}
 Rotates the Cartesian coordinates obtained from \code{jnd2xyz}
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers)
 cd.flowers <- coldist(vis.flowers)
 jndrot(jnd2xyz(cd.flowers))
-}
 
 }
 \author{

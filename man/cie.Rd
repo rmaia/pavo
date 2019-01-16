@@ -11,7 +11,7 @@ cie(vismodeldata, space = c("XYZ", "LAB", "LCh"))
 from \code{\link{vismodel}} or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).}
 
-\item{space}{(required) Choice between XYZ (1931), LAB (1971), or LCH colour models.}
+\item{space}{(required) Choice between XYZ (1931), LAB (1971), or LCh colour models.}
 }
 \value{
 Object of class \code{colspace} containing:
@@ -30,16 +30,14 @@ Object of class \code{colspace} containing:
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
-in either the CIEXYZ (1931), CIELAB (1971), or CIELCH (1971) colourspaces.
+in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 flowers.cielch <- colspace(vis.flowers, space = 'cielch')
-}
 
 }
 \references{

@@ -14,7 +14,8 @@ projpoints <- function(tcsdata, ...) {
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   points.theta <- tcsdata[, "h.theta"]
@@ -46,11 +47,11 @@ projpoints <- function(tcsdata, ...) {
 
   mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
 
-  mp.v.theta <- mp$x[1:9]
-  mp.v.phi <- mp$y[1:9]
+  mp.v.theta <- mp$x[seq_len(9)]
+  mp.v.phi <- mp$y[seq_len(9)]
 
-  mp.p.theta <- mp$x[-c(1:9)]
-  mp.p.phi <- mp$y[-c(1:9)]
+  mp.p.theta <- mp$x[-c(seq_len(9))]
+  mp.p.phi <- mp$y[-c(seq_len(9))]
 
   points(mp.p.phi ~ mp.p.theta, ...)
 

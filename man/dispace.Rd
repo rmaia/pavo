@@ -26,11 +26,9 @@ Calculates coordinates and colorimetric variables that represent reflectance spe
 in a dichromatic colour space.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
 di.flowers <- colspace(vis.flowers, space = 'di')
-}
 
 }
 \references{

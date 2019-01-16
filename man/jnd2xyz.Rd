@@ -43,12 +43,10 @@ Converts a \code{coldist} output into Cartesian coordinates that are
 perceptually-corrected (i.e. Euclidean distances = JND distances)
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers)
 cd.flowers <- coldist(vis.flowers)
 jnd2xyz(cd.flowers)
-}
 
 }
 \references{

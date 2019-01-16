@@ -7,12 +7,11 @@
 #' center ("achro") or the data centroid ("mean", the default)?
 #' @inheritParams jnd2xyz
 
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' jndrot(jnd2xyz(cd.flowers))
-#' }
 #'
 #' @author Rafael Maia \email{rm72@zips.uakron.edu}
 #'
@@ -34,7 +33,8 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
     )
   }
 
-  if (!is.null(ref2) && all(c("x", "y", "z") %in% colnames(jnd2xyzres)) && !paste0("jnd2xyzrrf.", ref2) %in% rownames(attr(jnd2xyzres, "resref"))) {
+  if (!is.null(ref2) && all(c("x", "y", "z") %in% colnames(jnd2xyzres)) &&
+    !paste0("jnd2xyzrrf.", ref2) %in% rownames(attr(jnd2xyzres, "resref"))) {
     stop('"ref2" does not match the name of a photoreceptor; must be one of: ',
       paste0(gsub("jnd2xyzrrf.", "", rownames(attr(jnd2xyzres, "resref")))
       [-c(1, length(rownames(attr(jnd2xyzres, "resref"))))], collapse = ", ")

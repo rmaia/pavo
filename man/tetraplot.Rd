@@ -9,8 +9,7 @@ tetraplot(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   achro.col = "grey", achro.size = 1, achro.line = FALSE,
   achro.lwd = 1, achro.lty = 3, tetrahedron = TRUE, vert.cex = 1,
   vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-  margin = c(0, 0, 0, 0), type = "p", view, scale.y, axis, grid,
-  vertexsize, labels = FALSE, ...)
+  margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
@@ -50,8 +49,6 @@ See \code{\link{persp}} for details.}
 \item{type}{accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
 the base of the tetrahedron.}
 
-\item{view, scale.y, axis, grid}{deprecated arguments.}
-
 \item{labels}{logical. Should the name of each cone be printed next to the
 corresponding vertex?}
 }
@@ -62,15 +59,12 @@ corresponding vertex?}
 Produces a static 3D tetrahedral plot.
 }
 \examples{
-\dontrun{
 
 # For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 plot(tcs.sicalis)
-
-}
 
 }
 \references{

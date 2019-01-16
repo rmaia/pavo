@@ -22,7 +22,7 @@
 #'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(teal)
 #'
 #' # Average every two spectra
@@ -34,7 +34,6 @@
 #' teal.sset2 <- aggspec(teal, by = ind)
 #'
 #' plot(teal.sset2)
-#' }
 #'
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
@@ -52,6 +51,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     y <- rspecdata[, -wl_index, drop = FALSE]
   } else {
     y <- rspecdata
+    wl <- 300:700
   }
 
   if (is.null(by)) {
@@ -79,10 +79,10 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
-    wl_id <- sapply(1:length(by), function(x) which(by[[x]] == "wl")) # extract wl columns
+    wl_id <- vapply(seq_along(by), function(x) which(by[[x]] == "wl"), numeric(1)) # extract wl columns
     # remove 'wl' column from each vector in list
-    if (any(sapply(wl_id, length) != 0)) {
-      id <- which(sapply(wl_id, length) != 0)
+    if (any(vapply(wl_id, length, numeric(1)) != 0)) {
+      id <- which(vapply(wl_id, length, numeric(1)) != 0)
       by[id] <- lapply(by[id], "[", -unlist(wl_id)[id])
     }
     # check that wl column is the same for all vectors
@@ -101,7 +101,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # i.e. if by=3, average every 3 consecutive data of "data"
   if (length(by) == 1) {
     by0 <- names(y)[seq(1, length(names(y)), by = by)]
-    by <- rep(1:(length(y) / by), each = by)
+    by <- rep(seq_len(length(y) / by), each = by)
   }
   # END RM EDIT 1
 
@@ -109,7 +109,10 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # check: does data have the same number of columns as the by vector?
 
   if (dim(y)[2] != length(by)) {
-    stop(paste("\n", dQuote(deparse(substitute(by))), "is not of same length as columns in", dQuote(deparse(substitute(data)))))
+    stop(dQuote(deparse(substitute(by))),
+      " is not of same length as columns in ",
+      dQuote(deparse(substitute(data)))
+    )
   }
 
   # END RM EDIT 3

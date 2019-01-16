@@ -29,11 +29,9 @@ Calculates coordinates and colorimetric variables that represent reflectance spe
 in a trichromatic chromaticity space.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
 tri.flowers <- colspace(vis.flowers, space = 'tri')
-}
 
 }
 \references{

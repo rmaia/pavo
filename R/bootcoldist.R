@@ -7,7 +7,7 @@
 #'  Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
 #'  independently calculated quantum catches, in the form of a data frame with
 #'  columns representing photoreceptors.
-#' @param by (required) a vector containing indicating the group to which each row from
+#' @param by (required) a numeric or character vector indicating the group to which each row from
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
@@ -24,7 +24,7 @@
 #'  data(sicalis)
 #'  vm <- vismodel(sicalis, achro='bt.dc')
 #'  gr <- gsub("ind..", "", rownames(vm))
-#'  bootcoldist(vm, gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
+#'  bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
 #'  }
 #'
 #' @export
@@ -37,7 +37,7 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
                         cores = getOption("mc.cores", 2L), ...) {
-  if (!any(c("colspace", "vismodel") %in% class(vismodeldata))) {
+  if (!is.vismodel(vismodeldata) && !is.colspace(vismodeldata)) {
     stop('object must be a "vismodel" or "colspace" result', call. = FALSE)
   }
 
@@ -104,8 +104,6 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     arg0$weber.ref <- "longest"
   }
 
-
-
   sortinggroups <- order(by)
   vismodeldata <- vismodeldata[sortinggroups, ]
   by <- by[sortinggroups]
@@ -141,12 +139,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   names(bygroup) <- unique(by)
 
   # create vectors of indices to sample
-  its <- lapply(samplesizes, function(x) sample(1:x, x * boot.n, replace = TRUE))
+  its <- lapply(samplesizes, function(x) sample(seq_len(x), x * boot.n, replace = TRUE))
 
   # use the indices from its to sample from the data
   # returns a list with length = number of by
   # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
-  bootsamples <- lapply(1:length(bygroup), function(x) bygroup[[x]][its[[x]], ])
+  bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
 
 
   # next, split by bootstrap replicate
@@ -154,12 +152,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   #
   # list with length = number of by
   # and values = index for the bootstrap replicate that sample belongs to
-  bootindex <- lapply(samplesizes, function(x) as.character(rep(1:boot.n, each = x)))
+  bootindex <- lapply(samplesizes, function(x) as.character(rep(seq_len(boot.n), each = x)))
 
   # use the index to break samples into bootstrap replicates
   # returns a list with length = number of by
   # each entry is itself a list with length = number of replicates
-  bootbygroup <- lapply(1:length(bygroup), function(x) {
+  bootbygroup <- lapply(seq_along(bygroup), function(x) {
     lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]] == z, ])
   })
 
@@ -172,7 +170,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   # now "split and merge"
   # creating a list with length = number of bootstrap replicates
   # and rows in each entry = mean per group in that replicate
-  bootgrouped <- lapply(1:boot.n, function(x)
+  bootgrouped <- lapply(seq_len(boot.n), function(x)
     do.call(rbind, lapply(groupcolmeans, "[", x, )))
 
   # ...name the rows by group

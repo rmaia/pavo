@@ -2,8 +2,6 @@
 #'
 #' Returns the attributes of \code{colspace} objects.
 #'
-#' @import geometry
-#'
 #' @param object (required) a \code{colspace} object.
 #' @param by when the input is in \code{tcs} colorspace, \code{by} is either
 #'  a single value specifying the range of color points for which
@@ -32,7 +30,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Colour hexagon
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
@@ -44,7 +42,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 #' csp.sicalis <- colspace(vis.sicalis)
-#' summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))}
+#' summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
@@ -77,7 +75,7 @@ summary.colspace <- function(object, by = NULL, ...) {
     if (!is.null(by)) {
       if (length(by) == 1) {
         by.many <- by
-        by <- rep(1:(dim(object)[1] / by), each = by)
+        by <- rep(seq_len(dim(object)[1] / by), each = by)
         by <- factor(by,
           labels = row.names(object)[seq(1, length(row.names(object)), by = by.many)]
         )
@@ -91,7 +89,7 @@ summary.colspace <- function(object, by = NULL, ...) {
       row.names(res.c) <- "all.points"
     }
 
-    if (any(is.na(res.c$c.vol))) {
+    if (anyNA(res.c$c.vol)) {
       warning("Not enough points to calculate volume", call. = FALSE)
     }
 

@@ -15,13 +15,11 @@
 #' @inheritParams triplot
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
 #'                         vonkries = TRUE, achro = 'l', bkg = 'green')
 #' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
 #' plot(hex.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -63,7 +61,6 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   # Hexagon edge coordinates
   hexX <- c(0, -0.886, -0.886, 0, 0.886, 0.886, 0)
   hexY <- c(1, 0.5, -0.5, -1, -0.5, 0.5, 1)
-  hexout <- data.frame(hexX, hexY)
 
   # Hue sector divider coordinates
   # Coarse (45-degree)
@@ -100,18 +97,18 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   }
 
   # Hexagon outline
-  for (x in 1:length(hexX)) {
+  for (x in seq_along(hexX)) {
     segments(hexX[x], hexY[x], hexX[x + 1], hexY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
   }
 
   # Hexagon sectors
   if (sectors == "coarse") {
-    for (x in 1:length(secX))
+    for (x in seq_along(secX))
       segments(0, 0, secX[x], secY[x], col = sec.col)
   }
 
   if (sectors == "fine") {
-    for (x in 1:length(secX_c))
+    for (x in seq_along(secX_c))
       segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
   }
 

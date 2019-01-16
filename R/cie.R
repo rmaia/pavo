@@ -1,12 +1,12 @@
 #' CIE colour spaces
 #'
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in either the CIEXYZ (1931), CIELAB (1971), or CIELCH (1971) colourspaces.
+#' in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a
 #'  data frame with three columns representing trichromatic viewer).
-#' @param space (required) Choice between XYZ (1931), LAB (1971), or LCH colour models.
+#' @param space (required) Choice between XYZ (1931), LAB (1971), or LCh colour models.
 #'
 #' @return Object of class \code{colspace} containing:
 #'    \itemize{
@@ -23,13 +23,11 @@
 #'    }
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
 #' flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
 #' flowers.cielab <- colspace(vis.flowers, space = 'cielab')
 #' flowers.cielch <- colspace(vis.flowers, space = 'cielch')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

@@ -10,11 +10,11 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual='avg.uv')
 #' summary(vis.sicalis)
-#' }
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I. (1998).
 #'  Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative

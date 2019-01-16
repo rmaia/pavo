@@ -40,7 +40,6 @@ Models reflectance spectra in a colorspace. For information on plotting argument
 and graphical parameters, see \code{\link{plot.colspace}}.
 }
 \examples{
-\dontrun{
 data(flowers)
 
 # A dichromat in a segment colourspace
@@ -64,7 +63,6 @@ tcs.flowers <- colspace(vis.flowers, space = 'tcs')
 # A housefly in the categorical colourspace
 vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
 cat.flowers <- colspace(vis.flowers, space = 'categorical')
-}
 
 }
 \references{

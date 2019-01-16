@@ -6,7 +6,7 @@
 \usage{
 getspec(where = getwd(), ext = "txt", lim = c(300, 700),
   decimal = ".", sep = NULL, subdir = FALSE, subdir.names = FALSE,
-  cores = getOption("mc.cores", 2L), ignore.case = TRUE, fast)
+  cores = getOption("mc.cores", 2L), ignore.case = TRUE)
 }
 \arguments{
 \item{where}{(required) folder in which files are located.}
@@ -34,9 +34,6 @@ parallel processing (not available in Windows).}
 
 \item{ignore.case}{Logical. Should the extension search be case insensitive?
 (defaults to TRUE)}
-
-\item{fast}{deprecated argument. use \code{cores} for parallel processing
-instead.}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported
@@ -50,9 +47,8 @@ USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
 Avantes (before or after exporting).
 }
 \examples{
-\dontrun{
-getspec('examplespec/', lim = c(400, 900))
-getspec('examplespec/', ext = 'ttt')}
+getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
+getspec(system.file("testdata", package = "pavo"), ext = 'ttt')
 
 }
 \references{

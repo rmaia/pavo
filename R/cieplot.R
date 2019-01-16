@@ -2,9 +2,6 @@
 #'
 #' Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 #'
-#'
-# #' @usage plot(ciedata, ...)
-#'
 #' @param ciedata (required). a data frame, possibly a result from the \code{colspace}
 #' or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
 #' model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).
@@ -22,13 +19,11 @@
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
 #' when \code{space = 'cielab'}.
 #' @param box logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})
-#' @param view, scale.y, axis, grid deprecated arguments.
 #' @param margin vector of four numbers specifying drawing margins for CIELAB plot
 #'   (defaults to c(0,0,0,0))
 #' @param ... Additional graphical options. See \code{\link{par}}.
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #'
 #' # CIEXYZ
@@ -36,10 +31,9 @@
 #' xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
 #' plot(xyz.flowers)
 #'
-#' #CIELAB
+#' # CIELAB
 #' lab.flowers <- colspace(vis.flowers, space = 'cielab')
 #' plot(lab.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -56,7 +50,7 @@
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
-                    margin = c(0, 0, 0, 0), view, scale.y, axis, grid, ...) {
+                    margin = c(0, 0, 0, 0), ...) {
   arg <- list(...)
 
   # CIEXYZ
@@ -129,20 +123,6 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 
   # CIELAB or CIELch
   if (attr(ciedata, "clrsp") == "CIELAB" | attr(ciedata, "clrsp") == "CIELCh") {
-
-    # check deprecated arguments view, scale.y, axis, grid
-    if (!missing(view)) {
-      stop('argument "view" is deprecated, please use "theta" and "phi" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-    }
-    if (!missing(scale.y)) {
-      stop('argument "scale.y" is deprecated, please use "expand" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-    }
-    if (!missing(axis)) {
-      stop('argument "axis" is deprecated, please use "box" instead. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-    }
-    if (!missing(grid)) {
-      stop('argument "grid" is deprecated. see ?plot.colspace or ?tetraplot for more information.', call. = FALSE)
-    }
 
     # Set defaults
     arg <- list(...)

@@ -25,7 +25,7 @@ remaining columns.}
    The data frame must contain a \code{'wl'} column with the range of wavelengths included,
    and the sensitivity for each other cone as a column.
 \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
-\item \code{'avg.uv'}: average avian UV system.
+\item \code{'avg.uv'}: average avian UV system (default).
 \item \code{'avg.v'}: average avian V system.
 \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 \item \code{'canis'}: Canid \emph{Canis familiaris}.
@@ -48,7 +48,7 @@ remaining columns.}
  receptor stimulation. Either a vector containing the sensitivity for a single receptor,
  or one of the options:
 \itemize{
- \item \code{'none'}: no achromatic stimulation calculated.
+ \item \code{'none'}: no achromatic stimulation calculated (default).
     \item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
@@ -79,7 +79,7 @@ ocular transmission (from Hart et al. 2000).
 
 \item{qcatch}{Which quantal catch metric to return. Options are:
 \itemize{
-\item \code{'Qi'}: Quantum catch for each photoreceptor
+\item \code{'Qi'}: Quantum catch for each photoreceptor (default)
 \item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
  channel is proportional to the logarithm of the quantum catch)
 \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
@@ -114,7 +114,6 @@ Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colorspace and non-colorspace models.
 }
 \examples{
-\dontrun{
 # Dichromat (dingo)
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'canis')
@@ -129,7 +128,11 @@ tri.flowers <- colspace(vis.flowers, space = 'tri')
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
 tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-}
+
+# Tetrachromat (starling), receptor-noise model
+data(sicalis)
+vis.star <- vismodel(sicalis, visual = 'star', achromatic = 'bt.dc', relative = FALSE)
+dist.star <- coldist(vis.star, achromatic = TRUE)
 
 }
 \references{

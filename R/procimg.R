@@ -30,7 +30,7 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #' papilio <- procimg(papilio, scaledist = 10)
@@ -38,7 +38,6 @@
 #' # Assign individual scales to each image, after slightly reducing their size.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #' snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
-#' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
@@ -65,20 +64,23 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate)) {
     stop("No options selected.")
   }
-  
+
   ## Check for imager if rotating or resizing
-  if (!is.null(resize) || !is.null(rotate)){
+  if (!is.null(resize) || !is.null(rotate)) {
     if (!requireNamespace("imager", quietly = TRUE)) {
-      stop("Package \"imager\" needed for image resizing and rotation. Please install it.",
-           call. = FALSE)
+      stop("Package \"imager\" required for image resizing and rotation. Please install it.",
+        call. = FALSE
+      )
     }
   }
 
-  multi_image <- inherits(image, "list") # Single or multiple images?
+  ## If it's a single image, store it in a list for processing convenience,
+  ## before converting it back at the end
+  if (!inherits(image, "list")) {
+    image <- list(image)
+  }
 
   ## ------------------------------ Main ------------------------------ ##
-
-  if (multi_image) { # Multiple images
 
     ## Resize ##
     if (attr(image[[1]], "state") == "colclass" && is.numeric(resize)) {
@@ -89,7 +91,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
       image <- lapply(image, function(x) imager::imresize(x, resize))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
+      image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
 
@@ -102,7 +104,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       imgnames <- lapply(image, function(x) attr(x, "imgname"))
       image <- lapply(image, function(x) rimg2cimg(x))
       image <- lapply(image, function(x) imager::imrotate(x, rotate))
-      image <- lapply(1:length(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
+      image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
       class(image) <- c("rimg", "list")
     }
 
@@ -119,8 +121,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
       if (plotnew) dev.new(noRStudioGD = TRUE)
       message("Scale calibration: Select both ends of the scale, images will progress automatically.")
-      for (i in 1:length(image)) {
-        attr(image[[i]], "px_scale") <- scaler(image_i = image[[i]], scaledist_i = scaledist[[i]], col = col, ...)
+      for (i in seq_along(image)) {
+        attr(image[[i]], "px_scale") <- scaler(
+          image_i = image[[i]],
+          scaledist_i = scaledist[[i]], col = col, ...
+        )
         attr(image[[i]], "raw_scale") <- scaledist[[i]]
       }
       if (plotnew) dev.off()
@@ -129,57 +134,16 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     ## Select outline ##
     if (outline) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
-      for (i in 1:length(image)) {
+      for (i in seq_along(image)) {
         message("Select the outline of focal stimulus, and press [esc] when complete.
                 The first and last points will be automatically connected.")
         attr(image[[i]], "outline") <- outliner(image[[i]], smooth, iterations, col = col, ...)
       }
       if (plotnew) dev.off()
     }
-  } else {
-
-    ## Resize ##
-    if (attr(image, "state") == "colclass" && is.numeric(resize)) {
-      message("Cannot resize colour-classified images.")
-      resize <- NULL
-    }
-    if (is.numeric(resize)) {
-      imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imresize(image, resize)
-      image <- cimg2rimg(image, imgname)
-    }
-
-    ## Rotate ##
-    if (attr(image, "state") == "colclass" && is.numeric(rotate)) {
-      message("Cannot rotate colour-classified images.")
-      rotate <- NULL
-    }
-    if (is.numeric(rotate)) {
-      imgname <- attr(image, "imgname")
-      image <- rimg2cimg(image)
-      image <- imager::imrotate(image, rotate)
-      image <- cimg2rimg(image, imgname)
-    }
-
-    ## Scale ##
-    if (plotnew) dev.new(noRStudioGD = TRUE)
-    if (is.numeric(scaledist)) {
-      message("Scale calibration: Select both ends of the scale.")
-      attr(image, "px_scale") <- scaler(image_i = image, scaledist_i = scaledist, col = col, ...)
-      attr(image, "raw_scale") <- scaledist
-    }
-    if (plotnew) dev.off()
-
-    ## Select outline of focal stimulus ##
-    if (plotnew) dev.new(noRStudioGD = TRUE)
-    if (outline) {
-      message("Select the outline of focal stimulus, and press [esc] when complete.
-              The first and last points will be automatically connected.")
-      attr(image, "outline") <- outliner(image, smooth, iterations, col = col, ...)
-    }
-    if (plotnew) dev.off()
-  }
+  
+  if(length(image) == 1)
+    image <- image[[1]]
 
   image
 }

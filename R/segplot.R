@@ -10,12 +10,10 @@
 #' @inheritParams cocplot
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = 'segment', achromatic = 'all')
 #' seg.flowers <- colspace(vis.flowers, space = 'segment')
 #' plot(seg.flowers)
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -31,11 +29,12 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
                     margins = c(1, 1, 2, 2), square = TRUE, ...) {
 
   # Check if object is of class colorspace and tetrachromat
-  if (!("colspace" %in% attr(segdata, "class")) & is.element(FALSE, c("LM", "MS") %in% names(segdata))) {
-    stop("object is not of class ", dQuote("colspace"), ", and does not contain LM, MS segment data")
+  if (!is.colspace(segdata) & !all(c("LM", "MS") %in% names(segdata))) {
+    stop("object is not of class ", dQuote("colspace"),
+         ", and does not contain LM, MS segment data")
   }
 
-  if (("colspace" %in% attr(segdata, "class")) & attr(segdata, "clrsp") != "segment") {
+  if (is.colspace(segdata) & attr(segdata, "clrsp") != "segment") {
     stop(dQuote("colspace"), " object is not a result of segspace()")
   }
 
@@ -65,22 +64,22 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   }
   arg$bty <- "n"
   arg$axes <- FALSE
+  arg$type <- "n"
 
   # Plot
   arg$x <- segdata$MS
   arg$y <- segdata$LM
 
-  do.call(plot, c(arg, type = "n"))
+  do.call(plot, arg)
   axis(1, at = tick.loc, pos = 0, cex.axis = 0.8) # todo - best way to handle user specs?
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 
   # Segment edge coordinates
   segX <- c(0, 1, 0, -1, 0)
   segY <- c(1, 0, -1, 0, 1)
-  segout <- data.frame(segX, segY)
 
   # Segplot outline
-  for (x in 1:length(segX)) {
+  for (x in seq_along(segX)) {
     segments(segX[x], segY[x], segX[x + 1], segY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
   }
 

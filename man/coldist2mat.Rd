@@ -18,13 +18,11 @@ Converts a \code{coldist} output into a distance matrix where samples
 are rows and columns.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, achro=TRUE)
 cd.flowers <- coldist(vis.flowers)
 coldist2mat(cd.flowers)[['dS']]
 coldist2mat(cd.flowers)[['dL']]
-}
 
 }
 \references{

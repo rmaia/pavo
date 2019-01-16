@@ -3,7 +3,11 @@
 #' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space.
 #'
-#' @import rcdd
+#' @importFrom rcdd d2q q2d scdd
+#'
+#' @importFrom geometry convhulln
+#'
+#' @importFrom stats runif
 #'
 #' @export
 #'
@@ -74,7 +78,7 @@
 #' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = 1:3) }
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3)) }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}, with code from Sebastien Villeger
 #'
@@ -143,15 +147,15 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
 
     samples <- apply(rbind(pmin, pmax), 2, function(x) runif(nsamp, x[1], x[2]))
 
-    sindex <- 1:dim(samples)[1]
+    sindex <- seq_len(dim(samples)[1])
 
-    newvol1 <- sapply(sindex, function(x) convhulln(rbind(dat1, samples[x, ]), "FA")$vol)
-    newvol2 <- sapply(sindex, function(x) convhulln(rbind(dat2, samples[x, ]), "FA")$vol)
+    newvol1 <- vapply(sindex, function(x) convhulln(rbind(dat1, samples[x, ]), "FA")$vol, numeric(1))
+    newvol2 <- vapply(sindex, function(x) convhulln(rbind(dat2, samples[x, ]), "FA")$vol, numeric(1))
 
     # points that are within each volume
 
-    invol1 <- sapply(newvol1, function(x) isTRUE(x <= vol1))
-    invol2 <- sapply(newvol2, function(x) isTRUE(x <= vol2))
+    invol1 <- vapply(newvol1, function(x) isTRUE(x <= vol1), logical(1))
+    invol2 <- vapply(newvol2, function(x) isTRUE(x <= vol2), logical(1))
 
     # how many points are in each category
 
@@ -182,7 +186,7 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
   ############
   if (plot) {
     if (length(col) < 3) {
-      col <- c(rep(col, 2)[1:2], "darkgrey")
+      col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
     }
 
 
@@ -232,7 +236,10 @@ voloverlap <- function(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
     }
 
     if (!interactive) {
-      plotrange <- apply(rbind(tcsres1[, c("x", "y", "z")], tcsres2[, c("x", "y", "z")]), 2, range)
+      plotrange <- apply(rbind(
+        tcsres1[, c("x", "y", "z")],
+        tcsres2[, c("x", "y", "z")]
+      ), 2, range)
 
       if (length(fill) < 3) {
         if (dim(Voverlap)[1] > 3) {

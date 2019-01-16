@@ -5,7 +5,8 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL)
+as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL,
+  exceed.range = TRUE)
 
 is.rspec(object)
 }
@@ -13,9 +14,9 @@ is.rspec(object)
 \item{object}{(required) a data frame or matrix containing spectra to
 process.}
 
-\item{whichwl}{specifies which column contains wavelengths. If NULL
-(default), function searches for column containing equally spaced numbers
-and sets it as wavelengths "wl". If no wavelengths are found or
+\item{whichwl}{a numeric or character vector specifying which column contains
+wavelengths. If NULL (default), function searches for column containing equally
+spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 \code{whichwl} is not given, returns arbitrary index values.}
 
 \item{interp}{whether to interpolate wavelengths in 1-nm bins (defaults to
@@ -23,6 +24,12 @@ TRUE).}
 
 \item{lim}{vector specifying wavelength range to interpolate over (e.g.
 \code{c(300, 700)}).}
+
+\item{exceed.range}{logical. Should data be interpolated to the limits specified
+by \code{lim} if \code{lim} exceeds the range of the actual data? Useful, and relatively safe,
+when the data range falls slightly within \code{lim} (e.g. 300.1 - 699 nm), but will
+produce spurious results if \code{lim} far exceeds the range of input data.
+Defaults to \code{TRUE}.}
 }
 \value{
 an object of class \code{rspec} for use in further \code{pavo}
@@ -36,7 +43,6 @@ Converts data frames or matrices containing spectral data to \code{rspec}
 object
 }
 \examples{
-\dontrun{
 
 # Generate some fake reflectance data
 fakedat <- data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401))
@@ -48,7 +54,7 @@ is.rspec(fakedat)
 # Convert to rspec object
 fakedat2 <- as.rspec(fakedat)
 is.rspec(fakedat2)
-head(fakedat2)}
+head(fakedat2)
 
 }
 \author{

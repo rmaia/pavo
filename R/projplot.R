@@ -1,8 +1,8 @@
 #' Hue projection plot
 #'
-#' Produces a 2D projection plot of points in a color space
+#' Produces a 2D projection plot of points in a tetrahedral color space
 #'
-#' @param tcsdata (required) color space coordinates, possibly a result from the \code{\link{tcs}} function,
+#' @param tcsdata (required) tetrahedral color space coordinates, possibly a result from \code{\link{colspace}},
 #' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
 #' @param ... additional parameters to be passed to the plotting of data points.
 #'
@@ -16,12 +16,11 @@
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' projplot(tcs.sicalis, pch = 16, col = setNames(rep(1:3, 7), rep(c('C', 'T', 'B'), 7)))
-#' }
+#' projplot(tcs.sicalis, pch = 16, col = setNames(rep(seq_len(3), 7), rep(c('C', 'T', 'B'), 7)))
 #'
 #' @inherit tcspace references
 
@@ -30,7 +29,8 @@ projplot <- function(tcsdata, ...) {
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # oPar <- par(no.readonly=TRUE)
@@ -66,11 +66,11 @@ projplot <- function(tcsdata, ...) {
 
   mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
 
-  mp.v.theta <- mp$x[1:9]
-  mp.v.phi <- mp$y[1:9]
+  mp.v.theta <- mp$x[seq_len(9)]
+  mp.v.phi <- mp$y[seq_len(9)]
 
-  mp.p.theta <- mp$x[-c(1:9)]
-  mp.p.phi <- mp$y[-c(1:9)]
+  mp.p.theta <- mp$x[-c(seq_len(9))]
+  mp.p.phi <- mp$y[-c(seq_len(9))]
 
   # plot
 
@@ -87,7 +87,10 @@ projplot <- function(tcsdata, ...) {
 
   mapproj::map.grid(c(-180, 180, -90, 90), labels = FALSE, col = "grey")
 
-  points(mp.v.phi ~ mp.v.theta, pch = 20, cex = 1.5, col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu)))
+  points(mp.v.phi ~ mp.v.theta,
+    pch = 20, cex = 1.5,
+    col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu))
+  )
 
   points(mp.p.phi ~ mp.p.theta, ...)
 }

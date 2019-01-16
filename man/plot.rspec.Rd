@@ -5,7 +5,7 @@
 \title{Plot spectra}
 \usage{
 \method{plot}{rspec}(x, select = NULL, type = c("overlay", "stack",
-  "heatmap"), varying = NULL, n = 100, ...)
+  "heatmap"), varying = NULL, n = 100, labels.stack = NULL, ...)
 }
 \arguments{
 \item{x}{(required) a data frame, possibly an object of class \code{rspec},
@@ -29,6 +29,9 @@ a common y-axis.
 \item{n}{number of bins with which to interpolate colors and \code{varying} for the
 heatplot.}
 
+\item{labels.stack}{a vector of labels for the stacked spectra when using \code{type = stack}.
+Defaults to the numeric column ID's.}
+
 \item{...}{additional arguments passed to plot (or image for \code{'heatmap'}).}
 }
 \description{
@@ -36,10 +39,13 @@ Plots reflectance spectra in different arrangements.
 }
 \examples{
 \dontrun{
+
 data(teal)
 plot(teal, type = 'overlay')
 plot(teal, type = 'stack')
-plot(teal, type = 'heatmap')}
+plot(teal, type = 'heatmap')
+
+}
 
 }
 \seealso{
@@ -47,4 +53,6 @@ plot(teal, type = 'heatmap')}
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}
+
+Thomas White \email{thomas.white026@gmail.com}
 }

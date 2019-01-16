@@ -7,7 +7,7 @@
 #' @param x (required) an image of class rimg, or list thereof.
 #' @param axes should axes be drawn? (defaults to \code{TRUE})
 #' @param col optional vector of colours when plotting colour-classified images.
-#' Defaults to the mean RGB values of the k-means centres (i.e. the average 'original' 
+#' Defaults to the mean RGB values of the k-means centres (i.e. the average 'original'
 #' colours).
 #' @param ... additional graphical parameters. Also see \code{\link{par}}.
 #'
@@ -36,7 +36,7 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
   if (!multi_image) {
     defaultrasterImageplot(x, axes = axes, col = col, ...)
   } else {
-    for (i in 1:length(x)) {
+    for (i in seq_along(x)) {
       readline(prompt = "Press [enter] for next plot")
       defaultrasterImageplot(x[[i]], axes = axes, col = col, ...)
     }
@@ -64,9 +64,9 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
       rgbs <- attr(imagedata, "classRGB")
     }
 
-    mapR <- setNames(rgbs$R, 1:nrow(rgbs))
-    mapG <- setNames(rgbs$G, 1:nrow(rgbs))
-    mapB <- setNames(rgbs$B, 1:nrow(rgbs))
+    mapR <- setNames(rgbs$R, seq_len(nrow(rgbs)))
+    mapG <- setNames(rgbs$G, seq_len(nrow(rgbs)))
+    mapB <- setNames(rgbs$B, seq_len(nrow(rgbs)))
     R <- matrix(mapR[img], nrow = nrow(img), dimnames = dimnames(img))
     G <- matrix(mapG[img], nrow = nrow(img), dimnames = dimnames(img))
     B <- matrix(mapB[img], nrow = nrow(img), dimnames = dimnames(img))
@@ -76,7 +76,7 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
     # Convert and transform
     imagedata2 <- suppressWarnings(as.raster(imageout))
     imagedata2 <- mirrorx(imagedata2)
-    imagedata2 <- apply(t(as.matrix(imagedata2)),2,rev)
+    imagedata2 <- apply(t(as.matrix(imagedata2)), 2, rev)
   } else if (attr(imagedata, "state") == "raw") {
     # Convert and transform
     imagedata2 <- as.rimg(imagedata)

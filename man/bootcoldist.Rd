@@ -13,7 +13,7 @@ Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.}
 
-\item{by}{(required) a vector containing indicating the group to which each row from
+\item{by}{(required) a numeric or character vector indicating the group to which each row from
 the object belongs to.}
 
 \item{boot.n}{number of bootstrap replicates (defaults to 1000)}
@@ -39,7 +39,7 @@ Uses a bootstrap procedure to generate confidence intervals
  data(sicalis)
  vm <- vismodel(sicalis, achro='bt.dc')
  gr <- gsub("ind..", "", rownames(vm))
- bootcoldist(vm, gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
+ bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
  }
 
 }

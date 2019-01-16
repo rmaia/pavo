@@ -17,11 +17,10 @@
 #'
 #' @keywords internal
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
 #' seg.sic <- colspace(vis.sic, space = 'segment')
-#' }
 #'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
@@ -34,7 +33,7 @@ segspace <- function(vismodeldata) {
   dat <- vismodeldata
 
   # if object is vismodel:
-  if ("vismodel" %in% attr(dat, "class")) {
+  if (is.vismodel(dat)) {
 
     # check if tetrachromat
     if (attr(dat, "conenumb") < 4) {
@@ -44,35 +43,37 @@ segspace <- function(vismodeldata) {
     if (attr(dat, "conenumb") != "seg" & attr(dat, "conenumb") > 4) {
       warning("vismodel input is not tetrachromatic, considering first four columns only", call. = FALSE)
     }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
-      dat <- dat[, 1:4]
-      dat <- dat / apply(dat, 1, sum)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
   }
 
   # if not, check if it has more (or less) than 4 columns
-
-  if (!("vismodel" %in% attr(dat, "class"))) {
+  else {
     if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
+      stop("Input data is not a ", dQuote("vismodel"),
+        " object and has fewer than four columns",
+        call. = FALSE
+      )
     }
     if (ncol(dat) == 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object; treating columns as unstandardized quantum catch for ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object; treating columns as unstandardized quantum catch for ",
+        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
+        " segments, respectively",
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 4) {
-      warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively", call. = FALSE)
+      warning("Input data is not a ", dQuote("vismodel"),
+        " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ",
+        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively",
+        call. = FALSE
+      )
     }
 
-    dat <- dat[, 1:4]
+    dat <- dat[, seq_len(4)]
     names(dat) <- c("S1", "S2", "S3", "S4")
 
-    dat <- dat / apply(dat, 1, sum)
+    dat <- dat / rowSums(dat)
     warning("Quantum catch have been transformed to be relative (sum of 1)", call. = FALSE)
     attr(vismodeldata, "relative") <- TRUE
   }
@@ -83,14 +84,21 @@ segspace <- function(vismodeldata) {
     Q3 <- dat[, "S3"]
     Q4 <- dat[, "S4"]
   } else {
-    warning("Could not find columns named ", dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), ", using first four columns instead.", call. = FALSE)
+    warning("Could not find columns named ",
+      dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
+      ", using first four columns instead.",
+      call. = FALSE
+    )
     Q1 <- dat[, 1]
     Q2 <- dat[, 2]
     Q3 <- dat[, 3]
     Q4 <- dat[, 4]
   }
 
-  B <- dat$lum
+  if(!is.null(dat$lum))
+    B <- dat$lum
+  else
+    B <- NA
 
   # LM/MS
 

@@ -28,102 +28,113 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(teal)
+#'
 #' peakshape(teal, select = 3)
 #' peakshape(teal, select = 10)
 #'
 #' # Use wavelength bounds to narrow in on peak of interest
-#' peakshape(teal, select = 10, lim=c(400, 550))
-#' }
-#' @author Chad Eliason \email{cme16@@zips.uakron.edu}, Rafael Maia \email{rm72@@zips.uakron.edu}
+#' peakshape(teal, select = 10, lim = c(400, 550))
+#'
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL,
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
 
-  # if (length(select) > 1)
-  #   par(mfrow=c(2,2)) else
-  #   par(mfrow=c(1,1))
-
   nms <- names(rspecdata)
 
-  wl_index <- which(names(rspecdata) == "wl")
+  wl_index <- which(nms == "wl")
   if (length(wl_index) > 0) {
     haswl <- TRUE
     wl <- rspecdata[, wl_index]
   } else {
     haswl <- FALSE
-    wl <- 1:nrow(rspecdata)
-    warning("No wavelengths provided; using arbitrary index values", call. = FALSE)
+    wl <- seq_len(nrow(rspecdata))
+    warning("No wavelengths provided; using arbitrary index values",
+            call. = FALSE)
   }
 
   # set default wavelength range if not provided
   if (is.null(lim)) {
-    lim <- c(head(wl, 1), tail(wl, 1))
+    lim <- range(wl)
   }
 
   # subset based on indexing vector
   if (is.logical(select)) {
-    select <- which(select == "TRUE")
+    select <- which(select)
   }
-  if (is.null(select) & haswl == TRUE) {
-    select <- (1:ncol(rspecdata))[-wl_index]
-  }
-  if (is.null(select) & haswl == FALSE) {
-    select <- 1:ncol(rspecdata)
+  if (is.null(select)) {
+    select <- seq_along(rspecdata)
+
+    if (haswl) {
+      select <- select[-wl_index]
+    }
   }
 
   rspecdata <- as.data.frame(rspecdata[, select, drop = FALSE])
 
+  wlrange <- seq(lim[1], lim[2])
 
-  wlrange <- lim[1]:lim[2]
+  rspecdata2 <- rspecdata[wl>=lim[1] & wl<=lim[2], , drop = FALSE]
 
-
-  rspecdata2 <- rspecdata[(which(wl == lim[1])):(which(wl == lim[2])), , drop = FALSE] # working wl range
-  Yi <- apply(rspecdata2, 2, max) # max refls
-  Yj <- apply(rspecdata2, 2, min) # min refls
-  Yk <- apply(rspecdata, 2, min) # min refls, whole spectrum
-  Xi <- sapply(1:ncol(rspecdata2), function(x) which(rspecdata2[, x] == Yi[x])) # lambda_max index
-  # CE edit: test if any wls have equal reflectance values
-  dblpeaks <- sapply(Xi, length)
-  dblpeak.nms <- nms[select][dblpeaks > 1]
-  if (any(dblpeaks > 1)) {
-    # Keep only first peak of each spectrum
-    Xi <- sapply(Xi, "[[", 1)
-    warning(paste("Multiple wavelengths have the same reflectance value (", paste(dblpeak.nms, collapse = ", "), "). Using first peak found. Please check the data or try smoothing.", sep = ""), call. = FALSE)
-  }
-  # end CE edit
+  Bmax <- apply(rspecdata2, 2, max) # max refls
+  Bmin <- apply(rspecdata2, 2, min) # min refls
+  Bmin_all <- apply(rspecdata, 2, min) # min refls, whole spectrum
 
   if (absolute.min) {
-    Yj <- Yk
+    halfmax <- (Bmax + Bmin_all)/2
+  } else {
+    halfmax <- (Bmax + Bmin)/2
   }
 
-  fsthalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[1:Xi[x], x])
-  sndhalf <- lapply(1:ncol(rspecdata2), function(x) rspecdata2[Xi[x]:nrow(rspecdata2), x])
-  halfmax <- (Yi + Yj) / 2 # reflectance midpoint
-  fstHM <- sapply(1:length(fsthalf), function(x) which.min(abs(fsthalf[[x]] - halfmax[x])))
-  sndHM <- sapply(1:length(sndhalf), function(x) which.min(abs(sndhalf[[x]] - halfmax[x])))
-
-
-
-
-  if (any(Yj > Yk)) {
-    warning(paste("Consider fixing ", dQuote("lim"), " in spectra with ", dQuote("incl.min"), " marked ", dQuote("No"), " to incorporate all minima in spectral curves", sep = ""), call. = FALSE)
+  Xi <- vapply(
+    seq_along(rspecdata2),
+    function(x) which(rspecdata2[, x] == Bmax[x]),
+    numeric(1)
+  ) # lambda_max index
+  dblpeaks <- vapply(Xi, length, numeric(1))
+  if (any(dblpeaks > 1)) {
+    # Keep only first peak of each spectrum
+    dblpeak_nms <- nms[select][dblpeaks > 1]
+    Xi <- vapply(Xi, "[[", 1, numeric(1))
+    warning("Multiple wavelengths have the same reflectance value (",
+            paste(dblpeak_nms, collapse = ", "), "). Using first peak found. ",
+            "Please check the data or try smoothing.",
+            call. = FALSE)
   }
 
-  Xa <- wlrange[fstHM]
-  Xb <- wlrange[Xi + sndHM]
+  hilo <- t(t(rspecdata2) - halfmax) > 0
+
+  FWHM_lims <- sapply(seq_len(ncol(rspecdata2)), function(x) {
+    # Start at H1 and find first value below halfmax
+    fstHM <- match(FALSE, hilo[seq(Xi[x], 1, -1), x])
+    sndHM <- match(FALSE, hilo[Xi[x]:nrow(rspecdata2), x])
+    return(c(fstHM, sndHM))
+  })
+
+  if (any(Bmin > Bmin_all)) {
+    warning("Consider fixing ", dQuote("lim"), " in spectra with ",
+            dQuote("incl.min"), " marked ", dQuote("No"),
+            " to incorporate all minima in spectral curves",
+            call. = FALSE)
+  }
+
   hue <- wlrange[Xi]
+  Xa <- wlrange[Xi - FWHM_lims[1,]]
+  Xb <- wlrange[Xi + FWHM_lims[2,]]
 
-  if (plot == TRUE) {
+  if (plot) {
     oPar <- par("ask")
     on.exit(par(oPar))
     par(ask = ask)
 
     for (i in seq_along(select)) {
       plot(rspecdata[, i] ~ wl,
-        type = "l", xlab = "Wavelength (nm)",
-        ylab = "Reflectance (%)", main = nms[select[i]], ...
+           type = "l", xlab = "Wavelength (nm)",
+           ylab = "Reflectance (%)", main = nms[select[i]], ...
       )
       abline(v = hue[i], col = "red")
       abline(h = halfmax[i], col = "red")
@@ -133,13 +144,9 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     }
   }
 
-  out <- data.frame(
-    id = nms[select], B3 = as.numeric(Yi), H1 = hue,
+  data.frame(
+    id = nms[select], B3 = as.numeric(Bmax), H1 = hue,
     FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
-    incl.min = c("Yes", "No")[as.numeric(Yj > Yk) + 1]
+    incl.min = c("Yes", "No")[as.numeric(Bmin > Bmin_all) + 1]
   )
-
-  # row.names(out) <- nms[select]
-
-  out
 }

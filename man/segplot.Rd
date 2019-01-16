@@ -28,12 +28,10 @@ as columns (labeled as such).}
 Produces a plot based on Endler's (1990) segment analysis.
 }
 \examples{
-\dontrun{
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = 'segment', achromatic = 'all')
 seg.flowers <- colspace(vis.flowers, space = 'segment')
 plot(seg.flowers)
-}
 
 }
 \references{

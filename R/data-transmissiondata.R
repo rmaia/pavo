@@ -7,5 +7,4 @@
 #' Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
 #' species of passerine
 #' @keywords data
-#' @export transmissiondata
 NULL

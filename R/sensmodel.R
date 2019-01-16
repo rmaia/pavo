@@ -29,14 +29,14 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Blue tit visual system based on Hart et al (2000)
-#' bluesens <- sensmodel(c(371,448,502,563), beta = F, lambdacut = c(330, 413, 507, 572),
-#' oiltype = c("T", "C", "Y","R"), om = TRUE)
+#' bluesens <- sensmodel(c(371,448,502,563), beta = FALSE,
+#'                       lambdacut = c(330, 413, 507, 572),
+#'                       oiltype = c("T", "C", "Y","R"), om = TRUE)
 #'
 #' # Danio aequipinnatus based on Govardovskii et al. (2000)
 #' daniosens <- sensmodel(c(357, 411, 477, 569))
-#' }
 #'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
@@ -73,7 +73,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
 
 
-  for (i in 1:length(peaksens)) {
+  for (i in seq_along(peaksens)) {
 
     # Sensitivities w/o oil droplets
     peak <- 1 / (exp(69.7 * (.8795 + .0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / (range[1]:range[2]))))
@@ -130,7 +130,10 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     if (!is.null(om)) {
       if (length(om) == 1) {
         if (om == "bird") {
-          T.e <- log(8.928 * 10^-13 * (range[1]:range[2])^5 - 2.595 * 10^-9 * (range[1]:range[2])^4 + 3.006 * 10^-6 * (range[1]:range[2])^3 - .001736 * (range[1]:range[2])^2 + .5013 * (range[1]:range[2]) - 55.56)
+          T.e <- log(8.928 * 10^-13 * (range[1]:range[2])^5 - 2.595 * 10^-9 *
+            (range[1]:range[2])^4 + 3.006 * 10^-6 *
+            (range[1]:range[2])^3 - .001736 * (range[1]:range[2])^2 + .5013 *
+            (range[1]:range[2]) - 55.56)
           T.e[which(T.e < 0)] <- 0
           peak <- peak * T.e
         }

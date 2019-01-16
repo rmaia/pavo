@@ -26,12 +26,11 @@
 #' that the rotation aligns with the z axis (only used if data has 3 dimensions).
 #' Ignored if \code{ref2} is NULL (in 3-dimensional case only)
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers)
 #' cd.flowers <- coldist(vis.flowers)
 #' jnd2xyz(cd.flowers)
-#' }
 #'
 #' @author Rafael Maia \email{rm72@zips.uakron.edu}
 #'
@@ -44,7 +43,8 @@
 
 
 jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
-                    rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
+                    rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u",
+                    axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
 
   # Accessory functions
   pos2 <- function(d12, d13, d23) {

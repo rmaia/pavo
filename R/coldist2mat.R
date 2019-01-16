@@ -8,15 +8,14 @@
 #' @return A list containing one or two matrices, for dS and dL, depending
 #' if the original object had dS and dL columns
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, achro=TRUE)
 #' cd.flowers <- coldist(vis.flowers)
 #' coldist2mat(cd.flowers)[['dS']]
 #' coldist2mat(cd.flowers)[['dL']]
-#' }
 #'
-#' @author Rafael Maia \email{rm72@zips.uakron.edu}
+#' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
 #'

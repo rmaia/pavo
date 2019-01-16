@@ -3,9 +3,6 @@
 #' Produces an interactive 3D plot of a tetrahedral
 #' colorspace using OpenGL capabilities.
 #'
-# #' @import rgl
-# #' @importFrom rgl spheres3d rgl.postscript rgl.snapshot rgl.material
-#'
 #' @inheritParams tetraplot
 #' @param size size of the points in the plot (defaults to 0.02)
 #' @param col color of the points in the plot (defaults to black)
@@ -32,8 +29,8 @@
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
 #' tcsplot(tcs.sicalis, size = 0.005)
-#' rgl.postscript('testplot.pdf',fmt='pdf')
-#' rgl.snapshot('testplot.png')
+#' rgl::rgl.postscript('testplot.pdf',fmt='pdf')
+#' rgl::rgl.snapshot('testplot.png')
 #'
 #' # For adding points
 #' patch <- rep(c('C', 'T', 'B'), 7)

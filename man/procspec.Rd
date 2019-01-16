@@ -50,7 +50,6 @@ A data frame of class \code{rspec} with the processed data.
 Applies normalization and/or smoothing to spectra for further analysis or plotting.
 }
 \examples{
-\dontrun{
 data(teal)
 plot(teal, select = 10)
 
@@ -59,9 +58,8 @@ teal.sm <- procspec(teal, opt = 'smooth', span = 0.25)
 plot(teal.sm, select = 10)
 
 # Normalize to max of unity
-teal.max <- procspec(teal, opt = c('max'), span = 0.25)
+teal.max <- procspec(teal, opt = c('max'))
 plot(teal.max, select = 10)
-}
 
 }
 \references{

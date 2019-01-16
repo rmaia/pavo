@@ -5,7 +5,7 @@
 \title{Plot a tetrahedral color space}
 \usage{
 vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
-  view, scale.y, axis, ...)
+  ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
@@ -20,8 +20,6 @@ coordinates as columns (labeled as such).}
 
 \item{new}{logical. Should a new plot be started or draw over an open plot?
 (defaults to FALSE)}
-
-\item{view, scale.y, axis}{deprecated arguments.}
 
 \item{...}{additional graphical options. See \code{\link{polygon}} and \code{\link{tetraplot}}.}
 }

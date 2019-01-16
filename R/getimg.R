@@ -22,17 +22,17 @@
 #'
 #' @importFrom pbmcapply pbmclapply
 #'
-#' @examples \dontrun{
+#' @examples
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.size = 1, cores = getOption("mc.cores", 2L)) {
+getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
+                   max.size = 1, cores = getOption("mc.cores", 2L)) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -48,9 +48,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    #imgdat <- imager::load.image(imgpath)
     imgdat <- grabimg(imgpath)
-    imgdat <- as.rimg(drop(as.array(imgdat)), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    imgdat <- as.rimg(drop(as.array(imgdat)),
+      name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
+    )
 
     # Warn of slowness if dimensions are large
     if ((dim(imgdat)[1] * dim(imgdat)[2]) > (1000 * 1000)) {
@@ -64,7 +65,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
     extension <- paste0("\\.", ext, "$", collapse = "|")
 
     # File names
-    file_names <- list.files(imgpath, pattern = extension, recursive = subdir, include.dirs = subdir)
+    file_names <- list.files(imgpath,
+      pattern = extension,
+      recursive = subdir, include.dirs = subdir
+    )
     files <- paste0(imgpath, "/", file_names)
 
     if (subdir.names) {
@@ -95,13 +99,12 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 
     # Crudely avoid a bug in pbmclapply when handling large objects.
     if (totalsize < 0.1) {
-      imgdat <- pbmclapply(1:length(file_names), function(x) grabimg(files[x]), mc.cores = cores)
-      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- pbmclapply(files, grabimg, mc.cores = cores)
     } else {
-      imgdat <- lapply(1:length(file_names), function(x) grabimg(files[x]))
-      imgdat <- lapply(1:length(imgdat), function(x) drop(as.array(imgdat[[x]])))
+      imgdat <- lapply(files, grabimg)
     }
 
+    imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
     imgdat <- as.rimg(imgdat, imgnames)
 
     # Simplify if it's a single image
@@ -111,18 +114,17 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE, max.
 }
 
 ## Grab images
-#' @import readbitmap
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#' @importFrom readbitmap read.bitmap
 grabimg <- function(file) {
   bmp <- read.bitmap(file)
   if (!is.null(attr(bmp, "header"))) {
     bmp <- bmp / 255
   }
-  if (length(dim(bmp)) == 3) {  # 3 channels (colour)
+  if (length(dim(bmp)) == 3) { # 3 channels (colour)
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
   }
-  else {  # 1 channel (B&W), duplicate to 3d for classification convenience
+  else { # 1 channel (B&W), duplicate to 3d for classification convenience
     bmp <- replicate(3, bmp, simplify = "array")
     bmp <- mirrorx(bmp)
     bmp <- rot90(bmp)
@@ -130,7 +132,7 @@ grabimg <- function(file) {
   bmp
 }
 
-# Rotate matrices 90-degrees
+## Rotate matrices 90-degrees
 rot90 <- function(x) {
   permVec <- c(2, 1, 3:length(dim(x)))
   rotA <- aperm(x, permVec)
@@ -138,14 +140,14 @@ rot90 <- function(x) {
   rotA
 }
 
-# Mirror matrices about x axis
+## Mirror matrices about x axis
 mirrorx <- function(x) {
   if (length(dim(x)) == 3) {
-    for (i in 1:dim(x)[3]) {
-      x[, , i] <- x[, , i][, ncol(x[, , i]):1]
+    for (i in seq_len(dim(x)[3])) {
+      x[, , i] <- x[, , i][, rev(seq_len(ncol(x[, , i])))]
     }
   } else {
-    x <- x[, ncol(x):1]
+    x <- x[, rev(seq_len(ncol(x)))]
   }
   x
 }

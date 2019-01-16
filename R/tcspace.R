@@ -3,8 +3,6 @@
 #' Calculates coordinates and colorimetric variables that represent reflectance spectra
 #' in the avian tetrahedral color space.
 #'
-#' @import geometry
-#'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
 #'  with four columns name 'u', 's', 'm', 'l', representing the avian cones).
@@ -24,11 +22,10 @@
 #' @return \code{r.achieved}: the relative r distance from the achromatic center, in
 #'  relation to the maximum distance achievable (\code{r.vec/r.max}).
 #'
-#' @examples \dontrun{
+#' @examples
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
 #' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
@@ -46,7 +43,7 @@ tcspace <- function(vismodeldata) {
   dat <- vismodeldata
 
   # if object is vismodel:
-  if ("vismodel" %in% attr(dat, "class")) {
+  if (is.vismodel(dat)) {
 
     # check if tetrachromat
     if (attr(dat, "conenumb") < 4) {
@@ -59,8 +56,8 @@ tcspace <- function(vismodeldata) {
 
     # check if relative
     if (!attr(dat, "relative")) {
-      dat <- dat[, 1:4]
-      dat <- dat / apply(dat, 1, sum)
+      dat <- dat[, seq_len(4)]
+      dat <- dat / rowSums(dat)
       class(dat) <- class(vismodeldata)
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
@@ -68,8 +65,7 @@ tcspace <- function(vismodeldata) {
   }
 
   # if not, check if it has more (or less) than 4 columns
-
-  if (!("vismodel" %in% attr(dat, "class"))) {
+  else {
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
     }
@@ -81,10 +77,10 @@ tcspace <- function(vismodeldata) {
       warning("Input data is not a ", dQuote("vismodel"), " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
     }
 
-    dat <- dat[, 1:4]
+    dat <- dat[, seq_len(4)]
     names(dat) <- c("u", "s", "m", "l")
 
-    dat <- dat / apply(dat, 1, sum)
+    dat <- dat / rowSums(dat)
     warning("Quantum catch have been transformed to be relative (sum of 1)", call. = FALSE)
     attr(vismodeldata, "relative") <- TRUE
   }
@@ -95,7 +91,11 @@ tcspace <- function(vismodeldata) {
     m <- dat[, "m"]
     l <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first four columns instead.", call. = FALSE)
+    warning("Could not find columns named ",
+      dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
+      ", using first four columns instead.",
+      call. = FALSE
+    )
     u <- dat[, 1]
     s <- dat[, 2]
     m <- dat[, 3]
