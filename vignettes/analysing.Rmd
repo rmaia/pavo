@@ -1,5 +1,5 @@
 ---
-title: "Analysing data"
+title: "Analysing Data"
 author: "Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output:

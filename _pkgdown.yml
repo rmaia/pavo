@@ -69,3 +69,11 @@ template:
 
 development:
   mode: unreleased
+  
+articles:
+- title: Vignettes
+  contents:
+  - overview
+  - importing_processing
+  - analysing
+  - spectraldesc

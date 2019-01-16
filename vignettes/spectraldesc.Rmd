@@ -1,5 +1,5 @@
 ---
-title: "Spectral shape descriptors"
+title: "Spectral Shape Descriptors"
 author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output: 
