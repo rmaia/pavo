@@ -1,6 +1,6 @@
 ---
 title: "Importing and Processing Data"
-author: "Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason"
+author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output:
   rmarkdown::html_vignette:
