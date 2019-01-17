@@ -339,7 +339,7 @@ We have implemented three methods of visualizing spectral data using `plot`:
 2. **Stack**: spectra plotted with same x-axis but arranged vertically along y-axis
 3. **Heatmap**: false colour map to illustrate three dimensional data
 
-These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) (@Eliason2012).
+These options are in addition to the exploratory plotting offered by `explorespec()`, as seen in the figures in section 1. To showcase the capabilities of `plot.rspec()`, we will use the `teal` dataset included in `pavo`. This dataset consists of reflectance spectra from the iridescent wing patch of a green-winged teal (_Anas carolinensis_). Reflectance measurements were taken between 300 and 700 nm at different incident angles, ranging from 15° to 70° (in 5° increments) [@Eliason2012].
 
 ### The `overlay` Option
 
