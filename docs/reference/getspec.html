@@ -95,13 +95,13 @@ Avantes (before or after exporting)." />
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/analysing.html">Analysing Data</a>
+      <a href="../articles/overview.html">Overview</a>
     </li>
     <li>
       <a href="../articles/importing_processing.html">Importing and Processing Data</a>
     </li>
     <li>
-      <a href="../articles/overview.html">Overview</a>
+      <a href="../articles/analysing.html">Analysing Data</a>
     </li>
     <li>
       <a href="../articles/spectraldesc.html">Spectral Shape Descriptors</a>
@@ -122,7 +122,7 @@ Avantes (before or after exporting)." />
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right" role="search">
+      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -219,7 +219,7 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'>getspec</span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>), <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>900</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='output co'>#&gt; <span class='warning'>Warning: Could not import one or more files:</span>
-#&gt; <span class='warning'>/Users/twhite/Dropbox (Sydney Uni)/notes/research/projects/pavo/inst/testdata/failfile.txt</span></div><div class='output co'>#&gt; <span class='message'></span>
+#&gt; <span class='warning'>/home/hugo/Dropbox/PhD/pavo/inst/testdata/failfile.txt</span></div><div class='output co'>#&gt; <span class='message'></span>
 #&gt; <span class='message'>The spectral data contain 27 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span></div><div class='output co'>#&gt;      wl   OceanView
 #&gt; 1   400 -1.85001333
 #&gt; 2   401 -1.83632667
@@ -1149,7 +1149,7 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
 </div>
       </footer>
    </div>
