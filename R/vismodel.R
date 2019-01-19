@@ -48,6 +48,7 @@
 #'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
 #'  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
 #'  \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
+#'  \item \code{'cf.r'}: Canid \emph{Canis familiaris} cone.
 #'  \item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors.
 #'  \item \code{'l'}: the longest-wavelength photoreceptor.
 #'  \item \code{'all'}: the summed response of all photoreceptors.
@@ -140,6 +141,8 @@
 #' @references CIE (2006). Fundamental chromaticity diagram with physiological axes.
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 #'  Internationale de l' Eclairage.
+#' @references Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog. 
+#' Visual Neuroscience, 3, 119-125.
 #'
 
 vismodel <- function(rspecdata,
@@ -147,7 +150,7 @@ vismodel <- function(rspecdata,
                        "avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis",
                        "canis", "cie2", "cie10", "musca", "segment", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all"),
+                     achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r", "ml", "l", "all"),
                      illum = c("ideal", "bluesky", "D65", "forestshade"),
                      trans = c("ideal", "bluetit", "blackbird"),
                      qcatch = c("Qi", "fi", "Ei"),

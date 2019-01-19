@@ -1,5 +1,9 @@
 # pavo 2.1.0
 
+## NEW FEATURES
+
+* added the rod sensitivity of _Canis familiaris_
+
 ## MINOR FEATURES AND BUG FIXES
 
 * the `achro` argument in `coldist()` has been changed for `achromatic` to

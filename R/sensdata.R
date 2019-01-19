@@ -32,6 +32,7 @@
 #' 	\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
 #'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
 #'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
+#'  \item \code{'cf.r'}: Canid \emph{Canis familiaris} rod
 #'  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
 #'  \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
 #' }
@@ -85,7 +86,7 @@ sensdata <- function(
                        "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
                        "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc"),
+                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r"),
                      illum = c("none", "all", "bluesky", "D65", "forestshade"),
                      trans = c("none", "all", "bluetit", "blackbird"),
                      bkg = c("none", "all", "green"),
@@ -116,7 +117,7 @@ sensdata <- function(
   # Achromatic receptor
   if (!isTRUE("none" %in% achro2)) {
     if (isTRUE("all" %in% achro2)) {
-      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc")
+      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r")
     }
     sens <- as.data.frame(vissyst)
     achro <- as.data.frame(subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens))))
