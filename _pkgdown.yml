@@ -69,15 +69,24 @@ template:
 
 development:
   mode: unreleased
-  
+
 navbar:
-- text: Articles
-  menu:
-  - text: Overview
-    href: articles/overview.html
-  - text: Importing and Processing Data
-    href: articles/importing_processing.html
-  - text: Analysing Data
-    href: articles/amalysing.html
-  - text: Spectral Shape Descriptors
-    href: articles/spectraldesc.html
+  title: ~
+  type: default
+  left:
+    - icon: fa-home fa-lg
+      href: index.html
+    - text: Reference
+      href: reference/index.html
+    - text: Articles
+      menu:
+      - text: Overview
+        href: articles/overview.html
+      - text: Importing and Processing Data
+        href: articles/importing_processing.html
+      - text: Analysing Data
+        href: articles/analysing.html
+      - text: Spectral Shape Descriptors
+        href: articles/spectraldesc.html
+    - text: Changelog
+      href: news/index.html
