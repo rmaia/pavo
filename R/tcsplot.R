@@ -5,11 +5,11 @@
 #'
 #' @inheritParams tetraplot
 #' @param size size of the points in the plot (defaults to 0.02)
-#' @param col color of the points in the plot (defaults to black)
+#' @param col colour of the points in the plot (defaults to black)
 #' @param alpha transparency of points (or volume fill in \code{tcsvol})
 #' @param vertexsize size of the points at the vertices
 #' @param achrosize size of the point in the achromatic centre
-#' @param achrocol color of the point in the achromatic centre
+#' @param achrocol colour of the point in the achromatic centre
 #' @param lwd,lcol graphical parameters for the edges of the tetrahedron.
 #' @param new should a new 3D plot be called (defaults to \code{FALSE})?
 #' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})

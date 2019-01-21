@@ -1,6 +1,6 @@
-#' Retrieve or plot in-built data
+#' Retrieve or plot in-built spectral sensitivity data
 #'
-#' Retrieve (as an rspec object) or plot pavo's in-built spectral data.
+#' Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.
 #'
 #' @param visual visual systems. Options are:
 #' \itemize{

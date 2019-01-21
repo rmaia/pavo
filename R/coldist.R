@@ -1,12 +1,12 @@
-#' Color distances
+#' Colour distances
 #'
-#' Calculates color distances. When data are the result of \code{\link{vismodel}},
-#' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
+#' Calculates colour distances. When data are the result of \code{\link{vismodel}},
+#' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
 #' with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data
 #' from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
 #' distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.
 #'
-#' @param modeldata (required) quantum catch color data. Can be the result
+#' @param modeldata (required) quantum catch colour data. Can be the result
 #'  from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches,
 #'  in the form of a data frame with columns representing photoreceptors.
 #' @param qcatch if the object is of class \code{vismodel} or \code{colspace},

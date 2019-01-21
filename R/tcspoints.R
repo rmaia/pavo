@@ -1,8 +1,8 @@
-#' Plot a tetrahedral color space
+#' Plot a tetrahedral colour space
 #'
-#' Plots points in a tetrahedral color space
+#' Plots points in a tetrahedral colour space
 #'
-#' @return \code{tcspoints} creates 3D points in a tetrahedral color space plot produced by \code{tcsplot}
+#' @return \code{tcspoints} creates 3D points in a tetrahedral colour space plot produced by \code{tcsplot}
 #' using functions of the package \code{rgl}, based on openGL capabilities.
 #'
 #' @rdname tcsplot
@@ -10,7 +10,7 @@
 #'
 
 tcspoints <- function(tcsdata, size = 0.02, col = "black", alpha = 1) {
-  if (attr(tcsdata, "clrsp") != "tcs") stop("object is not in tetrahedral color space")
+  if (attr(tcsdata, "clrsp") != "tcs") stop("object is not in tetrahedral colour space")
 
   # check if rgl is installed and loaded
   if (!requireNamespace("rgl", quietly = TRUE)) {

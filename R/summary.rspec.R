@@ -1,7 +1,6 @@
-#' Colorimetric variables
+#' Colourimetric variables
 #'
-#' Calculates all 23 colorimetric variables reviewed in
-#' Montgomerie (2006).
+#' Calculates all 23 colourimetric variables reviewed in Montgomerie (2006).
 #'
 #' @param object (required) a data frame, possibly an object of class \code{rspec},
 #' with a column with wavelength data, named 'wl', and the remaining column containing

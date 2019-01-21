@@ -1,6 +1,6 @@
-#' Plot points in a colorspace
+#' Plot points in a colourspace
 #'
-#' Add points to a colorspace plot
+#' Add points to a colourspace plot
 #'
 #'
 #' @inheritParams plot.colspace

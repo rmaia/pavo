@@ -1,6 +1,4 @@
-#' Plot a tetrahedral color space
-#'
-#' Produces a 3D convex hull in tetrahedral color space
+#' Produces a 3D convex hull in tetrahedral colour space
 #'
 #' @param grid.alpha transparency of the volume polygon grid lines
 #' @param grid if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})

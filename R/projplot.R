@@ -1,6 +1,6 @@
-#' Hue projection plot
+#' 2D projection of a tetrahedral colourspace
 #'
-#' Produces a 2D projection plot of points in a tetrahedral color space
+#' Produces a 2D projection plot of points in a tetrahedral colour space
 #'
 #' @param tcsdata (required) tetrahedral color space coordinates, possibly a result from \code{\link{colspace}},
 #' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).

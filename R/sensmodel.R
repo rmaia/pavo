@@ -1,4 +1,4 @@
-#' modeling spectral sensitivity
+#' Modeling spectral sensitivity
 #'
 #' Models spectral sensitivity (with oil droplets; optional) based on peak cone sensitivity
 #' according to the models of Govardovskii et al. (2000) and Hart & Vorobyev (2005).

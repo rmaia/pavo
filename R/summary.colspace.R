@@ -1,16 +1,16 @@
-#' Colorspace data summary
+#' Colourspace data summary
 #'
 #' Returns the attributes of \code{colspace} objects.
 #'
 #' @param object (required) a \code{colspace} object.
-#' @param by when the input is in \code{tcs} colorspace, \code{by} is either
-#'  a single value specifying the range of color points for which
-#'  summary tetrahedral-colorspace variables should be calculated (for example, \code{by} = 3
-#'  indicates summary will be calculated for groups of 3 consecutive color points (rows)
-#'  in the quantum catch color data frame) or a vector containing identifications for
-#'  the rows in the quantum catch color data frame (in which case summaries will be
+#' @param by when the input is in \code{tcs} colourspace, \code{by} is either
+#'  a single value specifying the range of colour points for which
+#'  summary tetrahedral-colourspace variables should be calculated (for example, \code{by} = 3
+#'  indicates summary will be calculated for groups of 3 consecutive colour points (rows)
+#'  in the quantum catch colour data frame) or a vector containing identifications for
+#'  the rows in the quantum catch colour data frame (in which case summaries will be
 #'  calculated for each group of points sharing the same identification). If \code{by}
-#'  is left blank, the summary statistics are calculated across all color points in the
+#'  is left blank, the summary statistics are calculated across all colour points in the
 #'  data.
 #' @param ... class consistency (ignored).
 #'

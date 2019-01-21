@@ -1,7 +1,7 @@
-#' Plot reference axes in a static tetrahedral colorspace
+#' Plot reference axes in a static tetrahedral colourspace
 #'
 #' Plots reference x, y and z arrows showing the direction of
-#' the axes in a static tetrahedral colorspace plot.
+#' the axes in a static tetrahedral colourspace plot.
 #'
 #' @param x,y position of the legend relative to plot limits
 #'  (usually a value between 0 and 1, but because of the perspective distortion,
@@ -16,7 +16,7 @@
 #' @param label.cex,label.col graphical parameters for the labels.
 #'
 #' @return \code{axistetra} adds reference arrows showing the direction of the
-#' 3-dimensional axes in a static tetrahedral colorspace plot.
+#' 3-dimensional axes in a static tetrahedral colourspace plot.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
