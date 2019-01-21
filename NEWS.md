@@ -1,8 +1,12 @@
 # pavo 2.1.0
 
-## NEW FEATURES
+## NEW FEATURES AND POTENTIALLY BREAKING CHANGES
 
 * added the rod sensitivity of _Canis familiaris_
+* `peakshape()` uses a completely different algorithm to find the FWHM. It now
+works as expected for spectra with multiple peaks. See PR #137 for a detailed 
+overview of the changes.
+* data used internally by pavo (`bgandilum`, `transmissiondata`, `ttvertex`, `vissyst`) is no longer exposed to users
 
 ## MINOR FEATURES AND BUG FIXES
 
@@ -17,14 +21,14 @@ features of `procimg()`.
 custom spectra labels in stacked plots.
 * users now receive a warning when interpolating beyond the limits of the data using `as.rspec`, and can control the behaviour with the new argument `exceed.limits`. 
 * all deprecated functions and arguments have now been fully removed.
-* `as.rspec()` now accepts both numeric and character vectors to identify the wavelength column using `whichwl`.  
+* `as.rspec()` now accepts both numeric and character vectors to identify the wavelength column using `whichwl` (eg. `whichwl = "wl"`).  
 * Reference images in `classify()` can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).  
 * fixed a bug in `aggspec()` when wavelength column was previously removed by the user.
+* fixed a bug where `cocplot()` would failed whenever `type` graphical parameter was specified.
+* `spec2rgb()` has been simplified to rely more on `vismodel()`. As a result, output values may be slightly different but upon testing, we found that differences between the old and the new version were barely noticeable.
+* the vignette have been split into three smaller parts, which should help new users to get started with pavo
 * numerous under-the-hood changes for stability and speed, with thanks to 
 three reviewers and an associate editor at MEE.
-* `peakshape()` uses a completely different algorithm to find the FWHM. It now
-works as expected for spectra with multiple peaks. See PR #137 for a detailed 
-overview of the changes.
 
 # pavo 2.0.0
 
