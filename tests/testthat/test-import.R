@@ -27,8 +27,8 @@ test_that("getspec", {
   expect_length(proc, 4)
 
   # getspec should ignore the case of the ext argument by default
-  proccase <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "procspec"))
-  expect_identical(proccase, proc)
+  #proccase <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "procspec"))
+  #expect_identical(proccase, proc)
 
   trm <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "TRM"))
   expect_is(trm, "rspec")
