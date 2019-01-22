@@ -2,7 +2,7 @@
 % Please edit documentation in R/points.colspace.R
 \name{points.colspace}
 \alias{points.colspace}
-\title{Plot points in a colorspace}
+\title{Plot points in a colourspace}
 \usage{
 \method{points}{colspace}(x, ...)
 }
@@ -17,7 +17,7 @@
  based on openGL capabilities.
 }
 \description{
-Add points to a colorspace plot
+Add points to a colourspace plot
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

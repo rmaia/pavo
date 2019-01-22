@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensmodel.R
 \name{sensmodel}
 \alias{sensmodel}
-\title{modeling spectral sensitivity}
+\title{Modeling spectral sensitivity}
 \usage{
 sensmodel(peaksens, range = c(300, 700), lambdacut = NULL,
   Bmid = NULL, oiltype = NULL, beta = TRUE, om = NULL,

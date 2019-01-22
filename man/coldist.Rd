@@ -2,7 +2,7 @@
 % Please edit documentation in R/coldist.R
 \name{coldist}
 \alias{coldist}
-\title{Color distances}
+\title{Colour distances}
 \usage{
 coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
   achromatic = FALSE, qcatch = NULL, n = c(1, 2, 2, 4),
@@ -10,7 +10,7 @@ coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
   n3, n4)
 }
 \arguments{
-\item{modeldata}{(required) quantum catch color data. Can be the result
+\item{modeldata}{(required) quantum catch colour data. Can be the result
 from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches,
 in the form of a data frame with columns representing photoreceptors.}
 
@@ -90,8 +90,8 @@ color-opponent-coding space, green-receptor contrast in the hexagon, and lightne
 contrast in the cielab model.
 }
 \description{
-Calculates color distances. When data are the result of \code{\link{vismodel}},
-it applies the receptor-noise model of Vorobyev et al. (1998) to calculate color distances
+Calculates colour distances. When data are the result of \code{\link{vismodel}},
+it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
 with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data
 from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
 distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.

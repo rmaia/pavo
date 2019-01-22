@@ -3,7 +3,7 @@
 \name{projplot}
 \alias{projplot}
 \alias{projpoints}
-\title{Hue projection plot}
+\title{2D projection of a tetrahedral colourspace}
 \usage{
 projplot(tcsdata, ...)
 
@@ -23,7 +23,7 @@ to its encapsulating sphere, and is ideal to visualize differences in hue.
 produced by \code{projplot}.
 }
 \description{
-Produces a 2D projection plot of points in a tetrahedral color space
+Produces a 2D projection plot of points in a tetrahedral colour space
 
 Adds points to a tetrahedral colorspace projection
 }

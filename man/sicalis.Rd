@@ -3,7 +3,7 @@
 \docType{data}
 \name{sicalis}
 \alias{sicalis}
-\title{Spectral curves from three body regions of Stripe-Tailed Yellow Finch
+\title{Spectral curves from three body regions of stripe-tailed yellow finch
 (\emph{Sicalis citrina}) males}
 \description{
 dataset containing reflectance measurements from 3 body parts

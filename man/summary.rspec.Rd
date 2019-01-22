@@ -2,7 +2,7 @@
 % Please edit documentation in R/summary.rspec.R
 \name{summary.rspec}
 \alias{summary.rspec}
-\title{Colorimetric variables}
+\title{Colourimetric variables}
 \usage{
 \method{summary}{rspec}(object, subset = FALSE, wlmin = NULL,
   wlmax = NULL, ...)
@@ -103,8 +103,7 @@ H5 (Hue): Wavelength at bmax. Sensitive to noise and may be variable if there is
 more than one maxima and minima. REF 5
 }
 \description{
-Calculates all 23 colorimetric variables reviewed in
-Montgomerie (2006).
+Calculates all 23 colourimetric variables reviewed in Montgomerie (2006).
 }
 \note{
 If minimum wavelength is over 400, UV chroma is not computed.

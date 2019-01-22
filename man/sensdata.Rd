@@ -2,7 +2,7 @@
 % Please edit documentation in R/sensdata.R
 \name{sensdata}
 \alias{sensdata}
-\title{Retrieve or plot in-built data}
+\title{Retrieve or plot in-built spectral sensitivity data}
 \usage{
 sensdata(visual = c("none", "all", "avg.uv", "avg.v", "bluetit",
   "ctenophorus", "star", "pfowl", "apis", "canis", "cie2", "cie10",
@@ -84,7 +84,7 @@ An object of class \code{rspec} (when \code{plot = FALSE}), containing
 a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
 }
 \description{
-Retrieve (as an rspec object) or plot pavo's in-built spectral data.
+Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.
 }
 \examples{
 # Plot the honeybee's receptors

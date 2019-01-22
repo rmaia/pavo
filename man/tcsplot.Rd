@@ -25,7 +25,7 @@ coordinates as columns (labeled as such).}
 
 \item{alpha}{transparency of points (or volume fill in \code{tcsvol})}
 
-\item{col}{color of the points in the plot (defaults to black)}
+\item{col}{colour of the points in the plot (defaults to black)}
 
 \item{vertexsize}{size of the points at the vertices}
 
@@ -33,7 +33,7 @@ coordinates as columns (labeled as such).}
 
 \item{achrosize}{size of the point in the achromatic centre}
 
-\item{achrocol}{color of the point in the achromatic centre}
+\item{achrocol}{colour of the point in the achromatic centre}
 
 \item{lwd, lcol}{graphical parameters for the edges of the tetrahedron.}
 
@@ -60,7 +60,7 @@ third button: zoom). \code{tcsvol} creates polygon based on points, determining 
 occupied by them in the colorspace. \code{tcspoints} adds points to the plot. Points are
 currently plotted only as spheres to maintain export capabilities.
 
-\code{tcspoints} creates 3D points in a tetrahedral color space plot produced by \code{tcsplot}
+\code{tcspoints} creates 3D points in a tetrahedral colour space plot produced by \code{tcsplot}
 using functions of the package \code{rgl}, based on openGL capabilities.
 
 \code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
@@ -69,9 +69,7 @@ using functions of the package \code{rgl}, based on openGL capabilities.
 Produces an interactive 3D plot of a tetrahedral
 colorspace using OpenGL capabilities.
 
-Plots points in a tetrahedral color space
-
-Produces a 3D convex hull in tetrahedral color space
+Plots points in a tetrahedral colour space
 }
 \examples{
 \dontrun{

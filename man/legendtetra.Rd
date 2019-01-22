@@ -2,7 +2,7 @@
 % Please edit documentation in R/legendtetra.R
 \name{legendtetra}
 \alias{legendtetra}
-\title{Add legend to a static tetrahedral colorspace}
+\title{Add legend to a static tetrahedral colourspace}
 \usage{
 legendtetra(x = 0.8, y = 1.2, ...)
 }
@@ -14,12 +14,12 @@ values greater than 1 are possible)}
 \item{...}{additional arguments passed to \code{\link{legend}}.}
 }
 \value{
-\code{legendtetra} adds a legend to a static tetrahedral colorspace plot.
+\code{legendtetra} adds a legend to a static tetrahedral colourspace plot.
 for additional information on which arguments are necessary and how they are used,
 see \code{\link{legend}}.
 }
 \description{
-Adds a legend to a static tetrahedral colorspace plot.
+Adds a legend to a static tetrahedral colourspace plot.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/axistetra.R
 \name{axistetra}
 \alias{axistetra}
-\title{Plot reference axes in a static tetrahedral colorspace}
+\title{Plot reference axes in a static tetrahedral colourspace}
 \usage{
 axistetra(x = 0, y = 1.3, size = 0.1, arrowhead = 0.05,
   col = par("fg"), lty = par("lty"), lwd = par("lwd"),
@@ -30,11 +30,11 @@ for x, y and z arrows, each with 2 values for x and y adjustment.}
 }
 \value{
 \code{axistetra} adds reference arrows showing the direction of the
-3-dimensional axes in a static tetrahedral colorspace plot.
+3-dimensional axes in a static tetrahedral colourspace plot.
 }
 \description{
 Plots reference x, y and z arrows showing the direction of
-the axes in a static tetrahedral colorspace plot.
+the axes in a static tetrahedral colourspace plot.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
