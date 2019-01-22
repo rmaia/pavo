@@ -5,11 +5,11 @@
 #' contrast (Endler & Mielke 2005).
 #'
 #' @param classimg (required) an xyz matrix, or list of matrices, in which
-#' x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code 
+#' x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
 #' specifying a colour-class. Preferably the result of \code{\link{classify}}, or constructed
 #' from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).
 #' @param xpts an integer specifying the number of sample points along the x axis,
-#' from which the evenly-spaced sampling grid is constructed (if required). Defaults 
+#' from which the evenly-spaced sampling grid is constructed (if required). Defaults
 #' to the smallest dimension of \code{classimg}, though this should be carefully considered.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
 #' in preferred units. Not required, and ignored, only if image scales have been set via
@@ -28,7 +28,7 @@
 #' pertaining to the background alone, for relatively homogeneous and uniquely-identified
 #' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
 #' call \code{summary} on, the result of \code{\link{classify}} to visualise the RGB
-#' values corresponding to colour-class ID numbers for classified images. Ignored 
+#' values corresponding to colour-class ID numbers for classified images. Ignored
 #' if the focal object and background has been identified using \code{\link{procimg}}.
 #' @param polygon a data.frame of x-y coordinates delineating a closed polygon that
 #' separates the focal object from the background. Not required, and ignored, if the
@@ -131,10 +131,10 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
-#' adjacent colours. Biological Journal Of The Linnean Society, 86(4), 405-431.
-#' @references Endler, J. A., Cole G., Kranz A.  (2018). Boundary Strength Analysis:
+#' adjacent colours. Biological Journal Of The Linnean Society, 107(2), 233-253.
+#' @references Endler, J. A., Cole G., Kranz A. (2018). Boundary Strength Analysis:
 #' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
-#' and fitness. bioRxiv.
+#' and fitness. Methods in Ecology and Evolution, 9(12), 2334-2348.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
@@ -147,10 +147,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 
   ## Single or multiple images?
   multi_image <- inherits(classimg, "list")
-  
-  # Prepare if it's user-generated, and not the result of classify() 
+
+  # Prepare if it's user-generated, and not the result of classify()
   # if(!inherits(rimg, "list")){
-  # 
+  #
   # }
 
   ## If it's a single image, store it in a list for processing convenience,
@@ -253,7 +253,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   # Set to smallest dimension by default
   if(is.null(xpts))
     xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
-  
+
   xpts <- as.list(rep(xpts, length(classimg)))
 
   ## ------------------------------ Main ------------------------------ ##
