@@ -116,7 +116,7 @@
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -136,16 +136,19 @@
       <small>Source: <a href='https://github.com/rmaia/pavo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
-    <div id="pavo-2-1-0" class="section level1">
+    <div id="pavo-210" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-2-1-0" class="anchor"></a>pavo 2.1.0<small> Unreleased </small>
+<a href="#pavo-210" class="anchor"></a>pavo 2.1.0<small> Unreleased </small>
 </h1>
-<div id="new-features" class="section level2">
+<div id="new-features-and-potentially-breaking-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-and-potentially-breaking-changes" class="anchor"></a>NEW FEATURES AND POTENTIALLY BREAKING CHANGES</h2>
 <ul>
 <li>added the rod sensitivity of <em>Canis familiaris</em>
 </li>
+<li>
+<code><a href="../reference/peakshape.html">peakshape()</a></code> uses a completely different algorithm to find the FWHM. It now works as expected for spectra with multiple peaks. See PR <a href='https://github.com/rmaia/pavo/issues/137'>#137</a> for a detailed overview of the changes.</li>
+<li>data used internally by pavo (<code>bgandilum</code>, <code>transmissiondata</code>, <code>ttvertex</code>, <code>vissyst</code>) is no longer exposed to users</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes" class="section level2">
@@ -159,24 +162,26 @@
 <li>users now receive a warning when interpolating beyond the limits of the data using <code>as.rspec</code>, and can control the behaviour with the new argument <code>exceed.limits</code>.</li>
 <li>all deprecated functions and arguments have now been fully removed.</li>
 <li>
-<code><a href="../reference/as.rspec.html">as.rspec()</a></code> now accepts both numeric and character vectors to identify the wavelength column using <code>whichwl</code>.<br>
+<code><a href="../reference/as.rspec.html">as.rspec()</a></code> now accepts both numeric and character vectors to identify the wavelength column using <code>whichwl</code> (eg. <code>whichwl = "wl"</code>).<br>
 </li>
 <li>Reference images in <code><a href="../reference/classify.html">classify()</a></code> can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).<br>
 </li>
 <li>fixed a bug in <code><a href="../reference/aggspec.html">aggspec()</a></code> when wavelength column was previously removed by the user.</li>
-<li>numerous under-the-hood changes for stability and speed, with thanks to three reviewers and an associate editor at MEE.</li>
+<li>fixed a bug where <code><a href="../reference/cocplot.html">cocplot()</a></code> would failed whenever <code>type</code> graphical parameter was specified.</li>
 <li>
-<code><a href="../reference/peakshape.html">peakshape()</a></code> uses a completely different algorithm to find the FWHM. It now works as expected for spectra with multiple peaks. See PR <a href='https://github.com/rmaia/pavo/issues/137'>#137</a> for a detailed overview of the changes.</li>
+<code><a href="../reference/spec2rgb.html">spec2rgb()</a></code> has been simplified to rely more on <code><a href="../reference/vismodel.html">vismodel()</a></code>. As a result, output values may be slightly different but upon testing, we found that differences between the old and the new version were barely noticeable.</li>
+<li>the vignette have been split into three smaller parts, which should help new users to get started with pavo</li>
+<li>numerous under-the-hood changes for stability and speed, with thanks to three reviewers and an associate editor at MEE.</li>
 </ul>
 </div>
 </div>
-    <div id="pavo-2-0-0" class="section level1">
+    <div id="pavo-200" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-2-0-0" class="anchor"></a>pavo 2.0.0<small> 2018-09-22 </small>
+<a href="#pavo-200" class="anchor"></a>pavo 2.0.0<small> 2018-09-22 </small>
 </h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>image-based workflow for the combined analysis of colour and pattern geometry</li>
 <li>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em>
@@ -198,13 +203,13 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-4-0" class="section level1">
+    <div id="pavo-140" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-4-0" class="anchor"></a>pavo 1.4.0<small> 2018-07-11 </small>
+<a href="#pavo-140" class="anchor"></a>pavo 1.4.0<small> 2018-07-11 </small>
 </h1>
-<div id="new-features-2" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>
 <code><a href="../reference/getspec.html">getspec()</a></code> can now read OceanOptics <code>.ProcSpec</code> files</li>
@@ -252,9 +257,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-3-1" class="section level1">
+    <div id="pavo-131" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-3-1" class="anchor"></a>pavo 1.3.1<small> 2017-10-02 </small>
+<a href="#pavo-131" class="anchor"></a>pavo 1.3.1<small> 2017-10-02 </small>
 </h1>
 <div id="new-functions" class="section level2">
 <h2 class="hasAnchor">
@@ -274,9 +279,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-3-0" class="section level1">
+    <div id="pavo-130" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-3-0" class="anchor"></a>pavo 1.3.0<small> 2017-09-20 </small>
+<a href="#pavo-130" class="anchor"></a>pavo 1.3.0<small> 2017-09-20 </small>
 </h1>
 <div id="new-functions-1" class="section level2">
 <h2 class="hasAnchor">
@@ -320,9 +325,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-2-0" class="section level1">
+    <div id="pavo-120" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-2-0" class="anchor"></a>pavo 1.2.0<small> Unreleased </small>
+<a href="#pavo-120" class="anchor"></a>pavo 1.2.0<small> Unreleased </small>
 </h1>
 <div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
@@ -341,9 +346,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-1-0" class="section level1">
+    <div id="pavo-110" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-1-0" class="anchor"></a>pavo 1.1.0<small> 2017-05-05 </small>
+<a href="#pavo-110" class="anchor"></a>pavo 1.1.0<small> 2017-05-05 </small>
 </h1>
 <div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
@@ -370,9 +375,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-1-0" class="section level1">
+    <div id="pavo-10" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-1-0" class="anchor"></a>pavo 1.0<small> Unreleased </small>
+<a href="#pavo-10" class="anchor"></a>pavo 1.0<small> Unreleased </small>
 </h1>
 <ul>
 <li>See vignette for detailed description of changes.</li>
@@ -418,9 +423,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5-6" class="section level1">
+    <div id="pavo-05-6" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5-6" class="anchor"></a>pavo 0.5-6<small> 2016-10-20 </small>
+<a href="#pavo-05-6" class="anchor"></a>pavo 0.5-6<small> 2016-10-20 </small>
 </h1>
 <div id="bug-fixes" class="section level2">
 <h2 class="hasAnchor">
@@ -430,9 +435,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5-5" class="section level1">
+    <div id="pavo-05-5" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5-5" class="anchor"></a>pavo 0.5-5<small> 2016-03-09 </small>
+<a href="#pavo-05-5" class="anchor"></a>pavo 0.5-5<small> 2016-03-09 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
@@ -442,9 +447,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5-4" class="section level1">
+    <div id="pavo-05-4" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5-4" class="anchor"></a>pavo 0.5-4<small> 2016-01-28 </small>
+<a href="#pavo-05-4" class="anchor"></a>pavo 0.5-4<small> 2016-01-28 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
@@ -454,9 +459,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5-2" class="section level1">
+    <div id="pavo-05-2" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5-2" class="anchor"></a>pavo 0.5-2<small> 2015-06-11 </small>
+<a href="#pavo-05-2" class="anchor"></a>pavo 0.5-2<small> 2015-06-11 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
@@ -466,9 +471,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5-1" class="section level1">
+    <div id="pavo-05-1" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5-1" class="anchor"></a>pavo 0.5-1<small> 2013-09-04 </small>
+<a href="#pavo-05-1" class="anchor"></a>pavo 0.5-1<small> 2013-09-04 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
@@ -481,9 +486,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-5" class="section level1">
+    <div id="pavo-05" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-5" class="anchor"></a>pavo 0.5<small> 2013-06-09 </small>
+<a href="#pavo-05" class="anchor"></a>pavo 0.5<small> 2013-06-09 </small>
 </h1>
 <ul>
 <li>updated citation()</li>
@@ -499,9 +504,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-3-1" class="section level1">
+    <div id="pavo-03-1" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-3-1" class="anchor"></a>pavo 0.3-1<small> 2013-05-06 </small>
+<a href="#pavo-03-1" class="anchor"></a>pavo 0.3-1<small> 2013-05-06 </small>
 </h1>
 <div id="new-functions-4" class="section level2">
 <h2 class="hasAnchor">
@@ -521,9 +526,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-3" class="section level1">
+    <div id="pavo-03" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-3" class="anchor"></a>pavo 0.3<small> 2013-04-23 </small>
+<a href="#pavo-03" class="anchor"></a>pavo 0.3<small> 2013-04-23 </small>
 </h1>
 <div id="new-functions-5" class="section level2">
 <h2 class="hasAnchor">
@@ -561,9 +566,9 @@
 </ul>
 </div>
 </div>
-    <div id="pavo-0-1-2" class="section level1">
+    <div id="pavo-01-2" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-0-1-2" class="anchor"></a>pavo 0.1-2<small> 2013-01-12 </small>
+<a href="#pavo-01-2" class="anchor"></a>pavo 0.1-2<small> 2013-01-12 </small>
 </h1>
 <div id="new-functions-6" class="section level2">
 <h2 class="hasAnchor">
@@ -615,23 +620,23 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pavo-2-1-0">2.1.0</a></li>
-        <li><a href="#pavo-2-0-0">2.0.0</a></li>
-        <li><a href="#pavo-1-4-0">1.4.0</a></li>
-        <li><a href="#pavo-1-3-1">1.3.1</a></li>
-        <li><a href="#pavo-1-3-0">1.3.0</a></li>
-        <li><a href="#pavo-1-2-0">1.2.0</a></li>
-        <li><a href="#pavo-1-1-0">1.1.0</a></li>
-        <li><a href="#pavo-1-0">1.0</a></li>
-        <li><a href="#pavo-0-5-6">0.5-6</a></li>
-        <li><a href="#pavo-0-5-5">0.5-5</a></li>
-        <li><a href="#pavo-0-5-4">0.5-4</a></li>
-        <li><a href="#pavo-0-5-2">0.5-2</a></li>
-        <li><a href="#pavo-0-5-1">0.5-1</a></li>
-        <li><a href="#pavo-0-5">0.5</a></li>
-        <li><a href="#pavo-0-3-1">0.3-1</a></li>
-        <li><a href="#pavo-0-3">0.3</a></li>
-        <li><a href="#pavo-0-1-2">0.1-2</a></li>
+        <li><a href="#pavo-210">2.1.0</a></li>
+        <li><a href="#pavo-200">2.0.0</a></li>
+        <li><a href="#pavo-140">1.4.0</a></li>
+        <li><a href="#pavo-131">1.3.1</a></li>
+        <li><a href="#pavo-130">1.3.0</a></li>
+        <li><a href="#pavo-120">1.2.0</a></li>
+        <li><a href="#pavo-110">1.1.0</a></li>
+        <li><a href="#pavo-10">1.0</a></li>
+        <li><a href="#pavo-05-6">0.5-6</a></li>
+        <li><a href="#pavo-05-5">0.5-5</a></li>
+        <li><a href="#pavo-05-4">0.5-4</a></li>
+        <li><a href="#pavo-05-2">0.5-2</a></li>
+        <li><a href="#pavo-05-1">0.5-1</a></li>
+        <li><a href="#pavo-05">0.5</a></li>
+        <li><a href="#pavo-03-1">0.3-1</a></li>
+        <li><a href="#pavo-03">0.3</a></li>
+        <li><a href="#pavo-01-2">0.1-2</a></li>
       </ul>
     </div>
   </div>
@@ -644,7 +649,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>

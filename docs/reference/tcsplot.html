@@ -40,8 +40,7 @@
 
 <meta property="og:description" content="Produces an interactive 3D plot of a tetrahedral
 colorspace using OpenGL capabilities.
-Plots points in a tetrahedral color space
-Produces a 3D convex hull in tetrahedral color space" />
+Plots points in a tetrahedral colour space" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -122,7 +121,7 @@ Produces a 3D convex hull in tetrahedral color space" />
 </li>
       </ul>
       
-      <form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
+      <form class="navbar-form navbar-right" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
         </div>
@@ -147,8 +146,7 @@ Produces a 3D convex hull in tetrahedral color space" />
     
     <p>Produces an interactive 3D plot of a tetrahedral
 colorspace using OpenGL capabilities.</p>
-<p>Plots points in a tetrahedral color space</p>
-<p>Produces a 3D convex hull in tetrahedral color space</p>
+<p>Plots points in a tetrahedral colour space</p>
     
     </div>
 
@@ -181,7 +179,7 @@ coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>col</th>
-      <td><p>color of the points in the plot (defaults to black)</p></td>
+      <td><p>colour of the points in the plot (defaults to black)</p></td>
     </tr>
     <tr>
       <th>vertexsize</th>
@@ -197,7 +195,7 @@ coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>achrocol</th>
-      <td><p>color of the point in the achromatic centre</p></td>
+      <td><p>colour of the point in the achromatic centre</p></td>
     </tr>
     <tr>
       <th>lwd, lcol</th>
@@ -242,7 +240,7 @@ based on openGL capabilities. Plot is interactive and can be manipulated with th
 third button: zoom). <code>tcsvol</code> creates polygon based on points, determining the volume
 occupied by them in the colorspace. <code>tcspoints</code> adds points to the plot. Points are
 currently plotted only as spheres to maintain export capabilities.</p>
-<p><code>tcspoints</code> creates 3D points in a tetrahedral color space plot produced by <code>tcsplot</code>
+<p><code>tcspoints</code> creates 3D points in a tetrahedral colour space plot produced by <code>tcsplot</code>
 using functions of the package <code>rgl</code>, based on openGL capabilities.</p>
 <p><code>tcsvol</code> creates a 3D convex hull within a <code>tcsplot</code> object.</p>
     
@@ -256,8 +254,8 @@ using functions of the package <code>rgl</code>, based on openGL capabilities.</
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>spheres3d</code>,<code>rgl.postscript</code>,
-<code>rgl.snapshot</code>,<code>rgl.material</code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/rgl/topics/spheres'>spheres3d</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/postscript'>rgl.postscript</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl.snapshot</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/material'>rgl.material</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -267,8 +265,8 @@ using functions of the package <code>rgl</code>, based on openGL capabilities.</
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>'avg.uv'</span>)
 <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>'tcs'</span>)
 <span class='fu'>tcsplot</span>(<span class='no'>tcs.sicalis</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
-<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'>rgl.postscript</span>(<span class='st'>'testplot.pdf'</span>,<span class='kw'>fmt</span><span class='kw'>=</span><span class='st'>'pdf'</span>)
-<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'>rgl.snapshot</span>(<span class='st'>'testplot.png'</span>)
+<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/postscript'>rgl.postscript</a></span>(<span class='st'>'testplot.pdf'</span>,<span class='kw'>fmt</span><span class='kw'>=</span><span class='st'>'pdf'</span>)
+<span class='kw pkg'>rgl</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl.snapshot</a></span>(<span class='st'>'testplot.png'</span>)
 
 <span class='co'># For adding points</span>
 <span class='no'>patch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/rep'>rep</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>'C'</span>, <span class='st'>'T'</span>, <span class='st'>'B'</span>), <span class='fl'>7</span>)
@@ -308,7 +306,7 @@ using functions of the package <code>rgl</code>, based on openGL capabilities.</
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
       </footer>
    </div>
