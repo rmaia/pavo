@@ -105,7 +105,7 @@ as.rspec <- function(object, whichwl = NULL,
     )
   }
 
-  l1.dat <- ceiling(wl[which.min(wl)]) # lower wavelength limit of given data
+  l1.dat <- floor(wl[which.min(wl)]) # lower wavelength limit of given data
   l2.dat <- floor(wl[which.max(wl)]) # upper wavelength limit of given data
 
   # Get data limits
