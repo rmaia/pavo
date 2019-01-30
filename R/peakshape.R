@@ -106,12 +106,12 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
             call. = FALSE)
   }
 
-  hilo <- t(t(rspecdata2) - halfmax) > 0
+  hilo <- t(t(rspecdata2) - halfmax) < 0
 
   FWHM_lims <- sapply(seq_len(ncol(rspecdata2)), function(x) {
     # Start at H1 and find first value below halfmax
-    fstHM <- match(FALSE, hilo[seq(Xi[x], 1, -1), x])
-    sndHM <- match(FALSE, hilo[Xi[x]:nrow(rspecdata2), x])
+    fstHM <- match(TRUE, hilo[seq(Xi[x], 1, -1), x])
+    sndHM <- match(TRUE, hilo[Xi[x]:nrow(rspecdata2), x])
     return(c(fstHM, sndHM))
   })
 
@@ -123,8 +123,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   }
 
   hue <- wlrange[Xi]
-  Xa <- wlrange[Xi - FWHM_lims[1,]]
-  Xb <- wlrange[Xi + FWHM_lims[2,]]
+
+  # Shift FWHM_lims by 1 because we calculated the index by including H1.
+  Xa <- wlrange[Xi - FWHM_lims[1,]+1]
+  Xb <- wlrange[Xi + FWHM_lims[2,]-1]
 
   if (plot) {
     oPar <- par("ask")
