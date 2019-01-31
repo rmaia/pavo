@@ -32,7 +32,7 @@ test_that("sensdata", {
 test_that("peakshape", {
   data(flowers)
 
-  expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(916, 3317))
+  expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(216, 2617))
 
   test <- read.csv("known_output/FWHM_lims.csv")
   expect_equal(peakshape(test, plot = FALSE)[,4], c(144, 52))

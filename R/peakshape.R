@@ -62,19 +62,29 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     lim <- range(wl)
   }
 
-  # subset based on indexing vector
-  if (is.logical(select)) {
-    select <- which(select)
-  }
+
   if (is.null(select)) {
     select <- seq_along(rspecdata)
-
-    if (haswl) {
-      select <- select[-wl_index]
+  }
+  else {
+    # subset based on indexing vector
+    if (is.logical(select)) {
+      select <- which(select)
+    }
+    if (isTRUE(wl_index %in% select)) {
+      warning("Cannot calculate peak shape on wavelength index", call. = FALSE)
     }
   }
 
+  if (haswl) {
+    select <- setdiff(select, wl_index)
+  }
+
   rspecdata <- as.data.frame(rspecdata[, select, drop = FALSE])
+
+  if (ncol(rspecdata) == 0) {
+    return(NULL)
+  }
 
   wlrange <- seq(lim[1], lim[2])
 
