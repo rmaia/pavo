@@ -1,7 +1,7 @@
 # `pavo`
 
-[![cran version](http://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
-[![cran downloads](http://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
+[![cran version](https://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
+[![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
 [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)
 [![Coverage status](https://codecov.io/gh/rmaia/pavo/branch/master/graph/badge.svg)](https://codecov.io/github/rmaia/pavo?branch=master)  
 
