@@ -75,7 +75,7 @@ specs <- getspec("~/pavo/data_external/vignette", ext = "ttt", decimal = ",", su
 For convenience, however, we've included the spectra as an RData file in the package installation, and so will simply load it directly.
 
 ```{r}
-specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
+specs <- readRDS(system.file("extdata/specsdata.rds", package = "pavo"))
 ```
 
 And we can inspect the resulting object:

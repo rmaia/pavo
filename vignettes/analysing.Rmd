@@ -61,7 +61,7 @@ The data consist of reflectance spectra, obtained using Avantes equipment and so
 In addition, `pavo` includes three datasets that can be called with the `data` function. `data(teal)`, `data(sicalis)`, and `data(flowers)` will all be used in this vignette. See the help files for each dataset for more information; via `?teal`, `?sicalis`, and `?flowers`.
 
 ```{r}
-specs <- readRDS(system.file("extdata/specsdata.rda", package = "pavo"))
+specs <- readRDS(system.file("extdata/specsdata.rds", package = "pavo"))
 mspecs <- aggspec(specs, by = 3, FUN = mean)
 spp <- gsub('\\.[0-9].*$', '', names(mspecs))[-1]
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
