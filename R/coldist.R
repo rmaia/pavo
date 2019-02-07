@@ -66,8 +66,6 @@
 #' 	objects of class \code{vismodel}.
 #' }
 #'
-#' @param n1,n2,n3,n4,v deprecated arguments. see below.
-#'
 #' @return A data frame containing up to 4 columns.
 #' The first two (\code{patch1, patch2}) refer
 #' to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
@@ -148,10 +146,10 @@
 
 
 coldist <- function(modeldata,
-                     noise = c("neural", "quantum"), subset = NULL,
-                     achromatic = FALSE, qcatch = NULL,
-                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest", weber.achro = 0.1,
-                     v, n1, n2, n3, n4) {
+                    noise = c("neural", "quantum"), subset = NULL,
+                    achromatic = FALSE, qcatch = NULL,
+                    n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
+                    weber.achro = 0.1) {
 
   ##################################
   # START RECEPTOR NOISE FUNCTIONS #
@@ -442,7 +440,8 @@ coldist <- function(modeldata,
   # transformations in case object is neither from colspace or vismodel
   if (!any(c("colspace", "vismodel") %in% class(modeldata))) {
     if (is.null(qcatch)) {
-      stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).")
+      stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
+           call. = FALSE)
     }
 
     dat <- as.matrix(modeldata)
