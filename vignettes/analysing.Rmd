@@ -462,7 +462,7 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.B, plot = TRUE)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 ```
 
-The function `voloverlap()` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\mathtt{vsmallest} = V_{overlap} / min(V_A, V_B)$$ and $$\mathtt{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
+The function `voloverlap()` gives the volume ($V$) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: $$\text{vsmallest} = V_{overlap} / min(V_A, V_B)$$ and $$\text{vboth} = V_{overlap} / (V_A + V_B)$$. Thus, if one of the volumes is entirely contained in the other, `vsmallest` will equal 1.
 
 So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).
 

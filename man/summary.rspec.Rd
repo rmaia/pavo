@@ -167,7 +167,7 @@ Functional Ecology 17:555-561.
 variation in ultraviolet-blue plumage colour. Proceedings of the Royal Society B
 270:1455-1460.
 
-12- Siefferman, L. and G. Hill. 2005. Uv-blue structural coloration and competition for nestboxes in male
+12- Siefferman, L. and G. Hill. 2005. UV-blue structural coloration and competition for nestboxes in male
 eastern bluebirds. Animal Behaviour 69:67-72.
 
 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance

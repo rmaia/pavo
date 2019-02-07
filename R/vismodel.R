@@ -9,7 +9,7 @@
 #' @param qcatch Which quantal catch metric to return. Options are:
 #' \itemize{
 #' \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
-#' \item \code{'fi'}: Quantum catch according to Fechner law (the signal of the receptor
+#' \item \code{'fi'}: Quantum catch according to Fechner's law (the signal of the receptor
 #'  channel is proportional to the logarithm of the quantum catch)
 #' \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 #' }
@@ -141,7 +141,7 @@
 #' @references CIE (2006). Fundamental chromaticity diagram with physiological axes.
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 #'  Internationale de l' Eclairage.
-#' @references Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog. 
+#' @references Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 #' Visual Neuroscience, 3, 119-125.
 #'
 

@@ -66,7 +66,7 @@ For suggestions, assistance and/or bug reports, we suggest getting in touch via 
 
 Most of the methods implemented in `pavo` have been thoroughly described in their original publications, to which users should refer for details and interpretation. For reflectance shape variables ("objective colourimetrics") and their particular relation to signal production and perception, see @Andersson2006 and @Montgomerie2006. Visual models based on photon catches and receptor noise are detailed in @Vorobyev1998 and @Vorobyev1998, and photoreceptor sensitivity curve estimation in @Govardovskii2000 and @Hart2005. For tetrahedral colourspace model implementations and variable calculations, see @Endler2005 and @Stoddard2008, and for colour volume overlap see @Stoddard2008 and @Stoddard2011. Adjacency and boundary strength analyses are described in @Endler2012 and @Endler2018, while overall pattern contrast is detailed in @Endler2005. Users of the functions that apply these methods must cite the original sources as appropriate, along with `pavo` itself.
 
-# Acknowledgments
+# Acknowledgements
 
 We would like to thank Matthew D. Shawkey and Stephanie M. Doucet for insights and support, and Jarrod D. Hadfield and Mary Caswell Stoddard for sharing code that helped us develop some of `pavo`'s capabilities.
 

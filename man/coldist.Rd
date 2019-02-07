@@ -43,7 +43,7 @@ instead returns simple long (or 'green') receptor contrast.}
  used, so that the noise can be calculated accordingly:
 \itemize{
  \item \code{Qi}: Quantum catch for each photoreceptor
- \item \code{fi}: Quantum catch according to Fechner law (the signal of the receptor
+ \item \code{fi}: Quantum catch according to Fechner's law (the signal of the receptor
    channel is proportional to the logarithm of the quantum catch)
  }}
 
