@@ -5,8 +5,8 @@
 \title{Process images}
 \usage{
 procimg(image, resize = NULL, rotate = NULL, scaledist = NULL,
-  outline = FALSE, smooth = FALSE, iterations = 1L, col = "red",
-  plotnew = FALSE, ...)
+  outline = FALSE, reclass = NULL, smooth = FALSE, iterations = 1L,
+  col = "red", plotnew = FALSE, ...)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
@@ -29,6 +29,11 @@ closed polygon are saved as an attribute, for use in generating a masking layer 
 separating animals/plants from backgrounds in further analyses. This is particularly
 useful when backgrounds are complex, such as in natural settings.}
 
+\item{reclass}{interactively specify an area on a colour-classified image that is
+to be reclassified as the numeric value provided. e.g. when \code{reclass = 1}, the user
+will be asked to select a polygon on the image, within which all colour-category values will be
+changes to \code{1}.}
+
 \item{smooth}{should the polygon specified when \code{outline = TRUE} be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.}
 
@@ -50,13 +55,12 @@ Specify scales, resize, and/or define focal objects within images.
 }
 \examples{
 # Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 papilio <- procimg(papilio, scaledist = 10)
 
 # Assign individual scales to each image, after slightly reducing their size.
-snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
-
 }
 \references{
 Chaikin, G. 1974. An algorithm for high speed curve generation.

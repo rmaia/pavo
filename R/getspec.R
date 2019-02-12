@@ -55,6 +55,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
     pattern = extension, ignore.case = ignore.case,
     recursive = subdir, include.dirs = subdir
   )
+  print(summary(file_names))
   
   file_names <- sort(file_names, method = "radix")
   

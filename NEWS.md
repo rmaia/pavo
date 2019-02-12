@@ -2,6 +2,8 @@
 
 ## NEW FEATURES AND POTENTIALLY BREAKING CHANGES
 
+* added the argument `reclass` to `procimg()`, which allows users to interactively
+correct areas within images that have been misclassified
 * added the rod sensitivity of _Canis familiaris_
 * `peakshape()` uses a completely different algorithm to find the FWHM. It now
 works as expected for spectra with multiple peaks. See PR #137 for a detailed 

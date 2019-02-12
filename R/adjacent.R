@@ -626,6 +626,7 @@ polymask <- function(imagedat,
 
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
   maskmat <- apply(as.matrix(maskmat), 1, rev)
+  maskmat <- rev(t(apply(as.matrix(maskmat), 1, rev))) # mirror (DOUBLECHECK)
   if (alter_which == "inside") {
     imagedat[which(maskmat == 1)] <- replacement_value
     imagedat[which(maskmat == 2)] <- replacement_value
