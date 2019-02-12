@@ -35,19 +35,18 @@ Imports:
     readbitmap,
     rcdd,
     sp,
-    stats,
-    utils
+    viridisLite
 Suggests:
-    covr,
+    digest,
     imager,
     knitr,
     mapproj,
     rgl,
+    rmarkdown,
     spelling,
     testthat,
     NbClust,
-    xml2,
-    digest
+    xml2
 VignetteBuilder: knitr
 RoxygenNote: 6.1.1
 Language: en-GB

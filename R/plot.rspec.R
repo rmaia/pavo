@@ -93,13 +93,8 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     if (is.null(arg$ylim)) {
       arg$ylim <- range(varying, na.rm = TRUE)
     }
-    if (is.null(arg$col) == 1) {
-      jc <- colorRampPalette(rev(c(
-        "#9E0142", "#D53E4F", "#F46D43", "#FDAE61",
-        "#FEE08B", "#FFFFBF", "#E6F598", "#ABDDA4",
-        "#66C2A5", "#3288BD", "#5E4FA2"
-      )))
-      arg$col <- jc(n)
+    if (is.null(arg$col)) {
+      arg$col <- viridisLite::cividis(n)
     } else {
       jc <- colorRampPalette(arg$col)
       arg$col <- jc(n)
