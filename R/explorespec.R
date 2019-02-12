@@ -19,7 +19,7 @@
 #' @note Number of plots presented per page depends on the number of graphs produced.
 #'
 #' @export
-#' 
+#'
 #' @importFrom grDevices n2mfrow
 #'
 #' @examples
@@ -43,10 +43,6 @@ explorespec <- function(rspecdata, by = NULL,
 
   scale <- match.arg(scale)
 
-  ## begin CE edit
-
-  by0 <- by
-
   # default by value
   if (is.null(by)) {
     by <- 1
@@ -60,7 +56,6 @@ explorespec <- function(rspecdata, by = NULL,
   # Allow for means of every "by" data, if "by" is a single number
   # i.e. if by=3, average every 3 consecutive data of "data"
   if (length(by) == 1) {
-    nms <- names(rspecdata)[seq(1, length(names(rspecdata)), by = by)]
     by <- rep(seq_len(length(rspecdata) / by), each = by)
   }
   # check: does data have the same number of columns as the by vector?
@@ -76,14 +71,8 @@ explorespec <- function(rspecdata, by = NULL,
 
   by <- factor(by)
 
-  # return(by)
-
   # number of 'by' groups
-  numby <- length(levels(by))
-  if (numby <= 0) stop("Invalid by value") # is this needed anymore?
-  nplots <- numby
-
-  ##### end CE edit
+  numby <- nlevels(by)
 
   # setup multi-panel plot parameters
   if (numby <= 4) {
@@ -102,8 +91,8 @@ explorespec <- function(rspecdata, by = NULL,
     yaxismult <- c(0.9, 1.8)
   }
 
-  if (nplots <= 16) {
-    par(mfrow = n2mfrow(nplots))
+  if (numby <= 16) {
+    par(mfrow = n2mfrow(numby))
   }
   else {
     par(ask = TRUE)
@@ -122,7 +111,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   par(mar = c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
 
-  if (all(is.null(arg$ylim), scale == "equal")) {
+  if (is.null(arg$ylim) && scale == "equal") {
     arg$ylim <- c(min(rspecdata), max(rspecdata)) * yaxismult
   }
 
@@ -132,7 +121,7 @@ explorespec <- function(rspecdata, by = NULL,
   }
 
   # Do the plotting
-  for (i in seq_len(nplots)) {
+  for (i in seq_len(numby)) {
     if (numby == 1) {
       bloc <- data.frame(rspecdata[i])
     } else {
