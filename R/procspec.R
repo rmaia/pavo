@@ -73,7 +73,7 @@ procspec <- function(rspecdata, opt = c(
 
   fixneg <- match.arg(fixneg)
 
-  applied <- "processing options applied:\n"
+  applied <- "processing options applied:"
 
   if (any(opt == "none")) {
     opt <- "none" # remove other opt arguments (so they are not called further on, but still allowing for fixneg to work)
@@ -104,57 +104,40 @@ procspec <- function(rspecdata, opt = c(
         family = "gaussian", evaluation = length(wl)
       )$y
     }, numeric(nrow(rspecdata)))
-    applied <- c(applied, paste("smoothing spectra with a span of", span, "\n"))
+    applied <- c(applied, paste("smoothing spectra with a span of", span))
   }
 
+  mins <- apply(rspecdata, 2, min)
+  maxs <- apply(rspecdata, 2, max)
+
   if (fixneg == "addmin") {
-    adm <- function(x) {
-      if (min(x) < 0) {
-        x + abs(min(x))
-      } else {
-        x
-      }
-    }
-    tempspc <- data.frame(vapply(seq_len(ncol(rspecdata)),
-      function(z) adm(rspecdata[, z]),
-      FUN.VALUE = numeric(nrow(rspecdata))
-    ))
-    names(tempspc) <- names(rspecdata)
-    rspecdata <- round(tempspc, 6)
-    applied <- c(applied, "Negative value correction: added min to all reflectance\n")
+    rspecdata <- t(t(rspecdata) + abs(pmin(0, mins)))
+    applied <- c(applied, "Negative value correction: added min to all reflectance")
   }
 
   if (fixneg == "zero") {
-    rspecdata[rspecdata < 0 ] <- 0
-    applied <- c(applied, "Negative value correction: converted negative values to zero\n")
+    rspecdata[rspecdata < 0] <- 0
+    applied <- c(applied, "Negative value correction: converted negative values to zero")
   }
 
   if (any(opt == "minimum")) {
-    rspecdata <- vapply(
-      seq_len(ncol(rspecdata)),
-      function(z) rspecdata[, z] - min(rspecdata[, z]),
-      numeric(nrow(rspecdata))
-    )
-    applied <- c(applied, "Scaling spectra to a minimum value of zero\n")
+    rspecdata <- t(t(rspecdata) - mins)
+    applied <- c(applied, "Scaling spectra to a minimum value of zero")
   }
 
   if (any(opt == "maximum")) {
-    rspecdata <- vapply(
-      seq_len(ncol(rspecdata)),
-      function(z) rspecdata[, z] / max(rspecdata[, z]),
-      numeric(nrow(rspecdata))
-    )
-    applied <- c(applied, "Scaling spectra to a maximum value of 1\n")
+    rspecdata <- t(t(rspecdata) / maxs)
+    applied <- c(applied, "Scaling spectra to a maximum value of 1")
   }
 
   if (any(opt == "sum")) {
     rspecdata <- t(t(rspecdata) / colSums(rspecdata))
-    applied <- c(applied, "Scaling spectra to a total area of 1\n")
+    applied <- c(applied, "Scaling spectra to a total area of 1")
   }
 
   if (any(opt == "center")) {
     rspecdata <- t(t(rspecdata) - colMeans(rspecdata))
-    applied <- c(applied, "Centering spectra to a mean of zero\n")
+    applied <- c(applied, "Centering spectra to a mean of zero")
   }
 
   # Calculate medians according to # of bins specified for use in PCA
@@ -180,7 +163,7 @@ procspec <- function(rspecdata, opt = c(
   names(rspecdata) <- c("wl", nam)
   class(rspecdata) <- c("rspec", "data.frame")
 
-  applied <- c(applied, "\n")
+  applied <- paste(applied, collapse = "\n")
   message(applied)
 
   rspecdata
