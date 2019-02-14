@@ -47,10 +47,8 @@
 
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
                     lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...) {
-  if (is.numeric(by)) {
-    if (by == 1) {
-      stop("Cannot group single spectra (use plot instead)")
-    }
+  if (isTRUE(by == 1)) {
+    stop("Cannot group single spectra (use plot instead)")
   }
 
   # take aggregated data
@@ -67,17 +65,15 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   wl_index_err <- which(names(errplotspecs) == "wl")
 
   if (length(wl_index) > 0) {
-    haswl <- TRUE
     wl <- rspecdata[, wl_index, drop = TRUE]
     cntplotspecs <- as.data.frame(cntplotspecs[, -wl_index_cnt])
     errplotspecs <- as.data.frame(errplotspecs[, -wl_index_err])
   } else {
-    haswl <- FALSE
     wl <- seq_len(nrow(rspecdata))
     warning("No wavelengths provided; using arbitrary index values")
   }
 
-  indexsub <- seq_len(dim(cntplotspecs)[2])
+  indexsub <- seq_along(cntplotspecs)
 
   if (as.integer(dim(errplotspecs)[1] / 2) == as.integer(dim(cntplotspecs)[1]) &&
     as.integer(dim(errplotspecs)[1] %% 2) == 0) {
@@ -91,9 +87,6 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
       c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])),
       numeric(nrow(errplotspecs)*2))
   }
-
-
-
 
   polygon_wl <- c(wl, rev(wl))
 
