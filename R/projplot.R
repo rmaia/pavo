@@ -74,10 +74,10 @@ projplot <- function(tcsdata, ...) {
 
   # plot
 
-  cu <- t(col2rgb("#984EA3")) / 255
-  cs <- t(col2rgb("#377EB8")) / 255
-  cm <- t(col2rgb("#4DAF4A")) / 255
-  cl <- t(col2rgb("#E41A1C")) / 255
+  cu <- "#984EA3"
+  cs <- "#377EB8"
+  cm <- "#4DAF4A"
+  cl <- "#E41A1C"
 
   par(mar = c(0, 0, 0, 0))
   plot(0, 0,
@@ -89,7 +89,7 @@ projplot <- function(tcsdata, ...) {
 
   points(mp.v.phi ~ mp.v.theta,
     pch = 20, cex = 1.5,
-    col = c(rep("grey", 4), rgb(cl), rgb(cl), rgb(cm), rgb(cs), rgb(cu))
+    col = c(rep("grey", 4), cl, cl, cm, cs, cu)
   )
 
   points(mp.p.phi ~ mp.p.theta, ...)
