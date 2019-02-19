@@ -315,7 +315,6 @@ coldist <- function(modeldata,
   #######################
 
   noise <- match.arg(noise)
-  lengthn <- as.character(length(n))
 
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
@@ -326,18 +325,13 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if (is.colspace(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
-    ncone <- as.character(attr(modeldata, "conenumb"))
+    ncone <- attr(modeldata, "conenumb")
 
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
 
     if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
       # transform or stop if Qi not appropriate
 
-      if (lengthn != ncone) {
-        stop("vector of relative cone densities (", dQuote("n"),
-             ") is different from the number of cones in the visual model data",
-             call. = FALSE)
-      }
       dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
       dat <- switch(qcatch,
                     fi = dat,
@@ -400,13 +394,7 @@ coldist <- function(modeldata,
     )
 
     # Choose receptor noise model depending on visual system
-    ncone <- as.character(attr(modeldata, "conenumb"))
-
-    if (lengthn != ncone) {
-      stop("vector of relative cone densities (", dQuote("n"),
-           ") has a different length than the number of cones (columns) used for the visual model",
-           call. = FALSE)
-    }
+    ncone <- attr(modeldata, "conenumb")
 
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -478,7 +466,7 @@ coldist <- function(modeldata,
   }
 
   if (usereceptornoisemodel) {
-    dat2 <- dat[, 1:as.numeric(ncone), drop = FALSE]
+    dat2 <- dat[, 1:ncone, drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) {
       stop("reference cone class for the empirical estimate of the Weber fraction (",
@@ -489,18 +477,18 @@ coldist <- function(modeldata,
 
     if (weber.ref == "longest") weber.ref <- length(n)
 
-    if (length(n) != dim(dat2)[2]) {
+    if (length(n) != ncone) {
       stop("vector of relative cone densities (", dQuote("n"),
            ") has a different length than the number of cones (columns) used for the visual model", call. = FALSE)
     }
 
     # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
 
-    refsamp <- min(dim(dat2)[1], as.numeric(ncone))
+    refsamp <- min(dim(dat2)[1], ncone)
 
     visref <- matrix(NA,
-                     ncol = as.numeric(ncone),
-                     nrow = refsamp + as.numeric(ncone) + 1,
+                     ncol = ncone,
+                     nrow = refsamp + ncone + 1,
                      dimnames = list(
                        c(
                          rownames(dat2)[seq(refsamp)],
@@ -510,7 +498,7 @@ coldist <- function(modeldata,
                      )
     )
 
-    rrf <- diag(9, as.numeric(ncone))
+    rrf <- diag(9, ncone)
     rrf[lower.tri(rrf)] <- 0.001
     rrf[upper.tri(rrf)] <- 0.001
 
@@ -530,7 +518,7 @@ coldist <- function(modeldata,
 
     res[, "dS"] <- switch(noise,
                           "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
-                          "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:as.numeric(ncone)])
+                          "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:ncone])
     )
     resref[, "dS"] <- switch(noise,
                              "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
