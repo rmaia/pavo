@@ -316,6 +316,8 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
+  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))
+
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
       stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
@@ -444,28 +446,16 @@ coldist <- function(modeldata,
     res[, "dL"] <- NA
   }
 
-  #########################
-  # Receptor Noise Models #
-  #########################
-
-  # should be used when:
-  # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
-  # - vismodel object: always
-  # - user input data: always
-
-  usereceptornoisemodel <- FALSE
-
-  # this covers vismodel, user input
-  if (is.null(attr(modeldata, "clrsp"))) usereceptornoisemodel <- TRUE
-
-  # this covers colspace
-  if (is.colspace(modeldata)) {
-    if (!attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "coc", "segment")) {
-      usereceptornoisemodel <- TRUE
-    }
-  }
-
   if (usereceptornoisemodel) {
+    #########################
+    # Receptor Noise Models #
+    #########################
+
+    # should be used when:
+    # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
+    # - vismodel object: always
+    # - user input data: always
+
     dat2 <- dat[, 1:ncone, drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) {
@@ -557,17 +547,11 @@ coldist <- function(modeldata,
                                  )))
       )
 
-      if (dim(dat)[2] <= as.numeric(ncone)) {
+      if (dim(dat)[2] <= ncone) {
         warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
-  }
-
-  #######################
-  # Other Visual Models #
-  #######################
-
-  if (isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))) {
+  } else {
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "hexagon" = ,
                           "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
