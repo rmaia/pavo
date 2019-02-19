@@ -332,7 +332,6 @@ coldist <- function(modeldata,
 
     if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
       # transform or stop if Qi not appropriate
-      qcatch <- attr(modeldata, "qcatch")
 
       if (lengthn != ncone) {
         stop("vector of relative cone densities (", dQuote("n"),
