@@ -314,6 +314,19 @@ coldist <- function(modeldata,
   # END OTHER DISTANCES #
   #######################
 
+  # Prepare output
+  pairsid <- t(combn(nrow(modeldata), 2))
+
+  res <- as.data.frame(matrix(rownames(modeldata)[pairsid],
+                              ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
+  ), stringsAsFactors = FALSE)
+
+  res[, "dS"] <- NA
+
+  if (achromatic) {
+    res[, "dL"] <- NA
+  }
+
   noise <- match.arg(noise)
 
   usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))
@@ -324,126 +337,52 @@ coldist <- function(modeldata,
     }
   }
 
+  ncone <- attr(modeldata, "conenumb")
+
+  if (attr(modeldata, "relative")) {
+    warning("Quantum catch are relative, distances may not be meaningful",
+            call. = FALSE)
+  }
+
   # Pre-processing for colspace objects
-  if (is.colspace(modeldata)) {
+  if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
-    ncone <- attr(modeldata, "conenumb")
-
-    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
-
-    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
-      # transform or stop if Qi not appropriate
-
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
-      dat <- switch(qcatch,
-                    fi = dat,
-                    Qi = log(dat)
-      )
-
-      # Quantum catch models need Qi in original scale (not log transformed)
-      # to calculate the noise. Save as qndat object.
-      qndat <- switch(qcatch,
-                      Qi = as.matrix(modeldata),
-                      fi = as.matrix(exp(modeldata))
-      )
-    }
-
-    if (attr(modeldata, "relative")) {
-      warning("Quantum catch are relative, distances may not be meaningful",
-              call. = FALSE)
-    }
   }
 
   # Pre-processing for vismodel objects
   if (is.vismodel(modeldata)) {
-
     # Set achromatic=FALSE if visual model has achromatic='none'
-    if (attr(modeldata, "visualsystem.achromatic") == "none") {
-      if (achromatic) {
-        warning("achromatic=TRUE but visual model was calculated with achromatic=",
-                dQuote("none"), "; achromatic contrast not calculated.",
-                call. = FALSE)
-      }
+    if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
+      warning("achromatic=TRUE but visual model was calculated with achromatic=",
+              dQuote("none"), "; achromatic contrast not calculated.",
+              call. = FALSE)
       achromatic <- FALSE
     }
-
     # initial checks...
-    if (attr(modeldata, "qcatch") == "Ei") {
-      stop("Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+    if (qcatch == "Ei") {
+      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
     }
 
-    if (attr(modeldata, "relative")) {
-      warning("Quantum catch are relative, distances may not be meaningful",
-              call. = FALSE)
-    }
-
-    # Save input object...
-    dat <- as.matrix(modeldata)
-
-    # Transform or stop if Qi not appropriate
-    qcatch <- attr(modeldata, "qcatch")
-
-    dat <- switch(qcatch,
-                  fi = dat,
-                  Qi = log(dat)
-    )
-
-    # Quantum catch models need Qi in original scale (not log transformed)
-    # to calculate the noise. Save as qndat object.
-    qndat <- switch(qcatch,
-                    Qi = as.matrix(modeldata),
-                    fi = as.matrix(exp(modeldata))
-    )
-
-    # Choose receptor noise model depending on visual system
-    ncone <- attr(modeldata, "conenumb")
-
-    rownames(dat) <- rownames(modeldata)
-    colnames(dat) <- colnames(modeldata)
   }
 
   # transformations in case object is neither from colspace or vismodel
-  if (!any(c("colspace", "vismodel") %in% class(modeldata))) {
-    if (is.null(qcatch)) {
-      stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
-           call. = FALSE)
-    }
-
-    dat <- as.matrix(modeldata)
-
-    # Ensure catches are log transformed
-    dat <- switch(qcatch,
-                  fi = dat,
-                  Qi = log(dat)
-    )
-
-    rownames(dat) <- rownames(modeldata)
-    colnames(dat) <- colnames(modeldata)
-
+  if (is.null(ncone)) {
     if (achromatic) {
-      ncone <- dim(dat)[2] - 1
+      ncone <- ncol(modeldata) - 1
       warning("number of cones not specified; assumed to be ", ncone,
               " (last column ignored for chromatic contrast, used only for achromatic contrast)",
               call. = FALSE)
     }
     else {
-      ncone <- dim(dat)[2]
+      ncone <- ncol(modeldata)
       warning("number of cones not specified; assumed to be ", ncone,
               call. = FALSE)
     }
   }
 
-  # Prepare output
-  pairsid <- t(combn(nrow(dat), 2))
-
-  res <- as.data.frame(matrix(rownames(dat)[pairsid],
-                              ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
-  ), stringsAsFactors = FALSE)
-
-  res[, "dS"] <- NA
-
-  if (achromatic) {
-    res[, "dL"] <- NA
+  if (is.null(qcatch)) {
+    stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
+         call. = FALSE)
   }
 
   if (usereceptornoisemodel) {
@@ -455,6 +394,30 @@ coldist <- function(modeldata,
     # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
     # - vismodel object: always
     # - user input data: always
+
+
+    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
+
+      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
+
+    } else {
+      dat <- as.matrix(modeldata)
+
+      rownames(dat) <- rownames(modeldata)
+      colnames(dat) <- colnames(modeldata)
+    }
+
+    # Ensure catches are log transformed
+    dat <- switch(qcatch,
+                  fi = dat,
+                  Qi = log(dat)
+    )
+    # Quantum catch models need Qi in original scale (not log transformed)
+    # to calculate the noise. Save as qndat object.
+    qndat <- switch(qcatch,
+                    Qi = as.matrix(modeldata),
+                    fi = as.matrix(exp(modeldata))
+    )
 
     dat2 <- dat[, 1:ncone, drop = FALSE]
 
@@ -552,6 +515,8 @@ coldist <- function(modeldata,
       }
     }
   } else {
+    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
+
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "hexagon" = ,
                           "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
