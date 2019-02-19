@@ -253,38 +253,19 @@ coldist <- function(modeldata,
   #########################
 
 
-  # 2d Euclidean distance
-  euc2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["x"] - coord2["x"])^2 +
-                            (coord1["y"] - coord2["y"])^2), 7))
-  }
-
-  # 2d Euclidean distance in segment space
-  seg2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["MS"] - coord2["MS"])^2 +
-                            (coord1["LM"] - coord2["LM"])^2), 7))
-  }
-
-  # Achromatic contrast in segment space
-  achroseg <- function(coord1, coord2) {
-    as.numeric(abs(coord1["B"] - coord2["B"]))
+  # Euclidean distance
+  euc <- function(coord1, coord2) {
+    sqrt(sum((coord1 - coord2)^2))
   }
 
   # Achromatic 'green' receptor contrast in the hexagon
   achrohex <- function(coord1, coord2) {
-    as.numeric(round(coord1["l"] / coord2["l"], 7))
+    coord1["l"] / coord2["l"]
   }
 
-  # Achromatic contrast in cielab
-  achrolab <- function(coord1, coord2) {
-    as.numeric(abs(coord1["L"] - coord2["L"]))
-  }
-
-  # 2d Euclidean distances in CIELAB
-  lab2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["L"] - coord2["L"])^2 +
-                            (coord1["a"] - coord2["a"])^2 +
-                            (coord1["b"] - coord2["b"])^2), 7))
+  # Manhattan distance
+  bloc2d <- function(coord1, coord2) {
+    abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
   }
 
   # CIE2000 colour distance for CIELCh (LOLWAT)
@@ -326,12 +307,7 @@ coldist <- function(modeldata,
     sH <- 1 + 0.015 * mC * t
     Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
 
-    as.numeric(round(sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))), 7)
-  }
-
-  # Manhattan distance
-  bloc2d <- function(coord1, coord2) {
-    as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
+    sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))
   }
 
   #######################
@@ -607,10 +583,10 @@ coldist <- function(modeldata,
   if (isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))) {
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "hexagon" = ,
-                          "categorical" = apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ])),
+                          "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
                           "CIELAB" = ,
-                          "CIELch" = apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ])),
-                          "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+                          "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
+                          "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
                           "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
@@ -618,8 +594,8 @@ coldist <- function(modeldata,
                             "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
                             "categorical" = NA,
                             "CIELAB" = ,
-                            "CIELch" = apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ])),
-                            "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+                            "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
+                            "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
                             "coc" = NA
       )
     }
