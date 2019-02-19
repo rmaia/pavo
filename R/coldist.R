@@ -151,169 +151,6 @@ coldist <- function(modeldata,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
                     weber.achro = 0.1) {
 
-  ##################################
-  # START RECEPTOR NOISE FUNCTIONS #
-  ##################################
-
-  newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
-    reln <- n / sum(n)
-    v <- weber * sqrt(reln[weber.ref])
-
-    if (is.null(qndat)) {
-      e <- setNames(v / sqrt(reln), colnames(dat))
-    } else {
-      ept1 <- setNames(v^2 / reln, colnames(dat))
-      ept2 <- 2 / t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ]))
-      e <- sqrt(sweep(ept2, 2, ept1, "+"))
-    }
-
-    ###############
-    # NUMERATOR #
-    ###############
-
-    # all n-2 combinations (first part numerator)
-    n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
-
-    if (is.null(qndat)) {
-      # get those combinations of ei and prod(ei)^2
-      num1 <- setNames(
-        apply(n1combs, 2, function(x) prod(e[x])),
-        apply(n1combs, 2, paste, collapse = "")
-      )
-    } else {
-      # get those combinations of ei and prod(ei)^2
-      num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(n1combs, 2, function(x) prod(e[z, x]))))
-      colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
-    }
-
-    # remaining 2 combinations (second part numerator)
-    n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
-
-    # f_d and f_e
-    deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
-      t(apply(res, 1, function(x)
-        dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
-    names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
-
-    # (f_d-f_e)^2
-    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
-
-    # (e_abc)^2*(f_d-f_e)^2
-    if (is.null(qndat)) {
-      etimesq <- num2 %*% diag(num1)
-    } else {
-      etimesq <- num2 * num1
-    }
-
-    # sum numerator
-    numerator <- rowSums(etimesq^2)
-
-    ###############
-    # DENOMINATOR #
-    ###############
-
-    # all n-1 combinations
-    dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
-
-    if (is.null(qndat)) {
-      den <- setNames(
-        apply(dcombs, 2, function(x) prod(e[x])),
-        apply(dcombs, 2, paste, collapse = "")
-      )
-      denominator <- sum(den^2)
-    } else {
-      den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(dcombs, 2, function(x) prod(e[z, x]))))
-      colnames(den) <- apply(dcombs, 2, paste, collapse = "")
-      denominator <- rowSums(den^2)
-    }
-    sqrt(numerator / denominator) # DELTA S
-  }
-
-  # Achromatic function
-  ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
-    dq1 <- f1[length(f1)] - f2[length(f1)]
-    dq1 <- as.numeric(dq1)
-    if (is.null(qn1)) {
-      w <- weber.achro
-    } else {
-      w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
-    }
-    round(abs(dq1 / w), 7)
-  }
-
-
-  ################################
-  # END RECEPTOR NOISE FUNCTIONS #
-  ################################
-
-  #########################
-  # START OTHER DISTANCES #
-  #########################
-
-
-  # Euclidean distance
-  euc <- function(coord1, coord2) {
-    sqrt(sum((coord1 - coord2)^2))
-  }
-
-  # Achromatic 'green' receptor contrast in the hexagon
-  achrohex <- function(coord1, coord2) {
-    coord1["l"] / coord2["l"]
-  }
-
-  # Manhattan distance
-  bloc2d <- function(coord1, coord2) {
-    abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
-  }
-
-  # CIE2000 colour distance for CIELCh (LOLWAT)
-  cie2000 <- function(coord1, coord2) {
-
-    # Lightness difference
-    dL <- coord2["L"] - coord1["L"]
-
-    # Mean lightness
-    mL <- (coord2["L"] + coord1["L"]) / 2
-
-    # Chroma difference
-    dC <- coord2["C"] - coord1["C"]
-
-    # Mean chroma
-    mC <- (coord2["C"] + coord1["C"]) / 2
-
-    # Hue difference
-    if (coord1["h"] - coord2["h"] <= 180) {
-      dh <- coord2["h"] - coord1["h"]
-    } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] <= coord1["h"]) {
-      dh <- coord2["h"] + coord1["h"] + 360
-    } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
-      dh <- coord2["h"] + coord1["h"] - 360
-    }
-
-    # Mean hue
-    if (abs(coord2["h"] - coord1["h"]) <= 180) {
-      mh <- (coord2["h"] + coord1["h"]) / 2
-    } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] < 360) {
-      mh <- (coord2["h"] + coord1["h"] + 360) / 2
-    } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
-      mh <- (coord2["h"] + coord1["h"] - 360) / 2
-    }
-
-    t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
-    sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
-    sC <- 1 + 0.045 * mC
-    sH <- 1 + 0.015 * mC * t
-    Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
-
-    sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))
-  }
-
-  #######################
-  # END OTHER DISTANCES #
-  #######################
-
   # Prepare output
   pairsid <- t(combn(nrow(modeldata), 2))
 
@@ -576,3 +413,166 @@ coldist <- function(modeldata,
 
   res
 }
+
+##################################
+# START RECEPTOR NOISE FUNCTIONS #
+##################################
+
+newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
+  reln <- n / sum(n)
+  v <- weber * sqrt(reln[weber.ref])
+
+  if (is.null(qndat)) {
+    e <- setNames(v / sqrt(reln), colnames(dat))
+  } else {
+    ept1 <- setNames(v^2 / reln, colnames(dat))
+    ept2 <- 2 / t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ]))
+    e <- sqrt(sweep(ept2, 2, ept1, "+"))
+  }
+
+  ###############
+  # NUMERATOR #
+  ###############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
+
+  if (is.null(qndat)) {
+    # get those combinations of ei and prod(ei)^2
+    num1 <- setNames(
+      apply(n1combs, 2, function(x) prod(e[x])),
+      apply(n1combs, 2, paste, collapse = "")
+    )
+  } else {
+    # get those combinations of ei and prod(ei)^2
+    num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+      apply(n1combs, 2, function(x) prod(e[z, x]))))
+    colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
+  }
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
+
+  # f_d and f_e
+  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
+
+  # (f_d-f_e)^2
+  num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
+
+  # (e_abc)^2*(f_d-f_e)^2
+  if (is.null(qndat)) {
+    etimesq <- num2 %*% diag(num1)
+  } else {
+    etimesq <- num2 * num1
+  }
+
+  # sum numerator
+  numerator <- rowSums(etimesq^2)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
+
+  if (is.null(qndat)) {
+    den <- setNames(
+      apply(dcombs, 2, function(x) prod(e[x])),
+      apply(dcombs, 2, paste, collapse = "")
+    )
+    denominator <- sum(den^2)
+  } else {
+    den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+      apply(dcombs, 2, function(x) prod(e[z, x]))))
+    colnames(den) <- apply(dcombs, 2, paste, collapse = "")
+    denominator <- rowSums(den^2)
+  }
+  sqrt(numerator / denominator) # DELTA S
+}
+
+# Achromatic function
+ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
+  dq1 <- f1[length(f1)] - f2[length(f1)]
+  dq1 <- as.numeric(dq1)
+  if (is.null(qn1)) {
+    w <- weber.achro
+  } else {
+    w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
+  }
+  round(abs(dq1 / w), 7)
+}
+
+
+################################
+# END RECEPTOR NOISE FUNCTIONS #
+################################
+
+#########################
+# START OTHER DISTANCES #
+#########################
+
+
+# Euclidean distance
+euc <- function(coord1, coord2) {
+  sqrt(sum((coord1 - coord2)^2))
+}
+
+# Achromatic 'green' receptor contrast in the hexagon
+achrohex <- function(coord1, coord2) {
+  coord1["l"] / coord2["l"]
+}
+
+# Manhattan distance
+bloc2d <- function(coord1, coord2) {
+  abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
+}
+
+# CIE2000 colour distance for CIELCh (LOLWAT)
+cie2000 <- function(coord1, coord2) {
+
+  # Lightness difference
+  dL <- coord2["L"] - coord1["L"]
+
+  # Mean lightness
+  mL <- (coord2["L"] + coord1["L"]) / 2
+
+  # Chroma difference
+  dC <- coord2["C"] - coord1["C"]
+
+  # Mean chroma
+  mC <- (coord2["C"] + coord1["C"]) / 2
+
+  # Hue difference
+  if (coord1["h"] - coord2["h"] <= 180) {
+    dh <- coord2["h"] - coord1["h"]
+  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] <= coord1["h"]) {
+    dh <- coord2["h"] + coord1["h"] + 360
+  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
+    dh <- coord2["h"] + coord1["h"] - 360
+  }
+
+  # Mean hue
+  if (abs(coord2["h"] - coord1["h"]) <= 180) {
+    mh <- (coord2["h"] + coord1["h"]) / 2
+  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] < 360) {
+    mh <- (coord2["h"] + coord1["h"] + 360) / 2
+  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
+    mh <- (coord2["h"] + coord1["h"] - 360) / 2
+  }
+
+  t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
+  sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
+  sC <- 1 + 0.045 * mC
+  sH <- 1 + 0.015 * mC * t
+  Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
+
+  sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))
+}
+
+#######################
+# END OTHER DISTANCES #
+#######################
