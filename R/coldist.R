@@ -374,8 +374,6 @@ coldist <- function(modeldata,
     }
   }
 
-  nams2 <- with(res, unique(c(patch1, patch2)))
-
   # Subsetting samples
   if (length(subset) > 2) {
     stop("Too many subsetting conditions; one or two allowed.", call. = FALSE)
