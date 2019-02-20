@@ -316,7 +316,6 @@ coldist <- function(modeldata,
     )
 
     if (achromatic) {
-      browser()
       visref <- cbind(visref, lum = log(1e-10))
       visref[grep("jnd2xyzrrf", rownames(visref), invert = TRUE), "lum"] <-
         dat[seq(refsamp), dim(dat)[2]]
