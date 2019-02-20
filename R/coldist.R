@@ -57,7 +57,7 @@
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 #' categorical, segment, and cie models)):
 #' \itemize{
-#' 	\item \code{neural}: noise is proportional to the Weber fraction and
+#' 	\item \code{neural} (default): noise is proportional to the Weber fraction and
 #'  is independent of the intensity of the signal received (i.e. assumes bright conditions).
 #' 	\item \code{quantum}: noise is the sum of the neural noise and receptor noise,
 #'  and is thus proportional to the Weber fraction and inversely proportional
@@ -316,6 +316,7 @@ coldist <- function(modeldata,
     )
 
     if (achromatic) {
+      browser()
       visref <- cbind(visref, lum = log(1e-10))
       visref[grep("jnd2xyzrrf", rownames(visref), invert = TRUE), "lum"] <-
         dat[seq(refsamp), dim(dat)[2]]
