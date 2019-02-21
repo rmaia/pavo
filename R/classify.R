@@ -9,6 +9,7 @@
 #' \item \code{'kMeans'}: k-means clustering
 #' \item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')
 #' algorithm for large datasets.
+#' #' \item \code{'cMeans'}: Fuzzy c-means clustering.
 #' }
 #' @param kcols the number of discrete colour classes present in the input image(s).
 #' Can be a single integer when only a single image is present, or if kcols is identical for all
@@ -58,7 +59,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, method = c('kMeans', 'kMedoids'), kcols = NULL, refID = NULL, interactive = FALSE,
+classify <- function(imgdat, method = c('kMeans', 'kMedoids', 'cMeans'), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -255,6 +256,7 @@ classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
 
 # Main function for identifying colour classes in an image for adjacency analyses
 #' @importFrom cluster clara
+#' @importFrom e1071 cmeans
 classify_main <- function(imgdat_i, n_cols_i, method_i) {
 
   ## Dimensions
@@ -270,14 +272,17 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
   # Cluster analysis, then format as image matrix
   kMeans <- switch(method_i, 
                    'kMeans' = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
-                   'kMedoids' = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = 100, pamLike = TRUE)
+                   'kMedoids' = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = 100, pamLike = TRUE),
+                   'cMeans' = cmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i, m = 3.5)
   )
   outmat3 <- switch(method_i,
-                    'kMeans' = matrix(kMeans$cluster, nrow = imgdim[1]),
+                    'kMeans' = ,
+                    'cMeans' = matrix(kMeans$cluster, nrow = imgdim[1]),
                     'kMedoids' = matrix(kMeans$clustering, nrow = imgdim[1])
   )
   centers <- switch(method_i,
-                    'kMeans' = as.data.frame(kMeans$centers),
+                    'kMeans' = ,
+                    'cMeans' = as.data.frame(kMeans$centers),
                     'kMedoids' = as.data.frame(kMeans$medoids)
   )
 

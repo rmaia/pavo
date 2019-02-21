@@ -4,9 +4,9 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL,
-  refID = NULL, interactive = FALSE, plotnew = FALSE, col = "red",
-  cores = getOption("mc.cores", 2L), ...)
+classify(imgdat, method = c("kMeans", "kMedoids", "cMeans"),
+  kcols = NULL, refID = NULL, interactive = FALSE, plotnew = FALSE,
+  col = "red", cores = getOption("mc.cores", 2L), ...)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
@@ -17,6 +17,7 @@ stored in a list. Preferably the result of \code{\link{getimg}}.}
 \item \code{'kMeans'}: k-means clustering
 \item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')
 algorithm for large datasets.
+#' \item \code{'cMeans'}: Fuzzy c-means clustering.
 }}
 
 \item{kcols}{the number of discrete colour classes present in the input image(s).
