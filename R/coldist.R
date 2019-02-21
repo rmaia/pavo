@@ -176,7 +176,7 @@ coldist <- function(modeldata,
 
   ncone <- attr(modeldata, "conenumb")
 
-  if (attr(modeldata, "relative")) {
+  if (isTRUE(attr(modeldata, "relative"))) {
     warning("Quantum catch are relative, distances may not be meaningful",
             call. = FALSE)
   }
