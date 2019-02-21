@@ -1,9 +1,15 @@
 #' Identify colour classes in an image for adjacency analyses
 #'
-#' Use k-means clustering to classify image pixels into discrete colour classes.
+#' Classify image pixels into discrete colour classes.
 #'
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
+#' @param method methods for image segemtation/classification.
+#' \itemize{
+#' \item \code{'kMeans'}: k-means clustering
+#' \item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')
+#' algorithm for large datasets.
+#' }
 #' @param kcols the number of discrete colour classes present in the input image(s).
 #' Can be a single integer when only a single image is present, or if kcols is identical for all
 #' images. When passing a list of images, \code{kcols} can also be a vector the same length
@@ -52,7 +58,7 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
+classify <- function(imgdat, method = c('kMeans', 'kMedoids'), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -79,6 +85,17 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
   # Need options
   if (!interactive && is.null(kcols)) {
     stop("Either kcols must be specified, or interactive classification used (via interactive = TRUE)")
+  }
+  
+  # Method
+  method2 <- tryCatch(
+    match.arg(method),
+    error = function(e) "kMeans"
+  )
+  
+  # Cannot currently interactively-classify with k-medoids
+  if (interactive && method2 == 'kMedoids') {
+    stop("Cannot interactively classify images using k-medoids, set kcols instead.")
   }
 
   ## Class/structure
@@ -120,7 +137,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
   if (!interactive) {
     if (!is.null(refID)) { ## (2) Single k, with reference image ##
-      ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]]), "classRGB")
+      ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method2), "classRGB")
       ref_centers <- rep(list(ref_centers), length(imgdat))
     }
     else { ## (1) Non-interactive, with a reference image. ##
@@ -129,7 +146,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, ref_centers, parallel, cores)
+    outdata <- classifier(imgdat, ref_centers, parallel, cores, method2)
   } else if (interactive) {
 
     ## (3) Interactive, no reference image. ##
@@ -189,7 +206,7 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, centers, parallel, cores)
+    outdata <- classifier(imgdat, centers, parallel, cores, method2)
   }
 
   # Names & attributes
@@ -225,19 +242,20 @@ classify <- function(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
 
 # Wrapper for main classify function to handle parallel/single core
 #' @importFrom pbmcapply pbmclapply
-classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2) {
+classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
   ifelse(parallel_i2,
     outdata <- pbmclapply(seq_along(imgdat_i2),
-      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]]),
+      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
       mc.cores = cores_i2
     ),
-    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]]))
+    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
   )
   outdata
 }
 
 # Main function for identifying colour classes in an image for adjacency analyses
-classify_main <- function(imgdat_i, n_cols_i) {
+#' @importFrom cluster clara
+classify_main <- function(imgdat_i, n_cols_i, method_i) {
 
   ## Dimensions
   imgdim <- dim(imgdat_i)
@@ -249,11 +267,19 @@ classify_main <- function(imgdat_i, n_cols_i) {
     B = as.vector(imgdat_i[, , 3])
   )
 
-  # Cluster analysis
-  kMeans <- kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i)
-
-  # Tidy & format as image matrix
-  outmat3 <- matrix(kMeans$cluster, nrow = imgdim[1])
+  # Cluster analysis, then format as image matrix
+  kMeans <- switch(method_i, 
+                   'kMeans' = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
+                   'kMedoids' = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = 100, pamLike = TRUE)
+  )
+  outmat3 <- switch(method_i,
+                    'kMeans' = matrix(kMeans$cluster, nrow = imgdim[1]),
+                    'kMedoids' = matrix(kMeans$clustering, nrow = imgdim[1])
+  )
+  centers <- switch(method_i,
+                    'kMeans' = as.data.frame(kMeans$centers),
+                    'kMedoids' = as.data.frame(kMeans$medoids)
+  )
 
   # Rotate to match original orientation
   outmat2 <- rev(t(apply(outmat3, 1, rev))) # mirror
@@ -262,9 +288,9 @@ classify_main <- function(imgdat_i, n_cols_i) {
 
   # Attributes
   class(outmat) <- c("rimg", "matrix")
-  attr(outmat, "classRGB") <- as.data.frame(kMeans$centers)
+  attr(outmat, "classRGB") <- centers
   # attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
-  attr(outmat, "colnames") <- data.frame(name = seq_len(nrow(kMeans$centers)))
+  attr(outmat, "colnames") <- data.frame(name = seq_len(nrow(centers)))
   attr(outmat, "tag_loc") <- NA
 
   outmat
