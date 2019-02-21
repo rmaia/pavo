@@ -93,6 +93,7 @@ test_that("Output regression", {
   data(flowers)
   expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'all')), n = c(1, 2), achromatic = TRUE, subset = 'Hibbertia_acicularis'), digits = 4), "c965bc7dcee5fda9748f80113874b8f7ac7250be")  # dispace
   expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'apis', achromatic = 'all', relative = FALSE, vonkries = TRUE), space = 'hexagon'), n = c(1, 2), achromatic = TRUE, subset = c('Hibbertia_acicularis', 'Grevillea_buxifolia')), digits = 4), "d3fea6d99f61626581756c92e529a8a107a4411a")  # dispace
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'segment')), achromatic = TRUE), digits = 4), "177ffd2f53c5a53f44ac06fcebc2006f1bc3cc94")
 })
 
 test_that("bootcoldist", {
