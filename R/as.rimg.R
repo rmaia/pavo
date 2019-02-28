@@ -69,7 +69,7 @@ as.rimg <- function(object, name = "img") {
     # Is it already colour-classified by the user?
     # Tricky to distinguish between single-dimension (greyscale) RGB & a 
     # colour-classified matrix. Best I've got atm.
-    is.whole <- function(x){is.numeric(x) && floor(x) == x}
+    is.whole <- function(x){ all(is.numeric(x), floor(x) == x) }
     if(inherits(object2[[1]], "matrix") && max(object2[[1]]) < 30 && is.whole(object2[[1]]))
       colclass = TRUE
     else
