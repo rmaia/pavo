@@ -57,7 +57,7 @@
 #'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 #' categorical, segment, and cie models)):
 #' \itemize{
-#' 	\item \code{neural}: noise is proportional to the Weber fraction and
+#' 	\item \code{neural} (default): noise is proportional to the Weber fraction and
 #'  is independent of the intensity of the signal received (i.e. assumes bright conditions).
 #' 	\item \code{quantum}: noise is the sum of the neural noise and receptor noise,
 #'  and is thus proportional to the Weber fraction and inversely proportional
@@ -151,327 +151,10 @@ coldist <- function(modeldata,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
                     weber.achro = 0.1) {
 
-  ##################################
-  # START RECEPTOR NOISE FUNCTIONS #
-  ##################################
-
-  newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
-    reln <- n / sum(n)
-    v <- weber * sqrt(reln[weber.ref])
-
-    if (is.null(qndat)) {
-      e <- setNames(v / sqrt(reln), colnames(dat))
-    } else {
-      ept1 <- setNames(v^2 / reln, colnames(dat))
-      ept2 <- 2 / t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ]))
-      e <- sqrt(sweep(ept2, 2, ept1, "+"))
-    }
-
-    ###############
-    # NUMERATOR #
-    ###############
-
-    # all n-2 combinations (first part numerator)
-    n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
-
-    if (is.null(qndat)) {
-      # get those combinations of ei and prod(ei)^2
-      num1 <- setNames(
-        apply(n1combs, 2, function(x) prod(e[x])),
-        apply(n1combs, 2, paste, collapse = "")
-      )
-    } else {
-      # get those combinations of ei and prod(ei)^2
-      num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(n1combs, 2, function(x) prod(e[z, x]))))
-      colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
-    }
-
-    # remaining 2 combinations (second part numerator)
-    n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
-
-    # f_d and f_e
-    deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
-      t(apply(res, 1, function(x)
-        dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
-    names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
-
-    # (f_d-f_e)^2
-    num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
-
-    # (e_abc)^2*(f_d-f_e)^2
-    if (is.null(qndat)) {
-      etimesq <- num2 %*% diag(num1)
-    } else {
-      etimesq <- num2 * num1
-    }
-
-    # sum numerator
-    numerator <- rowSums(etimesq^2)
-
-    ###############
-    # DENOMINATOR #
-    ###############
-
-    # all n-1 combinations
-    dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
-
-    if (is.null(qndat)) {
-      den <- setNames(
-        apply(dcombs, 2, function(x) prod(e[x])),
-        apply(dcombs, 2, paste, collapse = "")
-      )
-      denominator <- sum(den^2)
-    } else {
-      den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-        apply(dcombs, 2, function(x) prod(e[z, x]))))
-      colnames(den) <- apply(dcombs, 2, paste, collapse = "")
-      denominator <- rowSums(den^2)
-    }
-    sqrt(numerator / denominator) # DELTA S
-  }
-
-  # Achromatic function
-  ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
-    dq1 <- f1[length(f1)] - f2[length(f1)]
-    dq1 <- as.numeric(dq1)
-    if (is.null(qn1)) {
-      w <- weber.achro
-    } else {
-      w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
-    }
-    round(abs(dq1 / w), 7)
-  }
-
-
-  ################################
-  # END RECEPTOR NOISE FUNCTIONS #
-  ################################
-
-  #########################
-  # START OTHER DISTANCES #
-  #########################
-
-
-  # 2d Euclidean distance
-  euc2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["x"] - coord2["x"])^2 +
-                            (coord1["y"] - coord2["y"])^2), 7))
-  }
-
-  # 2d Euclidean distance in segment space
-  seg2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["MS"] - coord2["MS"])^2 +
-                            (coord1["LM"] - coord2["LM"])^2), 7))
-  }
-
-  # Achromatic contrast in segment space
-  achroseg <- function(coord1, coord2) {
-    as.numeric(abs(coord1["B"] - coord2["B"]))
-  }
-
-  # Achromatic 'green' receptor contrast in the hexagon
-  achrohex <- function(coord1, coord2) {
-    as.numeric(round(coord1["l"] / coord2["l"], 7))
-  }
-
-  # Achromatic contrast in cielab
-  achrolab <- function(coord1, coord2) {
-    as.numeric(abs(coord1["L"] - coord2["L"]))
-  }
-
-  # 2d Euclidean distances in CIELAB
-  lab2d <- function(coord1, coord2) {
-    as.numeric(round(sqrt((coord1["L"] - coord2["L"])^2 +
-                            (coord1["a"] - coord2["a"])^2 +
-                            (coord1["b"] - coord2["b"])^2), 7))
-  }
-
-  # CIE2000 colour distance for CIELCh (LOLWAT)
-  cie2000 <- function(coord1, coord2) {
-
-    # Lightness difference
-    dL <- coord2["L"] - coord1["L"]
-
-    # Mean lightness
-    mL <- (coord2["L"] + coord1["L"]) / 2
-
-    # Chroma difference
-    dC <- coord2["C"] - coord1["C"]
-
-    # Mean chroma
-    mC <- (coord2["C"] + coord1["C"]) / 2
-
-    # Hue difference
-    if (coord1["h"] - coord2["h"] <= 180) {
-      dh <- coord2["h"] - coord1["h"]
-    } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] <= coord1["h"]) {
-      dh <- coord2["h"] + coord1["h"] + 360
-    } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
-      dh <- coord2["h"] + coord1["h"] - 360
-    }
-
-    # Mean hue
-    if (abs(coord2["h"] - coord1["h"]) <= 180) {
-      mh <- (coord2["h"] + coord1["h"]) / 2
-    } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] < 360) {
-      mh <- (coord2["h"] + coord1["h"] + 360) / 2
-    } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
-      mh <- (coord2["h"] + coord1["h"] - 360) / 2
-    }
-
-    t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
-    sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
-    sC <- 1 + 0.045 * mC
-    sH <- 1 + 0.015 * mC * t
-    Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
-
-    as.numeric(round(sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))), 7)
-  }
-
-  # Manhattan distance
-  bloc2d <- function(coord1, coord2) {
-    as.numeric(round(abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])), 7)
-  }
-
-  #######################
-  # END OTHER DISTANCES #
-  #######################
-
-  noise <- match.arg(noise)
-  lengthn <- as.character(length(n))
-
-  if (noise == "quantum") {
-    if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
-      stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
-    }
-  }
-
-  # Pre-processing for colspace objects
-  if (is.colspace(modeldata)) {
-    qcatch <- attr(modeldata, "qcatch")
-    ncone <- as.character(attr(modeldata, "conenumb"))
-
-    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
-
-    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
-      # transform or stop if Qi not appropriate
-      qcatch <- attr(modeldata, "qcatch")
-
-      if (lengthn != ncone) {
-        stop("vector of relative cone densities (", dQuote("n"),
-             ") is different from the number of cones in the visual model data",
-             call. = FALSE)
-      }
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
-      dat <- switch(qcatch,
-                    fi = dat,
-                    Qi = log(dat)
-      )
-
-      # Quantum catch models need Qi in original scale (not log transformed)
-      # to calculate the noise. Save as qndat object.
-      qndat <- switch(qcatch,
-                      Qi = as.matrix(modeldata),
-                      fi = as.matrix(exp(modeldata))
-      )
-    }
-
-    if (attr(modeldata, "relative")) {
-      warning("Quantum catch are relative, distances may not be meaningful",
-              call. = FALSE)
-    }
-  }
-
-  # Pre-processing for vismodel objects
-  if (is.vismodel(modeldata)) {
-
-    # Set achromatic=FALSE if visual model has achromatic='none'
-    if (attr(modeldata, "visualsystem.achromatic") == "none") {
-      if (achromatic) {
-        warning("achromatic=TRUE but visual model was calculated with achromatic=",
-                dQuote("none"), "; achromatic contrast not calculated.",
-                call. = FALSE)
-      }
-      achromatic <- FALSE
-    }
-
-    # initial checks...
-    if (attr(modeldata, "qcatch") == "Ei") {
-      stop("Receptor-nose model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
-    }
-
-    if (attr(modeldata, "relative")) {
-      warning("Quantum catch are relative, distances may not be meaningful",
-              call. = FALSE)
-    }
-
-    # Save input object...
-    dat <- as.matrix(modeldata)
-
-    # Transform or stop if Qi not appropriate
-    qcatch <- attr(modeldata, "qcatch")
-
-    dat <- switch(qcatch,
-                  fi = dat,
-                  Qi = log(dat)
-    )
-
-    # Quantum catch models need Qi in original scale (not log transformed)
-    # to calculate the noise. Save as qndat object.
-    qndat <- switch(qcatch,
-                    Qi = as.matrix(modeldata),
-                    fi = as.matrix(exp(modeldata))
-    )
-
-    # Choose receptor noise model depending on visual system
-    ncone <- as.character(attr(modeldata, "conenumb"))
-
-    if (lengthn != ncone) {
-      stop("vector of relative cone densities (", dQuote("n"),
-           ") has a different length than the number of cones (columns) used for the visual model",
-           call. = FALSE)
-    }
-
-    rownames(dat) <- rownames(modeldata)
-    colnames(dat) <- colnames(modeldata)
-  }
-
-  # transformations in case object is neither from colspace or vismodel
-  if (!any(c("colspace", "vismodel") %in% class(modeldata))) {
-    if (is.null(qcatch)) {
-      stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
-           call. = FALSE)
-    }
-
-    dat <- as.matrix(modeldata)
-
-    # Ensure catches are log transformed
-    dat <- switch(qcatch,
-                  fi = dat,
-                  Qi = log(dat)
-    )
-
-    rownames(dat) <- rownames(modeldata)
-    colnames(dat) <- colnames(modeldata)
-
-    if (achromatic) {
-      ncone <- dim(dat)[2] - 1
-      warning("number of cones not specified; assumed to be ", ncone,
-              " (last column ignored for chromatic contrast, used only for achromatic contrast)",
-              call. = FALSE)
-    }
-    else {
-      ncone <- dim(dat)[2]
-      warning("number of cones not specified; assumed to be ", ncone,
-              call. = FALSE)
-    }
-  }
-
   # Prepare output
-  pairsid <- t(combn(nrow(dat), 2))
+  pairsid <- t(combn(nrow(modeldata), 2))
 
-  res <- as.data.frame(matrix(rownames(dat)[pairsid],
+  res <- as.data.frame(matrix(rownames(modeldata)[pairsid],
                               ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
   ), stringsAsFactors = FALSE)
 
@@ -481,29 +164,99 @@ coldist <- function(modeldata,
     res[, "dL"] <- NA
   }
 
-  #########################
-  # Receptor Noise Models #
-  #########################
+  noise <- match.arg(noise)
 
-  # should be used when:
-  # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
-  # - vismodel object: always
-  # - user input data: always
+  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))
 
-  usereceptornoisemodel <- FALSE
-
-  # this covers vismodel, user input
-  if (is.null(attr(modeldata, "clrsp"))) usereceptornoisemodel <- TRUE
-
-  # this covers colspace
-  if (is.colspace(modeldata)) {
-    if (!attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "coc", "segment")) {
-      usereceptornoisemodel <- TRUE
+  if (noise == "quantum") {
+    if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
+      stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
     }
   }
 
+  ncone <- attr(modeldata, "conenumb")
+
+  if (isTRUE(attr(modeldata, "relative"))) {
+    warning("Quantum catch are relative, distances may not be meaningful",
+            call. = FALSE)
+  }
+
+  # Pre-processing for colspace objects
+  if (is.colspace(modeldata) || is.vismodel(modeldata)) {
+    qcatch <- attr(modeldata, "qcatch")
+  }
+
+  # Pre-processing for vismodel objects
+  if (is.vismodel(modeldata)) {
+    # Set achromatic=FALSE if visual model has achromatic='none'
+    if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
+      warning("achromatic=TRUE but visual model was calculated with achromatic=",
+              dQuote("none"), "; achromatic contrast not calculated.",
+              call. = FALSE)
+      achromatic <- FALSE
+    }
+    # initial checks...
+    if (qcatch == "Ei") {
+      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+    }
+
+  }
+
+  # transformations in case object is neither from colspace or vismodel
+  if (is.null(ncone)) {
+    if (achromatic) {
+      ncone <- ncol(modeldata) - 1
+      warning("number of cones not specified; assumed to be ", ncone,
+              " (last column ignored for chromatic contrast, used only for achromatic contrast)",
+              call. = FALSE)
+    }
+    else {
+      ncone <- ncol(modeldata)
+      warning("number of cones not specified; assumed to be ", ncone,
+              call. = FALSE)
+    }
+  }
+
+  if (is.null(qcatch)) {
+    stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
+         call. = FALSE)
+  }
+
   if (usereceptornoisemodel) {
-    dat2 <- dat[, 1:as.numeric(ncone), drop = FALSE]
+    #########################
+    # Receptor Noise Models #
+    #########################
+
+    # should be used when:
+    # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
+    # - vismodel object: always
+    # - user input data: always
+
+
+    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
+
+      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
+
+    } else {
+      dat <- as.matrix(modeldata)
+
+      rownames(dat) <- rownames(modeldata)
+      colnames(dat) <- colnames(modeldata)
+    }
+
+    # Ensure catches are log transformed
+    dat <- switch(qcatch,
+                  fi = dat,
+                  Qi = log(dat)
+    )
+    # Quantum catch models need Qi in original scale (not log transformed)
+    # to calculate the noise. Save as qndat object.
+    qndat <- switch(qcatch,
+                    Qi = as.matrix(modeldata),
+                    fi = as.matrix(exp(modeldata))
+    )
+
+    dat2 <- dat[, 1:ncone, drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) {
       stop("reference cone class for the empirical estimate of the Weber fraction (",
@@ -514,18 +267,18 @@ coldist <- function(modeldata,
 
     if (weber.ref == "longest") weber.ref <- length(n)
 
-    if (length(n) != dim(dat2)[2]) {
+    if (length(n) != ncone) {
       stop("vector of relative cone densities (", dQuote("n"),
            ") has a different length than the number of cones (columns) used for the visual model", call. = FALSE)
     }
 
     # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
 
-    refsamp <- min(dim(dat2)[1], as.numeric(ncone))
+    refsamp <- min(dim(dat2)[1], ncone)
 
     visref <- matrix(NA,
-                     ncol = as.numeric(ncone),
-                     nrow = refsamp + as.numeric(ncone) + 1,
+                     ncol = ncone,
+                     nrow = refsamp + ncone + 1,
                      dimnames = list(
                        c(
                          rownames(dat2)[seq(refsamp)],
@@ -535,7 +288,7 @@ coldist <- function(modeldata,
                      )
     )
 
-    rrf <- diag(9, as.numeric(ncone))
+    rrf <- diag(9, ncone)
     rrf[lower.tri(rrf)] <- 0.001
     rrf[upper.tri(rrf)] <- 0.001
 
@@ -555,7 +308,7 @@ coldist <- function(modeldata,
 
     res[, "dS"] <- switch(noise,
                           "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
-                          "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:as.numeric(ncone)])
+                          "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:ncone])
     )
     resref[, "dS"] <- switch(noise,
                              "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
@@ -594,23 +347,19 @@ coldist <- function(modeldata,
                                  )))
       )
 
-      if (dim(dat)[2] <= as.numeric(ncone)) {
+      if (dim(dat)[2] <= ncone) {
         warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
-  }
+  } else {
+    dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
 
-  #######################
-  # Other Visual Models #
-  #######################
-
-  if (isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))) {
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "hexagon" = ,
-                          "categorical" = apply(pairsid, 1, function(x) euc2d(dat[x[1], ], dat[x[2], ])),
+                          "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
                           "CIELAB" = ,
-                          "CIELch" = apply(pairsid, 1, function(x) lab2d(dat[x[1], ], dat[x[2], ])),
-                          "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+                          "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
+                          "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
                           "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
@@ -618,14 +367,12 @@ coldist <- function(modeldata,
                             "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
                             "categorical" = NA,
                             "CIELAB" = ,
-                            "CIELch" = apply(pairsid, 1, function(x) achrolab(dat[x[1], ], dat[x[2], ])),
-                            "segment" = apply(pairsid, 1, function(x) seg2d(dat[x[1], ], dat[x[2], ])),
+                            "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
+                            "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
                             "coc" = NA
       )
     }
   }
-
-  nams2 <- with(res, unique(c(patch1, patch2)))
 
   # Subsetting samples
   if (length(subset) > 2) {
@@ -664,3 +411,166 @@ coldist <- function(modeldata,
 
   res
 }
+
+##################################
+# START RECEPTOR NOISE FUNCTIONS #
+##################################
+
+newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
+  reln <- n / sum(n)
+  v <- weber * sqrt(reln[weber.ref])
+
+  if (is.null(qndat)) {
+    e <- setNames(v / sqrt(reln), colnames(dat))
+  } else {
+    ept1 <- setNames(v^2 / reln, colnames(dat))
+    ept2 <- 2 / t(apply(res, 1, function(x) qndat[x[1], ] + qndat[x[2], ]))
+    e <- sqrt(sweep(ept2, 2, ept1, "+"))
+  }
+
+  ###############
+  # NUMERATOR #
+  ###############
+
+  # all n-2 combinations (first part numerator)
+  n1combs <- combn(colnames(dat), dim(dat)[2] - 2)
+
+  if (is.null(qndat)) {
+    # get those combinations of ei and prod(ei)^2
+    num1 <- setNames(
+      apply(n1combs, 2, function(x) prod(e[x])),
+      apply(n1combs, 2, paste, collapse = "")
+    )
+  } else {
+    # get those combinations of ei and prod(ei)^2
+    num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+      apply(n1combs, 2, function(x) prod(e[z, x]))))
+    colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
+  }
+
+  # remaining 2 combinations (second part numerator)
+  n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
+
+  # f_d and f_e
+  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
+    t(apply(res, 1, function(x)
+      dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
+  names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
+
+  # (f_d-f_e)^2
+  num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
+
+  # (e_abc)^2*(f_d-f_e)^2
+  if (is.null(qndat)) {
+    etimesq <- num2 %*% diag(num1)
+  } else {
+    etimesq <- num2 * num1
+  }
+
+  # sum numerator
+  numerator <- rowSums(etimesq^2)
+
+  ###############
+  # DENOMINATOR #
+  ###############
+
+  # all n-1 combinations
+  dcombs <- combn(colnames(dat), dim(dat)[2] - 1)
+
+  if (is.null(qndat)) {
+    den <- setNames(
+      apply(dcombs, 2, function(x) prod(e[x])),
+      apply(dcombs, 2, paste, collapse = "")
+    )
+    denominator <- sum(den^2)
+  } else {
+    den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
+      apply(dcombs, 2, function(x) prod(e[z, x]))))
+    colnames(den) <- apply(dcombs, 2, paste, collapse = "")
+    denominator <- rowSums(den^2)
+  }
+  sqrt(numerator / denominator) # DELTA S
+}
+
+# Achromatic function
+ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
+  dq1 <- f1[length(f1)] - f2[length(f1)]
+  dq1 <- as.numeric(dq1)
+  if (is.null(qn1)) {
+    w <- weber.achro
+  } else {
+    w <- sqrt((weber.achro)^2 + (2 / (qn1[length(qn1)] + qn2[length(qn1)])))
+  }
+  round(abs(dq1 / w), 7)
+}
+
+
+################################
+# END RECEPTOR NOISE FUNCTIONS #
+################################
+
+#########################
+# START OTHER DISTANCES #
+#########################
+
+
+# Euclidean distance
+euc <- function(coord1, coord2) {
+  sqrt(sum((coord1 - coord2)^2))
+}
+
+# Achromatic 'green' receptor contrast in the hexagon
+achrohex <- function(coord1, coord2) {
+  coord1["l"] / coord2["l"]
+}
+
+# Manhattan distance
+bloc2d <- function(coord1, coord2) {
+  abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
+}
+
+# CIE2000 colour distance for CIELCh (LOLWAT)
+cie2000 <- function(coord1, coord2) {
+
+  # Lightness difference
+  dL <- coord2["L"] - coord1["L"]
+
+  # Mean lightness
+  mL <- (coord2["L"] + coord1["L"]) / 2
+
+  # Chroma difference
+  dC <- coord2["C"] - coord1["C"]
+
+  # Mean chroma
+  mC <- (coord2["C"] + coord1["C"]) / 2
+
+  # Hue difference
+  if (coord1["h"] - coord2["h"] <= 180) {
+    dh <- coord2["h"] - coord1["h"]
+  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] <= coord1["h"]) {
+    dh <- coord2["h"] + coord1["h"] + 360
+  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
+    dh <- coord2["h"] + coord1["h"] - 360
+  }
+
+  # Mean hue
+  if (abs(coord2["h"] - coord1["h"]) <= 180) {
+    mh <- (coord2["h"] + coord1["h"]) / 2
+  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] < 360) {
+    mh <- (coord2["h"] + coord1["h"] + 360) / 2
+  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
+    mh <- (coord2["h"] + coord1["h"] - 360) / 2
+  }
+
+  t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
+  sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
+  sC <- 1 + 0.045 * mC
+  sH <- 1 + 0.015 * mC * t
+  Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
+
+  sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))
+}
+
+#######################
+# END OTHER DISTANCES #
+#######################
