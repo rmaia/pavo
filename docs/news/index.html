@@ -144,6 +144,7 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-potentially-breaking-changes" class="anchor"></a>NEW FEATURES AND POTENTIALLY BREAKING CHANGES</h2>
 <ul>
+<li>added the argument <code>reclass</code> to <code><a href="../reference/procimg.html">procimg()</a></code>, which allows users to interactively correct areas within images that have been misclassified</li>
 <li>added the rod sensitivity of <em>Canis familiaris</em>
 </li>
 <li>
@@ -155,6 +156,9 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>fixed a bug where images would sometimes be wrongly detected as user classified in <code>as.img()</code>
+</li>
+<li>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
 <li>the <code>achro</code> argument in <code><a href="../reference/coldist.html">coldist()</a></code> has been changed for <code>achromatic</code> to better match the arguments from <code><a href="../reference/vismodel.html">vismodel()</a></code>. Older scripts that use <code>achro</code> should not be affected and still work as before.</li>
 <li>the package <code>imager</code> is no longer a dependency, and is only loaded if using some features of <code><a href="../reference/procimg.html">procimg()</a></code>.</li>
 <li>the package <code>mapproj</code> is no longer a dependency, and is only loaded if using <code><a href="../reference/projplot.html">projplot()</a></code>.</li>

@@ -100,7 +100,7 @@
       <h1>Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2019-01-23</h4>
+            <h4 class="date">2019-03-01</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/analysing.Rmd"><code>vignettes/analysing.Rmd</code></a></small>
       <div class="hidden name"><code>analysing.Rmd</code></div>
@@ -137,7 +137,7 @@ code.sourceCode {
 <p>The raw spectral data used in this example are available from the package repository on <a href="https://github.com/rmaia/pavo">github</a>, located <a href="https://github.com/rmaia/pavo/blob/master/data_external/vignette">here</a>. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).</p>
 <p>The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal <em>Cardinalis cardinalis</em>, Wattled Jacana <em>Jacana jacana</em>, Baltimore Oriole <em>Icterus galbula</em>, Peach-fronted Parakeet <em>Aratinga aurea</em>, American Robin <em>Turdus migratorius</em>, and Sayaca Tanager <em>Thraupis sayaca</em>. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility <code>pavo</code> offers, as we’ll see below.</p>
 <p>In addition, <code>pavo</code> includes three datasets that can be called with the <code>data</code> function. <code><a href="https://www.rdocumentation.org/packages/utils/topics/data">data(teal)</a></code>, <code><a href="https://www.rdocumentation.org/packages/utils/topics/data">data(sicalis)</a></code>, and <code><a href="https://www.rdocumentation.org/packages/utils/topics/data">data(flowers)</a></code> will all be used in this vignette. See the help files for each dataset for more information; via <code><a href="../reference/teal.html">?teal</a></code>, <code><a href="../reference/sicalis.html">?sicalis</a></code>, and <code><a href="../reference/flowers.html">?flowers</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">specs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/specsdata.rda"</span>, <span class="dt">package =</span> <span class="st">"pavo"</span>))</a>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" title="1">specs &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/readRDS">readRDS</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/system.file">system.file</a></span>(<span class="st">"extdata/specsdata.rds"</span>, <span class="dt">package =</span> <span class="st">"pavo"</span>))</a>
 <a class="sourceLine" id="cb2-2" title="2">mspecs &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aggspec.html">aggspec</a></span>(specs, <span class="dt">by =</span> <span class="dv">3</span>, <span class="dt">FUN =</span> mean)</a>
 <a class="sourceLine" id="cb2-3" title="3">spp &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/grep">gsub</a></span>(<span class="st">'</span><span class="ch">\\</span><span class="st">.[0-9].*$'</span>, <span class="st">''</span>, <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(mspecs))[<span class="op">-</span><span class="dv">1</span>]</a>
 <a class="sourceLine" id="cb2-4" title="4">sppspec &lt;-<span class="st"> </span><span class="kw"><a href="../reference/aggspec.html">aggspec</a></span>(mspecs, <span class="dt">by =</span> spp, <span class="dt">FUN =</span> mean)</a>
@@ -178,12 +178,12 @@ Plots from <code>peakshape</code>
 </p>
 </div>
 <pre><code>##         id       B3  H1 FWHM HWHM.l HWHM.r incl.min
-## 1 cardinal 52.70167 700   NA    115     NA      Yes
-## 2   jacana 53.78744 700   NA    173     NA      Yes
-## 3   oriole 54.15508 700   NA    150     NA      Yes
-## 4 parakeet 29.86504 572  128     64     64      Yes
-## 5    robin 37.85542 700   NA    108     NA      Yes
-## 6  tanager 30.48108 557  168     82     86      Yes</code></pre>
+## 1 cardinal 52.70167 700   NA    114     NA      Yes
+## 2   jacana 53.78744 700   NA    172     NA      Yes
+## 3   oriole 54.15508 700   NA    149     NA      Yes
+## 4 parakeet 29.86504 572  126     63     63      Yes
+## 5    robin 37.85542 700   NA    107     NA      Yes
+## 6  tanager 30.48108 557  166     81     85      Yes</code></pre>
 <p>As it can be seen, the variable FWHM is meaningless if the curve doesn’t have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. <code><a href="../reference/peakshape.html">peakshape()</a></code> also offers a <code>select</code> argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" title="1"><span class="kw"><a href="../reference/peakshape.html">peakshape</a></span>(spec.sm, <span class="dt">select =</span> <span class="dv">2</span>, <span class="dt">lim =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">300</span>, <span class="dv">500</span>), <span class="dt">plot =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <div class="figure">
@@ -192,7 +192,7 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 </p>
 </div>
 <pre><code>##         id       B3  H1 FWHM HWHM.l HWHM.r incl.min
-## 1 cardinal 17.84381 369  102     47     55      Yes</code></pre>
+## 1 cardinal 17.84381 369  100     46     54      Yes</code></pre>
 </div>
 </div>
 <div id="visual-modelling" class="section level2">
@@ -688,7 +688,7 @@ Projection plot from a tetrahedral colour space.
 <p><img src="analysing_files/figure-html/unnamed-chunk-32-1.png" width="700"></p>
 <pre><code>##           vol1         vol2 overlapvol vsmallest vboth
 ## 1 5.183721e-06 4.739152e-06          0         0     0</code></pre>
-<p>The function <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gives the volume (<span class="math inline">\(V\)</span>) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: <span class="math display">\[\mathtt{vsmallest} = V_{overlap} / min(V_A, V_B)\]</span> and <span class="math display">\[\mathtt{vboth} = V_{overlap} / (V_A + V_B)\]</span>. Thus, if one of the volumes is entirely contained in the other, <code>vsmallest</code> will equal 1.</p>
+<p>The function <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gives the volume (<span class="math inline">\(V\)</span>) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: <span class="math display">\[\text{vsmallest} = V_{overlap} / min(V_A, V_B)\]</span> and <span class="math display">\[\text{vboth} = V_{overlap} / (V_A + V_B)\]</span>. Thus, if one of the volumes is entirely contained in the other, <code>vsmallest</code> will equal 1.</p>
 <p>So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).</p>
 <p><strong>Summary variables for groups of points</strong></p>
 <p>Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied, the mean and variance of hue span and the mean saturation. In <code>pavo</code>, the result of a <code><a href="../reference/colspace.html">colspace()</a></code> call is an object of class <code>colspace</code>, and thus these summary statistics can be calculated simply by calling <code>summary</code>. Note that the <code>summary</code> call can also take a <code>by</code> vector of group identities, so that the variables are calculated for each group separately:</p>
