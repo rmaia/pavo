@@ -6,7 +6,7 @@
 #'
 #' @export
 #'
-#' @seelaso \code{\link{vismodel}}
+#' @seealso \code{\link{vismodel}}
 #'
 is.vismodel <- function(object) {
   inherits(object, "vismodel")

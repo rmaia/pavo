@@ -15,3 +15,6 @@ a logical value indicating whether the object is of class \code{vismodel}
 \description{
 Test is object is of class 'vismodel'
 }
+\seealso{
+\code{\link{vismodel}}
+}
