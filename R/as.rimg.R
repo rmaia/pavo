@@ -114,7 +114,7 @@ as.rimg <- function(object, name = "img") {
       for (i in seq_along(object2)) attr(object2[[i]], 'state') <- 'colclass'  # classification state
       for (i in seq_along(object2)) attr(object2[[i]], 'k') <- length(table(object2[[i]]))  # kcols
       for (i in seq_along(object2)) attr(object2[[i]], 'class') <- c('rimg', 'matrix')  # class
-      for (i in seq_along(object2)) attr(object2[[i]], 'colnames') <- data.frame(name = 1:length(table(object2[[i]])))  # colour-category names (in progress)
+      for (i in seq_along(object2)) attr(object2[[i]], 'colnames') <- data.frame(name = seq_along(table(object2[[i]])))  # colour-category names (in progress)
       for (i in seq_along(object2)) attr(object2[[i]], 'classRGB') <- data.frame(R = rep(NA, length(table(object2[[i]]))),
                                                                                  G = rep(NA, length(table(object2[[i]]))),
                                                                                  B = rep(NA, length(table(object2[[i]]))))  

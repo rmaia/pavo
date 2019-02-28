@@ -10,7 +10,7 @@ test_that("as.rspec", {
   expect_s3_class(flowers2, "rspec")
 
   # Both text and numerically identify wavelength column
-  refl1 = rnorm(401)
+  refl1 <- rnorm(401)
   fake1 <- data.frame(wave = 300:700, refl1)
   fake2 <- data.frame(refl1, wave = 300:700)
   expect_equal(as.rspec(fake1, whichwl = 'wave'), as.rspec(fake2, whichwl = 2))
