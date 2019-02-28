@@ -119,8 +119,7 @@ variables can be reliably extracted using non-smoothed data.
 data(sicalis)
 summary(sicalis)
 summary(sicalis, subset = TRUE)
-summary(sicalis, subset = c('B1', 'H4'))
-
+summary(sicalis, subset = c("B1", "H4"))
 }
 \references{
 Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.

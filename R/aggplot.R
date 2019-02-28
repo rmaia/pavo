@@ -26,19 +26,18 @@
 #' @export
 #'
 #' @examples
-#'
+#' 
 #' # Load reflectance data
 #' data(sicalis)
-#'
+#' 
 #' # Create grouping variable based on spec names
-#' bysic <- gsub("^ind[0-9].",'', names(sicalis)[-1])
-#'
+#' bysic <- gsub("^ind[0-9].", "", names(sicalis)[-1])
+#' 
 #' # Plot using various error functions and options
 #' aggplot(sicalis, bysic)
-#' aggplot(sicalis, bysic, FUN.error=function(x) quantile(x, c(0.0275,0.975)))
+#' aggplot(sicalis, bysic, FUN.error = function(x) quantile(x, c(0.0275, 0.975)))
 #' aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
-#' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x)))
-#'
+#' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x) / sqrt(length(x)))
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu},
 #' Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
@@ -55,7 +54,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
   errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
 
-  if (anyNA(errplotspecs[, -1]))  {
+  if (anyNA(errplotspecs[, -1])) {
     stop("Could not calculate errors. Do any groups have n = 1?", call. = FALSE)
   }
 
@@ -83,9 +82,11 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
         rev(errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 0, x])
       ), numeric(nrow(errplotspecs)))
   } else {
-    polygon_data <- vapply(indexsub, function(x)
-      c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])),
-      numeric(nrow(errplotspecs)*2))
+    polygon_data <- vapply(
+      indexsub, function(x)
+        c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])),
+      numeric(nrow(errplotspecs) * 2)
+    )
   }
 
   polygon_wl <- c(wl, rev(wl))

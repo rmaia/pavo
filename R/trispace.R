@@ -17,9 +17,8 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
-#' tri.flowers <- colspace(vis.flowers, space = 'tri')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "apis", achro = "l")
+#' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

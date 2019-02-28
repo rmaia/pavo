@@ -88,14 +88,13 @@ Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.
 }
 \examples{
 # Plot the honeybee's receptors
-sensdata(visual = 'apis', ylab = 'Absorbance', plot = TRUE)
+sensdata(visual = "apis", ylab = "Absorbance", plot = TRUE)
 
 # Plot the average UV vs V avian receptors
-sensdata(visual = c('avg.v', 'avg.uv'), ylab = 'Absorbance', plot = TRUE)
+sensdata(visual = c("avg.v", "avg.uv"), ylab = "Absorbance", plot = TRUE)
 
 # Retrieve the CIE colour matching functions as an rspec object
-ciedat <- sensdata(visual = c('cie2', 'cie10'))
-
+ciedat <- sensdata(visual = c("cie2", "cie10"))
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

@@ -28,9 +28,8 @@ Applies the fly categorical colour vision model of Troje (1993)
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'musca', achromatic = 'md.r1')
-cat.flowers <- colspace(vis.flowers, space = 'categorical')
-
+vis.flowers <- vismodel(flowers, visual = "musca", achromatic = "md.r1")
+cat.flowers <- colspace(vis.flowers, space = "categorical")
 }
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour

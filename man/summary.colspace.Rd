@@ -51,17 +51,18 @@ Returns the attributes of \code{colspace} objects.
 \examples{
 # Colour hexagon
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
-                        vonkries = TRUE, bkg = 'green')
+vis.flowers <- vismodel(flowers,
+  visual = "apis", qcatch = "Ei", relative = FALSE,
+  vonkries = TRUE, bkg = "green"
+)
 flowers.hex <- hexagon(vis.flowers)
 summary(flowers.hex)
 
 # Tetrahedral model
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual='avg.uv')
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 csp.sicalis <- colspace(vis.sicalis)
-summary(csp.sicalis, by = rep(c('C', 'T', 'B'), 7))
-
+summary(csp.sicalis, by = rep(c("C", "T", "B"), 7))
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage

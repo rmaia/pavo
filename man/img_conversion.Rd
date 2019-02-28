@@ -29,7 +29,7 @@ conversion from class \code{rimg}, so it's best to use early in the analysis wor
 }
 \examples{
 \dontrun{
-papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 # From class rimg to cimg
 papilio_cimg <- rimg2cimg(papilio)

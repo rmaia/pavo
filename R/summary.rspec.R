@@ -104,8 +104,7 @@
 #' data(sicalis)
 #' summary(sicalis)
 #' summary(sicalis, subset = TRUE)
-#' summary(sicalis, subset = c('B1', 'H4'))
-#'
+#' summary(sicalis, subset = c("B1", "H4"))
 #' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}, Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.

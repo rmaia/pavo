@@ -19,11 +19,10 @@ are rows and columns.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, achro=TRUE)
+vis.flowers <- vismodel(flowers, achro = TRUE)
 cd.flowers <- coldist(vis.flowers)
-coldist2mat(cd.flowers)[['dS']]
-coldist2mat(cd.flowers)[['dL']]
-
+coldist2mat(cd.flowers)[["dS"]]
+coldist2mat(cd.flowers)[["dL"]]
 }
 \references{
 Maia, R., White, T. E., (2018) Comparing colors using visual models.

@@ -46,14 +46,13 @@ Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 data(flowers)
 
 # CIEXYZ
-vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
-xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+xyz.flowers <- colspace(vis.flowers, space = "ciexyz")
 plot(xyz.flowers)
 
 # CIELAB
-lab.flowers <- colspace(vis.flowers, space = 'cielab')
+lab.flowers <- colspace(vis.flowers, space = "cielab")
 plot(lab.flowers)
-
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.

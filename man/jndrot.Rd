@@ -40,7 +40,6 @@ data(flowers)
 vis.flowers <- vismodel(flowers)
 cd.flowers <- coldist(vis.flowers)
 jndrot(jnd2xyz(cd.flowers))
-
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

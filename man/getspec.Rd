@@ -48,8 +48,7 @@ Avantes (before or after exporting).
 }
 \examples{
 getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
-getspec(system.file("testdata", package = "pavo"), ext = 'ttt')
-
+getspec(system.file("testdata", package = "pavo"), ext = "ttt")
 }
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)

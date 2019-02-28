@@ -11,17 +11,16 @@
 #' @export
 #'
 #' @examples
-#'
+#' 
 #' # Load and split dataset into 2 sections
 #' data(teal)
 #' teal1 <- teal[, c(1, 3:5)]
 #' teal2 <- teal[, c(1, 2, 6:12)]
-#' teal.mer <- merge(teal1, teal2, by = 'wl')
+#' teal.mer <- merge(teal1, teal2, by = "wl")
 #' head(teal.mer)
 #' par(mfrow = c(1, 2))
 #' plot(teal.mer)
 #' plot(teal)
-#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @seealso \code{\link{as.rspec}}, \code{\link{aggspec}}
 

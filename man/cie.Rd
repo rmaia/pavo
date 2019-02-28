@@ -34,11 +34,10 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
-flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
-flowers.cielab <- colspace(vis.flowers, space = 'cielab')
-flowers.cielch <- colspace(vis.flowers, space = 'cielch')
-
+vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+flowers.ciexyz <- colspace(vis.flowers, space = "ciexyz")
+flowers.cielab <- colspace(vis.flowers, space = "cielab")
+flowers.cielch <- colspace(vis.flowers, space = "cielch")
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.

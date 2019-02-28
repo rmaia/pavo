@@ -18,14 +18,13 @@
 #' @export
 #'
 #' @examples
-#'
+#' 
 #' # For plotting
 #' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-#' tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+#' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+#' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
 #' vol(tcs.sicalis)
-#'
 #' @importFrom geometry convhulln
 #'
 #' @importFrom grDevices trans3d

@@ -29,7 +29,7 @@ Returns the attributes of, and optionally plots, an image.
 }
 \examples{
 \dontrun{
-papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 summary(papilio_class)
 
@@ -37,7 +37,7 @@ summary(papilio_class)
 summary(papilio_class, plot = TRUE)
 
 # Multiple images
-snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 snakes_class <- classify(snakes, kcols = 3)
 summary(snakes_class, plot = TRUE)
 }

@@ -13,10 +13,9 @@
 #' @examples
 #' data(teal)
 #' spec2rgb(teal)
-#'
+#' 
 #' # Plot data using estimated perceived colour
-#' plot(teal, col = spec2rgb(teal), type = 'o')
-#'
+#' plot(teal, col = spec2rgb(teal), type = "o")
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'

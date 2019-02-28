@@ -26,7 +26,7 @@ test_that("Class assignment", {
 })
 
 test_that("sensdata", {
-  expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata('all', 'all'))))
+  expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata("all", "all"))))
 })
 
 test_that("peakshape", {
@@ -35,5 +35,5 @@ test_that("peakshape", {
   expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(216, 2617))
 
   test <- read.csv("known_output/FWHM_lims.csv")
-  expect_equal(peakshape(test, plot = FALSE)[,4], c(144, 52))
+  expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
 })

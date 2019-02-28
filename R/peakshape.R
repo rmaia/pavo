@@ -30,20 +30,18 @@
 #'
 #' @examples
 #' data(teal)
-#'
+#' 
 #' peakshape(teal, select = 3)
 #' peakshape(teal, select = 10)
-#'
+#' 
 #' # Use wavelength bounds to narrow in on peak of interest
 #' peakshape(teal, select = 10, lim = c(400, 550))
-#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL,
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
-
   nms <- names(rspecdata)
 
   wl_index <- which(nms == "wl")
@@ -54,7 +52,8 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     haswl <- FALSE
     wl <- seq_len(nrow(rspecdata))
     warning("No wavelengths provided; using arbitrary index values",
-            call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # set default wavelength range if not provided
@@ -88,16 +87,16 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   wlrange <- seq(lim[1], lim[2])
 
-  rspecdata2 <- rspecdata[wl>=lim[1] & wl<=lim[2], , drop = FALSE]
+  rspecdata2 <- rspecdata[wl >= lim[1] & wl <= lim[2], , drop = FALSE]
 
   Bmax <- apply(rspecdata2, 2, max) # max refls
   Bmin <- apply(rspecdata2, 2, min) # min refls
   Bmin_all <- apply(rspecdata, 2, min) # min refls, whole spectrum
 
   if (absolute.min) {
-    halfmax <- (Bmax + Bmin_all)/2
+    halfmax <- (Bmax + Bmin_all) / 2
   } else {
-    halfmax <- (Bmax + Bmin)/2
+    halfmax <- (Bmax + Bmin) / 2
   }
 
   Xi <- vapply(
@@ -111,9 +110,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     dblpeak_nms <- nms[select][dblpeaks > 1]
     Xi <- vapply(Xi, "[[", 1, numeric(1))
     warning("Multiple wavelengths have the same reflectance value (",
-            paste(dblpeak_nms, collapse = ", "), "). Using first peak found. ",
-            "Please check the data or try smoothing.",
-            call. = FALSE)
+      paste(dblpeak_nms, collapse = ", "), "). Using first peak found. ",
+      "Please check the data or try smoothing.",
+      call. = FALSE
+    )
   }
 
   hilo <- t(t(rspecdata2) - halfmax) < 0
@@ -127,16 +127,17 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   if (any(Bmin > Bmin_all)) {
     warning("Consider fixing ", dQuote("lim"), " in spectra with ",
-            dQuote("incl.min"), " marked ", dQuote("No"),
-            " to incorporate all minima in spectral curves",
-            call. = FALSE)
+      dQuote("incl.min"), " marked ", dQuote("No"),
+      " to incorporate all minima in spectral curves",
+      call. = FALSE
+    )
   }
 
   hue <- wlrange[Xi]
 
   # Shift FWHM_lims by 1 because we calculated the index by including H1.
-  Xa <- wlrange[Xi - FWHM_lims[1,]+1]
-  Xb <- wlrange[Xi + FWHM_lims[2,]-1]
+  Xa <- wlrange[Xi - FWHM_lims[1, ] + 1]
+  Xb <- wlrange[Xi + FWHM_lims[2, ] - 1]
 
   if (plot) {
     oPar <- par("ask")
@@ -145,8 +146,8 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
     for (i in seq_along(select)) {
       plot(rspecdata[, i] ~ wl,
-           type = "l", xlab = "Wavelength (nm)",
-           ylab = "Reflectance (%)", main = nms[select[i]], ...
+        type = "l", xlab = "Wavelength (nm)",
+        ylab = "Reflectance (%)", main = nms[select[i]], ...
       )
       abline(v = hue[i], col = "red")
       abline(h = halfmax[i], col = "red")

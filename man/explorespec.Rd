@@ -37,7 +37,6 @@ Number of plots presented per page depends on the number of graphs produced.
 data(sicalis)
 explorespec(sicalis, 3)
 explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))
-
 }
 \author{
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}

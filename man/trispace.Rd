@@ -30,9 +30,8 @@ in a trichromatic chromaticity space.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', achro = 'l')
-tri.flowers <- colspace(vis.flowers, space = 'tri')
-
+vis.flowers <- vismodel(flowers, visual = "apis", achro = "l")
+tri.flowers <- colspace(vis.flowers, space = "tri")
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)

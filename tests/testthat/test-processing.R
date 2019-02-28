@@ -13,7 +13,7 @@ test_that("Conversion to rspec", {
 
   # Single column df should work and output a 2 columns rspec object
   expect_equal(dim(suppressWarnings(as.rspec(fakedat[, 2, drop = FALSE]))), c(1201, 2))
-  
+
   expect_message(as.rspec(fakedat), "wavelengths found")
 
   expect_warning(as.rspec(fakedat[, -1], lim = c(300, 700)), "user-specified range")
@@ -21,10 +21,10 @@ test_that("Conversion to rspec", {
 
   expect_error(as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE), "limits")
   expect_error(as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE), "limits")
-  
+
   fakedat[2:4, 2] <- NA
-  expect_message(as.rspec(fakedat, whichwl = 1), 'negative')
-  expect_message(as.rspec(fakedat, whichwl = 1), 'NA')
+  expect_message(as.rspec(fakedat, whichwl = 1), "negative")
+  expect_message(as.rspec(fakedat, whichwl = 1), "NA")
 })
 
 test_that("Procspec", {
@@ -79,40 +79,38 @@ test_that("Procspec", {
 test_that("Aggregation", {
   library(digest)
   data(teal)
-  
-  ind <- rep(c('a', 'b'), times = 6)
+
+  ind <- rep(c("a", "b"), times = 6)
   expect_equal(dim(aggspec(teal, by = ind)), c(401, 3))
   expect_equal(dim(aggspec(teal, by = 6)), c(401, 3))
-  expect_equal(dim(aggspec(teal[,-1], by = ind)), c(401, 3))
+  expect_equal(dim(aggspec(teal[, -1], by = ind)), c(401, 3))
   expect_equal(dim(aggspec(teal)), c(401, 2))
-  
+
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
-  expect_equal(digest::sha1(merge(teal1, teal2, by = 'wl'), digits = 4), "a2072eee8242dbad1774712fa50cd53d6d8d8978")
-  
+  expect_equal(digest::sha1(merge(teal1, teal2, by = "wl"), digits = 4), "a2072eee8242dbad1774712fa50cd53d6d8d8978")
+
   data(sicalis)
   vis.sicalis <- vismodel(sicalis)
-  tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+  tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 
   # Subset all 'crown' patches (C in file names)
-  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4),  "fac9de4d69bf66f262dc09dd05b9d274266fb398")
-  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "8cf8078dd22a0d7be9aebed447ce9122ef36f72f") 
-  
+  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4), "fac9de4d69bf66f262dc09dd05b9d274266fb398")
+  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "8cf8078dd22a0d7be9aebed447ce9122ef36f72f")
 })
 
 test_that("Convert", {
   # Flux/irrad
-  illum <- sensdata(illum = 'forestshade')
+  illum <- sensdata(illum = "forestshade")
   expect_equal(round(sum(irrad2flux(illum)[2]), 3), 6.618)
   expect_equal(round(sum(flux2irrad(illum)[2]), 3), 3174.87)
-  
+
   # Errors
-  class(illum) <- 'data.frame'
-  expect_error(irrad2flux(illum), 'rspec')
-  expect_error(flux2irrad(illum), 'rspec')
-  
+  class(illum) <- "data.frame"
+  expect_error(irrad2flux(illum), "rspec")
+  expect_error(flux2irrad(illum), "rspec")
+
   # RGB
   data(teal)
   expect_equivalent(spec2rgb(teal)[1], "#24B461FF")
 })
-

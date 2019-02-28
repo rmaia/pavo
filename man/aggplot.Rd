@@ -47,14 +47,13 @@ according to an index or a vector of identities.
 data(sicalis)
 
 # Create grouping variable based on spec names
-bysic <- gsub("^ind[0-9].",'', names(sicalis)[-1])
+bysic <- gsub("^ind[0-9].", "", names(sicalis)[-1])
 
 # Plot using various error functions and options
 aggplot(sicalis, bysic)
-aggplot(sicalis, bysic, FUN.error=function(x) quantile(x, c(0.0275,0.975)))
+aggplot(sicalis, bysic, FUN.error = function(x) quantile(x, c(0.0275, 0.975)))
 aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
-aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x)/sqrt(length(x)))
-
+aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x) / sqrt(length(x)))
 }
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)

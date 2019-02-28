@@ -28,10 +28,12 @@ object.
 
 # Generate some fake image data
 fake <- array(c(
-as.matrix(rep(c(0.2, 0.4, 0.6), each = 250)),
-as.matrix(rep(c(0.4, 0.7, 0.8), each = 250)),
-as.matrix(rep(c(0.6, 0.1, 0.2), each = 250))),
-dim = c(750, 750, 3))
+  as.matrix(rep(c(0.2, 0.4, 0.6), each = 250)),
+  as.matrix(rep(c(0.4, 0.7, 0.8), each = 250)),
+  as.matrix(rep(c(0.6, 0.1, 0.2), each = 250))
+),
+dim = c(750, 750, 3)
+)
 
 # Inspect it
 head(fake)
@@ -42,7 +44,6 @@ is.rimg(fake)
 # Convert to rimg object and check again
 fake2 <- as.rimg(fake)
 is.rimg(fake2)
-
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

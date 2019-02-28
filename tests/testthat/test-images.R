@@ -45,9 +45,9 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimgfake))
   expect_true(is.rimg(rimgfake2))
   expect_true(is.rimg(rimggrey))
-  
+
   # as.rimg can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
@@ -55,19 +55,18 @@ test_that("as.rimg", {
 })
 
 test_that("procimg", {
-  
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
-  
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+
   # Resize
-  expect_equal(dim(procimg(papilio, resize = 0.5))[1:2], dim(papilio)[1:2]/2)
-  
+  expect_equal(dim(procimg(papilio, resize = 0.5))[1:2], dim(papilio)[1:2] / 2)
+
   # Messages/Errors
   expect_message(procimg(classify(papilio, kcols = 3), resize = 2), "Cannot resize")
   expect_message(procimg(classify(papilio, kcols = 3), rotate = 90), "Cannot rotate")
   expect_error(procimg(papilio), "options")
-  class(papilio) <- 'array'
+  class(papilio) <- "array"
   expect_message(procimg(papilio, "coerce"))
-  class(papilio) <- 'cimg'
+  class(papilio) <- "cimg"
   expect_message(procimg(papilio, "coerce"))
 })
 
@@ -233,32 +232,29 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_hue, 1.5)
   expect_equal(checker_adj$m_sat, 3.6)
   expect_equal(checker_adj$m_lum, 5.68)
-  
+
   # Can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   papilio_adj <- adjacent(papilio_class, xscale = 100)
-  
-  pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)), name = 'papilio')
+
+  pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)), name = "papilio")
   pap2_adj <- adjacent(pap2, xscale = 100)
-  
+
   expect_identical(papilio_adj, pap2_adj)
-  
 })
 
 test_that("summary", {
   library(digest)
   set.seed(2231)
-  
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
-  snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+  snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes_class <- classify(snakes, kcols = 3)
-  
+
   expect_equal(digest::sha1(summary(papilio), digits = 4), "261b24d0d720036a973549b2cfba1665680f3cfc")
   expect_equal(digest::sha1(summary(snakes), digits = 4), "2ec7acae69e5812b0544d347b37b7dcdc55b1517")
-  #expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
-  #expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
-  
+  # expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
+  # expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
 })
-  

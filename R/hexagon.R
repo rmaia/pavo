@@ -19,10 +19,11 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
-#'                         vonkries = TRUE, achro = 'l', bkg = 'green')
-#' flowers.hex <- colspace(vis.flowers, space = 'hexagon')
-#'
+#' vis.flowers <- vismodel(flowers,
+#'   visual = "apis", qcatch = "Ei", relative = FALSE,
+#'   vonkries = TRUE, achro = "l", bkg = "green"
+#' )
+#' flowers.hex <- colspace(vis.flowers, space = "hexagon")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

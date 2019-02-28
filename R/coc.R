@@ -14,9 +14,8 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-#' coc.flowers <- colspace(vis.flowers, space = 'coc')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
+#' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -58,7 +57,9 @@ coc <- function(vismodeldata) {
   else {
     if (ncol(dat) < 3) {
       stop("Input data is not a ", dQuote("vismodel"),
-           " object and has fewer than three columns", call. = FALSE)
+        " object and has fewer than three columns",
+        call. = FALSE
+      )
     }
     if (ncol(dat) == 3) {
       warning("Input data is not a ", dQuote("vismodel"),

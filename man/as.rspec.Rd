@@ -55,7 +55,6 @@ is.rspec(fakedat)
 fakedat2 <- as.rspec(fakedat)
 is.rspec(fakedat2)
 head(fakedat2)
-
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}

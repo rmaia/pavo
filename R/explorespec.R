@@ -26,13 +26,11 @@
 #' data(sicalis)
 #' explorespec(sicalis, 3)
 #' explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))
-#'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
 explorespec <- function(rspecdata, by = NULL,
                         scale = c("equal", "free"),
                         legpos = "topright", ...) {
-
   oPar <- par("mar", "oma", "ask", "mfrow")
   on.exit(par(oPar))
 
@@ -63,9 +61,10 @@ explorespec <- function(rspecdata, by = NULL,
   # describing the species, type of patch, etc. (by=3 should work fine here, last
   # plot will only have fewer lines)
   if (dim(rspecdata)[2] != length(by) & !is.integer(by)) {
-    stop(dQuote(deparse(substitute(by))),
-         " is not of same length as columns in ",
-         dQuote(deparse(substitute(data)))
+    stop(
+      dQuote(deparse(substitute(by))),
+      " is not of same length as columns in ",
+      dQuote(deparse(substitute(data)))
     )
   }
 

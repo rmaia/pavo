@@ -32,8 +32,7 @@
 #'
 #' @examples
 #' getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
-#' getspec(system.file("testdata", package = "pavo"), ext = 'ttt')
-#'
+#' getspec(system.file("testdata", package = "pavo"), ext = "ttt")
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -56,9 +55,9 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
     recursive = subdir, include.dirs = subdir
   )
   print(summary(file_names))
-  
+
   file_names <- sort(file_names, method = "radix")
-  
+
   nb_files <- length(file_names)
 
   if (nb_files == 0) {

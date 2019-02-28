@@ -64,7 +64,6 @@ vis.flowers <- vismodel(flowers)
 cd.flowers <- coldist(vis.flowers)
 propxyz <- jnd2xyz(cd.flowers)
 plot(propxyz)
-
 }
 \references{
 Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams.

@@ -41,10 +41,9 @@ Plots reflectance spectra in different arrangements.
 \dontrun{
 
 data(teal)
-plot(teal, type = 'overlay')
-plot(teal, type = 'stack')
-plot(teal, type = 'heatmap')
-
+plot(teal, type = "overlay")
+plot(teal, type = "stack")
+plot(teal, type = "heatmap")
 }
 
 }

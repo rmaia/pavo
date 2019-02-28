@@ -22,10 +22,9 @@ Produces a plot based on Troje's (1993) categorical colour model.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
-cat.flowers <- colspace(vis.flowers, space = 'categorical')
+vis.flowers <- vismodel(flowers, qcatch = "Qi", visual = "musca", achro = "none", relative = TRUE)
+cat.flowers <- colspace(vis.flowers, space = "categorical")
 plot(cat.flowers)
-
 }
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour

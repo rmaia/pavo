@@ -75,21 +75,21 @@ Plots points in a tetrahedral colour space
 \dontrun{
 # For plotting
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 tcsplot(tcs.sicalis, size = 0.005)
-rgl::rgl.postscript('testplot.pdf',fmt='pdf')
-rgl::rgl.snapshot('testplot.png')
+rgl::rgl.postscript("testplot.pdf", fmt = "pdf")
+rgl::rgl.snapshot("testplot.png")
 
 # For adding points
-patch <- rep(c('C', 'T', 'B'), 7)
-tcs.crown <- subset(tcs.sicalis, 'C')
-tcs.breast <- subset(tcs.sicalis, 'B')
-tcsplot(tcs.crown, col ='blue')
-tcspoints(tcs.breast, col ='red')
+patch <- rep(c("C", "T", "B"), 7)
+tcs.crown <- subset(tcs.sicalis, "C")
+tcs.breast <- subset(tcs.sicalis, "B")
+tcsplot(tcs.crown, col = "blue")
+tcspoints(tcs.breast, col = "red")
 
 # For plotting convex hull
-tcsplot(tcs.sicalis, col = 'blue', size = 0.005)
+tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 tcsvol(tcs.sicalis)
 }
 

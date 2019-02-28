@@ -27,9 +27,8 @@ in a dichromatic colour space.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'canis')
-di.flowers <- colspace(vis.flowers, space = 'di')
-
+vis.flowers <- vismodel(flowers, visual = "canis")
+di.flowers <- colspace(vis.flowers, space = "di")
 }
 \references{
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -

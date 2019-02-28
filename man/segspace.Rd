@@ -27,9 +27,8 @@ Calculates segment classification measures as defined in Endler (1990).
 }
 \examples{
 data(sicalis)
-vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
-seg.sic <- colspace(vis.sic, space = 'segment')
-
+vis.sic <- vismodel(sicalis, visual = "segment", achromatic = "all")
+seg.sic <- colspace(vis.sic, space = "segment")
 }
 \references{
 Endler, J. A. (1990) On the measurement and classification of

@@ -19,9 +19,8 @@
 #'
 #' @examples
 #' data(sicalis)
-#' vis.sic <- vismodel(sicalis, visual = 'segment', achromatic = 'all')
-#' seg.sic <- colspace(vis.sic, space = 'segment')
-#'
+#' vis.sic <- vismodel(sicalis, visual = "segment", achromatic = "all")
+#' seg.sic <- colspace(vis.sic, space = "segment")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #'
@@ -95,10 +94,11 @@ segspace <- function(vismodeldata) {
     Q4 <- dat[, 4]
   }
 
-  if(!is.null(dat$lum))
+  if (!is.null(dat$lum)) {
     B <- dat$lum
-  else
+  } else {
     B <- NA
+  }
 
   # LM/MS
 

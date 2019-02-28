@@ -36,35 +36,37 @@ data(flowers)
 data(sicalis)
 
 # Dichromat
-vis.flowers <- vismodel(flowers, visual = 'canis')
-di.flowers <- colspace(vis.flowers, space = 'di')
+vis.flowers <- vismodel(flowers, visual = "canis")
+di.flowers <- colspace(vis.flowers, space = "di")
 plot(di.flowers)
 
 # Colour hexagon
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
-                        vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- colspace(vis.flowers, space = 'hexagon')
-plot(hex.flowers, sectors = 'coarse')
+vis.flowers <- vismodel(flowers,
+  visual = "apis", qcatch = "Ei", relative = FALSE,
+  vonkries = TRUE, achro = "l", bkg = "green"
+)
+hex.flowers <- colspace(vis.flowers, space = "hexagon")
+plot(hex.flowers, sectors = "coarse")
 
 # Tetrahedron (static)
-vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
 
 # Tetrahedron (interactive)
-vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 tcsplot(tcs.sicalis, size = 0.005)
 
 ## Add points to interactive tetrahedron
-patch <- rep(c('C','T','B'), 7)
-tcs.crown <- subset(tcs.sicalis, 'C')
-tcs.breast <- subset(tcs.sicalis, 'B')
-tcsplot(tcs.crown, col ='blue')
-tcspoints(tcs.breast, col ='red')
+patch <- rep(c("C", "T", "B"), 7)
+tcs.crown <- subset(tcs.sicalis, "C")
+tcs.breast <- subset(tcs.sicalis, "B")
+tcsplot(tcs.crown, col = "blue")
+tcspoints(tcs.breast, col = "red")
 
 ## Plot convex hull in interactive tetrahedron
-tcsplot(tcs.sicalis, col = 'blue', size = 0.005)
+tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 tcsvol(tcs.sicalis)
 }
 

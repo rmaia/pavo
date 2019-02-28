@@ -47,13 +47,14 @@ according to the models of Govardovskii et al. (2000) and Hart & Vorobyev (2005)
 }
 \examples{
 # Blue tit visual system based on Hart et al (2000)
-bluesens <- sensmodel(c(371,448,502,563), beta = FALSE,
-                      lambdacut = c(330, 413, 507, 572),
-                      oiltype = c("T", "C", "Y","R"), om = TRUE)
+bluesens <- sensmodel(c(371, 448, 502, 563),
+  beta = FALSE,
+  lambdacut = c(330, 413, 507, 572),
+  oiltype = c("T", "C", "Y", "R"), om = TRUE
+)
 
 # Danio aequipinnatus based on Govardovskii et al. (2000)
 daniosens <- sensmodel(c(357, 411, 477, 569))
-
 }
 \references{
 Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000.

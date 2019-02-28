@@ -42,15 +42,14 @@
 #' @examples
 #' data(teal)
 #' plot(teal, select = 10)
-#'
+#' 
 #' # Smooth data to remove noise
-#' teal.sm <- procspec(teal, opt = 'smooth', span = 0.25)
+#' teal.sm <- procspec(teal, opt = "smooth", span = 0.25)
 #' plot(teal.sm, select = 10)
-#'
+#' 
 #' # Normalize to max of unity
-#' teal.max <- procspec(teal, opt = c('max'))
+#' teal.max <- procspec(teal, opt = c("max"))
 #' plot(teal.max, select = 10)
-#'
 #' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
 #'
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.

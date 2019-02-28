@@ -71,15 +71,17 @@
 #' within the other. For this reason, we also report the volume relative to the union of
 #' the two input volumes, which may be more adequate in most cases.
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' data(sicalis)
-#' tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), 'C')
-#' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), 'T')
-#' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), 'B')
+#' tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
+#' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
+#' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3)) }
-#'
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3))
+#' }
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}, with code from Sebastien Villeger
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color

@@ -48,7 +48,6 @@ peakshape(teal, select = 10)
 
 # Use wavelength bounds to narrow in on peak of interest
 peakshape(teal, select = 10, lim = c(400, 550))
-
 }
 \seealso{
 \code{\link{procspec}}

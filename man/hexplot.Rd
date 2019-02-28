@@ -51,11 +51,12 @@ Produces a colour hexagon plot.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
-                        vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+vis.flowers <- vismodel(flowers,
+  visual = "apis", qcatch = "Ei", relative = FALSE,
+  vonkries = TRUE, achro = "l", bkg = "green"
+)
+hex.flowers <- colspace(vis.flowers, space = "hexagon")
 plot(hex.flowers)
-
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram

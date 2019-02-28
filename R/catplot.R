@@ -12,10 +12,9 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, qcatch = 'Qi', visual = 'musca', achro = 'none', relative = TRUE)
-#' cat.flowers <- colspace(vis.flowers, space = 'categorical')
+#' vis.flowers <- vismodel(flowers, qcatch = "Qi", visual = "musca", achro = "none", relative = TRUE)
+#' cat.flowers <- colspace(vis.flowers, space = "categorical")
 #' plot(cat.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -28,8 +27,10 @@ catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
 
   # Check if object is of class colorspace and tetrachromat
   if (!is.colspace(catdata) & !all(c("x", "y") %in% names(catdata))) {
-    stop("object is not of class ", dQuote("colspace"),
-         ", and does not contain x, y coordinates")
+    stop(
+      "object is not of class ", dQuote("colspace"),
+      ", and does not contain x, y coordinates"
+    )
   }
 
   if (is.colspace(catdata) & attr(catdata, "clrsp") != "categorical") {

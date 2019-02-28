@@ -16,16 +16,16 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' data(sicalis)
 #' plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
 #' }
-#'
+#' 
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20, 
+plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
                        curves = 5, specnum = 0, ask = TRUE) {
-
   oPar <- par("mfrow", "ask", "mar", "oma")
   on.exit(par(oPar))
 
@@ -115,12 +115,12 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
   # all below does not work yet
 
   par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
-  
+
   col_list <- c(
     "#000000", "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
     "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
   )
-  
+
   for (i in seq_len(nplots)) {
     bloc <- plotdata[, (((i - 1) * curves) + 1):(i * curves)]
     cols <- col_list[1:curves]

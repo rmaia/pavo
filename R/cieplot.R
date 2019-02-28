@@ -25,16 +25,15 @@
 #'
 #' @examples
 #' data(flowers)
-#'
+#' 
 #' # CIEXYZ
-#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
-#' xyz.flowers <- colspace(vis.flowers, space = 'ciexyz')
+#' vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+#' xyz.flowers <- colspace(vis.flowers, space = "ciexyz")
 #' plot(xyz.flowers)
-#'
+#' 
 #' # CIELAB
-#' lab.flowers <- colspace(vis.flowers, space = 'cielab')
+#' lab.flowers <- colspace(vis.flowers, space = "cielab")
 #' plot(lab.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

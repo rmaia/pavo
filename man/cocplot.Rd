@@ -37,10 +37,9 @@ Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-coc.flowers <- colspace(vis.flowers, space = 'coc')
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
+coc.flowers <- colspace(vis.flowers, space = "coc")
 plot(coc.flowers)
-
 }
 \references{
 Backhaus W. (1991). Color opponent coding in the visual system

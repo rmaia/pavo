@@ -15,9 +15,8 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colspace(vis.flowers, space = 'di')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "canis")
+#' di.flowers <- colspace(vis.flowers, space = "di")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

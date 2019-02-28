@@ -37,10 +37,9 @@ Produces a Maxwell triangle plot.
 }
 \examples{
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis')
-tri.flowers <- colspace(vis.flowers, space = 'tri')
+vis.flowers <- vismodel(flowers, visual = "apis")
+tri.flowers <- colspace(vis.flowers, space = "tri")
 plot(tri.flowers)
-
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)

@@ -13,15 +13,15 @@ test_that("as.rspec", {
   refl1 <- rnorm(401)
   fake1 <- data.frame(wave = 300:700, refl1)
   fake2 <- data.frame(refl1, wave = 300:700)
-  expect_equal(as.rspec(fake1, whichwl = 'wave'), as.rspec(fake2, whichwl = 2))
+  expect_equal(as.rspec(fake1, whichwl = "wave"), as.rspec(fake2, whichwl = 2))
 
   # Interpolation should not happen outside of wl range by default
-  flowers3 <- flowers[-1,]
+  flowers3 <- flowers[-1, ]
   expect_equivalent(flowers3, as.rspec(flowers3))
 
   # With rule = 2, missing values outside of range are generated
-  expect_equal(nrow(flowers3)+1, nrow(as.rspec(flowers3, lim = c(300,700), exceed.range = TRUE)))
-  expect_warning(as.rspec(flowers3, lim = c(300,700), exceed.range = TRUE), "beyond the range")
+  expect_equal(nrow(flowers3) + 1, nrow(as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE)))
+  expect_warning(as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE), "beyond the range")
 })
 
 test_that("summary.rspec", {
@@ -42,5 +42,4 @@ test_that("summary.rspec", {
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
   expect_equal(dim(summary(one_spec)), c(1, 23))
-
 })

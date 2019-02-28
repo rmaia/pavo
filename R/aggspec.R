@@ -24,17 +24,16 @@
 #'
 #' @examples
 #' data(teal)
-#'
+#' 
 #' # Average every two spectra
 #' teal.sset1 <- aggspec(teal, by = 2)
 #' plot(teal.sset1)
-#'
+#' 
 #' # Create factor and average spectra by levels 'a' and 'b'
-#' ind <- rep(c('a', 'b'), times = 6)
+#' ind <- rep(c("a", "b"), times = 6)
 #' teal.sset2 <- aggspec(teal, by = ind)
-#'
+#' 
 #' plot(teal.sset2)
-#'
 #' @references Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
@@ -109,7 +108,8 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # check: does data have the same number of columns as the by vector?
 
   if (dim(y)[2] != length(by)) {
-    stop(dQuote(deparse(substitute(by))),
+    stop(
+      dQuote(deparse(substitute(by))),
       " is not of same length as columns in ",
       dQuote(deparse(substitute(data)))
     )

@@ -116,34 +116,36 @@ argument directly, and not based on \code{v} and \code{n4} as before.
 \dontrun{
 # Dichromat
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
+vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
 didist.flowers <- coldist(vis.flowers, n = c(1, 2))
 
 # Trichromat
-vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
+vis.flowers <- vismodel(flowers, visual = "apis", relative = FALSE)
 tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
 
 # Trichromat, color-hexagon model (euclidean distances)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',
-                        relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+vis.flowers <- vismodel(flowers,
+  visual = "apis", qcatch = "Ei",
+  relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green"
+)
+hex.flowers <- colspace(vis.flowers, space = "hexagon")
 hexdist.flowers <- coldist(hex.flowers)
 
 # Trichromat, color-opponent-coding model (manhattan distances)
-vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-coc.flowers <- colspace(vis.flowers, space = 'coc')
+vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
+coc.flowers <- colspace(vis.flowers, space = "coc")
 hexdist.flowers <- coldist(coc.flowers)
 
 # Tetrachromat
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
 # This will also work, but give you several warnings you shouldn't ignore!!
 col.sicalis <- colspace(vis.sicalis)
 tetradist.sicalis.n <- coldist(col.sicalis)
 
-tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
+tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
 }
 
 }

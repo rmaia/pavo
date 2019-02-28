@@ -34,10 +34,9 @@ relationships within latitudes without distortion.
 }
 \examples{
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual = 'avg.uv')
-tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
-projplot(tcs.sicalis, pch = 16, col = setNames(rep(seq_len(3), 7), rep(c('C', 'T', 'B'), 7)))
-
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
+projplot(tcs.sicalis, pch = 16, col = setNames(rep(seq_len(3), 7), rep(c("C", "T", "B"), 7)))
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage

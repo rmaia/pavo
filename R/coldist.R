@@ -93,39 +93,42 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
+#' @examples
+#' \dontrun{
 #' # Dichromat
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'canis', relative = FALSE)
+#' vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
 #' didist.flowers <- coldist(vis.flowers, n = c(1, 2))
-#'
+#' 
 #' # Trichromat
-#' vis.flowers <- vismodel(flowers, visual = 'apis', relative = FALSE)
+#' vis.flowers <- vismodel(flowers, visual = "apis", relative = FALSE)
 #' tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
-#'
+#' 
 #' # Trichromat, color-hexagon model (euclidean distances)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei',
-#'                         relative = FALSE, vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
+#' vis.flowers <- vismodel(flowers,
+#'   visual = "apis", qcatch = "Ei",
+#'   relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green"
+#' )
+#' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' hexdist.flowers <- coldist(hex.flowers)
-#'
+#' 
 #' # Trichromat, color-opponent-coding model (manhattan distances)
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE, vonkries = TRUE)
-#' coc.flowers <- colspace(vis.flowers, space = 'coc')
+#' vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
+#' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' hexdist.flowers <- coldist(coc.flowers)
-#'
+#' 
 #' # Tetrachromat
 #' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual = 'avg.uv', relative = FALSE)
+#' vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
-#'
+#' 
 #' # This will also work, but give you several warnings you shouldn't ignore!!
 #' col.sicalis <- colspace(vis.sicalis)
 #' tetradist.sicalis.n <- coldist(col.sicalis)
-#'
-#' tetradist.sicalis.q <- coldist(vis.sicalis, noise = 'quantum')
+#' 
+#' tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
 #' }
-#'
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
@@ -155,7 +158,7 @@ coldist <- function(modeldata,
   pairsid <- t(combn(nrow(modeldata), 2))
 
   res <- as.data.frame(matrix(rownames(modeldata)[pairsid],
-                              ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
+    ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
   ), stringsAsFactors = FALSE)
 
   res[, "dS"] <- NA
@@ -178,7 +181,8 @@ coldist <- function(modeldata,
 
   if (isTRUE(attr(modeldata, "relative"))) {
     warning("Quantum catch are relative, distances may not be meaningful",
-            call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # Pre-processing for colspace objects
@@ -191,15 +195,15 @@ coldist <- function(modeldata,
     # Set achromatic=FALSE if visual model has achromatic='none'
     if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
       warning("achromatic=TRUE but visual model was calculated with achromatic=",
-              dQuote("none"), "; achromatic contrast not calculated.",
-              call. = FALSE)
+        dQuote("none"), "; achromatic contrast not calculated.",
+        call. = FALSE
+      )
       achromatic <- FALSE
     }
     # initial checks...
     if (qcatch == "Ei") {
       stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
     }
-
   }
 
   # transformations in case object is neither from colspace or vismodel
@@ -207,19 +211,22 @@ coldist <- function(modeldata,
     if (achromatic) {
       ncone <- ncol(modeldata) - 1
       warning("number of cones not specified; assumed to be ", ncone,
-              " (last column ignored for chromatic contrast, used only for achromatic contrast)",
-              call. = FALSE)
+        " (last column ignored for chromatic contrast, used only for achromatic contrast)",
+        call. = FALSE
+      )
     }
     else {
       ncone <- ncol(modeldata)
       warning("number of cones not specified; assumed to be ", ncone,
-              call. = FALSE)
+        call. = FALSE
+      )
     }
   }
 
   if (is.null(qcatch)) {
     stop("Scale of quantum catches not defined (Qi or fi in argument qcatch).",
-         call. = FALSE)
+      call. = FALSE
+    )
   }
 
   if (usereceptornoisemodel) {
@@ -234,9 +241,7 @@ coldist <- function(modeldata,
 
 
     if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
-
       dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
-
     } else {
       dat <- as.matrix(modeldata)
 
@@ -246,30 +251,34 @@ coldist <- function(modeldata,
 
     # Ensure catches are log transformed
     dat <- switch(qcatch,
-                  fi = dat,
-                  Qi = log(dat)
+      fi = dat,
+      Qi = log(dat)
     )
     # Quantum catch models need Qi in original scale (not log transformed)
     # to calculate the noise. Save as qndat object.
     qndat <- switch(qcatch,
-                    Qi = as.matrix(modeldata),
-                    fi = as.matrix(exp(modeldata))
+      Qi = as.matrix(modeldata),
+      fi = as.matrix(exp(modeldata))
     )
 
     dat2 <- dat[, 1:ncone, drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) {
       stop("reference cone class for the empirical estimate of the Weber fraction (",
-           dQuote("weber ref"),
-           ") is greater than the length of vector of relative cone densities (",
-           dQuote("n"), ")", call. = FALSE)
+        dQuote("weber ref"),
+        ") is greater than the length of vector of relative cone densities (",
+        dQuote("n"), ")",
+        call. = FALSE
+      )
     }
 
     if (weber.ref == "longest") weber.ref <- length(n)
 
     if (length(n) != ncone) {
       stop("vector of relative cone densities (", dQuote("n"),
-           ") has a different length than the number of cones (columns) used for the visual model", call. = FALSE)
+        ") has a different length than the number of cones (columns) used for the visual model",
+        call. = FALSE
+      )
     }
 
     # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
@@ -277,15 +286,15 @@ coldist <- function(modeldata,
     refsamp <- min(dim(dat2)[1], ncone)
 
     visref <- matrix(NA,
-                     ncol = ncone,
-                     nrow = refsamp + ncone + 1,
-                     dimnames = list(
-                       c(
-                         rownames(dat2)[seq(refsamp)],
-                         paste0("jnd2xyzrrf.", c("achro", colnames(dat2)))
-                       ),
-                       colnames(dat2)
-                     )
+      ncol = ncone,
+      nrow = refsamp + ncone + 1,
+      dimnames = list(
+        c(
+          rownames(dat2)[seq(refsamp)],
+          paste0("jnd2xyzrrf.", c("achro", colnames(dat2)))
+        ),
+        colnames(dat2)
+      )
     )
 
     rrf <- diag(9, ncone)
@@ -299,7 +308,7 @@ coldist <- function(modeldata,
     visref[-seq(refsamp + 1), ] <- rrf
 
     resref <- as.data.frame(matrix(rownames(visref)[t(combn(nrow(visref), 2))],
-                                   ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
+      ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
     ), stringsAsFactors = FALSE)
     resref[, "dS"] <- NA
     if (achromatic) {
@@ -307,12 +316,12 @@ coldist <- function(modeldata,
     }
 
     res[, "dS"] <- switch(noise,
-                          "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
-                          "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:ncone])
+      "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
+      "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:ncone])
     )
     resref[, "dS"] <- switch(noise,
-                             "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
-                             "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, qndat = exp(visref))
+      "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
+      "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, qndat = exp(visref))
     )
 
     if (achromatic) {
@@ -321,30 +330,30 @@ coldist <- function(modeldata,
         dat[seq(refsamp), dim(dat)[2]]
 
       res[, "dL"] <- switch(noise,
-                            "neural" = unlist(lapply(seq(nrow(res)), function(x)
-                              ttdistcalcachro(
-                                dat[res[x, 1], ], dat[res[x, 2], ],
-                                NULL, NULL, weber.achro
-                              ))),
-                            "quantum" = unlist(lapply(seq(nrow(res)), function(x)
-                              ttdistcalcachro(
-                                dat[res[x, 1], ], dat[res[x, 2], ],
-                                qndat[res[x, 1], ], qndat[res[x, 2], ], weber.achro
-                              )))
+        "neural" = unlist(lapply(seq(nrow(res)), function(x)
+          ttdistcalcachro(
+            dat[res[x, 1], ], dat[res[x, 2], ],
+            NULL, NULL, weber.achro
+          ))),
+        "quantum" = unlist(lapply(seq(nrow(res)), function(x)
+          ttdistcalcachro(
+            dat[res[x, 1], ], dat[res[x, 2], ],
+            qndat[res[x, 1], ], qndat[res[x, 2], ], weber.achro
+          )))
       )
 
       resref[, "dL"] <- switch(noise,
-                               "neural" = unlist(lapply(seq(nrow(resref)), function(x)
-                                 ttdistcalcachro(
-                                   visref[resref[x, 1], ], visref[resref[x, 2], ],
-                                   NULL, NULL,
-                                   weber.achro = weber.achro
-                                 ))),
-                               "quantum" = unlist(lapply(seq(nrow(resref)), function(x)
-                                 ttdistcalcachro(
-                                   visref[resref[x, 1], ], visref[resref[x, 2], ],
-                                   exp(visref)[resref[x, 1], ], exp(visref)[resref[x, 2], ], weber.achro
-                                 )))
+        "neural" = unlist(lapply(seq(nrow(resref)), function(x)
+          ttdistcalcachro(
+            visref[resref[x, 1], ], visref[resref[x, 2], ],
+            NULL, NULL,
+            weber.achro = weber.achro
+          ))),
+        "quantum" = unlist(lapply(seq(nrow(resref)), function(x)
+          ttdistcalcachro(
+            visref[resref[x, 1], ], visref[resref[x, 2], ],
+            exp(visref)[resref[x, 1], ], exp(visref)[resref[x, 2], ], weber.achro
+          )))
       )
 
       if (dim(dat)[2] <= ncone) {
@@ -355,21 +364,21 @@ coldist <- function(modeldata,
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
-                          "hexagon" = ,
-                          "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
-                          "CIELAB" = ,
-                          "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
-                          "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
-                          "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+      "hexagon" = ,
+      "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
+      "CIELAB" = ,
+      "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
+      "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
+      "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
       res[, "dL"] <- switch(attr(modeldata, "clrsp"),
-                            "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
-                            "categorical" = NA,
-                            "CIELAB" = ,
-                            "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
-                            "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
-                            "coc" = NA
+        "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
+        "categorical" = NA,
+        "CIELAB" = ,
+        "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
+        "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
+        "coc" = NA
       )
     }
   }

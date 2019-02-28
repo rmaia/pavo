@@ -117,24 +117,23 @@ can be returned, for use in a suite of colorspace and non-colorspace models.
 \examples{
 # Dichromat (dingo)
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'canis')
-di.flowers <- colspace(vis.flowers, space = 'di')
+vis.flowers <- vismodel(flowers, visual = "canis")
+di.flowers <- colspace(vis.flowers, space = "di")
 
 # Trichromat (honeybee)
 data(flowers)
-vis.flowers <- vismodel(flowers, visual = 'apis')
-tri.flowers <- colspace(vis.flowers, space = 'tri')
+vis.flowers <- vismodel(flowers, visual = "apis")
+tri.flowers <- colspace(vis.flowers, space = "tri")
 
 # Tetrachromat (blue tit)
 data(sicalis)
-vis.sicalis <- vismodel(sicalis, visual = 'bluetit')
-tcs.sicalis <- colspace(vis.sicalis, space = 'tcs')
+vis.sicalis <- vismodel(sicalis, visual = "bluetit")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 
 # Tetrachromat (starling), receptor-noise model
 data(sicalis)
-vis.star <- vismodel(sicalis, visual = 'star', achromatic = 'bt.dc', relative = FALSE)
+vis.star <- vismodel(sicalis, visual = "star", achromatic = "bt.dc", relative = FALSE)
 dist.star <- coldist(vis.star, achromatic = TRUE)
-
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.

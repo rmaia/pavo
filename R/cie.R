@@ -24,11 +24,10 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = 'cie10', illum = 'D65', vonkries = TRUE, relative = FALSE)
-#' flowers.ciexyz <- colspace(vis.flowers, space = 'ciexyz')
-#' flowers.cielab <- colspace(vis.flowers, space = 'cielab')
-#' flowers.cielch <- colspace(vis.flowers, space = 'cielch')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+#' flowers.ciexyz <- colspace(vis.flowers, space = "ciexyz")
+#' flowers.cielab <- colspace(vis.flowers, space = "cielab")
+#' flowers.cielch <- colspace(vis.flowers, space = "cielch")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

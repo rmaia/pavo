@@ -30,29 +30,30 @@
 #'
 #' @examples
 #' data(flowers)
-#'
+#' 
 #' # A dichromat in a segment colourspace
-#' vis.flowers <- vismodel(flowers, visual = 'canis')
-#' di.flowers <- colspace(vis.flowers, space = 'di')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "canis")
+#' di.flowers <- colspace(vis.flowers, space = "di")
+#' 
 #' # Honeybee in the colour hexagon
-#' vis.flowers <- vismodel(flowers, visual = 'apis', qcatch = 'Ei', relative = FALSE,
-#'                         vonkries = TRUE, achro = 'l', bkg = 'green')
-#' hex.flowers <- colspace(vis.flowers, space = 'hexagon')
-#'
+#' vis.flowers <- vismodel(flowers,
+#'   visual = "apis", qcatch = "Ei", relative = FALSE,
+#'   vonkries = TRUE, achro = "l", bkg = "green"
+#' )
+#' hex.flowers <- colspace(vis.flowers, space = "hexagon")
+#' 
 #' # A trichromat in a Maxwell triangle
-#' vis.flowers <- vismodel(flowers, visual = 'apis')
-#' tri.flowers <- colspace(vis.flowers, space = 'tri')
+#' vis.flowers <- vismodel(flowers, visual = "apis")
+#' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' plot(tri.flowers)
-#'
+#' 
 #' # A tetrachromat in a tetrahedral colourspace
-#' vis.flowers <- vismodel(flowers, visual = 'bluetit')
-#' tcs.flowers <- colspace(vis.flowers, space = 'tcs')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "bluetit")
+#' tcs.flowers <- colspace(vis.flowers, space = "tcs")
+#' 
 #' # A housefly in the categorical colourspace
-#' vis.flowers <- vismodel(flowers, visual = 'musca', achro = 'md.r1')
-#' cat.flowers <- colspace(vis.flowers, space = 'categorical')
-#'
+#' vis.flowers <- vismodel(flowers, visual = "musca", achro = "md.r1")
+#' cat.flowers <- colspace(vis.flowers, space = "categorical")
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

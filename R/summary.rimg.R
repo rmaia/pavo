@@ -20,21 +20,21 @@
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
-#' @examples \dontrun{
-#' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+#' @examples
+#' \dontrun{
+#' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #' papilio_class <- classify(papilio, kcols = 4)
 #' summary(papilio_class)
-#'
+#' 
 #' # Plot the colour-classified image alongside the colour class palette
 #' summary(papilio_class, plot = TRUE)
-#'
+#' 
 #' # Multiple images
-#' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+#' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #' snakes_class <- classify(snakes, kcols = 3)
 #' summary(snakes_class, plot = TRUE)
 #' }
-#'
-
+#' 
 summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
   multi_image <- inherits(object, "list") # Single or multiple images?
 

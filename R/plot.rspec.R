@@ -24,15 +24,15 @@
 #'
 #' @export
 #'
-#' @examples \dontrun{
-#'
+#' @examples
+#' \dontrun{
+#' 
 #' data(teal)
-#' plot(teal, type = 'overlay')
-#' plot(teal, type = 'stack')
-#' plot(teal, type = 'heatmap')
-#'
+#' plot(teal, type = "overlay")
+#' plot(teal, type = "stack")
+#' plot(teal, type = "heatmap")
 #' }
-#'
+#' 
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
