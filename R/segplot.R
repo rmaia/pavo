@@ -51,10 +51,10 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
     arg$pch <- 19
   }
   if (is.null(arg$xlim)) {
-    arg$xlim <- c(-1, 1)
+    arg$xlim <- c(-1.05, 1.01)
   }
   if (is.null(arg$ylim)) {
-    arg$ylim <- c(-1, 1)
+    arg$ylim <- c(-1.05, 1.05)
   }
   if (is.null(arg$xlab)) {
     arg$xlab <- " "
