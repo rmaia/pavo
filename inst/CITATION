@@ -7,6 +7,6 @@ citEntry(entry="Article",
     as.person("John A. Endler"),
     as.person("Thomas E. White")
     ),
-	journal = "bioRxiv",
-  year = "2018",
-  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2018. pavo 2: new tools for the spectral and spatial analysis of colour in R. bioRxiv.")
+	journal = "Methods in Ecology and Evolution",
+  year = "2019",
+  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2019. pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution.")
