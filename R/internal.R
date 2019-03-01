@@ -24,7 +24,7 @@ tcssum <- function(tcsres) {
 
     # Exact formula for the volume of a regular tetrahedron inscribed in a
     # circle of radius (3/4)
-    tot.c.vol <- (3 / sqrt(6))^3 / (6 * sqrt(2))
+    tot.c.vol <- sqrt(3) / 8
 
     # relative color volume
     rel.c.vol <- c.vol / tot.c.vol
