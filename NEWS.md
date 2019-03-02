@@ -6,7 +6,7 @@
 correct areas within images that have been misclassified
 * added the rod sensitivity of _Canis familiaris_
 * `peakshape()` uses a completely different algorithm to find the FWHM. It now
-works as expected for spectra with multiple peaks. See PR #137 for a detailed 
+works as expected for spectra with multiple peaks. See [PR #137](https://github.com/rmaia/pavo/pull/137) for a detailed 
 overview of the changes.
 * data used internally by pavo (`bgandilum`, `transmissiondata`, `ttvertex`, `vissyst`) is no longer exposed to users
 
