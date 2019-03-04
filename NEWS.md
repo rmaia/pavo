@@ -12,7 +12,8 @@ overview of the changes.
 
 ## MINOR FEATURES AND BUG FIXES
 
-* fixed a bug where images would sometimes be wrongly detected as user classified in `as.img()`
+* new functions `is.vismodel()` and `is.colspace()` are exported to test whether an object is of class `vismodel` or `colspace`, respectively
+* fixed a bug where images would sometimes be wrongly detected as user-classified in `as.rimg()`
 * the UV-sensitive cone is now only always named "u", even for VS species (such as `pfowl` and `avg.v` in `vismodel()` and `sensdata()`). This removes an unnecessary but harmless warning when `colspace()` was used to place quantum catches of such species in the tetrahedral colour space.
 * the `achro` argument in `coldist()` has been changed for `achromatic` to
 better match the arguments from `vismodel()`. Older scripts that use `achro` 
