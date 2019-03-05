@@ -3,7 +3,7 @@
 [![cran version](https://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
 [![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
 [![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)
-[![Coverage status](https://codecov.io/gh/rmaia/pavo/branch/master/graph/badge.svg)](https://codecov.io/github/rmaia/pavo?branch=master)  
+[![Coverage status](https://codecov.io/gh/rmaia/pavo/branch/master/graph/badge.svg)](https://codecov.io/github/rmaia/pavo?branch=master)
 
 ## An `R` package for the spectral and spatial analysis of color patterns
 
@@ -19,28 +19,28 @@
 - **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 - **Visualise** the output, with multiple options provided for exploration, presentation, and analysis.
 
-### Need more information, or help with the package? 
+### Need more information, or help with the package?
 
 - Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/pavo.html) (or via `browseVignettes('pavo')`) for detailed examples and discussion.
 - Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
 - **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
-  
+
 ## Citing pavo
 
-The manuscripts describing the package has been published and are free to access: 
+The manuscripts describing the package has been published and are free to access:
 
 \> v. 2.0
 
-Maia R., Gruson H., Endler J.A. and White T.E. 2018 **pavo 2: new tools for the spectral 
+Maia R., Gruson H., Endler J.A. and White T.E. 2018 **pavo 2: new tools for the spectral
 and spatial analysis of colour in R**. bioRxiv. [doi: 10.1101/427658](https://doi.org/10.1101/427658)
 
 < v. 2.0
 
-Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013. 
-**pavo: an R Package for the analysis, visualization and organization of spectral data.** 
+Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013.
+**pavo: an R Package for the analysis, visualization and organization of spectral data.**
 *Methods in Ecology and Evolution* 4(10):609-613.
-[doi: 10.1111/2041-210X.12069](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12069/abstract)  
-  
+[doi: 10.1111/2041-210X.12069](http://onlinelibrary.wiley.com/doi/10.1111/2041-210X.12069/abstract)
+
 ## Install
 
 This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
@@ -49,7 +49,7 @@ If you want to install the bleeding edge version of `pavo`, you can:
 
 * use the [`remotes`](https://github.com/r-lib/remotes) package:
 
-```r     
+```r
 # install.packages('remotes')
 remotes::install_github('rmaia/pavo')
 ```

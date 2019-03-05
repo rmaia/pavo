@@ -1,6 +1,6 @@
 ## Test environments
 * local OS X install, R 3.5.1
-* ubuntu 14.04.5 LTS (on travis-ci), R 3.5.0 ('release'), R 3.4.4 ('oldrelease') and R-devel (2018-09-18 r75325)
+* Ubuntu 14.04.5 LTS (on travis-ci), R 3.5.2 ('release'), R 3.4.4 ('oldrel') and R-devel (2019-03-03 r76191)
 * win-builder (R-devel 2018-09-18 r75325)
 
 ## R CMD check results
