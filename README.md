@@ -21,7 +21,7 @@
 
 ### Need more information, or help with the package?
 
-- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/pavo.html) (or via `browseVignettes('pavo')`) for detailed examples and discussion.
+- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes('pavo')`) for detailed examples and discussion.
 - Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
 - **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
 
