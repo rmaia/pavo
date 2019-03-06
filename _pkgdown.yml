@@ -7,6 +7,8 @@ reference:
   - '`aggspec`'
   - '`as.rspec`'
   - '`as.rimg`'
+  - '`is.colspace`'
+  - '`is.vismodel`'
   - '`cimg2rimg`'
   - '`getspec`'
   - '`getimg`'
