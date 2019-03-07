@@ -246,6 +246,7 @@ test_that("adjacency", {
 
 test_that("summary", {
   library(digest)
+  suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
 
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
@@ -255,6 +256,6 @@ test_that("summary", {
 
   expect_equal(digest::sha1(summary(papilio), digits = 4), "261b24d0d720036a973549b2cfba1665680f3cfc")
   expect_equal(digest::sha1(summary(snakes), digits = 4), "2ec7acae69e5812b0544d347b37b7dcdc55b1517")
-  # expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
-  # expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
+  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
+  expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
 })
