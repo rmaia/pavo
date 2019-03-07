@@ -208,7 +208,7 @@ outliner <- function(image_i, smooth_i, iterations_i, col, ...) {
     xy <- cbind(xy$x, xy$y)
     xy <- rbind(xy, xy[1, ])
 
-    # Smooth coordinates (Chaikin’s corner cutting)
+    # Smooth coordinates (Chaikin's corner cutting)
     if (smooth_i) {
       for (i in seq.int(iterations_i)) {
         n_pts <- nrow(xy)
