@@ -9,11 +9,12 @@ segplot(segdata, labels = TRUE, lab.cex = 0.9, out.lwd = 1,
   margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{segdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{segspace} function, containing values for 'LM' and 'MS'
+\item{segdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=segspace]{segspace()}} function, containing values for 'LM' and 'MS'
 as columns (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
+\item{labels}{logical. Should the name of each cone be printed next to the
+corresponding vertex?}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes.}
 
@@ -22,7 +23,7 @@ as columns (labeled as such).}
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}.}
+\item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
 \description{
 Produces a plot based on Endler's (1990) segment analysis.

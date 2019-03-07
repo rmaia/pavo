@@ -4,10 +4,10 @@
 #'
 #'
 #' @inheritParams plot.colspace
-#' @param ... additional graphical options. See \code{\link{par}}.
+#' @param ... additional graphical options. See [par()].
 #'
-#' @return \code{points.colspace} adds points to a colorspace plot. When \code{space = 'tcs'},
-#'  it creates 3D points in a tetrahedral color space plot using functions of the package \code{rgl},
+#' @return `points.colspace` adds points to a colorspace plot. When `space = 'tcs'`,
+#'  it creates 3D points in a tetrahedral color space plot using functions of the package `rgl`,
 #'  based on openGL capabilities.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

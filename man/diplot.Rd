@@ -9,11 +9,12 @@ diplot(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{didata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{dispace}
+\item{didata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=dispace]{dispace()}}
 function, containing values for the 'x' coordinates as a column (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
+\item{labels}{logical. Should the name of each cone be printed next to the
+corresponding vertex?}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
@@ -21,7 +22,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
-\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+\item{labels.cex}{size of the arrow labels.}
 
 \item{out.lwd}{graphical parameters for the plot outline.}
 
@@ -34,7 +35,7 @@ function, containing values for the 'x' coordinates as a column (labeled as such
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}.}
+\item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
 \description{
 Produces a dichromat segment plot.
@@ -47,8 +48,8 @@ plot(di.flowers)
 }
 \references{
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
- behavioural tests and physiological concepts. Biological Reviews, 78,
- 81 - 118.
+behavioural tests and physiological concepts. Biological Reviews, 78,
+81 - 118.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

@@ -2,12 +2,10 @@
 #'
 #' Produces a plot based on Troje's (1993) categorical colour model.
 #'
-# #' @usage plot(catdata, ...)
-#'
-#' @param catdata (required) a data frame, possibly a result from the \code{colspace}
-#'  or \code{categorical} function, containing values for 'x' and 'y' coordinates
+#' @param catdata (required) a data frame, possibly a result from the [colspace()]
+#'  or [categorical()] function, containing values for 'x' and 'y' coordinates
 #'  as columns (labeled as such).
-#' @param labels plot category labels inside? Defaults to \code{TRUE}.
+#' @param labels plot category labels inside? Defaults to `TRUE`.
 #' @inheritParams triplot
 #'
 #' @examples

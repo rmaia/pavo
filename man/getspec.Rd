@@ -33,7 +33,7 @@ spectra? (defaults to \code{FALSE}).}
 parallel processing (not available in Windows).}
 
 \item{ignore.case}{Logical. Should the extension search be case insensitive?
-(defaults to TRUE)}
+(defaults to `TRUE``)}
 }
 \value{
 A data frame, of class \code{rspec}, containing individual imported

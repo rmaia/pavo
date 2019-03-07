@@ -9,13 +9,14 @@ cocplot(cocdata, labels = TRUE, labels.cex = 0.9, tick.loc = c(-12,
   achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{cocdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{categorical} function, containing values for 'x' and 'y' coordinates
+\item{cocdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=categorical]{categorical()}} function, containing values for 'x' and 'y' coordinates
 as columns (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
+\item{labels}{logical. Should the name of each cone be printed next to the
+corresponding vertex?}
 
-\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+\item{labels.cex}{size of the arrow labels.}
 
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x & y axes.}
 
@@ -30,7 +31,7 @@ as columns (labeled as such).}
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}.}
+\item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
 \description{
 Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
@@ -43,7 +44,7 @@ plot(coc.flowers)
 }
 \references{
 Backhaus W. (1991). Color opponent coding in the visual system
- of the honeybee. Vision Research, 31, 1381-1397.
+of the honeybee. Vision Research, 31, 1381-1397.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

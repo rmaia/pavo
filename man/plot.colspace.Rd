@@ -7,22 +7,23 @@
 \method{plot}{colspace}(x, ...)
 }
 \arguments{
-\item{x}{(required) an object of class \code{colspace}.}
+\item{x}{(required) an object of class [\code{colspace}.}
 
 \item{...}{additional graphical options, which vary by modeled \code{space}. Refer
 to their individual documentation:
 \itemize{
-      \item \code{\link{diplot}}: dichromat space
-      \item \code{\link{triplot}}: trichromat space
-      \item \code{\link{tetraplot}}: tetrahedral space
-      \item \code{\link{catplot}}: categorical space
-      \item \code{\link{hexplot}}: colour hexagon
-      \item \code{\link{cocplot}}: colour-opponent-coding space
-      \item \code{\link{cieplot}}: cie spaces
-      \item \code{\link{segplot}}: segment analysis space
-      \item \code{\link{jndplot}}: perceptual, 'noise corrected' space (for the results of \code{\link{jnd2xyz}})
-      }
-      Also see \code{\link{par}}.}
+\item \code{\link[=diplot]{diplot()}}: dichromat space
+\item \code{\link[=triplot]{triplot()}}: trichromat space
+\item \code{\link[=tetraplot]{tetraplot()}}: tetrahedral space
+\item \code{\link[=catplot]{catplot()}}: categorical space
+\item \code{\link[=hexplot]{hexplot()}}: colour hexagon
+\item \code{\link[=cocplot]{cocplot()}}: colour-opponent-coding space
+\item \code{\link[=cieplot]{cieplot()}}: cie spaces
+\item \code{\link[=segplot]{segplot()}}: segment analysis space
+\item \code{\link[=jndplot]{jndplot()}}: perceptual, 'noise corrected' space (for the results of \code{\link[=jnd2xyz]{jnd2xyz()}})
+}
+
+Also see \code{\link[=par]{par()}}.}
 }
 \value{
 A colorspace plot appropriate to the input data.
@@ -73,42 +74,42 @@ tcsvol(tcs.sicalis)
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-   Transactions of the Optical Society, 33(3), 73-134.
+Transactions of the Optical Society, 33(3), 73-134.
 
 Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-   using MATLAB. John Wiley & Sons.
+using MATLAB. John Wiley & Sons.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
 Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-   component of flower reflections, and the colour perception of Hymenoptera.
-   Vision research, 34(11), 1489-1508.
+component of flower reflections, and the colour perception of Hymenoptera.
+Vision research, 34(11), 1489-1508.
 
 Troje N. (1993). Spectral categories in the learning behaviour
- of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
-Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision
-   - behavioural tests and physiological concepts. Biological Reviews, 78,
-   81 - 118.
+Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
+behavioural tests and physiological concepts. Biological Reviews, 78,
+81 - 118.
 
 Backhaus W. (1991). Color opponent coding in the visual system
- of the honeybee. Vision Research, 31, 1381-1397.
+of the honeybee. Vision Research, 31, 1381-1397.
 
 Endler, J. A. (1990) On the measurement and classification of
 color in studies of animal color patterns. Biological Journal of the Linnean
 Society, 41, 315-352.
 }
 \seealso{
-\code{\link{plot}}
+\code{\link[=plot]{plot()}}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

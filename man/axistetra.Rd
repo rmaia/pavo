@@ -11,7 +11,7 @@ axistetra(x = 0, y = 1.3, size = 0.1, arrowhead = 0.05,
 }
 \arguments{
 \item{x, y}{position of the legend relative to plot limits
- (usually a value between 0 and 1, but because of the perspective distortion,
+(usually a value between 0 and 1, but because of the perspective distortion,
 values greater than 1 are possible)}
 
 \item{size}{length of the arrows. Can be either a single value
@@ -21,7 +21,7 @@ values greater than 1 are possible)}
 
 \item{col, lty, lwd}{graphical parameters for the arrows.}
 
-\item{label}{logical, include x, y and z labels (defaults to TRUE).}
+\item{label}{logical, include x, y and z labels (defaults to `TRUE``).}
 
 \item{adj.label}{position adjustment for the labels. a list of 3 named objects
 for x, y and z arrows, each with 2 values for x and y adjustment.}

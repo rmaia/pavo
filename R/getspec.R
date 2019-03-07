@@ -14,15 +14,15 @@
 #' (defaults to ".").
 #' @param sep column delimiting characters to be considered in addition to the
 #' default (which are: tab, space, and ";")
-#' @param subdir should subdirectories within the \code{where} folder be
-#' included in the search? (defaults to \code{FALSE}).
+#' @param subdir should subdirectories within the `where` folder be
+#' included in the search? (defaults to `FALSE`).
 #' @param subdir.names should subdirectory path be included in the name of the
-#' spectra? (defaults to \code{FALSE}).
+#' spectra? (defaults to `FALSE`).
 #' @param cores Number of cores to be used. If greater than 1, import will use
 #'  parallel processing (not available in Windows).
 #' @param ignore.case Logical. Should the extension search be case insensitive?
-#' (defaults to TRUE)
-#' @return A data frame, of class \code{rspec}, containing individual imported
+#' (defaults to `TRUE``)
+#' @return A data frame, of class `rspec`, containing individual imported
 #' spectral files as columns.
 #' Reflectance values are interpolated to the nearest wavelength integer.
 #'

@@ -7,14 +7,14 @@
 coldist2mat(coldistres)
 }
 \arguments{
-\item{coldistres}{(required) the output from a \code{coldist} call.}
+\item{coldistres}{(required) the output from a \code{\link[=coldist]{coldist()}} call.}
 }
 \value{
 A list containing one or two matrices, for dS and dL, depending
 if the original object had dS and dL columns
 }
 \description{
-Converts a \code{coldist} output into a distance matrix where samples
+Converts a \code{\link[=coldist]{coldist()}} output into a distance matrix where samples
 are rows and columns.
 }
 \examples{
@@ -26,7 +26,7 @@ coldist2mat(cd.flowers)[["dL"]]
 }
 \references{
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
- Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
+Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

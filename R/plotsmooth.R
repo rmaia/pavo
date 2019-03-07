@@ -1,27 +1,27 @@
 #' Plot loess smoothed curves
 #'
 #' Plots spectral curves with various levels of loess smoothing to help decide which
-#' loess parameters are best for subsequently smoothing the data (e.g. via \code{procspec}).
+#' loess parameters are best for subsequently smoothing the data (e.g. via [procspec()]).
 #'
-#' @param rspecdata (required) a data frame, possibly of class \code{rspec}, which
-#' contains a column containing a wavelength range , named 'wl', and spectra data in
-#' remaining columns.
-#' @param minsmooth the minimum f value of the loess function to visualize (defaults to \code{0.05}).
-#' @param maxsmooth the maximum f value of the loess function to visualize (defaults to \code{0.20}).
-#' @param curves the number of curves to display on the same plot (defaults to \code{5}).
-#' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to \code{ALL}).
-#' @param ask logical. if \code{TRUE}, asks for user input before changing plot pages
+#' @inheritParams aggplot
+#' @param minsmooth the minimum f value of the loess function to visualize (defaults to `0.05`).
+#' @param maxsmooth the maximum f value of the loess function to visualize (defaults to `0.20`).
+#' @param curves the number of curves to display on the same plot (defaults to `5`).
+#' @param specnum the number of spectral curves, from the data frame, to visualize (defaults to `ALL`).
+#' @param ask logical. if `TRUE`, asks for user input before changing plot pages
 #'
 #' @return Series of plot with curves processed with varying level of loess smoothing
 #'
 #' @export
+#'
+#' @seealso [procspec()]
 #'
 #' @examples
 #' \dontrun{
 #' data(sicalis)
 #' plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
 #' }
-#' 
+#'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,

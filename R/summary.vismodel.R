@@ -1,12 +1,12 @@
 #' Visual model summary
 #'
-#' Returns the attributes used when calculating a visual model using \code{vismodel}
+#' Returns the attributes used when calculating a visual model using [vismodel()]
 #'
-#' @param object (required) Results of \code{vismodel}
+#' @param object (required) Results of [vismodel()]
 #' @param ... class consistency (ignored)
 #'
 #' @return Returns all attributes chosen when calculating the visual model, as well as the
-#' default \code{data.frame} summary
+#' default `data.frame` summary
 #'
 #' @export
 #'

@@ -10,11 +10,11 @@ is.vismodel(object)
 \item{object}{an R object}
 }
 \value{
-a logical value indicating whether the object is of class \code{vismodel}
+a logical value indicating whether the object is of class \code{vismodel}.
 }
 \description{
 Test is object is of class 'vismodel'
 }
 \seealso{
-\code{\link{vismodel}}
+\code{\link[=vismodel]{vismodel()}}
 }

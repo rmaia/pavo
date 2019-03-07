@@ -4,14 +4,14 @@
 #' in a dichromatic colour space.
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  from [vismodel()] or independently calculated data (in the form of a data frame
 #'  with two columns named 's' and 'l', representing a dichromatic viewer's receptors).
 #'
-#' @return A data frame of class \code{colspace} consisting of the following columns:
-#' @return \code{s}, \code{l}: the quantum catch data used to calculate
+#' @return A data frame of class [`colspace`] consisting of the following columns:
+#' * `s`, `l`: the quantum catch data used to calculate
 #'  the remaining variables.
-#' @return \code{x}: the coordinate of the stimulus along a segment
-#' @return \code{r.vec}: the r vector (saturation, distance from the center).
+#' * `x`: the coordinate of the stimulus along a segment
+#' * `r.vec`: the r vector (saturation, distance from the center).
 #'
 #' @examples
 #' data(flowers)

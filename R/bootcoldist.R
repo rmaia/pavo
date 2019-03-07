@@ -4,20 +4,20 @@
 #'  for the mean colour distance between two or more samples of colours
 #'
 #' @param vismodeldata (required) quantum catch color data.
-#'  Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
+#'  Can be the result from [vismodel()], or [colspace()]. Data may also be
 #'  independently calculated quantum catches, in the form of a data frame with
 #'  columns representing photoreceptors.
 #' @param by (required) a numeric or character vector indicating the group to which each row from
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
-#' @param cores number of cores to be used in parallel processing. If \code{1}, parallel
-#'  computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}
-#' @param ... other arguments to be passed to \code{\link{coldist}}. Must at minimum
-#' include \code{n} and \code{weber}. See \code{\link{coldist}} for details.
+#' @param cores number of cores to be used in parallel processing. If `1`, parallel
+#'  computing will not be used. Defaults to `getOption("mc.cores", 2L)`
+#' @param ... other arguments to be passed to [coldist()]. Must at minimum
+#' include `n` and `weber`. See [coldist()] for details.
 #'
 #' @return a matrix including the empirical mean and bootstrapped
-#'  confidence limits for dS (and dL if \code{achro = TRUE}).
+#'  confidence limits for dS (and dL if `achro = TRUE`).
 #'
 #' @examples
 #' \dontrun{
@@ -26,7 +26,7 @@
 #' gr <- gsub("ind..", "", rownames(vm))
 #' bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
 #' }
-#' 
+#'
 #' @export
 #' @importFrom pbmcapply pbmclapply
 #' @importFrom stats aggregate

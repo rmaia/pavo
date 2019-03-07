@@ -2,8 +2,8 @@
 #'
 #' Adds points to a tetrahedral colorspace projection
 #'
-#' @return \code{projpoints} creates points in a projection color space plot
-#' produced by \code{projplot}.
+#' @return [projpoints()] creates points in a projection color space plot
+#' produced by [projplot()].
 #'
 #' @rdname projplot
 #'

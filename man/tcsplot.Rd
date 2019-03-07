@@ -17,23 +17,23 @@ tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
   grid = TRUE, fill = TRUE, lwd = 1)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).}
 
 \item{size}{size of the points in the plot (defaults to 0.02)}
 
-\item{alpha}{transparency of points (or volume fill in \code{tcsvol})}
+\item{alpha}{transparency of points (or volume fill in \code{\link[=tcsvol]{tcsvol()}})}
 
 \item{col}{colour of the points in the plot (defaults to black)}
 
 \item{vertexsize}{size of the points at the vertices}
 
-\item{achro}{logical. Should the achromatic center be plotted? (defaults to \code{TRUE})}
+\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achrosize}{size of the point in the achromatic centre}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
-\item{achrocol}{colour of the point in the achromatic centre}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
 
 \item{lwd, lcol}{graphical parameters for the edges of the tetrahedron.}
 
@@ -53,17 +53,15 @@ coordinates as columns (labeled as such).}
 is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).}
 }
 \value{
-\code{tcsplot} creates a 3D plot using functions of the package \code{rgl},
+\code{\link[=tcsplot]{tcsplot()}} creates a 3D plot using functions of the package \code{rgl},
 based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
 (left button: rotate along 'z' axis; right button: rotate along 'x' axis;
-third button: zoom). \code{tcsvol} creates polygon based on points, determining the volume
-occupied by them in the colorspace. \code{tcspoints} adds points to the plot. Points are
-currently plotted only as spheres to maintain export capabilities.
+third button: zoom).
 
-\code{tcspoints} creates 3D points in a tetrahedral colour space plot produced by \code{tcsplot}
-using functions of the package \code{rgl}, based on openGL capabilities.
+\code{\link[=tcspoints]{tcspoints()}} adds points to the plot. Points are currently plotted
+only as spheres to maintain export capabilities.
 
-\code{tcsvol} creates a 3D convex hull within a \code{tcsplot} object.
+\code{\link[=tcsvol]{tcsvol()}} creates a 3D convex hull within a \code{tcsplot} object.
 }
 \description{
 Produces an interactive 3D plot of a tetrahedral
@@ -96,15 +94,15 @@ tcsvol(tcs.sicalis)
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \seealso{
-\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
-\code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
+\code{\link[rgl:spheres3d]{rgl::spheres3d()}},\code{\link[rgl:rgl.postscript]{rgl::rgl.postscript()}},
+\code{\link[rgl:rgl.snapshot]{rgl::rgl.snapshot()}},\code{\link[rgl:rgl.material]{rgl::rgl.material()}}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

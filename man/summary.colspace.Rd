@@ -24,26 +24,19 @@ data.}
 \value{
 returns all attributes of the data as mapped to the selected colourspace, including
 options specified when calculating the visual model. Also return the default
-\code{data.frame} summary, except when the object is the result of \code{tcs},
+\code{data.frame} summary, except when the object is the result of \code{\link[=tcspace]{tcspace()}},
 in which case the following variables are output instead:
-
-\code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
-
-\code{c.vol} the total volume occupied by the points.
-
-\code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
-
-\code{colspan.m} the mean hue span.
-
-\code{colspan.v} the variance in hue span.
-
-\code{huedisp.m} the mean hue disparity.
-
-\code{huedisp.v} the variance in hue disparity.
-
-\code{mean.ra} mean saturation.
-
-\code{max.ra} maximum saturation achieved by the group of points.
+\itemize{
+\item \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
+\item \code{c.vol} the total volume occupied by the points.
+\item \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
+\item \code{colspan.m} the mean hue span.
+\item \code{colspan.v} the variance in hue span.
+\item \code{huedisp.m} the mean hue disparity.
+\item \code{huedisp.v} the variance in hue disparity.
+\item \code{mean.ra} mean saturation.
+\item \code{max.ra} maximum saturation achieved by the group of points.
+}
 }
 \description{
 Returns the attributes of \code{colspace} objects.
@@ -66,11 +59,11 @@ summary(csp.sicalis, by = rep(c("C", "T", "B"), 7))
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

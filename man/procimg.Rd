@@ -10,9 +10,9 @@ procimg(image, resize = NULL, rotate = NULL, scaledist = NULL,
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
-stored in a list. Preferably the result of \code{\link{getimg}}.}
+stored in a list. Preferably the result of \code{\link[=getimg]{getimg()}}.}
 
-\item{resize}{an integer specifying a percentage for resizing images, if so desired. 
+\item{resize}{an integer specifying a percentage for resizing images, if so desired.
 E.g. 50 to half the size of an image, 200 to double it.}
 
 \item{rotate}{an integer specifying the angle of image rotation, in degrees. Images
@@ -43,7 +43,7 @@ Defaults to \code{1}.}
 
 \item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 
-\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
+\item{...}{additional graphical parameters. Also see \code{\link[=par]{par()}}.}
 }
 \value{
 an image, or list of images, for use in further

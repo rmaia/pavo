@@ -1,40 +1,37 @@
 #' Perceptually-corrected chromaticity diagrams
 #'
-#' Plot options for \code{jnd2xyz} objects.
+#' Plot options for [`jnd2xyz`] objects.
 #'
-#' @param x (required) the output from a \code{jnd2xyz} call.
+#' @param x (required) the output from a [jnd2xyz()] call.
 #' @param arrow If and how arrows indicating receptor vectors should be
-#' drawn. Options are \code{'relative'} (default), \code{'absolute'} or
-#' \code{'none'}. See description.
+#' drawn. Options are `"relative"` (default), `"absolute"` or
+#' `"none"`. See description.
 #' @param achro Logical. Should the achromatic variable be plotted as a
-#' dimension? (only available for dichromats and trichromats, defaults to \code{FALSE}).
+#' dimension? (only available for dichromats and trichromats, defaults to `FALSE`).
 #' @param arrow.labels Logical. Should labels be plotted for receptor arrows?
-#' (defaults to \code{TRUE})
+#' (defaults to `TRUE`)
 #' @param arrow.col color of the arrows and labels.
 #' @param arrow.p scaling factor for arrows.
-#' @param labels.cex scaling factor for arrow labels.
-#' @param margin accepts either \code{'recommended'}, where the function will choose margin
-#' attributes, or a numerical vector of the form \code{c(bottom, left, top, right)}
+#' @param margin accepts either `"recommended"`, where the function will choose margin
+#' attributes, or a numerical vector of the form `c(bottom, left, top, right)`
 #' which gives the number of lines of margin to be specified on the four sides of the plot.
 #' (Default varies depending on plot dimensionality).
-#' @param square Logical. Should a square plotting area be used? (defaults to \code{TRUE})
-#' @param ... additional parameters to be passed to \code{\link{plot}}, \code{\link{arrows}}
-#' and \code{link{persp}} (for 3D plots).
+#' @param ... additional parameters to be passed to [plot()], [arrows()]
+#' and [graphics::persp()] (for 3D plots).
+#' @inheritParams triplot
 #'
 #' @return Creates a plot, details of the plot depend on the input data.
-#' @note the \code{arrow} argument accepts three options:
-#' \itemize{
-#'  \item \code{'relative'}: With this option, arrows will be made relative to the data. Arrows
-#'    will be centered on the data centroid, and will have an arbitrary length of half the
-#'    average pairwise distance between points, which can be scaled with the \code{arrow.p}
-#'    argument.
-#'  \item \code{'absolute'}: With this option, arrows will be made to reflect the visual system
-#'    underlying the data. Arrows will be centered on the achromatic point in colorspace, and
-#'    will have length equal to the distance to a monochromatic point (i.e. a color that
-#'    stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
-#'    the \code{arrow.p} argument, in which case they cannot be interpreted as described.
-#'   \item \code{'none'}: no arrows will be included.
-#' }
+#' @note the `arrow` argument accepts three options:
+#' * `"relative"`: With this option, arrows will be made relative to the data. Arrows
+#' will be centered on the data centroid, and will have an arbitrary length of half the
+#' average pairwise distance between points, which can be scaled with the `arrow.p`
+#' argument.
+#' * `"absolute"`: With this option, arrows will be made to reflect the visual system
+#' underlying the data. Arrows will be centered on the achromatic point in colorspace, and
+#' will have length equal to the distance to a monochromatic point (i.e. a color that
+#' stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
+#' the `arrow.p` argument, in which case they cannot be interpreted as described.
+#' * `"none"`: no arrows will be included.
 #'
 #' @export
 #'

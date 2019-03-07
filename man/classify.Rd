@@ -10,7 +10,7 @@ classify(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL,
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
-stored in a list. Preferably the result of \code{\link{getimg}}.}
+stored in a list. Preferably the result of \code{\link[=getimg]{getimg()}}.}
 
 \item{method}{methods for image segemtation/classification.
 \itemize{
@@ -46,7 +46,7 @@ computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
 available on Windows.}
 
 \item{...}{additional graphical parameters when \code{interactive = TRUE}.
-Also see \code{\link{par}}.}
+Also see \code{\link[graphics:par]{graphics::par()}}.}
 }
 \value{
 A matrix, or list of matrices, of class \code{rimg} containing the colour
@@ -58,7 +58,7 @@ Classify image pixels into discrete colour classes.
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial
-cluster centres when \code{interactive = FALSE}, use \code{set.seed} if reproducible
+cluster centres when \code{interactive = FALSE}, use \code{\link[=set.seed]{set.seed()}} if reproducible
 cluster ID's are desired between runs.
 }
 \examples{
@@ -70,6 +70,9 @@ papilio_class <- classify(papilio, kcols = 4)
 snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
 #snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 
+}
+\seealso{
+\link[stats:kmeans]{stats::kmeans}
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

@@ -2,38 +2,35 @@
 #'
 #' Calculates height, location and width of peak at the reflectance midpoint (FWHM).
 #' Note: bounds should be set wide enough to incorporate all minima in spectra. Smoothing
-#' spectra using \code{\link{procspec}} is also recommended.
+#' spectra using [procspec()] is also recommended.
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
-#' with a column with wavelength data, named 'wl', and the remaining column containing
-#' spectra to process.
-#' @param select specification of which spectra to plot. Can be a numeric vector or
-#' factor (e.g., \code{sex == 'male'}).
 #' @param lim a vector specifying the wavelength range to analyze.
 #' @param plot logical. Should plots indicating calculated parameters be returned?
-#' (Defaults to \code{TRUE}).
+#' (Defaults to `TRUE`).
 #' @param ask logical, specifies whether user input needed to plot multiple plots
-#' when number of spectra to analyze is greater than 1 (defaults to \code{FALSE}).
-#' @param absolute.min logical. If \code{TRUE}, full width at half maximum will be
+#' when number of spectra to analyze is greater than 1 (defaults to `FALSE`).
+#' @param absolute.min logical. If `TRUE`, full width at half maximum will be
 #' calculated using the absolute minimum reflectance of the spectrum, even if
-#' that value falls outside the range specified by \code{lim}. (defaults to \code{FALSE})
+#' that value falls outside the range specified by `lim`. (defaults to `FALSE`)
 #' @param ... additional arguments to be passed to plot.
+#' @inheritParams plotsmooth
+#' @inheritParams plot.rspec
 #'
 #' @return a data frame containing column names (id); peak height (max value, B3), location (hue, H1) and full width
 #' at half maximum (FWHM), as well as half widths on left (HWHM.l) and right side of peak (HWHM.r). Incl.min column
 #' indicates whether user-defined bounds incorporate the actual minima of the spectra.
 #' Function will return a warning if not.
 #'
-#' @seealso \code{\link{procspec}}
+#' @seealso [procspec()]
 #'
 #' @export
 #'
 #' @examples
 #' data(teal)
-#' 
+#'
 #' peakshape(teal, select = 3)
 #' peakshape(teal, select = 10)
-#' 
+#'
 #' # Use wavelength bounds to narrow in on peak of interest
 #' peakshape(teal, select = 10, lim = c(400, 550))
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}

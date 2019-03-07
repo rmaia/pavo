@@ -1,9 +1,9 @@
 #' Convert coldist to distance matrix
 #'
-#' Converts a \code{coldist} output into a distance matrix where samples
+#' Converts a [coldist()] output into a distance matrix where samples
 #' are rows and columns.
 #'
-#' @param coldistres (required) the output from a \code{coldist} call.
+#' @param coldistres (required) the output from a [coldist()] call.
 #'
 #' @return A list containing one or two matrices, for dS and dL, depending
 #' if the original object had dS and dL columns

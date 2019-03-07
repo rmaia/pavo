@@ -4,23 +4,20 @@
 #' in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a
+#'  from [vismodel()] or independently calculated data (in the form of a
 #'  data frame with three columns representing trichromatic viewer).
 #' @param space (required) Choice between XYZ (1931), LAB (1971), or LCh colour models.
 #'
-#' @return Object of class \code{colspace} containing:
-#'    \itemize{
-#'      \item \code{X, Y, Z}: Tristimulus values.
-#'      \item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
-#'      \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a}
-#'          (redness-greenness) and \code{b} (yellowness-blueness) values, in a
-#'          Cartesian coordinate space. Returned when using \code{space = LAB}.
-#'      \item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a}
-#'          (redness-greenness) and \code{b} (yellowness-blueness) values, as well as
-#'          chroma \code{C} and hue-angle \code{h} (degrees), the latter of which are cylindrical
-#'          representations of \code{a} and \code{b} from the CIELAB model. Returned
-#'          when using \code{space = LCh}.
-#'    }
+#' @return Object of class [`colspace`] containing:
+#' * `X, Y, Z`: Tristimulus values.
+#' * `x, y, z`: Cartesian coordinates, when using `space = XYZ`.
+#' * `L, a, b`: Lightness, `L`, and colour-opponent `a` (redness-greenness) and
+#' `b` (yellowness-blueness) values, in a Cartesian coordinate space. Returned
+#' when using `space = LAB`.
+#' * `L, a, b, C, h`: Lightness, `L`, colour-opponent `a` (redness-greenness)
+#' and `b` (yellowness-blueness) values, as well as chroma `C` and hue-angle `h`
+#' (degrees), the latter of which are cylindrical representations of `a` and `b`
+#' from the CIELAB model. Returned when using `space = LCh`.
 #'
 #' @examples
 #' data(flowers)

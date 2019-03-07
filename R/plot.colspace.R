@@ -2,21 +2,20 @@
 #'
 #' Plots reflectance spectra in the appropriate colorspace.
 #'
-#' @param x (required) an object of class \code{colspace}.
-#' @param ... additional graphical options, which vary by modeled \code{space}. Refer
+#' @param x (required) an object of class [`colspace`.
+#' @param ... additional graphical options, which vary by modeled `space`. Refer
 #'  to their individual documentation:
-#'  \itemize{
-#'        \item \code{\link{diplot}}: dichromat space
-#'        \item \code{\link{triplot}}: trichromat space
-#'        \item \code{\link{tetraplot}}: tetrahedral space
-#'        \item \code{\link{catplot}}: categorical space
-#'        \item \code{\link{hexplot}}: colour hexagon
-#'        \item \code{\link{cocplot}}: colour-opponent-coding space
-#'        \item \code{\link{cieplot}}: cie spaces
-#'        \item \code{\link{segplot}}: segment analysis space
-#'        \item \code{\link{jndplot}}: perceptual, 'noise corrected' space (for the results of \code{\link{jnd2xyz}})
-#'        }
-#'        Also see \code{\link{par}}.
+#' * [diplot()]: dichromat space
+#' * [triplot()]: trichromat space
+#' * [tetraplot()]: tetrahedral space
+#' * [catplot()]: categorical space
+#' * [hexplot()]: colour hexagon
+#' * [cocplot()]: colour-opponent-coding space
+#' * [cieplot()]: cie spaces
+#' * [segplot()]: segment analysis space
+#' * [jndplot()]: perceptual, 'noise corrected' space (for the results of [jnd2xyz()])
+#'
+#' Also see [par()].
 #'
 #' @return A colorspace plot appropriate to the input data.
 #'
@@ -24,12 +23,12 @@
 #' \dontrun{
 #' data(flowers)
 #' data(sicalis)
-#' 
+#'
 #' # Dichromat
 #' vis.flowers <- vismodel(flowers, visual = "canis")
 #' di.flowers <- colspace(vis.flowers, space = "di")
 #' plot(di.flowers)
-#' 
+#'
 #' # Colour hexagon
 #' vis.flowers <- vismodel(flowers,
 #'   visual = "apis", qcatch = "Ei", relative = FALSE,
@@ -37,30 +36,30 @@
 #' )
 #' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' plot(hex.flowers, sectors = "coarse")
-#' 
+#'
 #' # Tetrahedron (static)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
-#' 
+#'
 #' # Tetrahedron (interactive)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' tcsplot(tcs.sicalis, size = 0.005)
-#' 
+#'
 #' ## Add points to interactive tetrahedron
 #' patch <- rep(c("C", "T", "B"), 7)
 #' tcs.crown <- subset(tcs.sicalis, "C")
 #' tcs.breast <- subset(tcs.sicalis, "B")
 #' tcsplot(tcs.crown, col = "blue")
 #' tcspoints(tcs.breast, col = "red")
-#' 
+#'
 #' ## Plot convex hull in interactive tetrahedron
 #' tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 #' tcsvol(tcs.sicalis)
 #' }
-#' 
-#' @seealso \code{\link{plot}}
+#'
+#' @seealso [plot()]
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}

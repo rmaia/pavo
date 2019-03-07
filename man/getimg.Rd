@@ -24,8 +24,8 @@ images? (defaults to \code{FALSE}).}
 \item{cores}{deprecated argument.}
 }
 \value{
-a image, or list of images, of class \code{rimg},
-for use in further \code{pavo} functions.
+a image, or list of images, of class \code{rimg}, for use in further
+\code{pavo} functions.
 }
 \description{
 Finds and imports PNG, JPEG, and/or BMP images.

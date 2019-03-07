@@ -1,6 +1,6 @@
 #' Convert data to an rspec object
 #'
-#' Converts data frames or matrices containing spectral data to \code{rspec}
+#' Converts data frames or matrices containing spectral data to `rspec`
 #' object
 #'
 #' @param object (required) a data frame or matrix containing spectra to
@@ -8,31 +8,31 @@
 #' @param whichwl a numeric or character vector specifying which column contains
 #' wavelengths. If NULL (default), function searches for column containing equally
 #' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
-#' \code{whichwl} is not given, returns arbitrary index values.
+#' `whichwl` is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
 #' TRUE).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
-#' \code{c(300, 700)}).
+#' `c(300, 700)`).
 #' @param exceed.range logical. Should data be interpolated to the limits specified
-#' by \code{lim} if \code{lim} exceeds the range of the actual data? Useful, and relatively safe,
-#' when the data range falls slightly within \code{lim} (e.g. 300.1 - 699 nm), but will
-#' produce spurious results if \code{lim} far exceeds the range of input data.
-#' Defaults to \code{TRUE}.
+#' by `lim` if `lim` exceeds the range of the actual data? Useful, and relatively safe,
+#' when the data range falls slightly within `lim` (e.g. 300.1 - 699 nm), but will
+#' produce spurious results if `lim` far exceeds the range of input data.
+#' Defaults to `TRUE`.
 #'
-#' @return an object of class \code{rspec} for use in further \code{pavo}
+#' @return an object of class `rspec` for use in further `pavo`
 #' functions
 #'
 #' @export as.rspec is.rspec
 #'
 #' @examples
-#' 
+#'
 #' # Generate some fake reflectance data
 #' fakedat <- data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401))
 #' head(fakedat)
-#' 
+#'
 #' # Determine if is rspec object
 #' is.rspec(fakedat)
-#' 
+#'
 #' # Convert to rspec object
 #' fakedat2 <- as.rspec(fakedat)
 #' is.rspec(fakedat2)
@@ -173,7 +173,7 @@ as.rspec <- function(object, whichwl = NULL,
 
 #' @rdname as.rspec
 #' @return a logical value indicating whether the object is of class
-#' \code{rspec}
+#' `rspec`
 
 is.rspec <- function(object) {
   inherits(object, "rspec")

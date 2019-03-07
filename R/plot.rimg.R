@@ -5,11 +5,11 @@
 #' one by one.
 #'
 #' @param x (required) an image of class rimg, or list thereof.
-#' @param axes should axes be drawn? (defaults to \code{TRUE})
+#' @param axes should axes be drawn? (defaults to `TRUE`)
 #' @param col optional vector of colours when plotting colour-classified images.
 #' Defaults to the mean RGB values of the k-means centres (i.e. the average 'original'
 #' colours).
-#' @param ... additional graphical parameters. Also see \code{\link{par}}.
+#' @param ... additional graphical parameters. Also see [par()].
 #'
 #' @return an image plot.
 #'

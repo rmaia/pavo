@@ -8,8 +8,8 @@ vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
   ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
@@ -21,10 +21,10 @@ coordinates as columns (labeled as such).}
 \item{new}{logical. Should a new plot be started or draw over an open plot?
 (defaults to FALSE)}
 
-\item{...}{additional graphical options. See \code{\link{polygon}} and \code{\link{tetraplot}}.}
+\item{...}{additional graphical options. See \code{\link[=polygon]{polygon()}} and \code{\link[=tetraplot]{tetraplot()}}.}
 }
 \value{
-\code{vol} creates a 3D convex hull within a static tetrahedral plot.
+\code{\link[=vol]{vol()}} creates a 3D convex hull within a static tetrahedral plot.
 }
 \description{
 Produces a 3D convex hull in tetrahedral color space when plotting a

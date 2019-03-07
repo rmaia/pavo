@@ -4,8 +4,8 @@
 #'
 # #' @usage plot(cocdata, ...)
 #'
-#' @param cocdata (required) a data frame, possibly a result from the \code{colspace}
-#' or \code{categorical} function, containing values for 'x' and 'y' coordinates
+#' @param cocdata (required) a data frame, possibly a result from the [colspace()]
+#' or [categorical()] function, containing values for 'x' and 'y' coordinates
 #' as columns (labeled as such).
 #' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes.
 #' @inheritParams triplot

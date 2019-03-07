@@ -8,7 +8,7 @@
   ...)
 }
 \arguments{
-\item{object}{(required) an image of class rimg, or list thereof.}
+\item{object}{(required) an image of class \code{rimg}, or list thereof.}
 
 \item{plot}{logical; plot the image and, if the image is color-classified, the colours
 corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.}
@@ -18,11 +18,11 @@ corresponding to colour class categories side-by-side? Defaults to \code{FALSE}.
 \item{col}{optional vector of colours when plotting colour-classified images with \code{plot = TRUE}.
 Defaults to the mean RGB values of the k-means centres (i.e. the 'original' colours).}
 
-\item{...}{additional graphical options when \code{plot = TRUE}. Also see \code{\link{par}}.}
+\item{...}{additional graphical options when \code{plot = TRUE}. Also see \code{\link[=par]{par()}}.}
 }
 \value{
 Either the RGB values of the k-means centres from the colour-classified image,
-or a plot of both the image and specified colours (when \code{plot = TRUE}.
+or a plot of both the image and specified colours (when \code{plot = TRUE}).
 }
 \description{
 Returns the attributes of, and optionally plots, an image.

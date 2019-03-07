@@ -4,16 +4,16 @@
 #' in a trichromatic chromaticity space.
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  from [vismodel()] or independently calculated data (in the form of a data frame
 #'  with three columns named 's', 'm', 'l', representing a trichromatic viewer).
 #'
-#' @return A data frame of class \code{colspace} consisting of the following columns:
-#' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
+#' @return A data frame of class [`colspace`] consisting of the following columns:
+#' * `s`, `m`, `l`: the quantum catch data used to calculate
 #'  the remaining variables.
-#' @return \code{x}, \code{y}: cartesian coordinates for the points in the
+#' * `x`, `y`: cartesian coordinates for the points in the
 #'  Maxwell triangle.
-#' @return \code{h.theta}: angle theta, in radians, determining the hue of the color.
-#' @return \code{r.vec}: the r vector (saturation, distance from the center).
+#' * `h.theta`: angle theta, in radians, determining the hue of the color.
+#' * `r.vec`: the r vector (saturation, distance from the center).
 #'
 #' @examples
 #' data(flowers)

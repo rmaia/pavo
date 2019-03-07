@@ -32,7 +32,7 @@ plot(teal.mer)
 plot(teal)
 }
 \seealso{
-\code{\link{as.rspec}}, \code{\link{aggspec}}
+\code{\link[=as.rspec]{as.rspec()}}, \code{\link[=aggspec]{aggspec()}}
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}

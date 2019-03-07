@@ -8,19 +8,18 @@ segspace(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic
 'tetrachromatic' viewer).}
 }
 \value{
-A data frame of class \code{colspace} consisting of the following columns:
-
-\code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
+A data frame of class \code{\link{colspace}} consisting of the following columns:
+\itemize{
+\item \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
 of the four segments.
-
-\code{LM}, \code{MS}: segment scores
-
-\code{C}, \code{H}, \code{B}: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
+\item \code{LM}, \code{MS}: segment scores
+\item \code{C}, \code{H}, \code{B}: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
+}
 }
 \description{
 Calculates segment classification measures as defined in Endler (1990).

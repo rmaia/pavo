@@ -4,23 +4,23 @@
 #' in the avian tetrahedral color space.
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  from [vismodel()] or independently calculated data (in the form of a data frame
 #'  with four columns name 'u', 's', 'm', 'l', representing the avian cones).
 #'
-#' @return A data frame of class \code{tcs} consisting of the following columns:
-#' @return \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
+#' @return A data frame of class [`colspace`] consisting of the following columns:
+#' * `u`, `s`, `m`, `l`: the quantum catch data used to
 #'  calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
-#'  the output column will be labeled \code{u}.
-#' @return \code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,
+#'  the output column will be labeled `u`.
+#' * `u.r`, `s.r`, `m.r`, `l.r`: relative cone stimulation,
 #'  for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.
-#' @return \code{x}, \code{y}, \code{z}: cartesian coordinates for the points in the
+#' * `x`, `y`, `z`: cartesian coordinates for the points in the
 #'  tetrahedral color space.
-#' @return \code{h.theta}, \code{h.phi}: angles theta and phi, in radians, determining
+#' * `h.theta`, `h.phi`: angles theta and phi, in radians, determining
 #'  the hue of the color.
-#' @return \code{r.vec}: the r vector (saturation, distance from the achromatic center).
-#' @return \code{r.max}: the maximum r vector achievable for the color's hue.
-#' @return \code{r.achieved}: the relative r distance from the achromatic center, in
-#'  relation to the maximum distance achievable (\code{r.vec/r.max}).
+#' * `r.vec`: the r vector (saturation, distance from the achromatic center).
+#' * `r.max`: the maximum r vector achievable for the color's hue.
+#' * `r.achieved`: the relative r distance from the achromatic center, in
+#'  relation to the maximum distance achievable (`r.vec/r.max`).
 #'
 #' @examples
 #' data(sicalis)

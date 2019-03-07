@@ -11,14 +11,14 @@ rimg2cimg(image)
 rimg2magick(image)
 }
 \arguments{
-\item{image}{an object of class \code{rimg}.}
+\item{image}{an object of class \code{rimg}}
 }
 \value{
 an image of the specified class
 }
 \description{
 Conveniently convert single objects of class \code{rimg} to class \code{cimg} (from the
-package \code{imager} or \code{magick-image} (from the package \code{magick}), both of which
+package \code{imager} or \code{magick-image} (from the package \code{magick}, both of which
 contains a suite of useful image-processing capabilities.
 }
 \note{
@@ -31,7 +31,7 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 # From class rimg to cimg
 papilio_cimg <- rimg2cimg(papilio)
-class(papilio_magick)
+class(papilio_cimg)
 
 # From class rimg to magick-image
 papilio_magick <- rimg2magick(papilio)
