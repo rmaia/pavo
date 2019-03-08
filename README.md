@@ -22,7 +22,7 @@
 
 ### Need more information, or help with the package?
 
-- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes('pavo')`) for detailed examples and discussion.
+- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes("pavo")`) for detailed examples and discussion.
 - Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
 - **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
 
@@ -44,19 +44,19 @@ Maia R., Eliason C.M., Bitton P.-P., Doucet S.M. and Shawkey M.D. 2013.
 
 ## Install
 
-This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
+This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages("pavo")` to install.
 
 If you want to install the bleeding edge version of `pavo`, you can:
 
 * use the [`remotes`](https://github.com/r-lib/remotes) package:
 
 ```r
-# install.packages('remotes')
-remotes::install_github('rmaia/pavo')
+# install.packages("remotes")
+remotes::install_github("rmaia/pavo")
 ```
 
 * download files from GitHub and install using `$R CMD INSTALL` or, from within R:
 
 ```r
-install.packages(path, type='source', repos=NULL)
+install.packages(path, type = "source", repos = NULL)
 ```
