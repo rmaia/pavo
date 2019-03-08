@@ -24,7 +24,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Thomas White \email{thomas.white026@gmail.com} (0000-0001-8493-9450)
+  \item Thomas White \email{thomas.white026@gmail.com} (0000-0002-3976-1734)
   \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} (0000-0002-4094-1476)
   \item John Endler \email{john.endler@deakin.edu.au}
   \item Chad Eliason \email{cme16@zips.uakron.edu}
