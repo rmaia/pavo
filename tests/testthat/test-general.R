@@ -1,4 +1,3 @@
-library(pavo)
 context("general")
 
 test_that("Class assignment", {

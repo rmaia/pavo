@@ -1,4 +1,3 @@
-library(pavo)
 context("processing")
 
 test_that("Conversion to rspec", {

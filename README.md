@@ -2,7 +2,8 @@
 
 [![cran version](https://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
 [![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
-[![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/branches)
+[![Build Status](https://travis-ci.org/rmaia/pavo.svg?branch=master)](https://travis-ci.org/rmaia/pavo/)
+[![cran checks](https://cranchecks.info/badges/worst/pavo)](https://cranchecks.info/pkgs/pavo)
 [![Coverage status](https://codecov.io/gh/rmaia/pavo/branch/master/graph/badge.svg)](https://codecov.io/github/rmaia/pavo?branch=master)
 
 ## An `R` package for the spectral and spatial analysis of color patterns
@@ -21,7 +22,7 @@
 
 ### Need more information, or help with the package?
 
-- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes('pavo')`) for detailed examples and discussion.
+- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes("pavo")`) for detailed examples and discussion.
 - Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
 - **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
 
@@ -42,19 +43,19 @@ _Methods in Ecology and Evolution_ 4(10):609-613.
 
 ## Install
 
-This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages('pavo')` to install.
+This is the development page for `pavo`. The stable release is available from CRAN. Simply use `install.packages("pavo")` to install.
 
 If you want to install the bleeding edge version of `pavo`, you can:
 
 * use the [`remotes`](https://github.com/r-lib/remotes) package:
 
 ```r
-# install.packages('remotes')
-remotes::install_github('rmaia/pavo')
+# install.packages("remotes")
+remotes::install_github("rmaia/pavo")
 ```
 
 * download files from GitHub and install using `$R CMD INSTALL` or, from within R:
 
 ```r
-install.packages(path, type='source', repos=NULL)
+install.packages(path, type = "source", repos = NULL)
 ```

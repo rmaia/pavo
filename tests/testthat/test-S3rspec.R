@@ -1,4 +1,3 @@
-library(pavo)
 context("rspec")
 
 # File to test S3 functions related to the rspec class
