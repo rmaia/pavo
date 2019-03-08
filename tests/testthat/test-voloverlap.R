@@ -1,4 +1,3 @@
-library(pavo)
 context("voloverlap")
 
 test_that("tcs", {

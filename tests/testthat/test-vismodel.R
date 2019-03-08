@@ -1,4 +1,3 @@
-library(pavo)
 context("vismodel")
 
 test_that("Output regression", {

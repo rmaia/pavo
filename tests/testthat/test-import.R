@@ -1,4 +1,3 @@
-library(pavo)
 context("import")
 
 test_that("getspec", {

@@ -1,4 +1,3 @@
-library(pavo)
 context("colspace")
 
 test_that("Receptor orders/names", {

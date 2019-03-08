@@ -1,4 +1,3 @@
-library(pavo)
 context("coldist")
 
 test_that("Errors", {

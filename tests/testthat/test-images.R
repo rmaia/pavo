@@ -1,4 +1,3 @@
-library(pavo)
 context("adjacency")
 
 test_that("as.rimg", {
