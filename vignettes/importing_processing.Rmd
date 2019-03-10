@@ -199,7 +199,7 @@ spp <- gsub('\\.[0-9].*$', '', names(mspecs))[-1]
 table(spp)
 ```
 
-Instead, we are going to use the `spp` vector we created to tell the `aggspec()` function how to average the spectra in `mspec`:
+Instead, we are going to use the `spp` vector we created to tell the `aggspec()` function how to average the spectra in `mspecs`:
 
 ```{r, label=exploresppmeans, fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.cap="Result from `explorespec` for species means"}
 sppspec <- aggspec(mspecs, by = spp, FUN = mean)
