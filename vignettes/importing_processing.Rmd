@@ -480,7 +480,7 @@ Distinguishing a focal object from its background is important in cases where we
 butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
 
-All of these options can be simultaneously specified in a single call to `procimg()`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult illustrate to here due to their interactive nature.
+All of these options can be simultaneously specified in a single call to `procimg()`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult to illustrate here due to their interactive nature.
 
 # References
 
