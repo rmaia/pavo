@@ -3,7 +3,7 @@ Description: A cohesive framework for parsing, analyzing and organizing color
     from spectral data.
 Title: Perceptual Analysis, Visualization and Organization of Spectral Color
     Data in R
-Version: 2.1.0
+Version: 2.2.0
 License: GPL (>= 2)
 Encoding: UTF-8
 Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
