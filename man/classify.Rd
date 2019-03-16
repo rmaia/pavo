@@ -4,13 +4,20 @@
 \alias{classify}
 \title{Identify colour classes in an image for adjacency analyses}
 \usage{
-classify(imgdat, kcols = NULL, refID = NULL, interactive = FALSE,
-  plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L),
-  ...)
+classify(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL,
+  refID = NULL, interactive = FALSE, plotnew = FALSE, col = "red",
+  cores = getOption("mc.cores", 2L), ...)
 }
 \arguments{
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. Preferably the result of \code{\link{getimg}}.}
+
+\item{method}{methods for image segemtation/classification.
+\itemize{
+\item \code{'kMeans'}: k-means clustering
+\item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')
+algorithm for large datasets.
+}}
 
 \item{kcols}{the number of discrete colour classes present in the input image(s).
 Can be a single integer when only a single image is present, or if kcols is identical for all
@@ -44,10 +51,10 @@ Also see \code{\link{par}}.}
 \value{
 A matrix, or list of matrices, of class \code{rimg} containing the colour
 class classifications ID at each pixel location. The RGB values corresponding to
-k-means centres (i.e. colour classes) are stored as object attributes.
+cluster centres (i.e. colour classes) are stored as object attributes.
 }
 \description{
-Use k-means clustering to classify image pixels into discrete colour classes.
+Classify image pixels into discrete colour classes.
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial
@@ -56,14 +63,12 @@ cluster ID's are desired between runs.
 }
 \examples{
 # Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
 papilio_class <- classify(papilio, kcols = 4)
 
-\dontrun{
 # Multiple images, with interactive classification and a reference image
-snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
-}
+snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
+#snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 
 }
 \author{

@@ -1,5 +1,9 @@
 # pavo 2.2.0
 
+## NEW FEATURES
+
+* added k-medoids clustering as an option in `classify()`
+
 ## MINOR FEATURES AND BUG FIXES
 
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images

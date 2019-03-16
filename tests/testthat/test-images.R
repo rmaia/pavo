@@ -112,6 +112,16 @@ test_that("classify", {
   expect_true(is.rimg(fake2_class2[[2]]))
   expect_equal(dim(fake2_class2[[1]]), c(8, 12))
   expect_equal(dim(fake2_class2[[2]]), c(8, 12))
+  
+  # k medoids
+  expect_error(classify(imgfakes, method = 'kMedoids', kcols = fake_IDs, refID = 1), 'k-medoids')
+  expect_error(classify(imgfakes, method = 'kMedoids', interactive = TRUE), 'k-medoids')
+  fake2_class3 <- classify(imgfakes, method = 'kMedoids', kcols = fake_IDs)
+  expect_true(is.rimg(fake2_class3))
+  expect_true(is.rimg(fake2_class3[[1]]))
+  expect_true(is.rimg(fake2_class3[[2]]))
+  expect_equal(dim(fake2_class3[[1]]), c(8, 12))
+  expect_equal(dim(fake2_class3[[2]]), c(8, 12))
 })
 
 test_that("adjacency", {
