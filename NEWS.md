@@ -1,3 +1,9 @@
+# pavo 2.2.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images
+
 # pavo 2.1.0
 
 ## NEW FEATURES AND POTENTIALLY BREAKING CHANGES
