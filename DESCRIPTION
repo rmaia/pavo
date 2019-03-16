@@ -35,6 +35,7 @@ Imports:
     readbitmap,
     rcdd,
     sp,
+    magick,
     cluster,
     viridisLite
 Suggests:
