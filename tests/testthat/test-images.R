@@ -65,10 +65,10 @@ test_that("procimg", {
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
   # Resize
-  expect_equal(dim(procimg(papilio, resize = 0.5))[1:2], dim(papilio)[1:2] / 2)
+  expect_equal(dim(procimg(papilio, resize = 50))[1:2], dim(papilio)[1:2] / 2)
 
   # Messages/Errors
-  expect_message(procimg(classify(papilio, kcols = 3), resize = 2), "Cannot resize")
+  expect_message(procimg(classify(papilio, kcols = 3), resize = 200), "Cannot resize")
   expect_message(procimg(classify(papilio, kcols = 3), rotate = 90), "Cannot rotate")
   expect_error(procimg(papilio), "options")
   class(papilio) <- "array"
