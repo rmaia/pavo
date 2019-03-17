@@ -2,7 +2,7 @@
 #'
 #' Finds and imports PNG, JPEG, and/or BMP images.
 #'
-#' @param imgpath (required) either the full path to a given image (including extension),
+#' @param imgpath (required) eith the full file-path or URL to an image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
 #' within a folder are accepted.
 #' @param subdir should subdirectories within the \code{imgpath} folder be
@@ -39,7 +39,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
   ## Cores
   if (!missing(cores)) {
-    warning("the cores argument is deprecated as all image importing is now parallelised.", 
+    warning("the cores argument is deprecated as all image importing is now vectorised.", 
             call. = FALSE)
   }
 

@@ -8,7 +8,7 @@ getimg(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
   max.size = 1, cores)
 }
 \arguments{
-\item{imgpath}{(required) either the full path to a given image (including extension),
+\item{imgpath}{(required) eith the full file-path or URL to an image (including extension),
 or the path to a folder in which multiple image files are located. Mixed file formats
 within a folder are accepted.}
 
