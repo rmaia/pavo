@@ -39,7 +39,6 @@ Imports:
     viridisLite
 Suggests:
     digest,
-    imager,
     knitr,
     mapproj,
     rgl,
