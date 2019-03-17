@@ -32,7 +32,6 @@ Imports:
     geometry,
     pbmcapply,
     plot3D,
-    readbitmap,
     rcdd,
     sp,
     magick,

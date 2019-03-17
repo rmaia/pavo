@@ -18,9 +18,9 @@
 #' @return a image, or list of images, of class \code{rimg},
 #' for use in further \code{pavo} functions.
 #'
-#' @export
+#' @importFrom magick image_info
 #'
-#' @importFrom pbmcapply pbmclapply
+#' @export
 #'
 #' @examples
 #' # Single image
@@ -28,6 +28,7 @@
 #' 
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+#' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
@@ -47,10 +48,8 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    imgdat <- grabimg(imgpath)
-    imgdat <- as.rimg(drop(as.array(imgdat)),
-      name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath))
-    )
+    
+    imgdat <- magick2rimg(image_read(imgpath), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Warn of slowness if dimensions are large
     if ((dim(imgdat)[1] * dim(imgdat)[2]) > (1000 * 1000)) {
@@ -85,7 +84,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     imgnames <- gsub(extension, "", file_names)
 
     # Stop if max size estimated to exceed available memory
-    imgsize <- prod(dim(grabimg(files[1])))
+    imgsize <- image_info(image_read(files[1]))['filesize']
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
@@ -96,39 +95,13 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
       message("Total size of images exceeds 200 mb in memory, which may result in slowed performance. Consider resizing images with procimg() prior to analysis, if speed is a priority.")
     }
 
-    # Crudely avoid a bug in pbmclapply when handling large objects.
-    if (totalsize < 0.1) {
-      imgdat <- pbmclapply(files, grabimg, mc.cores = cores)
-    } else {
-      imgdat <- lapply(files, grabimg)
-    }
-
-    imgdat <- lapply(imgdat, function(x) drop(as.array(x)))
-    imgdat <- as.rimg(imgdat, imgnames)
-
-    # Simplify if it's a single image
+    # Get images
+      imgdat <- magick2rimg(image_read(files), name = imgnames)
+    
+    # Simplify if it's a single image   ###TODO###
     if (length(imgdat) == 1) imgdat <- cimg2rimg(imgdat[[1]])
   }
   imgdat
-}
-
-## Grab images
-#' @importFrom readbitmap read.bitmap
-grabimg <- function(file) {
-  bmp <- read.bitmap(file)
-  if (!is.null(attr(bmp, "header"))) {
-    bmp <- bmp / 255
-  }
-  if (length(dim(bmp)) == 3) { # 3 channels (colour)
-    bmp <- mirrorx(bmp)
-    bmp <- rot90(bmp)
-  }
-  else { # 1 channel (B&W), duplicate to 3d for classification convenience
-    bmp <- replicate(3, bmp, simplify = "array")
-    bmp <- mirrorx(bmp)
-    bmp <- rot90(bmp)
-  }
-  bmp
 }
 
 ## Rotate matrices 90-degrees
