@@ -51,6 +51,13 @@ test_that("as.rimg", {
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
   expect_equal(papilio_class, pap2, check.attributes = FALSE)
+  
+  # magick conversion
+  magickpapilio <- rimg2magick(papilio)
+  expect_equal(class(magickpapilio), 'magick-image')
+  papiliomagick <- magick2rimg(magickpapilio)
+  attr(papiliomagick, 'imgname') <- 'papilio'
+  expect_equal(papilio, papiliomagick, check.attributes = TRUE)
 })
 
 test_that("procimg", {

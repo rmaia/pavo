@@ -56,9 +56,5 @@ Thomas E. White \email{thomas.white026@gmail.com}
 
 Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 
-Thomas E. White \email{thomas.white026@gmail.com}
-
 Hugo Gruson \email{hugo.gruson+R@normalesup.org}
-
-Thomas E. White \email{thomas.white026@gmail.com}
 }

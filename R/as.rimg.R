@@ -229,6 +229,7 @@ rimg2magick <- function(image) {
 #'
 #' @importFrom magick image_flop
 #' @importFrom magick image_rotate
+#' @importFrom magick image_data
 #'
 #' @export
 #'
