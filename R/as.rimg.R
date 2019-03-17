@@ -129,7 +129,7 @@ as.rimg <- function(object, name = "img") {
       attr(object2, "state") <- "colclass"
     }
     # Output
-    if (!inherits(object, "list")) {
+    if (!inherits(object, "list") || length(object) == 1) {
       object2[[1]]
     } else {
       object2
@@ -202,4 +202,39 @@ rimg2cimg <- function(image) {
 cimg2rimg <- function(image, name = "img") {
   image <- as.rimg(drop(as.array(image)), name = name)
   image
+}
+
+#' @rdname img_conversion
+#'
+#' @importFrom magick image_read
+#' @importFrom magick image_flop
+#' @importFrom magick image_rotate
+#'
+#' @export
+#'
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+rimg2magick <- function(image) {
+  if (inherits(image, "list")) {
+    output <- do.call(c, lapply(image, image_read))
+    output <- image_rotate(output, 90)
+    image_flop(output)
+  } else {
+    output <- image_read(image)
+    output <- image_rotate(output, 90)
+    image_flop(output)
+  }
+}
+
+#' @rdname img_conversion
+#'
+#' @importFrom magick image_flop
+#' @importFrom magick image_rotate
+#'
+#' @export
+#'
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+magick2rimg <- function(image, name = "img") {
+  image <- image_rotate(image, 90)
+  image <- image_flop(image)
+  suppressMessages(as.rimg(lapply(image, function(img) as.integer(image_data(img))), name = name))
 }

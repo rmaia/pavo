@@ -4,11 +4,17 @@
 \alias{img_conversion}
 \alias{rimg2cimg}
 \alias{cimg2rimg}
+\alias{rimg2magick}
+\alias{magick2rimg}
 \title{Convert images between class rimg and cimg}
 \usage{
 rimg2cimg(image)
 
 cimg2rimg(image, name = "img")
+
+rimg2magick(image)
+
+magick2rimg(image, name = "img")
 }
 \arguments{
 \item{image}{an object of class \code{rimg} or \code{cimg}.}
@@ -45,6 +51,14 @@ class(papilio_rimg)
 Thomas E. White \email{thomas.white026@gmail.com}
 
 Thomas E. White \email{thomas.white026@gmail.com}
+
+Thomas E. White \email{thomas.white026@gmail.com}
+
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
+
+Thomas E. White \email{thomas.white026@gmail.com}
+
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 
 Thomas E. White \email{thomas.white026@gmail.com}
 }
