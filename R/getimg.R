@@ -11,9 +11,7 @@
 #' images? (defaults to \code{FALSE}).
 #' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
 #' \code{1}.
-#' @param cores number of cores to be used in parallel processing. If \code{1}, or
-#' if total image sizes exceed 200 mb in memory, parallel computing will not be used.
-#' Defaults to \code{getOption("mc.cores", 2L)}. Not available on Windows.
+#' @param cores deprecated argument.
 #'
 #' @return a image, or list of images, of class \code{rimg},
 #' for use in further \code{pavo} functions.
@@ -32,7 +30,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
-                   max.size = 1, cores = getOption("mc.cores", 2L)) {
+                   max.size = 1, cores) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -40,8 +38,9 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
   ext <- c("jpg", "jpeg", "png", "bmp")
 
   ## Cores
-  if (cores > 1 && .Platform$OS.type == "windows") {
-    cores <- 1
+  if (!missing(cores)) {
+    warning("the cores argument is deprecated as all image importing is now parallelised.", 
+            call. = FALSE)
   }
 
   ## ------------------------------ Main ------------------------------ ##
@@ -52,7 +51,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     imgdat <- magick2rimg(image_read(imgpath), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Warn of slowness if dimensions are large
-    if ((dim(imgdat)[1] * dim(imgdat)[2]) > (1000 * 1000)) {
+    if (dim(imgdat)[1] * dim(imgdat)[2] > 1000000) {
       message("Image dimensions are relatively large, consider reducing image size with procimg() for faster performance.")
     }
 
