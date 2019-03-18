@@ -39,16 +39,16 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
   ## Cores
   if (!missing(cores)) {
-    warning("the cores argument is deprecated as all image importing is now vectorised.", 
-            call. = FALSE)
+    warning("the cores argument is deprecated as all image importing is now vectorised.",
+      call. = FALSE
+    )
   }
 
   ## ------------------------------ Main ------------------------------ ##
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    
-    imgdat <- magick2rimg(image_read(imgpath), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    imgdat <- as.rimg(image_read(imgpath), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
 
     # Warn of slowness if dimensions are large
     if (dim(imgdat)[1] * dim(imgdat)[2] > 1000000) {
@@ -83,7 +83,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     imgnames <- gsub(extension, "", file_names)
 
     # Stop if max size estimated to exceed available memory
-    imgsize <- image_info(image_read(files[1]))['filesize']
+    imgsize <- image_info(image_read(files[1]))["filesize"]
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if (totalsize > max.size) {
       stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
@@ -95,10 +95,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     }
 
     # Get images
-      imgdat <- magick2rimg(image_read(files), name = imgnames)
-    
+    imgdat <- as.rimg(image_read(files), name = imgnames)
+
     # Simplify if it's a single image   ###TODO###
-    if (length(imgdat) == 1) imgdat <- cimg2rimg(imgdat[[1]])
+    if (length(imgdat) == 1) imgdat <- imgdat[[1]]
   }
   imgdat
 }

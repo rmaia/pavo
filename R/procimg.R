@@ -60,11 +60,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   ## Class
   if (!"rimg" %in% class(image)) {
     message("Attempting to coerce image to class rimg.")
-    if ("cimg" %in% class(image)) {
-      image <- cimg2rimg(image)
-    } else {
-      image <- as.rimg(image)
-    }
+    image <- as.rimg(image)
   }
 
   ## Options
@@ -98,7 +94,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       size <- paste0(resize, "%")  # magick geometry string
       image <- image_resize(image, size, "Quadratic")
     }
-    image <- magick2rimg(image, imgnames)
+    image <- as.rimg(image, imgnames)
   }
 
   ## Scale ##

@@ -56,7 +56,7 @@ test_that("as.rimg", {
   # magick conversion
   magickpapilio <- rimg2magick(papilio)
   expect_equal(class(magickpapilio), 'magick-image')
-  papiliomagick <- magick2rimg(magickpapilio)
+  papiliomagick <- as.rimg(magickpapilio)
   attr(papiliomagick, 'imgname') <- 'papilio'
   expect_equal(papilio, papiliomagick, check.attributes = TRUE)
 })
