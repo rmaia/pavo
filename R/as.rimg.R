@@ -233,11 +233,9 @@ rimg2cimg <- function(image) {
 rimg2magick <- function(image) {
   if (inherits(image, "list")) {
     output <- do.call(c, lapply(image, image_read))
-    output <- image_rotate(output, 90)
-    image_flop(output)
   } else {
     output <- image_read(image)
-    output <- image_rotate(output, 90)
-    image_flop(output)
   }
+  output <- image_rotate(output, 90)
+  image_flop(output)
 }
