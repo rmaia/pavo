@@ -20,6 +20,7 @@ test_that("as.rimg", {
   dim = c(10, 10, 3)
   )
   rimgfake <- as.rimg(imgfake, "image")
+  c <- rimg2magick(rimgfake)
 
   imggrey <- imgfake[, , 1]
   rimggrey <- as.rimg(imggrey, "image")

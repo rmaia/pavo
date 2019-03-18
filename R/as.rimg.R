@@ -34,7 +34,7 @@
 #' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
-#'
+#' 
 as.rimg <- function(object, name = "img") {
   UseMethod("as.rimg")
 }
@@ -160,6 +160,8 @@ as.rimg.cimg <- function(object, name = "img") {
 #' @rdname as.rimg
 #'
 #' @importFrom magick image_flop image_rotate image_data
+#'
+#' @usage as.rimg(object, name = "img")
 #'
 #' @export
 "as.rimg.magick-image" <- function(object, name = "img") {
