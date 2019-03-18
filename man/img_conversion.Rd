@@ -3,25 +3,23 @@
 \name{img_conversion}
 \alias{img_conversion}
 \alias{rimg2cimg}
-\alias{cimg2rimg}
-\title{Convert images between class rimg and cimg}
+\alias{rimg2magick}
+\title{Convert images between class rimg and cimg or magick-image}
 \usage{
 rimg2cimg(image)
 
-cimg2rimg(image, name = "img")
+rimg2magick(image)
 }
 \arguments{
-\item{image}{an object of class \code{rimg} or \code{cimg}.}
-
-\item{name}{the name(s) of the image(s).}
+\item{image}{an object of class \code{rimg}.}
 }
 \value{
 an image of the specified class
 }
 \description{
-Conveniently convert single objects of class \code{rimg} and \code{cimg} (from the
-package \code{imager}, which contains a suite of useful image-processing
-capabilities).
+Conveniently convert single objects of class \code{rimg} to class \code{cimg} (from the
+package \code{imager} or \code{magick-image} (from the package \code{magick}), both of which
+contains a suite of useful image-processing capabilities.
 }
 \note{
 Attributes (e.g. scales, color-classes) will not be preserved following
@@ -33,18 +31,16 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 # From class rimg to cimg
 papilio_cimg <- rimg2cimg(papilio)
-class(papilio_cimg)
+class(papilio_magick)
 
-# From class cimg to rimg
-papilio_rimg <- cimg2rimg(papilio_cimg)
-class(papilio_rimg)
+# From class rimg to magick-image
+papilio_magick <- rimg2magick(papilio)
+class(papilio_magick)
 }
 
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}
 
-Thomas E. White \email{thomas.white026@gmail.com}
-
-Thomas E. White \email{thomas.white026@gmail.com}
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 }

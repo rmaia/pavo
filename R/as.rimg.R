@@ -1,7 +1,7 @@
 #' Convert data to an rimg object
 #'
-#' Converts an array containing RGB image data data to an \code{rimg}
-#' object.
+#' Converts an array of RGB values, a \code{cimg} object, or a \code{magick-image} object,
+#' to an \code{rimg} object.
 #'
 #' @param object (required) a three-dimensional array containing RGB values.
 #' @param name the name(s) of the image(s).
@@ -9,7 +9,7 @@
 #' @return an object of class \code{rimg} for use in further \code{pavo}
 #' functions
 #'
-#' @export as.rimg is.rimg
+#' @export
 #'
 #' @examples
 #' 
@@ -31,9 +31,19 @@
 #' # Convert to rimg object and check again
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
+#' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
-
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+#' 
 as.rimg <- function(object, name = "img") {
+  UseMethod("as.rimg")
+}
+
+#' @rdname as.rimg
+#'
+#' @export
+#'
+as.rimg.default <- function(object, name = "img") {
   if (!inherits(object, "rimg")) { # Not already 'rimg'
 
     attrgiver <- function(x, name2 = name) {
@@ -129,7 +139,7 @@ as.rimg <- function(object, name = "img") {
       attr(object2, "state") <- "colclass"
     }
     # Output
-    if (!inherits(object, "list")) {
+    if (!inherits(object, "list") || length(object) == 1) {
       object2[[1]]
     } else {
       object2
@@ -141,19 +151,41 @@ as.rimg <- function(object, name = "img") {
 }
 
 #' @rdname as.rimg
+#'
+#' @export
+as.rimg.cimg <- function(object, name = "img") {
+  as.rimg.default(drop(as.array(object)), name = name)
+}
+
+#' @rdname as.rimg
+#'
+#' @importFrom magick image_flop image_rotate image_data
+#'
+#' @usage as.rimg(object, name = "img")
+#'
+#' @export
+"as.rimg.magick-image" <- function(object, name = "img") {
+  object <- image_rotate(object, 90)
+  object <- image_flop(object)
+  suppressMessages(as.rimg.default(lapply(object, function(img) as.integer(image_data(img))), name = name))
+}
+
+#' @rdname as.rimg
+#' 
+#' @export
+#' 
 #' @return a logical value indicating whether the object is of class \code{rimg}
 is.rimg <- function(object) {
   inherits(object, "rimg")
 }
 
-#' Convert images between class rimg and cimg
+#' Convert images between class rimg and cimg or magick-image
 #'
-#' Conveniently convert single objects of class \code{rimg} and \code{cimg} (from the
-#' package \code{imager}, which contains a suite of useful image-processing
-#' capabilities).
+#' Conveniently convert single objects of class \code{rimg} to class \code{cimg} (from the
+#' package \code{imager} or \code{magick-image} (from the package \code{magick}), both of which
+#' contains a suite of useful image-processing capabilities.
 #'
-#' @param image an object of class \code{rimg} or \code{cimg}.
-#' @param name the name(s) of the image(s).
+#' @param image an object of class \code{rimg}.
 #'
 #' @return an image of the specified class
 #'
@@ -166,14 +198,15 @@ is.rimg <- function(object) {
 #' 
 #' # From class rimg to cimg
 #' papilio_cimg <- rimg2cimg(papilio)
-#' class(papilio_cimg)
+#' class(papilio_magick)
 #' 
-#' # From class cimg to rimg
-#' papilio_rimg <- cimg2rimg(papilio_cimg)
-#' class(papilio_rimg)
+#' # From class rimg to magick-image
+#' papilio_magick <- rimg2magick(papilio)
+#' class(papilio_magick)
 #' }
 #' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' @name img_conversion
 #'
 NULL
@@ -181,8 +214,6 @@ NULL
 #' @rdname img_conversion
 #'
 #' @export
-#'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 rimg2cimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
@@ -196,10 +227,15 @@ rimg2cimg <- function(image) {
 
 #' @rdname img_conversion
 #'
-#' @export
+#' @importFrom magick image_read image_flop image_rotate
 #'
-#' @author Thomas E. White \email{thomas.white026@@gmail.com}
-cimg2rimg <- function(image, name = "img") {
-  image <- as.rimg(drop(as.array(image)), name = name)
-  image
+#' @export
+rimg2magick <- function(image) {
+  if (inherits(image, "list")) {
+    output <- do.call(c, lapply(image, image_read))
+  } else {
+    output <- image_read(image)
+  }
+  output <- image_rotate(output, 90)
+  image_flop(output)
 }

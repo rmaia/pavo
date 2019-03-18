@@ -20,6 +20,7 @@ test_that("as.rimg", {
   dim = c(10, 10, 3)
   )
   rimgfake <- as.rimg(imgfake, "image")
+  c <- rimg2magick(rimgfake)
 
   imggrey <- imgfake[, , 1]
   rimggrey <- as.rimg(imggrey, "image")
@@ -30,7 +31,8 @@ test_that("as.rimg", {
   # Warnings/messages
   expect_message(as.rimg(imgfake), "[0,1]")
   expect_message(as.rimg(imgfake2), "[0,1]")
-
+  expect_warning(getimg(system.file("testdata/images/papilio.png", package = "pavo"), cores = 2), 'deprecated')
+  
   # Classes/attributes/structure
   expect_equal(dim(rimgfake), c(10, 10, 3))
   expect_equal(dim(rimggrey), c(10, 10, 3))
@@ -51,16 +53,23 @@ test_that("as.rimg", {
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
   expect_equal(papilio_class, pap2, check.attributes = FALSE)
+  
+  # magick conversion
+  magickpapilio <- rimg2magick(papilio)
+  expect_equal(class(magickpapilio), 'magick-image')
+  papiliomagick <- as.rimg(magickpapilio)
+  attr(papiliomagick, 'imgname') <- 'papilio'
+  expect_equal(papilio, papiliomagick, check.attributes = TRUE)
 })
 
 test_that("procimg", {
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
   # Resize
-  expect_equal(dim(procimg(papilio, resize = 0.5))[1:2], dim(papilio)[1:2] / 2)
+  expect_equal(dim(procimg(papilio, resize = 50))[1:2], dim(papilio)[1:2] / 2)
 
   # Messages/Errors
-  expect_message(procimg(classify(papilio, kcols = 3), resize = 2), "Cannot resize")
+  expect_message(procimg(classify(papilio, kcols = 3), resize = 200), "Cannot resize")
   expect_message(procimg(classify(papilio, kcols = 3), rotate = 90), "Cannot rotate")
   expect_error(procimg(papilio), "options")
   class(papilio) <- "array"

@@ -6,7 +6,10 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `getimg()` can now import images from URL's
+* the `cores` argument in `getimg()` is deprecated, as image import is vectorised
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images
+* the `resize` argument in `procimg()` now takes a percentage, rather than scaling factor
 
 # pavo 2.1.0
 

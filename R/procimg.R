@@ -4,9 +4,8 @@
 #'
 #' @param image (required) image data. Either a single image array, or a number of images
 #' stored in a list. Preferably the result of \code{\link{getimg}}.
-#' @param resize an integer specifying the scaling factor for linearly
-#' resizing images, if so desired. E.g. 0.5 to half the size of an image, or 2 to
-#' double it.
+#' @param resize an integer specifying a percentage for resizing images, if so desired. 
+#' E.g. 50 to half the size of an image, 200 to double it.
 #' @param rotate an integer specifying the angle of image rotation, in degrees. Images
 #' are rotated around the centre, and linearly interpolated.
 #' @param scaledist an integer, or numeric vector equal in length to the number of images,
@@ -32,6 +31,8 @@
 #' @return an image, or list of images, for use in further
 #' \code{pavo} functions.
 #'
+#' @importFrom magick image_rotate image_resize
+#'
 #' @export
 #'
 #' @examples
@@ -42,7 +43,7 @@
 #'
 #' # Assign individual scales to each image, after slightly reducing their size.
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-#' snakes <- procimg(snakes, scaledist = c(10, 14), resize = 0.95)
+#' snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 #' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
@@ -59,25 +60,12 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   ## Class
   if (!"rimg" %in% class(image)) {
     message("Attempting to coerce image to class rimg.")
-    if ("cimg" %in% class(image)) {
-      image <- cimg2rimg(image)
-    } else {
-      image <- as.rimg(image)
-    }
+    image <- as.rimg(image)
   }
 
   ## Options
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass)) {
     stop("No options selected.")
-  }
-
-  ## Check for imager if rotating or resizing
-  if (!is.null(resize) || !is.null(rotate)) {
-    if (!requireNamespace("imager", quietly = TRUE)) {
-      stop("Package \"imager\" required for image resizing and rotation. Please install it.",
-        call. = FALSE
-      )
-    }
   }
 
   ## If it's a single image, store it in a list for processing convenience,
@@ -88,30 +76,25 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
   ## ------------------------------ Main ------------------------------ ##
 
-  ## Resize ##
+  ## Resize and Rotate ##
   if (attr(image[[1]], "state") == "colclass" && is.numeric(resize)) {
     message("Cannot resize colour-classified images.")
     resize <- NULL
   }
-  if (is.numeric(resize)) {
-    imgnames <- lapply(image, function(x) attr(x, "imgname"))
-    image <- lapply(image, function(x) rimg2cimg(x))
-    image <- lapply(image, function(x) imager::imresize(x, resize))
-    image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], name = imgnames[[x]]))
-    class(image) <- c("rimg", "list")
-  }
-
-  ## Rotate ##
   if (attr(image[[1]], "state") == "colclass" && is.numeric(rotate)) {
     message("Cannot rotate colour-classified images.")
     rotate <- NULL
   }
-  if (is.numeric(rotate)) {
+  if (is.numeric(resize) || is.numeric(rotate)) {
     imgnames <- lapply(image, function(x) attr(x, "imgname"))
-    image <- lapply(image, function(x) rimg2cimg(x))
-    image <- lapply(image, function(x) imager::imrotate(x, rotate))
-    image <- lapply(seq_along(image), function(x) cimg2rimg(image[[x]], imgnames[[x]]))
-    class(image) <- c("rimg", "list")
+    image <- rimg2magick(image)
+    if(is.numeric(rotate))
+      image <- image_rotate(image, rotate)
+    if(is.numeric(resize)){
+      size <- paste0(resize, "%")  # magick geometry string
+      image <- image_resize(image, size, "Quadratic")
+    }
+    image <- as.rimg(image, imgnames)
   }
 
   ## Scale ##
