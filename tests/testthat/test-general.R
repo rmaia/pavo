@@ -35,4 +35,17 @@ test_that("peakshape", {
 
   test <- read.csv("known_output/FWHM_lims.csv")
   expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
+
+  expect_warning(peakshape(flowers[,-1], plot = FALSE), "No wavelengths")
+
+  expect_equivalent(nrow(peakshape(flowers, grepl("^Hibbertia", colnames(flowers)), plot = FALSE)),
+                    6)
+
+  expect_null(peakshape(flowers, select = FALSE))
+
+  expect_equivalent(digest::sha1(peakshape(flowers, absolute.min = TRUE), digits = 5),
+                    "5300bb69c576646c251857257b265972c29536e2")
+
+  expect_warning(peakshape(flowers, lim = c(300,400), plot = FALSE),
+                 "incorporate all minima in spectral curves")
 })
