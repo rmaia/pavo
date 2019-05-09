@@ -52,7 +52,7 @@ options(
 2. **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 3. **Visualise** the output, with multiple options provided for exploration and analysis.
 
-In the included vignettes we begin by detailing the [importing, processing and visualisation](importing_processing.html) of spectral and image data, before moving on to discussion of the [flexible analyses](analysing.html) of such data that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
+In the included vignettes we begin by detailing the [importing, processing and visualisation](02importing_processing.html) of spectral and image data, before moving on to discussion of the [flexible analyses](03analysing.html) of such data that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
 
 # Classes and Attributes
 
@@ -60,7 +60,7 @@ To enable the comprehensive workflow of `pavo`, we've implemented an expanded cl
 
 # Suggestions and Assistance
 
-For suggestions, assistance and/or bug reports, we suggest getting in touch via 'gitter' at [https://gitter.im/r-pavo/help](https://gitter.im/r-pavo/help), which is essentially a public chat room for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page](https://github.com/rmaia/pavo), or to make a pull-request directly.
+For suggestions, assistance and/or bug reports, we suggest getting in touch by sending an email to <r-pavo@googlegroups.com>, which is a public mailing list for all things pavo. If you have a bug to report, we'd appreciate it if you could also include a reproducible example when possible. Users familiar with git may prefer to open an issue on the project's [github page][pavo_repo], or to make a pull-request directly.
 
 # Citation of methods implemented in `pavo`
 
