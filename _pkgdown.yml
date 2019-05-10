@@ -83,12 +83,12 @@ navbar:
     - text: Articles
       menu:
       - text: Overview
-        href: articles/overview.html
+        href: articles/pavo-1-overview.html
       - text: Importing and Processing Data
-        href: articles/importing_processing.html
+        href: articles/pavo-2-importing_processing.html
       - text: Analysing Data
-        href: articles/analysing.html
+        href: articles/pavo-3-analysing.html
       - text: Spectral Shape Descriptors
-        href: articles/spectraldesc.html
+        href: articles/pavo-4-spectraldesc.html
     - text: Changelog
       href: news/index.html
