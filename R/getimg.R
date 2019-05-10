@@ -2,7 +2,7 @@
 #'
 #' Finds and imports PNG, JPEG, and/or BMP images.
 #'
-#' @param imgpath (required) eith the full file-path or URL to an image (including extension),
+#' @param imgpath (required) either the full file-path or URL to an image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
 #' within a folder are accepted.
 #' @param subdir should subdirectories within the \code{imgpath} folder be
@@ -23,10 +23,10 @@
 #' @examples
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
-#' 
+#'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
