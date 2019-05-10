@@ -9,7 +9,6 @@ reference:
   - '`as.rimg`'
   - '`is.colspace`'
   - '`is.vismodel`'
-  - '`cimg2rimg`'
   - '`getspec`'
   - '`getimg`'
   - '`irrad2flux`'
