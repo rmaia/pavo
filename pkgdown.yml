@@ -1,0 +1,12 @@
+pandoc: '2.2'
+pkgdown: 1.3.0
+pkgdown_sha: ~
+articles:
+  pavo-1-overview: pavo-1-overview.html
+  pavo-2-importing_processing: pavo-2-importing_processing.html
+  pavo-3-analysing: pavo-3-analysing.html
+  pavo-4-spectraldesc: pavo-4-spectraldesc.html
+urls:
+  reference: http://rafaelmaia.net/pavo/reference
+  article: http://rafaelmaia.net/pavo/articles
+
