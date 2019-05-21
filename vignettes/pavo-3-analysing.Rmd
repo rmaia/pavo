@@ -36,6 +36,7 @@ options(
    warnPartialMatchArgs = FALSE,
    warnPartialMatchAttr = FALSE
 )
+knitr::knit_hooks$set(fig = knitr::hook_pngquant)
 ```
 
 [pavo_repo]: https://github.com/rmaia/pavo
