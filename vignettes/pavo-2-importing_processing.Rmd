@@ -1,5 +1,5 @@
 ---
-title: "Importing and Processing Data"
+title: "(2) Importing, Processing, and Visualising Data"
 author: "Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason"
 date: "`r Sys.Date()`"
 output:
