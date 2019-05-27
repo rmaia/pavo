@@ -6,6 +6,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `irrad2flux()` and `flux2irrad()` use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)
 * `getimg()` can now import images from URL's
 * the `cores` argument in `getimg()` is deprecated, as image import is vectorised
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images

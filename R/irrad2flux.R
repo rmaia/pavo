@@ -20,7 +20,7 @@ irrad2flux <- function(rspecdata) {
   nam <- names(rspecdata)
   wl <- rspecdata[, nam == "wl"]
 
-  K <- 0.01 / (6.626 * 2.998 * 6.02308)
+  K <- 0.01 / (6.626068 * 2.99792458 * 6.02214076)
 
   rspecdata[, nam != "wl"] <- rspecdata[, nam != "wl"] * wl * K
 
@@ -38,7 +38,7 @@ flux2irrad <- function(rspecdata) {
   nam <- names(rspecdata)
   wl <- rspecdata[, nam == "wl"]
 
-  K <- 0.01 / (6.626 * 2.998 * 6.02308)
+  K <- 0.01 / (6.626068 * 2.99792458 * 6.02214076)
 
   rspecdata[, nam != "wl"] <- rspecdata[, nam != "wl"] / (wl * K)
 
