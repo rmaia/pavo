@@ -154,24 +154,26 @@
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a data frame
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
 with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipteran viewer).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Object of class <code>colspace</code> consisting of the following columns:</p>
-<p><code>R7p, R7y, R8p, R8y</code>: the quantum catch data used to
- calculate the remaining variables.</p>
-<p><code>x, y</code>: cartesian coordinates in the categorical colour space.</p>
-<p><code>r.vec</code>: the r vector (saturation, distance from the center).</p>
-<p><code>category</code>: fly-colour category. One of <code>p-y-</code>, <code>p-y+</code>, <code>p+y-</code>, <code>p+y+</code>.</p>
+    <p>Object of class <code>colspace</code> consisting of the following columns:</p><ul>
+<li><p><code>R7p, R7y, R8p, R8y</code>: the quantum catch data used to
+calculate the remaining variables.</p></li>
+<li><p><code>x, y</code>: cartesian coordinates in the categorical colour space.</p></li>
+<li><p><code>r.vec</code>: the r vector (saturation, distance from the center).</p></li>
+<li><p><code>category</code>: fly-colour category. One of <code>p-y-</code>, <code>p-y+</code>, <code>p+y-</code>, <code>p+y+</code>.</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Troje N. (1993). Spectral categories in the learning behaviour
- of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
+of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

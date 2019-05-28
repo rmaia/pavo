@@ -142,7 +142,7 @@
 
     <div class="ref-description">
     
-    <p>Plot options for <code>jnd2xyz</code> objects.</p>
+    <p>Plot options for <code><a href='jnd2xyz.html'>jnd2xyz</a></code> objects.</p>
     
     </div>
 
@@ -155,13 +155,13 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>(required) the output from a <code>jnd2xyz</code> call.</p></td>
+      <td><p>(required) the output from a <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> call.</p></td>
     </tr>
     <tr>
       <th>arrow</th>
       <td><p>If and how arrows indicating receptor vectors should be
-drawn. Options are <code>'relative'</code> (default), <code>'absolute'</code> or
-<code>'none'</code>. See description.</p></td>
+drawn. Options are <code>"relative"</code> (default), <code>"absolute"</code> or
+<code>"none"</code>. See description.</p></td>
     </tr>
     <tr>
       <th>achro</th>
@@ -183,23 +183,24 @@ dimension? (only available for dichromats and trichromats, defaults to <code>FAL
     </tr>
     <tr>
       <th>labels.cex</th>
-      <td><p>scaling factor for arrow labels.</p></td>
+      <td><p>size of the arrow labels.</p></td>
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>accepts either <code>'recommended'</code>, where the function will choose margin
+      <td><p>accepts either <code>"recommended"</code>, where the function will choose margin
 attributes, or a numerical vector of the form <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(bottom, left, top, right)</a></code>
 which gives the number of lines of margin to be specified on the four sides of the plot.
 (Default varies depending on plot dimensionality).</p></td>
     </tr>
     <tr>
       <th>square</th>
-      <td><p>Logical. Should a square plotting area be used? (defaults to <code>TRUE</code>)</p></td>
+      <td><p>logical. Should the aspect ratio of the plot be held to 1:1?
+(defaults to <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional parameters to be passed to <code><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></code>, <code><a href='https://www.rdocumentation.org/packages/graphics/topics/arrows'>arrows</a></code>
-and <code>link{persp}</code> (for 3D plots).</p></td>
+      <td><p>additional parameters to be passed to <code><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot()</a></code>, <code><a href='https://www.rdocumentation.org/packages/graphics/topics/arrows'>arrows()</a></code>
+and <code><a href='https://www.rdocumentation.org/packages/graphics/topics/persp'>graphics::persp()</a></code> (for 3D plots).</p></td>
     </tr>
     </table>
     
@@ -210,16 +211,16 @@ and <code>link{persp}</code> (for 3D plots).</p></td>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>the <code>arrow</code> argument accepts three options:</p><ul>
-<li><p><code>'relative'</code>: With this option, arrows will be made relative to the data. Arrows
-   will be centered on the data centroid, and will have an arbitrary length of half the
-   average pairwise distance between points, which can be scaled with the <code>arrow.p</code>
-   argument.</p></li>
-<li><p><code>'absolute'</code>: With this option, arrows will be made to reflect the visual system
-   underlying the data. Arrows will be centered on the achromatic point in colorspace, and
-   will have length equal to the distance to a monochromatic point (i.e. a color that
-   stimulates approximately 99.9<!-- % of that receptor alone). Arrows can still be scaled using -->
-   the <code>arrow.p</code> argument, in which case they cannot be interpreted as described.</p></li>
-<li><p><code>'none'</code>: no arrows will be included.</p></li>
+<li><p><code>"relative"</code>: With this option, arrows will be made relative to the data. Arrows
+will be centered on the data centroid, and will have an arbitrary length of half the
+average pairwise distance between points, which can be scaled with the <code>arrow.p</code>
+argument.</p></li>
+<li><p><code>"absolute"</code>: With this option, arrows will be made to reflect the visual system
+underlying the data. Arrows will be centered on the achromatic point in colorspace, and
+will have length equal to the distance to a monochromatic point (i.e. a color that
+stimulates approximately 99.9<!-- % of that receptor alone). Arrows can still be scaled using -->
+the <code>arrow.p</code> argument, in which case they cannot be interpreted as described.</p></li>
+<li><p><code>"none"</code>: no arrows will be included.</p></li>
 </ul>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>

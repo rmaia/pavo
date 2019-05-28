@@ -156,31 +156,33 @@ in a trichromatic chromaticity space.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a data frame
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p>
-<p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
- the remaining variables.</p>
-<p><code>x</code>, <code>y</code>: cartesian coordinates for the points in the
- Maxwell triangle.</p>
-<p><code>h.theta</code>: angle theta, in radians, determining the hue of the color.</p>
-<p><code>r.vec</code>: the r vector (saturation, distance from the center).</p>
+    <p>A data frame of class <code><a href='colspace.html'>colspace</a></code> consisting of the following columns:</p><ul>
+<li><p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
+the remaining variables.</p></li>
+<li><p><code>x</code>, <code>y</code>: cartesian coordinates for the points in the
+Maxwell triangle.</p></li>
+<li><p><code>h.theta</code>: angle theta, in radians, determining the hue of the color.</p></li>
+<li><p><code>r.vec</code>: the r vector (saturation, distance from the center).</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
- Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.</p>
+Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.</p>
 <p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
- behavioural tests and physiological concepts. Biological Reviews, 78,
- 81 - 118.</p>
+behavioural tests and physiological concepts. Biological Reviews, 78,
+81 - 118.</p>
 <p>MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
- cone excitation by stimuli of equal luminance. Journal of the Optical
- Society of America, 69, 1183-1186.</p>
+cone excitation by stimuli of equal luminance. Journal of the Optical
+Society of America, 69, 1183-1186.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

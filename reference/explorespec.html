@@ -156,8 +156,8 @@ compare groups of spectra.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
-      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>
-that has wavelength range in the first column, named 'wl', and spectral measurements in the
+      <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
 remaining columns.</p></td>
     </tr>
     <tr>
@@ -166,8 +166,8 @@ remaining columns.</p></td>
     </tr>
     <tr>
       <th>scale</th>
-      <td><p>defines how the y-axis should be scaled. <code>'free'</code>: panels can vary in
-the range of the y-axis; <code>'equal'</code>: all panels have the y-axis with the same range.</p></td>
+      <td><p>defines how the y-axis should be scaled. <code>"free"</code>: panels can vary in
+the range of the y-axis; <code>"equal"</code>: all panels have the y-axis with the same range.</p></td>
     </tr>
     <tr>
       <th>legpos</th>

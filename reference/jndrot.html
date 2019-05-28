@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rotate Cartesian coordinates obtained from <code>jnd2xyz</code> — jndrot • pavo</title>
+<title>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> — jndrot • pavo</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -36,9 +36,9 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Rotate Cartesian coordinates obtained from <code>jnd2xyz</code> — jndrot" />
+<meta property="og:title" content="Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> — jndrot" />
 
-<meta property="og:description" content="Rotates the Cartesian coordinates obtained from jnd2xyz" />
+<meta property="og:description" content="Rotate Cartesian coordinates obtained from jnd2xyz()" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -135,14 +135,14 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rotate Cartesian coordinates obtained from <code>jnd2xyz</code></h1>
+    <h1>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code></h1>
     <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/jndrot.R'><code>R/jndrot.R</code></a></small>
     <div class="hidden name"><code>jndrot.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Rotates the Cartesian coordinates obtained from <code>jnd2xyz</code></p>
+    <p>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code></p>
     
     </div>
 
@@ -154,7 +154,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>jnd2xyzres</th>
-      <td><p>(required) the output from a <code>jnd2xyz</code> call.</p></td>
+      <td><p>(required) the output from a <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> call.</p></td>
     </tr>
     <tr>
       <th>center</th>
@@ -165,13 +165,13 @@ center ("achro") or the data centroid ("mean", the default)?</p></td>
       <th>ref1</th>
       <td><p>the cone to be used as a the first reference. May be NULL
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code>coldist</code>. Defaults to 'l'.</p></td>
+in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'l'.</p></td>
     </tr>
     <tr>
       <th>ref2</th>
       <td><p>the cone to be used as a the second reference.May be NULL
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code>coldist</code>. Defaults to 'u'.
+in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'u'.
 (only used if data has 3 dimensions).</p></td>
     </tr>
     <tr>
@@ -179,14 +179,14 @@ in the original data that was used for <code>coldist</code>. Defaults to 'u'.
       <td><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
 that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
-Ignored if <code>ref1</code> is NULL (in 3-dimensional case only)</p></td>
+Ignored if <code>ref1</code> is `NULL`` (in 3-dimensional case only)</p></td>
     </tr>
     <tr>
       <th>axis2</th>
       <td><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
 that the rotation aligns with the z axis (only used if data has 3 dimensions).
-Ignored if <code>ref2</code> is NULL (in 3-dimensional case only)</p></td>
+Ignored if <code>ref2</code> is `NULL`` (in 3-dimensional case only)</p></td>
     </tr>
     </table>
     

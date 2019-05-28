@@ -155,25 +155,24 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
-      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>,
-with a column with wavelength data, named 'wl', and the remaining column containing
-spectra to process.</p></td>
+      <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
+remaining columns.</p></td>
     </tr>
     <tr>
       <th>opt</th>
-      <td><p>what type of processing options to apply. User can select multiple options
-           by providing a vector. Possibilities are:</p><ul>
+      <td><p>what type of processing options to apply. User can select multiple
+options by providing a vector. Possibilities are:</p><ul>
 <li><p><code>"none"</code> does not perform any processing (default).</p></li>
-<li><p><code>"smooth"</code> applies LOESS smoothing to each spectrum using
-                     <code><a href='https://www.rdocumentation.org/packages/stats/topics/scatter.smooth'>loess.smooth</a></code>. Optimal smoothing parameter
-                     can be assessed by using <code><a href='plotsmooth.html'>plotsmooth</a></code>.</p></li>
+<li><p><code>"smooth"</code> applies LOESS smoothing to each spectrum using <code><a href='https://www.rdocumentation.org/packages/stats/topics/scatter.smooth'>loess.smooth()</a></code>.
+Optimal smoothing parameter can be assessed by using <code><a href='plotsmooth.html'>plotsmooth()</a></code>.</p></li>
 <li><p><code>"minimum"</code> subtracts the minimum from each individual spectra.</p></li>
 <li><p><code>"maxmimum"</code> divides each spectrum by its maximum value.</p></li>
 <li><p><code>"sum"</code> divides each spectrum by summed values.</p></li>
-<li><p><code>"bin"</code> bins each spectrum into the specified number of bins.
-                     <code>bins</code> argument must be set.</p></li>
-<li><p><code>"center"</code> centers individual spectra by subtracting mean
-                     reflectance from all values.</p></li>
+<li><p><code>"bin"</code> bins each spectrum into the specified number of bins. <code>bins</code>
+argument must be set.</p></li>
+<li><p><code>"center"</code> centers individual spectra by subtracting mean reflectance from
+all values.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -181,15 +180,14 @@ spectra to process.</p></td>
       <td><p>how to handle negative values. Possibilities are:</p><ul>
 <li><p><code>"none"</code> does not perform negative value correction (default).</p></li>
 <li><p><code>"zero"</code> sets all negative values to zero.</p></li>
-<li><p><code>"addmin"</code> adds the absolute value of the maximally negative
-                     values of each spectra to the reflectance at all other
-                     wavelengths (setting the minimum value to zero, but
-                     scaling other values accordingly).</p></li>
+<li><p><code>"addmin"</code> adds the absolute value of the maximally negative values of each
+spectra to the reflectance at all other wavelengths (setting the minimum
+value to zero, but scaling other values accordingly).</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>span</th>
-      <td><p>sets the smoothing parameter used by <code>loess.smooth</code>.</p></td>
+      <td><p>sets the smoothing parameter used by <code><a href='https://www.rdocumentation.org/packages/stats/topics/scatter.smooth'>loess.smooth()</a></code>.</p></td>
     </tr>
     <tr>
       <th>bins</th>
@@ -204,18 +202,18 @@ spectra to process.</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Cuthill, I., Bennett, A. T. D., Partridge, J. &amp; Maier, E. 1999.
- Plumage reflectance and the objective assessment of avian sexual dichromatism.
- The American Naturalist, 153, 183-200.</p>
+Plumage reflectance and the objective assessment of avian sexual dichromatism.
+The American Naturalist, 153, 183-200.</p>
 <p>Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw,
- K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
- University Press, Cambridge, Massachusetts.</p>
+K.J., eds. Bird Coloration. Volume 1 Mechanisms and measurements. Harvard
+University Press, Cambridge, Massachusetts.</p>
 <p>White, T. E., Dalrymple, R. L., Noble D. W. A., O'Hanlon, J. C.,
 Zurek, D. B., Umbers, K. D. L. 2015. Reproducible research in the study
 of biological coloration. Animal Behaviour, 106, 51-57.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/stats/topics/scatter.smooth'>loess.smooth</a></code>, <code><a href='plotsmooth.html'>plotsmooth</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/stats/topics/scatter.smooth'>loess.smooth()</a></code>, <code><a href='plotsmooth.html'>plotsmooth()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

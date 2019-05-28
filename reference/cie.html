@@ -156,7 +156,7 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).</p></td>
     </tr>
     <tr>
@@ -167,32 +167,31 @@ data frame with three columns representing trichromatic viewer).</p></td>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Object of class <code>colspace</code> containing:</p><ul>
+    <p>Object of class <code><a href='colspace.html'>colspace</a></code> containing:</p><ul>
 <li><p><code>X, Y, Z</code>: Tristimulus values.</p></li>
 <li><p><code>x, y, z</code>: Cartesian coordinates, when using <code>space = XYZ</code>.</p></li>
-<li><p><code>L, a, b</code>: Lightness, <code>L</code>, and colour-opponent <code>a</code>
-         (redness-greenness) and <code>b</code> (yellowness-blueness) values, in a
-         Cartesian coordinate space. Returned when using <code>space = LAB</code>.</p></li>
-<li><p><code>L, a, b, C, h</code>: Lightness, <code>L</code>, colour-opponent <code>a</code>
-         (redness-greenness) and <code>b</code> (yellowness-blueness) values, as well as
-         chroma <code>C</code> and hue-angle <code>h</code> (degrees), the latter of which are cylindrical
-         representations of <code>a</code> and <code>b</code> from the CIELAB model. Returned
-         when using <code>space = LCh</code>.</p></li>
+<li><p><code>L, a, b</code>: Lightness, <code>L</code>, and colour-opponent <code>a</code> (redness-greenness) and
+<code>b</code> (yellowness-blueness) values, in a Cartesian coordinate space. Returned
+when using <code>space = LAB</code>.</p></li>
+<li><p><code>L, a, b, C, h</code>: Lightness, <code>L</code>, colour-opponent <code>a</code> (redness-greenness)
+and <code>b</code> (yellowness-blueness) values, as well as chroma <code>C</code> and hue-angle <code>h</code>
+(degrees), the latter of which are cylindrical representations of <code>a</code> and <code>b</code>
+from the CIELAB model. Returned when using <code>space = LCh</code>.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-   Transactions of the Optical Society, 33(3), 73-134.</p>
+Transactions of the Optical Society, 33(3), 73-134.</p>
 <p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-   using MATLAB. John Wiley &amp; Sons.</p>
+using MATLAB. John Wiley &amp; Sons.</p>
 <p>Stockman, A., &amp; Sharpe, L. T. (2000). Spectral sensitivities of
- the middle- and long-wavelength sensitive cones derived from measurements in
- observers of known genotype. Vision Research, 40, 1711-1737.</p>
+the middle- and long-wavelength sensitive cones derived from measurements in
+observers of known genotype. Vision Research, 40, 1711-1737.</p>
 <p>CIE (2006). Fundamental chromaticity diagram with physiological axes.
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
- Internationale de l Eclairage.</p>
+Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
+Internationale de l Eclairage.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

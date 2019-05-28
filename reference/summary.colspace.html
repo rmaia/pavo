@@ -178,25 +178,27 @@ data.</p></td>
 
     <p>returns all attributes of the data as mapped to the selected colourspace, including
 options specified when calculating the visual model. Also return the default
-<code>data.frame</code> summary, except when the object is the result of <code>tcs</code>,
-in which case the following variables are output instead:</p>
-<p><code>centroid.u, .s, .m, .l</code> the centroids of <code>usml</code> coordinates of points.</p>
-<p><code>c.vol</code> the total volume occupied by the points.</p>
-<p><code>rel.c.vol</code> volume occupied by the points relative to the tetrahedron volume.</p>
-<p><code>colspan.m</code> the mean hue span.</p>
-<p><code>colspan.v</code> the variance in hue span.</p>
-<p><code>huedisp.m</code> the mean hue disparity.</p>
-<p><code>huedisp.v</code> the variance in hue disparity.</p>
-<p><code>mean.ra</code> mean saturation.</p>
-<p><code>max.ra</code> maximum saturation achieved by the group of points.</p>
+<code>data.frame</code> summary, except when the object is the result of <code><a href='tcspace.html'>tcspace()</a></code>,
+in which case the following variables are output instead:</p><ul>
+<li><p><code>centroid.u, .s, .m, .l</code> the centroids of <code>usml</code> coordinates of points.</p></li>
+<li><p><code>c.vol</code> the total volume occupied by the points.</p></li>
+<li><p><code>rel.c.vol</code> volume occupied by the points relative to the tetrahedron volume.</p></li>
+<li><p><code>colspan.m</code> the mean hue span.</p></li>
+<li><p><code>colspan.v</code> the variance in hue span.</p></li>
+<li><p><code>huedisp.m</code> the mean hue disparity.</p></li>
+<li><p><code>huedisp.v</code> the variance in hue disparity.</p></li>
+<li><p><code>mean.ra</code> mean saturation.</p></li>
+<li><p><code>max.ra</code> maximum saturation achieved by the group of points.</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

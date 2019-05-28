@@ -157,7 +157,7 @@ Adds points to a tetrahedral colorspace projection" />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tcsdata</th>
-      <td><p>(required) tetrahedral color space coordinates, possibly a result from <code><a href='colspace.html'>colspace</a></code>,
+      <td><p>(required) tetrahedral color space coordinates, possibly a result from <code><a href='colspace.html'>colspace()</a></code>,
 containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -168,24 +168,24 @@ containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled 
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>projplot</code> creates a 2D plot  of color points projected from the tetrahedron
+    <p><code>projplot()</code> creates a 2D plot  of color points projected from the tetrahedron
 to its encapsulating sphere, and is ideal to visualize differences in hue.</p>
-<p><code>projpoints</code> creates points in a projection color space plot
-produced by <code>projplot</code>.</p>
+<p><code>projpoints()</code> creates points in a projection color space plot
+produced by <code>projplot()</code>.</p>
     
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
-    <p><code>projplot</code> uses the Mollweide projection, and not the Robinson projection, which
+    <p><code>projplot()</code> uses the Mollweide projection, and not the Robinson projection, which
 has been used in the past. Among other advantages, the Mollweide projection preserves area
 relationships within latitudes without distortion.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

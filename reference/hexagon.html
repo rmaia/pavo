@@ -156,33 +156,35 @@ in the hymenopteran color hexagon.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a data frame
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p>
-<p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
- the remaining variables</p>
-<p><code>x</code>, <code>y</code>: cartesian coordinates in the colour hexagon.</p>
-<p><code>h.theta</code>: hue angle theta (in degrees), with 0-degrees at the 1200
- angle, increasing clockwise.</p>
-<p><code>r.vec</code>: the r vector (saturation, distance from the center).</p>
-<p><code>sec.fine</code>: fine 'hue sector', wherein the full hexagon is composed
- of 36 10-degree sectors, with 0-degrees at the 1200 angle.</p>
-<p><code>sec.coarse</code>: coarse 'hue sector', wherein the full hexagon is
- composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.</p>
+    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p><ul>
+<li><p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
+the remaining variables</p></li>
+<li><p><code>x</code>, <code>y</code>: cartesian coordinates in the colour hexagon.</p></li>
+<li><p><code>h.theta</code>: hue angle theta (in degrees), with 0-degrees at the 1200
+angle, increasing clockwise.</p></li>
+<li><p><code>r.vec</code>: the r vector (saturation, distance from the center).</p></li>
+<li><p><code>sec.fine</code>: fine 'hue sector', wherein the full hexagon is composed
+of 36 10-degree sectors, with 0-degrees at the 1200 angle.</p></li>
+<li><p><code>sec.coarse</code>: coarse 'hue sector', wherein the full hexagon is
+composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
 <p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-   component of flower reflections, and the colour perception of Hymenoptera.
-   Vision research, 34(11), 1489-1508.</p>
+component of flower reflections, and the colour perception of Hymenoptera.
+Vision research, 34(11), 1489-1508.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

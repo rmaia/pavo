@@ -156,7 +156,7 @@
     <tr>
       <th>imgdat</th>
       <td><p>(required) image data. Either a single image, or a series of images
-stored in a list. Preferably the result of <code><a href='getimg.html'>getimg</a></code>.</p></td>
+stored in a list. Preferably the result of <code><a href='getimg.html'>getimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>method</th>
@@ -207,7 +207,7 @@ available on Windows.</p></td>
     <tr>
       <th>...</th>
       <td><p>additional graphical parameters when <code>interactive = TRUE</code>.
-Also see <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></code>.</p></td>
+Also see <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>graphics::par()</a></code>.</p></td>
     </tr>
     </table>
     
@@ -220,8 +220,12 @@ cluster centres (i.e. colour classes) are stored as object attributes.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Since the <code>kmeans</code> process draws on random numbers to find initial
-cluster centres when <code>interactive = FALSE</code>, use <code>set.seed</code> if reproducible
+cluster centres when <code>interactive = FALSE</code>, use <code><a href='https://www.rdocumentation.org/packages/base/topics/Random'>set.seed()</a></code> if reproducible
 cluster ID's are desired between runs.</p>
+    
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><a href='https://www.rdocumentation.org/packages/stats/topics/kmeans'>stats::kmeans</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -241,6 +245,8 @@ cluster ID's are desired between runs.</p>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#note">Note</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

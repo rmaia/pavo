@@ -162,28 +162,28 @@ can be returned, for use in a suite of colorspace and non-colorspace models.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
-      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>
-that has wavelength range in the first column, named 'wl', and spectral measurements in the
+      <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
 remaining columns.</p></td>
     </tr>
     <tr>
       <th>visual</th>
       <td><p>the visual system to be used. Options are:</p><ul>
-<li><p>a data frame such as one produced containing by <code>sensmodel</code>, containing
-   user-defined sensitivity data for the receptors involved in colour vision.
-   The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
-   and the sensitivity for each other cone as a column.</p></li>
+<li><p>a data frame such as one produced containing by <code><a href='sensmodel.html'>sensmodel()</a></code>, containing
+user-defined sensitivity data for the receptors involved in colour vision.
+The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
+and the sensitivity for each other cone as a column.</p></li>
 <li><p><code>'apis'</code>: Honeybee <em>Apis mellifera</em>.</p></li>
 <li><p><code>'avg.uv'</code>: average avian UV system (default).</p></li>
 <li><p><code>'avg.v'</code>: average avian V system.</p></li>
 <li><p><code>'bluetit'</code>: Blue tit <em>Cyanistes caeruleus</em>.</p></li>
 <li><p><code>'canis'</code>: Canid <em>Canis familiaris</em>.</p></li>
 <li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 2-degree cone fundamentals
- of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
+colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 10-degree cone fundamentals
- of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
+colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>'ctenophorus'</code>: Ornate dragon lizard <em>Ctenophorus ornatus</em>.</p></li>
 <li><p><code>'musca'</code>: Housefly <em>Musca domestica</em>.</p></li>
 <li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em>.</p></li>
@@ -196,8 +196,8 @@ remaining columns.</p></td>
     <tr>
       <th>achromatic</th>
       <td><p>the sensitivity data to be used to calculate luminance (achromatic)
- receptor stimulation. Either a vector containing the sensitivity for a single receptor,
- or one of the options:</p><ul>
+receptor stimulation. Either a vector containing the sensitivity for a single receptor,
+or one of the options:</p><ul>
 <li><p><code>'none'</code>: no achromatic stimulation calculated (default).</p></li>
 <li><p><code>'bt.dc'</code>: Blue tit <em>Cyanistes caeruleus</em> double cone.</p></li>
 <li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone.</p></li>
@@ -235,7 +235,7 @@ ocular transmission (from Hart et al. 2000).</p></li>
       <td><p>Which quantal catch metric to return. Options are:</p><ul>
 <li><p><code>'Qi'</code>: Quantum catch for each photoreceptor (default)</p></li>
 <li><p><code>'fi'</code>: Quantum catch according to Fechner's law (the signal of the receptor
- channel is proportional to the logarithm of the quantum catch)</p></li>
+channel is proportional to the logarithm of the quantum catch)</p></li>
 <li><p><code>'Ei'</code>: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).</p></li>
 </ul></td>
     </tr>
@@ -255,9 +255,9 @@ Either a vector containing the spectral data, or one of the options:</p><ul>
     <tr>
       <th>scale</th>
       <td><p>a value by which the illuminant will be multiplied. Useful for when the
- illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
- and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
- are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
+illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
+and does not correspond to quantum flux units (\(\mu mol.s^{-1}.m^{-2}\)). Useful values
+are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 <code>vonkries = TRUE</code> this transformation has no effect.</p></td>
     </tr>
     <tr>
@@ -270,37 +270,37 @@ space model? Defaults to <code>TRUE</code>).</p></td>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>vismodel</code> containing the photon catches for each of the
- photoreceptors considered. Information on the parameters used in the calculation are also
- stored and can be called using the <code>summary.vismodel</code> function.</p>
+photoreceptors considered. Information on the parameters used in the calculation are also
+stored and can be called using the <code><a href='summary.vismodel.html'>summary.vismodel()</a></code> function.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &amp; Cuthill, I.
- (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
- Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.</p>
+(1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
+Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.</p>
 <p>Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000).
 Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
 species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird
 (Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.</p>
 <p>Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
- In Retinal And Eye Research, 20(5), 675-703.</p>
+In Retinal And Eye Research, 20(5), 675-703.</p>
 <p>Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
- Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
- Lizard, Ctenophorus ornatus.</p>
+Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
+Lizard, Ctenophorus ornatus.</p>
 <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
 <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
 <p>Stockman, A., &amp; Sharpe, L. T. (2000). Spectral sensitivities of
- the middle- and long-wavelength sensitive cones derived from measurements in
- observers of known genotype. Vision Research, 40, 1711-1737.</p>
+the middle- and long-wavelength sensitive cones derived from measurements in
+observers of known genotype. Vision Research, 40, 1711-1737.</p>
 <p>CIE (2006). Fundamental chromaticity diagram with physiological axes.
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
- Internationale de l' Eclairage.</p>
+Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
+Internationale de l' Eclairage.</p>
 <p>Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 Visual Neuroscience, 3, 119-125.</p>
     

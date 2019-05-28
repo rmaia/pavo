@@ -156,8 +156,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>hexdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code>colspace</code>
-or <code>hexagon</code>
+      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
+or <code><a href='hexagon.html'>hexagon()</a></code>
 function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)</p></td>
     </tr>
     <tr>
@@ -166,19 +166,20 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
     </tr>
     <tr>
       <th>labels</th>
-      <td><p>plot verticy labels? Defaults to <code>TRUE</code>.</p></td>
+      <td><p>logical. Should the name of each cone be printed next to the
+corresponding vertex?</p></td>
     </tr>
     <tr>
       <th>sectors</th>
       <td><p>plot the bee-hue sector dividers? Options are:</p><ul>
-<li><p><code>'none'</code>: No sectors (default)</p></li>
-<li><p><code>'fine'</code>: 36 10-degree sectors</p></li>
-<li><p><code>'coarse'</code>: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).</p></li>
+<li><p><code>"none"</code>: No sectors (default)</p></li>
+<li><p><code>"fine"</code>: 36 10-degree sectors</p></li>
+<li><p><code>"coarse"</code>: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>sec.col</th>
-      <td><p>line colour of hue sector dividers. Defaults to <code>'grey'</code>.</p></td>
+      <td><p>line colour of hue sector dividers. Defaults to <code>"grey"</code>.</p></td>
     </tr>
     <tr>
       <th>out.lwd</th>
@@ -194,7 +195,7 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
     </tr>
     <tr>
       <th>labels.cex</th>
-      <td><p>character expansion factor for category labels when <code>labels = TRUE</code>).</p></td>
+      <td><p>size of the arrow labels.</p></td>
     </tr>
     <tr>
       <th>achrosize</th>
@@ -215,18 +216,18 @@ function, containing values for the 'x' and 'y' coordinates as columns (labeled 
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional graphical options. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par</a></code>.</p></td>
+      <td><p>additional graphical options. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par()</a></code>.</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
 <p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-   component of flower reflections, and the colour perception of Hymenoptera.
-   Vision research, 34(11), 1489-1508.</p>
+component of flower reflections, and the colour perception of Hymenoptera.
+Vision research, 34(11), 1489-1508.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

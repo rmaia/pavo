@@ -165,8 +165,8 @@ colorspace using OpenGL capabilities.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tcsdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code>colspace</code>
-or <code>tetraspace</code> function, containing values for the 'x', 'y' and 'z'
+      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
+or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -175,7 +175,7 @@ coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>alpha</th>
-      <td><p>transparency of points (or volume fill in <code>tcsvol</code>)</p></td>
+      <td><p>transparency of points (or volume fill in <code>tcsvol()</code>)</p></td>
     </tr>
     <tr>
       <th>col</th>
@@ -187,15 +187,15 @@ coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>achro</th>
-      <td><p>logical. Should the achromatic center be plotted? (defaults to <code>TRUE</code>)</p></td>
+      <td><p>should a point be plotted at the origin (defaults to <code>TRUE</code>)?</p></td>
     </tr>
     <tr>
       <th>achrosize</th>
-      <td><p>size of the point in the achromatic centre</p></td>
+      <td><p>size of the point at the origin when <code>achro = TRUE</code> (defaults to <code>0.8</code>).</p></td>
     </tr>
     <tr>
       <th>achrocol</th>
-      <td><p>colour of the point in the achromatic centre</p></td>
+      <td><p>color of the point at the origin <code>achro = TRUE</code> (defaults to <code>'grey'</code>).</p></td>
     </tr>
     <tr>
       <th>lwd, lcol</th>
@@ -234,28 +234,26 @@ is not saved properly if exported using <code>rgl.postscript</code>)(defaults to
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tcsplot</code> creates a 3D plot using functions of the package <code>rgl</code>,
+    <p><code>tcsplot()</code> creates a 3D plot using functions of the package <code>rgl</code>,
 based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
 (left button: rotate along 'z' axis; right button: rotate along 'x' axis;
-third button: zoom). <code>tcsvol</code> creates polygon based on points, determining the volume
-occupied by them in the colorspace. <code>tcspoints</code> adds points to the plot. Points are
-currently plotted only as spheres to maintain export capabilities.</p>
-<p><code>tcspoints</code> creates 3D points in a tetrahedral colour space plot produced by <code>tcsplot</code>
-using functions of the package <code>rgl</code>, based on openGL capabilities.</p>
-<p><code>tcsvol</code> creates a 3D convex hull within a <code>tcsplot</code> object.</p>
+third button: zoom).</p>
+<p><code>tcspoints()</code> adds points to the plot. Points are currently plotted
+only as spheres to maintain export capabilities.</p>
+<p><code>tcsvol()</code> creates a 3D convex hull within a <code>tcsplot</code> object.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/rgl/topics/spheres'>spheres3d</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/postscript'>rgl.postscript</a></code>,
-<code><a href='https://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl.snapshot</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/material'>rgl.material</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/rgl/topics/spheres'>rgl::spheres3d()</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/postscript'>rgl::rgl.postscript()</a></code>,
+<code><a href='https://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl::rgl.snapshot()</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/material'>rgl::rgl.material()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

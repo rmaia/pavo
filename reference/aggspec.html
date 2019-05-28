@@ -155,9 +155,9 @@ an index or a vector of identities.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
-      <td><p>(required) data frame, possibly of class <code>rspec</code>
-containing the spectra to be manipulated. If it contains a wavelength column
-named "wl", that column will be ignored.</p></td>
+      <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
+remaining columns.</p></td>
     </tr>
     <tr>
       <th>by</th>
@@ -170,7 +170,7 @@ same identification); or a list of vectors, e.g., <code>by = list(sex, species)<
     </tr>
     <tr>
       <th>FUN</th>
-      <td><p>the function to be applied to the groups of spectra. (defaults to <code><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean</a></code>)</p></td>
+      <td><p>the function to be applied to the groups of spectra. (defaults to <code><a href='https://www.rdocumentation.org/packages/base/topics/mean'>mean()</a></code>)</p></td>
     </tr>
     <tr>
       <th>trim</th>

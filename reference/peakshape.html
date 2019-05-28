@@ -40,7 +40,7 @@
 
 <meta property="og:description" content="Calculates height, location and width of peak at the reflectance midpoint (FWHM).
 Note: bounds should be set wide enough to incorporate all minima in spectra. Smoothing
-spectra using procspec is also recommended." />
+spectra using procspec() is also recommended." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -146,7 +146,7 @@ spectra using procspec is also recommended." />
     
     <p>Calculates height, location and width of peak at the reflectance midpoint (FWHM).
 Note: bounds should be set wide enough to incorporate all minima in spectra. Smoothing
-spectra using <code><a href='procspec.html'>procspec</a></code> is also recommended.</p>
+spectra using <code><a href='procspec.html'>procspec()</a></code> is also recommended.</p>
     
     </div>
 
@@ -158,14 +158,14 @@ spectra using <code><a href='procspec.html'>procspec</a></code> is also recommen
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>rspecdata</th>
-      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>,
-with a column with wavelength data, named 'wl', and the remaining column containing
-spectra to process.</p></td>
+      <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
+remaining columns.</p></td>
     </tr>
     <tr>
       <th>select</th>
       <td><p>specification of which spectra to plot. Can be a numeric vector or
-factor (e.g., <code>sex == 'male'</code>).</p></td>
+factor (e.g., <code>sex=='male'</code>)</p></td>
     </tr>
     <tr>
       <th>lim</th>
@@ -202,7 +202,7 @@ Function will return a warning if not.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='procspec.html'>procspec</a></code></p></div>
+    <div class='dont-index'><p><code><a href='procspec.html'>procspec()</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

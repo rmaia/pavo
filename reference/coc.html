@@ -156,24 +156,26 @@ in the color opponent coding model of hymenopteran vision.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel</a></code> or independently calculated data (in the form of a data frame
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p>
-<p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate
- the remaining variables.</p>
-<p><code>x</code>, <code>y</code>: coordinates for the points in coc space</p>
-<p><code>r.vec</code>: the r vector (saturation, distance from the center using
- a city-block metric).</p>
+    <p>A data frame of class <code><a href='colspace.html'>colspace</a></code> consisting of the following columns:</p><ul>
+<li><p><code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to calculate the remaining
+variables.</p></li>
+<li><p><code>x</code>, <code>y</code>: coordinates for the points in coc space</p></li>
+<li><p><code>r.vec</code>: the r vector (saturation, distance from the center using a
+city-block metric).</p></li>
+</ul>
+
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Backhaus W. (1991). Color opponent coding in the visual system
- of the honeybee. Vision Research, 31, 1381-1397.</p>
+of the honeybee. Vision Research, 31, 1381-1397.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>

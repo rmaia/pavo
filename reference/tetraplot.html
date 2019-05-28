@@ -158,8 +158,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tcsdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code>colspace</code>
-or <code>tetraspace</code> function, containing values for the 'x', 'y' and 'z'
+      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
+or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -173,7 +173,7 @@ coordinates as columns (labeled as such).</p></td>
     <tr>
       <th>perspective</th>
       <td><p>logical, should perspective be forced by using point size to reflect
-distance from the plane of view? (defaults to FALSE)</p></td>
+distance from the plane of view? (defaults to `FALSE``)</p></td>
     </tr>
     <tr>
       <th>range, </th>
@@ -184,7 +184,7 @@ to indicate the size range variation reflecting the distance from the plane of v
       <th>r</th>
       <td><p>the distance of the eyepoint from the center of the plotting box.
 Very high values approximate an orthographic projection (defaults to 1e6).
-See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/persp'>persp</a></code> for details.</p></td>
+See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/persp'>persp()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>zoom</th>
@@ -192,15 +192,15 @@ See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/persp
     </tr>
     <tr>
       <th>achro</th>
-      <td><p>logical. Should the achromatic center be plotted? (defaults to <code>TRUE</code>)</p></td>
-    </tr>
-    <tr>
-      <th>achro.col, achro.size, achro.lwd, achro.lty</th>
-      <td><p>graphical parameters for the achromatic coordinates.</p></td>
+      <td><p>should a point be plotted at the origin (defaults to <code>TRUE</code>)?</p></td>
     </tr>
     <tr>
       <th>achro.line</th>
       <td><p>logical. Should the achromatic line be plotted? (defaults to <code>FALSE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>achro.lwd, achro.lty</th>
+      <td><p>graphical parameters for the achromatic coordinates.</p></td>
     </tr>
     <tr>
       <th>tetrahedron</th>
@@ -228,24 +228,23 @@ the base of the tetrahedron.</p></td>
       <td><p>logical. Should the name of each cone be printed next to the
 corresponding vertex?</p></td>
     </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional graphical options. See <code><a href='https://www.rdocumentation.org/packages/graphics/topics/par'>par()</a></code>.</p></td>
+    </tr>
     </table>
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>tetraplot</code> creates a 3D plot.</p>
+    <p><code>tetraplot()</code> creates a non-interactive 3D plot.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
-    
-    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
-
-    <div class='dont-index'><p><code><a href='https://www.rdocumentation.org/packages/rgl/topics/spheres'>spheres3d</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/postscript'>rgl.postscript</a></code>,
-<code><a href='https://www.rdocumentation.org/packages/rgl/topics/snapshot'>rgl.snapshot</a></code>,<code><a href='https://www.rdocumentation.org/packages/rgl/topics/material'>rgl.material</a></code></p></div>
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -254,7 +253,8 @@ corresponding vertex?</p></td>
 <span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
 <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -264,8 +264,6 @@ corresponding vertex?</p></td>
       <li><a href="#value">Value</a></li>
 
       <li><a href="#references">References</a></li>
-
-      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>
