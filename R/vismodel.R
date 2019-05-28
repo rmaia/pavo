@@ -3,91 +3,77 @@
 #' Calculates quantum catches at each photoreceptor. Both raw and relative values
 #' can be returned, for use in a suite of colorspace and non-colorspace models.
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}
-#'  that has wavelength range in the first column, named 'wl', and spectral measurements in the
-#'  remaining columns.
+#' @inheritParams aggplot
 #' @param qcatch Which quantal catch metric to return. Options are:
-#' \itemize{
-#' \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
-#' \item \code{'fi'}: Quantum catch according to Fechner's law (the signal of the receptor
+#' - `'Qi'`: Quantum catch for each photoreceptor (default)
+#' - `'fi'`: Quantum catch according to Fechner's law (the signal of the receptor
 #'  channel is proportional to the logarithm of the quantum catch)
-#' \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
-#' }
+#' - `'Ei'`: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 #' @param visual the visual system to be used. Options are:
-#' \itemize{
-#' 	\item a data frame such as one produced containing by \code{sensmodel}, containing
+#' - a data frame such as one produced containing by [sensmodel()], containing
 #'    user-defined sensitivity data for the receptors involved in colour vision.
-#'    The data frame must contain a \code{'wl'} column with the range of wavelengths included,
+#'    The data frame must contain a `'wl'` column with the range of wavelengths included,
 #'    and the sensitivity for each other cone as a column.
-#' \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
-#' \item \code{'avg.uv'}: average avian UV system (default).
-#' \item \code{'avg.v'}: average avian V system.
-#' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
-#' \item \code{'canis'}: Canid \emph{Canis familiaris}.
-#' \item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
+#' - `'apis'`: Honeybee *Apis mellifera*.
+#' - `'avg.uv'`: average avian UV system (default).
+#' - `'avg.v'`: average avian V system.
+#' - `'bluetit'`: Blue tit *Cyanistes caeruleus*.
+#' - `'canis'`: Canid *Canis familiaris*.
+#' - `'cie2'`: 2-degree colour matching functions for CIE models of human
 #'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-#' \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
+#' - `'cie10'`: 10-degree colour matching functions for CIE models of human
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-#' \item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
-#' \item \code{'musca'}: Housefly \emph{Musca domestica}.
-#' \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus}.
-#' \item \code{'segment'}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
-#' \item \code{'star'}: Starling \emph{Sturnus vulgaris}.
-#' \item \code{'habronattus'}: Jumping spider \emph{Habronattus pyrrithrix}.
-#' \item \code{'rhinecanthus'}: Triggerfish \emph{Rhinecanthus aculeatus}.
-#' }
+#' - `'ctenophorus'`: Ornate dragon lizard *Ctenophorus ornatus*.
+#' - `'musca'`: Housefly *Musca domestica*.
+#' - `'pfowl'`: Peafowl *Pavo cristatus*.
+#' - `'segment'`: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
+#' - `'star'`: Starling *Sturnus vulgaris*.
+#' - `'habronattus'`: Jumping spider *Habronattus pyrrithrix*.
+#' - `'rhinecanthus'`: Triggerfish *Rhinecanthus aculeatus*.
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
 #'  receptor stimulation. Either a vector containing the sensitivity for a single receptor,
 #'  or one of the options:
-#' \itemize{
-#'  \item \code{'none'}: no achromatic stimulation calculated (default).
-#' 	\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
-#'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
-#'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
-#'  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
-#'  \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
-#'  \item \code{'cf.r'}: Canid \emph{Canis familiaris} cone.
-#'  \item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors.
-#'  \item \code{'l'}: the longest-wavelength photoreceptor.
-#'  \item \code{'all'}: the summed response of all photoreceptors.
-#' }
+#' - `'none'`: no achromatic stimulation calculated (default).
+#' - `'bt.dc'`: Blue tit *Cyanistes caeruleus* double cone.
+#' - `'ch.dc'`: Chicken *Gallus gallus* double cone.
+#' - `'st.dc'`: Starling *Sturnus vulgaris* double cone.
+#' - `'md.r1'`: Housefly *Musca domestica* R1-6 photoreceptor.
+#' - `'ra.dc'`: Triggerfish *Rhinecanthus aculeatus* double cone.
+#' - `'cf.r'`: Canid *Canis familiaris* cone.
+#' - `'ml'`: the summed response of the two longest-wavelength photoreceptors.
+#' - `'l'`: the longest-wavelength photoreceptor.
+#' - `'all'`: the summed response of all photoreceptors.
 #' @param illum either a vector containing the illuminant, or one of the options:
-#' \itemize{
-#' \item \code{'ideal'}: homogeneous illuminance of 1 across wavelengths (default)
-#' \item \code{'bluesky'} open blue sky.
-#' \item \code{'D65'}: standard daylight.
-#' \item \code{'forestshade'} forest shade.
-#' }
-#' @param bkg background spectrum. Note that this will have no effect when \code{vonkries = FALSE}.
+#' - `'ideal'`: homogeneous illuminance of 1 across wavelengths (default)
+#' - `'bluesky'` open blue sky.
+#' - `'D65'`: standard daylight.
+#' - `'forestshade'` forest shade.
+#' @param bkg background spectrum. Note that this will have no effect when `vonkries = FALSE`.
 #' Either a vector containing the spectral data, or one of the options:
-#' \itemize{
-#' \item \code{'ideal'}: homogeneous illuminance of 1 across all wavelengths (default).
-#' \item \code{'green'}: green foliage.
-#' }
+#' - `'ideal'`: homogeneous illuminance of 1 across all wavelengths (default).
+#' - `'green'`: green foliage.
 #' @param trans either a vector containing the ocular or environmental transmission
 #' spectra, or one of the options:
-#' \itemize{
-#' \item \code{'ideal'}: homogeneous transmission of 1 across all wavelengths (default)
-#' \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus}
+#' - `'ideal'`: homogeneous transmission of 1 across all wavelengths (default)
+#' - `'bluetit'`: blue tit *Cyanistes caeruleus*
 #' ocular transmission (from Hart et al. 2000).
-#' \item \code{'blackbird'}: blackbird \emph{Turdus merula}
+#' - `'blackbird'`: blackbird *Turdus merula*
 #' ocular transmission (from Hart et al. 2000).
-#' }
 #' @param relative should relative quantum catches be returned (i.e. is it a color
-#'  space model? Defaults to \code{TRUE}).
+#'  space model? Defaults to `TRUE`).
 #' @param vonkries logical. Should the von Kries color correction transformation be applied?
-#'  (defaults to \code{FALSE}).
+#'  (defaults to `FALSE`).
 #' @param scale a value by which the illuminant will be multiplied. Useful for when the
 #'  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
-#'  and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
+#'  and does not correspond to quantum flux units (\eqn{\mu mol.s^{-1}.m^{-2}}). Useful values
 #'  are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
-#' \code{vonkries = TRUE} this transformation has no effect.
+#' `vonkries = TRUE` this transformation has no effect.
 #'
-#' @return An object of class \code{vismodel} containing the photon catches for each of the
+#' @return An object of class `vismodel` containing the photon catches for each of the
 #'  photoreceptors considered. Information on the parameters used in the calculation are also
-#'  stored and can be called using the \code{summary.vismodel} function.
+#'  stored and can be called using the [summary.vismodel()] function.
 #'
 #' @export
 #'
@@ -96,17 +82,17 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = "canis")
 #' di.flowers <- colspace(vis.flowers, space = "di")
-#' 
+#'
 #' # Trichromat (honeybee)
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = "apis")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
-#' 
+#'
 #' # Tetrachromat (blue tit)
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "bluetit")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
-#' 
+#'
 #' # Tetrachromat (starling), receptor-noise model
 #' data(sicalis)
 #' vis.star <- vismodel(sicalis, visual = "star", achromatic = "bt.dc", relative = FALSE)

@@ -3,16 +3,16 @@
 #' Subsets various object types based on a given vector or grep partial matching
 #' of data names.
 #'
-#' @param x (required) an object of class \code{rspec}, \code{vismodel}, or
-#' \code{colspace}, containing spectra, visual model output or colorspace data
+#' @param x (required) an object of class `rspec`, `vismodel`, or
+#' `colspace`, containing spectra, visual model output or colorspace data
 #' to subset.
 #' @param subset a string used for partial matching of observations.
-#' @param ... additional attributes passed to \code{grep}. Ignored if
-#' \code{subset} is logical.
+#' @param ... additional attributes passed to `grep`. Ignored if
+#' `subset` is logical.
 #' @return a subsetted object of the same class as the input object.
 #'
-#' @note if more than one value is given to \code{subset}, any spectra that
-#' matches \emph{either} condition will be included. It's a union, not an
+#' @note if more than one value is given to `subset`, any spectra that
+#' matches *either* condition will be included. It's a union, not an
 #' intersect.
 #'
 #' @export
@@ -21,7 +21,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis)
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
-#' 
+#'
 #' # Subset all 'crown' patches (C in file names)
 #' head(subset(sicalis, "C"))
 #' subset(vis.sicalis, "C")

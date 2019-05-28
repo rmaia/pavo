@@ -3,15 +3,15 @@
 #' Calculates segment classification measures as defined in Endler (1990).
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+#'  from [vismodel()] or independently calculated data (in the form of a data frame
 #'  with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic
 #'  'tetrachromatic' viewer).
 #'
-#' @return A data frame of class \code{colspace} consisting of the following columns:
-#' @return \code{S1}, \code{S2}, \code{S3}, \code{S4}: the relative reflectance at each
+#' @return A data frame of class [`colspace`] consisting of the following columns:
+#' * `S1`, `S2`, `S3`, `S4`: the relative reflectance at each
 #' of the four segments.
-#' @return \code{LM}, \code{MS}: segment scores
-#' @return \code{C}, \code{H}, \code{B}: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
+#' * `LM`, `MS`: segment scores
+#' * `C`, `H`, `B`: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
 #'
 #' @export
 #'

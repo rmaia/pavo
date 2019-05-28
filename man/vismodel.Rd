@@ -14,27 +14,27 @@ vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit",
   vonkries = FALSE, scale = 1, relative = TRUE)
 }
 \arguments{
-\item{rspecdata}{(required) a data frame, possibly an object of class \code{rspec}
-that has wavelength range in the first column, named 'wl', and spectral measurements in the
+\item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
 remaining columns.}
 
 \item{visual}{the visual system to be used. Options are:
 \itemize{
-    \item a data frame such as one produced containing by \code{sensmodel}, containing
-   user-defined sensitivity data for the receptors involved in colour vision.
-   The data frame must contain a \code{'wl'} column with the range of wavelengths included,
-   and the sensitivity for each other cone as a column.
+\item a data frame such as one produced containing by \code{\link[=sensmodel]{sensmodel()}}, containing
+user-defined sensitivity data for the receptors involved in colour vision.
+The data frame must contain a \code{'wl'} column with the range of wavelengths included,
+and the sensitivity for each other cone as a column.
 \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
 \item \code{'avg.uv'}: average avian UV system (default).
 \item \code{'avg.v'}: average avian V system.
 \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 \item \code{'canis'}: Canid \emph{Canis familiaris}.
 \item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 2-degree cone fundamentals
- of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 10-degree cone fundamentals
- of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
 \item \code{'musca'}: Housefly \emph{Musca domestica}.
 \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus}.
@@ -45,19 +45,19 @@ remaining columns.}
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
- receptor stimulation. Either a vector containing the sensitivity for a single receptor,
- or one of the options:
+receptor stimulation. Either a vector containing the sensitivity for a single receptor,
+or one of the options:
 \itemize{
- \item \code{'none'}: no achromatic stimulation calculated (default).
-    \item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
- \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
- \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
- \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
- \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
- \item \code{'cf.r'}: Canid \emph{Canis familiaris} cone.
- \item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors.
- \item \code{'l'}: the longest-wavelength photoreceptor.
- \item \code{'all'}: the summed response of all photoreceptors.
+\item \code{'none'}: no achromatic stimulation calculated (default).
+\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
+\item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
+\item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
+\item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+\item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
+\item \code{'cf.r'}: Canid \emph{Canis familiaris} cone.
+\item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors.
+\item \code{'l'}: the longest-wavelength photoreceptor.
+\item \code{'all'}: the summed response of all photoreceptors.
 }}
 
 \item{illum}{either a vector containing the illuminant, or one of the options:
@@ -82,7 +82,7 @@ ocular transmission (from Hart et al. 2000).
 \itemize{
 \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
 \item \code{'fi'}: Quantum catch according to Fechner's law (the signal of the receptor
- channel is proportional to the logarithm of the quantum catch)
+channel is proportional to the logarithm of the quantum catch)
 \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
@@ -97,9 +97,9 @@ Either a vector containing the spectral data, or one of the options:
 (defaults to \code{FALSE}).}
 
 \item{scale}{a value by which the illuminant will be multiplied. Useful for when the
- illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
- and does not correspond to quantum flux units ($umol*s^-1*m^-2$). Useful values
- are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
+illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
+and does not correspond to quantum flux units (\eqn{\mu mol.s^{-1}.m^{-2}}). Useful values
+are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 \code{vonkries = TRUE} this transformation has no effect.}
 
 \item{relative}{should relative quantum catches be returned (i.e. is it a color
@@ -107,8 +107,8 @@ space model? Defaults to \code{TRUE}).}
 }
 \value{
 An object of class \code{vismodel} containing the photon catches for each of the
- photoreceptors considered. Information on the parameters used in the calculation are also
- stored and can be called using the \code{summary.vismodel} function.
+photoreceptors considered. Information on the parameters used in the calculation are also
+stored and can be called using the \code{\link[=summary.vismodel]{summary.vismodel()}} function.
 }
 \description{
 Calculates quantum catches at each photoreceptor. Both raw and relative values
@@ -137,8 +137,8 @@ dist.star <- coldist(vis.star, achromatic = TRUE)
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
- (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
- Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+(1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
+Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 
 Hart, N. S., Partridge, J. C., Cuthill, I. C., Bennett, A. T. D. (2000).
 Visual pigments, oil droplets, ocular media and cone photoreceptor distribution in two
@@ -146,30 +146,30 @@ species of passerine bird: the blue tit (Parus caeruleus L.) and the blackbird
 (Turdus merula L.). Journal of Comparative Physiology A, 186, 375-387.
 
 Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
- In Retinal And Eye Research, 20(5), 675-703.
+In Retinal And Eye Research, 20(5), 675-703.
 
 Barbour H. R., Archer, M. A., Hart, N. S., Thomas, N., Dunlop, S. A.,
- Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
- Lizard, Ctenophorus ornatus.
+Beazley, L. D, Shand, J. (2002). Retinal characteristics of the Ornate Dragon
+Lizard, Ctenophorus ornatus.
 
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
 Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of
- the middle- and long-wavelength sensitive cones derived from measurements in
- observers of known genotype. Vision Research, 40, 1711-1737.
+the middle- and long-wavelength sensitive cones derived from measurements in
+observers of known genotype. Vision Research, 40, 1711-1737.
 
 CIE (2006). Fundamental chromaticity diagram with physiological axes.
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
- Internationale de l' Eclairage.
+Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
+Internationale de l' Eclairage.
 
 Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 Visual Neuroscience, 3, 119-125.

@@ -9,11 +9,12 @@ triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{tridata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{trispace} function, containing values for the 'x' and 'y' coordinates
+\item{tridata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=trispace]{trispace()}} function, containing values for the 'x' and 'y' coordinates
 as columns (labeled as such).}
 
-\item{labels}{plot verticy labels? Defaults to \code{TRUE}.}
+\item{labels}{logical. Should the name of each cone be printed next to the
+corresponding vertex?}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
@@ -21,7 +22,7 @@ as columns (labeled as such).}
 
 \item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
 
-\item{labels.cex}{character expansion factor for category labels when \code{labels = TRUE}).}
+\item{labels.cex}{size of the arrow labels.}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
@@ -30,7 +31,7 @@ as columns (labeled as such).}
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{...}{additional graphical options. See \code{\link{par}}.}
+\item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
 \description{
 Produces a Maxwell triangle plot.
@@ -43,15 +44,15 @@ plot(tri.flowers)
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
- Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
+Sources of Color Science. Cambridge, MIT Press, 1872 - 1873.
 
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
- behavioural tests and physiological concepts. Biological Reviews, 78,
- 81 - 118.
+behavioural tests and physiological concepts. Biological Reviews, 78,
+81 - 118.
 
 MacLeod DIA, Boynton RM. (1979). Chromaticity diagram showing
- cone excitation by stimuli of equal luminance. Journal of the Optical
- Society of America, 69, 1183-1186.
+cone excitation by stimuli of equal luminance. Journal of the Optical
+Society of America, 69, 1183-1186.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

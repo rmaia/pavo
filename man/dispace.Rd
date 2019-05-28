@@ -8,18 +8,17 @@ dispace(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with two columns named 's' and 'l', representing a dichromatic viewer's receptors).}
 }
 \value{
-A data frame of class \code{colspace} consisting of the following columns:
-
-\code{s}, \code{l}: the quantum catch data used to calculate
- the remaining variables.
-
-\code{x}: the coordinate of the stimulus along a segment
-
-\code{r.vec}: the r vector (saturation, distance from the center).
+A data frame of class \code{\link{colspace}} consisting of the following columns:
+\itemize{
+\item \code{s}, \code{l}: the quantum catch data used to calculate
+the remaining variables.
+\item \code{x}: the coordinate of the stimulus along a segment
+\item \code{r.vec}: the r vector (saturation, distance from the center).
+}
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
@@ -32,8 +31,8 @@ di.flowers <- colspace(vis.flowers, space = "di")
 }
 \references{
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
- behavioural tests and physiological concepts. Biological Reviews, 78,
- 81 - 118.
+behavioural tests and physiological concepts. Biological Reviews, 78,
+81 - 118.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

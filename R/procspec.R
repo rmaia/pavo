@@ -2,38 +2,29 @@
 #'
 #' Applies normalization and/or smoothing to spectra for further analysis or plotting.
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec},
-#' with a column with wavelength data, named 'wl', and the remaining column containing
-#' spectra to process.
-#' @param opt what type of processing options to apply. User can select multiple options
-#'            by providing a vector. Possibilities are:
-#' \itemize{
-#' 	\item \code{"none"} does not perform any processing (default).
-#' 	\item \code{"smooth"} applies LOESS smoothing to each spectrum using
-#'                      \code{\link{loess.smooth}}. Optimal smoothing parameter
-#'                      can be assessed by using \code{\link{plotsmooth}}.
-#' 	\item \code{"minimum"} subtracts the minimum from each individual spectra.
-#' 	\item \code{"maxmimum"} divides each spectrum by its maximum value.
-#' 	\item \code{"sum"} divides each spectrum by summed values.
-#' 	\item \code{"bin"} bins each spectrum into the specified number of bins.
-#'                      \code{bins} argument must be set.
-#'      \item \code{"center"} centers individual spectra by subtracting mean
-#'                      reflectance from all values.
-#' }
-#'
+#' @inheritParams aggplot
+#' @param opt what type of processing options to apply. User can select multiple
+#' options by providing a vector. Possibilities are:
+#' * `"none"` does not perform any processing (default).
+#' * `"smooth"` applies LOESS smoothing to each spectrum using [loess.smooth()].
+#' Optimal smoothing parameter can be assessed by using [plotsmooth()].
+#' * `"minimum"` subtracts the minimum from each individual spectra.
+#' * `"maxmimum"` divides each spectrum by its maximum value.
+#' * `"sum"` divides each spectrum by summed values.
+#' * `"bin"` bins each spectrum into the specified number of bins. `bins`
+#' argument must be set.
+#' * `"center"` centers individual spectra by subtracting mean reflectance from
+#' all values.
 #' @param fixneg how to handle negative values. Possibilities are:
-#' \itemize{
-#' 	\item \code{"none"} does not perform negative value correction (default).
-#'      \item \code{"zero"} sets all negative values to zero.
-#'      \item \code{"addmin"} adds the absolute value of the maximally negative
-#'                      values of each spectra to the reflectance at all other
-#'                      wavelengths (setting the minimum value to zero, but
-#'                      scaling other values accordingly).
-#' }
-#' @param span sets the smoothing parameter used by \code{loess.smooth}.
-#' @param bins sets the number of equally sized wavelength bins for \code{opt = "bin"}.
+#' * `"none"` does not perform negative value correction (default).
+#' * `"zero"` sets all negative values to zero.
+#' * `"addmin"` adds the absolute value of the maximally negative values of each
+#' spectra to the reflectance at all other wavelengths (setting the minimum
+#' value to zero, but scaling other values accordingly).
+#' @param span sets the smoothing parameter used by [loess.smooth()].
+#' @param bins sets the number of equally sized wavelength bins for `opt = "bin"`.
 #'
-#' @return A data frame of class \code{rspec} with the processed data.
+#' @return A data frame of class `rspec` with the processed data.
 #'
 #' @export
 #'
@@ -42,15 +33,15 @@
 #' @examples
 #' data(teal)
 #' plot(teal, select = 10)
-#' 
+#'
 #' # Smooth data to remove noise
 #' teal.sm <- procspec(teal, opt = "smooth", span = 0.25)
 #' plot(teal.sm, select = 10)
-#' 
+#'
 #' # Normalize to max of unity
 #' teal.max <- procspec(teal, opt = c("max"))
 #' plot(teal.max, select = 10)
-#' @seealso \code{\link{loess.smooth}}, \code{\link{plotsmooth}}
+#' @seealso [loess.smooth()], [plotsmooth()]
 #'
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
 #'  Plumage reflectance and the objective assessment of avian sexual dichromatism.

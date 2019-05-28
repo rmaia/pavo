@@ -9,11 +9,11 @@ jndplot(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
   labels.cex = 1, margin = "recommended", square = TRUE, ...)
 }
 \arguments{
-\item{x}{(required) the output from a \code{jnd2xyz} call.}
+\item{x}{(required) the output from a \code{\link[=jnd2xyz]{jnd2xyz()}} call.}
 
 \item{arrow}{If and how arrows indicating receptor vectors should be
-drawn. Options are \code{'relative'} (default), \code{'absolute'} or
-\code{'none'}. See description.}
+drawn. Options are \code{"relative"} (default), \code{"absolute"} or
+\code{"none"}. See description.}
 
 \item{achro}{Logical. Should the achromatic variable be plotted as a
 dimension? (only available for dichromats and trichromats, defaults to \code{FALSE}).}
@@ -25,37 +25,38 @@ dimension? (only available for dichromats and trichromats, defaults to \code{FAL
 
 \item{arrow.p}{scaling factor for arrows.}
 
-\item{labels.cex}{scaling factor for arrow labels.}
+\item{labels.cex}{size of the arrow labels.}
 
-\item{margin}{accepts either \code{'recommended'}, where the function will choose margin
+\item{margin}{accepts either \code{"recommended"}, where the function will choose margin
 attributes, or a numerical vector of the form \code{c(bottom, left, top, right)}
 which gives the number of lines of margin to be specified on the four sides of the plot.
 (Default varies depending on plot dimensionality).}
 
-\item{square}{Logical. Should a square plotting area be used? (defaults to \code{TRUE})}
+\item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
+(defaults to \code{TRUE}).}
 
-\item{...}{additional parameters to be passed to \code{\link{plot}}, \code{\link{arrows}}
-and \code{link{persp}} (for 3D plots).}
+\item{...}{additional parameters to be passed to \code{\link[=plot]{plot()}}, \code{\link[=arrows]{arrows()}}
+and \code{\link[graphics:persp]{graphics::persp()}} (for 3D plots).}
 }
 \value{
 Creates a plot, details of the plot depend on the input data.
 }
 \description{
-Plot options for \code{jnd2xyz} objects.
+Plot options for \code{\link{jnd2xyz}} objects.
 }
 \note{
 the \code{arrow} argument accepts three options:
 \itemize{
- \item \code{'relative'}: With this option, arrows will be made relative to the data. Arrows
-   will be centered on the data centroid, and will have an arbitrary length of half the
-   average pairwise distance between points, which can be scaled with the \code{arrow.p}
-   argument.
- \item \code{'absolute'}: With this option, arrows will be made to reflect the visual system
-   underlying the data. Arrows will be centered on the achromatic point in colorspace, and
-   will have length equal to the distance to a monochromatic point (i.e. a color that
-   stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
-   the \code{arrow.p} argument, in which case they cannot be interpreted as described.
-  \item \code{'none'}: no arrows will be included.
+\item \code{"relative"}: With this option, arrows will be made relative to the data. Arrows
+will be centered on the data centroid, and will have an arbitrary length of half the
+average pairwise distance between points, which can be scaled with the \code{arrow.p}
+argument.
+\item \code{"absolute"}: With this option, arrows will be made to reflect the visual system
+underlying the data. Arrows will be centered on the achromatic point in colorspace, and
+will have length equal to the distance to a monochromatic point (i.e. a color that
+stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
+the \code{arrow.p} argument, in which case they cannot be interpreted as described.
+\item \code{"none"}: no arrows will be included.
 }
 }
 \examples{

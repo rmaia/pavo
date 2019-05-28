@@ -5,16 +5,16 @@
 #' @param imgpath (required) either the full file-path or URL to an image (including extension),
 #' or the path to a folder in which multiple image files are located. Mixed file formats
 #' within a folder are accepted.
-#' @param subdir should subdirectories within the \code{imgpath} folder be
-#' included in the search? (defaults to \code{FALSE}).
+#' @param subdir should subdirectories within the `imgpath` folder be
+#' included in the search? (defaults to `FALSE`).
 #' @param subdir.names should subdirectory path be included in the name of the
-#' images? (defaults to \code{FALSE}).
+#' images? (defaults to `FALSE`).
 #' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
-#' \code{1}.
+#' `1`.
 #' @param cores deprecated argument.
 #'
-#' @return a image, or list of images, of class \code{rimg},
-#' for use in further \code{pavo} functions.
+#' @return a image, or list of images, of class `rimg`, for use in further
+#' `pavo` functions.
 #'
 #' @importFrom magick image_info
 #'

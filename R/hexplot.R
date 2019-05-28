@@ -2,16 +2,14 @@
 #'
 #' Produces a colour hexagon plot.
 #'
-#' @param hexdata (required) a data frame, possibly a result from the \code{colspace}
-#'  or \code{hexagon}
+#' @param hexdata (required) a data frame, possibly a result from the [colspace()]
+#'  or [hexagon()]
 #'  function, containing values for the 'x' and 'y' coordinates as columns (labeled as such)
 #' @param sectors plot the bee-hue sector dividers? Options are:
-#'    \itemize{
-#'        \item \code{'none'}: No sectors (default)
-#'        \item \code{'fine'}: 36 10-degree sectors
-#'        \item \code{'coarse'}: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
-#'        }
-#' @param sec.col line colour of hue sector dividers. Defaults to \code{'grey'}.
+#' * `"none"`: No sectors (default)
+#' * `"fine"`: 36 10-degree sectors
+#' * `"coarse"`: six bee-hue sectors (blue, blue-green, green, uv-green, uv, uv-blue).
+#' @param sec.col line colour of hue sector dividers. Defaults to `"grey"`.
 #' @inheritParams triplot
 #'
 #' @examples

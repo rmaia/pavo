@@ -15,73 +15,71 @@ sensdata(visual = c("none", "all", "avg.uv", "avg.v", "bluetit",
 \arguments{
 \item{visual}{visual systems. Options are:
 \itemize{
-\item \code{'none'}: no visual sensitivity data.
-\item \code{'all'}: all visual sensitivity data.
-\item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
-\item \code{'avg.uv'}: average avian UV system.
-\item \code{'avg.v'}: average avian V system.
-\item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus} visual system.
-\item \code{'canis'}: Canid \emph{Canis familiaris} visual system.
-\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 2-degree cone fundamentals
- of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
- colour vision. Functions are linear transformations of the 10-degree cone fundamentals
- of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-\item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
-\item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
-\item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
-\item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
-\item \code{'habronattus'}: Jumping spider \emph{Habronattus pyrrithrix}.
-\item \code{'rhinecanthus'}: Triggerfish \emph{Rhinecanthus aculeatus}.
+\item \code{"none"}: no visual sensitivity data.
+\item \code{"all"}: all visual sensitivity data.
+\item \code{"apis"}: Honeybee \emph{Apis mellifera} visual system.
+\item \code{"avg.uv"}: average avian UV system.
+\item \code{"avg.v"}: average avian V system.
+\item \code{"bluetit"}: Blue tit \emph{Cyanistes caeruleus} visual system.
+\item \code{"canis"}: Canid \emph{Canis familiaris} visual system.
+\item \code{"cie2"}: 2-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+\item \code{"cie10"}: 10-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+\item \code{"ctenophorus"}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
+\item \code{"musca"}: Housefly \emph{Musca domestica} visual system.
+\item \code{"pfowl"}: Peafowl \emph{Pavo cristatus} visual system.
+\item \code{"star"}: Starling \emph{Sturnus vulgaris} visual system.
+\item \code{"habronattus"}: Jumping spider \emph{Habronattus pyrrithrix}.
+\item \code{"rhinecanthus"}: Triggerfish \emph{Rhinecanthus aculeatus}.
 }}
 
 \item{achromatic}{the sensitivity data used to calculate luminance (achromatic)
- receptor stimulation. Options are:
+receptor stimulation. Options are:
 \itemize{
- \item \code{'none'}: no achromatic sensitivity data.
- \item \code{'all'}: all achromatic sensitivity data.
-    \item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
- \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
- \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
- \item \code{'cf.r'}: Canid \emph{Canis familiaris} rod
- \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
- \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
+\item \code{"none"}: no achromatic sensitivity data.
+\item \code{"all"}: all achromatic sensitivity data.
+\item \code{"bt.dc"}: Blue tit \emph{Cyanistes caeruleus} double cone.
+\item \code{"ch.dc"}: Chicken \emph{Gallus gallus} double cone.
+\item \code{"st.dc"}: Starling \emph{Sturnus vulgaris} double cone.
+\item \code{"cf.r"}: Canid \emph{Canis familiaris} rod
+\item \code{"md.r1"}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+\item \code{"ra.dc"}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
 }}
 
 \item{illum}{illuminants. Options are:
 \itemize{
-\item \code{'none'}: no illuminant data.
-\item \code{'all'}: all background spectral data.
-\item \code{'bluesky'} open blue sky.
-\item \code{'D65'}: standard daylight.
-\item \code{'forestshade'} forest shade.
+\item \code{"none"}: no illuminant data.
+\item \code{"all"}: all background spectral data.
+\item \code{"bluesky"} open blue sky.
+\item \code{"D65"}: standard daylight.
+\item \code{"forestshade"} forest shade.
 }}
 
 \item{trans}{Ocular transmission data. Options are:
 \itemize{
-\item \code{'none'}: no transmission data.
-\item \code{'all'}: all transmission data.
-\item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus}
-ocular transmission (from Hart et al. 2000).
-\item \code{'blackbird'}: blackbird \emph{Turdus merula}
-ocular transmission (from Hart et al. 2000).
+\item \code{"none"}: no transmission data.
+\item \code{"all"}: all transmission data.
+\item \code{"bluetit"}: blue tit \emph{Cyanistes caeruleus} ocular transmission (from Hart et al. 2000).
+\item \code{"blackbird"}: blackbird \emph{Turdus merula} ocular transmission (from Hart et al. 2000).
 }}
 
 \item{bkg}{background spectra. Options are:
 \itemize{
-\item \code{'none'}: no background spectral data.
-\item \code{'all'}: all background spectral data.
-\item \code{'green'}: green foliage.
+\item \code{"none"}: no background spectral data.
+\item \code{"all"}: all background spectral data.
+\item \code{"green"}: green foliage.
 }}
 
 \item{plot}{should the spectral data be plotted, or returned instead (defaults to \code{FALSE})?}
 
-\item{...}{additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.}
+\item{...}{additional graphical options passed to \code{\link[=plot.rspec]{plot.rspec()}} when \code{plot = TRUE}.}
 }
 \value{
 An object of class \code{rspec} (when \code{plot = FALSE}), containing
-a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
+a wavelength column \code{"wl"} and spectral data binned at 1 nm intervals from 300-700 nm.
 }
 \description{
 Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.

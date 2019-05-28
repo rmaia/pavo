@@ -12,8 +12,8 @@ tetraplot(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{colspace}
-or \code{tetraspace} function, containing values for the 'x', 'y' and 'z'
+\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
 coordinates as columns (labeled as such).}
 
 \item{theta}{angle to rotate the plot in the xy plane (defaults to 45).}
@@ -21,22 +21,22 @@ coordinates as columns (labeled as such).}
 \item{phi}{angle to rotate the plot in the yz plane (defaults to 10).}
 
 \item{perspective}{logical, should perspective be forced by using point size to reflect
-distance from the plane of view? (defaults to FALSE)}
+distance from the plane of view? (defaults to `FALSE``)}
 
 \item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively,
 to indicate the size range variation reflecting the distance from the plane of view.}
 
 \item{r}{the distance of the eyepoint from the center of the plotting box.
 Very high values approximate an orthographic projection (defaults to 1e6).
-See \code{\link{persp}} for details.}
+See \code{\link[=persp]{persp()}} for details.}
 
 \item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.}
 
-\item{achro}{logical. Should the achromatic center be plotted? (defaults to \code{TRUE})}
-
-\item{achro.col, achro.size, achro.lwd, achro.lty}{graphical parameters for the achromatic coordinates.}
+\item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
 \item{achro.line}{logical. Should the achromatic line be plotted? (defaults to \code{FALSE})}
+
+\item{achro.lwd, achro.lty}{graphical parameters for the achromatic coordinates.}
 
 \item{tetrahedron}{logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})}
 
@@ -51,9 +51,11 @@ the base of the tetrahedron.}
 
 \item{labels}{logical. Should the name of each cone be printed next to the
 corresponding vertex?}
+
+\item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
 \value{
-\code{tetraplot} creates a 3D plot.
+\code{\link[=tetraplot]{tetraplot()}} creates a non-interactive 3D plot.
 }
 \description{
 Produces a static 3D tetrahedral plot.
@@ -65,18 +67,15 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
+
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
-}
-\seealso{
-\code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
-\code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

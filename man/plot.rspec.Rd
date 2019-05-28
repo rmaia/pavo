@@ -17,14 +17,14 @@ factor (e.g., \code{sex=='male'})}
 
 \item{type}{what type of plot should be drawn. Possibilities are:
 \itemize{
- \item \code{overlay} (default) for plotting multiple spectra in a single panel with
+\item \code{overlay} (default) for plotting multiple spectra in a single panel with
 a common y-axis.
- \item \code{stack} for plotting multiple spectra in a vertical arrangement.
- \item \code{heatmap} for plotting reflectance values by wavelength and a third variable
-       (\code{varying}).
+\item \code{stack} for plotting multiple spectra in a vertical arrangement.
+\item \code{heatmap} for plotting reflectance values by wavelength and a third variable
+(\code{varying}).
 }}
 
-\item{varying}{a numeric vector giving values for y-axis in \code{heatplot}.}
+\item{varying}{a numeric vector giving values for y-axis in \code{type = heatmap}.}
 
 \item{n}{number of bins with which to interpolate colors and \code{varying} for the
 heatplot.}
@@ -32,7 +32,7 @@ heatplot.}
 \item{labels.stack}{a vector of labels for the stacked spectra when using \code{type = stack}.
 Defaults to the numeric column ID's.}
 
-\item{...}{additional arguments passed to plot (or image for \code{'heatmap'}).}
+\item{...}{additional arguments passed to plot (or image for \code{"heatmap"}).}
 }
 \description{
 Plots reflectance spectra in different arrangements.
@@ -48,7 +48,7 @@ plot(teal, type = "heatmap")
 
 }
 \seealso{
-\code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
+\code{\link[=spec2rgb]{spec2rgb()}}, \code{\link[=image]{image()}}, \code{\link[=plot]{plot()}}
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}

@@ -4,24 +4,21 @@
 #' colorspace using OpenGL capabilities.
 #'
 #' @inheritParams tetraplot
+#' @inheritParams triplot
 #' @param size size of the points in the plot (defaults to 0.02)
 #' @param col colour of the points in the plot (defaults to black)
-#' @param alpha transparency of points (or volume fill in \code{tcsvol})
+#' @param alpha transparency of points (or volume fill in [tcsvol()])
 #' @param vertexsize size of the points at the vertices
-#' @param achrosize size of the point in the achromatic centre
-#' @param achrocol colour of the point in the achromatic centre
 #' @param lwd,lcol graphical parameters for the edges of the tetrahedron.
-#' @param new should a new 3D plot be called (defaults to \code{FALSE})?
-#' @param hspin if \code{TRUE}, the graphic will spin horizontally (around the 'z' axis)(defaults to \code{FALSE})
-#' @param vspin if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})
-#' @param floor if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})
+#' @param new should a new 3D plot be called (defaults to `FALSE`)?
+#' @param hspin if `TRUE`, the graphic will spin horizontally (around the 'z' axis)(defaults to `FALSE`)
+#' @param vspin if `TRUE`, the graphic will spin vertically (around the 'x' axis)(defaults to `FALSE`)
+#' @param floor if `TRUE`, a reference xy plane is plotted under the tetrahedron (defaults to `TRUE`)
 #'
-#' @return \code{tcsplot} creates a 3D plot using functions of the package \code{rgl},
+#' @return [tcsplot()] creates a 3D plot using functions of the package `rgl`,
 #' based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
 #' (left button: rotate along 'z' axis; right button: rotate along 'x' axis;
-#' third button: zoom). \code{tcsvol} creates polygon based on points, determining the volume
-#' occupied by them in the colorspace. \code{tcspoints} adds points to the plot. Points are
-#' currently plotted only as spheres to maintain export capabilities.
+#' third button: zoom).
 #'
 #' @examples
 #' \dontrun{
@@ -32,21 +29,21 @@
 #' tcsplot(tcs.sicalis, size = 0.005)
 #' rgl::rgl.postscript("testplot.pdf", fmt = "pdf")
 #' rgl::rgl.snapshot("testplot.png")
-#' 
+#'
 #' # For adding points
 #' patch <- rep(c("C", "T", "B"), 7)
 #' tcs.crown <- subset(tcs.sicalis, "C")
 #' tcs.breast <- subset(tcs.sicalis, "B")
 #' tcsplot(tcs.crown, col = "blue")
 #' tcspoints(tcs.breast, col = "red")
-#' 
+#'
 #' # For plotting convex hull
 #' tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 #' tcsvol(tcs.sicalis)
 #' }
-#' 
-#' @seealso \code{\link[rgl]{spheres3d}},\code{\link[rgl]{rgl.postscript}},
-#' \code{\link[rgl]{rgl.snapshot}},\code{\link[rgl]{rgl.material}}
+#'
+#' @seealso [rgl::spheres3d()],[rgl::rgl.postscript()],
+#' [rgl::rgl.snapshot()],[rgl::rgl.material()]
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

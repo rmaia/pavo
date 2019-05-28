@@ -2,11 +2,11 @@
 #'
 #' @param object an R object
 #'
-#' @return a logical value indicating whether the object is of class \code{colspace}
+#' @return a logical value indicating whether the object is of class `colspace`
 #'
 #' @export
 #'
-#' @seealso \code{\link{colspace}}
+#' @seealso [colspace()]
 #'
 is.colspace <- function(object) {
   inherits(object, "colspace")

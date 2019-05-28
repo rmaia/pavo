@@ -15,7 +15,7 @@
 Defaults to the mean RGB values of the k-means centres (i.e. the average 'original'
 colours).}
 
-\item{...}{additional graphical parameters. Also see \code{\link{par}}.}
+\item{...}{additional graphical parameters. Also see \code{\link[=par]{par()}}.}
 }
 \value{
 an image plot.

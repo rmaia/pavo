@@ -2,35 +2,33 @@
 #'
 #' Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 #'
-#' @param ciedata (required). a data frame, possibly a result from the \code{colspace}
-#' or \code{cie} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
+#' @param ciedata (required). a data frame, possibly a result from the [colspace()]
+#' or [cie()] function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
 #' model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).
 #' @param mono should the monochromatic loci (the 'horseshoe') be
-#'    plotted when \code{space = 'ciexyz'}? Defaults to \code{TRUE}.
-#' @param out.lwd,out.lcol,out.lty graphical parameters for the monochromatic loci outline.
-#' @param theta angle to rotate the plot in the xy plane  when \code{space = 'cielab'}
+#'    plotted when `space = "ciexyz"`? Defaults to `TRUE`.
+#' @param theta angle to rotate the plot in the xy plane  when `space = "cielab"`
 #' (defaults to 10).
-#' @param phi angle to rotate the plot in the yz plane  when \code{space = 'cielab'}
+#' @param phi angle to rotate the plot in the yz plane  when `space = "cielab"`
 #' (defaults to 45).
 #' @param r the distance of the eyepoint from the center of the plotting box
-#' when \code{space = 'cielab'}. Very high values approximate an orthographic projection
-#' (defaults to 1e6). See \code{\link{persp}} for details.
-#' . See \code{\link{persp}} for details.
+#' when `space = "cielab"`. Very high values approximate an orthographic projection
+#' (defaults to 1e6). See [graphics::persp()] for details.
 #' @param zoom zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
-#' when \code{space = 'cielab'}.
-#' @param box logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})
+#' when `space = "cielab"`.
+#' @param box logical. Should the plot area box and axes be plotted? (defaults to `FALSE`)
 #' @param margin vector of four numbers specifying drawing margins for CIELAB plot
 #'   (defaults to c(0,0,0,0))
-#' @param ... Additional graphical options. See \code{\link{par}}.
+#' @inheritParams triplot
 #'
 #' @examples
 #' data(flowers)
-#' 
+#'
 #' # CIEXYZ
 #' vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
 #' xyz.flowers <- colspace(vis.flowers, space = "ciexyz")
 #' plot(xyz.flowers)
-#' 
+#'
 #' # CIELAB
 #' lab.flowers <- colspace(vis.flowers, space = "cielab")
 #' plot(lab.flowers)

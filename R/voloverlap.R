@@ -11,47 +11,42 @@
 #'
 #' @export
 #'
-#' @param tcsres1,tcsres2 (required) data frame, possibly a result from the \code{colspace}
+#' @param tcsres1,tcsres2 (required) data frame, possibly a result from the [colspace()]
 #' function, containing
 #' values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)
-#' @param plot logical. Should the volumes and points be plotted? (defaults to \code{FALSE})
-#' @param interactive logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
-#' if \code{FALSE} then a static plot is generated.
+#' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`)
+#' @param interactive logical. If `TRUE`, uses the rgl engine for interactive plotting;
+#' if `FALSE` then a static plot is generated.
 #' @param col a vector of length 3 with the colors for (in order) the first volume,
 #' the second volume, and the overlap.
-#' @param fill logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})
-#' @param new logical. Should a new plot window be called? If \code{FALSE}, volumes and their
-#' overlap are plotted over the current plot (defaults to \code{TRUE}).
-#' @param montecarlo logical. If \code{TRUE}, Monte Carlo simulation is used instead of exact
-#' solution (not recommended; defaults to \code{FALSE})
-#' @param nsamp if \code{montecarlo = TRUE}, determines the number of points to be sampled.
-#' @param psize if \code{montecarlo = TRUE} and \code{plot = TRUE}, sets the size to plot the points
+#' @param fill logical. should the two volumes be filled in the plot? (defaults to `FALSE`)
+#' @param new logical. Should a new plot window be called? If `FALSE`, volumes and their
+#' overlap are plotted over the current plot (defaults to `TRUE`).
+#' @param montecarlo logical. If `TRUE`, Monte Carlo simulation is used instead of exact
+#' solution (not recommended; defaults to `FALSE`)
+#' @param nsamp if `montecarlo = TRUE`, determines the number of points to be sampled.
+#' @param psize if `montecarlo = TRUE` and `plot = TRUE`, sets the size to plot the points
 #' used in the Monte Carlo simulation.
-#' @param lwd if \code{plot = TRUE}, sets the line width for volume grids.
-#' @param ... additional arguments passed to the plot. See \code{\link{vol}}
+#' @param lwd if `plot = TRUE`, sets the line width for volume grids.
+#' @param ... additional arguments passed to the plot. See [vol()]
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colorspace. The volume from the overlap is then given relative to:
-#' \itemize{
-#' 	\item \code{vsmallest} the volume of the overlap divided by the smallest of that defined
+#' - `vsmallest` the volume of the overlap divided by the smallest of that defined
 #' by the the two input sets of color points. Thus, if one of the volumes is entirely
-#' contained within the other, this overlap will be \code{vsmallest = 1}.
-#'  \item \code{vboth} the volume of the overlap divided by the combined volume of both
+#' contained within the other, this overlap will be `vsmallest = 1`.
+#' - `vboth` the volume of the overlap divided by the combined volume of both
 #' input sets of color points.
-#' }
 #'
 #' The Monte Carlo solution is available mostly for legacy and benchmarking, and is not recommended
 #' (see notes). If used, the output will be different:
-
-#' \itemize{
-#' 	\item \code{s_in1, s_in2} the number of sampled points that fall within each of the volumes
+#' - `s_in1, s_in2` the number of sampled points that fall within each of the volumes
 #' individually.
-#' 	\item \code{s_inboth} the number of sampled points that fall within both volumes.
-#' 	\item \code{s_ineither} the number of points that fall within either of the volumes.
-#' 	\item \code{psmallest} the proportion of points that fall within both volumes divided by the
+#' - `s_inboth` the number of sampled points that fall within both volumes.
+#' - `s_ineither` the number of points that fall within either of the volumes.
+#' - `psmallest` the proportion of points that fall within both volumes divided by the
 #'  number of points that fall within the smallest volume.
-#' 	\item \code{pboth} the proportion of points that fall within both volumes divided by the total
+#' - `pboth` the proportion of points that fall within both volumes divided by the total
 #'  number of points that fall within both volumes.
-#' 	}
 #'
 #' If the Monte Carlo solution is used, a number of points much greater than the default should be
 #' considered (Stoddard & Stevens(2011) use around 750,000 points, but more or fewer might be required
@@ -62,7 +57,7 @@
 #' simulated values that fall inside the volumes defined by both sets of color points.
 #' @note Here we present an exact solution based on finding common vertices to both volumes
 #' and calculating its volume. However, we also the Monte Carlo solution is available through
-#' the \code{montecarlo=TRUE} option.
+#' the `montecarlo=TRUE` option.
 #'
 #' @note Stoddard & Stevens (2011) also return the value of the overlap relative to one of
 #' the volumes (in that case, the host species). However, for other applications
@@ -81,7 +76,7 @@
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3))
 #' }
-#' 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}, with code from Sebastien Villeger
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color

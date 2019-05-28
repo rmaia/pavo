@@ -3,16 +3,14 @@
 #' Plots one or multiple spectral curves in the same graph to rapidly
 #' compare groups of spectra.
 #'
-#' @param rspecdata (required) a data frame, possibly an object of class \code{rspec}
-#' that has wavelength range in the first column, named 'wl', and spectral measurements in the
-#' remaining columns.
 #' @param by number of spectra to include in each graph (defaults to 1)
-#' @param scale defines how the y-axis should be scaled. \code{'free'}: panels can vary in
-#' the range of the y-axis; \code{'equal'}: all panels have the y-axis with the same range.
-#' @param legpos legend position control. Either a vector containing \code{x} and \code{y} coordinates
-#' or a single keyword from the list: \code{"bottomright"}, \code{"bottom"}, \code{"bottomleft"},
-#' \code{"left"}, \code{"topleft"}, \code{"top"}, \code{"topright"}, \code{"right"} and \code{"center"}.
+#' @param scale defines how the y-axis should be scaled. `"free"`: panels can vary in
+#' the range of the y-axis; `"equal"`: all panels have the y-axis with the same range.
+#' @param legpos legend position control. Either a vector containing `x` and `y` coordinates
+#' or a single keyword from the list: `"bottomright"`, `"bottom"`, `"bottomleft"`,
+#' `"left"`, `"topleft"`, `"top"`, `"topright"`, `"right"` and `"center"`.
 #' @param ... additional parameters to be passed to plot
+#' @inheritParams plotsmooth
 #'
 #' @return Spectral curve plots
 #'

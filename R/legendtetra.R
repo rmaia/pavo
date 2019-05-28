@@ -2,14 +2,12 @@
 #'
 #' Adds a legend to a static tetrahedral colourspace plot.
 #'
-#' @param x,y position of the legend relative to plot limits
-#'  (usually a value between 0 and 1, but because of the perspective distortion,
-#' values greater than 1 are possible)
-#' @param ... additional arguments passed to \code{\link{legend}}.
+#' @inheritParams axistetra
+#' @param ... additional arguments passed to [legend()].
 #'
-#' @return \code{legendtetra} adds a legend to a static tetrahedral colourspace plot.
+#' @return [legendtetra()] adds a legend to a static tetrahedral colourspace plot.
 #' for additional information on which arguments are necessary and how they are used,
-#' see \code{\link{legend}}.
+#' see [legend()].
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

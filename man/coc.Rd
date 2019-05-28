@@ -8,19 +8,18 @@ coc(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }
 \value{
-A data frame of class \code{colspace} consisting of the following columns:
-
-\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
- the remaining variables.
-
-\code{x}, \code{y}: coordinates for the points in coc space
-
-\code{r.vec}: the r vector (saturation, distance from the center using
- a city-block metric).
+A data frame of class \code{\link{colspace}} consisting of the following columns:
+\itemize{
+\item \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate the remaining
+variables.
+\item \code{x}, \code{y}: coordinates for the points in coc space
+\item \code{r.vec}: the r vector (saturation, distance from the center using a
+city-block metric).
+}
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
@@ -33,7 +32,7 @@ coc.flowers <- colspace(vis.flowers, space = "coc")
 }
 \references{
 Backhaus W. (1991). Color opponent coding in the visual system
- of the honeybee. Vision Research, 31, 1381-1397.
+of the honeybee. Vision Research, 31, 1381-1397.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

@@ -2,13 +2,13 @@
 #'
 #' Produces a 2D projection plot of points in a tetrahedral colour space
 #'
-#' @param tcsdata (required) tetrahedral color space coordinates, possibly a result from \code{\link{colspace}},
+#' @param tcsdata (required) tetrahedral color space coordinates, possibly a result from [colspace()],
 #' containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).
 #' @param ... additional parameters to be passed to the plotting of data points.
 #'
-#' @return \code{projplot} creates a 2D plot  of color points projected from the tetrahedron
+#' @return [projplot()] creates a 2D plot  of color points projected from the tetrahedron
 #' to its encapsulating sphere, and is ideal to visualize differences in hue.
-#' @note \code{projplot} uses the Mollweide projection, and not the Robinson projection, which
+#' @note [projplot()] uses the Mollweide projection, and not the Robinson projection, which
 #' has been used in the past. Among other advantages, the Mollweide projection preserves area
 #' relationships within latitudes without distortion.
 #'

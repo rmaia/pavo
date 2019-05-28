@@ -2,41 +2,39 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @param x (required) a data frame, possibly an object of class \code{rspec},
+#' @param x (required) a data frame, possibly an object of class `rspec`,
 #' with a column with wavelength data, named 'wl', and the remaining column containing
 #' spectra to plot.
 #' @param select specification of which spectra to plot. Can be a numeric vector or
-#' factor (e.g., \code{sex=='male'})
+#' factor (e.g., `sex=='male'`)
 #' @param type what type of plot should be drawn. Possibilities are:
-#' \itemize{
-#'  \item \code{overlay} (default) for plotting multiple spectra in a single panel with
+#' * `overlay` (default) for plotting multiple spectra in a single panel with
 #' a common y-axis.
-#'  \item \code{stack} for plotting multiple spectra in a vertical arrangement.
-#'  \item \code{heatmap} for plotting reflectance values by wavelength and a third variable
-#'        (\code{varying}).
-#' }
-#' @param varying a numeric vector giving values for y-axis in \code{heatplot}.
-#' @param n number of bins with which to interpolate colors and \code{varying} for the
+#' * `stack` for plotting multiple spectra in a vertical arrangement.
+#' * `heatmap` for plotting reflectance values by wavelength and a third variable
+#' (`varying`).
+#' @param varying a numeric vector giving values for y-axis in `type = heatmap`.
+#' @param n number of bins with which to interpolate colors and `varying` for the
 #' heatplot.
-#' @param labels.stack a vector of labels for the stacked spectra when using \code{type = stack}.
+#' @param labels.stack a vector of labels for the stacked spectra when using `type = stack`.
 #' Defaults to the numeric column ID's.
-#' @param ... additional arguments passed to plot (or image for \code{'heatmap'}).
+#' @param ... additional arguments passed to plot (or image for `"heatmap"`).
 #'
 #' @export
 #'
 #' @examples
 #' \dontrun{
-#' 
+#'
 #' data(teal)
 #' plot(teal, type = "overlay")
 #' plot(teal, type = "stack")
 #' plot(teal, type = "heatmap")
 #' }
-#' 
+#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
-#' @seealso \code{\link{spec2rgb}}, \code{\link{image}}, \code{\link{plot}}
+#' @seealso [spec2rgb()], [image()], [plot()]
 
 # TODO: add argument for padding region between x in stack plot
 

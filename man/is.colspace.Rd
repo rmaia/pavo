@@ -16,5 +16,5 @@ a logical value indicating whether the object is of class \code{colspace}
 Test is object is of class 'colspace'
 }
 \seealso{
-\code{\link{colspace}}
+\code{\link[=colspace]{colspace()}}
 }

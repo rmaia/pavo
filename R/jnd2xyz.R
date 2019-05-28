@@ -1,30 +1,30 @@
 #' Convert JND distances into perceptually-corrected Cartesian coordinates
 #'
-#' Converts a \code{coldist} output into Cartesian coordinates that are
+#' Converts a [coldist()] output into Cartesian coordinates that are
 #' perceptually-corrected (i.e. Euclidean distances = JND distances)
 #'
-#' @param coldistres (required) the output from a \code{coldist} call.
+#' @param coldistres (required) the output from a [coldist()] call.
 #' @param center logical indicating if the data should be centered on its centroid
-#' (defaults to \code{TRUE}).
-#' @param rotate logical indicating if the data should be rotated (defaults to \code{TRUE}).
+#' (defaults to `TRUE`).
+#' @param rotate logical indicating if the data should be rotated (defaults to `TRUE`).
 #' @param rotcenter should the vectors for rotation be centered in the achromatic
 #' center ("achro") or the data centroid ("mean", the default)?
 #' @param ref1 the cone to be used as a the first reference. May be NULL
 #' (for no first rotation in the 3-dimensional case) or must match name
-#' in the original data that was used for \code{coldist}. Defaults to 'l'.
+#' in the original data that was used for [coldist()]. Defaults to 'l'.
 # " (only used if data has 2 or 3 dimensions)
 #' @param ref2 the cone to be used as a the second reference.May be NULL
 #' (for no first rotation in the 3-dimensional case) or must match name
-#' in the original data that was used for \code{coldist}. Defaults to 'u'.
+#' in the original data that was used for [coldist()]. Defaults to 'u'.
 #' (only used if data has 3 dimensions).
 #' @param axis1 A vector of length 3 composed of 0's and 1's, with
 #' 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
 #' that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
-#' Ignored if \code{ref1} is NULL (in 3-dimensional case only)
+#' Ignored if `ref1` is `NULL`` (in 3-dimensional case only)
 #' @param axis2 A vector of length 3 composed of 0's and 1's, with
 #' 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
 #' that the rotation aligns with the z axis (only used if data has 3 dimensions).
-#' Ignored if \code{ref2} is NULL (in 3-dimensional case only)
+#' Ignored if `ref2` is `NULL`` (in 3-dimensional case only)
 #'
 #' @examples
 #' data(flowers)

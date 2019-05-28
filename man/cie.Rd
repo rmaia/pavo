@@ -8,25 +8,24 @@ cie(vismodeldata, space = c("XYZ", "LAB", "LCh"))
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).}
 
 \item{space}{(required) Choice between XYZ (1931), LAB (1971), or LCh colour models.}
 }
 \value{
-Object of class \code{colspace} containing:
-   \itemize{
-     \item \code{X, Y, Z}: Tristimulus values.
-     \item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
-     \item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a}
-         (redness-greenness) and \code{b} (yellowness-blueness) values, in a
-         Cartesian coordinate space. Returned when using \code{space = LAB}.
-     \item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a}
-         (redness-greenness) and \code{b} (yellowness-blueness) values, as well as
-         chroma \code{C} and hue-angle \code{h} (degrees), the latter of which are cylindrical
-         representations of \code{a} and \code{b} from the CIELAB model. Returned
-         when using \code{space = LCh}.
-   }
+Object of class \code{\link{colspace}} containing:
+\itemize{
+\item \code{X, Y, Z}: Tristimulus values.
+\item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
+\item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} (redness-greenness) and
+\code{b} (yellowness-blueness) values, in a Cartesian coordinate space. Returned
+when using \code{space = LAB}.
+\item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a} (redness-greenness)
+and \code{b} (yellowness-blueness) values, as well as chroma \code{C} and hue-angle \code{h}
+(degrees), the latter of which are cylindrical representations of \code{a} and \code{b}
+from the CIELAB model. Returned when using \code{space = LCh}.
+}
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
@@ -41,18 +40,18 @@ flowers.cielch <- colspace(vis.flowers, space = "cielch")
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-   Transactions of the Optical Society, 33(3), 73-134.
+Transactions of the Optical Society, 33(3), 73-134.
 
 Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-   using MATLAB. John Wiley & Sons.
+using MATLAB. John Wiley & Sons.
 
 Stockman, A., & Sharpe, L. T. (2000). Spectral sensitivities of
- the middle- and long-wavelength sensitive cones derived from measurements in
- observers of known genotype. Vision Research, 40, 1711-1737.
+the middle- and long-wavelength sensitive cones derived from measurements in
+observers of known genotype. Vision Research, 40, 1711-1737.
 
 CIE (2006). Fundamental chromaticity diagram with physiological axes.
- Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
- Internationale de l Eclairage.
+Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
+Internationale de l Eclairage.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

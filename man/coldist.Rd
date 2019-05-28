@@ -10,20 +10,20 @@ coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
 }
 \arguments{
 \item{modeldata}{(required) quantum catch colour data. Can be the result
-from \code{\link{vismodel}}, or \code{\link{colspace}}. Data may also be independently calculated quantum catches,
+from \code{\link[=vismodel]{vismodel()}}, or \code{\link[=colspace]{colspace()}}. Data may also be independently calculated quantum catches,
 in the form of a data frame with columns representing photoreceptors.}
 
 \item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
- if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
+if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models)):
 \itemize{
-    \item \code{neural} (default): noise is proportional to the Weber fraction and
- is independent of the intensity of the signal received (i.e. assumes bright conditions).
-    \item \code{quantum}: noise is the sum of the neural noise and receptor noise,
- and is thus proportional to the Weber fraction and inversely proportional
- to the intensity of the signal received (the quantum catches).
- Note that the \code{quantum} option will only work with
-    objects of class \code{vismodel}.
+\item \code{neural} (default): noise is proportional to the Weber fraction and
+is independent of the intensity of the signal received (i.e. assumes bright conditions).
+\item \code{quantum}: noise is the sum of the neural noise and receptor noise,
+and is thus proportional to the Weber fraction and inversely proportional
+to the intensity of the signal received (the quantum catches).
+Note that the \code{quantum} option will only work with
+objects of class \code{vismodel}.
 }}
 
 \item{subset}{If only some of the comparisons should be returned, a character vector of
@@ -37,23 +37,21 @@ the achromatic contrast, with noise based on the Weber fraction given by the arg
 If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it
 instead returns simple long (or 'green') receptor contrast.}
 
-\item{qcatch}{if the object is of class \code{vismodel} or \code{colspace},
- this argument is ignored. If the object is a data frame of quantal catches
- from another source, this argument is used to specify what type of quantum catch is being
- used, so that the noise can be calculated accordingly:
+\item{qcatch}{if the object is of class \code{\link{vismodel}} or \code{\link{colspace}},
+this argument is ignored. If the object is a data frame of quantal catches
+from another source, this argument is used to specify what type of quantum catch is being
+used, so that the noise can be calculated accordingly:
 \itemize{
- \item \code{Qi}: Quantum catch for each photoreceptor
- \item \code{fi}: Quantum catch according to Fechner's law (the signal of the receptor
-   channel is proportional to the logarithm of the quantum catch)
- }}
+\item \code{Qi}: Quantum catch for each photoreceptor
+\item \code{fi}: Quantum catch according to Fechner's law (the signal of the receptor
+channel is proportional to the logarithm of the quantum catch)
+}}
 
 \item{n}{photoreceptor densities for the cones used in visual modeling.
 must have same length as number of columns (excluding achromatic receptor if used;
-defaults to
-the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}).
-Ignored for \code{colspace} objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, and cie models).}
+defaults to the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}).
+Ignored for \code{\link{colspace}} objects if model is not a receptor noise model
+(i.e. hexagon, colour-opponent-coding, categorical, and cie models).}
 
 \item{weber}{The Weber fraction to be used (often also referred to as receptor noise,
 or \emph{e}). The noise-to-signal ratio \code{v} is unknown,
@@ -67,14 +65,14 @@ if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the
- Weber fraction used for the \code{weber} argument. By default, \code{n4} is used,
- representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
- if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
+Weber fraction used for the \code{weber} argument. By default, \code{n4} is used,
+representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
+if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when
- \code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
- if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
+\code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
+if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
 categorical, segment, and cie models).}
 }
 \value{
@@ -87,25 +85,25 @@ color-opponent-coding space, green-receptor contrast in the hexagon, and lightne
 contrast in the cielab model.
 }
 \description{
-Calculates colour distances. When data are the result of \code{\link{vismodel}},
+Calculates colour distances. When data are the result of \code{\link[=vismodel]{vismodel()}},
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
-with noise based on relative photoreceptor densities. It also accepts \code{\link{colspace}} data
+with noise based on relative photoreceptor densities. It also accepts \code{\link[=colspace]{colspace()}} data
 from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
 distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.
 }
 \section{Note on previous versions}{
 
-previous versions of \code{coldist} calculated receptor noise using the arguments
+previous versions of \code{\link[=coldist]{coldist()}} calculated receptor noise using the arguments
 \code{v} for the individual cone noise-to-signal ratio and \code{n1,n2,n3,n4} for
 the relative cone densities. These arguments have been replaced by \code{weber} and
 \code{n}, which takes a vector of relative cone densities. \code{weber.ref} allows
 the user to specify which receptor to use as the reference to obtain the
-desired Weber fraction, and \code{coldist} calculates internally the value of \code{v}
+desired Weber fraction, and \code{\link[=coldist]{coldist()}} calculates internally the value of \code{v}
 to be used when calculating the Weber fraction for the remaining cones.
 
 This allows a more explicit choice of Weber fraction, without the need to find the
 right value of \code{v} to use in order to obtain the desired signal-to-noise ratio. Furthermore,
-by allowing \code{n} to be entered as a vector, \code{coldist} can now handle visual
+by allowing \code{n} to be entered as a vector, \code{\link[=coldist]{coldist()}} can now handle visual
 systems with more than four photoreceptors.
 
 In addition, the achromatic noise is calculated based on the \code{weber.achro}
@@ -151,25 +149,25 @@ tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
- (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
- Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
+(1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
+Physiology A-Neuroethology Sensory Neural And Behavioral Physiology, 183(5), 621-633.
 
 Hart, N. S. (2001). The visual ecology of avian photoreceptors. Progress
- In Retinal And Eye Research, 20(5), 675-703.
+In Retinal And Eye Research, 20(5), 675-703.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Olsson, P., Lind, O., & Kelber, A. (2015) Bird colour vision:
- behavioural thresholds reveal receptor noise. Journal of Experimental Biology,
- 218, 184-193.
+behavioural thresholds reveal receptor noise. Journal of Experimental Biology,
+218, 184-193.
 
 Lind, O. (2016) Colour vision and background adaptation in a passerine
- bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.
+bird, the zebra finch (Taeniopygia guttata). Royal Society Open Science, 3, 160383.
 
 Olsson, P., Lind, O., & Kelber, A. (2017) Chromatic and achromatic
- vision: parameter choice and limitations for reliable model predictions.
- Behavioral Ecology, \doi{10.1093/beheco/arx133}
+vision: parameter choice and limitations for reliable model predictions.
+Behavioral Ecology, \doi{10.1093/beheco/arx133}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

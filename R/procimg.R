@@ -3,8 +3,8 @@
 #' Specify scales, resize, and/or define focal objects within images.
 #'
 #' @param image (required) image data. Either a single image array, or a number of images
-#' stored in a list. Preferably the result of \code{\link{getimg}}.
-#' @param resize an integer specifying a percentage for resizing images, if so desired. 
+#' stored in a list. Preferably the result of [getimg()].
+#' @param resize an integer specifying a percentage for resizing images, if so desired.
 #' E.g. 50 to half the size of an image, 200 to double it.
 #' @param rotate an integer specifying the angle of image rotation, in degrees. Images
 #' are rotated around the centre, and linearly interpolated.
@@ -17,19 +17,19 @@
 #' separating animals/plants from backgrounds in further analyses. This is particularly
 #' useful when backgrounds are complex, such as in natural settings.
 #' @param reclass interactively specify an area on a colour-classified image that is
-#' to be reclassified as the numeric value provided. e.g. when \code{reclass = 1}, the user
+#' to be reclassified as the numeric value provided. e.g. when `reclass = 1`, the user
 #' will be asked to select a polygon on the image, within which all colour-category values will be
-#' changes to \code{1}.
+#' changes to `1`.
 #' @param col the color of the marker points and/or line, when using interactive options.
-#' @param smooth should the polygon specified when \code{outline = TRUE} be smoothed
-#' using Chaikin's corner-cuting algorithm? Defaults to \code{FALSE}.
-#' @param iterations the number of smoothing iterations, when \code{smooth = TRUE}.
-#' Defaults to \code{1}.
-#' @param plotnew should plots be opened in a new window? Defaults to \code{FALSE}.
-#' @param ... additional graphical parameters. Also see \code{\link{par}}.
+#' @param smooth should the polygon specified when `outline = TRUE` be smoothed
+#' using Chaikin's corner-cuting algorithm? Defaults to `FALSE`.
+#' @param iterations the number of smoothing iterations, when `smooth = TRUE`.
+#' Defaults to `1`.
+#' @param plotnew should plots be opened in a new window? Defaults to `FALSE`.
+#' @param ... additional graphical parameters. Also see [par()].
 #'
 #' @return an image, or list of images, for use in further
-#' \code{pavo} functions.
+#' `pavo` functions.
 #'
 #' @importFrom magick image_rotate image_resize
 #'

@@ -8,27 +8,23 @@ hexagon(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }
 \value{
 A data frame of class \code{colspace} consisting of the following columns:
-
-\code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
- the remaining variables
-
-\code{x}, \code{y}: cartesian coordinates in the colour hexagon.
-
-\code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
- angle, increasing clockwise.
-
-\code{r.vec}: the r vector (saturation, distance from the center).
-
-\code{sec.fine}: fine 'hue sector', wherein the full hexagon is composed
- of 36 10-degree sectors, with 0-degrees at the 1200 angle.
-
-\code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is
- composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.
+\itemize{
+\item \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
+the remaining variables
+\item \code{x}, \code{y}: cartesian coordinates in the colour hexagon.
+\item \code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
+angle, increasing clockwise.
+\item \code{r.vec}: the r vector (saturation, distance from the center).
+\item \code{sec.fine}: fine 'hue sector', wherein the full hexagon is composed
+of 36 10-degree sectors, with 0-degrees at the 1200 angle.
+\item \code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is
+composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.
+}
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
@@ -44,12 +40,12 @@ flowers.hex <- colspace(vis.flowers, space = "hexagon")
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
-   based on photoreceptor excitations as a generalized representation of
-   colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
+based on photoreceptor excitations as a generalized representation of
+colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.
 
 Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
-   component of flower reflections, and the colour perception of Hymenoptera.
-   Vision research, 34(11), 1489-1508.
+component of flower reflections, and the colour perception of Hymenoptera.
+Vision research, 34(11), 1489-1508.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

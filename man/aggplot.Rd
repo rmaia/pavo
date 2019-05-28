@@ -8,21 +8,22 @@ aggplot(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...)
 }
 \arguments{
-\item{rspecdata}{(required) data frame containing the spectra to be manipulated and
-plotted.}
+\item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
+contains a column containing a wavelength range , named 'wl', and spectra data in
+remaining columns.}
 
 \item{by}{(required) either a single value specifying the range of spectra within
 the data frame to be combined (for example, \code{by} = 3 indicates the function
-will be applied to groups of 3 consecutive columns in the spectra data frame) or
+will be applied to groups of 3 consecutive columns in the spectra data frame);
 a vector containing identifications for the columns in the spectra data frame
 (in which case the function will be applied to each group of spectra sharing the
-same identification).}
+same identification); or a list of vectors, e.g., \code{by = list(sex, species)}.}
 
 \item{FUN.center}{the function to be applied to the groups of spectra, calculating a
-measure of central tendency (defaults to \code{mean}).}
+measure of central tendency (defaults to \code{\link[base:mean]{base::mean()}}).}
 
 \item{FUN.error}{the function to be applied to the groups of spectra, calculating a
-measure of variation (defaults to \code{sd}).}
+measure of variation (defaults to \code{\link[stats:sd]{stats::sd()}}).}
 
 \item{lcol}{color of plotted lines indicating central tendency.}
 

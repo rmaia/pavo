@@ -5,16 +5,16 @@
 #'
 #' @inheritParams trispace
 #'
-#' @return A data frame of class \code{colspace} consisting of the following columns:
-#' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
+#' @return A data frame of class `colspace` consisting of the following columns:
+#' * `s`, `m`, `l`: the quantum catch data used to calculate
 #'  the remaining variables
-#' @return \code{x}, \code{y}: cartesian coordinates in the colour hexagon.
-#' @return \code{h.theta}: hue angle theta (in degrees), with 0-degrees at the 1200
+#' * `x`, `y`: cartesian coordinates in the colour hexagon.
+#' * `h.theta`: hue angle theta (in degrees), with 0-degrees at the 1200
 #'  angle, increasing clockwise.
-#' @return \code{r.vec}: the r vector (saturation, distance from the center).
-#' @return \code{sec.fine}: fine 'hue sector', wherein the full hexagon is composed
+#' * `r.vec`: the r vector (saturation, distance from the center).
+#' * `sec.fine`: fine 'hue sector', wherein the full hexagon is composed
 #'  of 36 10-degree sectors, with 0-degrees at the 1200 angle.
-#' @return \code{sec.coarse}: coarse 'hue sector', wherein the full hexagon is
+#' * `sec.coarse`: coarse 'hue sector', wherein the full hexagon is
 #'  composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.
 #'
 #' @examples

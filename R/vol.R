@@ -4,21 +4,21 @@
 #' non-interactive tetrahedral plot.
 #'
 #' @inheritParams tcsplot
-#' @param alpha transparency of volume (if \code{fill = TRUE}).
-#' @param grid logical. if \code{TRUE} (default), draws the polygon outline defined by the points.
-#' @param fill logical. if \code{TRUE} (default), fills the volume defined by the points.
+#' @param alpha transparency of volume (if `fill = TRUE`).
+#' @param grid logical. if `TRUE` (default), draws the polygon outline defined by the points.
+#' @param fill logical. if `TRUE` (default), fills the volume defined by the points.
 #' @param new logical. Should a new plot be started or draw over an open plot?
 #' (defaults to FALSE)
-#' @param ... additional graphical options. See \code{\link{polygon}} and \code{\link{tetraplot}}.
+#' @param ... additional graphical options. See [polygon()] and [tetraplot()].
 #'
-#' @return \code{vol} creates a 3D convex hull within a static tetrahedral plot.
+#' @return [vol()] creates a 3D convex hull within a static tetrahedral plot.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
 #'
 #' @examples
-#' 
+#'
 #' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")

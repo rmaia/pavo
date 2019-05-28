@@ -4,10 +4,9 @@
 #'
 # #' @usage plot(didata, ...)
 #'
-#' @param didata (required) a data frame, possibly a result from the \code{colspace}
-#'  or \code{dispace}
+#' @param didata (required) a data frame, possibly a result from the [colspace()]
+#'  or [dispace()]
 #'  function, containing values for the 'x' coordinates as a column (labeled as such).
-#' @param labels plot verticy labels? Defaults to \code{TRUE}.
 #' @inheritParams triplot
 #'
 #' @examples

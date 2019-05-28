@@ -3,75 +3,63 @@
 #' Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.
 #'
 #' @param visual visual systems. Options are:
-#' \itemize{
-#' \item \code{'none'}: no visual sensitivity data.
-#' \item \code{'all'}: all visual sensitivity data.
-#' \item \code{'apis'}: Honeybee \emph{Apis mellifera} visual system.
-#' \item \code{'avg.uv'}: average avian UV system.
-#' \item \code{'avg.v'}: average avian V system.
-#' \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus} visual system.
-#' \item \code{'canis'}: Canid \emph{Canis familiaris} visual system.
-#' \item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
+#' - `"none"`: no visual sensitivity data.
+#' - `"all"`: all visual sensitivity data.
+#' - `"apis"`: Honeybee *Apis mellifera* visual system.
+#' - `"avg.uv"`: average avian UV system.
+#' - `"avg.v"`: average avian V system.
+#' - `"bluetit"`: Blue tit *Cyanistes caeruleus* visual system.
+#' - `"canis"`: Canid *Canis familiaris* visual system.
+#' - `"cie2"`: 2-degree colour matching functions for CIE models of human
 #'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-#' \item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
+#' - `"cie10"`: 10-degree colour matching functions for CIE models of human
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
-#' \item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
-#' \item \code{'musca'}: Housefly \emph{Musca domestica} visual system.
-#' \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus} visual system.
-#' \item \code{'star'}: Starling \emph{Sturnus vulgaris} visual system.
-#' \item \code{'habronattus'}: Jumping spider \emph{Habronattus pyrrithrix}.
-#' \item \code{'rhinecanthus'}: Triggerfish \emph{Rhinecanthus aculeatus}.
-#' }
+#' - `"ctenophorus"`: Ornate dragon lizard *Ctenophorus ornatus*.
+#' - `"musca"`: Housefly *Musca domestica* visual system.
+#' - `"pfowl"`: Peafowl *Pavo cristatus* visual system.
+#' - `"star"`: Starling *Sturnus vulgaris* visual system.
+#' - `"habronattus"`: Jumping spider *Habronattus pyrrithrix*.
+#' - `"rhinecanthus"`: Triggerfish *Rhinecanthus aculeatus*.
 #' @param achromatic the sensitivity data used to calculate luminance (achromatic)
 #'  receptor stimulation. Options are:
-#' \itemize{
-#'  \item \code{'none'}: no achromatic sensitivity data.
-#'  \item \code{'all'}: all achromatic sensitivity data.
-#' 	\item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
-#'  \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
-#'  \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
-#'  \item \code{'cf.r'}: Canid \emph{Canis familiaris} rod
-#'  \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
-#'  \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
-#' }
+#' - `"none"`: no achromatic sensitivity data.
+#' - `"all"`: all achromatic sensitivity data.
+#' - `"bt.dc"`: Blue tit *Cyanistes caeruleus* double cone.
+#' - `"ch.dc"`: Chicken *Gallus gallus* double cone.
+#' - `"st.dc"`: Starling *Sturnus vulgaris* double cone.
+#' - `"cf.r"`: Canid *Canis familiaris* rod
+#' - `"md.r1"`: Housefly *Musca domestica* R1-6 photoreceptor.
+#' - `"ra.dc"`: Triggerfish *Rhinecanthus aculeatus* double cone.
 #' @param illum illuminants. Options are:
-#' \itemize{
-#' \item \code{'none'}: no illuminant data.
-#' \item \code{'all'}: all background spectral data.
-#' \item \code{'bluesky'} open blue sky.
-#' \item \code{'D65'}: standard daylight.
-#' \item \code{'forestshade'} forest shade.
-#' }
+#' - `"none"`: no illuminant data.
+#' - `"all"`: all background spectral data.
+#' - `"bluesky"` open blue sky.
+#' - `"D65"`: standard daylight.
+#' - `"forestshade"` forest shade.
 #' @param bkg background spectra. Options are:
-#' \itemize{
-#' \item \code{'none'}: no background spectral data.
-#' \item \code{'all'}: all background spectral data.
-#' \item \code{'green'}: green foliage.
-#' }
+#' - `"none"`: no background spectral data.
+#' - `"all"`: all background spectral data.
+#' - `"green"`: green foliage.
 #' @param trans Ocular transmission data. Options are:
-#' \itemize{
-#' \item \code{'none'}: no transmission data.
-#' \item \code{'all'}: all transmission data.
-#' \item \code{'bluetit'}: blue tit \emph{Cyanistes caeruleus}
-#' ocular transmission (from Hart et al. 2000).
-#' \item \code{'blackbird'}: blackbird \emph{Turdus merula}
-#' ocular transmission (from Hart et al. 2000).
-#' }
-#' @param plot should the spectral data be plotted, or returned instead (defaults to \code{FALSE})?
-#' @param ... additional graphical options passed to \code{\link{plot.rspec}} when \code{plot = TRUE}.
+#' - `"none"`: no transmission data.
+#' - `"all"`: all transmission data.
+#' - `"bluetit"`: blue tit *Cyanistes caeruleus* ocular transmission (from Hart et al. 2000).
+#' - `"blackbird"`: blackbird *Turdus merula* ocular transmission (from Hart et al. 2000).
+#' @param plot should the spectral data be plotted, or returned instead (defaults to `FALSE`)?
+#' @param ... additional graphical options passed to [plot.rspec()] when `plot = TRUE`.
 #'
-#' @return An object of class \code{rspec} (when \code{plot = FALSE}), containing
-#' a wavelength column \code{'wl'} and spectral data binned at 1 nm intervals from 300-700 nm.
+#' @return An object of class `rspec` (when `plot = FALSE`), containing
+#' a wavelength column `"wl"` and spectral data binned at 1 nm intervals from 300-700 nm.
 #'
 #' @examples
 #' # Plot the honeybee's receptors
 #' sensdata(visual = "apis", ylab = "Absorbance", plot = TRUE)
-#' 
+#'
 #' # Plot the average UV vs V avian receptors
 #' sensdata(visual = c("avg.v", "avg.uv"), ylab = "Absorbance", plot = TRUE)
-#' 
+#'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c("cie2", "cie10"))
 #' @author Thomas White \email{thomas.white026@@gmail.com}

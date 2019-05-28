@@ -5,12 +5,12 @@
 #'
 #' @inheritParams trispace
 #'
-#' @return A data frame of class \code{colspace} consisting of the following columns:
-#' @return \code{s}, \code{m}, \code{l}: the quantum catch data used to calculate
-#'  the remaining variables.
-#' @return \code{x}, \code{y}: coordinates for the points in coc space
-#' @return \code{r.vec}: the r vector (saturation, distance from the center using
-#'  a city-block metric).
+#' @return A data frame of class [`colspace`] consisting of the following columns:
+#' * `s`, `m`, `l`: the quantum catch data used to calculate the remaining
+#' variables.
+#' * `x`, `y`: coordinates for the points in coc space
+#' * `r.vec`: the r vector (saturation, distance from the center using a
+#' city-block metric).
 #'
 #' @examples
 #' data(flowers)

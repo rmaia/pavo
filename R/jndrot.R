@@ -1,8 +1,6 @@
-#' Rotate Cartesian coordinates obtained from \code{jnd2xyz}
+#' Rotate Cartesian coordinates obtained from [jnd2xyz()]
 #'
-#' Rotates the Cartesian coordinates obtained from \code{jnd2xyz}
-#'
-#' @param jnd2xyzres (required) the output from a \code{jnd2xyz} call.
+#' @param jnd2xyzres (required) the output from a [jnd2xyz()] call.
 #' @param center should the vectors for rotation be centered in the achromatic
 #' center ("achro") or the data centroid ("mean", the default)?
 #' @inheritParams jnd2xyz

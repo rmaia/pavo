@@ -8,31 +8,26 @@ tcspace(vismodeldata)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link{vismodel}} or independently calculated data (in the form of a data frame
+from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with four columns name 'u', 's', 'm', 'l', representing the avian cones).}
 }
 \value{
-A data frame of class \code{tcs} consisting of the following columns:
-
-\code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
- calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
- the output column will be labeled \code{u}.
-
-\code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,
- for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.
-
-\code{x}, \code{y}, \code{z}: cartesian coordinates for the points in the
- tetrahedral color space.
-
-\code{h.theta}, \code{h.phi}: angles theta and phi, in radians, determining
- the hue of the color.
-
-\code{r.vec}: the r vector (saturation, distance from the achromatic center).
-
-\code{r.max}: the maximum r vector achievable for the color's hue.
-
-\code{r.achieved}: the relative r distance from the achromatic center, in
- relation to the maximum distance achievable (\code{r.vec/r.max}).
+A data frame of class \code{\link{colspace}} consisting of the following columns:
+\itemize{
+\item \code{u}, \code{s}, \code{m}, \code{l}: the quantum catch data used to
+calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
+the output column will be labeled \code{u}.
+\item \code{u.r}, \code{s.r}, \code{m.r}, \code{l.r}: relative cone stimulation,
+for a given hue, as a function of saturation. See Stoddard & Prum (2008) for details.
+\item \code{x}, \code{y}, \code{z}: cartesian coordinates for the points in the
+tetrahedral color space.
+\item \code{h.theta}, \code{h.phi}: angles theta and phi, in radians, determining
+the hue of the color.
+\item \code{r.vec}: the r vector (saturation, distance from the achromatic center).
+\item \code{r.max}: the maximum r vector achievable for the color's hue.
+\item \code{r.achieved}: the relative r distance from the achromatic center, in
+relation to the maximum distance achievable (\code{r.vec/r.max}).
+}
 }
 \description{
 Calculates coordinates and colorimetric variables that represent reflectance spectra
@@ -45,11 +40,11 @@ tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
- color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
- The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
+The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
- as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

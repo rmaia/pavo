@@ -2,19 +2,20 @@
 #'
 #' Produces a Maxwell triangle plot.
 #'
-#' @param tridata (required) a data frame, possibly a result from the \code{colspace}
-#'  or \code{trispace} function, containing values for the 'x' and 'y' coordinates
+#' @param tridata (required) a data frame, possibly a result from the [colspace()]
+#'  or [trispace()] function, containing values for the 'x' and 'y' coordinates
 #'  as columns (labeled as such).
-#' @param achro should a point be plotted at the origin (defaults to \code{TRUE})?
-#' @param labels plot verticy labels? Defaults to \code{TRUE}.
-#' @param labels.cex character expansion factor for category labels when \code{labels = TRUE}).
-#' @param achrosize size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).
-#' @param achrocol color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).
+#' @param achro should a point be plotted at the origin (defaults to `TRUE`)?
+#' @param labels logical. Should the name of each cone be printed next to the
+#' corresponding vertex?
+#' @param labels.cex  size of the arrow labels.
+#' @param achrosize size of the point at the origin when `achro = TRUE` (defaults to `0.8`).
+#' @param achrocol color of the point at the origin `achro = TRUE` (defaults to `'grey'`).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the plot outline.
 #' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
-#' (defaults to \code{TRUE}).
-#' @param ... additional graphical options. See \code{\link{par}}.
+#' (defaults to `TRUE`).
+#' @param ... additional graphical options. See [par()].
 #'
 #' @examples
 #' data(flowers)

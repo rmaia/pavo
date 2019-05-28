@@ -2,11 +2,11 @@
 #'
 #' @param object an R object
 #'
-#' @return a logical value indicating whether the object is of class \code{vismodel}
+#' @return a logical value indicating whether the object is of class `vismodel`.
 #'
 #' @export
 #'
-#' @seealso \code{\link{vismodel}}
+#' @seealso [vismodel()]
 #'
 is.vismodel <- function(object) {
   inherits(object, "vismodel")

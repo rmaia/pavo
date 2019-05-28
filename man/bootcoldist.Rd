@@ -9,7 +9,7 @@ bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data.
-Can be the result from \code{vismodel}, or \code{colspace}. Data may also be
+Can be the result from \code{\link[=vismodel]{vismodel()}}, or \code{\link[=colspace]{colspace()}}. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.}
 
@@ -23,16 +23,16 @@ the object belongs to.}
 \item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
 computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}}
 
-\item{...}{other arguments to be passed to \code{\link{coldist}}. Must at minimum
-include \code{n} and \code{weber}. See \code{\link{coldist}} for details.}
+\item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
+include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped
- confidence limits for dS (and dL if \code{achro = TRUE}).
+confidence limits for dS (and dL if \code{achro = TRUE}).
 }
 \description{
 Uses a bootstrap procedure to generate confidence intervals
- for the mean colour distance between two or more samples of colours
+for the mean colour distance between two or more samples of colours
 }
 \examples{
 \dontrun{
@@ -45,5 +45,5 @@ bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, core
 }
 \references{
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
- Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
+Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 }
