@@ -7,7 +7,7 @@
 coc(vismodeldata)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data. Can be either the result
+\item{vismodeldata}{(required) quantum catch colour data. Can be either the result
 from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }

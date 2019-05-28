@@ -18,7 +18,7 @@
 #' * `h.theta`, `h.phi`: angles theta and phi, in radians, determining
 #'  the hue of the color.
 #' * `r.vec`: the r vector (saturation, distance from the achromatic center).
-#' * `r.max`: the maximum r vector achievable for the color's hue.
+#' * `r.max`: the maximum r vector achievable for the colour's hue.
 #' * `r.achieved`: the relative r distance from the achromatic center, in
 #'  relation to the maximum distance achievable (`r.vec/r.max`).
 #'

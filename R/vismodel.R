@@ -1,7 +1,7 @@
 #' Visual models
 #'
 #' Calculates quantum catches at each photoreceptor. Both raw and relative values
-#' can be returned, for use in a suite of colorspace and non-colorspace models.
+#' can be returned, for use in a suite of colourspace and non-colourspace models.
 #'
 #' @inheritParams aggplot
 #' @param qcatch Which quantal catch metric to return. Options are:
@@ -61,9 +61,9 @@
 #' ocular transmission (from Hart et al. 2000).
 #' - `'blackbird'`: blackbird *Turdus merula*
 #' ocular transmission (from Hart et al. 2000).
-#' @param relative should relative quantum catches be returned (i.e. is it a color
+#' @param relative should relative quantum catches be returned (i.e. is it a colour
 #'  space model? Defaults to `TRUE`).
-#' @param vonkries logical. Should the von Kries color correction transformation be applied?
+#' @param vonkries logical. Should the von Kries colour correction transformation be applied?
 #'  (defaults to `FALSE`).
 #' @param scale a value by which the illuminant will be multiplied. Useful for when the
 #'  illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
@@ -394,7 +394,7 @@ vismodel <- function(rspecdata,
   }
 
   # von Kries correction (constant adapting background)
-  vk <- "(von Kries color correction not applied)"
+  vk <- "(von Kries colour correction not applied)"
 
   # Quantum catch normalized to the background (qi = k*Qi)
   if (vonkries) {
@@ -404,7 +404,7 @@ vismodel <- function(rspecdata,
     }
     k <- 1 / (colSums(S * bkg * illum) * K)
     Qi <- data.frame(t(t(Qi) * k))
-    vk <- "(von Kries color correction applied)"
+    vk <- "(von Kries colour correction applied)"
     if (!is.null(lum)) {
       Qi[, "lum"] <- uncqi
     }

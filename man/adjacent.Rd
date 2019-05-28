@@ -87,7 +87,7 @@ all colour and luminance classes are equal in relative area, then \code{Sc = k}.
 \item \code{'Jt'}: Simpson transition diversity relative to its achievable maximum.
 \code{Jt = St/(k*(k-1)/2)}.
 \item \code{'B'}: The animal/background transition ratio, or the ratio of class-change
-ransitions entirely within the focal object and those involving the object and background,
+transitions entirely within the focal object and those involving the object and background,
 \code{B = sum(O_a_a / O_a_b)}.
 \item \code{'Rt'}: Ratio of animal-animal and animal-background transition diversities,
 \code{Rt = St_a_a / St_a_b}.

@@ -7,7 +7,7 @@
 trispace(vismodeldata)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data. Can be either the result
+\item{vismodeldata}{(required) quantum catch colour data. Can be either the result
 from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }
@@ -18,12 +18,12 @@ A data frame of class \code{\link{colspace}} consisting of the following columns
 the remaining variables.
 \item \code{x}, \code{y}: cartesian coordinates for the points in the
 Maxwell triangle.
-\item \code{h.theta}: angle theta, in radians, determining the hue of the color.
+\item \code{h.theta}: angle theta, in radians, determining the hue of the colour.
 \item \code{r.vec}: the r vector (saturation, distance from the center).
 }
 }
 \description{
-Calculates coordinates and colorimetric variables that represent reflectance spectra
+Calculates coordinates and colourimetric variables that represent reflectance spectra
 in a trichromatic chromaticity space.
 }
 \examples{

@@ -221,7 +221,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
   if (tetrahedron) {
 
-    # vertice colors
+    # vertice colours
     vcols <- setNames(
       c("darkorchid1", "cornflowerblue", "mediumseagreen", "firebrick1"),
       rownames(verts)

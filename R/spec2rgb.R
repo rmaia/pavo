@@ -3,7 +3,7 @@
 #' Calculates rgb values from spectra based on human colour matching functions.
 #'
 #' @inheritParams vismodel
-#' @param alpha alpha value to use for colors (defaults to 1, opaque).
+#' @param alpha alpha value to use for colours (defaults to 1, opaque).
 #'
 #' @return A character vector consisting of hexadecimal colour values
 #' for passing to further plotting functions.
@@ -13,7 +13,7 @@
 #' @examples
 #' data(teal)
 #' spec2rgb(teal)
-#' 
+#'
 #' # Plot data using estimated perceived colour
 #' plot(teal, col = spec2rgb(teal), type = "o")
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}

@@ -27,8 +27,8 @@
 #' average pairwise distance between points, which can be scaled with the `arrow.p`
 #' argument.
 #' * `"absolute"`: With this option, arrows will be made to reflect the visual system
-#' underlying the data. Arrows will be centered on the achromatic point in colorspace, and
-#' will have length equal to the distance to a monochromatic point (i.e. a color that
+#' underlying the data. Arrows will be centered on the achromatic point in colourspace, and
+#' will have length equal to the distance to a monochromatic point (i.e. a colour that
 #' stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
 #' the `arrow.p` argument, in which case they cannot be interpreted as described.
 #' * `"none"`: no arrows will be included.

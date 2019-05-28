@@ -1,7 +1,7 @@
 #' Colour hexagon
 #'
-#' Calculates coordinates and colorimetric variables that represent reflectance spectra
-#' in the hymenopteran color hexagon.
+#' Calculates coordinates and colourimetric variables that represent reflectance spectra
+#' in the hymenopteran colour hexagon.
 #'
 #' @inheritParams trispace
 #'

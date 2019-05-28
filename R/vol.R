@@ -1,6 +1,6 @@
-#' Plot a tetrahedral color space
+#' Plot a tetrahedral colour space
 #'
-#' Produces a 3D convex hull in tetrahedral color space when plotting a
+#' Produces a 3D convex hull in tetrahedral colour space when plotting a
 #' non-interactive tetrahedral plot.
 #'
 #' @inheritParams tcsplot

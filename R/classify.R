@@ -4,7 +4,7 @@
 #'
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. Preferably the result of [getimg()].
-#' @param method methods for image segemtation/classification.
+#' @param method methods for image segmentation/classification.
 #' * `'kMeans'`: k-means clustering
 #' * `'kMedoids'`: k-medoids clustering, using the partitioning-around-medoids ('pam')
 #' algorithm for large datasets.

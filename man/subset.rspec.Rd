@@ -14,7 +14,7 @@
 }
 \arguments{
 \item{x}{(required) an object of class \code{rspec}, \code{vismodel}, or
-\code{colspace}, containing spectra, visual model output or colorspace data
+\code{colspace}, containing spectra, visual model output or colourspace data
 to subset.}
 
 \item{subset}{a string used for partial matching of observations.}

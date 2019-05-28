@@ -72,7 +72,7 @@
 #' - `'Jt'`: Simpson transition diversity relative to its achievable maximum.
 #' `Jt = St/(k*(k-1)/2)`.
 #' - `'B'`: The animal/background transition ratio, or the ratio of class-change
-#' ransitions entirely within the focal object and those involving the object and background,
+#' transitions entirely within the focal object and those involving the object and background,
 #' `B = sum(O_a_a / O_a_b)`.
 #' - `'Rt'`: Ratio of animal-animal and animal-background transition diversities,
 #' `Rt = St_a_a / St_a_b`.

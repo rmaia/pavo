@@ -11,7 +11,7 @@ spec2rgb(rspecdata, alpha = 1)
 contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
-\item{alpha}{alpha value to use for colors (defaults to 1, opaque).}
+\item{alpha}{alpha value to use for colours (defaults to 1, opaque).}
 }
 \value{
 A character vector consisting of hexadecimal colour values

@@ -4,7 +4,7 @@
 #' of data names.
 #'
 #' @param x (required) an object of class `rspec`, `vismodel`, or
-#' `colspace`, containing spectra, visual model output or colorspace data
+#' `colspace`, containing spectra, visual model output or colourspace data
 #' to subset.
 #' @param subset a string used for partial matching of observations.
 #' @param ... additional attributes passed to `grep`. Ignored if

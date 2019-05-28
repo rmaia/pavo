@@ -12,7 +12,7 @@ classify(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL,
 \item{imgdat}{(required) image data. Either a single image, or a series of images
 stored in a list. Preferably the result of \code{\link[=getimg]{getimg()}}.}
 
-\item{method}{methods for image segemtation/classification.
+\item{method}{methods for image segmentation/classification.
 \itemize{
 \item \code{'kMeans'}: k-means clustering
 \item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')

@@ -7,7 +7,7 @@
 hexagon(vismodeldata)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data. Can be either the result
+\item{vismodeldata}{(required) quantum catch colour data. Can be either the result
 from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
 with three columns named 's', 'm', 'l', representing a trichromatic viewer).}
 }
@@ -27,8 +27,8 @@ composed of five sectors: blue, bluegreen, green, uvgreen, uv, and uvblue.
 }
 }
 \description{
-Calculates coordinates and colorimetric variables that represent reflectance spectra
-in the hymenopteran color hexagon.
+Calculates coordinates and colourimetric variables that represent reflectance spectra
+in the hymenopteran colour hexagon.
 }
 \examples{
 data(flowers)

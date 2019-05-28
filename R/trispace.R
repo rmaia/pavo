@@ -1,9 +1,9 @@
 #' Trichromatic colour space
 #'
-#' Calculates coordinates and colorimetric variables that represent reflectance spectra
+#' Calculates coordinates and colourimetric variables that represent reflectance spectra
 #' in a trichromatic chromaticity space.
 #'
-#' @param vismodeldata (required) quantum catch color data. Can be either the result
+#' @param vismodeldata (required) quantum catch colour data. Can be either the result
 #'  from [vismodel()] or independently calculated data (in the form of a data frame
 #'  with three columns named 's', 'm', 'l', representing a trichromatic viewer).
 #'
@@ -12,7 +12,7 @@
 #'  the remaining variables.
 #' * `x`, `y`: cartesian coordinates for the points in the
 #'  Maxwell triangle.
-#' * `h.theta`: angle theta, in radians, determining the hue of the color.
+#' * `h.theta`: angle theta, in radians, determining the hue of the colour.
 #' * `r.vec`: the r vector (saturation, distance from the center).
 #'
 #' @examples

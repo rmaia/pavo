@@ -30,12 +30,12 @@
 #' @param lwd if `plot = TRUE`, sets the line width for volume grids.
 #' @param ... additional arguments passed to the plot. See [vol()]
 #' @return Calculates the overlap between the volumes defined by two set of points in
-#' colorspace. The volume from the overlap is then given relative to:
+#' colourspace. The volume from the overlap is then given relative to:
 #' - `vsmallest` the volume of the overlap divided by the smallest of that defined
-#' by the the two input sets of color points. Thus, if one of the volumes is entirely
+#' by the the two input sets of colour points. Thus, if one of the volumes is entirely
 #' contained within the other, this overlap will be `vsmallest = 1`.
 #' - `vboth` the volume of the overlap divided by the combined volume of both
-#' input sets of color points.
+#' input sets of colour points.
 #'
 #' The Monte Carlo solution is available mostly for legacy and benchmarking, and is not recommended
 #' (see notes). If used, the output will be different:

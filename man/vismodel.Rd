@@ -93,7 +93,7 @@ Either a vector containing the spectral data, or one of the options:
 \item \code{'green'}: green foliage.
 }}
 
-\item{vonkries}{logical. Should the von Kries color correction transformation be applied?
+\item{vonkries}{logical. Should the von Kries colour correction transformation be applied?
 (defaults to \code{FALSE}).}
 
 \item{scale}{a value by which the illuminant will be multiplied. Useful for when the
@@ -102,7 +102,7 @@ and does not correspond to quantum flux units (\eqn{\mu mol.s^{-1}.m^{-2}}). Use
 are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
 \code{vonkries = TRUE} this transformation has no effect.}
 
-\item{relative}{should relative quantum catches be returned (i.e. is it a color
+\item{relative}{should relative quantum catches be returned (i.e. is it a colour
 space model? Defaults to \code{TRUE}).}
 }
 \value{
@@ -112,7 +112,7 @@ stored and can be called using the \code{\link[=summary.vismodel]{summary.vismod
 }
 \description{
 Calculates quantum catches at each photoreceptor. Both raw and relative values
-can be returned, for use in a suite of colorspace and non-colorspace models.
+can be returned, for use in a suite of colourspace and non-colourspace models.
 }
 \examples{
 # Dichromat (dingo)

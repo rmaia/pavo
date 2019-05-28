@@ -24,7 +24,7 @@ tetrahedral color space.
 \item \code{h.theta}, \code{h.phi}: angles theta and phi, in radians, determining
 the hue of the color.
 \item \code{r.vec}: the r vector (saturation, distance from the achromatic center).
-\item \code{r.max}: the maximum r vector achievable for the color's hue.
+\item \code{r.max}: the maximum r vector achievable for the colour's hue.
 \item \code{r.achieved}: the relative r distance from the achromatic center, in
 relation to the maximum distance achievable (\code{r.vec/r.max}).
 }

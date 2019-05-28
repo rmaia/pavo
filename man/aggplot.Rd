@@ -25,9 +25,9 @@ measure of central tendency (defaults to \code{\link[base:mean]{base::mean()}}).
 \item{FUN.error}{the function to be applied to the groups of spectra, calculating a
 measure of variation (defaults to \code{\link[stats:sd]{stats::sd()}}).}
 
-\item{lcol}{color of plotted lines indicating central tendency.}
+\item{lcol}{colour of plotted lines indicating central tendency.}
 
-\item{shadecol}{color of shaded areas indicating variance measure.}
+\item{shadecol}{colour of shaded areas indicating variance measure.}
 
 \item{alpha}{transparency of the shaded areas.}
 

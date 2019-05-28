@@ -16,8 +16,8 @@
 #' measure of central tendency (defaults to [base::mean()]).
 #' @param FUN.error the function to be applied to the groups of spectra, calculating a
 #' measure of variation (defaults to [stats::sd()]).
-#' @param lcol color of plotted lines indicating central tendency.
-#' @param shadecol color of shaded areas indicating variance measure.
+#' @param lcol colour of plotted lines indicating central tendency.
+#' @param shadecol colour of shaded areas indicating variance measure.
 #' @param alpha transparency of the shaded areas.
 #' @param legend automatically add a legend.
 #' @param ... additional graphical parameters to be passed to plot.
