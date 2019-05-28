@@ -9,7 +9,7 @@ explorespec(rspecdata, by = NULL, scale = c("equal", "free"),
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{by}{number of spectra to include in each graph (defaults to 1)}

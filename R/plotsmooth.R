@@ -17,10 +17,8 @@
 #' @seealso [procspec()]
 #'
 #' @examples
-#' \dontrun{
 #' data(sicalis)
 #' plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
-#' }
 #'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 

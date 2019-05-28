@@ -21,6 +21,13 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
+#'
+#' @examples
+#' data(sicalis)
+#' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+#' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
+#' plot(tcs.sicalis)
+#' axistetra()
 
 axistetra <- function(x = 0, y = 1.3, size = 0.1,
                       arrowhead = 0.05, col = par("fg"),

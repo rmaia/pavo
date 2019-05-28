@@ -4,7 +4,7 @@
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
 #' with noise based on relative photoreceptor densities. It also accepts [colspace()] data
 #' from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-#' distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.
+#' distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned.
 #'
 #' @param modeldata (required) quantum catch colour data. Can be the result
 #'  from [vismodel()], or [colspace()]. Data may also be independently calculated quantum catches,
@@ -98,7 +98,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis", relative = FALSE)
 #' tridist.flowers <- coldist(vis.flowers, n = c(1, 2, 1))
 #'
-#' # Trichromat, color-hexagon model (euclidean distances)
+#' # Trichromat, colour-hexagon model (euclidean distances)
 #' vis.flowers <- vismodel(flowers,
 #'   visual = "apis", qcatch = "Ei",
 #'   relative = FALSE, vonkries = TRUE, achro = "l", bkg = "green"
@@ -106,7 +106,7 @@
 #' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' hexdist.flowers <- coldist(hex.flowers)
 #'
-#' # Trichromat, color-opponent-coding model (manhattan distances)
+#' # Trichromat, colour-opponent-coding model (manhattan distances)
 #' vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
 #' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' hexdist.flowers <- coldist(coc.flowers)

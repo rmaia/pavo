@@ -19,11 +19,11 @@ jnd2xyz(coldistres, center = TRUE, rotate = TRUE,
 \item{rotcenter}{should the vectors for rotation be centered in the achromatic
 center ("achro") or the data centroid ("mean", the default)?}
 
-\item{ref1}{the cone to be used as a the first reference. May be NULL
+\item{ref1}{the cone to be used as a the first reference. May be \code{NULL}
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for \code{\link[=coldist]{coldist()}}. Defaults to 'l'.}
 
-\item{ref2}{the cone to be used as a the second reference.May be NULL
+\item{ref2}{the cone to be used as a the second reference. May be \code{NULL}
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for \code{\link[=coldist]{coldist()}}. Defaults to 'u'.
 (only used if data has 3 dimensions).}
@@ -31,12 +31,12 @@ in the original data that was used for \code{\link[=coldist]{coldist()}}. Defaul
 \item{axis1}{A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
 that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
-Ignored if \code{ref1} is `NULL`` (in 3-dimensional case only)}
+Ignored if \code{ref1} is \code{NULL} (in 3-dimensional case only)}
 
 \item{axis2}{A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
 that the rotation aligns with the z axis (only used if data has 3 dimensions).
-Ignored if \code{ref2} is `NULL`` (in 3-dimensional case only)}
+Ignored if \code{ref2} is \code{NULL} (in 3-dimensional case only)}
 }
 \description{
 Converts a \code{\link[=coldist]{coldist()}} output into Cartesian coordinates that are

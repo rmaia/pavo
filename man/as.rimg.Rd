@@ -14,7 +14,7 @@ as.rimg(object, name = "img")
 
 \method{as.rimg}{cimg}(object, name = "img")
 
-as.rimg(object, name = "img")
+\method{as.rimg}{magick-image}(object, name = "img")
 
 is.rimg(object)
 }

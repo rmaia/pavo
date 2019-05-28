@@ -18,7 +18,7 @@ an image of the specified class
 }
 \description{
 Conveniently convert single objects of class \code{rimg} to class \code{cimg} (from the
-package \code{imager} or \code{magick-image} (from the package \code{magick}, both of which
+package \code{imager}) or \code{magick-image} (from the package \code{magick}), both of which
 contains a suite of useful image-processing capabilities.
 }
 \note{
@@ -26,7 +26,6 @@ Attributes (e.g. scales, color-classes) will not be preserved following
 conversion from class \code{rimg}, so it's best to use early in the analysis workflow.
 }
 \examples{
-\dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 # From class rimg to cimg
@@ -36,7 +35,6 @@ class(papilio_cimg)
 # From class rimg to magick-image
 papilio_magick <- rimg2magick(papilio)
 class(papilio_magick)
-}
 
 }
 \author{

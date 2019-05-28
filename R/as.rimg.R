@@ -161,8 +161,6 @@ as.rimg.cimg <- function(object, name = "img") {
 #'
 #' @importFrom magick image_flop image_rotate image_data
 #'
-#' @usage as.rimg(object, name = "img")
-#'
 #' @export
 "as.rimg.magick-image" <- function(object, name = "img") {
   object <- image_rotate(object, 90)
@@ -182,7 +180,7 @@ is.rimg <- function(object) {
 #' Convert images between class rimg and cimg or magick-image
 #'
 #' Conveniently convert single objects of class `rimg` to class `cimg` (from the
-#' package `imager` or `magick-image` (from the package `magick`, both of which
+#' package `imager`) or `magick-image` (from the package `magick`), both of which
 #' contains a suite of useful image-processing capabilities.
 #'
 #' @param image an object of class `rimg`
@@ -194,7 +192,6 @@ is.rimg <- function(object) {
 #' conversion from class `rimg`, so it's best to use early in the analysis workflow.
 #'
 #' @examples
-#' \dontrun{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #'
 #' # From class rimg to cimg
@@ -204,7 +201,6 @@ is.rimg <- function(object) {
 #' # From class rimg to magick-image
 #' papilio_magick <- rimg2magick(papilio)
 #' class(papilio_magick)
-#' }
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}

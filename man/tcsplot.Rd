@@ -64,8 +64,8 @@ only as spheres to maintain export capabilities.
 \code{\link[=tcsvol]{tcsvol()}} creates a 3D convex hull within a \code{tcsplot} object.
 }
 \description{
-Produces an interactive 3D plot of a tetrahedral
-colorspace using OpenGL capabilities.
+Produces an interactive 3D plot of a tetrahedral colourspace using OpenGL
+capabilities.
 
 Plots points in a tetrahedral colour space
 }

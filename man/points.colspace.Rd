@@ -7,7 +7,7 @@
 \method{points}{colspace}(x, ...)
 }
 \arguments{
-\item{x}{(required) an object of class [\code{colspace}.}
+\item{x}{(required) an object of class \code{colspace}.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

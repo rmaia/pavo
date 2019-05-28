@@ -7,7 +7,7 @@
 \method{plot}{colspace}(x, ...)
 }
 \arguments{
-\item{x}{(required) an object of class [\code{colspace}.}
+\item{x}{(required) an object of class \code{colspace}.}
 
 \item{...}{additional graphical options, which vary by modeled \code{space}. Refer
 to their individual documentation:
@@ -26,10 +26,10 @@ to their individual documentation:
 Also see \code{\link[=par]{par()}}.}
 }
 \value{
-A colorspace plot appropriate to the input data.
+A colourspace plot appropriate to the input data.
 }
 \description{
-Plots reflectance spectra in the appropriate colorspace.
+Plots reflectance spectra in the appropriate colourspace.
 }
 \examples{
 \dontrun{

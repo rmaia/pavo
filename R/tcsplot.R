@@ -1,7 +1,7 @@
 #' Interactive plot of a tetrahedral colourspace
 #'
-#' Produces an interactive 3D plot of a tetrahedral
-#' colorspace using OpenGL capabilities.
+#' Produces an interactive 3D plot of a tetrahedral colourspace using OpenGL
+#'  capabilities.
 #'
 #' @inheritParams tetraplot
 #' @inheritParams triplot

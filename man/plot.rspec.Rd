@@ -38,13 +38,10 @@ Defaults to the numeric column ID's.}
 Plots reflectance spectra in different arrangements.
 }
 \examples{
-\dontrun{
-
 data(teal)
 plot(teal, type = "overlay")
 plot(teal, type = "stack")
 plot(teal, type = "heatmap")
-}
 
 }
 \seealso{

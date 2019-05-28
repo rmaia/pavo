@@ -8,7 +8,7 @@ bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   cores = getOption("mc.cores", 2L), ...)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data.
+\item{vismodeldata}{(required) quantum catch colour data.
 Can be the result from \code{\link[=vismodel]{vismodel()}}, or \code{\link[=colspace]{colspace()}}. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.}

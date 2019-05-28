@@ -21,7 +21,7 @@ values greater than 1 are possible)}
 
 \item{col, lty, lwd}{graphical parameters for the arrows.}
 
-\item{label}{logical, include x, y and z labels (defaults to `TRUE``).}
+\item{label}{logical, include x, y and z labels (defaults to \code{TRUE}).}
 
 \item{adj.label}{position adjustment for the labels. a list of 3 named objects
 for x, y and z arrows, each with 2 values for x and y adjustment.}
@@ -35,6 +35,13 @@ for x, y and z arrows, each with 2 values for x and y adjustment.}
 \description{
 Plots reference x, y and z arrows showing the direction of
 the axes in a static tetrahedral colourspace plot.
+}
+\examples{
+data(sicalis)
+vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
+plot(tcs.sicalis)
+axistetra()
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

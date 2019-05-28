@@ -8,7 +8,7 @@ aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{by}{(required) either a single value specifying the range of spectra within

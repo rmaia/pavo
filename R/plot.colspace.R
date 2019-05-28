@@ -1,8 +1,8 @@
 #' Plot spectra in a colourspace
 #'
-#' Plots reflectance spectra in the appropriate colorspace.
+#' Plots reflectance spectra in the appropriate colourspace.
 #'
-#' @param x (required) an object of class [`colspace`.
+#' @param x (required) an object of class `colspace`.
 #' @param ... additional graphical options, which vary by modeled `space`. Refer
 #'  to their individual documentation:
 #' * [diplot()]: dichromat space
@@ -17,7 +17,7 @@
 #'
 #' Also see [par()].
 #'
-#' @return A colorspace plot appropriate to the input data.
+#' @return A colourspace plot appropriate to the input data.
 #'
 #' @examples
 #' \dontrun{

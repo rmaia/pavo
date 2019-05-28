@@ -8,7 +8,7 @@ spec2rgb(rspecdata, alpha = 1)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{alpha}{alpha value to use for colors (defaults to 1, opaque).}

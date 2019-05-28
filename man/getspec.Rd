@@ -47,8 +47,9 @@ USB4000 and Jaz spectrometers), CRAIC software (after exporting) and
 Avantes (before or after exporting).
 }
 \examples{
-getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
-getspec(system.file("testdata", package = "pavo"), ext = "ttt")
+rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))
+head(rspecdata)
+
 }
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)

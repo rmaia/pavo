@@ -3,7 +3,7 @@
 #' Uses a bootstrap procedure to generate confidence intervals
 #'  for the mean colour distance between two or more samples of colours
 #'
-#' @param vismodeldata (required) quantum catch color data.
+#' @param vismodeldata (required) quantum catch colour data.
 #'  Can be the result from [vismodel()], or [colspace()]. Data may also be
 #'  independently calculated quantum catches, in the form of a data frame with
 #'  columns representing photoreceptors.

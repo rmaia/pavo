@@ -9,7 +9,7 @@ plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{minsmooth}{the minimum f value of the loess function to visualize (defaults to \code{0.05}).}
@@ -30,10 +30,8 @@ Plots spectral curves with various levels of loess smoothing to help decide whic
 loess parameters are best for subsequently smoothing the data (e.g. via \code{\link[=procspec]{procspec()}}).
 }
 \examples{
-\dontrun{
 data(sicalis)
 plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
-}
 
 }
 \seealso{

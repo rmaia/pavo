@@ -9,7 +9,7 @@ peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{select}{specification of which spectra to plot. Can be a numeric vector or

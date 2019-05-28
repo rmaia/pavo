@@ -4,7 +4,7 @@
 #' according to an index or a vector of identities.
 #'
 #' @param rspecdata (required) a data frame, possibly of class `rspec`, which
-#' contains a column containing a wavelength range , named 'wl', and spectra data in
+#' contains a column containing a wavelength range, named 'wl', and spectra data in
 #' remaining columns.
 #' @param by (required) either a single value specifying the range of spectra within
 #' the data frame to be combined (for example, `by` = 3 indicates the function

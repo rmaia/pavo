@@ -1,4 +1,4 @@
-#' Color volume overlap
+#' Colour volume overlap
 #'
 #' Calculates the overlap between the volumes defined by two sets of points in cartesian
 #' space.
@@ -17,7 +17,7 @@
 #' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`)
 #' @param interactive logical. If `TRUE`, uses the rgl engine for interactive plotting;
 #' if `FALSE` then a static plot is generated.
-#' @param col a vector of length 3 with the colors for (in order) the first volume,
+#' @param col a vector of length 3 with the colours for (in order) the first volume,
 #' the second volume, and the overlap.
 #' @param fill logical. should the two volumes be filled in the plot? (defaults to `FALSE`)
 #' @param new logical. Should a new plot window be called? If `FALSE`, volumes and their
@@ -54,7 +54,7 @@
 #'
 #' @note Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 #' simulations of points within the range of the volumes, and obtaining the frequency of
-#' simulated values that fall inside the volumes defined by both sets of color points.
+#' simulated values that fall inside the volumes defined by both sets of colour points.
 #' @note Here we present an exact solution based on finding common vertices to both volumes
 #' and calculating its volume. However, we also the Monte Carlo solution is available through
 #' the `montecarlo=TRUE` option.

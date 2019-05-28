@@ -10,7 +10,7 @@ procspec(rspecdata, opt = c("none", "smooth", "maximum", "minimum",
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range , named 'wl', and spectra data in
+contains a column containing a wavelength range, named 'wl', and spectra data in
 remaining columns.}
 
 \item{opt}{what type of processing options to apply. User can select multiple

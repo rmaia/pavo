@@ -2,7 +2,7 @@
 % Please edit documentation in R/voloverlap.R
 \name{voloverlap}
 \alias{voloverlap}
-\title{Color volume overlap}
+\title{Colour volume overlap}
 \usage{
 voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
   col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
@@ -18,7 +18,7 @@ values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
 \item{interactive}{logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
 if \code{FALSE} then a static plot is generated.}
 
-\item{col}{a vector of length 3 with the colors for (in order) the first volume,
+\item{col}{a vector of length 3 with the colours for (in order) the first volume,
 the second volume, and the overlap.}
 
 \item{fill}{logical. should the two volumes be filled in the plot? (defaults to \code{FALSE})}
@@ -73,7 +73,7 @@ space.
 \note{
 Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 simulations of points within the range of the volumes, and obtaining the frequency of
-simulated values that fall inside the volumes defined by both sets of color points.
+simulated values that fall inside the volumes defined by both sets of colour points.
 
 Here we present an exact solution based on finding common vertices to both volumes
 and calculating its volume. However, we also the Monte Carlo solution is available through

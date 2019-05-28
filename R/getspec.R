@@ -31,8 +31,9 @@
 #' @importFrom pbmcapply pbmclapply
 #'
 #' @examples
-#' getspec(system.file("testdata", package = "pavo"), lim = c(400, 900))
-#' getspec(system.file("testdata", package = "pavo"), ext = "ttt")
+#' rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))
+#' head(rspecdata)
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
