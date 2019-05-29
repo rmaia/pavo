@@ -6,8 +6,7 @@
 #' @param object (required) a three-dimensional array containing RGB values.
 #' @param name the name(s) of the image(s).
 #'
-#' @return an object of class `rimg` for use in further `pavo`
-#' functions
+#' @return an object of class `rimg` for use in further `pavo` functions
 #'
 #' @export
 #'
@@ -157,12 +156,12 @@ as.rimg.cimg <- function(object, name = "img") {
   as.rimg.default(drop(as.array(object)), name = name)
 }
 
-#' @rdname as.rimg
-#'
 #' @importFrom magick image_flop image_rotate image_data
 #'
 #' @export
-"as.rimg.magick-image" <- function(object, name = "img") {
+#'
+#' @noRd
+`as.rimg.magick-image` <- function(object, name = "img") {
   object <- image_rotate(object, 90)
   object <- image_flop(object)
   suppressMessages(as.rimg.default(lapply(object, function(img) as.integer(image_data(img))), name = name))

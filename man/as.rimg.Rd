@@ -4,7 +4,6 @@
 \alias{as.rimg}
 \alias{as.rimg.default}
 \alias{as.rimg.cimg}
-\alias{as.rimg.magick-image}
 \alias{is.rimg}
 \title{Convert data to an rimg object}
 \usage{
@@ -14,8 +13,6 @@ as.rimg(object, name = "img")
 
 \method{as.rimg}{cimg}(object, name = "img")
 
-\method{as.rimg}{magick-image}(object, name = "img")
-
 is.rimg(object)
 }
 \arguments{
@@ -24,8 +21,7 @@ is.rimg(object)
 \item{name}{the name(s) of the image(s).}
 }
 \value{
-an object of class \code{rimg} for use in further \code{pavo}
-functions
+an object of class \code{rimg} for use in further \code{pavo} functions
 
 a logical value indicating whether the object is of class \code{rimg}
 }
