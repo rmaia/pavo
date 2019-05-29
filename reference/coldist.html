@@ -42,7 +42,7 @@
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
 with noise based on relative photoreceptor densities. It also accepts colspace() data
 from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned." />
+distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -150,7 +150,7 @@ distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) a
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
 with noise based on relative photoreceptor densities. It also accepts <code><a href='colspace.html'>colspace()</a></code> data
 from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical, segment) or manhattan distances (coc) are returned.</p>
+distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned.</p>
     
     </div>
 
@@ -302,7 +302,7 @@ Behavioral Ecology, doi: <a href='https://doi.org/10.1093/beheco/arx133'>10.1093
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>tridist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.flowers</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>))
 
-<span class='co'># Trichromat, color-hexagon model (euclidean distances)</span>
+<span class='co'># Trichromat, colour-hexagon model (euclidean distances)</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>,
   <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>,
   <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>"green"</span>
@@ -310,7 +310,7 @@ Behavioral Ecology, doi: <a href='https://doi.org/10.1093/beheco/arx133'>10.1093
 <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)
 <span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>hex.flowers</span>)
 
-<span class='co'># Trichromat, color-opponent-coding model (manhattan distances)</span>
+<span class='co'># Trichromat, colour-opponent-coding model (manhattan distances)</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"coc"</span>)
 <span class='no'>hexdist.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>coc.flowers</span>)

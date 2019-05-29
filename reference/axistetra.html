@@ -177,7 +177,7 @@ values greater than 1 are possible)</p></td>
     </tr>
     <tr>
       <th>label</th>
-      <td><p>logical, include x, y and z labels (defaults to `TRUE``).</p></td>
+      <td><p>logical, include x, y and z labels (defaults to <code>TRUE</code>).</p></td>
     </tr>
     <tr>
       <th>adj.label</th>
@@ -196,6 +196,11 @@ for x, y and z arrows, each with 2 values for x and y adjustment.</p></td>
 3-dimensional axes in a static tetrahedral colourspace plot.</p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://www.rdocumentation.org/packages/utils/topics/data'>data</a></span>(<span class='no'>sicalis</span>)
+<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
+<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
+<span class='fu'><a href='https://www.rdocumentation.org/packages/graphics/topics/plot'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='input'><span class='fu'>axistetra</span>()</div><div class='img'><img src='axistetra-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -203,7 +208,9 @@ for x, y and z arrows, each with 2 values for x and y adjustment.</p></td>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#value">Value</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
