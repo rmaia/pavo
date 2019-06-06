@@ -77,23 +77,23 @@ procspec <- function(rspecdata, opt = c(
 
   if (length(wl_index > 0)) {
     wl <- rspecdata[, wl_index]
-    rspecdata <- as.data.frame(rspecdata[-wl_index])
+    rspecdata <- rspecdata[-wl_index]
   } else {
     warning("No wavelengths supplied; using arbitrary values")
-    rspecdata <- as.data.frame(rspecdata)
+    rspecdata <- rspecdata
     wl <- seq_len(nrow(rspecdata))
   }
 
   nam <- names(rspecdata)
 
   if (any(opt == "smooth")) {
-    rspecdata <- vapply(seq_len(ncol(rspecdata)), function(z) {
+    rspecdata <- apply(rspecdata, 2, function(z) {
       loess.smooth(
         x = wl,
-        y = as.data.frame(rspecdata[, z]), span = span, degree = 2,
+        y = z, span = span, degree = 2,
         family = "gaussian", evaluation = length(wl)
       )$y
-    }, numeric(nrow(rspecdata)))
+    })
     applied <- c(applied, paste("smoothing spectra with a span of", span))
   }
 
