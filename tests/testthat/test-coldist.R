@@ -75,7 +75,7 @@ test_that("jnd transform", {
 
   # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
-  expect_equal(dim(coldist(vismodel(flowers))), c(630, 3))
+  expect_equal(dim(coldist(vismodel(flowers))), c(630, 4))
 
   rownames(attr(jnd.flowers, "resref"))[4] <- "nope"
   expect_error(jndrot(jnd.flowers), "does not match")

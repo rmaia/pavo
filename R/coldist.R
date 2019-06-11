@@ -147,7 +147,7 @@ coldist <- function(modeldata,
                     achromatic = FALSE, qcatch = NULL,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
                     weber.achro = 0.1) {
-
+  
   # Prepare output
   pairsid <- t(combn(nrow(modeldata), 2))
 
@@ -182,29 +182,38 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
+    if (qcatch == "Ei") {
+      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+    }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
       modeldata$lum <- 0
+      if(achromatic){
+        warning("achromatic = TRUE but visual model was calculated with achromatic = ",
+                dQuote("none"), "; achromatic contrast not calculated.",
+                call. = FALSE
+        )
+      }
       achromatic <- FALSE
     }
   }
 
   # Pre-processing for vismodel objects
-  if (is.vismodel(modeldata)) {
-    # Set achromatic = FALSE if visual model has achromatic = 'none'
-    if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
-      warning("achromatic = TRUE but visual model was calculated with achromatic = ",
-        dQuote("none"), "; achromatic contrast not calculated.",
-        call. = FALSE
-      )
-      achromatic <- FALSE
-    }
+  # if (is.vismodel(modeldata)) {
+  #   # Set achromatic = FALSE if visual model has achromatic = 'none'
+  #   if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
+  #     warning("achromatic = TRUE but visual model was calculated with achromatic = ",
+  #       dQuote("none"), "; achromatic contrast not calculated.",
+  #       call. = FALSE
+  #     )
+  #     achromatic <- FALSE
+  #   }
     # initial checks...
-    if (qcatch == "Ei") {
-      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
-    }
-  }
+  #   if (qcatch == "Ei") {
+  #     stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+  #   }
+  # }
 
   # transformations in case object is neither from colspace or vismodel
   if (is.null(ncone)) {
