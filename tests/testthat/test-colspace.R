@@ -8,21 +8,21 @@ test_that("Receptor orders/names", {
   names(di) <- c("wl", "l", "s")
   di.vis <- vismodel(flowers, visual = di)
   di.space <- colspace(di.vis)
-  expect_equal(di.vis, di.space[, 2:1], check.attributes = FALSE)
+  expect_equal(di.vis[, 2:1], di.space[, 2:1], check.attributes = FALSE)
 
   # trichromat
   tri <- sensmodel(c(550, 440, 330))
   names(tri) <- c("wl", "l", "m", "s")
   tri.vis <- vismodel(flowers, visual = tri)
   tri.space <- colspace(tri.vis)
-  expect_equal(tri.vis, tri.space[, 3:1], check.attributes = FALSE)
+  expect_equal(tri.vis[, 3:1], tri.space[, 3:1], check.attributes = FALSE)
 
   # tetrachromat
   tetra <- sensmodel(c(660, 550, 440, 330))
   names(tetra) <- c("wl", "l", "m", "s", "u")
   tetra.vis <- vismodel(flowers, visual = tetra)
   tetra.space <- colspace(tetra.vis)
-  expect_equal(tetra.vis, tetra.space[, 4:1], check.attributes = FALSE)
+  expect_equal(tetra.vis[, 4:1], tetra.space[, 4:1], check.attributes = FALSE)
   expect_warning({
     sumtcs <- summary(tetra.space, by = 3)
   })

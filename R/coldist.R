@@ -182,11 +182,14 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
+    # Strip NA lum values
+    if(attr(modeldata, "visualsystem.achromatic") == "none")
+      modeldata <- modeldata[,!names(modeldata) %in% 'lum']
   }
 
   # Pre-processing for vismodel objects
   if (is.vismodel(modeldata)) {
-    # Set achromatic=FALSE if visual model has achromatic='none'
+    # Set achromatic = FALSE if visual model has achromatic = 'none'
     if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
       warning("achromatic=TRUE but visual model was calculated with achromatic=",
         dQuote("none"), "; achromatic contrast not calculated.",
@@ -238,7 +241,6 @@ coldist <- function(modeldata,
       dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
     } else {
       dat <- as.matrix(modeldata)
-
       rownames(dat) <- rownames(modeldata)
       colnames(dat) <- colnames(modeldata)
     }
