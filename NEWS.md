@@ -11,6 +11,7 @@
 * the `cores` argument in `getimg()` is deprecated, as image import is vectorised
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images
 * the `resize` argument in `procimg()` now takes a percentage, rather than scaling factor
+* fixed a bug where `colspace(space = segment)` would return both a `B` and (redundant) `lum` column
 
 # pavo 2.1.0
 

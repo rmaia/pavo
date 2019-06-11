@@ -119,13 +119,9 @@ colspace <- function(vismodeldata,
       )
   }
 
-  # include achromatic if there is any
-  # if (!is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
-  #   if (attr(vismodeldata, "visualsystem.achromatic") != "none") {
+  # Include lum for appropriate spaces
     if(!any(space2 %in% c('segment', 'ciexyz', 'cielab', 'cielch')))
       res$lum <- vismodeldata$lum
-  #   }
-  # }
 
   # check qcatch if user-defined input
   if (is.null(attr(res, "qcatch"))) {

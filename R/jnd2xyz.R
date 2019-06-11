@@ -44,7 +44,7 @@
 jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
                     rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u",
                     axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
-
+  
   # Accessory functions
   pos2 <- function(d12, d13, d23) {
     x3 <- d13
@@ -55,7 +55,6 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
     x3
   }
-
 
   # Accessory functions
   pos3 <- function(d12, d13, d23) {
@@ -93,6 +92,11 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     grep("jnd2xyzrrf", references$patch2)
   ), ]
 
+  # Strip 'lum' column if it's all NA
+  if(all(is.na(coldistres$dL))){
+    coldistres <- coldistres[, !names(coldistres) %in% 'dL']
+  }  
+  
   combined <- rbind(coldistres, references)
 
   colmat <- coldist2mat(combined)

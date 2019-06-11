@@ -182,16 +182,19 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
-    # Strip NA lum values
-    if(attr(modeldata, "visualsystem.achromatic") == "none")
-      modeldata <- modeldata[,!names(modeldata) %in% 'lum']
+    # Convert lum values to 0 instead of NA, for convenient
+    # processing. Converted back to NA at the end.
+    if (attr(modeldata, "visualsystem.achromatic") == "none") {
+      modeldata$lum <- 0
+      achromatic <- FALSE
+    }
   }
 
   # Pre-processing for vismodel objects
   if (is.vismodel(modeldata)) {
     # Set achromatic = FALSE if visual model has achromatic = 'none'
     if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
-      warning("achromatic=TRUE but visual model was calculated with achromatic=",
+      warning("achromatic = TRUE but visual model was calculated with achromatic = ",
         dQuote("none"), "; achromatic contrast not calculated.",
         call. = FALSE
       )
@@ -410,6 +413,10 @@ coldist <- function(modeldata,
   if (exists("resref", inherits = FALSE)) {
     attr(res, "resref") <- resref
   }
+  
+  # Set achro contrasts to NA if no lum values supplied
+  if(attr(modeldata, "visualsystem.achromatic") == "none")
+    res$dL = NA
 
   attr(res, "ncone") <- ncone
   attr(res, "isrnoise") <- usereceptornoisemodel
