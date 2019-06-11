@@ -421,6 +421,11 @@ vismodel <- function(rspecdata,
   if (relative) {
     res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(Qi) %in% "lum"])
   }
+  
+  # Add NA lum column is lum not calculated
+  if (achromatic2 == "none") {
+    res$lum <- NA
+  }
 
   class(res) <- c("vismodel", "data.frame")
 
