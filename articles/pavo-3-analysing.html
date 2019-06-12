@@ -100,7 +100,7 @@
       <h1>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2019-05-29</h4>
+            <h4 class="date">2019-06-12</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -439,22 +439,22 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 14 parakeet  tanager  5.969760 1.3891312
 ## 15    robin  tanager  7.688707 4.4674974</code></pre>
 <div class="sourceCode" id="cb22"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb22-1" data-line-number="1"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod.idi, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>)</a></code></pre></div>
-<pre><code>##      patch1   patch2        dS
-## 1  cardinal   jacana 2.0993283
-## 2  cardinal   oriole 4.6567462
-## 3  cardinal parakeet 2.2575457
-## 4  cardinal    robin 3.7236780
-## 5  cardinal  tanager 3.5417700
-## 6    jacana   oriole 2.5574178
-## 7    jacana parakeet 4.3568740
-## 8    jacana    robin 1.6243496
-## 9    jacana  tanager 5.6410983
-## 10   oriole parakeet 6.9142918
-## 11   oriole    robin 0.9330682
-## 12   oriole  tanager 8.1985162
-## 13 parakeet    robin 5.9812236
-## 14 parakeet  tanager 1.2842244
-## 15    robin  tanager 7.2654480</code></pre>
+<pre><code>##      patch1   patch2        dS dL
+## 1  cardinal   jacana 2.0993283 NA
+## 2  cardinal   oriole 4.6567462 NA
+## 3  cardinal parakeet 2.2575457 NA
+## 4  cardinal    robin 3.7236780 NA
+## 5  cardinal  tanager 3.5417700 NA
+## 6    jacana   oriole 2.5574178 NA
+## 7    jacana parakeet 4.3568740 NA
+## 8    jacana    robin 1.6243496 NA
+## 9    jacana  tanager 5.6410983 NA
+## 10   oriole parakeet 6.9142918 NA
+## 11   oriole    robin 0.9330682 NA
+## 12   oriole  tanager 8.1985162 NA
+## 13 parakeet    robin 5.9812236 NA
+## 14 parakeet  tanager 1.2842244 NA
+## 15    robin  tanager 7.2654480 NA</code></pre>
 <p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). Note that, by default, <code>achromatic = FALSE</code>, so <code>dL</code> isn’t included in the second result (this is to maintain consistency since, in the <code><a href="../reference/vismodel.html">vismodel()</a></code> function, the <code>achromatic</code> argument defaults to <code>none</code>). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
 <p><code><a href="../reference/coldist.html">coldist()</a></code> also has a <code>subset</code> argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). <code>subset</code> can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:</p>
 <div class="sourceCode" id="cb24"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb24-1" data-line-number="1"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">subset =</span> <span class="st">'cardinal'</span>)</a></code></pre></div>
@@ -567,13 +567,13 @@ Spectral data in a receptor noise-corrected colourspace
 <a class="sourceLine" id="cb45-3" data-line-number="3">di.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/colspace.html">colspace</a></span>(vis.flowers, <span class="dt">space =</span> <span class="st">'di'</span>)</a>
 <a class="sourceLine" id="cb45-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb45-5" data-line-number="5"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(di.flowers)</a></code></pre></div>
-<pre><code>##                                s         l           x      r.vec
-## Goodenia_heterophylla 0.52954393 0.4704561 -0.04178143 0.04178143
-## Goodenia_geniculata   0.25430150 0.7456985  0.34747015 0.34747015
-## Goodenia_gracilis     0.01747832 0.9825217  0.68238870 0.68238870
-## Xyris_operculata      0.39433933 0.6056607  0.14942675 0.14942675
-## Eucalyptus_sp         0.40628552 0.5937145  0.13253229 0.13253229
-## Faradaya_splendida    0.23166580 0.7683342  0.37948187 0.37948187</code></pre>
+<pre><code>##                                s         l           x      r.vec lum
+## Goodenia_heterophylla 0.52954393 0.4704561 -0.04178143 0.04178143  NA
+## Goodenia_geniculata   0.25430150 0.7456985  0.34747015 0.34747015  NA
+## Goodenia_gracilis     0.01747832 0.9825217  0.68238870 0.68238870  NA
+## Xyris_operculata      0.39433933 0.6056607  0.14942675 0.14942675  NA
+## Eucalyptus_sp         0.40628552 0.5937145  0.13253229 0.13253229  NA
+## Faradaya_splendida    0.23166580 0.7683342  0.37948187 0.37948187  NA</code></pre>
 <p>The output contains values for the relative stimulation of short- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.</p>
 <div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb47-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(di.flowers, <span class="dt">col =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
 <div class="figure">
@@ -594,13 +594,13 @@ Flowers in a dichromatic colourspace, as modelled according to a canid visual sy
 ## Xyris_operculata      0.2395035 0.3729820 0.3875145  0.010275990
 ## Eucalyptus_sp         0.2760091 0.3548096 0.3691813  0.010162377
 ## Faradaya_splendida    0.2654951 0.3431266 0.3913783  0.034119147
-##                                 y    h.theta      r.vec
-## Goodenia_heterophylla -0.05522995 -1.6435057 0.05537626
-## Goodenia_geniculata   -0.10508396 -1.2922439 0.10929687
-## Goodenia_gracilis     -0.24007647 -0.9601417 0.29303604
-## Xyris_operculata      -0.11491764 -1.4816131 0.11537616
-## Eucalyptus_sp         -0.07020755 -1.4270471 0.07093922
-## Faradaya_splendida    -0.08308452 -1.1811377 0.08981733</code></pre>
+##                                 y    h.theta      r.vec lum
+## Goodenia_heterophylla -0.05522995 -1.6435057 0.05537626  NA
+## Goodenia_geniculata   -0.10508396 -1.2922439 0.10929687  NA
+## Goodenia_gracilis     -0.24007647 -0.9601417 0.29303604  NA
+## Xyris_operculata      -0.11491764 -1.4816131 0.11537616  NA
+## Eucalyptus_sp         -0.07020755 -1.4270471 0.07093922  NA
+## Faradaya_splendida    -0.08308452 -1.1811377 0.08981733  NA</code></pre>
 <p>As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, as well as the ‘hue angle’ <code>h.theta</code> and distance from the origin (<code>r.vec</code>).</p>
 <div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb50-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(tri.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
 <div class="figure">
@@ -635,13 +635,13 @@ Floral reflectance in a Maxwell triangle, considering a honeybee visual system.
 ## Xyris_operculata      -0.010813615 -0.07337659 -0.7998327 -1.368146
 ## Eucalyptus_sp          0.001044768 -0.03815190  0.5885699 -1.521510
 ## Faradaya_splendida     0.007189965 -0.06558169  0.4328380 -1.315140
-##                            r.vec     r.max r.achieved
-## Goodenia_heterophylla 0.02430520 0.2692325 0.09027589
-## Goodenia_geniculata   0.08779638 0.2508989 0.34992737
-## Goodenia_gracilis     0.22191605 0.2678272 0.82857920
-## Xyris_operculata      0.07490949 0.2552227 0.29350636
-## Eucalyptus_sp         0.03819828 0.2503039 0.15260760
-## Faradaya_splendida    0.06778487 0.2583986 0.26232676</code></pre>
+##                            r.vec     r.max r.achieved lum
+## Goodenia_heterophylla 0.02430520 0.2692325 0.09027589  NA
+## Goodenia_geniculata   0.08779638 0.2508989 0.34992737  NA
+## Goodenia_gracilis     0.22191605 0.2678272 0.82857920  NA
+## Xyris_operculata      0.07490949 0.2552227 0.29350636  NA
+## Eucalyptus_sp         0.03819828 0.2503039 0.15260760  NA
+## Faradaya_splendida    0.06778487 0.2583986 0.26232676  NA</code></pre>
 <p>Tetrahedral data (via <code><a href="../reference/colspace.html">colspace(space = 'tcs')</a></code>) may be plotted in a standard <em>static</em> tetrahedron by using <code><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot()</a></code>, or can be visualised as part of an <em>interactive</em> tetrahedron by using <code><a href="../reference/tcsplot.html">tcsplot()</a></code> with the accessory functions <code><a href="../reference/tcsplot.html">tcspoints()</a></code> and <code><a href="../reference/tcsplot.html">tcsvol()</a></code> for adding points and convex hulls, respectively. As with other colourspace plots there are a number of associated graphical options, though the <code>theta</code> and <code>phi</code> arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.</p>
 <p>When plotting the tetrahedral colourspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments <code>perspective = TRUE</code> and controlling the size range with the <code>range</code> argument. Several other options control the appearance of this plot, you can check these using <code><a href="../reference/plot.colspace.html">?plot.colspace</a></code> or <code><a href="../reference/tetraplot.html">?tetraplot</a></code></p>
 <div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb53-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(tetra.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers), <span class="dt">perspective =</span> <span class="ot">TRUE</span>, <span class="dt">range =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">cex =</span> <span class="fl">0.5</span>)</a></code></pre></div>
@@ -761,13 +761,13 @@ Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overla
 ## Xyris_operculata      0.21080752 0.7345122 0.6796464 5.045218  3.5349309
 ## Eucalyptus_sp         0.55622758 0.8515289 0.8208038 2.845304  1.9900420
 ## Faradaya_splendida    0.45855056 0.7828905 0.8565895 3.357182  0.5654568
-##                           r.vec
-## Goodenia_heterophylla  5.407473
-## Goodenia_geniculata    6.275622
-## Goodenia_gracilis     11.340299
-## Xyris_operculata       8.580149
-## Eucalyptus_sp          4.835346
-## Faradaya_splendida     3.922638</code></pre>
+##                           r.vec lum
+## Goodenia_heterophylla  5.407473  NA
+## Goodenia_geniculata    6.275622  NA
+## Goodenia_gracilis     11.340299  NA
+## Xyris_operculata       8.580149  NA
+## Eucalyptus_sp          4.835346  NA
+## Faradaya_splendida     3.922638  NA</code></pre>
 <p>The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in <code>r.vec</code>, it contains no associated measure of hue.</p>
 <div class="sourceCode" id="cb70"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb70-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(coc.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers), <span class="dt">yaxt =</span> <span class="st">"n"</span>)</a></code></pre></div>
 <div class="figure">
@@ -872,13 +872,13 @@ Floral reflectance spectra represented in the CIELab model of human colour sensa
 ## Xyris_operculata      0.01270355 0.12523436 0.4488383 0.4132238 -0.4361348
 ## Eucalyptus_sp         0.03461951 0.14207857 0.3977211 0.4255808 -0.3631016
 ## Faradaya_splendida    0.03599956 0.09188569 0.3129199 0.5591949 -0.2769203
-##                                y category     r.vec
-## Goodenia_heterophylla -0.1383114     p-y- 0.4041279
-## Goodenia_geniculata   -0.4399187     p-y- 0.5640108
-## Goodenia_gracilis     -0.7964350     p-y- 0.8070515
-## Xyris_operculata      -0.2879894     p-y- 0.5226389
-## Eucalyptus_sp         -0.2835023     p-y- 0.4606694
-## Faradaya_splendida    -0.4673092     p-y- 0.5431968</code></pre>
+##                                y category     r.vec lum
+## Goodenia_heterophylla -0.1383114     p-y- 0.4041279  NA
+## Goodenia_geniculata   -0.4399187     p-y- 0.5640108  NA
+## Goodenia_gracilis     -0.7964350     p-y- 0.8070515  NA
+## Xyris_operculata      -0.2879894     p-y- 0.5226389  NA
+## Eucalyptus_sp         -0.2835023     p-y- 0.4606694  NA
+## Faradaya_splendida    -0.4673092     p-y- 0.5431968  NA</code></pre>
 <p>And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.</p>
 <div class="sourceCode" id="cb81"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb81-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/graphics/topics/plot">plot</a></span>(cat.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
 <div class="figure">
@@ -952,13 +952,13 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <p>Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in <code>R</code> using the <code><a href="../reference/coldist.html">coldist()</a></code> function on the <code><a href="../reference/colspace.html">colspace()</a></code> output:</p>
 <div class="sourceCode" id="cb97"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb97-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/coldist.html">coldist</a></span>(tetra.flowers))</a></code></pre></div>
 <pre><code>## Warning: Quantum catch are relative, distances may not be meaningful</code></pre>
-<pre><code>##                  patch1              patch2        dS
-## 1 Goodenia_heterophylla Goodenia_geniculata 0.4389066
-## 2 Goodenia_heterophylla   Goodenia_gracilis 1.4421739
-## 3 Goodenia_heterophylla    Xyris_operculata 0.3859043
-## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1383047
-## 5 Goodenia_heterophylla  Faradaya_splendida 0.3640816
-## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2588980</code></pre>
+<pre><code>##                  patch1              patch2        dS dL
+## 1 Goodenia_heterophylla Goodenia_geniculata 0.4389066 NA
+## 2 Goodenia_heterophylla   Goodenia_gracilis 1.4421739 NA
+## 3 Goodenia_heterophylla    Xyris_operculata 0.3859043 NA
+## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1383047 NA
+## 5 Goodenia_heterophylla  Faradaya_splendida 0.3640816 NA
+## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2588980 NA</code></pre>
 <p>Specialised colourspace models such as the colour-hexagon, coc space, CIELab and CIELCh models have their own distance measures, which are returned be default when run through <code><a href="../reference/coldist.html">coldist()</a></code>. Be sure to read the <code><a href="../reference/coldist.html">?coldist</a></code> documentation, and the original publications, to understand what is being returned. As an example, if we run the results of colour-hexagon modelling through <code><a href="../reference/coldist.html">coldist()</a></code>:</p>
 <div class="sourceCode" id="cb100"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb100-1" data-line-number="1"><span class="co"># Model flower colours according to a honeybee</span></a>
 <a class="sourceLine" id="cb100-2" data-line-number="2">vis.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(flowers, <span class="dt">visual =</span> <span class="st">"apis"</span>, <span class="dt">qcatch =</span> <span class="st">"Ei"</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">vonkries =</span> <span class="ot">TRUE</span>, <span class="dt">achromatic =</span> <span class="st">"l"</span>, <span class="dt">bkg =</span> <span class="st">"green"</span>)</a>
@@ -1000,13 +1000,13 @@ Visual system of a pretend mantis shrimp with 10 cones
 <a class="sourceLine" id="cb103-4" data-line-number="4">JND.fms &lt;-<span class="st"> </span><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vm.fms, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>))</a>
 <a class="sourceLine" id="cb103-5" data-line-number="5"></a>
 <a class="sourceLine" id="cb103-6" data-line-number="6"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(JND.fms)</a></code></pre></div>
-<pre><code>##                  patch1              patch2        dS
-## 1 Goodenia_heterophylla Goodenia_geniculata 16.297557
-## 2 Goodenia_heterophylla   Goodenia_gracilis 48.390309
-## 3 Goodenia_heterophylla    Xyris_operculata 30.760482
-## 4 Goodenia_heterophylla       Eucalyptus_sp  6.044184
-## 5 Goodenia_heterophylla  Faradaya_splendida 15.901435
-## 6 Goodenia_heterophylla  Gaultheria_hispida 11.188246</code></pre>
+<pre><code>##                  patch1              patch2        dS dL
+## 1 Goodenia_heterophylla Goodenia_geniculata 16.297557 NA
+## 2 Goodenia_heterophylla   Goodenia_gracilis 48.390309 NA
+## 3 Goodenia_heterophylla    Xyris_operculata 30.760482 NA
+## 4 Goodenia_heterophylla       Eucalyptus_sp  6.044184 NA
+## 5 Goodenia_heterophylla  Faradaya_splendida 15.901435 NA
+## 6 Goodenia_heterophylla  Gaultheria_hispida 11.188246 NA</code></pre>
 </div>
 </div>
 </div>

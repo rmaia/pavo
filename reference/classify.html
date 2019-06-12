@@ -230,11 +230,10 @@ cluster ID's are desired between runs.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single image</span>
-<span class='no'>papilio</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pavo'</span>))
+<span class='no'>papilio</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))
 <span class='no'>papilio_class</span> <span class='kw'>&lt;-</span> <span class='fu'>classify</span>(<span class='no'>papilio</span>, <span class='kw'>kcols</span> <span class='kw'>=</span> <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'>
 <span class='co'># Multiple images, with interactive classification and a reference image</span>
-<span class='no'>snakes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>'pavo'</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'>#snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
-
+<span class='no'>snakes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/system.file'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'># snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
