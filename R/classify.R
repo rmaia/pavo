@@ -49,16 +49,15 @@
 #'
 #' @examples
 #' # Single image
-#' papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+#' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #' papilio_class <- classify(papilio, kcols = 4)
 #'
 #' # Multiple images, with interactive classification and a reference image
-#' snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#' #snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
-#'
+#' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+#' # snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
-classify <- function(imgdat, method = c('kMeans', 'kMedoids'), kcols = NULL, refID = NULL, interactive = FALSE,
+classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -94,10 +93,10 @@ classify <- function(imgdat, method = c('kMeans', 'kMedoids'), kcols = NULL, ref
   )
 
   # Cannot currently use pre-specific centres with k-medoids. Annoying.
-  if (interactive && method2 == 'kMedoids') {
+  if (interactive && method2 == "kMedoids") {
     stop("Cannot currently interactively classify images using k-medoids, set kcols instead.")
   }
-  if (!is.null(refID) && method2 == 'kMedoids') {
+  if (!is.null(refID) && method2 == "kMedoids") {
     stop("Cannot currently use a reference image when using k-medoids")
   }
 
@@ -247,11 +246,11 @@ classify <- function(imgdat, method = c('kMeans', 'kMedoids'), kcols = NULL, ref
 #' @importFrom pbmcapply pbmclapply
 classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
   ifelse(parallel_i2,
-         outdata <- pbmclapply(seq_along(imgdat_i2),
-                               function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
-                               mc.cores = cores_i2
-         ),
-         outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
+    outdata <- pbmclapply(seq_along(imgdat_i2),
+      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
+      mc.cores = cores_i2
+    ),
+    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
   )
   outdata
 }
@@ -264,7 +263,7 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
   imgdim <- dim(imgdat_i)
 
   # Set minimum sample size for kMedoids
-  samsize <- min(200, (imgdim[1]*imgdim[2]))
+  samsize <- min(200, (imgdim[1] * imgdim[2]))
 
   # Assign RGB channels to data frame
   imgRGB <- data.frame(
@@ -275,16 +274,16 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
 
   # Cluster analysis, then format as image matrix
   kMeans <- switch(method_i,
-                   'kMeans' = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
-                   'kMedoids' = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
+    "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
+    "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
   )
   outmat3 <- switch(method_i,
-                    'kMeans' = matrix(kMeans$cluster, nrow = imgdim[1]),
-                    'kMedoids' = matrix(kMeans$clustering, nrow = imgdim[1])
+    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
+    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
   )
   centers <- switch(method_i,
-                    'kMeans' = as.data.frame(kMeans$centers),
-                    'kMedoids' = as.data.frame(kMeans$medoids)
+    "kMeans" = as.data.frame(kMeans$centers),
+    "kMedoids" = as.data.frame(kMeans$medoids)
   )
 
   # Rotate to match original orientation

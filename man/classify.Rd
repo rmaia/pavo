@@ -63,13 +63,12 @@ cluster ID's are desired between runs.
 }
 \examples{
 # Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = 'pavo'))
+papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images, with interactive classification and a reference image
-snakes <- getimg(system.file("testdata/images/snakes", package = 'pavo'))
-#snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
-
+snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+# snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 }
 \seealso{
 \link[stats:kmeans]{stats::kmeans}

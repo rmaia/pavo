@@ -36,7 +36,6 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

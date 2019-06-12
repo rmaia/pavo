@@ -42,7 +42,6 @@ data(teal)
 plot(teal, type = "overlay")
 plot(teal, type = "stack")
 plot(teal, type = "heatmap")
-
 }
 \seealso{
 \code{\link[=spec2rgb]{spec2rgb()}}, \code{\link[=image]{image()}}, \code{\link[=plot]{plot()}}

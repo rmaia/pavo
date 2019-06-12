@@ -147,7 +147,7 @@ coldist <- function(modeldata,
                     achromatic = FALSE, qcatch = NULL,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
                     weber.achro = 0.1) {
-  
+
   # Prepare output
   pairsid <- t(combn(nrow(modeldata), 2))
 
@@ -192,10 +192,10 @@ coldist <- function(modeldata,
     # processing. Converted back to NA at the end.
     if (attr(modeldata, "visualsystem.achromatic") == "none") {
       modeldata$lum <- 0
-      if(achromatic){
+      if (achromatic) {
         warning("achromatic = TRUE but visual model was calculated with achromatic = ",
-                dQuote("none"), "; achromatic contrast not calculated.",
-                call. = FALSE
+          dQuote("none"), "; achromatic contrast not calculated.",
+          call. = FALSE
         )
       }
       achromatic <- FALSE
@@ -212,11 +212,12 @@ coldist <- function(modeldata,
       )
     }
     else {
-      # Don't count all-NA columns when guessing ncone 
-      if(any(sapply(modeldata, function(x) all(is.na(x)))))
+      # Don't count all-NA columns when guessing ncone
+      if (any(sapply(modeldata, function(x) all(is.na(x))))) {
         ncone <- ncol(modeldata) - 1
-      else
+      } else {
         ncone <- ncol(modeldata)
+      }
       warning("number of cones not specified; assumed to be ", ncone,
         call. = FALSE
       )
@@ -413,10 +414,11 @@ coldist <- function(modeldata,
   if (exists("resref", inherits = FALSE)) {
     attr(res, "resref") <- resref
   }
-  
+
   # Set achro contrasts to NA if no lum values supplied
-  if(attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic")))
-    res$dL = NA
+  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))) {
+    res$dL <- NA
+  }
 
   attr(res, "ncone") <- ncone
   attr(res, "isrnoise") <- usereceptornoisemodel

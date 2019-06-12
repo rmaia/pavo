@@ -184,8 +184,9 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   attribs <- attributes(vismodeldata)
   attribs <- attribs[grep("data|names", names(attribs), invert = TRUE)]
 
-  for (i in seq_along(bootgrouped))
+  for (i in seq_along(bootgrouped)) {
     attributes(bootgrouped[[i]])[names(attribs)] <- attribs
+  }
 
   # apply coldist to the replicated bootstraps
   if (cores > 1 && .Platform$OS.type == "windows") {

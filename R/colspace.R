@@ -120,8 +120,9 @@ colspace <- function(vismodeldata,
   }
 
   # Include lum for appropriate spaces
-    if(!any(space2 %in% c('segment', 'ciexyz', 'cielab', 'cielch')))
-      res$lum <- vismodeldata$lum
+  if (!any(space2 %in% c("segment", "ciexyz", "cielab", "cielch"))) {
+    res$lum <- vismodeldata$lum
+  }
 
   # check qcatch if user-defined input
   if (is.null(attr(res, "qcatch"))) {

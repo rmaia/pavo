@@ -35,7 +35,6 @@
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Chad Eliason \email{cme16@zips.uakron.edu}

@@ -28,8 +28,8 @@ spec2rgb <- function(rspecdata, alpha = 1) {
     visual = "cie10", illum = "D65",
     vonkries = TRUE, relative = FALSE
   )
-  
-  XYZ <- XYZ[, !(names(XYZ) %in% 'lum')]
+
+  XYZ <- XYZ[, !(names(XYZ) %in% "lum")]
 
   rgb1 <- convertColor(XYZ, from = "XYZ", to = "sRGB")
 

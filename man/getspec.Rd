@@ -49,7 +49,6 @@ Avantes (before or after exporting).
 \examples{
 rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))
 head(rspecdata)
-
 }
 \references{
 Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)

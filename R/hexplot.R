@@ -102,13 +102,15 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
 
   # Hexagon sectors
   if (sectors == "coarse") {
-    for (x in seq_along(secX))
+    for (x in seq_along(secX)) {
       segments(0, 0, secX[x], secY[x], col = sec.col)
+    }
   }
 
   if (sectors == "fine") {
-    for (x in seq_along(secX_c))
+    for (x in seq_along(secX_c)) {
       segments(0, 0, secX_c[x], secY_c[x], col = sec.col)
+    }
   }
 
   # remove plot-specific args, add points after the stuff is drawn

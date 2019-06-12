@@ -32,7 +32,6 @@ loess parameters are best for subsequently smoothing the data (e.g. via \code{\l
 \examples{
 data(sicalis)
 plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
-
 }
 \seealso{
 \code{\link[=procspec]{procspec()}}
