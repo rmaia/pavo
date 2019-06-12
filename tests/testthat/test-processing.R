@@ -96,6 +96,8 @@ test_that("Aggregation", {
   # Subset all 'crown' patches (C in file names)
   expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4), "e42aa1c3abe2aca9114b03744e4f590004c8068a")
   expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "8cf8078dd22a0d7be9aebed447ce9122ef36f72f")
+  
+  expect_error(aggspec(teal, by = 7), 'by not a multiple')
 })
 
 test_that("Convert", {

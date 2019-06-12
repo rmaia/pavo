@@ -30,9 +30,8 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
-
-  # BEGIN RM EDIT
-  # check: user may have removed 'wl' function already.
+  
+  # Check: user may have removed 'wl' function already.
   # (data.frame doesn't allow duplicate names anymore, so this should work)
 
   wl_index <- which(names(rspecdata) == "wl")
@@ -58,15 +57,12 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     }
   }
 
-  # BEGIN RM EDIT 2
-  # check if the by argument has a 'wl' entry (e.g. if names were obtained through
+  # Check if the by argument has a 'wl' entry (e.g. if names were obtained through
   # regex conditions on the original spec names) and remove it
 
   if (length(which(by == "wl")) != 0) {
     by <- by[-which(by == "wl")]
   }
-
-  # END RM EDIT 2
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
@@ -87,16 +83,13 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # retain original 'by' values
   by0 <- by
 
-  # BEGIN RM EDIT 1
   # Allow for means of every "by" data, if "by" is a single number
   # i.e. if by=3, average every 3 consecutive data of "data"
   if (length(by) == 1) {
     by0 <- names(y)[seq(1, length(names(y)), by = by)]
     by <- rep(seq_len(length(y) / by), each = by)
   }
-  # END RM EDIT 1
 
-  # BEGIN RM EDIT 3
   # check: does data have the same number of columns as the by vector?
 
   if (dim(y)[2] != length(by)) {
@@ -106,8 +99,6 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
       dQuote(deparse(substitute(data)))
     )
   }
-
-  # END RM EDIT 3
 
   # Add ability to aggregate based on multiple vectors (given a list as input)
   # TODO: add that list can be an input in roxygen doc

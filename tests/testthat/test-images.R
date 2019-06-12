@@ -60,6 +60,7 @@ test_that("as.rimg", {
   papiliomagick <- as.rimg(magickpapilio)
   attr(papiliomagick, "imgname") <- "papilio"
   expect_equal(papilio, papiliomagick, check.attributes = TRUE)
+  
 })
 
 test_that("procimg", {
@@ -131,6 +132,11 @@ test_that("classify", {
   expect_true(is.rimg(fake2_class3[[2]]))
   expect_equal(dim(fake2_class3[[1]]), c(8, 12))
   expect_equal(dim(fake2_class3[[2]]), c(8, 12))
+  
+  # Messages
+  expect_error(classify(imgfakes, refID = 'fail'), 'No image found with that name')
+  expect_message(classify(imgfakes, kcols = c(3, 4), refID = 1), 'Cannot use reference image')
+  
 })
 
 test_that("adjacency", {

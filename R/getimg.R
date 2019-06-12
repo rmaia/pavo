@@ -101,23 +101,3 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
   }
   imgdat
 }
-
-## Rotate matrices 90-degrees
-rot90 <- function(x) {
-  permVec <- c(2, 1, 3:length(dim(x)))
-  rotA <- aperm(x, permVec)
-  rotA <- rotA[dim(x)[2]:1, , ]
-  rotA
-}
-
-## Mirror matrices about x axis
-mirrorx <- function(x) {
-  if (length(dim(x)) == 3) {
-    for (i in seq_len(dim(x)[3])) {
-      x[, , i] <- x[, , i][, rev(seq_len(ncol(x[, , i])))]
-    }
-  } else {
-    x <- x[, rev(seq_len(ncol(x)))]
-  }
-  x
-}

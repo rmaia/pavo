@@ -107,3 +107,23 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
   title(arg$main, xlab = arg$xlab, ylab = arg$ylab)
   rasterImage(imagedata2, 1, nrow(imagedata2), ncol(imagedata2), 1)
 }
+
+## Rotate matrices 90-degrees
+rot90 <- function(x) {
+  permVec <- c(2, 1, 3:length(dim(x)))
+  rotA <- aperm(x, permVec)
+  rotA <- rotA[dim(x)[2]:1, , ]
+  rotA
+}
+
+## Mirror matrices about x axis
+mirrorx <- function(x) {
+  if (length(dim(x)) == 3) {
+    for (i in seq_len(dim(x)[3])) {
+      x[, , i] <- x[, , i][, rev(seq_len(ncol(x[, , i])))]
+    }
+  } else {
+    x <- x[, rev(seq_len(ncol(x)))]
+  }
+  x
+}

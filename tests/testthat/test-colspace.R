@@ -144,6 +144,19 @@ test_that("Errors/messages", {
   vis.flowers <- vismodel(flowers, visual = "apis", relative = TRUE, qcatch = "Ei", vonkries = TRUE)
   class(vis.flowers) <- "data.frame"
   expect_error(colspace(vis.flowers, space = "hexagon"), "relative")
+  
+  # tcs
+  vis.flowers <- vismodel(flowers, visual = "apis")
+  expect_error(colspace(vis.flowers, space = 'tcs'), 'not tetrachromatic')
+  expect_warning(colspace(vismodel(flowers, visual = sensmodel(c(300, 400, 500, 600, 700))), space = 'tcs'), 'not tetrachromatic')
+  class(vis.flowers) <- 'data.frame'
+  expect_error(colspace(vis.flowers[1:3], space = 'tcs'), 'has fewer than four')
+  expect_warning(colspace(vis.flowers, space = 'tcs'), 'treating columns as')
+  expect_warning(colspace(cbind(vis.flowers, vis.flowers[1:2]), space = 'tcs'), 'has more than four columns')
+  
+  vis.flowers <- vismodel(flowers, visual = "bluetit")
+  names(vis.flowers) <- c('a', 'b', 'c', 'd', 'e')
+  expect_warning(colspace(vis.flowers, space = 'tcs'), 'Could not find columns')
 })
 
 test_that("Output regression", {
