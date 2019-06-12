@@ -31,8 +31,8 @@ test_that("as.rimg", {
   # Warnings/messages
   expect_message(as.rimg(imgfake), "[0,1]")
   expect_message(as.rimg(imgfake2), "[0,1]")
-  expect_warning(getimg(system.file("testdata/images/papilio.png", package = "pavo"), cores = 2), 'deprecated')
-  
+  expect_warning(getimg(system.file("testdata/images/papilio.png", package = "pavo"), cores = 2), "deprecated")
+
   # Classes/attributes/structure
   expect_equal(dim(rimgfake), c(10, 10, 3))
   expect_equal(dim(rimggrey), c(10, 10, 3))
@@ -53,12 +53,12 @@ test_that("as.rimg", {
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
   expect_equal(papilio_class, pap2, check.attributes = FALSE)
-  
+
   # magick conversion
   magickpapilio <- rimg2magick(papilio)
-  expect_equal(class(magickpapilio), 'magick-image')
+  expect_equal(class(magickpapilio), "magick-image")
   papiliomagick <- as.rimg(magickpapilio)
-  attr(papiliomagick, 'imgname') <- 'papilio'
+  attr(papiliomagick, "imgname") <- "papilio"
   expect_equal(papilio, papiliomagick, check.attributes = TRUE)
 })
 
@@ -121,11 +121,11 @@ test_that("classify", {
   expect_true(is.rimg(fake2_class2[[2]]))
   expect_equal(dim(fake2_class2[[1]]), c(8, 12))
   expect_equal(dim(fake2_class2[[2]]), c(8, 12))
-  
+
   # k medoids
-  expect_error(classify(imgfakes, method = 'kMedoids', kcols = fake_IDs, refID = 1), 'k-medoids')
-  expect_error(classify(imgfakes, method = 'kMedoids', interactive = TRUE), 'k-medoids')
-  fake2_class3 <- classify(imgfakes, method = 'kMedoids', kcols = fake_IDs)
+  expect_error(classify(imgfakes, method = "kMedoids", kcols = fake_IDs, refID = 1), "k-medoids")
+  expect_error(classify(imgfakes, method = "kMedoids", interactive = TRUE), "k-medoids")
+  fake2_class3 <- classify(imgfakes, method = "kMedoids", kcols = fake_IDs)
   expect_true(is.rimg(fake2_class3))
   expect_true(is.rimg(fake2_class3[[1]]))
   expect_true(is.rimg(fake2_class3[[2]]))
@@ -274,6 +274,6 @@ test_that("summary", {
 
   expect_equal(digest::sha1(summary(papilio), digits = 4), "261b24d0d720036a973549b2cfba1665680f3cfc")
   expect_equal(digest::sha1(summary(snakes), digits = 4), "2ec7acae69e5812b0544d347b37b7dcdc55b1517")
-  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep('papilio', 4), 1:4, 1:4))
+  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4))
   expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
 })

@@ -21,14 +21,14 @@
 #' plot(papilio)
 #' papilio_class <- classify(papilio, kcols = 4)
 #' plot(papilio_class)
-#' 
+#'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #' plot(snakes)
 #' snakes_class <- classify(snakes, kcols = 3)
 #' plot(snakes_class)
 #' }
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {

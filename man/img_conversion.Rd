@@ -35,7 +35,6 @@ class(papilio_cimg)
 # From class rimg to magick-image
 papilio_magick <- rimg2magick(papilio)
 class(papilio_magick)
-
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

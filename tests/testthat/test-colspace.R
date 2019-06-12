@@ -8,21 +8,21 @@ test_that("Receptor orders/names", {
   names(di) <- c("wl", "l", "s")
   di.vis <- vismodel(flowers, visual = di)
   di.space <- colspace(di.vis)
-  expect_equal(di.vis, di.space[, 2:1], check.attributes = FALSE)
+  expect_equal(di.vis[, 1:2], di.space[, 2:1], check.attributes = FALSE)
 
   # trichromat
   tri <- sensmodel(c(550, 440, 330))
   names(tri) <- c("wl", "l", "m", "s")
   tri.vis <- vismodel(flowers, visual = tri)
   tri.space <- colspace(tri.vis)
-  expect_equal(tri.vis, tri.space[, 3:1], check.attributes = FALSE)
+  expect_equal(tri.vis[, 1:3], tri.space[, 3:1], check.attributes = FALSE)
 
   # tetrachromat
   tetra <- sensmodel(c(660, 550, 440, 330))
   names(tetra) <- c("wl", "l", "m", "s", "u")
   tetra.vis <- vismodel(flowers, visual = tetra)
   tetra.space <- colspace(tetra.vis)
-  expect_equal(tetra.vis, tetra.space[, 4:1], check.attributes = FALSE)
+  expect_equal(tetra.vis[, 1:4], tetra.space[, 4:1], check.attributes = FALSE)
   expect_warning({
     sumtcs <- summary(tetra.space, by = 3)
   })
@@ -118,7 +118,7 @@ test_that("Errors/messages", {
   class(vis.flowers) <- "data.frame"
 
   expect_error(colspace(vis.flowers[1:2], space = "coc"), "fewer than three")
-  expect_warning(colspace(vis.flowers, space = "coc"), "treating columns as")
+  expect_warning(colspace(vis.flowers[1:3], space = "coc"), "treating columns as")
   expect_warning(colspace(cbind(vis.flowers, vis.flowers[, 2]), space = "coc"), "has more than three")
 
   vis.flowers <- vismodel(flowers, visual = "apis", relative = TRUE, qcatch = "Ei", vonkries = TRUE)
@@ -138,7 +138,7 @@ test_that("Errors/messages", {
   names(vis.flowers)[1] <- "a"
 
   expect_error(colspace(vis.flowers[1:2], space = "hexagon"), "fewer than three")
-  expect_warning(colspace(vis.flowers, space = "hexagon"), "treating columns as")
+  expect_warning(colspace(vis.flowers[1:3], space = "hexagon"), "treating columns as")
   expect_warning(colspace(cbind(vis.flowers, vis.flowers[, 2]), space = "hexagon"), "has more than three")
 
   vis.flowers <- vismodel(flowers, visual = "apis", relative = TRUE, qcatch = "Ei", vonkries = TRUE)
@@ -154,7 +154,7 @@ test_that("Output regression", {
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 4), "b6e9903af99aa8b6dab9aa6e8e5e5954a6f16bb1") # trispace
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 4), "f7b2fdc06e9e3d6597011aa05a654a79b306c03e") # tcs
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4), "5defb10dbb4f988431a2e706025aa613448220ec") # categorical
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4), "5b6a96fac5140f9109ab4cee6ad96e8ff6beecb1") # segment
+  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4), "0fe76c8979e1cf37d33763d036e1c125270aa2bb") # segment
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", vonkries = TRUE, achromatic = "l"), space = "coc"), digits = 4), "2c2afbdc41577ba095cf6879cfac157315a65afe") # coc
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", qcatch = "Ei", vonkries = TRUE, relative = FALSE, achromatic = "l"), space = "hexagon"), digits = 4), "20ce621deff5b1bf62134f585daaf9941af631eb") # hexagon
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4), "ab8b1f06949fc1f5ee5263c557f317a33b66515e") # ciexyz

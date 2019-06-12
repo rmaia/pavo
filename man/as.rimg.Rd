@@ -49,7 +49,6 @@ is.rimg(fake)
 # Convert to rimg object and check again
 fake2 <- as.rimg(fake)
 is.rimg(fake2)
-
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

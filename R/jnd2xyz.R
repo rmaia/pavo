@@ -56,7 +56,6 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     x3
   }
 
-
   # Accessory functions
   pos3 <- function(d12, d13, d23) {
     x3 <- (d13^2 - d23^2 + d12^2) / (2 * d12)
@@ -92,6 +91,11 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     grep("jnd2xyzrrf", references$patch1, invert = TRUE),
     grep("jnd2xyzrrf", references$patch2)
   ), ]
+
+  # Strip 'lum' column if it's all NA
+  if (all(is.na(coldistres$dL))) {
+    coldistres <- coldistres[, !names(coldistres) %in% "dL"]
+  }
 
   combined <- rbind(coldistres, references)
 

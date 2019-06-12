@@ -17,7 +17,7 @@ test_that("Warnings", {
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
-  expect_warning(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "number of cones not specified")
+  expect_warning(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "number of cones not specified; assumed to be 4")
   expect_warning(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
 })
 
@@ -75,7 +75,7 @@ test_that("jnd transform", {
 
   # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
-  expect_equal(dim(coldist(vismodel(flowers))), c(630, 3))
+  expect_equal(dim(coldist(vismodel(flowers))), c(630, 4))
 
   rownames(attr(jnd.flowers, "resref"))[4] <- "nope"
   expect_error(jndrot(jnd.flowers), "does not match")

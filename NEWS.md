@@ -6,11 +6,13 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `vismodel()`, `colspace()`, and `coldist()` now always return `lum` and `dL` columns, for consistency.
 * `irrad2flux()` and `flux2irrad()` use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)
 * `getimg()` can now import images from URL's
 * the `cores` argument in `getimg()` is deprecated, as image import is vectorised
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images
 * the `resize` argument in `procimg()` now takes a percentage, rather than scaling factor
+* fixed a bug where `colspace(space = segment)` would return both a `B` and (redundant) `lum` column
 
 # pavo 2.1.0
 

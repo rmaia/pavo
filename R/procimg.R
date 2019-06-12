@@ -88,10 +88,11 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (is.numeric(resize) || is.numeric(rotate)) {
     imgnames <- lapply(image, function(x) attr(x, "imgname"))
     image <- rimg2magick(image)
-    if(is.numeric(rotate))
+    if (is.numeric(rotate)) {
       image <- image_rotate(image, rotate)
-    if(is.numeric(resize)){
-      size <- paste0(resize, "%")  # magick geometry string
+    }
+    if (is.numeric(resize)) {
+      size <- paste0(resize, "%") # magick geometry string
       image <- image_resize(image, size, "Quadratic")
     }
     image <- as.rimg(image, imgnames)

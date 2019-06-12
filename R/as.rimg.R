@@ -30,7 +30,6 @@
 #' # Convert to rimg object and check again
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
-#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -128,11 +127,13 @@ as.rimg.default <- function(object, name = "img") {
       for (i in seq_along(object2)) attr(object2[[i]], "k") <- length(table(object2[[i]])) # kcols
       for (i in seq_along(object2)) attr(object2[[i]], "class") <- c("rimg", "matrix") # class
       for (i in seq_along(object2)) attr(object2[[i]], "colnames") <- data.frame(name = seq_along(table(object2[[i]]))) # colour-category names (in progress)
-      for (i in seq_along(object2)) attr(object2[[i]], "classRGB") <- data.frame(
+      for (i in seq_along(object2)) {
+        attr(object2[[i]], "classRGB") <- data.frame(
           R = rep(NA, length(table(object2[[i]]))),
           G = rep(NA, length(table(object2[[i]]))),
           B = rep(NA, length(table(object2[[i]])))
         )
+      }
       # The list itself needs attributes
       class(object2) <- c("rimg", "list")
       attr(object2, "state") <- "colclass"
@@ -200,7 +201,6 @@ is.rimg <- function(object) {
 #' # From class rimg to magick-image
 #' papilio_magick <- rimg2magick(papilio)
 #' class(papilio_magick)
-#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' @name img_conversion
