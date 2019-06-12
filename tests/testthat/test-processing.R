@@ -94,7 +94,7 @@ test_that("Aggregation", {
   tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 
   # Subset all 'crown' patches (C in file names)
-  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4), "fac9de4d69bf66f262dc09dd05b9d274266fb398")
+  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4), "e42aa1c3abe2aca9114b03744e4f590004c8068a")
   expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "8cf8078dd22a0d7be9aebed447ce9122ef36f72f")
 })
 

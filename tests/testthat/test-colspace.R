@@ -154,7 +154,7 @@ test_that("Output regression", {
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 4), "b6e9903af99aa8b6dab9aa6e8e5e5954a6f16bb1") # trispace
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 4), "f7b2fdc06e9e3d6597011aa05a654a79b306c03e") # tcs
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4), "5defb10dbb4f988431a2e706025aa613448220ec") # categorical
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4), "5b6a96fac5140f9109ab4cee6ad96e8ff6beecb1") # segment
+  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4), "0fe76c8979e1cf37d33763d036e1c125270aa2bb") # segment
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", vonkries = TRUE, achromatic = "l"), space = "coc"), digits = 4), "2c2afbdc41577ba095cf6879cfac157315a65afe") # coc
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", qcatch = "Ei", vonkries = TRUE, relative = FALSE, achromatic = "l"), space = "hexagon"), digits = 4), "20ce621deff5b1bf62134f585daaf9941af631eb") # hexagon
   expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4), "ab8b1f06949fc1f5ee5263c557f317a33b66515e") # ciexyz

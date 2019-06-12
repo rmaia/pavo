@@ -10,7 +10,7 @@ test_that("Output regression", {
   expect_equal(digest::sha1(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit"), digits = 4), "802350160486ca224f16dd1b5dde0afa5caa893b")
   expect_equal(digest::sha1(vismodel(flowers, visual = "musca", achro = "md.r1", relative = FALSE), digits = 4), "a3ef5be279eadffeb56de61162c632d28ce52fc8")
   expect_equal(digest::sha1(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", bkg = "green", vonkries = TRUE, achromatic = "l"), digits = 4), "896951a2ca1425a09c4907e964cfdf04856185d1")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4), "8e59f884320fc49a33a1bc00c202a21e16335e45")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4), "89689372836a478440853c441f1a87c4caac544b")
 
   # Attributes
   expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4), "6d34450fb15cf66e32f95e4e2e803df917e5d46e")
