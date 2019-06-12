@@ -182,8 +182,11 @@ coldist <- function(modeldata,
   # Pre-processing for colspace objects
   if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
-    if (qcatch == "Ei") {
-      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+    # Pre-processing for vismodel objects
+    if (is.vismodel(modeldata)) {
+      if (qcatch == "Ei") {
+        stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
+      }
     }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
@@ -199,22 +202,6 @@ coldist <- function(modeldata,
     }
   }
 
-  # Pre-processing for vismodel objects
-  # if (is.vismodel(modeldata)) {
-  #   # Set achromatic = FALSE if visual model has achromatic = 'none'
-  #   if (attr(modeldata, "visualsystem.achromatic") == "none" && achromatic) {
-  #     warning("achromatic = TRUE but visual model was calculated with achromatic = ",
-  #       dQuote("none"), "; achromatic contrast not calculated.",
-  #       call. = FALSE
-  #     )
-  #     achromatic <- FALSE
-  #   }
-    # initial checks...
-  #   if (qcatch == "Ei") {
-  #     stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
-  #   }
-  # }
-
   # transformations in case object is neither from colspace or vismodel
   if (is.null(ncone)) {
     if (achromatic) {
@@ -225,7 +212,11 @@ coldist <- function(modeldata,
       )
     }
     else {
-      ncone <- ncol(modeldata)
+      # Don't count all-NA columns when guessing ncone 
+      if(any(sapply(modeldata, function(x) all(is.na(x)))))
+        ncone <- ncol(modeldata) - 1
+      else
+        ncone <- ncol(modeldata)
       warning("number of cones not specified; assumed to be ", ncone,
         call. = FALSE
       )
@@ -424,7 +415,7 @@ coldist <- function(modeldata,
   }
   
   # Set achro contrasts to NA if no lum values supplied
-  if(attr(modeldata, "visualsystem.achromatic") == "none")
+  if(attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic")))
     res$dL = NA
 
   attr(res, "ncone") <- ncone
