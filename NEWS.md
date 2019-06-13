@@ -13,6 +13,7 @@
 * fixed a small bug in `classify()` when using `refID` and `kcols` for multiple images
 * the `resize` argument in `procimg()` now takes a percentage, rather than scaling factor
 * fixed a bug where `colspace(space = segment)` would return both a `B` and (redundant) `lum` column
+* fixed a bug where the rod sensitivity of _Canis familiaris_ was inaccessible through `vismodel()`
 
 # pavo 2.1.0
 

@@ -368,12 +368,13 @@ vismodel <- function(rspecdata,
   # Achromatic contrast
 
   # Calculate lum
-  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "ml", "l", "all", "user-defined")) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", 'cf.r', "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
       "bt.dc" = ,
       "ch.dc" = ,
       "st.dc" = ,
       "md.r1" = ,
+      "cf.r" = ,
       "ra.dc" = sens[, grep(achromatic2, names(sens))],
       "ml" = rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])]),
       "l" = S[, dim(S)[2]],
