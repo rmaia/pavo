@@ -20,6 +20,9 @@ test_that("getspec", {
 
   jazirrad <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "JazIrrad"))
   expect_is(jazirrad, "rspec")
+  
+  non_EN <- suppressMessages(getspec(system.file("testdata/subdir", package = "pavo"), ext = "txt", decimal = ','))
+  expect_is(non_EN, "rspec")
 
   proc <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "ProcSpec"))
   expect_is(proc, "rspec")
