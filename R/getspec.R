@@ -126,7 +126,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       )
 
       # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
-      if (any(grepl("Begin Calibration Data", raw))) {
+      if (grepl("\\.JazIrrad$", ff, ignore.case = ignore.case) && any(grepl("Begin Calibration Data", raw))) {
         raw <- raw[1:grep("Begin Calibration Data", raw) - 1]
       }
 
