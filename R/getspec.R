@@ -114,6 +114,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # function.
 
       tempframe <- parse_procspec(ff)
+      
     } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = ignore.case)) {
       tempframe <- parse_avantes(ff)
     } else {
@@ -125,11 +126,20 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       )
 
       # rough fix for 'JazIrrad' files that have a stram of calibration data at the end
-      if (any(grepl("Begin Calibration Data", raw))) {
+      if (grepl("\\.JazIrrad$", ff, ignore.case = ignore.case) && any(grepl("Begin Calibration Data", raw))) {
         raw <- raw[1:grep("Begin Calibration Data", raw) - 1]
       }
 
       # ToDo we can actually use this raw string to import metadata if we want
+      
+      # Strip badly encoded characters
+      raw <- sapply(raw, function(line) {
+        # Convert non-ASCII character to ""
+        line <- iconv(line, to = "ASCII", sub = "")
+        # Remove the extra malformed character
+        line <- gsub("\\\001", "", line)
+        return(line)
+      }, USE.NAMES = FALSE)
 
       # substitute separators for a single value to be used in split
       raw <- gsub(seps, ";", raw)
