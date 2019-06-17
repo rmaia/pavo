@@ -12,8 +12,18 @@ test_that("Errors", {
   expect_error(coldist(vismodel(flowers), weber.ref = 5), "greater than the length of vector")
 })
 
-test_that("Warnings", {
+test_that("Messages & warnings", {
   data(flowers)
+  
+  expect_message(coldist(vismodel(flowers, relative = FALSE)), "noise-weighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'segment'))), "unweighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'musca'), space = 'categorical')), "unweighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'cie2'), space = 'cielab')), "CIE2000 distances")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "CIE2000 distances")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, 
+                                           qcatch = 'Ei', vonkries = TRUE), space = 'coc')), "city-bloc distances")
+  expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, 
+                                           qcatch = 'Ei', vonkries = TRUE), space = 'hexagon')), "unweighted Euclidean")
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")

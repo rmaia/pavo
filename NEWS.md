@@ -6,6 +6,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* added a message to indicate what distance metric is being calculated during calls to `coldist()` 
 * `vismodel()`, `colspace()`, and `coldist()` now always return `lum` and `dL` columns, for consistency.
 * `irrad2flux()` and `flux2irrad()` use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)
 * `getimg()` can now import images from URL's
@@ -15,6 +16,7 @@
 * fixed a bug where `colspace(space = segment)` would return both a `B` and (redundant) `lum` column
 * fixed a bug where the rod sensitivity of _Canis familiaris_ was inaccessible through `vismodel()`
 * fixed an issue in `getspec()` where badly encoded characters in some spectral files would cause failure
+* fixed a bug where `coldist()` would attempt to estimate receptor-noise weigted distances rather than cie-distances for `cielch` model results
 
 # pavo 2.1.0
 

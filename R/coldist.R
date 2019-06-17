@@ -163,7 +163,7 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
-  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELch", "segment", "coc"))
+  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "segment", "coc"))
 
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
@@ -231,6 +231,9 @@ coldist <- function(modeldata,
   }
 
   if (usereceptornoisemodel) {
+    
+    message('Calculating noise-weighted Euclidean distances...')
+    
     #########################
     # Receptor Noise Models #
     #########################
@@ -362,13 +365,23 @@ coldist <- function(modeldata,
     }
   } else {
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
+    
+    # Message about the distances being calculated
+    note <- switch(attr(modeldata, "clrsp"),
+                          "hexagon" = ,
+                          "categorical" = ,
+                          "segment" = "Calculating unweighted Euclidean distances...",
+                          "CIELAB" = ,
+                          "CIELCh" = "Calculating CIE2000 distances...",
+                          "coc" = "Calculating city-bloc distances...")
+    message(note)
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
       "hexagon" = ,
       "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
-      "CIELAB" = ,
-      "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
       "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
+      "CIELAB" = ,
+      "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
       "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
@@ -376,7 +389,7 @@ coldist <- function(modeldata,
         "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
         "categorical" = NA,
         "CIELAB" = ,
-        "CIELch" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
+        "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
         "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
         "coc" = NA
       )
