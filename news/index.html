@@ -152,6 +152,8 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>added a message to indicate what distance metric is being calculated during calls to <code><a href="../reference/coldist.html">coldist()</a></code>
+</li>
 <li>
 <code><a href="../reference/vismodel.html">vismodel()</a></code>, <code><a href="../reference/colspace.html">colspace()</a></code>, and <code><a href="../reference/coldist.html">coldist()</a></code> now always return <code>lum</code> and <code>dL</code> columns, for consistency.</li>
 <li>
@@ -164,6 +166,8 @@
 <li>fixed a bug where <code><a href="../reference/colspace.html">colspace(space = segment)</a></code> would return both a <code>B</code> and (redundant) <code>lum</code> column</li>
 <li>fixed a bug where the rod sensitivity of <em>Canis familiaris</em> was inaccessible through <code><a href="../reference/vismodel.html">vismodel()</a></code>
 </li>
+<li>fixed an issue in <code><a href="../reference/getspec.html">getspec()</a></code> where badly encoded characters in some spectral files would cause failure</li>
+<li>fixed a bug where <code><a href="../reference/coldist.html">coldist()</a></code> would attempt to estimate receptor-noise weigted distances rather than cie-distances for <code>cielch</code> model results</li>
 </ul>
 </div>
 </div>
