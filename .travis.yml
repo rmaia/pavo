@@ -7,7 +7,7 @@ cache: packages
 addons:
   apt:
     sources:
-    - sourceline: 'ppa:opencpu/imagemagick'
+    - sourceline: 'ppa:cran/imagemagick'
     packages:
     - libgmp3-dev
     - libmagick++-dev
