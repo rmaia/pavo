@@ -110,11 +110,6 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
-# This will also work, but give you several warnings you shouldn't ignore!!
-col.sicalis <- colspace(vis.sicalis)
-tetradist.sicalis.n <- coldist(col.sicalis)
-
-tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
 }
 
 }

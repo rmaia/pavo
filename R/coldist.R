@@ -88,12 +88,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
-#'
-#' # This will also work, but give you several warnings you shouldn't ignore!!
-#' col.sicalis <- colspace(vis.sicalis)
-#' tetradist.sicalis.n <- coldist(col.sicalis)
-#'
-#' tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
+#' 
 #' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -205,7 +200,6 @@ coldist <- function(modeldata,
   }
 
   if (usereceptornoisemodel) {
-    message("Calculating noise-weighted Euclidean distances...")
 
     #########################
     # Receptor Noise Models #
@@ -216,6 +210,9 @@ coldist <- function(modeldata,
     # - vismodel object: always
     # - user input data: always
 
+    note_dS <- 'Calculating noise-weighted Euclidean distances'
+    note_dL <- NULL
+    
     dat <- as.matrix(modeldata)
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
@@ -296,6 +293,7 @@ coldist <- function(modeldata,
     )
 
     if (achromatic) {
+      note_dL <- ' and noise-weighted luminance contrasts'
       visref <- cbind(visref, lum = log(1e-10))
       visref[grep("jnd2xyzrrf", rownames(visref), invert = TRUE), "lum"] <-
         dat[seq(refsamp), dim(dat)[2]]
@@ -331,6 +329,7 @@ coldist <- function(modeldata,
         warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
+    message(paste0(note_dS, note_dL))
   } else {
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
 
