@@ -163,7 +163,7 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
-  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "segment", "coc"))
+  usereceptornoisemodel <- !isTRUE(any(class(modeldata) %in% 'colspace'))
 
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
@@ -239,18 +239,13 @@ coldist <- function(modeldata,
     #########################
 
     # should be used when:
-    # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
+    # - colspace object: never
     # - vismodel object: always
     # - user input data: always
 
-
-    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
-    } else {
       dat <- as.matrix(modeldata)
       rownames(dat) <- rownames(modeldata)
       colnames(dat) <- colnames(modeldata)
-    }
 
     # Ensure catches are log transformed
     dat <- switch(qcatch,
@@ -368,6 +363,9 @@ coldist <- function(modeldata,
     
     # Message about the distances being calculated
     note <- switch(attr(modeldata, "clrsp"),
+                          "dispace" = ,
+                          "trispace" = ,
+                          "tcs" = ,
                           "hexagon" = ,
                           "categorical" = ,
                           "segment" = "Calculating unweighted Euclidean distances...",
@@ -377,16 +375,22 @@ coldist <- function(modeldata,
     message(note)
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
+                          "dispace" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], "x"], dat[x[2], "x"]))),
+                          "tcs" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y", "z")], dat[x[2], c("x", "y", "z")]))),
+                          "trispace" = ,
       "hexagon" = ,
-      "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
-      "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
+      "categorical" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]))),
+      "segment" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
       "CIELAB" = ,
-      "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
+      "CIELCh" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")]))),
       "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
       res[, "dL"] <- switch(attr(modeldata, "clrsp"),
-        "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
+                            "dispace" = ,
+                            "trispace" = ,
+                            "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'lum'], dat[x[2], 'lum'])),
+        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'l'], dat[x[2], 'l'])),
         "categorical" = NA,
         "CIELAB" = ,
         "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
@@ -428,7 +432,7 @@ coldist <- function(modeldata,
     attr(res, "resref") <- resref
   }
 
-  # Set achro contrasts to NA if no lum values supplied
+  # Set achro contrasts to NA if no lum values supplied         # || !(achromatic)
   if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))) {
     res$dL <- NA
   }
@@ -546,9 +550,9 @@ euc <- function(coord1, coord2) {
   sqrt(sum((coord1 - coord2)^2))
 }
 
-# Achromatic 'green' receptor contrast in the hexagon
-achrohex <- function(coord1, coord2) {
-  coord1["l"] / coord2["l"]
+# Luminance contrast 
+lumcont <- function(coord1, coord2) {
+  coord1 / coord2
 }
 
 # Manhattan distance
