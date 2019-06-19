@@ -190,7 +190,7 @@ coldist <- function(modeldata,
     }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
-    if (attr(modeldata, "visualsystem.achromatic") == "none") {
+    if (attr(modeldata, "visualsystem.achromatic") == "none" && !(any(c('CIELAB', 'CIELCh') %in% attr(modeldata, 'clrsp')))) {
       modeldata$lum <- 0
       if (achromatic) {
         warning("achromatic = TRUE but visual model was calculated with achromatic = ",
@@ -362,17 +362,17 @@ coldist <- function(modeldata,
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
     
     # Message about the distances being calculated
-    note <- switch(attr(modeldata, "clrsp"),
+    note_dS <- switch(attr(modeldata, "clrsp"),
                           "dispace" = ,
                           "trispace" = ,
                           "tcs" = ,
                           "hexagon" = ,
                           "categorical" = ,
-                          "segment" = "Calculating unweighted Euclidean distances...",
+                          "segment" = "Calculating unweighted Euclidean distances",
                           "CIELAB" = ,
-                          "CIELCh" = "Calculating CIE2000 distances...",
-                          "coc" = "Calculating city-bloc distances...")
-    message(note)
+                          "CIELCh" = "Calculating CIE2000 distances",
+                          "coc" = "Calculating city-bloc distances")
+    note_dL <- NULL
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
                           "dispace" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], "x"], dat[x[2], "x"]))),
@@ -386,18 +386,30 @@ coldist <- function(modeldata,
       "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
     )
     if (achromatic) {
+      note_dL <- switch(attr(modeldata, "clrsp"),
+                        "dispace" = ,
+                        "trispace" = ,
+                        "tcs" = " and Weber luminance contrast",
+                        "hexagon" = " and simple luminance contrast",
+                        "segment" = " and Michelson luminance contrast",
+                        "CIELAB" = ,
+                        "CIELCh" = " and Weber luminance contrast",
+                        "categorical" = ,
+                        "coc" = " and no luminance contrast")
+
       res[, "dL"] <- switch(attr(modeldata, "clrsp"),
                             "dispace" = ,
                             "trispace" = ,
-                            "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'lum'], dat[x[2], 'lum'])),
-        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'l'], dat[x[2], 'l'])),
+                            "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'lum'], dat[x[2], 'lum'], type = 'weber')),
+        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'l'], dat[x[2], 'l'], type = 'simple')),
         "categorical" = NA,
         "CIELAB" = ,
-        "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
-        "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
+        "CIELCh" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "L"], dat[x[2], "L"], type = 'weber')),
+        "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = 'michelson')),
         "coc" = NA
       )
     }
+    message(paste0(note_dS, note_dL))
   }
 
   # Subsetting samples
@@ -552,8 +564,15 @@ euc <- function(coord1, coord2) {
 }
 
 # Luminance contrast 
-lumcont <- function(coord1, coord2) {
-  coord1 / coord2
+lumcont <- function(coord1, coord2, type = c('simple', 'weber', 'michelson')) {
+  contrast <- match.arg(type)
+  
+  dLout <- switch(contrast,
+                  'simple' = coord1 / coord2,
+                  'weber' = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / min(c(coord1, coord2)),
+                  'michelson' = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / (max(c(coord1, coord2)) + min(c(coord1, coord2))))
+  dLout
+    
 }
 
 # Manhattan distance
