@@ -163,7 +163,8 @@ coldist <- function(modeldata,
     }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
-    if (attr(modeldata, "visualsystem.achromatic") == "none" && !(any(c("CIELAB", "CIELCh") %in% attr(modeldata, "clrsp")))) {
+    if (attr(modeldata, "visualsystem.achromatic") == "none" && !(any(c("CIELAB", "CIELCh") %in% attr(modeldata, "clrsp")))
+        || is.null(attr(modeldata, "visualsystem.achromatic"))) {
       modeldata$lum <- 0
       if (achromatic) {
         warning("achromatic = TRUE but visual model was calculated with achromatic = ",

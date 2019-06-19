@@ -21,7 +21,7 @@ test_that("Messages & warnings", {
   expect_message(coldist(colspace(vismodel(flowers, visual = 'cie2'), space = 'cielab')), "CIE2000 distances")
   expect_message(coldist(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "CIE2000 distances")
   expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, 
-                                           qcatch = 'Ei', vonkries = TRUE), space = 'coc')), "city-bloc distances")
+                                           qcatch = 'Ei', vonkries = TRUE), space = 'coc')), "Manhattan distances")
   expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE, 
                                            qcatch = 'Ei', vonkries = TRUE), space = 'hexagon')), "unweighted Euclidean")
 
@@ -45,14 +45,8 @@ test_that("Equivalent", {
   )
 
   expect_equal(
-    coldist(vismodel(flowers, relative = FALSE), achromatic = FALSE),
-    suppressWarnings(coldist(colspace(vismodel(flowers, relative = FALSE)), achro = FALSE)),
-    check.attributes = FALSE
-  )
-
-  expect_equal(
-    suppressWarnings(coldist(vismodel(flowers))),
-    suppressWarnings(coldist(colspace(vismodel(flowers)))),
+    coldist(vismodel(flowers, relative = TRUE), achromatic = FALSE),
+    suppressWarnings(coldist(vismodel(flowers, relative = FALSE), achro = FALSE)),
     check.attributes = FALSE
   )
 
@@ -82,7 +76,6 @@ test_that("jnd transform", {
 
   expect_equal(digest::sha1(jndrot(jnd2xyz(coldist(vismodel(flowers, achromatic = "bt.dc", relative = FALSE), achromatic = TRUE))), digits = 4), "1785819f0a27bd0fcd516ef3cdc6753612870d76")
 
-
   # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
   expect_equal(dim(coldist(vismodel(flowers))), c(630, 4))
@@ -94,12 +87,26 @@ test_that("jnd transform", {
   expect_error(jndrot(jnd.flowers), "jnd2xyz")
 })
 
-test_that("Output regression", {
+test_that("Output", {
   library(digest)
   data(flowers)
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4), "c965bc7dcee5fda9748f80113874b8f7ac7250be") # dispace
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"), n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4), "d3fea6d99f61626581756c92e529a8a107a4411a") # dispace
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4), "177ffd2f53c5a53f44ac06fcebc2006f1bc3cc94")
+  
+  # Maximum possible unweighted Euclidean distances
+  di <- data.frame(s = c(0,1), l = c(1,0))
+  expect_equal(coldist(colspace(di, space = 'di'))['dS'], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  
+  tri <- data.frame(s = c(0,0), m = c(0,1), l = c(1,0))
+  expect_equal(coldist(colspace(tri, space = 'tri'))['dS'], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  
+  tetra <- data.frame(u = c(0, 1), s = c(0, 0), m = c(0, 0), l = c(1, 0))
+  expect_equal(coldist(colspace(tetra, space = 'tcs'))['dS'], (sqrt(3)/(2*sqrt(2)))*2, check.attributes = FALSE)
+  
+  # Regression
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'ml')), achromatic = TRUE), digits = 4), "3e41f66a7bb60c31d5f2c5c5e2d41bb04fb2a584")
+  expect_equal(digest::sha1(coldist(vismodel(flowers, visual = 'canis', achromatic = 'ml'), achromatic = TRUE, n = c(1, 1)), digits = 4), "2ed40bf8a00463a5562fc231faabb8cb169df64e")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4), "fda8f1c47b0d8e334b2d89b566457791219c3ab6")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"), n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4), "d3fea6d99f61626581756c92e529a8a107a4411a") 
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4), "ebfaa2e476f53e0533057e7bf4c88c46d2b05a00")
 })
 
 test_that("bootcoldist", {
