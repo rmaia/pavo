@@ -432,8 +432,9 @@ coldist <- function(modeldata,
     attr(res, "resref") <- resref
   }
 
-  # Set achro contrasts to NA if no lum values supplied         # || !(achromatic)
-  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))) {
+  # Set achro contrasts to NA if no lum values supplied
+  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))
+      || !(achromatic)) {
     res$dL <- NA
   }
 
