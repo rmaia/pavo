@@ -371,7 +371,7 @@ coldist <- function(modeldata,
                           "segment" = "Calculating unweighted Euclidean distances",
                           "CIELAB" = ,
                           "CIELCh" = "Calculating CIE2000 distances",
-                          "coc" = "Calculating city-bloc distances")
+                          "coc" = "Calculating Manhattan distances")
     note_dL <- NULL
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
@@ -383,7 +383,7 @@ coldist <- function(modeldata,
       "segment" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
       "CIELAB" = ,
       "CIELCh" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")]))),
-      "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+      "coc" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]), method = 'manhattan'))
     )
     if (achromatic) {
       note_dL <- switch(attr(modeldata, "clrsp"),
@@ -401,8 +401,8 @@ coldist <- function(modeldata,
                             "dispace" = ,
                             "trispace" = ,
                             "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'lum'], dat[x[2], 'lum'], type = 'weber')),
-        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'l'], dat[x[2], 'l'], type = 'simple')),
         "categorical" = NA,
+        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], 'l'], dat[x[2], 'l'], type = 'simple')),
         "CIELAB" = ,
         "CIELCh" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "L"], dat[x[2], "L"], type = 'weber')),
         "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = 'michelson')),
@@ -557,12 +557,6 @@ ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
 # START OTHER DISTANCES #
 #########################
 
-
-# Euclidean distance
-euc <- function(coord1, coord2) {
-  sqrt(sum((coord1 - coord2)^2))
-}
-
 # Luminance contrast 
 lumcont <- function(coord1, coord2, type = c('simple', 'weber', 'michelson')) {
   contrast <- match.arg(type)
@@ -573,11 +567,6 @@ lumcont <- function(coord1, coord2, type = c('simple', 'weber', 'michelson')) {
                   'michelson' = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / (max(c(coord1, coord2)) + min(c(coord1, coord2))))
   dLout
     
-}
-
-# Manhattan distance
-bloc2d <- function(coord1, coord2) {
-  abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
 }
 
 # CIE2000 colour distance for CIELCh (LOLWAT)
