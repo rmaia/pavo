@@ -1,13 +1,14 @@
 # pavo 2.2.0
 
-## NEW FEATURES
+## NEW FEATURES AND SIGNIFICANT CHANGES
 
 * added k-medoids clustering as an option in `classify()`
+* `coldist()` now return unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic `colspace()` models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use `coldist()` directly on `vismodel()` objects, as previously.
 
 ## MINOR FEATURES AND BUG FIXES
 
 * added a message to indicate what distance metric is being calculated during calls to `coldist()` 
-* `vismodel()`, `colspace()`, and `coldist()` now always return `lum` and `dL` columns, for consistency.
+* `vismodel()`, `colspace()`, and `coldist()` now always return `lum` and `dL` columns, for consistency
 * `irrad2flux()` and `flux2irrad()` use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)
 * `getimg()` can now import images from URL's
 * the `cores` argument in `getimg()` is deprecated, as image import is vectorised
