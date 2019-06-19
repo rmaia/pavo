@@ -81,6 +81,16 @@ it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colou
 with noise based on relative photoreceptor densities. It also accepts \code{\link[=colspace]{colspace()}} data in which case
 unweighted Euclidean distances or Manhattan distances (coc model only) are returned.
 }
+\section{Note on previous versions}{
+ Generic di- tri- and tetra-chromatic \code{colspace()} objects were previously
+passed through the receptor-noise limited model to return noise-weighted Euclidean distances. This
+behaviour has been amended, and generic spaces now return unweighted Euclidean distances. Equivalent
+results to the former behaviour can be attained by sending the results of \code{vismodel()} directly to \code{coldist()}
+, as previously, which also offers greater flexibility and reliability. Thus \code{coldist()} now returns
+unweighted Euclidean distances for \code{colspace()} objects (with the exception of Manhattan distances for
+the coc space), and noise-weighted Euclidean distances for \code{vismodel()} objects.
+}
+
 \examples{
 \dontrun{
 # Dichromat

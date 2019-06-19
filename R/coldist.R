@@ -58,6 +58,14 @@
 #' color-opponent-coding space. Units of `dL` vary, and are either simple contrast, Weber contrast,
 #' or Michelson contrast, as indicated by the output message.
 #'
+#' @section Note on previous versions: Generic di- tri- and tetra-chromatic `colspace()` objects were previously
+#' passed through the receptor-noise limited model to return noise-weighted Euclidean distances. This 
+#' behaviour has been amended, and generic spaces now return unweighted Euclidean distances. Equivalent 
+#' results to the former behaviour can be attained by sending the results of `vismodel()` directly to `coldist()`
+#' , as previously, which also offers greater flexibility and reliability. Thus `coldist()` now returns
+#'  unweighted Euclidean distances for `colspace()` objects (with the exception of Manhattan distances for 
+#'  the coc space), and noise-weighted Euclidean distances for `vismodel()` objects.   
+#'
 #' @export
 #'
 #' @examples
@@ -329,7 +337,7 @@ coldist <- function(modeldata,
         warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
-    message(paste0(note_dS, note_dL))
+    message(note_dS, note_dL)
   } else {
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
 
@@ -383,7 +391,7 @@ coldist <- function(modeldata,
         "coc" = NA
       )
     }
-    message(paste0(note_dS, note_dL))
+    message(note_dS, note_dL)
   }
 
   # Subsetting samples
