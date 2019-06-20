@@ -140,12 +140,14 @@
 <h1 class="page-header">
 <a href="#pavo-2-2-0" class="anchor"></a>pavo 2.2.0<small> Unreleased </small>
 </h1>
-<div id="new-features" class="section level2">
+<div id="new-features-and-significant-changes" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-and-significant-changes" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
 <li>added k-medoids clustering as an option in <code><a href="../reference/classify.html">classify()</a></code>
 </li>
+<li>
+<code><a href="../reference/coldist.html">coldist()</a></code> now return unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes" class="section level2">
@@ -155,7 +157,7 @@
 <li>added a message to indicate what distance metric is being calculated during calls to <code><a href="../reference/coldist.html">coldist()</a></code>
 </li>
 <li>
-<code><a href="../reference/vismodel.html">vismodel()</a></code>, <code><a href="../reference/colspace.html">colspace()</a></code>, and <code><a href="../reference/coldist.html">coldist()</a></code> now always return <code>lum</code> and <code>dL</code> columns, for consistency.</li>
+<code><a href="../reference/vismodel.html">vismodel()</a></code>, <code><a href="../reference/colspace.html">colspace()</a></code>, and <code><a href="../reference/coldist.html">coldist()</a></code> now always return <code>lum</code> and <code>dL</code> columns, for consistency</li>
 <li>
 <code><a href="../reference/irrad2flux.html">irrad2flux()</a></code> and <code><a href="../reference/irrad2flux.html">flux2irrad()</a></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</li>
 <li>
@@ -219,9 +221,9 @@
 <h1 class="page-header">
 <a href="#pavo-2-0-0" class="anchor"></a>pavo 2.0.0<small> 2018-09-22 </small>
 </h1>
-<div id="new-features-1" class="section level2">
+<div id="new-features" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>image-based workflow for the combined analysis of colour and pattern geometry</li>
 <li>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em>
@@ -247,9 +249,9 @@
 <h1 class="page-header">
 <a href="#pavo-1-4-0" class="anchor"></a>pavo 1.4.0<small> 2018-07-11 </small>
 </h1>
-<div id="new-features-2" class="section level2">
+<div id="new-features-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-2" class="anchor"></a>NEW FEATURES</h2>
+<a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>
 <code><a href="../reference/getspec.html">getspec()</a></code> can now read OceanOptics <code>.ProcSpec</code> files</li>

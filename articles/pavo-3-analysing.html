@@ -100,7 +100,7 @@
       <h1>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2019-06-17</h4>
+            <h4 class="date">2019-06-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -422,7 +422,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="dt">noise =</span> <span class="st">"neural"</span>, <span class="dt">achromatic =</span> <span class="ot">TRUE</span>, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>),</a>
 <a class="sourceLine" id="cb20-3" data-line-number="3">  <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">weber.achro =</span> <span class="fl">0.1</span></a>
 <a class="sourceLine" id="cb20-4" data-line-number="4">)</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</code></pre>
 <pre><code>##      patch1   patch2        dS        dL
 ## 1  cardinal   jacana  8.423965 3.3449627
 ## 2  cardinal   oriole  7.905876 3.5110820
@@ -440,7 +440,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 14 parakeet  tanager  5.969760 1.3891312
 ## 15    robin  tanager  7.688707 4.4674974</code></pre>
 <div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod.idi, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">weber =</span> <span class="fl">0.1</span>)</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances</code></pre>
 <pre><code>##      patch1   patch2        dS dL
 ## 1  cardinal   jacana 2.0993283 NA
 ## 2  cardinal   oriole 4.6567462 NA
@@ -460,18 +460,18 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). Note that, by default, <code>achromatic = FALSE</code>, so <code>dL</code> isn’t included in the second result (this is to maintain consistency since, in the <code><a href="../reference/vismodel.html">vismodel()</a></code> function, the <code>achromatic</code> argument defaults to <code>none</code>). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
 <p><code><a href="../reference/coldist.html">coldist()</a></code> also has a <code>subset</code> argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). <code>subset</code> can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:</p>
 <div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb26-1" data-line-number="1"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">subset =</span> <span class="st">'cardinal'</span>)</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
-<pre><code>##     patch1   patch2        dS
-## 1 cardinal   jacana  8.423965
-## 2 cardinal   oriole  7.905876
-## 3 cardinal parakeet  7.999730
-## 4 cardinal    robin  5.805562
-## 5 cardinal  tanager 10.100311</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances</code></pre>
+<pre><code>##     patch1   patch2        dS dL
+## 1 cardinal   jacana  8.423965 NA
+## 2 cardinal   oriole  7.905876 NA
+## 3 cardinal parakeet  7.999730 NA
+## 4 cardinal    robin  5.805562 NA
+## 5 cardinal  tanager 10.100311 NA</code></pre>
 <p>to:</p>
 <div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb29-1" data-line-number="1"><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vismod1, <span class="dt">subset =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="st">'cardinal'</span>, <span class="st">'jacana'</span>))</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
-<pre><code>##     patch1 patch2       dS
-## 1 cardinal jacana 8.423965</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances</code></pre>
+<pre><code>##     patch1 patch2       dS dL
+## 1 cardinal jacana 8.423965 NA</code></pre>
 </div>
 <div id="converting-receptor-noise-corrected-distances-to-cartesian-coordinates" class="section level4">
 <h4 class="hasAnchor">
@@ -520,7 +520,7 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a class="sourceLine" id="cb44-4" data-line-number="4">  <span class="dt">noise =</span> <span class="st">"neural"</span>, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">4</span>),</a>
 <a class="sourceLine" id="cb44-5" data-line-number="5">  <span class="dt">weber =</span> <span class="fl">0.1</span>, <span class="dt">achromatic =</span> <span class="ot">TRUE</span></a>
 <a class="sourceLine" id="cb44-6" data-line-number="6">)</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</code></pre>
 <div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb46-1" data-line-number="1"><span class="co"># Converting to Cartesian coordinates</span></a>
 <a class="sourceLine" id="cb46-2" data-line-number="2">fakedata.cc &lt;-<span class="st"> </span><span class="kw"><a href="../reference/jnd2xyz.html">jnd2xyz</a></span>(fakedata.cd, <span class="dt">ref1 =</span> <span class="st">"l"</span>, <span class="dt">axis1 =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">0</span>, <span class="dv">0</span>), <span class="dt">ref2 =</span> <span class="ot">NULL</span>)</a>
 <a class="sourceLine" id="cb46-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(fakedata.cc)</a></code></pre></div>
@@ -956,14 +956,14 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <p>Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in <code>R</code> using the <code><a href="../reference/coldist.html">coldist()</a></code> function on the <code><a href="../reference/colspace.html">colspace()</a></code> output:</p>
 <div class="sourceCode" id="cb103"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb103-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(<span class="kw"><a href="../reference/coldist.html">coldist</a></span>(tetra.flowers))</a></code></pre></div>
 <pre><code>## Warning: Quantum catch are relative, distances may not be meaningful</code></pre>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
-<pre><code>##                  patch1              patch2        dS dL
-## 1 Goodenia_heterophylla Goodenia_geniculata 0.4389066 NA
-## 2 Goodenia_heterophylla   Goodenia_gracilis 1.4421739 NA
-## 3 Goodenia_heterophylla    Xyris_operculata 0.3859043 NA
-## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1383047 NA
-## 5 Goodenia_heterophylla  Faradaya_splendida 0.3640816 NA
-## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2588980 NA</code></pre>
+<pre><code>## Calculating unweighted Euclidean distances</code></pre>
+<pre><code>##                  patch1              patch2         dS dL
+## 1 Goodenia_heterophylla Goodenia_geniculata 0.06695922 NA
+## 2 Goodenia_heterophylla   Goodenia_gracilis 0.20467411 NA
+## 3 Goodenia_heterophylla    Xyris_operculata 0.05407934 NA
+## 4 Goodenia_heterophylla       Eucalyptus_sp 0.01901724 NA
+## 5 Goodenia_heterophylla  Faradaya_splendida 0.05027645 NA
+## 6 Goodenia_heterophylla  Gaultheria_hispida 0.03897671 NA</code></pre>
 <p>Specialised colourspace models such as the colour-hexagon, coc space, CIELab and CIELCh models have their own distance measures, which are returned be default when run through <code><a href="../reference/coldist.html">coldist()</a></code>. Be sure to read the <code><a href="../reference/coldist.html">?coldist</a></code> documentation, and the original publications, to understand what is being returned. As an example, if we run the results of colour-hexagon modelling through <code><a href="../reference/coldist.html">coldist()</a></code>:</p>
 <div class="sourceCode" id="cb107"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb107-1" data-line-number="1"><span class="co"># Model flower colours according to a honeybee</span></a>
 <a class="sourceLine" id="cb107-2" data-line-number="2">vis.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(flowers, <span class="dt">visual =</span> <span class="st">"apis"</span>, <span class="dt">qcatch =</span> <span class="st">"Ei"</span>, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">vonkries =</span> <span class="ot">TRUE</span>, <span class="dt">achromatic =</span> <span class="st">"l"</span>, <span class="dt">bkg =</span> <span class="st">"green"</span>)</a>
@@ -972,15 +972,15 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <a class="sourceLine" id="cb107-5" data-line-number="5"><span class="co"># Estimate colour distances. No need to specify relative receptor densities, noise etc.,</span></a>
 <a class="sourceLine" id="cb107-6" data-line-number="6"><span class="co"># which only apply in the case of receptor-noise modelling</span></a>
 <a class="sourceLine" id="cb107-7" data-line-number="7">dist.flowers &lt;-<span class="st"> </span><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(hex.flowers)</a></code></pre></div>
-<pre><code>## Calculating unweighted Euclidean distances...</code></pre>
+<pre><code>## Calculating unweighted Euclidean distances</code></pre>
 <div class="sourceCode" id="cb109"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb109-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(dist.flowers)</a></code></pre></div>
-<pre><code>##                  patch1              patch2        dS
-## 1 Goodenia_heterophylla Goodenia_geniculata 0.3207265
-## 2 Goodenia_heterophylla   Goodenia_gracilis 0.6870945
-## 3 Goodenia_heterophylla    Xyris_operculata 0.3025298
-## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1111375
-## 5 Goodenia_heterophylla  Faradaya_splendida 0.2324927
-## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2280836</code></pre>
+<pre><code>##                  patch1              patch2        dS dL
+## 1 Goodenia_heterophylla Goodenia_geniculata 0.3207265 NA
+## 2 Goodenia_heterophylla   Goodenia_gracilis 0.6870945 NA
+## 3 Goodenia_heterophylla    Xyris_operculata 0.3025298 NA
+## 4 Goodenia_heterophylla       Eucalyptus_sp 0.1111375 NA
+## 5 Goodenia_heterophylla  Faradaya_splendida 0.2324927 NA
+## 6 Goodenia_heterophylla  Gaultheria_hispida 0.2280836 NA</code></pre>
 <p>the chromatic contrasts <code>dS</code> and achromatic contrasts <code>dL</code> are expressed as Euclidean distances in the hexagon, known as ‘hexagon units’ <span class="citation">(Chittka 1992)</span>. If we had instead used the colour-opponent coding space the units would have been city-bloc distances, while in the CIELab model the distances would be derived from the CIE colour-distance formula (2000).</p>
 </div>
 <div id="distances-in-n-dimensions" class="section level4">
@@ -1004,7 +1004,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <a class="sourceLine" id="cb112-2" data-line-number="2">vm.fms &lt;-<span class="st"> </span><span class="kw"><a href="../reference/vismodel.html">vismodel</a></span>(flowers, <span class="dt">visual =</span> fakemantisshrimp, <span class="dt">relative =</span> <span class="ot">FALSE</span>, <span class="dt">achromatic =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb112-3" data-line-number="3"></a>
 <a class="sourceLine" id="cb112-4" data-line-number="4">JND.fms &lt;-<span class="st"> </span><span class="kw"><a href="../reference/coldist.html">coldist</a></span>(vm.fms, <span class="dt">n =</span> <span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/c">c</a></span>(<span class="dv">1</span>, <span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">3</span>, <span class="dv">4</span>, <span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">5</span>))</a></code></pre></div>
-<pre><code>## Calculating noise-weighted Euclidean distances...</code></pre>
+<pre><code>## Calculating noise-weighted Euclidean distances</code></pre>
 <div class="sourceCode" id="cb114"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb114-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(JND.fms)</a></code></pre></div>
 <pre><code>##                  patch1              patch2        dS dL
 ## 1 Goodenia_heterophylla Goodenia_geniculata 16.297557 NA

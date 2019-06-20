@@ -40,9 +40,8 @@
 
 <meta property="og:description" content="Calculates colour distances. When data are the result of vismodel(),
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
-with noise based on relative photoreceptor densities. It also accepts colspace() data
-from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned." />
+with noise based on relative photoreceptor densities. It also accepts colspace() data in which case
+unweighted Euclidean distances or Manhattan distances (coc model only) are returned." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -148,9 +147,8 @@ distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) a
     
     <p>Calculates colour distances. When data are the result of <code><a href='vismodel.html'>vismodel()</a></code>,
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
-with noise based on relative photoreceptor densities. It also accepts <code><a href='colspace.html'>colspace()</a></code> data
-from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned.</p>
+with noise based on relative photoreceptor densities. It also accepts <code><a href='colspace.html'>colspace()</a></code> data in which case
+unweighted Euclidean distances or Manhattan distances (coc model only) are returned.</p>
     
     </div>
 
@@ -164,14 +162,13 @@ distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) a
     <tr>
       <th>modeldata</th>
       <td><p>(required) quantum catch colour data. Can be the result
-from <code><a href='vismodel.html'>vismodel()</a></code>, or <code><a href='colspace.html'>colspace()</a></code>. Data may also be independently calculated quantum catches,
-in the form of a data frame with columns representing photoreceptors.</p></td>
+from <code><a href='vismodel.html'>vismodel()</a></code> for noise-weighted Euclidean distances, or <code><a href='colspace.html'>colspace()</a></code> for
+unweighted (typically) Euclidean distances. Data may also be independently calculated
+quantum catches, in the form of a data frame with columns representing photoreceptors.</p></td>
     </tr>
     <tr>
       <th>noise</th>
-      <td><p>how the noise will be calculated. (Ignored for <code>colspace</code> objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models)):</p><ul>
+      <td><p>how the noise will be calculated (ignored for <code>colspace</code> objects):</p><ul>
 <li><p><code>neural</code> (default): noise is proportional to the Weber fraction and
 is independent of the intensity of the signal received (i.e. assumes bright conditions).</p></li>
 <li><p><code>quantum</code>: noise is the sum of the neural noise and receptor noise,
@@ -191,10 +188,9 @@ are supported.</p></td>
     <tr>
       <th>achromatic</th>
       <td><p>Logical. If <code>TRUE</code>, last column of the data frame is used to calculate
-the achromatic contrast, with noise based on the Weber fraction given by the argument
-<code>weber.achro</code>.
-If the data are from the hexagon model (i.e. <code><a href='colspace.html'>colspace(space = 'hexagon')</a></code>), it
-instead returns simple long (or 'green') receptor contrast.</p></td>
+the achromatic contrast, the form of which will depend on the input data and will be
+indicated by a message during execution. For noise-weighted distances, noise is based on
+the Weber fraction given by the argument <code>weber.achro</code>.</p></td>
     </tr>
     <tr>
       <th>qcatch</th>
@@ -212,8 +208,7 @@ channel is proportional to the logarithm of the quantum catch)</p></li>
       <td><p>photoreceptor densities for the cones used in visual modeling.
 must have same length as number of columns (excluding achromatic receptor if used;
 defaults to the Pekin robin <em>Leiothrix lutea</em> densities: <code><a href='https://www.rdocumentation.org/packages/base/topics/c'>c(1,2,2,4)</a></code>).
-Ignored for <code><a href='colspace.html'>colspace</a></code> objects if model is not a receptor noise model
-(i.e. hexagon, colour-opponent-coding, categorical, and cie models).</p></td>
+Ignored for <code><a href='colspace.html'>colspace</a></code> objects.</p></td>
     </tr>
     <tr>
       <th>weber</th>
@@ -224,24 +219,18 @@ fraction of one of the cone classes. <code>v</code> is then applied to estimate 
 Weber fraction of the other cones. by default, the value of 0.1 is used
 (the empirically estimated value for the
 LWS cone from <em>Leiothrix lutea</em>). See Olsson et al. 2017 for a review of
-published values in the literature. Ignored for <code>colspace</code> objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).</p></td>
+published values in the literature. Ignored for <code>colspace</code> objects.</p></td>
     </tr>
     <tr>
       <th>weber.ref</th>
       <td><p>the cone class used to obtain the empirical estimate of the
 Weber fraction used for the <code>weber</code> argument. By default, <code>n4</code> is used,
-representing the LWS cone for <em>Leiothrix lutea</em>. Ignored for <code>colspace</code> objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).</p></td>
+representing the LWS cone for <em>Leiothrix lutea</em>. Ignored for <code>colspace</code> objects.</p></td>
     </tr>
     <tr>
       <th>weber.achro</th>
       <td><p>the Weber fraction to be used to calculate achromatic contrast, when
-<code>achromatic = TRUE</code>. Defaults to 0.1. Ignored for <code>colspace</code> objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).</p></td>
+<code>achromatic = TRUE</code>. Defaults to 0.1. Ignored for <code>colspace</code> objects.</p></td>
     </tr>
     </table>
     
@@ -250,27 +239,20 @@ categorical, segment, and cie models).</p></td>
     <p>A data frame containing up to 4 columns.
 The first two (<code>patch1, patch2</code>) refer
 to the two colors being contrasted; <code>dS</code> is the chromatic contrast (delta S)
-and <code>dL</code> is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-model, euclidean distances in the categorical and segment space, manhattan distances in the
-color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L)
-contrast in the cielab model.</p>
+and <code>dL</code> is the achromatic contrast (delta L). Units of <code>dS</code> JND's in the receptor-noise
+model, unweighted Euclidean distances in colorspace models, and Manhattan distances in the
+color-opponent-coding space. Units of <code>dL</code> vary, and are either simple contrast, Weber contrast,
+or Michelson contrast, as indicated by the output message.</p>
     
     <h2 class="hasAnchor" id="note-on-previous-versions"><a class="anchor" href="#note-on-previous-versions"></a>Note on previous versions</h2>
 
-    
-    <p>previous versions of <code>coldist()</code> calculated receptor noise using the arguments
-<code>v</code> for the individual cone noise-to-signal ratio and <code>n1,n2,n3,n4</code> for
-the relative cone densities. These arguments have been replaced by <code>weber</code> and
-<code>n</code>, which takes a vector of relative cone densities. <code>weber.ref</code> allows
-the user to specify which receptor to use as the reference to obtain the
-desired Weber fraction, and <code>coldist()</code> calculates internally the value of <code>v</code>
-to be used when calculating the Weber fraction for the remaining cones.</p>
-<p>This allows a more explicit choice of Weber fraction, without the need to find the
-right value of <code>v</code> to use in order to obtain the desired signal-to-noise ratio. Furthermore,
-by allowing <code>n</code> to be entered as a vector, <code>coldist()</code> can now handle visual
-systems with more than four photoreceptors.</p>
-<p>In addition, the achromatic noise is calculated based on the <code>weber.achro</code>
-argument directly, and not based on <code>v</code> and <code>n4</code> as before.</p>
+    <p>Generic di- tri- and tetra-chromatic <code><a href='colspace.html'>colspace()</a></code> objects were previously
+passed through the receptor-noise limited model to return noise-weighted Euclidean distances. This
+behaviour has been amended, and generic spaces now return unweighted Euclidean distances. Equivalent
+results to the former behaviour can be attained by sending the results of <code><a href='vismodel.html'>vismodel()</a></code> directly to <code>coldist()</code>
+, as previously, which also offers greater flexibility and reliability. Thus <code>coldist()</code> now returns
+unweighted Euclidean distances for <code><a href='colspace.html'>colspace()</a></code> objects (with the exception of Manhattan distances for
+the coc space), and noise-weighted Euclidean distances for <code><a href='vismodel.html'>vismodel()</a></code> objects.</p>
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
@@ -320,11 +302,6 @@ Behavioral Ecology, doi: <a href='https://doi.org/10.1093/beheco/arx133'>10.1093
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>)
 
-<span class='co'># This will also work, but give you several warnings you shouldn't ignore!!</span>
-<span class='no'>col.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>)
-<span class='no'>tetradist.sicalis.n</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>col.sicalis</span>)
-
-<span class='no'>tetradist.sicalis.q</span> <span class='kw'>&lt;-</span> <span class='fu'>coldist</span>(<span class='no'>vis.sicalis</span>, <span class='kw'>noise</span> <span class='kw'>=</span> <span class='st'>"quantum"</span>)
 <span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
