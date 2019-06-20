@@ -2,13 +2,13 @@
 #'
 #' Calculates colour distances. When data are the result of [vismodel()],
 #' it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
-#' with noise based on relative photoreceptor densities. It also accepts [colspace()] data
-#' from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-#' distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned.
+#' with noise based on relative photoreceptor densities. It also accepts [colspace()] data in which case
+#' unweighted Euclidean distances or Manhattan distances (coc model only) are returned.
 #'
 #' @param modeldata (required) quantum catch colour data. Can be the result
-#'  from [vismodel()], or [colspace()]. Data may also be independently calculated quantum catches,
-#'  in the form of a data frame with columns representing photoreceptors.
+#'  from [vismodel()] for noise-weighted Euclidean distances, or [colspace()] for
+#'  unweighted (typically) Euclidean distances. Data may also be independently calculated
+#'  quantum catches, in the form of a data frame with columns representing photoreceptors.
 #' @param qcatch if the object is of class [`vismodel`] or [`colspace`],
 #'  this argument is ignored. If the object is a data frame of quantal catches
 #'  from another source, this argument is used to specify what type of quantum catch is being
@@ -21,15 +21,13 @@
 #'  must match the labels of the input samples, but partial matching (and regular expressions)
 #'  are supported.
 #' @param achromatic Logical. If `TRUE`, last column of the data frame is used to calculate
-#'  the achromatic contrast, with noise based on the Weber fraction given by the argument
-#'  `weber.achro`.
-#'  If the data are from the hexagon model (i.e. `colspace(space = 'hexagon')`), it
-#'  instead returns simple long (or 'green') receptor contrast.
+#'  the achromatic contrast, the form of which will depend on the input data and will be
+#'  indicated by a message during execution. For noise-weighted distances, noise is based on
+#'  the Weber fraction given by the argument `weber.achro`.
 #' @param n photoreceptor densities for the cones used in visual modeling.
 #'  must have same length as number of columns (excluding achromatic receptor if used;
 #'  defaults to the Pekin robin *Leiothrix lutea* densities: `c(1,2,2,4)`).
-#'  Ignored for [`colspace`] objects if model is not a receptor noise model
-#'  (i.e. hexagon, colour-opponent-coding, categorical, and cie models).
+#'  Ignored for [`colspace`] objects.
 #' @param weber The Weber fraction to be used (often also referred to as receptor noise,
 #'  or *e*). The noise-to-signal ratio `v` is unknown,
 #'  and therefore must be calculated based on the empirically estimated Weber
@@ -37,21 +35,13 @@
 #'  Weber fraction of the other cones. by default, the value of 0.1 is used
 #'  (the empirically estimated value for the
 #'  LWS cone from *Leiothrix lutea*). See Olsson et al. 2017 for a review of
-#'  published values in the literature. Ignored for `colspace` objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-#'  categorical, segment, and cie models).
+#'  published values in the literature. Ignored for `colspace` objects.
 #' @param weber.ref the cone class used to obtain the empirical estimate of the
 #'  Weber fraction used for the `weber` argument. By default, `n4` is used,
-#'  representing the LWS cone for *Leiothrix lutea*. Ignored for `colspace` objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-#' categorical, segment, and cie models).
+#'  representing the LWS cone for *Leiothrix lutea*. Ignored for `colspace` objects.
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when
-#'  `achromatic = TRUE`. Defaults to 0.1. Ignored for `colspace` objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-#' categorical, segment, and cie models).
-#' @param noise how the noise will be calculated. (Ignored for `colspace` objects
-#'  if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-#'  categorical, segment, and cie models)):
+#'  `achromatic = TRUE`. Defaults to 0.1. Ignored for `colspace` objects.
+#' @param noise how the noise will be calculated (ignored for `colspace` objects):
 #' * `neural` (default): noise is proportional to the Weber fraction and
 #'  is independent of the intensity of the signal received (i.e. assumes bright conditions).
 #' * `quantum`: noise is the sum of the neural noise and receptor noise,
@@ -63,27 +53,18 @@
 #' @return A data frame containing up to 4 columns.
 #' The first two (`patch1, patch2`) refer
 #' to the two colors being contrasted; `dS` is the chromatic contrast (delta S)
-#' and `dL` is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-#' model, euclidean distances in the categorical and segment space, manhattan distances in the
-#' color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L)
-#' contrast in the cielab model.
+#' and `dL` is the achromatic contrast (delta L). Units of `dS` JND's in the receptor-noise
+#' model, unweighted Euclidean distances in colorspace models, and Manhattan distances in the
+#' color-opponent-coding space. Units of `dL` vary, and are either simple contrast, Weber contrast,
+#' or Michelson contrast, as indicated by the output message.
 #'
-#' @section Note on previous versions:
-#' previous versions of [coldist()] calculated receptor noise using the arguments
-#' `v` for the individual cone noise-to-signal ratio and `n1,n2,n3,n4` for
-#' the relative cone densities. These arguments have been replaced by `weber` and
-#' `n`, which takes a vector of relative cone densities. `weber.ref` allows
-#' the user to specify which receptor to use as the reference to obtain the
-#' desired Weber fraction, and [coldist()] calculates internally the value of `v`
-#' to be used when calculating the Weber fraction for the remaining cones.
-#'
-#' This allows a more explicit choice of Weber fraction, without the need to find the
-#' right value of `v` to use in order to obtain the desired signal-to-noise ratio. Furthermore,
-#' by allowing `n` to be entered as a vector, [coldist()] can now handle visual
-#' systems with more than four photoreceptors.
-#'
-#' In addition, the achromatic noise is calculated based on the `weber.achro`
-#' argument directly, and not based on `v` and `n4` as before.
+#' @section Note on previous versions: Generic di- tri- and tetra-chromatic `colspace()` objects were previously
+#' passed through the receptor-noise limited model to return noise-weighted Euclidean distances. This 
+#' behaviour has been amended, and generic spaces now return unweighted Euclidean distances. Equivalent 
+#' results to the former behaviour can be attained by sending the results of `vismodel()` directly to `coldist()`
+#' , as previously, which also offers greater flexibility and reliability. Thus `coldist()` now returns
+#'  unweighted Euclidean distances for `colspace()` objects (with the exception of Manhattan distances for 
+#'  the coc space), and noise-weighted Euclidean distances for `vismodel()` objects.   
 #'
 #' @export
 #'
@@ -115,12 +96,7 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
-#'
-#' # This will also work, but give you several warnings you shouldn't ignore!!
-#' col.sicalis <- colspace(vis.sicalis)
-#' tetradist.sicalis.n <- coldist(col.sicalis)
-#'
-#' tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
+#' 
 #' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -163,7 +139,7 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
-  usereceptornoisemodel <- !isTRUE(attr(modeldata, "clrsp") %in% c("hexagon", "categorical", "CIELAB", "CIELCh", "segment", "coc"))
+  usereceptornoisemodel <- !isTRUE(any(class(modeldata) %in% "colspace"))
 
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
@@ -190,7 +166,8 @@ coldist <- function(modeldata,
     }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
-    if (attr(modeldata, "visualsystem.achromatic") == "none") {
+    if (attr(modeldata, "visualsystem.achromatic") == "none" && !(any(c("CIELAB", "CIELCh") %in% attr(modeldata, "clrsp")))
+        || is.null(attr(modeldata, "visualsystem.achromatic"))) {
       modeldata$lum <- 0
       if (achromatic) {
         warning("achromatic = TRUE but visual model was calculated with achromatic = ",
@@ -231,26 +208,22 @@ coldist <- function(modeldata,
   }
 
   if (usereceptornoisemodel) {
-    
-    message('Calculating noise-weighted Euclidean distances...')
-    
+
     #########################
     # Receptor Noise Models #
     #########################
 
     # should be used when:
-    # - colspace object: is not hexagon, coc, categorical, ciexyz, cielab, cielch
+    # - colspace object: never
     # - vismodel object: always
     # - user input data: always
 
-
-    if (any(c("dispace", "trispace", "tcs") %in% attr(modeldata, "clrsp"))) {
-      dat <- as.matrix(modeldata[, names(modeldata) %in% c("u", "s", "m", "l", "lum")])
-    } else {
-      dat <- as.matrix(modeldata)
-      rownames(dat) <- rownames(modeldata)
-      colnames(dat) <- colnames(modeldata)
-    }
+    note_dS <- 'Calculating noise-weighted Euclidean distances'
+    note_dL <- NULL
+    
+    dat <- as.matrix(modeldata)
+    rownames(dat) <- rownames(modeldata)
+    colnames(dat) <- colnames(modeldata)
 
     # Ensure catches are log transformed
     dat <- switch(qcatch,
@@ -328,6 +301,7 @@ coldist <- function(modeldata,
     )
 
     if (achromatic) {
+      note_dL <- ' and noise-weighted luminance contrasts'
       visref <- cbind(visref, lum = log(1e-10))
       visref[grep("jnd2xyzrrf", rownames(visref), invert = TRUE), "lum"] <-
         dat[seq(refsamp), dim(dat)[2]]
@@ -363,37 +337,61 @@ coldist <- function(modeldata,
         warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
+    message(note_dS, note_dL)
   } else {
     dat <- as.matrix(modeldata[, sapply(modeldata, is.numeric)])
-    
+
     # Message about the distances being calculated
-    note <- switch(attr(modeldata, "clrsp"),
-                          "hexagon" = ,
-                          "categorical" = ,
-                          "segment" = "Calculating unweighted Euclidean distances...",
-                          "CIELAB" = ,
-                          "CIELCh" = "Calculating CIE2000 distances...",
-                          "coc" = "Calculating city-bloc distances...")
-    message(note)
+    note_dS <- switch(attr(modeldata, "clrsp"),
+      "dispace" = ,
+      "trispace" = ,
+      "tcs" = ,
+      "hexagon" = ,
+      "categorical" = ,
+      "segment" = "Calculating unweighted Euclidean distances",
+      "CIELAB" = ,
+      "CIELCh" = "Calculating CIE2000 distances",
+      "coc" = "Calculating Manhattan distances"
+    )
+    note_dL <- NULL
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
+      "dispace" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], "x"], dat[x[2], "x"]))),
+      "tcs" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y", "z")], dat[x[2], c("x", "y", "z")]))),
+      "trispace" = ,
       "hexagon" = ,
-      "categorical" = apply(pairsid, 1, function(x) euc(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")])),
-      "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")])),
+      "categorical" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]))),
+      "segment" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
       "CIELAB" = ,
-      "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")])),
-      "coc" = apply(pairsid, 1, function(x) bloc2d(dat[x[1], ], dat[x[2], ]))
+      "CIELCh" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")]))),
+      "coc" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]), method = "manhattan"))
     )
     if (achromatic) {
-      res[, "dL"] <- switch(attr(modeldata, "clrsp"),
-        "hexagon" = apply(pairsid, 1, function(x) achrohex(dat[x[1], ], dat[x[2], ])),
-        "categorical" = NA,
+      note_dL <- switch(attr(modeldata, "clrsp"),
+        "dispace" = ,
+        "trispace" = ,
+        "tcs" = " and Weber luminance contrast",
+        "hexagon" = " and simple luminance contrast",
+        "segment" = " and Michelson luminance contrast",
         "CIELAB" = ,
-        "CIELCh" = apply(pairsid, 1, function(x) euc(dat[x[1], "L"], dat[x[2], "L"])),
-        "segment" = apply(pairsid, 1, function(x) euc(dat[x[1], "B"], dat[x[2], "B"])),
+        "CIELCh" = " and Weber luminance contrast",
+        "categorical" = ,
+        "coc" = " and no luminance contrast"
+      )
+
+      res[, "dL"] <- switch(attr(modeldata, "clrsp"),
+        "dispace" = ,
+        "trispace" = ,
+        "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "lum"], dat[x[2], "lum"], type = "weber")),
+        "categorical" = NA,
+        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "l"], dat[x[2], "l"], type = "simple")),
+        "CIELAB" = ,
+        "CIELCh" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "L"], dat[x[2], "L"], type = "weber")),
+        "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = "michelson")),
         "coc" = NA
       )
     }
+    message(note_dS, note_dL)
   }
 
   # Subsetting samples
@@ -429,7 +427,8 @@ coldist <- function(modeldata,
   }
 
   # Set achro contrasts to NA if no lum values supplied
-  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))) {
+  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))
+  || !(achromatic)) {
     res$dL <- NA
   }
 
@@ -540,20 +539,16 @@ ttdistcalcachro <- function(f1, f2, qn1 = NULL, qn2 = NULL, weber.achro) {
 # START OTHER DISTANCES #
 #########################
 
+# Luminance contrast
+lumcont <- function(coord1, coord2, type = c("simple", "weber", "michelson")) {
+  contrast <- match.arg(type)
 
-# Euclidean distance
-euc <- function(coord1, coord2) {
-  sqrt(sum((coord1 - coord2)^2))
-}
-
-# Achromatic 'green' receptor contrast in the hexagon
-achrohex <- function(coord1, coord2) {
-  coord1["l"] / coord2["l"]
-}
-
-# Manhattan distance
-bloc2d <- function(coord1, coord2) {
-  abs(coord1["x"] - coord2["x"]) + abs(coord1["y"] - coord2["y"])
+  dLout <- switch(contrast,
+    "simple" = coord1 / coord2,
+    "weber" = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / min(c(coord1, coord2)),
+    "michelson" = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / (max(c(coord1, coord2)) + min(c(coord1, coord2)))
+  )
+  dLout
 }
 
 # CIE2000 colour distance for CIELCh (LOLWAT)

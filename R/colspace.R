@@ -52,6 +52,7 @@
 #' # A housefly in the categorical colourspace
 #' vis.flowers <- vismodel(flowers, visual = "musca", achro = "md.r1")
 #' cat.flowers <- colspace(vis.flowers, space = "categorical")
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'

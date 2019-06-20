@@ -10,12 +10,11 @@ coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
 }
 \arguments{
 \item{modeldata}{(required) quantum catch colour data. Can be the result
-from \code{\link[=vismodel]{vismodel()}}, or \code{\link[=colspace]{colspace()}}. Data may also be independently calculated quantum catches,
-in the form of a data frame with columns representing photoreceptors.}
+from \code{\link[=vismodel]{vismodel()}} for noise-weighted Euclidean distances, or \code{\link[=colspace]{colspace()}} for
+unweighted (typically) Euclidean distances. Data may also be independently calculated
+quantum catches, in the form of a data frame with columns representing photoreceptors.}
 
-\item{noise}{how the noise will be calculated. (Ignored for \code{colspace} objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models)):
+\item{noise}{how the noise will be calculated (ignored for \code{colspace} objects):
 \itemize{
 \item \code{neural} (default): noise is proportional to the Weber fraction and
 is independent of the intensity of the signal received (i.e. assumes bright conditions).
@@ -32,10 +31,9 @@ must match the labels of the input samples, but partial matching (and regular ex
 are supported.}
 
 \item{achromatic}{Logical. If \code{TRUE}, last column of the data frame is used to calculate
-the achromatic contrast, with noise based on the Weber fraction given by the argument
-\code{weber.achro}.
-If the data are from the hexagon model (i.e. \code{colspace(space = 'hexagon')}), it
-instead returns simple long (or 'green') receptor contrast.}
+the achromatic contrast, the form of which will depend on the input data and will be
+indicated by a message during execution. For noise-weighted distances, noise is based on
+the Weber fraction given by the argument \code{weber.achro}.}
 
 \item{qcatch}{if the object is of class \code{\link{vismodel}} or \code{\link{colspace}},
 this argument is ignored. If the object is a data frame of quantal catches
@@ -50,8 +48,7 @@ channel is proportional to the logarithm of the quantum catch)
 \item{n}{photoreceptor densities for the cones used in visual modeling.
 must have same length as number of columns (excluding achromatic receptor if used;
 defaults to the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}).
-Ignored for \code{\link{colspace}} objects if model is not a receptor noise model
-(i.e. hexagon, colour-opponent-coding, categorical, and cie models).}
+Ignored for \code{\link{colspace}} objects.}
 
 \item{weber}{The Weber fraction to be used (often also referred to as receptor noise,
 or \emph{e}). The noise-to-signal ratio \code{v} is unknown,
@@ -60,54 +57,38 @@ fraction of one of the cone classes. \code{v} is then applied to estimate the
 Weber fraction of the other cones. by default, the value of 0.1 is used
 (the empirically estimated value for the
 LWS cone from \emph{Leiothrix lutea}). See Olsson et al. 2017 for a review of
-published values in the literature. Ignored for \code{colspace} objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).}
+published values in the literature. Ignored for \code{colspace} objects.}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the
 Weber fraction used for the \code{weber} argument. By default, \code{n4} is used,
-representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).}
+representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects.}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when
-\code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects
-if model is not a receptor noise model (i.e. hexagon, colour-opponent-coding,
-categorical, segment, and cie models).}
+\code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects.}
 }
 \value{
 A data frame containing up to 4 columns.
 The first two (\code{patch1, patch2}) refer
 to the two colors being contrasted; \code{dS} is the chromatic contrast (delta S)
-and \code{dL} is the achromatic contrast (delta L). Units are JND's in the receptor-noise
-model, euclidean distances in the categorical and segment space, manhattan distances in the
-color-opponent-coding space, green-receptor contrast in the hexagon, and lightness (L)
-contrast in the cielab model.
+and \code{dL} is the achromatic contrast (delta L). Units of \code{dS} JND's in the receptor-noise
+model, unweighted Euclidean distances in colorspace models, and Manhattan distances in the
+color-opponent-coding space. Units of \code{dL} vary, and are either simple contrast, Weber contrast,
+or Michelson contrast, as indicated by the output message.
 }
 \description{
 Calculates colour distances. When data are the result of \code{\link[=vismodel]{vismodel()}},
 it applies the receptor-noise model of Vorobyev et al. (1998) to calculate colour distances
-with noise based on relative photoreceptor densities. It also accepts \code{\link[=colspace]{colspace()}} data
-from the hexagon, colour-opponent-coding, categorical, segment, and cielab models, in which case euclidean
-distances (hexagon, cielab, categorical, segment) or Manhattan distances (coc) are returned.
+with noise based on relative photoreceptor densities. It also accepts \code{\link[=colspace]{colspace()}} data in which case
+unweighted Euclidean distances or Manhattan distances (coc model only) are returned.
 }
 \section{Note on previous versions}{
-
-previous versions of \code{\link[=coldist]{coldist()}} calculated receptor noise using the arguments
-\code{v} for the individual cone noise-to-signal ratio and \code{n1,n2,n3,n4} for
-the relative cone densities. These arguments have been replaced by \code{weber} and
-\code{n}, which takes a vector of relative cone densities. \code{weber.ref} allows
-the user to specify which receptor to use as the reference to obtain the
-desired Weber fraction, and \code{\link[=coldist]{coldist()}} calculates internally the value of \code{v}
-to be used when calculating the Weber fraction for the remaining cones.
-
-This allows a more explicit choice of Weber fraction, without the need to find the
-right value of \code{v} to use in order to obtain the desired signal-to-noise ratio. Furthermore,
-by allowing \code{n} to be entered as a vector, \code{\link[=coldist]{coldist()}} can now handle visual
-systems with more than four photoreceptors.
-
-In addition, the achromatic noise is calculated based on the \code{weber.achro}
-argument directly, and not based on \code{v} and \code{n4} as before.
+ Generic di- tri- and tetra-chromatic \code{colspace()} objects were previously
+passed through the receptor-noise limited model to return noise-weighted Euclidean distances. This
+behaviour has been amended, and generic spaces now return unweighted Euclidean distances. Equivalent
+results to the former behaviour can be attained by sending the results of \code{vismodel()} directly to \code{coldist()}
+, as previously, which also offers greater flexibility and reliability. Thus \code{coldist()} now returns
+unweighted Euclidean distances for \code{colspace()} objects (with the exception of Manhattan distances for
+the coc space), and noise-weighted Euclidean distances for \code{vismodel()} objects.
 }
 
 \examples{
@@ -139,11 +120,6 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
 
-# This will also work, but give you several warnings you shouldn't ignore!!
-col.sicalis <- colspace(vis.sicalis)
-tetradist.sicalis.n <- coldist(col.sicalis)
-
-tetradist.sicalis.q <- coldist(vis.sicalis, noise = "quantum")
 }
 
 }
