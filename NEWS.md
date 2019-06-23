@@ -3,7 +3,7 @@
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
 * added k-medoids clustering as an option in `classify()`
-* `coldist()` now return unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic `colspace()` models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use `coldist()` directly on `vismodel()` objects, as previously.
+* `coldist()` now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic `colspace()` models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use `coldist()` directly on `vismodel()` objects, as previously.
 
 ## MINOR FEATURES AND BUG FIXES
 
