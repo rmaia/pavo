@@ -8,7 +8,7 @@
 0 errors | 0 warnings | 0 notes
 
 ## Additional notes
-All existing problems from the check results have been fixed. In particular the
+All existing problems from the check results have been fixed. In particular `procimg.R`  has been modified to fix the r-devel-linux-x86_64-debian-clang issue.
 
 ## Reverse dependencies
 
