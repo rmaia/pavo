@@ -27,3 +27,4 @@ LICENSE.md
 .covrignore
 CONTRIBUTING.md
 CONDUCT.md
+^revdep$

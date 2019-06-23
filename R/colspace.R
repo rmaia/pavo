@@ -11,17 +11,17 @@
 #' applies `di`, `tri` or `tcs` if input visual model had two, three or four
 #' cones, respectively.
 #' * `di`: dichromatic colourspace. See [dispace()] for details.
-#' (\link[=diplot]{plotting arguments})
-#' * `tri`: trichromatic colourspace (i.e. Maxwell triangle). See [trispace()] for details. (\link[=triplot]{plotting arguments})
+#' ([plotting arguments][diplot])
+#' * `tri`: trichromatic colourspace (i.e. Maxwell triangle). See [trispace()] for details. ([plotting arguments][triplot])
 #' * `tcs`: tetrahedral colourspace. See [tcspace()] for details.
-#' (\link[=tetraplot]{plotting arguments})
-#' * `hexagon`: the trichromatic colour-hexagon of Chittka (1992). See [hexagon()] for details. (\link[=hexplot]{plotting arguments})
-#' * `coc`: the trichromatic colour-opponent-coding model of Backhaus (1991). See [coc()] for details. (\link[=cocplot]{plotting arguments})
-#' * `categorical`: the tetrachromatic categorical fly-model of Troje (1993). See [categorical()] for details. (\link[=catplot]{plotting arguments})
-#' * `ciexyz`: CIEXYZ space. See [cie()] for details. (\link[=cieplot]{plotting arguments})
-#' * `cielab`: CIELAB space. See [cie()] for details. (\link[=cieplot]{plotting arguments})
-#' * `cielch`: CIELCh space. See [cie()] for details. (\link[=cieplot]{plotting arguments})
-#' * `segment`: segment analysis of Endler (1990). See [segspace()] for details. (\link[=segplot]{plotting arguments})
+#' ([plotting arguments][tetraplot])
+#' * `hexagon`: the trichromatic colour-hexagon of Chittka (1992). See [hexagon()] for details. ([plotting arguments][hexplot])
+#' * `coc`: the trichromatic colour-opponent-coding model of Backhaus (1991). See [coc()] for details. ([plotting arguments][cocplot])
+#' * `categorical`: the tetrachromatic categorical fly-model of Troje (1993). See [categorical()] for details. ([plotting arguments][catplot])
+#' * `ciexyz`: CIEXYZ space. See [cie()] for details. ([plotting arguments][cieplot])
+#' * `cielab`: CIELAB space. See [cie()] for details. ([plotting arguments][cieplot])
+#' * `cielch`: CIELCh space. See [cie()] for details. ([plotting arguments][cieplot])
+#' * `segment`: segment analysis of Endler (1990). See [segspace()] for details. ([plotting arguments][segplot])
 #'
 #' @param qcatch Which quantal catch metric is being inputted. Only used when input data is NOT
 #' an output from [vismodel()]. Must be `Qi`, `fi` or `Ei`.
