@@ -121,9 +121,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     kcols <- parse_kcols(kcols, imgdat)
   }
   
-  ## Check distinct data points > kcols, otherwise it'll give an uninformative error or hang
-  if(any(unlist(lapply(seq_along(imgdat), function(x) nrow(unique(apply(imgdat[[x]], 3, rbind))))) < max(kcols)))
-    stop('The specified number of cluster centers exceeds the number of distinct data points in one or more images, consider a new value for argument "kcols"')
+  ## Check distinct data points > kcols, otherwise it'll give an uninformative error or hang.
+  ## Doesn't work for interactive atm though
+  if(!is.null(kcols))
+    if(any(unlist(lapply(seq_along(imgdat), function(x) nrow(unique(apply(imgdat[[x]], 3, rbind))))) < max(kcols)))
+      stop('The specified number of cluster centers exceeds the number of distinct data points in one or more images, consider a new value for argument "kcols"')
   
   ## ------------------------------ Main ------------------------------ ##
   
