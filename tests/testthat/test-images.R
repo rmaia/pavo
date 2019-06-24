@@ -10,7 +10,7 @@ test_that("as.rimg", {
     expect_equal(attr(x, "k"), NA)
     expect_equal(attr(x, "outline"), NA)
   }
-
+  
   # Fake image(s)
   imgfake <- array(c(
     matrix(c(155, 1, 0, 0), nrow = 10, ncol = 10),
@@ -21,18 +21,18 @@ test_that("as.rimg", {
   )
   rimgfake <- as.rimg(imgfake, "image")
   c <- rimg2magick(rimgfake)
-
+  
   imggrey <- imgfake[, , 1]
   rimggrey <- as.rimg(imggrey, "image")
-
+  
   imgfake2 <- list(imgfake, imgfake)
   rimgfake2 <- as.rimg(imgfake2, c("image", "image"))
-
+  
   # Warnings/messages
   expect_message(as.rimg(imgfake), "[0,1]")
   expect_message(as.rimg(imgfake2), "[0,1]")
   expect_warning(getimg(system.file("testdata/images/papilio.png", package = "pavo"), cores = 2), "deprecated")
-
+  
   # Classes/attributes/structure
   expect_equal(dim(rimgfake), c(10, 10, 3))
   expect_equal(dim(rimggrey), c(10, 10, 3))
@@ -46,14 +46,14 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimgfake))
   expect_true(is.rimg(rimgfake2))
   expect_true(is.rimg(rimggrey))
-
+  
   # as.rimg can handle user-classified images
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
   expect_equal(papilio_class, pap2, check.attributes = FALSE)
-
+  
   # magick conversion
   magickpapilio <- rimg2magick(papilio)
   expect_equal(class(magickpapilio), "magick-image")
@@ -65,10 +65,10 @@ test_that("as.rimg", {
 
 test_that("procimg", {
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
-
+  
   # Resize
   expect_equal(dim(procimg(papilio, resize = 50))[1:2], dim(papilio)[1:2] / 2)
-
+  
   # Messages/Errors
   expect_message(procimg(classify(papilio, kcols = 3), resize = 200), "Cannot resize")
   expect_message(procimg(classify(papilio, kcols = 3), rotate = 90), "Cannot rotate")
@@ -81,7 +81,7 @@ test_that("procimg", {
 
 
 test_that("classify", {
-
+  
   # Images
   imgfake <- as.rimg(array(c(
     matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
@@ -90,39 +90,39 @@ test_that("classify", {
   ),
   dim = c(12, 8, 3)
   ))
-
+  
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
-
+  
   # Single
   expect_error(classify(1, kcols = 1), "array")
   expect_error(classify(imgfake), "kcols")
-
+  
   fake_class <- classify(imgfake, kcols = 2)
   expect_equal(dim(fake_class), c(8, 12))
   expect_true(is.rimg(fake_class))
-
+  
   ## Multiple
   fake_IDs <- data.frame(
     ID = c("fake_02.png", "fake_01.jpg"),
     k = c(2, 2)
   )
-
+  
   expect_error(classify(list(1, 1), kcols = fake_IDs), "array")
-
+  
   fake2_class <- classify(imgfakes, kcols = fake_IDs)
   expect_true(is.rimg(fake2_class))
   expect_true(is.rimg(fake2_class[[1]]))
   expect_true(is.rimg(fake2_class[[2]]))
   expect_equal(dim(fake2_class[[1]]), c(8, 12))
   expect_equal(dim(fake2_class[[2]]), c(8, 12))
-
+  
   fake2_class2 <- classify(imgfakes, kcols = fake_IDs, refID = 1)
   expect_true(is.rimg(fake2_class2))
   expect_true(is.rimg(fake2_class2[[1]]))
   expect_true(is.rimg(fake2_class2[[2]]))
   expect_equal(dim(fake2_class2[[1]]), c(8, 12))
   expect_equal(dim(fake2_class2[[2]]), c(8, 12))
-
+  
   # k medoids
   expect_error(classify(imgfakes, method = "kMedoids", kcols = fake_IDs, refID = 1), "k-medoids")
   expect_error(classify(imgfakes, method = "kMedoids", interactive = TRUE), "k-medoids")
@@ -133,14 +133,16 @@ test_that("classify", {
   expect_equal(dim(fake2_class3[[1]]), c(8, 12))
   expect_equal(dim(fake2_class3[[2]]), c(8, 12))
   
+  
   # Messages
   expect_error(classify(imgfakes, refID = 'fail'), 'No image found with that name')
-  expect_message(classify(imgfakes, kcols = c(3, 4), refID = 1), 'Cannot use reference image')
+  expect_error(classify(imgfakes, kcols = 10), 'cluster centers exceeds the number of distinct data points')
+  expect_message(classify(imgfakes, kcols = c(1, 2), refID = 1), 'Cannot use reference image')
   
 })
 
 test_that("adjacency", {
-
+  
   # Images
   imgfake <- as.rimg(array(c(
     matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
@@ -149,9 +151,9 @@ test_that("adjacency", {
   ),
   dim = c(12, 8, 3)
   ))
-
+  
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
-
+  
   img1col <- as.rimg(array(c(
     matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100),
     matrix(c(0, 0, 0, 0), nrow = 100, ncol = 100),
@@ -159,7 +161,7 @@ test_that("adjacency", {
   ),
   dim = c(100, 100, 3)
   ))
-
+  
   distances <- data.frame(
     c1 = 1,
     c2 = 2,
@@ -178,14 +180,14 @@ test_that("adjacency", {
     lum = c(10, 5),
     sat = c(3.5, 1.1)
   )
-
+  
   # Single
   set.seed(1234)
   fake_class <- classify(imgfake, kcols = 2)
   fake_class_90 <- classify(procimg(imgfake, rotate = 90), kcols = 2)
   expect_error(adjacent(10, xpts = 10, xscale = 10), "array")
   expect_error(adjacent(fake_class, xpts = 10, xscale = 10, coldists = distances2), "do not match")
-
+  
   fake_adjacent <- adjacent(fake_class, xpts = 8, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
   fake_adjacent_90 <- adjacent(fake_class_90, xpts = 8, xscale = 10, coldists = distances, hsl = hsl_vals, bkgID = 1)
   expect_message(adjacent(fake_class, xpts = 123, xscale = 10), "grid-sampling density")
@@ -199,18 +201,18 @@ test_that("adjacency", {
   expect_equal(round(fake_adjacent$p_1, 1), round(fake_adjacent$p_2, 1))
   expect_gt(fake_adjacent$N, fake_adjacent$n_off)
   expect_equal(fake_adjacent$m, ((fake_adjacent$m_r + fake_adjacent$m_c) / 2))
-
+  
   # Multiple
   fake2_class <- classify(imgfakes, kcols = 2)
   expect_error(adjacent(list(10, 10), xpts = 10, xscale = 10), "array")
-
+  
   fake2_adjacent <- adjacent(fake2_class, xpts = 10, xscale = 150)
   expect_message(adjacent(fake2_class, xpts = 123, xscale = 10), "grid-sampling density")
   expect_equal(fake2_adjacent$k, c(2, 2))
   expect_equal(round(fake2_adjacent$p_1, 1), round(fake2_adjacent$p_2, 1))
   expect_gt(fake2_adjacent$N[1], fake2_adjacent$n_off[1])
   expect_equal(fake2_adjacent$m, ((fake2_adjacent$m_r + fake2_adjacent$m_c) / 2))
-
+  
   ## Single colour
   fake3_class <- classify(img1col, kcols = 1)
   fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
@@ -220,7 +222,7 @@ test_that("adjacency", {
   expect_equal(fake3_adjacent$q_1_1, 1)
   expect_equal(fake3_adjacent$m, 0)
   expect_equal(fake3_adjacent$Sc, 1)
-
+  
   ## Checkerboard (known values)
   distances <- data.frame(
     c1 = 1,
@@ -228,7 +230,7 @@ test_that("adjacency", {
     dS = 10,
     dL = 20
   )
-
+  
   hsl_vals <- data.frame(
     patch = 1:2,
     hue = c(1, 2),
@@ -256,15 +258,15 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_hue, 1.5)
   expect_equal(checker_adj$m_sat, 3.6)
   expect_equal(checker_adj$m_lum, 5.68)
-
+  
   # Can handle user-classified images
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   papilio_adj <- adjacent(papilio_class, xscale = 100)
-
+  
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)), name = "papilio")
   pap2_adj <- adjacent(pap2, xscale = 100)
-
+  
   expect_identical(papilio_adj, pap2_adj)
 })
 
@@ -272,12 +274,12 @@ test_that("summary", {
   library(digest)
   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
-
+  
   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes_class <- classify(snakes, kcols = 3)
-
+  
   expect_equal(digest::sha1(summary(papilio), digits = 4), "261b24d0d720036a973549b2cfba1665680f3cfc")
   expect_equal(digest::sha1(summary(snakes), digits = 4), "2ec7acae69e5812b0544d347b37b7dcdc55b1517")
   expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4))

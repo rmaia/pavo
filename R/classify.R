@@ -59,12 +59,12 @@
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
-
+  
   ## ------------------------------ Checks ------------------------------ ##
-
+  
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
-
+  
   ## Convert refID to numeric identifier
   if (!is.null(refID)) {
     if (is.character(refID)) {
@@ -74,43 +74,43 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
       }
     }
   }
-
+  
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
   if (!multi_image) {
     imgdat <- list(imgdat)
   }
-
+  
   # Need options
   if (!interactive && is.null(kcols)) {
     stop("Either kcols must be specified, or interactive classification used (via interactive = TRUE)")
   }
-
+  
   # Method
   method2 <- tryCatch(
     match.arg(method),
     error = function(e) "kMeans"
   )
-
-  # Cannot currently use pre-specific centres with k-medoids. Annoying.
+  
+  # Cannot currently use pre-specified centres with k-medoids. Annoying.
   if (interactive && method2 == "kMedoids") {
     stop("Cannot currently interactively classify images using k-medoids, set kcols instead.")
   }
   if (!is.null(refID) && method2 == "kMedoids") {
     stop("Cannot currently use a reference image when using k-medoids")
   }
-
+  
   ## Class/structure
   if (!all(unlist(lapply(imgdat, is.rimg)))) {
     message("One or more images are not of class 'rimg'; attempting to coerce.")
     imgdat <- lapply(imgdat, as.rimg)
   }
-
+  
   ## Cores
   if (cores > 1 && .Platform$OS.type == "windows") {
     cores <- 1
   }
-
+  
   ## kcols
   if (!is.null(kcols)) {
     # Can't have a reference image when k's vary
@@ -120,23 +120,27 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     }
     kcols <- parse_kcols(kcols, imgdat)
   }
-
+  
+  ## Check distinct data points > kcols, otherwise it'll give an uninformative error or hang
+  if(any(unlist(lapply(seq_along(imgdat), function(x) nrow(unique(apply(imgdat[[x]], 3, rbind))))) < max(kcols)))
+    stop('The specified number of cluster centers exceeds the number of distinct data points in one or more images, consider a new value for argument "kcols"')
+  
   ## ------------------------------ Main ------------------------------ ##
-
+  
   #### So your options/configurations for classification are:
-
+  
   # (1) Non-interactive, no reference image.
   # (2) Non-interactive, with a reference image.
   # (3) Interactive, no reference image.
   # (4) Interctive, with a reference image
-
+  
   # Image size check to avoid pbmc bug when faced with large objects
   if (format(object.size(imgdat), units = "Mb") < 100) {
     parallel <- TRUE
   } else {
     parallel <- FALSE
   }
-
+  
   if (!interactive) {
     if (!is.null(refID)) { ## (2) Single k, with reference image ##
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method2), "classRGB")
@@ -145,17 +149,17 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     else { ## (1) Non-interactive, with a reference image. ##
       ref_centers <- kcols
     }
-
+    
     # Classify
     message("Image classification in progress...")
     outdata <- classifier(imgdat, ref_centers, parallel, cores, method2)
   } else if (interactive) {
-
+    
     ## (3) Interactive, no reference image. ##
     if (is.null(kcols)) {
       kcols <- rep(list(512), length(imgdat))
     }
-
+    
     centers <- list()
     tag_loc <- list()
     if (!is.null(refID)) {
@@ -163,21 +167,21 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     } else {
       i <- 1
     }
-
+    
     while (i <= length(imgdat)) {
       if (plotnew) dev.new(noRStudioGD = TRUE)
-
+      
       plot(imgdat[[i]], ...)
-
+      
       message(paste0(
         "Select the focal colours in image ",
         attr(imgdat[[i]], "imgname"), ", and press [esc] to continue."
       ))
       reference <- as.data.frame(locator(type = "p", col = col, n = kcols[[i]]))
       kcols[[i]] <- nrow(reference)
-
+      
       if (plotnew) dev.off()
-
+      
       ref_centers <- try(do.call(rbind, lapply(
         seq_len(nrow(reference)),
         function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
@@ -186,7 +190,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
       )
       centers[[i]] <- ref_centers
       tag_loc[[i]] <- reference
-
+      
       # Error prevention
       if (class(centers[[i]]) == "try-error") {
         message("One or more coorodinates out-of bounds. Try again.")
@@ -205,12 +209,12 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
         i <- i + 1
       }
     }
-
+    
     # Classify
     message("Image classification in progress...")
     outdata <- classifier(imgdat, centers, parallel, cores, method2)
   }
-
+  
   # Names & attributes
   for (i in seq_along(outdata)) {
     attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
@@ -233,7 +237,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
       attr(outdata[[i]], "k") <- kcols
     }
   }
-
+  
   if (multi_image) {
     class(outdata) <- c("rimg", "list")
   } else {
@@ -246,11 +250,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 #' @importFrom pbmcapply pbmclapply
 classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
   ifelse(parallel_i2,
-    outdata <- pbmclapply(seq_along(imgdat_i2),
-      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
-      mc.cores = cores_i2
-    ),
-    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
+         outdata <- pbmclapply(seq_along(imgdat_i2),
+                               function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
+                               mc.cores = cores_i2
+         ),
+         outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
   )
   outdata
 }
@@ -258,68 +262,68 @@ classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
 # Main function for identifying colour classes in an image for adjacency analyses
 #' @importFrom cluster clara
 classify_main <- function(imgdat_i, n_cols_i, method_i) {
-
+  
   ## Dimensions
   imgdim <- dim(imgdat_i)
-
+  
   # Set minimum sample size for kMedoids
   samsize <- min(200, (imgdim[1] * imgdim[2]))
-
+  
   # Assign RGB channels to data frame
   imgRGB <- data.frame(
     R = as.vector(imgdat_i[, , 1]),
     G = as.vector(imgdat_i[, , 2]),
     B = as.vector(imgdat_i[, , 3])
   )
-
+  
   # Cluster analysis, then format as image matrix
   kMeans <- switch(method_i,
-    "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
-    "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
+                   "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
+                   "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
   )
   outmat3 <- switch(method_i,
-    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
-    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
+                    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
+                    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
   )
   centers <- switch(method_i,
-    "kMeans" = as.data.frame(kMeans$centers),
-    "kMedoids" = as.data.frame(kMeans$medoids)
+                    "kMeans" = as.data.frame(kMeans$centers),
+                    "kMedoids" = as.data.frame(kMeans$medoids)
   )
-
+  
   # Rotate to match original orientation
   outmat2 <- rev(t(apply(outmat3, 1, rev))) # mirror
   dim(outmat2) <- dim(outmat3)
   outmat <- t(apply(outmat2, 2, rev)) # rotate 90
-
+  
   # Attributes
   class(outmat) <- c("rimg", "matrix")
   attr(outmat, "classRGB") <- centers
   # attr(outmat, "colnames") <- data.frame(name = paste0("clr", 1:nrow(kMeans$centers)), stringsAsFactors = FALSE)
   attr(outmat, "colnames") <- data.frame(name = seq_len(nrow(centers)))
   attr(outmat, "tag_loc") <- NA
-
+  
   outmat
 }
 
 ## k structure parser
 #' @importFrom tools file_path_sans_ext
 parse_kcols <- function(kcols_i, imgdat_i) {
-
+  
   # If kcols is a 2-col data frame/matrix
   if (!is.vector(kcols_i)) {
-
+    
     # TODO more safety
     if (ncol(kcols_i) > 2) {
       warning("More than two columns included in kcols. Taking the first two columns only.")
       kcols_i <- as.data.frame(kcols_i[, 1:2])
     }
-
+    
     # Identify the name of the column containing file names
     id_col <- names(kcols_i[!vapply(kcols_i, is.numeric, logical(1))])
-
+    
     # Remove file extensions if present
     kcols_i[[id_col]] <- file_path_sans_ext(kcols_i[[id_col]])
-
+    
     # Extract image names from image data
     imageIDs <- data.frame(
       names = unlist(lapply(
@@ -328,10 +332,10 @@ parse_kcols <- function(kcols_i, imgdat_i) {
       )),
       stringsAsFactors = FALSE
     )
-
+    
     # Reorder user-supplied kcols to match order of images
     kcols_i <- kcols_i[match(imageIDs[, 1], kcols_i[[id_col]]), ]
-
+    
     # Extract kcols
     kcols_i <- as.numeric(unlist(kcols_i[vapply(kcols_i, is.numeric, logical(1))]))
   }
@@ -345,6 +349,6 @@ parse_kcols <- function(kcols_i, imgdat_i) {
   if (length(kcols_i) == 1 && length(imgdat_i) > 1) {
     kcols_i <- rep(kcols_i, length(imgdat_i))
   }
-
+  
   kcols_i
 }
