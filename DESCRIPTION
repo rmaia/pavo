@@ -44,7 +44,6 @@ Suggests:
     mapproj,
     rgl,
     rmarkdown,
-    spelling,
     testthat,
     NbClust,
     xml2
