@@ -1,5 +1,5 @@
 .onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to pavo 2! Take a look at the latest features (and update your bibliography) in our recent publication: Maia R., Gruson H., Endler J. A., White T. E. (2019) pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution, Early View.")
+  packageStartupMessage("Welcome to pavo 2! Take a look at the latest features (and update your bibliography) in our recent publication: Maia R., Gruson H., Endler J. A., White T. E. (2019) pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution, 10, 1097-1107.")
 }
 
 #####################
