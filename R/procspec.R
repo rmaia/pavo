@@ -135,7 +135,7 @@ procspec <- function(rspecdata, opt = c(
   if (any(opt == "bin")) {
     bw <- floor(length(wl) / (bins - 1))
     wl_bin <- wl_bin <- seq(min(wl), by = bw, length.out = bins)
-    rspecdata <- by(rspecdata, findInterval(wl, wl_bin, rightmost.closed = TRUE, left.open = TRUE), function(x) apply(x, 2, median))
+    rspecdata <- by(rspecdata, findInterval(wl, wl_bin), function(x) apply(x, 2, median))
     rspecdata <- do.call(rbind, rspecdata)
     rspecdata <- cbind(wl_bin, rspecdata)
     applied <- c(applied, paste("binned spectra to ", bw, "-nm intervals\n", sep = ""))
