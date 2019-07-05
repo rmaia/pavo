@@ -174,7 +174,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   ## Class/structure
   if (!all(unlist(lapply(classimg, is.rimg)))) {
     message("One or more image matrices are not of class 'rimg'; attempting to coerce.")
-    classimg <- lapply(seq_along(classimg), function(x) as.rimg(classimg[[x]]))
+    classimg <- lapply(classimg, as.rimg)
   }
 
   ## Colour-classified
