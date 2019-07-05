@@ -1,3 +1,9 @@
+# pavo 2.3.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* `procspec(opt = "bin")` no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.
+
 # pavo 2.2.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
