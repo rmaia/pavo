@@ -374,21 +374,21 @@ coldist <- function(modeldata,
         "hexagon" = " and simple luminance contrast",
         "segment" = " and Michelson luminance contrast",
         "CIELAB" = ,
-        "CIELCh" = " and Weber luminance contrast",
         "categorical" = ,
-        "coc" = " and no luminance contrast"
+        "coc" = ,
+        "CIELCh" = " and Weber luminance contrast",
       )
 
       res[, "dL"] <- switch(attr(modeldata, "clrsp"),
         "dispace" = ,
         "trispace" = ,
+        "categorical" = ,
+        "coc" = ,
         "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "lum"], dat[x[2], "lum"], type = "weber")),
-        "categorical" = NA,
         "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "l"], dat[x[2], "l"], type = "simple")),
         "CIELAB" = ,
         "CIELCh" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "L"], dat[x[2], "L"], type = "weber")),
-        "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = "michelson")),
-        "coc" = NA
+        "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = "michelson"))
       )
     }
     message(note_dS, note_dL)
