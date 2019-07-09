@@ -48,11 +48,9 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
     space <- "XYZ"
   }
 
-  dat <- vismodeldata
-
-  X <- dat[, names(dat) %in% c("X", "cie2_X", "cie10_X")]
-  Y <- dat[, names(dat) %in% c("Y", "cie2_Y", "cie10_Y")]
-  Z <- dat[, names(dat) %in% c("Z", "cie2_Z", "cie10_Z")]
+  X <- vismodeldata[, names(vismodeldata) %in% c("X", "cie2_X", "cie10_X")]
+  Y <- vismodeldata[, names(vismodeldata) %in% c("Y", "cie2_Y", "cie10_Y")]
+  Z <- vismodeldata[, names(vismodeldata) %in% c("Z", "cie2_Z", "cie10_Z")]
 
   # Coordinates in the chosen CIE space
   if (space == "XYZ") {
@@ -63,8 +61,8 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
 
     # Calculate tristimulus values for neutral point. First need to
     # re-grab original sensitivity and illuminant data.
-    S <- attr(dat, "data.visualsystem.chromatic")
-    illum <- attr(dat, "data.illuminant") # Illuminant
+    S <- attr(vismodeldata, "data.visualsystem.chromatic")
+    illum <- attr(vismodeldata, "data.illuminant") # Illuminant
     Xn <- sum(S[, 1] * illum)
     Yn <- sum(S[, 2] * illum)
     Zn <- sum(S[, 3] * illum)
@@ -101,14 +99,12 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
   }
 
   if (space == "XYZ") {
-    res.p <- data.frame(X, Y, Z, x, y, z, row.names = rownames(dat))
+    res <- data.frame(X, Y, Z, x, y, z, row.names = rownames(vismodeldata))
   } else if (space == "LAB") {
-    res.p <- data.frame(X, Y, Z, L, a, b, row.names = rownames(dat))
+    res <- data.frame(X, Y, Z, L, a, b, row.names = rownames(vismodeldata))
   } else if (space == "LCh") {
-    res.p <- data.frame(X, Y, Z, L, a, b, C, h, row.names = rownames(dat))
+    res <- data.frame(X, Y, Z, L, a, b, C, h, row.names = rownames(vismodeldata))
   }
-
-  res <- res.p
 
   class(res) <- c("colspace", "data.frame")
 
