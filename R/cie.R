@@ -6,7 +6,8 @@
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from [vismodel()] or independently calculated data (in the form of a
 #'  data frame with three columns representing trichromatic viewer).
-#' @param space (required) Choice between XYZ (1931), LAB (1971), or LCh colour models.
+#' @param space (required) Choice between XYZ (default), LAB, or LCh colour models.
+#'
 #'
 #' @return Object of class [`colspace`] containing:
 #' * `X, Y, Z`: Tristimulus values.
@@ -43,10 +44,12 @@
 #'  Internationale de l Eclairage.
 
 cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
-  space2 <- try(match.arg(space), silent = TRUE)
-  if (inherits(space2, "try-error")) {
-    space <- "XYZ"
-  }
+
+  space <- tryCatch(match.arg(space),
+                    error = function(e) {
+                      message("Invalid space arg. Defaulting to XYZ")
+                      return("XYZ")
+                    })
 
   X <- vismodeldata[, names(vismodeldata) %in% c("X", "cie2_X", "cie10_X")]
   Y <- vismodeldata[, names(vismodeldata) %in% c("Y", "cie2_Y", "cie10_Y")]
