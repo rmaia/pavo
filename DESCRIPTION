@@ -1,53 +1,66 @@
 Package: pavo
-Description: A cohesive framework for parsing, analyzing and organizing colour
-    from spectral data.
-Title: Perceptual Analysis, Visualization and Organization of Spectral Colour
-    Data in R
+Title: Perceptual Analysis, Visualization and Organization of
+    Spectral Colour Data in R
 Version: 2.2.0
-License: GPL (>= 2)
-Encoding: UTF-8
-Authors@R: c(person("Rafael", "Maia", role = c("aut", "cre"),
-    email = "rm72@zips.uakron.edu",
-    comment = c(ORCID = "0000-0002-7563-9795")),
-    person("Thomas", "White", role = "aut",
-    email = "thomas.white026@gmail.com",
-    comment = c(ORCID = "0000-0002-3976-1734")),
-    person("Hugo", "Gruson", role = "aut",
-    email = "hugo.gruson+R@normalesup.org",
-    comment = c(ORCID = "0000-0002-4094-1476")),
-    person("John", "Endler", role = "aut",
-    email = "john.endler@deakin.edu.au"),
-    person("Chad", "Eliason", role = "aut",
-    email = "cme16@zips.uakron.edu"),
-    person("Pierre-Paul", "Bitton", role = "aut",
-    email = "bittonp@uwindsor.ca",
-    comment = c(ORCID = "0000-0001-5984-2331"))
-    )
+Authors@R: 
+    c(person(given = "Rafael",
+             family = "Maia",
+             role = c("aut", "cre"),
+             email = "rm72@zips.uakron.edu",
+             comment = c(ORCID = "0000-0002-7563-9795")),
+      person(given = "Thomas",
+             family = "White",
+             role = "aut",
+             email = "thomas.white026@gmail.com",
+             comment = c(ORCID = "0000-0002-3976-1734")),
+      person(given = "Hugo",
+             family = "Gruson",
+             role = "aut",
+             email = "hugo.gruson+R@normalesup.org",
+             comment = c(ORCID = "0000-0002-4094-1476")),
+      person(given = "John",
+             family = "Endler",
+             role = "aut",
+             email = "john.endler@deakin.edu.au"),
+      person(given = "Chad",
+             family = "Eliason",
+             role = "aut",
+             email = "cme16@zips.uakron.edu"),
+      person(given = "Pierre-Paul",
+             family = "Bitton",
+             role = "aut",
+             email = "bittonp@uwindsor.ca",
+             comment = c(ORCID = "0000-0001-5984-2331")))
 Maintainer: Rafael Maia <rm72@zips.uakron.edu>
+Description: A cohesive framework for parsing, analyzing and
+    organizing colour from spectral data.
+License: GPL (>= 2)
 URL: http://rafaelmaia.net/pavo/, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
-    R(>= 3.2.0)
+    R (>= 3.2.0)
 Imports:
+    cluster,
     geometry,
+    magick,
     pbmcapply,
     plot3D,
     rcdd,
     sp,
-    magick,
-    cluster,
     viridisLite
 Suggests:
     digest,
     imager,
     knitr,
     mapproj,
+    NbClust,
     rgl,
     rmarkdown,
     testthat,
-    NbClust,
     xml2
-VignetteBuilder: knitr
-RoxygenNote: 6.1.1
+VignetteBuilder: 
+    knitr
+Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
+RoxygenNote: 6.1.1
