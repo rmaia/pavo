@@ -225,7 +225,7 @@ vismodel <- function(rspecdata,
 
     sens_wl <- wl
   } else if (visual2 == "user-defined") {
-    S <- visual[, names(visual) != "wl"]
+    S <- visual[, names(visual) != "wl", drop = FALSE]
     sens_wl <- visual[, "wl"]
     fullS <- visual
   } else {
@@ -357,12 +357,6 @@ vismodel <- function(rspecdata,
     crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
   )
 
-  # In case rspecdata only has one spectrum
-  if (dim(Qi)[2] < 2) {
-    Qi <- data.frame(t(Qi))
-    rownames(Qi) <- names(y)
-  }
-
   names(Qi) <- names(S)
 
   # Achromatic contrast
@@ -418,14 +412,14 @@ vismodel <- function(rspecdata,
     Ei = Qi / (Qi + 1)
   )
 
-  # Convert to relative
-  if (relative) {
-    res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(Qi) %in% "lum"])
-  }
-
   # Add NA lum column is lum not calculated
   if (achromatic2 == "none") {
     res$lum <- NA
+  }
+
+  # Convert to relative
+  if (relative) {
+    res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(res) %in% "lum", drop = FALSE])
   }
 
   class(res) <- c("vismodel", "data.frame")
