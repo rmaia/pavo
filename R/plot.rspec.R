@@ -53,21 +53,16 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   if (is.null(arg$xlab)) {
     arg$xlab <- "Wavelength (nm)"
   }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- range(wl, na.rm = TRUE)
-  }
+  arg$x <- wl
 
   # heat plot
   if (type == "heatmap") {
-    if (is.null(arg$xlab)) {
-      arg$xlab <- "Wavelength (nm)"
-    }
     if (is.null(arg$ylab)) {
       arg$ylab <- "Index"
     }
     if (is.null(varying)) {
-      varying <- seq_len(ncol(x))
-      print("No varying vector supplied; using arbitrary values")
+      varying <- seq_along(x)
+      message("No varying vector supplied; using arbitrary values")
     }
     if (is.null(arg$ylim)) {
       arg$ylim <- range(varying, na.rm = TRUE)
@@ -78,7 +73,6 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       jc <- colorRampPalette(arg$col)
       arg$col <- jc(n)
     }
-
     if (is.null(arg$lty)) {
       arg$lty <- 1
     }
@@ -93,7 +87,6 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       )$y
     }, numeric(length(Index)))
 
-    arg$x <- wl
     arg$y <- Index
     arg$z <- t(dat)
 
@@ -103,7 +96,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # coloring for overlay plot & others
   if (length(arg$col) < ncol(x)) {
     arg$col <- rep(arg$col, ncol(x))
-    arg$col <- arg$col[seq_len(ncol(x))]
+    arg$col <- arg$col[seq_along(x)]
   }
 
   if (any(names(arg$col) %in% names(x))) {
@@ -113,12 +106,13 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   # line types for overlay plot & others
   if (length(arg$lty) < ncol(x)) {
     arg$lty <- rep(arg$lty, ncol(x))
-    arg$lty <- arg$lty[seq_len(ncol(x))]
+    arg$lty <- arg$lty[seq_along(x)]
   }
 
   if (any(names(arg$lty) %in% names(x))) {
     arg$col <- arg$lty[select - 1]
   }
+  arg$type <- "l"
 
 
   # overlay different spec curves
@@ -129,8 +123,6 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     if (is.null(arg$ylab)) {
       arg$ylab <- "Reflectance (%)"
     }
-    arg$type <- "l"
-    arg$x <- wl
     arg$y <- x[, 1]
     col <- arg$col
     arg$col <- col[1]
@@ -152,12 +144,11 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
   # Stack curves along y-axis
   if (type == "stack") {
-    arg$type <- "l"
     if (is.null(arg$ylab)) {
       arg$ylab <- "Cumulative reflectance (arb. units)"
     }
 
-    x2 <- as.data.frame(x[, c(rev(seq_len(ncol(x))))])
+    x2 <- as.data.frame(x[, c(rev(seq_along(x)))])
     if (length(select) == 1) {
       y <- max(x2)
     } else {
@@ -166,7 +157,6 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     ym <- cumsum(y)
     ymins <- c(0, ym[-length(ym)])
 
-    arg$x <- wl
     arg$y <- x2[, 1]
     if (is.null(arg$ylim)) {
       arg$ylim <- c(0, sum(y))
