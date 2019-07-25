@@ -68,22 +68,19 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   cntplotspecs <- isolate_wl(cntplotspecs, keep = "spec")
   errplotspecs <- isolate_wl(errplotspecs, keep = "spec")
 
-  indexsub <- seq_along(cntplotspecs)
-
   if (as.integer(dim(errplotspecs)[1] / 2) == as.integer(dim(cntplotspecs)[1]) &&
     as.integer(dim(errplotspecs)[1] %% 2) == 0) {
-    polygon_data <- vapply(indexsub, function(x)
-      c(
-        errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 1, x],
-        rev(errplotspecs[seq(dim(errplotspecs)[1]) %% 2 == 0, x])
-      ), numeric(nrow(errplotspecs)))
+    # When FUN.error returns length 2 output for each spectrum (e.g. quantiles)
+    lower <- errplotspecs[seq(nrow(errplotspecs)) %% 2 == 0, ]
+    upper <- errplotspecs[seq(nrow(errplotspecs)) %% 2 == 1, ]
   } else {
-    polygon_data <- vapply(
-      indexsub, function(x)
-        c(cntplotspecs[, x] + errplotspecs[, x], rev(cntplotspecs[, x] - errplotspecs[, x])),
-      numeric(nrow(errplotspecs) * 2)
-    )
+    lower <- cntplotspecs - errplotspecs
+    upper <- cntplotspecs + errplotspecs
   }
+
+  polygon_data <- rbind(upper,
+                        lower[rev(seq(nrow(lower))),])
+
 
   polygon_wl <- c(wl, rev(wl))
 
