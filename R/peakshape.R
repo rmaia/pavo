@@ -71,22 +71,22 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     halfmax <- (Bmax + Bmin) / 2
   }
 
-  Xi <- vapply(
+  Xi <- lapply(
     seq_along(rspecdata2),
-    function(x) which(rspecdata2[, x] == Bmax[x]),
-    numeric(1)
+    function(x) which(rspecdata2[, x] == Bmax[x])
   ) # lambda_max index
+
   dblpeaks <- vapply(Xi, length, numeric(1))
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum
-    dblpeak_nms <- nms[select][dblpeaks > 1]
-    Xi <- vapply(Xi, "[[", 1, numeric(1))
+    dblpeak_nms <- nms[dblpeaks > 1]
     warning("Multiple wavelengths have the same reflectance value (",
       paste(dblpeak_nms, collapse = ", "), "). Using first peak found. ",
       "Please check the data or try smoothing.",
       call. = FALSE
     )
   }
+  Xi <- apply(rspecdata2, 2, which.max)
 
   hilo <- t(t(rspecdata2) - halfmax) < 0
 
