@@ -73,16 +73,8 @@ procspec <- function(rspecdata, opt = c(
     }
   }
 
-  wl_index <- which(names(rspecdata) == "wl")
-
-  if (length(wl_index > 0)) {
-    wl <- rspecdata[, wl_index]
-    rspecdata <- rspecdata[-wl_index]
-  } else {
-    warning("No wavelengths supplied; using arbitrary values")
-    rspecdata <- rspecdata
-    wl <- seq_len(nrow(rspecdata))
-  }
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  rspecdata <- isolate_wl(rspecdata, keep = "spec")
 
   nam <- names(rspecdata)
 

@@ -39,28 +39,13 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   type <- match.arg(type)
 
   # make wavelength vector
-  wl_index <- which(names(x) == "wl")
-  if (length(wl_index) > 0) {
-    haswl <- TRUE
-    wl <- x[, wl_index]
+  wl <- isolate_wl(x, keep = "wl")
+
+  if (is.null(select)) {
+    x  <- isolate_wl(x, keep = "spec")
   } else {
-    haswl <- FALSE
-    wl <- seq_len(nrow(x))
-    warning("No wavelengths provided; using arbitrary index values")
+    x <- isolate_wl(x[ , select, drop = FALSE], keep = "spec")
   }
-
-  # subset based on indexing vector
-  if (is.logical(select)) {
-    select <- which(select == "TRUE")
-  }
-  if (is.null(select) & haswl == TRUE) {
-    select <- (seq_len(ncol(x)))[-wl_index]
-  }
-  if (is.null(select) & haswl == FALSE) {
-    select <- seq_len(ncol(x))
-  }
-
-  x <- as.data.frame(x[select]) # CE: removed comma before select
 
   arg <- list(...)
 

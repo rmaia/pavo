@@ -63,18 +63,10 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   }
 
   # make wavelength vector
-  wl_index <- which(names(rspecdata) == "wl")
-  wl_index_cnt <- which(names(cntplotspecs) == "wl")
-  wl_index_err <- which(names(errplotspecs) == "wl")
+  wl <- isolate_wl(rspecdata, keep = "wl")
 
-  if (length(wl_index) > 0) {
-    wl <- rspecdata[, wl_index, drop = TRUE]
-    cntplotspecs <- as.data.frame(cntplotspecs[, -wl_index_cnt])
-    errplotspecs <- as.data.frame(errplotspecs[, -wl_index_err])
-  } else {
-    wl <- seq_len(nrow(rspecdata))
-    warning("No wavelengths provided; using arbitrary index values")
-  }
+  cntplotspecs <- isolate_wl(cntplotspecs, keep = "spec")
+  errplotspecs <- isolate_wl(errplotspecs, keep = "spec")
 
   indexsub <- seq_along(cntplotspecs)
 

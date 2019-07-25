@@ -150,10 +150,8 @@ vismodel <- function(rspecdata,
                      vonkries = FALSE, scale = 1, relative = TRUE) {
 
   # remove & save colum with wavelengths
-
-  wl_index <- which(names(rspecdata) == "wl")
-  wl <- rspecdata[, wl_index]
-  y <- rspecdata[, -wl_index, drop = FALSE]
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  y <- isolate_wl(rspecdata, keep = "spec")
 
   # Negative value check
   if (any(y < 0)) {

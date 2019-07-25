@@ -32,11 +32,9 @@ explorespec <- function(rspecdata, by = NULL,
   oPar <- par("mar", "oma", "ask", "mfrow")
   on.exit(par(oPar))
 
-  by0 <- by
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  rspecdata <- isolate_wl(rspecdata, keep = "spec")
 
-  wl_index <- which(names(rspecdata) == "wl")
-  wl <- rspecdata[, wl_index]
-  rspecdata <- rspecdata[, -wl_index, drop = FALSE]
   leg2 <- names(rspecdata)
 
   scale <- match.arg(scale)
