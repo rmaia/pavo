@@ -39,44 +39,19 @@
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL,
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
-  nms <- names(rspecdata)
 
-  wl_index <- which(nms == "wl")
-  if (length(wl_index) > 0) {
-    haswl <- TRUE
-    wl <- rspecdata[, wl_index]
+  wl <- isolate_wl(rspecdata, keep = "wl")
+
+  if (is.null(select)) {
+    rspecdata <- isolate_wl(rspecdata, keep = "spec")
   } else {
-    haswl <- FALSE
-    wl <- seq_len(nrow(rspecdata))
-    warning("No wavelengths provided; using arbitrary index values",
-      call. = FALSE
-    )
+    rspecdata <- isolate_wl(rspecdata[, select, drop = FALSE], keep = "spec")
   }
-
+  nms <- names(rspecdata)
   # set default wavelength range if not provided
   if (is.null(lim)) {
     lim <- range(wl)
   }
-
-
-  if (is.null(select)) {
-    select <- seq_along(rspecdata)
-  }
-  else {
-    # subset based on indexing vector
-    if (is.logical(select)) {
-      select <- which(select)
-    }
-    if (isTRUE(wl_index %in% select)) {
-      warning("Cannot calculate peak shape on wavelength index", call. = FALSE)
-    }
-  }
-
-  if (haswl) {
-    select <- setdiff(select, wl_index)
-  }
-
-  rspecdata <- as.data.frame(rspecdata[, select, drop = FALSE])
 
   if (ncol(rspecdata) == 0) {
     return(NULL)
@@ -141,10 +116,10 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     on.exit(par(oPar))
     par(ask = ask)
 
-    for (i in seq_along(select)) {
+    for (i in seq_along(rspecdata)) {
       plot(rspecdata[, i] ~ wl,
         type = "l", xlab = "Wavelength (nm)",
-        ylab = "Reflectance (%)", main = nms[select[i]], ...
+        ylab = "Reflectance (%)", main = nms[i], ...
       )
       abline(v = hue[i], col = "red")
       abline(h = halfmax[i], col = "red")
@@ -155,7 +130,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   }
 
   data.frame(
-    id = nms[select], B3 = as.numeric(Bmax), H1 = hue,
+    id = nms, B3 = as.numeric(Bmax), H1 = hue,
     FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
     incl.min = c("Yes", "No")[as.numeric(Bmin > Bmin_all) + 1]
   )

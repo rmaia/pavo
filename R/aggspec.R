@@ -33,16 +33,8 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   # Check: user may have removed 'wl' function already.
   # (data.frame doesn't allow duplicate names anymore, so this should work)
-
-  wl_index <- which(names(rspecdata) == "wl")
-
-  if (length(wl_index > 0)) {
-    wl <- rspecdata[, wl_index]
-    y <- rspecdata[, -wl_index, drop = FALSE]
-  } else {
-    y <- rspecdata
-    wl <- 300:700
-  }
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  y  <- isolate_wl(rspecdata, keep = "spec")
 
   if (is.null(by)) {
     dat <- apply(y, 1, FUN)

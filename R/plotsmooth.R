@@ -31,7 +31,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
   titlenames <- names(rspecdata[, 2:dim(rspecdata)[2]])
 
   if (specnum == 1) {
-    titlenames <- titlenames [2]
+    titlenames <- titlenames[2]
     rspecdata <- rspecdata[, seq_len(specnum + 1)]
   }
 
@@ -40,8 +40,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     titlenames <- titlenames[2:dim(rspecdata)[2]]
   }
 
-  wl_index <- which(names(rspecdata) == "wl")
-  wl <- rspecdata[, wl_index]
+  wl <- isolate_wl(rspecdata, keep = "wl")
 
   nplots <- ncol(rspecdata) - 1
 

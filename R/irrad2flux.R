@@ -13,16 +13,17 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 
 irrad2flux <- function(rspecdata) {
-  if (!is.rspec(rspecdata)) {
-    stop("not an object of class rspec")
-  }
 
-  nam <- names(rspecdata)
-  wl <- rspecdata[, nam == "wl"]
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  y  <- isolate_wl(rspecdata, keep = "spec")
 
   K <- 0.01 / (6.626068 * 2.99792458 * 6.02214076)
 
-  rspecdata[, nam != "wl"] <- rspecdata[, nam != "wl"] * wl * K
+  y <- y * wl * K
+
+  rspecdata <- cbind(wl, y)
+
+  class(rspecdata) <- c("rspec", "data.frame")
 
   return(rspecdata)
 }
@@ -31,16 +32,17 @@ irrad2flux <- function(rspecdata) {
 #' @rdname irrad2flux
 
 flux2irrad <- function(rspecdata) {
-  if (!is.rspec(rspecdata)) {
-    stop("not an object of class rspec")
-  }
 
-  nam <- names(rspecdata)
-  wl <- rspecdata[, nam == "wl"]
+  wl <- isolate_wl(rspecdata, keep = "wl")
+  y  <- isolate_wl(rspecdata, keep = "spec")
 
   K <- 0.01 / (6.626068 * 2.99792458 * 6.02214076)
 
-  rspecdata[, nam != "wl"] <- rspecdata[, nam != "wl"] / (wl * K)
+  y <- y / (wl * K)
 
-  rspecdata
+  rspecdata <- cbind(wl, y)
+
+  class(rspecdata) <- c("rspec", "data.frame")
+
+  return(rspecdata)
 }

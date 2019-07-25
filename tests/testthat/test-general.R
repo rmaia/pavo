@@ -38,7 +38,7 @@ test_that("peakshape", {
   test <- read.csv("known_output/FWHM_lims.csv")
   expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
 
-  expect_warning(peakshape(flowers[, -1], plot = FALSE), "No wavelengths")
+  expect_warning(peakshape(flowers[, -1], plot = FALSE), "wl column missing")
 
   expect_equivalent(
     nrow(peakshape(flowers, grepl("^Hibbertia", colnames(flowers)), plot = FALSE)),

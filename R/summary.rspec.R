@@ -160,8 +160,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   chkDots(...)
 
-  wl_index <- which(names(object) == "wl")
-  wl <- object[, wl_index]
+  wl <- isolate_wl(object, keep = "wl")
 
   # Set WL min & max
   lambdamin <- max(wlmin, min(wl))
@@ -176,10 +175,10 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Restrict to range of wlmin:wlmax
   object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
-  wl <- object[, wl_index]
 
-  select <- (seq_len(ncol(object)))[-wl_index]
-  object <- object[, select, drop = FALSE]
+  wl <- isolate_wl(object, keep = "wl")
+  object <- isolate_wl(object, keep = "spec")
+
   output.mat <- matrix(nrow = ncol(object), ncol = 23)
 
   # Three measures of brightness
