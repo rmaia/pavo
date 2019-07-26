@@ -157,6 +157,9 @@
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
 summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
+
+  chkDots(...)
+
   wl_index <- which(names(object) == "wl")
   wl <- object[, wl_index]
 

@@ -25,6 +25,9 @@
 #' @seealso [as.rspec()], [aggspec()]
 
 merge.rspec <- function(x, y, ...) {
+
+  chkDots(...)
+
   if (!all(is.rspec(x), is.rspec(y))) {
     stop("One or more invalid rspec objects")
   }
