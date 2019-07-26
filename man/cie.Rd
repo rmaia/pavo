@@ -11,7 +11,7 @@ cie(vismodeldata, space = c("XYZ", "LAB", "LCh"))
 from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).}
 
-\item{space}{(required) Choice between XYZ (1931), LAB (1971), or LCh colour models.}
+\item{space}{(required) Choice between XYZ (default), LAB, or LCh colour models.}
 }
 \value{
 Object of class \code{\link{colspace}} containing:
