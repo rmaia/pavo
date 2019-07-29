@@ -152,7 +152,7 @@
 
     <pre class="usage"><span class='fu'>cieplot</span>(<span class='no'>ciedata</span>, <span class='kw'>mono</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
   <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>, <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>, <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>box</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='no'>...</span>)</pre>
+  <span class='kw'>box</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>), <span class='kw'>ciebg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -209,6 +209,11 @@ when <code>space = "cielab"</code>.</p></td>
       <th>margin</th>
       <td><p>vector of four numbers specifying drawing margins for CIELAB plot
 (defaults to c(0,0,0,0))</p></td>
+    </tr>
+    <tr>
+      <th>ciebg</th>
+      <td><p>should the colour background be plotted for CIEXYZ plot?
+(defaults to <code>TRUE</code>)</p></td>
     </tr>
     <tr>
       <th>...</th>
