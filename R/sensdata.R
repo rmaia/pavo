@@ -84,7 +84,7 @@ sensdata <- function(visual = c(
   bkg2 <- match.arg(bkg, several.ok = TRUE)
   trans2 <- match.arg(trans, several.ok = TRUE)
 
-  dat <- data.frame(wl = 300:700)
+  dat <- data.frame("wl" = 300:700)
 
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
@@ -95,8 +95,8 @@ sensdata <- function(visual = c(
         "ctenophorus"
       )
     }
-    sens <- as.data.frame(vissyst)
-    S <- as.data.frame(subset(sens, select = grepl(paste(visual2, collapse = "|"), names(sens))))
+    sens <- vissyst
+    S <- subset(sens, select = grepl(paste(visual2, collapse = "|"), names(sens)))
     dat <- cbind(dat, S)
   }
 
@@ -105,8 +105,8 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% achro2)) {
       achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r")
     }
-    sens <- as.data.frame(vissyst)
-    achro <- as.data.frame(subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens))))
+    sens <- vissyst
+    achro <- subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens)))
     dat <- cbind(dat, achro)
   }
 
@@ -115,8 +115,8 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% illum2)) {
       illum2 <- c("bluesky", "D65", "forestshade")
     }
-    bgil <- as.data.frame(bgandilum)
-    illum <- as.data.frame(subset(bgil, select = grepl(paste(illum2, collapse = "|"), names(bgil))))
+    bgil <- bgandilum
+    illum <- subset(bgil, select = grepl(paste(illum2, collapse = "|"), names(bgil)))
     dat <- cbind(dat, illum)
   }
 
@@ -125,8 +125,8 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% bkg2)) {
       bkg2 <- "green"
     }
-    bgil <- as.data.frame(bgandilum)
-    bkg <- as.data.frame(subset(bgil, select = grepl(paste(bkg2, collapse = "|"), names(bgil))))
+    bgil <- bgandilum
+    bkg <- subset(bgil, select = grepl(paste(bkg2, collapse = "|"), names(bgil)))
     dat <- cbind(dat, bkg)
   }
 
@@ -135,8 +135,8 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% trans2)) {
       trans2 <- c("bluetit", "blackbird")
     }
-    trdat <- as.data.frame(transmissiondata)
-    trans <- as.data.frame(subset(trdat, select = grepl(paste(trans2, collapse = "|"), names(trdat))))
+    trdat <- transmissiondata
+    trans <- subset(trdat, select = grepl(paste(trans2, collapse = "|"), names(trdat)))
     dat <- cbind(dat, trans)
   }
 
