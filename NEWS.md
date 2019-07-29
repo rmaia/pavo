@@ -1,5 +1,11 @@
 # pavo 2.3.0
 
+## NEW FEATURES
+
+* `cieplot()` (and therefore `plot.colspace()` for CIEXYZ model) now adds the 
+background of the CIEXYZ colour space by default. This can be turned off by
+switching the `ciebg` argument to `FALSE`.
+
 ## MINOR FEATURES AND BUG FIXES
 
 * `procspec(opt = "bin")` no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.
