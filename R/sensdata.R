@@ -95,8 +95,7 @@ sensdata <- function(visual = c(
         "ctenophorus"
       )
     }
-    sens <- vissyst
-    S <- subset(sens, select = grepl(paste(visual2, collapse = "|"), names(sens)))
+    S <- vissyst[, grepl(paste(visual2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, S)
   }
 
@@ -105,8 +104,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% achro2)) {
       achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r")
     }
-    sens <- vissyst
-    achro <- subset(sens, select = grepl(paste(achro2, collapse = "|"), names(sens)))
+    achro <- vissyst[, grepl(paste(achro2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, achro)
   }
 
@@ -115,8 +113,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% illum2)) {
       illum2 <- c("bluesky", "D65", "forestshade")
     }
-    bgil <- bgandilum
-    illum <- subset(bgil, select = grepl(paste(illum2, collapse = "|"), names(bgil)))
+    illum <- bgandilum[, grepl(paste(illum2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, illum)
   }
 
@@ -125,8 +122,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% bkg2)) {
       bkg2 <- "green"
     }
-    bgil <- bgandilum
-    bkg <- subset(bgil, select = grepl(paste(bkg2, collapse = "|"), names(bgil)))
+    bkg <- bgandilum[, grepl(paste(bkg2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, bkg)
   }
 
@@ -135,8 +131,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% trans2)) {
       trans2 <- c("bluetit", "blackbird")
     }
-    trdat <- transmissiondata
-    trans <- subset(trdat, select = grepl(paste(trans2, collapse = "|"), names(trdat)))
+    trans <- transmissiondata[, grepl(paste(trans2, collapse = "|"), names(transmissiondata)), drop = FALSE]
     dat <- cbind(dat, trans)
   }
 
