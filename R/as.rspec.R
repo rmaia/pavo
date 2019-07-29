@@ -124,14 +124,6 @@ as.rspec <- function(object, whichwl = NULL,
     }
   }
 
-  # Negative value check
-  if (any(object < 0, na.rm = TRUE)) {
-    message(
-      "\nThe spectral data contain ", sum(object < 0, na.rm = TRUE),
-      " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
-    )
-  }
-
   # Interpolation & data-trimming
   ifelse(exceed.range, rule <- 2, rule <- 1)
   if (interp) {
@@ -163,6 +155,14 @@ as.rspec <- function(object, whichwl = NULL,
         "Check 'lim' argument."
       )
     }
+  }
+  
+  # Negative value check
+  if (any(res < 0, na.rm = TRUE)) {
+    message(
+      "\nThe spectral data contain ", sum(res < 0, na.rm = TRUE),
+      " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
+    )
   }
 
   res <- as.data.frame(res)
