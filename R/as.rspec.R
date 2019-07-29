@@ -43,7 +43,9 @@ as.rspec <- function(object, whichwl = NULL,
                      interp = TRUE, lim = NULL, exceed.range = TRUE) {
 
   # tibble dodge
-  if ("tbl_df" %in% attr(object, "class")) object <- data.frame(object)
+  if ("tbl_df" %in% attr(object, "class")) {
+    object <- data.frame(object)
+  }
 
   if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
@@ -51,9 +53,9 @@ as.rspec <- function(object, whichwl = NULL,
     stop("object must be a data frame or matrix")
   }
 
-  if (length(object[is.na(object)]) > 0) {
+  if (anyNA(object)) {
     message(
-      "\nThe spectral data contain ", length(object[is.na(object)]),
+      "The spectral data contain ", sum(is.na(object)),
       " NA's(s), which should be reviewed closely."
     )
   }
@@ -69,11 +71,6 @@ as.rspec <- function(object, whichwl = NULL,
   # Case 3: wl | col1 | col2... (no whichwl, lim) --> use correlation find
   # Case 4:      col1 | col2... --> use arbitrary numbering
 
-  # try to automatically find wavelength column. for increasing wavelengths,
-  # expect a perfect correlation between lambda values and column indices
-  ind <- apply(object, 2, function(x) {
-    cor(x, seq_len(nrow(object)))
-  })
 
   if (!is.null(whichwl)) {
     if (is.numeric(whichwl)) {
@@ -84,24 +81,31 @@ as.rspec <- function(object, whichwl = NULL,
     wl <- object[, wl_index]
     object <- object[, -wl_index, drop = FALSE]
     name <- name[-wl_index]
-  } else if (any(ind > 0.999)) {
-    wl_index <- which(ind > 0.999)[1]
-    wl <- object[, wl_index]
-    object <- object[, -wl_index, drop = FALSE]
-    name <- name[-wl_index]
-    message("wavelengths found in column ", wl_index)
-  } else if (!is.null(lim)) {
-    wl <- seq(lim[1], lim[2], length.out = nrow(object))
-    warning(
-      "No wavelengths contained in dataset, using user-specified range. ",
-      "Check output carefully!"
-    )
   } else {
-    wl <- seq_len(nrow(object))
-    warning(
-      "No wavelengths found or whichwl not provided; ",
-      "using arbitrary index values"
-    )
+    # try to automatically find wavelength column. for increasing wavelengths,
+    # expect a near perfect correlation between lambda values and row indices
+    ind <- apply(object, 2, function(x) {
+      cor(x, seq_len(nrow(object)))
+    })
+    if (any(ind > 0.999)) {
+      wl_index <- which(ind > 0.999)[1]
+      wl <- object[, wl_index]
+      object <- object[, -wl_index, drop = FALSE]
+      name <- name[-wl_index]
+      message("wavelengths found in column ", wl_index)
+    } else if (!is.null(lim)) {
+      wl <- seq(lim[1], lim[2], length.out = nrow(object))
+      warning(
+        "No wavelengths contained in dataset, using user-specified range. ",
+        "Check output carefully!"
+      )
+    } else {
+      wl <- seq_len(nrow(object))
+      warning(
+        "No wavelengths found or whichwl not provided; ",
+        "using arbitrary index values."
+      )
+    }
   }
 
   l1.dat <- floor(wl[which.min(wl)]) # lower wavelength limit of given data
@@ -125,7 +129,8 @@ as.rspec <- function(object, whichwl = NULL,
   }
 
   # Interpolation & data-trimming
-  ifelse(exceed.range, rule <- 2, rule <- 1)
+  rule <- ifelse(exceed.range, 2, 1)
+
   if (interp) {
     object <- apply(object, 2, function(col) {
       approx(x = wl, y = col, xout = l1:l2, rule = rule)$y
@@ -156,11 +161,11 @@ as.rspec <- function(object, whichwl = NULL,
       )
     }
   }
-  
+
   # Negative value check
   if (any(res < 0, na.rm = TRUE)) {
     message(
-      "\nThe spectral data contain ", sum(res < 0, na.rm = TRUE),
+      "The spectral data contain ", sum(res < 0, na.rm = TRUE),
       " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
     )
   }
