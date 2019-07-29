@@ -109,9 +109,7 @@ coc <- function(vismodeldata) {
   r.vec <- abs(x) + abs(y) # city-block from origin
   # h.theta <- atan2(y, x)
 
-  res.p <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
-
-  res <- res.p
+  res <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 

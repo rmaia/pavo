@@ -122,10 +122,8 @@ hexagon <- function(vismodeldata) {
   sec.fine <- round(floor(h.theta / 10), 0) * 10
   sec.coarse <- vapply(seq_along(x), function(x) coarse_sec(h.theta[x]), character(1))
 
-  res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
+  res <- data.frame(s, m, l, x, y, h.theta, r.vec, sec.fine, sec.coarse, row.names = rownames(dat))
   # res.p <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
-
-  res <- res.p
 
   class(res) <- c("colspace", "data.frame")
 

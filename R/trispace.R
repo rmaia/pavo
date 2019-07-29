@@ -116,9 +116,7 @@ trispace <- function(vismodeldata) {
   r.vec <- sqrt(x^2 + y^2)
   h.theta <- atan2(y, x)
 
-  res.p <- data.frame(s, m, l, x, y, h.theta, r.vec, row.names = rownames(dat))
-
-  res <- res.p
+  res <- data.frame(s, m, l, x, y, h.theta, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 
