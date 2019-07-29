@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.colspace.R
 \name{is.colspace}
 \alias{is.colspace}
-\title{Test is object is of class 'colspace'}
+\title{Test if object is of class 'colspace'}
 \usage{
 is.colspace(object)
 }
@@ -13,7 +13,7 @@ is.colspace(object)
 a logical value indicating whether the object is of class \code{colspace}
 }
 \description{
-Test is object is of class 'colspace'
+Test if object is of class 'colspace'
 }
 \seealso{
 \code{\link[=colspace]{colspace()}}

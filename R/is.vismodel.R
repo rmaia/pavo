@@ -1,4 +1,4 @@
-#' Test is object is of class 'vismodel'
+#' Test if object is of class 'vismodel'
 #'
 #' @param object an R object
 #'

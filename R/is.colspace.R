@@ -1,4 +1,4 @@
-#' Test is object is of class 'colspace'
+#' Test if object is of class 'colspace'
 #'
 #' @param object an R object
 #'

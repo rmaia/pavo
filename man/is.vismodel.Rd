@@ -2,7 +2,7 @@
 % Please edit documentation in R/is.vismodel.R
 \name{is.vismodel}
 \alias{is.vismodel}
-\title{Test is object is of class 'vismodel'}
+\title{Test if object is of class 'vismodel'}
 \usage{
 is.vismodel(object)
 }
@@ -13,7 +13,7 @@ is.vismodel(object)
 a logical value indicating whether the object is of class \code{vismodel}.
 }
 \description{
-Test is object is of class 'vismodel'
+Test if object is of class 'vismodel'
 }
 \seealso{
 \code{\link[=vismodel]{vismodel()}}

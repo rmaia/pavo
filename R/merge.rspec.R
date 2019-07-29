@@ -26,7 +26,8 @@
 
 merge.rspec <- function(x, y, ...) {
 
-  chkDots(...)
+## allowed arg has not yet been implemented
+# chkDots(..., allowed = "by")
 
   if (!all(is.rspec(x), is.rspec(y))) {
     stop("One or more invalid rspec objects")
