@@ -140,7 +140,7 @@ sensdata <- function(visual = c(
     dat <- cbind(dat, trans)
   }
 
-  dat <- suppressMessages(as.rspec(dat))
+  class(dat) <- c("rspec", "data.frame")
 
   if (plot) {
     plot(dat, ...)
