@@ -1,6 +1,6 @@
 pandoc: '2.2'
 pkgdown: 1.3.0.9100
-pkgdown_sha: e3cee56df1eaa875b86171427a3a0eb3d5157b71
+pkgdown_sha: 7582f674ee59bba404c782bba367c146feb043e9
 articles:
   pavo-1-overview: pavo-1-overview.html
   pavo-2-importing_processing: pavo-2-importing_processing.html
