@@ -68,8 +68,7 @@
 #' @export
 #'
 
-sensdata <- function(
-                     visual = c(
+sensdata <- function(visual = c(
                        "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
                        "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"
                      ),
@@ -143,8 +142,9 @@ sensdata <- function(
 
   dat <- suppressMessages(as.rspec(dat))
 
-  if (plot == TRUE) {
+  if (plot) {
     plot(dat, ...)
+    invisible(dat)
   } else {
     dat
   }
