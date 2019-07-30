@@ -102,9 +102,7 @@ dispace <- function(vismodeldata) {
   # colorimetrics?
   r.vec <- abs(x)
 
-  res.p <- data.frame(s, l, x, r.vec, row.names = rownames(dat))
-
-  res <- res.p
+  res <- data.frame(s, l, x, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 

@@ -148,13 +148,12 @@ tcspace <- function(vismodeldata) {
   m.r <- r.vec * cosalpha.m
   l.r <- r.vec * cosalpha.l
 
-  res.p <- data.frame(u, s, m, l, u.r, s.r, m.r, l.r,
+  res <- data.frame(u, s, m, l, u.r, s.r, m.r, l.r,
     x, y, z, h.theta, h.phi,
     r.vec, r.max, r.achieved,
     row.names = rownames(dat)
   )
 
-  res <- res.p
   class(res) <- c("colspace", "data.frame")
 
   # Descriptive attributes (largely preserved from vismodel)

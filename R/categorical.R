@@ -121,12 +121,10 @@ categorical <- function(vismodeldata) {
     }
   }
 
-  res.p <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
+  res <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
 
-  res.p$category <- vapply(seq_len(nrow(res.p)), function(x) colcat(res.p[x, ]), character(1))
-  res.p$r.vec <- sqrt(res.p$x^2 + res.p$y^2)
-
-  res <- res.p
+  res$category <- vapply(seq_len(nrow(res)), function(x) colcat(res[x, ]), character(1))
+  res$r.vec <- sqrt(res$x^2 + res$y^2)
 
   class(res) <- c("colspace", "data.frame")
 
