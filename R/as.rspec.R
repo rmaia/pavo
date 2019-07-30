@@ -10,7 +10,7 @@
 #' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 #' `whichwl` is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
-#' `TRUE``).
+#' `TRUE`).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
 #' `c(300, 700)`).
 #' @param exceed.range logical. Should data be interpolated to the limits specified
@@ -138,6 +138,9 @@ as.rspec <- function(object, whichwl = NULL,
     wl <- seq(l1, l2)
   }
 
+  # We need to convert object as a df before putting back the wl, otherwise
+  # altrep INTSXP wl will be converted to REALSXP
+  object <- as.data.frame(object)
   res <- cbind(wl, object)
 
   colnames(res) <- c("wl", name)
@@ -170,7 +173,6 @@ as.rspec <- function(object, whichwl = NULL,
     )
   }
 
-  res <- as.data.frame(res)
   class(res) <- c("rspec", "data.frame")
 
   return(res)

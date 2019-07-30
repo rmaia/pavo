@@ -42,6 +42,9 @@ merge.rspec <- function(x, y, ...) {
   arg$x <- x
   arg$y <- y
 
+  # FIXME: this step converts altrep INTSXP wl column into simple INTSXP wl
+  # column. Probably something that needs to be changed in merge.data.frame()
+  # by R-Core.
   res <- do.call(merge.data.frame, arg)
   class(res) <- c("rspec", "data.frame")
   res
