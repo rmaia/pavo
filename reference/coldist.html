@@ -216,20 +216,22 @@ Ignored for <code><a href='colspace.html'>colspace</a></code> objects.</p></td>
     </tr>
     <tr>
       <th>weber</th>
-      <td><p>The Weber fraction to be used (often also referred to as receptor noise,
+      <td><p>The Weber fraction(s) to be used (often also referred to as receptor noise,
 or <em>e</em>). The noise-to-signal ratio <code>v</code> is unknown,
 and therefore must be calculated based on the empirically estimated Weber
-fraction of one of the cone classes. <code>v</code> is then applied to estimate the
-Weber fraction of the other cones. by default, the value of 0.1 is used
-(the empirically estimated value for the
-LWS cone from <em>Leiothrix lutea</em>). See Olsson et al. 2017 for a review of
-published values in the literature. Ignored for <code>colspace</code> objects.</p></td>
+fraction of one or (more rarely) all the cone classes. When noise is only known for
+one receptor, as is typical, <code>v</code> is then applied to estimate the
+Weber fraction of the other cones. By default, the value of 0.1 is used
+(the empirically estimated value for the LWS cone from <em>Leiothrix lutea</em>).
+See Olsson et al. 2017 for a review of published values in the literature.
+Ignored for <code>colspace</code> objects.</p></td>
     </tr>
     <tr>
       <th>weber.ref</th>
       <td><p>the cone class used to obtain the empirical estimate of the
-Weber fraction used for the <code>weber</code> argument. By default, <code>n4</code> is used,
-representing the LWS cone for <em>Leiothrix lutea</em>. Ignored for <code>colspace</code> objects.</p></td>
+Weber fraction used for the <code>weber</code> argument, if a single value is specified.
+By default, <code>n4</code> is used, representing the LWS cone for <em>Leiothrix lutea</em>.
+Ignored for <code>colspace</code> objects.</p></td>
     </tr>
     <tr>
       <th>weber.achro</th>
