@@ -50,18 +50,20 @@ must have same length as number of columns (excluding achromatic receptor if use
 defaults to the Pekin robin \emph{Leiothrix lutea} densities: \code{c(1,2,2,4)}).
 Ignored for \code{\link{colspace}} objects.}
 
-\item{weber}{The Weber fraction to be used (often also referred to as receptor noise,
+\item{weber}{The Weber fraction(s) to be used (often also referred to as receptor noise,
 or \emph{e}). The noise-to-signal ratio \code{v} is unknown,
 and therefore must be calculated based on the empirically estimated Weber
-fraction of one of the cone classes. \code{v} is then applied to estimate the
-Weber fraction of the other cones. by default, the value of 0.1 is used
-(the empirically estimated value for the
-LWS cone from \emph{Leiothrix lutea}). See Olsson et al. 2017 for a review of
-published values in the literature. Ignored for \code{colspace} objects.}
+fraction of one or (more rarely) all the cone classes. When noise is only known for
+one receptor, as is typical, \code{v} is then applied to estimate the
+Weber fraction of the other cones. By default, the value of 0.1 is used
+(the empirically estimated value for the LWS cone from \emph{Leiothrix lutea}).
+See Olsson et al. 2017 for a review of published values in the literature.
+Ignored for \code{colspace} objects.}
 
 \item{weber.ref}{the cone class used to obtain the empirical estimate of the
-Weber fraction used for the \code{weber} argument. By default, \code{n4} is used,
-representing the LWS cone for \emph{Leiothrix lutea}. Ignored for \code{colspace} objects.}
+Weber fraction used for the \code{weber} argument, if a single value is specified.
+By default, \code{n4} is used, representing the LWS cone for \emph{Leiothrix lutea}.
+Ignored for \code{colspace} objects.}
 
 \item{weber.achro}{the Weber fraction to be used to calculate achromatic contrast, when
 \code{achromatic = TRUE}. Defaults to 0.1. Ignored for \code{colspace} objects.}

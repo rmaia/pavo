@@ -28,17 +28,19 @@
 #'  must have same length as number of columns (excluding achromatic receptor if used;
 #'  defaults to the Pekin robin *Leiothrix lutea* densities: `c(1,2,2,4)`).
 #'  Ignored for [`colspace`] objects.
-#' @param weber The Weber fraction to be used (often also referred to as receptor noise,
+#' @param weber The Weber fraction(s) to be used (often also referred to as receptor noise,
 #'  or *e*). The noise-to-signal ratio `v` is unknown,
 #'  and therefore must be calculated based on the empirically estimated Weber
-#'  fraction of one of the cone classes. `v` is then applied to estimate the
-#'  Weber fraction of the other cones. by default, the value of 0.1 is used
-#'  (the empirically estimated value for the
-#'  LWS cone from *Leiothrix lutea*). See Olsson et al. 2017 for a review of
-#'  published values in the literature. Ignored for `colspace` objects.
+#'  fraction of one or (more rarely) all the cone classes. When noise is only known for
+#'  one receptor, as is typical, `v` is then applied to estimate the
+#'  Weber fraction of the other cones. By default, the value of 0.1 is used
+#'  (the empirically estimated value for the LWS cone from *Leiothrix lutea*).
+#'  See Olsson et al. 2017 for a review of published values in the literature. 
+#'  Ignored for `colspace` objects.
 #' @param weber.ref the cone class used to obtain the empirical estimate of the
-#'  Weber fraction used for the `weber` argument. By default, `n4` is used,
-#'  representing the LWS cone for *Leiothrix lutea*. Ignored for `colspace` objects.
+#'  Weber fraction used for the `weber` argument, if a single value is specified. 
+#'  By default, `n4` is used, representing the LWS cone for *Leiothrix lutea*. 
+#'  Ignored for `colspace` objects.
 #' @param weber.achro the Weber fraction to be used to calculate achromatic contrast, when
 #'  `achromatic = TRUE`. Defaults to 0.1. Ignored for `colspace` objects.
 #' @param noise how the noise will be calculated (ignored for `colspace` objects):
@@ -444,7 +446,10 @@ coldist <- function(modeldata,
 
 newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
   reln <- n / sum(n)
-  v <- weber * sqrt(reln[weber.ref])
+  if(length(weber) == length(n))  # For when weber is known for all receptors
+    v <- weber * sqrt(reln)
+  else
+    v <- weber * sqrt(reln[weber.ref])  # When weber is known for one receptor (typical) 
 
   if (is.null(qndat)) {
     e <- setNames(v / sqrt(reln), colnames(dat))
