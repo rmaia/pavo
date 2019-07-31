@@ -101,18 +101,18 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     if (!is.null(lambdacut) & !is.null(oiltype)) {
       if (length(lambdacut) != length(oiltype)) stop("lambdacut and oiltype must be of same length")
 
-      if (oiltype[i] == "C") oil <- c(0.99, 24.38)
-      if (oiltype[i] == "Y") oil <- c(0.9, 70.03)
-      if (oiltype[i] == "R") oil <- c(0.99, 28.65)
-      if (oiltype[i] == "P") oil <- c(0.96, 33.57)
+      if (oiltype[i] == "T") {
+        T.oil <- 1
+      } else {
+        if (oiltype[i] == "C") oil <- c(0.99, 24.38)
+        if (oiltype[i] == "Y") oil <- c(0.9, 70.03)
+        if (oiltype[i] == "R") oil <- c(0.99, 28.65)
+        if (oiltype[i] == "P") oil <- c(0.96, 33.57)
 
-
-      # Oil droplet transmission from Hart and Vorobyev (2005)
-      if (oiltype[i] != "T") {
+        # Oil droplet transmission from Hart and Vorobyev (2005)
         T.oil <- exp(-exp(-2.89 * (.5 / ((oil[1] * lambdacut[i] + oil[2]) - lambdacut[i])) *
-          (wl - lambdacut[i]) + 1.08))
+                            (wl - lambdacut[i]) + 1.08))
       }
-      if (oiltype[i] == "T") T.oil <- 1
 
       peak <- peak * T.oil
     }
