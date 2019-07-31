@@ -72,23 +72,19 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   sensecurves <- matrix(ncol = length(peaksens) + 1, nrow = (range[2] - range[1] + 1))
   sensecurves[, 1] <- c(range[1]:range[2])
 
-
-
   for (i in seq_along(peaksens)) {
 
     # Sensitivities w/o oil droplets
     peak <- 1 / (exp(69.7 * (.8795 + .0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / (range[1]:range[2]))))
     + exp(28 * (.922 - peaksens[i] / (range[1]:range[2]))) + exp(-14.9 * (1.104 - (peaksens[i] / (range[1]:range[2])))) + .674)
 
-    betaband <- 0.26 * exp(-(((range[1]:range[2])
-    - (189 + 0.315 * peaksens[i])) / (-40.5 + 0.195 * peaksens[i]))^2)
+    if (beta) {
+      betaband <- 0.26 * exp(-(((range[1]:range[2])
+                                - (189 + 0.315 * peaksens[i])) / (-40.5 + 0.195 * peaksens[i]))^2)
+      peak <- peak + betaband
+    }
 
-    if (beta == TRUE) peak <- peak + betaband
     peak <- peak / max(peak)
-
-
-
-
 
     if (!is.null(lambdacut) & !is.null(Bmid)) {
       if (length(lambdacut) != length(Bmid)) stop("lambdacut and Bmid must be of same length")
@@ -144,7 +140,6 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
         peak <- peak * T.e
       }
     }
-
 
     sensecurves[, (i + 1)] <- peak
   }
