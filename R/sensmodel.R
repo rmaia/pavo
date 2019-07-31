@@ -147,10 +147,11 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     sensecurves[, i] <- peak
   }
 
-  sensecurves <- cbind(wl, sensecurves)
   sensecurves <- as.data.frame(sensecurves)
-  names(sensecurves) <- c("wl", paste("lmax", peaksens, sep = ""))
-  # sensecurves <- as.rspec(sensecurves)
+  names(sensecurves) <- paste0("lmax", peaksens)
+
+  sensecurves <- cbind(wl, sensecurves)
+
   class(sensecurves) <- c("rspec", "sensmod", "data.frame")
 
   if (is.null(om)) {
