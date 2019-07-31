@@ -93,8 +93,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
     if (!is.null(lambdacut) & !is.null(Bmid)) {
 
-      if (is.na(lambdacut[i])) {
-        if (!is.na(Bmid[i])) warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
+      if (is.na(lambdacut[i]) & !is.na(Bmid[i])) {
+        warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
         T.oil <- 1
       } else {
         T.oil <- exp(-exp(-2.89 * Bmid[i] * (wl - lambdacut[i]) + 1.08))
