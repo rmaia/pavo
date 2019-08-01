@@ -38,11 +38,9 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   nplots <- ncol(rspecdata2)
 
-  plotdata <- matrix(nrow = dim(rspecdata2)[1], ncol = nplots * curves)
-
   inc <- (maxsmooth - minsmooth) / (curves - 2)
-  legnames <- seq(minsmooth, maxsmooth, by = inc)
-  legnames <- sprintf("%.4s", legnames)
+  span_values <- seq(minsmooth, maxsmooth, by = inc)
+  legnames <- sprintf("%.4s", span_values)
   legnames <- paste0("span = ", legnames)
   legnames <- rev(c("raw", legnames))
 
@@ -79,50 +77,40 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     "#000000", "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
     "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
   )
+  cols <- col_list[1:curves]
 
   # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
-    plotdata[, ((i - 1) * curves) + 1] <- rspecdata2[, i]
 
-    plotdata[, ((i - 1) * curves) + 2] <-
+    yaxismax <- max(rspecdata2[, i]) + 10 + ((curves-3-1)*5)
+
+    plot(wl, rspecdata2[, i], cex = 0.1, ylim = c(0, yaxismax + 5))
+    legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
+    title(titlenames[i])
+
+    lines(wl,
       loess.smooth(wl, rspecdata2[, i],
         span = minsmooth,
         evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + 5
+      )$y + 5, col = cols[2])
 
-    plotdata[, ((i - 1) * curves) + curves] <-
+    lines(wl,
       loess.smooth(wl, rspecdata2[, i],
         span = maxsmooth,
         evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + ((curves - 1) * 5)
+      )$y + (curves - 1) * 5, col = cols[length(cols)])
 
     for (j in seq_len(curves - 3)) {
-      plotdata[, ((i - 1) * curves) + 2 + j] <-
+      lines(wl,
         loess.smooth(wl, rspecdata2[, i],
           span = (minsmooth + (inc * j)),
           evaluation = length(wl), degree = 2, family = "gaussian"
-        )$y + (10 + ((j - 1) * 5))
+        )$y + (10 + ((j - 1) * 5)), col = cols[j+2])
     }
-
-    bloc <- plotdata[, (((i - 1) * curves) + 1):(i * curves)]
-    cols <- col_list[1:curves]
-
-    yaxismin <- min(bloc)
-    yaxismax <- max(bloc)
-
-    plot(wl, bloc[, 1], cex = 0.1, ylim = c(yaxismin, yaxismax + 5), xlab = "Wavelength (nm)", ylab = "% Reflectance")
-    legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
-    title(titlenames[i])
 
     if (i %% numplots == 0) {
       mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
       mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
-    }
-
-    nextplot <- 2
-    while (nextplot < ncol(bloc) + 1) {
-      lines(wl, bloc[, nextplot], cex = 0.1, col = cols[nextplot])
-      nextplot <- nextplot + 1
     }
   }
 
