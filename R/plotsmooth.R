@@ -46,31 +46,6 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
   legnames <- paste0("span = ", legnames)
   legnames <- rev(c("raw", legnames))
 
-  # Creates the smooth data matrix
-  for (i in seq_len(nplots)) {
-    plotdata[, ((i - 1) * curves) + 1] <- rspecdata2[, i]
-
-    plotdata[, ((i - 1) * curves) + 2] <-
-      loess.smooth(wl, rspecdata2[, i],
-        span = minsmooth,
-        evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + 5
-
-    plotdata[, ((i - 1) * curves) + curves] <-
-      loess.smooth(wl, rspecdata2[, i],
-        span = maxsmooth,
-        evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + ((curves - 1) * 5)
-
-    for (j in seq_len(curves - 3)) {
-      plotdata[, ((i - 1) * curves) + 2 + j] <-
-        loess.smooth(wl, rspecdata2[, i],
-          span = (minsmooth + (inc * j)),
-          evaluation = length(wl), degree = 2, family = "gaussian"
-        )$y + (10 + ((j - 1) * 5))
-    }
-  }
-
   # Sets plot parameters based on the number of curves on the plots
   par(mfrow = c(3, 4), ask = ask)
   numplots <- 12
@@ -98,9 +73,6 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     par(ask = FALSE)
   }
 
-  # Plots all curves
-  # all below does not work yet
-
   par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
   col_list <- c(
@@ -108,7 +80,30 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
   )
 
+  # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
+    plotdata[, ((i - 1) * curves) + 1] <- rspecdata2[, i]
+
+    plotdata[, ((i - 1) * curves) + 2] <-
+      loess.smooth(wl, rspecdata2[, i],
+        span = minsmooth,
+        evaluation = length(wl), degree = 2, family = "gaussian"
+      )$y + 5
+
+    plotdata[, ((i - 1) * curves) + curves] <-
+      loess.smooth(wl, rspecdata2[, i],
+        span = maxsmooth,
+        evaluation = length(wl), degree = 2, family = "gaussian"
+      )$y + ((curves - 1) * 5)
+
+    for (j in seq_len(curves - 3)) {
+      plotdata[, ((i - 1) * curves) + 2 + j] <-
+        loess.smooth(wl, rspecdata2[, i],
+          span = (minsmooth + (inc * j)),
+          evaluation = length(wl), degree = 2, family = "gaussian"
+        )$y + (10 + ((j - 1) * 5))
+    }
+
     bloc <- plotdata[, (((i - 1) * curves) + 1):(i * curves)]
     cols <- col_list[1:curves]
 
