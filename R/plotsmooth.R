@@ -122,8 +122,8 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     yaxismin <- min(bloc)
     yaxismax <- max(bloc)
 
-    plot(rspecdata[, 1], bloc[, 1], cex = 0.1, ylim = c(yaxismin, yaxismax + 5), xlab = "Wavelength (nm)", ylab = "% Reflectance")
-    legend(rspecdata[1, 1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
+    plot(wl, bloc[, 1], cex = 0.1, ylim = c(yaxismin, yaxismax + 5), xlab = "Wavelength (nm)", ylab = "% Reflectance")
+    legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
     title(titlenames[i])
 
     if (i %% numplots == 0) {
@@ -133,7 +133,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
     nextplot <- 2
     while (nextplot < ncol(bloc) + 1) {
-      lines(rspecdata[, 1], bloc[, nextplot], cex = 0.1, col = cols[nextplot])
+      lines(wl, bloc[, nextplot], cex = 0.1, col = cols[nextplot])
       nextplot <- nextplot + 1
     }
   }
