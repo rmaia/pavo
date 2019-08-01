@@ -46,15 +46,13 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   plotdata <- matrix(nrow = dim(rspecdata)[1], ncol = nplots * curves)
 
-  legnames <- as.character(seq(minsmooth, maxsmooth, by = (maxsmooth - minsmooth) / (curves - 2)))
+  inc <- (maxsmooth - minsmooth) / (curves - 2)
+  legnames <- as.character(seq(minsmooth, maxsmooth, by = inc))
   legnames <- sprintf("%.4s", legnames)
-  legnames <- paste("span = ", legnames, sep = "")
+  legnames <- paste0("span = ", legnames)
   legnames <- rev(c("raw", legnames))
 
   # Creates the smooth data matrix
-
-  inc <- (maxsmooth - minsmooth) / (curves - 2)
-
   for (i in seq_len(nplots)) {
     plotdata[, ((i - 1) * curves) + 1] <- rspecdata[, i + 1]
 
