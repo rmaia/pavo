@@ -61,9 +61,7 @@ as.rimg.default <- function(object, name = "img") {
     rescaler <- function(x) {
       if (any(x > 1)) {
         message("Rescaling values to [0,1]")
-        for (i in seq_len(dim(x)[3])) {
-          x[, , i] <- x[, , i] / 255
-        }
+        x <- x / 255
       }
       x
     }
