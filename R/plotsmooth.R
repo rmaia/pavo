@@ -22,7 +22,7 @@
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
-                       curves = 5, specnum = 0, ask = TRUE) {
+                       curves = 5, specnum = "ALL", ask = TRUE) {
   oPar <- par("mfrow", "ask", "mar", "oma")
   on.exit(par(oPar))
 
@@ -32,7 +32,9 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
   rspecdata2 <- isolate_wl(rspecdata, keep = "spec")
 
   # Remove spectra according to specnum
-  rspecdata2 <- rspecdata2[, seq_len(specnum)]
+  if (specnum != "ALL") {
+    rspecdata2 <- rspecdata2[, seq_len(specnum)]
+  }
 
   titlenames <- names(rspecdata2)
 
