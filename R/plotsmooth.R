@@ -88,24 +88,12 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
     title(titlenames[i])
 
-    lines(wl,
-      loess.smooth(wl, rspecdata2[, i],
-        span = minsmooth,
-        evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + 5, col = cols[2])
-
-    lines(wl,
-      loess.smooth(wl, rspecdata2[, i],
-        span = maxsmooth,
-        evaluation = length(wl), degree = 2, family = "gaussian"
-      )$y + (curves - 1) * 5, col = cols[length(cols)])
-
-    for (j in seq_len(curves - 3)) {
+    for (j in seq_len(curves - 1)) {
       lines(wl,
         loess.smooth(wl, rspecdata2[, i],
-          span = (minsmooth + (inc * j)),
+          span = span_values[j],
           evaluation = length(wl), degree = 2, family = "gaussian"
-        )$y + (10 + ((j - 1) * 5)), col = cols[j+2])
+        )$y + (j * 5), col = cols[j+1])
     }
 
     if (i %% numplots == 0) {
