@@ -28,50 +28,43 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   curves <- curves + 1
 
-  titlenames <- names(rspecdata[, 2:dim(rspecdata)[2]])
-
-  if (specnum == 1) {
-    titlenames <- titlenames[2]
-    rspecdata <- rspecdata[, seq_len(specnum + 1)]
-  }
-
-  if (specnum > 1) {
-    rspecdata <- rspecdata[, seq_len(specnum + 1)]
-    titlenames <- titlenames[2:dim(rspecdata)[2]]
-  }
-
   wl <- isolate_wl(rspecdata, keep = "wl")
+  rspecdata2 <- isolate_wl(rspecdata, keep = "spec")
 
-  nplots <- ncol(rspecdata) - 1
+  # Remove spectra according to specnum
+  rspecdata2 <- rspecdata2[, seq_len(specnum)]
 
-  plotdata <- matrix(nrow = dim(rspecdata)[1], ncol = nplots * curves)
+  titlenames <- names(rspecdata2)
+
+  nplots <- ncol(rspecdata2)
+
+  plotdata <- matrix(nrow = dim(rspecdata2)[1], ncol = nplots * curves)
 
   inc <- (maxsmooth - minsmooth) / (curves - 2)
-  legnames <- as.character(seq(minsmooth, maxsmooth, by = inc))
+  legnames <- seq(minsmooth, maxsmooth, by = inc)
   legnames <- sprintf("%.4s", legnames)
   legnames <- paste0("span = ", legnames)
   legnames <- rev(c("raw", legnames))
 
   # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
-    plotdata[, ((i - 1) * curves) + 1] <- rspecdata[, i + 1]
+    plotdata[, ((i - 1) * curves) + 1] <- rspecdata2[, i]
 
     plotdata[, ((i - 1) * curves) + 2] <-
-
-      loess.smooth(wl, rspecdata [, i + 1],
+      loess.smooth(wl, rspecdata2[, i],
         span = minsmooth,
         evaluation = length(wl), degree = 2, family = "gaussian"
       )$y + 5
 
     plotdata[, ((i - 1) * curves) + curves] <-
-      loess.smooth(wl, rspecdata [, i + 1],
+      loess.smooth(wl, rspecdata2[, i],
         span = maxsmooth,
         evaluation = length(wl), degree = 2, family = "gaussian"
       )$y + ((curves - 1) * 5)
 
     for (j in seq_len(curves - 3)) {
       plotdata[, ((i - 1) * curves) + 2 + j] <-
-        loess.smooth(wl, rspecdata [, i + 1],
+        loess.smooth(wl, rspecdata2[, i],
           span = (minsmooth + (inc * j)),
           evaluation = length(wl), degree = 2, family = "gaussian"
         )$y + (10 + ((j - 1) * 5))
