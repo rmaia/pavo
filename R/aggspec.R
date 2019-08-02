@@ -101,7 +101,6 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   }
 
   # Add ability to aggregate based on multiple vectors (given a list as input)
-  # TODO: add that list can be an input in roxygen doc
 
   by <- factor(by) # is this necessary?
 
@@ -112,7 +111,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   colnames(dat) <- unique(by0)
 
   if (trim) {
-    colnames(dat) <- gsub("[\\. | \\_ | \\-][0-9]*$", "", colnames(dat))
+    colnames(dat) <- gsub("[._-][0-9]*$", "", colnames(dat))
   }
 
   res <- data.frame(cbind(wl = wl, dat))
