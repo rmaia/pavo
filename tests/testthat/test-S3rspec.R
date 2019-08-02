@@ -44,4 +44,10 @@ test_that("summary.rspec", {
   one_spec <- sicalis[, c(1, 2)]
   expect_equal(dim(summary(one_spec)), c(1, 23))
   expect_length(summary(one_spec, wlmin = 500), 23)
+
+  # Error if subset vars do not exist
+  expect_error(summary(sicalis, subset = "H9"), "do not match color variable names")
+
+  # Warning about UV variables if full UV range is not included
+  expect_warning(summary(sicalis, wlmin = 350), "UV-related variables may not be meaningful")
 })
