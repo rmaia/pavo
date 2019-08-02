@@ -276,8 +276,8 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Carotenoid chroma
 
-  R450 <- as.numeric(object[which(wl == 450), ])
-  R700 <- as.numeric(object[which(wl == 700), ])
+  R450 <- as.numeric(object[which(wl == 450), , drop = FALSE])
+  R700 <- as.numeric(object[which(wl == 700), , drop = FALSE])
   Carotchroma <- (R700 - R450) / R700
 
   # H3
