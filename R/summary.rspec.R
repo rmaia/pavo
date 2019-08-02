@@ -241,7 +241,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   }
 
   if (lambdamin > 300 & lambdamin < 400) {
-    warning(paste("Minimum wavelength is", lambdamin, "; UV-related variables may not be meaningful"), call. = FALSE)
+    warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful", call. = FALSE)
   }
 
   # Violet
