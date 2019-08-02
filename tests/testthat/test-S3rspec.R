@@ -36,6 +36,8 @@ test_that("summary.rspec", {
   # Different wl ranges
   expect_warning(summary(sicalis, wlmin = 500), "wavelength range not between")
   expect_warning(summary(sicalis[1:200, ]), "wavelength range not between")
+  expect_warning(summary(sicalis, wlmax = 600), "wavelength range not between")
+  expect_error(summary(sicalis, wlmin = 200), "wlmin is smaller")
   expect_error(summary(sicalis, wlmax = 1000), "wlmax is larger")
 
   # Test one spectrum rspec object
