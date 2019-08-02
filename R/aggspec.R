@@ -30,7 +30,7 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
-  
+
   # Check: user may have removed 'wl' function already.
   # (data.frame doesn't allow duplicate names anymore, so this should work)
 
@@ -104,12 +104,6 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # TODO: add that list can be an input in roxygen doc
 
   by <- factor(by) # is this necessary?
-
-  # check if '...' is in argument list of specified FUN
-  # if not, add it. otherwise aggplot() options (like lty, lwd) will cause errors
-  if (!is.name(formals(FUN)$...)) {
-    formals(FUN) <- c(formals(FUN), alist(... = ))
-  }
 
   dat <- sapply(unique(by), function(z) {
     apply(y[which(by == z)], 1, FUN)
