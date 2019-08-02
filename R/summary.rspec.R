@@ -362,13 +362,13 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   color.var <- data.frame(output.mat, row.names = names(object))
 
-  names(color.var) <- c(
+  colvarnames <- c(
     "B1", "B2", "B3", "S1U", "S1V", "S1B", "S1G",
     "S1Y", "S1R", "S2", "S3", "S4", "S5", "S6", "S7", "S8",
     "S9", "S10", "H1", "H2", "H3", "H4", "H5"
   )
 
-  colvarnames <- names(color.var)
+  names(color.var) <- colvarnames
 
   if (is.logical(subset)) {
     if (subset) {
