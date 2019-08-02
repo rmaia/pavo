@@ -43,4 +43,5 @@ test_that("summary.rspec", {
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
   expect_equal(dim(summary(one_spec)), c(1, 23))
+  expect_length(summary(one_spec, wlmin = 500), 23)
 })

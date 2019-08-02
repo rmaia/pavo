@@ -11,6 +11,7 @@ switching the `ciebg` argument to `FALSE`.
 * `procspec(opt = "bin")` no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.
 * `coc()` and `categorical()` spaces now return Weber luminance contrast by default when passed through `coldist()`, rather than nothing (as per the original publications). 
 * `coldist()` can now take multiple values for `weber`, when Weber fractions are known for all receptor classes
+* `summary.rspec()` no longer errors for a single spectrum when the wavelength range does not contain 450-700nm
 
 # pavo 2.2.0
 
