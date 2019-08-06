@@ -11,12 +11,13 @@ jndplot(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 \arguments{
 \item{x}{(required) the output from a \code{\link[=jnd2xyz]{jnd2xyz()}} call.}
 
-\item{arrow}{If and how arrows indicating receptor vectors should be
-drawn. Options are \code{"relative"} (default), \code{"absolute"} or
-\code{"none"}. See description.}
+\item{arrow}{If and how arrows indicating receptor vectors should be drawn.
+Options are \code{"relative"} (default), \code{"absolute"} or \code{"none"}. See
+description.}
 
 \item{achro}{Logical. Should the achromatic variable be plotted as a
-dimension? (only available for dichromats and trichromats, defaults to \code{FALSE}).}
+dimension? (only available for dichromats and trichromats, defaults to
+\code{FALSE}).}
 
 \item{arrow.labels}{Logical. Should labels be plotted for receptor arrows?
 (defaults to \code{TRUE})}
@@ -27,16 +28,15 @@ dimension? (only available for dichromats and trichromats, defaults to \code{FAL
 
 \item{labels.cex}{size of the arrow labels.}
 
-\item{margin}{accepts either \code{"recommended"}, where the function will choose margin
-attributes, or a numerical vector of the form \code{c(bottom, left, top, right)}
-which gives the number of lines of margin to be specified on the four sides of the plot.
-(Default varies depending on plot dimensionality).}
+\item{margin}{accepts either \code{"recommended"}, where the function will choose
+margin attributes, or a numerical vector of the form \code{c(bottom, left, top, right)} which gives the number of lines of margin to be specified on the
+four sides of the plot. (Default varies depending on plot dimensionality).}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{...}{additional parameters to be passed to \code{\link[=plot]{plot()}}, \code{\link[=arrows]{arrows()}}
-and \code{\link[graphics:persp]{graphics::persp()}} (for 3D plots).}
+\item{...}{additional parameters to be passed to \code{\link[=plot]{plot()}}, \code{\link[=arrows]{arrows()}} and
+\code{\link[graphics:persp]{graphics::persp()}} (for 3D plots).}
 }
 \value{
 Creates a plot, details of the plot depend on the input data.
@@ -47,15 +47,16 @@ Plot options for \code{\link{jnd2xyz}} objects.
 \note{
 the \code{arrow} argument accepts three options:
 \itemize{
-\item \code{"relative"}: With this option, arrows will be made relative to the data. Arrows
-will be centered on the data centroid, and will have an arbitrary length of half the
-average pairwise distance between points, which can be scaled with the \code{arrow.p}
-argument.
-\item \code{"absolute"}: With this option, arrows will be made to reflect the visual system
-underlying the data. Arrows will be centered on the achromatic point in colourspace, and
-will have length equal to the distance to a monochromatic point (i.e. a colour that
-stimulates approximately 99.9% of that receptor alone). Arrows can still be scaled using
-the \code{arrow.p} argument, in which case they cannot be interpreted as described.
+\item \code{"relative"}: With this option, arrows will be made relative to the data.
+Arrows will be centered on the data centroid, and will have an arbitrary
+length of half the average pairwise distance between points, which can be
+scaled with the \code{arrow.p} argument.
+\item \code{"absolute"}: With this option, arrows will be made to reflect the visual
+system underlying the data. Arrows will be centered on the achromatic point
+in colourspace, and will have length equal to the distance to a
+monochromatic point (i.e. a colour that stimulates approximately 99.9% of
+that receptor alone). Arrows can still be scaled using the \code{arrow.p}
+argument, in which case they cannot be interpreted as described.
 \item \code{"none"}: no arrows will be included.
 }
 }
@@ -65,10 +66,11 @@ vis.flowers <- vismodel(flowers)
 cd.flowers <- coldist(vis.flowers)
 propxyz <- jnd2xyz(cd.flowers)
 plot(propxyz)
+
 }
 \references{
-Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams.
-Behavioral Ecology, 23, 723-728.
+Pike, T.W. (2012). Preserving perceptual distances in
+chromaticity diagrams. Behavioral Ecology, 23, 723-728.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
