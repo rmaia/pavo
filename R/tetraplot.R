@@ -247,7 +247,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
     # sort segments by proximity
     combdist <- setNames(
-      apply(combn(dvals[c("u", "s", "m", "l")], 2), 2, sum),
+      colSums(combn(dvals[c("u", "s", "m", "l")], 2)),
       apply(combn(names(dvals[c("u", "s", "m", "l")]), 2), 2, paste0, collapse = "")
     )
 
