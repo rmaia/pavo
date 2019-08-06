@@ -73,12 +73,12 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
   arg <- list(...)
 
   if (achro) {
-    plotdims <- as.character(round(sum(c("x", "y", "z", "lum") %in% colnames(x))))
+    plotdims <- sum(c("x", "y", "z", "lum") %in% colnames(x))
   } else {
-    plotdims <- as.character(round(sum(c("x", "y", "z") %in% colnames(x))))
+    plotdims <- sum(c("x", "y", "z") %in% colnames(x))
   }
 
-  if (plotdims == "4") {
+  if (plotdims == 4) {
     stop('cannot use "achro=TRUE" when chromatic space is three-dimensional.')
   }
 
@@ -92,7 +92,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
 
   # 1 DIMENSION
-  if (plotdims == "1") {
+  if (plotdims == 1) {
     if (!is.null(margin)) {
       if (margin == "recommended") {
         par(mar = c(5.1, 2.1, 4.1, 2.1))
@@ -177,7 +177,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
   }
 
   # 2 DIMENSIONS
-  if (plotdims == "2") {
+  if (plotdims == 2) {
     if (!is.null(margin)) {
       if (margin == "recommended") {
         par(mar = c(5.1, 4.1, 4.1, 2.1))
@@ -353,7 +353,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
 
   # 3 DIMENSIONS
-  if (plotdims == "3") {
+  if (plotdims == 3) {
     if (!is.null(margin)) {
       if (margin == "recommended") {
         par(mar = c(1, 2, 0, 1) + 0.1)
