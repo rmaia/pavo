@@ -8,9 +8,9 @@ vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
   ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
-coordinates as columns (labeled as such).}
+\item{tcsdata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y'
+and 'z' coordinates as columns (labeled as such).}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
 

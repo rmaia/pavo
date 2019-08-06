@@ -12,42 +12,48 @@ tetraplot(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
-coordinates as columns (labeled as such).}
+\item{tcsdata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y'
+and 'z' coordinates as columns (labeled as such).}
 
 \item{theta}{angle to rotate the plot in the xy plane (defaults to 45).}
 
 \item{phi}{angle to rotate the plot in the yz plane (defaults to 10).}
 
-\item{perspective}{logical, should perspective be forced by using point size to reflect
-distance from the plane of view? (defaults to `FALSE``)}
+\item{perspective}{logical, should perspective be forced by using point size
+to reflect distance from the plane of view? (defaults to `FALSE``)}
 
-\item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex}, respectively,
-to indicate the size range variation reflecting the distance from the plane of view.}
+\item{range, }{vert.range multiplier applied to \code{cex} and \code{vert.cex},
+respectively, to indicate the size range variation reflecting the distance
+from the plane of view.}
 
 \item{r}{the distance of the eyepoint from the center of the plotting box.
 Very high values approximate an orthographic projection (defaults to 1e6).
 See \code{\link[=persp]{persp()}} for details.}
 
-\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.}
+\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1)
+from the plotting area.}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achro.line}{logical. Should the achromatic line be plotted? (defaults to \code{FALSE})}
+\item{achro.line}{logical. Should the achromatic line be plotted? (defaults
+to \code{FALSE})}
 
-\item{achro.lwd, achro.lty}{graphical parameters for the achromatic coordinates.}
+\item{achro.lwd, achro.lty}{graphical parameters for the achromatic
+coordinates.}
 
-\item{tetrahedron}{logical. Should the tetrahedron be plotted? (defaults to \code{TRUE})}
+\item{tetrahedron}{logical. Should the tetrahedron be plotted? (defaults to
+\code{TRUE})}
 
 \item{vert.cex}{size of the points at the vertices (defaults to 1).}
 
 \item{out.lwd, out.lcol}{graphical parameters for the tetrahedral outline.}
 
-\item{margin}{vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).}
+\item{margin}{vector of four numbers specifying drawing margins (defaults to
+c(0, 0, 0, 0)).}
 
-\item{type}{accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
-the base of the tetrahedron.}
+\item{type}{accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
+for lines from the point to the base of the tetrahedron.}
 
 \item{labels}{logical. Should the name of each cone be printed next to the
 corresponding vertex?}
@@ -67,14 +73,16 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
+
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
-color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world
+buntings. The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
-as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The Linnean Society,
+86(4), 405-431.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

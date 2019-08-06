@@ -17,9 +17,9 @@ tcsvol(tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
   grid = TRUE, fill = TRUE, lwd = 1)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y' and 'z'
-coordinates as columns (labeled as such).}
+\item{tcsdata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y'
+and 'z' coordinates as columns (labeled as such).}
 
 \item{size}{size of the points in the plot (defaults to 0.02)}
 
