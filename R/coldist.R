@@ -399,11 +399,11 @@ coldist <- function(modeldata,
         "trispace" = ,
         "categorical" = ,
         "coc" = ,
-        "tcs" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "lum"], dat[x[2], "lum"], type = "weber")),
-        "hexagon" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "l"], dat[x[2], "l"], type = "simple")),
+        "tcs" = lumcont(dat[pairsid[,1], "lum"], dat[pairsid[,2], "lum"], type = "weber"),
+        "hexagon" = lumcont(dat[pairsid[,1], "l"], dat[pairsid[,2], "l"], type = "simple"),
         "CIELAB" = ,
-        "CIELCh" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "L"], dat[x[2], "L"], type = "weber")),
-        "segment" = apply(pairsid, 1, function(x) lumcont(dat[x[1], "B"], dat[x[2], "B"], type = "michelson"))
+        "CIELCh" = lumcont(dat[pairsid[,1], "L"], dat[pairsid[,2], "L"], type = "weber"),
+        "segment" = lumcont(dat[pairsid[,1], "B"], dat[pairsid[,2], "B"], type = "michelson")
       )
     }
     message(note_dS, note_dL)
@@ -563,8 +563,8 @@ lumcont <- function(coord1, coord2, type = c("simple", "weber", "michelson")) {
 
   dLout <- switch(contrast,
     "simple" = coord1 / coord2,
-    "weber" = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / min(c(coord1, coord2)),
-    "michelson" = (max(c(coord1, coord2)) - min(c(coord1, coord2))) / (max(c(coord1, coord2)) + min(c(coord1, coord2)))
+    "weber" = (pmax(coord1, coord2) - pmin(coord1, coord2)) / pmin(coord1, coord2),
+    "michelson" = (pmax(coord1, coord2) - pmin(coord1, coord2)) / (pmax(coord1, coord2) + pmin(coord1, coord2))
   )
   dLout
 }
