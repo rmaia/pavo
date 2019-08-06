@@ -162,9 +162,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tcsdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
-or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y' and 'z'
-coordinates as columns (labeled as such).</p></td>
+      <td><p>(required) a data frame, possibly a result from the
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y'
+and 'z' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>theta</th>
@@ -176,13 +176,14 @@ coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>perspective</th>
-      <td><p>logical, should perspective be forced by using point size to reflect
-distance from the plane of view? (defaults to `FALSE``)</p></td>
+      <td><p>logical, should perspective be forced by using point size
+to reflect distance from the plane of view? (defaults to `FALSE``)</p></td>
     </tr>
     <tr>
       <th>range, </th>
-      <td><p>vert.range multiplier applied to <code>cex</code> and <code>vert.cex</code>, respectively,
-to indicate the size range variation reflecting the distance from the plane of view.</p></td>
+      <td><p>vert.range multiplier applied to <code>cex</code> and <code>vert.cex</code>,
+respectively, to indicate the size range variation reflecting the distance
+from the plane of view.</p></td>
     </tr>
     <tr>
       <th>r</th>
@@ -192,7 +193,8 @@ See <code><a href='https://rdrr.io/r/graphics/persp.html'>persp()</a></code> for
     </tr>
     <tr>
       <th>zoom</th>
-      <td><p>zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area.</p></td>
+      <td><p>zooms in (values greater than 1) or out (values between 0 and 1)
+from the plotting area.</p></td>
     </tr>
     <tr>
       <th>achro</th>
@@ -200,15 +202,18 @@ See <code><a href='https://rdrr.io/r/graphics/persp.html'>persp()</a></code> for
     </tr>
     <tr>
       <th>achro.line</th>
-      <td><p>logical. Should the achromatic line be plotted? (defaults to <code>FALSE</code>)</p></td>
+      <td><p>logical. Should the achromatic line be plotted? (defaults
+to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>achro.lwd, achro.lty</th>
-      <td><p>graphical parameters for the achromatic coordinates.</p></td>
+      <td><p>graphical parameters for the achromatic
+coordinates.</p></td>
     </tr>
     <tr>
       <th>tetrahedron</th>
-      <td><p>logical. Should the tetrahedron be plotted? (defaults to <code>TRUE</code>)</p></td>
+      <td><p>logical. Should the tetrahedron be plotted? (defaults to
+<code>TRUE</code>)</p></td>
     </tr>
     <tr>
       <th>vert.cex</th>
@@ -220,12 +225,13 @@ See <code><a href='https://rdrr.io/r/graphics/persp.html'>persp()</a></code> for
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins (defaults to c(0, 0, 0, 0)).</p></td>
+      <td><p>vector of four numbers specifying drawing margins (defaults to
+c(0, 0, 0, 0)).</p></td>
     </tr>
     <tr>
       <th>type</th>
-      <td><p>accepts a vector of length 1 or 2 with 'p' for points and/or 'l' for lines from the point to
-the base of the tetrahedron.</p></td>
+      <td><p>accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
+for lines from the point to the base of the tetrahedron.</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -245,10 +251,11 @@ corresponding vertex?</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
-color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-The American Naturalist, 171(6), 755-776.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
-as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world
+buntings. The American Naturalist, 171(6), 755-776.</p>
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The Linnean Society,
+86(4), 405-431.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -257,7 +264,8 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
 <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

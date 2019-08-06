@@ -163,14 +163,15 @@
     </tr>
     <tr>
       <th>arrow</th>
-      <td><p>If and how arrows indicating receptor vectors should be
-drawn. Options are <code>"relative"</code> (default), <code>"absolute"</code> or
-<code>"none"</code>. See description.</p></td>
+      <td><p>If and how arrows indicating receptor vectors should be drawn.
+Options are <code>"relative"</code> (default), <code>"absolute"</code> or <code>"none"</code>. See
+description.</p></td>
     </tr>
     <tr>
       <th>achro</th>
       <td><p>Logical. Should the achromatic variable be plotted as a
-dimension? (only available for dichromats and trichromats, defaults to <code>FALSE</code>).</p></td>
+dimension? (only available for dichromats and trichromats, defaults to
+<code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>arrow.labels</th>
@@ -191,10 +192,9 @@ dimension? (only available for dichromats and trichromats, defaults to <code>FAL
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>accepts either <code>"recommended"</code>, where the function will choose margin
-attributes, or a numerical vector of the form <code><a href='https://rdrr.io/r/base/c.html'>c(bottom, left, top, right)</a></code>
-which gives the number of lines of margin to be specified on the four sides of the plot.
-(Default varies depending on plot dimensionality).</p></td>
+      <td><p>accepts either <code>"recommended"</code>, where the function will choose
+margin attributes, or a numerical vector of the form <code><a href='https://rdrr.io/r/base/c.html'>c(bottom, left, top, right)</a></code> which gives the number of lines of margin to be specified on the
+four sides of the plot. (Default varies depending on plot dimensionality).</p></td>
     </tr>
     <tr>
       <th>square</th>
@@ -203,8 +203,8 @@ which gives the number of lines of margin to be specified on the four sides of t
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional parameters to be passed to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>, <code><a href='https://rdrr.io/r/graphics/arrows.html'>arrows()</a></code>
-and <code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a></code> (for 3D plots).</p></td>
+      <td><p>additional parameters to be passed to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>, <code><a href='https://rdrr.io/r/graphics/arrows.html'>arrows()</a></code> and
+<code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a></code> (for 3D plots).</p></td>
     </tr>
     </table>
     
@@ -215,30 +215,32 @@ and <code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a><
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>the <code>arrow</code> argument accepts three options:</p><ul>
-<li><p><code>"relative"</code>: With this option, arrows will be made relative to the data. Arrows
-will be centered on the data centroid, and will have an arbitrary length of half the
-average pairwise distance between points, which can be scaled with the <code>arrow.p</code>
-argument.</p></li>
-<li><p><code>"absolute"</code>: With this option, arrows will be made to reflect the visual system
-underlying the data. Arrows will be centered on the achromatic point in colourspace, and
-will have length equal to the distance to a monochromatic point (i.e. a colour that
-stimulates approximately 99.9<!-- % of that receptor alone). Arrows can still be scaled using -->
-the <code>arrow.p</code> argument, in which case they cannot be interpreted as described.</p></li>
+<li><p><code>"relative"</code>: With this option, arrows will be made relative to the data.
+Arrows will be centered on the data centroid, and will have an arbitrary
+length of half the average pairwise distance between points, which can be
+scaled with the <code>arrow.p</code> argument.</p></li>
+<li><p><code>"absolute"</code>: With this option, arrows will be made to reflect the visual
+system underlying the data. Arrows will be centered on the achromatic point
+in colourspace, and will have length equal to the distance to a
+monochromatic point (i.e. a colour that stimulates approximately 99.9<!-- % of -->
+that receptor alone). Arrows can still be scaled using the <code>arrow.p</code>
+argument, in which case they cannot be interpreted as described.</p></li>
 <li><p><code>"none"</code>: no arrows will be included.</p></li>
 </ul>
 
     
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Pike, T.W. (2012). Preserving perceptual distances in chromaticity diagrams.
-Behavioral Ecology, 23, 723-728.</p>
+    <p>Pike, T.W. (2012). Preserving perceptual distances in
+chromaticity diagrams. Behavioral Ecology, 23, 723-728.</p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
 <span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='no'>propxyz</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span>(<span class='no'>cd.flowers</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>propxyz</span>)</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>propxyz</span>)</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
