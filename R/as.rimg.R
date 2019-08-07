@@ -118,7 +118,8 @@ as.rimg.default <- function(object, name = "img") {
     # The list itself needs attributes
     class(object2) <- c("rimg", "list")
     attr(object2, "state") <- "raw"
-  } else if (colclass) {
+
+  } else { # colour classified object
 
     # Attributes
     if (length(name) == 1) {
