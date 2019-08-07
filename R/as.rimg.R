@@ -125,11 +125,11 @@ as.rimg.default <- function(object, name = "img") {
       name <- rep(name, length(object2))
     }
     object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]])) # names
-    for (i in seq_along(object2)) attr(object2[[i]], "state") <- "colclass" # classification state
-    for (i in seq_along(object2)) attr(object2[[i]], "k") <- length(table(object2[[i]])) # kcols
-    for (i in seq_along(object2)) attr(object2[[i]], "class") <- c("rimg", "matrix") # class
-    for (i in seq_along(object2)) attr(object2[[i]], "colnames") <- data.frame(name = seq_along(table(object2[[i]]))) # colour-category names (in progress)
     for (i in seq_along(object2)) {
+      attr(object2[[i]], "state") <- "colclass" # classification state
+      attr(object2[[i]], "k") <- length(table(object2[[i]])) # kcols
+      attr(object2[[i]], "class") <- c("rimg", "matrix") # class
+      attr(object2[[i]], "colnames") <- data.frame(name = seq_along(table(object2[[i]]))) # colour-category names (in progress)
       attr(object2[[i]], "classRGB") <- data.frame(
         R = rep(NA, length(table(object2[[i]]))),
         G = rep(NA, length(table(object2[[i]]))),
