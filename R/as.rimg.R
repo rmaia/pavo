@@ -107,7 +107,7 @@ as.rimg.default <- function(object, name = "img") {
     object2 <- lapply(seq_along(object2), function(j) object2[[j]][, , 1:3])
 
     # Rescale RGB to [0,1] if need be
-    object2 <- lapply(seq_along(object2), function(j) rescaler(object2[[j]]))
+    object2 <- lapply(object2, rescaler)
 
     # Attributes
     if (length(name) == 1) {
