@@ -17,6 +17,7 @@
 #' `pavo` functions.
 #'
 #' @importFrom magick image_info
+#' @importFrom tools file_path_sans_ext
 #'
 #' @export
 #'
@@ -47,7 +48,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
   if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
-    imgdat <- as.rimg(image_read(imgpath), name = sub(".*\\/", "", sub("[.][^.]+$", "", imgpath)))
+    imgdat <- as.rimg(image_read(imgpath), name = file_path_sans_ext(basename(imgpath)))
 
     # Warn of slowness if dimensions are large
     if (dim(imgdat)[1] * dim(imgdat)[2] > 1000000) {
