@@ -65,20 +65,20 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   ## Single or multiple images?
   multi_image <- inherits(imgdat, "list")
 
-  ## Convert refID to numeric identifier
-  if (!is.null(refID)) {
-    if (is.character(refID)) {
-      refID <- which(unlist(lapply(seq_along(imgdat), function(x) attr(imgdat[[x]], "imgname"))) == refID)
-      if (length(refID) == 0) {
-        stop("No image found with that name, specify another reference image using refID.")
-      }
-    }
-  }
-
   ## If it's a single image, store it in a list for processing convenience,
   ## before converting it back at the end
   if (!multi_image) {
     imgdat <- list(imgdat)
+  }
+
+  ## Convert refID to numeric identifier
+  if (!is.null(refID)) {
+    if (is.character(refID)) {
+      refID <- which(unlist(lapply(imgdat, function(x) attr(x, "imgname"))) == refID)
+      if (length(refID) == 0) {
+        stop("No image found with that name, specify another reference image using refID.")
+      }
+    }
   }
 
   # Need options
