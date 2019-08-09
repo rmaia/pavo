@@ -5,7 +5,7 @@
 #' @param imgdat (required) image data. Either a single image, or a series of images
 #' stored in a list. Preferably the result of [getimg()].
 #' @param method methods for image segmentation/classification.
-#' * `'kMeans'`: k-means clustering
+#' * `'kMeans'`: k-means clustering (default)
 #' * `'kMedoids'`: k-medoids clustering, using the partitioning-around-medoids ('pam')
 #' algorithm for large datasets.
 #' @param kcols the number of discrete colour classes present in the input image(s).

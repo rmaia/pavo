@@ -14,7 +14,7 @@ stored in a list. Preferably the result of \code{\link[=getimg]{getimg()}}.}
 
 \item{method}{methods for image segmentation/classification.
 \itemize{
-\item \code{'kMeans'}: k-means clustering
+\item \code{'kMeans'}: k-means clustering (default)
 \item \code{'kMedoids'}: k-medoids clustering, using the partitioning-around-medoids ('pam')
 algorithm for large datasets.
 }}
