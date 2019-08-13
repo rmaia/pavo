@@ -80,8 +80,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
     message(length(files), " files found; importing images.")
 
-    imgnames <- gsub(extension, "", file_names)
-
     # Stop if max size estimated to exceed available memory
     imgsize <- image_info(image_read(files[1]))["filesize"]
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
@@ -95,7 +93,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     }
 
     # Get images
-    imgdat <- as.rimg(image_read(files), name = imgnames)
+    imgdat <- as.rimg(image_read(files), name = file_names)
 
     # Simplify if it's a single image   ###TODO###
     if (length(imgdat) == 1) imgdat <- imgdat[[1]]
