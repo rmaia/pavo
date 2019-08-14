@@ -18,13 +18,12 @@
 #' @param fill logical. should the two volumes be filled in the plot? (defaults to `FALSE`)
 #' @param new logical. Should a new plot window be called? If `FALSE`, volumes and their
 #' overlap are plotted over the current plot (defaults to `TRUE`).
-#' @param montecarlo logical. If `TRUE`, Monte Carlo simulation is used instead of exact
-#' solution (not recommended; defaults to `FALSE`)
-#' @param nsamp if `montecarlo = TRUE`, determines the number of points to be sampled.
-#' @param psize if `montecarlo = TRUE` and `plot = TRUE`, sets the size to plot the points
-#' used in the Monte Carlo simulation.
+#' @param montecarlo deprecated argument
+#' @param nsamp deprecated argument
+#' @param psize deprecated argument
 #' @param lwd if `plot = TRUE`, sets the line width for volume grids.
 #' @param ... additional arguments passed to the plot. See [vol()]
+#'
 #' @return Calculates the overlap between the volumes defined by two set of points in
 #' colourspace. The volume from the overlap is then given relative to:
 #' - `vsmallest` the volume of the overlap divided by the smallest of that defined
@@ -32,28 +31,10 @@
 #' contained within the other, this overlap will be `vsmallest = 1`.
 #' - `vboth` the volume of the overlap divided by the combined volume of both
 #' input sets of colour points.
-#'
-#' The Monte Carlo solution is available mostly for legacy and benchmarking, and is not recommended
-#' (see notes). If used, the output will be different:
-#' - `s_in1, s_in2` the number of sampled points that fall within each of the volumes
-#' individually.
-#' - `s_inboth` the number of sampled points that fall within both volumes.
-#' - `s_ineither` the number of points that fall within either of the volumes.
-#' - `psmallest` the proportion of points that fall within both volumes divided by the
-#'  number of points that fall within the smallest volume.
-#' - `pboth` the proportion of points that fall within both volumes divided by the total
-#'  number of points that fall within both volumes.
-#'
-#' If the Monte Carlo solution is used, a number of points much greater than the default should be
-#' considered (Stoddard & Stevens(2011) use around 750,000 points, but more or fewer might be required
-#' depending on the degree of overlap).
-#'
+
 #' @note Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 #' simulations of points within the range of the volumes, and obtaining the frequency of
 #' simulated values that fall inside the volumes defined by both sets of colour points.
-#' @note Here we present an exact solution based on finding common vertices to both volumes
-#' and calculating its volume. However, we also the Monte Carlo solution is available through
-#' the `montecarlo=TRUE` option.
 #'
 #' @note Stoddard & Stevens (2011) also return the value of the overlap relative to one of
 #' the volumes (in that case, the host species). However, for other applications
@@ -74,6 +55,7 @@
 #' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color
 #' in a tetrahedral color space: A phylogenetic analysis of new world buntings. The
@@ -86,8 +68,12 @@
 
 voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
-                       montecarlo = FALSE, nsamp = 1000, psize = 0.001,
+                       montecarlo = NULL, nsamp = NULL, psize = NULL,
                        lwd = 1, ...) {
+
+  if (!all(missing(montecarlo), missing(nsamp), missing(psize))) {
+    warning("montecarlo, nsamp and psize arguments are deprecated and will be ignored.")
+  }
 
   dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
 
@@ -98,77 +84,21 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
   vol1 <- over$ch1$vol
   vol2 <- over$ch2$vol
 
-  ######################
-  # EXACT SOLUTION BEGIN#
-  ######################
-  if (!montecarlo) {
+  overlapVol <- over$ch$vol
 
-    overlapVol <- over$ch$vol
+  vsmallest <- overlapVol / min(vol1, vol2)
 
-    vsmallest <- overlapVol / min(vol1, vol2)
+  vboth <- overlapVol / (vol1 + vol2 - overlapVol)
 
-    vboth <- overlapVol / (vol1 + vol2 - overlapVol)
+  res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
 
-    res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
-  }
-
-  ####################
-  # EXACT SOLUTION END#
-  ####################
-
-  ###################
-  # MONTE CARLO BEGIN#
-  ###################
-
-  if (montecarlo) {
-    # sample random points
-    pmin <- apply(rbind(dat1, dat2), 2, min)
-    pmax <- apply(rbind(dat1, dat2), 2, max)
-
-    samples <- apply(rbind(pmin, pmax), 2, function(x) runif(nsamp, x[1], x[2]))
-
-    sindex <- seq_len(dim(samples)[1])
-
-    newvol1 <- vapply(sindex, function(x) convhulln(rbind(dat1, samples[x, ]), "FA")$vol, numeric(1))
-    newvol2 <- vapply(sindex, function(x) convhulln(rbind(dat2, samples[x, ]), "FA")$vol, numeric(1))
-
-    # points that are within each volume
-
-    invol1 <- vapply(newvol1, function(x) isTRUE(x <= vol1), logical(1))
-    invol2 <- vapply(newvol2, function(x) isTRUE(x <= vol2), logical(1))
-
-    # how many points are in each category
-
-    s_in1 <- length(which(invol1))
-    s_in2 <- length(which(invol2))
-
-    s_inboth <- length(which(invol1 & invol2))
-
-    s_ineither <- length(which(invol1 | invol2))
-
-    # points in both relative points in smallest
-
-    psmallest <- s_inboth / c(s_in1, s_in2)[which.min(c(vol1, vol2))]
-
-    # points in both relative to total points in both
-
-    pboth <- s_inboth / s_ineither
-
-    res <- data.frame(vol1, vol2, s_in1, s_in2, s_inboth, s_ineither, psmallest, pboth)
-  }
-
-  #################
-  # MONTE CARLO END#
-  #################
-
-  ############
-  # PLOT BEGIN#
-  ############
+  ##############
+  # PLOT BEGIN #
+  ##############
   if (plot) {
     if (length(col) < 3) {
       col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
     }
-
 
     if (interactive) {
       # check if rgl is installed and loaded
@@ -189,33 +119,11 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
       tcsvol(colsp1, col = col[1], fill = FALSE)
       tcsvol(colsp2, col = col[2], fill = FALSE)
 
-      if (!montecarlo) {
-        if (dim(Voverlap)[1] > 3) {
-          attr(Voverlap, "clrsp") <- "tcs"
-          tcsvol(Voverlap, col = col[3])
-        }
+      if (dim(Voverlap)[1] > 3) {
+        attr(Voverlap, "clrsp") <- "tcs"
+        tcsvol(Voverlap, col = col[3])
       }
-
-      if (montecarlo) {
-        rgl::spheres3d(samples[which(invol1 & !invol2), ],
-          type = "s",
-          lit = FALSE, radius = psize, col = col[1]
-        )
-        rgl::spheres3d(samples[which(invol2 & !invol1), ],
-          type = "s",
-          lit = FALSE, radius = psize, col = col[2]
-        )
-
-        if (s_inboth > 0) {
-          rgl::spheres3d(samples[which(invol1 & invol2), ],
-            type = "s",
-            lit = FALSE, radius = psize, col = col[3]
-          )
-        }
-      }
-    }
-
-    if (!interactive) {
+    } else {
       plotrange <- apply(rbind(colsp1[, c("x", "y", "z")], colsp2[, c("x", "y", "z")]), 2, range)
 
       if (length(fill) < 3) {
@@ -239,9 +147,9 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
     }
 
 
-    ##########
-    # PLOT END#
-    ##########
+    ############
+    # PLOT END #
+    ############
   }
 
   res
