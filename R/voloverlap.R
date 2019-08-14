@@ -100,6 +100,8 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
       col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
     }
 
+    Voverlap <- over$ch$p
+
     if (interactive) {
       # check if rgl is installed and loaded
       if (!requireNamespace("rgl", quietly = TRUE)) {
@@ -119,7 +121,8 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
       tcsvol(colsp1, col = col[1], fill = FALSE)
       tcsvol(colsp2, col = col[2], fill = FALSE)
 
-      if (dim(Voverlap)[1] > 3) {
+      if (!is.null(Voverlap)) {
+        colnames(Voverlap) <- c("x", "y", "z")
         attr(Voverlap, "clrsp") <- "tcs"
         tcsvol(Voverlap, col = col[3])
       }
@@ -127,7 +130,8 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
       plotrange <- apply(rbind(colsp1[, c("x", "y", "z")], colsp2[, c("x", "y", "z")]), 2, range)
 
       if (length(fill) < 3) {
-        if (dim(Voverlap)[1] > 3) {
+        if (!is.null(Voverlap)) {
+          colnames(Voverlap) <- c("x", "y", "z")
           vol(Voverlap,
             col = col[3], new = new, fill = TRUE,
             xlim = plotrange[, "x"], ylim = plotrange[, "y"],
@@ -145,8 +149,6 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
         }
       }
     }
-
-
     ############
     # PLOT END #
     ############
