@@ -1,10 +1,17 @@
 # pavo 2.3.0
 
-## NEW FEATURES
+## NEW FEATURES AND SIGNIFICANT CHANGES
 
 * `cieplot()` (and therefore `plot.colspace()` for CIEXYZ model) now adds the 
 background of the CIEXYZ colour space by default. This can be turned off by
 switching the `ciebg` argument to `FALSE`.
+* `voloverlap()` uses a different algorithm to determine volume overlaps, which 
+means:
+  - computation is now much more efficient
+  - `voloverlap()` now works for `trispace()` objects as well
+  - accordingly, first two arguments of `voloverlap()` has been renamed `colsp1`
+  and `colsp2` instead of `tcsres1` and `tcsres2`
+  - slow and possibly inaccurate `montecarlo` option has been deprecated
 
 ## MINOR FEATURES AND BUG FIXES
 
