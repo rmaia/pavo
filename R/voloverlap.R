@@ -118,35 +118,28 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
         rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
       }
 
-      tcsvol(colsp1, col = col[1], fill = FALSE)
-      tcsvol(colsp2, col = col[2], fill = FALSE)
+      tcsvol(colsp1, col = col[1], fill = fill)
+      tcsvol(colsp2, col = col[2], fill = fill)
 
       if (!is.null(Voverlap)) {
         colnames(Voverlap) <- c("x", "y", "z")
         attr(Voverlap, "clrsp") <- "tcs"
-        tcsvol(Voverlap, col = col[3])
+        tcsvol(Voverlap, col = col[3], fill = TRUE)
       }
     } else {
-      plotrange <- apply(rbind(colsp1[, c("x", "y", "z")], colsp2[, c("x", "y", "z")]), 2, range)
+      plotrange <- apply(rbind(dat1, dat2), 2, range)
 
-      if (length(fill) < 3) {
-        if (!is.null(Voverlap)) {
-          colnames(Voverlap) <- c("x", "y", "z")
-          vol(Voverlap,
-            col = col[3], new = new, fill = TRUE,
-            xlim = plotrange[, "x"], ylim = plotrange[, "y"],
-            zlim = plotrange[, "z"], lwd = lwd, ...
-          )
-          vol(colsp1, col = col[1], fill = fill, lwd = lwd, new = FALSE)
-          vol(colsp2, col = col[2], fill = fill, lwd = lwd, new = FALSE)
-        } else {
-          vol(colsp1,
-            col = col[1], lwd = lwd, new = new, fill = fill,
-            xlim = plotrange[, "x"], ylim = plotrange[, "y"],
-            zlim = plotrange[, "z"], ...
-          )
-          vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
-        }
+      vol(colsp1,
+          col = col[1], lwd = lwd, new = new, fill = fill,
+          xlim = plotrange[, "x"], ylim = plotrange[, "y"],
+          zlim = plotrange[, "z"], ...
+      )
+      vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
+
+      if (!is.null(Voverlap)) {
+        colnames(Voverlap) <- c("x", "y", "z")
+        attr(Voverlap, "clrsp") <- "tcs"
+        vol(Voverlap, col = col[3], lwd = lwd, fill = TRUE, new = FALSE)
       }
     }
     ############
