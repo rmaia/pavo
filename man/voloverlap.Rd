@@ -13,7 +13,8 @@ voloverlap(colsp1, colsp2, plot = FALSE, interactive = FALSE,
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)}
 
-\item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE})}
+\item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
+This only works for tetrahedral colourspaces at the moment.}
 
 \item{interactive}{logical. If \code{TRUE}, uses the rgl engine for interactive plotting;
 if \code{FALSE} then a static plot is generated.}

@@ -10,7 +10,8 @@
 #' @param colsp1,colsp2 (required) data frame, possibly a result from the [colspace()]
 #' function, containing
 #' values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)
-#' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`)
+#' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`).
+#' This only works for tetrahedral colourspaces at the moment.
 #' @param interactive logical. If `TRUE`, uses the rgl engine for interactive plotting;
 #' if `FALSE` then a static plot is generated.
 #' @param col a vector of length 3 with the colours for (in order) the first volume,
@@ -96,6 +97,11 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
   # PLOT BEGIN #
   ##############
   if (plot) {
+    if (ncol(dat1) < 3 || ncol(dat2) < 3) {
+      warning("plot argument only works for tetrahedral colourspaces at the moment.")
+      return(res)
+    }
+
     if (length(col) < 3) {
       col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
     }
