@@ -4,14 +4,14 @@
 \alias{voloverlap}
 \title{Colour volume overlap}
 \usage{
-voloverlap(tcsres1, tcsres2, plot = FALSE, interactive = FALSE,
+voloverlap(colsp1, colsp2, plot = FALSE, interactive = FALSE,
   col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
-  montecarlo = FALSE, nsamp = 1000, psize = 0.001, lwd = 1, ...)
+  montecarlo = NULL, nsamp = NULL, psize = NULL, lwd = 1, ...)
 }
 \arguments{
-\item{tcsres1, tcsres2}{(required) data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
+\item{colsp1, colsp2}{(required) data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
 function, containing
-values for the 'x', 'y' and 'z' coordinates as columns (labeled as such)}
+values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE})}
 
@@ -26,13 +26,11 @@ the second volume, and the overlap.}
 \item{new}{logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 overlap are plotted over the current plot (defaults to \code{TRUE}).}
 
-\item{montecarlo}{logical. If \code{TRUE}, Monte Carlo simulation is used instead of exact
-solution (not recommended; defaults to \code{FALSE})}
+\item{montecarlo}{deprecated argument}
 
-\item{nsamp}{if \code{montecarlo = TRUE}, determines the number of points to be sampled.}
+\item{nsamp}{deprecated argument}
 
-\item{psize}{if \code{montecarlo = TRUE} and \code{plot = TRUE}, sets the size to plot the points
-used in the Monte Carlo simulation.}
+\item{psize}{deprecated argument}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
@@ -48,23 +46,6 @@ contained within the other, this overlap will be \code{vsmallest = 1}.
 \item \code{vboth} the volume of the overlap divided by the combined volume of both
 input sets of colour points.
 }
-
-The Monte Carlo solution is available mostly for legacy and benchmarking, and is not recommended
-(see notes). If used, the output will be different:
-\itemize{
-\item \code{s_in1, s_in2} the number of sampled points that fall within each of the volumes
-individually.
-\item \code{s_inboth} the number of sampled points that fall within both volumes.
-\item \code{s_ineither} the number of points that fall within either of the volumes.
-\item \code{psmallest} the proportion of points that fall within both volumes divided by the
-number of points that fall within the smallest volume.
-\item \code{pboth} the proportion of points that fall within both volumes divided by the total
-number of points that fall within both volumes.
-}
-
-If the Monte Carlo solution is used, a number of points much greater than the default should be
-considered (Stoddard & Stevens(2011) use around 750,000 points, but more or fewer might be required
-depending on the degree of overlap).
 }
 \description{
 Calculates the overlap between the volumes defined by two sets of points in cartesian
@@ -74,10 +55,6 @@ space.
 Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 simulations of points within the range of the volumes, and obtaining the frequency of
 simulated values that fall inside the volumes defined by both sets of colour points.
-
-Here we present an exact solution based on finding common vertices to both volumes
-and calculating its volume. However, we also the Monte Carlo solution is available through
-the \code{montecarlo=TRUE} option.
 
 Stoddard & Stevens (2011) also return the value of the overlap relative to one of
 the volumes (in that case, the host species). However, for other applications
@@ -106,13 +83,11 @@ American Naturalist, 171(6), 755-776.
 Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of
 egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
 
-Villeger, S., Novack-Gottshall, P. M., & Mouillot, D. (2011). The
-multidimensionality of the niche reveals functional diversity changes in benthic
-marine biotas across geological time. Ecology Letters, 14(6), 561-568.
-
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}, with code from Sebastien Villeger
+Rafael Maia \email{rm72@zips.uakron.edu}
+
+Hugo Gruson \email{hugo.gruson+R@normalesup.org}
 }
