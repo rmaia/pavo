@@ -9,7 +9,6 @@ addons:
     sources:
     - sourceline: 'ppa:cran/imagemagick'
     packages:
-    - libgmp3-dev
     - libmagick++-dev
     - libglu1-mesa-dev
 before_script:

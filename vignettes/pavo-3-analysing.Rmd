@@ -446,7 +446,7 @@ For tetrahedral models, another plotting option available is `projplot`, which p
 projplot(tetra.flowers, pch = 20, col = spec2rgb(flowers))
 ```
 
-Finally, a useful function for tetrahedral models is `voloverlap()`, which calculates the overlap in tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. [@Stoddard2011]. To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
+Finally, a useful function for tri- and tetrahedral models is `voloverlap()`, which calculates the overlap in tri- or tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) "sensory niches", or to test for mimetism, dichromatism, etc. [@Stoddard2011]. To show this function, we will use the `sicalis` dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (_Sicalis citrina_).
 
 ```{r}
 data(sicalis)
