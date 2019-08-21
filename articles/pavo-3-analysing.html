@@ -102,7 +102,7 @@
       <h1>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2019-08-13</h4>
+            <h4 class="date">2019-08-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -680,7 +680,7 @@ Flowers in a tetrahedral colourspace, with varied orientations and perspectives,
 Projection plot from a tetrahedral colour space.
 </p>
 </div>
-<p>Finally, a useful function for tetrahedral models is <code><a href="../reference/voloverlap.html">voloverlap()</a></code>, which calculates the overlap in tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”, or to test for mimetism, dichromatism, etc. <span class="citation">(Stoddard and Stevens 2011)</span>. To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
+<p>Finally, a useful function for tri- and tetrahedral models is <code><a href="../reference/voloverlap.html">voloverlap()</a></code>, which calculates the overlap in tri- or tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”, or to test for mimetism, dichromatism, etc. <span class="citation">(Stoddard and Stevens 2011)</span>. To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
 <div class="sourceCode" id="cb62"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb62-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(sicalis)</a></code></pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colourspace (note the option <code>plot</code> for plotting of the volumes):</p>
 <div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb63-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="dt">mfrow =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>, <span class="dv">2</span>), <span class="dt">pty =</span> <span class="st">"s"</span>)</a>
@@ -1079,24 +1079,24 @@ The k-means classified images of our butterflies, along with their identified co
 <a class="sourceLine" id="cb130-4" data-line-number="4"></a>
 <a class="sourceLine" id="cb130-5" data-line-number="5"><span class="co"># Take a look</span></a>
 <a class="sourceLine" id="cb130-6" data-line-number="6"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(butterflies_adj)</a></code></pre></div>
-<pre><code>##             k     N n_off       p_1        p_2       p_3       p_4
-## h_melpomene 4 54064  5111 0.0406250 0.03511029 0.5833824 0.3408824
-## papilio     3 63241  4387 0.5607233 0.23905660 0.2002201        NA
-##                  q_1_1       q_1_2       q_2_2      q_2_3     q_3_3
-## h_melpomene 0.02683856 0.009821693 0.006510802 0.01294762 0.5649970
-## papilio     0.54839424 0.012839772 0.209183915 0.04936671 0.1730523
-##                  q_1_4      q_2_4      q_3_4     q_4_4     t_1_2     t_2_3
-## h_melpomene 0.01825614 0.03486608 0.01864457 0.3071175 0.1038936 0.1369595
+<pre><code>##             k     N n_off        p_1       p_2       p_3       p_4
+## h_melpomene 4 54064  5111 0.03511029 0.0406250 0.5833824 0.3408824
+## papilio     3 63241  4387 0.23905660 0.5607233 0.2002201        NA
+##                   q_1_1       q_1_2      q_2_2      q_1_3     q_3_3
+## h_melpomene 0.006510802 0.009821693 0.02683856 0.01294762 0.5649970
+## papilio     0.209183915 0.012839772 0.54839424 0.04936671 0.1730523
+##                  q_1_4      q_2_4      q_3_4     q_4_4     t_1_2     t_1_3
+## h_melpomene 0.03486608 0.01825614 0.01864457 0.3071175 0.1038936 0.1369595
 ## papilio             NA         NA         NA        NA 0.1850923 0.7116481
-##                 t_1_4     t_2_4     t_3_4       q_1_3     t_1_3          m
-## h_melpomene 0.1931129 0.3688124 0.1972217          NA        NA 0.09395221
+##                 t_1_4     t_2_4     t_3_4       q_2_3     t_2_3          m
+## h_melpomene 0.3688124 0.1931129 0.1972217          NA        NA 0.09395221
 ## papilio            NA        NA        NA 0.007163075 0.1032596 0.06894056
 ##                    m_r        m_c         A       Sc       St        Jc
 ## h_melpomene 0.08779412 0.10011029 0.8769739 2.176663 4.136277 0.5441657
 ## papilio     0.07836478 0.05951633 1.3166937 2.429267 1.813682 0.8097558
 ##                    Jt         B        Rt Rab m_dS s_dS cv_dS m_dL s_dL
-## h_melpomene 0.6893795 0.9270202 0.5887841   1   NA   NA    NA   NA   NA
-## papilio     0.6045606 0.8527468 0.5513647   1   NA   NA    NA   NA   NA
+## h_melpomene 0.6893795 0.4558795 0.4803734   1   NA   NA    NA   NA   NA
+## papilio     0.6045606 0.1253704 0.5513647   1   NA   NA    NA   NA   NA
 ##             cv_dL m_hue s_hue var_hue m_sat s_sat cv_sat m_lum s_lum
 ## h_melpomene    NA    NA    NA      NA    NA    NA     NA    NA    NA
 ## papilio        NA    NA    NA      NA    NA    NA     NA    NA    NA
@@ -1135,17 +1135,17 @@ The k-means classified images of our butterflies, along with their identified co
 <a class="sourceLine" id="cb136-3" data-line-number="3"><span class="co"># include a list of images along with a list of distances and hsl values)</span></a>
 <a class="sourceLine" id="cb136-4" data-line-number="4"><span class="kw"><a href="../reference/adjacent.html">adjacent</a></span>(butterflies_class[[<span class="dv">2</span>]], <span class="dt">xscale =</span> <span class="dv">200</span>, <span class="dt">xpts =</span> <span class="dv">200</span>, <span class="dt">bkgID =</span> <span class="dv">1</span>, <span class="dt">coldists =</span> distances, <span class="dt">hsl =</span> hsl_vals)</a></code></pre></div>
 <pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1      q_1_2
-## papilio 3 63241  4387 0.5607233 0.2390566 0.2002201 0.5483942 0.01283977
-##             q_2_2       q_1_3      q_2_3     q_3_3     t_1_2     t_1_3
-## papilio 0.2091839 0.007163075 0.04936671 0.1730523 0.1850923 0.1032596
+## papilio 3 63241  4387 0.2390566 0.5607233 0.2002201 0.2091839 0.01283977
+##             q_2_2      q_1_3       q_2_3     q_3_3     t_1_2     t_1_3
+## papilio 0.5483942 0.04936671 0.007163075 0.1730523 0.1850923 0.7116481
 ##             t_2_3          m        m_r        m_c        A       Sc
-## papilio 0.7116481 0.06894056 0.07836478 0.05951633 1.316694 2.429267
+## papilio 0.1032596 0.06894056 0.07836478 0.05951633 1.316694 2.429267
 ##               St        Jc        Jt         B        Rt Rab     m_dS
-## papilio 1.813682 0.8097558 0.6045606 0.8527468 0.5513647   1 5.619854
-##             s_dS     cv_dS     m_dL     s_dL     cv_dL    m_hue     s_hue
-## papilio 3.557393 0.6330046 2.739024 1.207703 0.4409246 1.663715 0.4154308
-##           var_hue    m_sat    s_sat    cv_sat    m_lum   s_lum    cv_lum
-## papilio 0.0826731 3.486881 2.237874 0.6417983 8.204057 2.78182 0.3390785</code></pre>
+## papilio 1.813682 0.8097558 0.6045606 0.1253704 0.5513647   1 6.045726
+##             s_dS     cv_dS     m_dL      s_dL     cv_dL    m_hue     s_hue
+## papilio 3.255664 0.5385067 2.313152 0.9184739 0.3970658 1.663715 0.4154308
+##           var_hue    m_sat    s_sat   cv_sat    m_lum   s_lum    cv_lum
+## papilio 0.0826731 2.714881 2.666422 0.982151 6.595723 2.68164 0.4065726</code></pre>
 </div>
 <div id="example-2-complex-whole-visual-environments" class="section level3">
 <h3 class="hasAnchor">
