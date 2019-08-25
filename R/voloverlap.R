@@ -51,8 +51,8 @@
 #' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 #' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = T, col = seq_len(3))
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
 #' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
