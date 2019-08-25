@@ -19,6 +19,8 @@
 #'   the heatplot.
 #' @param labels.stack a vector of labels for the stacked spectra when using
 #'   `type = "stack"`. Defaults to the numeric column ID's.
+#' @param wl_guide logical determining whether visible light spectrum should be
+#'   added to the x-axis.
 #' @param ... additional arguments passed to [plot()] (or [image()] for
 #'   `"heatmap"`).
 #'
@@ -34,12 +36,14 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @seealso [spec2rgb()], [image()], [plot()]
+#'
+#' @importFrom magick image_read
 
 # TODO: add argument for padding region between x in stack plot
 
-plot.rspec <- function(x, select = NULL,
-                       type = c("overlay", "stack", "heatmap"),
-                       varying = NULL, n = 100, labels.stack = NULL, ...) {
+plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap"),
+                       varying = NULL, n = 100, labels.stack = NULL,
+                       wl_guide = TRUE, ...) {
 
   type <- match.arg(type)
 
@@ -194,5 +198,14 @@ plot.rspec <- function(x, select = NULL,
     }
 
     axis(side = 4, at = yloc, labels = labels.stack, las = 1)
+  }
+
+  if (wl_guide) {
+    vislight <- image_read(system.file("linear_visible_spectrum.png", package = "pavo"))
+    rasterImage(vislight, 
+                380, 
+                grconvertY(0, from = "npc", to = "user"), 
+                750,
+                grconvertY(0.03, from = "npc", to = "user"))
   }
 }

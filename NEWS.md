@@ -2,6 +2,9 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+* `plot.rspec()` now adds a linear spectrum alongside the x-axis to show the 
+hues corresponding to each wavelength (controlled by the `wl_guide` boolean 
+argument).
 * `cieplot()` (and therefore `plot.colspace()` for CIEXYZ model) now adds the 
 background of the CIEXYZ colour space by default. This can be turned off by
 switching the `ciebg` argument to `FALSE`.
