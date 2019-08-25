@@ -45,7 +45,6 @@
 #' the two input volumes, which may be more adequate in most cases.
 #'
 #' @examples
-#' \dontrun{
 #' data(sicalis)
 #' tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 #' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
@@ -53,7 +52,6 @@
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
-#' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
