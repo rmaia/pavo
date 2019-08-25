@@ -11,6 +11,7 @@
   varying = NULL,
   n = 100,
   labels.stack = NULL,
+  wl_guide = TRUE,
   ...
 )
 }
@@ -39,6 +40,9 @@ the heatplot.}
 
 \item{labels.stack}{a vector of labels for the stacked spectra when using
 \code{type = "stack"}. Defaults to the numeric column ID's.}
+
+\item{wl_guide}{logical determining whether visible light spectrum should be
+added to the x-axis.}
 
 \item{...}{additional arguments passed to \code{\link[=plot]{plot()}} (or \code{\link[=image]{image()}} for
 \code{"heatmap"}).}
