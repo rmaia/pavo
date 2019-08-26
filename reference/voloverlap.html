@@ -247,15 +247,14 @@ Behavioral Ecology, ary017 character(0)doi: <a href='https://doi.org/10.1093/beh
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><span class='co'># NOT RUN {</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='no'>tcs.sicalis.C</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"C"</span>)
 <span class='no'>tcs.sicalis.T</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"T"</span>)
 <span class='no'>tcs.sicalis.B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"B"</span>)
-<span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.B</span>)
-<span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='no'>T</span>)
-<span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='no'>T</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>))
-<span class='co'># }</span><div class='input'>
+<span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.B</span>)</div><div class='output co'>#&gt;           vol1         vol2   overlapvol vsmallest      vboth
+#&gt; 1 5.183721e-06 6.281511e-06 6.904074e-07 0.1331876 0.06407598</div><div class='input'><span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='img'><img src='voloverlap-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           vol1         vol2 overlapvol vsmallest vboth
+#&gt; 1 5.183721e-06 4.739152e-06          0         0     0</div><div class='input'><span class='fu'>voloverlap</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>))</div><div class='img'><img src='voloverlap-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           vol1         vol2 overlapvol vsmallest vboth
+#&gt; 1 5.183721e-06 4.739152e-06          0         0     0</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
