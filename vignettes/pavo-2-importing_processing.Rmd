@@ -32,9 +32,9 @@ code.sourceCode {
 ```{r include = FALSE}
 # Do not use partial matching
 options(
-   warnPartialMatchDollar = FALSE,
-   warnPartialMatchArgs = FALSE,
-   warnPartialMatchAttr = FALSE
+   warnPartialMatchDollar = TRUE,
+   warnPartialMatchArgs = TRUE,
+   warnPartialMatchAttr = TRUE
 )
 knitr::knit_hooks$set(fig = knitr::hook_pngquant)
 ```

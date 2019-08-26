@@ -29,15 +29,6 @@ code.sourceCode {
 }
 </style>
 
-```{r include = FALSE}
-# Do not use partial matching
-options(
-   warnPartialMatchDollar = FALSE,
-   warnPartialMatchArgs = FALSE,
-   warnPartialMatchAttr = FALSE
-)
-```
-
 [pavo_repo]: https://github.com/rmaia/pavo
 
 [data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
