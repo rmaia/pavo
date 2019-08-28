@@ -8,11 +8,13 @@
 
 <title>Convert images between class rimg and cimg or magick-image — img_conversion • pavo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -38,12 +40,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Convert images between class rimg and cimg or magick-image — img_conversion" />
 
+<meta property="og:title" content="Convert images between class rimg and cimg or magick-image — img_conversion" />
 <meta property="og:description" content="Conveniently convert single objects of class rimg to class cimg (from the
 package imager) or magick-image (from the package magick), both of which
 contains a suite of useful image-processing capabilities." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -114,7 +117,6 @@ contains a suite of useful image-processing capabilities." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rmaia/pavo">
@@ -147,17 +149,15 @@ contains a suite of useful image-processing capabilities." />
     </div>
 
     <div class="ref-description">
-    
     <p>Conveniently convert single objects of class <code>rimg</code> to class <code>cimg</code> (from the
 package <code>imager</code>) or <code>magick-image</code> (from the package <code>magick</code>), both of which
 contains a suite of useful image-processing capabilities.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>rimg2cimg</span>(<span class='no'>image</span>)
 
 <span class='fu'>rimg2magick</span>(<span class='no'>image</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -166,16 +166,14 @@ contains a suite of useful image-processing capabilities.</p>
       <td><p>an object of class <code>rimg</code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>an image of the specified class</p>
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Attributes (e.g. scales, color-classes) will not be preserved following
 conversion from class <code>rimg</code>, so it's best to use early in the analysis workflow.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>papilio</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))
@@ -191,11 +189,8 @@ conversion from class <code>rimg</code>, so it's best to use early in the analys
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

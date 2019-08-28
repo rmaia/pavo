@@ -8,11 +8,13 @@
 
 <title>Visual models — vismodel • pavo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -38,11 +40,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Visual models — vismodel" />
 
+<meta property="og:title" content="Visual models — vismodel" />
 <meta property="og:description" content="Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colourspace and non-colourspace models." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -113,7 +116,6 @@ can be returned, for use in a suite of colourspace and non-colourspace models." 
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rmaia/pavo">
@@ -146,10 +148,8 @@ can be returned, for use in a suite of colourspace and non-colourspace models." 
     </div>
 
     <div class="ref-description">
-    
     <p>Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colourspace and non-colourspace models.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>vismodel</span>(<span class='no'>rspecdata</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>,
@@ -160,7 +160,7 @@ can be returned, for use in a suite of colourspace and non-colourspace models.</
   <span class='st'>"forestshade"</span>), <span class='kw'>trans</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>),
   <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span>), <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ideal"</span>, <span class='st'>"green"</span>),
   <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>scale</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -270,13 +270,12 @@ are, for example, 500 (for dim light) and 10000 (for bright illumination). Note 
 space model? Defaults to <code>TRUE</code>).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>An object of class <code>vismodel</code> containing the photon catches for each of the
 photoreceptors considered. Information on the parameters used in the calculation are also
 stored and can be called using the <code><a href='summary.vismodel.html'>summary.vismodel()</a></code> function.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., &amp; Cuthill, I.
@@ -307,7 +306,6 @@ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 Internationale de l' Eclairage.</p>
 <p>Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 Visual Neuroscience, 3, 119-125.</p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Dichromat (dingo)</span>
@@ -334,11 +332,8 @@ Visual Neuroscience, 3, 119-125.</p>
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

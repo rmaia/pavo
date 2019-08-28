@@ -8,11 +8,13 @@
 
 <title>Interactive plot of a tetrahedral colourspace — tcsplot • pavo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -38,12 +40,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Interactive plot of a tetrahedral colourspace — tcsplot" />
 
+<meta property="og:title" content="Interactive plot of a tetrahedral colourspace — tcsplot" />
 <meta property="og:description" content="Produces an interactive 3D plot of a tetrahedral colourspace using OpenGL
 capabilities.
 Plots points in a tetrahedral colour space" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -114,7 +117,6 @@ Plots points in a tetrahedral colour space" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rmaia/pavo">
@@ -147,11 +149,9 @@ Plots points in a tetrahedral colour space" />
     </div>
 
     <div class="ref-description">
-    
     <p>Produces an interactive 3D plot of a tetrahedral colourspace using OpenGL
 capabilities.</p>
 <p>Plots points in a tetrahedral colour space</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>tcsplot</span>(<span class='no'>tcsdata</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.02</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
@@ -163,7 +163,7 @@ capabilities.</p>
 
 <span class='fu'>tcsvol</span>(<span class='no'>tcsdata</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>grid.alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -235,7 +235,7 @@ and 'z' coordinates as columns (labeled as such).</p></td>
 is not saved properly if exported using <code>rgl.postscript</code>)(defaults to <code>TRUE</code>).</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p><code>tcsplot()</code> creates a 3D plot using functions of the package <code>rgl</code>,
@@ -245,7 +245,6 @@ third button: zoom).</p>
 <p><code>tcspoints()</code> adds points to the plot. Points are currently plotted
 only as spheres to maintain export capabilities.</p>
 <p><code>tcsvol()</code> creates a 3D convex hull within a <code>tcsplot</code> object.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
@@ -253,12 +252,10 @@ color in a tetrahedral color space: A phylogenetic analysis of new world bunting
 The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/rgl/man/spheres.html'>rgl::spheres3d()</a></code>,<code><a href='https://rdrr.io/pkg/rgl/man/postscript.html'>rgl::rgl.postscript()</a></code>,
 <code><a href='https://rdrr.io/pkg/rgl/man/snapshot.html'>rgl::rgl.snapshot()</a></code>,<code><a href='https://rdrr.io/pkg/rgl/man/material.html'>rgl::rgl.material()</a></code></p></div>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -287,13 +284,9 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-
       <li><a href="#see-also">See also</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

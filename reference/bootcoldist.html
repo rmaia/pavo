@@ -8,11 +8,13 @@
 
 <title>Bootstrap colour distance confidence intervals — bootcoldist • pavo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -38,11 +40,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Bootstrap colour distance confidence intervals — bootcoldist" />
 
+<meta property="og:title" content="Bootstrap colour distance confidence intervals — bootcoldist" />
 <meta property="og:description" content="Uses a bootstrap procedure to generate confidence intervals
 for the mean colour distance between two or more samples of colours" />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -113,7 +116,6 @@ for the mean colour distance between two or more samples of colours" />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rmaia/pavo">
@@ -146,15 +148,13 @@ for the mean colour distance between two or more samples of colours" />
     </div>
 
     <div class="ref-description">
-    
     <p>Uses a bootstrap procedure to generate confidence intervals
 for the mean colour distance between two or more samples of colours</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>bootcoldist</span>(<span class='no'>vismodeldata</span>, <span class='no'>by</span>, <span class='kw'>boot.n</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
   <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>), <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -189,17 +189,15 @@ computing will not be used. Defaults to <code><a href='https://rdrr.io/r/base/op
 include <code>n</code> and <code>weber</code>. See <code><a href='coldist.html'>coldist()</a></code> for details.</p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a matrix including the empirical mean and bootstrapped
 confidence limits for dS (and dL if <code>achro = TRUE</code>).</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 character(0)doi: <a href='https://doi.org/10.1093/beheco/ary017'>10.1093/beheco/ary017</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><span class='co'># NOT RUN {</span>
@@ -214,11 +212,8 @@ Behavioral Ecology, ary017 character(0)doi: <a href='https://doi.org/10.1093/beh
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 

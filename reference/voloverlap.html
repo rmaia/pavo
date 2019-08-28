@@ -8,11 +8,13 @@
 
 <title>Colour volume overlap — voloverlap • pavo</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
@@ -38,11 +40,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script>
 
 
-<meta property="og:title" content="Colour volume overlap — voloverlap" />
 
+<meta property="og:title" content="Colour volume overlap — voloverlap" />
 <meta property="og:description" content="Calculates the overlap between the volumes defined by two sets of points in cartesian
 space." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -113,7 +116,6 @@ space." />
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/rmaia/pavo">
@@ -146,16 +148,14 @@ space." />
     </div>
 
     <div class="ref-description">
-    
     <p>Calculates the overlap between the volumes defined by two sets of points in cartesian
 space.</p>
-    
     </div>
 
     <pre class="usage"><span class='fu'>voloverlap</span>(<span class='no'>colsp1</span>, <span class='no'>colsp2</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"darkgrey"</span>), <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>montecarlo</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nsamp</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>psize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>...</span>)</pre>
-    
+
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
@@ -210,7 +210,7 @@ overlap are plotted over the current plot (defaults to <code>TRUE</code>).</p></
       <td><p>additional arguments passed to the plot. See <code><a href='vol.html'>vol()</a></code></p></td>
     </tr>
     </table>
-    
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Calculates the overlap between the volumes defined by two set of points in
@@ -222,7 +222,6 @@ contained within the other, this overlap will be <code>vsmallest = 1</code>.</p>
 input sets of colour points.</p></li>
 </ul>
 
-    
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Stoddard &amp; Stevens (2011) originally obtained the volume overlap through Monte Carlo
@@ -234,7 +233,6 @@ this value may not be what one expects to obtain if (1) the two
 volumes differ considerably in size, or (2) one of the volumes is entirely contained
 within the other. For this reason, we also report the volume relative to the union of
 the two input volumes, which may be more adequate in most cases.</p>
-    
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage color
@@ -244,7 +242,6 @@ American Naturalist, 171(6), 755-776.</p>
 egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.</p>
 <p>Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 character(0)doi: <a href='https://doi.org/10.1093/beheco/ary017'>10.1093/beheco/ary017</a></p>
-    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
@@ -261,13 +258,9 @@ Behavioral Ecology, ary017 character(0)doi: <a href='https://doi.org/10.1093/beh
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#note">Note</a></li>
-
       <li><a href="#references">References</a></li>
-      
       <li><a href="#examples">Examples</a></li>
     </ul>
 
