@@ -44,8 +44,8 @@
   
 
 <meta property="og:title" content="Model spectra in a colorspace — colspace" />
-<meta property="og:description" content="Models reflectance spectra in a colorspace. For information on plotting arguments
-and graphical parameters, see plot.colspace()." />
+<meta property="og:description" content="Models reflectance spectra in a colorspace. For information on plotting
+arguments and graphical parameters, see plot.colspace()." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -150,8 +150,8 @@ and graphical parameters, see plot.colspace()." />
     </div>
 
     <div class="ref-description">
-    <p>Models reflectance spectra in a colorspace. For information on plotting arguments
-and graphical parameters, see <code><a href='plot.colspace.html'>plot.colspace()</a></code>.</p>
+    <p>Models reflectance spectra in a colorspace. For information on plotting
+arguments and graphical parameters, see <code><a href='plot.colspace.html'>plot.colspace()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>colspace</span>(<span class='no'>vismodeldata</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"auto"</span>, <span class='st'>"di"</span>, <span class='st'>"tri"</span>, <span class='st'>"tcs"</span>, <span class='st'>"hexagon"</span>,
@@ -163,64 +163,72 @@ and graphical parameters, see <code><a href='plot.colspace.html'>plot.colspace()
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>vismodeldata</th>
-      <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
-with columns representing quantum catches).</p></td>
+      <td><p>(required) quantum catch color data. Can be either the
+result from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
+data frame with columns representing quantum catches).</p></td>
     </tr>
     <tr>
       <th>space</th>
       <td><p>Which colorspace/model to use. Options are:</p><ul>
-<li><p><code>auto</code>: if data is a result from <code><a href='vismodel.html'>vismodel()</a></code>,
-applies <code>di</code>, <code>tri</code> or <code>tcs</code> if input visual model had two, three or four
-cones, respectively.</p></li>
+<li><p><code>auto</code>: if data is a result from <code><a href='vismodel.html'>vismodel()</a></code>, applies <code>di</code>, <code>tri</code> or <code>tcs</code>
+if input visual model had two, three or four cones, respectively.</p></li>
 <li><p><code>di</code>: dichromatic colourspace. See <code><a href='dispace.html'>dispace()</a></code> for details.
 (<a href='diplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>tri</code>: trichromatic colourspace (i.e. Maxwell triangle). See <code><a href='trispace.html'>trispace()</a></code> for details. (<a href='triplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>tri</code>: trichromatic colourspace (i.e. Maxwell triangle). See <code><a href='trispace.html'>trispace()</a></code>
+for details. (<a href='triplot.html'>plotting arguments</a>)</p></li>
 <li><p><code>tcs</code>: tetrahedral colourspace. See <code><a href='tcspace.html'>tcspace()</a></code> for details.
 (<a href='tetraplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>hexagon</code>: the trichromatic colour-hexagon of Chittka (1992). See <code><a href='hexagon.html'>hexagon()</a></code> for details. (<a href='hexplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>coc</code>: the trichromatic colour-opponent-coding model of Backhaus (1991). See <code><a href='coc.html'>coc()</a></code> for details. (<a href='cocplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>categorical</code>: the tetrachromatic categorical fly-model of Troje (1993). See <code><a href='categorical.html'>categorical()</a></code> for details. (<a href='catplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>ciexyz</code>: CIEXYZ space. See <code><a href='cie.html'>cie()</a></code> for details. (<a href='cieplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>cielab</code>: CIELAB space. See <code><a href='cie.html'>cie()</a></code> for details. (<a href='cieplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>cielch</code>: CIELCh space. See <code><a href='cie.html'>cie()</a></code> for details. (<a href='cieplot.html'>plotting arguments</a>)</p></li>
-<li><p><code>segment</code>: segment analysis of Endler (1990). See <code><a href='segspace.html'>segspace()</a></code> for details. (<a href='segplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>hexagon</code>: the trichromatic colour-hexagon of Chittka (1992). See
+<code><a href='hexagon.html'>hexagon()</a></code> for details. (<a href='hexplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>coc</code>: the trichromatic colour-opponent-coding model of Backhaus (1991).
+See <code><a href='coc.html'>coc()</a></code> for details. (<a href='cocplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>categorical</code>: the tetrachromatic categorical fly-model of Troje (1993).
+See <code><a href='categorical.html'>categorical()</a></code> for details. (<a href='catplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>ciexyz</code>: CIEXYZ space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>cielab</code>: CIELAB space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>cielch</code>: CIELCh space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>segment</code>: segment analysis of Endler (1990). See <code><a href='segspace.html'>segspace()</a></code> for details.
+(<a href='segplot.html'>plotting arguments</a>)</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>qcatch</th>
-      <td><p>Which quantal catch metric is being inputted. Only used when input data is NOT
-an output from <code><a href='vismodel.html'>vismodel()</a></code>. Must be <code>Qi</code>, <code>fi</code> or <code>Ei</code>.</p></td>
+      <td><p>Which quantal catch metric is being inputted. Only used when
+input data is NOT an output from <code><a href='vismodel.html'>vismodel()</a></code>. Must be <code>Qi</code>, <code>fi</code> or <code>Ei</code>.</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-Transactions of the Optical Society, 33(3), 73-134.</p>
-<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-using MATLAB. John Wiley &amp; Sons.</p>
+    <p>Smith T, Guild J. (1932) The CIE colorimetric standards and their
+use. Transactions of the Optical Society, 33(3), 73-134.</p>
+<p>Westland S, Ripamonti C, Cheung V. (2012). Computational colour
+science using MATLAB. John Wiley &amp; Sons.</p>
 <p>Chittka L. (1992). The colour hexagon: a chromaticity diagram
 based on photoreceptor excitations as a generalized representation of
 colour opponency. Journal of Comparative Physiology A, 170(5), 533-543.</p>
 <p>Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
 component of flower reflections, and the colour perception of Hymenoptera.
 Vision research, 34(11), 1489-1508.</p>
-<p>Troje N. (1993). Spectral categories in the learning behaviour
-of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
+<p>Troje N. (1993). Spectral categories in the learning behaviour of
+blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
 <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
-color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-The American Naturalist, 171(6), 755-776.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
-as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+color in a tetrahedral color space: A phylogenetic analysis of new world
+buntings. The American Naturalist, 171(6), 755-776.</p>
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The Linnean Society,
+86(4), 405-431.</p>
 <p>Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
-behavioural tests and physiological concepts. Biological Reviews, 78,
-81 - 118.</p>
-<p>Backhaus W. (1991). Color opponent coding in the visual system
-of the honeybee. Vision Research, 31, 1381-1397.</p>
+behavioural tests and physiological concepts. Biological Reviews, 78, 81 -
+118.</p>
+<p>Backhaus W. (1991). Color opponent coding in the visual system of
+the honeybee. Vision Research, 31, 1381-1397.</p>
 <p>Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
-Society, 41, 315-352.</p>
+color in studies of animal color patterns. Biological Journal of the
+Linnean Society, 41, 315-352.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
