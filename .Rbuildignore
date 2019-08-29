@@ -19,7 +19,7 @@ vignette_data/
 todo.txt
 ^cran-comments\.md$
 ^docs$
-^_pkgdown\.yml$
+^pkgdown$
 ^codecov\.yml$
 LICENSE.md
 ^.*\.pdf$
