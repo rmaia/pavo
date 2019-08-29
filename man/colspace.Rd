@@ -9,35 +9,42 @@ colspace(vismodeldata, space = c("auto", "di", "tri", "tcs", "hexagon",
   qcatch = NULL)
 }
 \arguments{
-\item{vismodeldata}{(required) quantum catch color data. Can be either the result
-from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a data frame
-with columns representing quantum catches).}
+\item{vismodeldata}{(required) quantum catch color data. Can be either the
+result from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in the form of a
+data frame with columns representing quantum catches).}
 
 \item{space}{Which colorspace/model to use. Options are:
 \itemize{
-\item \code{auto}: if data is a result from \code{\link[=vismodel]{vismodel()}},
-applies \code{di}, \code{tri} or \code{tcs} if input visual model had two, three or four
-cones, respectively.
+\item \code{auto}: if data is a result from \code{\link[=vismodel]{vismodel()}}, applies \code{di}, \code{tri} or \code{tcs}
+if input visual model had two, three or four cones, respectively.
 \item \code{di}: dichromatic colourspace. See \code{\link[=dispace]{dispace()}} for details.
 (\link[=diplot]{plotting arguments})
-\item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link[=trispace]{trispace()}} for details. (\link[=triplot]{plotting arguments})
+\item \code{tri}: trichromatic colourspace (i.e. Maxwell triangle). See \code{\link[=trispace]{trispace()}}
+for details. (\link[=triplot]{plotting arguments})
 \item \code{tcs}: tetrahedral colourspace. See \code{\link[=tcspace]{tcspace()}} for details.
 (\link[=tetraplot]{plotting arguments})
-\item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See \code{\link[=hexagon]{hexagon()}} for details. (\link[=hexplot]{plotting arguments})
-\item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991). See \code{\link[=coc]{coc()}} for details. (\link[=cocplot]{plotting arguments})
-\item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993). See \code{\link[=categorical]{categorical()}} for details. (\link[=catplot]{plotting arguments})
-\item \code{ciexyz}: CIEXYZ space. See \code{\link[=cie]{cie()}} for details. (\link[=cieplot]{plotting arguments})
-\item \code{cielab}: CIELAB space. See \code{\link[=cie]{cie()}} for details. (\link[=cieplot]{plotting arguments})
-\item \code{cielch}: CIELCh space. See \code{\link[=cie]{cie()}} for details. (\link[=cieplot]{plotting arguments})
-\item \code{segment}: segment analysis of Endler (1990). See \code{\link[=segspace]{segspace()}} for details. (\link[=segplot]{plotting arguments})
+\item \code{hexagon}: the trichromatic colour-hexagon of Chittka (1992). See
+\code{\link[=hexagon]{hexagon()}} for details. (\link[=hexplot]{plotting arguments})
+\item \code{coc}: the trichromatic colour-opponent-coding model of Backhaus (1991).
+See \code{\link[=coc]{coc()}} for details. (\link[=cocplot]{plotting arguments})
+\item \code{categorical}: the tetrachromatic categorical fly-model of Troje (1993).
+See \code{\link[=categorical]{categorical()}} for details. (\link[=catplot]{plotting arguments})
+\item \code{ciexyz}: CIEXYZ space. See \code{\link[=cie]{cie()}} for details.
+(\link[=cieplot]{plotting arguments})
+\item \code{cielab}: CIELAB space. See \code{\link[=cie]{cie()}} for details.
+(\link[=cieplot]{plotting arguments})
+\item \code{cielch}: CIELCh space. See \code{\link[=cie]{cie()}} for details.
+(\link[=cieplot]{plotting arguments})
+\item \code{segment}: segment analysis of Endler (1990). See \code{\link[=segspace]{segspace()}} for details.
+(\link[=segplot]{plotting arguments})
 }}
 
-\item{qcatch}{Which quantal catch metric is being inputted. Only used when input data is NOT
-an output from \code{\link[=vismodel]{vismodel()}}. Must be \code{Qi}, \code{fi} or \code{Ei}.}
+\item{qcatch}{Which quantal catch metric is being inputted. Only used when
+input data is NOT an output from \code{\link[=vismodel]{vismodel()}}. Must be \code{Qi}, \code{fi} or \code{Ei}.}
 }
 \description{
-Models reflectance spectra in a colorspace. For information on plotting arguments
-and graphical parameters, see \code{\link[=plot.colspace]{plot.colspace()}}.
+Models reflectance spectra in a colorspace. For information on plotting
+arguments and graphical parameters, see \code{\link[=plot.colspace]{plot.colspace()}}.
 }
 \examples{
 data(flowers)
@@ -68,11 +75,11 @@ cat.flowers <- colspace(vis.flowers, space = "categorical")
 
 }
 \references{
-Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
-Transactions of the Optical Society, 33(3), 73-134.
+Smith T, Guild J. (1932) The CIE colorimetric standards and their
+use. Transactions of the Optical Society, 33(3), 73-134.
 
-Westland S, Ripamonti C, Cheung V. (2012). Computational colour science
-using MATLAB. John Wiley & Sons.
+Westland S, Ripamonti C, Cheung V. (2012). Computational colour
+science using MATLAB. John Wiley & Sons.
 
 Chittka L. (1992). The colour hexagon: a chromaticity diagram
 based on photoreceptor excitations as a generalized representation of
@@ -82,26 +89,27 @@ Chittka L, Shmida A, Troje N, Menzel R. (1994). Ultraviolet as a
 component of flower reflections, and the colour perception of Hymenoptera.
 Vision research, 34(11), 1489-1508.
 
-Troje N. (1993). Spectral categories in the learning behaviour
-of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
+Troje N. (1993). Spectral categories in the learning behaviour of
+blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
-color in a tetrahedral color space: A phylogenetic analysis of new world buntings.
-The American Naturalist, 171(6), 755-776.
+color in a tetrahedral color space: A phylogenetic analysis of new world
+buntings. The American Naturalist, 171(6), 755-776.
 
-Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
-as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+patterns as birds see them. Biological Journal Of The Linnean Society,
+86(4), 405-431.
 
 Kelber A, Vorobyev M, Osorio D. (2003). Animal colour vision -
-behavioural tests and physiological concepts. Biological Reviews, 78,
-81 - 118.
+behavioural tests and physiological concepts. Biological Reviews, 78, 81 -
+118.
 
-Backhaus W. (1991). Color opponent coding in the visual system
-of the honeybee. Vision Research, 31, 1381-1397.
+Backhaus W. (1991). Color opponent coding in the visual system of
+the honeybee. Vision Research, 31, 1381-1397.
 
 Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
-Society, 41, 315-352.
+color in studies of animal color patterns. Biological Journal of the
+Linnean Society, 41, 315-352.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
