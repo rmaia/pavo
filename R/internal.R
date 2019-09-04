@@ -7,6 +7,8 @@
 #####################
 
 huedisp <- function(tcsres) {
+  # This function can probably also be expressed with x,y,z or u,s,m,l, which
+  # might help write a more efficient code using linear algebra libs.
   combn(nrow(tcsres), 2, function(x) {
     phi   = tcsres[x, "h.phi"]
     theta = tcsres[x, "h.theta"]
