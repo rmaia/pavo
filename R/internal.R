@@ -7,9 +7,13 @@
 #####################
 
 huedisp <- function(tcsres) {
-  combn(nrow(tcsres), 2, function(x)
-    acos((cos(tcsres[x[1], "h.phi"]) * cos(tcsres[x[2], "h.phi"]) * cos(tcsres[x[1], "h.theta"] -
-      tcsres[x[2], "h.theta"])) + (sin(tcsres[x[1], "h.phi"]) * sin(tcsres[x[2], "h.phi"]))))
+  combn(nrow(tcsres), 2, function(x) {
+    phi   = tcsres[x, "h.phi"]
+    theta = tcsres[x, "h.theta"]
+
+    alpha = prod(cos(phi), cos(diff(theta))) + prod(sin(phi))
+    acos(alpha)
+  })
 }
 
 
@@ -19,8 +23,9 @@ tcssum <- function(tcsres) {
   centroid <- colMeans(tcsres[c("u", "s", "m", "l")])
 
   # color span
-  colspan.m <- mean(dist(tcsres[, c("x", "y", "z")]))
-  colspan.v <- var(dist(tcsres[, c("x", "y", "z")]))
+  colspan <- dist(tcsres[, c("x", "y", "z")])
+  colspan.m <- mean(colspan)
+  colspan.v <- var(colspan)
 
   if (nrow(tcsres) > 3) {
     # color volume
@@ -38,8 +43,9 @@ tcssum <- function(tcsres) {
   }
 
   # hue disparity
-  hdisp.m <- mean(huedisp(tcsres))
-  hdisp.v <- var(huedisp(tcsres))
+  hdisp <- huedisp(tcsres)
+  hdisp.m <- mean(hdisp)
+  hdisp.v <- var(hdisp)
 
   # summary of achieved chroma
   mean.ra <- mean(tcsres$r.achieved)
