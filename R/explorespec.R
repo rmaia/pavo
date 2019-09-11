@@ -32,6 +32,8 @@ explorespec <- function(rspecdata, by = NULL,
   oPar <- par("mar", "oma", "ask", "mfrow")
   on.exit(par(oPar))
 
+  by0 <- by
+
   wl_index <- which(names(rspecdata) == "wl")
   wl <- rspecdata[, wl_index]
   rspecdata <- rspecdata[, -wl_index, drop = FALSE]
@@ -120,7 +122,7 @@ explorespec <- function(rspecdata, by = NULL,
   # Do the plotting
   for (i in seq_len(numby)) {
     if (numby == 1) {
-      bloc <- data.frame(rspecdata[i])
+      bloc <- data.frame(rspecdata[seq_len(by0)])
     } else {
       # THIS IS WHAT I NEED TO FIX
       bloc <- rspecdata[, which(by == levels(by)[i])]
