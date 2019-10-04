@@ -4,23 +4,22 @@
 #' object
 #'
 #' @param object (required) a data frame or matrix containing spectra to
-#' process.
+#'   process.
 #' @param whichwl a numeric or character vector specifying which column contains
-#' wavelengths. If `NULL` (default), function searches for column containing equally
-#' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
-#' `whichwl` is not given, returns arbitrary index values.
+#'   wavelengths. If `NULL` (default), function searches for column containing
+#'   equally spaced numbers and sets it as wavelengths "wl". If no wavelengths
+#'   are found or `whichwl` is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
-#' `TRUE`).
+#'   `TRUE`).
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
-#' `c(300, 700)`).
-#' @param exceed.range logical. Should data be interpolated to the limits specified
-#' by `lim` if `lim` exceeds the range of the actual data? Useful, and relatively safe,
-#' when the data range falls slightly within `lim` (e.g. 300.1 - 699 nm), but will
-#' produce spurious results if `lim` far exceeds the range of input data.
-#' Defaults to `TRUE`.
+#'   `c(300, 700)`).
+#' @param exceed.range logical. Should data be interpolated to the limits
+#'   specified by `lim` if `lim` exceeds the range of the actual data? Useful,
+#'   and relatively safe, when the data range falls slightly within `lim` (e.g.
+#'   300.1 - 699 nm), but will produce spurious results if `lim` far exceeds the
+#'   range of input data. Defaults to `TRUE`.
 #'
-#' @return an object of class `rspec` for use in further `pavo`
-#' functions
+#' @return an object of class `rspec` for use in further `pavo` functions
 #'
 #' @export as.rspec is.rspec
 #'
@@ -179,8 +178,7 @@ as.rspec <- function(object, whichwl = NULL,
 }
 
 #' @rdname as.rspec
-#' @return a logical value indicating whether the object is of class
-#' `rspec`
+#' @return a logical value indicating whether the object is of class `rspec`
 
 is.rspec <- function(object) {
   inherits(object, "rspec")
