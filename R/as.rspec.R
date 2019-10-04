@@ -6,7 +6,7 @@
 #' @param object (required) a data frame or matrix containing spectra to
 #' process.
 #' @param whichwl a numeric or character vector specifying which column contains
-#' wavelengths. If `NULL`` (default), function searches for column containing equally
+#' wavelengths. If `NULL` (default), function searches for column containing equally
 #' spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or
 #' `whichwl` is not given, returns arbitrary index values.
 #' @param interp whether to interpolate wavelengths in 1-nm bins (defaults to
