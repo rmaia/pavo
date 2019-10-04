@@ -15,7 +15,9 @@ is.rspec(object)
 process.}
 
 \item{whichwl}{a numeric or character vector specifying which column contains
-wavelengths. If \code{NULL`` (default), function searches for column containing equally spaced numbers and sets it as wavelengths "wl". If no wavelengths are found or }whichwl` is not given, returns arbitrary index values.}
+wavelengths. If \code{NULL} (default), function searches for column containing
+equally spaced numbers and sets it as wavelengths "wl". If no wavelengths
+are found or \code{whichwl} is not given, returns arbitrary index values.}
 
 \item{interp}{whether to interpolate wavelengths in 1-nm bins (defaults to
 \code{TRUE}).}
@@ -23,18 +25,16 @@ wavelengths. If \code{NULL`` (default), function searches for column containing 
 \item{lim}{vector specifying wavelength range to interpolate over (e.g.
 \code{c(300, 700)}).}
 
-\item{exceed.range}{logical. Should data be interpolated to the limits specified
-by \code{lim} if \code{lim} exceeds the range of the actual data? Useful, and relatively safe,
-when the data range falls slightly within \code{lim} (e.g. 300.1 - 699 nm), but will
-produce spurious results if \code{lim} far exceeds the range of input data.
-Defaults to \code{TRUE}.}
+\item{exceed.range}{logical. Should data be interpolated to the limits
+specified by \code{lim} if \code{lim} exceeds the range of the actual data? Useful,
+and relatively safe, when the data range falls slightly within \code{lim} (e.g.
+300.1 - 699 nm), but will produce spurious results if \code{lim} far exceeds the
+range of input data. Defaults to \code{TRUE}.}
 }
 \value{
-an object of class \code{rspec} for use in further \code{pavo}
-functions
+an object of class \code{rspec} for use in further \code{pavo} functions
 
-a logical value indicating whether the object is of class
-\code{rspec}
+a logical value indicating whether the object is of class \code{rspec}
 }
 \description{
 Converts data frames or matrices containing spectral data to \code{rspec}
