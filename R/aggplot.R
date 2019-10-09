@@ -56,7 +56,8 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   errplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.error)
 
   if (anyNA(errplotspecs[, -1])) {
-    stop("Could not calculate errors. Do any groups have n = 1?", call. = FALSE)
+    warning("Could not calculate errors. Do any groups have n = 1?",
+            call. = FALSE)
   }
 
   # make wavelength vector
@@ -105,7 +106,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     arg$xlim <- range(wl)
   }
   if (is.null(arg$ylim)) {
-    arg$ylim <- range(polygon_data)
+    arg$ylim <- range(polygon_data, cntplotspecs, na.rm = TRUE)
   }
 
   # line width
