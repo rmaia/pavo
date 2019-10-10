@@ -2,19 +2,21 @@
 #'
 #' Produces a Maxwell triangle plot.
 #'
-#' @param tridata (required) a data frame, possibly a result from the [colspace()]
-#'  or [trispace()] function, containing values for the 'x' and 'y' coordinates
-#'  as columns (labeled as such).
+#' @param tridata (required) a data frame, possibly a result from the
+#'   [colspace()] or [trispace()] function, containing values for the 'x' and
+#'   'y' coordinates as columns (labeled as such).
 #' @param achro should a point be plotted at the origin (defaults to `TRUE`)?
 #' @param labels logical. Should the name of each cone be printed next to the
-#' corresponding vertex?
+#'   corresponding vertex?
 #' @param labels.cex  size of the arrow labels.
-#' @param achrosize size of the point at the origin when `achro = TRUE` (defaults to `0.8`).
-#' @param achrocol color of the point at the origin `achro = TRUE` (defaults to `'grey'`).
+#' @param achrosize size of the point at the origin when `achro = TRUE`
+#'   (defaults to `0.8`).
+#' @param achrocol color of the point at the origin `achro = TRUE` (defaults to
+#'   `'grey'`).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the plot outline.
 #' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
-#' (defaults to `TRUE`).
+#'   (defaults to `TRUE`).
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -22,6 +24,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' plot(tri.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

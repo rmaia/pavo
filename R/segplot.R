@@ -2,9 +2,9 @@
 #'
 #' Produces a plot based on Endler's (1990) segment analysis.
 #'
-#' @param segdata (required) a data frame, possibly a result from the [colspace()]
-#' or [segspace()] function, containing values for 'LM' and 'MS'
-#' as columns (labeled as such).
+#' @param segdata (required) a data frame, possibly a result from the
+#'   [colspace()] or [segspace()] function, containing values for 'LM' and 'MS'
+#'   as columns (labeled as such).
 #' @inheritParams cocplot
 #'
 #' @examples
@@ -12,6 +12,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "segment", achromatic = "all")
 #' seg.flowers <- colspace(vis.flowers, space = "segment")
 #' plot(seg.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

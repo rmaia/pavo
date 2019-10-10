@@ -2,11 +2,9 @@
 #'
 #' Produces a dichromat segment plot.
 #'
-# #' @usage plot(didata, ...)
-#'
-#' @param didata (required) a data frame, possibly a result from the [colspace()]
-#'  or [dispace()]
-#'  function, containing values for the 'x' coordinates as a column (labeled as such).
+#' @param didata (required) a data frame, possibly a result from the
+#'   [colspace()] or [dispace()] function, containing values for the 'x'
+#'   coordinates as a column (labeled as such).
 #' @inheritParams triplot
 #'
 #' @examples
@@ -14,6 +12,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "canis")
 #' di.flowers <- colspace(vis.flowers, space = "di")
 #' plot(di.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export

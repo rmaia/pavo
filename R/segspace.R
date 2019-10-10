@@ -2,16 +2,17 @@
 #'
 #' Calculates segment classification measures as defined in Endler (1990).
 #'
-#' @param vismodeldata (required) quantum catch color data. Can be either the result
-#'  from [vismodel()] or independently calculated data (in the form of a data frame
-#'  with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic
-#'  'tetrachromatic' viewer).
+#' @param vismodeldata (required) quantum catch color data. Can be either the
+#'   result from [vismodel()] or independently calculated data (in the form of a
+#'   data frame with columns named 'S1', 'S2', 'S3', 'S4', and, optionally,
+#'   'lum', representing a generic 'tetrachromatic' viewer).
 #'
 #' @return A data frame of class [`colspace`] consisting of the following columns:
-#' * `S1`, `S2`, `S3`, `S4`: the relative reflectance at each
-#' of the four segments.
+#' * `S1`, `S2`, `S3`, `S4`: the relative reflectance at each of the four
+#' segments.
 #' * `LM`, `MS`: segment scores
-#' * `C`, `H`, `B`: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space
+#' * `C`, `H`, `B`: 'chroma', 'hue' (degrees), and 'brightness' in the segment
+#' classification space
 #'
 #' @export
 #'
@@ -21,12 +22,13 @@
 #' data(sicalis)
 #' vis.sic <- vismodel(sicalis, visual = "segment", achromatic = "all")
 #' seg.sic <- colspace(vis.sic, space = "segment")
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #'
 #' @references Endler, J. A. (1990) On the measurement and classification of
-#' color in studies of animal color patterns. Biological Journal of the Linnean
-#' Society, 41, 315-352.
+#' colour in studies of animal colour patterns. Biological Journal of the
+#' Linnean Society, 41, 315-352.
 
 segspace <- function(vismodeldata) {
   dat <- vismodeldata
