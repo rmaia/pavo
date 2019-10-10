@@ -64,8 +64,9 @@ catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
 
   # Category labels (todo: make this more flexible/robust?)
   if (labels) {
-    legend(x = c("topleft", "topright", "bottomleft", "bottomright"),
-           legend = c("p- y+", "p+ y+", "p- y-", "p+ y-"),
-           bty = "n", cex = labels.cex)
+    legend(x = "topleft", legend = "p- y+", bty = "n", cex = labels.cex)
+    legend(x = "topright", legend = "p+ y+", bty = "n", cex = labels.cex)
+    legend(x = "bottomleft", legend = "p- y-", bty = "n", cex = labels.cex)
+    legend(x = "bottomright", legend = "p+ y-", bty = "n", cex = labels.cex)
   }
 }
