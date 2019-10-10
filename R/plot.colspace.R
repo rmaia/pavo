@@ -20,7 +20,6 @@
 #' @return A colourspace plot appropriate to the input data.
 #'
 #' @examples
-#' \dontrun{
 #' data(flowers)
 #' data(sicalis)
 #'
@@ -42,6 +41,7 @@
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
 #'
+#' \dontrun{
 #' # Tetrahedron (interactive)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
