@@ -8,15 +8,16 @@ aggspec(rspecdata, by = NULL, FUN = mean, trim = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range, named 'wl', and spectra data in
-remaining columns.}
+contains a column containing a wavelength range, named 'wl', and spectra
+data in remaining columns.}
 
-\item{by}{(required) either a single value specifying the range of spectra within
-the data frame to be combined (for example, \code{by} = 3 indicates the function
-will be applied to groups of 3 consecutive columns in the spectra data frame);
-a vector containing identifications for the columns in the spectra data frame
-(in which case the function will be applied to each group of spectra sharing the
-same identification); or a list of vectors, e.g., \code{by = list(sex, species)}.}
+\item{by}{(required) either a single value specifying the range of spectra
+within the data frame to be combined (for example, \code{by} = 3 indicates the
+function will be applied to groups of 3 consecutive columns in the spectra
+data frame); a vector containing identifications for the columns in the
+spectra data frame (in which case the function will be applied to each
+group of spectra sharing the same identification); or a list of vectors,
+e.g., \code{by = list(sex, species)}.}
 
 \item{FUN}{the function to be applied to the groups of spectra. (defaults to \code{\link[=mean]{mean()}})}
 

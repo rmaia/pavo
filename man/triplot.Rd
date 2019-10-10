@@ -9,18 +9,20 @@ triplot(tridata, labels = TRUE, achro = TRUE, achrocol = "grey",
   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...)
 }
 \arguments{
-\item{tridata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=trispace]{trispace()}} function, containing values for the 'x' and 'y' coordinates
-as columns (labeled as such).}
+\item{tridata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=trispace]{trispace()}} function, containing values for the 'x' and
+'y' coordinates as columns (labeled as such).}
 
 \item{labels}{logical. Should the name of each cone be printed next to the
 corresponding vertex?}
 
 \item{achro}{should a point be plotted at the origin (defaults to \code{TRUE})?}
 
-\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to \code{'grey'}).}
+\item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to
+\code{'grey'}).}
 
-\item{achrosize}{size of the point at the origin when \code{achro = TRUE} (defaults to \code{0.8}).}
+\item{achrosize}{size of the point at the origin when \code{achro = TRUE}
+(defaults to \code{0.8}).}
 
 \item{labels.cex}{size of the arrow labels.}
 
@@ -41,6 +43,7 @@ data(flowers)
 vis.flowers <- vismodel(flowers, visual = "apis")
 tri.flowers <- colspace(vis.flowers, space = "tri")
 plot(tri.flowers)
+
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
