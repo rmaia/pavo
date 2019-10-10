@@ -62,7 +62,10 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
 
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
-    text("S", x = -0.76, y = 0, xpd = TRUE, cex = labels.cex)
-    text("L", x = 0.76, y = 0, xpd = TRUE, cex = labels.cex)
+    text(vert,
+         labels = c("S", "L"),
+         pos = c(2, 4),
+         xpd = TRUE,
+         cex = labels.cex)
   }
 }

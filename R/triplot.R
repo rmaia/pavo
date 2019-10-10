@@ -90,8 +90,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
 
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
-    text("M", x = -0.76, y = -0.39, xpd = TRUE, cex = labels.cex)
-    text("S", x = 0, y = 0.88, xpd = TRUE, cex = labels.cex)
-    text("L", x = 0.76, y = -0.39, xpd = TRUE, cex = labels.cex)
+    text(vert,
+         labels = c("S", "M", "L"),
+         pos = c(3, 2, 4),
+         xpd = TRUE,
+         cex = labels.cex)
   }
 }

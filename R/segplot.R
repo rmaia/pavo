@@ -89,10 +89,12 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   do.call(points, arg)
 
   # Category labels (todo: make this more flexible/robust?)
-  if (labels == TRUE) {
-    text(x = 0, y = 1.05, labels = "S4", cex = lab.cex)
-    text(x = 0, y = -1.05, labels = "S2", cex = lab.cex)
-    text(x = 1.05, y = 0, labels = "S3", cex = lab.cex)
-    text(x = -1.05, y = 0, labels = "S1", cex = lab.cex)
+  if (labels) {
+    text(x      = segX,
+         y      = segY,
+         labels = c("S1", "S2", "S3", "S4"),
+         pos    = c(2, 1, 4, 3),
+         xpd    = TRUE,
+         cex    = lab.cex)
   }
 }
