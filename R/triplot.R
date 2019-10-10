@@ -73,9 +73,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   do.call(plot, c(arg, type = "n"))
 
   # Add lines
-  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
-  segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
-  segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  polygon(vert, lwd = out.lwd, lty = out.lty, border = out.lcol)
 
   # Origin
   if (isTRUE(achro)) {

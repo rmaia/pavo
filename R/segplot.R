@@ -75,13 +75,11 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 
   # Segment edge coordinates
-  segX <- c(0, 1, 0, -1, 0)
-  segY <- c(1, 0, -1, 0, 1)
+  segX <- c(-1,  0, 1, 0)
+  segY <- c( 0, -1, 0, 1)
 
-  # Segplot outline
-  for (x in seq_along(segX)) {
-    segments(segX[x], segY[x], segX[x + 1], segY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
-  }
+  # Segplot outline1
+  polygon(segX, segY, lwd = out.lwd, border = out.lcol, lty = out.lty)
 
   # Remove plot-specific args, add points after the stuff is drawn
   arg[c(
