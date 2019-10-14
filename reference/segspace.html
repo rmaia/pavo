@@ -159,27 +159,28 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>vismodeldata</th>
-      <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
-with columns named 'S1', 'S2', 'S3', 'S4', and, optionally, 'lum', representing a generic
-'tetrachromatic' viewer).</p></td>
+      <td><p>(required) quantum catch color data. Can be either the
+result from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
+data frame with columns named 'S1', 'S2', 'S3', 'S4', and, optionally,
+'lum', representing a generic 'tetrachromatic' viewer).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>A data frame of class <code><a href='colspace.html'>colspace</a></code> consisting of the following columns:</p><ul>
-<li><p><code>S1</code>, <code>S2</code>, <code>S3</code>, <code>S4</code>: the relative reflectance at each
-of the four segments.</p></li>
+<li><p><code>S1</code>, <code>S2</code>, <code>S3</code>, <code>S4</code>: the relative reflectance at each of the four
+segments.</p></li>
 <li><p><code>LM</code>, <code>MS</code>: segment scores</p></li>
-<li><p><code>C</code>, <code>H</code>, <code>B</code>: 'chroma', 'hue' (degrees), and 'brightness' in the segment classification space</p></li>
+<li><p><code>C</code>, <code>H</code>, <code>B</code>: 'chroma', 'hue' (degrees), and 'brightness' in the segment
+classification space</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
-Society, 41, 315-352.</p>
+colour in studies of animal colour patterns. Biological Journal of the
+Linnean Society, 41, 315-352.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)

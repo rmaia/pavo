@@ -161,8 +161,8 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>segdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
-or <code><a href='segspace.html'>segspace()</a></code> function, containing values for 'LM' and 'MS'
+      <td><p>(required) a data frame, possibly a result from the
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='segspace.html'>segspace()</a></code> function, containing values for 'LM' and 'MS'
 as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -172,7 +172,8 @@ corresponding vertex?</p></td>
     </tr>
     <tr>
       <th>tick.loc</th>
-      <td><p>a numeric vector specifying the location of tick marks on x &amp; y axes.</p></td>
+      <td><p>a numeric vector specifying the location of tick marks on x &amp;
+y axes.</p></td>
     </tr>
     <tr>
       <th>margins</th>
@@ -192,13 +193,14 @@ corresponding vertex?</p></td>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Endler, J. A. (1990) On the measurement and classification of
-color in studies of animal color patterns. Biological Journal of the Linnean
-Society, 41, 315-352.</p>
+colour in studies of animal colour patterns. Biological Journal of the
+Linnean Society, 41, 315-352.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"segment"</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: segment analysis chosen, overriding incompatible parameters.</span></div><div class='input'><span class='no'>seg.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"segment"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>seg.flowers</span>)</div><div class='img'><img src='segplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>seg.flowers</span>)</div><div class='img'><img src='segplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

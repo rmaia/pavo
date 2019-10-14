@@ -44,7 +44,8 @@
   
 
 <meta property="og:title" content="Plot the colour opponent coding diagram — cocplot" />
-<meta property="og:description" content="Produces a plot based on the colour opponent coding diagram of Backhaus (1991)." />
+<meta property="og:description" content="Produces a plot based on the colour opponent coding diagram of Backhaus
+(1991)." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -149,7 +150,8 @@
     </div>
 
     <div class="ref-description">
-    <p>Produces a plot based on the colour opponent coding diagram of Backhaus (1991).</p>
+    <p>Produces a plot based on the colour opponent coding diagram of Backhaus
+(1991).</p>
     </div>
 
     <pre class="usage"><span class='fu'>cocplot</span>(<span class='no'>cocdata</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='kw'>tick.loc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>12</span>,
@@ -161,9 +163,9 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>cocdata</th>
-      <td><p>(required) a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
-or <code><a href='categorical.html'>categorical()</a></code> function, containing values for 'x' and 'y' coordinates
-as columns (labeled as such).</p></td>
+      <td><p>(required) a data frame, possibly a result from the
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='categorical.html'>categorical()</a></code> function, containing values for 'x' and 'y'
+coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>labels</th>
@@ -176,7 +178,8 @@ corresponding vertex?</p></td>
     </tr>
     <tr>
       <th>tick.loc</th>
-      <td><p>a numeric vector specifying the location of tick marks on x &amp; y axes.</p></td>
+      <td><p>a numeric vector specifying the location of tick marks on x &amp;
+y axes.</p></td>
     </tr>
     <tr>
       <th>achro</th>
@@ -184,11 +187,13 @@ corresponding vertex?</p></td>
     </tr>
     <tr>
       <th>achrosize</th>
-      <td><p>size of the point at the origin when <code>achro = TRUE</code> (defaults to <code>0.8</code>).</p></td>
+      <td><p>size of the point at the origin when <code>achro = TRUE</code>
+(defaults to <code>0.8</code>).</p></td>
     </tr>
     <tr>
       <th>achrocol</th>
-      <td><p>color of the point at the origin <code>achro = TRUE</code> (defaults to <code>'grey'</code>).</p></td>
+      <td><p>color of the point at the origin <code>achro = TRUE</code> (defaults to
+<code>'grey'</code>).</p></td>
     </tr>
     <tr>
       <th>margins</th>
@@ -214,7 +219,8 @@ of the honeybee. Vision Research, 31, 1381-1397.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"coc"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>coc.flowers</span>)</div><div class='img'><img src='cocplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>coc.flowers</span>)</div><div class='img'><img src='cocplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

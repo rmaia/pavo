@@ -44,8 +44,8 @@
   
 
 <meta property="og:title" content="Plot aggregated reflectance spectra — aggplot" />
-<meta property="og:description" content="Combines and plots spectra (by taking the average and the standard deviation, for example)
-according to an index or a vector of identities." />
+<meta property="og:description" content="Combines and plots spectra (by taking the average and the standard deviation,
+for example) according to an index or a vector of identities." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -150,8 +150,8 @@ according to an index or a vector of identities." />
     </div>
 
     <div class="ref-description">
-    <p>Combines and plots spectra (by taking the average and the standard deviation, for example)
-according to an index or a vector of identities.</p>
+    <p>Combines and plots spectra (by taking the average and the standard deviation,
+for example) according to an index or a vector of identities.</p>
     </div>
 
     <pre class="usage"><span class='fu'>aggplot</span>(<span class='no'>rspecdata</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>FUN.center</span> <span class='kw'>=</span> <span class='no'>mean</span>, <span class='kw'>FUN.error</span> <span class='kw'>=</span> <span class='no'>sd</span>,
@@ -163,27 +163,28 @@ according to an index or a vector of identities.</p>
     <tr>
       <th>rspecdata</th>
       <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
-contains a column containing a wavelength range, named 'wl', and spectra data in
-remaining columns.</p></td>
+contains a column containing a wavelength range, named 'wl', and spectra
+data in remaining columns.</p></td>
     </tr>
     <tr>
       <th>by</th>
-      <td><p>(required) either a single value specifying the range of spectra within
-the data frame to be combined (for example, <code>by</code> = 3 indicates the function
-will be applied to groups of 3 consecutive columns in the spectra data frame);
-a vector containing identifications for the columns in the spectra data frame
-(in which case the function will be applied to each group of spectra sharing the
-same identification); or a list of vectors, e.g., <code>by = list(sex, species)</code>.</p></td>
+      <td><p>(required) either a single value specifying the range of spectra
+within the data frame to be combined (for example, <code>by</code> = 3 indicates the
+function will be applied to groups of 3 consecutive columns in the spectra
+data frame); a vector containing identifications for the columns in the
+spectra data frame (in which case the function will be applied to each
+group of spectra sharing the same identification); or a list of vectors,
+e.g., <code>by = list(sex, species)</code>.</p></td>
     </tr>
     <tr>
       <th>FUN.center</th>
-      <td><p>the function to be applied to the groups of spectra, calculating a
-measure of central tendency (defaults to <code><a href='https://rdrr.io/r/base/mean.html'>base::mean()</a></code>).</p></td>
+      <td><p>the function to be applied to the groups of spectra,
+calculating a measure of central tendency (defaults to <code><a href='https://rdrr.io/r/base/mean.html'>base::mean()</a></code>).</p></td>
     </tr>
     <tr>
       <th>FUN.error</th>
-      <td><p>the function to be applied to the groups of spectra, calculating a
-measure of variation (defaults to <code><a href='https://rdrr.io/r/stats/sd.html'>stats::sd()</a></code>).</p></td>
+      <td><p>the function to be applied to the groups of spectra,
+calculating a measure of variation (defaults to <code><a href='https://rdrr.io/r/stats/sd.html'>stats::sd()</a></code>).</p></td>
     </tr>
     <tr>
       <th>lcol</th>
@@ -224,7 +225,8 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 <span class='no'>bysic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"^ind[0-9]."</span>, <span class='st'>""</span>, <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>sicalis</span>)[-<span class='fl'>1</span>])
 
 <span class='co'># Plot using various error functions and options</span>
-<span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>)</div><div class='img'><img src='aggplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>FUN.error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.0275</span>, <span class='fl'>0.975</span>)))</div><div class='img'><img src='aggplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>shadecol</span> <span class='kw'>=</span> <span class='fu'><a href='spec2rgb.html'>spec2rgb</a></span>(<span class='no'>sicalis</span>), <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='aggplot-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>FUN.error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>x</span>) / <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>)))</div><div class='img'><img src='aggplot-4.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>)</div><div class='img'><img src='aggplot-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>FUN.error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/quantile.html'>quantile</a></span>(<span class='no'>x</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.0275</span>, <span class='fl'>0.975</span>)))</div><div class='img'><img src='aggplot-2.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>shadecol</span> <span class='kw'>=</span> <span class='fu'><a href='spec2rgb.html'>spec2rgb</a></span>(<span class='no'>sicalis</span>), <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='aggplot-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'>aggplot</span>(<span class='no'>sicalis</span>, <span class='no'>bysic</span>, <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>FUN.error</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>x</span>) <span class='fu'><a href='https://rdrr.io/r/stats/sd.html'>sd</a></span>(<span class='no'>x</span>) / <span class='fu'><a href='https://rdrr.io/r/base/MathFun.html'>sqrt</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/length.html'>length</a></span>(<span class='no'>x</span>)))</div><div class='img'><img src='aggplot-4.png' alt='' width='700' height='433' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

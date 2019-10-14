@@ -162,17 +162,18 @@ an index or a vector of identities.</p>
     <tr>
       <th>rspecdata</th>
       <td><p>(required) a data frame, possibly of class <code>rspec</code>, which
-contains a column containing a wavelength range, named 'wl', and spectra data in
-remaining columns.</p></td>
+contains a column containing a wavelength range, named 'wl', and spectra
+data in remaining columns.</p></td>
     </tr>
     <tr>
       <th>by</th>
-      <td><p>(required) either a single value specifying the range of spectra within
-the data frame to be combined (for example, <code>by</code> = 3 indicates the function
-will be applied to groups of 3 consecutive columns in the spectra data frame);
-a vector containing identifications for the columns in the spectra data frame
-(in which case the function will be applied to each group of spectra sharing the
-same identification); or a list of vectors, e.g., <code>by = list(sex, species)</code>.</p></td>
+      <td><p>(required) either a single value specifying the range of spectra
+within the data frame to be combined (for example, <code>by</code> = 3 indicates the
+function will be applied to groups of 3 consecutive columns in the spectra
+data frame); a vector containing identifications for the columns in the
+spectra data frame (in which case the function will be applied to each
+group of spectra sharing the same identification); or a list of vectors,
+e.g., <code>by = list(sex, species)</code>.</p></td>
     </tr>
     <tr>
       <th>FUN</th>
