@@ -9,8 +9,8 @@ plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range, named 'wl', and spectra data in
-remaining columns.}
+contains a column containing a wavelength range, named 'wl', and spectra
+data in remaining columns.}
 
 \item{minsmooth}{the minimum f value of the loess function to visualize (defaults to \code{0.05}).}
 

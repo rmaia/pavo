@@ -2,19 +2,21 @@
 #'
 #' Produces a Maxwell triangle plot.
 #'
-#' @param tridata (required) a data frame, possibly a result from the [colspace()]
-#'  or [trispace()] function, containing values for the 'x' and 'y' coordinates
-#'  as columns (labeled as such).
+#' @param tridata (required) a data frame, possibly a result from the
+#'   [colspace()] or [trispace()] function, containing values for the 'x' and
+#'   'y' coordinates as columns (labeled as such).
 #' @param achro should a point be plotted at the origin (defaults to `TRUE`)?
 #' @param labels logical. Should the name of each cone be printed next to the
-#' corresponding vertex?
+#'   corresponding vertex?
 #' @param labels.cex  size of the arrow labels.
-#' @param achrosize size of the point at the origin when `achro = TRUE` (defaults to `0.8`).
-#' @param achrocol color of the point at the origin `achro = TRUE` (defaults to `'grey'`).
+#' @param achrosize size of the point at the origin when `achro = TRUE`
+#'   (defaults to `0.8`).
+#' @param achrocol color of the point at the origin `achro = TRUE` (defaults to
+#'   `'grey'`).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the plot outline.
 #' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
-#' (defaults to `TRUE`).
+#'   (defaults to `TRUE`).
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -22,6 +24,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' plot(tri.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -70,9 +73,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   do.call(plot, c(arg, type = "n"))
 
   # Add lines
-  segments(vert$x[1], vert$y[1], vert$x[2], vert$y[2], lwd = out.lwd, lty = out.lty, col = out.lcol)
-  segments(vert$x[1], vert$y[1], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
-  segments(vert$x[2], vert$y[2], vert$x[3], vert$y[3], lwd = out.lwd, lty = out.lty, col = out.lcol)
+  polygon(vert, lwd = out.lwd, lty = out.lty, border = out.lcol)
 
   # Origin
   if (isTRUE(achro)) {
@@ -89,8 +90,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
 
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
-    text("M", x = -0.76, y = -0.39, xpd = TRUE, cex = labels.cex)
-    text("S", x = 0, y = 0.88, xpd = TRUE, cex = labels.cex)
-    text("L", x = 0.76, y = -0.39, xpd = TRUE, cex = labels.cex)
+    text(vert,
+         labels = c("S", "M", "L"),
+         pos = c(3, 2, 4),
+         xpd = TRUE,
+         cex = labels.cex)
   }
 }

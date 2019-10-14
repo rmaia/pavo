@@ -15,8 +15,8 @@ vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit",
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
-contains a column containing a wavelength range, named 'wl', and spectra data in
-remaining columns.}
+contains a column containing a wavelength range, named 'wl', and spectra
+data in remaining columns.}
 
 \item{visual}{the visual system to be used. Options are:
 \itemize{

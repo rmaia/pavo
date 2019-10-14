@@ -7,9 +7,9 @@
 catplot(catdata, labels = TRUE, labels.cex = 0.9, ...)
 }
 \arguments{
-\item{catdata}{(required) a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=categorical]{categorical()}} function, containing values for 'x' and 'y' coordinates
-as columns (labeled as such).}
+\item{catdata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=categorical]{categorical()}} function, containing values for 'x' and 'y'
+coordinates as columns (labeled as such).}
 
 \item{labels}{plot category labels inside? Defaults to \code{TRUE}.}
 
@@ -25,6 +25,7 @@ data(flowers)
 vis.flowers <- vismodel(flowers, qcatch = "Qi", visual = "musca", achro = "none", relative = TRUE)
 cat.flowers <- colspace(vis.flowers, space = "categorical")
 plot(cat.flowers)
+
 }
 \references{
 Troje N. (1993). Spectral categories in the learning behaviour

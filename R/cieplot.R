@@ -115,7 +115,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     }
 
     if (mono == TRUE) {
-      polygon(monoy ~ monox, border = out.lcol, lty = out.lty, density = out.lwd)
+      polygon(monoy ~ monox, border = out.lcol, lty = out.lty, lwd = out.lwd)
     }
 
     # remove plot-specific args, add points after the stuff is drawn

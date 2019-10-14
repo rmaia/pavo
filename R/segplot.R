@@ -2,9 +2,9 @@
 #'
 #' Produces a plot based on Endler's (1990) segment analysis.
 #'
-#' @param segdata (required) a data frame, possibly a result from the [colspace()]
-#' or [segspace()] function, containing values for 'LM' and 'MS'
-#' as columns (labeled as such).
+#' @param segdata (required) a data frame, possibly a result from the
+#'   [colspace()] or [segspace()] function, containing values for 'LM' and 'MS'
+#'   as columns (labeled as such).
 #' @inheritParams cocplot
 #'
 #' @examples
@@ -12,6 +12,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "segment", achromatic = "all")
 #' seg.flowers <- colspace(vis.flowers, space = "segment")
 #' plot(seg.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -74,13 +75,11 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 
   # Segment edge coordinates
-  segX <- c(0, 1, 0, -1, 0)
-  segY <- c(1, 0, -1, 0, 1)
+  segX <- c(-1,  0, 1, 0)
+  segY <- c( 0, -1, 0, 1)
 
-  # Segplot outline
-  for (x in seq_along(segX)) {
-    segments(segX[x], segY[x], segX[x + 1], segY[x + 1], lwd = out.lwd, col = out.lcol, lty = out.lty)
-  }
+  # Segplot outline1
+  polygon(segX, segY, lwd = out.lwd, border = out.lcol, lty = out.lty)
 
   # Remove plot-specific args, add points after the stuff is drawn
   arg[c(
@@ -90,10 +89,12 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   do.call(points, arg)
 
   # Category labels (todo: make this more flexible/robust?)
-  if (labels == TRUE) {
-    text(x = 0, y = 1.05, labels = "S4", cex = lab.cex)
-    text(x = 0, y = -1.05, labels = "S2", cex = lab.cex)
-    text(x = 1.05, y = 0, labels = "S3", cex = lab.cex)
-    text(x = -1.05, y = 0, labels = "S1", cex = lab.cex)
+  if (labels) {
+    text(x      = segX,
+         y      = segY,
+         labels = c("S1", "S2", "S3", "S4"),
+         pos    = c(2, 1, 4, 3),
+         xpd    = TRUE,
+         cex    = lab.cex)
   }
 }

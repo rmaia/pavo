@@ -1,13 +1,13 @@
 #' Plot the colour opponent coding diagram
 #'
-#' Produces a plot based on the colour opponent coding diagram of Backhaus (1991).
+#' Produces a plot based on the colour opponent coding diagram of Backhaus
+#' (1991).
 #'
-# #' @usage plot(cocdata, ...)
-#'
-#' @param cocdata (required) a data frame, possibly a result from the [colspace()]
-#' or [categorical()] function, containing values for 'x' and 'y' coordinates
-#' as columns (labeled as such).
-#' @param tick.loc a numeric vector specifying the location of tick marks on x & y axes.
+#' @param cocdata (required) a data frame, possibly a result from the
+#'   [colspace()] or [categorical()] function, containing values for 'x' and 'y'
+#'   coordinates as columns (labeled as such).
+#' @param tick.loc a numeric vector specifying the location of tick marks on x &
+#'   y axes.
 #' @inheritParams triplot
 #'
 #' @examples
@@ -15,6 +15,7 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
 #' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' plot(coc.flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -40,10 +41,10 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
     arg$pch <- 19
   }
   if (is.null(arg$xlim)) {
-    arg$xlim <- c(-12, 12)
+    arg$xlim <- range(tick.loc)
   }
   if (is.null(arg$ylim)) {
-    arg$ylim <- c(-12, 12)
+    arg$ylim <- range(tick.loc)
   }
   if (is.null(arg$xlab)) {
     arg$xlab <- ""
@@ -78,8 +79,12 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   do.call(points, arg)
 
   # Category labels (todo: make this more flexible/robust?)
-  if (labels == TRUE) {
-    text("B", x = 0, y = 13.5, xpd = TRUE, cex = labels.cex)
-    text("A", x = 13.5, y = 0, xpd = TRUE, cex = labels.cex)
+  if (labels) {
+    text(x = c(max(tick.loc), 0),
+         y = c(0, max(tick.loc)),
+         labels = c("A", "B"),
+         pos = c(4, 3),
+         xpd = TRUE,
+         cex = labels.cex)
   }
 }
