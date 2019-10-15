@@ -32,7 +32,6 @@ A colourspace plot appropriate to the input data.
 Plots reflectance spectra in the appropriate colourspace.
 }
 \examples{
-\dontrun{
 data(flowers)
 data(sicalis)
 
@@ -54,6 +53,7 @@ vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
 
+\dontrun{
 # Tetrahedron (interactive)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")

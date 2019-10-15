@@ -20,7 +20,7 @@ options by providing a vector. Possibilities are:
 \item \code{"smooth"} applies LOESS smoothing to each spectrum using \code{\link[=loess.smooth]{loess.smooth()}}.
 Optimal smoothing parameter can be assessed by using \code{\link[=plotsmooth]{plotsmooth()}}.
 \item \code{"minimum"} subtracts the minimum from each individual spectra.
-\item \code{"maxmimum"} divides each spectrum by its maximum value.
+\item \code{"maximum"} divides each spectrum by its maximum value.
 \item \code{"sum"} divides each spectrum by summed values.
 \item \code{"bin"} bins each spectrum into the specified number of bins. \code{bins}
 argument must be set.
