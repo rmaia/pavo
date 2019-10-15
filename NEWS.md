@@ -40,7 +40,7 @@ means:
 * fixed a bug where `colspace(space = segment)` would return both a `B` and (redundant) `lum` column
 * fixed a bug where the rod sensitivity of _Canis familiaris_ was inaccessible through `vismodel()`
 * fixed an issue in `getspec()` where badly encoded characters in some spectral files would cause failure
-* fixed a bug where `coldist()` would attempt to estimate receptor-noise weigted distances rather than cie-distances for `cielch` model results
+* fixed a bug where `coldist()` would attempt to estimate receptor-noise weighted distances rather than cie-distances for `cielch` model results
 
 # pavo 2.1.0
 
