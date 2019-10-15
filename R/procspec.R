@@ -9,7 +9,7 @@
 #' * `"smooth"` applies LOESS smoothing to each spectrum using [loess.smooth()].
 #' Optimal smoothing parameter can be assessed by using [plotsmooth()].
 #' * `"minimum"` subtracts the minimum from each individual spectra.
-#' * `"maxmimum"` divides each spectrum by its maximum value.
+#' * `"maximum"` divides each spectrum by its maximum value.
 #' * `"sum"` divides each spectrum by summed values.
 #' * `"bin"` bins each spectrum into the specified number of bins. `bins`
 #' argument must be set.
