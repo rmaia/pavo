@@ -217,28 +217,25 @@ Linnean Society, 41, 315-352.</p>
     <div class='dont-index'><p><code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 
 <span class='co'># Dichromat</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"canis"</span>)
 <span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"di"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>di.flowers</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>di.flowers</span>)</div><div class='img'><img src='plot.colspace-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Colour hexagon</span>
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>,
   <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>"green"</span>
 )
 <span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>hex.flowers</span>, <span class='kw'>sectors</span> <span class='kw'>=</span> <span class='st'>"coarse"</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>hex.flowers</span>, <span class='kw'>sectors</span> <span class='kw'>=</span> <span class='st'>"coarse"</span>)</div><div class='img'><img src='plot.colspace-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Tetrahedron (static)</span>
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
 <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)
-
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='plot.colspace-3.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Tetrahedron (interactive)</span>
 <span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
 <span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
