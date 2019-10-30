@@ -312,23 +312,28 @@ Visual Neuroscience, 3, 119-125.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Dichromat (dingo)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"canis"</span>)
-<span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"di"</span>)
+<span class='no'>vis.dingo</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"canis"</span>)
+<span class='no'>di.dingo</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.dingo</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"di"</span>)
 
 <span class='co'># Trichromat (honeybee)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>)
-<span class='no'>tri.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tri"</span>)
+<span class='no'>vis.bee</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>)
+<span class='no'>tri.bee</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.bee</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tri"</span>)
 
 <span class='co'># Tetrachromat (blue tit)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"bluetit"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
+<span class='no'>vis.bluetit</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"bluetit"</span>)
+<span class='no'>tcs.bluetit</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.bluetit</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
 
 <span class='co'># Tetrachromat (starling), receptor-noise model</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='no'>vis.star</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"star"</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"bt.dc"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>dist.star</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.star</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div></pre>
+<span class='no'>dist.star</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.star</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
+<span class='co'># Custom trichromatic visual system</span>
+<span class='no'>custom</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='sensmodel.html'>sensmodel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span>))
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>custom</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>'wl'</span>, <span class='st'>'s'</span>, <span class='st'>'m'</span>, <span class='st'>'l'</span>)
+<span class='no'>vis.custom</span> <span class='kw'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='no'>custom</span>)
+<span class='no'>tri.custom</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.custom</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tri"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
