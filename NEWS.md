@@ -15,6 +15,7 @@ means:
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `summary.colspace()` no longer fails for tcs objects with only one row.
 * `vismodel()` now works for monochromats as well.
 * `procspec(opt = "bin")` no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.
 * `coc()` and `categorical()` spaces now return Weber luminance contrast by default when passed through `coldist()`, rather than nothing (as per the original publications). 
