@@ -14,4 +14,4 @@ test_that("summary.colspace", {
                                    "Not enough points")
   expect_output(sumtcs_sicalis$huedisp.m, NA)
   expect_output(sumtcs_sicalis$huedisp.v, NA)
-}
+})
