@@ -287,11 +287,11 @@ to:
 coldist(vismod1, subset = c('cardinal', 'jacana'))
 ```
 
-A bootstrap-based variant of `coldist()`, described in @Maia2018 as part of a more general analytical framework, is implemented via the function `bootcoldist()`. As the name suggests, `bootcoldist()` uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, which can be inspected for the inclusion of appropriate 'threshold', when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function's arguemnts are shared `coldist()` save for a few extra requirements. The `by` argument is used to specify a grouping variable that defines the groups to be compared, while `boot.n` and `alpha` control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the `by` argument is required.
+A bootstrap-based variant of `coldist()`, described in @Maia2018 as part of a more general analytical framework, is implemented via the function `bootcoldist()`. As the name suggests, `bootcoldist()` uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, which can be inspected for the inclusion of appropriate 'threshold', when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function's arguments are shared `coldist()` save for a few extra requirements. The `by` argument is used to specify a grouping variable that defines the groups to be compared, while `boot.n` and `alpha` control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the `by` argument is required.
 
 Here we run present a quick example that tests for colour differences across three body regions (breast, crown, and throat) of the finch _Sicalis citrina_, given seven measures of each region from different males.
 
-```{r, message=FALSE}
+```{r, message=FALSE, warning=FALSE}
 
 # Load the data
 data(sicalis)
