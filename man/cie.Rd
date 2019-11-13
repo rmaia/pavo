@@ -16,12 +16,12 @@ data frame with three columns representing trichromatic viewer).}
 \value{
 Object of class \code{\link{colspace}} containing:
 \itemize{
-\item \code{X, Y, Z}: Tristimulus values.
-\item \code{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
-\item \code{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} (redness-greenness) and
+\item \verb{X, Y, Z}: Tristimulus values.
+\item \verb{x, y, z}: Cartesian coordinates, when using \code{space = XYZ}.
+\item \verb{L, a, b}: Lightness, \code{L}, and colour-opponent \code{a} (redness-greenness) and
 \code{b} (yellowness-blueness) values, in a Cartesian coordinate space. Returned
 when using \code{space = LAB}.
-\item \code{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a} (redness-greenness)
+\item \verb{L, a, b, C, h}: Lightness, \code{L}, colour-opponent \code{a} (redness-greenness)
 and \code{b} (yellowness-blueness) values, as well as chroma \code{C} and hue-angle \code{h}
 (degrees), the latter of which are cylindrical representations of \code{a} and \code{b}
 from the CIELAB model. Returned when using \code{space = LCh}.

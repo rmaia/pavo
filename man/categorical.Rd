@@ -14,11 +14,11 @@ with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipter
 \value{
 Object of class \code{colspace} consisting of the following columns:
 \itemize{
-\item \code{R7p, R7y, R8p, R8y}: the quantum catch data used to
+\item \verb{R7p, R7y, R8p, R8y}: the quantum catch data used to
 calculate the remaining variables.
-\item \code{x, y}: cartesian coordinates in the categorical colour space.
+\item \verb{x, y}: cartesian coordinates in the categorical colour space.
 \item \code{r.vec}: the r vector (saturation, distance from the center).
-\item \code{category}: fly-colour category. One of \code{p-y-}, \code{p-y+}, \code{p+y-}, \code{p+y+}.
+\item \code{category}: fly-colour category. One of \verb{p-y-}, \verb{p-y+}, \verb{p+y-}, \verb{p+y+}.
 }
 }
 \description{

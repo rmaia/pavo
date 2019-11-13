@@ -4,8 +4,7 @@
 \alias{summary.rimg}
 \title{Image summary}
 \usage{
-\method{summary}{rimg}(object, plot = FALSE, axes = TRUE, col = NULL,
-  ...)
+\method{summary}{rimg}(object, plot = FALSE, axes = TRUE, col = NULL, ...)
 }
 \arguments{
 \item{object}{(required) an image of class \code{rimg}, or list thereof.}

@@ -4,9 +4,20 @@
 \alias{voloverlap}
 \title{Colour volume overlap}
 \usage{
-voloverlap(colsp1, colsp2, plot = FALSE, interactive = FALSE,
-  col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
-  montecarlo = NULL, nsamp = NULL, psize = NULL, lwd = 1, ...)
+voloverlap(
+  colsp1,
+  colsp2,
+  plot = FALSE,
+  interactive = FALSE,
+  col = c("blue", "red", "darkgrey"),
+  fill = FALSE,
+  new = TRUE,
+  montecarlo = NULL,
+  nsamp = NULL,
+  psize = NULL,
+  lwd = 1,
+  ...
+)
 }
 \arguments{
 \item{colsp1, colsp2}{(required) data frame, possibly a result from the \code{\link[=colspace]{colspace()}}

@@ -4,9 +4,18 @@
 \alias{jndplot}
 \title{Perceptually-corrected chromaticity diagrams}
 \usage{
-jndplot(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
-  arrow.labels = TRUE, arrow.col = "darkgrey", arrow.p = 1,
-  labels.cex = 1, margin = "recommended", square = TRUE, ...)
+jndplot(
+  x,
+  arrow = c("relative", "absolute", "none"),
+  achro = FALSE,
+  arrow.labels = TRUE,
+  arrow.col = "darkgrey",
+  arrow.p = 1,
+  labels.cex = 1,
+  margin = "recommended",
+  square = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{(required) the output from a \code{\link[=jnd2xyz]{jnd2xyz()}} call.}
@@ -54,7 +63,7 @@ scaled with the \code{arrow.p} argument.
 \item \code{"absolute"}: With this option, arrows will be made to reflect the visual
 system underlying the data. Arrows will be centered on the achromatic point
 in colourspace, and will have length equal to the distance to a
-monochromatic point (i.e. a colour that stimulates approximately 99.9% of
+monochromatic point (i.e. a colour that stimulates approximately 99.9\% of
 that receptor alone). Arrows can still be scaled using the \code{arrow.p}
 argument, in which case they cannot be interpreted as described.
 \item \code{"none"}: no arrows will be included.

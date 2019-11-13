@@ -4,9 +4,13 @@
 \alias{procspec}
 \title{Process spectra}
 \usage{
-procspec(rspecdata, opt = c("none", "smooth", "maximum", "minimum",
-  "bin", "sum", "center"), fixneg = c("none", "addmin", "zero"),
-  span = 0.25, bins = 20)
+procspec(
+  rspecdata,
+  opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center"),
+  fixneg = c("none", "addmin", "zero"),
+  span = 0.25,
+  bins = 20
+)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which

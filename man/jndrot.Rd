@@ -4,8 +4,14 @@
 \alias{jndrot}
 \title{Rotate Cartesian coordinates obtained from \code{\link[=jnd2xyz]{jnd2xyz()}}}
 \usage{
-jndrot(jnd2xyzres, center = c("mean", "achro"), ref1 = "l",
-  ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0, 1))
+jndrot(
+  jnd2xyzres,
+  center = c("mean", "achro"),
+  ref1 = "l",
+  ref2 = "u",
+  axis1 = c(1, 1, 0),
+  axis2 = c(0, 0, 1)
+)
 }
 \arguments{
 \item{jnd2xyzres}{(required) the output from a \code{\link[=jnd2xyz]{jnd2xyz()}} call.}

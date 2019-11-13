@@ -4,8 +4,7 @@
 \alias{vol}
 \title{Plot a tetrahedral colour space}
 \usage{
-vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
-  ...)
+vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the

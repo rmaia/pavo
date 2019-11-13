@@ -4,8 +4,13 @@
 \alias{getimg}
 \title{Import image data}
 \usage{
-getimg(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
-  max.size = 1, cores)
+getimg(
+  imgpath = getwd(),
+  subdir = FALSE,
+  subdir.names = FALSE,
+  max.size = 1,
+  cores
+)
 }
 \arguments{
 \item{imgpath}{(required) either the full file-path or URL to an image (including extension),

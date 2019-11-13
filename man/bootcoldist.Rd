@@ -4,8 +4,14 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95,
-  cores = getOption("mc.cores", 2L), ...)
+bootcoldist(
+  vismodeldata,
+  by,
+  boot.n = 1000,
+  alpha = 0.95,
+  cores = getOption("mc.cores", 2L),
+  ...
+)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.

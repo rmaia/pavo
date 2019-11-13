@@ -4,13 +4,16 @@
 \alias{sensdata}
 \title{Retrieve or plot in-built spectral sensitivity data}
 \usage{
-sensdata(visual = c("none", "all", "avg.uv", "avg.v", "bluetit",
-  "ctenophorus", "star", "pfowl", "apis", "canis", "cie2", "cie10",
-  "musca", "habronattus", "rhinecanthus"), achromatic = c("none", "all",
-  "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r"), illum = c("none",
-  "all", "bluesky", "D65", "forestshade"), trans = c("none", "all",
-  "bluetit", "blackbird"), bkg = c("none", "all", "green"),
-  plot = FALSE, ...)
+sensdata(
+  visual = c("none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
+    "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"),
+  achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r"),
+  illum = c("none", "all", "bluesky", "D65", "forestshade"),
+  trans = c("none", "all", "bluetit", "blackbird"),
+  bkg = c("none", "all", "green"),
+  plot = FALSE,
+  ...
+)
 }
 \arguments{
 \item{visual}{visual systems. Options are:
