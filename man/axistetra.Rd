@@ -4,10 +4,19 @@
 \alias{axistetra}
 \title{Plot reference axes in a static tetrahedral colourspace}
 \usage{
-axistetra(x = 0, y = 1.3, size = 0.1, arrowhead = 0.05,
-  col = par("fg"), lty = par("lty"), lwd = par("lwd"),
-  label = TRUE, adj.label = list(x = c(0.003, 0), y = c(0.003, 0.003),
-  z = c(0, 0.003)), label.cex = 1, label.col = NULL)
+axistetra(
+  x = 0,
+  y = 1.3,
+  size = 0.1,
+  arrowhead = 0.05,
+  col = par("fg"),
+  lty = par("lty"),
+  lwd = par("lwd"),
+  label = TRUE,
+  adj.label = list(x = c(0.003, 0), y = c(0.003, 0.003), z = c(0, 0.003)),
+  label.cex = 1,
+  label.col = NULL
+)
 }
 \arguments{
 \item{x, y}{position of the legend relative to plot limits

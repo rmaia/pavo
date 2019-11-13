@@ -4,9 +4,18 @@
 \alias{segplot}
 \title{Plot the segment-analysis model}
 \usage{
-segplot(segdata, labels = TRUE, lab.cex = 0.9, out.lwd = 1,
-  out.lty = 1, out.lcol = "black", tick.loc = c(-1, -0.5, 0.5, 1),
-  margins = c(1, 1, 2, 2), square = TRUE, ...)
+segplot(
+  segdata,
+  labels = TRUE,
+  lab.cex = 0.9,
+  out.lwd = 1,
+  out.lty = 1,
+  out.lcol = "black",
+  tick.loc = c(-1, -0.5, 0.5, 1),
+  margins = c(1, 1, 2, 2),
+  square = TRUE,
+  ...
+)
 }
 \arguments{
 \item{segdata}{(required) a data frame, possibly a result from the

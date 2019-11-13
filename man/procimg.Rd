@@ -4,9 +4,19 @@
 \alias{procimg}
 \title{Process images}
 \usage{
-procimg(image, resize = NULL, rotate = NULL, scaledist = NULL,
-  outline = FALSE, reclass = NULL, smooth = FALSE, iterations = 1L,
-  col = "red", plotnew = FALSE, ...)
+procimg(
+  image,
+  resize = NULL,
+  rotate = NULL,
+  scaledist = NULL,
+  outline = FALSE,
+  reclass = NULL,
+  smooth = FALSE,
+  iterations = 1L,
+  col = "red",
+  plotnew = FALSE,
+  ...
+)
 }
 \arguments{
 \item{image}{(required) image data. Either a single image array, or a number of images
