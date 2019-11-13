@@ -187,7 +187,6 @@ is.rimg <- function(object) {
 #' contains a suite of useful image-processing capabilities.
 #'
 #' @param image an object of class `rimg`
-#' @inheritParams as.rimg
 #'
 #' @return an image of the specified class
 #'
