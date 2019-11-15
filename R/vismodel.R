@@ -418,6 +418,16 @@ vismodel <- function(rspecdata,
     fi = log(Qi),
     Ei = Qi / (Qi + 1)
   )
+  
+  # Negative qcatch check
+  if(any(res < 0)){
+    warning(
+      length(res[res < 0]),
+      " negative quantum-catch value(s) returned, which may be unreliable. ",
+      "Consider whether the illuminant is properly scaled, and/or the appropriate",
+      " form of quantum catch is being calculated."
+    )
+  }
 
   # Add NA lum column is lum not calculated
   if (achromatic2 == "none") {
