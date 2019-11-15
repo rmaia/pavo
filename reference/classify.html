@@ -152,9 +152,17 @@
     <p>Classify image pixels into discrete colour classes.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>classify</span>(<span class='no'>imgdat</span>, <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kMeans"</span>, <span class='st'>"kMedoids"</span>), <span class='kw'>kcols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>refID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>), <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>classify</span>(
+  <span class='no'>imgdat</span>,
+  <span class='kw'>method</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"kMeans"</span>, <span class='st'>"kMedoids"</span>),
+  <span class='kw'>kcols</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>refID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>),
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">

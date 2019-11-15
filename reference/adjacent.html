@@ -156,9 +156,17 @@ boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 contrast (Endler &amp; Mielke 2005).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>adjacent</span>(<span class='no'>classimg</span>, <span class='kw'>xpts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bkgID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"background"</span>, <span class='st'>"object"</span>),
-  <span class='kw'>coldists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hsl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>))</pre>
+    <pre class="usage"><span class='fu'>adjacent</span>(
+  <span class='no'>classimg</span>,
+  <span class='kw'>xpts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>bkgID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"background"</span>, <span class='st'>"object"</span>),
+  <span class='kw'>coldists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>hsl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
