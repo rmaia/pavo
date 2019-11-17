@@ -9,7 +9,7 @@ plotsmooth(
   minsmooth = 0.05,
   maxsmooth = 0.2,
   curves = 5,
-  specnum = 0,
+  specnum = "ALL",
   ask = TRUE
 )
 }
