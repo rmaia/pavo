@@ -2,22 +2,23 @@
 #'
 #' Plots reflectance spectra in different arrangements.
 #'
-#' @param x (required) a data frame, possibly an object of class `rspec`,
-#' with a column with wavelength data, named 'wl', and the remaining column containing
-#' spectra to plot.
-#' @param select specification of which spectra to plot. Can be a numeric vector or
-#' factor (e.g., `sex=='male'`)
+#' @param x (required) a data frame, possibly an object of class `rspec`, with a
+#'   column with wavelength data, named 'wl', and the remaining column
+#'   containing spectra to plot.
+#' @param select specification of which spectra to plot. Can be a numeric vector
+#'   or factor (e.g., `sex=="male"`)
 #' @param type what type of plot should be drawn. Possibilities are:
-#' * `overlay` (default) for plotting multiple spectra in a single panel with
-#' a common y-axis.
-#' * `stack` for plotting multiple spectra in a vertical arrangement.
-#' * `heatmap` for plotting reflectance values by wavelength and a third variable
-#' (`varying`).
-#' @param varying a numeric vector giving values for y-axis in `type = heatmap`.
-#' @param n number of bins with which to interpolate colors and `varying` for the
-#' heatplot.
-#' @param labels.stack a vector of labels for the stacked spectra when using `type = stack`.
-#' Defaults to the numeric column ID's.
+#'    * `overlay` (default) for plotting multiple spectra in a single panel with 
+#'      a common y-axis.
+#'    * `stack` for plotting multiple spectra in a vertical arrangement.
+#'    * `heatmap` for plotting reflectance values by wavelength and a third
+#'      variable (`varying`).
+#' @param varying a numeric vector giving values for y-axis in 
+#' `type = "heatmap"`.
+#' @param n number of bins with which to interpolate colors and `varying` for
+#'   the heatplot.
+#' @param labels.stack a vector of labels for the stacked spectra when using
+#'   `type = "stack"`. Defaults to the numeric column ID's.
 #' @param ... additional arguments passed to plot (or image for `"heatmap"`).
 #'
 #' @export

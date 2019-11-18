@@ -19,8 +19,8 @@ peakshape(
 contains a column containing a wavelength range, named 'wl', and spectra
 data in remaining columns.}
 
-\item{select}{specification of which spectra to plot. Can be a numeric vector or
-factor (e.g., \code{sex=='male'})}
+\item{select}{specification of which spectra to plot. Can be a numeric vector
+or factor (e.g., \code{sex=="male"})}
 
 \item{lim}{a vector specifying the wavelength range to analyze.}
 
