@@ -47,6 +47,10 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   } else {
     x <- isolate_wl(x[ , select, drop = FALSE], keep = "spec")
   }
+  
+  # This line is needed for later because cols and lty are dropped depending on
+  # select and if it remains NULL, everything is dropped.
+  select <- seq_along(x)
 
   arg <- list(...)
 
