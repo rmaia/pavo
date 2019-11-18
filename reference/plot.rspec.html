@@ -168,14 +168,14 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>,
-with a column with wavelength data, named 'wl', and the remaining column containing
-spectra to plot.</p></td>
+      <td><p>(required) a data frame, possibly an object of class <code>rspec</code>, with a
+column with wavelength data, named 'wl', and the remaining column
+containing spectra to plot.</p></td>
     </tr>
     <tr>
       <th>select</th>
-      <td><p>specification of which spectra to plot. Can be a numeric vector or
-factor (e.g., <code>sex=='male'</code>)</p></td>
+      <td><p>specification of which spectra to plot. Can be a numeric vector
+or factor (e.g., <code>sex=="male"</code>)</p></td>
     </tr>
     <tr>
       <th>type</th>
@@ -183,23 +183,24 @@ factor (e.g., <code>sex=='male'</code>)</p></td>
 <li><p><code>overlay</code> (default) for plotting multiple spectra in a single panel with
 a common y-axis.</p></li>
 <li><p><code>stack</code> for plotting multiple spectra in a vertical arrangement.</p></li>
-<li><p><code>heatmap</code> for plotting reflectance values by wavelength and a third variable
-(<code>varying</code>).</p></li>
+<li><p><code>heatmap</code> for plotting reflectance values by wavelength and a third
+variable (<code>varying</code>).</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>varying</th>
-      <td><p>a numeric vector giving values for y-axis in <code>type = heatmap</code>.</p></td>
+      <td><p>a numeric vector giving values for y-axis in
+<code>type = "heatmap"</code>.</p></td>
     </tr>
     <tr>
       <th>n</th>
-      <td><p>number of bins with which to interpolate colors and <code>varying</code> for the
-heatplot.</p></td>
+      <td><p>number of bins with which to interpolate colors and <code>varying</code> for
+the heatplot.</p></td>
     </tr>
     <tr>
       <th>labels.stack</th>
-      <td><p>a vector of labels for the stacked spectra when using <code>type = stack</code>.
-Defaults to the numeric column ID's.</p></td>
+      <td><p>a vector of labels for the stacked spectra when using
+<code>type = "stack"</code>. Defaults to the numeric column ID's.</p></td>
     </tr>
     <tr>
       <th>...</th>
