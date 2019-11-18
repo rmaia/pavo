@@ -88,13 +88,13 @@ plot.rspec <- function(x, select = NULL,
 
     Index <- approx(varying, n = n)$y
 
-    dat <- vapply(seq_len(nrow(x)), function(z) {
+    dat <- apply(x, 1, function(z) {
       approx(
         x = varying,
-        y = x[z, ],
+        y = z,
         n = n
       )$y
-    }, numeric(length(Index)))
+    })
 
     arg$y <- Index
     arg$z <- t(dat)
