@@ -8,18 +8,19 @@
 #' @param select specification of which spectra to plot. Can be a numeric vector
 #'   or factor (e.g., `sex=="male"`)
 #' @param type what type of plot should be drawn. Possibilities are:
-#'    * `overlay` (default) for plotting multiple spectra in a single panel with 
+#'    * `overlay` (default) for plotting multiple spectra in a single panel with
 #'      a common y-axis.
 #'    * `stack` for plotting multiple spectra in a vertical arrangement.
 #'    * `heatmap` for plotting reflectance values by wavelength and a third
 #'      variable (`varying`).
-#' @param varying a numeric vector giving values for y-axis in 
+#' @param varying a numeric vector giving values for y-axis in
 #' `type = "heatmap"`.
 #' @param n number of bins with which to interpolate colors and `varying` for
 #'   the heatplot.
 #' @param labels.stack a vector of labels for the stacked spectra when using
 #'   `type = "stack"`. Defaults to the numeric column ID's.
-#' @param ... additional arguments passed to plot (or image for `"heatmap"`).
+#' @param ... additional arguments passed to [plot()] (or [image()] for
+#'   `"heatmap"`).
 #'
 #' @export
 #'
@@ -28,6 +29,7 @@
 #' plot(teal, type = "overlay")
 #' plot(teal, type = "stack")
 #' plot(teal, type = "heatmap")
+#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -35,8 +37,10 @@
 
 # TODO: add argument for padding region between x in stack plot
 
-plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap"),
+plot.rspec <- function(x, select = NULL,
+                       type = c("overlay", "stack", "heatmap"),
                        varying = NULL, n = 100, labels.stack = NULL, ...) {
+
   type <- match.arg(type)
 
   # make wavelength vector
@@ -47,7 +51,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   } else {
     x <- isolate_wl(x[ , select, drop = FALSE], keep = "spec")
   }
-  
+
   # This line is needed for later because cols and lty are dropped depending on
   # select and if it remains NULL, everything is dropped.
   select <- seq_along(x)
@@ -96,6 +100,8 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     arg$z <- t(dat)
 
     do.call(image, arg)
+
+    return()
   }
 
   # coloring for overlay plot & others
