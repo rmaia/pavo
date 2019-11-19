@@ -86,7 +86,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
     yaxismax <- max(rspecdata2[, i]) + (curves-1)*5
 
-    plot(wl, rspecdata2[, i], cex = 0.1, ylim = c(0, yaxismax + 5))
+    plot(wl, rspecdata2[, i], cex = 0.1, ylim = c(0, yaxismax + 5), type = "l")
     legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
     title(titlenames[i])
 
