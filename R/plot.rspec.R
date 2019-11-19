@@ -54,7 +54,9 @@ plot.rspec <- function(x, select = NULL,
 
   # This line is needed for later because cols and lty are dropped depending on
   # select and if it remains NULL, everything is dropped.
-  select <- seq_along(x)
+  if (is.null(select)) {
+    select <- seq_along(x)
+  }
 
   arg <- list(...)
 
