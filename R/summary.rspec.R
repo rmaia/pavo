@@ -196,7 +196,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Red
   if (lambdamin <= 605 & lambdamax >= 700) {
-    Redchromamat <- object[which(wl == 605):which(wl == 700), , drop = FALSE] # red 605-700nm inclusive
+    Redchromamat <- object[wl >= 605 & wl <= 700, , drop = FALSE] # red 605-700nm inclusive
     Redchroma <- colSums(Redchromamat) / B1 # S1 red
     output.mat[, 9] <- Redchroma
   } else {
@@ -205,7 +205,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Yellow
   if (lambdamin <= 550 & lambdamax >= 625) {
-    Yellowchromamat <- object[which(wl == 550):which(wl == 625), , drop = FALSE] # yellow 550-625nm
+    Yellowchromamat <- object[wl >= 550 & wl <= 625, , drop = FALSE] # yellow 550-625nm
     Yellowchroma <- colSums(Yellowchromamat) / B1 # S1 yellow
     output.mat[, 8] <- Yellowchroma
   } else {
@@ -214,7 +214,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Green
   if (lambdamin <= 510 & lambdamax >= 605) {
-    Greenchromamat <- object[which(wl == 510):which(wl == 605), , drop = FALSE] # green 510-605nm inlusive
+    Greenchromamat <- object[wl >= 510 & wl <= 605, , drop = FALSE] # green 510-605nm inlusive
     Greenchroma <- colSums(Greenchromamat) / B1 # S1 green
     output.mat[, 7] <- Greenchroma
   } else {
@@ -223,7 +223,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Blue
   if (lambdamin <= 400 & lambdamax >= 510) {
-    Bluechromamat <- object[which(wl == 400):which(wl == 510), , drop = FALSE] # blue 400-510nm inclusive
+    Bluechromamat <- object[wl >= 400 & wl <= 510, , drop = FALSE] # blue 400-510nm inclusive
     Bluechroma <- colSums(Bluechromamat) / B1 # S1 blue
     output.mat[, 6] <- Bluechroma
   } else {
@@ -232,7 +232,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # UV
   if (lambdamin <= 400 & lambdamax >= 400) {
-    UVchromamat <- object[which(wl == lambdamin):which(wl == 400), , drop = FALSE]
+    UVchromamat <- object[wl >= lambdamin & wl >= 400, , drop = FALSE]
     UVchroma <- colSums(UVchromamat) / B1 # S1 UV
     output.mat [, 4] <- UVchroma
   } else {
@@ -245,7 +245,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Violet
   if (lambdamin <= 415 & lambdamax >= 415) {
-    Vchromamat <- object[which(wl == lambdamin):which(wl == 415), , drop = FALSE]
+    Vchromamat <- object[wl <= lambdamin & wl >= 415, , drop = FALSE]
     Vchroma <- colSums(Vchromamat) / B1 # S1 Violet
     output.mat[, 5] <- Vchroma
   } else {
@@ -259,10 +259,10 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
 
-  Q1 <- which(wl == segmts[1]):which(wl == segmts[2])
-  Q2 <- which(wl == segmts[2]):which(wl == segmts[3])
-  Q3 <- which(wl == segmts[3]):which(wl == segmts[4])
-  Q4 <- which(wl == segmts[4]):which(wl == segmts[5])
+  Q1 <- wl >= segmts[1] & wl <= segmts[2]
+  Q2 <- wl >= segmts[2] & wl <= segmts[3]
+  Q3 <- wl >= segmts[3] & wl <= segmts[4]
+  Q4 <- wl >= segmts[4] & wl <= segmts[5]
 
   S5R <- colSums(object[Q4, , drop = FALSE])
   S5Y <- colSums(object[Q3, , drop = FALSE])
