@@ -79,7 +79,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   }
 
   polygon_data <- rbind(upper,
-                        lower[rev(seq(nrow(lower))),])
+                        lower[rev(seq(nrow(lower))), , drop = FALSE])
 
 
   polygon_wl <- c(wl, rev(wl))
