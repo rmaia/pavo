@@ -57,7 +57,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     return(NULL)
   }
 
-  wlrange <- seq(lim[1], lim[2])
+  wlrange <- wl[wl >= lim[1] & wl <= lim[2]]
 
   rspecdata2 <- rspecdata[wl >= lim[1] & wl <= lim[2], , drop = FALSE]
 
