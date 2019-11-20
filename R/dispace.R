@@ -40,6 +40,7 @@ dispace <- function(vismodeldata) {
 
     if (attr(dat, "conenumb") > 2) {
       warning("vismodel input is not dichromatic, considering first two receptors only", call. = FALSE)
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(2)]
     }
 
     # check if relative
@@ -71,6 +72,7 @@ dispace <- function(vismodeldata) {
         dQuote("s"), ", and ", dQuote("l"), " receptors, respectively",
         call. = FALSE
       )
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(2)]
     }
 
     dat <- dat[, 1:2]
@@ -97,7 +99,9 @@ dispace <- function(vismodeldata) {
   }
 
   # coordinate
-  x <- (1 / sqrt(2)) * (l - s)
+  ref <- matrix(c(-1/sqrt(2), 1/sqrt(2)), nrow = 2, ncol = 1)
+
+  x <- bary2cart(ref, cbind(s, l))
 
   # colorimetrics?
   r.vec <- abs(x)
@@ -121,6 +125,14 @@ dispace <- function(vismodeldata) {
   attr(res, "data.visualsystem.chromatic") <- attr(vismodeldata, "data.visualsystem.chromatic")
   attr(res, "data.visualsystem.achromatic") <- attr(vismodeldata, "data.visualsystem.achromatic")
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
+
+  maxqcatches <- attr(vismodeldata, "data.maxqcatches")
+  if (!is.null(maxqcatches) && ncol(maxqcatches)==2) {
+    maxqcatches <- maxqcatches / rowSums(maxqcatches)
+    attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
+  } else {
+    attr(res, "data.maxgamut") <- NA
+  }
 
   res
 }

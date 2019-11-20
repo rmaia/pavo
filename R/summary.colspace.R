@@ -61,6 +61,21 @@ summary.colspace <- function(object, by = NULL, ...) {
     return(summary(as.data.frame(object)))
   }
 
+
+  if (!is.null(attr(object, "data.maxgamut"))) {
+    maxgamut <- attr(object, "data.maxgamut")
+    if (attr(object, "clrsp") == "dispace") {
+      maxvol <- max(maxgamut) - min(maxgamut)
+    } else {
+      maxvol <- tryCatch(
+        convhulln(attr(object, "data.maxgamut"), "FA")$vol,
+        error = function(e) NA
+      )
+    }
+  } else {
+    maxvol <- NA
+  }
+
   cat(
     "Colorspace & visual model options:\n",
     "* Colorspace:", attr(object, "clrsp"), "\n",
@@ -69,8 +84,12 @@ summary.colspace <- function(object, by = NULL, ...) {
     "* Visual system, achromatic:", attr(object, "visualsystem.achromatic"), "\n",
     "* Illuminant:", attr(object, "illuminant"), "\n",
     "* Background:", attr(object, "background"), "\n",
-    "* Relative:", attr(object, "relative"), "\n", "\n"
+    "* Relative:", attr(object, "relative"), "\n",
+    "* Max possible chromatic volume:", maxvol, "\n"
   )
+
+
+  cat("\n")
 
   if (attr(object, "clrsp") != "tcs") {
     return(summary.data.frame(object))
