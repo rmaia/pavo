@@ -364,6 +364,7 @@ vismodel <- function(rspecdata,
   Qi <- data.frame(
     crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
   )
+  maxQi <- as.matrix(S * illum) * B * K
 
   names(Qi) <- names(S)
 
@@ -416,6 +417,13 @@ vismodel <- function(rspecdata,
     Ei = Qi / (Qi + 1)
   )
 
+  # TODO: implement max gamut for other types of quantum catches
+  maxqcatches <- switch(qcatch,
+    Qi = maxQi,
+    fi = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi)),
+    Ei = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi))
+  )
+
   # Negative qcatch check
   if (any(res < 0)) {
     warning(
@@ -455,6 +463,7 @@ vismodel <- function(rspecdata,
   attr(res, "data.illuminant") <- illum
   attr(res, "data.background") <- bkg
   attr(res, "data.transmission") <- trans
+  attr(res, "data.maxqcatches") <- maxqcatches
 
   res
 }
