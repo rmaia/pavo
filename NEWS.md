@@ -15,7 +15,7 @@ means:
 
 ## MINOR FEATURES AND BUG FIXES
 
-* all `pavo` functions (excepted `vismodel()` and `spec2rgb()`) now works with
+* all `pavo` functions (excepted `vismodel()` and `spec2rgb()`) now work with
 sub-nm precision, for `rspec` objects with non-integer wavelengths.
 * `summary.colspace()` no longer fails for tcs objects with only one row.
 * `vismodel()` now works for monochromats as well.
