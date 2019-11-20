@@ -23,6 +23,8 @@
 #'
 #' @export
 #'
+#' @importFrom geometry bary2cart
+#'
 #' @keywords internal
 #'
 #' @references Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
@@ -47,6 +49,7 @@ trispace <- function(vismodeldata) {
 
     if (attr(dat, "conenumb") > 3) {
       warning("vismodel input is not trichromatic, considering first three receptors only", call. = FALSE)
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(3)]
     }
 
     # check if relative
@@ -79,6 +82,7 @@ trispace <- function(vismodeldata) {
         dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
         call. = FALSE
       )
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(3)]
     }
 
     dat <- dat[, seq_len(3)]
@@ -108,9 +112,14 @@ trispace <- function(vismodeldata) {
   }
 
   # cartesian coordinates
+  ref <- matrix(c(    0     ,  sqrt(2/3),
+                  -1/sqrt(2), -1/sqrt(6),
+                   1/sqrt(2), -1/sqrt(6)), nrow = 3, ncol = 2, byrow = TRUE)
 
-  x <- (1 / sqrt(2)) * (l - m)
-  y <- (sqrt(2) / sqrt(3)) * (s - ((l + m) / 2))
+  coords <- bary2cart(ref, cbind(s, m, l))
+
+  x <- coords[, 1]
+  y <- coords[, 2]
 
   # colorimetrics
   r.vec <- sqrt(x^2 + y^2)
@@ -135,6 +144,14 @@ trispace <- function(vismodeldata) {
   attr(res, "data.visualsystem.chromatic") <- attr(vismodeldata, "data.visualsystem.chromatic")
   attr(res, "data.visualsystem.achromatic") <- attr(vismodeldata, "data.visualsystem.achromatic")
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
+
+  maxqcatches <- attr(vismodeldata, "data.maxqcatches")
+  if (!is.null(maxqcatches) && ncol(maxqcatches)==3) {
+    maxqcatches <- maxqcatches / rowSums(maxqcatches)
+    attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
+  } else {
+    attr(res, "data.maxgamut") <- NA
+  }
 
   res
 }

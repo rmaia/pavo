@@ -30,6 +30,8 @@
 #'
 #' @export
 #'
+#' @importFrom geometry bary2cart
+#'
 #' @keywords internal
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
@@ -51,6 +53,7 @@ tcspace <- function(vismodeldata) {
 
     if (attr(dat, "conenumb") > 4) {
       warning("vismodel input is not tetrachromatic, considering first four receptors only", call. = FALSE)
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(4)]
     }
 
     # check if relative
@@ -80,6 +83,7 @@ tcspace <- function(vismodeldata) {
       } else {
         message("Input data is not a ", dQuote("vismodel"), " object and has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
       }
+      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(4)]
     }
 
     dat <- dat[, seq_len(4)]
@@ -110,11 +114,17 @@ tcspace <- function(vismodeldata) {
     l <- dat[, 4]
   }
 
+  ref <- matrix(c(0, 0, 3/4,
+                  -sqrt(6)/4, -sqrt(2)/4, -1/4,
+                  0, 1/sqrt(2), -1/4,
+                  sqrt(6)/4, -sqrt(2)/4, -1/4), nrow = 4, ncol = 3, byrow = TRUE)
   # cartesian coordinates
 
-  x <- ((1 - 2 * s - m - u) / 2) * sqrt(3 / 2)
-  y <- (-1 + 3 * m + u) / (2 * sqrt(2))
-  z <- u - (1 / 4)
+  coords <- bary2cart(ref, cbind(u, s, m, l))
+
+  x <- coords[, 1]
+  y <- coords[, 2]
+  z <- coords[, 3]
 
   # vertex cartesian coordinates & their spherical data
 
@@ -180,6 +190,14 @@ tcspace <- function(vismodeldata) {
   attr(res, "data.visualsystem.chromatic") <- attr(vismodeldata, "data.visualsystem.chromatic")
   attr(res, "data.visualsystem.achromatic") <- attr(vismodeldata, "data.visualsystem.achromatic")
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
+
+  maxqcatches <- attr(vismodeldata, "data.maxqcatches")
+  if (!is.null(maxqcatches) && ncol(maxqcatches)==4) {
+    maxqcatches <- maxqcatches / rowSums(maxqcatches)
+    attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
+  } else {
+    attr(res, "data.maxgamut") <- NA
+  }
 
   res
 }
