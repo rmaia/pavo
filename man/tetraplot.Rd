@@ -26,6 +26,7 @@ tetraplot(
   margin = c(0, 0, 0, 0),
   type = "p",
   labels = FALSE,
+  gamut = FALSE,
   ...
 )
 }
@@ -75,6 +76,10 @@ for lines from the point to the base of the tetrahedron.}
 
 \item{labels}{logical. Should the name of each cone be printed next to the
 corresponding vertex?}
+
+\item{gamut}{logical. Should the polygon showing the possible colours given
+visual system and illuminant used in the analysis (defaults to \code{FALSE}).
+This option currently only works when \code{qcatch = Qi}.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

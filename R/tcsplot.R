@@ -57,7 +57,7 @@
 tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
                     vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",
                     lwd = 1, lcol = "lightgrey", new = FALSE, hspin = FALSE,
-                    vspin = FALSE, floor = TRUE) {
+                    vspin = FALSE, floor = TRUE, gamut = FALSE) {
 
   # check if rgl is installed and loaded
   if (!requireNamespace("rgl", quietly = TRUE)) {
@@ -109,6 +109,15 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
     indices <- c(1, 2, 3, 4)
 
     rgl::wire3d(rgl::qmesh3d(vertices, indices), lit = FALSE)
+  }
+
+  if (gamut) {
+    maxgamut <- attr(tcsdata, "data.maxgamut")
+    colnames(maxgamut) <- c("x", "y", "z")
+    attr(maxgamut, "clrsp") <- "tcs"
+    tryCatch(tcsvol(maxgamut, grid = FALSE),
+             error = function(e) warning("Max gamut cannot be plotted.",
+                                         call. = FALSE))
   }
 
   if (hspin) {
