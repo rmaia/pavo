@@ -6,9 +6,6 @@ test_that("getspec", {
   avantes1 <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "ttt"))
   expect_is(avantes1, "rspec")
 
-  avantes2 <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "trt"))
-  expect_is(avantes2, "rspec")
-
   transmit <- suppressMessages(getspec(system.file("testdata", package = "pavo"), ext = "Transmission"))
   expect_is(transmit, "rspec")
 
@@ -47,10 +44,10 @@ test_that("getspec", {
   expect_length(csv, 3)
 
   ## Error handling
-  # should fail completely; ROH files only have scope data, which are not imported by getspec
-  expect_error(
+  # should fail; ROH files only have scope data, which are not imported by getspec
+  expect_warning(
     getspec(system.file("testdata", package = "pavo"), ext = "ROH"),
-    "Could not import spectra"
+    "File import failed"
   )
 
   # should partly succeed (1/2)
@@ -59,7 +56,7 @@ test_that("getspec", {
   expect_is(oceanview, "rspec")
 
   # should fail if ignore.case is set to FALSE and user don't use correct case
-  expect_error(
+  expect_warning(
     getspec(system.file("testdata", package = "pavo"), ext = "procspec", ignore.case = FALSE),
     "No files found."
   )

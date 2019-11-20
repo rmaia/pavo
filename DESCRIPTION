@@ -41,6 +41,7 @@ Depends:
 Imports:
     cluster,
     geometry(>= 0.4.0),
+    lightr(>= 1.0),
     magick,
     pbmcapply,
     plot3D,
@@ -55,7 +56,6 @@ Suggests:
     rgl,
     rmarkdown,
     testthat,
-    xml2
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
