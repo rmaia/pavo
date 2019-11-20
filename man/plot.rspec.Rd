@@ -40,7 +40,8 @@ the heatplot.}
 \item{labels.stack}{a vector of labels for the stacked spectra when using
 \code{type = "stack"}. Defaults to the numeric column ID's.}
 
-\item{...}{additional arguments passed to plot (or image for \code{"heatmap"}).}
+\item{...}{additional arguments passed to \code{\link[=plot]{plot()}} (or \code{\link[=image]{image()}} for
+\code{"heatmap"}).}
 }
 \description{
 Plots reflectance spectra in different arrangements.
@@ -50,6 +51,7 @@ data(teal)
 plot(teal, type = "overlay")
 plot(teal, type = "stack")
 plot(teal, type = "heatmap")
+
 }
 \seealso{
 \code{\link[=spec2rgb]{spec2rgb()}}, \code{\link[=image]{image()}}, \code{\link[=plot]{plot()}}
