@@ -17,6 +17,9 @@
 #' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
 #'   (defaults to `TRUE`).
+#' @param gamut logical. Should the polygon showing the possible colours given
+#'   visual system and illuminant used in the analysis (defaults to `FALSE`).
+#'   This option currently only works when `qcatch = Qi`.
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -35,7 +38,7 @@
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
-                    margins = c(1, 1, 2, 2), square = TRUE, ...) {
+                    margins = c(1, 1, 2, 2), square = TRUE, gamut = FALSE, ...) {
 
   oPar <- par("mar", "pty")
   on.exit(par(oPar))
@@ -77,6 +80,18 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
 
   # Add lines
   polygon(vert, lwd = out.lwd, lty = out.lty, border = out.lcol)
+
+  if (gamut) {
+    coords_mono <- attr(tridata, "data.maxgamut")
+    max_gamut <- tryCatch(
+      {
+        convhulln(coords_mono)
+        polygon(coords_mono[sort(c(max_gamut)), ],
+                col = "#55555555", border = NA)
+      },
+      error = function(e) warning("Max gamut cannot be plotted.", call. = FALSE)
+    )
+  }
 
   # Origin
   if (isTRUE(achro)) {

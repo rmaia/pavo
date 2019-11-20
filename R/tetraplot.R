@@ -64,7 +64,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       range = c(1, 2), r = 1e6, zoom = 1,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
-                      margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...) {
+                      margin = c(0, 0, 0, 0), type = "p", labels = FALSE, gamut = FALSE, ...) {
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
   }
@@ -400,7 +400,16 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     }
   }
 
-
   # Save plot info
   assign("last_plot.tetra", M, envir = .PlotTetraEnv)
+
+  if (gamut) {
+    maxgamut <- attr(tcsdata, "data.maxgamut")
+    colnames(maxgamut) <- c("x", "y", "z")
+    attr(maxgamut, "clrsp") <- "tcs"
+    tryCatch(vol(maxgamut, grid = FALSE),
+             error = function(e) warning("Max gamut cannot be plotted.",
+                                         call. = FALSE))
+
+  }
 }

@@ -20,7 +20,8 @@ tcsplot(
   new = FALSE,
   hspin = FALSE,
   vspin = FALSE,
-  floor = TRUE
+  floor = TRUE,
+  gamut = FALSE
 )
 
 tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
@@ -65,6 +66,10 @@ and 'z' coordinates as columns (labeled as such).}
 \item{vspin}{if \code{TRUE}, the graphic will spin vertically (around the 'x' axis)(defaults to \code{FALSE})}
 
 \item{floor}{if \code{TRUE}, a reference xy plane is plotted under the tetrahedron (defaults to \code{TRUE})}
+
+\item{gamut}{logical. Should the polygon showing the possible colours given
+visual system and illuminant used in the analysis (defaults to \code{FALSE}).
+This option currently only works when \code{qcatch = Qi}.}
 
 \item{grid.alpha}{transparency of the volume polygon grid lines}
 
