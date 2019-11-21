@@ -20,6 +20,7 @@
 nspace <- function(vismodeldata) {
   
   qcatches <- vismodeldata[, colnames(vismodeldata) != "lum"]
+  lum <- vismodeldata[, colnames(vismodeldata) == "lum"]
   ncones <-ncol(qcatches)
   
   # Get relative qcatches
@@ -29,7 +30,7 @@ nspace <- function(vismodeldata) {
   
   r.vec <- sqrt(rowSums(apply(coords, 2, function(x) x^2)))
   
-  return(data.frame(qcatches, coords, r.vec))
+  return(data.frame(qcatches, coords, r.vec, lum))
 }
 
 simplex <- function(n) {
