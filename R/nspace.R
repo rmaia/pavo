@@ -22,6 +22,7 @@ nspace <- function(vismodeldata) {
   qcatches <- vismodeldata[, colnames(vismodeldata) != "lum"]
   lum <- vismodeldata[, colnames(vismodeldata) == "lum"]
   ncones <-ncol(qcatches)
+  message("Detected ", ncones, " cones.")
   
   # Get relative qcatches
   qcatches <- qcatches / rowSums(qcatches)
