@@ -15,6 +15,7 @@ addons:
     packages:
     - libmagick++-dev
     - libglu1-mesa-dev
+    - pngquant
 before_script:
   - Rscript -e 'remotes::install_cran(c("covr", "spelling"))'
 after_success:
