@@ -22,6 +22,9 @@ nspace <- function(vismodeldata) {
   qcatches <- vismodeldata[, colnames(vismodeldata) != "lum"]
   ncones <-ncol(qcatches)
   
+  # Get relative qcatches
+  qcatches <- qcatches / rowSums(qcatches)
+  
   coords <- bary2cart(simplex(ncones), as.matrix(qcatches))
   
   r.vec <- sqrt(rowSums(apply(coords, 2, function(x) x^2)))
