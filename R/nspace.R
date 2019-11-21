@@ -34,5 +34,5 @@ nspace <- function(vismodeldata) {
 }
 
 simplex <- function(n) {
-  qr.Q(qr(matrix(1,nrow=n)),complete=T)[,-1]
+  qr.Q(qr(matrix(1, nrow = n)), complete = TRUE)[,-1]
 }
