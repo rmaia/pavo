@@ -80,7 +80,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
     aa <- vectornorm(coords[grep(paste0("jnd2xyzrrf.", ref1), rownames(coords)), ] -
       cent)
     bb <- vectornorm(axis1)
-    daabb <- sum(aa * bb)
+    daabb <- crossprod(aa, bb)
     ncaabb <- vectormag(vectorcross(aa, bb))
     GG <- rbind(
       c(daabb, -ncaabb, 0),
@@ -120,7 +120,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
       aa <- vectornorm(coords[grep(paste0("jnd2xyzrrf.", ref1), rownames(coords)), ] -
         cent)
       bb <- vectornorm(axis1)
-      daabb <- sum(aa * bb)
+      daabb <- crossprod(aa, bb)
       ncaabb <- vectormag(vectorcross(aa, bb))
       GG <- rbind(
         c(daabb, -ncaabb, 0),
@@ -154,7 +154,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
       aa <- vectornorm(res[grep(paste0("jnd2xyzrrf.", ref2), rownames(res)), ] -
         cent)
       bb <- vectornorm(axis2)
-      daabb <- sum(aa * bb)
+      daabb <- crossprod(aa, bb)
       ncaabb <- vectormag(vectorcross(aa, bb))
       GG <- rbind(
         c(daabb, -ncaabb, 0),
