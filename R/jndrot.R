@@ -96,7 +96,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
     RR <- FF %*% GG %*% solve(FF)
 
     res <- sweep(coords, 2, cent, "-")
-    res <- t(apply(res, 1, function(x) RR %*% x))
+    res <- tcrossprod(res, RR)
     # res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
 
     res <- res[, -dim(res)[2]]
@@ -136,7 +136,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
       RR <- FF %*% GG %*% solve(FF)
 
       res <- sweep(coords, 2, cent, "-")
-      res <- t(apply(res, 1, function(x) RR %*% x))
+      res <- tcrossprod(res, RR)
       # res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
     } else {
       res <- coords
@@ -170,7 +170,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
       RR <- FF %*% GG %*% solve(FF)
 
       res <- sweep(res, 2, cent, "-")
-      res <- t(apply(res, 1, function(x) RR %*% x))
+      res <- tcrossprod(res, RR)
       # res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
     }
 
