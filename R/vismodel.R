@@ -230,14 +230,14 @@ vismodel <- function(rspecdata,
 
     sens_wl <- wl
   } else if (visual2 == "user-defined") {
-    S <- visual[, names(visual) != "wl", drop = FALSE]
-    sens_wl <- visual[, "wl"]
+    S <- isolate_wl(visual, keep = "spec")
+    sens_wl <- isolate_wl(visual, keep = "wl")
     fullS <- visual
   } else {
     visual <- match.arg(visual)
     S <- sens[, grep(visual, names(sens))]
     names(S) <- gsub(paste0(visual, "."), "", names(S))
-    sens_wl <- sens[, "wl"]
+    sens_wl <- isolate_wl(sens, keep = "wl")
   }
 
   # Save cone numer
