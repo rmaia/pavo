@@ -97,7 +97,7 @@
 #' data(sicalis)
 #' vis.star <- vismodel(sicalis, visual = "star", achromatic = "bt.dc", relative = FALSE)
 #' dist.star <- coldist(vis.star, achromatic = TRUE)
-#' 
+#'
 #' # Custom trichromatic visual system
 #' custom <- sensmodel(c(330, 440, 550))
 #' names(custom) <- c('wl', 's', 'm', 'l')
@@ -409,7 +409,7 @@ vismodel <- function(rspecdata,
     fi = log(Qi),
     Ei = Qi / (Qi + 1)
   )
-  
+
   # Negative qcatch check
   if(any(res < 0)){
     warning(
