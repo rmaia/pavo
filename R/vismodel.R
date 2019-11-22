@@ -379,13 +379,9 @@ vismodel <- function(rspecdata,
     )
     lum <- colSums(y * L * illum)
     Qi <- data.frame(cbind(Qi, lum))
-  }
-
-  if (achromatic2 == "segment") {
+  } else if (achromatic2 == "segment") {
     Qi <- data.frame(cbind(Qi, B))
-  }
-
-  if (achromatic2 == "none") {
+  } else if (achromatic2 == "none") {
     L <- NULL
     lum <- NULL
   }
