@@ -241,10 +241,7 @@ vismodel <- function(rspecdata,
   }
 
   # Save cone numer
-  ifelse(identical(visual2, "segment"),
-    conenumb <- "seg",
-    conenumb <- dim(S)[2]
-  )
+  conenumb <- ifelse(identical(visual2, "segment"), "seg", dim(S)[2])
 
   # Check if wavelength range matches
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
