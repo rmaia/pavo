@@ -286,7 +286,7 @@ vismodel <- function(rspecdata,
   }
 
   if (tr2 != "ideal" & visual2 == "user-defined") {
-    if ("sensmod" %in% class(fullS)) {
+    if (inherits(fullS, "sensmod")) {
       if (attr(fullS, "om")) {
         warning(
           "The visual system being used appears to already incorporate ocular ",
