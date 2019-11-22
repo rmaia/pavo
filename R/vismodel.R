@@ -204,8 +204,8 @@ vismodel <- function(rspecdata,
   }
 
   if (visual2 == "segment") {
-    if (vonkries || !relative || !identical(achromatic2, "all") || identical(qcatch, "Qi") ||
-      !identical(bg2, "ideal") || !identical(tr2, "ideal") || identical(illum2, "ideal")) {
+    if (vonkries || !relative || !identical(achromatic2, "all") || !identical(qcatch, "Qi") ||
+      !identical(bg2, "ideal") || !identical(tr2, "ideal") || !identical(illum2, "ideal")) {
       vonkries <- FALSE
       relative <- TRUE
       achromatic2 <- "all"
