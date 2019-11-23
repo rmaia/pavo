@@ -31,7 +31,6 @@ Authors@R:
              role = "aut",
              email = "bittonp@uwindsor.ca",
              comment = c(ORCID = "0000-0001-5984-2331")))
-Maintainer: Rafael Maia <rm72@zips.uakron.edu>
 Description: A cohesive framework for parsing, analyzing and
     organizing colour from spectral data.
 License: GPL (>= 2)
