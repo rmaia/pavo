@@ -179,8 +179,9 @@ vismodel <- function(rspecdata,
     match.arg(bkg),
     error = function(e) "user-defined"
   )
-  if (is.null(bkg)) {
-    stop("chosen background is NULL")
+  if (is.null(bkg) & vonkries) {
+    stop("Chosen background is NULL. ",
+         "This argument is required with `vonkries = TRUE`.")
   }
   tr2 <- tryCatch(
     match.arg(trans),
