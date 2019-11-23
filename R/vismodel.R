@@ -187,7 +187,9 @@ vismodel <- function(rspecdata,
     error = function(e) "user-defined"
   )
   if (is.null(trans)) {
-    stop("chosen transmission is NULL")
+    stop("Chosen transmission is NULL. ",
+         "If you want to model a completely transparent medium or if this is ",
+         "already included in your `visual` argument, use `trans = 'ideal'`.")
   }
 
   qcatch <- match.arg(qcatch)
