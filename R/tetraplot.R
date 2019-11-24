@@ -86,16 +86,9 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   arg$col <- NULL
 
   # tetrahedron vertices
-  verts <- matrix(
-    c(
-      0, 0, 0.75,
-      (-0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25,
-      0, (1 / sqrt(2)), -0.25,
-      (0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25
-    ),
-    byrow = TRUE, nrow = 4,
-    dimnames = list(c("u", "s", "m", "l"), c("x", "y", "z"))
-  )
+  verts <- simplex(4)
+  colnames(verts) <- c("x", "y", "z")
+  rownames(verts) <- c("u", "s", "m", "l")
 
   # combinations of vertices to make facets
   sides <- verts[combn(seq_len(4), 2), ]
