@@ -27,7 +27,8 @@ test_that("Class assignment", {
 test_that("sensdata", {
   library(digest)
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata("all", "all"))))
-  expect_equal(digest::sha1(sensdata(illum = 'all', bkg = 'all', trans = 'all'), digits = 4), "e24bee440f4953c841f735e7a68a086d0c976b35")
+  expect_equal(digest::sha1(sensdata(illum = 'all', bkg = 'all', trans = 'all'), digits = 4),
+               "4e25ee65b1a5d3a993baf4ba11b6ad7c15348704")
 })
 
 test_that("peakshape", {
@@ -54,7 +55,7 @@ test_that("peakshape", {
 
   expect_equivalent(
     digest::sha1(peakshape(flowers, absolute.min = TRUE), digits = 5),
-    "5300bb69c576646c251857257b265972c29536e2"
+    "d257957d21449f28fd24a9a0a33220dcd9a371bd"
   )
 
   expect_warning(

@@ -5,17 +5,26 @@ test_that("Output regression", {
   data(flowers)
 
   # Output
-  expect_equal(digest::sha1(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky"), digits = 4), "54b3b040113eb655f93be8d9f26eb20d6019cc9b")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000), digits = 4), "d57a50aaf84b7debcb7937d99961280067ce7ab3")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit"), digits = 4), "802350160486ca224f16dd1b5dde0afa5caa893b")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "musca", achro = "md.r1", relative = FALSE), digits = 4), "a3ef5be279eadffeb56de61162c632d28ce52fc8")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", bkg = "green", vonkries = TRUE, achromatic = "l"), digits = 4), "896951a2ca1425a09c4907e964cfdf04856185d1")
-  expect_equal(digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4), "89689372836a478440853c441f1a87c4caac544b")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky"), digits = 4),
+               "7885f3c09e3fa529cfca3658e214b22fac81f9eb")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000), digits = 4),
+               "cb9471e72e3261269799e6193d44c2067a36188d")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit"), digits = 4),
+               "d50c261f4a31527fe3ba4281fef66eabb9b9261f")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "musca", achromatic = "md.r1", relative = FALSE), digits = 4),
+               "07c41c78516ef09dde394d6eec27cefe66c3bc77")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", bkg = "green", vonkries = TRUE, achromatic = "l"), digits = 4),
+               "7b348f76891decb04b06ad398cbef1ece1370a4f")
+  expect_equal(digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4),
+               "ac896df0004fc14da08394ab6ade8f3764e0498a")
 
   # Attributes
-  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4), "6d34450fb15cf66e32f95e4e2e803df917e5d46e")
-  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4), "18df75d8ede8466566cfaf1c444ac0796928867a")
-  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4), "00f45815ec340e8f9271339106e501a65e3e8c62")
+  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4),
+               "457f2380406720be0fb65d2c7d3efe4efcca5009")
+  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4),
+               "1692dd3afc83d7524d8d971af695f68794c673f2")
+  expect_equal(digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4),
+               "81e59dc34d535e29bec068d7fcf7c828d9c3acef")
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'musca', achro = 'md.r1', relative = FALSE)), digits = 4),  "3fcd2c3eb74ed4e6d2e505b2c207ca558f287d16")
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'apis', relative = FALSE, qcatch = 'Ei', bkg = 'green', vonkries = TRUE, achromatic = 'l')), digits = 4),  "e1dc6128b9c4ce47a0664394f0e453e53ba6c9db")
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'cie10')), digits = 4),  "38c06f479375903ba566d9fd7187f9efcf134761")

@@ -47,7 +47,7 @@ Imports:
     sp,
     viridisLite
 Suggests:
-    digest,
+    digest(>= 0.6.23),
     imager,
     knitr,
     mapproj,

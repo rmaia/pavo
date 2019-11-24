@@ -75,7 +75,8 @@ test_that("jnd transform", {
   cd.flowers <- coldist(vis.flowers, n = c(1, 1, 1))
   jnd.flowers <- jnd2xyz(cd.flowers)
 
-  expect_equal(digest::sha1(jndrot(jnd2xyz(coldist(vismodel(flowers, achromatic = "bt.dc", relative = FALSE), achromatic = TRUE))), digits = 4), "1785819f0a27bd0fcd516ef3cdc6753612870d76")
+  expect_equal(digest::sha1(jndrot(jnd2xyz(coldist(vismodel(flowers, achromatic = "bt.dc", relative = FALSE), achromatic = TRUE))), digits = 4), 
+               "1ceb103b8d49b526e042ee4da945e7be009fa406")
 
   # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
@@ -103,11 +104,16 @@ test_that("Output", {
   expect_equal(coldist(colspace(tetra, space = 'tcs'))['dS'], (sqrt(3)/(2*sqrt(2)))*2, check.attributes = FALSE)
 
   # Regression
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'ml')), achromatic = TRUE), digits = 4), "3e41f66a7bb60c31d5f2c5c5e2d41bb04fb2a584")
-  expect_equal(digest::sha1(coldist(vismodel(flowers, visual = 'canis', achromatic = 'ml'), achromatic = TRUE, n = c(1, 1)), digits = 4), "2ed40bf8a00463a5562fc231faabb8cb169df64e")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4), "fda8f1c47b0d8e334b2d89b566457791219c3ab6")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"), n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4), "d3fea6d99f61626581756c92e529a8a107a4411a")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4), "ebfaa2e476f53e0533057e7bf4c88c46d2b05a00")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'ml')), achromatic = TRUE), digits = 4), 
+               "bc460149b2263a857c9d573e77169556fa641f56")
+  expect_equal(digest::sha1(coldist(vismodel(flowers, visual = 'canis', achromatic = 'ml'), achromatic = TRUE, n = c(1, 1)), digits = 4), 
+               "a461ec2b1b51a37a1af5bbc78f7c966cc09e9d1c")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4), 
+               "27ab9af8efe2b1651cd36f8506262f87e2b127a7")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"), n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4), 
+               "754c01809100bdacc80d40db2359797f41180c23")
+  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4), 
+               "d65c018342664ae9c8dca35e715c57dde28de30a")
 })
 
 test_that("bootcoldist", {

@@ -76,7 +76,6 @@ test_that("Procspec", {
 })
 
 test_that("Aggregation", {
-  library(digest)
   data(teal)
 
   ind <- rep(c("a", "b"), times = 6)
@@ -87,15 +86,18 @@ test_that("Aggregation", {
 
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
-  expect_equal(digest::sha1(merge(teal1, teal2, by = "wl"), digits = 4), "a2072eee8242dbad1774712fa50cd53d6d8d8978")
+  expect_equal(digest::sha1(merge(teal1, teal2, by = "wl"), digits = 4),
+               "8c0579ca0ebb379ddd163f0b0d1b1c6b21c4c88c")
 
   data(sicalis)
   vis.sicalis <- vismodel(sicalis)
   tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 
   # Subset all 'crown' patches (C in file names)
-  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4), "e42aa1c3abe2aca9114b03744e4f590004c8068a")
-  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4), "b90885da8128f48f232d924e5895fb5e4a73439f")
+  expect_equal(digest::sha1(subset(vis.sicalis, "C"), digits = 4),
+               "4d77fb3cbccb2520faa75c427345e0e630fc4938")
+  expect_equal(digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4),
+               "332a97ed1c25045b70d871a8686e268d09cefd76")
 
   expect_error(aggspec(teal, by = 7), 'by not a multiple')
 })
