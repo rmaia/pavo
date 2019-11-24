@@ -140,13 +140,13 @@ coldist <- function(modeldata,
                     weber.achro = 0.1) {
   
   # Negative qcatch check
-  if(isTRUE(any(modeldata < 0))){
-    warning(
-      length(modeldata[modeldata < 0]),
-      " negative quantum-catch value(s) present in model data,", 
-      " which may produce unreliable distance estimates."
-    )
-  }
+  # if(isTRUE(any(modeldata < 0))){
+  #   warning(
+  #     length(modeldata[modeldata < 0]),
+  #     " negative quantum-catch value(s) present in model data,", 
+  #     " which may produce unreliable distance estimates."
+  #   )
+  # }
 
   # Prepare output
   pairsid <- t(combn(nrow(modeldata), 2))
