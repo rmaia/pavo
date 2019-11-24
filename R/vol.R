@@ -8,7 +8,7 @@
 #' @param grid logical. if `TRUE` (default), draws the polygon outline defined by the points.
 #' @param fill logical. if `TRUE` (default), fills the volume defined by the points.
 #' @param new logical. Should a new plot be started or draw over an open plot?
-#' (defaults to FALSE)
+#' (defaults to `FALSE`)
 #' @param ... additional graphical options. See [polygon()] and [tetraplot()].
 #'
 #' @return [vol()] creates a 3D convex hull within a static tetrahedral plot.
@@ -34,8 +34,9 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
                 new = FALSE, ...) {
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") stop("object is not in tetrahedral color space")
 
-  vol <- t(convhulln(tcsdata[, c("x", "y", "z")], options = "FA")$hull)
   coords <- tcsdata[, c("x", "y", "z")]
+  
+  vol <- t(convhulln(coords, options = "FA")$hull)
 
   arg <- list(...)
 
@@ -110,14 +111,12 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   if (fill) {
     arg$border <- NA
     arg$col <- alphacolor
+  } else {
+    arg$col <- NA
   }
 
   if (grid) {
     arg$border <- darkcolor
-  }
-
-  if (!fill) {
-    arg$col <- NA
   }
 
   # CRAN won't accept triple : arguments and persp.default is not exported,
