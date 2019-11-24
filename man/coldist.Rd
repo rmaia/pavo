@@ -4,17 +4,9 @@
 \alias{coldist}
 \title{Colour distances}
 \usage{
-coldist(
-  modeldata,
-  noise = c("neural", "quantum"),
-  subset = NULL,
-  achromatic = FALSE,
-  qcatch = NULL,
-  n = c(1, 2, 2, 4),
-  weber = 0.1,
-  weber.ref = "longest",
-  weber.achro = 0.1
-)
+coldist(modeldata, noise = c("neural", "quantum"), subset = NULL,
+  achromatic = FALSE, qcatch = NULL, n = c(1, 2, 2, 4),
+  weber = 0.1, weber.ref = "longest", weber.achro = 0.1)
 }
 \arguments{
 \item{modeldata}{(required) quantum catch colour data. Can be the result from
@@ -81,7 +73,7 @@ objects.}
 }
 \value{
 A data frame containing up to 4 columns. The first two
-(\verb{patch1, patch2}) refer to the two colors being contrasted; \code{dS} is the
+(\code{patch1, patch2}) refer to the two colors being contrasted; \code{dS} is the
 chromatic contrast (delta S) and \code{dL} is the achromatic contrast (delta L).
 Units of \code{dS} JND's in the receptor-noise model, unweighted Euclidean
 distances in colorspace models, and Manhattan distances in the

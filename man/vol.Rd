@@ -4,7 +4,8 @@
 \alias{vol}
 \title{Plot a tetrahedral colour space}
 \usage{
-vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE, ...)
+vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE,
+  ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the
@@ -18,7 +19,7 @@ and 'z' coordinates as columns (labeled as such).}
 \item{fill}{logical. if \code{TRUE} (default), fills the volume defined by the points.}
 
 \item{new}{logical. Should a new plot be started or draw over an open plot?
-(defaults to FALSE)}
+(defaults to \code{FALSE})}
 
 \item{...}{additional graphical options. See \code{\link[=polygon]{polygon()}} and \code{\link[=tetraplot]{tetraplot()}}.}
 }

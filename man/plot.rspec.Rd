@@ -4,16 +4,9 @@
 \alias{plot.rspec}
 \title{Plot spectra}
 \usage{
-\method{plot}{rspec}(
-  x,
-  select = NULL,
-  type = c("overlay", "stack", "heatmap"),
-  varying = NULL,
-  n = 100,
-  labels.stack = NULL,
-  wl_guide = TRUE,
-  ...
-)
+\method{plot}{rspec}(x, select = NULL, type = c("overlay", "stack",
+  "heatmap"), varying = NULL, n = 100, labels.stack = NULL,
+  wl.guide = TRUE, ...)
 }
 \arguments{
 \item{x}{(required) a data frame, possibly an object of class \code{rspec}, with a
@@ -41,7 +34,7 @@ the heatplot.}
 \item{labels.stack}{a vector of labels for the stacked spectra when using
 \code{type = "stack"}. Defaults to the numeric column ID's.}
 
-\item{wl_guide}{logical determining whether visible light spectrum should be
+\item{wl.guide}{logical determining whether visible light spectrum should be
 added to the x-axis.}
 
 \item{...}{additional arguments passed to \code{\link[=plot]{plot()}} (or \code{\link[=image]{image()}} for

@@ -27,7 +27,7 @@ options specified when calculating the visual model. Also return the default
 \code{data.frame} summary, except when the object is the result of \code{\link[=tcspace]{tcspace()}},
 in which case the following variables are output instead:
 \itemize{
-\item \verb{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
+\item \code{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
 \item \code{c.vol} the total volume occupied by the points.
 \item \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
 \item \code{colspan.m} the mean hue span.

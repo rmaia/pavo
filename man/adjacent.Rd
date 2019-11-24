@@ -4,17 +4,9 @@
 \alias{adjacent}
 \title{Run an adjacency and boundary strength analysis}
 \usage{
-adjacent(
-  classimg,
-  xpts = NULL,
-  xscale = NULL,
-  bkgID = NULL,
-  polygon = NULL,
-  exclude = c("none", "background", "object"),
-  coldists = NULL,
-  hsl = NULL,
-  cores = getOption("mc.cores", 2L)
-)
+adjacent(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
+  polygon = NULL, exclude = c("none", "background", "object"),
+  coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L))
 }
 \arguments{
 \item{classimg}{(required) an xyz matrix, or list of matrices, in which
@@ -101,15 +93,15 @@ transitions entirely within the focal object and those involving the object and 
 \code{Rt = St_a_a / St_a_b}.
 \item \code{'Rab'}: Ratio of animal-animal and background-background transition diversities,
 \code{Rt = St_a_a / St_b_b}.
-\item \verb{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of
+\item \code{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of
 variation of the chromatic boundary strength.
-\item \verb{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of
+\item \code{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of
 variation of the achromatic boundary strength.
-\item \verb{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of
+\item \code{'m_hue', 's_hue', 'var_hue'}: circular mean, sd, and variance of
 overall pattern hue (in radians).
-\item \verb{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient
+\item \code{'m_sat', 's_sat', 'cv_sat'}: weighted mean, sd, and coefficient
 variation of overall pattern saturation.
-\item \verb{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient
+\item \code{'m_lum', 's_lum', 'cv_lum'}: weighted mean, sd, and coefficient
 variation of overall pattern luminance.
 }
 }

@@ -4,30 +4,12 @@
 \alias{tetraplot}
 \title{Plot a static tetrahedral colorspace}
 \usage{
-tetraplot(
-  tcsdata,
-  theta = 45,
-  phi = 10,
-  perspective = FALSE,
-  range = c(1, 2),
-  r = 1e+06,
-  zoom = 1,
-  achro = TRUE,
-  achro.col = "grey",
-  achro.size = 1,
-  achro.line = FALSE,
-  achro.lwd = 1,
-  achro.lty = 3,
-  tetrahedron = TRUE,
-  vert.cex = 1,
-  vert.range = c(1, 2),
-  out.lwd = 1,
-  out.lcol = "darkgrey",
-  margin = c(0, 0, 0, 0),
-  type = "p",
-  labels = FALSE,
-  ...
-)
+tetraplot(tcsdata, theta = 45, phi = 10, perspective = FALSE,
+  range = c(1, 2), r = 1e+06, zoom = 1, achro = TRUE,
+  achro.col = "grey", achro.size = 1, achro.line = FALSE,
+  achro.lwd = 1, achro.lty = 3, tetrahedron = TRUE, vert.cex = 1,
+  vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
+  margin = c(0, 0, 0, 0), type = "p", labels = FALSE, ...)
 }
 \arguments{
 \item{tcsdata}{(required) a data frame, possibly a result from the

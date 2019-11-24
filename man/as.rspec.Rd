@@ -5,13 +5,8 @@
 \alias{is.rspec}
 \title{Convert data to an rspec object}
 \usage{
-as.rspec(
-  object,
-  whichwl = NULL,
-  interp = TRUE,
-  lim = NULL,
-  exceed.range = TRUE
-)
+as.rspec(object, whichwl = NULL, interp = TRUE, lim = NULL,
+  exceed.range = TRUE)
 
 is.rspec(object)
 }

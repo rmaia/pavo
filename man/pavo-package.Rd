@@ -20,15 +20,15 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu} (\href{https://orcid.org/0000-0002-7563-9795}{ORCID})
+\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu} (0000-0002-7563-9795)
 
 Authors:
 \itemize{
-  \item Thomas White \email{thomas.white026@gmail.com} (\href{https://orcid.org/0000-0002-3976-1734}{ORCID})
-  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} (\href{https://orcid.org/0000-0002-4094-1476}{ORCID})
+  \item Thomas White \email{thomas.white026@gmail.com} (0000-0002-3976-1734)
+  \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} (0000-0002-4094-1476)
   \item John Endler \email{john.endler@deakin.edu.au}
   \item Chad Eliason \email{cme16@zips.uakron.edu}
-  \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca} (\href{https://orcid.org/0000-0001-5984-2331}{ORCID})
+  \item Pierre-Paul Bitton \email{bittonp@uwindsor.ca} (0000-0001-5984-2331)
 }
 
 }

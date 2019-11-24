@@ -4,14 +4,8 @@
 \alias{plotsmooth}
 \title{Plot loess smoothed curves}
 \usage{
-plotsmooth(
-  rspecdata,
-  minsmooth = 0.05,
-  maxsmooth = 0.2,
-  curves = 5,
-  specnum = "ALL",
-  ask = TRUE
-)
+plotsmooth(rspecdata, minsmooth = 0.05, maxsmooth = 0.2, curves = 5,
+  specnum = "ALL", ask = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which

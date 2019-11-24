@@ -4,20 +4,14 @@
 \alias{vismodel}
 \title{Visual models}
 \usage{
-vismodel(
-  rspecdata,
-  visual = c("avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis",
-    "canis", "cie2", "cie10", "musca", "segment", "habronattus", "rhinecanthus"),
-  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r", "ml", "l",
-    "all"),
-  illum = c("ideal", "bluesky", "D65", "forestshade"),
-  trans = c("ideal", "bluetit", "blackbird"),
-  qcatch = c("Qi", "fi", "Ei"),
-  bkg = c("ideal", "green"),
-  vonkries = FALSE,
-  scale = 1,
-  relative = TRUE
-)
+vismodel(rspecdata, visual = c("avg.uv", "avg.v", "bluetit",
+  "ctenophorus", "star", "pfowl", "apis", "canis", "cie2", "cie10",
+  "musca", "segment", "habronattus", "rhinecanthus"),
+  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc",
+  "cf.r", "ml", "l", "all"), illum = c("ideal", "bluesky", "D65",
+  "forestshade"), trans = c("ideal", "bluetit", "blackbird"),
+  qcatch = c("Qi", "fi", "Ei"), bkg = c("ideal", "green"),
+  vonkries = FALSE, scale = 1, relative = TRUE)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which

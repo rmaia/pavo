@@ -4,21 +4,9 @@
 \alias{cieplot}
 \title{CIE plot}
 \usage{
-cieplot(
-  ciedata,
-  mono = TRUE,
-  out.lwd = NULL,
-  out.lcol = "black",
-  out.lty = 1,
-  theta = 45,
-  phi = 10,
-  r = 1e+06,
-  zoom = 1,
-  box = FALSE,
-  margin = c(0, 0, 0, 0),
-  ciebg = TRUE,
-  ...
-)
+cieplot(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
+  out.lty = 1, theta = 45, phi = 10, r = 1e+06, zoom = 1,
+  box = FALSE, margin = c(0, 0, 0, 0), ciebg = TRUE, ...)
 }
 \arguments{
 \item{ciedata}{(required). a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
