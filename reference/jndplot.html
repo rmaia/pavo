@@ -152,9 +152,18 @@
     <p>Plot options for <code><a href='jnd2xyz.html'>jnd2xyz</a></code> objects.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>jndplot</span>(<span class='no'>x</span>, <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"relative"</span>, <span class='st'>"absolute"</span>, <span class='st'>"none"</span>), <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>arrow.labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>arrow.col</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>, <span class='kw'>arrow.p</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>margin</span> <span class='kw'>=</span> <span class='st'>"recommended"</span>, <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>jndplot</span>(
+  <span class='no'>x</span>,
+  <span class='kw'>arrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"relative"</span>, <span class='st'>"absolute"</span>, <span class='st'>"none"</span>),
+  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>arrow.labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>arrow.col</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>,
+  <span class='kw'>arrow.p</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='st'>"recommended"</span>,
+  <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='no'>...</span>
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -223,7 +232,7 @@ scaled with the <code>arrow.p</code> argument.</p></li>
 <li><p><code>"absolute"</code>: With this option, arrows will be made to reflect the visual
 system underlying the data. Arrows will be centered on the achromatic point
 in colourspace, and will have length equal to the distance to a
-monochromatic point (i.e. a colour that stimulates approximately 99.9<!-- % of -->
+monochromatic point (i.e. a colour that stimulates approximately 99.9% of
 that receptor alone). Arrows can still be scaled using the <code>arrow.p</code>
 argument, in which case they cannot be interpreted as described.</p></li>
 <li><p><code>"none"</code>: no arrows will be included.</p></li>
