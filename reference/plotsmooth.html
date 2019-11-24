@@ -78,7 +78,7 @@ loess parameters are best for subsequently smoothing the data (e.g. via procspec
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -154,14 +154,8 @@ loess parameters are best for subsequently smoothing the data (e.g. via procspec
 loess parameters are best for subsequently smoothing the data (e.g. via <code><a href='procspec.html'>procspec()</a></code>).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotsmooth</span>(
-  <span class='no'>rspecdata</span>,
-  <span class='kw'>minsmooth</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
-  <span class='kw'>maxsmooth</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>curves</span> <span class='kw'>=</span> <span class='fl'>5</span>,
-  <span class='kw'>specnum</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>,
-  <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>plotsmooth</span>(<span class='no'>rspecdata</span>, <span class='kw'>minsmooth</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>maxsmooth</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>curves</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>specnum</span> <span class='kw'>=</span> <span class='st'>"ALL"</span>, <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,7 +199,7 @@ data in remaining columns.</p></td>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='fu'>plotsmooth</span>(<span class='no'>sicalis</span>, <span class='kw'>minsmooth</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>maxsmooth</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>curves</span> <span class='kw'>=</span> <span class='fl'>7</span>, <span class='kw'>specnum</span> <span class='kw'>=</span> <span class='fl'>6</span>)</div><div class='img'><img src='plotsmooth-1.png' alt='' width='700' height='433' /></div><div class='img'><img src='plotsmooth-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

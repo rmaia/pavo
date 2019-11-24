@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -152,13 +152,8 @@
     <p>Finds and imports PNG, JPEG, and/or BMP images.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>getimg</span>(
-  <span class='kw'>imgpath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(),
-  <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>max.size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='no'>cores</span>
-)</pre>
+    <pre class="usage"><span class='fu'>getimg</span>(<span class='kw'>imgpath</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/getwd.html'>getwd</a></span>(), <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>max.size</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='no'>cores</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,7 +197,7 @@ images? (defaults to <code>FALSE</code>).</p></td>
 <span class='co'># Multiple images</span>
 <span class='no'>snakes</span> <span class='kw'>&lt;-</span> <span class='fu'>getimg</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

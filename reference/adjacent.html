@@ -79,7 +79,7 @@ contrast (Endler &amp;amp; Mielke 2005)." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -156,17 +156,9 @@ boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 contrast (Endler &amp; Mielke 2005).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>adjacent</span>(
-  <span class='no'>classimg</span>,
-  <span class='kw'>xpts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>bkgID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"background"</span>, <span class='st'>"object"</span>),
-  <span class='kw'>coldists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>hsl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>adjacent</span>(<span class='no'>classimg</span>, <span class='kw'>xpts</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>bkgID</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>polygon</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"background"</span>, <span class='st'>"object"</span>),
+  <span class='kw'>coldists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hsl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>))</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -338,7 +330,7 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
 <span class='no'>snakes_adj</span> <span class='kw'>&lt;-</span> <span class='fu'>adjacent</span>(<span class='no'>snakes_class</span>, <span class='kw'>xpts</span> <span class='kw'>=</span> <span class='fl'>120</span>, <span class='kw'>xscale</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>55</span>))
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

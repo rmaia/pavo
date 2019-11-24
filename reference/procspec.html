@@ -77,7 +77,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -152,13 +152,9 @@
     <p>Applies normalization and/or smoothing to spectra for further analysis or plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>procspec</span>(
-  <span class='no'>rspecdata</span>,
-  <span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"smooth"</span>, <span class='st'>"maximum"</span>, <span class='st'>"minimum"</span>, <span class='st'>"bin"</span>, <span class='st'>"sum"</span>, <span class='st'>"center"</span>),
-  <span class='kw'>fixneg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"addmin"</span>, <span class='st'>"zero"</span>),
-  <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.25</span>,
-  <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>
-)</pre>
+    <pre class="usage"><span class='fu'>procspec</span>(<span class='no'>rspecdata</span>, <span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"smooth"</span>, <span class='st'>"maximum"</span>, <span class='st'>"minimum"</span>,
+  <span class='st'>"bin"</span>, <span class='st'>"sum"</span>, <span class='st'>"center"</span>), <span class='kw'>fixneg</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"addmin"</span>, <span class='st'>"zero"</span>),
+  <span class='kw'>span</span> <span class='kw'>=</span> <span class='fl'>0.25</span>, <span class='kw'>bins</span> <span class='kw'>=</span> <span class='fl'>20</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,7 +229,7 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
 <span class='no'>teal.max</span> <span class='kw'>&lt;-</span> <span class='fu'>procspec</span>(<span class='no'>teal</span>, <span class='kw'>opt</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"max"</span>))</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
 #&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>teal.max</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='img'><img src='procspec-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

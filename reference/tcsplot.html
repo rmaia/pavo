@@ -79,7 +79,7 @@ Plots points in a tetrahedral colour space" />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -156,34 +156,15 @@ capabilities.</p>
 <p>Plots points in a tetrahedral colour space</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tcsplot</span>(
-  <span class='no'>tcsdata</span>,
-  <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.02</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>vertexsize</span> <span class='kw'>=</span> <span class='fl'>0.02</span>,
-  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
-  <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
-  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='st'>"lightgrey"</span>,
-  <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>hspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>vspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>floor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)
+    <pre class="usage"><span class='fu'>tcsplot</span>(<span class='no'>tcsdata</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.02</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
+  <span class='kw'>vertexsize</span> <span class='kw'>=</span> <span class='fl'>0.02</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.01</span>,
+  <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>lcol</span> <span class='kw'>=</span> <span class='st'>"lightgrey"</span>, <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>hspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>floor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 
 <span class='fu'>tcspoints</span>(<span class='no'>tcsdata</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.02</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
 
-<span class='fu'>tcsvol</span>(
-  <span class='no'>tcsdata</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>grid.alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>
-)</pre>
+<span class='fu'>tcsvol</span>(<span class='no'>tcsdata</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>grid.alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -302,7 +283,7 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
 <span class='fu'>tcsvol</span>(<span class='no'>tcs.sicalis</span>)
 }</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

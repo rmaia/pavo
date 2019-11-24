@@ -78,7 +78,7 @@ according to the models of Govardovskii et al. (2000) and Hart &amp;amp; Vorobye
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -154,16 +154,9 @@ according to the models of Govardovskii et al. (2000) and Hart &amp;amp; Vorobye
 according to the models of Govardovskii et al. (2000) and Hart &amp; Vorobyev (2005).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>sensmodel</span>(
-  <span class='no'>peaksens</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>300</span>, <span class='fl'>700</span>),
-  <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>Bmid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>om</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>sensmodel</span>(<span class='no'>peaksens</span>, <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>300</span>, <span class='fl'>700</span>), <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>Bmid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>om</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -241,7 +234,7 @@ Physiol A 186:375-387</p>
 <span class='co'># Danio aequipinnatus based on Govardovskii et al. (2000)</span>
 <span class='no'>daniosens</span> <span class='kw'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>357</span>, <span class='fl'>411</span>, <span class='fl'>477</span>, <span class='fl'>569</span>))</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>

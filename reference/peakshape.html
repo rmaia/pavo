@@ -79,7 +79,7 @@ spectra using procspec() is also recommended." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.2.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.3.0</span>
       </span>
     </div>
 
@@ -156,15 +156,8 @@ Note: bounds should be set wide enough to incorporate all minima in spectra. Smo
 spectra using <code><a href='procspec.html'>procspec()</a></code> is also recommended.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>peakshape</span>(
-  <span class='no'>rspecdata</span>,
-  <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>lim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>absolute.min</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>peakshape</span>(<span class='no'>rspecdata</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>ask</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>absolute.min</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -226,7 +219,7 @@ Function will return a warning if not.</p>
 <span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>550</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Consider fixing “lim” in spectra with “incl.min” marked “No” to incorporate all minima in spectral curves</span></div><div class='img'><img src='peakshape-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;          id    B3  H1 FWHM HWHM.l HWHM.r incl.min
 #&gt; 1 Acrecca-9 7.173 468   68     38     30       No</div></pre>
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
