@@ -74,8 +74,6 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
     rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
   }
 
-  # can't figure out how to change the character type
-
   ttv <- ttvertex
 
   cu <- "#984EA3"
@@ -92,26 +90,12 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
     col = c(cu, cs, cm, cl)
   )
 
-  rgl::segments3d(ttv[c("xu", "xs")], ttv[c("yu", "ys")], ttv[c("zu", "zs")],
-    color = lcol, lwd = lwd
-  )
-  rgl::segments3d(ttv[c("xu", "xm")], ttv[c("yu", "ym")], ttv[c("zu", "zm")],
-    color = lcol, lwd = lwd
-  )
-  rgl::segments3d(ttv[c("xu", "xl")], ttv[c("yu", "yl")], ttv[c("zu", "zl")],
-    color = lcol, lwd = lwd
-  )
-  rgl::segments3d(ttv[c("xs", "xm")], ttv[c("ys", "ym")], ttv[c("zs", "zm")],
-    color = lcol, lwd = lwd
-  )
-  rgl::segments3d(ttv[c("xs", "xl")], ttv[c("ys", "yl")], ttv[c("zs", "zl")],
-    color = lcol, lwd = lwd
-  )
-  rgl::segments3d(ttv[c("xl", "xm")], ttv[c("yl", "ym")], ttv[c("zl", "zm")],
-    color = lcol, lwd = lwd
-  )
+  rgl::lines3d(unlist(ttv[c("xu", "xs", "xm", "xl", "xs", "xl", "xu", "xm")]),
+               unlist(ttv[c("yu", "ys", "ym", "yl", "ys", "yl", "yu", "ym")]),
+               unlist(ttv[c("zu", "zs", "zm", "zl", "zs", "zl", "zu", "zm")]),
+               color = lcol, lwd = lwd)
 
-  if (achro == TRUE) {
+  if (achro) {
     rgl::spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = FALSE)
   }
 
