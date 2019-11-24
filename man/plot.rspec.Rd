@@ -4,9 +4,16 @@
 \alias{plot.rspec}
 \title{Plot spectra}
 \usage{
-\method{plot}{rspec}(x, select = NULL, type = c("overlay", "stack",
-  "heatmap"), varying = NULL, n = 100, labels.stack = NULL,
-  wl.guide = TRUE, ...)
+\method{plot}{rspec}(
+  x,
+  select = NULL,
+  type = c("overlay", "stack", "heatmap"),
+  varying = NULL,
+  n = 100,
+  labels.stack = NULL,
+  wl.guide = TRUE,
+  ...
+)
 }
 \arguments{
 \item{x}{(required) a data frame, possibly an object of class \code{rspec}, with a

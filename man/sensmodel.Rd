@@ -4,9 +4,16 @@
 \alias{sensmodel}
 \title{Modeling spectral sensitivity}
 \usage{
-sensmodel(peaksens, range = c(300, 700), lambdacut = NULL,
-  Bmid = NULL, oiltype = NULL, beta = TRUE, om = NULL,
-  integrate = TRUE)
+sensmodel(
+  peaksens,
+  range = c(300, 700),
+  lambdacut = NULL,
+  Bmid = NULL,
+  oiltype = NULL,
+  beta = TRUE,
+  om = NULL,
+  integrate = TRUE
+)
 }
 \arguments{
 \item{peaksens}{(required) a vector with peak sensitivities for the cones to

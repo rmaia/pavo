@@ -4,8 +4,17 @@
 \alias{aggplot}
 \title{Plot aggregated reflectance spectra}
 \usage{
-aggplot(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
-  lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...)
+aggplot(
+  rspecdata,
+  by = NULL,
+  FUN.center = mean,
+  FUN.error = sd,
+  lcol = NULL,
+  shadecol = NULL,
+  alpha = 0.2,
+  legend = FALSE,
+  ...
+)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which

@@ -4,8 +4,15 @@
 \alias{peakshape}
 \title{Peak shape descriptors}
 \usage{
-peakshape(rspecdata, select = NULL, lim = NULL, plot = TRUE,
-  ask = FALSE, absolute.min = FALSE, ...)
+peakshape(
+  rspecdata,
+  select = NULL,
+  lim = NULL,
+  plot = TRUE,
+  ask = FALSE,
+  absolute.min = FALSE,
+  ...
+)
 }
 \arguments{
 \item{rspecdata}{(required) a data frame, possibly of class \code{rspec}, which
