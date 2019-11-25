@@ -29,14 +29,6 @@ test_that("Messages & warnings", {
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
   expect_warning(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "number of cones not specified; assumed to be 4")
   expect_warning(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
-  
-  # Warn for negative values
-  expect_warning(coldist(vismodel(flowers, relative = FALSE, qcatch = 'fi')), "negative")  # Negative value warning
-  
-  # DONT warn for negative values outside quantum catches (e.g. x/y coords)
-  vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
-  expect_warning(coldist(colspace(vis.flowers, space = "hexagon")), NA)
-  
 })
 
 test_that("Equivalent", {
