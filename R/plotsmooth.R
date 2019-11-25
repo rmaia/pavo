@@ -40,10 +40,9 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   nplots <- ncol(rspecdata2)
 
-  inc <- (maxsmooth - minsmooth) / (curves - 2)
-  span_values <- seq(minsmooth, maxsmooth, by = inc)
-  legnames <- sprintf("%.4s", span_values)
-  legnames <- paste0("span = ", legnames)
+  span_values <- seq(minsmooth, maxsmooth, length.out = curves - 1)
+
+  legnames <- sprintf("span = %.4s", span_values)
   legnames <- rev(c("raw", legnames))
 
   # Sets plot parameters based on the number of curves on the plots
@@ -79,7 +78,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
     "#000000", "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
     "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
   )
-  cols <- col_list[1:curves]
+  cols <- col_list[seq_len(curves)]
 
   # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
