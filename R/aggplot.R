@@ -164,44 +164,29 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
 
   arg$type <- NULL
   arg$x <- polygon_wl
-  arg$y <- polygon_data[, 1]
-  arg$col <- shadecol[1]
   arg$border <- NA
 
-  arg0 <- arg[names(arg) %in% names(formals(polygon))]
-  do.call(polygon, arg0)
-
-  if (ncol(cntplotspecs) > 1) {
-    for (i in 2:ncol(cntplotspecs)) {
-      arg$col <- shadecol[i]
-      arg$y <- polygon_data[, i]
-      arg0 <- arg[names(arg) %in% c(names(formals(polygon)), names(par()))]
-      do.call(polygon, arg0)
-    }
+  for (i in seq_along(cntplotspecs)) {
+    arg$col <- shadecol[i]
+    arg$y <- polygon_data[, i]
+    arg0 <- arg[names(arg) %in% c(names(formals(polygon)), names(par()))]
+    do.call(polygon, arg0)
   }
 
   # ...then lines (so they are on top)
   arg$border <- NULL
-  arg$col <- lcol[1]
   arg$x <- wl
-  arg$y <- cntplotspecs[, 1]
   arg$type <- "l"
-  arg$lty <- lty[1]
-  arg$lwd <- lwd[1]
 
-  arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-  do.call(lines, arg0)
-
-  if (ncol(cntplotspecs) > 1) {
-    for (i in 2:ncol(cntplotspecs)) {
-      arg$y <- cntplotspecs[, i]
-      arg$col <- lcol[i]
-      arg$lty <- lty[i]
-      arg$lwd <- lwd[i]
-      arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
-      do.call(lines, arg0)
-    }
+  for (i in seq_along(cntplotspecs)) {
+    arg$y <- cntplotspecs[, i]
+    arg$col <- lcol[i]
+    arg$lty <- lty[i]
+    arg$lwd <- lwd[i]
+    arg0 <- arg[names(arg) %in% c(names(formals(plot.default)), names(par()))]
+    do.call(lines, arg0)
   }
+
   if (legend) {
     legend("topleft",
       bty = "n", legend = names(cntplotspecs),
