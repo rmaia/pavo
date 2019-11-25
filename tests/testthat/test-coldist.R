@@ -14,7 +14,7 @@ test_that("Errors", {
 
 test_that("Messages & warnings", {
   data(flowers)
-
+  
   expect_message(coldist(vismodel(flowers, relative = FALSE)), "noise-weighted Euclidean")
   expect_message(coldist(colspace(vismodel(flowers, visual = 'segment'))), "unweighted Euclidean")
   expect_message(coldist(colspace(vismodel(flowers, visual = 'musca'), space = 'categorical')), "unweighted Euclidean")
@@ -26,10 +26,17 @@ test_that("Messages & warnings", {
                                            qcatch = 'Ei', vonkries = TRUE), space = 'hexagon')), "unweighted Euclidean")
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
-  expect_warning(coldist(vismodel(flowers, relative = FALSE, qcatch = 'fi')), "negative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
   expect_warning(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "number of cones not specified; assumed to be 4")
   expect_warning(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
+  
+  # Warn for negative values
+  expect_warning(coldist(vismodel(flowers, relative = FALSE, qcatch = 'fi')), "negative")  # Negative value warning
+  
+  # DONT warn for negative values outside quantum catches (e.g. x/y coords)
+  vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE, achromatic = "l", bkg = "green")
+  expect_warning(coldist(colspace(vis.flowers, space = "hexagon")), NA)
+  
 })
 
 test_that("Equivalent", {

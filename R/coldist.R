@@ -139,14 +139,16 @@ coldist <- function(modeldata,
                     n = c(1, 2, 2, 4), weber = 0.1, weber.ref = "longest",
                     weber.achro = 0.1) {
   
-  # Negative qcatch check
-  # if(isTRUE(any(modeldata < 0))){
-  #   warning(
-  #     length(modeldata[modeldata < 0]),
-  #     " negative quantum-catch value(s) present in model data,", 
-  #     " which may produce unreliable distance estimates."
-  #   )
-  # }
+  # Negative qcatch check. Currently only works for vismodel objects, or
+  # custom qcatches containing any names matching c('u', 's', 'm', 'l')
+  checkcols <- names(modeldata)[(names(modeldata) %in% c('u', 's', 'm', 'l'))]
+  if(isTRUE(any(modeldata[, checkcols] < 0))){
+    warning(
+      sum(modeldata[, checkcols] < 0),
+      " negative quantum-catch value(s) present in model data,",
+      " which may produce unreliable distance estimates."
+    )
+  }
 
   # Prepare output
   pairsid <- t(combn(nrow(modeldata), 2))
