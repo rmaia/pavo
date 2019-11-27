@@ -27,13 +27,6 @@ points.colspace <- function(x, ...) {
     arg$pch <- 19
   }
 
-  if (attr(x, "clrsp") != "tcs" & attr(x, "clrsp") != "CIELAB") {
-    arg$x <- x[, "x"]
-    arg$y <- x[, "y"]
-
-    do.call(points, arg)
-  }
-
   if (attr(x, "clrsp") == "tcs") {
     last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
 
@@ -45,9 +38,7 @@ points.colspace <- function(x, ...) {
 
     xy <- trans3d(x[, "x"], x[, "y"], x[, "z"], last_tetraplot)
     do.call(points, c(xy, arg))
-  }
-
-  if (attr(x, "clrsp") == "CIELAB") {
+  } else if (attr(x, "clrsp") == "CIELAB") {
     last_labplot <- get("last_plot.cielab", envir = .PlotCielabEnv)
 
     # arg$x <- x[ ,'a']
@@ -58,5 +49,10 @@ points.colspace <- function(x, ...) {
 
     xy <- trans3d(x[, "a"], x[, "b"], x[, "L"], last_labplot)
     do.call(points, c(xy, arg))
+  } else {
+    arg$x <- x[, "x"]
+    arg$y <- x[, "y"]
+
+    do.call(points, arg)
   }
 }
