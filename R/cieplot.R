@@ -127,6 +127,8 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
       "ann", "axes", "frame.plot", "panel.first", "panel.last", "asp"
     )] <- NULL
     do.call(points, arg)
+
+    invisible(NULL)
   }
 
   # CIELAB or CIELch
