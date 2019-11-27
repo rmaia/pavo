@@ -48,9 +48,6 @@
 
 aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
                     lcol = NULL, shadecol = NULL, alpha = 0.2, legend = FALSE, ...) {
-  if (isTRUE(by == 1)) {
-    stop("Cannot group single spectra (use plot instead)")
-  }
 
   # take aggregated data
   cntplotspecs <- aggspec(rspecdata, by = by, FUN = FUN.center)
