@@ -107,7 +107,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
     do.call(image, arg)
 
-    return()
+    invisible()
   }
 
   # coloring for overlay plot & others
