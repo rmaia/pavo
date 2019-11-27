@@ -37,6 +37,7 @@
 #' @seealso [spec2rgb()], [image()], [plot()]
 #'
 #' @importFrom magick image_read
+#' @importFrom grDevices hcl.colors
 
 # TODO: add argument for padding region between x in stack plot
 
@@ -81,7 +82,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
       arg$ylim <- range(varying, na.rm = TRUE)
     }
     if (is.null(arg$col)) {
-      arg$col <- viridisLite::cividis(n)
+      arg$col <- hcl.colors(n, palette = "cividis")
     } else {
       jc <- colorRampPalette(arg$col)
       arg$col <- jc(n)
