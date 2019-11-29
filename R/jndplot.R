@@ -198,8 +198,6 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     if (arrow != "none") {
       # get arrow coordinates
-      arrow <- match.arg(arrow)
-
       arrowstart <- switch(arrow,
         relative = as.matrix(attr(dat, "resref")[dim(attr(dat, "resref"))[1], colstouse]),
         absolute = as.matrix(attr(dat, "resref")["jnd2xyzrrf.achro", colstouse]),
@@ -358,9 +356,6 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     dat <- rbind(x2, attr(x, "resref")[, colstouse])
     attr(dat, "resref") <- attr(x, "resref")[, colstouse]
-
-    # get arrow coordinates
-    arrow <- match.arg(arrow)
 
     if (arrow != "none") {
       arrowstart <- switch(arrow,
