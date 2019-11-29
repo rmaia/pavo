@@ -154,13 +154,9 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     if (arrow.labels) {
-      text("S",
-        x = arrowarg$x1[1], y = 0, xpd = TRUE,
-        pos = 2, cex = labels.cex, col = arrow.col
-      )
-      text("L",
-        x = arrowarg$x1[2], y = 0, xpd = TRUE,
-        pos = 4, cex = labels.cex, col = arrow.col
+      text(c("S", "L"),
+        x = arrowarg$x1, y = 0, xpd = TRUE,
+        pos = c(2,4), cex = labels.cex, col = arrow.col
       )
     }
 
