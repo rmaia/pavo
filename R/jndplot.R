@@ -101,10 +101,11 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     # combine data with references
-    dat <- rbind(x[, "x", drop = FALSE], attr(x, "resref")[, "x", drop = FALSE])
+    x2 <- x[, "x", drop = FALSE]
+
+    dat <- rbind(x2, attr(x, "resref")[, "x", drop = FALSE])
     attr(dat, "resref") <- attr(x, "resref")[, "x", drop = FALSE]
 
-    x2 <- x[, "x", drop = FALSE]
 
     # get arrow coordinates
 
@@ -361,7 +362,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     x2 <- x[, colstouse]
     attr(x2, "resref") <- attr(x, "resref")[, colstouse]
 
-    dat <- rbind(x[, colstouse], attr(x, "resref")[, colstouse])
+    dat <- rbind(x2, attr(x, "resref")[, colstouse])
     attr(dat, "resref") <- attr(x, "resref")[, colstouse]
 
     # get arrow coordinates
