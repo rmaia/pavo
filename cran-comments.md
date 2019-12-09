@@ -1,10 +1,14 @@
 ## Test environments
-* local OS X install, R 3.6.0
-* ubuntu 14.04 (on travis-ci), R 3.6.0
-* win-builder (devel and release)
+* local macOS 10.15.1 install, R 3.6.1
+* ubuntu 16.04.6 (on travis-ci), R 3.6.1, R 3.5.3, R devel
+* win-builder (R 3.6.1 and devel)
+* rhub::check_for_cran()
 
 ## R CMD check results
 
-0 errors | 0 warnings | 0 note
+0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+## Additional notes
+The package was recently archived due to hash test errors, which have been fixed in this release.
