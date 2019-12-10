@@ -100,10 +100,9 @@
 #'
 #' # Custom trichromatic visual system
 #' custom <- sensmodel(c(330, 440, 550))
-#' names(custom) <- c('wl', 's', 'm', 'l')
+#' names(custom) <- c("wl", "s", "m", "l")
 #' vis.custom <- vismodel(flowers, visual = custom)
 #' tri.custom <- colspace(vis.custom, space = "tri")
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -180,17 +179,21 @@ vismodel <- function(rspecdata,
     error = function(e) "user-defined"
   )
   if (is.null(bkg) & vonkries) {
-    stop("Chosen background is NULL. ",
-         "This argument is required with `vonkries = TRUE`.")
+    stop(
+      "Chosen background is NULL. ",
+      "This argument is required with `vonkries = TRUE`."
+    )
   }
   tr2 <- tryCatch(
     match.arg(trans),
     error = function(e) "user-defined"
   )
   if (is.null(trans)) {
-    stop("Chosen transmission is NULL. ",
-         "If you want to model a completely transparent medium or if this is ",
-         "already included in your `visual` argument, use `trans = 'ideal'`.")
+    stop(
+      "Chosen transmission is NULL. ",
+      "If you want to model a completely transparent medium or if this is ",
+      "already included in your `visual` argument, use `trans = 'ideal'`."
+    )
   }
 
   qcatch <- match.arg(qcatch)
@@ -367,7 +370,7 @@ vismodel <- function(rspecdata,
   # Achromatic contrast
 
   # Calculate lum
-  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", 'cf.r', "ra.dc", "ml", "l", "all", "user-defined")) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "cf.r", "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
       "bt.dc" = ,
       "ch.dc" = ,
@@ -414,7 +417,7 @@ vismodel <- function(rspecdata,
   )
 
   # Negative qcatch check
-  if(any(res < 0)){
+  if (any(res < 0)) {
     warning(
       length(res[res < 0]),
       " negative quantum-catch value(s) returned, which may be unreliable. ",

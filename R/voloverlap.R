@@ -52,7 +52,6 @@
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -69,7 +68,6 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
                        montecarlo = NULL, nsamp = NULL, psize = NULL,
                        lwd = 1, ...) {
-
   if (!all(missing(montecarlo), missing(nsamp), missing(psize))) {
     warning("montecarlo, nsamp and psize arguments are deprecated and will be ignored.")
   }
@@ -134,9 +132,9 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
       plotrange <- apply(rbind(dat1, dat2), 2, range)
 
       vol(colsp1,
-          col = col[1], lwd = lwd, new = new, fill = fill,
-          xlim = plotrange[, "x"], ylim = plotrange[, "y"],
-          zlim = plotrange[, "z"], ...
+        col = col[1], lwd = lwd, new = new, fill = fill,
+        xlim = plotrange[, "x"], ylim = plotrange[, "y"],
+        zlim = plotrange[, "z"], ...
       )
       vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
 

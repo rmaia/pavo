@@ -108,7 +108,6 @@
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
-#'
 #' }
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -182,7 +181,7 @@ coldist <- function(modeldata,
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
     if (attr(modeldata, "visualsystem.achromatic") == "none" && !(any(c("CIELAB", "CIELCh") %in% attr(modeldata, "clrsp")))
-        || is.null(attr(modeldata, "visualsystem.achromatic"))) {
+    || is.null(attr(modeldata, "visualsystem.achromatic"))) {
       modeldata$lum <- 0
       if (achromatic) {
         warning("achromatic = TRUE but visual model was calculated with achromatic = ",
@@ -233,7 +232,7 @@ coldist <- function(modeldata,
     # - vismodel object: always
     # - user input data: always
 
-    note_dS <- 'Calculating noise-weighted Euclidean distances'
+    note_dS <- "Calculating noise-weighted Euclidean distances"
     note_dL <- NULL
 
     dat <- as.matrix(modeldata)
@@ -316,36 +315,40 @@ coldist <- function(modeldata,
     )
 
     if (achromatic) {
-      note_dL <- ' and noise-weighted luminance contrasts'
+      note_dL <- " and noise-weighted luminance contrasts"
       visref <- cbind(visref, lum = log(1e-10))
       visref[grep("jnd2xyzrrf", rownames(visref), invert = TRUE), "lum"] <-
         dat[seq(refsamp), dim(dat)[2]]
 
       res[, "dL"] <- switch(noise,
-        "neural" = unlist(lapply(seq(nrow(res)), function(x)
+        "neural" = unlist(lapply(seq(nrow(res)), function(x) {
           ttdistcalcachro(
             dat[res[x, 1], ], dat[res[x, 2], ],
             NULL, NULL, weber.achro
-          ))),
-        "quantum" = unlist(lapply(seq(nrow(res)), function(x)
+          )
+        })),
+        "quantum" = unlist(lapply(seq(nrow(res)), function(x) {
           ttdistcalcachro(
             dat[res[x, 1], ], dat[res[x, 2], ],
             qndat[res[x, 1], ], qndat[res[x, 2], ], weber.achro
-          )))
+          )
+        }))
       )
 
       resref[, "dL"] <- switch(noise,
-        "neural" = unlist(lapply(seq(nrow(resref)), function(x)
+        "neural" = unlist(lapply(seq(nrow(resref)), function(x) {
           ttdistcalcachro(
             visref[resref[x, 1], ], visref[resref[x, 2], ],
             NULL, NULL,
             weber.achro = weber.achro
-          ))),
-        "quantum" = unlist(lapply(seq(nrow(resref)), function(x)
+          )
+        })),
+        "quantum" = unlist(lapply(seq(nrow(resref)), function(x) {
           ttdistcalcachro(
             visref[resref[x, 1], ], visref[resref[x, 2], ],
             exp(visref)[resref[x, 1], ], exp(visref)[resref[x, 2], ], weber.achro
-          )))
+          )
+        }))
       )
 
       if (dim(dat)[2] <= ncone) {
@@ -399,11 +402,11 @@ coldist <- function(modeldata,
         "trispace" = ,
         "categorical" = ,
         "coc" = ,
-        "tcs" = lumcont(dat[pairsid[,1], "lum"], dat[pairsid[,2], "lum"], type = "weber"),
-        "hexagon" = lumcont(dat[pairsid[,1], "l"], dat[pairsid[,2], "l"], type = "simple"),
+        "tcs" = lumcont(dat[pairsid[, 1], "lum"], dat[pairsid[, 2], "lum"], type = "weber"),
+        "hexagon" = lumcont(dat[pairsid[, 1], "l"], dat[pairsid[, 2], "l"], type = "simple"),
         "CIELAB" = ,
-        "CIELCh" = lumcont(dat[pairsid[,1], "L"], dat[pairsid[,2], "L"], type = "weber"),
-        "segment" = lumcont(dat[pairsid[,1], "B"], dat[pairsid[,2], "B"], type = "michelson")
+        "CIELCh" = lumcont(dat[pairsid[, 1], "L"], dat[pairsid[, 2], "L"], type = "weber"),
+        "segment" = lumcont(dat[pairsid[, 1], "B"], dat[pairsid[, 2], "B"], type = "michelson")
       )
     }
     message(note_dS, note_dL)
@@ -459,10 +462,11 @@ coldist <- function(modeldata,
 
 newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
   reln <- n / sum(n)
-  if(length(weber) == length(n))  # For when weber is known for all receptors
+  if (length(weber) == length(n)) { # For when weber is known for all receptors
     v <- weber * sqrt(reln)
-  else
-    v <- weber * sqrt(reln[weber.ref])  # When weber is known for one receptor (typical)
+  } else {
+    v <- weber * sqrt(reln[weber.ref])
+  } # When weber is known for one receptor (typical)
 
   if (is.null(qndat)) {
     e <- setNames(v / sqrt(reln), colnames(dat))
@@ -487,8 +491,9 @@ newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
     )
   } else {
     # get those combinations of ei and prod(ei)^2
-    num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-      apply(n1combs, 2, function(x) prod(e[z, x]))))
+    num1 <- do.call("rbind", lapply(1:dim(res)[1], function(z) {
+      apply(n1combs, 2, function(x) prod(e[z, x]))
+    }))
     colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
   }
 
@@ -496,9 +501,11 @@ newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
   n2combs <- apply(n1combs, 2, function(x) colnames(dat)[ !colnames(dat) %in% x ])
 
   # f_d and f_e
-  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y)
-    t(apply(res, 1, function(x)
-      dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]])))
+  deltaqiqj <- lapply(1:dim(n1combs)[2], function(y) {
+    t(apply(res, 1, function(x) {
+      dat[x[1], n2combs[, y]] - dat[x[2], n2combs[, y]]
+    }))
+  })
   names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
 
   # (f_d-f_e)^2
@@ -528,8 +535,9 @@ newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
     )
     denominator <- sum(den^2)
   } else {
-    den <- do.call("rbind", lapply(1:dim(res)[1], function(z)
-      apply(dcombs, 2, function(x) prod(e[z, x]))))
+    den <- do.call("rbind", lapply(1:dim(res)[1], function(z) {
+      apply(dcombs, 2, function(x) prod(e[z, x]))
+    }))
     colnames(den) <- apply(dcombs, 2, paste, collapse = "")
     denominator <- rowSums(den^2)
   }

@@ -31,7 +31,6 @@
 #' plot(teal, type = "overlay")
 #' plot(teal, type = "stack")
 #' plot(teal, type = "heatmap")
-#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -44,16 +43,15 @@
 plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap"),
                        varying = NULL, n = 100, labels.stack = NULL,
                        wl.guide = TRUE, ...) {
-
   type <- match.arg(type)
 
   # make wavelength vector
   wl <- isolate_wl(x, keep = "wl")
 
   if (is.null(select)) {
-    x  <- isolate_wl(x, keep = "spec")
+    x <- isolate_wl(x, keep = "spec")
   } else {
-    x <- isolate_wl(x[ , select, drop = FALSE], keep = "spec")
+    x <- isolate_wl(x[, select, drop = FALSE], keep = "spec")
   }
 
   # This line is needed for later because cols and lty are dropped depending on
@@ -202,10 +200,12 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
   if (wl.guide) {
     vislight <- image_read(system.file("linear_visible_spectrum.png", package = "pavo"))
-    rasterImage(vislight, 
-                380, 
-                grconvertY(0, from = "npc", to = "user"), 
-                750,
-                grconvertY(0.03, from = "npc", to = "user"))
+    rasterImage(
+      vislight,
+      380,
+      grconvertY(0, from = "npc", to = "user"),
+      750,
+      grconvertY(0.03, from = "npc", to = "user")
+    )
   }
 }

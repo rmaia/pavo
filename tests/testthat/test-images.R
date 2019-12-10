@@ -60,7 +60,6 @@ test_that("as.rimg", {
   papiliomagick <- as.rimg(magickpapilio)
   attr(papiliomagick, "imgname") <- "papilio"
   expect_equal(papilio, papiliomagick, check.attributes = TRUE)
-
 })
 
 test_that("procimg", {
@@ -102,8 +101,16 @@ test_that("classify", {
   expect_true(is.rimg(fake_class))
 
   # Shouldn't fail even when user unnecessarily specifies refID for single img
-  expect_identical({set.seed(1); classify(imgfake, kcols = 2)},
-                   {set.seed(1); classify(imgfake, kcols = 2, refID = "img")})
+  expect_identical(
+    {
+      set.seed(1)
+      classify(imgfake, kcols = 2)
+    },
+    {
+      set.seed(1)
+      classify(imgfake, kcols = 2, refID = "img")
+    }
+  )
 
   ## Multiple
   fake_IDs <- data.frame(
@@ -139,10 +146,9 @@ test_that("classify", {
 
 
   # Messages
-  expect_error(classify(imgfakes, refID = 'fail'), 'No image found with that name')
-  expect_error(classify(imgfakes, kcols = 10), 'cluster centers exceeds the number of distinct data points')
-  expect_message(classify(imgfakes, kcols = c(1, 2), refID = 1), 'Cannot use reference image')
-
+  expect_error(classify(imgfakes, refID = "fail"), "No image found with that name")
+  expect_error(classify(imgfakes, kcols = 10), "cluster centers exceeds the number of distinct data points")
+  expect_message(classify(imgfakes, kcols = c(1, 2), refID = 1), "Cannot use reference image")
 })
 
 test_that("adjacency", {
@@ -286,4 +292,3 @@ test_that("summary", {
   expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4))
   expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
 })
-

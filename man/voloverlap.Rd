@@ -83,7 +83,6 @@ tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
-
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color

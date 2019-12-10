@@ -44,8 +44,10 @@ test_that("peakshape", {
   )
 
   # Double peak
-  dblpkspec <- data.frame(wl = 300:700,
-                          spec = dnorm(300:700, 400, 10) + dnorm(300:700, 600, 10))
+  dblpkspec <- data.frame(
+    wl = 300:700,
+    spec = dnorm(300:700, 400, 10) + dnorm(300:700, 600, 10)
+  )
   expect_warning(peakshape(dblpkspec), "Using first peak found")
 
   expect_null(peakshape(flowers, select = FALSE))

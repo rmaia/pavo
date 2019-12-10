@@ -10,7 +10,7 @@ test_that("Warnings", {
   expect_warning(vismodel(flowers, vonkries = TRUE, relative = FALSE, achromatic = "l", visual = "cie10"), "overriding")
   expect_warning(vismodel(flowers, qcatch = "fi", vonkries = TRUE, relative = FALSE, achromatic = "none", visual = "cie10"), "overriding")
   expect_warning(vismodel(fakedat, visual = "bluetit"), "negative")
-  expect_warning(vismodel(flowers, qcatch = 'fi', relative = FALSE), "negative")
+  expect_warning(vismodel(flowers, qcatch = "fi", relative = FALSE), "negative")
 
   test_rspec <- as.rspec(flowers[1:2])
   test_matrix <- as.matrix(flowers[1:2])

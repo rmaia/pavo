@@ -92,7 +92,6 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     peak <- peak / max(peak)
 
     if (!is.null(lambdacut) & !is.null(Bmid)) {
-
       if (is.na(lambdacut[i]) & !is.na(Bmid[i])) {
         warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
         T.oil <- 1
@@ -103,7 +102,6 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     }
 
     if (!is.null(lambdacut) & !is.null(oiltype)) {
-
       if (oiltype[i] == "T") {
         T.oil <- 1
       } else {
@@ -114,7 +112,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
         # Oil droplet transmission from Hart and Vorobyev (2005)
         T.oil <- exp(-exp(-2.89 * (.5 / ((oil[1] * lambdacut[i] + oil[2]) - lambdacut[i])) *
-                            (wl - lambdacut[i]) + 1.08))
+          (wl - lambdacut[i]) + 1.08))
       }
 
       peak <- peak * T.oil

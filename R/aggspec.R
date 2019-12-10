@@ -34,7 +34,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   # Check: user may have removed 'wl' function already.
   # (data.frame doesn't allow duplicate names anymore, so this should work)
   wl <- isolate_wl(rspecdata, keep = "wl")
-  y  <- isolate_wl(rspecdata, keep = "spec")
+  y <- isolate_wl(rspecdata, keep = "spec")
 
   if (is.null(by)) {
     dat <- apply(y, 1, FUN)

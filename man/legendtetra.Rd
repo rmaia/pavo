@@ -33,9 +33,10 @@ tcs_sicalis <- colspace(vis_sicalis)
 
 cols <- c("#1B9E77", "#D95F02", "#7570B3")
 plot(tcs_sicalis, col = cols)
-legendtetra(legend = c("Crown", "Throat", "Breast"),
-            col = cols, pch = 16)
-
+legendtetra(
+  legend = c("Crown", "Throat", "Breast"),
+  col = cols, pch = 16
+)
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

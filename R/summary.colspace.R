@@ -54,7 +54,6 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 summary.colspace <- function(object, by = NULL, ...) {
-
   chkDots(...)
 
   if (is.null(attr(object, "clrsp"))) {

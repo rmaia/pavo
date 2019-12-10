@@ -12,7 +12,6 @@
 #' vis.flowers <- vismodel(flowers, visual = "segment", achromatic = "all")
 #' seg.flowers <- colspace(vis.flowers, space = "segment")
 #' plot(seg.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -75,8 +74,8 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   axis(2, at = tick.loc, pos = 0, cex.axis = 0.8, las = 2)
 
   # Segment edge coordinates
-  segX <- c(-1,  0, 1, 0)
-  segY <- c( 0, -1, 0, 1)
+  segX <- c(-1, 0, 1, 0)
+  segY <- c(0, -1, 0, 1)
 
   # Segplot outline1
   polygon(segX, segY, lwd = out.lwd, border = out.lcol, lty = out.lty)
@@ -90,11 +89,13 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
 
   # Category labels (todo: make this more flexible/robust?)
   if (labels) {
-    text(x      = segX,
-         y      = segY,
-         labels = c("S1", "S2", "S3", "S4"),
-         pos    = c(2, 1, 4, 3),
-         xpd    = TRUE,
-         cex    = lab.cex)
+    text(
+      x = segX,
+      y = segY,
+      labels = c("S1", "S2", "S3", "S4"),
+      pos = c(2, 1, 4, 3),
+      xpd = TRUE,
+      cex = lab.cex
+    )
   }
 }

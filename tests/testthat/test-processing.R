@@ -91,7 +91,7 @@ test_that("Aggregation", {
   vis.sicalis <- vismodel(sicalis)
   tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 
-  expect_error(aggspec(teal, by = 7), 'by not a multiple')
+  expect_error(aggspec(teal, by = 7), "by not a multiple")
 })
 
 test_that("Convert", {

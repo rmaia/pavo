@@ -137,7 +137,6 @@ hexdist.flowers <- coldist(coc.flowers)
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv", relative = FALSE)
 tetradist.sicalis.n <- coldist(vis.sicalis)
-
 }
 
 }

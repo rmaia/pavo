@@ -14,16 +14,20 @@ test_that("Errors", {
 
 test_that("Messages & warnings", {
   data(flowers)
-  
+
   expect_message(coldist(vismodel(flowers, relative = FALSE)), "noise-weighted Euclidean")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'segment'))), "unweighted Euclidean")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'musca'), space = 'categorical')), "unweighted Euclidean")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'cie2'), space = 'cielab')), "CIE2000 distances")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'cie10'), space = 'cielch')), "CIE2000 distances")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE,
-                                           qcatch = 'Ei', vonkries = TRUE), space = 'coc')), "Manhattan distances")
-  expect_message(coldist(colspace(vismodel(flowers, visual = 'apis', relative = FALSE,
-                                           qcatch = 'Ei', vonkries = TRUE), space = 'hexagon')), "unweighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = "segment"))), "unweighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = "musca"), space = "categorical")), "unweighted Euclidean")
+  expect_message(coldist(colspace(vismodel(flowers, visual = "cie2"), space = "cielab")), "CIE2000 distances")
+  expect_message(coldist(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), "CIE2000 distances")
+  expect_message(coldist(colspace(vismodel(flowers,
+    visual = "apis", relative = FALSE,
+    qcatch = "Ei", vonkries = TRUE
+  ), space = "coc")), "Manhattan distances")
+  expect_message(coldist(colspace(vismodel(flowers,
+    visual = "apis", relative = FALSE,
+    qcatch = "Ei", vonkries = TRUE
+  ), space = "hexagon")), "unweighted Euclidean")
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
@@ -88,15 +92,14 @@ test_that("Output", {
   data(flowers)
 
   # Maximum possible unweighted Euclidean distances
-  di <- data.frame(s = c(0,1), l = c(1,0))
-  expect_equal(coldist(colspace(di, space = 'di'))['dS'], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  di <- data.frame(s = c(0, 1), l = c(1, 0))
+  expect_equal(coldist(colspace(di, space = "di"))["dS"], (1 / sqrt(2)) * 2, check.attributes = FALSE)
 
-  tri <- data.frame(s = c(0,0), m = c(0,1), l = c(1,0))
-  expect_equal(coldist(colspace(tri, space = 'tri'))['dS'], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  tri <- data.frame(s = c(0, 0), m = c(0, 1), l = c(1, 0))
+  expect_equal(coldist(colspace(tri, space = "tri"))["dS"], (1 / sqrt(2)) * 2, check.attributes = FALSE)
 
   tetra <- data.frame(u = c(0, 1), s = c(0, 0), m = c(0, 0), l = c(1, 0))
-  expect_equal(coldist(colspace(tetra, space = 'tcs'))['dS'], (sqrt(3)/(2*sqrt(2)))*2, check.attributes = FALSE)
-
+  expect_equal(coldist(colspace(tetra, space = "tcs"))["dS"], (sqrt(3) / (2 * sqrt(2))) * 2, check.attributes = FALSE)
 })
 
 test_that("bootcoldist", {

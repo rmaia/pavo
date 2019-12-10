@@ -15,7 +15,6 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE, vonkries = TRUE)
 #' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' plot(coc.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -80,11 +79,13 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
 
   # Category labels (todo: make this more flexible/robust?)
   if (labels) {
-    text(x = c(max(tick.loc), 0),
-         y = c(0, max(tick.loc)),
-         labels = c("A", "B"),
-         pos = c(4, 3),
-         xpd = TRUE,
-         cex = labels.cex)
+    text(
+      x = c(max(tick.loc), 0),
+      y = c(0, max(tick.loc)),
+      labels = c("A", "B"),
+      pos = c(4, 3),
+      xpd = TRUE,
+      cex = labels.cex
+    )
   }
 }

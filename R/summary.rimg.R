@@ -52,12 +52,14 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
           summary_main(i, plot, axes = axes, col = col, ...)
         }
       } else {
-        out <- lapply(object, function(x) data.frame(
+        out <- lapply(object, function(x) {
+          data.frame(
             ID = attr(x, "imgname"),
             col_ID = seq(seq_len(nrow(attr(x, "classRGB")))),
             col_name = attr(x, "colnames"),
             attr(x, "classRGB")
-          ))
+          )
+        })
         do.call(rbind, out)
       }
     } else {

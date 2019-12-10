@@ -75,7 +75,6 @@ tcs.flowers <- colspace(vis.flowers, space = "tcs")
 # A housefly in the categorical colourspace
 vis.flowers <- vismodel(flowers, visual = "musca", achro = "md.r1")
 cat.flowers <- colspace(vis.flowers, space = "categorical")
-
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their

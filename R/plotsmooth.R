@@ -82,8 +82,7 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
-
-    yaxismax <- max(rspecdata2[, i]) + (curves-1)*5
+    yaxismax <- max(rspecdata2[, i]) + (curves - 1) * 5
 
     plot(wl, rspecdata2[, i], cex = 0.1, ylim = c(0, yaxismax + 5), type = "l")
     legend(wl[1] - 20, yaxismax + 6, legend = legnames, text.col = rev(cols), cex = 0.7, bty = "n", xjust = 0)
@@ -94,7 +93,9 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
         loess.smooth(wl, rspecdata2[, i],
           span = span_values[j],
           evaluation = length(wl), degree = 2, family = "gaussian"
-        )$y + (j * 5), col = cols[j+1])
+        )$y + (j * 5),
+        col = cols[j + 1]
+      )
     }
 
     if (i %% numplots == 0) {

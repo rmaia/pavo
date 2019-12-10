@@ -36,7 +36,7 @@ test_that("Dataframe", {
     c(-7, -1, -1)
   )
 
-#  expect_error(voloverlap(hrep, qux), "dimnames")
+  #  expect_error(voloverlap(hrep, qux), "dimnames")
 
   colnames(hrep) <- c("x", "y", "z")
   colnames(qux) <- c("x", "y", "z")

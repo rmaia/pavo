@@ -58,7 +58,6 @@
 #' # A housefly in the categorical colourspace
 #' vis.flowers <- vismodel(flowers, visual = "musca", achro = "md.r1")
 #' cat.flowers <- colspace(vis.flowers, space = "categorical")
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -94,7 +93,6 @@
 colspace <- function(vismodeldata,
                      space = c("auto", "di", "tri", "tcs", "hexagon", "coc", "categorical", "ciexyz", "cielab", "cielch", "segment"),
                      qcatch = NULL) {
-
   space2 <- try(match.arg(space), silent = TRUE)
 
   if (inherits(space2, "try-error")) {
@@ -106,9 +104,11 @@ colspace <- function(vismodeldata,
       res <- cie(vismodeldata, "XYZ")
     } else {
       if (is.null(attr(vismodeldata, "conenumb"))) {
-        stop("conenumb attribute is missing from vismodeldata. Please check",
-             " that is a valid vismodel object or manually specify the space",
-             " argument")
+        stop(
+          "conenumb attribute is missing from vismodeldata. Please check",
+          " that is a valid vismodel object or manually specify the space",
+          " argument"
+        )
       }
       res <-
         switch(as.character(attr(vismodeldata, "conenumb")),

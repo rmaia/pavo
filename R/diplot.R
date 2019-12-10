@@ -12,7 +12,6 @@
 #' vis.flowers <- vismodel(flowers, visual = "canis")
 #' di.flowers <- colspace(vis.flowers, space = "di")
 #' plot(di.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -63,9 +62,10 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
     text(vert,
-         labels = c("S", "L"),
-         pos = c(2, 4),
-         xpd = TRUE,
-         cex = labels.cex)
+      labels = c("S", "L"),
+      pos = c(2, 4),
+      xpd = TRUE,
+      cex = labels.cex
+    )
   }
 }

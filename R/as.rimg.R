@@ -42,7 +42,6 @@ as.rimg <- function(object, name = "img") {
 #' @export
 #'
 as.rimg.default <- function(object, name = "img") {
-
   if (is.rimg(object)) {
     # Just output the original, if already 'rimg'
     return(object)
@@ -121,7 +120,6 @@ as.rimg.default <- function(object, name = "img") {
     # The list itself needs attributes
     class(object2) <- c("rimg", "list")
     attr(object2, "state") <- "raw"
-
   } else { # colour classified object
 
     # Attributes
@@ -150,7 +148,6 @@ as.rimg.default <- function(object, name = "img") {
   } else {
     object2
   }
-
 }
 
 #' @rdname as.rimg

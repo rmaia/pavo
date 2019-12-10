@@ -157,7 +157,6 @@
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
 summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
-
   chkDots(...)
 
   wl <- isolate_wl(object, keep = "wl")

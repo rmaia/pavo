@@ -73,7 +73,6 @@ vis.flowers <- vismodel(flowers,
 )
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 plot(hex.flowers)
-
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram

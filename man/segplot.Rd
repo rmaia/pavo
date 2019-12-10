@@ -43,7 +43,6 @@ data(flowers)
 vis.flowers <- vismodel(flowers, visual = "segment", achromatic = "all")
 seg.flowers <- colspace(vis.flowers, space = "segment")
 plot(seg.flowers)
-
 }
 \references{
 Endler, J. A. (1990) On the measurement and classification of

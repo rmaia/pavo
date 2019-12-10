@@ -1,5 +1,4 @@
 isolate_wl <- function(rspecdata, keep = c("wl", "spec")) {
-
   keep <- match.arg(keep)
 
   is_wl <- colnames(rspecdata) == "wl"
@@ -9,7 +8,9 @@ isolate_wl <- function(rspecdata, keep = c("wl", "spec")) {
       return(rspecdata[, is_wl])
     } else {
       warning("wl column missing from input rspec data. Using arbritrary ",
-              "values based on object length.", call. = FALSE)
+        "values based on object length.",
+        call. = FALSE
+      )
       return(seq_len(nrow(rspecdata)))
     }
   } else {

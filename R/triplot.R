@@ -24,7 +24,6 @@
 #' vis.flowers <- vismodel(flowers, visual = "apis")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' plot(tri.flowers)
-#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -91,9 +90,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
     text(vert,
-         labels = c("S", "M", "L"),
-         pos = c(3, 2, 4),
-         xpd = TRUE,
-         cex = labels.cex)
+      labels = c("S", "M", "L"),
+      pos = c(3, 2, 4),
+      xpd = TRUE,
+      cex = labels.cex
+    )
   }
 }

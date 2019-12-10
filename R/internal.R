@@ -7,13 +7,13 @@
 #####################
 
 huedisp <- function(tcsres) {
-  if (nrow(tcsres)==1) {
+  if (nrow(tcsres) == 1) {
     return(NA)
   }
   # This function can probably also be expressed with x,y,z or u,s,m,l, which
   # might help write a more efficient code using linear algebra libs.
   alphas <- combn(nrow(tcsres), 2, function(x) {
-    phi   <- tcsres[x, "h.phi"]
+    phi <- tcsres[x, "h.phi"]
     theta <- tcsres[x, "h.theta"]
 
     prod(cos(phi), cos(diff(theta))) + prod(sin(phi))

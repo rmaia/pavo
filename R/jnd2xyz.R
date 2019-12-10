@@ -120,12 +120,13 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[2], ] <- cdmat[ptnames[1], ptnames[2]]
 
     # subsequent points
-    coords[c(ptnames[-c(1:2)]), ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x)
+    coords[c(ptnames[-c(1:2)]), ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
       pos2(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
         cdmat[ptnames[2], x]
-      )))
+      )
+    }))
   }
 
   if (ncone == "3") {
@@ -145,12 +146,13 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
 
     # subsequent points
-    positions <- lapply(ptnames[-c(1:3)], function(x)
+    positions <- lapply(ptnames[-c(1:3)], function(x) {
       pos3(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
         cdmat[ptnames[2], x]
-      ))
+      )
+    })
     names(positions) <- ptnames[-c(1:3)]
 
 
@@ -192,13 +194,14 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[4], ] <- fourthpointxyz
 
     # subsequent points
-    positions <- lapply(ptnames[-c(1:4)], function(x)
+    positions <- lapply(ptnames[-c(1:4)], function(x) {
       pos4(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
         cdmat[ptnames[2], x],
         cdmat[ptnames[3], x]
-      ))
+      )
+    })
     names(positions) <- ptnames[-c(1:4)]
 
 
@@ -224,12 +227,13 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[2], "lum"] <- ldmat[ptnames[1], ptnames[2]]
 
     # subsequent points
-    coords[c(ptnames[-c(1:2)]), "lum" ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x)
+    coords[c(ptnames[-c(1:2)]), "lum" ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
       pos2(
         ldmat[ptnames[1], ptnames[2]],
         ldmat[ptnames[1], x],
         ldmat[ptnames[2], x]
-      )))
+      )
+    }))
     # invert if darkest point is positive
 
 

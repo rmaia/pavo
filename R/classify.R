@@ -123,9 +123,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
   ## Check distinct data points > kcols, otherwise it'll give an uninformative error or hang.
   ## Doesn't work for interactive atm though
-  if(!is.null(kcols))
-    if(any(unlist(lapply(seq_along(imgdat), function(x) nrow(unique(apply(imgdat[[x]], 3, rbind))))) < max(kcols)))
+  if (!is.null(kcols)) {
+    if (any(unlist(lapply(seq_along(imgdat), function(x) nrow(unique(apply(imgdat[[x]], 3, rbind))))) < max(kcols))) {
       stop('The specified number of cluster centers exceeds the number of distinct data points in one or more images, consider a new value for argument "kcols"')
+    }
+  }
 
   ## ------------------------------ Main ------------------------------ ##
 
@@ -252,11 +254,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 #' @importFrom pbmcapply pbmclapply
 classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
   ifelse(parallel_i2,
-         outdata <- pbmclapply(seq_along(imgdat_i2),
-                               function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
-                               mc.cores = cores_i2
-         ),
-         outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
+    outdata <- pbmclapply(seq_along(imgdat_i2),
+      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
+      mc.cores = cores_i2
+    ),
+    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
   )
   outdata
 }
@@ -280,16 +282,16 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
 
   # Cluster analysis, then format as image matrix
   kMeans <- switch(method_i,
-                   "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
-                   "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
+    "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
+    "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
   )
   outmat3 <- switch(method_i,
-                    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
-                    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
+    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
+    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
   )
   centers <- switch(method_i,
-                    "kMeans" = as.data.frame(kMeans$centers),
-                    "kMedoids" = as.data.frame(kMeans$medoids)
+    "kMeans" = as.data.frame(kMeans$centers),
+    "kMedoids" = as.data.frame(kMeans$medoids)
   )
 
   # Rotate to match original orientation

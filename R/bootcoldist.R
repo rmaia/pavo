@@ -164,14 +164,16 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   # now take the column means for all bootstrapped by
   # returns a list with length = number of by
   # each row in these = the (geometric) mean of bootstrap replicates
-  groupcolmeans <- lapply(bootbygroup, function(z)
-    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))))
+  groupcolmeans <- lapply(bootbygroup, function(z) {
+    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean)))
+  })
 
   # now "split and merge"
   # creating a list with length = number of bootstrap replicates
   # and rows in each entry = mean per group in that replicate
-  bootgrouped <- lapply(seq_len(boot.n), function(x)
-    do.call(rbind, lapply(groupcolmeans, "[", x, )))
+  bootgrouped <- lapply(seq_len(boot.n), function(x) {
+    do.call(rbind, lapply(groupcolmeans, "[", x, ))
+  })
 
   # ...name the rows by group
   bootgrouped <- lapply(bootgrouped, function(x) {
@@ -210,8 +212,9 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   # get deltaS and name by group difference
   bootdS <- do.call(
     rbind,
-    lapply(bootcd, function(x)
-      setNames(x$dS, paste(x$patch1, x$patch2, sep = "-")))
+    lapply(bootcd, function(x) {
+      setNames(x$dS, paste(x$patch1, x$patch2, sep = "-"))
+    })
   )
 
   if (dim(bootdS)[1] < boot.n) {
@@ -242,8 +245,9 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 
     bootdL <- do.call(
       rbind,
-      lapply(bootcd, function(x)
-        setNames(x$dL, paste(x$patch1, x$patch2, sep = "-")))
+      lapply(bootcd, function(x) {
+        setNames(x$dL, paste(x$patch1, x$patch2, sep = "-"))
+      })
     )
 
     bootdL <- apply(bootdL, 2, sort)

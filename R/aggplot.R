@@ -40,7 +40,6 @@
 #' aggplot(sicalis, bysic, FUN.error = function(x) quantile(x, c(0.0275, 0.975)))
 #' aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
 #' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x) / sqrt(length(x)))
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu},
 #' Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
@@ -59,7 +58,8 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
 
   if (anyNA(errplotspecs[, -1])) {
     warning("Could not calculate errors. Do any groups have n = 1?",
-            call. = FALSE)
+      call. = FALSE
+    )
   }
 
   # make wavelength vector
@@ -78,8 +78,10 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     upper <- cntplotspecs + errplotspecs
   }
 
-  polygon_data <- rbind(upper,
-                        lower[rev(seq(nrow(lower))), , drop = FALSE])
+  polygon_data <- rbind(
+    upper,
+    lower[rev(seq(nrow(lower))), , drop = FALSE]
+  )
 
 
   polygon_wl <- c(wl, rev(wl))

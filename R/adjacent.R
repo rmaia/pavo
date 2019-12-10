@@ -270,19 +270,8 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 
   ifelse(imgsize < 100,
     outdata <- pbmcapply::pbmclapply(seq_along(classimg),
-      function(x) adjacent_main(classimg[[x]],
-          xpts_i = xpts[[x]],
-          xscale_i = xscale[[x]],
-          bkgID_i = bkgID,
-          exclude2_i = exclude2,
-          coldists_i = coldists[[x]],
-          hsl_i = hsl[[x]]
-        ),
-      mc.cores = cores
-    ),
-    outdata <- lapply(
-      seq_along(classimg),
-      function(x) adjacent_main(classimg[[x]],
+      function(x) {
+        adjacent_main(classimg[[x]],
           xpts_i = xpts[[x]],
           xscale_i = xscale[[x]],
           bkgID_i = bkgID,
@@ -290,16 +279,32 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
           coldists_i = coldists[[x]],
           hsl_i = hsl[[x]]
         )
+      },
+      mc.cores = cores
+    ),
+    outdata <- lapply(
+      seq_along(classimg),
+      function(x) {
+        adjacent_main(classimg[[x]],
+          xpts_i = xpts[[x]],
+          xscale_i = xscale[[x]],
+          bkgID_i = bkgID,
+          exclude2_i = exclude2,
+          coldists_i = coldists[[x]],
+          hsl_i = hsl[[x]]
+        )
+      }
     )
   )
 
   # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
   allNms <- unique(unlist(lapply(outdata, names)))
-  outdata <- do.call(rbind, c(lapply(outdata, function(x)
+  outdata <- do.call(rbind, c(lapply(outdata, function(x) {
     data.frame(c(x, vapply(
       setdiff(allNms, names(x)),
       function(y) NA, logical(1)
-    )))), make.row.names = FALSE))
+    )))
+  }), make.row.names = FALSE))
 
   # Reshuffle column order
   namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
@@ -653,10 +658,12 @@ transitioncalc <- function(classimgdat, colornames) {
   # All row transitions
   rt_temp <- lapply(
     seq_len(nrow(classimgdat)),
-    function(x) table(paste0(
+    function(x) {
+      table(paste0(
         head(as.numeric(classimgdat[x, ]), -1),
         ".", tail(as.numeric(classimgdat[x, ]), -1)
       ))
+    }
   )
   rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
   rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
@@ -671,10 +678,12 @@ transitioncalc <- function(classimgdat, colornames) {
   classimgdat_trans <- as.data.frame(t(classimgdat))
   ct_temp <- lapply(
     seq_len(nrow(classimgdat_trans)),
-    function(x) table(paste0(
+    function(x) {
+      table(paste0(
         head(as.numeric(classimgdat_trans[x, ]), -1),
         ".", tail(as.numeric(classimgdat_trans[x, ]), -1)
       ))
+    }
   )
   ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
   ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)

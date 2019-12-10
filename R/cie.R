@@ -44,12 +44,12 @@
 #'  Internationale de l Eclairage.
 
 cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
-
   space <- tryCatch(match.arg(space),
-                    error = function(e) {
-                      message("Invalid space arg. Defaulting to XYZ")
-                      return("XYZ")
-                    })
+    error = function(e) {
+      message("Invalid space arg. Defaulting to XYZ")
+      return("XYZ")
+    }
+  )
 
   X <- vismodeldata[, names(vismodeldata) %in% c("X", "cie2_X", "cie10_X")]
   Y <- vismodeldata[, names(vismodeldata) %in% c("Y", "cie2_Y", "cie10_Y")]

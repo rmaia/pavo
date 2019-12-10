@@ -27,7 +27,6 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 summary.vismodel <- function(object, ...) {
-
   chkDots(...)
 
   if (is.null(attr(object, "qcatch"))) {

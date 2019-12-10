@@ -114,7 +114,6 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       # function.
 
       tempframe <- parse_procspec(ff)
-      
     } else if (grepl("\\.(ABS|TRM)$", ff, ignore.case = ignore.case)) {
       tempframe <- parse_avantes(ff)
     } else {
@@ -131,7 +130,7 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
       }
 
       # ToDo we can actually use this raw string to import metadata if we want
-      
+
       # Strip badly encoded characters
       raw <- sapply(raw, function(line) {
         # Convert non-ASCII character to ""
@@ -186,11 +185,12 @@ getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = "
   }
 
 
-  tmp <- pbmclapply(files, function(x)
+  tmp <- pbmclapply(files, function(x) {
     tryCatch(gsp(x),
       error = function(e) NULL,
       warning = function(e) NULL
-    ), mc.cores = cores)
+    )
+  }, mc.cores = cores)
 
   if (any(unlist(lapply(tmp, is.null)))) {
     whichfailed <- which(unlist(lapply(tmp, is.null)))

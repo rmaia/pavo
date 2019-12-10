@@ -39,7 +39,6 @@
 
 peakshape <- function(rspecdata, select = NULL, lim = NULL,
                       plot = TRUE, ask = FALSE, absolute.min = FALSE, ...) {
-
   wl <- isolate_wl(rspecdata, keep = "wl")
 
   if (is.null(select)) {
