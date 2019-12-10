@@ -26,7 +26,7 @@ test_that("Receptor orders/names", {
   expect_warning({
     sumtcs <- summary(tetra.space, by = 3)
   })
-  # expect_equal(digest::sha1(sumtcs, digits = 4), "2a4f6b9dcb757139c3c6d2436d6e2a1d27a2d41d")
+  
 })
 
 test_that("Relative quantum catches", {
@@ -157,35 +157,7 @@ test_that("Errors/messages", {
   vis.flowers <- vismodel(flowers, visual = "bluetit")
   names(vis.flowers) <- c('a', 'b', 'c', 'd', 'e')
   expect_warning(colspace(vis.flowers, space = 'tcs'), 'Could not find columns')
-})
-
-test_that("Output regression", {
-  library(digest)
-  data(flowers)
-
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 4),
-               "443206b9f30dbf9fabb1025890e9c5953efb3b43") # dispace
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 4), 
-               "1c8c2087dc1cb245a77b56c3e194002205cf4d20") # trispace
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 4), 
-               "3e32a9a99b2bd284b8cf2077ae4668f0bb83ca9a") # tcs
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4), 
-               "681486ec527c0f6e50e6dde1e23831f6c407895e") # categorical
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4), 
-               "f47081fbc5f3f896fc50b2223937d91b6f61069e") # segment
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", vonkries = TRUE, achromatic = "l"), space = "coc"), digits = 4), 
-               "d6e5c22dd45d2604c0d2fc16509b8887cb7812d2") # coc
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "apis", qcatch = "Ei", vonkries = TRUE, relative = FALSE, achromatic = "l"), space = "hexagon"), digits = 4), 
-               "2b51da258f4c5bcaf3a8a851e4e13cbd011c400f") # hexagon
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4), 
-               "4738ecfa2f5859134d0578d84bdd103ad7912983") # ciexyz
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielab"), digits = 4), 
-               "dfc481f4410e335fd63112db92712e4857f6515e") # cielab
-  expect_equal(digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielch"), digits = 4), 
-               "f4e4cc8da4fdffddc80c51f2f830b88adba3779d") # cielch
-
-  expect_equal(digest::sha1(summary(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), digits = 4),
-               "8d9c05ec7ae28b219c4c56edbce6a721bd68af82")
+  
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
 })

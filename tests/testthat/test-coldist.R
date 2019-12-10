@@ -68,14 +68,10 @@ test_that("Options", {
 
 test_that("jnd transform", {
   data(flowers)
-  library(digest)
 
   vis.flowers <- vismodel(flowers, visual = "apis")
   cd.flowers <- coldist(vis.flowers, n = c(1, 1, 1))
   jnd.flowers <- jnd2xyz(cd.flowers)
-
-  # expect_equal(digest::sha1(jndrot(jnd2xyz(coldist(vismodel(flowers, achromatic = "bt.dc", relative = FALSE), achromatic = TRUE))), digits = 4), 
-  #              "07064d68561bad24d8f02c0413611b5ba49ec53a")
 
   # Errors
   expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
@@ -89,7 +85,6 @@ test_that("jnd transform", {
 })
 
 test_that("Output", {
-  library(digest)
   data(flowers)
 
   # Maximum possible unweighted Euclidean distances
@@ -102,26 +97,13 @@ test_that("Output", {
   tetra <- data.frame(u = c(0, 1), s = c(0, 0), m = c(0, 0), l = c(1, 0))
   expect_equal(coldist(colspace(tetra, space = 'tcs'))['dS'], (sqrt(3)/(2*sqrt(2)))*2, check.attributes = FALSE)
 
-  # Regression
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = 'canis', achromatic = 'ml')), achromatic = TRUE), digits = 4), 
-               "bc460149b2263a857c9d573e77169556fa641f56")
-  # expect_equal(digest::sha1(coldist(vismodel(flowers, visual = 'canis', achromatic = 'ml'), achromatic = TRUE, n = c(1, 1)), digits = 4), 
-  #              "7329a3c550fe1d2939423e4104066c868891914f")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4), 
-               "27ab9af8efe2b1651cd36f8506262f87e2b127a7")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"), n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4), 
-               "754c01809100bdacc80d40db2359797f41180c23")
-  expect_equal(digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4), 
-               "d65c018342664ae9c8dca35e715c57dde28de30a")
 })
 
 test_that("bootcoldist", {
-  library(digest)
   # set.seed(11023)
   data(sicalis)
 
   vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
   gr <- gsub("ind..", "", rownames(vm))
-  # expect_equal(digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), "67116b67a619e14189e65807a039be1fac6a4077")
   expect_equal(dim(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), c(3, 6))
 })

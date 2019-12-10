@@ -5,7 +5,7 @@
 \alias{pavo}
 \alias{pavo-package}
 \title{pavo: Perceptual Analysis, Visualization and Organization of
-    Spectral Colour Data in R}
+    Spectral Colour Data}
 \description{
 A cohesive framework for parsing, analyzing and
     organizing colour from spectral data.
