@@ -1,8 +1,8 @@
-
-
 context("hashes")
 
 test_that("coldist", {
+  skip_on_cran()
+  
   data(flowers)
   library(digest)
 
@@ -35,6 +35,8 @@ test_that("coldist", {
 })
 
 test_that("colspace", {
+  skip_on_cran()
+  
   library(digest)
   data(flowers)
 
@@ -88,6 +90,8 @@ test_that("colspace", {
 })
 
 test_that("processing & general", {
+  skip_on_cran()
+  
   library(digest)
 
   # Sensdata
@@ -125,6 +129,8 @@ test_that("processing & general", {
 })
 
 test_that("images", {
+  skip_on_cran()
+  
   library(digest)
   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
@@ -143,6 +149,8 @@ test_that("images", {
 })
 
 test_that("vismodel", {
+  skip_on_cran()
+  
   library(digest)
   data(flowers)
 

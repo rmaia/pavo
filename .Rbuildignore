@@ -30,4 +30,3 @@ CONDUCT.md
 ^revdep$
 ^inst/ciebg\.svg$
 ^inst/linear_visible_spectrum\.svg$
-tests/testthat/test-hashes.R
