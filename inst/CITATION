@@ -1,14 +1,13 @@
 citHeader("To cite package pavo in publications use:")
 
-citEntry(entry="Article",
-    title = "pavo 2: new tools for the spectral and spatial analysis of colour in R",
-    author = personList(as.person("Rafael Maia"),
-    as.person("Hugo Gruson"),
-    as.person("John A. Endler"),
-    as.person("Thomas E. White")
-    ),
-	journal = "Methods in Ecology and Evolution",
+citEntry(
+  entry = "Article",
+  title = "pavo 2: new tools for the spectral and spatial analysis of colour in R",
+  author = c("Rafael Maia", "Hugo Gruson", "John A. Endler", "Thomas E. White"),
+  journal = "Methods in Ecology and Evolution",
   year = "2019",
   volume = "10",
+  number = "7",
   page = "1097-1107",
-  textVersion = "Maia R., Gruson H.,  Endler J. A., White T. E. 2019. pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution, 10(7), 1097-1107")
+  doi = "10.1111/2041-210X.13174",
+  textVersion = "Maia R., Gruson H., Endler J. A., White T. E. 2019. pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution, 10(7), 1097-1107")
