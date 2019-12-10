@@ -1,5 +1,8 @@
 url: http://rafaelmaia.net/pavo
 
+home:
+  title: Perceptual Analysis, Visualization and Organization of Spectral Colour Data in R
+
 reference:
 - title: Processing and Organisation
   desc: "Functions for importing and processing spectral data"
