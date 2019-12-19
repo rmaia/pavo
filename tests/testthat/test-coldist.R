@@ -31,8 +31,8 @@ test_that("Messages & warnings", {
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
-  expect_warning(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "number of cones not specified; assumed to be 4")
-  expect_warning(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
+  expect_message(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "Number of cones assumed to be 4")
+  expect_message(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
 })
 
 test_that("Equivalent", {

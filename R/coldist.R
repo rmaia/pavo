@@ -193,13 +193,14 @@ coldist <- function(modeldata,
     }
   }
 
-  # transformations in case object is neither from colspace or vismodel
+  # Transformations in case object is neither from colspace or vismodel. Changed 
+  # warnings to messages, since there's no way to directly specify 'ncone' when using 
+  # custom data you'd always get scary warnings.
   if (is.null(ncone)) {
     if (achromatic) {
       ncone <- ncol(modeldata) - 1
-      warning("number of cones not specified; assumed to be ", ncone,
-        " (last column ignored for chromatic contrast, used only for achromatic contrast)",
-        call. = FALSE
+      message("Number of cones assumed to be ", ncone,
+        " (last column ignored for chromatic contrast, used only for achromatic contrast)"
       )
     }
     else {
@@ -209,9 +210,7 @@ coldist <- function(modeldata,
       } else {
         ncone <- ncol(modeldata)
       }
-      warning("number of cones not specified; assumed to be ", ncone,
-        call. = FALSE
-      )
+      message("Number of cones assumed to be ", ncone)
     }
   }
 
