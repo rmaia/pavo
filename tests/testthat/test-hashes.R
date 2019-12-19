@@ -32,6 +32,11 @@ test_that("coldist", {
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4),
     "d65c018342664ae9c8dca35e715c57dde28de30a"
   )
+  expect_equal(
+    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 4),
+    "c6d1989e98abd7772c00475696c6e6dafe0a2e46"
+  )
+  
 })
 
 test_that("colspace", {
