@@ -160,7 +160,7 @@ coldist <- function(modeldata,
       stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
     }
   }
-  
+
   ncone <- attr(modeldata, "conenumb")
 
   if (isTRUE(attr(modeldata, "relative"))) {
@@ -193,13 +193,14 @@ coldist <- function(modeldata,
     }
   }
 
-  # Transformations in case object is neither from colspace or vismodel. Changed 
-  # warnings to messages, since there's no way to directly specify 'ncone' when using 
+  # Transformations in case object is neither from colspace or vismodel. Changed
+  # warnings to messages, since there's no way to directly specify 'ncone' when using
   # custom data you'd always get scary warnings.
   if (is.null(ncone)) {
     if (achromatic) {
       ncone <- ncol(modeldata) - 1
-      message("Number of cones assumed to be ", ncone,
+      message(
+        "Number of cones assumed to be ", ncone,
         " (last column ignored for chromatic contrast, used only for achromatic contrast)"
       )
     }
@@ -444,10 +445,10 @@ coldist <- function(modeldata,
   }
 
   # Set achro contrasts to NA if no lum values supplied
-  if(((is.vismodel(modeldata) || is.colspace(modeldata)) && attr(modeldata, "visualsystem.achromatic") == "none") || !(achromatic)){
+  if (((is.vismodel(modeldata) || is.colspace(modeldata)) && attr(modeldata, "visualsystem.achromatic") == "none") || !(achromatic)) {
     res$dL <- NA
   }
-  
+
   # if (attr(modeldata, "visualsystem.achromatic") == "none" || !(achromatic)) {
   #   res$dL <- NA
   # }
