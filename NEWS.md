@@ -1,3 +1,10 @@
+# pavo 2.4.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* fixed a bug in `coldist()`that prevented the calculation of achromatic contrast
+when using custom quantum catch data 
+
 # pavo 2.3.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES

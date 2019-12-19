@@ -160,7 +160,7 @@ coldist <- function(modeldata,
       stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
     }
   }
-
+  
   ncone <- attr(modeldata, "conenumb")
 
   if (isTRUE(attr(modeldata, "relative"))) {
@@ -445,10 +445,13 @@ coldist <- function(modeldata,
   }
 
   # Set achro contrasts to NA if no lum values supplied
-  if (attr(modeldata, "visualsystem.achromatic") == "none" || is.null(attr(modeldata, "visualsystem.achromatic"))
-  || !(achromatic)) {
+  if(((is.vismodel(modeldata) || is.colspace(modeldata)) && attr(modeldata, "visualsystem.achromatic") == "none") || !(achromatic)){
     res$dL <- NA
   }
+  
+  # if (attr(modeldata, "visualsystem.achromatic") == "none" || !(achromatic)) {
+  #   res$dL <- NA
+  # }
 
   attr(res, "ncone") <- ncone
   attr(res, "isrnoise") <- usereceptornoisemodel

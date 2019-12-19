@@ -20,7 +20,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Rafael Maia \email{rm72@zips.uakron.edu} (\href{https://orcid.org/0000-0002-7563-9795}{ORCID})
+\strong{Maintainer}: Rafael Maia \email{thomas.white026@gmail.com} (\href{https://orcid.org/0000-0002-7563-9795}{ORCID})
 
 Authors:
 \itemize{

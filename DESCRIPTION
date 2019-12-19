@@ -1,12 +1,12 @@
 Package: pavo
 Title: Perceptual Analysis, Visualization and Organization of
     Spectral Colour Data
-Version: 2.3.0
+Version: 2.4.0
 Authors@R: 
     c(person(given = "Rafael",
              family = "Maia",
              role = c("aut", "cre"),
-             email = "rm72@zips.uakron.edu",
+             email = "thomas.white026@gmail.com",
              comment = c(ORCID = "0000-0002-7563-9795")),
       person(given = "Thomas",
              family = "White",

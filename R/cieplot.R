@@ -63,6 +63,9 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     if (is.null(arg$xaxp)) {
       arg$xaxp <- c(0, 0.9, 9)
     }
+    if (is.null(arg$asp)) {
+      arg$asp <- 1
+    }
     if (is.null(arg$yaxp)) {
       arg$yaxp <- c(0, 0.8, 8)
     }
