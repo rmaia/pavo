@@ -99,9 +99,11 @@ colspace <- function(vismodeldata,
     stop("Invalid colorspace selected")
   }
 
+  # Auto-define an appropriate space
   if (space2 == "auto") {
     if (all(c("X", "Y", "Z") %in% names(vismodeldata))) {
-      res <- cie(vismodeldata, "XYZ")
+      space2 <- 'XYZ'
+      #res <- cie(vismodeldata, "XYZ")
     } else {
       if (is.null(attr(vismodeldata, "conenumb"))) {
         stop(
@@ -110,15 +112,17 @@ colspace <- function(vismodeldata,
           " argument"
         )
       }
-      res <-
+      space2 <-
         switch(as.character(attr(vismodeldata, "conenumb")),
-          "2" = dispace(vismodeldata),
-          "3" = trispace(vismodeldata),
-          "4" = tcspace(vismodeldata),
-          "seg" = segspace(vismodeldata)
+          "2" = 'di',
+          "3" = 'tri',
+          "4" = 'tcs',
+          "seg" = 'segment'
         )
     }
-  } else {
+  }
+    
+    # Run the model
     res <-
       switch(space2,
         "di" = dispace(vismodeldata),
@@ -132,7 +136,6 @@ colspace <- function(vismodeldata,
         "cielch" = cie(vismodeldata, "LCh"),
         "segment" = segspace(vismodeldata)
       )
-  }
 
   # Include lum for appropriate spaces
   if (!any(space2 %in% c("segment", "ciexyz", "cielab", "cielch"))) {
