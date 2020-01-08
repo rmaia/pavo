@@ -150,8 +150,8 @@ test_that("Errors/messages", {
   expect_warning(colspace(vismodel(flowers, visual = sensmodel(c(300, 400, 500, 600, 700))), space = "tcs"), "not tetrachromatic")
   class(vis.flowers) <- "data.frame"
   expect_error(colspace(vis.flowers[1:3], space = "tcs"), "has fewer than four")
-  expect_warning(colspace(vis.flowers, space = "tcs"), "treating columns as")
-  expect_warning(colspace(cbind(vis.flowers, vis.flowers[1:2]), space = "tcs"), "has more than four columns")
+  expect_message(colspace(vis.flowers, space = "tcs"), "treating columns as")
+  expect_message(colspace(cbind(vis.flowers, vis.flowers[1:2]), space = "tcs"), "has more than four columns")
 
   vis.flowers <- vismodel(flowers, visual = "bluetit")
   names(vis.flowers) <- c("a", "b", "c", "d", "e")

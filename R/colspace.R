@@ -143,12 +143,12 @@ colspace <- function(vismodeldata,
   if (is.null(attr(res, "qcatch"))) {
     if (is.null(qcatch)) {
       qcatch <- "Qi"
-      warning('input is not a "vismodel" object and argument "qcatch" is undefined; assuming quantum catch are not transformed (i.e. qcatch="Qi")')
+      message('Input is not a "vismodel" object and argument "qcatch" is undefined; assuming quantum catch are not transformed (i.e. qcatch = "Qi")')
     }
     attr(res, "qcatch") <- qcatch
   }
 
-  # check relative if user-defined input
+  # Check relative if user-defined input
   if (is.null(attr(res, "relative"))) {
     attr(res, "relative") <- FALSE
     receptcols <- res[, colnames(res) %in% c("u", "s", "m", "l")]
