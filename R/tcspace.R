@@ -69,14 +69,15 @@ tcspace <- function(vismodeldata) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
     }
     if (ncol(dat) == 4) {
-      if(!all(c("u", "s", "m", "l") %in% names(dat)))
+      if (!all(c("u", "s", "m", "l") %in% names(dat))) {
         message("Input data is not a ", dQuote("vismodel"), " object; treating columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+      }
     }
 
     if (ncol(dat) > 4) {
-      if(all(c("u", "s", "m", "l") %in% names(dat))){
-        dat <- dat[,c('u', 's', 'm', 'l')]
-      }else{
+      if (all(c("u", "s", "m", "l") %in% names(dat))) {
+        dat <- dat[, c("u", "s", "m", "l")]
+      } else {
         message("Input data is not a ", dQuote("vismodel"), " object and has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
       }
     }
@@ -85,7 +86,7 @@ tcspace <- function(vismodeldata) {
     names(dat) <- c("u", "s", "m", "l")
 
     # Transform to relative if necessary
-    if(!isTRUE(all.equal(rowSums(dat), rowSums(dat / rowSums(dat)), tol = 0.001))){
+    if (!isTRUE(all.equal(rowSums(dat), rowSums(dat / rowSums(dat)), tol = 0.001))) {
       dat <- dat / rowSums(dat)
       message("Quantum catch have been transformed to be relative (sum of 1)")
       attr(vismodeldata, "relative") <- TRUE

@@ -102,8 +102,8 @@ colspace <- function(vismodeldata,
   # Auto-define an appropriate space
   if (space2 == "auto") {
     if (all(c("X", "Y", "Z") %in% names(vismodeldata))) {
-      space2 <- 'XYZ'
-      #res <- cie(vismodeldata, "XYZ")
+      space2 <- "XYZ"
+      # res <- cie(vismodeldata, "XYZ")
     } else {
       if (is.null(attr(vismodeldata, "conenumb"))) {
         stop(
@@ -114,28 +114,28 @@ colspace <- function(vismodeldata,
       }
       space2 <-
         switch(as.character(attr(vismodeldata, "conenumb")),
-          "2" = 'di',
-          "3" = 'tri',
-          "4" = 'tcs',
-          "seg" = 'segment'
+          "2" = "di",
+          "3" = "tri",
+          "4" = "tcs",
+          "seg" = "segment"
         )
     }
   }
-    
-    # Run the model
-    res <-
-      switch(space2,
-        "di" = dispace(vismodeldata),
-        "tri" = trispace(vismodeldata),
-        "hexagon" = hexagon(vismodeldata),
-        "tcs" = tcspace(vismodeldata),
-        "coc" = coc(vismodeldata),
-        "categorical" = categorical(vismodeldata),
-        "ciexyz" = cie(vismodeldata, "XYZ"),
-        "cielab" = cie(vismodeldata, "LAB"),
-        "cielch" = cie(vismodeldata, "LCh"),
-        "segment" = segspace(vismodeldata)
-      )
+
+  # Run the model
+  res <-
+    switch(space2,
+      "di" = dispace(vismodeldata),
+      "tri" = trispace(vismodeldata),
+      "hexagon" = hexagon(vismodeldata),
+      "tcs" = tcspace(vismodeldata),
+      "coc" = coc(vismodeldata),
+      "categorical" = categorical(vismodeldata),
+      "ciexyz" = cie(vismodeldata, "XYZ"),
+      "cielab" = cie(vismodeldata, "LAB"),
+      "cielch" = cie(vismodeldata, "LCh"),
+      "segment" = segspace(vismodeldata)
+    )
 
   # Include lum for appropriate spaces
   if (!any(space2 %in% c("segment", "ciexyz", "cielab", "cielch"))) {
