@@ -27,7 +27,7 @@
 #'
 #' @export
 #'
-#' @importFrom grDevices adjustcolor
+#' @importFrom grDevices adjustcolor palette.colors
 #'
 #' @examples
 #'
@@ -138,12 +138,8 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     lcol <- rep(lcol, ncol(cntplotspecs))
   }
 
-  col_list <- c(
-    "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-    "#FF7F00", "#FFFF33", "#A65628", "#F781BF"
-  )
-
-  col_list <- rep(col_list, length.out = dim(cntplotspecs)[2])
+  col_list <- palette.colors(ncol(cntplotspecs), palette = "Okabe-Ito",
+                             alpha = 1, recycle = TRUE)
 
   if (is.null(shadecol)) {
     shadecol <- col_list

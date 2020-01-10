@@ -18,7 +18,7 @@
 #'
 #' @export
 #'
-#' @importFrom grDevices n2mfrow
+#' @importFrom grDevices n2mfrow palette.colors
 #'
 #' @examples
 #' data(sicalis)
@@ -101,10 +101,7 @@ explorespec <- function(rspecdata, by = NULL,
   arg$x <- wl
 
   if (is.null(arg$col)) {
-    col_list <- c(
-      "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-      "#FF7F00", "#FFFF33", "#A65628", "#F781BF"
-    )
+    col_list <- palette.colors(n = 8, palette = "Okabe-Ito", alpha = 1)
   } else {
     col_list <- arg$col
   }

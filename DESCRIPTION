@@ -37,7 +37,7 @@ License: GPL (>= 2)
 URL: http://rafaelmaia.net/pavo/, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.0.0)
 Imports:
     cluster,
     geometry(>= 0.4.0),
