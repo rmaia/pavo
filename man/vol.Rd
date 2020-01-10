@@ -37,6 +37,7 @@ vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
 vol(tcs.sicalis)
+
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

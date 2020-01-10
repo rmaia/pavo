@@ -25,9 +25,9 @@
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
 #' vol(tcs.sicalis)
-#' @importFrom geometry convhulln
 #'
-#' @importFrom grDevices trans3d
+#' @importFrom geometry convhulln
+#' @importFrom grDevices trans3d adjustcolor
 #'
 
 vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
@@ -106,7 +106,7 @@ vol <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
   }
 
   darkcolor <- arg$col
-  alphacolor <- rgb(t(col2rgb(arg$col)), alpha = alpha * 255, maxColorValue = 255)
+  alphacolor <- adjustcolor(arg$col, alpha.f = alpha)
 
   if (fill) {
     arg$border <- NA

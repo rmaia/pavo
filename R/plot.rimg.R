@@ -45,7 +45,7 @@ plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
 }
 
 ## For raw images
-#' @importFrom grDevices as.raster
+#' @importFrom grDevices as.raster col2rgb
 #' @importFrom graphics box plot.new plot.window
 defaultrasterImageplot <- function(imagedata, axes, col, ...) {
   if (missing(axes)) axes <- TRUE

@@ -27,6 +27,8 @@
 #'
 #' @export
 #'
+#' @importFrom grDevices adjustcolor
+#'
 #' @examples
 #'
 #' # Load reflectance data
@@ -151,7 +153,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     lcol <- col_list
   }
 
-  shadecol <- rgb(t(col2rgb(shadecol)) / 255, alpha = alpha)
+  shadecol <- adjustcolor(shadecol, alpha.f = alpha)
 
   # plot polygons first...
 
