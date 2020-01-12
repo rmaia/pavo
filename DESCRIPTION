@@ -34,7 +34,7 @@ Authors@R:
 Description: A cohesive framework for parsing, analyzing and
     organizing colour from spectral data.
 License: GPL (>= 2)
-URL: http://rafaelmaia.net/pavo/, https://github.com/rmaia/pavo/
+URL: http://pavo.colrverse.com, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
     R (>= 3.5.0)

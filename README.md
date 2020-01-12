@@ -21,8 +21,8 @@
 
 ### Need more information, or help with the package?
 
-- Read the [Package Vignettes](http://rafaelmaia.net/pavo/articles/) (or via `browseVignettes("pavo")`) for detailed examples and discussion.
-- Check out the [Latest News](http://rafaelmaia.net/pavo/news/index.html) for changes and updates.
+- Read the [package documentation and vignettes](http://pavo.colrverse.com/index.html) (or via `browseVignettes("pavo")`) for detailed examples and discussion.
+- Check out the [latest news](http://pavo.colrverse.com/news/index.html) for changes and updates.
 - **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
 
 ## Citing pavo
