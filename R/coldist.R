@@ -206,6 +206,8 @@ coldist <- function(modeldata,
     }
     else {
       # Don't count all-NA columns when guessing ncone
+      # FIXME: this only works if there is a single all-NA column. But we have
+      # no guarantee this will always be the case
       if (any(sapply(modeldata, function(x) all(is.na(x))))) {
         ncone <- ncol(modeldata) - 1
       } else {
@@ -251,7 +253,7 @@ coldist <- function(modeldata,
       fi = exp(dat)
     )
 
-    dat2 <- dat[, 1:ncone, drop = FALSE]
+    dat2 <- dat[, seq_len(ncone), drop = FALSE]
 
     if (is.numeric(weber.ref) && weber.ref > length(n)) {
       stop("reference cone class for the empirical estimate of the Weber fraction (",
@@ -307,7 +309,7 @@ coldist <- function(modeldata,
 
     res[, "dS"] <- switch(noise,
       "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
-      "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, 1:ncone])
+      "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, seq_len(ncone)])
     )
     resref[, "dS"] <- switch(noise,
       "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
