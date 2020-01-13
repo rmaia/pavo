@@ -58,7 +58,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   ## ------------------------------ Checks ------------------------------ ##
 
   ## Class
-  if (!"rimg" %in% class(image)) {
+  if (!inherits(image, "rimg")) {
     message("Attempting to coerce image to class rimg.")
     image <- as.rimg(image)
   }

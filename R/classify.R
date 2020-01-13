@@ -196,7 +196,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
       tag_loc[[i]] <- reference
 
       # Error prevention
-      if (class(centers[[i]]) == "try-error") {
+      if (inherits(centers[[i]], "try-error")) {
         message("One or more coorodinates out-of bounds. Try again.")
         i <- i
       } else if (any(duplicated(centers[[i]]))) {

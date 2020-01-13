@@ -153,7 +153,7 @@ coldist <- function(modeldata,
 
   noise <- match.arg(noise)
 
-  usereceptornoisemodel <- !isTRUE(any(class(modeldata) %in% "colspace"))
+  usereceptornoisemodel <- !inherits(modeldata, "colspace")
 
   if (noise == "quantum") {
     if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {

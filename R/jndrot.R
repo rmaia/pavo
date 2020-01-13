@@ -17,7 +17,7 @@
 #' @keywords internal
 
 jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
-  if (!"jnd2xyz" %in% class(jnd2xyzres)) {
+  if (!inherits(jnd2xyzres, "jnd2xyz")) {
     stop('object must be a result from the "jnd2xyz" function')
   }
 
