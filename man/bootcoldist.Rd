@@ -43,7 +43,7 @@ for the mean colour distance between two or more samples of colours
 \examples{
 \dontrun{
 data(sicalis)
-vm <- vismodel(sicalis, achro = "bt.dc")
+vm <- vismodel(sicalis, achromatic = "bt.dc")
 gr <- gsub("ind..", "", rownames(vm))
 bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1, cores = 1)
 }
