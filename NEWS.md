@@ -2,6 +2,11 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+* several `plot()` functions for colspace (`triplot()`, `tcsplot()`, 
+`tetraplot()`) gain a new `gamut` argument to plot the maximum gamut for a given
+visual system and illuminant. `summary.colspace()` also now returns the maximum
+colour volume for a given visual system and illuminant that you can use to
+compare to the realised volume by a given dataset. More information in PR #180.
 * parallel processing now relies on the `future` package, which offers windows 
 and high performance computing (HPC) environments support. The progress bar is
 produced by the `progressr` package and can be customised as well. As a 
