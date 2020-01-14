@@ -60,6 +60,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 
   arg0 <- list(...)
 
+  # 'achromatic' used to be called just 'achro' so let's work around it.
+  # TODO: add a warning about this so users update their scripts??
+  if (is.null(arg0$achromatic)) {
+    arg0$achromatic <- arg0$achro
+  }
+
   if (is.null(arg0$n)) {
     stop('argument "n" to be passed to "coldist" is missing', call. = FALSE)
   }
@@ -76,17 +82,17 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
 
-  if (is.null(arg0$achro)) {
+  if (is.null(arg0$achromatic)) {
     if (is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
-      stop('argument "achro" to be passed to "coldist" is missing', call. = FALSE)
+      stop('argument "achromatic" to be passed to "coldist" is missing', call. = FALSE)
     }
 
     if (attr(vismodeldata, "visualsystem.achromatic") == "none") {
-      arg0$achro <- FALSE
+      arg0$achromatic <- FALSE
     }
 
     if (attr(vismodeldata, "visualsystem.achromatic") != "none") {
-      arg0$achro <- TRUE
+      arg0$achromatic <- TRUE
     }
   }
 

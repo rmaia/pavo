@@ -2,6 +2,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* fix partial matching warnings in examples and in `bootcooldist()`
 * the package has a new website at `pavo.colrverse.com`
 * fixed a bug in `coldist()`that prevented the calculation of achromatic contrast
 when using custom quantum catch data 
