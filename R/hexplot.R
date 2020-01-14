@@ -17,7 +17,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers,
 #'   visual = "apis", qcatch = "Ei", relative = FALSE,
-#'   vonkries = TRUE, achro = "l", bkg = "green"
+#'   vonkries = TRUE, achromatic = "l", bkg = "green"
 #' )
 #' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' plot(hex.flowers)

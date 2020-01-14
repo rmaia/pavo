@@ -17,7 +17,7 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, visual = "apis", achro = "l")
+#' vis.flowers <- vismodel(flowers, visual = "apis", achromatic = "l")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
