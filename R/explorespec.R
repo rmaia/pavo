@@ -46,7 +46,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   # check if the by argument has a 'wl' entry (e.g. if names were obtained through
   # regex conditions on the original spec names) and remove it
-  if (length(which(by == "wl")) != 0) {
+  if ("wl" %in% by) {
     by <- by[-which(by == "wl")]
   }
   # Allow for means of every "by" data, if "by" is a single number
@@ -109,7 +109,7 @@ explorespec <- function(rspecdata, by = NULL,
   par(mar = c(2, 2, 1, 1), oma = c(3, 3, 0, 0))
 
   if (is.null(arg$ylim) && scale == "equal") {
-    arg$ylim <- c(min(rspecdata), max(rspecdata)) * yaxismult
+    arg$ylim <- range(rspecdata) * yaxismult
   }
 
   # TODO: should be able to deal with this if there are NAs in the by vector

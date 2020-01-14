@@ -21,8 +21,6 @@ projpoints <- function(tcsdata, ...) {
   points.theta <- tcsdata[, "h.theta"]
   points.phi <- tcsdata[, "h.phi"]
 
-  n <- length(points.theta)
-
   # Edges of the tetrahedron, adjusted
   vert.theta <- c(-3.1415, 3.1415, -1.047198, 1.047198, -2.617994)
   vert.phi <- c(-0.3398369, -0.3398369, -0.3398369, -0.3398369, 1.5707963)
@@ -38,7 +36,6 @@ projpoints <- function(tcsdata, ...) {
     points.theta + (210 / 180 * pi)
   )
 
-
   # radians to degrees
   coords.theta <- c(edge.theta, vert.theta, points.theta) * 180 / pi
   coords.phi <- c(edge.phi, vert.phi, points.phi) * 180 / pi
@@ -46,9 +43,6 @@ projpoints <- function(tcsdata, ...) {
   # map projection coordinates
 
   mp <- mapproj::mapproject(coords.theta, coords.phi, projection = "mollweide")
-
-  mp.v.theta <- mp$x[seq_len(9)]
-  mp.v.phi <- mp$y[seq_len(9)]
 
   mp.p.theta <- mp$x[-c(seq_len(9))]
   mp.p.phi <- mp$y[-c(seq_len(9))]

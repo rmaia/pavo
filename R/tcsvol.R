@@ -26,24 +26,19 @@ tcsvol <- function(tcsdata, col = "black", alpha = 0.2,
     requireNamespace("rgl")
   }
 
-  vol <- t(convhulln(tcsdata[, c("x", "y", "z")], options = "FA")$hull)
   coords <- tcsdata[, c("x", "y", "z")]
-  listvol <- split(vol, rep(seq_len(ncol(vol)), each = nrow(vol)))
-  ppairs <- do.call(rbind, lapply(listvol, function(x) t(combn(x, 2))))
+  vol <- t(convhulln(coords, options = "Tv"))
 
   if (grid) {
-    for (i in seq_len(nrow(ppairs))) {
-      rgl::segments3d(coords[ppairs[i, ], "x"],
-        coords[ppairs[i, ], "y"],
-        coords[ppairs[i, ], "z"],
-        color = col, alpha = grid.alpha, lwd = lwd
-      )
-    }
+    rgl::triangles3d(coords[vol, ],
+                     color = col, alpha = grid.alpha, lwd = lwd,
+                     front = "lines", back = "lines"
+    )
   }
 
   if (fill) {
-    rgl::rgl.triangles(coords[vol, 1], coords[vol, 2], coords[vol, 3],
-      alpha = alpha, color = col
+    rgl::rgl.triangles(coords[vol, ],
+                       alpha = alpha, color = col
     )
   }
 

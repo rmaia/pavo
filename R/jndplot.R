@@ -101,10 +101,11 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     # combine data with references
-    dat <- rbind(x[, "x", drop = FALSE], attr(x, "resref")[, "x", drop = FALSE])
+    x2 <- x[, "x", drop = FALSE]
+
+    dat <- rbind(x2, attr(x, "resref")[, "x", drop = FALSE])
     attr(dat, "resref") <- attr(x, "resref")[, "x", drop = FALSE]
 
-    x2 <- x[, "x", drop = FALSE]
 
     # get arrow coordinates
 
@@ -142,8 +143,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     # add arrows
     if (arrow != "none") {
       arrowarg <- arg
-      arrowarg <- arrowarg[names(as.list(args(arrows)))]
-      arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+      arrowarg <- arrowarg[names(arg) %in% names(formals(arrows))]
       arrowarg$x0 <- arrowstart
       arrowarg$x1 <- arrowpos
       arrowarg$y0 <- rep(0, 2)
@@ -154,19 +154,15 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     if (arrow.labels) {
-      text("S",
-        x = arrowarg$x1[1], y = 0, xpd = TRUE,
-        pos = 2, cex = labels.cex, col = arrow.col
-      )
-      text("L",
-        x = arrowarg$x1[2], y = 0, xpd = TRUE,
-        pos = 4, cex = labels.cex, col = arrow.col
+      text(c("S", "L"),
+        x = arrowarg$x1, y = 0, xpd = TRUE,
+        pos = c(2,4), cex = labels.cex, col = arrow.col
       )
     }
 
     # Add points
     pointsarg <- arg
-    pointsarg[names(as.list(args(arrows)))] <- NULL
+    pointsarg[names(formals(arrows))] <- NULL
     pointsarg$col <- arg$col
 
     pointsarg$x <- x[, "x"]
@@ -202,8 +198,6 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     if (arrow != "none") {
       # get arrow coordinates
-      arrow <- match.arg(arrow)
-
       arrowstart <- switch(arrow,
         relative = as.matrix(attr(dat, "resref")[dim(attr(dat, "resref"))[1], colstouse]),
         absolute = as.matrix(attr(dat, "resref")["jnd2xyzrrf.achro", colstouse]),
@@ -276,7 +270,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     # Blank plot w/ segment
     plotarg <- arg
-    plotarg[names(as.list(args(arrows)))] <- NULL
+    plotarg[names(formals(arrows))] <- NULL
     plotarg$x <- 0
     plotarg$y <- 0
     plotarg$type <- "n"
@@ -303,8 +297,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     # add arrows
     if (arrow != "none") {
       arrowarg <- arg
-      arrowarg <- arrowarg[names(as.list(args(arrows)))]
-      arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+      arrowarg <- arrowarg[names(arg) %in% names(formals(arrows))]
       arrowarg$x0 <- rep(arrowstart[, colstouse[1]], 3)
       arrowarg$x1 <- arrowpos[, colstouse[1]]
       arrowarg$y0 <- rep(arrowstart[, colstouse[2]], 3)
@@ -330,7 +323,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     # Add points
     pointsarg <- arg
-    pointsarg[names(as.list(args(arrows)))] <- NULL
+    pointsarg[names(formals(arrows))] <- NULL
     pointsarg$col <- arg$col
 
     pointsarg$x <- x[, colstouse[1]]
@@ -361,11 +354,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     x2 <- x[, colstouse]
     attr(x2, "resref") <- attr(x, "resref")[, colstouse]
 
-    dat <- rbind(x[, colstouse], attr(x, "resref")[, colstouse])
+    dat <- rbind(x2, attr(x, "resref")[, colstouse])
     attr(dat, "resref") <- attr(x, "resref")[, colstouse]
-
-    # get arrow coordinates
-    arrow <- match.arg(arrow)
 
     if (arrow != "none") {
       arrowstart <- switch(arrow,
@@ -448,7 +438,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
     # Blank plot w/ segment
     plotarg <- arg
-    plotarg[names(as.list(args(arrows)))] <- NULL
+    plotarg[names(formals(arrows))] <- NULL
     if (arrow != "none") {
       if (is.null(plotarg$xlim)) plotarg$xlim <- range(rbind(x2, labelpos)[, colstouse[1]])
       if (is.null(plotarg$ylim)) plotarg$ylim <- range(rbind(x2, labelpos)[, colstouse[2]])
@@ -498,8 +488,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
       )
 
       arrowarg <- arg
-      arrowarg <- arrowarg[names(as.list(args(arrows)))]
-      arrowarg <- arrowarg[!unlist(lapply(arrowarg, is.null))]
+      arrowarg <- arrowarg[names(arg) %in% names(formals(arrows))]
 
       arrowarg$x0 <- astart$x
       arrowarg$x1 <- aend$x
@@ -523,12 +512,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     # Add points
-    pointsarg <- arg
-    pointsarg[names(as.list(args(arrows)))] <- NULL
-    pointsarg[setdiff(
-      perspargs,
-      names(as.list(args(plot.default)))
-    )] <- NULL
+    pointsarg <- arg[!names(arg) %in% c(formals(arrows), formals(plot.default))]
     pointsarg$col <- arg$col
 
     ptpos <- trans3d(x2[, colstouse[1]], x2[, colstouse[2]], x2[, colstouse[3]], P)
