@@ -10,8 +10,8 @@
 #'
 #' @examples
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers, achro = TRUE)
-#' cd.flowers <- coldist(vis.flowers)
+#' vis.flowers <- vismodel(flowers, achromatic = "l")
+#' cd.flowers <- coldist(vis.flowers, achromatic = TRUE)
 #' coldist2mat(cd.flowers)[["dS"]]
 #' coldist2mat(cd.flowers)[["dL"]]
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
