@@ -176,8 +176,8 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>coldist2mat</span>(<span class='no'>cd.flowers</span>)<span class='kw'>[[</span><span class='st'>"dS"</span>]]</div><div class='output co'>#&gt;                           Goodenia_heterophylla Goodenia_geniculata
+<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"l"</span>)
+<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'><span class='fu'>coldist2mat</span>(<span class='no'>cd.flowers</span>)<span class='kw'>[[</span><span class='st'>"dS"</span>]]</div><div class='output co'>#&gt;                           Goodenia_heterophylla Goodenia_geniculata
 #&gt; Goodenia_heterophylla                  0.000000          13.9065686
 #&gt; Goodenia_geniculata                   13.906569           0.0000000
 #&gt; Goodenia_gracilis                     35.153838          22.3130837
@@ -769,597 +769,597 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
 #&gt; Hibbertia_empetrifolia               16.194456          20.501183
 #&gt; Hibbertia_procumbens                  0.000000           7.145998
 #&gt; Hibbertia_linearis                    7.145998           0.000000</div><div class='input'><span class='fu'>coldist2mat</span>(<span class='no'>cd.flowers</span>)<span class='kw'>[[</span><span class='st'>"dL"</span>]]</div><div class='output co'>#&gt;                           Goodenia_heterophylla Goodenia_geniculata
-#&gt; Goodenia_heterophylla                         0                   0
-#&gt; Goodenia_geniculata                           0                   0
-#&gt; Goodenia_gracilis                             0                   0
-#&gt; Xyris_operculata                              0                   0
-#&gt; Eucalyptus_sp                                 0                   0
-#&gt; Faradaya_splendida                            0                   0
-#&gt; Gaultheria_hispida                            0                   0
-#&gt; Geitonoplesium_cymosum                        0                   0
-#&gt; Euryomyrtus_ramosissima                       0                   0
-#&gt; Genista_linifolia                             0                   0
-#&gt; Genista_monspessulana                         0                   0
-#&gt; Geranium_sp                                   0                   0
-#&gt; Glycine_clandestina                           0                   0
-#&gt; Gompholobium_ecostatum_1                      0                   0
-#&gt; Gompholobium_ecostatum_2                      0                   0
-#&gt; Gompholobium_grandiflorum                     0                   0
-#&gt; Gompholobium_huegelii                         0                   0
-#&gt; Gompholobium_virgatum                         0                   0
-#&gt; Gonocarpus_humilis                            0                   0
-#&gt; Gonocarpus_teucrioides                        0                   0
-#&gt; Hibbertia_obtusifolia                         0                   0
-#&gt; Zieria_arborescens                            0                   0
-#&gt; Goodenia_lanata                               0                   0
-#&gt; Goodenia_ovata                                0                   0
-#&gt; Goodenia_rotundifolia                         0                   0
-#&gt; Grevillea_buxifolia                           0                   0
-#&gt; Grevillea_steiglitziana                       0                   0
-#&gt; Grevillea_oleoides                            0                   0
-#&gt; Gymnostachys_anceps                           0                   0
-#&gt; Hakea_actites                                 0                   0
-#&gt; Hardenbergia_violaceae                        0                   0
-#&gt; Hibbertia_acicularis                          0                   0
-#&gt; Hibbertia_bracteata                           0                   0
-#&gt; Hibbertia_empetrifolia                        0                   0
-#&gt; Hibbertia_procumbens                          0                   0
-#&gt; Hibbertia_linearis                            0                   0
+#&gt; Goodenia_heterophylla                 0.0000000          11.8298980
+#&gt; Goodenia_geniculata                  11.8298980           0.0000000
+#&gt; Goodenia_gracilis                    11.0738334           0.7560646
+#&gt; Xyris_operculata                      5.5362423           6.2936557
+#&gt; Eucalyptus_sp                         7.6227445           4.2071534
+#&gt; Faradaya_splendida                   12.6081366           0.7782387
+#&gt; Gaultheria_hispida                    8.9990709           2.8308271
+#&gt; Geitonoplesium_cymosum               11.2467855          23.0766834
+#&gt; Euryomyrtus_ramosissima               5.7313800           6.0985179
+#&gt; Genista_linifolia                     7.5742600           4.2556380
+#&gt; Genista_monspessulana                11.3454888           0.4844091
+#&gt; Geranium_sp                           9.1969204          21.0268183
+#&gt; Glycine_clandestina                   8.4568920           3.3730059
+#&gt; Gompholobium_ecostatum_1              4.8732791           6.9566188
+#&gt; Gompholobium_ecostatum_2              9.9293095           1.9005884
+#&gt; Gompholobium_grandiflorum            10.4941776           1.3357204
+#&gt; Gompholobium_huegelii                12.5026622           0.6727643
+#&gt; Gompholobium_virgatum                 0.7201898          11.1097081
+#&gt; Gonocarpus_humilis                   14.3965125           2.5666146
+#&gt; Gonocarpus_teucrioides               11.2219327           0.6079653
+#&gt; Hibbertia_obtusifolia                13.0918168           1.2619189
+#&gt; Zieria_arborescens                   12.1236570           0.2937590
+#&gt; Goodenia_lanata                       7.7152681           4.1146298
+#&gt; Goodenia_ovata                        3.4677866           8.3621114
+#&gt; Goodenia_rotundifolia                 0.0476395          11.7822584
+#&gt; Grevillea_buxifolia                   7.3505068           4.4793912
+#&gt; Grevillea_steiglitziana               2.6223966          14.4522945
+#&gt; Grevillea_oleoides                   13.1523052           1.3224072
+#&gt; Gymnostachys_anceps                  12.3652141           0.5353162
+#&gt; Hakea_actites                         2.8184292          14.6483272
+#&gt; Hardenbergia_violaceae               11.2382217           0.5916762
+#&gt; Hibbertia_acicularis                  6.6560611           5.1738369
+#&gt; Hibbertia_bracteata                   1.2826453          10.5472526
+#&gt; Hibbertia_empetrifolia               12.7340099           0.9041119
+#&gt; Hibbertia_procumbens                 14.8013078           2.9714098
+#&gt; Hibbertia_linearis                    8.2226051           3.6072928
 #&gt;                           Goodenia_gracilis Xyris_operculata Eucalyptus_sp
-#&gt; Goodenia_heterophylla                     0                0             0
-#&gt; Goodenia_geniculata                       0                0             0
-#&gt; Goodenia_gracilis                         0                0             0
-#&gt; Xyris_operculata                          0                0             0
-#&gt; Eucalyptus_sp                             0                0             0
-#&gt; Faradaya_splendida                        0                0             0
-#&gt; Gaultheria_hispida                        0                0             0
-#&gt; Geitonoplesium_cymosum                    0                0             0
-#&gt; Euryomyrtus_ramosissima                   0                0             0
-#&gt; Genista_linifolia                         0                0             0
-#&gt; Genista_monspessulana                     0                0             0
-#&gt; Geranium_sp                               0                0             0
-#&gt; Glycine_clandestina                       0                0             0
-#&gt; Gompholobium_ecostatum_1                  0                0             0
-#&gt; Gompholobium_ecostatum_2                  0                0             0
-#&gt; Gompholobium_grandiflorum                 0                0             0
-#&gt; Gompholobium_huegelii                     0                0             0
-#&gt; Gompholobium_virgatum                     0                0             0
-#&gt; Gonocarpus_humilis                        0                0             0
-#&gt; Gonocarpus_teucrioides                    0                0             0
-#&gt; Hibbertia_obtusifolia                     0                0             0
-#&gt; Zieria_arborescens                        0                0             0
-#&gt; Goodenia_lanata                           0                0             0
-#&gt; Goodenia_ovata                            0                0             0
-#&gt; Goodenia_rotundifolia                     0                0             0
-#&gt; Grevillea_buxifolia                       0                0             0
-#&gt; Grevillea_steiglitziana                   0                0             0
-#&gt; Grevillea_oleoides                        0                0             0
-#&gt; Gymnostachys_anceps                       0                0             0
-#&gt; Hakea_actites                             0                0             0
-#&gt; Hardenbergia_violaceae                    0                0             0
-#&gt; Hibbertia_acicularis                      0                0             0
-#&gt; Hibbertia_bracteata                       0                0             0
-#&gt; Hibbertia_empetrifolia                    0                0             0
-#&gt; Hibbertia_procumbens                      0                0             0
-#&gt; Hibbertia_linearis                        0                0             0
+#&gt; Goodenia_heterophylla            11.0738334        5.5362423     7.6227445
+#&gt; Goodenia_geniculata               0.7560646        6.2936557     4.2071534
+#&gt; Goodenia_gracilis                 0.0000000        5.5375911     3.4510888
+#&gt; Xyris_operculata                  5.5375911        0.0000000     2.0865023
+#&gt; Eucalyptus_sp                     3.4510888        2.0865023     0.0000000
+#&gt; Faradaya_splendida                1.5343033        7.0718944     4.9853921
+#&gt; Gaultheria_hispida                2.0747625        3.4628286     1.3763264
+#&gt; Geitonoplesium_cymosum           22.3206188       16.7830277    18.8695300
+#&gt; Euryomyrtus_ramosissima           5.3424534        0.1951377     1.8913645
+#&gt; Genista_linifolia                 3.4995734        2.0380177     0.0484845
+#&gt; Genista_monspessulana             0.2716555        5.8092466     3.7227443
+#&gt; Geranium_sp                      20.2707537       14.7331626    16.8196649
+#&gt; Glycine_clandestina               2.6169414        2.9206497     0.8341475
+#&gt; Gompholobium_ecostatum_1          6.2005543        0.6629632     2.7494654
+#&gt; Gompholobium_ecostatum_2          1.1445238        4.3930673     2.3065650
+#&gt; Gompholobium_grandiflorum         0.5796558        4.9579353     2.8714330
+#&gt; Gompholobium_huegelii             1.4288289        6.9664200     4.8799177
+#&gt; Gompholobium_virgatum            10.3536435        4.8160524     6.9025547
+#&gt; Gonocarpus_humilis                3.3226792        8.8602703     6.7737680
+#&gt; Gonocarpus_teucrioides            0.1480993        5.6856904     3.5991881
+#&gt; Hibbertia_obtusifolia             2.0179835        7.5555746     5.4690723
+#&gt; Zieria_arborescens                1.0498236        6.5874147     4.5009125
+#&gt; Goodenia_lanata                   3.3585653        2.1790258     0.0925236
+#&gt; Goodenia_ovata                    7.6060468        2.0684557     4.1549580
+#&gt; Goodenia_rotundifolia            11.0261939        5.4886028     7.5751050
+#&gt; Grevillea_buxifolia               3.7233266        1.8142645     0.2722378
+#&gt; Grevillea_steiglitziana          13.6962300        8.1586389    10.2451411
+#&gt; Grevillea_oleoides                2.0784718        7.6160629     5.5295606
+#&gt; Gymnostachys_anceps               1.2913808        6.8289719     4.7424696
+#&gt; Hakea_actites                    13.8922626        8.3546715    10.4411738
+#&gt; Hardenbergia_violaceae            0.1643883        5.7019795     3.6154772
+#&gt; Hibbertia_acicularis              4.4177723        1.1198188     0.9666835
+#&gt; Hibbertia_bracteata               9.7911881        4.2535970     6.3400992
+#&gt; Hibbertia_empetrifolia            1.6601765        7.1977676     5.1112653
+#&gt; Hibbertia_procumbens              3.7274744        9.2650655     7.1785632
+#&gt; Hibbertia_linearis                2.8512282        2.6863629     0.5998606
 #&gt;                           Faradaya_splendida Gaultheria_hispida
-#&gt; Goodenia_heterophylla                      0                  0
-#&gt; Goodenia_geniculata                        0                  0
-#&gt; Goodenia_gracilis                          0                  0
-#&gt; Xyris_operculata                           0                  0
-#&gt; Eucalyptus_sp                              0                  0
-#&gt; Faradaya_splendida                         0                  0
-#&gt; Gaultheria_hispida                         0                  0
-#&gt; Geitonoplesium_cymosum                     0                  0
-#&gt; Euryomyrtus_ramosissima                    0                  0
-#&gt; Genista_linifolia                          0                  0
-#&gt; Genista_monspessulana                      0                  0
-#&gt; Geranium_sp                                0                  0
-#&gt; Glycine_clandestina                        0                  0
-#&gt; Gompholobium_ecostatum_1                   0                  0
-#&gt; Gompholobium_ecostatum_2                   0                  0
-#&gt; Gompholobium_grandiflorum                  0                  0
-#&gt; Gompholobium_huegelii                      0                  0
-#&gt; Gompholobium_virgatum                      0                  0
-#&gt; Gonocarpus_humilis                         0                  0
-#&gt; Gonocarpus_teucrioides                     0                  0
-#&gt; Hibbertia_obtusifolia                      0                  0
-#&gt; Zieria_arborescens                         0                  0
-#&gt; Goodenia_lanata                            0                  0
-#&gt; Goodenia_ovata                             0                  0
-#&gt; Goodenia_rotundifolia                      0                  0
-#&gt; Grevillea_buxifolia                        0                  0
-#&gt; Grevillea_steiglitziana                    0                  0
-#&gt; Grevillea_oleoides                         0                  0
-#&gt; Gymnostachys_anceps                        0                  0
-#&gt; Hakea_actites                              0                  0
-#&gt; Hardenbergia_violaceae                     0                  0
-#&gt; Hibbertia_acicularis                       0                  0
-#&gt; Hibbertia_bracteata                        0                  0
-#&gt; Hibbertia_empetrifolia                     0                  0
-#&gt; Hibbertia_procumbens                       0                  0
-#&gt; Hibbertia_linearis                         0                  0
+#&gt; Goodenia_heterophylla             12.6081366          8.9990709
+#&gt; Goodenia_geniculata                0.7782387          2.8308271
+#&gt; Goodenia_gracilis                  1.5343033          2.0747625
+#&gt; Xyris_operculata                   7.0718944          3.4628286
+#&gt; Eucalyptus_sp                      4.9853921          1.3763264
+#&gt; Faradaya_splendida                 0.0000000          3.6090657
+#&gt; Gaultheria_hispida                 3.6090657          0.0000000
+#&gt; Geitonoplesium_cymosum            23.8549221         20.2458564
+#&gt; Euryomyrtus_ramosissima            6.8767566          3.2676909
+#&gt; Genista_linifolia                  5.0338766          1.4248109
+#&gt; Genista_monspessulana              1.2626478          2.3464179
+#&gt; Geranium_sp                       21.8050570         18.1959913
+#&gt; Glycine_clandestina                4.1512446          0.5421789
+#&gt; Gompholobium_ecostatum_1           7.7348575          4.1257918
+#&gt; Gompholobium_ecostatum_2           2.6788271          0.9302386
+#&gt; Gompholobium_grandiflorum          2.1139591          1.4951067
+#&gt; Gompholobium_huegelii              0.1054744          3.5035913
+#&gt; Gompholobium_virgatum             11.8879468          8.2788811
+#&gt; Gonocarpus_humilis                 1.7883759          5.3974416
+#&gt; Gonocarpus_teucrioides             1.3862040          2.2228618
+#&gt; Hibbertia_obtusifolia              0.4836802          4.0927459
+#&gt; Zieria_arborescens                 0.4844796          3.1245861
+#&gt; Goodenia_lanata                    4.8928685          1.2838028
+#&gt; Goodenia_ovata                     9.1403501          5.5312843
+#&gt; Goodenia_rotundifolia             12.5604971          8.9514314
+#&gt; Grevillea_buxifolia                5.2576299          1.6485641
+#&gt; Grevillea_steiglitziana           15.2305332         11.6214675
+#&gt; Grevillea_oleoides                 0.5441685          4.1532343
+#&gt; Gymnostachys_anceps                0.2429225          3.3661432
+#&gt; Hakea_actites                     15.4265659         11.8175001
+#&gt; Hardenbergia_violaceae             1.3699149          2.2391508
+#&gt; Hibbertia_acicularis               5.9520756          2.3430098
+#&gt; Hibbertia_bracteata               11.3254913          7.7164256
+#&gt; Hibbertia_empetrifolia             0.1258732          3.7349390
+#&gt; Hibbertia_procumbens               2.1931711          5.8022369
+#&gt; Hibbertia_linearis                 4.3855315          0.7764658
 #&gt;                           Geitonoplesium_cymosum Euryomyrtus_ramosissima
-#&gt; Goodenia_heterophylla                          0                       0
-#&gt; Goodenia_geniculata                            0                       0
-#&gt; Goodenia_gracilis                              0                       0
-#&gt; Xyris_operculata                               0                       0
-#&gt; Eucalyptus_sp                                  0                       0
-#&gt; Faradaya_splendida                             0                       0
-#&gt; Gaultheria_hispida                             0                       0
-#&gt; Geitonoplesium_cymosum                         0                       0
-#&gt; Euryomyrtus_ramosissima                        0                       0
-#&gt; Genista_linifolia                              0                       0
-#&gt; Genista_monspessulana                          0                       0
-#&gt; Geranium_sp                                    0                       0
-#&gt; Glycine_clandestina                            0                       0
-#&gt; Gompholobium_ecostatum_1                       0                       0
-#&gt; Gompholobium_ecostatum_2                       0                       0
-#&gt; Gompholobium_grandiflorum                      0                       0
-#&gt; Gompholobium_huegelii                          0                       0
-#&gt; Gompholobium_virgatum                          0                       0
-#&gt; Gonocarpus_humilis                             0                       0
-#&gt; Gonocarpus_teucrioides                         0                       0
-#&gt; Hibbertia_obtusifolia                          0                       0
-#&gt; Zieria_arborescens                             0                       0
-#&gt; Goodenia_lanata                                0                       0
-#&gt; Goodenia_ovata                                 0                       0
-#&gt; Goodenia_rotundifolia                          0                       0
-#&gt; Grevillea_buxifolia                            0                       0
-#&gt; Grevillea_steiglitziana                        0                       0
-#&gt; Grevillea_oleoides                             0                       0
-#&gt; Gymnostachys_anceps                            0                       0
-#&gt; Hakea_actites                                  0                       0
-#&gt; Hardenbergia_violaceae                         0                       0
-#&gt; Hibbertia_acicularis                           0                       0
-#&gt; Hibbertia_bracteata                            0                       0
-#&gt; Hibbertia_empetrifolia                         0                       0
-#&gt; Hibbertia_procumbens                           0                       0
-#&gt; Hibbertia_linearis                             0                       0
+#&gt; Goodenia_heterophylla                  11.246785               5.7313800
+#&gt; Goodenia_geniculata                    23.076683               6.0985179
+#&gt; Goodenia_gracilis                      22.320619               5.3424534
+#&gt; Xyris_operculata                       16.783028               0.1951377
+#&gt; Eucalyptus_sp                          18.869530               1.8913645
+#&gt; Faradaya_splendida                     23.854922               6.8767566
+#&gt; Gaultheria_hispida                     20.245856               3.2676909
+#&gt; Geitonoplesium_cymosum                  0.000000              16.9781655
+#&gt; Euryomyrtus_ramosissima                16.978165               0.0000000
+#&gt; Genista_linifolia                      18.821046               1.8428800
+#&gt; Genista_monspessulana                  22.592274               5.6141088
+#&gt; Geranium_sp                             2.049865              14.9283004
+#&gt; Glycine_clandestina                    19.703678               2.7255120
+#&gt; Gompholobium_ecostatum_1               16.120065               0.8581009
+#&gt; Gompholobium_ecostatum_2               21.176095               4.1979295
+#&gt; Gompholobium_grandiflorum              21.740963               4.7627976
+#&gt; Gompholobium_huegelii                  23.749448               6.7712822
+#&gt; Gompholobium_virgatum                  11.966975               5.0111902
+#&gt; Gonocarpus_humilis                     25.643298               8.6651325
+#&gt; Gonocarpus_teucrioides                 22.468718               5.4905526
+#&gt; Hibbertia_obtusifolia                  24.338602               7.3604368
+#&gt; Zieria_arborescens                     23.370442               6.3922770
+#&gt; Goodenia_lanata                        18.962054               1.9838881
+#&gt; Goodenia_ovata                         14.714572               2.2635935
+#&gt; Goodenia_rotundifolia                  11.294425               5.6837405
+#&gt; Grevillea_buxifolia                    18.597292               1.6191268
+#&gt; Grevillea_steiglitziana                 8.624389               8.3537766
+#&gt; Grevillea_oleoides                     24.399091               7.4209252
+#&gt; Gymnostachys_anceps                    23.612000               6.6338341
+#&gt; Hakea_actites                           8.428356               8.5498092
+#&gt; Hardenbergia_violaceae                 22.485007               5.5068417
+#&gt; Hibbertia_acicularis                   17.902846               0.9246811
+#&gt; Hibbertia_bracteata                    12.529431               4.4487347
+#&gt; Hibbertia_empetrifolia                 23.980795               7.0026298
+#&gt; Hibbertia_procumbens                   26.048093               9.0699278
+#&gt; Hibbertia_linearis                     19.469391               2.4912251
 #&gt;                           Genista_linifolia Genista_monspessulana Geranium_sp
-#&gt; Goodenia_heterophylla                     0                     0           0
-#&gt; Goodenia_geniculata                       0                     0           0
-#&gt; Goodenia_gracilis                         0                     0           0
-#&gt; Xyris_operculata                          0                     0           0
-#&gt; Eucalyptus_sp                             0                     0           0
-#&gt; Faradaya_splendida                        0                     0           0
-#&gt; Gaultheria_hispida                        0                     0           0
-#&gt; Geitonoplesium_cymosum                    0                     0           0
-#&gt; Euryomyrtus_ramosissima                   0                     0           0
-#&gt; Genista_linifolia                         0                     0           0
-#&gt; Genista_monspessulana                     0                     0           0
-#&gt; Geranium_sp                               0                     0           0
-#&gt; Glycine_clandestina                       0                     0           0
-#&gt; Gompholobium_ecostatum_1                  0                     0           0
-#&gt; Gompholobium_ecostatum_2                  0                     0           0
-#&gt; Gompholobium_grandiflorum                 0                     0           0
-#&gt; Gompholobium_huegelii                     0                     0           0
-#&gt; Gompholobium_virgatum                     0                     0           0
-#&gt; Gonocarpus_humilis                        0                     0           0
-#&gt; Gonocarpus_teucrioides                    0                     0           0
-#&gt; Hibbertia_obtusifolia                     0                     0           0
-#&gt; Zieria_arborescens                        0                     0           0
-#&gt; Goodenia_lanata                           0                     0           0
-#&gt; Goodenia_ovata                            0                     0           0
-#&gt; Goodenia_rotundifolia                     0                     0           0
-#&gt; Grevillea_buxifolia                       0                     0           0
-#&gt; Grevillea_steiglitziana                   0                     0           0
-#&gt; Grevillea_oleoides                        0                     0           0
-#&gt; Gymnostachys_anceps                       0                     0           0
-#&gt; Hakea_actites                             0                     0           0
-#&gt; Hardenbergia_violaceae                    0                     0           0
-#&gt; Hibbertia_acicularis                      0                     0           0
-#&gt; Hibbertia_bracteata                       0                     0           0
-#&gt; Hibbertia_empetrifolia                    0                     0           0
-#&gt; Hibbertia_procumbens                      0                     0           0
-#&gt; Hibbertia_linearis                        0                     0           0
+#&gt; Goodenia_heterophylla             7.5742600            11.3454888    9.196920
+#&gt; Goodenia_geniculata               4.2556380             0.4844091   21.026818
+#&gt; Goodenia_gracilis                 3.4995734             0.2716555   20.270754
+#&gt; Xyris_operculata                  2.0380177             5.8092466   14.733163
+#&gt; Eucalyptus_sp                     0.0484845             3.7227443   16.819665
+#&gt; Faradaya_splendida                5.0338766             1.2626478   21.805057
+#&gt; Gaultheria_hispida                1.4248109             2.3464179   18.195991
+#&gt; Geitonoplesium_cymosum           18.8210455            22.5922743    2.049865
+#&gt; Euryomyrtus_ramosissima           1.8428800             5.6141088   14.928300
+#&gt; Genista_linifolia                 0.0000000             3.7712288   16.771180
+#&gt; Genista_monspessulana             3.7712288             0.0000000   20.542409
+#&gt; Geranium_sp                      16.7711804            20.5424092    0.000000
+#&gt; Glycine_clandestina               0.8826320             2.8885968   17.653812
+#&gt; Gompholobium_ecostatum_1          2.7009809             6.4722097   14.070199
+#&gt; Gompholobium_ecostatum_2          2.3550495             1.4161793   19.126230
+#&gt; Gompholobium_grandiflorum         2.9199176             0.8513113   19.691098
+#&gt; Gompholobium_huegelii             4.9284022             1.1571734   21.699583
+#&gt; Gompholobium_virgatum             6.8540702            10.6252990    9.917110
+#&gt; Gonocarpus_humilis                6.8222525             3.0510237   23.593433
+#&gt; Gonocarpus_teucrioides            3.6476727             0.1235562   20.418853
+#&gt; Hibbertia_obtusifolia             5.5175568             1.7463280   22.288737
+#&gt; Zieria_arborescens                4.5493970             0.7781682   21.320577
+#&gt; Goodenia_lanata                   0.1410081             3.6302207   16.912188
+#&gt; Goodenia_ovata                    4.1064734             7.8777023   12.664707
+#&gt; Goodenia_rotundifolia             7.5266205            11.2978493    9.244560
+#&gt; Grevillea_buxifolia               0.2237532             3.9949820   16.547427
+#&gt; Grevillea_steiglitziana          10.1966566            13.9678854    6.574524
+#&gt; Grevillea_oleoides                5.5780452             1.8068163   22.349225
+#&gt; Gymnostachys_anceps               4.7909541             1.0197253   21.562134
+#&gt; Hakea_actites                    10.3926892            14.1639181    6.378491
+#&gt; Hardenbergia_violaceae            3.6639617             0.1072671   20.435142
+#&gt; Hibbertia_acicularis              0.9181989             4.6894278   15.852981
+#&gt; Hibbertia_bracteata               6.2916147            10.0628435   10.479566
+#&gt; Hibbertia_empetrifolia            5.1597499             1.3885210   21.930930
+#&gt; Hibbertia_procumbens              7.2270478             3.4558189   23.998228
+#&gt; Hibbertia_linearis                0.6483451             3.1228837   17.419525
 #&gt;                           Glycine_clandestina Gompholobium_ecostatum_1
-#&gt; Goodenia_heterophylla                       0                        0
-#&gt; Goodenia_geniculata                         0                        0
-#&gt; Goodenia_gracilis                           0                        0
-#&gt; Xyris_operculata                            0                        0
-#&gt; Eucalyptus_sp                               0                        0
-#&gt; Faradaya_splendida                          0                        0
-#&gt; Gaultheria_hispida                          0                        0
-#&gt; Geitonoplesium_cymosum                      0                        0
-#&gt; Euryomyrtus_ramosissima                     0                        0
-#&gt; Genista_linifolia                           0                        0
-#&gt; Genista_monspessulana                       0                        0
-#&gt; Geranium_sp                                 0                        0
-#&gt; Glycine_clandestina                         0                        0
-#&gt; Gompholobium_ecostatum_1                    0                        0
-#&gt; Gompholobium_ecostatum_2                    0                        0
-#&gt; Gompholobium_grandiflorum                   0                        0
-#&gt; Gompholobium_huegelii                       0                        0
-#&gt; Gompholobium_virgatum                       0                        0
-#&gt; Gonocarpus_humilis                          0                        0
-#&gt; Gonocarpus_teucrioides                      0                        0
-#&gt; Hibbertia_obtusifolia                       0                        0
-#&gt; Zieria_arborescens                          0                        0
-#&gt; Goodenia_lanata                             0                        0
-#&gt; Goodenia_ovata                              0                        0
-#&gt; Goodenia_rotundifolia                       0                        0
-#&gt; Grevillea_buxifolia                         0                        0
-#&gt; Grevillea_steiglitziana                     0                        0
-#&gt; Grevillea_oleoides                          0                        0
-#&gt; Gymnostachys_anceps                         0                        0
-#&gt; Hakea_actites                               0                        0
-#&gt; Hardenbergia_violaceae                      0                        0
-#&gt; Hibbertia_acicularis                        0                        0
-#&gt; Hibbertia_bracteata                         0                        0
-#&gt; Hibbertia_empetrifolia                      0                        0
-#&gt; Hibbertia_procumbens                        0                        0
-#&gt; Hibbertia_linearis                          0                        0
+#&gt; Goodenia_heterophylla               8.4568920                4.8732791
+#&gt; Goodenia_geniculata                 3.3730059                6.9566188
+#&gt; Goodenia_gracilis                   2.6169414                6.2005543
+#&gt; Xyris_operculata                    2.9206497                0.6629632
+#&gt; Eucalyptus_sp                       0.8341475                2.7494654
+#&gt; Faradaya_splendida                  4.1512446                7.7348575
+#&gt; Gaultheria_hispida                  0.5421789                4.1257918
+#&gt; Geitonoplesium_cymosum             19.7036775               16.1200646
+#&gt; Euryomyrtus_ramosissima             2.7255120                0.8581009
+#&gt; Genista_linifolia                   0.8826320                2.7009809
+#&gt; Genista_monspessulana               2.8885968                6.4722097
+#&gt; Geranium_sp                        17.6538124               14.0701995
+#&gt; Glycine_clandestina                 0.0000000                3.5836129
+#&gt; Gompholobium_ecostatum_1            3.5836129                0.0000000
+#&gt; Gompholobium_ecostatum_2            1.4724175                5.0560304
+#&gt; Gompholobium_grandiflorum           2.0372856                5.6208985
+#&gt; Gompholobium_huegelii               4.0457702                7.6293831
+#&gt; Gompholobium_virgatum               7.7367022                4.1530893
+#&gt; Gonocarpus_humilis                  5.9396205                9.5232334
+#&gt; Gonocarpus_teucrioides              2.7650407                6.3486535
+#&gt; Hibbertia_obtusifolia               4.6349248                8.2185377
+#&gt; Zieria_arborescens                  3.6667650                7.2503779
+#&gt; Goodenia_lanata                     0.7416239                2.8419890
+#&gt; Goodenia_ovata                      4.9891055                1.4054926
+#&gt; Goodenia_rotundifolia               8.4092525                4.8256396
+#&gt; Grevillea_buxifolia                 1.1063852                2.4772277
+#&gt; Grevillea_steiglitziana            11.0792886                7.4956757
+#&gt; Grevillea_oleoides                  4.6954132                8.2790261
+#&gt; Gymnostachys_anceps                 3.9083221                7.4919350
+#&gt; Hakea_actites                      11.2753212                7.6917083
+#&gt; Hardenbergia_violaceae              2.7813297                6.3649426
+#&gt; Hibbertia_acicularis                1.8008309                1.7827820
+#&gt; Hibbertia_bracteata                 7.1742467                3.5906338
+#&gt; Hibbertia_empetrifolia              4.2771178                7.8607307
+#&gt; Hibbertia_procumbens                6.3444158                9.9280287
+#&gt; Hibbertia_linearis                  0.2342869                3.3493260
 #&gt;                           Gompholobium_ecostatum_2 Gompholobium_grandiflorum
-#&gt; Goodenia_heterophylla                            0                         0
-#&gt; Goodenia_geniculata                              0                         0
-#&gt; Goodenia_gracilis                                0                         0
-#&gt; Xyris_operculata                                 0                         0
-#&gt; Eucalyptus_sp                                    0                         0
-#&gt; Faradaya_splendida                               0                         0
-#&gt; Gaultheria_hispida                               0                         0
-#&gt; Geitonoplesium_cymosum                           0                         0
-#&gt; Euryomyrtus_ramosissima                          0                         0
-#&gt; Genista_linifolia                                0                         0
-#&gt; Genista_monspessulana                            0                         0
-#&gt; Geranium_sp                                      0                         0
-#&gt; Glycine_clandestina                              0                         0
-#&gt; Gompholobium_ecostatum_1                         0                         0
-#&gt; Gompholobium_ecostatum_2                         0                         0
-#&gt; Gompholobium_grandiflorum                        0                         0
-#&gt; Gompholobium_huegelii                            0                         0
-#&gt; Gompholobium_virgatum                            0                         0
-#&gt; Gonocarpus_humilis                               0                         0
-#&gt; Gonocarpus_teucrioides                           0                         0
-#&gt; Hibbertia_obtusifolia                            0                         0
-#&gt; Zieria_arborescens                               0                         0
-#&gt; Goodenia_lanata                                  0                         0
-#&gt; Goodenia_ovata                                   0                         0
-#&gt; Goodenia_rotundifolia                            0                         0
-#&gt; Grevillea_buxifolia                              0                         0
-#&gt; Grevillea_steiglitziana                          0                         0
-#&gt; Grevillea_oleoides                               0                         0
-#&gt; Gymnostachys_anceps                              0                         0
-#&gt; Hakea_actites                                    0                         0
-#&gt; Hardenbergia_violaceae                           0                         0
-#&gt; Hibbertia_acicularis                             0                         0
-#&gt; Hibbertia_bracteata                              0                         0
-#&gt; Hibbertia_empetrifolia                           0                         0
-#&gt; Hibbertia_procumbens                             0                         0
-#&gt; Hibbertia_linearis                               0                         0
+#&gt; Goodenia_heterophylla                    9.9293095                10.4941776
+#&gt; Goodenia_geniculata                      1.9005884                 1.3357204
+#&gt; Goodenia_gracilis                        1.1445238                 0.5796558
+#&gt; Xyris_operculata                         4.3930673                 4.9579353
+#&gt; Eucalyptus_sp                            2.3065650                 2.8714330
+#&gt; Faradaya_splendida                       2.6788271                 2.1139591
+#&gt; Gaultheria_hispida                       0.9302386                 1.4951067
+#&gt; Geitonoplesium_cymosum                  21.1760950                21.7409630
+#&gt; Euryomyrtus_ramosissima                  4.1979295                 4.7627976
+#&gt; Genista_linifolia                        2.3550495                 2.9199176
+#&gt; Genista_monspessulana                    1.4161793                 0.8513113
+#&gt; Geranium_sp                             19.1262299                19.6910979
+#&gt; Glycine_clandestina                      1.4724175                 2.0372856
+#&gt; Gompholobium_ecostatum_1                 5.0560304                 5.6208985
+#&gt; Gompholobium_ecostatum_2                 0.0000000                 0.5648680
+#&gt; Gompholobium_grandiflorum                0.5648680                 0.0000000
+#&gt; Gompholobium_huegelii                    2.5733527                 2.0084847
+#&gt; Gompholobium_virgatum                    9.2091197                 9.7739877
+#&gt; Gonocarpus_humilis                       4.4672030                 3.9023350
+#&gt; Gonocarpus_teucrioides                   1.2926231                 0.7277551
+#&gt; Hibbertia_obtusifolia                    3.1625073                 2.5976393
+#&gt; Zieria_arborescens                       2.1943475                 1.6294794
+#&gt; Goodenia_lanata                          2.2140414                 2.7789095
+#&gt; Goodenia_ovata                           6.4615230                 7.0263910
+#&gt; Goodenia_rotundifolia                    9.8816700                10.4465381
+#&gt; Grevillea_buxifolia                      2.5788028                 3.1436708
+#&gt; Grevillea_steiglitziana                 12.5517061                13.1165742
+#&gt; Grevillea_oleoides                       3.2229956                 2.6581276
+#&gt; Gymnostachys_anceps                      2.4359046                 1.8710366
+#&gt; Hakea_actites                           12.7477388                13.3126068
+#&gt; Hardenbergia_violaceae                   1.3089122                 0.7440442
+#&gt; Hibbertia_acicularis                     3.2732485                 3.8381165
+#&gt; Hibbertia_bracteata                      8.6466642                 9.2115323
+#&gt; Hibbertia_empetrifolia                   2.8047003                 2.2398323
+#&gt; Hibbertia_procumbens                     4.8719982                 4.3071302
+#&gt; Hibbertia_linearis                       1.7067044                 2.2715724
 #&gt;                           Gompholobium_huegelii Gompholobium_virgatum
-#&gt; Goodenia_heterophylla                         0                     0
-#&gt; Goodenia_geniculata                           0                     0
-#&gt; Goodenia_gracilis                             0                     0
-#&gt; Xyris_operculata                              0                     0
-#&gt; Eucalyptus_sp                                 0                     0
-#&gt; Faradaya_splendida                            0                     0
-#&gt; Gaultheria_hispida                            0                     0
-#&gt; Geitonoplesium_cymosum                        0                     0
-#&gt; Euryomyrtus_ramosissima                       0                     0
-#&gt; Genista_linifolia                             0                     0
-#&gt; Genista_monspessulana                         0                     0
-#&gt; Geranium_sp                                   0                     0
-#&gt; Glycine_clandestina                           0                     0
-#&gt; Gompholobium_ecostatum_1                      0                     0
-#&gt; Gompholobium_ecostatum_2                      0                     0
-#&gt; Gompholobium_grandiflorum                     0                     0
-#&gt; Gompholobium_huegelii                         0                     0
-#&gt; Gompholobium_virgatum                         0                     0
-#&gt; Gonocarpus_humilis                            0                     0
-#&gt; Gonocarpus_teucrioides                        0                     0
-#&gt; Hibbertia_obtusifolia                         0                     0
-#&gt; Zieria_arborescens                            0                     0
-#&gt; Goodenia_lanata                               0                     0
-#&gt; Goodenia_ovata                                0                     0
-#&gt; Goodenia_rotundifolia                         0                     0
-#&gt; Grevillea_buxifolia                           0                     0
-#&gt; Grevillea_steiglitziana                       0                     0
-#&gt; Grevillea_oleoides                            0                     0
-#&gt; Gymnostachys_anceps                           0                     0
-#&gt; Hakea_actites                                 0                     0
-#&gt; Hardenbergia_violaceae                        0                     0
-#&gt; Hibbertia_acicularis                          0                     0
-#&gt; Hibbertia_bracteata                           0                     0
-#&gt; Hibbertia_empetrifolia                        0                     0
-#&gt; Hibbertia_procumbens                          0                     0
-#&gt; Hibbertia_linearis                            0                     0
+#&gt; Goodenia_heterophylla                12.5026622             0.7201898
+#&gt; Goodenia_geniculata                   0.6727643            11.1097081
+#&gt; Goodenia_gracilis                     1.4288289            10.3536435
+#&gt; Xyris_operculata                      6.9664200             4.8160524
+#&gt; Eucalyptus_sp                         4.8799177             6.9025547
+#&gt; Faradaya_splendida                    0.1054744            11.8879468
+#&gt; Gaultheria_hispida                    3.5035913             8.2788811
+#&gt; Geitonoplesium_cymosum               23.7494477            11.9669753
+#&gt; Euryomyrtus_ramosissima               6.7712822             5.0111902
+#&gt; Genista_linifolia                     4.9284022             6.8540702
+#&gt; Genista_monspessulana                 1.1571734            10.6252990
+#&gt; Geranium_sp                          21.6995826             9.9171102
+#&gt; Glycine_clandestina                   4.0457702             7.7367022
+#&gt; Gompholobium_ecostatum_1              7.6293831             4.1530893
+#&gt; Gompholobium_ecostatum_2              2.5733527             9.2091197
+#&gt; Gompholobium_grandiflorum             2.0084847             9.7739877
+#&gt; Gompholobium_huegelii                 0.0000000            11.7824724
+#&gt; Gompholobium_virgatum                11.7824724             0.0000000
+#&gt; Gonocarpus_humilis                    1.8938503            13.6763227
+#&gt; Gonocarpus_teucrioides                1.2807296            10.5017428
+#&gt; Hibbertia_obtusifolia                 0.5891546            12.3716270
+#&gt; Zieria_arborescens                    0.3790052            11.4034672
+#&gt; Goodenia_lanata                       4.7873941             6.9950783
+#&gt; Goodenia_ovata                        9.0348757             2.7475967
+#&gt; Goodenia_rotundifolia                12.4550227             0.6725503
+#&gt; Grevillea_buxifolia                   5.1521555             6.6303169
+#&gt; Grevillea_steiglitziana              15.1250588             3.3425864
+#&gt; Grevillea_oleoides                    0.6496429            12.4321153
+#&gt; Gymnostachys_anceps                   0.1374481            11.6450243
+#&gt; Hakea_actites                        15.3210915             3.5386191
+#&gt; Hardenbergia_violaceae                1.2644405            10.5180319
+#&gt; Hibbertia_acicularis                  5.8466012             5.9358712
+#&gt; Hibbertia_bracteata                  11.2200169             0.5624555
+#&gt; Hibbertia_empetrifolia                0.2313476            12.0138200
+#&gt; Hibbertia_procumbens                  2.2986455            14.0811179
+#&gt; Hibbertia_linearis                    4.2800571             7.5024153
 #&gt;                           Gonocarpus_humilis Gonocarpus_teucrioides
-#&gt; Goodenia_heterophylla                      0                      0
-#&gt; Goodenia_geniculata                        0                      0
-#&gt; Goodenia_gracilis                          0                      0
-#&gt; Xyris_operculata                           0                      0
-#&gt; Eucalyptus_sp                              0                      0
-#&gt; Faradaya_splendida                         0                      0
-#&gt; Gaultheria_hispida                         0                      0
-#&gt; Geitonoplesium_cymosum                     0                      0
-#&gt; Euryomyrtus_ramosissima                    0                      0
-#&gt; Genista_linifolia                          0                      0
-#&gt; Genista_monspessulana                      0                      0
-#&gt; Geranium_sp                                0                      0
-#&gt; Glycine_clandestina                        0                      0
-#&gt; Gompholobium_ecostatum_1                   0                      0
-#&gt; Gompholobium_ecostatum_2                   0                      0
-#&gt; Gompholobium_grandiflorum                  0                      0
-#&gt; Gompholobium_huegelii                      0                      0
-#&gt; Gompholobium_virgatum                      0                      0
-#&gt; Gonocarpus_humilis                         0                      0
-#&gt; Gonocarpus_teucrioides                     0                      0
-#&gt; Hibbertia_obtusifolia                      0                      0
-#&gt; Zieria_arborescens                         0                      0
-#&gt; Goodenia_lanata                            0                      0
-#&gt; Goodenia_ovata                             0                      0
-#&gt; Goodenia_rotundifolia                      0                      0
-#&gt; Grevillea_buxifolia                        0                      0
-#&gt; Grevillea_steiglitziana                    0                      0
-#&gt; Grevillea_oleoides                         0                      0
-#&gt; Gymnostachys_anceps                        0                      0
-#&gt; Hakea_actites                              0                      0
-#&gt; Hardenbergia_violaceae                     0                      0
-#&gt; Hibbertia_acicularis                       0                      0
-#&gt; Hibbertia_bracteata                        0                      0
-#&gt; Hibbertia_empetrifolia                     0                      0
-#&gt; Hibbertia_procumbens                       0                      0
-#&gt; Hibbertia_linearis                         0                      0
+#&gt; Goodenia_heterophylla             14.3965125             11.2219327
+#&gt; Goodenia_geniculata                2.5666146              0.6079653
+#&gt; Goodenia_gracilis                  3.3226792              0.1480993
+#&gt; Xyris_operculata                   8.8602703              5.6856904
+#&gt; Eucalyptus_sp                      6.7737680              3.5991881
+#&gt; Faradaya_splendida                 1.7883759              1.3862040
+#&gt; Gaultheria_hispida                 5.3974416              2.2228618
+#&gt; Geitonoplesium_cymosum            25.6432980             22.4687181
+#&gt; Euryomyrtus_ramosissima            8.6651325              5.4905526
+#&gt; Genista_linifolia                  6.8222525              3.6476727
+#&gt; Genista_monspessulana              3.0510237              0.1235562
+#&gt; Geranium_sp                       23.5934329             20.4188530
+#&gt; Glycine_clandestina                5.9396205              2.7650407
+#&gt; Gompholobium_ecostatum_1           9.5232334              6.3486535
+#&gt; Gompholobium_ecostatum_2           4.4672030              1.2926231
+#&gt; Gompholobium_grandiflorum          3.9023350              0.7277551
+#&gt; Gompholobium_huegelii              1.8938503              1.2807296
+#&gt; Gompholobium_virgatum             13.6763227             10.5017428
+#&gt; Gonocarpus_humilis                 0.0000000              3.1745799
+#&gt; Gonocarpus_teucrioides             3.1745799              0.0000000
+#&gt; Hibbertia_obtusifolia              1.3046957              1.8698842
+#&gt; Zieria_arborescens                 2.2728555              0.9017243
+#&gt; Goodenia_lanata                    6.6812444              3.5066645
+#&gt; Goodenia_ovata                    10.9287260              7.7541461
+#&gt; Goodenia_rotundifolia             14.3488730             11.1742932
+#&gt; Grevillea_buxifolia                7.0460057              3.8714259
+#&gt; Grevillea_steiglitziana           17.0189091             13.8443292
+#&gt; Grevillea_oleoides                 1.2442074              1.9303725
+#&gt; Gymnostachys_anceps                2.0312984              1.1432815
+#&gt; Hakea_actites                     17.2149418             14.0403619
+#&gt; Hardenbergia_violaceae             3.1582908              0.0162891
+#&gt; Hibbertia_acicularis               7.7404515              4.5658716
+#&gt; Hibbertia_bracteata               13.1138672              9.9392873
+#&gt; Hibbertia_empetrifolia             1.6625027              1.5120772
+#&gt; Hibbertia_procumbens               0.4047952              3.5793751
+#&gt; Hibbertia_linearis                 6.1739074              2.9993275
 #&gt;                           Hibbertia_obtusifolia Zieria_arborescens
-#&gt; Goodenia_heterophylla                         0                  0
-#&gt; Goodenia_geniculata                           0                  0
-#&gt; Goodenia_gracilis                             0                  0
-#&gt; Xyris_operculata                              0                  0
-#&gt; Eucalyptus_sp                                 0                  0
-#&gt; Faradaya_splendida                            0                  0
-#&gt; Gaultheria_hispida                            0                  0
-#&gt; Geitonoplesium_cymosum                        0                  0
-#&gt; Euryomyrtus_ramosissima                       0                  0
-#&gt; Genista_linifolia                             0                  0
-#&gt; Genista_monspessulana                         0                  0
-#&gt; Geranium_sp                                   0                  0
-#&gt; Glycine_clandestina                           0                  0
-#&gt; Gompholobium_ecostatum_1                      0                  0
-#&gt; Gompholobium_ecostatum_2                      0                  0
-#&gt; Gompholobium_grandiflorum                     0                  0
-#&gt; Gompholobium_huegelii                         0                  0
-#&gt; Gompholobium_virgatum                         0                  0
-#&gt; Gonocarpus_humilis                            0                  0
-#&gt; Gonocarpus_teucrioides                        0                  0
-#&gt; Hibbertia_obtusifolia                         0                  0
-#&gt; Zieria_arborescens                            0                  0
-#&gt; Goodenia_lanata                               0                  0
-#&gt; Goodenia_ovata                                0                  0
-#&gt; Goodenia_rotundifolia                         0                  0
-#&gt; Grevillea_buxifolia                           0                  0
-#&gt; Grevillea_steiglitziana                       0                  0
-#&gt; Grevillea_oleoides                            0                  0
-#&gt; Gymnostachys_anceps                           0                  0
-#&gt; Hakea_actites                                 0                  0
-#&gt; Hardenbergia_violaceae                        0                  0
-#&gt; Hibbertia_acicularis                          0                  0
-#&gt; Hibbertia_bracteata                           0                  0
-#&gt; Hibbertia_empetrifolia                        0                  0
-#&gt; Hibbertia_procumbens                          0                  0
-#&gt; Hibbertia_linearis                            0                  0
+#&gt; Goodenia_heterophylla                13.0918168         12.1236570
+#&gt; Goodenia_geniculata                   1.2619189          0.2937590
+#&gt; Goodenia_gracilis                     2.0179835          1.0498236
+#&gt; Xyris_operculata                      7.5555746          6.5874147
+#&gt; Eucalyptus_sp                         5.4690723          4.5009125
+#&gt; Faradaya_splendida                    0.4836802          0.4844796
+#&gt; Gaultheria_hispida                    4.0927459          3.1245861
+#&gt; Geitonoplesium_cymosum               24.3386023         23.3704425
+#&gt; Euryomyrtus_ramosissima               7.3604368          6.3922770
+#&gt; Genista_linifolia                     5.5175568          4.5493970
+#&gt; Genista_monspessulana                 1.7463280          0.7781682
+#&gt; Geranium_sp                          22.2887372         21.3205774
+#&gt; Glycine_clandestina                   4.6349248          3.6667650
+#&gt; Gompholobium_ecostatum_1              8.2185377          7.2503779
+#&gt; Gompholobium_ecostatum_2              3.1625073          2.1943475
+#&gt; Gompholobium_grandiflorum             2.5976393          1.6294794
+#&gt; Gompholobium_huegelii                 0.5891546          0.3790052
+#&gt; Gompholobium_virgatum                12.3716270         11.4034672
+#&gt; Gonocarpus_humilis                    1.3046957          2.2728555
+#&gt; Gonocarpus_teucrioides                1.8698842          0.9017243
+#&gt; Hibbertia_obtusifolia                 0.0000000          0.9681598
+#&gt; Zieria_arborescens                    0.9681598          0.0000000
+#&gt; Goodenia_lanata                       5.3765487          4.4083889
+#&gt; Goodenia_ovata                        9.6240303          8.6558704
+#&gt; Goodenia_rotundifolia                13.0441773         12.0760175
+#&gt; Grevillea_buxifolia                   5.7413100          4.7731502
+#&gt; Grevillea_steiglitziana              15.7142134         14.7460536
+#&gt; Grevillea_oleoides                    0.0604883          1.0286482
+#&gt; Gymnostachys_anceps                   0.7266027          0.2415571
+#&gt; Hakea_actites                        15.9102461         14.9420862
+#&gt; Hardenbergia_violaceae                1.8535951          0.8854353
+#&gt; Hibbertia_acicularis                  6.4357557          5.4675959
+#&gt; Hibbertia_bracteata                  11.8091715         10.8410117
+#&gt; Hibbertia_empetrifolia                0.3578070          0.6103529
+#&gt; Hibbertia_procumbens                  1.7094909          2.6776508
+#&gt; Hibbertia_linearis                    4.8692117          3.9010519
 #&gt;                           Goodenia_lanata Goodenia_ovata Goodenia_rotundifolia
-#&gt; Goodenia_heterophylla                   0              0                     0
-#&gt; Goodenia_geniculata                     0              0                     0
-#&gt; Goodenia_gracilis                       0              0                     0
-#&gt; Xyris_operculata                        0              0                     0
-#&gt; Eucalyptus_sp                           0              0                     0
-#&gt; Faradaya_splendida                      0              0                     0
-#&gt; Gaultheria_hispida                      0              0                     0
-#&gt; Geitonoplesium_cymosum                  0              0                     0
-#&gt; Euryomyrtus_ramosissima                 0              0                     0
-#&gt; Genista_linifolia                       0              0                     0
-#&gt; Genista_monspessulana                   0              0                     0
-#&gt; Geranium_sp                             0              0                     0
-#&gt; Glycine_clandestina                     0              0                     0
-#&gt; Gompholobium_ecostatum_1                0              0                     0
-#&gt; Gompholobium_ecostatum_2                0              0                     0
-#&gt; Gompholobium_grandiflorum               0              0                     0
-#&gt; Gompholobium_huegelii                   0              0                     0
-#&gt; Gompholobium_virgatum                   0              0                     0
-#&gt; Gonocarpus_humilis                      0              0                     0
-#&gt; Gonocarpus_teucrioides                  0              0                     0
-#&gt; Hibbertia_obtusifolia                   0              0                     0
-#&gt; Zieria_arborescens                      0              0                     0
-#&gt; Goodenia_lanata                         0              0                     0
-#&gt; Goodenia_ovata                          0              0                     0
-#&gt; Goodenia_rotundifolia                   0              0                     0
-#&gt; Grevillea_buxifolia                     0              0                     0
-#&gt; Grevillea_steiglitziana                 0              0                     0
-#&gt; Grevillea_oleoides                      0              0                     0
-#&gt; Gymnostachys_anceps                     0              0                     0
-#&gt; Hakea_actites                           0              0                     0
-#&gt; Hardenbergia_violaceae                  0              0                     0
-#&gt; Hibbertia_acicularis                    0              0                     0
-#&gt; Hibbertia_bracteata                     0              0                     0
-#&gt; Hibbertia_empetrifolia                  0              0                     0
-#&gt; Hibbertia_procumbens                    0              0                     0
-#&gt; Hibbertia_linearis                      0              0                     0
+#&gt; Goodenia_heterophylla           7.7152681       3.467787             0.0476395
+#&gt; Goodenia_geniculata             4.1146298       8.362111            11.7822584
+#&gt; Goodenia_gracilis               3.3585653       7.606047            11.0261939
+#&gt; Xyris_operculata                2.1790258       2.068456             5.4886028
+#&gt; Eucalyptus_sp                   0.0925236       4.154958             7.5751050
+#&gt; Faradaya_splendida              4.8928685       9.140350            12.5604971
+#&gt; Gaultheria_hispida              1.2838028       5.531284             8.9514314
+#&gt; Geitonoplesium_cymosum         18.9620536      14.714572            11.2944250
+#&gt; Euryomyrtus_ramosissima         1.9838881       2.263593             5.6837405
+#&gt; Genista_linifolia               0.1410081       4.106473             7.5266205
+#&gt; Genista_monspessulana           3.6302207       7.877702            11.2978493
+#&gt; Geranium_sp                    16.9121885      12.664707             9.2445599
+#&gt; Glycine_clandestina             0.7416239       4.989105             8.4092525
+#&gt; Gompholobium_ecostatum_1        2.8419890       1.405493             4.8256396
+#&gt; Gompholobium_ecostatum_2        2.2140414       6.461523             9.8816700
+#&gt; Gompholobium_grandiflorum       2.7789095       7.026391            10.4465381
+#&gt; Gompholobium_huegelii           4.7873941       9.034876            12.4550227
+#&gt; Gompholobium_virgatum           6.9950783       2.747597             0.6725503
+#&gt; Gonocarpus_humilis              6.6812444      10.928726            14.3488730
+#&gt; Gonocarpus_teucrioides          3.5066645       7.754146            11.1742932
+#&gt; Hibbertia_obtusifolia           5.3765487       9.624030            13.0441773
+#&gt; Zieria_arborescens              4.4083889       8.655870            12.0760175
+#&gt; Goodenia_lanata                 0.0000000       4.247482             7.6676286
+#&gt; Goodenia_ovata                  4.2474816       0.000000             3.4201470
+#&gt; Goodenia_rotundifolia           7.6676286       3.420147             0.0000000
+#&gt; Grevillea_buxifolia             0.3647613       3.882720             7.3028673
+#&gt; Grevillea_steiglitziana        10.3376647       6.090183             2.6700361
+#&gt; Grevillea_oleoides              5.4370371       9.684519            13.1046657
+#&gt; Gymnostachys_anceps             4.6499460       8.897428            12.3175746
+#&gt; Hakea_actites                  10.5336973       6.286216             2.8660687
+#&gt; Hardenbergia_violaceae          3.5229536       7.770435            11.1905822
+#&gt; Hibbertia_acicularis            1.0592070       3.188274             6.6084216
+#&gt; Hibbertia_bracteata             6.4326228       2.185141             1.2350058
+#&gt; Hibbertia_empetrifolia          5.0187417       9.266223            12.6863703
+#&gt; Hibbertia_procumbens            7.0860397      11.333521            14.7536683
+#&gt; Hibbertia_linearis              0.5073370       4.754819             8.1749656
 #&gt;                           Grevillea_buxifolia Grevillea_steiglitziana
-#&gt; Goodenia_heterophylla                       0                       0
-#&gt; Goodenia_geniculata                         0                       0
-#&gt; Goodenia_gracilis                           0                       0
-#&gt; Xyris_operculata                            0                       0
-#&gt; Eucalyptus_sp                               0                       0
-#&gt; Faradaya_splendida                          0                       0
-#&gt; Gaultheria_hispida                          0                       0
-#&gt; Geitonoplesium_cymosum                      0                       0
-#&gt; Euryomyrtus_ramosissima                     0                       0
-#&gt; Genista_linifolia                           0                       0
-#&gt; Genista_monspessulana                       0                       0
-#&gt; Geranium_sp                                 0                       0
-#&gt; Glycine_clandestina                         0                       0
-#&gt; Gompholobium_ecostatum_1                    0                       0
-#&gt; Gompholobium_ecostatum_2                    0                       0
-#&gt; Gompholobium_grandiflorum                   0                       0
-#&gt; Gompholobium_huegelii                       0                       0
-#&gt; Gompholobium_virgatum                       0                       0
-#&gt; Gonocarpus_humilis                          0                       0
-#&gt; Gonocarpus_teucrioides                      0                       0
-#&gt; Hibbertia_obtusifolia                       0                       0
-#&gt; Zieria_arborescens                          0                       0
-#&gt; Goodenia_lanata                             0                       0
-#&gt; Goodenia_ovata                              0                       0
-#&gt; Goodenia_rotundifolia                       0                       0
-#&gt; Grevillea_buxifolia                         0                       0
-#&gt; Grevillea_steiglitziana                     0                       0
-#&gt; Grevillea_oleoides                          0                       0
-#&gt; Gymnostachys_anceps                         0                       0
-#&gt; Hakea_actites                               0                       0
-#&gt; Hardenbergia_violaceae                      0                       0
-#&gt; Hibbertia_acicularis                        0                       0
-#&gt; Hibbertia_bracteata                         0                       0
-#&gt; Hibbertia_empetrifolia                      0                       0
-#&gt; Hibbertia_procumbens                        0                       0
-#&gt; Hibbertia_linearis                          0                       0
+#&gt; Goodenia_heterophylla               7.3505068               2.6223966
+#&gt; Goodenia_geniculata                 4.4793912              14.4522945
+#&gt; Goodenia_gracilis                   3.7233266              13.6962300
+#&gt; Xyris_operculata                    1.8142645               8.1586389
+#&gt; Eucalyptus_sp                       0.2722378              10.2451411
+#&gt; Faradaya_splendida                  5.2576299              15.2305332
+#&gt; Gaultheria_hispida                  1.6485641              11.6214675
+#&gt; Geitonoplesium_cymosum             18.5972923               8.6243889
+#&gt; Euryomyrtus_ramosissima             1.6191268               8.3537766
+#&gt; Genista_linifolia                   0.2237532              10.1966566
+#&gt; Genista_monspessulana               3.9949820              13.9678854
+#&gt; Geranium_sp                        16.5474271               6.5745238
+#&gt; Glycine_clandestina                 1.1063852              11.0792886
+#&gt; Gompholobium_ecostatum_1            2.4772277               7.4956757
+#&gt; Gompholobium_ecostatum_2            2.5788028              12.5517061
+#&gt; Gompholobium_grandiflorum           3.1436708              13.1165742
+#&gt; Gompholobium_huegelii               5.1521555              15.1250588
+#&gt; Gompholobium_virgatum               6.6303169               3.3425864
+#&gt; Gonocarpus_humilis                  7.0460057              17.0189091
+#&gt; Gonocarpus_teucrioides              3.8714259              13.8443292
+#&gt; Hibbertia_obtusifolia               5.7413100              15.7142134
+#&gt; Zieria_arborescens                  4.7731502              14.7460536
+#&gt; Goodenia_lanata                     0.3647613              10.3376647
+#&gt; Goodenia_ovata                      3.8827202               6.0901831
+#&gt; Goodenia_rotundifolia               7.3028673               2.6700361
+#&gt; Grevillea_buxifolia                 0.0000000               9.9729034
+#&gt; Grevillea_steiglitziana             9.9729034               0.0000000
+#&gt; Grevillea_oleoides                  5.8017984              15.7747018
+#&gt; Gymnostachys_anceps                 5.0147073              14.9876107
+#&gt; Hakea_actites                      10.1689360               0.1960326
+#&gt; Hardenbergia_violaceae              3.8877149              13.8606183
+#&gt; Hibbertia_acicularis                0.6944457               9.2784577
+#&gt; Hibbertia_bracteata                 6.0678615               3.9050419
+#&gt; Hibbertia_empetrifolia              5.3835031              15.3564064
+#&gt; Hibbertia_procumbens                7.4508010              17.4237044
+#&gt; Hibbertia_linearis                  0.8720984              10.8450017
 #&gt;                           Grevillea_oleoides Gymnostachys_anceps Hakea_actites
-#&gt; Goodenia_heterophylla                      0                   0             0
-#&gt; Goodenia_geniculata                        0                   0             0
-#&gt; Goodenia_gracilis                          0                   0             0
-#&gt; Xyris_operculata                           0                   0             0
-#&gt; Eucalyptus_sp                              0                   0             0
-#&gt; Faradaya_splendida                         0                   0             0
-#&gt; Gaultheria_hispida                         0                   0             0
-#&gt; Geitonoplesium_cymosum                     0                   0             0
-#&gt; Euryomyrtus_ramosissima                    0                   0             0
-#&gt; Genista_linifolia                          0                   0             0
-#&gt; Genista_monspessulana                      0                   0             0
-#&gt; Geranium_sp                                0                   0             0
-#&gt; Glycine_clandestina                        0                   0             0
-#&gt; Gompholobium_ecostatum_1                   0                   0             0
-#&gt; Gompholobium_ecostatum_2                   0                   0             0
-#&gt; Gompholobium_grandiflorum                  0                   0             0
-#&gt; Gompholobium_huegelii                      0                   0             0
-#&gt; Gompholobium_virgatum                      0                   0             0
-#&gt; Gonocarpus_humilis                         0                   0             0
-#&gt; Gonocarpus_teucrioides                     0                   0             0
-#&gt; Hibbertia_obtusifolia                      0                   0             0
-#&gt; Zieria_arborescens                         0                   0             0
-#&gt; Goodenia_lanata                            0                   0             0
-#&gt; Goodenia_ovata                             0                   0             0
-#&gt; Goodenia_rotundifolia                      0                   0             0
-#&gt; Grevillea_buxifolia                        0                   0             0
-#&gt; Grevillea_steiglitziana                    0                   0             0
-#&gt; Grevillea_oleoides                         0                   0             0
-#&gt; Gymnostachys_anceps                        0                   0             0
-#&gt; Hakea_actites                              0                   0             0
-#&gt; Hardenbergia_violaceae                     0                   0             0
-#&gt; Hibbertia_acicularis                       0                   0             0
-#&gt; Hibbertia_bracteata                        0                   0             0
-#&gt; Hibbertia_empetrifolia                     0                   0             0
-#&gt; Hibbertia_procumbens                       0                   0             0
-#&gt; Hibbertia_linearis                         0                   0             0
+#&gt; Goodenia_heterophylla             13.1523052          12.3652141     2.8184292
+#&gt; Goodenia_geniculata                1.3224072           0.5353162    14.6483272
+#&gt; Goodenia_gracilis                  2.0784718           1.2913808    13.8922626
+#&gt; Xyris_operculata                   7.6160629           6.8289719     8.3546715
+#&gt; Eucalyptus_sp                      5.5295606           4.7424696    10.4411738
+#&gt; Faradaya_splendida                 0.5441685           0.2429225    15.4265659
+#&gt; Gaultheria_hispida                 4.1532343           3.3661432    11.8175001
+#&gt; Geitonoplesium_cymosum            24.3990906          23.6119996     8.4283562
+#&gt; Euryomyrtus_ramosissima            7.4209252           6.6338341     8.5498092
+#&gt; Genista_linifolia                  5.5780452           4.7909541    10.3926892
+#&gt; Genista_monspessulana              1.8068163           1.0197253    14.1639181
+#&gt; Geranium_sp                       22.3492255          21.5621345     6.3784911
+#&gt; Glycine_clandestina                4.6954132           3.9083221    11.2753212
+#&gt; Gompholobium_ecostatum_1           8.2790261           7.4919350     7.6917083
+#&gt; Gompholobium_ecostatum_2           3.2229956           2.4359046    12.7477388
+#&gt; Gompholobium_grandiflorum          2.6581276           1.8710366    13.3126068
+#&gt; Gompholobium_huegelii              0.6496429           0.1374481    15.3210915
+#&gt; Gompholobium_virgatum             12.4321153          11.6450243     3.5386191
+#&gt; Gonocarpus_humilis                 1.2442074           2.0312984    17.2149418
+#&gt; Gonocarpus_teucrioides             1.9303725           1.1432815    14.0403619
+#&gt; Hibbertia_obtusifolia              0.0604883           0.7266027    15.9102461
+#&gt; Zieria_arborescens                 1.0286482           0.2415571    14.9420862
+#&gt; Goodenia_lanata                    5.4370371           4.6499460    10.5336973
+#&gt; Goodenia_ovata                     9.6845186           8.8974276     6.2862158
+#&gt; Goodenia_rotundifolia             13.1046657          12.3175746     2.8660687
+#&gt; Grevillea_buxifolia                5.8017984           5.0147073    10.1689360
+#&gt; Grevillea_steiglitziana           15.7747018          14.9876107     0.1960326
+#&gt; Grevillea_oleoides                 0.0000000           0.7870910    15.9707344
+#&gt; Gymnostachys_anceps                0.7870910           0.0000000    15.1836434
+#&gt; Hakea_actites                     15.9707344          15.1836434     0.0000000
+#&gt; Hardenbergia_violaceae             1.9140835           1.1269924    14.0566510
+#&gt; Hibbertia_acicularis               6.4962441           5.7091531     9.4744903
+#&gt; Hibbertia_bracteata               11.8696599          11.0825688     4.1010745
+#&gt; Hibbertia_empetrifolia             0.4182953           0.3687957    15.5524391
+#&gt; Hibbertia_procumbens               1.6490026           2.4360936    17.6197370
+#&gt; Hibbertia_linearis                 4.9297000           4.1426090    11.0410344
 #&gt;                           Hardenbergia_violaceae Hibbertia_acicularis
-#&gt; Goodenia_heterophylla                          0                    0
-#&gt; Goodenia_geniculata                            0                    0
-#&gt; Goodenia_gracilis                              0                    0
-#&gt; Xyris_operculata                               0                    0
-#&gt; Eucalyptus_sp                                  0                    0
-#&gt; Faradaya_splendida                             0                    0
-#&gt; Gaultheria_hispida                             0                    0
-#&gt; Geitonoplesium_cymosum                         0                    0
-#&gt; Euryomyrtus_ramosissima                        0                    0
-#&gt; Genista_linifolia                              0                    0
-#&gt; Genista_monspessulana                          0                    0
-#&gt; Geranium_sp                                    0                    0
-#&gt; Glycine_clandestina                            0                    0
-#&gt; Gompholobium_ecostatum_1                       0                    0
-#&gt; Gompholobium_ecostatum_2                       0                    0
-#&gt; Gompholobium_grandiflorum                      0                    0
-#&gt; Gompholobium_huegelii                          0                    0
-#&gt; Gompholobium_virgatum                          0                    0
-#&gt; Gonocarpus_humilis                             0                    0
-#&gt; Gonocarpus_teucrioides                         0                    0
-#&gt; Hibbertia_obtusifolia                          0                    0
-#&gt; Zieria_arborescens                             0                    0
-#&gt; Goodenia_lanata                                0                    0
-#&gt; Goodenia_ovata                                 0                    0
-#&gt; Goodenia_rotundifolia                          0                    0
-#&gt; Grevillea_buxifolia                            0                    0
-#&gt; Grevillea_steiglitziana                        0                    0
-#&gt; Grevillea_oleoides                             0                    0
-#&gt; Gymnostachys_anceps                            0                    0
-#&gt; Hakea_actites                                  0                    0
-#&gt; Hardenbergia_violaceae                         0                    0
-#&gt; Hibbertia_acicularis                           0                    0
-#&gt; Hibbertia_bracteata                            0                    0
-#&gt; Hibbertia_empetrifolia                         0                    0
-#&gt; Hibbertia_procumbens                           0                    0
-#&gt; Hibbertia_linearis                             0                    0
+#&gt; Goodenia_heterophylla                 11.2382217            6.6560611
+#&gt; Goodenia_geniculata                    0.5916762            5.1738369
+#&gt; Goodenia_gracilis                      0.1643883            4.4177723
+#&gt; Xyris_operculata                       5.7019795            1.1198188
+#&gt; Eucalyptus_sp                          3.6154772            0.9666835
+#&gt; Faradaya_splendida                     1.3699149            5.9520756
+#&gt; Gaultheria_hispida                     2.2391508            2.3430098
+#&gt; Geitonoplesium_cymosum                22.4850072           17.9028465
+#&gt; Euryomyrtus_ramosissima                5.5068417            0.9246811
+#&gt; Genista_linifolia                      3.6639617            0.9181989
+#&gt; Genista_monspessulana                  0.1072671            4.6894278
+#&gt; Geranium_sp                           20.4351421           15.8529814
+#&gt; Glycine_clandestina                    2.7813297            1.8008309
+#&gt; Gompholobium_ecostatum_1               6.3649426            1.7827820
+#&gt; Gompholobium_ecostatum_2               1.3089122            3.2732485
+#&gt; Gompholobium_grandiflorum              0.7440442            3.8381165
+#&gt; Gompholobium_huegelii                  1.2644405            5.8466012
+#&gt; Gompholobium_virgatum                 10.5180319            5.9358712
+#&gt; Gonocarpus_humilis                     3.1582908            7.7404515
+#&gt; Gonocarpus_teucrioides                 0.0162891            4.5658716
+#&gt; Hibbertia_obtusifolia                  1.8535951            6.4357557
+#&gt; Zieria_arborescens                     0.8854353            5.4675959
+#&gt; Goodenia_lanata                        3.5229536            1.0592070
+#&gt; Goodenia_ovata                         7.7704352            3.1882745
+#&gt; Goodenia_rotundifolia                 11.1905822            6.6084216
+#&gt; Grevillea_buxifolia                    3.8877149            0.6944457
+#&gt; Grevillea_steiglitziana               13.8606183            9.2784577
+#&gt; Grevillea_oleoides                     1.9140835            6.4962441
+#&gt; Gymnostachys_anceps                    1.1269924            5.7091531
+#&gt; Hakea_actites                         14.0566510            9.4744903
+#&gt; Hardenbergia_violaceae                 0.0000000            4.5821606
+#&gt; Hibbertia_acicularis                   4.5821606            0.0000000
+#&gt; Hibbertia_bracteata                    9.9555764            5.3734158
+#&gt; Hibbertia_empetrifolia                 1.4957881            6.0779488
+#&gt; Hibbertia_procumbens                   3.5630860            8.1452467
+#&gt; Hibbertia_linearis                     3.0156166            1.5665441
 #&gt;                           Hibbertia_bracteata Hibbertia_empetrifolia
-#&gt; Goodenia_heterophylla                       0                      0
-#&gt; Goodenia_geniculata                         0                      0
-#&gt; Goodenia_gracilis                           0                      0
-#&gt; Xyris_operculata                            0                      0
-#&gt; Eucalyptus_sp                               0                      0
-#&gt; Faradaya_splendida                          0                      0
-#&gt; Gaultheria_hispida                          0                      0
-#&gt; Geitonoplesium_cymosum                      0                      0
-#&gt; Euryomyrtus_ramosissima                     0                      0
-#&gt; Genista_linifolia                           0                      0
-#&gt; Genista_monspessulana                       0                      0
-#&gt; Geranium_sp                                 0                      0
-#&gt; Glycine_clandestina                         0                      0
-#&gt; Gompholobium_ecostatum_1                    0                      0
-#&gt; Gompholobium_ecostatum_2                    0                      0
-#&gt; Gompholobium_grandiflorum                   0                      0
-#&gt; Gompholobium_huegelii                       0                      0
-#&gt; Gompholobium_virgatum                       0                      0
-#&gt; Gonocarpus_humilis                          0                      0
-#&gt; Gonocarpus_teucrioides                      0                      0
-#&gt; Hibbertia_obtusifolia                       0                      0
-#&gt; Zieria_arborescens                          0                      0
-#&gt; Goodenia_lanata                             0                      0
-#&gt; Goodenia_ovata                              0                      0
-#&gt; Goodenia_rotundifolia                       0                      0
-#&gt; Grevillea_buxifolia                         0                      0
-#&gt; Grevillea_steiglitziana                     0                      0
-#&gt; Grevillea_oleoides                          0                      0
-#&gt; Gymnostachys_anceps                         0                      0
-#&gt; Hakea_actites                               0                      0
-#&gt; Hardenbergia_violaceae                      0                      0
-#&gt; Hibbertia_acicularis                        0                      0
-#&gt; Hibbertia_bracteata                         0                      0
-#&gt; Hibbertia_empetrifolia                      0                      0
-#&gt; Hibbertia_procumbens                        0                      0
-#&gt; Hibbertia_linearis                          0                      0
+#&gt; Goodenia_heterophylla               1.2826453             12.7340099
+#&gt; Goodenia_geniculata                10.5472526              0.9041119
+#&gt; Goodenia_gracilis                   9.7911881              1.6601765
+#&gt; Xyris_operculata                    4.2535970              7.1977676
+#&gt; Eucalyptus_sp                       6.3400992              5.1112653
+#&gt; Faradaya_splendida                 11.3254913              0.1258732
+#&gt; Gaultheria_hispida                  7.7164256              3.7349390
+#&gt; Geitonoplesium_cymosum             12.5294308             23.9807953
+#&gt; Euryomyrtus_ramosissima             4.4487347              7.0026298
+#&gt; Genista_linifolia                   6.2916147              5.1597499
+#&gt; Genista_monspessulana              10.0628435              1.3885210
+#&gt; Geranium_sp                        10.4795657             21.9309302
+#&gt; Glycine_clandestina                 7.1742467              4.2771178
+#&gt; Gompholobium_ecostatum_1            3.5906338              7.8607307
+#&gt; Gompholobium_ecostatum_2            8.6466642              2.8047003
+#&gt; Gompholobium_grandiflorum           9.2115323              2.2398323
+#&gt; Gompholobium_huegelii              11.2200169              0.2313476
+#&gt; Gompholobium_virgatum               0.5624555             12.0138200
+#&gt; Gonocarpus_humilis                 13.1138672              1.6625027
+#&gt; Gonocarpus_teucrioides              9.9392873              1.5120772
+#&gt; Hibbertia_obtusifolia              11.8091715              0.3578070
+#&gt; Zieria_arborescens                 10.8410117              0.6103529
+#&gt; Goodenia_lanata                     6.4326228              5.0187417
+#&gt; Goodenia_ovata                      2.1851412              9.2662233
+#&gt; Goodenia_rotundifolia               1.2350058             12.6863703
+#&gt; Grevillea_buxifolia                 6.0678615              5.3835031
+#&gt; Grevillea_steiglitziana             3.9050419             15.3564064
+#&gt; Grevillea_oleoides                 11.8696599              0.4182953
+#&gt; Gymnostachys_anceps                11.0825688              0.3687957
+#&gt; Hakea_actites                       4.1010745             15.5524391
+#&gt; Hardenbergia_violaceae              9.9555764              1.4957881
+#&gt; Hibbertia_acicularis                5.3734158              6.0779488
+#&gt; Hibbertia_bracteata                 0.0000000             11.4513645
+#&gt; Hibbertia_empetrifolia             11.4513645              0.0000000
+#&gt; Hibbertia_procumbens               13.5186625              2.0672979
+#&gt; Hibbertia_linearis                  6.9399598              4.5114047
 #&gt;                           Hibbertia_procumbens Hibbertia_linearis
-#&gt; Goodenia_heterophylla                        0                  0
-#&gt; Goodenia_geniculata                          0                  0
-#&gt; Goodenia_gracilis                            0                  0
-#&gt; Xyris_operculata                             0                  0
-#&gt; Eucalyptus_sp                                0                  0
-#&gt; Faradaya_splendida                           0                  0
-#&gt; Gaultheria_hispida                           0                  0
-#&gt; Geitonoplesium_cymosum                       0                  0
-#&gt; Euryomyrtus_ramosissima                      0                  0
-#&gt; Genista_linifolia                            0                  0
-#&gt; Genista_monspessulana                        0                  0
-#&gt; Geranium_sp                                  0                  0
-#&gt; Glycine_clandestina                          0                  0
-#&gt; Gompholobium_ecostatum_1                     0                  0
-#&gt; Gompholobium_ecostatum_2                     0                  0
-#&gt; Gompholobium_grandiflorum                    0                  0
-#&gt; Gompholobium_huegelii                        0                  0
-#&gt; Gompholobium_virgatum                        0                  0
-#&gt; Gonocarpus_humilis                           0                  0
-#&gt; Gonocarpus_teucrioides                       0                  0
-#&gt; Hibbertia_obtusifolia                        0                  0
-#&gt; Zieria_arborescens                           0                  0
-#&gt; Goodenia_lanata                              0                  0
-#&gt; Goodenia_ovata                               0                  0
-#&gt; Goodenia_rotundifolia                        0                  0
-#&gt; Grevillea_buxifolia                          0                  0
-#&gt; Grevillea_steiglitziana                      0                  0
-#&gt; Grevillea_oleoides                           0                  0
-#&gt; Gymnostachys_anceps                          0                  0
-#&gt; Hakea_actites                                0                  0
-#&gt; Hardenbergia_violaceae                       0                  0
-#&gt; Hibbertia_acicularis                         0                  0
-#&gt; Hibbertia_bracteata                          0                  0
-#&gt; Hibbertia_empetrifolia                       0                  0
-#&gt; Hibbertia_procumbens                         0                  0
-#&gt; Hibbertia_linearis                           0                  0</div></pre>
+#&gt; Goodenia_heterophylla               14.8013078          8.2226051
+#&gt; Goodenia_geniculata                  2.9714098          3.6072928
+#&gt; Goodenia_gracilis                    3.7274744          2.8512282
+#&gt; Xyris_operculata                     9.2650655          2.6863629
+#&gt; Eucalyptus_sp                        7.1785632          0.5998606
+#&gt; Faradaya_splendida                   2.1931711          4.3855315
+#&gt; Gaultheria_hispida                   5.8022369          0.7764658
+#&gt; Geitonoplesium_cymosum              26.0480932         19.4693906
+#&gt; Euryomyrtus_ramosissima              9.0699278          2.4912251
+#&gt; Genista_linifolia                    7.2270478          0.6483451
+#&gt; Genista_monspessulana                3.4558189          3.1228837
+#&gt; Geranium_sp                         23.9982281         17.4195255
+#&gt; Glycine_clandestina                  6.3444158          0.2342869
+#&gt; Gompholobium_ecostatum_1             9.9280287          3.3493260
+#&gt; Gompholobium_ecostatum_2             4.8719982          1.7067044
+#&gt; Gompholobium_grandiflorum            4.3071302          2.2715724
+#&gt; Gompholobium_huegelii                2.2986455          4.2800571
+#&gt; Gompholobium_virgatum               14.0811179          7.5024153
+#&gt; Gonocarpus_humilis                   0.4047952          6.1739074
+#&gt; Gonocarpus_teucrioides               3.5793751          2.9993275
+#&gt; Hibbertia_obtusifolia                1.7094909          4.8692117
+#&gt; Zieria_arborescens                   2.6776508          3.9010519
+#&gt; Goodenia_lanata                      7.0860397          0.5073370
+#&gt; Goodenia_ovata                      11.3335212          4.7548186
+#&gt; Goodenia_rotundifolia               14.7536683          8.1749656
+#&gt; Grevillea_buxifolia                  7.4508010          0.8720984
+#&gt; Grevillea_steiglitziana             17.4237044         10.8450017
+#&gt; Grevillea_oleoides                   1.6490026          4.9297000
+#&gt; Gymnostachys_anceps                  2.4360936          4.1426090
+#&gt; Hakea_actites                       17.6197370         11.0410344
+#&gt; Hardenbergia_violaceae               3.5630860          3.0156166
+#&gt; Hibbertia_acicularis                 8.1452467          1.5665441
+#&gt; Hibbertia_bracteata                 13.5186625          6.9399598
+#&gt; Hibbertia_empetrifolia               2.0672979          4.5114047
+#&gt; Hibbertia_procumbens                 0.0000000          6.5787026
+#&gt; Hibbertia_linearis                   6.5787026          0.0000000</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
