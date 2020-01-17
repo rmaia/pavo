@@ -19,6 +19,7 @@ reference:
   - '`procimg`'
   - '`procspec`'
   - '`rimg2cimg`'
+  - '`simulate_spec`'
   - '`spec2rgb`'
   - '`subset.rspec`'
 
