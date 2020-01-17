@@ -1,5 +1,11 @@
 # pavo 2.4.0
 
+## NEW FEATURES
+
+* new function `simulate_spec()` allows to simulate spectra with realistic 
+shapes, and specified colourimetric characteristics (hue, brightness, 
+saturation)
+
 ## MINOR FEATURES AND BUG FIXES
 
 * fix partial matching warnings in examples and in `bootcooldist()`
