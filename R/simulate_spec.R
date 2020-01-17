@@ -13,10 +13,10 @@
 #' @details Spectra are simulated with the following functions:
 #'
 #' * `"sigmoid"`:
-#' \deqn{R(\text{wl})=\text{baseline}+\text{brightness} \times\exp \left[-\dfrac{(\text{wl}-\text{hue})^2}{2\text{saturation}^{2}}\right]}{R(wl) = baseline + brightness * exp(-(wl-hue)^2/(2*saturation^2))}
+#' \deqn{R(\lambda)=P+K \times\exp \left[-\dfrac{(\lambda-H)^2}{2\sigma^{2}}\right]}{R(wl) = baseline + brightness * exp(-(wl-hue)^2/(2*saturation^2))}
 #'
 #' * `"bell"`:
-#' \deqn{R(\text{wl})=\text{baseline}+\text{brightness}\left[\frac{\pi}{2}+\arctan \left(\frac{\text{wl}-\text{hue}}{\text{saturation}}\right)\right]}{R(wl) = baseline + brightness * (pi/2 + arctan((wl-hue)/sigma))}
+#' \deqn{R(\lambda)=P+K\left[\frac{\pi}{2}+\arctan \left(\frac{\lambda-H}{\sigma}\right)\right]}{R(wl) = baseline + brightness * (pi/2 + arctan((wl-hue)/sigma))}
 #'
 #' @examples
 #' plot(simulate_spec("sigmoid", 450, 35, 10, 5))
