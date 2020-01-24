@@ -39,11 +39,13 @@ is not saved properly if exported using \code{rgl.postscript})(defaults to \code
 Produces a 3D alphashape in tetrahedral colour space
 }
 \examples{
+\dontrun{
 # For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 tcsshape(tcs.sicalis, avalue = 0.1)
+}
 
 }
