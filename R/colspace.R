@@ -102,8 +102,7 @@ colspace <- function(vismodeldata,
   # Auto-define an appropriate space
   if (space2 == "auto") {
     if (all(c("X", "Y", "Z") %in% names(vismodeldata))) {
-      space2 <- "XYZ"
-      # res <- cie(vismodeldata, "XYZ")
+      space2 <- "ciexyz"
     } else {
       if (is.null(attr(vismodeldata, "conenumb"))) {
         stop(

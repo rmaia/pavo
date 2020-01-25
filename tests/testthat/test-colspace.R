@@ -160,3 +160,14 @@ test_that("Errors/messages", {
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
 })
+
+test_that("CIE", {
+  
+  data(flowers)
+  vis_flowers <- colspace(vismodel(flowers, "cie10"))
+  implicit_cie_flowers <- colspace(vis_flowers)
+  expect_s3_class(implicit_cie_flowers, "colspace")
+  explicit_cie_flowers <- colspace(vis_flowers, space = "ciexyz")
+  expect_identical(implicit_cie_flowers, explicit_cie_flowers)
+  
+})
