@@ -14,8 +14,6 @@
 #' tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 #' tcsshape(tcs.sicalis, avalue = 0.1)
 #' }
-#'
-#' @importFrom alphashape3d ashape3d
 
 tcsshape <- function (tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
                       grid = TRUE, fill = TRUE, lwd = 1, avalue) {
@@ -32,13 +30,11 @@ tcsshape <- function (tcsdata, col = "black", alpha = 0.2, grid.alpha = 1,
     requireNamespace("rgl")
   }
 
-  ashape <- ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]), alpha = avalue)
+  ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]), 
+                                   alpha = avalue)
   tri <- ashape$triang
   vol <- t(tri[tri[, ncol(tri)] %in% c(2,3), c(1, 2, 3)])
   coords <- ashape$x
-  listvol <- split(vol, rep(seq_len(ncol(vol)), each = nrow(vol)))
-  ppairs <- do.call(rbind, lapply(listvol, function(x) t(combn(x,
-                                                               2))))
 
   if (grid) {
     rgl::triangles3d(coords[vol, ],
