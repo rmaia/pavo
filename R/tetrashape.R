@@ -19,15 +19,14 @@
 #' }
 #'
 #' @export
-#'
-#' @importFrom  alphashape3d ashape3d
 
 tetrashape <- function(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE,
                        new = FALSE, avalue, ...) {
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs")
     stop("object is not in tetrahedral color space")
 
-  ashape <- ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]), alpha = avalue)
+  ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]), 
+                                   alpha = avalue)
 
   tri <- ashape$triang
   vol <- t(tri[tri[, ncol(tri)] %in% c(2,3), c(1, 2, 3)])

@@ -47,5 +47,4 @@ tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 tcsshape(tcs.sicalis, avalue = 0.1)
 }
-
 }
