@@ -12,7 +12,7 @@ classify(
   interactive = FALSE,
   plotnew = FALSE,
   col = "red",
-  cores = getOption("mc.cores", 2L),
+  cores = NULL,
   ...
 )
 }
@@ -49,9 +49,8 @@ Defaults to \code{FALSE}.}
 
 \item{col}{the color of the marker points, when \code{interactive = TRUE}.}
 
-\item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
-available on Windows.}
+\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
+customise your parallelisation strategy.}
 
 \item{...}{additional graphical parameters when \code{interactive = TRUE}.
 Also see \code{\link[graphics:par]{graphics::par()}}.}
@@ -63,6 +62,13 @@ cluster centres (i.e. colour classes) are stored as object attributes.
 }
 \description{
 Classify image pixels into discrete colour classes.
+}
+\details{
+You can customise the type of parallel processing used by this function with
+the \code{\link[future:plan]{future::plan()}} function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the \code{\link[progressr:handlers]{progressr::handlers()}} functions
+(progress bar, acoustic feedback, nothing, etc.)
 }
 \note{
 Since the \code{kmeans} process draws on random numbers to find initial

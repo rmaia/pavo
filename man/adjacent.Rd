@@ -13,7 +13,7 @@ adjacent(
   exclude = c("none", "background", "object"),
   coldists = NULL,
   hsl = NULL,
-  cores = getOption("mc.cores", 2L)
+  cores = NULL
 )
 }
 \arguments{
@@ -65,9 +65,8 @@ as might be estimated via \code{\link[=vismodel]{vismodel()}} and \code{\link[=c
 column, named 'patch', should contain numeric color category IDs, with the remaining
 columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.}
 
-\item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}. Not
-available on Windows.}
+\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
+customise your parallelisation strategy.}
 }
 \value{
 a data frame of summary variables:
@@ -117,6 +116,13 @@ variation of overall pattern luminance.
 Calculate summary variables from the adjacency (Endler 2012) and
 boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 contrast (Endler & Mielke 2005).
+}
+\details{
+You can customise the type of parallel processing used by this function with
+the \code{\link[future:plan]{future::plan()}} function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the \code{\link[progressr:handlers]{progressr::handlers()}} functions
+(progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
 \dontrun{

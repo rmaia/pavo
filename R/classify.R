@@ -25,11 +25,11 @@
 #' @param col the color of the marker points, when `interactive = TRUE`.
 #' @param plotnew Should plots be opened in a new window when `interactive = TRUE`?
 #' Defaults to `FALSE`.
-#' @param cores number of cores to be used in parallel processing. If `1`, parallel
-#'  computing will not be used. Defaults to `getOption("mc.cores", 2L)`. Not
-#'  available on Windows.
 #' @param ... additional graphical parameters when `interactive = TRUE`.
 #' Also see [graphics::par()].
+#' @inheritParams getspec
+#' 
+#' @inherit getspec details
 #'
 #' @return A matrix, or list of matrices, of class `rimg` containing the colour
 #' class classifications ID at each pixel location. The RGB values corresponding to
@@ -58,7 +58,13 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
-                     plotnew = FALSE, col = "red", cores = getOption("mc.cores", 2L), ...) {
+                     plotnew = FALSE, col = "red", cores = NULL, ...) {
+
+  if (!missing(cores)) {
+    warning("'cores' argument is deprecated. See ?future::plan for more info ",
+            "about how you can choose your parallelisation strategy.",
+            call. = FALSE)
+  }
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -138,13 +144,6 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   # (3) Interactive, no reference image.
   # (4) Interctive, with a reference image
 
-  # Image size check to avoid pbmc bug when faced with large objects
-  if (format(object.size(imgdat), units = "Mb") < 100) {
-    parallel <- TRUE
-  } else {
-    parallel <- FALSE
-  }
-
   if (!interactive) {
     if (!is.null(refID)) { ## (2) Single k, with reference image ##
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method2), "classRGB")
@@ -156,7 +155,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, ref_centers, parallel, cores, method2)
+    outdata <- classifier(imgdat, ref_centers, method2)
   } else if (interactive) {
 
     ## (3) Interactive, no reference image. ##
@@ -216,7 +215,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, centers, parallel, cores, method2)
+    outdata <- classifier(imgdat, centers, method2)
   }
 
   # Names & attributes
@@ -251,15 +250,18 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 }
 
 # Wrapper for main classify function to handle parallel/single core
-#' @importFrom pbmcapply pbmclapply
-classifier <- function(imgdat_i2, n_cols_i2, parallel_i2, cores_i2, method_i2) {
-  ifelse(parallel_i2,
-    outdata <- pbmclapply(seq_along(imgdat_i2),
-      function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2),
-      mc.cores = cores_i2
-    ),
-    outdata <- lapply(seq_along(imgdat_i2), function(x) classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2))
-  )
+#' @importFrom future.apply future_lapply
+#' @importFrom progressr with_progress progressor
+classifier <- function(imgdat_i2, n_cols_i2, method_i2) {
+  
+  with_progress({
+    p <- progressor(along = imgdat_i2)
+    outdata <- future_lapply(seq_along(imgdat_i2), function(x) {
+      p()
+      classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2)
+    })
+  })
+
   outdata
 }
 

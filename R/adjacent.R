@@ -44,9 +44,9 @@
 #' as might be estimated via [vismodel()] and [colspace()]. The first
 #' column, named 'patch', should contain numeric color category IDs, with the remaining
 #' columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.
-#' @param cores number of cores to be used in parallel processing. If `1`, parallel
-#'  computing will not be used. Defaults to `getOption("mc.cores", 2L)`. Not
-#'  available on Windows.
+#' @inheritParams getspec
+#' 
+#' @inherit getspec details
 #'
 #' @return a data frame of summary variables:
 #' - `'k'`: The number of user-specified colour and/or luminance classes.
@@ -93,8 +93,9 @@
 #'
 #' @seealso [classify()], [summary.rimg()], [procimg()]
 #'
-#' @importFrom pbmcapply pbmclapply
 #' @importFrom utils object.size
+#' @importFrom future.apply future_lapply
+#' @importFrom progressr with_progress progressor
 #'
 #' @examples
 #' \dontrun{
@@ -147,7 +148,14 @@
 
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
-                     coldists = NULL, hsl = NULL, cores = getOption("mc.cores", 2L)) {
+                     coldists = NULL, hsl = NULL, cores = NULL) {
+  
+  if (!missing(cores)) {
+    warning("'cores' argument is deprecated. See ?future::plan for more info ",
+            "about how you can choose your parallelisation strategy.",
+            call. = FALSE)
+  }
+
   exclude2 <- match.arg(exclude)
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -164,11 +172,6 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   ## before converting it back at the end
   if (!multi_image) {
     classimg <- list(classimg)
-  }
-
-  ## Cores
-  if (cores > 1 && .Platform$OS.type == "windows") {
-    cores <- 1
   }
 
   ## Class/structure
@@ -268,34 +271,21 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 
   imgsize <- format(object.size(classimg), units = "Mb")
 
-  ifelse(imgsize < 100,
-    outdata <- pbmcapply::pbmclapply(seq_along(classimg),
-      function(x) {
-        adjacent_main(classimg[[x]],
-          xpts_i = xpts[[x]],
-          xscale_i = xscale[[x]],
-          bkgID_i = bkgID,
-          exclude2_i = exclude2,
-          coldists_i = coldists[[x]],
-          hsl_i = hsl[[x]]
-        )
-      },
-      mc.cores = cores
-    ),
-    outdata <- lapply(
-      seq_along(classimg),
-      function(x) {
-        adjacent_main(classimg[[x]],
-          xpts_i = xpts[[x]],
-          xscale_i = xscale[[x]],
-          bkgID_i = bkgID,
-          exclude2_i = exclude2,
-          coldists_i = coldists[[x]],
-          hsl_i = hsl[[x]]
-        )
-      }
-    )
-  )
+  with_progress({
+    p <- progressor(along = classimg)
+    outdata <- future_lapply(seq_along(classimg), function(x) {
+      p()
+      adjacent_main(
+        classimg[[x]],
+        xpts_i = xpts[[x]],
+        xscale_i = xscale[[x]],
+        bkgID_i = bkgID,
+        exclude2_i = exclude2,
+        coldists_i = coldists[[x]],
+        hsl_i = hsl[[x]]
+      )
+    })
+  })
 
   # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
   allNms <- unique(unlist(lapply(outdata, names)))
