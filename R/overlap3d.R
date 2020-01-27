@@ -3,7 +3,7 @@
 #' Compute colour volume overlap in 3D with alphashapes
 #'
 #' @inheritParams voloverlap
-#' @inheritParams tcshape
+#' @inheritParams tcsshape
 #' @param nsamp the number of points to be sampled. Stoddard & Stevens(2011) use
 #' around 750,000 points, but more or fewer might be required depending on the
 #' degree of overlap.
@@ -46,9 +46,9 @@ overlap3d <- function(colsp1, colsp2, plot = FALSE, interactive = TRUE,
             " interactive plot.")
   }
 
-  dat1 <- tcsres1[, c("x", "y", "z")]
+  dat1 <- colsp1[, c("x", "y", "z")]
 
-  dat2 <- tcsres2[, c("x", "y", "z")]
+  dat2 <- colsp2[, c("x", "y", "z")]
 
   shape1 <- alphashape3d::ashape3d(as.matrix(dat1), avalue)
   shape2 <- alphashape3d::ashape3d(as.matrix(dat2), avalue)
@@ -106,8 +106,8 @@ overlap3d <- function(colsp1, colsp2, plot = FALSE, interactive = TRUE,
       rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
     }
 
-    tcsshape(tcsres1, col = col[1], fill = FALSE, avalue = avalue)
-    tcsshape(tcsres2, col = col[2], fill = FALSE, avalue = avalue)
+    tcsshape(colsp1, col = col[1], fill = FALSE, avalue = avalue)
+    tcsshape(colsp2, col = col[2], fill = FALSE, avalue = avalue)
 
     rgl::spheres3d(samples[which(invol1 & !invol2), ],
                    type = "s",
