@@ -166,7 +166,7 @@ Avantes (before or after exporting).</p>
   <span class='kw'>sep</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>subdir</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>subdir.names</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>),
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>ignore.case</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
 )</pre>
 
@@ -175,47 +175,49 @@ Avantes (before or after exporting).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>where</th>
-      <td><p>(required) folder in which files are located.</p></td>
+      <td><p>Folder in which files are located (defaults to current working
+directory).</p></td>
     </tr>
     <tr>
       <th>ext</th>
-      <td><p>file extension to be searched for, without the "."
-(defaults to "txt").</p></td>
+      <td><p>File extension to be searched for, without the "." (defaults to
+<code>txt</code>). You can also use a character vector to specify multiple file
+extensions.</p></td>
     </tr>
     <tr>
       <th>lim</th>
-      <td><p>a vector with two numbers determining the wavelength limits to be
-considered (defaults to 300 and 700).</p></td>
+      <td><p>A vector with two numbers determining the wavelength limits to be
+considered (defaults to <code><a href='https://rdrr.io/r/base/c.html'>c(300, 700)</a></code>).</p></td>
     </tr>
     <tr>
       <th>decimal</th>
-      <td><p>character to be used to identify decimal plates
-(defaults to ".").</p></td>
+      <td><p>Character to be used to identify decimal plates
+(defaults to <code>.</code>).</p></td>
     </tr>
     <tr>
       <th>sep</th>
-      <td><p>column delimiting characters to be considered in addition to the
+      <td><p>Column delimiting characters to be considered in addition to the
 default (which are: tab, space, and ";")</p></td>
     </tr>
     <tr>
       <th>subdir</th>
-      <td><p>should subdirectories within the <code>where</code> folder be
-included in the search? (defaults to <code>FALSE</code>).</p></td>
+      <td><p>Should subdirectories within the <code>where</code> folder be included in
+the search? (defaults to <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>subdir.names</th>
-      <td><p>should subdirectory path be included in the name of the
+      <td><p>Should subdirectory path be included in the name of the
 spectra? (defaults to <code>FALSE</code>).</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>Number of cores to be used. If greater than 1, import will use
-parallel processing (not available in Windows).</p></td>
+      <td><p>deprecated. See <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> for more details on how to
+customise your parallelisation strategy.</p></td>
     </tr>
     <tr>
       <th>ignore.case</th>
-      <td><p>Logical. Should the extension search be case insensitive?
-(defaults to `TRUE``)</p></td>
+      <td><p>Should the extension search be case insensitive? (defaults
+to <code>TRUE</code>)</p></td>
     </tr>
     </table>
 
@@ -224,27 +226,41 @@ parallel processing (not available in Windows).</p></td>
     <p>A data frame, of class <code>rspec</code>, containing individual imported
 spectral files as columns.
 Reflectance values are interpolated to the nearest wavelength integer.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>You can customise the type of parallel processing used by this function with
+the <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers()</a></code> functions
+(progress bar, acoustic feedback, nothing, etc.)</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Montgomerie R (2006) Analyzing colors. In: Hill G, McGraw K (eds)
-Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
+    <p>Gruson H, White TE, Maia R (2019) lightr: import spectral data
+and metadata in R. Journal of Open Source Software, 4(43), 1857,
+<a href='doi:10.21105/joss.01857'>doi:10.21105/joss.01857</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <div class='dont-index'><p><code><a href='https://docs.ropensci.org/lightr/reference/lr_get_spec.html'>lightr::lr_get_spec()</a></code> for a more flexible version of this function
+(e.g. uninterpolated wavelengths)</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rspecdata</span> <span class='kw'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"ttt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt;    Length     Class      Mode 
-#&gt;         2 character character </div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>rspecdata</span>)</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long
+    <pre class="examples"><div class='input'><span class='no'>rspecdata</span> <span class='kw'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"ttt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>rspecdata</span>)</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long
 #&gt; 1 400         4.0899            5.639232
 #&gt; 2 401         3.9514            6.342615
 #&gt; 3 402         4.1269            6.147300
 #&gt; 4 403         4.2617            6.010692
 #&gt; 5 404         4.1683            6.333537
-#&gt; 6 405         4.0871            6.490569</div></pre>
+#&gt; 6 405         4.0871            6.490569</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
+      <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>
 
