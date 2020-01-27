@@ -5,5 +5,8 @@
 #' "B": breast, "T": throat) from seven male stripe-tailed yellow finches
 #' (*Sicalis citrina*)
 #'
+#' @usage
+#' data(sicalis)
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 "sicalis"

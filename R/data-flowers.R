@@ -4,6 +4,9 @@
 #' Dataset containing reflectance measurements from 36 native Australian
 #' angiosperm species, indicated by column names.
 #'
+#' @usage
+#' data(flowers)
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @references Dalrymple, R., L., Kemp, D. J., Flores-Moreno, H., Laffan, S. W.,
