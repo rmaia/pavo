@@ -7,7 +7,7 @@
 around Cairns, Queensland.}
 \format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 37 columns.}
 \usage{
-flowers
+data(flowers)
 }
 \description{
 Dataset containing reflectance measurements from 36 native Australian

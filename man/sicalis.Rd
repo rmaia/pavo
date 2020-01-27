@@ -7,7 +7,7 @@
 (\emph{Sicalis citrina}) males}
 \format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 22 columns.}
 \usage{
-sicalis
+data(sicalis)
 }
 \description{
 Dataset containing reflectance measurements from 3 body parts ("C": crown,
