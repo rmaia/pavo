@@ -1,5 +1,13 @@
 # pavo 2.5.0
 
+## NEW FEATURES AND SIGNIFICANT CHANGES
+
+* Add ability to compute colour volume by using alphashapes instead of convex 
+  hulls. The functions `vol()`, `tcsvol()` and `voloverlap()` gain a new 
+  argument `type = c("convex", "alpha")` to decide how you want to compute the
+  colour volume. Please refer to the vignette `vignette("pavo-5-alphashapes", 
+  package = "pavo")` for more information.
+
 ## MINOR FEATURES AND BUG FIXES
 
 * Added a continuous measure of hue to the output of the categorical model of Troje (1993)
@@ -16,6 +24,7 @@ from the input object.
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+<<<<<<< HEAD
 * Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and 
 S1V in `summary.rspec()`.
 * several `plot()` functions for colspace (`triplot()`, `tcsplot()`, 
