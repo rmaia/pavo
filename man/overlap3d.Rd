@@ -50,6 +50,8 @@ degree of overlap.}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
+\item{avalue}{Value of alpha parameter for the alphashape}
+
 \item{...}{additional arguments passed to the plot. See \code{\link[=vol]{vol()}}}
 }
 \value{
