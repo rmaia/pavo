@@ -2,7 +2,7 @@ context("hashes")
 
 test_that("coldist", {
   skip_on_cran()
-  
+
   data(flowers)
   library(digest)
 
@@ -36,12 +36,12 @@ test_that("coldist", {
     digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 4),
     "c6d1989e98abd7772c00475696c6e6dafe0a2e46"
   )
-  
+
 })
 
 test_that("colspace", {
   skip_on_cran()
-  
+
   library(digest)
   data(flowers)
 
@@ -86,17 +86,18 @@ test_that("colspace", {
     "f4e4cc8da4fdffddc80c51f2f830b88adba3779d"
   ) # cielch
 
-  expect_equal(
-    digest::sha1(summary(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), digits = 4),
-    "8d9c05ec7ae28b219c4c56edbce6a721bd68af82"
-  )
+  # sha1() has no method for the 'table' class
+  # expect_equal(
+  #   digest::sha1(summary(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), digits = 4),
+  #   "8d9c05ec7ae28b219c4c56edbce6a721bd68af82"
+  # )
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
   expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
 })
 
 test_that("processing & general", {
   skip_on_cran()
-  
+
   library(digest)
 
   # Sensdata
@@ -135,7 +136,7 @@ test_that("processing & general", {
 
 test_that("images", {
   skip_on_cran()
-  
+
   library(digest)
   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
@@ -155,7 +156,7 @@ test_that("images", {
 
 test_that("vismodel", {
   skip_on_cran()
-  
+
   library(digest)
   data(flowers)
 
