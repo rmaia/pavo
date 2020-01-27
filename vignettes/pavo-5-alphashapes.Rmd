@@ -18,7 +18,15 @@ options(rgl.useNULL = TRUE)
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
+Alphashapes are a new tool available in `pavo` to estimated colour volumes, 
+while allowing the presence of voids and pockets, which may lead to a more
+accurate measurement of "colourfulness" than convex hulls.
+
 # Alphashapes in chromaticity diagrams
+
+You can plot the colour volume using $\alpha$-shape with the `tetrashape()` 
+function (for non-interactive plots, `tcsshape()` otherwise), with a 
+user-defined value for $\alpha$, set by the `avalue` argument:
 
 ```{r}
 library(pavo)
@@ -29,8 +37,10 @@ plot(tcs_flowers)
 tetrashape(tcs_flowers, avalue = 0.5)
 ```
 
-Now let's try to find the smallest $\alpha$ value which does not create any isolated $n-2$ simplex ($\alpha^*$).
-We know this value cannot be smaller than the maximum distance to the closest point. So we can begin by identifying this minimal value:
+Now let's try to find the smallest $\alpha$ value which does not create any
+isolated $n-2$ simplex ($\alpha^*$). We know this value cannot be smaller than
+the maximum distance to the closest point. So we can begin by identifying this
+minimal value:
 
 ```{r, eval=FALSE}
 library(FNN)
@@ -39,13 +49,16 @@ annd <- max(distances)/2
 ```
 
 ```{r, include=FALSE}
-# This is a work around to not depend on FNN
+# This is a workaround to not depend on FNN
 annd <- 0.115302552185513
 ```
 
-We now know that the most isolated data point lies at a distance `annd`=`r sprintf("%.5f", annd)` of its closest neighbour.
+We now know that the most isolated data point lies at a distance `annd`=`r
+sprintf("%.5f", annd)` of its closest neighbour.
 
-Alphashapes change in a stepwise fashion and many close values will output the same colour volume. We can then start by finding all the threshold values and test only these values:
+Alphashapes change in a stepwise fashion and many close values will output the
+same colour volume. We can then start by finding all the threshold values and
+test only these values:
 
 ```{r}
 library(alphashape3d)
@@ -54,7 +67,9 @@ avalues <- unname(shapes$tetra[, "rhoT"])
 avalues <- sort(avalues)
 ```
 
-We find `length(avalues)`=`r length(avalues)` threshold values. Fortunately, we don't have to test them all since we know that $\alpha^*$ cannot be smaller than `annd`:
+We find `length(avalues)`=`r length(avalues)` threshold values. Fortunately, we
+don't have to test them all since we know that $\alpha^*$ cannot be smaller than
+`annd`:
 
 ```{r}
 avalues <- avalues[avalues >= annd]
@@ -80,7 +95,8 @@ astar_ind <- match(TRUE, allin)
 astar <- avalues[astar_ind]
 ```
 
-We can now visualise the colour volume of the `flowers` dataset computed with the alphashape method, and the $\alpha^*$ value as parameter:
+We can now visualise the colour volume of the `flowers` dataset computed with
+the alphashape method, and the $\alpha^*$ value as parameter:
 
 ```{r}
 plot(tcs_flowers)
@@ -89,7 +105,10 @@ tetrashape(tcs_flowers, avalue = astar)
 
 # Alphashapes in perceptually uniform spaces
 
-In the previous section, we focused on alpashapes in chromaticity diagrams since it is the most common space where convex hulls (that alphashapes aim at replacing) are used. But it is also possible to use alphashapes in other spaces, such as perceptually uniform spaces.
+In the previous section, we focused on alpashapes in chromaticity diagrams since
+it is the most common space where convex hulls (that alphashapes aim at
+replacing) are used. But it is also possible to use alphashapes in other spaces,
+such as perceptually uniform spaces.
 
 Let's first build this uniform space and look at the data points in this space:
 
@@ -99,12 +118,126 @@ xy_flowers <- jnd2xyz(cd_flowers)
 plot(xy_flowers)
 ```
 
-High-level functions to build the alphashape directly in `pavo` have not yet been implemented but you can use the `alphashape3d` directly to compute the alphashape, its volume and display it in a 3D interactive plot.
+High-level functions to build the alphashape directly in `pavo` have not yet
+been implemented but you can use the `alphashape3d` directly to compute the
+alphashape, its volume and display it in a 3D interactive plot.
 
-```{r, webgl=TRUE}
+```{r}
 ashape_jnd <- ashape3d(as.matrix(xy_flowers), alpha = 10)
 volume_ashape3d(ashape_jnd)
-bg3d("white") 
+```
+
+```{r, echo = FALSE}
+rgl::bg3d("white") 
+```
+
+```{r, webgl=TRUE}
 plot(ashape_jnd)
 ```
 
+# Colour volume overlap with alphashapes
+
+Alphashapes can also be used to measure the colour similarity of two objects, by
+computing the colour volume overlap. This is done in `pavo` with the 
+`overlap3d()` function. For example, let's compare the colour volume of the 
+crown and the breast of stripe-tailed yellow finches (*Sicalis citrina*):
+
+
+```{r}
+data(sicalis)
+tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
+tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
+```
+
+```{r, echo = FALSE}
+rgl::bg3d()
+```
+
+```{r, webgl=TRUE}
+overlap3d(tcs.sicalis.C, tcs.sicalis.B, avalue = 0.2, plot = TRUE)
+```
+
+<!--
+This doesn't work right now because it returns an a that is too small
+
+# Exploring other values of alpha
+
+Depending on your biological question, it is possible you might want a different
+value of $\alpha$ than the $\alpha^*$ suggested earlier. 
+
+For example, you may want all your colour volume to only have one component,
+instead of several multiple smaller volumes. Here is a quick demo of how you can
+do this.
+
+
+First, let's create a dummy dataset with two distinct clouds of points:
+
+```{r, include = FALSE}
+set.seed("20200126")
+```
+
+```{r}
+dvol = data.frame(
+  "x" = c(rnorm(n = 10, mean = -0.7/sqrt(2)+.3, sd = 0.05),
+          rnorm(n = 10, mean =  0.7/sqrt(2)-.3, sd = 0.05)),
+  "y" = c(rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3, sd = 0.05),
+          rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3  , sd = 0.05)),
+  "z" = c(rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3, sd = 0.05),
+          rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3  , sd = 0.05))
+)
+```
+
+With the approach highlighted before, this will result in a colour volume with
+two distinct components:
+
+```{r, eval = F}
+distances <- get.knn(dvol, k = 1)$nn.dist
+annd <- max(distances)/2
+```
+
+```{r, include=FALSE}
+# This is a workaround to not depend on FNN
+annd <- 0.03829851
+```
+
+```{r}
+shapes <- ashape3d(as.matrix(dvol), alpha = 0)
+avalues <- unname(shapes$tetra[, "rhoT"])
+avalues <- sort(avalues)
+avalues <- avalues[avalues >= annd]
+shapes <- ashape3d(as.matrix(dvol), alpha = avalues)
+isin <- inashape3d(shapes, indexAlpha = "all", as.matrix(dvol))
+allin <- vapply(isin, all, logical(1))
+astar_ind <- match(TRUE, allin)
+astar <- avalues[astar_ind]
+tetraplot(dvol)
+tetrashape(dvol, avalue = astar)
+```
+
+To prevent this, we can add an additional test that uses 
+`components_ashape3d()`. This function tells you in which component is each data
+point:
+
+```{r}
+comp <- components_ashape3d(shapes, indexAlpha = "all")
+```
+
+So, to ensure we only have one component, we can do:
+
+```{r}
+nb_comp <- sapply(comp, function(x) length(unique(x)) == 1)
+```
+
+We find the first `TRUE` value with `match()`:
+
+```{r}
+a_ind <- match(TRUE, nb_comp)
+a <- avalues[max(a_ind, astar_ind)]
+```
+
+```{r}
+tetraplot(as.data.frame(dvol))
+tetrashape(dvol, avalue = a)
+```
+
+-->
