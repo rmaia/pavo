@@ -18,7 +18,8 @@
 #' @importFrom lightr lr_get_spec
 #'
 #' @seealso [lightr::lr_get_spec()] for a more flexible version of this function
-#' (e.g. uninterpolated wavelengths)
+#' (e.g. uninterpolated wavelengths), and [lightr::lr_get_metadata()] for the retrieval
+#' and import of spectral metadata.
 #'
 #' @examples
 #' rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))

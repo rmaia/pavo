@@ -75,7 +75,8 @@ and metadata in R. Journal of Open Source Software, 4(43), 1857,
 }
 \seealso{
 \code{\link[lightr:lr_get_spec]{lightr::lr_get_spec()}} for a more flexible version of this function
-(e.g. uninterpolated wavelengths)
+(e.g. uninterpolated wavelengths), and \code{\link[lightr:lr_get_metadata]{lightr::lr_get_metadata()}} for the retrieval
+and import of spectral metadata.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

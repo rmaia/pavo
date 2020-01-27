@@ -41,12 +41,9 @@ the heatplot.}
 \item{labels.stack}{a vector of labels for the stacked spectra when using
 \code{type = "stack"}. Defaults to the numeric column ID's.}
 
-<<<<<<< HEAD
 \item{wl.guide}{logical determining whether visible light spectrum should be
 added to the x-axis.}
 
-=======
->>>>>>> 24b0126... Use lightr in getspec()
 \item{...}{additional arguments passed to \code{\link[=plot]{plot()}} (or \code{\link[=image]{image()}} for
 \code{"heatmap"}).}
 }
@@ -58,7 +55,6 @@ data(teal)
 plot(teal, type = "overlay")
 plot(teal, type = "stack")
 plot(teal, type = "heatmap")
-
 }
 \seealso{
 \code{\link[=spec2rgb]{spec2rgb()}}, \code{\link[=image]{image()}}, \code{\link[=plot]{plot()}}
