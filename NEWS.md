@@ -2,6 +2,8 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* fixed a bug in `summary.colspace()` where `NULL` was returned instead of 
+`summary.data.frame()` for non-tcs colourspaces.
 * fix partial matching warnings in examples and in `bootcooldist()`
 * the package has a new website at `pavo.colrverse.com`
 * fixed a bug in `coldist()`that prevented the calculation of achromatic contrast

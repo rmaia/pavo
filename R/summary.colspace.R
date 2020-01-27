@@ -72,7 +72,9 @@ summary.colspace <- function(object, by = NULL, ...) {
     "* Relative:", attr(object, "relative"), "\n", "\n"
   )
 
-  if (attr(object, "clrsp") != "tcs") summary.data.frame(object)
+  if (attr(object, "clrsp") != "tcs") {
+    return(summary.data.frame(object))
+  }
 
   if (attr(object, "clrsp") == "tcs") {
     if (!is.null(by)) {
