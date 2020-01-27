@@ -5,11 +5,15 @@
 \alias{teal}
 \title{Angle-resolved reflectance data for the iridescent wing patch of a male green-winged
 teal (\emph{Anas carolinensis})}
+\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 13 columns.}
+\usage{
+teal
+}
 \description{
-dataset containing reflectance measurements from the wing patch of
-a single male at different incident angles (15-75 degrees in 5-degree increments).
+Dataset containing reflectance measurements from the wing patch of a single
+male at different incident angles (15-75 degrees in 5-degree increments).
 }
 \author{
 Chad Eliason \email{cme16@zips.uakron.edu}
 }
-\keyword{data}
+\keyword{datasets}

@@ -5,9 +5,13 @@
 \alias{flowers}
 \title{Reflectance spectra from a suite of native Australian flowers, collected
 around Cairns, Queensland.}
+\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 37 columns.}
+\usage{
+flowers
+}
 \description{
-dataset containing reflectance measurements from 36 native
-Australian angiosperm species, indicated by column names.
+Dataset containing reflectance measurements from 36 native Australian
+angiosperm species, indicated by column names.
 }
 \references{
 Dalrymple, R., L., Kemp, D. J., Flores-Moreno, H., Laffan, S. W.,
@@ -27,4 +31,4 @@ Ecological Monographs, 88(2), 204-224. \doi{10.1002/ecm.1287}
 \author{
 Thomas White \email{thomas.white026@gmail.com}
 }
-\keyword{data}
+\keyword{datasets}

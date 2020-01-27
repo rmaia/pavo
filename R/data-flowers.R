@@ -1,12 +1,11 @@
 #' Reflectance spectra from a suite of native Australian flowers, collected
 #' around Cairns, Queensland.
 #'
-#' @name flowers
-#' @docType data
+#' Dataset containing reflectance measurements from 36 native Australian
+#' angiosperm species, indicated by column names.
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
-#' @keywords data
-#' @description dataset containing reflectance measurements from 36 native
-#' Australian angiosperm species, indicated by column names.
+#'
 #' @references Dalrymple, R., L., Kemp, D. J., Flores-Moreno, H., Laffan, S. W.,
 #' White, T. E., Hemmings, F. A., Tindall, M. L., & Moles, A. T. (2015). Birds,
 #' butterflies and flowers in the tropics are not more colourful than those at higher
@@ -18,4 +17,4 @@
 #' Laffan, S. W., Hemmings, F. A., Tindall, M. L., & Moles, A. T. (2018). Abiotic
 #' and biotic predictors of macroecological patterns in bird and butterfly coloration.
 #' Ecological Monographs, 88(2), 204-224. \doi{10.1002/ecm.1287}
-NULL
+"flowers"

@@ -5,11 +5,16 @@
 \alias{sicalis}
 \title{Spectral curves from three body regions of stripe-tailed yellow finch
 (\emph{Sicalis citrina}) males}
+\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 22 columns.}
+\usage{
+sicalis
+}
 \description{
-dataset containing reflectance measurements from 3 body parts
-("C": crown, "B": breast, "T": throat) from seven male stripe-tailed yellow finches
+Dataset containing reflectance measurements from 3 body parts ("C": crown,
+"B": breast, "T": throat) from seven male stripe-tailed yellow finches
+(\emph{Sicalis citrina})
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
-\keyword{data}
+\keyword{datasets}
