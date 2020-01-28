@@ -1,5 +1,13 @@
 # pavo 2.4.0
 
+## NEW FEATURES AND SIGNIFICANT CHANGES
+
+* parallel processing now relies on the `future` package, which offers windows 
+and high performance computing (HPC) environments support. The progress bar is
+produced by the `progressr` package and can be customised as well. As a 
+consequence, the `cores` argument in `getspec()`, `adjacent()` and `classify()`
+has been deprecated.
+
 ## MINOR FEATURES AND BUG FIXES
 
 * fixed a bug in `summary.colspace()` where `NULL` was returned instead of 
