@@ -165,7 +165,7 @@ contrast (Endler &amp; Mielke 2005).</p>
   <span class='kw'>exclude</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"background"</span>, <span class='st'>"object"</span>),
   <span class='kw'>coldists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>hsl</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>)
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -236,9 +236,8 @@ columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>number of cores to be used in parallel processing. If <code>1</code>, parallel
-computing will not be used. Defaults to <code><a href='https://rdrr.io/r/base/options.html'>getOption("mc.cores", 2L)</a></code>. Not
-available on Windows.</p></td>
+      <td><p>deprecated. See <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> for more details on how to
+customise your parallelisation strategy.</p></td>
     </tr>
     </table>
 
@@ -286,6 +285,13 @@ variation of overall pattern saturation.</p></li>
 variation of overall pattern luminance.</p></li>
 </ul>
 
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>You can customise the type of parallel processing used by this function with
+the <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers()</a></code> functions
+(progress bar, acoustic feedback, nothing, etc.)</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Endler, J. A. (2012). A framework for analysing colour pattern geometry:
@@ -343,6 +349,7 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>

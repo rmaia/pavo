@@ -154,14 +154,7 @@ for the mean colour distance between two or more samples of colours" />
 for the mean colour distance between two or more samples of colours</p>
     </div>
 
-    <pre class="usage"><span class='fu'>bootcoldist</span>(
-  <span class='no'>vismodeldata</span>,
-  <span class='no'>by</span>,
-  <span class='kw'>boot.n</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>),
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>bootcoldist</span>(<span class='no'>vismodeldata</span>, <span class='no'>by</span>, <span class='kw'>boot.n</span> <span class='kw'>=</span> <span class='fl'>1000</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.95</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,8 +181,8 @@ the object belongs to.</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>number of cores to be used in parallel processing. If <code>1</code>, parallel
-computing will not be used. Defaults to <code><a href='https://rdrr.io/r/base/options.html'>getOption("mc.cores", 2L)</a></code></p></td>
+      <td><p>deprecated. See <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> for more details on how to
+customise your parallelisation strategy.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -202,6 +195,13 @@ include <code>n</code> and <code>weber</code>. See <code><a href='coldist.html'>
 
     <p>a matrix including the empirical mean and bootstrapped
 confidence limits for dS (and dL if <code>achro = TRUE</code>).</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>You can customise the type of parallel processing used by this function with
+the <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers()</a></code> functions
+(progress bar, acoustic feedback, nothing, etc.)</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Maia, R., White, T. E., (2018) Comparing colors using visual models.
@@ -220,6 +220,7 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#references">References</a></li>
       <li><a href="#examples">Examples</a></li>
     </ul>

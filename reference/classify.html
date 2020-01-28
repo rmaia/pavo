@@ -160,7 +160,7 @@
   <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/options.html'>getOption</a></span>(<span class='st'>"mc.cores"</span>, <span class='fl'>2L</span>),
+  <span class='kw'>cores</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -214,9 +214,8 @@ Defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
       <th>cores</th>
-      <td><p>number of cores to be used in parallel processing. If <code>1</code>, parallel
-computing will not be used. Defaults to <code><a href='https://rdrr.io/r/base/options.html'>getOption("mc.cores", 2L)</a></code>. Not
-available on Windows.</p></td>
+      <td><p>deprecated. See <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> for more details on how to
+customise your parallelisation strategy.</p></td>
     </tr>
     <tr>
       <th>...</th>
@@ -230,6 +229,13 @@ Also see <code><a href='https://rdrr.io/r/graphics/par.html'>graphics::par()</a>
     <p>A matrix, or list of matrices, of class <code>rimg</code> containing the colour
 class classifications ID at each pixel location. The RGB values corresponding to
 cluster centres (i.e. colour classes) are stored as object attributes.</p>
+    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
+
+    <p>You can customise the type of parallel processing used by this function with
+the <code><a href='https://rdrr.io/pkg/future/man/plan.html'>future::plan()</a></code> function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the <code><a href='https://rdrr.io/pkg/progressr/man/handlers.html'>progressr::handlers()</a></code> functions
+(progress bar, acoustic feedback, nothing, etc.)</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Since the <code>kmeans</code> process draws on random numbers to find initial
@@ -252,6 +258,7 @@ cluster ID's are desired between runs.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       <li><a href="#value">Value</a></li>
+      <li><a href="#details">Details</a></li>
       <li><a href="#note">Note</a></li>
       <li><a href="#see-also">See also</a></li>
       <li><a href="#examples">Examples</a></li>
