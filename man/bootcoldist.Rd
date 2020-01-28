@@ -4,14 +4,7 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(
-  vismodeldata,
-  by,
-  boot.n = 1000,
-  alpha = 0.95,
-  cores = getOption("mc.cores", 2L),
-  ...
-)
+bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, cores = NULL, ...)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.
@@ -26,8 +19,8 @@ the object belongs to.}
 
 \item{alpha}{the confidence level for the confidence intervals (defaults to 0.95)}
 
-\item{cores}{number of cores to be used in parallel processing. If \code{1}, parallel
-computing will not be used. Defaults to \code{getOption("mc.cores", 2L)}}
+\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
+customise your parallelisation strategy.}
 
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
@@ -39,6 +32,13 @@ confidence limits for dS (and dL if \code{achro = TRUE}).
 \description{
 Uses a bootstrap procedure to generate confidence intervals
 for the mean colour distance between two or more samples of colours
+}
+\details{
+You can customise the type of parallel processing used by this function with
+the \code{\link[future:plan]{future::plan()}} function. This works on all operating systems, as well
+as high performance computing (HPC) environment. Similarly, you can customise
+the way progress is shown with the \code{\link[progressr:handlers]{progressr::handlers()}} functions
+(progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
 \dontrun{
