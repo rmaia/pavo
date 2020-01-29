@@ -6,12 +6,14 @@
 #' @inheritParams plot.colspace
 #' @param ... additional graphical options. See [par()].
 #'
-#' @return `points.colspace` adds points to a colorspace plot. When `space = 'tcs'`,
-#'  it creates 3D points in a tetrahedral color space plot using functions of the package `rgl`,
-#'  based on openGL capabilities.
+#' @return `points.colspace` adds points to a colourspace plot.
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#'
+#' @importFrom grDevices trans3d
+#'
+#' @seealso [plot.colspace()]
 #'
 #' @export
 #'

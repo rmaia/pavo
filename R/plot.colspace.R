@@ -58,7 +58,7 @@
 #' tcsvol(tcs.sicalis)
 #' }
 #'
-#' @seealso [plot()]
+#' @seealso [plot()], [points.colspace()]
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}

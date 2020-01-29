@@ -109,7 +109,7 @@ color in studies of animal color patterns. Biological Journal of the
 Linnean Society, 41, 315-352.
 }
 \seealso{
-\code{\link[=plot]{plot()}}
+\code{\link[=plot]{plot()}}, \code{\link[=points.colspace]{points.colspace()}}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
