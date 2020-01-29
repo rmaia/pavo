@@ -110,7 +110,6 @@ Fechner's
 fi
 fixneg
 frac
-funtion
 FWHM
 Fyhrquist
 galbula
@@ -128,6 +127,7 @@ heatplot
 Hemmings
 Herberstein
 Horak
+HPC
 HWHM
 Icterus
 idealizeddichromat
@@ -164,6 +164,7 @@ l'Eclairage
 legendtetra
 Leiothrix
 leq
+lightr
 lim
 Linnean
 LM
@@ -211,6 +212,7 @@ Olsson
 oma
 openGL
 opponency
+ORCID
 ornatus
 Ornborg
 Osorio
@@ -226,7 +228,6 @@ png
 pos
 Prager
 procspec
-ProcSpec
 projplot
 projpoints
 Prum
@@ -235,7 +236,6 @@ pyrrithrix
 qcatch
 RData
 reflectances
-reporitory
 rgb
 rgl
 Rhinecanthus
@@ -247,7 +247,6 @@ Rmax
 Rmid
 Rmin
 RNL
-ROH
 rspec
 Saks
 sayaca
@@ -268,7 +267,6 @@ signaling
 sm
 Smiseth
 sp
-spectrasuite
 SpectraSuite
 spp
 sppspec
@@ -297,12 +295,12 @@ trichromats
 Trichromats
 tristimulus
 Tristimulus
-TRM
 Troje
 Troje's
 Turdus
 u
 uncalibrated
+uninterpolated
 uninterpretable
 unnormalised
 URL's
