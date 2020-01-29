@@ -66,10 +66,6 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
     )
   }
 
-  if (!isNamespaceLoaded("rgl")) {
-    requireNamespace("rgl")
-  }
-
   if (new) {
     rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
   }

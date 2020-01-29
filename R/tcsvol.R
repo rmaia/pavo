@@ -22,10 +22,6 @@ tcsvol <- function(tcsdata, col = "black", alpha = 0.2,
     )
   }
 
-  if (!isNamespaceLoaded("rgl")) {
-    requireNamespace("rgl")
-  }
-
   coords <- tcsdata[, c("x", "y", "z")]
   vol <- t(convhulln(coords, options = "Tv"))
 

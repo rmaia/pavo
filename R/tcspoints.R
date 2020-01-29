@@ -19,10 +19,6 @@ tcspoints <- function(tcsdata, size = 0.02, col = "black", alpha = 1) {
     )
   }
 
-  if (!isNamespaceLoaded("rgl")) {
-    requireNamespace("rgl")
-  }
-
   rgl::spheres3d(tcsdata[, c("x", "y", "z")],
     radius = size, color = col, lit = FALSE, alpha = alpha
   )

@@ -112,10 +112,6 @@ voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
         )
       }
 
-      if (!isNamespaceLoaded("rgl")) {
-        requireNamespace("rgl")
-      }
-
       if (new) {
         rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
       }
