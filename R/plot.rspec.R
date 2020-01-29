@@ -105,107 +105,107 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
     do.call(image, arg)
 
-    invisible()
-  }
+  } else {
 
-  # coloring for overlay plot & others
-  if (length(arg$col) < ncol(x)) {
-    arg$col <- rep(arg$col, ncol(x))
-    arg$col <- arg$col[seq_along(x)]
-  }
-
-  if (any(names(arg$col) %in% names(x))) {
-    arg$col <- arg$col[select - 1]
-  }
-
-  # line types for overlay plot & others
-  if (length(arg$lty) < ncol(x)) {
-    arg$lty <- rep(arg$lty, ncol(x))
-    arg$lty <- arg$lty[seq_along(x)]
-  }
-
-  if (any(names(arg$lty) %in% names(x))) {
-    arg$col <- arg$lty[select - 1]
-  }
-  arg$type <- "l"
-
-
-  # overlay different spec curves
-  if (type == "overlay") {
-    if (is.null(arg$ylim)) {
-      arg$ylim <- range(x, na.rm = TRUE)
+    # coloring for overlay plot & others
+    if (length(arg$col) < ncol(x)) {
+      arg$col <- rep(arg$col, ncol(x))
+      arg$col <- arg$col[seq_along(x)]
     }
-    if (is.null(arg$ylab)) {
-      arg$ylab <- "Reflectance (%)"
+
+    if (any(names(arg$col) %in% names(x))) {
+      arg$col <- arg$col[select - 1]
     }
-    arg$y <- x[, 1]
-    col <- arg$col
-    arg$col <- col[1]
-    lty <- arg$lty
-    arg$lty <- lty[1]
+
+    # line types for overlay plot & others
+    if (length(arg$lty) < ncol(x)) {
+      arg$lty <- rep(arg$lty, ncol(x))
+      arg$lty <- arg$lty[seq_along(x)]
+    }
+
+    if (any(names(arg$lty) %in% names(x))) {
+      arg$col <- arg$lty[select - 1]
+    }
+    arg$type <- "l"
 
 
-    do.call(plot, arg)
-
-    if (ncol(x) > 1) {
-      for (i in 2:ncol(x)) {
-        arg$col <- col[i]
-        arg$lty <- lty[i]
-        arg$y <- x[, i]
-        do.call(lines, arg)
+    # overlay different spec curves
+    if (type == "overlay") {
+      if (is.null(arg$ylim)) {
+        arg$ylim <- range(x, na.rm = TRUE)
       }
-    }
-  }
+      if (is.null(arg$ylab)) {
+        arg$ylab <- "Reflectance (%)"
+      }
+      arg$y <- x[, 1]
+      col <- arg$col
+      arg$col <- col[1]
+      lty <- arg$lty
+      arg$lty <- lty[1]
 
-  # Stack curves along y-axis
-  if (type == "stack") {
-    if (is.null(arg$ylab)) {
-      arg$ylab <- "Cumulative reflectance (arb. units)"
-    }
 
-    x2 <- as.data.frame(x[, c(rev(seq_along(x)))])
-    if (length(select) == 1) {
-      y <- max(x2)
-    } else {
-      y <- apply(x2, 2, max)
-    }
-    ym <- cumsum(y)
-    ymins <- c(0, ym[-length(ym)])
+      do.call(plot, arg)
 
-    arg$y <- x2[, 1]
-    if (is.null(arg$ylim)) {
-      arg$ylim <- c(0, sum(y))
-    }
-
-    col <- rev(arg$col)
-    arg$col <- col[1]
-    do.call(plot, arg)
-    if (ncol(x2) > 1) {
-      for (i in 2:ncol(x2)) {
-        arg$y <- x2[, i] + ymins[i]
-        arg$col <- col[i]
-        do.call(lines, arg)
+      if (ncol(x) > 1) {
+        for (i in 2:ncol(x)) {
+          arg$col <- col[i]
+          arg$lty <- lty[i]
+          arg$y <- x[, i]
+          do.call(lines, arg)
+        }
       }
     }
 
-    yend <- tail(x2, 1)
-    yloc <- ymins + yend
+    # Stack curves along y-axis
+    if (type == "stack") {
+      if (is.null(arg$ylab)) {
+        arg$ylab <- "Cumulative reflectance (arb. units)"
+      }
 
-    if (is.null(labels.stack)) {
-      labels.stack <- rev(select)
+      x2 <- as.data.frame(x[, c(rev(seq_along(x)))])
+      if (length(select) == 1) {
+        y <- max(x2)
+      } else {
+        y <- apply(x2, 2, max)
+      }
+      ym <- cumsum(y)
+      ymins <- c(0, ym[-length(ym)])
+
+      arg$y <- x2[, 1]
+      if (is.null(arg$ylim)) {
+        arg$ylim <- c(0, sum(y))
+      }
+
+      col <- rev(arg$col)
+      arg$col <- col[1]
+      do.call(plot, arg)
+      if (ncol(x2) > 1) {
+        for (i in 2:ncol(x2)) {
+          arg$y <- x2[, i] + ymins[i]
+          arg$col <- col[i]
+          do.call(lines, arg)
+        }
+      }
+
+      yend <- tail(x2, 1)
+      yloc <- ymins + yend
+
+      if (is.null(labels.stack)) {
+        labels.stack <- rev(select)
+      }
+
+      axis(side = 4, at = yloc, labels = labels.stack, las = 1)
     }
 
-    axis(side = 4, at = yloc, labels = labels.stack, las = 1)
-  }
-
-  if (wl.guide) {
-    vislight <- image_read(system.file("linear_visible_spectrum.png", package = "pavo"))
-    rasterImage(
-      vislight,
-      380,
-      grconvertY(0, from = "npc", to = "user"),
-      750,
-      grconvertY(0.03, from = "npc", to = "user")
-    )
+    if (wl.guide) {
+      vislight <- image_read(system.file("linear_visible_spectrum.png", package = "pavo"))
+      rasterImage(
+        vislight,
+        380,
+        grconvertY(0, from = "npc", to = "user"),
+        750,
+        grconvertY(0.03, from = "npc", to = "user")
+      )
+    }
   }
 }
