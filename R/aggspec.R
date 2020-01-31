@@ -97,9 +97,10 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   by <- factor(by) # is this necessary?
 
-  dat <- sapply(unique(by), function(z) {
+  # Convert to data.frame now as to retain ALTREP wl when using cbind() later
+  dat <- data.frame(sapply(unique(by), function(z) {
     apply(y[which(by == z)], 1, FUN)
-  })
+  }))
 
   colnames(dat) <- unique(by0)
 
@@ -107,7 +108,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     colnames(dat) <- gsub("[._-][0-9]*$", "", colnames(dat))
   }
 
-  res <- data.frame(cbind(wl = wl, dat))
+  res <- cbind(wl = wl, dat)
 
   class(res) <- c("rspec", "data.frame")
 
