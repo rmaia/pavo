@@ -34,8 +34,6 @@
 
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
-  # Check: user may have removed 'wl' function already.
-  # (data.frame doesn't allow duplicate names anymore, so this should work)
   wl <- isolate_wl(rspecdata, keep = "wl")
   y <- isolate_wl(rspecdata, keep = "spec")
 
@@ -115,8 +113,4 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
 
   res
 
-  # This would return list of spectral data and data.frame with metadata:
-  # set <- strsplit(names(res), split='\\.')
-  # out <- as.data.frame(do.call("rbind", set))
-  # list(res, out)
 }
