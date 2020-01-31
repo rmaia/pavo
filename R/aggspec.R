@@ -1,14 +1,17 @@
 #' Aggregate reflectance spectra
 #'
-#' Combines spectra (by taking the average, for example) according to
-#' an index or a vector of identities.
+#' Combines spectra (by taking the average, for example) according to an index
+#' or a vector of identities.
 #'
 #' @inheritParams aggplot
-#' @param FUN the function to be applied to the groups of spectra. (defaults to [mean()])
-#' @param trim logical. if `TRUE` (default), the function will try to identify and
-#' remove numbers at the end of the names of the columns in the new rspec object.
+#' @param FUN the function to be applied to the groups of spectra. (defaults to
+#'   [mean()])
+#' @param trim logical. if `TRUE` (default), the function will try to identify
+#'   and remove numbers at the end of the names of the columns in the new rspec
+#'   object.
 #'
-#' @return A data frame of class `rspec` containing the spectra after applying the aggregating function.
+#' @return A data frame of class `rspec` containing the spectra after applying
+#'   the aggregating function.
 #'
 #' @export
 #'

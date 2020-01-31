@@ -19,17 +19,20 @@ spectra data frame (in which case the function will be applied to each
 group of spectra sharing the same identification); or a list of vectors,
 e.g., \code{by = list(sex, species)}.}
 
-\item{FUN}{the function to be applied to the groups of spectra. (defaults to \code{\link[=mean]{mean()}})}
+\item{FUN}{the function to be applied to the groups of spectra. (defaults to
+\code{\link[=mean]{mean()}})}
 
-\item{trim}{logical. if \code{TRUE} (default), the function will try to identify and
-remove numbers at the end of the names of the columns in the new rspec object.}
+\item{trim}{logical. if \code{TRUE} (default), the function will try to identify
+and remove numbers at the end of the names of the columns in the new rspec
+object.}
 }
 \value{
-A data frame of class \code{rspec} containing the spectra after applying the aggregating function.
+A data frame of class \code{rspec} containing the spectra after applying
+the aggregating function.
 }
 \description{
-Combines spectra (by taking the average, for example) according to
-an index or a vector of identities.
+Combines spectra (by taking the average, for example) according to an index
+or a vector of identities.
 }
 \examples{
 data(teal)
