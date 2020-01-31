@@ -52,16 +52,16 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     }
   }
 
-  # Check if the by argument has a 'wl' entry (e.g. if names were obtained through
-  # regex conditions on the original spec names) and remove it
+  # Check if the by argument has a 'wl' entry (e.g. if names were obtained
+  # through regex conditions on the original spec names) and remove it
 
-  if (length(which(by == "wl")) != 0) {
-    by <- by[-which(by == "wl")]
+  if ("wl" %in% by) {
+    by <- by[by != "wl"]
   }
 
   # Handle when 'by' is a list of factors
   if (is.list(by)) {
-    wl_id <- vapply(seq_along(by), function(x) which(by[[x]] == "wl"), numeric(1)) # extract wl columns
+    wl_id <- vapply(by, function(x) which(x == "wl"), numeric(1)) # extract wl columns
     # remove 'wl' column from each vector in list
     if (any(vapply(wl_id, length, numeric(1)) != 0)) {
       id <- which(vapply(wl_id, length, numeric(1)) != 0)
