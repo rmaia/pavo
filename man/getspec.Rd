@@ -71,7 +71,7 @@ head(rspecdata)
 \references{
 Gruson H, White TE, Maia R (2019) lightr: import spectral data
 and metadata in R. Journal of Open Source Software, 4(43), 1857,
-\url{doi:10.21105/joss.01857}
+\doi{doi:10.21105/joss.01857}.
 }
 \seealso{
 \code{\link[lightr:lr_get_spec]{lightr::lr_get_spec()}} for a more flexible version of this function

@@ -30,7 +30,7 @@
 #'
 #' @references Gruson H, White TE, Maia R (2019) lightr: import spectral data
 #'  and metadata in R. Journal of Open Source Software, 4(43), 1857,
-#'  <doi:10.21105/joss.01857>
+#'  \doi{doi:10.21105/joss.01857}.
 
 getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
                     sep = NULL, subdir = FALSE, subdir.names = FALSE,
