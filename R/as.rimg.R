@@ -211,15 +211,15 @@ NULL
 #' @export
 rimg2cimg <- function(image) {
   ## Check for imager
-  if (!requireNamespace("imager", quietly = TRUE)) {
+  if (requireNamespace("imager", quietly = TRUE)) {
+    image <- suppressWarnings(imager::as.cimg(image, cc = 3))
+    image
+  } else {
     stop("Package \"imager\" needed for conversion to cimg. Please install it.",
       call. = FALSE
     )
   }
-  image <- suppressWarnings(imager::as.cimg(image, cc = 3))
-  image
 }
-
 #' @rdname img_conversion
 #'
 #' @importFrom magick image_read image_flop image_rotate
