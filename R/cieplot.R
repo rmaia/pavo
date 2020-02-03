@@ -22,7 +22,7 @@
 #' @param margin vector of four numbers specifying drawing margins for CIELAB
 #'   plot (defaults to c(0,0,0,0))
 #' @param ciebg should the colour background be plotted for CIEXYZ plot?
-#'   (defaults to `TRUE``)
+#'   (defaults to `TRUE`)
 #' @inheritParams triplot
 #'
 #' @examples

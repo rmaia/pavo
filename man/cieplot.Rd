@@ -55,7 +55,7 @@ to \code{FALSE})}
 plot (defaults to c(0,0,0,0))}
 
 \item{ciebg}{should the colour background be plotted for CIEXYZ plot?
-(defaults to `TRUE``)}
+(defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
