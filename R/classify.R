@@ -112,11 +112,6 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     imgdat <- lapply(imgdat, as.rimg)
   }
 
-  ## Cores
-  if (cores > 1 && .Platform$OS.type == "windows") {
-    cores <- 1
-  }
-
   ## kcols
   if (!is.null(kcols)) {
     # Can't have a reference image when k's vary
