@@ -21,12 +21,13 @@ cieplot(
 )
 }
 \arguments{
-\item{ciedata}{(required). a data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
-or \code{\link[=cie]{cie()}} function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
-model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).}
+\item{ciedata}{(required). a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=cie]{cie()}} function, containing values for 'x', 'y' and 'z'
+coordinates for the CIEXYZ model, or LAB coordinates for the CIELAB (or
+CIELCh models), as columns (labeled as such).}
 
-\item{mono}{should the monochromatic loci (the 'horseshoe') be
-plotted when \code{space = "ciexyz"}? Defaults to \code{TRUE}.}
+\item{mono}{should the monochromatic loci (the 'horseshoe') be plotted when
+\code{space = "ciexyz"}? Defaults to \code{TRUE}.}
 
 \item{out.lwd}{graphical parameters for the plot outline.}
 
@@ -34,26 +35,27 @@ plotted when \code{space = "ciexyz"}? Defaults to \code{TRUE}.}
 
 \item{out.lty}{graphical parameters for the plot outline.}
 
-\item{theta}{angle to rotate the plot in the xy plane  when \code{space = "cielab"}
-(defaults to 10).}
+\item{theta}{angle to rotate the plot in the xy plane  when
+\code{space = "cielab"} (defaults to 10).}
 
 \item{phi}{angle to rotate the plot in the yz plane  when \code{space = "cielab"}
 (defaults to 45).}
 
 \item{r}{the distance of the eyepoint from the center of the plotting box
-when \code{space = "cielab"}. Very high values approximate an orthographic projection
-(defaults to 1e6). See \code{\link[graphics:persp]{graphics::persp()}} for details.}
+when \code{space = "cielab"}. Very high values approximate an orthographic
+projection (defaults to 1e6). See \code{\link[graphics:persp]{graphics::persp()}} for details.}
 
-\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
-when \code{space = "cielab"}.}
+\item{zoom}{zooms in (values greater than 1) or out (values between 0 and 1)
+from the plotting area when \code{space = "cielab"}.}
 
-\item{box}{logical. Should the plot area box and axes be plotted? (defaults to \code{FALSE})}
+\item{box}{logical. Should the plot area box and axes be plotted? (defaults
+to \code{FALSE})}
 
-\item{margin}{vector of four numbers specifying drawing margins for CIELAB plot
-(defaults to c(0,0,0,0))}
+\item{margin}{vector of four numbers specifying drawing margins for CIELAB
+plot (defaults to c(0,0,0,0))}
 
 \item{ciebg}{should the colour background be plotted for CIEXYZ plot?
-(defaults to \code{TRUE})}
+(defaults to `TRUE``)}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
