@@ -170,7 +170,8 @@ capabilities.</p>
   <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>hspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>vspin</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>floor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>floor</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>gamut</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>
 )
 
 <span class='fu'>tcspoints</span>(<span class='no'>tcsdata</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.02</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>, <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>)
@@ -243,6 +244,12 @@ and 'z' coordinates as columns (labeled as such).</p></td>
     <tr>
       <th>floor</th>
       <td><p>if <code>TRUE</code>, a reference xy plane is plotted under the tetrahedron (defaults to <code>TRUE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>gamut</th>
+      <td><p>logical. Should the polygon showing the possible colours given
+visual system and illuminant used in the analysis (defaults to <code>FALSE</code>).
+This option currently only works when <code>qcatch = Qi</code>.</p></td>
     </tr>
     <tr>
       <th>grid.alpha</th>

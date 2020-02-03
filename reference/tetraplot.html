@@ -174,6 +174,7 @@
   <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
   <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
   <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>gamut</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -257,6 +258,12 @@ for lines from the point to the base of the tetrahedron.</p></td>
       <th>labels</th>
       <td><p>logical. Should the name of each cone be printed next to the
 corresponding vertex?</p></td>
+    </tr>
+    <tr>
+      <th>gamut</th>
+      <td><p>logical. Should the polygon showing the possible colours given
+visual system and illuminant used in the analysis (defaults to <code>FALSE</code>).
+This option currently only works when <code>qcatch = Qi</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>

@@ -164,6 +164,7 @@
   <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
   <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>gamut</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -211,6 +212,12 @@ corresponding vertex?</p></td>
       <th>square</th>
       <td><p>logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>gamut</th>
+      <td><p>logical. Should the polygon showing the possible colours given
+visual system and illuminant used in the analysis (defaults to <code>FALSE</code>).
+This option currently only works when <code>qcatch = Qi</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
