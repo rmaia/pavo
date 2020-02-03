@@ -173,14 +173,15 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>ciedata</th>
-      <td><p>(required). a data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
-or <code><a href='cie.html'>cie()</a></code> function, containing values for 'x', 'y' and 'z'  coordinates for the CIEXYZ
-model, or LAB coordinates for the CIELAB (or CIELCh models), as columns (labeled as such).</p></td>
+      <td><p>(required). a data frame, possibly a result from the
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='cie.html'>cie()</a></code> function, containing values for 'x', 'y' and 'z'
+coordinates for the CIEXYZ model, or LAB coordinates for the CIELAB (or
+CIELCh models), as columns (labeled as such).</p></td>
     </tr>
     <tr>
       <th>mono</th>
-      <td><p>should the monochromatic loci (the 'horseshoe') be
-plotted when <code>space = "ciexyz"</code>? Defaults to <code>TRUE</code>.</p></td>
+      <td><p>should the monochromatic loci (the 'horseshoe') be plotted when
+<code>space = "ciexyz"</code>? Defaults to <code>TRUE</code>.</p></td>
     </tr>
     <tr>
       <th>out.lwd</th>
@@ -196,8 +197,8 @@ plotted when <code>space = "ciexyz"</code>? Defaults to <code>TRUE</code>.</p></
     </tr>
     <tr>
       <th>theta</th>
-      <td><p>angle to rotate the plot in the xy plane  when <code>space = "cielab"</code>
-(defaults to 10).</p></td>
+      <td><p>angle to rotate the plot in the xy plane  when
+<code>space = "cielab"</code> (defaults to 10).</p></td>
     </tr>
     <tr>
       <th>phi</th>
@@ -207,22 +208,23 @@ plotted when <code>space = "ciexyz"</code>? Defaults to <code>TRUE</code>.</p></
     <tr>
       <th>r</th>
       <td><p>the distance of the eyepoint from the center of the plotting box
-when <code>space = "cielab"</code>. Very high values approximate an orthographic projection
-(defaults to 1e6). See <code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a></code> for details.</p></td>
+when <code>space = "cielab"</code>. Very high values approximate an orthographic
+projection (defaults to 1e6). See <code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a></code> for details.</p></td>
     </tr>
     <tr>
       <th>zoom</th>
-      <td><p>zooms in (values greater than 1) or out (values between 0 and 1) from the plotting area
-when <code>space = "cielab"</code>.</p></td>
+      <td><p>zooms in (values greater than 1) or out (values between 0 and 1)
+from the plotting area when <code>space = "cielab"</code>.</p></td>
     </tr>
     <tr>
       <th>box</th>
-      <td><p>logical. Should the plot area box and axes be plotted? (defaults to <code>FALSE</code>)</p></td>
+      <td><p>logical. Should the plot area box and axes be plotted? (defaults
+to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins for CIELAB plot
-(defaults to c(0,0,0,0))</p></td>
+      <td><p>vector of four numbers specifying drawing margins for CIELAB
+plot (defaults to c(0,0,0,0))</p></td>
     </tr>
     <tr>
       <th>ciebg</th>
