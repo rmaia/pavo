@@ -184,12 +184,11 @@ To quantify the stimulation of cones by the emitted colour, we will use the `pav
 
 All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.
 
-```{r, results='hide'}
+```{r}
 vismod1 <- vismodel(sppspec,
   visual = "avg.uv", achromatic = "bt.dc",
   illum = "D65", relative = FALSE
 )
-vismod1
 ```
 
 Since there are multiple parameters that can be used to customize the output of `vismodel()`, as detailed above, for convenience these can be returned by using `summary` in a `vismodel` object:
