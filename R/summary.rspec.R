@@ -231,7 +231,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # UV
   if (lambdamin <= 400 & lambdamax >= 400) {
-    UVchromamat <- object[wl >= lambdamin & wl >= 400, , drop = FALSE]
+    UVchromamat <- object[wl >= lambdamin & wl <= 400, , drop = FALSE]
     UVchroma <- colSums(UVchromamat) / B1 # S1 UV
     output.mat [, 4] <- UVchroma
   } else {
@@ -244,7 +244,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
 
   # Violet
   if (lambdamin <= 415 & lambdamax >= 415) {
-    Vchromamat <- object[wl <= lambdamin & wl >= 415, , drop = FALSE]
+    Vchromamat <- object[wl >= lambdamin & wl <= 415, , drop = FALSE]
     Vchroma <- colSums(Vchromamat) / B1 # S1 Violet
     output.mat[, 5] <- Vchroma
   } else {

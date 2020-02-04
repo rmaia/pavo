@@ -2,6 +2,8 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+* Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and 
+S1V in `summary.rspec()`.
 * several `plot()` functions for colspace (`triplot()`, `tcsplot()`, 
 `tetraplot()`) gain a new `gamut` argument to plot the maximum gamut for a given
 visual system and illuminant. `summary.colspace()` also now returns the maximum

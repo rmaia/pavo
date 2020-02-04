@@ -132,6 +132,16 @@ test_that("processing & general", {
     digest::sha1(subset(sicalis, "T", invert = TRUE), digits = 4),
     "332a97ed1c25045b70d871a8686e268d09cefd76"
   )
+
+  # Summary
+  expect_equal(
+    digest::sha1(summary(teal), digits = 4),
+    "59e740d97537e0b9892a914b489231f7ccbd8517"
+  )
+  expect_equal(
+    digest::sha1(summary(teal), digits = 4),
+    "a882bdb4bdcda1b95235f02d0783fb705e66b834"
+  )
 })
 
 test_that("images", {
