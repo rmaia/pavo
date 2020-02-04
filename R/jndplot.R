@@ -512,7 +512,12 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     }
 
     # Add points
-    pointsarg <- arg[!names(arg) %in% c(formals(arrows), formals(plot.default))]
+    pointsarg <- arg
+    pointsarg[names(formals(arrows))] <- NULL
+    pointsarg[setdiff(
+      perspargs,
+      names(formals(plot.default))
+    )] <- NULL
     pointsarg$col <- arg$col
 
     ptpos <- trans3d(x2[, colstouse[1]], x2[, colstouse[2]], x2[, colstouse[3]], P)
