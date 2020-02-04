@@ -81,6 +81,15 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
     stop('cannot use "achro=TRUE" when chromatic space is three-dimensional.')
   }
 
+  # CRAN won't accept triple : arguments and persp.default is not exported,
+  # so we need to pass arguments by hand
+  perspargs <- c(
+    "x", "y", "z", "xlim", "ylim", "zlim", "xlab", "ylab", "zlab",
+    "main", "sub", "theta", "phi", "r", "d", "scale", "expand", "col", "border",
+    "ltheta", "lphi", "shade", "box", "axes", "nticks", "ticktype", "...", ""
+  )
+
+
   # 1 DIMENSION
   if (plotdims == 1) {
     if (!is.null(margin)) {
