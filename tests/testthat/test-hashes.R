@@ -139,7 +139,7 @@ test_that("processing & general", {
     "59e740d97537e0b9892a914b489231f7ccbd8517"
   )
   expect_equal(
-    digest::sha1(summary(teal), digits = 4),
+    digest::sha1(summary(sicalis), digits = 4),
     "a882bdb4bdcda1b95235f02d0783fb705e66b834"
   )
 })
