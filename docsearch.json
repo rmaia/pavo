@@ -2,21 +2,21 @@
   "index_name": "rafaelmaia_pavo",
   "start_urls": [
     {
-      "url": "https://pavo.colrverse.com/index.html",
+      "url": "http://pavo.colrverse.com/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "https://pavo.colrverse.com/reference",
+      "url": "http://pavo.colrverse.com/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "https://pavo.colrverse.com/articles",
+      "url": "http://pavo.colrverse.com/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "https://pavo.colrverse.com/sitemap.xml"
+    "http://pavo.colrverse.com/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
