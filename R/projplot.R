@@ -48,6 +48,9 @@ projplot <- function(tcsdata, ...) {
     xlim = c(-2, 2), ylim = c(-1, 1)
   )
 
+  # We need to call mapproject() before calling map.grid() in order to assign
+  # a value to mapproj::.Last.project
+  mapproj::mapproject(0, 0, projection = "mollweide")
   mapproj::map.grid(c(-180, 180, -90, 90), labels = FALSE, col = "grey")
 
   x <- c(-1.224647e-16, -1.224647e-16, 1.224647e-16, 1.224647e-16, -1.928477, 1.928477, -6.428450e-01, 6.428450e-01, -4.465816e-08)

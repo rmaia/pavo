@@ -17,6 +17,8 @@ has been deprecated.
 
 ## MINOR FEATURES AND BUG FIXES
 
+* fixed a plotting bug introduced in version 2.3.0 where it was required to run
+`projplot()` twice for the background grid to be displayed.
 * fixed a bug in `summary.colspace()` where `NULL` was returned instead of 
 `summary.data.frame()` for non-tcs colourspaces.
 * fix partial matching warnings in examples and in `bootcooldist()`
