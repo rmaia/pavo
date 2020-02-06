@@ -25,7 +25,8 @@ test_that("Warnings", {
 test_that("Summary", {
   data(sicalis)
   vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
-  expect_output(summary(vis.sicalis), "visual model options")
+  summary_vis <- expect_output(summary(vis.sicalis), "visual model options")
+  expect_is(summary_vis, "table")
 })
 
 test_that("Sensmodel", {
