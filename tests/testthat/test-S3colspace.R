@@ -15,8 +15,17 @@ test_that("summary.colspace", {
     summary(tcs_sicalis),
     "Not enough points"
   )
-  expect_output(sumtcs_sicalis$huedisp.m, NA)
-  expect_output(sumtcs_sicalis$huedisp.v, NA)
+  expect_true(is.na(sumtcs_sicalis$huedisp.m))
+  expect_true(is.na(sumtcs_sicalis$huedisp.v))
+
+  expect_output(summary(tcs_sicalis), "Colorspace & visual")
+
+  summary_subset <- expect_message(summary(tcs_sicalis[, -17]), "subset data")
+  expect_equivalent(summary_subset, summary.data.frame(tcs_sicalis[, -17]))
+
+  tri_sicalis <- colspace(vismodel(sicalis, "cie10"), "tri")
+  expect_equivalent(summary(tri_sicalis), summary.data.frame(tri_sicalis))
+
 })
 
 test_that("subset.colspace", {
