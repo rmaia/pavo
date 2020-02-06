@@ -22,13 +22,6 @@ test_that("Warnings", {
   expect_silent(vismodel(flowers, visual = "bluetit", achromatic = FALSE))
 })
 
-test_that("Summary", {
-  data(sicalis)
-  vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
-  summary_vis <- expect_output(summary(vis.sicalis), "visual model options")
-  expect_is(summary_vis, "table")
-})
-
 test_that("Sensmodel", {
   expect_equivalent(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "Y", "R"))[, -1]), c(1, 1, 1))
   expect_equivalent(round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "T", "P"), beta = FALSE, integrate = FALSE, om = "bird")[, -1]), 4), 68.271)
