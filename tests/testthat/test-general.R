@@ -29,7 +29,7 @@ test_that("peakshape", {
 
   expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(216, 2617))
 
-  test <- read.csv("known_output/FWHM_lims.csv")
+  test <- readRDS("known_output/FWHM_lims.rds")
   expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
 
   expect_warning(peakshape(flowers[, -1], plot = FALSE), "wl column missing")
