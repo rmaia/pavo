@@ -30,4 +30,5 @@ CONDUCT.md
 ^revdep$
 ^inst/ciebg\.svg$
 ^inst/linear_visible_spectrum\.svg$
+^vignettes/fig/workflow\.png$
 ^Dockerfile$
