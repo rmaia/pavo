@@ -4,23 +4,31 @@ context("rspec")
 
 test_that("as.rspec", {
   data(flowers)
+  expect_true(is.rspec(flowers))
 
-  flowers2 <- as.rspec(as.data.frame(flowers))
+  flowers2 <- expect_message(
+    as.rspec(as.data.frame(flowers)),
+    "wavelengths found in column 1"
+  )
   expect_s3_class(flowers2, "rspec")
+  expect_identical(flowers, flowers2)
 
   # Both text and numerically identify wavelength column
   refl1 <- rnorm(401)
   fake1 <- data.frame(wave = 300:700, refl1)
   fake2 <- data.frame(refl1, wave = 300:700)
-  expect_equal(as.rspec(fake1, whichwl = "wave"), as.rspec(fake2, whichwl = 2))
+  expect_identical(as.rspec(fake1, whichwl = "wave"), as.rspec(fake2, whichwl = 2))
 
   # Interpolation should not happen outside of wl range by default
   flowers3 <- flowers[-1, ]
   expect_equivalent(flowers3, as.rspec(flowers3))
 
   # With rule = 2, missing values outside of range are generated
-  expect_equal(nrow(flowers3) + 1, nrow(as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE)))
-  expect_warning(as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE), "beyond the range")
+  flowers3_fullrange <- expect_warning(
+    as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE),
+    "beyond the range"
+  )
+  expect_equal(dim(flowers3_fullrange), c(401, 37))
 
   expect_error(as.rspec(c(300:700)), "must be a data frame or matrix")
 
@@ -34,7 +42,7 @@ test_that("as.rspec", {
   expect_equal(as.data.frame(as.rspec(fakedat, lim = c(300, 700))["wl"]), data.frame(wl = as.numeric(c(300:700))))
 
   # Matrix and df input should have the same output
-  expect_equal(as.rspec(fakedat), as.rspec(as.matrix(fakedat)))
+  expect_identical(as.rspec(fakedat), as.rspec(as.matrix(fakedat)))
 
   # Single column df should work and output a 2 columns rspec object
   expect_equal(dim(suppressWarnings(as.rspec(fakedat[, 2, drop = FALSE]))), c(1201, 2))
