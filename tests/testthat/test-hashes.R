@@ -91,8 +91,7 @@ test_that("colspace", {
   #   digest::sha1(summary(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), digits = 4),
   #   "8d9c05ec7ae28b219c4c56edbce6a721bd68af82"
   # )
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
+
 })
 
 test_that("processing & general", {

@@ -26,6 +26,9 @@ test_that("summary.colspace", {
   tri_sicalis <- colspace(vismodel(sicalis, "cie10"), "tri")
   expect_equivalent(summary(tri_sicalis), summary.data.frame(tri_sicalis))
 
+  expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
+  expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
+
 })
 
 test_that("subset.colspace", {
