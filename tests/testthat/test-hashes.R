@@ -201,7 +201,7 @@ test_that("vismodel", {
   if (getRversion() < "4.0.0") {
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4),
-      "b77b40f7833f88083b7834362b34e80254f1de14"
+      "2f7964c26c7801917bb610c12176664f186a0058"
     )
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4),
@@ -209,12 +209,12 @@ test_that("vismodel", {
     )
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4),
-      "11f0526bea5e21f5b9c8b910b58e0bbab016b027"
+      "4bf4f3392cf0c740a3ab3cfe6a58167346a67ceb"
     )
   } else {
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4),
-      "b984121a82c91aaad824580eab08563eeffb0587"
+      "f48a7fc9993e7ae4b9607356670db2641c88784f"
     )
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4),
@@ -222,7 +222,7 @@ test_that("vismodel", {
     )
     expect_equal(
       digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4),
-      "760bfeafeea210f8629e126a49a80663f06e8885"
+      "89b35af79facc35e7b2ba1c1992c9990ba28383c"
     )
   }
   # expect_equal(digest::sha1(attributes(vismodel(flowers, visual = 'musca', achro = 'md.r1', relative = FALSE)), digits = 4),  "3fcd2c3eb74ed4e6d2e505b2c207ca558f287d16")
