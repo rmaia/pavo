@@ -15,10 +15,14 @@ test_that("Warnings", {
   test_rspec <- as.rspec(flowers[1:2])
   test_matrix <- as.matrix(flowers[1:2])
 
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec")
-  expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
+  expect_equivalent(
+    expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec"),
+    expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
+  )
+  expect_equivalent(
+    expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec"),
+    expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
+  )
   expect_silent(vismodel(flowers, visual = "bluetit", achromatic = FALSE))
 
   expect_error(vismodel(flowers, vonkries = TRUE, bkg = NULL), "background is NULL")
