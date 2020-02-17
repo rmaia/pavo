@@ -101,23 +101,24 @@ test_that("processing & general", {
   library(digest)
 
   # Sensdata
-  expect_equal(
-    digest::sha1(sensdata(illum = "all", bkg = "all", trans = "all"), digits = 4),
-    "4e25ee65b1a5d3a993baf4ba11b6ad7c15348704"
+  expect_known_hash(
+    expect_silent(sensdata(illum = "all", bkg = "all", trans = "all")),
+    "b845b697e6"
   )
+
   # Peakshape
-  expect_equivalent(
-    digest::sha1(peakshape(flowers, absolute.min = TRUE), digits = 5),
-    "d257957d21449f28fd24a9a0a33220dcd9a371bd"
+  expect_known_hash(
+    expect_silent(peakshape(flowers, absolute.min = TRUE)),
+    "7ac18400b5"
   )
 
   # Merge
   data(teal)
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
-  expect_equal(
-    digest::sha1(merge(teal1, teal2, by = "wl"), digits = 4),
-    "8c0579ca0ebb379ddd163f0b0d1b1c6b21c4c88c"
+  expect_known_hash(
+    expect_silent(merge(teal1, teal2, by = "wl")),
+    "235f1a3015"
   )
 
   # Subset
@@ -134,13 +135,13 @@ test_that("processing & general", {
   )
 
   # Summary
-  expect_equal(
-    digest::sha1(summary(teal), digits = 4),
-    "59e740d97537e0b9892a914b489231f7ccbd8517"
+  expect_known_hash(
+    expect_silent(summary(teal)),
+    "08ffb15d92"
   )
-  expect_equal(
-    digest::sha1(summary(sicalis), digits = 4),
-    "a882bdb4bdcda1b95235f02d0783fb705e66b834"
+  expect_known_hash(
+    expect_silent(summary(sicalis)),
+    "66129550f3"
   )
 })
 
