@@ -145,9 +145,22 @@
       <small>Source: <a href='https://github.com/rmaia/pavo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
+    <div id="pavo-2-5-0" class="section level1">
+<h1 class="page-header">
+<a href="#pavo-2-5-0" class="anchor"></a>pavo 2.5.0<small> Unreleased </small>
+</h1>
+<div id="minor-features-and-bug-fixes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<ul>
+<li>
+<code><a href="../reference/as.rspec.html">as.rspec()</a></code> is now more lenient for wavelength trimming when <code>interp = FALSE</code> and now works even if the specified <code>lims</code> do not correspond to actual wl values from the input object.</li>
+</ul>
+</div>
+</div>
     <div id="pavo-2-4-0" class="section level1">
 <h1 class="page-header">
-<a href="#pavo-2-4-0" class="anchor"></a>pavo 2.4.0<small> Unreleased </small>
+<a href="#pavo-2-4-0" class="anchor"></a>pavo 2.4.0<small> 2020-02-08 </small>
 </h1>
 <div id="new-features-and-significant-changes" class="section level2">
 <h2 class="hasAnchor">
@@ -158,9 +171,9 @@
 <li>parallel processing now relies on the <code>future</code> package, which offers windows and high performance computing (HPC) environments support. The progress bar is produced by the <code>progressr</code> package and can be customised as well. As a consequence, the <code>cores</code> argument in <code><a href="../reference/getspec.html">getspec()</a></code>, <code><a href="../reference/adjacent.html">adjacent()</a></code> and <code><a href="../reference/classify.html">classify()</a></code> has been deprecated.</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes" class="section level2">
+<div id="minor-features-and-bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-1" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>fixed a plotting bug introduced in version 2.3.0 where it was required to run <code><a href="../reference/projplot.html">projplot()</a></code> twice for the background grid to be displayed.</li>
 <li>fixed a bug in <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> where <code>NULL</code> was returned instead of <code><a href="https://rdrr.io/r/base/summary.html">summary.data.frame()</a></code> for non-tcs colourspaces.</li>
@@ -197,9 +210,9 @@
 </li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-1" class="section level2">
+<div id="minor-features-and-bug-fixes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-1" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-2" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>errors during argument checks in <code><a href="../reference/vismodel.html">vismodel()</a></code> now have more explicit messages.</li>
 <li>all <code>pavo</code> functions (excepted <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/spec2rgb.html">spec2rgb()</a></code>) now work with sub-nm precision, for <code>rspec</code> objects with non-integer wavelengths.</li>
@@ -232,9 +245,9 @@
 <code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-2" class="section level2">
+<div id="minor-features-and-bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-2" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-3" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>added a message to indicate what distance metric is being calculated during calls to <code><a href="../reference/coldist.html">coldist()</a></code>
 </li>
@@ -271,9 +284,9 @@
 <li>data used internally by pavo (<code>bgandilum</code>, <code>transmissiondata</code>, <code>ttvertex</code>, <code>vissyst</code>) is no longer exposed to users</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-3" class="section level2">
+<div id="minor-features-and-bug-fixes-4" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-3" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-4" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>new functions <code><a href="../reference/is.vismodel.html">is.vismodel()</a></code> and <code><a href="../reference/is.colspace.html">is.colspace()</a></code> are exported to test whether an object is of class <code>vismodel</code> or <code>colspace</code>, respectively</li>
 <li>fixed a bug where images would sometimes be wrongly detected as user-classified in <code><a href="../reference/as.rimg.html">as.rimg()</a></code>
@@ -314,9 +327,9 @@
 <code><a href="../reference/getspec.html">getspec()</a></code> can now read Avantes binary files (<code>.TRM</code> files)</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-4" class="section level2">
+<div id="minor-features-and-bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-4" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-5" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>Carotenoid chroma (S9) in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> has been fixed to (R700 - R450)/R700. This gives the same result as before but with a flipped sign, and better reflects the original formula in the literature.</li>
 <li>cieLAB values have been rescaled, and are expressed in the more standard range: L [0,100], ab [-128,127]</li>
@@ -350,9 +363,9 @@
 <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> returned incorrect values for S7. If you use S7, please re-run your analyses</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-5" class="section level2">
+<div id="minor-features-and-bug-fixes-6" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-5" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-6" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>
 <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> now properly outputs <code>NA</code> for monotonically decreasing spectra</li>
@@ -393,9 +406,9 @@
 <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-6" class="section level2">
+<div id="minor-features-and-bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-6" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-7" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when fewer samples than the number of photoreceptors</li>
 <li>fixed bug in <code><a href="../reference/getspec.html">getspec()</a></code> that would cause it to crash with errors</li>
@@ -429,9 +442,9 @@
 <li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-7" class="section level2">
+<div id="minor-features-and-bug-fixes-8" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-7" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-8" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>fixed bug in coldist() on log-transformation when object was neither of class vismodel nor colspace</li>
 <li>fixed bug in dL calculation when input is a colspace object</li>
@@ -461,9 +474,9 @@
 <li>added the sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-8" class="section level2">
+<div id="minor-features-and-bug-fixes-9" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-8" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-9" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>vignettes have been amalgamated &amp; the single, main vignette is now up-to-date</li>
 <li>added more informative labels for the segment analysis plot</li>
@@ -482,9 +495,9 @@
 <li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-9" class="section level2">
+<div id="minor-features-and-bug-fixes-10" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-9" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-10" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>the use of relative quantum catches is now optional in the categorical colorspace (though still produces a warning), for greater flexibility</li>
 <li>updated several functions to work when rspec object has only one spectrum</li>
@@ -527,9 +540,9 @@
 <li>legendtetra() adds legends to static tetrahedral plots</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-10" class="section level2">
+<div id="minor-features-and-bug-fixes-11" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-10" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-11" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>summary.colspace() for tcs spaces now returns relative color volume as well as absolute</li>
 <li>tcsvol() and voloverlap() now allow control for line width</li>
@@ -563,9 +576,9 @@
 <h1 class="page-header">
 <a href="#pavo-0-5-5" class="anchor"></a>pavo 0.5-5<small> 2016-03-09 </small>
 </h1>
-<div id="minor-features-and-bug-fixes-11" class="section level2">
+<div id="minor-features-and-bug-fixes-12" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-11" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-12" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>fixed bug in calculation of H3 in summary.rspec()</li>
 </ul>
@@ -575,9 +588,9 @@
 <h1 class="page-header">
 <a href="#pavo-0-5-4" class="anchor"></a>pavo 0.5-4<small> 2016-01-28 </small>
 </h1>
-<div id="minor-features-and-bug-fixes-12" class="section level2">
+<div id="minor-features-and-bug-fixes-13" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-12" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-13" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>changed default values for coldist()</li>
 </ul>
@@ -587,9 +600,9 @@
 <h1 class="page-header">
 <a href="#pavo-0-5-2" class="anchor"></a>pavo 0.5-2<small> 2015-06-11 </small>
 </h1>
-<div id="minor-features-and-bug-fixes-13" class="section level2">
+<div id="minor-features-and-bug-fixes-14" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-13" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-14" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</li>
 </ul>
@@ -599,9 +612,9 @@
 <h1 class="page-header">
 <a href="#pavo-0-5-1" class="anchor"></a>pavo 0.5-1<small> 2013-09-04 </small>
 </h1>
-<div id="minor-features-and-bug-fixes-14" class="section level2">
+<div id="minor-features-and-bug-fixes-15" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-14" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-15" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>vismodel() accepts matrix, data.frame or rspec objects for the illuminant, updated warning messages associated with this use</li>
 <li>vismodel() accepts user-defined achromatic receptors</li>
@@ -617,9 +630,9 @@
 <ul>
 <li>updated citation()</li>
 </ul>
-<div id="minor-features-and-bug-fixes-15" class="section level2">
+<div id="minor-features-and-bug-fixes-16" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-15" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-16" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>vismodel() vonkries = TRUE does not return a NULL result</li>
 <li>vismodel() works with a single spectrum object</li>
@@ -639,9 +652,9 @@
 <li>irrad2flux() and flux2irrad() to convert illuminant measurements</li>
 </ul>
 </div>
-<div id="minor-features-and-bug-fixes-16" class="section level2">
+<div id="minor-features-and-bug-fixes-17" class="section level2">
 <h2 class="hasAnchor">
-<a href="#minor-features-and-bug-fixes-16" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
+<a href="#minor-features-and-bug-fixes-17" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>vismodel() less cryptic error messages</li>
 <li>as_rspec() fix message pertaining wavelength column</li>
@@ -744,6 +757,7 @@
     <div id="tocnav">
       <h2>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
+        <li><a href="#pavo-2-5-0">2.5.0</a></li>
         <li><a href="#pavo-2-4-0">2.4.0</a></li>
         <li><a href="#pavo-2-3-0">2.3.0</a></li>
         <li><a href="#pavo-2-2-0">2.2.0</a></li>
