@@ -120,6 +120,11 @@ stored and can be called using the \code{\link[=summary.vismodel]{summary.vismod
 Calculates quantum catches at each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colourspace and non-colourspace models.
 }
+\note{
+Built-in \code{visual}, \code{achromatic}, \code{illum}, \code{bkg} and \code{trans} are only defined
+on the 300 to 700nm wavelength range. If you wish to work outside this range,
+you will need to provide your own data.
+}
 \examples{
 # Dichromat (dingo)
 data(flowers)
