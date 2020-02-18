@@ -11,7 +11,7 @@ test_that("Receptor orders/names", {
   expect_equal(di.vis[, 1:2], di.space[, 2:1], check.attributes = FALSE)
 
   expect_equivalent(
-    di.space,
+    di.space[, 1:3],
     dispace(di.vis)
   )
 
@@ -23,7 +23,7 @@ test_that("Receptor orders/names", {
   expect_equal(tri.vis[, 1:3], tri.space[, 3:1], check.attributes = FALSE)
 
   expect_equivalent(
-    tri.space,
+    tri.space[, 1:7],
     trispace(tri.vis)
   )
 
@@ -38,7 +38,7 @@ test_that("Receptor orders/names", {
   })
 
   expect_equivalent(
-    tetra.space,
+    tetra.space[, 1:16],
     tcspace(tetra.vis)
   )
 
