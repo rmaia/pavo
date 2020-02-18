@@ -13,7 +13,7 @@ test_that("Warnings", {
   expect_warning(vismodel(flowers, qcatch = "fi", relative = FALSE), "negative")
 
   test_rspec <- as.rspec(flowers[1:2])
-  test_matrix <- as.matrix(flowers[1:2])
+  test_matrix <- as.matrix(flowers[, 2, drop = FALSE])
 
   expect_equivalent(
     expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec"),
