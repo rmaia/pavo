@@ -34,6 +34,9 @@ test_that("Warnings", {
 
   expect_error(vismodel(flowers_NIR), "wavelength range")
   expect_error(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650))), "wavelength range")
+
+  expect_silent(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650), range = c(300, 1200))))
+
 })
 
 test_that("Sensmodel", {
