@@ -52,8 +52,14 @@ test_that("as.rspec", {
   expect_warning(as.rspec(fakedat[, -1], lim = c(300, 700)), "user-specified range")
   expect_warning(as.rspec(fakedat[, -1]), "arbitrary index")
 
-  expect_error(as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE), "limits")
-  expect_error(as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE), "limits")
+  expect_equal(
+    as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE)$wl, 
+    seq(300.5, 700, 0.5)
+  )
+  expect_equal(
+    as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE)$wl,
+    seq(300, 699, 0.5)
+  )
 
   fakedat[2:4, 2] <- NA
   expect_message(as.rspec(fakedat, whichwl = 1), "negative")

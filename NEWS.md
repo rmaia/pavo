@@ -1,3 +1,11 @@
+# pavo 2.5.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* `as.rspec()` is now more lenient for wavelength trimming when `interp = FALSE`
+and now works even if the specified `lims` do not correspond to actual wl values
+from the input object.
+
 # pavo 2.4.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
