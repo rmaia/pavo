@@ -10,12 +10,22 @@ test_that("Receptor orders/names", {
   di.space <- colspace(di.vis)
   expect_equal(di.vis[, 1:2], di.space[, 2:1], check.attributes = FALSE)
 
+  expect_equivalent(
+    di.space,
+    dispace(di.vis)
+  )
+
   # trichromat
   tri <- sensmodel(c(550, 440, 330))
   names(tri) <- c("wl", "l", "m", "s")
   tri.vis <- vismodel(flowers, visual = tri)
   tri.space <- colspace(tri.vis)
   expect_equal(tri.vis[, 1:3], tri.space[, 3:1], check.attributes = FALSE)
+
+  expect_equivalent(
+    tri.space,
+    trispace(tri.vis)
+  )
 
   # tetrachromat
   tetra <- sensmodel(c(660, 550, 440, 330))
@@ -26,6 +36,12 @@ test_that("Receptor orders/names", {
   expect_warning({
     sumtcs <- summary(tetra.space, by = 3)
   })
+
+  expect_equivalent(
+    tetra.space,
+    tcspace(tetra.vis)
+  )
+
 })
 
 test_that("Relative quantum catches", {
@@ -151,12 +167,12 @@ test_that("Errors/messages", {
 })
 
 test_that("CIE", {
-  
+
   data(flowers)
   vis_flowers <- colspace(vismodel(flowers, "cie10"))
   implicit_cie_flowers <- colspace(vis_flowers)
   expect_s3_class(implicit_cie_flowers, "colspace")
   explicit_cie_flowers <- colspace(vis_flowers, space = "ciexyz")
   expect_identical(implicit_cie_flowers, explicit_cie_flowers)
-  
+
 })
