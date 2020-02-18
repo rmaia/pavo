@@ -75,6 +75,11 @@
 #'  photoreceptors considered. Information on the parameters used in the calculation are also
 #'  stored and can be called using the [summary.vismodel()] function.
 #'
+#' @note
+#' Built-in `visual`, `achromatic`, `illum`, `bkg` and `trans` are only defined
+#' on the 300 to 700nm wavelength range. If you wish to work outside this range,
+#' you will need to provide your own data.
+#'
 #' @export
 #'
 #' @examples
