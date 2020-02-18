@@ -30,7 +30,7 @@
 The manuscript describing the current iteration of the package has been published and are free to access:
 
 Maia R., Gruson H., Endler J.A., and White T.E. 2019 [pavo 2: New tools for the spectral 
-and spatial analysis of colour in R](https://doi.org/10.1111/2041-210X.13174). _Methods in Ecology and Evolution_, 10(7):1097‑107. 
+and spatial analysis of colour in R](https://doi.org/10.1111/2041-210X.13174). _Methods in Ecology and Evolution_, 10(7):1097‑1107. 
 
 
 ## Install
