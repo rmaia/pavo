@@ -53,7 +53,7 @@ test_that("as.rspec", {
   expect_warning(as.rspec(fakedat[, -1]), "arbitrary index")
 
   expect_equal(
-    as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE)$wl, 
+    as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE)$wl,
     seq(300.5, 700, 0.5)
   )
   expect_equal(
@@ -87,7 +87,10 @@ test_that("summary.rspec", {
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
   expect_equal(dim(summary(one_spec)), c(1, 23))
-  expect_length(summary(one_spec, wlmin = 500), 23)
+  expect_length(
+    expect_warning(summary(one_spec, wlmin = 500), "blue chroma"),
+    23
+  )
 
   # Error if subset vars do not exist
   expect_error(summary(sicalis, subset = "H9"), "do not match color variable names")

@@ -64,7 +64,7 @@ test_that("Equivalent", {
 test_that("Options", {
   data(sicalis)
 
-  expect_length(coldist(vismodel(sicalis, achromatic = "bt.dc", qcatch = "fi", relative = FALSE),
+  expect_length(coldist(vismodel(sicalis, achromatic = "bt.dc", qcatch = "fi", illum = 1000, relative = FALSE),
     noise = "quantum",
     achro = TRUE
   ), 4)
@@ -108,5 +108,10 @@ test_that("bootcoldist", {
 
   vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
   gr <- gsub("ind..", "", rownames(vm))
-  expect_equal(dim(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, cores = 1)), c(3, 6))
+
+  bcd <- expect_warning(
+    bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1),
+    "relative"
+  )
+  expect_equal(dim(bcd), c(3, 6))
 })
