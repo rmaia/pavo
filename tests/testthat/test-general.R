@@ -3,13 +3,6 @@ context("general")
 test_that("Class assignment", {
   data(flowers)
 
-  # Check rspec
-  # See test-S3rspec.R
-
-  # Check vismodel
-  vis.flowers <- vismodel(flowers, visual = "apis")
-  expect_is(vis.flowers, "vismodel")
-
   # Check a few colorspaces
   vis.cie <- vismodel(flowers, vonkries = TRUE, relative = FALSE, achro = "none", visual = "cie10")
   col.cie <- colspace(vis.cie, space = "cielab")
