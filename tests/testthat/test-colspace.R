@@ -11,7 +11,7 @@ test_that("Receptor orders/names", {
   expect_equal(di.vis[, 1:2], di.space[, 2:1], check.attributes = FALSE)
 
   expect_equivalent(
-    di.space[, 1:3],
+    di.space[, 1:4],
     dispace(di.vis)
   )
 
