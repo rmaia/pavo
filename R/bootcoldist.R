@@ -214,7 +214,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     p <- progressor(along = bootgrouped)
     bootcd <- future_lapply(bootgrouped, function(z) {
       p()
-      tryCatch(tmpbootcdfoo(z),
+      tryCatch(suppressMessages(tmpbootcdfoo(z)),
                error = function(e) NULL
       )
     })
