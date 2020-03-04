@@ -2,6 +2,9 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* Some very small negative values in the built-in visual system data have 
+been corrected 
+
 * `as.rspec()` is now more lenient for wavelength trimming when `interp = FALSE`
 and now works even if the specified `lims` do not correspond to actual wl values
 from the input object.
