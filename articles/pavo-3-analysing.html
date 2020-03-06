@@ -103,7 +103,7 @@
       <h1>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-02-20</h4>
+            <h4 class="date">2020-03-06</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -903,19 +903,19 @@ Floral reflectance spectra represented in the CIELab model of human colour sensa
 <a class="sourceLine" id="cb73-2" data-line-number="2"></a>
 <a class="sourceLine" id="cb73-3" data-line-number="3"><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(cat.flowers)</a></code></pre></div>
 <pre><code>##                              R7p        R7y       R8p       R8y          x
-## Goodenia_heterophylla 0.05387620 0.18710675 0.4335989 0.3254182 -0.3797227
-## Goodenia_geniculata   0.02080100 0.08276037 0.3737596 0.5226791 -0.3529586
-## Goodenia_gracilis     0.01153133 0.02501422 0.1420052 0.8214492 -0.1304739
-## Xyris_operculata      0.01270355 0.12523436 0.4488383 0.4132238 -0.4361348
-## Eucalyptus_sp         0.03461951 0.14207857 0.3977211 0.4255808 -0.3631016
-## Faradaya_splendida    0.03599956 0.09188569 0.3129199 0.5591949 -0.2769203
+## Goodenia_heterophylla 0.05387616 0.18710662 0.4335986 0.3254187 -0.3797224
+## Goodenia_geniculata   0.02080098 0.08276030 0.3737592 0.5226795 -0.3529583
+## Goodenia_gracilis     0.01153130 0.02501417 0.1420049 0.8214496 -0.1304736
+## Xyris_operculata      0.01270353 0.12523419 0.4488377 0.4132246 -0.4361342
+## Eucalyptus_sp         0.03461949 0.14207848 0.3977208 0.4255812 -0.3631013
+## Faradaya_splendida    0.03599953 0.09188560 0.3129195 0.5591953 -0.2769200
 ##                                y category     r.vec lum
-## Goodenia_heterophylla -0.1383114     p-y- 0.4041279  NA
-## Goodenia_geniculata   -0.4399187     p-y- 0.5640108  NA
-## Goodenia_gracilis     -0.7964350     p-y- 0.8070515  NA
-## Xyris_operculata      -0.2879894     p-y- 0.5226389  NA
-## Eucalyptus_sp         -0.2835023     p-y- 0.4606694  NA
-## Faradaya_splendida    -0.4673092     p-y- 0.5431968  NA</code></pre>
+## Goodenia_heterophylla -0.1383120     p-y- 0.4041279  NA
+## Goodenia_geniculata   -0.4399192     p-y- 0.5640110  NA
+## Goodenia_gracilis     -0.7964355     p-y- 0.8070519  NA
+## Xyris_operculata      -0.2879904     p-y- 0.5226390  NA
+## Eucalyptus_sp         -0.2835027     p-y- 0.4606695  NA
+## Faradaya_splendida    -0.4673097     p-y- 0.5431971  NA</code></pre>
 <p>And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.</p>
 <div class="sourceCode" id="cb75"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb75-1" data-line-number="1"><span class="kw"><a href="https://rdrr.io/r/graphics/plot.html">plot</a></span>(cat.flowers, <span class="dt">pch =</span> <span class="dv">21</span>, <span class="dt">bg =</span> <span class="kw"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(flowers))</a></code></pre></div>
 <div class="figure">
