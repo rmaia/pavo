@@ -90,7 +90,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
       if (plot) {
         plot(object, axes = axes, ...)
       } else {
-        data.frame(ID = attr(object, "imgname"))
+        data.frame(ID = attr(object, "imgname"), stringsAsFactors = FALSE)
       }
     }
   }

@@ -108,7 +108,7 @@ test_that("processing & general", {
   # Peakshape
   expect_known_hash(
     expect_silent(peakshape(flowers, absolute.min = TRUE)),
-    "7ac18400b5"
+    "7fbaba1738"
   )
 
   # Merge
@@ -156,7 +156,7 @@ test_that("images", {
 
   expect_equal(
     digest::sha1(summary(papilio), digits = 4),
-    "b133bda5cc2567ff80a35bdb6d1e5b89e87af8a5"
+    "aa1c46d4796c523f51c4e959ac90a692dd8ecfe4"
   )
   expect_equal(
     digest::sha1(summary(snakes), digits = 4),

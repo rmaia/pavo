@@ -131,6 +131,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   data.frame(
     id = nms, B3 = as.numeric(Bmax), H1 = hue,
     FWHM = Xb - Xa, HWHM.l = hue - Xa, HWHM.r = Xb - hue,
-    incl.min = c("Yes", "No")[as.numeric(Bmin > Bmin_all) + 1]
+    incl.min = c("Yes", "No")[as.numeric(Bmin > Bmin_all) + 1],
+    stringsAsFactors = FALSE
   )
 }

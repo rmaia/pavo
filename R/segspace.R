@@ -110,7 +110,9 @@ segspace <- function(vismodeldata) {
   C <- sqrt(LM^2 + MS^2)
   H <- asin(MS / C) * (180 / pi)
 
-  res <- data.frame(S1 = Q1, S2 = Q2, S3 = Q3, S4 = Q4, LM, MS, C, H, B, row.names = rownames(dat))
+  res <- data.frame(S1 = Q1, S2 = Q2, S3 = Q3, S4 = Q4, LM, MS, C, H, B,
+                    row.names = rownames(dat),
+                    stringsAsFactors = FALSE)
 
   class(res) <- c("colspace", "data.frame")
 
