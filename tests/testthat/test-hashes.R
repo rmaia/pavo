@@ -71,7 +71,7 @@ test_that("colspace", {
   ) # coc
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "apis", qcatch = "Ei", vonkries = TRUE, relative = FALSE, achromatic = "l"), space = "hexagon"), digits = 4),
-    "2b51da258f4c5bcaf3a8a851e4e13cbd011c400f"
+    "a1fdd24e315413825c94d4caf1164b8be57c8156"
   ) # hexagon
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4),
@@ -160,7 +160,7 @@ test_that("images", {
   )
   expect_equal(
     digest::sha1(summary(snakes), digits = 4),
-    "001fb04576b913633f04ea890edef83b41f07e16"
+    "dd7fc9fd7c41da84c641181a9a3701da74f3c41e"
   )
 })
 
