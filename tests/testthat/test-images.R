@@ -289,6 +289,6 @@ test_that("summary", {
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes_class <- classify(snakes, kcols = 3)
 
-  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4))
+  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4, stringsAsFactors = FALSE))
   expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
 })
