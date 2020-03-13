@@ -71,7 +71,8 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
           img_ID = attr(object, "imgname"),
           col_ID = seq(seq_len(nrow(attr(object, "classRGB")))),
           col_name = attr(object, "colnames"),
-          attr(object, "classRGB")
+          attr(object, "classRGB"),
+          stringsAsFactors = FALSE
         )
       }
     }
