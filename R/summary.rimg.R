@@ -61,7 +61,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
             stringsAsFactors = FALSE
           )
         })
-        do.call(rbind, out)
+        do.call(rbind, c(out, stringsAsFactors = FALSE))
       }
     } else {
       if (plot) {
@@ -84,9 +84,9 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
           plot(i, axes = axes, ...)
         }
       } else {
-        out <- lapply(object, function(x) data.frame(ID = attr(x, "imgname")))
+        out <- lapply(object, function(x) data.frame(ID = attr(x, "imgname"), stringsAsFactors = FALSE))
 
-        do.call(rbind, out)
+        do.call(rbind, c(out, stringsAsFactors = FALSE))
       }
     } else {
       if (plot) {
