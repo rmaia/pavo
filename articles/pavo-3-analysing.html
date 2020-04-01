@@ -1111,27 +1111,27 @@ The k-means classified images of our butterflies, along with their identified co
 
 <span class="co"># Take a look</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">butterflies_adj</span>)</pre></body></html></div>
-<pre><code>##             k     N n_off        p_1       p_2       p_3        p_4      q_1_1
-## h_melpomene 4 54064  4587 0.03610294 0.5501103 0.3516176 0.06216912 0.02365715
-## papilio     3 63241  4387 0.20022013 0.5607233 0.2390566         NA 0.17305229
-##                   q_1_2     q_2_2      q_1_3      q_2_3     q_3_3       q_1_4
-## h_melpomene 0.011375407 0.5330349 0.01046907 0.01257769 0.3211194 0.003495857
-## papilio     0.007163075 0.5483942 0.04936671 0.01283977 0.2091839          NA
-##                   q_2_4      q_3_4      q_4_4     t_1_2     t_1_3     t_2_3
-## h_melpomene 0.004605653 0.04232021 0.03734463 0.1340746 0.1233922 0.1482450
-## papilio              NA         NA         NA 0.1032596 0.7116481 0.1850923
-##                 t_1_4      t_2_4    t_3_4          m        m_r        m_c
-## h_melpomene 0.0412034 0.05428385 0.498801 0.08431985 0.07816176 0.09047794
-## papilio            NA         NA       NA 0.06894056 0.07836478 0.05951633
-##                     A       Sc       St        Jc        Jt         B        Rt
-## h_melpomene 0.8638765 2.317901 3.240178 0.5794754 0.5400296 0.9053848 0.5601855
-## papilio     1.3166937 2.429267 1.813682 0.8097558 0.6045606 0.2106223 0.5513647
-##             Rab m_dS s_dS cv_dS m_dL s_dL cv_dL m_hue s_hue var_hue m_sat s_sat
-## h_melpomene   1   NA   NA    NA   NA   NA    NA    NA    NA      NA    NA    NA
-## papilio       1   NA   NA    NA   NA   NA    NA    NA    NA      NA    NA    NA
-##             cv_sat m_lum s_lum cv_lum
-## h_melpomene     NA    NA    NA     NA
-## papilio         NA    NA    NA     NA</code></pre>
+<pre><code>##             k     N n_off       p_1        p_2       p_3        p_4     q_1_1
+## h_melpomene 4 54064  5103 0.5833456 0.03496324 0.3410294 0.04066176 0.5649231
+## papilio     3 63241  4371 0.1995597 0.23949686 0.5609434         NA 0.1726728
+##                  q_1_2       q_2_2       q_1_3      q_2_3     q_3_3       q_2_4
+## h_melpomene 0.01302160 0.006473809 0.018644569 0.03464413 0.3073394 0.009747706
+## papilio     0.04901883 0.209642479 0.006941699 0.01315602 0.5485682          NA
+##                  q_3_4      q_4_4     t_1_2     t_1_3     t_2_3     t_2_4
+## h_melpomene 0.01833013 0.02687555 0.1379581 0.1975309 0.3670390 0.1032726
+## papilio             NA         NA 0.7092199 0.1004347 0.1903455        NA
+##                 t_3_4          m        m_r        m_c         A       Sc
+## h_melpomene 0.1941995 0.09380515 0.08764706 0.09996324 0.8767929 2.176426
+## papilio            NA 0.06868910 0.07805031 0.05932789 1.3155754 2.428125
+##                   St        Jc        Jt         B        Rt Rab m_dS s_dS
+## h_melpomene 4.146845 0.5441064 0.6911409 0.8837938 0.5656954   1   NA   NA
+## papilio     1.820461 0.8093752 0.6068204 0.2150538 0.5493113   1   NA   NA
+##             cv_dS m_dL s_dL cv_dL m_hue s_hue var_hue m_sat s_sat cv_sat m_lum
+## h_melpomene    NA   NA   NA    NA    NA    NA      NA    NA    NA     NA    NA
+## papilio        NA   NA   NA    NA    NA    NA      NA    NA    NA     NA    NA
+##             s_lum cv_lum
+## h_melpomene    NA     NA
+## papilio        NA     NA</code></pre>
 <p>The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function’s help file (<code><a href="../reference/adjacent.html">?adjacent</a></code>) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is <code>NA</code>, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give <code><a href="../reference/adjacent.html">adjacent()</a></code> enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.</p>
 <div class="sourceCode" id="cb120"><html><body><pre class="r"><span class="co"># Create a fake matrix of pairwise colour- and luminance distances between all</span>
 <span class="co"># colour patten elements, as might be attained through visual modelling of spectral data.</span>
@@ -1163,18 +1163,18 @@ The k-means classified images of our butterflies, along with their identified co
 <span class="co"># of our two images, for convenience (though this could be readily extended to</span>
 <span class="co"># include a list of images along with a list of distances and hsl values)</span>
 <span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="no">butterflies_class</span><span class="kw">[[</span><span class="fl">2</span>]], <span class="kw">xscale</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">xpts</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">bkgID</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">coldists</span> <span class="kw">=</span> <span class="no">distances</span>, <span class="kw">hsl</span> <span class="kw">=</span> <span class="no">hsl_vals</span>)</pre></body></html></div>
-<pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1       q_1_2
-## papilio 3 63241  4387 0.2002201 0.5607233 0.2390566 0.1730523 0.007163075
-##             q_2_2      q_1_3      q_2_3     q_3_3     t_1_2     t_1_3     t_2_3
-## papilio 0.5483942 0.04936671 0.01283977 0.2091839 0.1032596 0.7116481 0.1850923
-##                  m        m_r        m_c        A       Sc       St        Jc
-## papilio 0.06894056 0.07836478 0.05951633 1.316694 2.429267 1.813682 0.8097558
-##                Jt         B        Rt Rab     m_dS     s_dS     cv_dS     m_dL
-## papilio 0.6045606 0.2106223 0.5513647   1 5.538363 2.595436 0.4686287 2.485001
-##              s_dL     cv_dL    m_hue     s_hue   var_hue    m_sat    s_sat
-## papilio 0.8079466 0.3251293 1.663715 0.4154308 0.0826731 2.823623 2.810238
-##            cv_sat    m_lum    s_lum    cv_lum
-## papilio 0.9952598 6.479214 2.532574 0.3908767</code></pre>
+<pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1      q_1_2
+## papilio 3 63241  4371 0.1995597 0.2394969 0.5609434 0.1726728 0.04901883
+##             q_2_2       q_1_3      q_2_3     q_3_3     t_1_2     t_1_3
+## papilio 0.2096425 0.006941699 0.01315602 0.5485682 0.7092199 0.1004347
+##             t_2_3         m        m_r        m_c        A       Sc       St
+## papilio 0.1903455 0.0686891 0.07805031 0.05932789 1.315575 2.428125 1.820461
+##                Jc        Jt         B        Rt Rab     m_dS     s_dS     cv_dS
+## papilio 0.8093752 0.6068204 0.2150538 0.5493113   1 8.867467 4.039286 0.4555174
+##             m_dL     s_dL     cv_dL    m_hue     s_hue   var_hue    m_sat
+## papilio 1.640334 1.285109 0.7834435 1.663715 0.4154308 0.0826731 4.495849
+##            s_sat    cv_sat    m_lum    s_lum    cv_lum
+## papilio 2.852462 0.6344656 7.119686 2.158261 0.3031399</code></pre>
 </div>
 <div id="example-2-complex-whole-visual-environments" class="section level3">
 <h3 class="hasAnchor">
