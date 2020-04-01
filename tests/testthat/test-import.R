@@ -15,9 +15,6 @@ test_that("getspec", {
   jazirrad <- suppressMessages(getspec(system.file("testdata", package = "lightr"), ext = "JazIrrad"))
   expect_is(jazirrad, "rspec")
 
-  non_EN <- suppressMessages(getspec(system.file("testdata/notest", package = "lightr"), ext = "txt", decimal = ","))
-  expect_is(non_EN, "rspec")
-
   proc <- suppressMessages(getspec(system.file("testdata/procspec_files", package = "lightr"), ext = "ProcSpec"))
   expect_is(proc, "rspec")
   expect_length(proc, 5)
@@ -61,6 +58,9 @@ test_that("getspec", {
   irr <- suppressMessages(getspec(system.file("testdata", package = "lightr"), ext = "IRR"))
   expect_is(irr, "rspec")
 
+  non_EN <- suppressMessages(getspec(system.file("testdata/non_english", package = "lightr"), ext = "txt", decimal = ","))
+  expect_is(non_EN, "rspec")
+  
 })
 
 
