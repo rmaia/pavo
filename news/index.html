@@ -17,16 +17,20 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
 
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
+
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -61,7 +65,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-news">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -117,7 +121,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/rmaia/pavo">
+  <a href="https://github.com/rmaia/pavo/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -141,12 +145,12 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Changelog <small></small></h1>
+      <h1 data-toc-skip>Changelog <small></small></h1>
       <small>Source: <a href='https://github.com/rmaia/pavo/blob/master/NEWS.md'><code>NEWS.md</code></a></small>
     </div>
 
     <div id="pavo-250" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.5.0">
 <a href="#pavo-250" class="anchor"></a>pavo 2.5.0<small> Unreleased </small>
 </h1>
 <div id="minor-features-and-bug-fixes" class="section level2">
@@ -159,7 +163,7 @@
 </div>
 </div>
     <div id="pavo-240" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.4.0">
 <a href="#pavo-240" class="anchor"></a>pavo 2.4.0<small> 2020-02-08 </small>
 </h1>
 <div id="new-features-and-significant-changes" class="section level2">
@@ -186,7 +190,7 @@
 </div>
 </div>
     <div id="pavo-230" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.3.0">
 <a href="#pavo-230" class="anchor"></a>pavo 2.3.0<small> 2019-12-11 </small>
 </h1>
 <div id="new-features-and-significant-changes-1" class="section level2">
@@ -232,7 +236,7 @@
 </div>
 </div>
     <div id="pavo-220" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.2.0">
 <a href="#pavo-220" class="anchor"></a>pavo 2.2.0<small> 2019-06-25 </small>
 </h1>
 <div id="new-features-and-significant-changes-2" class="section level2">
@@ -242,7 +246,7 @@
 <li>added k-medoids clustering as an option in <code><a href="../reference/classify.html">classify()</a></code>
 </li>
 <li>
-<code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
+<code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e.Â via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-3" class="section level2">
@@ -256,7 +260,7 @@
 <li>
 <code><a href="../reference/irrad2flux.html">irrad2flux()</a></code> and <code><a href="../reference/irrad2flux.html">flux2irrad()</a></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</li>
 <li>
-<code><a href="../reference/getimg.html">getimg()</a></code> can now import images from URL’s</li>
+<code><a href="../reference/getimg.html">getimg()</a></code> can now import images from URLâs</li>
 <li>the <code>cores</code> argument in <code><a href="../reference/getimg.html">getimg()</a></code> is deprecated, as image import is vectorised</li>
 <li>fixed a small bug in <code><a href="../reference/classify.html">classify()</a></code> when using <code>refID</code> and <code>kcols</code> for multiple images</li>
 <li>the <code>resize</code> argument in <code><a href="../reference/procimg.html">procimg()</a></code> now takes a percentage, rather than scaling factor</li>
@@ -269,7 +273,7 @@
 </div>
 </div>
     <div id="pavo-210" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.1.0">
 <a href="#pavo-210" class="anchor"></a>pavo 2.1.0<small> 2019-03-06 </small>
 </h1>
 <div id="new-features-and-potentially-breaking-changes" class="section level2">
@@ -291,7 +295,7 @@
 <li>new functions <code><a href="../reference/is.vismodel.html">is.vismodel()</a></code> and <code><a href="../reference/is.colspace.html">is.colspace()</a></code> are exported to test whether an object is of class <code>vismodel</code> or <code>colspace</code>, respectively</li>
 <li>fixed a bug where images would sometimes be wrongly detected as user-classified in <code><a href="../reference/as.rimg.html">as.rimg()</a></code>
 </li>
-<li>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
+<li>the UV-sensitive cone is now only always named âuâ, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
 <li>the <code>achro</code> argument in <code><a href="../reference/coldist.html">coldist()</a></code> has been changed for <code>achromatic</code> to better match the arguments from <code><a href="../reference/vismodel.html">vismodel()</a></code>. Older scripts that use <code>achro</code> should not be affected and still work as before.</li>
 <li>the package <code>imager</code> is no longer a dependency, and is only loaded if using some features of <code><a href="../reference/procimg.html">procimg()</a></code>.</li>
 <li>the package <code>mapproj</code> is no longer a dependency, and is only loaded if using <code><a href="../reference/projplot.html">projplot()</a></code>.</li>
@@ -313,7 +317,7 @@
 </div>
 </div>
     <div id="pavo-200" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="2.0.0">
 <a href="#pavo-200" class="anchor"></a>pavo 2.0.0<small> 2018-09-22 </small>
 </h1>
 <div id="new-features" class="section level2">
@@ -341,7 +345,7 @@
 </div>
 </div>
     <div id="pavo-140" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.4.0">
 <a href="#pavo-140" class="anchor"></a>pavo 1.4.0<small> 2018-07-11 </small>
 </h1>
 <div id="new-features-1" class="section level2">
@@ -388,14 +392,14 @@
 <li>
 <code><a href="../reference/as.rspec.html">as.rspec()</a></code> no longer fails with tibbles</li>
 <li>bin option of <code><a href="../reference/procspec.html">procspec()</a></code> now works for all values of bins</li>
-<li>non-relative quantum catches from dataframe object were not correctly scaled in “di”, “tri”, “categorical” and “coc” colorspaces</li>
+<li>non-relative quantum catches from dataframe object were not correctly scaled in âdiâ, âtriâ, âcategoricalâ and âcocâ colorspaces</li>
 <li>fixed a bug in <code><a href="../reference/colspace.html">colspace()</a></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
-<li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e. maxwell triangle)</li>
+<li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e.Â maxwell triangle)</li>
 </ul>
 </div>
 </div>
     <div id="pavo-131" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.3.1">
 <a href="#pavo-131" class="anchor"></a>pavo 1.3.1<small> 2017-10-02 </small>
 </h1>
 <div id="new-functions" class="section level2">
@@ -417,7 +421,7 @@
 </div>
 </div>
     <div id="pavo-130" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.3.0">
 <a href="#pavo-130" class="anchor"></a>pavo 1.3.0<small> 2017-09-20 </small>
 </h1>
 <div id="new-functions-1" class="section level2">
@@ -428,7 +432,7 @@
 <li>plot() methods for objects resulting from jnd2xyz()</li>
 <li>jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()</li>
 <li>coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix</li>
-<li>sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
+<li>sensdata() function for retrieving and/or visualising pavoâs in-build spectral data</li>
 </ul>
 </div>
 <div id="major-changes-1" class="section level2">
@@ -439,7 +443,7 @@
 <li>tetraplot() allows forced perspective using size to denote distance</li>
 <li>voloverlap() and vol() have also been changed to work with the new tetraplot() options</li>
 <li>getspec() has been rewritten to be faster, more general, and allow parallel processing</li>
-<li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</li>
+<li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g.Â invert = TRUE)</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-8" class="section level2">
@@ -456,22 +460,22 @@
 <li>removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.</li>
 <li>changed default to achro=FALSE in coldist()</li>
 <li>replaced the modelled receptor sensitivities of the honeybee <em>Apis mellifera</em> with the empirical sensitivities from Peitsch et al (1992)</li>
-<li>the built-in ‘green’ background spectrum is no longer normalized</li>
+<li>the built-in âgreenâ background spectrum is no longer normalized</li>
 <li>removed wavelength limitations in the calculation of H3 from summary.rspec</li>
 <li>all visual systems (except CIE) have been normalized to have an integral of 1</li>
 </ul>
 </div>
 </div>
     <div id="pavo-120" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.2.0">
 <a href="#pavo-120" class="anchor"></a>pavo 1.2.0<small> Unreleased </small>
 </h1>
 <div id="major-changes-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#major-changes-2" class="anchor"></a>MAJOR CHANGES</h2>
 <ul>
-<li>added the CIELch model accessed via colspace(space = ‘cielch’)</li>
-<li>added the sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
+<li>added the CIELch model accessed via colspace(space = âcielchâ)</li>
+<li>added the sensdata() function for retrieving and/or visualising pavoâs in-build spectral data</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-9" class="section level2">
@@ -484,15 +488,15 @@
 </div>
 </div>
     <div id="pavo-110" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.1.0">
 <a href="#pavo-110" class="anchor"></a>pavo 1.1.0<small> 2017-05-05 </small>
 </h1>
 <div id="new-functions-2" class="section level2">
 <h2 class="hasAnchor">
 <a href="#new-functions-2" class="anchor"></a>NEW FUNCTIONS</h2>
 <ul>
-<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
-<li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
+<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = âsegmentâ. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
+<li>segplot() is a plot for Endlerâs (1990) segment analysis, and is accessed â along with all other 2d plots â via plot.colspace()</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-10" class="section level2">
@@ -506,14 +510,14 @@
 <li>fixed a bug in as.rspec() in which lim was not applied when interpolate = FALSE</li>
 <li>fixed bug in aggplot() which resulted in error when using lty, lwd arguments</li>
 <li>warning if ocular media is being used in both vismodel() and sensmodel()</li>
-<li>added an ‘all’ option to the achromatic argument in vismodel()</li>
+<li>added an âallâ option to the achromatic argument in vismodel()</li>
 <li>added the ability to calculate dL for cielab models in coldist()</li>
 <li>added some more informative messages and warnings</li>
 </ul>
 </div>
 </div>
     <div id="pavo-10" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="1.0">
 <a href="#pavo-10" class="anchor"></a>pavo 1.0<small> Unreleased </small>
 </h1>
 <ul>
@@ -552,8 +556,8 @@
 <li>peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700</li>
 <li>peakshape() returns warning if a spectrum contains duplicate reflectance values</li>
 <li>summary.rspec() works with single spectra</li>
-<li>aggplot() and aggspec() fixed bug on ordering of levels when they don’t match the sequence in the rspec object</li>
-<li>aggplot() added logical argument “legend” for automatically adding a legend to the plot</li>
+<li>aggplot() and aggspec() fixed bug on ordering of levels when they donât match the sequence in the rspec object</li>
+<li>aggplot() added logical argument âlegendâ for automatically adding a legend to the plot</li>
 <li>vismodel() returns error if bkg=NULL</li>
 <li>getspec() patched to stop returning warnings in Yosemite</li>
 <li>getspec() has a faster (~5-10X), but less flexible, algorithm used when all input files are from the same source.</li>
@@ -561,7 +565,7 @@
 </div>
 </div>
     <div id="pavo-05-6" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-6">
 <a href="#pavo-05-6" class="anchor"></a>pavo 0.5-6<small> 2016-10-20 </small>
 </h1>
 <div id="bug-fixes" class="section level2">
@@ -573,7 +577,7 @@
 </div>
 </div>
     <div id="pavo-05-5" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-5">
 <a href="#pavo-05-5" class="anchor"></a>pavo 0.5-5<small> 2016-03-09 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-12" class="section level2">
@@ -585,7 +589,7 @@
 </div>
 </div>
     <div id="pavo-05-4" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-4">
 <a href="#pavo-05-4" class="anchor"></a>pavo 0.5-4<small> 2016-01-28 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-13" class="section level2">
@@ -597,19 +601,19 @@
 </div>
 </div>
     <div id="pavo-05-2" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-2">
 <a href="#pavo-05-2" class="anchor"></a>pavo 0.5-2<small> 2015-06-11 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-14" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-14" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</li>
+<li>fixes to the blue tit visual system, changed vismodel() argument to âbluetitâ</li>
 </ul>
 </div>
 </div>
     <div id="pavo-05-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5-1">
 <a href="#pavo-05-1" class="anchor"></a>pavo 0.5-1<small> 2013-09-04 </small>
 </h1>
 <div id="minor-features-and-bug-fixes-15" class="section level2">
@@ -624,7 +628,7 @@
 </div>
 </div>
     <div id="pavo-05" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.5">
 <a href="#pavo-05" class="anchor"></a>pavo 0.5<small> 2013-06-09 </small>
 </h1>
 <ul>
@@ -642,7 +646,7 @@
 </div>
 </div>
     <div id="pavo-03-1" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3-1">
 <a href="#pavo-03-1" class="anchor"></a>pavo 0.3-1<small> 2013-05-06 </small>
 </h1>
 <div id="new-functions-4" class="section level2">
@@ -659,12 +663,12 @@
 <li>vismodel() less cryptic error messages</li>
 <li>as_rspec() fix message pertaining wavelength column</li>
 <li>getspec() now removes empty columns (generated by bad tabulation)</li>
-<li>plot.rspec() fix color labelling issue (previously, when user specified fewer colors than number of spectra, ‘stack’ and ‘overlay’ colored spectra differently)</li>
+<li>plot.rspec() fix color labelling issue (previously, when user specified fewer colors than number of spectra, âstackâ and âoverlayâ colored spectra differently)</li>
 </ul>
 </div>
 </div>
     <div id="pavo-03" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.3">
 <a href="#pavo-03" class="anchor"></a>pavo 0.3<small> 2013-04-23 </small>
 </h1>
 <div id="new-functions-5" class="section level2">
@@ -690,7 +694,7 @@
 <a href="#minor-features" class="anchor"></a>MINOR FEATURES</h2>
 <ul>
 <li>getspec() works with Avasoft 8 output</li>
-<li>aggspec() if no “by” argument is supplied, applies function to all spectra</li>
+<li>aggspec() if no âbyâ argument is supplied, applies function to all spectra</li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
@@ -704,7 +708,7 @@
 </div>
 </div>
     <div id="pavo-01-2" class="section level1">
-<h1 class="page-header">
+<h1 class="page-header" data-toc-text="0.1-2">
 <a href="#pavo-01-2" class="anchor"></a>pavo 0.1-2<small> 2013-01-12 </small>
 </h1>
 <div id="new-functions-6" class="section level2">
@@ -731,9 +735,9 @@
 <li>sensmodel() accepts user-defined ocular media transmission</li>
 <li>voloverlap() allows greater user control of plotting options</li>
 <li>voloverlap() includes Monte Carlo option for overlap calculation</li>
-<li>as.rspec() accepts “whichwl” argument for user-defined wavelength column selection</li>
-<li>as.rspec() includes “interp” argument; updated automatic search for wavelength column</li>
-<li>aggspec() aggregates spectra by multiple vectors (e.g. average spectra by species and sex using by=list(species,sex) )</li>
+<li>as.rspec() accepts âwhichwlâ argument for user-defined wavelength column selection</li>
+<li>as.rspec() includes âinterpâ argument; updated automatic search for wavelength column</li>
+<li>aggspec() aggregates spectra by multiple vectors (e.g.Â average spectra by species and sex using by=list(species,sex) )</li>
 <li>peakshape() gives plot titles, allows ask=TRUE and mfrow</li>
 </ul>
 </div>
@@ -741,10 +745,10 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"></a>BUG FIXES</h2>
 <ul>
-<li>explorespec() “free” argument fixed</li>
+<li>explorespec() âfreeâ argument fixed</li>
 <li>summary.rspec() S5 variable fixed; segments now divided by B1 (brightness-independent measure of saturation)</li>
 <li>summary.rspec() checks for positive values when bmaxneg is calculated, returns NA</li>
-<li>tcs() accepts “v” cone class</li>
+<li>tcs() accepts âvâ cone class</li>
 <li>aggspec() fixed matching of names</li>
 <li>procspec() works with rspec objects that include a single reflectance spectrum</li>
 <li>peakshape() minor fixes</li>
@@ -754,32 +758,9 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <div id="tocnav">
-      <h2>Contents</h2>
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#pavo-250">2.5.0</a></li>
-        <li><a href="#pavo-240">2.4.0</a></li>
-        <li><a href="#pavo-230">2.3.0</a></li>
-        <li><a href="#pavo-220">2.2.0</a></li>
-        <li><a href="#pavo-210">2.1.0</a></li>
-        <li><a href="#pavo-200">2.0.0</a></li>
-        <li><a href="#pavo-140">1.4.0</a></li>
-        <li><a href="#pavo-131">1.3.1</a></li>
-        <li><a href="#pavo-130">1.3.0</a></li>
-        <li><a href="#pavo-120">1.2.0</a></li>
-        <li><a href="#pavo-110">1.1.0</a></li>
-        <li><a href="#pavo-10">1.0</a></li>
-        <li><a href="#pavo-05-6">0.5-6</a></li>
-        <li><a href="#pavo-05-5">0.5-5</a></li>
-        <li><a href="#pavo-05-4">0.5-4</a></li>
-        <li><a href="#pavo-05-2">0.5-2</a></li>
-        <li><a href="#pavo-05-1">0.5-1</a></li>
-        <li><a href="#pavo-05">0.5</a></li>
-        <li><a href="#pavo-03-1">0.3-1</a></li>
-        <li><a href="#pavo-03">0.3</a></li>
-        <li><a href="#pavo-01-2">0.1-2</a></li>
-      </ul>
-    </div>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 
 </div>
@@ -791,7 +772,7 @@
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
 </div>
 
       </footer>
