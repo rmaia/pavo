@@ -18,7 +18,7 @@
 #' @inherit getspec details
 #'
 #' @return a matrix including the empirical mean and bootstrapped
-#'  confidence limits for dS (and dL if `achro = TRUE`).
+#'  confidence limits for dS (and dL if `achromatic = TRUE`).
 #'
 #' @examples
 #' \dontrun{
@@ -104,7 +104,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     }
   }
 
-  if (arg0$achro) {
+  if (arg0$achromatic) {
     if (is.null(arg0$weber.achro)) {
       stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
     }
@@ -251,7 +251,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 
   res <- t(rbind(dS.mean, dsCI))
 
-  if (arg0$achro) {
+  if (arg0$achromatic) {
     empdL <- setNames(empcd$dL, paste(empcd$patch1, empcd$patch2, sep = "-"))
 
     bootdL <- do.call(
