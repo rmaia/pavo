@@ -4,44 +4,51 @@
 #' boundary-strength (Endler et al. 2018) analyses, along with overall pattern
 #' contrast (Endler & Mielke 2005).
 #'
-#' @param classimg (required) an xyz matrix, or list of matrices, in which
-#' x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
-#' specifying a colour-class. Preferably the result of [classify()], or constructed
-#' from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).
-#' @param xpts an integer specifying the number of sample points along the x axis,
-#' from which the evenly-spaced sampling grid is constructed (if required). Defaults
-#' to the smallest dimension of `classimg`, though this should be carefully considered.
+#' @param classimg (required) an xyz matrix, or list of matrices, in which x and
+#'   y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
+#'   specifying a colour-class. Preferably the result of [classify()], or
+#'   constructed from grid-sampled spectra that have been visually modelled and
+#'   clustered (as per Endler 2012).
+#' @param xpts an integer specifying the number of sample points along the x
+#'   axis, from which the evenly-spaced sampling grid is constructed (if
+#'   required). Defaults to the smallest dimension of `classimg`, though this
+#'   should be carefully considered.
 #' @param xscale (required) an integer specifying the true length of the x-axis,
-#' in preferred units. Not required, and ignored, only if image scales have been set via
-#' [procimg()].
-#' @param exclude the portion of the scene to be excluded from the analysis, if any.
-#' - `'none'`: default
-#' - `'background'`: exclude everything *outside* the closed polygon specified
-#' using [procimg()], or the argument `polygon`. Alternatively, if
-#' the background is relatively homogeneous the colour-class ID(s) uniquely corresponding
-#' to the background can be specified via `bkgID`, and subsequently excluded.
-#' - `'object'`: exclude everything *inside* the closed polygon specified
-#' using [procimg()], or the argument `polygon`.
+#'   in preferred units. Not required, and ignored, only if image scales have
+#'   been set via [procimg()].
+#' @param exclude the portion of the scene to be excluded from the analysis, if
+#'   any.
+#'   - `'none'`: default
+#'   - `'background'`: exclude everything *outside* the closed polygon specified
+#'      using [procimg()], or the argument `polygon`. Alternatively, if the 
+#'      background is relatively homogeneous the colour-class ID(s) uniquely 
+#'      corresponding to the background can be specified via `bkgID`, and
+#'      subsequently excluded.
+#'   - `'object'`: exclude everything *inside* the closed polygon specified
+#'      using [procimg()], or the argument `polygon`.
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
-#' pertaining to the background alone, for relatively homogeneous and uniquely-identified
-#' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
-#' call `summary` on, the result of [classify()] to visualise the RGB
-#' values corresponding to colour-class ID numbers for classified images. Ignored
-#' if the focal object and background has been identified using [procimg()].
-#' @param polygon a data.frame of x-y coordinates delineating a closed polygon that
-#' separates the focal object from the background. Not required, and ignored, if the
-#' focal object outline is specified using [procimg()].
+#'   pertaining to the background alone, for relatively homogeneous and
+#'   uniquely-identified backgrounds (e.g. the matte background of pinned
+#'   specimens). Examine the attributes of, or call `summary` on, the result of
+#'   [classify()] to visualise the RGB values corresponding to colour-class ID
+#'   numbers for classified images. Ignored if the focal object and background
+#'   has been identified using [procimg()].
+#' @param polygon a data.frame of x-y coordinates delineating a closed polygon
+#'   that separates the focal object from the background. Not required, and
+#'   ignored, if the focal object outline is specified using [procimg()].
 #' @param coldists a data.frame specifying the visually-modelled chromatic (dS)
-#' and/or achromatic (dL) distances between colour-categories. The first two columns
-#' should be named 'c1' and 'c2', and specify all possible combinations of numeric
-#' colour-class ID's (viewable by calling `summary(image, plot = TRUE)` on
-#' a colour classified image), with the remaining columns named dS (for chromatic distances)
-#' and/or dL (for achromatic distances). See [vismodel()] and [colspace()]
-#' for visual modelling with spectral data.
-#' @param hsl data.frame specifying the hue, saturation, and luminance of color patch elements,
-#' as might be estimated via [vismodel()] and [colspace()]. The first
-#' column, named 'patch', should contain numeric color category IDs, with the remaining
-#' columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.
+#'   and/or achromatic (dL) distances between colour-categories. The first two
+#'   columns should be named 'c1' and 'c2', and specify all possible
+#'   combinations of numeric colour-class ID's (viewable by calling
+#'   `summary(image, plot = TRUE)` on a colour classified image), with the
+#'   remaining columns named dS (for chromatic distances) and/or dL (for
+#'   achromatic distances). See [vismodel()] and [colspace()] for visual
+#'   modelling with spectral data.
+#' @param hsl data.frame specifying the hue, saturation, and luminance of color
+#'   patch elements, as might be estimated via [vismodel()] and [colspace()].
+#'   The first column, named 'patch', should contain numeric color category IDs,
+#'   with the remaining columns specifying one or more of 'hue' (angle, in
+#'   radians), 'sat', and/or 'lum'.
 #' @inheritParams getspec
 #' 
 #' @inherit getspec details
@@ -51,41 +58,42 @@
 #' - `'N'`: The grand total (sum of diagonal and off-diagonal) transitions.
 #' - `'n_off'`: The total off-diagonal transitions.
 #' - `'p_i'`: The overall frequency of colour class *i*.
-#' - `'q_i_j'`: The frequency of transitions between *all* colour classes
-#' *i* and *j*, such that `sum(q_i_j) = 1`.
-#' - `'t_i_j'`: The frequency of off-diagonal (i.e. class-change
-#'  transitions) transitions *i* and *j*, such that `sum(t_i_j) = 1`.
-#' - `'m'`: The overall transition density (mean transitions),
-#'  in units specified in the argument `xscale`.
-#' - `'m_r'`: The row-wise transition density (mean row transitions),
-#'  in user-specified units.
-#' - `'m_c'`: The column-wise transition density (mean column transitions),
-#'  in user-specified units.
+#' - `'q_i_j'`: The frequency of transitions between *all* colour classes *i*
+#' and *j*, such that `sum(q_i_j) = 1`.
+#' - `'t_i_j'`: The frequency of off-diagonal (i.e. class-change transitions)
+#' transitions *i* and *j*, such that `sum(t_i_j) = 1`.
+#' - `'m'`: The overall transition density (mean transitions), in units
+#' specified in the argument `xscale`.
+#' - `'m_r'`: The row-wise transition density (mean row transitions), in
+#' user-specified units.
+#' - `'m_c'`: The column-wise transition density (mean column transitions), in
+#' user-specified units.
 #' - `'A'`: The transition aspect ratio (< 1 = wide, > 1 = tall).
-#' - `'Sc'`: Simpson colour class diversity, `Sc = 1/(sum(p_i^2))`. If
-#' all colour and luminance classes are equal in relative area, then `Sc = k`.
+#' - `'Sc'`: Simpson colour class diversity, `Sc = 1/(sum(p_i^2))`. If all
+#' colour and luminance classes are equal in relative area, then `Sc = k`.
 #' - `'St'`: Simpson transition diversity, `St = 1/sum(t_i_j^2)`.
 #' - `'Jc'`: Simpson colour class diversity relative to its achievable maximum.
 #' `Jc = Sc/k`.
 #' - `'Jt'`: Simpson transition diversity relative to its achievable maximum.
 #' `Jt = St/(k*(k-1)/2)`.
 #' - `'B'`: The animal/background transition ratio, or the ratio of class-change
-#' transitions entirely within the focal object and those involving the object and background,
+#' transitions entirely within the focal object and those involving the object
+#' and background,
 #' `B = sum(O_a_a / O_a_b)`.
-#' - `'Rt'`: Ratio of animal-animal and animal-background transition diversities,
-#' `Rt = St_a_a / St_a_b`.
-#' - `'Rab'`: Ratio of animal-animal and background-background transition diversities,
-#' `Rt = St_a_a / St_b_b`.
-#' - `'m_dS', 's_dS', 'cv_dS'`: weighted mean, sd, and coefficient of
-#' variation of the chromatic boundary strength.
-#' - `'m_dL', 's_dL', 'cv_dL'`: weighted mean, sd, and coefficient of
-#' variation of the achromatic boundary strength.
-#' - `'m_hue', 's_hue', 'var_hue'`: circular mean, sd, and variance of
-#' overall pattern hue (in radians).
-#' - `'m_sat', 's_sat', 'cv_sat'`: weighted mean, sd, and coefficient
-#' variation of overall pattern saturation.
-#' - `'m_lum', 's_lum', 'cv_lum'`: weighted mean, sd, and coefficient
-#' variation of overall pattern luminance.
+#' - `'Rt'`: Ratio of animal-animal and animal-background transition
+#' diversities, `Rt = St_a_a / St_a_b`.
+#' - `'Rab'`: Ratio of animal-animal and background-background transition
+#' diversities, `Rt = St_a_a / St_b_b`.
+#' - `'m_dS', 's_dS', 'cv_dS'`: weighted mean, sd, and coefficient of variation
+#' of the chromatic boundary strength.
+#' - `'m_dL', 's_dL', 'cv_dL'`: weighted mean, sd, and coefficient of variation
+#' of the achromatic boundary strength.
+#' - `'m_hue', 's_hue', 'var_hue'`: circular mean, sd, and variance of overall
+#' pattern hue (in radians).
+#' - `'m_sat', 's_sat', 'cv_sat'`: weighted mean, sd, and coefficient variation
+#' of overall pattern saturation.
+#' - `'m_lum', 's_lum', 'cv_lum'`: weighted mean, sd, and coefficient variation
+#' of overall pattern luminance.
 #'
 #' @export
 #'
@@ -136,13 +144,16 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #'
-#' @references Endler, J. A. (2012). A framework for analysing colour pattern geometry:
-#' adjacent colours. Biological Journal Of The Linnean Society, 107(2), 233-253.
-#' @references Endler, J. A., Cole G., Kranz A. (2018). Boundary Strength Analysis:
-#' Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
-#' and fitness. Methods in Ecology and Evolution, 9(12), 2334-2348.
-#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
-#'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references Endler, J. A. (2012). A framework for analysing colour pattern
+#'   geometry: adjacent colours. Biological Journal Of The Linnean Society,
+#'   107(2), 233-253.
+#' @references Endler, J. A., Cole G., Kranz A. (2018). Boundary Strength
+#'   Analysis: Combining color pattern geometry and coloured patch visual
+#'   properties for use in predicting behaviour and fitness. Methods in Ecology
+#'   and Evolution, 9(12), 2334-2348.
+#' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour
+#'   patterns  as birds see them. Biological Journal Of The Linnean Society,
+#'   86(4), 405-431.
 
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
