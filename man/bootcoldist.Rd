@@ -27,7 +27,7 @@ include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for det
 }
 \value{
 a matrix including the empirical mean and bootstrapped
-confidence limits for dS (and dL if \code{achro = TRUE}).
+confidence limits for dS (and dL if \code{achromatic = TRUE}).
 }
 \description{
 Uses a bootstrap procedure to generate confidence intervals

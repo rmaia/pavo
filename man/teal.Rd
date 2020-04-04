@@ -5,7 +5,9 @@
 \alias{teal}
 \title{Angle-resolved reflectance data for the iridescent wing patch of a male green-winged
 teal (\emph{Anas carolinensis})}
-\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 13 columns.}
+\format{
+An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 13 columns.
+}
 \usage{
 data(teal)
 }

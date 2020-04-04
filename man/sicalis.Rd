@@ -5,7 +5,9 @@
 \alias{sicalis}
 \title{Spectral curves from three body regions of stripe-tailed yellow finch
 (\emph{Sicalis citrina}) males}
-\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 22 columns.}
+\format{
+An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 22 columns.
+}
 \usage{
 data(sicalis)
 }

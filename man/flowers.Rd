@@ -5,7 +5,9 @@
 \alias{flowers}
 \title{Reflectance spectra from a suite of native Australian flowers, collected
 around Cairns, Queensland.}
-\format{An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 37 columns.}
+\format{
+An object of class \code{rspec} (inherits from \code{data.frame}) with 401 rows and 37 columns.
+}
 \usage{
 data(flowers)
 }
