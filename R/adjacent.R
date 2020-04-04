@@ -15,15 +15,13 @@
 #' in preferred units. Not required, and ignored, only if image scales have been set via
 #' [procimg()].
 #' @param exclude the portion of the scene to be excluded from the analysis, if any.
-#' \itemize{
-#' \item `'none'`: default
-#' \item `'background'`: exclude everything *outside* the closed polygon specified
+#' - `'none'`: default
+#' - `'background'`: exclude everything *outside* the closed polygon specified
 #' using [procimg()], or the argument `polygon`. Alternatively, if
 #' the background is relatively homogeneous the colour-class ID(s) uniquely corresponding
 #' to the background can be specified via `bkgID`, and subsequently excluded.
-#' \item `'object'`: exclude everything *inside* the closed polygon specified
+#' - `'object'`: exclude everything *inside* the closed polygon specified
 #' using [procimg()], or the argument `polygon`.
-#' }
 #' @param bkgID an integer or vector specifying the colour-class ID number(s) of
 #' pertaining to the background alone, for relatively homogeneous and uniquely-identified
 #' backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
