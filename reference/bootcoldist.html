@@ -197,7 +197,7 @@ include <code>n</code> and <code>weber</code>. See <code><a href='coldist.html'>
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>a matrix including the empirical mean and bootstrapped
-confidence limits for dS (and dL if <code>achro = TRUE</code>).</p>
+confidence limits for dS (and dL if <code>achromatic = TRUE</code>).</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
     <p>You can customise the type of parallel processing used by this function with
@@ -215,7 +215,7 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
 <span class='no'>vm</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"bt.dc"</span>)
 <span class='no'>gr</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"ind.."</span>, <span class='st'>""</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='no'>vm</span>))
-<span class='fu'>bootcoldist</span>(<span class='no'>vm</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>weber</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>weber.achro</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>cores</span> <span class='kw'>=</span> <span class='fl'>1</span>)
+<span class='fu'>bootcoldist</span>(<span class='no'>vm</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='no'>gr</span>, <span class='kw'>n</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>), <span class='kw'>weber</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>weber.achro</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

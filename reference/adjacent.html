@@ -176,46 +176,51 @@ contrast (Endler &amp; Mielke 2005).</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>classimg</th>
-      <td><p>(required) an xyz matrix, or list of matrices, in which
-x and y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
-specifying a colour-class. Preferably the result of <code><a href='classify.html'>classify()</a></code>, or constructed
-from grid-sampled spectra that have been visually modelled and clustered (as per Endler 2012).</p></td>
+      <td><p>(required) an xyz matrix, or list of matrices, in which x and
+y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
+specifying a colour-class. Preferably the result of <code><a href='classify.html'>classify()</a></code>, or
+constructed from grid-sampled spectra that have been visually modelled and
+clustered (as per Endler 2012).</p></td>
     </tr>
     <tr>
       <th>xpts</th>
-      <td><p>an integer specifying the number of sample points along the x axis,
-from which the evenly-spaced sampling grid is constructed (if required). Defaults
-to the smallest dimension of <code>classimg</code>, though this should be carefully considered.</p></td>
+      <td><p>an integer specifying the number of sample points along the x
+axis, from which the evenly-spaced sampling grid is constructed (if
+required). Defaults to the smallest dimension of <code>classimg</code>, though this
+should be carefully considered.</p></td>
     </tr>
     <tr>
       <th>xscale</th>
       <td><p>(required) an integer specifying the true length of the x-axis,
-in preferred units. Not required, and ignored, only if image scales have been set via
-<code><a href='procimg.html'>procimg()</a></code>.</p></td>
+in preferred units. Not required, and ignored, only if image scales have
+been set via <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>bkgID</th>
       <td><p>an integer or vector specifying the colour-class ID number(s) of
-pertaining to the background alone, for relatively homogeneous and uniquely-identified
-backgrounds (e.g. the matte background of pinned specimens). Examine the attributes of, or
-call <code>summary</code> on, the result of <code><a href='classify.html'>classify()</a></code> to visualise the RGB
-values corresponding to colour-class ID numbers for classified images. Ignored
-if the focal object and background has been identified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
+pertaining to the background alone, for relatively homogeneous and
+uniquely-identified backgrounds (e.g. the matte background of pinned
+specimens). Examine the attributes of, or call <code>summary</code> on, the result of
+<code><a href='classify.html'>classify()</a></code> to visualise the RGB values corresponding to colour-class ID
+numbers for classified images. Ignored if the focal object and background
+has been identified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>polygon</th>
-      <td><p>a data.frame of x-y coordinates delineating a closed polygon that
-separates the focal object from the background. Not required, and ignored, if the
-focal object outline is specified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
+      <td><p>a data.frame of x-y coordinates delineating a closed polygon
+that separates the focal object from the background. Not required, and
+ignored, if the focal object outline is specified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
-      <td><p>the portion of the scene to be excluded from the analysis, if any.</p><ul>
+      <td><p>the portion of the scene to be excluded from the analysis, if
+any.</p><ul>
 <li><p><code>'none'</code>: default</p></li>
 <li><p><code>'background'</code>: exclude everything <em>outside</em> the closed polygon specified
-using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>polygon</code>. Alternatively, if
-the background is relatively homogeneous the colour-class ID(s) uniquely corresponding
-to the background can be specified via <code>bkgID</code>, and subsequently excluded.</p></li>
+using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>polygon</code>. Alternatively, if the
+background is relatively homogeneous the colour-class ID(s) uniquely
+corresponding to the background can be specified via <code>bkgID</code>, and
+subsequently excluded.</p></li>
 <li><p><code>'object'</code>: exclude everything <em>inside</em> the closed polygon specified
 using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>polygon</code>.</p></li>
 </ul></td>
@@ -223,19 +228,21 @@ using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>p
     <tr>
       <th>coldists</th>
       <td><p>a data.frame specifying the visually-modelled chromatic (dS)
-and/or achromatic (dL) distances between colour-categories. The first two columns
-should be named 'c1' and 'c2', and specify all possible combinations of numeric
-colour-class ID's (viewable by calling <code><a href='https://rdrr.io/r/base/summary.html'>summary(image, plot = TRUE)</a></code> on
-a colour classified image), with the remaining columns named dS (for chromatic distances)
-and/or dL (for achromatic distances). See <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code>
-for visual modelling with spectral data.</p></td>
+and/or achromatic (dL) distances between colour-categories. The first two
+columns should be named 'c1' and 'c2', and specify all possible
+combinations of numeric colour-class ID's (viewable by calling
+<code><a href='https://rdrr.io/r/base/summary.html'>summary(image, plot = TRUE)</a></code> on a colour classified image), with the
+remaining columns named dS (for chromatic distances) and/or dL (for
+achromatic distances). See <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code> for visual
+modelling with spectral data.</p></td>
     </tr>
     <tr>
       <th>hsl</th>
-      <td><p>data.frame specifying the hue, saturation, and luminance of color patch elements,
-as might be estimated via <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code>. The first
-column, named 'patch', should contain numeric color category IDs, with the remaining
-columns specifying one or more of 'hue' (angle, in radians), 'sat', and/or 'lum'.</p></td>
+      <td><p>data.frame specifying the hue, saturation, and luminance of color
+patch elements, as might be estimated via <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code>.
+The first column, named 'patch', should contain numeric color category IDs,
+with the remaining columns specifying one or more of 'hue' (angle, in
+radians), 'sat', and/or 'lum'.</p></td>
     </tr>
     <tr>
       <th>cores</th>
@@ -251,41 +258,42 @@ customise your parallelisation strategy.</p></td>
 <li><p><code>'N'</code>: The grand total (sum of diagonal and off-diagonal) transitions.</p></li>
 <li><p><code>'n_off'</code>: The total off-diagonal transitions.</p></li>
 <li><p><code>'p_i'</code>: The overall frequency of colour class <em>i</em>.</p></li>
-<li><p><code>'q_i_j'</code>: The frequency of transitions between <em>all</em> colour classes
-<em>i</em> and <em>j</em>, such that <code>sum(q_i_j) = 1</code>.</p></li>
-<li><p><code>'t_i_j'</code>: The frequency of off-diagonal (i.e. class-change
-transitions) transitions <em>i</em> and <em>j</em>, such that <code>sum(t_i_j) = 1</code>.</p></li>
-<li><p><code>'m'</code>: The overall transition density (mean transitions),
-in units specified in the argument <code>xscale</code>.</p></li>
-<li><p><code>'m_r'</code>: The row-wise transition density (mean row transitions),
-in user-specified units.</p></li>
-<li><p><code>'m_c'</code>: The column-wise transition density (mean column transitions),
-in user-specified units.</p></li>
+<li><p><code>'q_i_j'</code>: The frequency of transitions between <em>all</em> colour classes <em>i</em>
+and <em>j</em>, such that <code>sum(q_i_j) = 1</code>.</p></li>
+<li><p><code>'t_i_j'</code>: The frequency of off-diagonal (i.e. class-change transitions)
+transitions <em>i</em> and <em>j</em>, such that <code>sum(t_i_j) = 1</code>.</p></li>
+<li><p><code>'m'</code>: The overall transition density (mean transitions), in units
+specified in the argument <code>xscale</code>.</p></li>
+<li><p><code>'m_r'</code>: The row-wise transition density (mean row transitions), in
+user-specified units.</p></li>
+<li><p><code>'m_c'</code>: The column-wise transition density (mean column transitions), in
+user-specified units.</p></li>
 <li><p><code>'A'</code>: The transition aspect ratio (&lt; 1 = wide, &gt; 1 = tall).</p></li>
-<li><p><code>'Sc'</code>: Simpson colour class diversity, <code>Sc = 1/(sum(p_i^2))</code>. If
-all colour and luminance classes are equal in relative area, then <code>Sc = k</code>.</p></li>
+<li><p><code>'Sc'</code>: Simpson colour class diversity, <code>Sc = 1/(sum(p_i^2))</code>. If all
+colour and luminance classes are equal in relative area, then <code>Sc = k</code>.</p></li>
 <li><p><code>'St'</code>: Simpson transition diversity, <code>St = 1/sum(t_i_j^2)</code>.</p></li>
 <li><p><code>'Jc'</code>: Simpson colour class diversity relative to its achievable maximum.
 <code>Jc = Sc/k</code>.</p></li>
 <li><p><code>'Jt'</code>: Simpson transition diversity relative to its achievable maximum.
 <code>Jt = St/(k*(k-1)/2)</code>.</p></li>
 <li><p><code>'B'</code>: The animal/background transition ratio, or the ratio of class-change
-transitions entirely within the focal object and those involving the object and background,
+transitions entirely within the focal object and those involving the object
+and background,
 <code>B = sum(O_a_a / O_a_b)</code>.</p></li>
-<li><p><code>'Rt'</code>: Ratio of animal-animal and animal-background transition diversities,
-<code>Rt = St_a_a / St_a_b</code>.</p></li>
-<li><p><code>'Rab'</code>: Ratio of animal-animal and background-background transition diversities,
-<code>Rt = St_a_a / St_b_b</code>.</p></li>
-<li><p><code>'m_dS', 's_dS', 'cv_dS'</code>: weighted mean, sd, and coefficient of
-variation of the chromatic boundary strength.</p></li>
-<li><p><code>'m_dL', 's_dL', 'cv_dL'</code>: weighted mean, sd, and coefficient of
-variation of the achromatic boundary strength.</p></li>
-<li><p><code>'m_hue', 's_hue', 'var_hue'</code>: circular mean, sd, and variance of
-overall pattern hue (in radians).</p></li>
-<li><p><code>'m_sat', 's_sat', 'cv_sat'</code>: weighted mean, sd, and coefficient
-variation of overall pattern saturation.</p></li>
-<li><p><code>'m_lum', 's_lum', 'cv_lum'</code>: weighted mean, sd, and coefficient
-variation of overall pattern luminance.</p></li>
+<li><p><code>'Rt'</code>: Ratio of animal-animal and animal-background transition
+diversities, <code>Rt = St_a_a / St_a_b</code>.</p></li>
+<li><p><code>'Rab'</code>: Ratio of animal-animal and background-background transition
+diversities, <code>Rt = St_a_a / St_b_b</code>.</p></li>
+<li><p><code>'m_dS', 's_dS', 'cv_dS'</code>: weighted mean, sd, and coefficient of variation
+of the chromatic boundary strength.</p></li>
+<li><p><code>'m_dL', 's_dL', 'cv_dL'</code>: weighted mean, sd, and coefficient of variation
+of the achromatic boundary strength.</p></li>
+<li><p><code>'m_hue', 's_hue', 'var_hue'</code>: circular mean, sd, and variance of overall
+pattern hue (in radians).</p></li>
+<li><p><code>'m_sat', 's_sat', 'cv_sat'</code>: weighted mean, sd, and coefficient variation
+of overall pattern saturation.</p></li>
+<li><p><code>'m_lum', 's_lum', 'cv_lum'</code>: weighted mean, sd, and coefficient variation
+of overall pattern luminance.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -297,13 +305,16 @@ the way progress is shown with the <code><a href='https://rdrr.io/pkg/progressr/
 (progress bar, acoustic feedback, nothing, etc.)</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Endler, J. A. (2012). A framework for analysing colour pattern geometry:
-adjacent colours. Biological Journal Of The Linnean Society, 107(2), 233-253.</p>
-<p>Endler, J. A., Cole G., Kranz A. (2018). Boundary Strength Analysis:
-Combining color pattern geometry and coloured patch visual properties for use in predicting behaviour
-and fitness. Methods in Ecology and Evolution, 9(12), 2334-2348.</p>
-<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
-as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+    <p>Endler, J. A. (2012). A framework for analysing colour pattern
+geometry: adjacent colours. Biological Journal Of The Linnean Society,
+107(2), 233-253.</p>
+<p>Endler, J. A., Cole G., Kranz A. (2018). Boundary Strength
+Analysis: Combining color pattern geometry and coloured patch visual
+properties for use in predicting behaviour and fitness. Methods in Ecology
+and Evolution, 9(12), 2334-2348.</p>
+<p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour
+patterns  as birds see them. Biological Journal Of The Linnean Society,
+86(4), 405-431.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
     <div class='dont-index'><p><code><a href='classify.html'>classify()</a></code>, <code><a href='summary.rimg.html'>summary.rimg()</a></code>, <code><a href='procimg.html'>procimg()</a></code></p></div>
