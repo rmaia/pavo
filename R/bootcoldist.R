@@ -39,9 +39,6 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
                         cores = NULL, ...) {
-  if (!is.vismodel(vismodeldata) && !is.colspace(vismodeldata)) {
-    stop('object must be a "vismodel" or "colspace" result', call. = FALSE)
-  }
 
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
