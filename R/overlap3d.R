@@ -3,7 +3,6 @@
 #' Compute colour volume overlap in 3D with alphashapes
 #'
 #' @inheritParams voloverlap
-#' @inheritParams tcsshape
 #'
 #' @return a data.frame with the following columns:
 #' - `s_in1, s_in2` the number of sampled points that fall within each of the
