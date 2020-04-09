@@ -32,3 +32,4 @@ CONDUCT.md
 ^inst/linear_visible_spectrum\.svg$
 ^vignettes/fig/workflow\.png$
 ^Dockerfile$
+^vignettes/drafts$

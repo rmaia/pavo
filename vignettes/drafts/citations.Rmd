@@ -1,0 +1,48 @@
+---
+title: "pavo's citations"
+author: "Hugo Gruson"
+date: "`r Sys.Date()`"
+output: 
+  rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{pavo's citations}
+  %\VignetteEngine{knitr::rmarkdown}
+  \usepackage[utf8]{inputenc}
+---
+
+# Introduction
+
+This vignette uses the data from [OpenCitations](https://opencitations.net/), 
+via the [citecorp R package](https://docs.ropensci.org/citecorp):
+
+```{r}
+pavo1_doi <- "10.1111/2041-210X.12069"
+pavo2_doi <- "10.1111/2041-210X.13174"
+
+library(citecorp)
+pavo_coci <- oc_coci_cites(c(pavo1_doi, pavo2_doi))
+```
+
+# Evolution of citations accross time
+
+```{r}
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+
+pavo_coci %>%
+  mutate(year = lubridate::year(as.Date(gsub("^(\\d{4})-\\d{2}(-\\d{2})?$", "\\1", creation), format = "%Y"))) %>%
+  ggplot(aes(x = year, fill = cited)) +
+  geom_dotplot() +
+  scale_y_continuous(NULL, breaks = NULL) +
+  scale_fill_viridis_d(option = "E", name = "", labels = c("pavo 1", "pavo 2")) +
+  theme_minimal()
+```
+
+# Type of work pavo is used in
+
+Let's start by looking at which journals published articles that used pavo:
+
+```{r}
+pavo_coci %<>% full_join(oc_coci_meta(.$citing), by = c("citing" = "doi"))
+```
