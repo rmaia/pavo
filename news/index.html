@@ -246,7 +246,7 @@
 <li>added k-medoids clustering as an option in <code><a href="../reference/classify.html">classify()</a></code>
 </li>
 <li>
-<code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e.Â via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
+<code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-3" class="section level2">
@@ -260,7 +260,7 @@
 <li>
 <code><a href="../reference/irrad2flux.html">irrad2flux()</a></code> and <code><a href="../reference/irrad2flux.html">flux2irrad()</a></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</li>
 <li>
-<code><a href="../reference/getimg.html">getimg()</a></code> can now import images from URLâs</li>
+<code><a href="../reference/getimg.html">getimg()</a></code> can now import images from URL’s</li>
 <li>the <code>cores</code> argument in <code><a href="../reference/getimg.html">getimg()</a></code> is deprecated, as image import is vectorised</li>
 <li>fixed a small bug in <code><a href="../reference/classify.html">classify()</a></code> when using <code>refID</code> and <code>kcols</code> for multiple images</li>
 <li>the <code>resize</code> argument in <code><a href="../reference/procimg.html">procimg()</a></code> now takes a percentage, rather than scaling factor</li>
@@ -295,7 +295,7 @@
 <li>new functions <code><a href="../reference/is.vismodel.html">is.vismodel()</a></code> and <code><a href="../reference/is.colspace.html">is.colspace()</a></code> are exported to test whether an object is of class <code>vismodel</code> or <code>colspace</code>, respectively</li>
 <li>fixed a bug where images would sometimes be wrongly detected as user-classified in <code><a href="../reference/as.rimg.html">as.rimg()</a></code>
 </li>
-<li>the UV-sensitive cone is now only always named âuâ, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
+<li>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
 <li>the <code>achro</code> argument in <code><a href="../reference/coldist.html">coldist()</a></code> has been changed for <code>achromatic</code> to better match the arguments from <code><a href="../reference/vismodel.html">vismodel()</a></code>. Older scripts that use <code>achro</code> should not be affected and still work as before.</li>
 <li>the package <code>imager</code> is no longer a dependency, and is only loaded if using some features of <code><a href="../reference/procimg.html">procimg()</a></code>.</li>
 <li>the package <code>mapproj</code> is no longer a dependency, and is only loaded if using <code><a href="../reference/projplot.html">projplot()</a></code>.</li>
@@ -392,9 +392,9 @@
 <li>
 <code><a href="../reference/as.rspec.html">as.rspec()</a></code> no longer fails with tibbles</li>
 <li>bin option of <code><a href="../reference/procspec.html">procspec()</a></code> now works for all values of bins</li>
-<li>non-relative quantum catches from dataframe object were not correctly scaled in âdiâ, âtriâ, âcategoricalâ and âcocâ colorspaces</li>
+<li>non-relative quantum catches from dataframe object were not correctly scaled in “di”, “tri”, “categorical” and “coc” colorspaces</li>
 <li>fixed a bug in <code><a href="../reference/colspace.html">colspace()</a></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
-<li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e.Â maxwell triangle)</li>
+<li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e. maxwell triangle)</li>
 </ul>
 </div>
 </div>
@@ -432,7 +432,7 @@
 <li>plot() methods for objects resulting from jnd2xyz()</li>
 <li>jndrot() produces rotations of Cartesian coordinates resulting from jnd2xyz()</li>
 <li>coldist2mat() converts coldist() result from a pairwise data.frame to a distance matrix</li>
-<li>sensdata() function for retrieving and/or visualising pavoâs in-build spectral data</li>
+<li>sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
 </ul>
 </div>
 <div id="major-changes-1" class="section level2">
@@ -443,7 +443,7 @@
 <li>tetraplot() allows forced perspective using size to denote distance</li>
 <li>voloverlap() and vol() have also been changed to work with the new tetraplot() options</li>
 <li>getspec() has been rewritten to be faster, more general, and allow parallel processing</li>
-<li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g.Â invert = TRUE)</li>
+<li>subset functions now allow more than one argument to be used, and allow further attributes to be passed onto grep (e.g. invert = TRUE)</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-8" class="section level2">
@@ -460,7 +460,7 @@
 <li>removed na.rm argument from aggspec() that was causing a bug when the error function did not have that argument. User should pass it as an argument to the function if necessary.</li>
 <li>changed default to achro=FALSE in coldist()</li>
 <li>replaced the modelled receptor sensitivities of the honeybee <em>Apis mellifera</em> with the empirical sensitivities from Peitsch et al (1992)</li>
-<li>the built-in âgreenâ background spectrum is no longer normalized</li>
+<li>the built-in ‘green’ background spectrum is no longer normalized</li>
 <li>removed wavelength limitations in the calculation of H3 from summary.rspec</li>
 <li>all visual systems (except CIE) have been normalized to have an integral of 1</li>
 </ul>
@@ -474,8 +474,8 @@
 <h2 class="hasAnchor">
 <a href="#major-changes-2" class="anchor"></a>MAJOR CHANGES</h2>
 <ul>
-<li>added the CIELch model accessed via colspace(space = âcielchâ)</li>
-<li>added the sensdata() function for retrieving and/or visualising pavoâs in-build spectral data</li>
+<li>added the CIELch model accessed via colspace(space = ‘cielch’)</li>
+<li>added the sensdata() function for retrieving and/or visualising pavo’s in-build spectral data</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-9" class="section level2">
@@ -495,8 +495,8 @@
 <h2 class="hasAnchor">
 <a href="#new-functions-2" class="anchor"></a>NEW FUNCTIONS</h2>
 <ul>
-<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = âsegmentâ. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
-<li>segplot() is a plot for Endlerâs (1990) segment analysis, and is accessed â along with all other 2d plots â via plot.colspace()</li>
+<li>segspace() replaces the deprecated segclass(), and is accessed via the colspace() argument space = ‘segment’. The results of segspace() are also now compatible with coldist() for the estimation of Euclidean colour-distances.</li>
+<li>segplot() is a plot for Endler’s (1990) segment analysis, and is accessed — along with all other 2d plots — via plot.colspace()</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-10" class="section level2">
@@ -510,7 +510,7 @@
 <li>fixed a bug in as.rspec() in which lim was not applied when interpolate = FALSE</li>
 <li>fixed bug in aggplot() which resulted in error when using lty, lwd arguments</li>
 <li>warning if ocular media is being used in both vismodel() and sensmodel()</li>
-<li>added an âallâ option to the achromatic argument in vismodel()</li>
+<li>added an ‘all’ option to the achromatic argument in vismodel()</li>
 <li>added the ability to calculate dL for cielab models in coldist()</li>
 <li>added some more informative messages and warnings</li>
 </ul>
@@ -556,8 +556,8 @@
 <li>peakshape() default wavelength limits (lim) now taken from rspec object rather than 300-700</li>
 <li>peakshape() returns warning if a spectrum contains duplicate reflectance values</li>
 <li>summary.rspec() works with single spectra</li>
-<li>aggplot() and aggspec() fixed bug on ordering of levels when they donât match the sequence in the rspec object</li>
-<li>aggplot() added logical argument âlegendâ for automatically adding a legend to the plot</li>
+<li>aggplot() and aggspec() fixed bug on ordering of levels when they don’t match the sequence in the rspec object</li>
+<li>aggplot() added logical argument “legend” for automatically adding a legend to the plot</li>
 <li>vismodel() returns error if bkg=NULL</li>
 <li>getspec() patched to stop returning warnings in Yosemite</li>
 <li>getspec() has a faster (~5-10X), but less flexible, algorithm used when all input files are from the same source.</li>
@@ -608,7 +608,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-14" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>fixes to the blue tit visual system, changed vismodel() argument to âbluetitâ</li>
+<li>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</li>
 </ul>
 </div>
 </div>
@@ -663,7 +663,7 @@
 <li>vismodel() less cryptic error messages</li>
 <li>as_rspec() fix message pertaining wavelength column</li>
 <li>getspec() now removes empty columns (generated by bad tabulation)</li>
-<li>plot.rspec() fix color labelling issue (previously, when user specified fewer colors than number of spectra, âstackâ and âoverlayâ colored spectra differently)</li>
+<li>plot.rspec() fix color labelling issue (previously, when user specified fewer colors than number of spectra, ‘stack’ and ‘overlay’ colored spectra differently)</li>
 </ul>
 </div>
 </div>
@@ -694,7 +694,7 @@
 <a href="#minor-features" class="anchor"></a>MINOR FEATURES</h2>
 <ul>
 <li>getspec() works with Avasoft 8 output</li>
-<li>aggspec() if no âbyâ argument is supplied, applies function to all spectra</li>
+<li>aggspec() if no “by” argument is supplied, applies function to all spectra</li>
 </ul>
 </div>
 <div id="bug-fixes-1" class="section level2">
@@ -735,9 +735,9 @@
 <li>sensmodel() accepts user-defined ocular media transmission</li>
 <li>voloverlap() allows greater user control of plotting options</li>
 <li>voloverlap() includes Monte Carlo option for overlap calculation</li>
-<li>as.rspec() accepts âwhichwlâ argument for user-defined wavelength column selection</li>
-<li>as.rspec() includes âinterpâ argument; updated automatic search for wavelength column</li>
-<li>aggspec() aggregates spectra by multiple vectors (e.g.Â average spectra by species and sex using by=list(species,sex) )</li>
+<li>as.rspec() accepts “whichwl” argument for user-defined wavelength column selection</li>
+<li>as.rspec() includes “interp” argument; updated automatic search for wavelength column</li>
+<li>aggspec() aggregates spectra by multiple vectors (e.g. average spectra by species and sex using by=list(species,sex) )</li>
 <li>peakshape() gives plot titles, allows ask=TRUE and mfrow</li>
 </ul>
 </div>
@@ -745,10 +745,10 @@
 <h2 class="hasAnchor">
 <a href="#bug-fixes-2" class="anchor"></a>BUG FIXES</h2>
 <ul>
-<li>explorespec() âfreeâ argument fixed</li>
+<li>explorespec() “free” argument fixed</li>
 <li>summary.rspec() S5 variable fixed; segments now divided by B1 (brightness-independent measure of saturation)</li>
 <li>summary.rspec() checks for positive values when bmaxneg is calculated, returns NA</li>
-<li>tcs() accepts âvâ cone class</li>
+<li>tcs() accepts “v” cone class</li>
 <li>aggspec() fixed matching of names</li>
 <li>procspec() works with rspec objects that include a single reflectance spectrum</li>
 <li>peakshape() minor fixes</li>
