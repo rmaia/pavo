@@ -4,12 +4,23 @@
 \alias{vol}
 \title{Plot a tetrahedral colour space}
 \usage{
-vol(tcsdata, alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE, ...)
+vol(
+  tcsdata,
+  type = c("convex", "alpha"),
+  avalue,
+  alpha = 0.2,
+  grid = TRUE,
+  fill = TRUE,
+  new = FALSE,
+  ...
+)
 }
 \arguments{
-\item{tcsdata}{(required) a data frame, possibly a result from the
-\code{\link[=colspace]{colspace()}} or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y'
-and 'z' coordinates as columns (labeled as such).}
+\item{type}{if "convex", the colour volume is plotted using a convex hull
+and if "alpha", it is plotted using alphashapes.}
+
+\item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
+to compute the alphashape.}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
 
@@ -23,10 +34,10 @@ and 'z' coordinates as columns (labeled as such).}
 \item{...}{additional graphical options. See \code{\link[=polygon]{polygon()}} and \code{\link[=tetraplot]{tetraplot()}}.}
 }
 \value{
-\code{\link[=vol]{vol()}} creates a 3D convex hull within a static tetrahedral plot.
+\code{\link[=vol]{vol()}} creates a 3D colour volume within a static tetrahedral plot.
 }
 \description{
-Produces a 3D convex hull in tetrahedral colour space when plotting a
+Produces a 3D colour volume in tetrahedral colour space when plotting a
 non-interactive tetrahedral plot.
 }
 \examples{
@@ -41,4 +52,6 @@ vol(tcs.sicalis)
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
+
+Hugo Gruson
 }

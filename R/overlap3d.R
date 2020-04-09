@@ -4,9 +4,6 @@
 #'
 #' @inheritParams voloverlap
 #' @inheritParams tcsshape
-#' @param nsamp the number of points to be sampled. Stoddard & Stevens(2011) use
-#' around 750,000 points, but more or fewer might be required depending on the
-#' degree of overlap.
 #'
 #' @return a data.frame with the following columns:
 #' - `s_in1, s_in2` the number of sampled points that fall within each of the
@@ -17,9 +14,6 @@
 #' by the number of points that fall within the smallest volume.
 #' - `pboth` the proportion of points that fall within both volumes divided by
 #' the total number of points that fall within both volumes.
-#'
-#' If the Monte Carlo solution is used, a number of points much greater than the default should be
-#' considered
 #'
 #' @examples
 #' data(sicalis)
@@ -34,12 +28,11 @@
 #'
 #' @importFrom stats runif
 #'
-#' @export
 
-overlap3d <- function(colsp1, colsp2, plot = FALSE, interactive = TRUE,
-                      col = c("blue", "red", "darkgrey"), fill = FALSE,
-                      new = TRUE, nsamp = 1000, psize = 0.001, lwd = 1,
-                      avalue, ...) {
+overlap3d <- function(colsp1, colsp2, avalue1, avalue2 , plot = FALSE, 
+                      interactive = TRUE, col = c("blue", "red", "darkgrey"),
+                      fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
+                      lwd = 1, ...) {
 
   if (!interactive) {
     warning("interactive = FALSE has not been implemented yet, falling back to",
@@ -50,8 +43,8 @@ overlap3d <- function(colsp1, colsp2, plot = FALSE, interactive = TRUE,
 
   dat2 <- colsp2[, c("x", "y", "z")]
 
-  shape1 <- alphashape3d::ashape3d(as.matrix(dat1), avalue)
-  shape2 <- alphashape3d::ashape3d(as.matrix(dat2), avalue)
+  shape1 <- alphashape3d::ashape3d(as.matrix(dat1), avalue1)
+  shape2 <- alphashape3d::ashape3d(as.matrix(dat2), avalue2)
 
   vol1 <- alphashape3d::volume_ashape3d(shape1)
   vol2 <- alphashape3d::volume_ashape3d(shape2)
@@ -106,8 +99,8 @@ overlap3d <- function(colsp1, colsp2, plot = FALSE, interactive = TRUE,
       rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
     }
 
-    tcsshape(colsp1, col = col[1], fill = FALSE, avalue = avalue)
-    tcsshape(colsp2, col = col[2], fill = FALSE, avalue = avalue)
+    tcsvol(colsp1, type = "alpha", avalue = avalue1 ,col = col[1], fill = FALSE)
+    tcsvol(colsp2, type = "alpha", avalue = avalue2, col = col[2], fill = FALSE)
 
     rgl::spheres3d(samples[which(invol1 & !invol2), ],
                    type = "s",

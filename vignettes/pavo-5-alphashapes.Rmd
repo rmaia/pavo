@@ -24,9 +24,10 @@ accurate measurement of "colourfulness" than convex hulls.
 
 # Alphashapes in chromaticity diagrams
 
-You can plot the colour volume using $\alpha$-shape with the `tetrashape()` 
-function (for non-interactive plots, `tcsshape()` otherwise), with a 
-user-defined value for $\alpha$, set by the `avalue` argument:
+You can plot the colour volume using $\alpha$-shape with the `vol()` function
+(for non-interactive plots, `tcsvol()` otherwise) by specifying 
+`type = "alpha"`. You can set the $\alpha$ parameter value via the `avalue` 
+argument:
 
 ```{r}
 library(pavo)
@@ -34,7 +35,7 @@ data(flowers)
 vis_flowers <- vismodel(flowers, visual = "avg.uv")
 tcs_flowers <- colspace(vis_flowers)
 plot(tcs_flowers)
-tetrashape(tcs_flowers, avalue = 0.5)
+vol(tcs_flowers, type = "alpha", avalue = 0.5)
 ```
 
 Now let's try to find the smallest $\alpha$ value which does not create any
@@ -100,7 +101,7 @@ the alphashape method, and the $\alpha^*$ value as parameter:
 
 ```{r}
 plot(tcs_flowers)
-tetrashape(tcs_flowers, avalue = astar)
+vol(tcs_flowers, type = "alpha", avalue = astar)
 ```
 
 # Alphashapes in perceptually uniform spaces
@@ -119,8 +120,8 @@ plot(xy_flowers)
 ```
 
 High-level functions to build the alphashape directly in `pavo` have not yet
-been implemented but you can use the `alphashape3d` directly to compute the
-alphashape, its volume and display it in a 3D interactive plot.
+been implemented but you can use the `alphashape3d` package directly to compute
+the alphashape, its volume and display it in a 3D interactive plot.
 
 ```{r}
 ashape_jnd <- ashape3d(as.matrix(xy_flowers), alpha = 10)
@@ -154,7 +155,8 @@ rgl::bg3d()
 ```
 
 ```{r, webgl=TRUE}
-overlap3d(tcs.sicalis.C, tcs.sicalis.B, avalue = 0.2, plot = TRUE)
+voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", 
+           avalue1 = 0.2, avalue2 = 0.2, plot = TRUE)
 ```
 
 <!--
@@ -211,7 +213,7 @@ allin <- vapply(isin, all, logical(1))
 astar_ind <- match(TRUE, allin)
 astar <- avalues[astar_ind]
 tetraplot(dvol)
-tetrashape(dvol, avalue = astar)
+vol(dvol, type= "alpha", avalue = astar)
 ```
 
 To prevent this, we can add an additional test that uses 
@@ -237,7 +239,7 @@ a <- avalues[max(a_ind, astar_ind)]
 
 ```{r}
 tetraplot(as.data.frame(dvol))
-tetrashape(dvol, avalue = a)
+vol(dvol, type = "alpha", avalue = a)
 ```
 
 -->

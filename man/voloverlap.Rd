@@ -7,14 +7,17 @@
 voloverlap(
   colsp1,
   colsp2,
+  type = c("convex", "alpha"),
+  avalue1,
+  avalue2,
   plot = FALSE,
   interactive = FALSE,
   col = c("blue", "red", "darkgrey"),
   fill = FALSE,
   new = TRUE,
-  montecarlo = NULL,
-  nsamp = NULL,
-  psize = NULL,
+  montecarlo,
+  nsamp = 1000,
+  psize = 0.001,
   lwd = 1,
   ...
 )
@@ -23,6 +26,12 @@ voloverlap(
 \item{colsp1, colsp2}{(required) data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)}
+
+\item{type}{if "convex", the colour volume is plotted using a convex hull
+and if "alpha", it is plotted using alphashapes.}
+
+\item{avalue1, avalue2}{if \code{type = alpha}, the alpha parameter values for
+\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}
@@ -38,11 +47,13 @@ the second volume, and the overlap.}
 \item{new}{logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 overlap are plotted over the current plot (defaults to \code{TRUE}).}
 
-\item{montecarlo}{deprecated argument}
+\item{nsamp}{if \code{type = "alpha"}, the number of points to be sampled for the
+Monte Carlo computation. Stoddard & Stevens(2011) use around 750,000 points,
+but more or fewer might be required depending on the
+degree of overlap.}
 
-\item{nsamp}{deprecated argument}
-
-\item{psize}{deprecated argument}
+\item{psize}{if \code{type = "alpha"} and \code{plot = TRUE}, sets the size to plot the points
+used in the Monte Carlo computation.}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
 
@@ -57,6 +68,15 @@ by the the two input sets of colour points. Thus, if one of the volumes is entir
 contained within the other, this overlap will be \code{vsmallest = 1}.
 \item \code{vboth} the volume of the overlap divided by the combined volume of both
 input sets of colour points.
+If \code{type = "alpha"}, If used, the output will be different:
+\item \verb{s_in1, s_in2} the number of sampled points that fall within each of the volumes
+individually.
+\item \code{s_inboth} the number of sampled points that fall within both volumes.
+\item \code{s_ineither} the number of points that fall within either of the volumes.
+\item \code{psmallest} the proportion of points that fall within both volumes divided by the
+number of points that fall within the smallest volume.
+\item \code{pboth} the proportion of points that fall within both volumes divided by the total
+number of points that fall within both volumes.
 }
 }
 \description{
@@ -82,7 +102,8 @@ tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3)) 
+
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color
