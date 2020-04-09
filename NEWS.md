@@ -24,7 +24,6 @@ from the input object.
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
-<<<<<<< HEAD
 * Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and 
 S1V in `summary.rspec()`.
 * several `plot()` functions for colspace (`triplot()`, `tcsplot()`, 
