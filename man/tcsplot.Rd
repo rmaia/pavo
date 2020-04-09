@@ -28,6 +28,8 @@ tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 
 tcsvol(
   tcsdata,
+  type = c("convex", "alpha"),
+  avalue,
   col = "black",
   alpha = 0.2,
   grid.alpha = 1,
@@ -71,6 +73,12 @@ and 'z' coordinates as columns (labeled as such).}
 visual system and illuminant used in the analysis (defaults to \code{FALSE}).
 This option currently only works when \code{qcatch = Qi}.}
 
+\item{type}{accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
+for lines from the point to the base of the tetrahedron.}
+
+\item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
+to compute the alphashape.}
+
 \item{grid.alpha}{transparency of the volume polygon grid lines}
 
 \item{grid}{if \code{TRUE}, connects the polygon outlining the volume occupied by points (defaults to \code{TRUE})}
@@ -87,7 +95,7 @@ third button: zoom).
 \code{\link[=tcspoints]{tcspoints()}} adds points to the plot. Points are currently plotted
 only as spheres to maintain export capabilities.
 
-\code{\link[=tcsvol]{tcsvol()}} creates a 3D convex hull within a \code{tcsplot} object.
+\code{\link[=tcsvol]{tcsvol()}} creates a 3D colour volume within a \code{tcsplot} object.
 }
 \description{
 Produces an interactive 3D plot of a tetrahedral colourspace using OpenGL

@@ -7,6 +7,8 @@
 overlap3d(
   colsp1,
   colsp2,
+  avalue1,
+  avalue2,
   plot = FALSE,
   interactive = TRUE,
   col = c("blue", "red", "darkgrey"),
@@ -15,7 +17,6 @@ overlap3d(
   nsamp = 1000,
   psize = 0.001,
   lwd = 1,
-  avalue,
   ...
 )
 }
@@ -27,6 +28,12 @@ values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as su
 \item{colsp2}{(required) data frame, possibly a result from the \code{\link[=colspace]{colspace()}}
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)}
+
+\item{avalue1}{if \code{type = alpha}, the alpha parameter values for
+\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
+
+\item{avalue2}{if \code{type = alpha}, the alpha parameter values for
+\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}
@@ -42,15 +49,15 @@ the second volume, and the overlap.}
 \item{new}{logical. Should a new plot window be called? If \code{FALSE}, volumes and their
 overlap are plotted over the current plot (defaults to \code{TRUE}).}
 
-\item{nsamp}{the number of points to be sampled. Stoddard & Stevens(2011) use
-around 750,000 points, but more or fewer might be required depending on the
+\item{nsamp}{if \code{type = "alpha"}, the number of points to be sampled for the
+Monte Carlo computation. Stoddard & Stevens(2011) use around 750,000 points,
+but more or fewer might be required depending on the
 degree of overlap.}
 
-\item{psize}{deprecated argument}
+\item{psize}{if \code{type = "alpha"} and \code{plot = TRUE}, sets the size to plot the points
+used in the Monte Carlo computation.}
 
 \item{lwd}{if \code{plot = TRUE}, sets the line width for volume grids.}
-
-\item{avalue}{Value of alpha parameter for the alphashape}
 
 \item{...}{additional arguments passed to the plot. See \code{\link[=vol]{vol()}}}
 }
@@ -66,9 +73,6 @@ by the number of points that fall within the smallest volume.
 \item \code{pboth} the proportion of points that fall within both volumes divided by
 the total number of points that fall within both volumes.
 }
-
-If the Monte Carlo solution is used, a number of points much greater than the default should be
-considered
 }
 \description{
 Compute colour volume overlap in 3D with alphashapes

@@ -10,6 +10,16 @@
 #' @param colsp1,colsp2 (required) data frame, possibly a result from the [colspace()]
 #' function, containing
 #' values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)
+#' @param type if "convex", the colour volume is plotted using a convex hull
+#'   and if "alpha", it is plotted using alphashapes.
+#' @param avalue1,avalue2 if `type = alpha`, the alpha parameter values for
+#' `colsp1` and `colsp2` respectively to compute the alphashapes.
+#' @param nsamp if `type = "alpha"`, the number of points to be sampled for the
+#' Monte Carlo computation. Stoddard & Stevens(2011) use around 750,000 points,
+#'  but more or fewer might be required depending on the
+#' degree of overlap.
+#' @param psize if `type = "alpha"` and `plot = TRUE`, sets the size to plot the points
+#' used in the Monte Carlo computation.
 #' @param plot logical. Should the volumes and points be plotted? (defaults to `FALSE`).
 #' This only works for tetrahedral colourspaces at the moment.
 #' @param interactive logical. If `TRUE`, uses the rgl engine for interactive plotting;
@@ -19,9 +29,6 @@
 #' @param fill logical. should the two volumes be filled in the plot? (defaults to `FALSE`)
 #' @param new logical. Should a new plot window be called? If `FALSE`, volumes and their
 #' overlap are plotted over the current plot (defaults to `TRUE`).
-#' @param montecarlo deprecated argument
-#' @param nsamp deprecated argument
-#' @param psize deprecated argument
 #' @param lwd if `plot = TRUE`, sets the line width for volume grids.
 #' @param ... additional arguments passed to the plot. See [vol()]
 #'
@@ -32,6 +39,15 @@
 #' contained within the other, this overlap will be `vsmallest = 1`.
 #' - `vboth` the volume of the overlap divided by the combined volume of both
 #' input sets of colour points.
+#' If `type = "alpha"`, If used, the output will be different:
+#' - `s_in1, s_in2` the number of sampled points that fall within each of the volumes
+#' individually.
+#' - `s_inboth` the number of sampled points that fall within both volumes.
+#' - `s_ineither` the number of points that fall within either of the volumes.
+#' - `psmallest` the proportion of points that fall within both volumes divided by the
+#'  number of points that fall within the smallest volume.
+#' - `pboth` the proportion of points that fall within both volumes divided by the total
+#'  number of points that fall within both volumes.
 
 #' @note Stoddard & Stevens (2011) originally obtained the volume overlap through Monte Carlo
 #' simulations of points within the range of the volumes, and obtaining the frequency of
@@ -51,7 +67,8 @@
 #' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B)
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3))
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3)) 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -64,85 +81,105 @@
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
-voloverlap <- function(colsp1, colsp2, plot = FALSE, interactive = FALSE,
+voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue1,
+                       avalue2, plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
-                       montecarlo = NULL, nsamp = NULL, psize = NULL,
+                       montecarlo, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
-  if (!all(missing(montecarlo), missing(nsamp), missing(psize))) {
-    warning("montecarlo, nsamp and psize arguments are deprecated and will be ignored.")
-  }
-
-  dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
-
-  dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
-
-  over <- intersectn(dat1, dat2)
-
-  vol1 <- over$ch1$vol
-  vol2 <- over$ch2$vol
-
-  overlapVol <- over$ch$vol
-
-  vsmallest <- overlapVol / min(vol1, vol2)
-
-  vboth <- overlapVol / (vol1 + vol2 - overlapVol)
-
-  res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
-
-  ##############
-  # PLOT BEGIN #
-  ##############
-  if (plot) {
-    if (ncol(dat1) < 3 || ncol(dat2) < 3) {
-      warning("plot argument only works for tetrahedral colourspaces at the moment.")
-      return(res)
-    }
-
-    if (length(col) < 3) {
-      col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
-    }
-
-    Voverlap <- over$ch$p
-
-    if (interactive) {
-      # check if rgl is installed and loaded
-      if (!requireNamespace("rgl", quietly = TRUE)) {
-        stop(dQuote("rgl"), " package needed for interactive plots. Please install it, or use interactive=FALSE.",
-          call. = FALSE
-        )
-      }
-
-      if (new) {
-        rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
-      }
-
-      tcsvol(colsp1, col = col[1], fill = fill)
-      tcsvol(colsp2, col = col[2], fill = fill)
-
-      if (!is.null(Voverlap)) {
-        colnames(Voverlap) <- c("x", "y", "z")
-        attr(Voverlap, "clrsp") <- "tcs"
-        tcsvol(Voverlap, col = col[3], fill = TRUE)
-      }
-    } else {
-      plotrange <- apply(rbind(dat1, dat2), 2, range)
-
-      vol(colsp1,
-        col = col[1], lwd = lwd, new = new, fill = fill,
-        xlim = plotrange[, "x"], ylim = plotrange[, "y"],
-        zlim = plotrange[, "z"], ...
+  
+  type <- match.arg(type)
+  
+  if (type == "alpha") {
+    
+    res <- overlap3d(colsp1, colsp2, avalue1, avalue2, plot, interactive, col, 
+                     fill, new, nsamp, psize, lwd, ...)
+    
+  } else {
+    
+    if (!all(missing(montecarlo), missing(nsamp), missing(psize))) {
+      warning(
+        'montecarlo, nsamp and psize arguments are deprecated for ',
+        'type = "convex" and will be ignored.'
       )
-      vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
-
-      if (!is.null(Voverlap)) {
-        colnames(Voverlap) <- c("x", "y", "z")
-        attr(Voverlap, "clrsp") <- "tcs"
-        vol(Voverlap, col = col[3], lwd = lwd, fill = TRUE, new = FALSE)
-      }
     }
-    ############
-    # PLOT END #
-    ############
+  
+  
+    dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
+  
+    dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
+  
+    over <- intersectn(dat1, dat2)
+  
+    vol1 <- over$ch1$vol
+    vol2 <- over$ch2$vol
+  
+    overlapVol <- over$ch$vol
+  
+    vsmallest <- overlapVol / min(vol1, vol2)
+  
+    vboth <- overlapVol / (vol1 + vol2 - overlapVol)
+  
+    res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
+  
+    ##############
+    # PLOT BEGIN #
+    ##############
+    if (plot) {
+      if (ncol(dat1) < 3 || ncol(dat2) < 3) {
+        warning("plot argument only works for tetrahedral colourspaces at the moment.")
+        return(res)
+      }
+  
+      if (length(col) < 3) {
+        col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
+      }
+  
+      Voverlap <- over$ch$p
+  
+      if (interactive) {
+        # check if rgl is installed and loaded
+        if (!requireNamespace("rgl", quietly = TRUE)) {
+          stop(dQuote("rgl"), " package needed for interactive plots. Please install it, or use interactive=FALSE.",
+            call. = FALSE
+          )
+        }
+  
+        if (!isNamespaceLoaded("rgl")) {
+          requireNamespace("rgl")
+        }
+  
+        if (new) {
+          rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
+        }
+  
+        tcsvol(colsp1, col = col[1], fill = fill)
+        tcsvol(colsp2, col = col[2], fill = fill)
+  
+        if (!is.null(Voverlap)) {
+          colnames(Voverlap) <- c("x", "y", "z")
+          attr(Voverlap, "clrsp") <- "tcs"
+          tcsvol(Voverlap, col = col[3], fill = TRUE)
+        }
+      } else {
+        plotrange <- apply(rbind(dat1, dat2), 2, range)
+  
+        vol(colsp1,
+          col = col[1], lwd = lwd, new = new, fill = fill,
+          xlim = plotrange[, "x"], ylim = plotrange[, "y"],
+          zlim = plotrange[, "z"], ...
+        )
+        vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
+  
+        if (!is.null(Voverlap)) {
+          colnames(Voverlap) <- c("x", "y", "z")
+          attr(Voverlap, "clrsp") <- "tcs"
+          vol(Voverlap, col = col[3], lwd = lwd, fill = TRUE, new = FALSE)
+        }
+      }
+      ############
+      # PLOT END #
+      ############
+    }
   }
 
   res
