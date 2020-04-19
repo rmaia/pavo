@@ -2,9 +2,11 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `teal` example dataset columns have been renamed to add an additional zero in
+front of single digit numbers, so that column names now sort in the correct
+order by default.
 * Some very small negative values in the built-in visual system data have 
-been corrected 
-
+been corrected .
 * `as.rspec()` is now more lenient for wavelength trimming when `interp = FALSE`
 and now works even if the specified `lims` do not correspond to actual wl values
 from the input object.
