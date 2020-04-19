@@ -187,20 +187,20 @@ Will use <code>by = "wl"</code> if unspecified, or automatically append <code>wl
 <span class='no'>teal1</span> <span class='kw'>&lt;-</span> <span class='no'>teal</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>3</span>:<span class='fl'>5</span>)]
 <span class='no'>teal2</span> <span class='kw'>&lt;-</span> <span class='no'>teal</span>[, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>6</span>:<span class='fl'>12</span>)]
 <span class='no'>teal.mer</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span>(<span class='no'>teal1</span>, <span class='no'>teal2</span>, <span class='kw'>by</span> <span class='kw'>=</span> <span class='st'>"wl"</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>teal.mer</span>)</div><div class='output co'>#&gt;    wl Acrecca-2 Acrecca-3 Acrecca-4 Acrecca-1 Acrecca-5 Acrecca-6 Acrecca-7
-#&gt; 1 300   18.9548   17.0896   14.7003   22.3388   11.7920    9.8451    7.7388
-#&gt; 2 301   18.4392   16.9199   13.5288   22.1828   11.9167    9.8450    7.9238
-#&gt; 3 302   19.1466   16.4382   14.2170   21.0080   11.5350    9.8310    8.4943
-#&gt; 4 303   19.0098   16.2978   13.7924   21.5870   11.9027    9.6512    7.7345
-#&gt; 5 304   18.0937   16.3787   13.2823   21.3067   11.4466    9.6831    8.1755
-#&gt; 6 305   18.0854   16.2797   13.9877   21.8222   11.7840   10.1984    8.9242
-#&gt;   Acrecca-8 Acrecca-9 Acrecca-10 Acrecca-11
-#&gt; 1    6.6097    5.7958     5.7655     5.8376
-#&gt; 2    6.6676    5.9672     5.6908     5.6719
-#&gt; 3    6.7162    5.9854     5.5914     5.6945
-#&gt; 4    7.1378    6.8542     5.8837     6.5800
-#&gt; 5    6.9856    6.0488     4.7887     5.4050
-#&gt; 6    7.6159    6.7029     6.4119     6.4612</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>teal.mer</span>)</div><div class='output co'>#&gt;    wl Acrecca-02 Acrecca-03 Acrecca-04 Acrecca-01 Acrecca-05 Acrecca-06
+#&gt; 1 300    18.9548    17.0896    14.7003    22.3388    11.7920     9.8451
+#&gt; 2 301    18.4392    16.9199    13.5288    22.1828    11.9167     9.8450
+#&gt; 3 302    19.1466    16.4382    14.2170    21.0080    11.5350     9.8310
+#&gt; 4 303    19.0098    16.2978    13.7924    21.5870    11.9027     9.6512
+#&gt; 5 304    18.0937    16.3787    13.2823    21.3067    11.4466     9.6831
+#&gt; 6 305    18.0854    16.2797    13.9877    21.8222    11.7840    10.1984
+#&gt;   Acrecca-07 Acrecca-08 Acrecca-09 Acrecca-10 Acrecca-11
+#&gt; 1     7.7388     6.6097     5.7958     5.7655     5.8376
+#&gt; 2     7.9238     6.6676     5.9672     5.6908     5.6719
+#&gt; 3     8.4943     6.7162     5.9854     5.5914     5.6945
+#&gt; 4     7.7345     7.1378     6.8542     5.8837     6.5800
+#&gt; 5     8.1755     6.9856     6.0488     4.7887     5.4050
+#&gt; 6     8.9242     7.6159     6.7029     6.4119     6.4612</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span>(<span class='kw'>mfrow</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>teal.mer</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>teal</span>)</div><div class='img'><img src='merge.rspec-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
@@ -218,7 +218,7 @@ Will use <code>by = "wl"</code> if unspecified, or automatically append <code>wl
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>

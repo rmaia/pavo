@@ -222,12 +222,12 @@ Function will return a warning if not.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>teal</span>)
 
-<span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='peakshape-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;          id      B3  H1 FWHM HWHM.l HWHM.r incl.min
-#&gt; 1 Acrecca-2 56.4446 517   71     35     36      Yes</div><div class='input'><span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='img'><img src='peakshape-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;          id     B3  H1 FWHM HWHM.l HWHM.r incl.min
-#&gt; 1 Acrecca-9 7.2747 307   NA     NA     53      Yes</div><div class='input'>
+<span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>3</span>)</div><div class='img'><img src='peakshape-1.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           id      B3  H1 FWHM HWHM.l HWHM.r incl.min
+#&gt; 1 Acrecca-02 56.4446 517   71     35     36      Yes</div><div class='input'><span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>)</div><div class='img'><img src='peakshape-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           id     B3  H1 FWHM HWHM.l HWHM.r incl.min
+#&gt; 1 Acrecca-09 7.2747 307   NA     NA     53      Yes</div><div class='input'>
 <span class='co'># Use wavelength bounds to narrow in on peak of interest</span>
-<span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>550</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Consider fixing “lim” in spectra with “incl.min” marked “No” to incorporate all minima in spectral curves</span></div><div class='img'><img src='peakshape-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;          id    B3  H1 FWHM HWHM.l HWHM.r incl.min
-#&gt; 1 Acrecca-9 7.173 468   68     38     30       No</div></pre>
+<span class='fu'>peakshape</span>(<span class='no'>teal</span>, <span class='kw'>select</span> <span class='kw'>=</span> <span class='fl'>10</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>550</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: Consider fixing “lim” in spectra with “incl.min” marked “No” to incorporate all minima in spectral curves</span></div><div class='img'><img src='peakshape-3.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           id    B3  H1 FWHM HWHM.l HWHM.r incl.min
+#&gt; 1 Acrecca-09 7.173 468   68     38     30       No</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -243,7 +243,7 @@ Function will return a warning if not.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
 </div>
 
       </footer>
