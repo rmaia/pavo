@@ -28,9 +28,11 @@ conversion from class \code{rimg}, so it's best to use early in the analysis wor
 \examples{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
+\donttest{
 # From class rimg to cimg
 papilio_cimg <- rimg2cimg(papilio)
 class(papilio_cimg)
+}
 
 # From class rimg to magick-image
 papilio_magick <- rimg2magick(papilio)
