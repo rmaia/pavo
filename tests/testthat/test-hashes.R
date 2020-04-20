@@ -117,7 +117,7 @@ test_that("processing & general", {
   teal2 <- teal[, c(1, 2, 6:12)]
   expect_known_hash(
     expect_silent(merge(teal1, teal2, by = "wl")),
-    "235f1a3015"
+    "02df3eedf3"
   )
 
   # Subset
@@ -136,7 +136,7 @@ test_that("processing & general", {
   # Summary
   expect_known_hash(
     expect_silent(summary(teal)),
-    "08ffb15d92"
+    "c64e1fd403"
   )
   expect_known_hash(
     expect_silent(summary(sicalis)),
