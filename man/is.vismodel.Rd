@@ -7,7 +7,7 @@
 is.vismodel(object)
 }
 \arguments{
-\item{object}{an R object}
+\item{object}{an \R object}
 }
 \value{
 a logical value indicating whether the object is of class \code{vismodel}.
