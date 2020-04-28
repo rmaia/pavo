@@ -75,7 +75,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     function(x) which(rspecdata2[, x] == Bmax[x])
   ) # lambda_max index
 
-  dblpeaks <- vapply(Xi, length, numeric(1))
+  dblpeaks <- lengths(Xi)
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum
     dblpeak_nms <- nms[dblpeaks > 1]
