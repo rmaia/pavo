@@ -17,10 +17,11 @@ a converted \code{rspec} object.
 }
 \description{
 Some spectrometers will give illuminant values in units of irradiance
-(\eqn{\mu Watt.cm^{-2}}), but physiological models require illuminants in units of
-photon (quantum) flux (\eqn{\mu mol.s^{-1}.m^{-2}}). The functions \code{irrad2flux}
-and \code{flux2irrad} allows for easy conversion of \code{rspec} objects
-between these units.
+(\ifelse{html}{\out{&mu;Watt.cm<sup>-2</sup>}}{\eqn{\mu Watt.cm^{-2}}}),
+but physiological models require illuminants in units of photon (quantum) flux
+(\ifelse{html}{\out{&mu;mol.s<sup>-1</sup>.m<sup>-2</sup>}}{\eqn{\mu mol.s^{-1}.m^{-2}}}).
+The functions \code{\link[=irrad2flux]{irrad2flux()}} and \code{\link[=flux2irrad]{flux2irrad()}} allows for easy conversion of
+\code{rspec} objects between these units.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

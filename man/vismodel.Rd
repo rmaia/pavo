@@ -104,9 +104,10 @@ Either a vector containing the spectral data, or one of the options:
 
 \item{scale}{a value by which the illuminant will be multiplied. Useful for when the
 illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
-and does not correspond to quantum flux units (\eqn{\mu mol.s^{-1}.m^{-2}}). Useful values
-are, for example, 500 (for dim light) and 10000 (for bright illumination). Note that if
-\code{vonkries = TRUE} this transformation has no effect.}
+and does not correspond to quantum flux units
+(\ifelse{html}{\out{&mu;mol.s<sup>-1</sup>.m<sup>-2</sup>}}{\eqn{\mu mol.s^{-1}.m^{-2}}}).
+Useful values #'  are, for example, 500 (for dim light) and 10000 (for
+bright illumination). Note that if \code{vonkries = TRUE} this transformation has no effect.}
 
 \item{relative}{should relative quantum catches be returned (i.e. is it a colour
 space model? Defaults to \code{TRUE}).}
