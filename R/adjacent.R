@@ -309,7 +309,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   namemove <- which(colnames(outdata) == "m"):which(colnames(outdata) == "cv_lum")
   outdata <- outdata[, c((seq_len(ncol(outdata)))[-namemove], namemove)]
 
-  for (i in seq_len(nrow(outdata))) rownames(outdata)[i] <- attr(classimg[[i]], "imgname")
+  rownames(outdata) <- vapply(classimg, attr, "imgname", FUN.VALUE = character(1))
 
   # Single image
   if (length(outdata) == 1) {
