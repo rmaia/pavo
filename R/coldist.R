@@ -439,7 +439,7 @@ coldist <- function(modeldata,
 
     subsamp <- unique(c(condition1, condition2))
     res <- res[subsamp, ]
-    row.names(res) <- 1:dim(res)[1]
+    row.names(res) <- NULL
   }
 
   if (exists("resref", inherits = FALSE)) {
