@@ -217,7 +217,7 @@ four sides of the plot. (Default varies depending on plot dimensionality).</p></
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional parameters to be passed to <code><a href='https://rdrr.io/r/graphics/plot.html'>plot()</a></code>, <code><a href='https://rdrr.io/r/graphics/arrows.html'>arrows()</a></code> and
+      <td><p>additional parameters to be passed to <code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>, <code><a href='https://rdrr.io/r/graphics/arrows.html'>arrows()</a></code> and
 <code><a href='https://rdrr.io/r/graphics/persp.html'>graphics::persp()</a></code> (for 3D plots).</p></td>
     </tr>
     </table>
@@ -250,7 +250,7 @@ chromaticity diagrams. Behavioral Ecology, 23, 723-728.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
 <span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
 <span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='no'>propxyz</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span>(<span class='no'>cd.flowers</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.html'>plot</a></span>(<span class='no'>propxyz</span>)</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>propxyz</span>)</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
