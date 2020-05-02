@@ -3,6 +3,7 @@ title: "Colour volume estimation"
 author: "Hugo Gruson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
+bibliography: main.bib
 vignette: >
   %\VignetteIndexEntry{Colour volume estimation}
   %\VignetteEngine{knitr::rmarkdown}
@@ -20,7 +21,8 @@ knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 
 Alphashapes are a new tool available in `pavo` to estimated colour volumes, 
 while allowing the presence of voids and pockets, which may lead to a more
-accurate measurement of "colourfulness" than convex hulls.
+accurate measurement of "colourfulness" than convex hulls. For more information
+on the theoretical background, please report to the related article [@Gruson2020]
 
 # Alphashapes in chromaticity diagrams
 
