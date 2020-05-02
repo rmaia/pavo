@@ -50,3 +50,15 @@ test_that("Sensmodel", {
   expect_error(sensmodel(c(300, 400, 500), Bmid = c(350, 450, 550)), "provided together")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), Bmid = c(350, 450, 550), oiltype = "t"), "only 2")
 })
+
+test_that("sensdata()", {
+  
+  vis_all <- sensdata(visual = "all", achromatic = "all",
+                      illum = "all", trans = "all",
+                      bkg = "all")
+  
+  # No negative values, no NA
+  expect_false(any(vis_all < 0))
+  expect_false(anyNA(vis_all))
+  
+})
