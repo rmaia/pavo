@@ -27,6 +27,10 @@
 #'
 #' @importFrom stats runif
 #'
+#' @references 
+#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using 
+#' \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha}{alpha}}‐shapes. Methods in Ecology
+#'  and Evolution, early view \doi{10.1111/2041-210X.13398}
 
 overlap3d <- function(colsp1, colsp2, avalue1, avalue2 , plot = FALSE, 
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
