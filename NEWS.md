@@ -6,7 +6,9 @@
   hulls. The functions `vol()`, `tcsvol()` and `voloverlap()` gain a new 
   argument `type = c("convex", "alpha")` to decide how you want to compute the
   colour volume. Please refer to the vignette `vignette("pavo-5-alphashapes", 
-  package = "pavo")` for more information.
+  package = "pavo")` for more information. As a result, the argument order
+  in these 3 function has changed. Check the documentation to update your
+  scripts accordingly.
 
 ## MINOR FEATURES AND BUG FIXES
 
