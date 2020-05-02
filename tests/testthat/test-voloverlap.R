@@ -6,16 +6,16 @@ test_that("Overlap", {
   tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
   
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B)), 5), 0.19728)
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C)), 7), 9.9e-06)
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B)[1:2]), 5), 1e-05)
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 5), 0.19728)
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 7), 9.9e-06)
+  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 5), 1e-05)
 })
 
 test_that("tcs", {
   data(sicalis)
 
   tcs_sicalis <- colspace(vismodel(sicalis))
-  vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis)
+  vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis, type = "convex")
 
   expect_length(vol_sicalis, 5)
   expect_equal(vol_sicalis$vboth, 1)
@@ -26,7 +26,7 @@ test_that("tri", {
   data(sicalis)
 
   tri_sicalis <- colspace(vismodel(sicalis, visual = "ctenophorus"))
-  vol_sicalis <- voloverlap(tri_sicalis, tri_sicalis)
+  vol_sicalis <- voloverlap(tri_sicalis, tri_sicalis, type = "convex")
 
   expect_length(vol_sicalis, 5)
   expect_equal(vol_sicalis$overlapvol, 0.00288459, tolerance = 1e-6)
@@ -52,7 +52,7 @@ test_that("Dataframe", {
   colnames(hrep) <- c("x", "y", "z")
   colnames(qux) <- c("x", "y", "z")
 
-  vol <- voloverlap(hrep, qux)
+  vol <- voloverlap(hrep, qux, type = "convex")
 
   expect_length(vol, 5)
   expect_equal(vol$vol1, 2.5 / 3)
@@ -77,12 +77,13 @@ test_that("Symmetric", {
   colnames(hrep) <- c("x", "y", "z")
   colnames(qux) <- c("x", "y", "z")
 
-  vol_hq <- voloverlap(hrep, qux)
-  vol_qh <- voloverlap(qux, hrep)
+  vol_hq <- voloverlap(hrep, qux, type = "convex")
+  vol_qh <- voloverlap(qux, hrep, type = "convex")
 
   expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
   expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
   expect_equal(vol_hq$vboth, vol_hq$vboth)
+
 })
 
 test_that("Plane", {
@@ -93,5 +94,5 @@ test_that("Plane", {
 
   plane_sicalis <- tcs_sicalis[1:3, ]
 
-  expect_error(suppressWarnings(voloverlap(plane_sicalis, plane_sicalis), "error code 1"))
+  expect_error(suppressWarnings(voloverlap(plane_sicalis, plane_sicalis, type = "convex"), "error code 1"))
 })
