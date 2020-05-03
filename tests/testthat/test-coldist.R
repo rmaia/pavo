@@ -66,7 +66,7 @@ test_that("Options", {
 
   expect_length(coldist(vismodel(sicalis, achromatic = "bt.dc", qcatch = "fi", illum = 1000, relative = FALSE),
     noise = "quantum",
-    achro = TRUE
+    achromatic = TRUE
   ), 4)
 })
 
@@ -89,17 +89,15 @@ test_that("jnd transform", {
 })
 
 test_that("Output", {
-  data(flowers)
-
   # Maximum possible unweighted Euclidean distances
   di <- data.frame(s = c(0, 1), l = c(1, 0))
-  expect_equal(coldist(colspace(di, space = "di"))["dS"], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  expect_equal(coldist(colspace(di, space = "di"))[["dS"]], (1 / sqrt(2)) * 2)
 
   tri <- data.frame(s = c(0, 0), m = c(0, 1), l = c(1, 0))
-  expect_equal(coldist(colspace(tri, space = "tri"))["dS"], (1 / sqrt(2)) * 2, check.attributes = FALSE)
+  expect_equal(coldist(colspace(tri, space = "tri"))[["dS"]], (1 / sqrt(2)) * 2)
 
   tetra <- data.frame(u = c(0, 1), s = c(0, 0), m = c(0, 0), l = c(1, 0))
-  expect_equal(coldist(colspace(tetra, space = "tcs"))["dS"], (sqrt(3) / (2 * sqrt(2))) * 2, check.attributes = FALSE)
+  expect_equal(coldist(colspace(tetra, space = "tcs"))[["dS"]], (sqrt(3) / (2 * sqrt(2))) * 2)
 })
 
 test_that("bootcoldist", {

@@ -29,7 +29,7 @@ test_that("tri", {
   vol_sicalis <- voloverlap(tri_sicalis, tri_sicalis)
 
   expect_length(vol_sicalis, 5)
-  expect_equal(vol_sicalis$overlapvol, 0.00288459)
+  expect_equal(vol_sicalis$overlapvol, 0.00288459, tolerance = 1e-6)
 })
 
 test_that("Dataframe", {
