@@ -15,7 +15,6 @@ voloverlap(
   col = c("blue", "red", "darkgrey"),
   fill = FALSE,
   new = TRUE,
-  montecarlo,
   nsamp = 1000,
   psize = 0.001,
   lwd = 1,

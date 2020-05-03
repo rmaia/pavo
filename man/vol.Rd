@@ -16,6 +16,10 @@ vol(
 )
 }
 \arguments{
+\item{tcsdata}{(required) a data frame, possibly a result from the
+\code{\link[=colspace]{colspace()}} or \code{\link[=tcspace]{tcspace()}} function, containing values for the 'x', 'y'
+and 'z' coordinates as columns (labeled as such).}
+
 \item{type}{if "convex", the colour volume is plotted using a convex hull
 and if "alpha", it is plotted using alphashapes.}
 
