@@ -86,8 +86,8 @@
 
 voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue1,
                        avalue2, plot = FALSE, interactive = FALSE,
-                       col = c("blue", "red", "darkgrey"), fill = FALSE, new = TRUE,
-                       montecarlo, nsamp = 1000, psize = 0.001,
+                       col = c("blue", "red", "darkgrey"), fill = FALSE,
+                       new = TRUE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
   
   type <- match.arg(type)
@@ -99,10 +99,10 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue1,
     
   } else {
     
-    if (!all(missing(montecarlo), missing(nsamp), missing(psize))) {
+    if (!all(missing(nsamp), missing(psize))) {
       warning(
-        'montecarlo, nsamp and psize arguments are deprecated for ',
-        'type = "convex" and will be ignored.'
+        'nsamp and psize arguments are deprecated for type = "convex" and will',
+        ' be ignored.', call.=FALSE
       )
     }
   

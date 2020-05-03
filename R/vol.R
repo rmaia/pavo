@@ -3,8 +3,10 @@
 #' Produces a 3D colour volume in tetrahedral colour space when plotting a
 #' non-interactive tetrahedral plot.
 #'
-#' @inheritParams tcsplot
 #' @inheritParams voloverlap
+#' @param tcsdata (required) a data frame, possibly a result from the
+#'   [colspace()] or [tcspace()] function, containing values for the 'x', 'y'
+#'   and 'z' coordinates as columns (labeled as such).
 #' @param avalue if `type = "alpha"`, which alpha parameter value should be used
 #'   to compute the alphashape.
 #' @param alpha transparency of volume (if `fill = TRUE`).

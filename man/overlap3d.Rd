@@ -82,8 +82,8 @@ data(sicalis)
 tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
-overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue = 1)
 \donttest{
+overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue = 1)
 overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, avalue = 0.1)
 overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), avalue = 0.1)
 }
