@@ -12,8 +12,9 @@
 #' values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)
 #' @param type if "convex", the colour volume is plotted using a convex hull
 #'   and if "alpha", it is plotted using alphashapes.
-#' @param avalue1,avalue2 if `type = alpha`, the alpha parameter values for
-#' `colsp1` and `colsp2` respectively to compute the alphashapes.
+#' @param avalue if `type = alpha`, the alpha parameter values for `colsp1` and
+#' `colsp2` respectively to compute the alphashapes. Can be a numeric of length
+#' one if the same value is used in both cases.
 #' @param nsamp if `type = "alpha"`, the number of points to be sampled for the
 #' Monte Carlo computation. Stoddard & Stevens(2011) use around 750,000 points,
 #'  but more or fewer might be required depending on the
@@ -84,8 +85,8 @@
 #'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in 
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
-voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue1,
-                       avalue2, plot = FALSE, interactive = FALSE,
+voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
+                       plot = FALSE, interactive = FALSE,
                        col = c("blue", "red", "darkgrey"), fill = FALSE,
                        new = TRUE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
@@ -94,7 +95,7 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue1,
   
   if (type == "alpha") {
     
-    res <- overlap3d(colsp1, colsp2, avalue1, avalue2, plot, interactive, col, 
+    res <- overlap3d(colsp1, colsp2, avalue, plot, interactive, col, 
                      fill, new, nsamp, psize, lwd, ...)
     
   } else {
