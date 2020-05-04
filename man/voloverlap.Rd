@@ -8,8 +8,7 @@ voloverlap(
   colsp1,
   colsp2,
   type = c("convex", "alpha"),
-  avalue1,
-  avalue2,
+  avalue,
   plot = FALSE,
   interactive = FALSE,
   col = c("blue", "red", "darkgrey"),
@@ -29,8 +28,9 @@ values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as su
 \item{type}{if "convex", the colour volume is plotted using a convex hull
 and if "alpha", it is plotted using alphashapes.}
 
-\item{avalue1, avalue2}{if \code{type = alpha}, the alpha parameter values for
-\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
+\item{avalue}{if \code{type = alpha}, the alpha parameter values for \code{colsp1} and
+\code{colsp2} respectively to compute the alphashapes. Can be a numeric of length
+one if the same value is used in both cases.}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}

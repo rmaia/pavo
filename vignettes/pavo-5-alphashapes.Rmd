@@ -158,7 +158,7 @@ rgl::bg3d()
 
 ```{r, webgl=TRUE}
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", 
-           avalue1 = 0.2, avalue2 = 0.2, plot = TRUE)
+           avalue = 0.2, plot = TRUE)
 ```
 
 <!--

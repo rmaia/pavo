@@ -20,9 +20,9 @@
 #' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 #' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 #' \donttest{
-#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue1 = 1, avalue2 = 1)
-#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, avalue1 = 0.1, avalue2 = 0.1)
-#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), avalue1 = 0.1, avalue2 = 0.1)
+#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue = 1)
+#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, avalue = c(0.1, 0.12))
+#' pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), avalue = 0.1)
 #' }
 #'
 #' @importFrom stats runif
@@ -32,7 +32,7 @@
 #'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in 
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
-overlap3d <- function(colsp1, colsp2, avalue1, avalue2 , plot = FALSE, 
+overlap3d <- function(colsp1, colsp2, avalue , plot = FALSE, 
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
                       fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
                       lwd = 1, ...) {
@@ -40,6 +40,15 @@ overlap3d <- function(colsp1, colsp2, avalue1, avalue2 , plot = FALSE,
   if (!interactive) {
     warning("interactive = FALSE has not been implemented yet, falling back to",
             " interactive plot.")
+  }
+  
+  if (length(avalue) == 1) {
+    avalue1 <- avalue2 <- avalue
+  } else if (length(avalue) == 2) {
+    avalue1 <- avalue[[1]]
+    avalue2 <- avalue[[2]]
+  } else {
+    stop("avalue must be a numeric of length one or two.", call. = FALSE)
   }
 
   dat1 <- colsp1[, c("x", "y", "z")]

@@ -7,8 +7,7 @@
 overlap3d(
   colsp1,
   colsp2,
-  avalue1,
-  avalue2,
+  avalue,
   plot = FALSE,
   interactive = TRUE,
   col = c("blue", "red", "darkgrey"),
@@ -29,11 +28,9 @@ values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as su
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)}
 
-\item{avalue1}{if \code{type = alpha}, the alpha parameter values for
-\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
-
-\item{avalue2}{if \code{type = alpha}, the alpha parameter values for
-\code{colsp1} and \code{colsp2} respectively to compute the alphashapes.}
+\item{avalue}{if \code{type = alpha}, the alpha parameter values for \code{colsp1} and
+\code{colsp2} respectively to compute the alphashapes. Can be a numeric of length
+one if the same value is used in both cases.}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}
@@ -83,9 +80,9 @@ tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 \donttest{
-pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue1 = 1, avalue2 = 1)
-pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, avalue1 = 0.1, avalue2 = 0.1)
-pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), avalue1 = 0.1, avalue2 = 0.1)
+pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.B, avalue = 1)
+pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, avalue = c(0.1, 0.12))
+pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), avalue = 0.1)
 }
 
 }
