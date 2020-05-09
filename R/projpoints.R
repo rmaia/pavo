@@ -4,6 +4,8 @@
 #'
 #' @return [projpoints()] creates points in a projection color space plot
 #' produced by [projplot()].
+#' 
+#' @importFrom graphics points
 #'
 #' @rdname projplot
 #'

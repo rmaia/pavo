@@ -6,6 +6,7 @@
 # SUMMARY VARIABLES #
 #####################
 
+#' @importFrom utils combn
 huedisp <- function(tcsres) {
   if (nrow(tcsres) == 1) {
     return(NA)
@@ -23,6 +24,7 @@ huedisp <- function(tcsres) {
 
 
 #' @importFrom geometry convhulln
+#' @importFrom stats dist var
 tcssum <- function(tcsres) {
   # centroid
   centroid <- colMeans(tcsres[c("u", "s", "m", "l")])

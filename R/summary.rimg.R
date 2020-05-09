@@ -15,7 +15,7 @@
 #'
 #' @export
 #'
-#' @importFrom graphics image
+#' @importFrom graphics image par
 #' @importFrom grDevices rgb
 #'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}

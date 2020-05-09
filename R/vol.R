@@ -27,6 +27,7 @@
 #' vol(tcs.sicalis)
 #'
 #' @importFrom geometry convhulln
+#' @importFrom graphics par polygon
 #' @importFrom grDevices trans3d adjustcolor
 #'
 

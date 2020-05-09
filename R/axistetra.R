@@ -20,6 +20,9 @@
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
+#' @importFrom graphics arrows par
+#' @importFrom grDevices trans3d
+#' 
 #' @export
 #'
 #' @examples

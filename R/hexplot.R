@@ -22,6 +22,8 @@
 #' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' plot(hex.flowers)
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @importFrom graphics par points polygon segments text
 #'
 #' @export
 #'

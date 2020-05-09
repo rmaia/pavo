@@ -18,6 +18,7 @@
 #'
 #' @export
 #'
+#' @importFrom graphics legend lines mtext par
 #' @importFrom grDevices n2mfrow
 #'
 #' @examples

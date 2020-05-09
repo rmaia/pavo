@@ -43,6 +43,7 @@
 #'
 #' @keywords internal
 #'
+#' @importFrom graphics par points polygon
 #' @importFrom grDevices trans3d
 #' @importFrom plot3D perspbox
 #' @importFrom magick image_read

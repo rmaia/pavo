@@ -37,6 +37,10 @@
 #' @seealso [spec2rgb()], [image()], [plot()]
 #'
 #' @importFrom magick image_read
+#' @importFrom graphics axis image lines
+#' @importFrom grDevices colorRampPalette
+#' @importFrom stats approx
+#' @importFrom utils tail
 
 # TODO: add argument for padding region between x in stack plot
 

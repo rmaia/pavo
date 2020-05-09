@@ -79,6 +79,9 @@
 #'   noise-weighted Euclidean distances for `vismodel` objects.
 #'
 #' @export
+#' 
+#' @importFrom stats dist setNames
+#' @importFrom utils combn
 #'
 #' @examples
 #' \dontrun{

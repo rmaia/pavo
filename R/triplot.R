@@ -28,6 +28,8 @@
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
 #' plot(tri.flowers)
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @importFrom graphics par points polygon
 #'
 #' @export
 #'

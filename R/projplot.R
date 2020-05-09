@@ -11,6 +11,8 @@
 #' @note [projplot()] uses the Mollweide projection, and not the Robinson projection, which
 #' has been used in the past. Among other advantages, the Mollweide projection preserves area
 #' relationships within latitudes without distortion.
+#' 
+#' @importFrom graphics par
 #'
 #' @export
 #'

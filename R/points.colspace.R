@@ -11,6 +11,7 @@
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
+#' @importFrom graphics points
 #' @importFrom grDevices trans3d
 #'
 #' @seealso [plot.colspace()]

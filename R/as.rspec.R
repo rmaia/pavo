@@ -20,6 +20,8 @@
 #'   range of input data. Defaults to `TRUE`.
 #'
 #' @return an object of class `rspec` for use in further `pavo` functions
+#' 
+#' @importFrom stats approx cor
 #'
 #' @export as.rspec is.rspec
 #'

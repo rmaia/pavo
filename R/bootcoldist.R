@@ -31,7 +31,7 @@
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
-#' @importFrom stats aggregate
+#' @importFrom stats aggregate setNames
 #'
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}

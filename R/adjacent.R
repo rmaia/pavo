@@ -99,7 +99,7 @@
 #'
 #' @seealso [classify()], [summary.rimg()], [procimg()]
 #'
-#' @importFrom utils object.size
+#' @importFrom utils head object.size tail
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
 #'

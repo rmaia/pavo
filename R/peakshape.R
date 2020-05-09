@@ -22,6 +22,8 @@
 #' Function will return a warning if not.
 #'
 #' @seealso [procspec()]
+#' 
+#' @importFrom graphics abline par
 #'
 #' @export
 #'

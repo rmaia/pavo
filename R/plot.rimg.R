@@ -12,6 +12,9 @@
 #' @param ... additional graphical parameters. Also see [par()].
 #'
 #' @return an image plot.
+#' 
+#' @importFrom graphics axis box title
+#' @importFrom stats setNames
 #'
 #' @export
 #'

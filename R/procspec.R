@@ -25,6 +25,8 @@
 #' @param bins sets the number of equally sized wavelength bins for `opt = "bin"`.
 #'
 #' @return A data frame of class `rspec` with the processed data.
+#' 
+#' @importFrom stats loess.smooth median
 #'
 #' @export
 #'

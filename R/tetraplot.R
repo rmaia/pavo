@@ -49,9 +49,10 @@
 #'
 #' @keywords internal
 #'
-#' @importFrom grDevices trans3d dev.off pdf
-#' @importFrom graphics grconvertX grconvertY
+#' @importFrom graphics grconvertX grconvertY lines par points
 #' @importFrom plot3D perspbox
+#' @importFrom stats setNames
+#' @importFrom utils combn
 #'
 #' @references Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
 #'   color in a tetrahedral color space: A phylogenetic analysis of new world

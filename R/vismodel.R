@@ -80,6 +80,8 @@
 #' Built-in `visual`, `achromatic`, `illum`, `bkg` and `trans` are only defined
 #' on the 300 to 700nm wavelength range. If you wish to work outside this range,
 #' you will need to provide your own data.
+#' 
+#' @importFrom stats quantile
 #'
 #' @export
 #'

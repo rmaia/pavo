@@ -16,6 +16,8 @@
 #' coc.flowers <- colspace(vis.flowers, space = "coc")
 #' plot(coc.flowers)
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @importFrom graphics axis par points
 #'
 #' @export
 #'

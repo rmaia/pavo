@@ -38,7 +38,8 @@
 #'
 #' @export
 #'
-#' @importFrom graphics plot.default arrows
+#' @importFrom graphics plot.default par plot.default points arrows
+#' @importFrom grDevices trans3d
 #'
 #' @keywords internal
 #'

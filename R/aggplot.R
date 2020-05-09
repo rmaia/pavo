@@ -27,7 +27,9 @@
 #'
 #' @export
 #'
+#' @importFrom graphics legend lines par plot.default polygon
 #' @importFrom grDevices adjustcolor
+#' @importFrom stats sd
 #'
 #' @examples
 #'
