@@ -249,7 +249,13 @@ doi: <a href='https://doi.org/10.21105/joss.01857'>10.21105/joss.01857</a>
 and import of spectral metadata.</p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='no'>rspecdata</span> <span class='kw'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"ttt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt; <span class='warning'>Warning: No files found. Try a different value for argument "ext".</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>rspecdata</span>)</div><div class='output co'>#&gt; NULL</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='no'>rspecdata</span> <span class='kw'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"lightr"</span>), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"ttt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>rspecdata</span>)</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long
+#&gt; 1 400         4.0899            5.639232
+#&gt; 2 401         3.9514            6.342615
+#&gt; 3 402         4.1269            6.147300
+#&gt; 4 403         4.2617            6.010692
+#&gt; 5 404         4.1683            6.333537
+#&gt; 6 405         4.0871            6.490569</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
