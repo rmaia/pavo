@@ -26,15 +26,17 @@ images are in a list, they will be stepped through
 one by one.
 }
 \examples{
-\dontrun{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 plot(papilio)
+\donttest{
 papilio_class <- classify(papilio, kcols = 4)
 plot(papilio_class)
+}
 
 # Multiple images
 snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 plot(snakes)
+\donttest{
 snakes_class <- classify(snakes, kcols = 3)
 plot(snakes_class)
 }

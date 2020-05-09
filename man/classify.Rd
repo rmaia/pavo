@@ -82,7 +82,10 @@ papilio_class <- classify(papilio, kcols = 4)
 
 # Multiple images, with interactive classification and a reference image
 snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-# snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
+\dontrun{
+snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
+}
+
 }
 \seealso{
 \link[stats:kmeans]{stats::kmeans}

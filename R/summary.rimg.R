@@ -21,7 +21,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #' papilio_class <- classify(papilio, kcols = 4)
 #' summary(papilio_class)

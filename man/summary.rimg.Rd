@@ -27,7 +27,7 @@ or a plot of both the image and specified colours (when \code{plot = TRUE}).
 Returns the attributes of, and optionally plots, an image.
 }
 \examples{
-\dontrun{
+\donttest{
 papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 summary(papilio_class)
