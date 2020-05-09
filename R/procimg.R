@@ -32,7 +32,7 @@
 #' `pavo` functions.
 #'
 #' @importFrom magick image_rotate image_resize
-#' @importFrom grDevices dev.new
+#' @importFrom grDevices dev.new dev.off
 #' @importFrom graphics lines
 #'
 #' @export

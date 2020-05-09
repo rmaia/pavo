@@ -39,7 +39,7 @@
 #'
 #' @importFrom stats kmeans
 #' @importFrom utils object.size
-#' @importFrom grDevices dev.new
+#' @importFrom grDevices dev.new dev.off
 #'
 #' @note Since the `kmeans` process draws on random numbers to find initial
 #' cluster centres when `interactive = FALSE`, use [set.seed()] if reproducible
