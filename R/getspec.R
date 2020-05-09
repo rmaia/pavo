@@ -22,7 +22,7 @@
 #' and import of spectral metadata.
 #'
 #' @examples
-#' rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))
+#' rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 #' head(rspecdata)
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}

@@ -64,7 +64,7 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 (progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
-rspecdata <- getspec(system.file("testdata", package = "pavo"), ext = "ttt", lim = c(400, 700))
+rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 head(rspecdata)
 
 }
