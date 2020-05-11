@@ -41,6 +41,6 @@ test_that("subset.colspace", {
   tcs_sicalis_T <- subset(tcs_sicalis, "T")
 
   expect_equal(dim(tcs_sicalis_T), c(7, 17))
-  expect_is(tcs_sicalis_T, "colspace")
+  expect_s3_class(tcs_sicalis_T, "colspace")
 
 })

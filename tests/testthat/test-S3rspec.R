@@ -114,7 +114,7 @@ test_that("subset.rspec", {
   sicalis_T <- subset(sicalis, "T")
 
   expect_equal(dim(sicalis_T), c(401, 8))
-  expect_is(sicalis_T, "rspec")
+  expect_s3_class(sicalis_T, "rspec")
 
   expect_warning(subset(sicalis, "Z"), "Subset condition not found")
 
@@ -131,7 +131,7 @@ test_that("merge.rspec", {
 
   sicalis_merged <- merge(sicalis_T, sicalis_C)
 
-  expect_is(sicalis_merged, "rspec")
+  expect_s3_class(sicalis_merged, "rspec")
   expect_mapequal(sicalis_TC, sicalis_merged)
 
   expect_error(merge(sicalis_T, as.data.frame(sicalis_C)),
