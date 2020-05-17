@@ -9,6 +9,13 @@ test_that("Overlap", {
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 0.1972758)
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 9.922872e-06)
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 1.146523e-05)
+  
+  overlap_alpha <- expect_silent(
+    voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5)
+  )
+  
+  expect_equal(overlap_alpha[[1]], 5.183721e-06)
+  expect_equal(overlap_alpha[[2]], 6.231493e-06)
 })
 
 test_that("tcs", {
