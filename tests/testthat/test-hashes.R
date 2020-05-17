@@ -94,6 +94,33 @@ test_that("colspace", {
 
 })
 
+test_that("voloverlap()", {
+  skip_on_cran()
+  
+  data(sicalis)
+  tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
+  tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
+  tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
+  
+  expect_equal(
+    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex"), digits = 4),
+    "3717422024683f1e3e1bd8dbfe832b177147afce"
+  )
+  
+  expect_equal(
+    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"), digits = 4),
+    "69b323778e83f2e43a91d60326f1e726eb2cd0e4"
+  )
+  voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000)
+  
+  set.seed(20200517)
+  expect_equal(
+    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
+    "6a6630ac178a1e0b5355d052863116605e2cfbfd"
+  )
+  
+})
+
 test_that("processing & general", {
   skip_on_cran()
 
