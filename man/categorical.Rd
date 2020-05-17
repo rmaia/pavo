@@ -18,7 +18,7 @@ Object of class \code{colspace} consisting of the following columns:
 calculate the remaining variables.
 \item \verb{x, y}: cartesian coordinates in the categorical colour space.
 \item \code{r.vec}: the r vector (saturation, distance from the center).
-\item \code{h.theta}: angle theta (in radians), a continuous measure of the stimulus hue.
+\item \code{h.theta}: angle theta (in radians), a continuous measure of stimulus hue.
 \item \code{category}: fly-colour category. One of \verb{p-y-}, \verb{p-y+}, \verb{p+y-}, \verb{p+y+}.
 }
 }

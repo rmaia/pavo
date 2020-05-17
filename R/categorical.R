@@ -11,7 +11,7 @@
 #'  calculate the remaining variables.
 #' - `x, y`: cartesian coordinates in the categorical colour space.
 #' - `r.vec`: the r vector (saturation, distance from the center).
-#' - `h.theta`: angle theta (in radians), a continuous measure of the stimulus hue.
+#' - `h.theta`: angle theta (in radians), a continuous measure of stimulus hue.
 #' - `category`: fly-colour category. One of `p-y-`, `p-y+`, `p+y-`, `p+y+`.
 #'
 #' @examples
