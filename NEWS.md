@@ -2,6 +2,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* Added a continuous measure of hue to the output of the categorical model of Troje (1993)
 * `teal` example dataset columns have been renamed to add an additional zero in
 front of single digit numbers, so that column names now sort in the correct
 order by default.

@@ -1,16 +1,17 @@
 #' Categorical fly-visual model
 #'
-#' Applies the fly categorical colour vision model of Troje (1993)
+#' Applies the categorical colour vision model of Troje (1993)
 #'
 #' @param vismodeldata (required) quantum catch color data. Can be either the result
 #'  from [vismodel()] or independently calculated data (in the form of a data frame
-#'  with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipteran viewer).
+#'  with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic viewer).
 #'
 #' @return Object of class `colspace` consisting of the following columns:
 #' - `R7p, R7y, R8p, R8y`: the quantum catch data used to
 #'  calculate the remaining variables.
 #' - `x, y`: cartesian coordinates in the categorical colour space.
 #' - `r.vec`: the r vector (saturation, distance from the center).
+#' - `h.theta`: angle theta (in radians), a continuous measure of the stimulus hue.
 #' - `category`: fly-colour category. One of `p-y-`, `p-y+`, `p+y-`, `p+y+`.
 #'
 #' @examples
@@ -125,6 +126,7 @@ categorical <- function(vismodeldata) {
 
   res$category <- vapply(seq_len(nrow(res)), function(x) colcat(res[x, ]), character(1))
   res$r.vec <- sqrt(res$x^2 + res$y^2)
+  res$h.theta <- atan2(res$y, res$x)
 
   class(res) <- c("colspace", "data.frame")
 
