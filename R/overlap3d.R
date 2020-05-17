@@ -36,11 +36,6 @@ overlap3d <- function(colsp1, colsp2, avalue , plot = FALSE,
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
                       fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
                       lwd = 1, ...) {
-
-  if (!interactive) {
-    warning("interactive = FALSE has not been implemented yet, falling back to",
-            " interactive plot.")
-  }
   
   if (length(avalue) == 1) {
     avalue1 <- avalue2 <- avalue
@@ -93,6 +88,10 @@ overlap3d <- function(colsp1, colsp2, avalue , plot = FALSE,
   # PLOT BEGIN#
   ############
   if (plot) {
+    if (!interactive) {
+      warning("interactive = FALSE has not been implemented yet, falling back to",
+              " interactive plot.")
+    }
     if (length(col) < 3) {
       col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
     }
