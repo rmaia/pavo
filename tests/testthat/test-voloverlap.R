@@ -5,10 +5,10 @@ test_that("Overlap", {
   tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
   tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
-  
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 5), 0.19728)
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 7), 9.9e-06)
-  expect_equivalent(round(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 5), 1e-05)
+
+  expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 0.1972758)
+  expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 9.922872e-06)
+  expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 1.146523e-05)
 })
 
 test_that("tcs", {
