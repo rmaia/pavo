@@ -116,7 +116,7 @@ test_that("voloverlap()", {
   set.seed(20200517)
   expect_equal(
     digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
-    "6a6630ac178a1e0b5355d052863116605e2cfbfd"
+    "7932522b35c2c59365fe7c342f367f8ec35f601a"
   )
   
 })
