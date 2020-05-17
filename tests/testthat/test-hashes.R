@@ -59,7 +59,7 @@ test_that("colspace", {
   ) # tcs
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4),
-    "ac596c0a5d2d6e5a4a243ce74fd7b33ec389f3f9"
+    "b20853b3e52a60f2dd17b418a48b681d7f49e7d1"
   ) # categorical
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4),
