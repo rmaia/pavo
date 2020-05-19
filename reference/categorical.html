@@ -48,7 +48,7 @@
   
 
 <meta property="og:title" content="Categorical fly-visual model — categorical" />
-<meta property="og:description" content="Applies the fly categorical colour vision model of Troje (1993)" />
+<meta property="og:description" content="Applies the categorical colour vision model of Troje (1993)" />
 
 
 
@@ -80,7 +80,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.5.0</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Applies the fly categorical colour vision model of Troje (1993)</p>
+    <p>Applies the categorical colour vision model of Troje (1993)</p>
     </div>
 
     <pre class="usage"><span class='fu'>categorical</span>(<span class='no'>vismodeldata</span>)</pre>
@@ -164,7 +164,7 @@
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
 from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
-with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipteran viewer).</p></td>
+with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic viewer).</p></td>
     </tr>
     </table>
 
@@ -175,6 +175,7 @@ with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic dipter
 calculate the remaining variables.</p></li>
 <li><p><code>x, y</code>: cartesian coordinates in the categorical colour space.</p></li>
 <li><p><code>r.vec</code>: the r vector (saturation, distance from the center).</p></li>
+<li><p><code>h.theta</code>: angle theta (in radians), a continuous measure of stimulus hue.</p></li>
 <li><p><code>category</code>: fly-colour category. One of <code>p-y-</code>, <code>p-y+</code>, <code>p+y-</code>, <code>p+y+</code>.</p></li>
 </ul>
 

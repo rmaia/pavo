@@ -82,7 +82,7 @@ contains a suite of useful image-processing capabilities." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.4.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.5.0</span>
       </span>
     </div>
 
@@ -185,7 +185,12 @@ conversion from class <code>rimg</code>, so it's best to use early in the analys
 
 <span class='co'># \donttest{</span>
 <span class='co'># From class rimg to cimg</span>
-<span class='no'>papilio_cimg</span> <span class='kw'>&lt;-</span> <span class='fu'>rimg2cimg</span>(<span class='no'>papilio</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Package "imager" needed for conversion to cimg. Please install it.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>papilio_cimg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'papilio_cimg' not found</span></div><div class='input'><span class='co'># }</span>
+<span class='co'># \dontshow{</span>
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"imager"</span>, <span class='kw'>quiety</span><span class='kw'>=</span><span class='fl'>TRUE</span>)) {
+}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: imager</span></div><div class='input'><span class='no'>papilio_cimg</span> <span class='kw'>&lt;-</span> <span class='fu'>rimg2cimg</span>(<span class='no'>papilio</span>)</div><div class='output co'>#&gt; <span class='error'>Error: Package "imager" needed for conversion to cimg. Please install it.</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='no'>papilio_cimg</span>)</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'papilio_cimg' not found</span></div><div class='input'><span class='co'># \dontshow{</span>
+<span class='co'># }</span>
+<span class='co'># }</span>
+<span class='co'># }</span>
 
 <span class='co'># From class rimg to magick-image</span>
 <span class='no'>papilio_magick</span> <span class='kw'>&lt;-</span> <span class='fu'>rimg2magick</span>(<span class='no'>papilio</span>)
