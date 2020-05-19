@@ -195,8 +195,14 @@ is.rimg <- function(object) {
 #'
 #' \donttest{
 #' # From class rimg to cimg
+#' \dontshow{
+#' if (requireNamespace("imager", quiety=TRUE)) {
+#' }
 #' papilio_cimg <- rimg2cimg(papilio)
 #' class(papilio_cimg)
+#' \dontshow{
+#' }
+#' }
 #' }
 #'
 #' # From class rimg to magick-image
