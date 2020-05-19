@@ -30,13 +30,9 @@ papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 
 \donttest{
 # From class rimg to cimg
-\dontshow{
 if (requireNamespace("imager", quiety=TRUE)) {
-}
-papilio_cimg <- rimg2cimg(papilio)
-class(papilio_cimg)
-\dontshow{
-}
+  papilio_cimg <- rimg2cimg(papilio)
+  class(papilio_cimg)
 }
 }
 
