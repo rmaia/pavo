@@ -10,7 +10,9 @@
 #' of the complete output (composed of B2, S8 and H1; the variables described in
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 #' names can be used in order to filter and show only those variables.
-#' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
+#' @param lim vector specifying wavelength range to interpolate over (e.g.
+#'   `c(300, 700)`).
+#' @param wlmin,wlmax (deprecated) minimum and maximum used to define the range of wavelengths used in
 #' calculations (default is to use entire range in the `rspec` object).
 #' @param ... class consistency (ignored)
 #'
@@ -97,7 +99,7 @@
 #' results. Make sure chosen smoothing parameters are adequate.
 #' @note Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other
 #' variables can be reliably extracted using non-smoothed data.
-#' 
+#'
 #' @importFrom stats quantile
 #'
 #' @export
@@ -158,21 +160,22 @@
 #' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
-summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
+summary.rspec <- function(object, subset = FALSE, lim = c(300, 700), wlmin = NULL, wlmax = NULL, ...) {
   chkDots(...)
 
   wl <- isolate_wl(object, keep = "wl")
 
-  # Set WL min & max
-  lambdamin <- max(wlmin, min(wl))
-  lambdamax <- min(wlmax, max(wl))
-
-  if (!is.null(wlmin) && lambdamin > wlmin) {
-    stop("wlmin is smaller than the range of spectral data")
-  }
-  if (!is.null(wlmax) && lambdamax < wlmax) {
-    stop("wlmax is larger than the range of spectral data")
-  }
+  # Deprecate wlmin/wlmax
+  if (any(!is.null(wlmin), !is.null(wlmax))) {
+    warning("Arguments 'wlmin' and 'wlmax' are deprecated in favour of the single 'lim' argument, and will be removed in a future version.")
+    lim = c(wlmin, wlmax)
+  } 
+  
+  if (min(lim) < min(wl) || max(lim) > max(wl))
+    stop("Specified wavelemgth range exceeds that of the spectral data. Check the 'lim' argument.")
+  
+  lambdamin <- max(min(lim), min(wl))
+  lambdamax <- min(max(lim), max(wl))
 
   # Restrict to range of wlmin:wlmax
   object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
