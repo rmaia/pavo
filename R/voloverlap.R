@@ -66,9 +66,14 @@
 #' tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 #' tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 #' tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
+#'
+#' # Convex hull volume
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE)
-#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq_len(3)) 
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq_len(3))
+#'
+#' # Alpha-shape volume
+#' voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
@@ -80,9 +85,9 @@
 #' egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
-#' @references 
-#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using 
-#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in 
+#' @references
+#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
 voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
@@ -90,41 +95,41 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
                        col = c("blue", "red", "darkgrey"), fill = FALSE,
                        new = TRUE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
-  
+
   type <- match.arg(type)
-  
+
   if (type == "alpha") {
-    
-    res <- overlap3d(colsp1, colsp2, avalue, plot, interactive, col, 
+
+    res <- overlap3d(colsp1, colsp2, avalue, plot, interactive, col,
                      fill, new, nsamp, psize, lwd, ...)
-    
+
   } else {
-    
+
     if (!all(missing(nsamp), missing(psize))) {
       warning(
         'nsamp and psize arguments are deprecated for type = "convex" and will',
         ' be ignored.', call.=FALSE
       )
     }
-  
-  
+
+
     dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
-  
+
     dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
-  
+
     over <- intersectn(dat1, dat2)
-  
+
     vol1 <- over$ch1$vol
     vol2 <- over$ch2$vol
-  
+
     overlapVol <- over$ch$vol
-  
+
     vsmallest <- overlapVol / min(vol1, vol2)
-  
+
     vboth <- overlapVol / (vol1 + vol2 - overlapVol)
-  
+
     res <- data.frame(vol1, vol2, overlapvol = overlapVol, vsmallest, vboth)
-  
+
     ##############
     # PLOT BEGIN #
     ##############
@@ -133,13 +138,13 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
         warning("plot argument only works for tetrahedral colourspaces at the moment.")
         return(res)
       }
-  
+
       if (length(col) < 3) {
         col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
       }
-  
+
       Voverlap <- over$ch$p
-  
+
       if (interactive) {
         # check if rgl is installed and loaded
         if (!requireNamespace("rgl", quietly = TRUE)) {
@@ -147,18 +152,18 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
             call. = FALSE
           )
         }
-  
+
         if (!isNamespaceLoaded("rgl")) {
           requireNamespace("rgl")
         }
-  
+
         if (new) {
           rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
         }
-  
+
         tcsvol(colsp1, col = col[1], fill = fill)
         tcsvol(colsp2, col = col[2], fill = fill)
-  
+
         if (!is.null(Voverlap)) {
           colnames(Voverlap) <- c("x", "y", "z")
           attr(Voverlap, "clrsp") <- "tcs"
@@ -166,14 +171,14 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue,
         }
       } else {
         plotrange <- apply(rbind(dat1, dat2), 2, range)
-  
+
         vol(colsp1,
           col = col[1], lwd = lwd, new = new, fill = fill,
           xlim = plotrange[, "x"], ylim = plotrange[, "y"],
           zlim = plotrange[, "z"], ...
         )
         vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
-  
+
         if (!is.null(Voverlap)) {
           colnames(Voverlap) <- c("x", "y", "z")
           attr(Voverlap, "clrsp") <- "tcs"

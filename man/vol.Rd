@@ -51,7 +51,12 @@ data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
-vol(tcs.sicalis)
+
+# Convex hull
+vol(tcs.sicalis, type = "convex")
+
+# Alpha-shape
+vol(tcs.sicalis, type = "alpha", avalue = 1)
 
 }
 \references{

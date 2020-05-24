@@ -99,9 +99,14 @@ data(sicalis)
 tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
-voloverlap(tcs.sicalis.T, tcs.sicalis.B)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE)
-voloverlap(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3)) 
+
+# Convex hull volume
+voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE)
+voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq_len(3))
+
+# Alpha-shape volume
+voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
 
 }
 \references{
