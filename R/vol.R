@@ -30,20 +30,25 @@
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
-#' vol(tcs.sicalis)
+#'
+#' # Convex hull
+#' vol(tcs.sicalis, type = "convex")
+#'
+#' # Alpha-shape
+#' vol(tcs.sicalis, type = "alpha", avalue = 1)
 #'
 #' @importFrom geometry convhulln
 #' @importFrom graphics par polygon
 #' @importFrom grDevices trans3d adjustcolor
-#' 
+#'
 #' @inherit overlap3d references
 #'
 
-vol <- function(tcsdata, type = c("convex", "alpha"), avalue, alpha = 0.2, 
+vol <- function(tcsdata, type = c("convex", "alpha"), avalue, alpha = 0.2,
                 grid = TRUE, fill = TRUE, new = FALSE, ...) {
-  
+
   type <- match.arg(type)
-  
+
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") {
     stop("object is not in tetrahedral color space")
   }
@@ -52,7 +57,7 @@ vol <- function(tcsdata, type = c("convex", "alpha"), avalue, alpha = 0.2,
     coords <- tcsdata[, c("x", "y", "z")]
     vol <- t(convhulln(coords, options = "FA")$hull)
   } else {
-    ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]), 
+    ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]),
                                      alpha = avalue)
     tri <- ashape$triang
     vol <- t(tri[tri[, ncol(tri)] %in% c(2,3), c(1, 2, 3)])
