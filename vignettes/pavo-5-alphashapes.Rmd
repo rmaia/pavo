@@ -10,12 +10,15 @@ vignette: >
   %\VignetteEncoding{UTF-8}
 ---
 
+```{r include = FALSE}
+options(rgl.useNULL = TRUE)
+```
+
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
-options(rgl.useNULL = TRUE)
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
