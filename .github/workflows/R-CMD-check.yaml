@@ -61,7 +61,7 @@ jobs:
           sudo -s eval "$sysreqs"
 
       - name: Install system dependencies (macOS)
-        if: runner.os == "macOS"
+        if: runner.os == 'macOS'
         run: brew cask install xquartz
 
       - name: Install dependencies
