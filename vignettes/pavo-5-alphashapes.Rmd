@@ -16,6 +16,9 @@ knitr::opts_chunk$set(
   comment = "#>"
 )
 options(rgl.useNULL = TRUE)
+```
+
+```{r include = FALSE}
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
