@@ -29,6 +29,7 @@ jobs:
       RSPM: ${{ matrix.config.rspm }}
       # prevent rgl issues because no X11 display is available
       RGL_USE_NULL: true
+      DISPLAY: 99 # for rgl
 
     steps:
       - uses: actions/checkout@v2
