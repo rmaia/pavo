@@ -109,6 +109,9 @@
     <loc>http://pavo.colrverse.com/reference/merge.rspec.html</loc>
   </url>
   <url>
+    <loc>http://pavo.colrverse.com/reference/overlap3d.html</loc>
+  </url>
+  <url>
     <loc>http://pavo.colrverse.com/reference/pavo-package.html</loc>
   </url>
   <url>
@@ -218,5 +221,8 @@
   </url>
   <url>
     <loc>http://pavo.colrverse.com/articles/pavo-4-spectraldesc.html</loc>
+  </url>
+  <url>
+    <loc>http://pavo.colrverse.com/articles/pavo-5-alphashapes.html</loc>
   </url>
 </urlset>

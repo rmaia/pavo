@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot a tetrahedral colour space — vol • pavo</title>
+<title>Colour volume overlap — overlap3d • pavo</title>
 
 
 <!-- jquery -->
@@ -47,9 +47,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Plot a tetrahedral colour space — vol" />
-<meta property="og:description" content="Produces a 3D colour volume in tetrahedral colour space when plotting a
-non-interactive tetrahedral plot." />
+<meta property="og:title" content="Colour volume overlap — overlap3d" />
+<meta property="og:description" content="Compute colour volume overlap in 3D with alphashapes" />
 
 
 
@@ -147,24 +146,27 @@ non-interactive tetrahedral plot." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot a tetrahedral colour space</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/vol.R'><code>R/vol.R</code></a></small>
-    <div class="hidden name"><code>vol.Rd</code></div>
+    <h1>Colour volume overlap</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/overlap3d.R'><code>R/overlap3d.R</code></a></small>
+    <div class="hidden name"><code>overlap3d.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Produces a 3D colour volume in tetrahedral colour space when plotting a
-non-interactive tetrahedral plot.</p>
+    <p>Compute colour volume overlap in 3D with alphashapes</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vol</span>(
-  <span class='no'>tcsdata</span>,
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"convex"</span>, <span class='st'>"alpha"</span>),
+    <pre class="usage"><span class='fu'>overlap3d</span>(
+  <span class='no'>colsp1</span>,
+  <span class='no'>colsp2</span>,
   <span class='no'>avalue</span>,
-  <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>grid</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"darkgrey"</span>),
+  <span class='kw'>fill</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>new</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nsamp</span> <span class='kw'>=</span> <span class='fl'>1000</span>,
+  <span class='kw'>psize</span> <span class='kw'>=</span> <span class='fl'>0.001</span>,
+  <span class='kw'>lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
   <span class='no'>...</span>
 )</pre>
 
@@ -172,47 +174,82 @@ non-interactive tetrahedral plot.</p>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>tcsdata</th>
-      <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y'
-and 'z' coordinates as columns (labeled as such).</p></td>
+      <th>colsp1</th>
+      <td><p>(required) data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
+function, containing
+values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)</p></td>
     </tr>
     <tr>
-      <th>type</th>
-      <td><p>if "convex", the colour volume is plotted using a convex hull
-and if "alpha", it is plotted using alphashapes.</p></td>
+      <th>colsp2</th>
+      <td><p>(required) data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
+function, containing
+values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)</p></td>
     </tr>
     <tr>
       <th>avalue</th>
-      <td><p>if <code>type = "alpha"</code>, which alpha parameter value should be used
-to compute the alphashape.</p></td>
+      <td><p>if <code>type = alpha</code>, the alpha parameter values for <code>colsp1</code> and
+<code>colsp2</code> respectively to compute the alphashapes. Can be a numeric of length
+one if the same value is used in both cases.</p></td>
     </tr>
     <tr>
-      <th>alpha</th>
-      <td><p>transparency of volume (if <code>fill = TRUE</code>).</p></td>
+      <th>plot</th>
+      <td><p>logical. Should the volumes and points be plotted? (defaults to <code>FALSE</code>).
+This only works for tetrahedral colourspaces at the moment.</p></td>
     </tr>
     <tr>
-      <th>grid</th>
-      <td><p>logical. if <code>TRUE</code> (default), draws the polygon outline defined by the points.</p></td>
+      <th>interactive</th>
+      <td><p>logical. If <code>TRUE</code>, uses the rgl engine for interactive plotting;
+if <code>FALSE</code> then a static plot is generated.</p></td>
+    </tr>
+    <tr>
+      <th>col</th>
+      <td><p>a vector of length 3 with the colours for (in order) the first volume,
+the second volume, and the overlap.</p></td>
     </tr>
     <tr>
       <th>fill</th>
-      <td><p>logical. if <code>TRUE</code> (default), fills the volume defined by the points.</p></td>
+      <td><p>logical. should the two volumes be filled in the plot? (defaults to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
       <th>new</th>
-      <td><p>logical. Should a new plot be started or draw over an open plot?
-(defaults to <code>FALSE</code>)</p></td>
+      <td><p>logical. Should a new plot window be called? If <code>FALSE</code>, volumes and their
+overlap are plotted over the current plot (defaults to <code>TRUE</code>).</p></td>
+    </tr>
+    <tr>
+      <th>nsamp</th>
+      <td><p>if <code>type = "alpha"</code>, the number of points to be sampled for the
+Monte Carlo computation. Stoddard &amp; Stevens(2011) use around 750,000 points,
+but more or fewer might be required depending on the
+degree of overlap.</p></td>
+    </tr>
+    <tr>
+      <th>psize</th>
+      <td><p>if <code>type = "alpha"</code> and <code>plot = TRUE</code>, sets the size to plot the points
+used in the Monte Carlo computation.</p></td>
+    </tr>
+    <tr>
+      <th>lwd</th>
+      <td><p>if <code>plot = TRUE</code>, sets the line width for volume grids.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional graphical options. See <code><a href='https://rdrr.io/r/graphics/polygon.html'>polygon()</a></code> and <code><a href='tetraplot.html'>tetraplot()</a></code>.</p></td>
+      <td><p>additional arguments passed to the plot. See <code><a href='vol.html'>vol()</a></code></p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p><code>vol()</code> creates a 3D colour volume within a static tetrahedral plot.</p>
+    <p>a data.frame with the following columns:</p><ul>
+<li><p><code>s_in1, s_in2</code> the number of sampled points that fall within each of the
+volumes individually.</p></li>
+<li><p><code>s_inboth</code> the number of sampled points that fall within both volumes.</p></li>
+<li><p><code>s_ineither</code> the number of points that fall within either of the volumes.</p></li>
+<li><p><code>psmallest</code> the proportion of points that fall within both volumes divided
+by the number of points that fall within the smallest volume.</p></li>
+<li><p><code>pboth</code> the proportion of points that fall within both volumes divided by
+the total number of points that fall within both volumes.</p></li>
+</ul>
+
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
@@ -220,17 +257,17 @@ to compute the alphashape.</p></td>
 Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210X.13398'>10.1111/2041-210X.13398</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># For plotting</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='input'>
-<span class='co'># Convex hull</span>
-<span class='fu'>vol</span>(<span class='no'>tcs.sicalis</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"convex"</span>)</div><div class='input'>
-<span class='co'># Alpha-shape</span>
-<span class='fu'>vol</span>(<span class='no'>tcs.sicalis</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"alpha"</span>, <span class='kw'>avalue</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='img'><img src='vol-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
+<span class='no'>tcs.sicalis.C</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"C"</span>)
+<span class='no'>tcs.sicalis.T</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"T"</span>)
+<span class='no'>tcs.sicalis.B</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>)), <span class='st'>"B"</span>)
+<span class='co'># \donttest{</span>
+<span class='kw pkg'>pavo</span><span class='kw ns'>:::</span><span class='fu'>overlap3d</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.B</span>, <span class='kw'>avalue</span> <span class='kw'>=</span> <span class='fl'>1</span>)</div><div class='output co'>#&gt;           vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest
+#&gt; 1 5.183721e-06 6.231493e-06     5    10        1         14       0.2
+#&gt;        pboth
+#&gt; 1 0.07142857</div><div class='input'><span class='kw pkg'>pavo</span><span class='kw ns'>:::</span><span class='fu'>overlap3d</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>avalue</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0.1</span>, <span class='fl'>0.12</span>))</div><div class='output co'>#&gt;   vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
+#&gt; 1    0 4.684183e-06     0     3        0          3       NaN     0</div><div class='input'><span class='kw pkg'>pavo</span><span class='kw ns'>:::</span><span class='fu'>overlap3d</span>(<span class='no'>tcs.sicalis.T</span>, <span class='no'>tcs.sicalis.C</span>, <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>), <span class='kw'>avalue</span> <span class='kw'>=</span> <span class='fl'>0.1</span>)</div><div class='output co'>#&gt;   vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
+#&gt; 1    0 4.684183e-06     0     6        0          6       NaN     0</div><div class='input'><span class='co'># }</span></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

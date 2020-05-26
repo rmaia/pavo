@@ -153,6 +153,13 @@
 <h1 class="page-header" data-toc-text="2.5.0">
 <a href="#pavo-250" class="anchor"></a>pavo 2.5.0<small> Unreleased </small>
 </h1>
+<div id="new-features-and-significant-changes" class="section level2">
+<h2 class="hasAnchor">
+<a href="#new-features-and-significant-changes" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
+<ul>
+<li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code><a href="../articles/pavo-5-alphashapes.html">vignette("pavo-5-alphashapes",  package = "pavo")</a></code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly.</li>
+</ul>
+</div>
 <div id="minor-features-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
@@ -170,9 +177,9 @@
 <h1 class="page-header" data-toc-text="2.4.0">
 <a href="#pavo-240" class="anchor"></a>pavo 2.4.0<small> 2020-02-08 </small>
 </h1>
-<div id="new-features-and-significant-changes" class="section level2">
+<div id="new-features-and-significant-changes-1" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-and-significant-changes" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
+<a href="#new-features-and-significant-changes-1" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
 <li>Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and S1V in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code>.</li>
 <li>several <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> functions for colspace (<code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) gain a new <code>gamut</code> argument to plot the maximum gamut for a given visual system and illuminant. <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also now returns the maximum colour volume for a given visual system and illuminant that you can use to compare to the realised volume by a given dataset. More information in PR <a href='https://github.com/rmaia/pavo/issues/180'>#180</a>.</li>
@@ -197,9 +204,9 @@
 <h1 class="page-header" data-toc-text="2.3.0">
 <a href="#pavo-230" class="anchor"></a>pavo 2.3.0<small> 2019-12-11 </small>
 </h1>
-<div id="new-features-and-significant-changes-1" class="section level2">
+<div id="new-features-and-significant-changes-2" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-and-significant-changes-1" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
+<a href="#new-features-and-significant-changes-2" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
 <li>
 <code><a href="../reference/plot.rspec.html">plot.rspec()</a></code> now adds a linear spectrum alongside the x-axis to show the hues corresponding to each wavelength (controlled by the <code>wl.guide</code> boolean argument).</li>
@@ -243,9 +250,9 @@
 <h1 class="page-header" data-toc-text="2.2.0">
 <a href="#pavo-220" class="anchor"></a>pavo 2.2.0<small> 2019-06-25 </small>
 </h1>
-<div id="new-features-and-significant-changes-2" class="section level2">
+<div id="new-features-and-significant-changes-3" class="section level2">
 <h2 class="hasAnchor">
-<a href="#new-features-and-significant-changes-2" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
+<a href="#new-features-and-significant-changes-3" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
 <li>added k-medoids clustering as an option in <code><a href="../reference/classify.html">classify()</a></code>
 </li>

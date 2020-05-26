@@ -212,22 +212,22 @@ range of input data. Defaults to <code>TRUE</code>.</p></td>
 <span class='co'># Generate some fake reflectance data</span>
 <span class='no'>fakedat</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span>(<span class='kw'>wl</span> <span class='kw'>=</span> <span class='fl'>300</span>:<span class='fl'>700</span>, <span class='kw'>refl1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>401</span>), <span class='kw'>refl2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>401</span>))
 <span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fakedat</span>)</div><div class='output co'>#&gt;    wl        refl1      refl2
-#&gt; 1 300 -1.400043517 -0.8452478
-#&gt; 2 301  0.255317055 -0.9615715
-#&gt; 3 302 -2.437263611  1.0174911
-#&gt; 4 303 -0.005571287 -1.4960537
-#&gt; 5 304  0.621552721 -1.1848187
-#&gt; 6 305  1.148411606  0.6302344</div><div class='input'>
+#&gt; 1 300 -2.437263611  1.0174911
+#&gt; 2 301 -0.005571287 -1.4960537
+#&gt; 3 302  0.621552721 -1.1848187
+#&gt; 4 303  1.148411606  0.6302344
+#&gt; 5 304 -1.821817661  2.1012525
+#&gt; 6 305 -0.247325302 -0.6137368</div><div class='input'>
 <span class='co'># Determine if is rspec object</span>
 <span class='fu'>is.rspec</span>(<span class='no'>fakedat</span>)</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
 <span class='co'># Convert to rspec object</span>
 <span class='no'>fakedat2</span> <span class='kw'>&lt;-</span> <span class='fu'>as.rspec</span>(<span class='no'>fakedat</span>)</div><div class='output co'>#&gt; <span class='message'>wavelengths found in column 1</span></div><div class='output co'>#&gt; <span class='message'>The spectral data contain 401 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span></div><div class='input'><span class='fu'>is.rspec</span>(<span class='no'>fakedat2</span>)</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>fakedat2</span>)</div><div class='output co'>#&gt;    wl        refl1      refl2
-#&gt; 1 300 -1.400043517 -0.8452478
-#&gt; 2 301  0.255317055 -0.9615715
-#&gt; 3 302 -2.437263611  1.0174911
-#&gt; 4 303 -0.005571287 -1.4960537
-#&gt; 5 304  0.621552721 -1.1848187
-#&gt; 6 305  1.148411606  0.6302344</div></pre>
+#&gt; 1 300 -2.437263611  1.0174911
+#&gt; 2 301 -0.005571287 -1.4960537
+#&gt; 3 302  0.621552721 -1.1848187
+#&gt; 4 303  1.148411606  0.6302344
+#&gt; 5 304 -1.821817661  2.1012525
+#&gt; 6 305 -0.247325302 -0.6137368</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

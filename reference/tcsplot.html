@@ -181,6 +181,8 @@ capabilities.</p>
 
 <span class='fu'>tcsvol</span>(
   <span class='no'>tcsdata</span>,
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"convex"</span>, <span class='st'>"alpha"</span>),
+  <span class='no'>avalue</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
   <span class='kw'>alpha</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
   <span class='kw'>grid.alpha</span> <span class='kw'>=</span> <span class='fl'>1</span>,
@@ -255,6 +257,16 @@ visual system and illuminant used in the analysis (defaults to <code>FALSE</code
 This option currently only works when <code>qcatch = Qi</code>.</p></td>
     </tr>
     <tr>
+      <th>type</th>
+      <td><p>accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
+for lines from the point to the base of the tetrahedron.</p></td>
+    </tr>
+    <tr>
+      <th>avalue</th>
+      <td><p>if <code>type = "alpha"</code>, which alpha parameter value should be used
+to compute the alphashape.</p></td>
+    </tr>
+    <tr>
       <th>grid.alpha</th>
       <td><p>transparency of the volume polygon grid lines</p></td>
     </tr>
@@ -277,7 +289,7 @@ based on openGL capabilities. Plot is interactive and can be manipulated with th
 third button: zoom).</p>
 <p><code>tcspoints()</code> adds points to the plot. Points are currently plotted
 only as spheres to maintain export capabilities.</p>
-<p><code>tcsvol()</code> creates a 3D convex hull within a <code>tcsplot</code> object.</p>
+<p><code>tcsvol()</code> creates a 3D colour volume within a <code>tcsplot</code> object.</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
     <p>Stoddard, M. C., &amp; Prum, R. O. (2008). Evolution of avian plumage
