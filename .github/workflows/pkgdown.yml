@@ -6,12 +6,19 @@ name: pkgdown
 
 jobs:
   pkgdown:
+    env:
+      # prevent rgl issues because no X11 display is available
+      RGL_USE_NULL: true
+      DISPLAY: 99 # for rgl
     runs-on: macOS-latest
     steps:
       - uses: actions/checkout@v2
       - uses: r-lib/actions/setup-r@master
       - uses: r-lib/actions/setup-pandoc@master
       - uses: r-lib/actions/setup-tinytex@v1
+      - name: Install system dependencies (macOS)
+        if: runner.os == 'macOS'
+        run: brew cask install xquartz
       - name: Install dependencies
         run: |
           install.packages("remotes")
