@@ -27,16 +27,16 @@
 #'
 #' @importFrom stats runif
 #'
-#' @references 
-#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using 
-#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in 
+#' @references
+#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
-overlap3d <- function(colsp1, colsp2, avalue , plot = FALSE, 
+overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
                       fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
                       lwd = 1, ...) {
-  
+
   if (length(avalue) == 1) {
     avalue1 <- avalue2 <- avalue
   } else if (length(avalue) == 2) {
@@ -49,6 +49,13 @@ overlap3d <- function(colsp1, colsp2, avalue , plot = FALSE,
   dat1 <- colsp1[, c("x", "y", "z")]
 
   dat2 <- colsp2[, c("x", "y", "z")]
+
+  if (avalue1 == "auto") {
+    avalue1 <- find_astar(as.matrix(dat1))
+  }
+  if (avalue2 == "auto") {
+    avalue2 <- find_astar(as.matrix(dat2))
+  }
 
   shape1 <- alphashape3d::ashape3d(as.matrix(dat1), avalue1)
   shape2 <- alphashape3d::ashape3d(as.matrix(dat2), avalue2)

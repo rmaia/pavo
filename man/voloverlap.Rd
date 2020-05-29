@@ -30,7 +30,9 @@ and if "alpha", it is plotted using alphashapes.}
 
 \item{avalue}{if \code{type = alpha}, the alpha parameter values for \code{colsp1} and
 \code{colsp2} respectively to compute the alphashapes. Can be a numeric of length
-one if the same value is used in both cases.}
+one if the same value is used in both cases. \code{avalue = "auto"} (default)
+finds and use the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}}
+value as defined in Gruson (2020).}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}

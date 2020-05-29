@@ -14,7 +14,9 @@
 #'   and if "alpha", it is plotted using alphashapes.
 #' @param avalue if `type = alpha`, the alpha parameter values for `colsp1` and
 #' `colsp2` respectively to compute the alphashapes. Can be a numeric of length
-#' one if the same value is used in both cases.
+#' one if the same value is used in both cases. `avalue = "auto"` (default)
+#' finds and use the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}}
+#' value as defined in Gruson (2020).
 #' @param nsamp if `type = "alpha"`, the number of points to be sampled for the
 #' Monte Carlo computation. Stoddard & Stevens(2011) use around 750,000 points,
 #'  but more or fewer might be required depending on the
