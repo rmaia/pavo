@@ -7,7 +7,7 @@
 vol(
   tcsdata,
   type = c("convex", "alpha"),
-  avalue,
+  avalue = "auto",
   alpha = 0.2,
   grid = TRUE,
   fill = TRUE,
@@ -24,7 +24,9 @@ and 'z' coordinates as columns (labeled as such).}
 and if "alpha", it is plotted using alphashapes.}
 
 \item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
-to compute the alphashape.}
+to compute the alphashape. \code{avalue = "auto"} (default) finds and use the
+\ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value as defined in
+Gruson (2020).}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
 

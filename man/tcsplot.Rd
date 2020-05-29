@@ -29,7 +29,7 @@ tcspoints(tcsdata, size = 0.02, col = "black", alpha = 1)
 tcsvol(
   tcsdata,
   type = c("convex", "alpha"),
-  avalue,
+  avalue = "auto",
   col = "black",
   alpha = 0.2,
   grid.alpha = 1,
@@ -77,7 +77,9 @@ This option currently only works when \code{qcatch = Qi}.}
 for lines from the point to the base of the tetrahedron.}
 
 \item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
-to compute the alphashape.}
+to compute the alphashape. \code{avalue = "auto"} (default) finds and use the
+\ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value as defined in
+Gruson (2020).}
 
 \item{grid.alpha}{transparency of the volume polygon grid lines}
 
