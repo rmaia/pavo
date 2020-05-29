@@ -71,6 +71,7 @@ been implemented but you can use the `alphashape3d` package directly to compute
 the alphashape, its volume and display it in a 3D interactive plot.
 
 ```{r}
+library(alphashape3d)
 ashape_jnd <- ashape3d(as.matrix(xy_flowers), alpha = 10)
 volume_ashape3d(ashape_jnd)
 ```
