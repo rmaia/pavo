@@ -22,7 +22,7 @@ options(rgl.useNULL = TRUE)
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
-Alphashapes are a new tool available in `pavo` to estimated colour volumes, 
+$\alpha$-shapes are a new tool available in `pavo` to estimate colour volumes, 
 while allowing the presence of voids and pockets, which may lead to a more
 accurate measurement of "colourfulness" than convex hulls. For more information
 on the theoretical background, please report to the related article [@Gruson2020]
@@ -31,8 +31,8 @@ on the theoretical background, please report to the related article [@Gruson2020
 
 You can plot the colour volume using $\alpha$-shape with the `vol()` function
 (for non-interactive plots, `tcsvol()` otherwise) by specifying 
-`type = "alpha"`. You can set the $\alpha$ parameter value via the `avalue` 
-argument:
+`type = "alpha"`. By default, this will use the $\alpha^*$ value defined in 
+@Gruson2020.
 
 ```{r}
 library(pavo)
@@ -40,73 +40,15 @@ data(flowers)
 vis_flowers <- vismodel(flowers, visual = "avg.uv")
 tcs_flowers <- colspace(vis_flowers)
 plot(tcs_flowers)
-vol(tcs_flowers, type = "alpha", avalue = 0.5)
+vol(tcs_flowers, type = "alpha")
 ```
 
-Now let's try to find the smallest $\alpha$ value which does not create any
-isolated $n-2$ simplex ($\alpha^*$). We know this value cannot be smaller than
-the maximum distance to the closest point. So we can begin by identifying this
-minimal value:
-
-```{r, eval=FALSE}
-library(FNN)
-distances <- get.knn(tcs_flowers[, c("x", "y", "z")], k = 1)$nn.dist
-annd <- max(distances)/2
-```
-
-```{r, include=FALSE}
-# This is a workaround to not depend on FNN
-annd <- 0.115302552185513
-```
-
-We now know that the most isolated data point lies at a distance `annd`=`r
-sprintf("%.5f", annd)` of its closest neighbour.
-
-Alphashapes change in a stepwise fashion and many close values will output the
-same colour volume. We can then start by finding all the threshold values and
-test only these values:
-
-```{r}
-library(alphashape3d)
-shapes <- ashape3d(as.matrix(tcs_flowers[, c("x", "y", "z")]), alpha = 0)
-avalues <- unname(shapes$tetra[, "rhoT"])
-avalues <- sort(avalues)
-```
-
-We find `length(avalues)`=`r length(avalues)` threshold values. Fortunately, we
-don't have to test them all since we know that $\alpha^*$ cannot be smaller than
-`annd`:
-
-```{r}
-avalues <- avalues[avalues >= annd]
-```
-
-We compute the alphashapes for all these values
-
-```{r}
-shapes <- ashape3d(as.matrix(tcs_flowers[, c("x", "y", "z")]), alpha = avalues)
-```
-
-and for each one of them, we test if all points are in a shape:
-
-```{r}
-isin <- inashape3d(shapes, indexAlpha = "all", as.matrix(tcs_flowers[, c("x", "y", "z")]))
-allin <- vapply(isin, all, logical(1))
-```
-
-The smallest value to satisfy this condition is $\alpha^*$:
-
-```{r}
-astar_ind <- match(TRUE, allin)
-astar <- avalues[astar_ind]
-```
-
-We can now visualise the colour volume of the `flowers` dataset computed with
-the alphashape method, and the $\alpha^*$ value as parameter:
+You can set the $\alpha$ parameter to the value of your choice via the `avalue` 
+argument:
 
 ```{r}
 plot(tcs_flowers)
-vol(tcs_flowers, type = "alpha", avalue = astar)
+vol(tcs_flowers, type = "alpha", avalue = 0.5)
 ```
 
 # Alphashapes in perceptually uniform spaces
@@ -160,8 +102,7 @@ rgl::bg3d()
 ```
 
 ```{r, webgl=TRUE}
-voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", 
-           avalue = 0.2, plot = TRUE)
+voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
 <!--
