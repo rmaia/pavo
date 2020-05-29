@@ -15,10 +15,11 @@
 find_astar <- function(coords) {
 
   tetras <- alphashape3d::ashape3d(coords,
-                                   alpha = 0)
+                                   alpha = 0)$tetra
   tetras <- cbind(c(tetras[, c("v1", "v2", "v3", "v4")]),
                   rep(tetras[, "rhoT"], 4))
   astar <- max(by(tetras[, 2], tetras[, 1], min))
 
-  return(astar)
+  # We have to round the value because of numerical precision issues
+  return(astar*(1+1e-15))
 }
