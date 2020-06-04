@@ -112,6 +112,9 @@
       <a href="../articles/pavo-3-analysing.html">Analysing Data</a>
     </li>
     <li>
+      <a href="../articles/pavo-5-alphashapes.html">Computing Colour Volumes</a>
+    </li>
+    <li>
       <a href="../articles/pavo-4-spectraldesc.html">Spectral Shape Descriptors</a>
     </li>
   </ul>
@@ -158,7 +161,7 @@
     <pre class="usage"><span class='fu'>overlap3d</span>(
   <span class='no'>colsp1</span>,
   <span class='no'>colsp2</span>,
-  <span class='no'>avalue</span>,
+  <span class='kw'>avalue</span> <span class='kw'>=</span> <span class='st'>"auto"</span>,
   <span class='kw'>plot</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
   <span class='kw'>interactive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>col</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"blue"</span>, <span class='st'>"red"</span>, <span class='st'>"darkgrey"</span>),
@@ -189,7 +192,9 @@ values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as su
       <th>avalue</th>
       <td><p>if <code>type = alpha</code>, the alpha parameter values for <code>colsp1</code> and
 <code>colsp2</code> respectively to compute the alphashapes. Can be a numeric of length
-one if the same value is used in both cases.</p></td>
+one if the same value is used in both cases. <code>avalue = "auto"</code> (default)
+finds and use the &alpha;*
+value as defined in Gruson (2020).</p></td>
     </tr>
     <tr>
       <th>plot</th>

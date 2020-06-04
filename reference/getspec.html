@@ -115,6 +115,9 @@ Avantes (before or after exporting)." />
       <a href="../articles/pavo-3-analysing.html">Analysing Data</a>
     </li>
     <li>
+      <a href="../articles/pavo-5-alphashapes.html">Computing Colour Volumes</a>
+    </li>
+    <li>
       <a href="../articles/pavo-4-spectraldesc.html">Spectral Shape Descriptors</a>
     </li>
   </ul>
@@ -247,6 +250,10 @@ doi: <a href='https://doi.org/10.21105/joss.01857'>10.21105/joss.01857</a>
     <div class='dont-index'><p><code><a href='https://docs.ropensci.org/lightr/reference/lr_get_spec.html'>lightr::lr_get_spec()</a></code> for a more flexible version of this function
 (e.g. uninterpolated wavelengths), and <code><a href='https://docs.ropensci.org/lightr/reference/lr_get_metadata.html'>lightr::lr_get_metadata()</a></code> for the retrieval
 and import of spectral metadata.</p></div>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
+<p>Hugo Gruson <a href='mailto:hugo.gruson+R@normalesup.org'>hugo.gruson+R@normalesup.org</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>rspecdata</span> <span class='kw'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"lightr"</span>), <span class='kw'>ext</span> <span class='kw'>=</span> <span class='st'>"ttt"</span>, <span class='kw'>lim</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='no'>rspecdata</span>)</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long

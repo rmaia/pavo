@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Plot the colour opponent coding diagram — cocplot • pavo</title>
+<title>Compute the &alpha;* value — find_astar • pavo</title>
 
 
 <!-- jquery -->
@@ -47,9 +47,8 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Plot the colour opponent coding diagram — cocplot" />
-<meta property="og:description" content="Produces a plot based on the colour opponent coding diagram of Backhaus
-(1991)." />
+<meta property="og:title" content="Compute the &alpha;* value — find_astar" />
+<meta property="og:description" content="Compute the &amp;alpha;* value" />
 
 
 
@@ -150,94 +149,40 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Plot the colour opponent coding diagram</h1>
-    <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/cocplot.R'><code>R/cocplot.R</code></a></small>
-    <div class="hidden name"><code>cocplot.Rd</code></div>
+    <h1>Compute the &alpha;* value</h1>
+    <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/find_astar.R'><code>R/find_astar.R</code></a></small>
+    <div class="hidden name"><code>find_astar.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Produces a plot based on the colour opponent coding diagram of Backhaus
-(1991).</p>
+    <p>Compute the &alpha;* value</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cocplot</span>(
-  <span class='no'>cocdata</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>tick.loc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>12</span>, -<span class='fl'>9</span>, -<span class='fl'>6</span>, -<span class='fl'>3</span>, <span class='fl'>3</span>, <span class='fl'>6</span>, <span class='fl'>9</span>, <span class='fl'>12</span>),
-  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-  <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>find_astar</span>(<span class='no'>coords</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>cocdata</th>
-      <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='categorical.html'>categorical()</a></code> function, containing values for 'x' and 'y'
-coordinates as columns (labeled as such).</p></td>
-    </tr>
-    <tr>
-      <th>labels</th>
-      <td><p>logical. Should the name of each cone be printed next to the
-corresponding vertex?</p></td>
-    </tr>
-    <tr>
-      <th>labels.cex</th>
-      <td><p>size of the arrow labels.</p></td>
-    </tr>
-    <tr>
-      <th>tick.loc</th>
-      <td><p>a numeric vector specifying the location of tick marks on x &amp;
-y axes.</p></td>
-    </tr>
-    <tr>
-      <th>achro</th>
-      <td><p>should a point be plotted at the origin (defaults to <code>TRUE</code>)?</p></td>
-    </tr>
-    <tr>
-      <th>achrosize</th>
-      <td><p>size of the point at the origin when <code>achro = TRUE</code>
-(defaults to <code>0.8</code>).</p></td>
-    </tr>
-    <tr>
-      <th>achrocol</th>
-      <td><p>color of the point at the origin <code>achro = TRUE</code> (defaults to
-<code>'grey'</code>).</p></td>
-    </tr>
-    <tr>
-      <th>margins</th>
-      <td><p>margins for the plot.</p></td>
-    </tr>
-    <tr>
-      <th>square</th>
-      <td><p>logical. Should the aspect ratio of the plot be held to 1:1?
-(defaults to <code>TRUE</code>).</p></td>
-    </tr>
-    <tr>
-      <th>...</th>
-      <td><p>additional graphical options. See <code><a href='https://rdrr.io/r/graphics/par.html'>par()</a></code>.</p></td>
+      <th>coords</th>
+      <td><p>coordinates of the points for which you want to compute the
+alphashape</p></td>
     </tr>
     </table>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>The &alpha;* value
+as defined in Gruson (2020).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Backhaus W. (1991). Color opponent coding in the visual system
-of the honeybee. Vision Research, 31, 1381-1397.</p>
-    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+    <p>Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+&alpha;‐shapes. Methods in
+Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210X.13398'>10.1111/2041-210X.13398</a></p>
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/pkg/alphashape3d/man/ashape3d.html'>alphashape3d::ashape3d()</a></code></p></div>
 
-    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>coc.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"coc"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>coc.flowers</span>)</div><div class='img'><img src='cocplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -113,6 +113,9 @@ space." />
       <a href="../articles/pavo-3-analysing.html">Analysing Data</a>
     </li>
     <li>
+      <a href="../articles/pavo-5-alphashapes.html">Computing Colour Volumes</a>
+    </li>
+    <li>
       <a href="../articles/pavo-4-spectraldesc.html">Spectral Shape Descriptors</a>
     </li>
   </ul>
@@ -191,7 +194,9 @@ and if "alpha", it is plotted using alphashapes.</p></td>
       <th>avalue</th>
       <td><p>if <code>type = alpha</code>, the alpha parameter values for <code>colsp1</code> and
 <code>colsp2</code> respectively to compute the alphashapes. Can be a numeric of length
-one if the same value is used in both cases.</p></td>
+one if the same value is used in both cases. <code>avalue = "auto"</code> (default)
+finds and use the &alpha;*
+value as defined in Gruson (2020).</p></td>
     </tr>
     <tr>
       <th>plot</th>
@@ -282,6 +287,10 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
 <p>Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
 &alpha;‐shapes. Methods in
 Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210X.13398'>10.1111/2041-210X.13398</a></p>
+    <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
+
+    <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
+<p>Hugo Gruson <a href='mailto:hugo.gruson+R@normalesup.org'>hugo.gruson+R@normalesup.org</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
