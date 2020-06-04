@@ -69,6 +69,10 @@ summary.colspace <- function(object, by = NULL, ...) {
     return(summary(as.data.frame(object)))
   }
 
+  # Check 'by' is correctly specified when relevant (space = tcs)
+  if (is.numeric(by) && attr(object, "clrsp") == "tcs" && nrow(object) %% by != 0) {
+    stop("The value passed to 'by' is not a multiple of the number of spectra")
+  }
 
   if (!is.null(attr(object, "data.maxgamut"))) {
     maxgamut <- attr(object, "data.maxgamut")
