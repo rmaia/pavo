@@ -157,7 +157,8 @@ test_that("Errors/messages", {
   expect_error(colspace(vis.flowers[1:3], space = "tcs"), "has fewer than four")
   expect_message(colspace(vis.flowers, space = "tcs"), "treating columns as")
   expect_message(colspace(cbind(vis.flowers, vis.flowers[1:2]), space = "tcs"), "has more than four columns")
-
+  expect_error(summary(colspace(vismodel(flowers)), by = 11), "not a multiple")
+  
   vis.flowers <- vismodel(flowers, visual = "bluetit")
   names(vis.flowers) <- c("a", "b", "c", "d", "e")
   expect_warning(colspace(vis.flowers, space = "tcs"), "Could not find columns")
