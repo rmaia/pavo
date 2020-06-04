@@ -29,8 +29,7 @@ test_that("summary.colspace", {
 
   data(flowers)
 
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
+  expect_equal(sum(summary(colspace(vismodel(flowers)))), 4.0958993)
 
 })
 

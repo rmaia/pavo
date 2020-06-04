@@ -162,8 +162,6 @@ test_that("Errors/messages", {
   names(vis.flowers) <- c("a", "b", "c", "d", "e")
   expect_warning(colspace(vis.flowers, space = "tcs"), "Could not find columns")
 
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers)))), 5), 4.08984)
-  expect_equivalent(round(sum(summary(colspace(vismodel(flowers))), by = 3), 5), 7.08984)
 })
 
 test_that("CIE", {
