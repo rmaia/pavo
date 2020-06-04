@@ -20,6 +20,8 @@ find_astar <- function(coords) {
                   rep(tetras[, "rhoT"], 4))
   astar <- max(by(tetras[, 2], tetras[, 1], min))
 
+  message("'avalue' automatically set to ", sprintf("%.4e", astar*(1+1e-15)))
+
   # We have to round the value because of numerical precision issues
   return(astar*(1+1e-15))
 }
