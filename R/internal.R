@@ -49,8 +49,9 @@ tcssum <- function(tcsres) {
     # relative color volume
     rel.c.vol <- c.vol / tot.c.vol
   } else {
-    c.vol <- NA
-    rel.c.vol <- NA
+    c.vol <- NA_real_
+    rel.c.vol <- NA_real_
+    a.vol <- NA_real_
   }
 
   # hue disparity
