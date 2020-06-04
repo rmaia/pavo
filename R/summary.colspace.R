@@ -19,14 +19,18 @@
 #' `data.frame` summary, except when the object is the result of [tcspace()],
 #' in which case the following variables are output instead:
 #' - `centroid.u, .s, .m, .l` the centroids of `usml` coordinates of points.
-#' - `c.vol` the total volume occupied by the points.
-#' - `rel.c.vol` volume occupied by the points relative to the tetrahedron volume.
+#' - `c.vol` the total volume occupied by the points, computed with a convex
+#'    hull.
+#' - `rel.c.vol` volume occupied by the points (convex hull volume) relative to
+#'    the tetrahedron volume.
 #' - `colspan.m` the mean hue span.
 #' - `colspan.v` the variance in hue span.
 #' - `huedisp.m` the mean hue disparity.
 #' - `huedisp.v` the variance in hue disparity.
 #' - `mean.ra` mean saturation.
 #' - `max.ra` maximum saturation achieved by the group of points.
+#' - `a.vol` colour volume computed with
+#'    \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes.
 #'
 #' @export
 #'
@@ -52,6 +56,10 @@
 #'  The American Naturalist, 171(6), 755-776.
 #' @references Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+#' @references
+#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
+#'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
 summary.colspace <- function(object, by = NULL, ...) {
   chkDots(...)

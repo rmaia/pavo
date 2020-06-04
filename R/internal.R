@@ -42,6 +42,10 @@ tcssum <- function(tcsres) {
     # circle of radius (3/4)
     tot.c.vol <- sqrt(3) / 8
 
+    astar <- find_astar(as.matrix(tcsres[, c("x", "y", "z")]))
+    ashape <- alphashape3d::ashape3d(as.matrix(tcsres[, c("x", "y", "z")]), astar)
+    a.vol <- alphashape3d::volume_ashape3d(ashape)
+
     # relative color volume
     rel.c.vol <- c.vol / tot.c.vol
   } else {
@@ -63,13 +67,15 @@ tcssum <- function(tcsres) {
     c.vol, rel.c.vol,
     colspan.m, colspan.v,
     hdisp.m, hdisp.v,
-    mean.ra, max.ra
+    mean.ra, max.ra,
+    a.vol
   )
 
   names(res.c) <- c(
     "centroid.u", "centroid.s", "centroid.m", "centroid.l",
     "c.vol", "rel.c.vol", "colspan.m", "colspan.v", "huedisp.m", "huedisp.v",
-    "mean.ra", "max.ra"
+    "mean.ra", "max.ra",
+    "a.vol"
   )
 
   res.c

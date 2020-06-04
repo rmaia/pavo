@@ -43,7 +43,13 @@ plot(tcs_flowers)
 vol(tcs_flowers, type = "alpha")
 ```
 
-You can set the $\alpha$ parameter to the value of your choice via the `avalue` 
+To get the colour volume value, you can use the `summary.colspace()` function:
+
+```{r}
+summary(tcs_flowers)
+```
+
+Alternatively, you can set the $\alpha$ parameter to the value of your choice via the `avalue` 
 argument:
 
 ```{r}
