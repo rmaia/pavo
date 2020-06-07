@@ -8,7 +8,9 @@
   colour volume. Please refer to the vignette `vignette("pavo-5-alphashapes", 
   package = "pavo")` for more information. As a result, the argument order
   in these 3 function has changed. Check the documentation to update your
-  scripts accordingly.
+  scripts accordingly. The function `summary.colspace()` also gains an 
+  additional column that returns that colour volume computed with an alpha-shape
+  of parameter alpha* in the case of `tcs` objects.
 
 ## MINOR FEATURES AND BUG FIXES
 
