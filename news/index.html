@@ -167,6 +167,10 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> is now laxer in its argument checks and accept objects that are neither <code>vismodel</code> or <code>colspace</code> objects. This means you can now use this function on quantum catches dataframe that you obtained outside of pavo, such as the MICA toolbox.</li>
+<li>
+<code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> now prints a more explicit error when the <code>by</code> argument value is not a multiple of the number of rows in the colspace object (i.e., the number of spectra)</li>
 <li>Added a continuous measure of hue to the output of the categorical model of Troje (1993)</li>
 <li>
 <code>teal</code> example dataset columns have been renamed to add an additional zero in front of single digit numbers, so that column names now sort in the correct order by default.</li>
