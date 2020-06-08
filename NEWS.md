@@ -14,6 +14,13 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `bootcoldist()` is now laxer in its argument checks and accept objects that 
+are neither `vismodel` or `colspace` objects. This means you can now use this 
+function on quantum catches dataframe that you obtained outside of pavo, such
+as the MICA toolbox.
+* `summary.colspace()` now prints a more explicit error when the `by` argument
+value is not a multiple of the number of rows in the colspace object (i.e., the
+number of spectra)
 * Added a continuous measure of hue to the output of the categorical model of Troje (1993)
 * `teal` example dataset columns have been renamed to add an additional zero in
 front of single digit numbers, so that column names now sort in the correct
