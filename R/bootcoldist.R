@@ -14,7 +14,7 @@
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
 #' @inheritParams getspec
-#' 
+#'
 #' @inherit getspec details
 #'
 #' @return a matrix including the empirical mean and bootstrapped
@@ -45,7 +45,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
-            "about how you can choose your parallelisation strategy.", 
+            "about how you can choose your parallelisation strategy.",
             call. = FALSE)
   }
 
@@ -97,9 +97,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
 
     if (attr(vismodeldata, "visualsystem.achromatic") == "none") {
       arg0$achromatic <- FALSE
-    }
-
-    if (attr(vismodeldata, "visualsystem.achromatic") != "none") {
+    } else {
       arg0$achromatic <- TRUE
     }
   }
@@ -209,7 +207,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     tmparg$modeldata <- x
     do.call(coldist, tmparg)
   }
-  
+
   with_progress({
     p <- progressor(along = bootgrouped)
     bootcd <- future_lapply(bootgrouped, function(z) {
