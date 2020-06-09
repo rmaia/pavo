@@ -11,7 +11,8 @@
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 #' names can be used in order to filter and show only those variables.
 #' @param lim vector specifying wavelength range to interpolate over (e.g.
-#'   `c(300, 700)`).
+#'   `c(300, 700)`). Defaults to the entire range in the `rspec` object. 
+#'   Replaces the deprecated `wlmin` and `wlmax` arguments.
 #' @param wlmin,wlmax (deprecated) minimum and maximum used to define the range of wavelengths used in
 #' calculations (default is to use entire range in the `rspec` object).
 #' @param ... class consistency (ignored)
@@ -21,7 +22,7 @@
 #' The colorimetric variables calculated by this function are
 #' described in Montgomerie (2006) with corrections included in the README CLR
 #' file from the May 2008 distribution of the CLR software. Authors should reference
-#' both this package,Montgomerie (2006), and the original reference(s).
+#' both this package, Montgomerie (2006), and the original reference(s).
 #' Description and notes on the measures:
 #'
 #' B1 (Total brightness): Sum of the relative reflectance over the entire spectral
