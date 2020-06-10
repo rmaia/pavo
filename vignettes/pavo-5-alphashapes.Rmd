@@ -22,12 +22,16 @@ options(rgl.useNULL = TRUE)
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
+Traditionally, colour volume or "colourfulness" of an object has been measured
+by computing the volume of the convex hull containing the data points, as
+described in [@Stoddard2008]
+
 $\alpha$-shapes are a new tool available in `pavo` to estimate colour volumes, 
 while allowing the presence of voids and pockets, which may lead to a more
 accurate measurement of "colourfulness" than convex hulls. For more information
 on the theoretical background, please report to the related article [@Gruson2020]
 
-# Alphashapes in chromaticity diagrams
+# $\alpha$-shapes in chromaticity diagrams
 
 You can plot the colour volume using $\alpha$-shape with the `vol()` function
 (for non-interactive plots, `tcsvol()` otherwise) by specifying 
@@ -43,7 +47,10 @@ plot(tcs_flowers)
 vol(tcs_flowers, type = "alpha")
 ```
 
-To get the colour volume value, you can use the `summary.colspace()` function:
+To get the colour volume value, you can use the `summary.colspace()` function. 
+The colour volume computed by the convex hull is contained in the `c.vol` column
+and the colour volume computed by the $\alpha$-shape (with parameter $\alpha^*$)
+is contained in the `a.vol` column:
 
 ```{r}
 summary(tcs_flowers)
@@ -57,11 +64,11 @@ plot(tcs_flowers)
 vol(tcs_flowers, type = "alpha", avalue = 0.5)
 ```
 
-# Alphashapes in perceptually uniform spaces
+# $\alpha$-shapes in perceptually uniform spaces
 
-In the previous section, we focused on alpashapes in chromaticity diagrams since
-it is the most common space where convex hulls (that alphashapes aim at
-replacing) are used. But it is also possible to use alphashapes in other spaces,
+In the previous section, we focused on $\alpha$-shapes in chromaticity diagrams since
+it is the most common space where convex hulls (that $\alpha$-shapes aim at
+replacing) are used. But it is also possible to use $\alpha$-shapes in other spaces,
 such as perceptually uniform spaces.
 
 Let's first build this uniform space and look at the data points in this space:
@@ -72,9 +79,9 @@ xy_flowers <- jnd2xyz(cd_flowers)
 plot(xy_flowers)
 ```
 
-High-level functions to build the alphashape directly in `pavo` have not yet
+High-level functions to build the $\alpha$-shape directly in `pavo` have not yet
 been implemented but you can use the `alphashape3d` package directly to compute
-the alphashape, its volume and display it in a 3D interactive plot.
+the $\alpha$-shapes, its volume and display it in a 3D interactive plot.
 
 ```{r}
 library(alphashape3d)
@@ -90,10 +97,10 @@ rgl::bg3d("white")
 plot(ashape_jnd)
 ```
 
-# Colour volume overlap with alphashapes
+# Colour volume overlap with $\alpha$-shapes
 
-Alphashapes can also be used to measure the colour similarity of two objects, by
-computing the colour volume overlap. This is done in `pavo` with the 
+$\alpha$-shapes can also be used to measure the colour similarity of two objects, 
+by computing the colour volume overlap. This is done in `pavo` with the 
 `overlap3d()` function. For example, let's compare the colour volume of the 
 crown and the breast of stripe-tailed yellow finches (*Sicalis citrina*):
 
