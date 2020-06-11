@@ -20,8 +20,8 @@
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' @param illum the illuminant used when estimating XYZ values, if `vismodeldata` are
-#' not the result of a call to `vismodel()` (otherwise the argument is ignored). 
-#' Either a data frame containing a `'wl'` column and the illuminant spectrum, or 
+#' not the result of a call to `vismodel()` (otherwise the argument is ignored).
+#' Either a data frame containing a `'wl'` column and the illuminant spectrum, or
 #' one of the built-in options:
 #' - `'D65'`: standard daylight.
 #' - `'bluesky'` open blue sky.
@@ -96,11 +96,17 @@ cie <- function(vismodeldata,
       # Match user-specified arguments
       visual2 <- tryCatch(
         match.arg(visual),
-        error = function(e) "user-defined"
+        error = function(e) {
+          message("Using custom visual system to estimate cie neutral point")
+          return("user-defined")
+        }
       )
       illum2 <- tryCatch(
         match.arg(illum),
-        error = function(e) "user-defined"
+        error = function(e) {
+          message("Using custom illuminant to estimate cie neutral point")
+          return("user-defined")
+        }
       )
 
       # Grab the relevant data

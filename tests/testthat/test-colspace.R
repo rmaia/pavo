@@ -185,5 +185,9 @@ test_that("CIE", {
   # Should ignore custom options when data are class vismodel()
   expect_equal(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie10', illum = 'D65'),
                colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie2', illum = 'bluesky'))
+  
+  # Message about the use of user-defined data
+  expect_message(colspace(fakedat, space = "cielab", illum = sensdata(illum = 'D65')), 'custom illuminant')
+  expect_message(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10')), 'custom visual system')
 
 })
