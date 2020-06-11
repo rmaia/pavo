@@ -84,7 +84,7 @@ cie <- function(vismodeldata,
 
     # Calculate tristimulus values for neutral point. First need to
     # re-grab original sensitivity and illuminant data.
-    if ("vismodel" %in% class(vismodeldata)) {
+    if (inherits(vismodeldata, "vismodel")) {
       S <- attr(vismodeldata, "data.visualsystem.chromatic")
       illum <- attr(vismodeldata, "data.illuminant") # Illuminant
     } else {
