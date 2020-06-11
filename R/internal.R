@@ -2,27 +2,6 @@
   packageStartupMessage("Welcome to pavo 2! Take a look at the latest features (and update your bibliography) in our recent publication: Maia R., Gruson H., Endler J. A., White T. E. (2019) pavo 2: new tools for the spectral and spatial analysis of colour in R. Methods in Ecology and Evolution, 10, 1097-1107.")
 }
 
-prepare_userdefined <- function(df) {
-  dfname <- deparse(substitute(df))
-  
-  if (is.rspec(df)) {
-    dfwhichused <- names(df)[2]
-    df <- df[, 2]
-    message(dfname, " is an rspec object; first spectrum (",
-            dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-            call. = FALSE
-    )
-  } else if (is.data.frame(df) | is.matrix(df)) {
-    dfwhichused <- names(df)[1]
-    df <- df[, 1]
-    message(dfname, " is a matrix or data frame; first column (",
-            dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-            call. = FALSE
-    )
-  }
-  return(df)
-}
-
 #####################
 # SUMMARY VARIABLES #
 #####################

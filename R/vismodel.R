@@ -289,7 +289,7 @@ vismodel <- function(rspecdata,
     bkg <- rep(1, dim(rspecdata)[1])
   }
 
-  # Defining ocular transmission
+  # Defining ocular  <- mission
   trdat <- transmissiondata
 
   if (tr2 != "user-defined") {
@@ -311,23 +311,23 @@ vismodel <- function(rspecdata,
       }
     }
   }
-
+  
   prepare_userdefined <- function(df) {
     dfname <- deparse(substitute(df))
-
+    
     if (is.rspec(df)) {
       dfwhichused <- names(df)[2]
       df <- df[, 2]
       warning(dfname, " is an rspec object; first spectrum (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     } else if (is.data.frame(df) | is.matrix(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
       warning(dfname, " is a matrix or data frame; first column (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     }
     return(df)
