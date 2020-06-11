@@ -173,5 +173,21 @@ test_that("CIE", {
   expect_s3_class(implicit_cie_flowers, "colspace")
   explicit_cie_flowers <- colspace(vis_flowers, space = "ciexyz")
   expect_identical(implicit_cie_flowers, explicit_cie_flowers)
+  
+  # BYO data
+  fakedat <- data.frame(X = c(0.1, 0.2), 
+                        Y = c(0.3, 0.4),
+                        Z = c(0.5, 0.6),
+                        lum = c(NA, NA))
+  expect_equal(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10'), illum = sensdata(illum = 'D65')),
+               colspace(fakedat, space = "cielab", visual = 'cie10', illum = 'D65'))
+  
+  # Should ignore custom options when data are class vismodel()
+  expect_equal(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie10', illum = 'D65'),
+               colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie2', illum = 'bluesky'))
+  
+  # Message about the use of user-defined data
+  expect_message(colspace(fakedat, space = "cielab", illum = sensdata(illum = 'D65')), 'custom illuminant')
+  expect_message(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10')), 'custom visual system')
 
 })

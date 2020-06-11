@@ -8,7 +8,8 @@ colspace(
   vismodeldata,
   space = c("auto", "di", "tri", "tcs", "hexagon", "coc", "categorical", "ciexyz",
     "cielab", "cielch", "segment"),
-  qcatch = NULL
+  qcatch = NULL,
+  ...
 )
 }
 \arguments{
@@ -44,6 +45,8 @@ See \code{\link[=categorical]{categorical()}} for details. (\link[=catplot]{plot
 
 \item{qcatch}{Which quantal catch metric is being inputted. Only used when
 input data is NOT an output from \code{\link[=vismodel]{vismodel()}}. Must be \code{Qi}, \code{fi} or \code{Ei}.}
+
+\item{...}{additional arguments passed to \code{\link[=cie]{cie()}} for non \code{vismodel()} data.}
 }
 \description{
 Models reflectance spectra in a colorspace. For information on plotting

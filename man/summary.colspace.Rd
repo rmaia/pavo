@@ -28,14 +28,18 @@ options specified when calculating the visual model. Also return the default
 in which case the following variables are output instead:
 \itemize{
 \item \verb{centroid.u, .s, .m, .l} the centroids of \code{usml} coordinates of points.
-\item \code{c.vol} the total volume occupied by the points.
-\item \code{rel.c.vol} volume occupied by the points relative to the tetrahedron volume.
+\item \code{c.vol} the total volume occupied by the points, computed with a convex
+hull.
+\item \code{rel.c.vol} volume occupied by the points (convex hull volume) relative to
+the tetrahedron volume.
 \item \code{colspan.m} the mean hue span.
 \item \code{colspan.v} the variance in hue span.
 \item \code{huedisp.m} the mean hue disparity.
 \item \code{huedisp.v} the variance in hue disparity.
 \item \code{mean.ra} mean saturation.
 \item \code{max.ra} maximum saturation achieved by the group of points.
+\item \code{a.vol} colour volume computed with
+\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes.
 }
 }
 \description{
@@ -64,6 +68,10 @@ The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
+
+Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
+Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
