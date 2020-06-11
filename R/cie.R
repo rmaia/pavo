@@ -7,7 +7,24 @@
 #'  from [vismodel()] or independently calculated data (in the form of a
 #'  data frame with three columns representing trichromatic viewer).
 #' @param space (required) Choice between XYZ (default), LAB, or LCh colour models.
-#'
+#' @param visual the visual system used when estimating XYZ values, if `vismodeldata` are
+#' not the result of a call to `vismodel()`. Options are:
+#' - a data frame such as one produced containing by [sensmodel()], containing
+#'    user-defined sensitivity data for the receptors involved in colour vision.
+#'    The data frame must contain a `'wl'` column with the range of wavelengths included,
+#'    and the sensitivity for each other cone as a column.
+#' - `'cie2'`: 2-degree colour matching functions for CIE models of human
+#'  colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+#'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+#' - `'cie10'`: 10-degree colour matching functions for CIE models of human
+#'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+#'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+#' @param illum the illuminant used when estimating XYZ values, if `vismodeldata` are
+#' not the result of a call to `vismodel()`. Either a data frame containing a `'wl'` column 
+#' and the illuminant spectrum, or one of the built-in options:
+#' - `'D65'`: standard daylight.
+#' - `'bluesky'` open blue sky.
+#' - `'forestshade'` forest shade.
 #'
 #' @return Object of class [`colspace`] containing:
 #' * `X, Y, Z`: Tristimulus values.
@@ -43,7 +60,11 @@
 #'  Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 #'  Internationale de l Eclairage.
 
-cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
+cie <- function(vismodeldata, 
+                space = c("XYZ", "LAB", "LCh"), 
+                visual = c("cie2", "cie10"),
+                illum = c("D65", "bluesky", "forestshade")) {
+  
   space <- tryCatch(match.arg(space),
     error = function(e) {
       message("Invalid space arg. Defaulting to XYZ")
@@ -64,15 +85,42 @@ cie <- function(vismodeldata, space = c("XYZ", "LAB", "LCh")) {
 
     # Calculate tristimulus values for neutral point. First need to
     # re-grab original sensitivity and illuminant data.
-    S <- attr(vismodeldata, "data.visualsystem.chromatic")
-    illum <- attr(vismodeldata, "data.illuminant") # Illuminant
+    if('vismodel' %in% class(vismodeldata)){
+      S <- attr(vismodeldata, "data.visualsystem.chromatic")
+      illum <- attr(vismodeldata, "data.illuminant") # Illuminant
+    }else{
+      # Grab built-in data
+      sens <- vissyst
+      bgil <- bgandilum
+      
+      # Match user-specified arguments
+      visual2 <- tryCatch(
+        match.arg(visual),
+        error = function(e) "user-defined"
+      )
+      print(visual2)
+      illum2 <- tryCatch(
+        match.arg(illum),
+        error = function(e) "user-defined"
+      )
+      
+      # Grab the relevant data
+      S <- switch(visual2,
+                  'user-defined' = prepare_userdefined(visual),
+                  'cie2' = sens[, grep(visual2, names(sens))],
+                  'cie10' = sens[, grep(visual2, names(sens))]
+                  )
+      illum <- switch(illum2,
+                     'user-defined' = prepare_userdefined(illum),
+                     'D65' = bgil[, grep(illum2, names(bgil))],
+                     'bluesky' = bgil[, grep(illum2, names(bgil))],
+                     'forestshade' = bgil[, grep(illum2, names(bgil))]
+    )
+    }
+      
     Xn <- sum(S[, 1] * illum)
     Yn <- sum(S[, 2] * illum)
     Zn <- sum(S[, 3] * illum)
-    # Xn <- Yn <- Zn <- 65535
-    # Xn = 94.811
-    # Yn = 100
-    # Zn = 107.304
 
     # LAB calculator
     f <- function(x) {
