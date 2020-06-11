@@ -35,6 +35,11 @@ test_that("Warnings", {
 
   expect_silent(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650), range = c(300, 1200))))
 
+  expect_identical(
+    vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE),
+    vismodel(flowers[91:401,], visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+  )
+
 })
 
 test_that("Sensmodel", {
@@ -65,6 +70,5 @@ test_that("sensdata()", {
   expect_false(anyNA(vis_all))
 
   colspace(vismodel(sensdata(illum = "D65"), visual = "cie10"))
-
 
 })
