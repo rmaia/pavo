@@ -193,14 +193,18 @@ options specified when calculating the visual model. Also return the default
 <code>data.frame</code> summary, except when the object is the result of <code><a href='tcspace.html'>tcspace()</a></code>,
 in which case the following variables are output instead:</p><ul>
 <li><p><code>centroid.u, .s, .m, .l</code> the centroids of <code>usml</code> coordinates of points.</p></li>
-<li><p><code>c.vol</code> the total volume occupied by the points.</p></li>
-<li><p><code>rel.c.vol</code> volume occupied by the points relative to the tetrahedron volume.</p></li>
+<li><p><code>c.vol</code> the total volume occupied by the points, computed with a convex
+hull.</p></li>
+<li><p><code>rel.c.vol</code> volume occupied by the points (convex hull volume) relative to
+the tetrahedron volume.</p></li>
 <li><p><code>colspan.m</code> the mean hue span.</p></li>
 <li><p><code>colspan.v</code> the variance in hue span.</p></li>
 <li><p><code>huedisp.m</code> the mean hue disparity.</p></li>
 <li><p><code>huedisp.v</code> the variance in hue disparity.</p></li>
 <li><p><code>mean.ra</code> mean saturation.</p></li>
 <li><p><code>max.ra</code> maximum saturation achieved by the group of points.</p></li>
+<li><p><code>a.vol</code> colour volume computed with
+&alpha;‐shapes.</p></li>
 </ul>
 
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
@@ -210,6 +214,9 @@ color in a tetrahedral color space: A phylogenetic analysis of new world bunting
 The American Naturalist, 171(6), 755-776.</p>
 <p>Endler, J. A., &amp; Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p>
+<p>Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
+&alpha;‐shapes. Methods in
+Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210X.13398'>10.1111/2041-210X.13398</a></p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>

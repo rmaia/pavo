@@ -160,7 +160,12 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces." />
 in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cie</span>(<span class='no'>vismodeldata</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XYZ"</span>, <span class='st'>"LAB"</span>, <span class='st'>"LCh"</span>))</pre>
+    <pre class="usage"><span class='fu'>cie</span>(
+  <span class='no'>vismodeldata</span>,
+  <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XYZ"</span>, <span class='st'>"LAB"</span>, <span class='st'>"LCh"</span>),
+  <span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>),
+  <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"D65"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"forestshade"</span>)
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -174,6 +179,33 @@ data frame with three columns representing trichromatic viewer).</p></td>
     <tr>
       <th>space</th>
       <td><p>(required) Choice between XYZ (default), LAB, or LCh colour models.</p></td>
+    </tr>
+    <tr>
+      <th>visual</th>
+      <td><p>the visual system used when estimating XYZ values, if <code>vismodeldata</code> are
+not the result of a call to <code><a href='vismodel.html'>vismodel()</a></code> (otherwise the argument is ignored). Options are:</p><ul>
+<li><p>a data frame such as one produced containing by <code><a href='sensmodel.html'>sensmodel()</a></code>, containing
+user-defined sensitivity data for the receptors involved in colour vision.
+The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
+and the sensitivity for each other cone as a column.</p></li>
+<li><p><code>'cie2'</code>: 2-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
+<li><p><code>'cie10'</code>: 10-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
+</ul></td>
+    </tr>
+    <tr>
+      <th>illum</th>
+      <td><p>the illuminant used when estimating XYZ values, if <code>vismodeldata</code> are
+not the result of a call to <code><a href='vismodel.html'>vismodel()</a></code> (otherwise the argument is ignored).
+Either a data frame containing a <code>'wl'</code> column and the illuminant spectrum, or
+one of the built-in options:</p><ul>
+<li><p><code>'D65'</code>: standard daylight.</p></li>
+<li><p><code>'bluesky'</code> open blue sky.</p></li>
+<li><p><code>'forestshade'</code> forest shade.</p></li>
+</ul></td>
     </tr>
     </table>
 

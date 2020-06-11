@@ -164,7 +164,8 @@ arguments and graphical parameters, see <code><a href='plot.colspace.html'>plot.
   <span class='no'>vismodeldata</span>,
   <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"auto"</span>, <span class='st'>"di"</span>, <span class='st'>"tri"</span>, <span class='st'>"tcs"</span>, <span class='st'>"hexagon"</span>, <span class='st'>"coc"</span>, <span class='st'>"categorical"</span>, <span class='st'>"ciexyz"</span>,
     <span class='st'>"cielab"</span>, <span class='st'>"cielch"</span>, <span class='st'>"segment"</span>),
-  <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -207,6 +208,10 @@ See <code><a href='categorical.html'>categorical()</a></code> for details. (<a h
       <th>qcatch</th>
       <td><p>Which quantal catch metric is being inputted. Only used when
 input data is NOT an output from <code><a href='vismodel.html'>vismodel()</a></code>. Must be <code>Qi</code>, <code>fi</code> or <code>Ei</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>additional arguments passed to <code><a href='cie.html'>cie()</a></code> for non <code><a href='vismodel.html'>vismodel()</a></code> data.</p></td>
     </tr>
     </table>
 
