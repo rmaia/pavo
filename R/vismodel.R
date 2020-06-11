@@ -335,7 +335,7 @@ vismodel <- function(rspecdata,
   achromatic <- prepare_userdefined(achromatic)
 
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
-    if (all(S[!sens_wl %in% wl, ] == 0)) {
+    if (length(sens_wl) > length(wl) && all(S[!sens_wl %in% wl, ] == 0)) {
       S <- S[sens_wl %in% wl, ]
       trans <- trans[sens_wl %in% wl]
       bkg <- bkg[sens_wl %in% wl]
