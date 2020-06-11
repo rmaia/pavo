@@ -179,6 +179,11 @@ test_that("CIE", {
                         Y = c(0.3, 0.4),
                         Z = c(0.5, 0.6),
                         lum = c(NA, NA))
-  colspace(fakedat, space = "cielab", visual = 'cie10', illum = sensdata(illum = 'D65'))
+  expect_equal(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10'), illum = sensdata(illum = 'D65')),
+               colspace(fakedat, space = "cielab", visual = 'cie10', illum = 'D65'))
+  
+  # Should ignore custom options when data are class vismodel()
+  expect_equal(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie10', illum = 'D65'),
+               colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie2', illum = 'bluesky'))
 
 })

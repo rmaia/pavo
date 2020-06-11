@@ -98,7 +98,6 @@ cie <- function(vismodeldata,
         match.arg(visual),
         error = function(e) "user-defined"
       )
-      print(visual2)
       illum2 <- tryCatch(
         match.arg(illum),
         error = function(e) "user-defined"
@@ -106,12 +105,12 @@ cie <- function(vismodeldata,
       
       # Grab the relevant data
       S <- switch(visual2,
-                  'user-defined' = prepare_userdefined(visual),
+                  'user-defined' = isolate_wl(visual, keep = 'spec'),
                   'cie2' = sens[, grep(visual2, names(sens))],
                   'cie10' = sens[, grep(visual2, names(sens))]
                   )
       illum <- switch(illum2,
-                     'user-defined' = prepare_userdefined(illum),
+                     'user-defined' = isolate_wl(illum, keep = 'spec'),
                      'D65' = bgil[, grep(illum2, names(bgil))],
                      'bluesky' = bgil[, grep(illum2, names(bgil))],
                      'forestshade' = bgil[, grep(illum2, names(bgil))]
