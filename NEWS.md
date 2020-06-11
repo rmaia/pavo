@@ -14,6 +14,9 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* CIE models now accept data created outside of `vismodel()`, by allowing users to 
+specify the illuminant and viewer sensitivity function used when estimating XYZ values 
+(via `illum` and `visual` arguments in `colspace()`).
 * `bootcoldist()` is now laxer in its argument checks and accept objects that 
 are neither `vismodel` or `colspace` objects. This means you can now use this 
 function on quantum catches dataframe that you obtained outside of pavo, such
