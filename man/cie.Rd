@@ -19,7 +19,7 @@ data frame with three columns representing trichromatic viewer).}
 \item{space}{(required) Choice between XYZ (default), LAB, or LCh colour models.}
 
 \item{visual}{the visual system used when estimating XYZ values, if \code{vismodeldata} are
-not the result of a call to \code{vismodel()}. Options are:
+not the result of a call to \code{vismodel()} (otherwise the argument is ignored). Options are:
 \itemize{
 \item a data frame such as one produced containing by \code{\link[=sensmodel]{sensmodel()}}, containing
 user-defined sensitivity data for the receptors involved in colour vision.
@@ -34,8 +34,9 @@ of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 }}
 
 \item{illum}{the illuminant used when estimating XYZ values, if \code{vismodeldata} are
-not the result of a call to \code{vismodel()}. Either a data frame containing a \code{'wl'} column
-and the illuminant spectrum, or one of the built-in options:
+not the result of a call to \code{vismodel()} (otherwise the argument is ignored).
+Either a data frame containing a \code{'wl'} column and the illuminant spectrum, or
+one of the built-in options:
 \itemize{
 \item \code{'D65'}: standard daylight.
 \item \code{'bluesky'} open blue sky.

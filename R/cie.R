@@ -8,7 +8,7 @@
 #'  data frame with three columns representing trichromatic viewer).
 #' @param space (required) Choice between XYZ (default), LAB, or LCh colour models.
 #' @param visual the visual system used when estimating XYZ values, if `vismodeldata` are
-#' not the result of a call to `vismodel()`. Options are:
+#' not the result of a call to `vismodel()` (otherwise the argument is ignored). Options are:
 #' - a data frame such as one produced containing by [sensmodel()], containing
 #'    user-defined sensitivity data for the receptors involved in colour vision.
 #'    The data frame must contain a `'wl'` column with the range of wavelengths included,
@@ -20,8 +20,9 @@
 #'  colour vision. Functions are linear transformations of the 10-degree cone fundamentals
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' @param illum the illuminant used when estimating XYZ values, if `vismodeldata` are
-#' not the result of a call to `vismodel()`. Either a data frame containing a `'wl'` column
-#' and the illuminant spectrum, or one of the built-in options:
+#' not the result of a call to `vismodel()` (otherwise the argument is ignored). 
+#' Either a data frame containing a `'wl'` column and the illuminant spectrum, or 
+#' one of the built-in options:
 #' - `'D65'`: standard daylight.
 #' - `'bluesky'` open blue sky.
 #' - `'forestshade'` forest shade.
