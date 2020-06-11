@@ -14,6 +14,8 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `sensmodel()` now accepts the argument `sensnames`, for specifying the names
+of the resulting sensitivity curves on-the-fly.
 * CIE models now accept data created outside of `vismodel()`, by allowing users to 
 specify the illuminant and viewer sensitivity function used when estimating XYZ values 
 (via `illum` and `visual` arguments in `colspace()`).

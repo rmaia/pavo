@@ -24,6 +24,8 @@
 #' under the curve of 1 (best for visual models; defaults to `TRUE`). NOTE:
 #' integration is applied before any effects of ocular media are considered, for
 #' compatibility with visual model procedures.
+#' @param sensnames A vector equal in length to `peaksens`, specifying custom names for the resulting sensitivity
+#' curves (e.g. c('s', 'm', 'l') for short-, medium- and long-wavelength sensitive receptors.) 
 #'
 #' @return A data frame of class `rspec` containing each cone model as a column.
 #'
@@ -54,7 +56,7 @@
 
 
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
-                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE) {
+                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = NULL) {
   if (!is.null(lambdacut)) {
     if (is.null(Bmid) & is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
     if (length(lambdacut) != length(peaksens)) stop("lambdacut must be same length as peaksens", call. = FALSE)
@@ -146,7 +148,20 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   }
 
   sensecurves <- as.data.frame(sensecurves)
-  names(sensecurves) <- paste0("lmax", peaksens)
+  
+  if(!is.null(sensnames)){
+    if(length(sensnames) != length(sensecurves)){
+      message("The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. Reverting to default names.")
+      sensnames <- NULL
+    }else{
+      names(sensecurves) <- sensnames
+    }
+  }
+  
+  if(is.null(sensnames)){
+    names(sensecurves) <- paste0("lmax", peaksens)  
+  }
+  
 
   sensecurves <- cbind(wl, sensecurves)
 

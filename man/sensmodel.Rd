@@ -12,7 +12,8 @@ sensmodel(
   oiltype = NULL,
   beta = TRUE,
   om = NULL,
-  integrate = TRUE
+  integrate = TRUE,
+  sensnames = NULL
 )
 }
 \arguments{
@@ -44,6 +45,9 @@ values from Hart et al. (2005), or user-defined values.}
 under the curve of 1 (best for visual models; defaults to \code{TRUE}). NOTE:
 integration is applied before any effects of ocular media are considered, for
 compatibility with visual model procedures.}
+
+\item{sensnames}{A vector equal in length to \code{peaksens}, specifying custom names for the resulting sensitivity
+curves (e.g. c('s', 'm', 'l') for short-, medium- and long-wavelength sensitive receptors.)}
 }
 \value{
 A data frame of class \code{rspec} containing each cone model as a column.

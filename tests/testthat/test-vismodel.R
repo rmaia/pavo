@@ -49,6 +49,11 @@ test_that("Sensmodel", {
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = "t"), "length")
   expect_error(sensmodel(c(300, 400, 500), Bmid = c(350, 450, 550)), "provided together")
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), Bmid = c(350, 450, 550), oiltype = "t"), "only 2")
+  
+  # Custom names
+  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm', 'l'))), c('wl', 's', 'm', 'l'))
+  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm'))), c('wl', 'lmax300', 'lmax400', 'lmax500'))
+  expect_message(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm'))), 'length of argument')
 })
 
 test_that("sensdata()", {
