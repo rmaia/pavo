@@ -168,7 +168,8 @@ according to the models of Govardovskii et al. (2000) and Hart &amp; Vorobyev (2
   <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='kw'>om</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+  <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>sensnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -218,6 +219,11 @@ values from Hart et al. (2005), or user-defined values.</p></td>
 under the curve of 1 (best for visual models; defaults to <code>TRUE</code>). NOTE:
 integration is applied before any effects of ocular media are considered, for
 compatibility with visual model procedures.</p></td>
+    </tr>
+    <tr>
+      <th>sensnames</th>
+      <td><p>A vector equal in length to <code>peaksens</code>, specifying custom names for the resulting sensitivity
+curves (e.g. c('s', 'm', 'l') for short-, medium- and long-wavelength sensitive receptors.)</p></td>
     </tr>
     </table>
 
