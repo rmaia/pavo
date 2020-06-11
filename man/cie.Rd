@@ -4,7 +4,12 @@
 \alias{cie}
 \title{CIE colour spaces}
 \usage{
-cie(vismodeldata, space = c("XYZ", "LAB", "LCh"))
+cie(
+  vismodeldata,
+  space = c("XYZ", "LAB", "LCh"),
+  visual = c("cie2", "cie10"),
+  illum = c("D65", "bluesky", "forestshade")
+)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch color data. Can be either the result
@@ -12,6 +17,30 @@ from \code{\link[=vismodel]{vismodel()}} or independently calculated data (in th
 data frame with three columns representing trichromatic viewer).}
 
 \item{space}{(required) Choice between XYZ (default), LAB, or LCh colour models.}
+
+\item{visual}{the visual system used when estimating XYZ values, if \code{vismodeldata} are
+not the result of a call to \code{vismodel()}. Options are:
+\itemize{
+\item a data frame such as one produced containing by \code{\link[=sensmodel]{sensmodel()}}, containing
+user-defined sensitivity data for the receptors involved in colour vision.
+The data frame must contain a \code{'wl'} column with the range of wavelengths included,
+and the sensitivity for each other cone as a column.
+\item \code{'cie2'}: 2-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 2-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+\item \code{'cie10'}: 10-degree colour matching functions for CIE models of human
+colour vision. Functions are linear transformations of the 10-degree cone fundamentals
+of Stockman & Sharpe (2000), as ratified by the CIE (2006).
+}}
+
+\item{illum}{the illuminant used when estimating XYZ values, if \code{vismodeldata} are
+not the result of a call to \code{vismodel()}. Either a data frame containing a \code{'wl'} column
+and the illuminant spectrum, or one of the built-in options:
+\itemize{
+\item \code{'D65'}: standard daylight.
+\item \code{'bluesky'} open blue sky.
+\item \code{'forestshade'} forest shade.
+}}
 }
 \value{
 Object of class \code{\link{colspace}} containing:

@@ -8,7 +8,7 @@ voloverlap(
   colsp1,
   colsp2,
   type = c("convex", "alpha"),
-  avalue,
+  avalue = "auto",
   plot = FALSE,
   interactive = FALSE,
   col = c("blue", "red", "darkgrey"),
