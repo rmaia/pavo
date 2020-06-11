@@ -31,6 +31,7 @@
 #' ([plotting arguments][segplot])
 #' @param qcatch Which quantal catch metric is being inputted. Only used when
 #'   input data is NOT an output from [vismodel()]. Must be `Qi`, `fi` or `Ei`.
+#' @param ... additional arguments passed to [cie()] for non `vismodel()` data.
 #'
 #' @examples
 #' data(flowers)
@@ -92,7 +93,8 @@
 
 colspace <- function(vismodeldata,
                      space = c("auto", "di", "tri", "tcs", "hexagon", "coc", "categorical", "ciexyz", "cielab", "cielch", "segment"),
-                     qcatch = NULL) {
+                     qcatch = NULL, 
+                     ...) {
   space2 <- try(match.arg(space), silent = TRUE)
 
   if (inherits(space2, "try-error")) {
@@ -130,9 +132,9 @@ colspace <- function(vismodeldata,
       "tcs" = tcspace(vismodeldata),
       "coc" = coc(vismodeldata),
       "categorical" = categorical(vismodeldata),
-      "ciexyz" = cie(vismodeldata, "XYZ"),
-      "cielab" = cie(vismodeldata, "LAB"),
-      "cielch" = cie(vismodeldata, "LCh"),
+      "ciexyz" = cie(vismodeldata, "XYZ", ...),
+      "cielab" = cie(vismodeldata, "LAB", ...),
+      "cielch" = cie(vismodeldata, "LCh", ...),
       "segment" = segspace(vismodeldata)
     )
 
