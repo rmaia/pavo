@@ -137,8 +137,8 @@ Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 }
 \seealso{
-\code{\link[rgl:spheres3d]{rgl::spheres3d()}},\code{\link[rgl:rgl.postscript]{rgl::rgl.postscript()}},
-\code{\link[rgl:rgl.snapshot]{rgl::rgl.snapshot()}},\code{\link[rgl:rgl.material]{rgl::rgl.material()}}
+\code{\link[rgl:spheres]{rgl::spheres3d()}},\code{\link[rgl:postscript]{rgl::rgl.postscript()}},
+\code{\link[rgl:snapshot]{rgl::rgl.snapshot()}},\code{\link[rgl:material]{rgl::rgl.material()}}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
