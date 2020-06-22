@@ -14,6 +14,9 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* Maximum quantum catches computation (`data.maxqcatches` attribute) now works
+for segment "visual model" as well. As a side effect, this removes a warning
+that occurred when users ran `vismodel(..., visual = "segment")`.
 * `sensmodel()` now accepts the argument `sensnames`, for specifying the names
 of the resulting sensitivity curves on-the-fly.
 * CIE models now accept data created outside of `vismodel()`, by allowing users to 

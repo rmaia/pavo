@@ -80,7 +80,7 @@
 #' Built-in `visual`, `achromatic`, `illum`, `bkg` and `trans` are only defined
 #' on the 300 to 700nm wavelength range. If you wish to work outside this range,
 #' you will need to provide your own data.
-#' 
+#'
 #' @importFrom stats quantile
 #'
 #' @export
@@ -311,10 +311,10 @@ vismodel <- function(rspecdata,
       }
     }
   }
-  
+
   prepare_userdefined <- function(df) {
     dfname <- deparse(substitute(df))
-    
+
     if (is.rspec(df)) {
       dfwhichused <- names(df)[2]
       df <- df[, 2]
@@ -372,7 +372,7 @@ vismodel <- function(rspecdata,
   Qi <- data.frame(
     crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
   )
-  maxQi <- as.matrix(S * illum) * B * K
+  maxQi <- as.matrix(S * illum) * K
 
   names(Qi) <- names(S)
 
