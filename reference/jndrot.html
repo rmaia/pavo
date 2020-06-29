@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> — jndrot • pavo</title>
+<title>Rotate Cartesian coordinates obtained from <code>jnd2xyz()</code> — jndrot • pavo</title>
 
 
 <!-- jquery -->
@@ -47,7 +47,7 @@
   <link href="../extra.css" rel="stylesheet">
   
 
-<meta property="og:title" content="Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> — jndrot" />
+<meta property="og:title" content="Rotate Cartesian coordinates obtained from <code>jnd2xyz()</code> — jndrot" />
 <meta property="og:description" content="Rotate Cartesian coordinates obtained from jnd2xyz()" />
 
 
@@ -149,22 +149,22 @@
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code></h1>
+    <h1>Rotate Cartesian coordinates obtained from <code>jnd2xyz()</code></h1>
     <small class="dont-index">Source: <a href='https://github.com/rmaia/pavo/blob/master/R/jndrot.R'><code>R/jndrot.R</code></a></small>
     <div class="hidden name"><code>jndrot.Rd</code></div>
     </div>
 
     <div class="ref-description">
-    <p>Rotate Cartesian coordinates obtained from <code><a href='jnd2xyz.html'>jnd2xyz()</a></code></p>
+    <p>Rotate Cartesian coordinates obtained from <code>jnd2xyz()</code></p>
     </div>
 
     <pre class="usage"><span class='fu'>jndrot</span>(
-  <span class='no'>jnd2xyzres</span>,
-  <span class='kw'>center</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
-  <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>,
-  <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>,
-  <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>),
-  <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
+  <span class='kw'>jnd2xyzres</span>,
+  center = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
+  ref1 = <span class='st'>"l"</span>,
+  ref2 = <span class='st'>"u"</span>,
+  axis1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>),
+  axis2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,7 +172,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>jnd2xyzres</th>
-      <td><p>(required) the output from a <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> call.</p></td>
+      <td><p>(required) the output from a <code>jnd2xyz()</code> call.</p></td>
     </tr>
     <tr>
       <th>center</th>
@@ -183,13 +183,13 @@ center ("achro") or the data centroid ("mean", the default)?</p></td>
       <th>ref1</th>
       <td><p>the cone to be used as a the first reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'l'.</p></td>
+in the original data that was used for <code>coldist()</code>. Defaults to 'l'.</p></td>
     </tr>
     <tr>
       <th>ref2</th>
       <td><p>the cone to be used as a the second reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'u'.
+in the original data that was used for <code>coldist()</code>. Defaults to 'u'.
 (only used if data has 3 dimensions).</p></td>
     </tr>
     <tr>
@@ -213,9 +213,9 @@ Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
-<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jndrot</span>(<span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span>(<span class='no'>cd.flowers</span>))</div><div class='output co'>#&gt;                                    x           y           z
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>)
+<span class='kw'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jndrot</span>(<span class='fu'>jnd2xyz</span>(<span class='kw'>cd.flowers</span>))</div><div class='output co'>#&gt;                                    x           y           z
 #&gt; Goodenia_heterophylla      0.5424525 -5.64780370   7.0514924
 #&gt; Goodenia_geniculata       -1.0550989 -2.50605704  -6.4010132
 #&gt; Goodenia_gracilis         -3.2108736 12.34251010 -22.9160486

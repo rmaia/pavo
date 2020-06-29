@@ -161,10 +161,10 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
     </div>
 
     <pre class="usage"><span class='fu'>cie</span>(
-  <span class='no'>vismodeldata</span>,
-  <span class='kw'>space</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XYZ"</span>, <span class='st'>"LAB"</span>, <span class='st'>"LCh"</span>),
-  <span class='kw'>visual</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>),
-  <span class='kw'>illum</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"D65"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"forestshade"</span>)
+  <span class='kw'>vismodeldata</span>,
+  space = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"XYZ"</span>, <span class='st'>"LAB"</span>, <span class='st'>"LCh"</span>),
+  visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>),
+  illum = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"D65"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"forestshade"</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -173,7 +173,7 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
+from <code>vismodel()</code> or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).</p></td>
     </tr>
     <tr>
@@ -183,8 +183,8 @@ data frame with three columns representing trichromatic viewer).</p></td>
     <tr>
       <th>visual</th>
       <td><p>the visual system used when estimating XYZ values, if <code>vismodeldata</code> are
-not the result of a call to <code><a href='vismodel.html'>vismodel()</a></code> (otherwise the argument is ignored). Options are:</p><ul>
-<li><p>a data frame such as one produced containing by <code><a href='sensmodel.html'>sensmodel()</a></code>, containing
+not the result of a call to <code>vismodel()</code> (otherwise the argument is ignored). Options are:</p><ul>
+<li><p>a data frame such as one produced containing by <code>sensmodel()</code>, containing
 user-defined sensitivity data for the receptors involved in colour vision.
 The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
 and the sensitivity for each other cone as a column.</p></li>
@@ -199,7 +199,7 @@ of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
     <tr>
       <th>illum</th>
       <td><p>the illuminant used when estimating XYZ values, if <code>vismodeldata</code> are
-not the result of a call to <code><a href='vismodel.html'>vismodel()</a></code> (otherwise the argument is ignored).
+not the result of a call to <code>vismodel()</code> (otherwise the argument is ignored).
 Either a data frame containing a <code>'wl'</code> column and the illuminant spectrum, or
 one of the built-in options:</p><ul>
 <li><p><code>'D65'</code>: standard daylight.</p></li>
@@ -211,7 +211,7 @@ one of the built-in options:</p><ul>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Object of class <code><a href='colspace.html'>colspace</a></code> containing:</p><ul>
+    <p>Object of class <code>colspace</code> containing:</p><ul>
 <li><p><code>X, Y, Z</code>: Tristimulus values.</p></li>
 <li><p><code>x, y, z</code>: Cartesian coordinates, when using <code>space = XYZ</code>.</p></li>
 <li><p><code>L, a, b</code>: Lightness, <code>L</code>, and colour-opponent <code>a</code> (redness-greenness) and
@@ -240,11 +240,11 @@ Internationale de l Eclairage.</p>
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"cie10"</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>"D65"</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>flowers.ciexyz</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"ciexyz"</span>)
-<span class='no'>flowers.cielab</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"cielab"</span>)
-<span class='no'>flowers.cielch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"cielch"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"cie10"</span>, illum = <span class='st'>"D65"</span>, vonkries = <span class='fl'>TRUE</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>flowers.ciexyz</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"ciexyz"</span>)
+<span class='kw'>flowers.cielab</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielab"</span>)
+<span class='kw'>flowers.cielch</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielch"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

@@ -159,16 +159,16 @@
     </div>
 
     <pre class="usage"><span class='fu'>segplot</span>(
-  <span class='no'>segdata</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>lab.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>,
-  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>tick.loc</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(-<span class='fl'>1</span>, -<span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>),
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-  <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>segdata</span>,
+  labels = <span class='fl'>TRUE</span>,
+  lab.cex = <span class='fl'>0.9</span>,
+  out.lwd = <span class='fl'>1</span>,
+  out.lty = <span class='fl'>1</span>,
+  out.lcol = <span class='st'>"black"</span>,
+  tick.loc = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='op'>-</span><span class='fl'>1</span>, <span class='op'>-</span><span class='fl'>0.5</span>, <span class='fl'>0.5</span>, <span class='fl'>1</span>),
+  margins = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
+  square = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -177,7 +177,7 @@
     <tr>
       <th>segdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='segspace.html'>segspace()</a></code> function, containing values for 'LM' and 'MS'
+<code>colspace()</code> or <code>segspace()</code> function, containing values for 'LM' and 'MS'
 as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -215,9 +215,10 @@ Linnean Society, 41, 315-352.</p>
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"segment"</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='input'><span class='no'>seg.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"segment"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>seg.flowers</span>)</div><div class='img'><img src='segplot-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"segment"</span>, achromatic = <span class='st'>"all"</span>)
+<span class='kw'>seg.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"segment"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>seg.flowers</span>)</div><div class='img'><img src='segplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

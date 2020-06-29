@@ -100,13 +100,13 @@
 
       
 
-      </header><div class="row">
+      </header><script src="pavo-3-analysing_files/accessible-code-block-0.0.1/empty-anchor.js"></script><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-06-15</h4>
+            <h4 class="date">2020-06-29</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -131,9 +131,11 @@ code.sourceCode {
 }
 </style>
 <p>Let’s again begin by loading the package.</p>
-<div class="sourceCode" id="cb1"><html><body><pre class="r"><span class="co"># Load the package, and set a global random-number seed for the reproducible generation of fake data later on.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">pavo</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1612217</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb1"><pre class="downlit">
+<span class="co"># Load the package, and set a global random-number seed for the reproducible generation of fake data later on.</span>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="http://pavo.colrverse.com">pavo</a></span>)
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">1612217</span>)
+</pre></div>
 <div id="analysing-spectral-data" class="section level1">
 <h1 class="hasAnchor">
 <a href="#analysing-spectral-data" class="anchor"></a>Analysing Spectral Data</h1>
@@ -143,11 +145,13 @@ code.sourceCode {
 <p>The raw spectral data used in this example are available from the package repository on <a href="https://github.com/rmaia/pavo">github</a>, located <a href="https://github.com/rmaia/pavo/blob/master/data_external/vignette">here</a>. You can download and extract it to follow the vignette exactly. Alternatively, the data are included as an RData file as part of the package installation, and so can be loaded directly (see below).</p>
 <p>The data consist of reflectance spectra, obtained using Avantes equipment and software, from seven bird species: Northern Cardinal <em>Cardinalis cardinalis</em>, Wattled Jacana <em>Jacana jacana</em>, Baltimore Oriole <em>Icterus galbula</em>, Peach-fronted Parakeet <em>Aratinga aurea</em>, American Robin <em>Turdus migratorius</em>, and Sayaca Tanager <em>Thraupis sayaca</em>. Several individuals were measured (sample size varies by species), and 3 spectra were collected from each individual. However, the number of individuals measured per species is uneven and the data have additional peculiarities that should emphasize the flexibility <code>pavo</code> offers, as we’ll see below.</p>
 <p>In addition, <code>pavo</code> includes three datasets that can be called with the <code>data</code> function. <code><a href="https://rdrr.io/r/utils/data.html">data(teal)</a></code>, <code><a href="https://rdrr.io/r/utils/data.html">data(sicalis)</a></code>, and <code><a href="https://rdrr.io/r/utils/data.html">data(flowers)</a></code> will all be used in this vignette. See the help files for each dataset for more information; via <code><a href="../reference/teal.html">?teal</a></code>, <code><a href="../reference/sicalis.html">?sicalis</a></code>, and <code><a href="../reference/flowers.html">?flowers</a></code>.</p>
-<div class="sourceCode" id="cb2"><html><body><pre class="r"><span class="no">specs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata/specsdata.rds"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">"pavo"</span>))
-<span class="no">mspecs</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/aggspec.html">aggspec</a></span>(<span class="no">specs</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">FUN</span> <span class="kw">=</span> <span class="no">mean</span>)
-<span class="no">spp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">'\\.[0-9].*$'</span>, <span class="st">''</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="no">mspecs</span>))[-<span class="fl">1</span>]
-<span class="no">sppspec</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/aggspec.html">aggspec</a></span>(<span class="no">mspecs</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="no">spp</span>, <span class="kw">FUN</span> <span class="kw">=</span> <span class="no">mean</span>)
-<span class="no">spec.sm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">sppspec</span>, <span class="kw">opt</span> <span class="kw">=</span> <span class="st">"smooth"</span>, <span class="kw">span</span> <span class="kw">=</span> <span class="fl">0.2</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb2"><pre class="downlit">
+<span class="kw">specs</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"extdata/specsdata.rds"</span>, package = <span class="st">"pavo"</span>))
+<span class="kw">mspecs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggspec.html">aggspec</a></span>(<span class="kw">specs</span>, by = <span class="fl">3</span>, FUN = <span class="kw">mean</span>)
+<span class="kw">spp</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html">gsub</a></span>(<span class="st">'\\.[0-9].*$'</span>, <span class="st">''</span>, <span class="fu"><a href="https://rdrr.io/r/base/names.html">names</a></span>(<span class="kw">mspecs</span>))[<span class="op">-</span><span class="fl">1</span>]
+<span class="kw">sppspec</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/aggspec.html">aggspec</a></span>(<span class="kw">mspecs</span>, by = <span class="kw">spp</span>, FUN = <span class="kw">mean</span>)
+<span class="kw">spec.sm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">sppspec</span>, opt = <span class="st">"smooth"</span>, span = <span class="fl">0.2</span>)
+</pre></div>
 <pre><code>## processing options applied:
 ## smoothing spectra with a span of 0.2</code></pre>
 </div>
@@ -165,19 +169,27 @@ code.sourceCode {
 <a href="#colourimetric-variables" class="anchor"></a>Colourimetric Variables</h3>
 <p>Obtaining colourimetric variables (pertaining to hue, saturation and brightness/value) is pretty straightforward in <code>pavo</code>. Since reflectance spectra is stored in an object of class <code>rspec</code>, the <code>summary</code> function recognizes the object as such and extracts 23 variables, as outlined in <span class="citation">Montgomerie (2006)</span>. Though outlined in a book chapter on bird colouration, these variables are broadly applicable to any reflectance data, particularly if the taxon of interest has colour vision within the UV-human visible range.</p>
 <p>The description and formulas for these variables can be found by running <code><a href="../reference/summary.rspec.html">?summary.rspec</a></code>.</p>
-<div class="sourceCode" id="cb4"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">spec.sm</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb4"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">spec.sm</span>)
+</pre></div>
 <p><code>summary</code> also takes an additional argument <code>subset</code> which if changed from the default <code>FALSE</code> to <code>TRUE</code> will return only the most commonly used colourimetrics <span class="citation">(Andersson and Prager 2006)</span>. <code>summary</code> can also take a vector of colour variable names, which can be used to filter the results</p>
-<div class="sourceCode" id="cb5"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">spec.sm</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb6"><html><body><pre class="r"><span class="co"># Extract only brightness variables</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">spec.sm</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'B1'</span>, <span class="st">'B2'</span>, <span class="st">'B3'</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb5"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">spec.sm</span>, subset = <span class="fl">TRUE</span>)
+</pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit">
+<span class="co"># Extract only brightness variables</span>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">spec.sm</span>, subset = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'B1'</span>, <span class="st">'B2'</span>, <span class="st">'B3'</span>))
+</pre></div>
 </div>
 <div id="peak-shape-descriptors" class="section level3">
 <h3 class="hasAnchor">
 <a href="#peak-shape-descriptors" class="anchor"></a>Peak Shape Descriptors</h3>
 <p>Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the <code>summary</code> function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak’s properties. The <code><a href="../reference/peakshape.html">peakshape()</a></code> function identifies the peak location (<code>H1</code>), returns the reflectance at that point (<code>B3</code>), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or <code>FWHM</code>). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.</p>
 <p>If this all sounds too esoteric, fear not: <code><a href="../reference/peakshape.html">peakshape()</a></code> has the option of returning plots indicating what it’s calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (<code>HWHM.l</code> and <code>HWHM.r</code>) is the FWHM:</p>
-<div class="sourceCode" id="cb7"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">3</span>))
-<span class="fu"><a href="../reference/peakshape.html">peakshape</a></span>(<span class="no">spec.sm</span>, <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb7"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">3</span>))
+<span class="fu"><a href="../reference/peakshape.html">peakshape</a></span>(<span class="kw">spec.sm</span>, plot = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-1.png" alt="Plots from `peakshape`" width="480"><p class="caption">
 Plots from <code>peakshape</code>
@@ -191,7 +203,9 @@ Plots from <code>peakshape</code>
 ## 5    robin 37.85542 700   NA    107     NA      Yes
 ## 6  tanager 30.48108 557  166     81     85      Yes</code></pre>
 <p>As it can be seen, the variable FWHM is meaningless if the curve doesn’t have a clear peak. Sometimes, such as in the case of the Cardinal (Above figure, first panel), there might be a peak which is not the point of maximum reflectance of the entire spectral curve. <code><a href="../reference/peakshape.html">peakshape()</a></code> also offers a <code>select</code> argument to facilitate subsetting the spectra data frame to, for example, focus on a single reflectance peak:</p>
-<div class="sourceCode" id="cb9"><html><body><pre class="r"><span class="fu"><a href="../reference/peakshape.html">peakshape</a></span>(<span class="no">spec.sm</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">lim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">300</span>, <span class="fl">500</span>), <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb9"><pre class="downlit">
+<span class="fu"><a href="../reference/peakshape.html">peakshape</a></span>(<span class="kw">spec.sm</span>, select = <span class="fl">2</span>, lim = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">300</span>, <span class="fl">500</span>), plot = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-8-1.png" alt="Plot from `peakshape`, setting the wavelength limits to 300 and 500 nm" width="480"><p class="caption">
 Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 nm
@@ -223,8 +237,10 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <h3 class="hasAnchor">
 <a href="#accessing-and-plotting-in-built-spectral-data" class="anchor"></a>Accessing and Plotting In-built Spectral Data</h3>
 <p>All in-built spectral data in <code>pavo</code> can be easily retrieved and/or plotted via the <code><a href="../reference/sensdata.html">sensdata()</a></code> function. These data can be visualised directly by including <code>plot = TRUE</code>, or assigned to an object for subsequent use, as in:</p>
-<div class="sourceCode" id="cb11"><html><body><pre class="r"><span class="no">musca_sense</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/sensdata.html">sensdata</a></span>(<span class="kw">visual</span> <span class="kw">=</span> <span class="st">"musca"</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">"md.r1"</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">musca_sense</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb11"><pre class="downlit">
+<span class="kw">musca_sense</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sensdata.html">sensdata</a></span>(visual = <span class="st">"musca"</span>, achromatic = <span class="st">"md.r1"</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">musca_sense</span>)
+</pre></div>
 <pre><code>##    wl    musca.u     musca.s     musca.m     musca.l       md.r1
 ## 1 300 0.01148992 0.006726680 0.001533875 0.001524705 0.001713692
 ## 2 301 0.01152860 0.006749516 0.001535080 0.001534918 0.001731120
@@ -239,6 +255,10 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <p><code>pavo</code> contains numerous di-, tri- and tetrachromatic visual systems, to accompany the suite of new models. The full complement of included systems are accessible via the <code><a href="../reference/vismodel.html">vismodel()</a></code> argument <code>visual</code>, and include:</p>
 <table class="table">
 <caption>Built-in visual phenotypes available in pavo</caption>
+<colgroup>
+<col width="10%">
+<col width="89%">
+</colgroup>
 <thead><tr class="header">
 <th align="left">phenotype</th>
 <th align="left">description</th>
@@ -340,12 +360,16 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <code>relative</code>: If <code>TRUE</code>, it will make the cone stimulations relative to their sum. This is appropriate for colourspace models such as the avian tetrahedral colourspace <span class="citation">(Goldsmith 1990; Stoddard and Prum 2008)</span>. For the photon catch and neural noise model, it is important to set <code>relative = FALSE</code>.</li>
 </ul>
 <p>All visual models begin with the estimation of receptor quantum catches. The requirements of models may differ significantly of course, so be sure to consult the function documentation and original publications. For this example, we will use the average reflectance of the different species to calculate the raw stimulation of retinal cones, considering the avian average UV visual system, a standard daylight illumination, and an idealized background.</p>
-<div class="sourceCode" id="cb13"><html><body><pre class="r"><span class="no">vismod1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sppspec</span>,
-  <span class="kw">visual</span> <span class="kw">=</span> <span class="st">"avg.uv"</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">"bt.dc"</span>,
-  <span class="kw">illum</span> <span class="kw">=</span> <span class="st">"D65"</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb13"><pre class="downlit">
+<span class="kw">vismod1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sppspec</span>,
+  visual = <span class="st">"avg.uv"</span>, achromatic = <span class="st">"bt.dc"</span>,
+  illum = <span class="st">"D65"</span>, relative = <span class="fl">FALSE</span>
+)
+</pre></div>
 <p>Since there are multiple parameters that can be used to customize the output of <code><a href="../reference/vismodel.html">vismodel()</a></code>, as detailed above, for convenience these can be returned by using <code>summary</code> in a <code>vismodel</code> object:</p>
-<div class="sourceCode" id="cb14"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">vismod1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb14"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">vismod1</span>)
+</pre></div>
 <pre><code>## visual model options:
 ##  * Quantal catch: Qi 
 ##  * Visual system, chromatic: avg.uv 
@@ -369,38 +393,44 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 ##  3rd Qu.:0.2618  
 ##  Max.   :0.2755</code></pre>
 <p>We can visualise what <code><a href="../reference/vismodel.html">vismodel()</a></code> is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:</p>
-<div class="sourceCode" id="cb17"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">6</span>), <span class="kw">oma</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span>))
+<div class="sourceCode" id="cb17"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">6</span>), oma = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span>))
 <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">4</span> , <span class="fl">3</span>, <span class="fl">6</span> , <span class="fl">5</span>),
-             <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span> , <span class="fl">3</span>, <span class="fl">5</span> , <span class="fl">5</span>),
+             <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span> , <span class="fl">3</span>, <span class="fl">5</span> , <span class="fl">5</span>), 
              <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">11</span>),
              <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">7</span>, <span class="fl">7</span>, <span class="fl">9</span> , <span class="fl">9</span>, <span class="fl">11</span>, <span class="fl">11</span>)))
 
-<span class="no">sppspecol</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">sppspec</span>)
+<span class="kw">sppspecol</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">sppspec</span>)
 
-<span class="kw">for</span> (<span class="no">i</span> <span class="kw">in</span> <span class="fl">1</span>:<span class="fl">6</span>) {
-  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>))
-  <span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">sppspec</span>, <span class="kw">select</span> <span class="kw">=</span> <span class="no">i</span>+<span class="fl">1</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="no">sppspecol</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">100</span>))
-  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mar</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4.1</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">2</span>))
-  <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="no">vismod1</span>[<span class="no">i</span>, <span class="fl">1</span>:<span class="fl">4</span>]), <span class="kw">yaxt</span> <span class="kw">=</span> <span class="st">"n"</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">"black"</span>)
+<span class="co">for</span> (<span class="kw">i</span> <span class="co">in</span> <span class="fl">1</span><span class="op">:</span><span class="fl">6</span>) {
+  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mar = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">2</span>))
+  <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">sppspec</span>, select = <span class="kw">i</span><span class="op">+</span><span class="fl">1</span>, col = <span class="kw">sppspecol</span>, lwd = <span class="fl">3</span>, ylim = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">100</span>))
+  <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mar = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4.1</span>, <span class="fl">2.5</span>, <span class="fl">2.5</span>, <span class="fl">2</span>))
+  <span class="fu"><a href="https://rdrr.io/r/graphics/barplot.html">barplot</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw">vismod1</span>[<span class="kw">i</span>, <span class="fl">1</span><span class="op">:</span><span class="fl">4</span>]), yaxt = <span class="st">"n"</span>, col = <span class="st">"black"</span>)
 }
 
-<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span>(<span class="st">"Wavelength (nm)"</span>, <span class="kw">side</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">outer</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">line</span> <span class="kw">=</span> <span class="fl">1</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span>(<span class="st">"Reflectance (%)"</span>, <span class="kw">side</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">outer</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">line</span> <span class="kw">=</span> <span class="fl">1</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span>(<span class="st">"Wavelength (nm)"</span>, side = <span class="fl">1</span>, outer = <span class="fl">TRUE</span>, line = <span class="fl">1</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span>(<span class="st">"Reflectance (%)"</span>, side = <span class="fl">2</span>, outer = <span class="fl">TRUE</span>, line = <span class="fl">1</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-13-1.png" alt="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)." width="816"><p class="caption">
 Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets).
 </p>
 </div>
 <p>As described above, <code>vismodel</code> also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function <code>sensmodel</code>, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in <span class="citation">Govardovskii et al. (2000)</span> and <span class="citation">Hart and Vorobyev (2005)</span>. <code>sensmodel</code> takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let’s model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:</p>
-<div class="sourceCode" id="cb18"><html><body><pre class="r"><span class="no">idealizeddichromat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">350</span>, <span class="fl">650</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">idealizeddichromat</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">idealizeddichromat</span>), <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Absorbance"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb18"><pre class="downlit">
+<span class="kw">idealizeddichromat</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">350</span>, <span class="fl">650</span>))
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">idealizeddichromat</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">idealizeddichromat</span>), ylab = <span class="st">"Absorbance"</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-14-1.png" alt="Idealized dichromat photoreceptors created using `sensmodel`." width="480"><p class="caption">
 Idealized dichromat photoreceptors created using <code>sensmodel</code>.
 </p>
 </div>
-<div class="sourceCode" id="cb19"><html><body><pre class="r"><span class="no">vismod.idi</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sppspec</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="no">idealizeddichromat</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
-<span class="no">vismod.idi</span></pre></body></html></div>
+<div class="sourceCode" id="cb19"><pre class="downlit">
+<span class="kw">vismod.idi</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sppspec</span>, visual = <span class="kw">idealizeddichromat</span>, relative = <span class="fl">FALSE</span>)
+<span class="kw">vismod.idi</span>
+</pre></div>
 </div>
 <div id="the-receptor-noise-model" class="section level3">
 <h3 class="hasAnchor">
@@ -426,10 +456,12 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <a href="#noise-weighted-distances-with-coldist-and-bootcoldist" class="anchor"></a>Noise-weighted Distances with <code>coldist()</code> and <code>bootcoldist()</code>
 </h4>
 <p><code>pavo</code> implements the noise-weighted colour distance calculations in the functions <code><a href="../reference/coldist.html">coldist()</a></code> and <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code>, assuming that raw receptor quantum catches are provided (via <code>relative = FALSE</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code>). For the achromatic contrast, <code><a href="../reference/coldist.html">coldist()</a></code> uses <code>n4</code> to calculate <span class="math inline">\(w\)</span> for the achromatic contrast. Note that even if <span class="math inline">\(Q_i\)</span> is chosen, values are still log-transformed. This option is available in case the user wants to specify a data frame of quantum catches that was not generated by <code><a href="../reference/vismodel.html">vismodel()</a></code> as an input. In this case, the argument <code>qcatch</code> should be used to inform the function if <span class="math inline">\(Q_i\)</span> or <span class="math inline">\(f_i\)</span> values are being used (note that if the input to <code><a href="../reference/coldist.html">coldist()</a></code> is an object generated using the <code><a href="../reference/vismodel.html">vismodel()</a></code> function, this argument is ignored.) The type of noise to be calculated can be selected from the <code><a href="../reference/coldist.html">coldist()</a></code> argument <code>noise</code> (which accepts either <code>"neural"</code> or <code>"quantum"</code>).</p>
-<div class="sourceCode" id="cb20"><html><body><pre class="r"><span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vismod1</span>,
-  <span class="kw">noise</span> <span class="kw">=</span> <span class="st">"neural"</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>),
-  <span class="kw">weber</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">weber.achro</span> <span class="kw">=</span> <span class="fl">0.1</span>
-)</pre></body></html></div>
+<div class="sourceCode" id="cb20"><pre class="downlit">
+<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod1</span>,
+  noise = <span class="st">"neural"</span>, achromatic = <span class="fl">TRUE</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>),
+  weber = <span class="fl">0.1</span>, weber.achro = <span class="fl">0.1</span>
+)
+</pre></div>
 <pre><code>##      patch1   patch2        dS        dL
 ## 1  cardinal   jacana  8.423965 3.3449627
 ## 2  cardinal   oriole  7.905876 3.5110820
@@ -446,7 +478,9 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 13 parakeet    robin  4.606847 3.0783661
 ## 14 parakeet  tanager  5.969760 1.3891312
 ## 15    robin  tanager  7.688707 4.4674974</code></pre>
-<div class="sourceCode" id="cb22"><html><body><pre class="r"><span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vismod.idi</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), <span class="kw">weber</span> <span class="kw">=</span> <span class="fl">0.1</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb22"><pre class="downlit">
+<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod.idi</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), weber = <span class="fl">0.1</span>)
+</pre></div>
 <pre><code>##      patch1   patch2        dS dL
 ## 1  cardinal   jacana 2.0993283 NA
 ## 2  cardinal   oriole 4.6567462 NA
@@ -465,7 +499,9 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 15    robin  tanager 7.2654480 NA</code></pre>
 <p>Where <code>dS</code> is the chromatic contrast (<span class="math inline">\(\Delta S\)</span>) and <code>dL</code> is the achromatic contrast (<span class="math inline">\(\Delta L\)</span>). Note that, by default, <code>achromatic = FALSE</code>, so <code>dL</code> isn’t included in the second result (this is to maintain consistency since, in the <code><a href="../reference/vismodel.html">vismodel()</a></code> function, the <code>achromatic</code> argument defaults to <code>none</code>). As expected, values are really high under the avian colour vision, since the colours of these species are quite different and because of the enhanced discriminatory ability with four compared to two cones.</p>
 <p><code><a href="../reference/coldist.html">coldist()</a></code> also has a <code>subset</code> argument, which is useful if only certain comparisons are of interest (for example, of colour patches against a background, or only comparisons among a species or body patch). <code>subset</code> can be a vector of length one or two. If only one subsetting option is passed, all comparisons against the matching argument are returned (useful in the case of comparing to a background, for example). If two values are passed, comparisons will only be made between samples that match that rule (partial string matching and regular expressions are accepted). For example, compare:</p>
-<div class="sourceCode" id="cb24"><html><body><pre class="r"><span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vismod1</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="st">'cardinal'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb24"><pre class="downlit">
+<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod1</span>, subset = <span class="st">'cardinal'</span>)
+</pre></div>
 <pre><code>##     patch1   patch2        dS dL
 ## 1 cardinal   jacana  8.423965 NA
 ## 2 cardinal   oriole  7.905876 NA
@@ -473,42 +509,48 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 ## 4 cardinal    robin  5.805562 NA
 ## 5 cardinal  tanager 10.100311 NA</code></pre>
 <p>to:</p>
-<div class="sourceCode" id="cb26"><html><body><pre class="r"><span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vismod1</span>, <span class="kw">subset</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'cardinal'</span>, <span class="st">'jacana'</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb26"><pre class="downlit">
+<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod1</span>, subset = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'cardinal'</span>, <span class="st">'jacana'</span>))
+</pre></div>
 <pre><code>##     patch1 patch2       dS dL
 ## 1 cardinal jacana 8.423965 NA</code></pre>
 <p>A bootstrap-based variant of <code><a href="../reference/coldist.html">coldist()</a></code>, described in <span class="citation">Maia and White (2018)</span> as part of a more general analytical framework, is implemented via the function <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code>. As the name suggests, <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, which can be inspected for the inclusion of appropriate ‘threshold’, when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function’s arguments are shared <code><a href="../reference/coldist.html">coldist()</a></code> save for a few extra requirements. The <code>by</code> argument is used to specify a grouping variable that defines the groups to be compared, while <code>boot.n</code> and <code>alpha</code> control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the <code>by</code> argument is required.</p>
 <p>Here we run present a quick example that tests for colour differences across three body regions (breast, crown, and throat) of the finch <em>Sicalis citrina</em>, given seven measures of each region from different males.</p>
-<div class="sourceCode" id="cb28"><html><body><pre class="r"><span class="co"># Load the data</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">sicalis</span>)
+<div class="sourceCode" id="cb28"><pre class="downlit">
+<span class="co"># Load the data</span>
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">sicalis</span>)
 
 <span class="co"># Construct a model using an avian viewer</span>
-<span class="no">sicmod</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sicalis</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'avg.uv'</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="kw">sicmod</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sicalis</span>, visual = <span class="st">'avg.uv'</span>, relative = <span class="fl">FALSE</span>)
 
 <span class="co"># Create a grouping variable to group by body region,</span>
 <span class="co"># informed by the spectral data names</span>
-<span class="no">regions</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">sicmod</span>), <span class="fl">6</span>, <span class="fl">6</span>)
+<span class="kw">regions</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html">substr</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">sicmod</span>), <span class="fl">6</span>, <span class="fl">6</span>)
 
 <span class="co"># Estimate bootstrapped colour-distances</span>
-<span class="no">sicdist</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/bootcoldist.html">bootcoldist</a></span>(<span class="no">sicmod</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="no">regions</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>), <span class="kw">weber</span> <span class="kw">=</span> <span class="fl">0.05</span>)
+<span class="kw">sicdist</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bootcoldist.html">bootcoldist</a></span>(<span class="kw">sicmod</span>, by = <span class="kw">regions</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>), weber = <span class="fl">0.05</span>)
 
 <span class="co"># Take a look at the resulting pairwise estimates </span>
-<span class="no">sicdist</span></pre></body></html></div>
+<span class="kw">sicdist</span>
+</pre></div>
 <pre><code>##       dS.mean    dS.lwr    dS.upr
 ## B-C  9.253097 5.7015179 14.013095
 ## B-T  3.483528 0.3728945  9.509223
 ## C-T 12.221038 8.1736179 16.899949</code></pre>
 <p>And plot the results for good measure. We can see that the pairwise comparisons of the chest, breast, and throat are quite chromatically distinct, but the breast and throat are much more similar in colour, perhaps to the point of being indistinguishable.</p>
-<div class="sourceCode" id="cb30"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">sicdist</span>[, <span class="fl">1</span>],
-     <span class="kw">ylim</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">20</span>),
-     <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>,
-     <span class="kw">bg</span> <span class="kw">=</span> <span class="fl">1</span>,
-     <span class="kw">cex</span> <span class="kw">=</span> <span class="fl">2</span>,
-     <span class="kw">xaxt</span> <span class="kw">=</span> <span class="st">'n'</span>,
-     <span class="kw">xlab</span> <span class="kw">=</span> <span class="st">'Centroid comparison'</span>,
-     <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">'Chromatic contrast (dS)'</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span>(<span class="fl">1</span>, <span class="kw">at</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fl">3</span>, <span class="kw">labels</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="no">sicdist</span>))
-<span class="fu"><a href="https://rdrr.io/r/graphics/segments.html">segments</a></span>(<span class="fl">1</span>:<span class="fl">3</span>, <span class="no">sicdist</span>[, <span class="fl">2</span>], <span class="fl">1</span>:<span class="fl">3</span>, <span class="no">sicdist</span>[, <span class="fl">3</span>], <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)  <span class="co"># Add CI's</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(<span class="kw">h</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">lty</span> <span class="kw">=</span> <span class="fl">3</span>, <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>)  <span class="co"># Add a 'threshold' line at dS = 1</span></pre></body></html></div>
+<div class="sourceCode" id="cb30"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">sicdist</span>[, <span class="fl">1</span>], 
+     ylim = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">0</span>, <span class="fl">20</span>), 
+     pch = <span class="fl">21</span>, 
+     bg = <span class="fl">1</span>, 
+     cex = <span class="fl">2</span>, 
+     xaxt = <span class="st">'n'</span>, 
+     xlab = <span class="st">'Centroid comparison'</span>, 
+     ylab = <span class="st">'Chromatic contrast (dS)'</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/axis.html">axis</a></span>(<span class="fl">1</span>, at = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, labels = <span class="fu"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(<span class="kw">sicdist</span>))
+<span class="fu"><a href="https://rdrr.io/r/graphics/segments.html">segments</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="kw">sicdist</span>[, <span class="fl">2</span>], <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>, <span class="kw">sicdist</span>[, <span class="fl">3</span>], lwd = <span class="fl">2</span>)  <span class="co"># Add CI's</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/abline.html">abline</a></span>(h = <span class="fl">1</span>, lty = <span class="fl">3</span>, lwd = <span class="fl">2</span>)  <span class="co"># Add a 'threshold' line at dS = 1</span>
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-20-1.png" alt="The bootstrapped colour distances between the throat, chest, and breast regions of male Sicalis citrina." width="480"><p class="caption">
 The bootstrapped colour distances between the throat, chest, and breast regions of male Sicalis citrina.
@@ -519,45 +561,49 @@ The bootstrapped colour distances between the throat, chest, and breast regions 
 <h4 class="hasAnchor">
 <a href="#converting-receptor-noise-corrected-distances-to-cartesian-coordinates" class="anchor"></a>Converting receptor noise-corrected distances to Cartesian coordinates</h4>
 <p>You can convert distances in JND back to Cartesian position coordinates with the function <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code>. Note that the actual position of these points in the XYZ space is arbitrary; therefore the function allows you to rotate the data so that, for example, the vector leading to the long-wavelength cone aligns with the X axis:</p>
-<div class="sourceCode" id="cb31"><html><body><pre class="r"><span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">100</span>, <span class="fl">500</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">20</span>),
-  <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
-      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="no">x</span>, <span class="fl">30</span>),
-      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="no">x</span> + <span class="fl">400</span>, <span class="fl">30</span>)
+<div class="sourceCode" id="cb31"><pre class="downlit">
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">100</span>, <span class="fl">500</span>, by = <span class="fl">20</span>),
+  <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">x</span>, <span class="fl">30</span>),
+      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">x</span> <span class="op">+</span> <span class="fl">400</span>, <span class="fl">30</span>)
     )),
     <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fl">401</span>)
 )
 
 <span class="co"># Creating idealized specs with varying saturation</span>
-<span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">500</span>, <span class="fl">300</span>, <span class="fl">150</span>, <span class="fl">105</span>, <span class="fl">75</span>, <span class="fl">55</span>, <span class="fl">40</span>, <span class="fl">30</span>),
-  <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fl">550</span>, <span class="no">x</span>),
+  <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fl">550</span>, <span class="kw">x</span>),
   <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fl">401</span>)
 )
 
-<span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata1</span>))
-<span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata1</span>, <span class="st">"max"</span>)
-<span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata2</span>))
-<span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata2</span>, <span class="st">"sum"</span>)
-<span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata2</span>, <span class="st">"min"</span>)
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata1</span>))
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata1</span>, <span class="st">"max"</span>)
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata2</span>))
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata2</span>, <span class="st">"sum"</span>)
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata2</span>, <span class="st">"min"</span>)
 
 <span class="co"># Converting reflectance to percentage</span>
-<span class="no">fakedata1</span>[, -<span class="fl">1</span>] <span class="kw">&lt;-</span> <span class="no">fakedata1</span>[, -<span class="fl">1</span>] * <span class="fl">100</span>
-<span class="no">fakedata2</span>[, -<span class="fl">1</span>] <span class="kw">&lt;-</span> <span class="no">fakedata2</span>[, -<span class="fl">1</span>] / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">fakedata2</span>[, -<span class="fl">1</span>]) * <span class="fl">100</span>
+<span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">&lt;-</span> <span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">*</span> <span class="fl">100</span>
+<span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">&lt;-</span> <span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>]) <span class="op">*</span> <span class="fl">100</span>
 
 <span class="co"># Combining and converting to rspec</span>
-<span class="no">fakedata.c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata1</span>[, -<span class="fl">1</span>], <span class="no">fakedata2</span>[, -<span class="fl">1</span>])
-<span class="no">fakedata.c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="no">fakedata.c</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb32"><html><body><pre class="r"><span class="co"># Visual model and colour distances</span>
-<span class="no">fakedata.vm</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">fakedata.c</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">'all'</span>)
-<span class="no">fakedata.cd</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">fakedata.vm</span>,
-  <span class="kw">noise</span> <span class="kw">=</span> <span class="st">"neural"</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>),
-  <span class="kw">weber</span> <span class="kw">=</span> <span class="fl">0.1</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="fl">TRUE</span>
+<span class="kw">fakedata.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>], <span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>])
+<span class="kw">fakedata.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">fakedata.c</span>)
+</pre></div>
+<div class="sourceCode" id="cb32"><pre class="downlit">
+<span class="co"># Visual model and colour distances</span>
+<span class="kw">fakedata.vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">fakedata.c</span>, relative = <span class="fl">FALSE</span>, achromatic = <span class="st">'all'</span>)
+<span class="kw">fakedata.cd</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">fakedata.vm</span>,
+  noise = <span class="st">"neural"</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span>),
+  weber = <span class="fl">0.1</span>, achromatic = <span class="fl">TRUE</span>
 )
 
 <span class="co"># Converting to Cartesian coordinates</span>
-<span class="no">fakedata.cc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/jnd2xyz.html">jnd2xyz</a></span>(<span class="no">fakedata.cd</span>, <span class="kw">ref1</span> <span class="kw">=</span> <span class="st">"l"</span>, <span class="kw">axis1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>), <span class="kw">ref2</span> <span class="kw">=</span> <span class="kw">NULL</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">fakedata.cc</span>)</pre></body></html></div>
+<span class="kw">fakedata.cc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/jnd2xyz.html">jnd2xyz</a></span>(<span class="kw">fakedata.cd</span>, ref1 = <span class="st">"l"</span>, axis1 = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">0</span>, <span class="fl">0</span>), ref2 = <span class="kw">NULL</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">fakedata.cc</span>)
+</pre></div>
 <pre><code>##             x          y         z      lum
 ## X1 -26.165302   3.692783 -17.71718 1.430788
 ## X2 -11.212399  -2.085407 -27.97937 2.315951
@@ -566,7 +612,9 @@ The bootstrapped colour distances between the throat, chest, and breast regions 
 ## X5  25.812150 -17.848152 -40.71621 4.444027
 ## X6  31.912643 -23.368560 -24.79660 4.046863</code></pre>
 <p>which you can then plot as well:</p>
-<div class="sourceCode" id="cb34"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">fakedata.cc</span>, <span class="kw">theta</span> <span class="kw">=</span> <span class="fl">55</span>, <span class="kw">phi</span> <span class="kw">=</span> <span class="fl">25</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">fakedata.c</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb34"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fakedata.cc</span>, theta = <span class="fl">55</span>, phi = <span class="fl">25</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">fakedata.c</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-23-1.png" alt="Spectral data in a receptor noise-corrected colourspace" width="384"><p class="caption">
 Spectral data in a receptor noise-corrected colourspace
@@ -581,9 +629,11 @@ Spectral data in a receptor noise-corrected colourspace
 <p>Another general, flexible representation of stimuli is the colour space model. In such approaches, photon catches are expressed in relative values (so that the quantum catches of all receptors involved in chromatic discrimination sum to 1). The maximum stimulation of each cone <span class="math inline">\(n\)</span> is placed at the vertex of a <span class="math inline">\((n-1)\)</span>-dimensional polygon that encompasses all theoretical colours that can be perceived by that visual system. For the avian visual system comprised of 4 cones, for example, all colours can be placed somewhere in the volume of a tetrahedron, in which each of the four vertices represents the maximum stimulation of that particular cone type.</p>
 <p>Though these models do not account for receptor noise (and thus do not allow an estimate of JNDs), they presents several advantages. First, they make for a very intuitive representation of colour points accounting for attributes of the colour vision of the signal receiver. Second, they allow for the calculation of several interesting variables that represent colour. For example, hue can be estimated from the angle of the point relative to the xy plane (blue-green-red) and the z axis (UV); saturation can be estimated as the distance of the point from the achromatic centre.</p>
 <p><code><a href="https://rdrr.io/r/utils/data.html">data(flowers)</a></code> is a new example dataset consisting of reflectance spectra from 36 Australian angiosperm species, which we’ll use to illustrate for the following colourspace modelling.</p>
-<div class="sourceCode" id="cb35"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">flowers</span>)
+<div class="sourceCode" id="cb35"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">flowers</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">flowers</span>[<span class="fl">1</span>:<span class="fl">4</span>])</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">flowers</span>[<span class="fl">1</span><span class="op">:</span><span class="fl">4</span>])
+</pre></div>
 <pre><code>##    wl Goodenia_heterophylla Goodenia_geniculata Goodenia_gracilis
 ## 1 300             1.7426387            1.918962         0.3638354
 ## 2 301             1.5724849            1.872966         0.3501921
@@ -600,11 +650,13 @@ Spectral data in a receptor noise-corrected colourspace
 <p><strong>Tetrachromats:</strong> <span class="math display">\[x = \frac{1}{\sqrt{2}}(Q_l - Q_m)\]</span> <span class="math display">\[y = \frac{\sqrt{2}}{\sqrt{3}}(Q_s - \frac{Q_l + Q_m}{2})\]</span> <span class="math display">\[z = \frac{\sqrt{3}}{2}(Q_u - \frac{Q_l + Q_m + Q_s}{3})\]</span></p>
 <p>Where Q<sub>u</sub>, Q<sub>s</sub>, Q<sub>m</sub>, and Q<sub>l</sub> refer to quantum catch estimates for UV-, short, medium-, and long-wavelength photoreceptors, respectively.</p>
 <p>For a dichromatic example, we can model our floral reflectance data using the visual system of the domestic dog <em>Canis familiaris</em>, which has two cones with maximal sensitivity near 440 and 560 nm.</p>
-<div class="sourceCode" id="cb37"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'canis'</span>)
+<div class="sourceCode" id="cb37"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">'canis'</span>)
 
-<span class="no">di.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'di'</span>)
+<span class="kw">di.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'di'</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">di.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">di.flowers</span>)
+</pre></div>
 <pre><code>##                                s         l           x      r.vec lum
 ## Goodenia_heterophylla 0.52954393 0.4704561 -0.04178143 0.04178143  NA
 ## Goodenia_geniculata   0.25430150 0.7456985  0.34747015 0.34747015  NA
@@ -613,18 +665,22 @@ Spectral data in a receptor noise-corrected colourspace
 ## Eucalyptus_sp         0.40628552 0.5937145  0.13253229 0.13253229  NA
 ## Faradaya_splendida    0.23166580 0.7683342  0.37948187 0.37948187  NA</code></pre>
 <p>The output contains values for the relative stimulation of short- and long-wavelength sensitive photoreceptors associated with each flower, along with its single coordinate in dichromatic space and its r.vector (distance from the origin). To visualise where these points lie, we can simply plot them on a segment.</p>
-<div class="sourceCode" id="cb39"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">di.flowers</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb39"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">di.flowers</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-26-1.png" alt="Flowers in a dichromatic colourspace, as modelled according to a canid visual system." width="384"><p class="caption">
 Flowers in a dichromatic colourspace, as modelled according to a canid visual system.
 </p>
 </div>
 <p>For our trichromatic viewer we can use the honeybee <em>Apis mellifera</em>, one of the most significant and widespread pollinators. We’ll also transform our quantum catches according to Fechner’s law by specifying <code>qcatch = 'fi'</code>, and will model photoreceptor stimulation under bright conditions by scaling our illuminant with the <code>scale</code> argument.</p>
-<div class="sourceCode" id="cb40"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'apis'</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">'fi'</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fl">10000</span>)
+<div class="sourceCode" id="cb40"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">'apis'</span>, qcatch = <span class="st">'fi'</span>, scale = <span class="fl">10000</span>)
 
-<span class="no">tri.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'tri'</span>)
+<span class="kw">tri.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'tri'</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">tri.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">tri.flowers</span>)
+</pre></div>
 <pre><code>##                               s         m         l            x           y
 ## Goodenia_heterophylla 0.2882383 0.3587254 0.3530363 -0.004022828 -0.05522995
 ## Goodenia_geniculata   0.2475326 0.3549832 0.3974842  0.030052720 -0.10508396
@@ -640,18 +696,22 @@ Flowers in a dichromatic colourspace, as modelled according to a canid visual sy
 ## Eucalyptus_sp         -1.4270471 0.07093922  NA
 ## Faradaya_splendida    -1.1811377 0.08981733  NA</code></pre>
 <p>As in the case of our dichromat, the output contains relative photoreceptor stimulations, coordinates in the Maxwell triangle, as well as the ‘hue angle’ <code>h.theta</code> and distance from the origin (<code>r.vec</code>).</p>
-<div class="sourceCode" id="cb42"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tri.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb42"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">tri.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-28-1.png" alt="Floral reflectance in a Maxwell triangle, considering a honeybee visual system." width="384"><p class="caption">
 Floral reflectance in a Maxwell triangle, considering a honeybee visual system.
 </p>
 </div>
 <p>Finally, we’ll draw on the blue tit’s visual system to model our floral reflectance spectra in a tetrahedral space, again using log-transformed quantum catches and assuming bright viewing conditions.</p>
-<div class="sourceCode" id="cb43"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">"bluetit"</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">"fi"</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fl">10000</span>)
+<div class="sourceCode" id="cb43"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">"bluetit"</span>, qcatch = <span class="st">"fi"</span>, scale = <span class="fl">10000</span>)
 
-<span class="no">tetra.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">"tcs"</span>)
+<span class="kw">tetra.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">"tcs"</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">tetra.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">tetra.flowers</span>)
+</pre></div>
 <pre><code>##                               u         s         m         l         u.r
 ## Goodenia_heterophylla 0.2274310 0.2659669 0.2524170 0.2541851 -0.02256897
 ## Goodenia_geniculata   0.1625182 0.2721621 0.2828016 0.2825182 -0.08748184
@@ -680,9 +740,11 @@ Floral reflectance in a Maxwell triangle, considering a honeybee visual system.
 ## Xyris_operculata      0.2552227 0.29350636  NA
 ## Eucalyptus_sp         0.2503039 0.15260760  NA
 ## Faradaya_splendida    0.2583986 0.26232676  NA</code></pre>
-<p>Tetrahedral data (via <code><a href="../reference/colspace.html">colspace(space = 'tcs')</a></code>) may be plotted in a standard <em>static</em> tetrahedron by using <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code>, or can be visualised as part of an <em>interactive</em> tetrahedron by using <code><a href="../reference/tcsplot.html">tcsplot()</a></code> with the accessory functions <code><a href="../reference/tcsplot.html">tcspoints()</a></code> and <code><a href="../reference/tcsplot.html">tcsvol()</a></code> for adding points and convex hulls, respectively. As with other colourspace plots there are a number of associated graphical options, though the <code>theta</code> and <code>phi</code> arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.</p>
+<p>Tetrahedral data (via <code><a href="../reference/colspace.html">colspace(space = 'tcs')</a></code>) may be plotted in a standard <em>static</em> tetrahedron by using <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code>, or can be visualised as part of an <em>interactive</em> tetrahedron by using <code><a href="../reference/tcsplot.html">tcsplot()</a></code> with the accessory functions <code><a href="../reference/tcsplot.html">tcspoints()</a></code> and <code><a href="../reference/tcsplot.html">tcsvol()</a></code> for adding points and convex hulls, respectively. As with other colourspace plots there are a number of associated graphical options, though the <code>theta</code> and <code>phi</code> arguments are particularly useful in this case, as they control the orientation (in degrees) of the tetrahedron in the xy and yz planes, respectively.</p>
 <p>When plotting the tetrahedral colourspace, one can also force perspective by changing the size of points relative to their distance from the plane of observation, using the arguments <code>perspective = TRUE</code> and controlling the size range with the <code>range</code> argument. Several other options control the appearance of this plot, you can check these using <code><a href="../reference/plot.colspace.html">?plot.colspace</a></code> or <code><a href="../reference/tetraplot.html">?tetraplot</a></code></p>
-<div class="sourceCode" id="cb45"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tetra.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>), <span class="kw">perspective</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">range</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), <span class="kw">cex</span> <span class="kw">=</span> <span class="fl">0.5</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb45"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">tetra.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>), perspective = <span class="fl">TRUE</span>, range = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), cex = <span class="fl">0.5</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-30-1.png" alt="Flowers in a tetrahedral colourspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective" width="480"><p class="caption">
 Flowers in a tetrahedral colourspace modelled using the visual phenotype of the blue tit. Point size is used to force perspective
@@ -695,18 +757,22 @@ Flowers in a tetrahedral colourspace modelled using the visual phenotype of the 
 <li>
 <code><a href="../reference/legendtetra.html">legendtetra()</a></code> allows you to add a legend to a plot.</li>
 </ul>
-<div class="sourceCode" id="cb46"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), <span class="kw">pty</span> <span class="kw">=</span> <span class="st">"s"</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tetra.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))
-<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">1.8</span>)
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">tetra.flowers</span>, <span class="kw">theta</span> <span class="kw">=</span> <span class="fl">110</span>, <span class="kw">phi</span> <span class="kw">=</span> <span class="fl">10</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))
-<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span>(<span class="kw">x</span> <span class="kw">=</span> <span class="fl">0</span>, <span class="kw">y</span> <span class="kw">=</span> <span class="fl">1.8</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb46"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), pty = <span class="st">"s"</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">tetra.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span>(x = <span class="fl">0</span>, y = <span class="fl">1.8</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">tetra.flowers</span>, theta = <span class="fl">110</span>, phi = <span class="fl">10</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span>(x = <span class="fl">0</span>, y = <span class="fl">1.8</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-1.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="576"><p class="caption">
 Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit.
 </p>
 </div>
 <p>For tetrahedral models, another plotting option available is <code>projplot</code>, which projects colour points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.</p>
-<div class="sourceCode" id="cb47"><html><body><pre class="r"><span class="fu"><a href="../reference/projplot.html">projplot</a></span>(<span class="no">tetra.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">20</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb47"><pre class="downlit">
+<span class="fu"><a href="../reference/projplot.html">projplot</a></span>(<span class="kw">tetra.flowers</span>, pch = <span class="fl">20</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <pre><code>## Warning in seq.default(lim[1], lim[2], len = 100): partial argument match of
 ## 'len' to 'length.out'</code></pre>
 <pre><code>## Warning in seq.default(lim[3], lim[4], len = 100): partial argument match of
@@ -717,16 +783,22 @@ Projection plot from a tetrahedral colour space.
 </p>
 </div>
 <p>Finally, a useful function for tri- and tetrahedral models is <code><a href="../reference/voloverlap.html">voloverlap()</a></code>, which calculates the overlap in tri- or tetrahedral colour volume between two sets of points. This can be useful to explore whether different species occupy similar (overlapping) or different (non- overlapping) “sensory niches”, or to test for mimetism, dichromatism, etc. <span class="citation">(Stoddard and Stevens 2011)</span>. To show this function, we will use the <code>sicalis</code> dataset, which includes measurements from the crown (C), throat (T) and breast (B) of seven stripe-tailed yellow finches (<em>Sicalis citrina</em>).</p>
-<div class="sourceCode" id="cb50"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="no">sicalis</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb50"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="kw">sicalis</span>)
+</pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colourspace (note the option <code>plot</code> for plotting of the volumes):</p>
-<div class="sourceCode" id="cb51"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), <span class="kw">pty</span> <span class="kw">=</span> <span class="st">"s"</span>)
-<span class="no">tcs.sicalis.C</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sicalis</span>)), <span class="st">"C"</span>)
-<span class="no">tcs.sicalis.T</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sicalis</span>)), <span class="st">"T"</span>)
-<span class="no">tcs.sicalis.B</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">sicalis</span>)), <span class="st">"B"</span>)
-<span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span>(<span class="no">tcs.sicalis.T</span>, <span class="no">tcs.sicalis.B</span>, <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb51"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), pty = <span class="st">"s"</span>)
+<span class="kw">tcs.sicalis.C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sicalis</span>)), <span class="st">"C"</span>)
+<span class="kw">tcs.sicalis.T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sicalis</span>)), <span class="st">"T"</span>)
+<span class="kw">tcs.sicalis.B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span>(<span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">sicalis</span>)), <span class="st">"B"</span>)
+<span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span>(<span class="kw">tcs.sicalis.T</span>, <span class="kw">tcs.sicalis.B</span>, plot = <span class="fl">TRUE</span>)
+</pre></div>
 <pre><code>##           vol1         vol2   overlapvol vsmallest      vboth
 ## 1 5.183721e-06 6.281511e-06 6.904074e-07 0.1331876 0.06407598</code></pre>
-<div class="sourceCode" id="cb53"><html><body><pre class="r"><span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span>(<span class="no">tcs.sicalis.T</span>, <span class="no">tcs.sicalis.C</span>, <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb53"><pre class="downlit">
+<span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span>(<span class="kw">tcs.sicalis.T</span>, <span class="kw">tcs.sicalis.C</span>, plot = <span class="fl">TRUE</span>)
+</pre></div>
 <p><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-34-1.png" width="700"></p>
 <pre><code>##           vol1         vol2 overlapvol vsmallest vboth
 ## 1 5.183721e-06 4.739152e-06          0         0     0</code></pre>
@@ -734,7 +806,9 @@ Projection plot from a tetrahedral colour space.
 <p>So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).</p>
 <p><strong>Summary variables for groups of points</strong></p>
 <p>Another advantage of colourspace models is that they allow for the calculation of useful summary statistics of groups of points, such as the centroid of the points, the total volume occupied, the mean and variance of hue span and the mean saturation. In <code>pavo</code>, the result of a <code><a href="../reference/colspace.html">colspace()</a></code> call is an object of class <code>colspace</code>, and thus these summary statistics can be calculated simply by calling <code>summary</code>. Note that the <code>summary</code> call can also take a <code>by</code> vector of group identities, so that the variables are calculated for each group separately:</p>
-<div class="sourceCode" id="cb55"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">tetra.flowers</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb55"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">tetra.flowers</span>)
+</pre></div>
 <pre><code>## Colorspace &amp; visual model options:
 ##  * Colorspace: tcs 
 ##  * Quantal catch: fi 
@@ -757,13 +831,17 @@ Projection plot from a tetrahedral colour space.
 <a href="#the-colour-hexagon" class="anchor"></a>The Colour Hexagon</h4>
 <p>The hexagon colour space of <span class="citation">Chittka (1992)</span> is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It’s also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved <span class="citation">(Briscoe and Chittka 2001)</span>. What’s particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.</p>
 <p>In the hexagon, photoreceptor quantum catches are typically hyperbolically transformed (and <code>pavo</code> will return a warning if the transform is not selected), and vonkries correction is often used used to model photoreceptor adaptation to a vegetation background. This can all now be specified in <code><a href="../reference/vismodel.html">vismodel()</a></code>. including the optional use of a ‘green’ vegetation background. Note that although this is a colourspace model, we specific <code>relative = FALSE</code> to return unnormalised quantum catches, as required for the model.</p>
-<div class="sourceCode" id="cb59"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'apis'</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">'Ei'</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">vonkries</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">'l'</span>, <span class="kw">bkg</span> <span class="kw">=</span> <span class="st">'green'</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb59"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">'apis'</span>, qcatch = <span class="st">'Ei'</span>, relative = <span class="fl">FALSE</span>, vonkries = <span class="fl">TRUE</span>, achromatic = <span class="st">'l'</span>, bkg = <span class="st">'green'</span>)
+</pre></div>
 <p>We can then apply the hexagon model in <code>colspace</code>, which will convert our photoreceptor ‘excitation values’ to coordinates in the hexagon according to:</p>
 <p><span class="math display">\[x = \frac{\sqrt{3}}{2(E_g + E_{uv})}\]</span></p>
 <p><span class="math display">\[y = E_b - 0.5(E_{uv} + E_g)\]</span></p>
-<div class="sourceCode" id="cb60"><html><body><pre class="r"><span class="no">hex.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'hexagon'</span>)
+<div class="sourceCode" id="cb60"><pre class="downlit">
+<span class="kw">hex.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'hexagon'</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">hex.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">hex.flowers</span>)
+</pre></div>
 <pre><code>##                                s         m         l         x          y
 ## Goodenia_heterophylla 0.56572097 0.8237141 0.7053057 0.1208839  0.1882007
 ## Goodenia_geniculata   0.35761236 0.8176153 0.8670134 0.4411542  0.2053024
@@ -779,7 +857,9 @@ Projection plot from a tetrahedral colour space.
 ## Eucalyptus_sp          54.57024 0.2812005       50  bluegreen 0.2787543
 ## Faradaya_splendida     70.02119 0.3667853       70  bluegreen 0.3351008</code></pre>
 <p>Again, the output includes the photoreceptor excitation values for short- medium- and long-wave sensitive photoreceptors, x and y coordinates, and measures of hue and saturation for each stimulus. The hexagon model also outputs two additional measures of of subjective ‘bee-hue’; <code>sec.fine</code> and <code>sec.coarse</code>. <code>sec.fine</code> describes the location of stimuli within one of 36 ‘hue sectors’ that are specified by radially dissecting the hexagon in 10-degree increments. <code>sec.coarse</code> follows a similar principle, though here the hexagon is divided into only five ‘bee-hue’ sectors: UV, UV-blue, blue, blue-green, green, and UV-green. These can easily be visualised by specifying <code>sectors = 'coarse</code> or <code>sectors = 'fine'</code> in a call to <code>plot</code> after modelling.</p>
-<div class="sourceCode" id="cb62"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">hex.flowers</span>, <span class="kw">sectors</span> <span class="kw">=</span> <span class="st">'coarse'</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb62"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">hex.flowers</span>, sectors = <span class="st">'coarse'</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-38-1.png" alt="Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors." width="480"><p class="caption">
 Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overlain with coarse bee-hue sectors.
@@ -792,11 +872,13 @@ Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overla
 <p>The colour opponent coding (coc) space is an earlier hymenopteran visual model <span class="citation">(Backhaus 1991)</span> which, although now seldom used in favour of the hexagon, may prove useful for comparative work. While the initial estimation of photoreceptor excitation is similar to that in the hexagon, the coc subsequently specifies <code>A</code> and <code>B</code> coordinates based on empirically-derived weights for the output from each photoreceptor:</p>
 <p><span class="math display">\[A = -9.86E_u + 7.70E_b + 2.16E_g\]</span> <span class="math display">\[B = -5.17E_u + 20.25E_b - 15.08E_g\]</span></p>
 <p>Where <span class="math inline">\(E_i\)</span> is the excitation value (hyperbolic-transformed quantum catch) in photoreceptor <span class="math inline">\(i\)</span>.</p>
-<div class="sourceCode" id="cb63"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">"apis"</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">"Ei"</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">vonkries</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">bkg</span> <span class="kw">=</span> <span class="st">"green"</span>)
+<div class="sourceCode" id="cb63"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">"apis"</span>, qcatch = <span class="st">"Ei"</span>, relative = <span class="fl">FALSE</span>, vonkries = <span class="fl">TRUE</span>, bkg = <span class="st">"green"</span>)
 
-<span class="no">coc.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">"coc"</span>)
+<span class="kw">coc.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">"coc"</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">coc.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">coc.flowers</span>)
+</pre></div>
 <pre><code>##                                s         m         l        x          y
 ## Goodenia_heterophylla 0.56572097 0.8237141 0.7053057 2.288050  3.1194224
 ## Goodenia_geniculata   0.35761236 0.8176153 0.8670134 4.642329  1.6332926
@@ -812,7 +894,9 @@ Flowers as modelled in the hymenopteran colour hexagon of Chittka (1992), overla
 ## Eucalyptus_sp          4.835346  NA
 ## Faradaya_splendida     3.922638  NA</code></pre>
 <p>The A and B coordinates are designated x and y in the output of coc for consistency, and while the model includes a measure of saturation in <code>r.vec</code>, it contains no associated measure of hue.</p>
-<div class="sourceCode" id="cb65"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">coc.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>), <span class="kw">yaxt</span> <span class="kw">=</span> <span class="st">"n"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb65"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">coc.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>), yaxt = <span class="st">"n"</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-40-1.png" alt="Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling according to the honeybee." width="480"><p class="caption">
 Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling according to the honeybee.
@@ -829,9 +913,13 @@ Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling acc
 <p>and the chromaticity coordinates of stimuli are calculated as</p>
 <p><span class="math display">\[x = \frac{X}{X + Y + Z}\]</span> <span class="math display">\[y = \frac{Y}{X + Y + Z}\]</span> <span class="math display">\[z = \frac{Z}{X + Y + Z} = 1 - x - y\]</span></p>
 <p>For modelling in both XYZ and LAB spaces, here we’ll use the CIE 10-degree standard observer, and assume a <code>D65</code> ‘standard daylight’ illuminant. Again, although they are colourspace models, we need to set <code>relative = FALSE</code> to return raw quantum catch estimates, <code>vonkries = TRUE</code> to account for the required normalising factor (as above), and <code>achromatic = 'none'</code> since there is no applicable way to estimate luminance in the CIE models. As with all models that have particular requirements, <code><a href="../reference/vismodel.html">vismodel()</a></code> will output warnings and/or errors if unusual or non-standard arguments are specified.</p>
-<div class="sourceCode" id="cb66"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'cie10'</span>, <span class="kw">illum</span> <span class="kw">=</span> <span class="st">'D65'</span>, <span class="kw">vonkries</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">'none'</span>)</pre></body></html></div>
-<div class="sourceCode" id="cb67"><html><body><pre class="r"><span class="no">ciexyz.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'ciexyz'</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">ciexyz.flowers</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb66"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">'cie10'</span>, illum = <span class="st">'D65'</span>, vonkries = <span class="fl">TRUE</span>, relative = <span class="fl">FALSE</span>, achromatic = <span class="st">'none'</span>)
+</pre></div>
+<div class="sourceCode" id="cb67"><pre class="downlit">
+<span class="kw">ciexyz.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'ciexyz'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">ciexyz.flowers</span>)
+</pre></div>
 <pre><code>##                               X         Y         Z         x         y
 ## Goodenia_heterophylla 0.2074305 0.2067084 0.3013614 0.2899097 0.2889005
 ## Goodenia_geniculata   0.6472803 0.6752456 0.4240380 0.3706021 0.3866137
@@ -847,7 +935,9 @@ Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling acc
 ## Eucalyptus_sp         0.31108420
 ## Faradaya_splendida    0.17865248</code></pre>
 <p>The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling</p>
-<div class="sourceCode" id="cb69"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">ciexyz.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb69"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">ciexyz.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-43-1.png" alt="Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location." width="480"><p class="caption">
 Floral reflectance in the CIEXYZ human visual model. Note that this space is not perceptually calibrated, so we cannot make inferences about the similarity or differences of colours based on their relative location.
@@ -872,8 +962,10 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 <p>Here, <span class="math inline">\(X_n, Y_n, Z_n\)</span> are neutral point values to model visual adaptation, calculated as:</p>
 <p><span class="math display">\[X_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}\]</span> <span class="math display">\[Y_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}\]</span> <span class="math display">\[Z_n = \int_{300}^{700}{R_n(\lambda)I(\lambda)\bar{z}(\lambda)\,d\lambda}\]</span></p>
 <p>when <span class="math inline">\(R_n(\lambda)\)</span> is a perfect diffuse reflector (i.e. 1).</p>
-<div class="sourceCode" id="cb70"><html><body><pre class="r"><span class="no">cielab.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'cielab'</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">cielab.flowers</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb70"><pre class="downlit">
+<span class="kw">cielab.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'cielab'</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">cielab.flowers</span>)
+</pre></div>
 <pre><code>##                               X         Y         Z        L           a
 ## Goodenia_heterophylla 0.2074305 0.2067084 0.3013614 16.91253  0.91908831
 ## Goodenia_geniculata   0.6472803 0.6752456 0.4240380 55.24744 -7.78898966
@@ -889,7 +981,9 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 ## Eucalyptus_sp          -8.295538
 ## Faradaya_splendida     41.517115</code></pre>
 <p>Our output now contains the tristimulus <code>XYZ</code> values, as well as their <code>Lab</code> counterparts, which are coordinates in the <code>Lab</code> space. These can also be visualised in three-dimensional <code>Lab</code> space by calling <code>plot</code>:</p>
-<div class="sourceCode" id="cb72"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cielab.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb72"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">cielab.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-45-1.png" alt="Floral reflectance spectra represented in the CIELab model of human colour sensation." width="480"><p class="caption">
 Floral reflectance spectra represented in the CIELab model of human colour sensation.
@@ -901,13 +995,17 @@ Floral reflectance spectra represented in the CIELab model of human colour sensa
 <a href="#categorical-fly-colourspace" class="anchor"></a>Categorical Fly Colourspace</h4>
 <p>The categorical colour vision model of <span class="citation">Troje (1993)</span> is a model of dipteran vision, based on behavioural data from the blowfly <em>Lucilia</em> sp. It assumes the involvement of all four dipteran photoreceptor classes (R7 &amp; R8 ‘pale’ and ‘yellow’ subtypes), and further posits that colour vision is based on two specific opponent mechanisms (R7p - R8p, and R7y - R8y). The model assumes that all colours are perceptually grouped into one of four colour categories, and that flies are unable to distinguish between colours that fall within the same category.</p>
 <p>We’ll use the visual systems of the muscoid fly <em>Musca domestica</em>, and will begin by estimating linear (i.e. untransformed) quantum catches for each of the four photoreceptors.</p>
-<div class="sourceCode" id="cb73"><html><body><pre class="r"><span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">'Qi'</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'musca'</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">'none'</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb73"><pre class="downlit">
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, qcatch = <span class="st">'Qi'</span>, visual = <span class="st">'musca'</span>, achromatic = <span class="st">'none'</span>, relative = <span class="fl">TRUE</span>)
+</pre></div>
 <p>Our call to <code><a href="../reference/colspace.html">colspace()</a></code> will then simply estimate the location of stimuli in the categorical space as the difference in relative stimulation between ‘pale’ (R7p - R8p) and ‘yellow’ (R7y - R8y) photoreceptor pairs:</p>
 <p><span class="math display">\[x = R7_p - R8_p\]</span></p>
 <p><span class="math display">\[y = R7_y - R8_y\]</span></p>
-<div class="sourceCode" id="cb74"><html><body><pre class="r"><span class="no">cat.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">'categorical'</span>)
+<div class="sourceCode" id="cb74"><pre class="downlit">
+<span class="kw">cat.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'categorical'</span>)
 
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">cat.flowers</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">cat.flowers</span>)
+</pre></div>
 <pre><code>##                              R7p        R7y       R8p       R8y          x
 ## Goodenia_heterophylla 0.05387616 0.18710662 0.4335986 0.3254187 -0.3797224
 ## Goodenia_geniculata   0.02080098 0.08276030 0.3737592 0.5226795 -0.3529583
@@ -923,7 +1021,9 @@ Floral reflectance spectra represented in the CIELab model of human colour sensa
 ## Eucalyptus_sp         -0.2835027     p-y- 0.4606695 -2.478681  NA
 ## Faradaya_splendida    -0.4673097     p-y- 0.5431971 -2.105745  NA</code></pre>
 <p>And it is simply the signs of these differences that define the four possible fly-colour categories (p+y+, p-y+, p+y-, p-y-), which we can see in the associated plot.</p>
-<div class="sourceCode" id="cb76"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">cat.flowers</span>, <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">21</span>, <span class="kw">bg</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb76"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">cat.flowers</span>, pch = <span class="fl">21</span>, bg = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">flowers</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-48-1.png" alt="Flowers in the categorical colourspace of Troje (1993)." width="480"><p class="caption">
 Flowers in the categorical colourspace of Troje (1993).
@@ -939,50 +1039,62 @@ Flowers in the categorical colourspace of Troje (1993).
 <p><span class="math display">\[LM = \frac{ R_\lambda \sum_{\lambda={Q4}} R_\lambda - \sum_{\lambda={Q2}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}\]</span> <span class="math display">\[MS = \frac{ R_\lambda \sum_{\lambda={Q3}} R_\lambda - \sum_{\lambda={Q1}} R_\lambda }{\sum_{\lambda={min}}^{max}R_\lambda}\]</span></p>
 <p>Where <span class="math inline">\(Qi\)</span> represent the interquantile distances (e.g. <span class="math inline">\(Q1=ultraviolet\)</span>, <span class="math inline">\(Q2=blue\)</span>, <span class="math inline">\(Q3=green\)</span> and <span class="math inline">\(Q4=red\)</span>)</p>
 <p>The segment classification model is obtained through the <code><a href="../reference/colspace.html">colspace()</a></code> argument <code>space = 'segment'</code>, following initial modelling with <code><a href="../reference/vismodel.html">vismodel()</a></code>. The example below uses idealized reflectance spectra to illustrate how the avian colour space defined from the segment classification maps to the human colour wheel:</p>
-<div class="sourceCode" id="cb77"><html><body><pre class="r"><span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">100</span>, <span class="fl">500</span>, <span class="kw">by</span> <span class="kw">=</span> <span class="fl">20</span>),
-  <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
-      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="no">x</span>, <span class="fl">30</span>),
-      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="no">x</span> + <span class="fl">400</span>, <span class="fl">30</span>)
+<div class="sourceCode" id="cb77"><pre class="downlit">
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">100</span>, <span class="fl">500</span>, by = <span class="fl">20</span>),
+  <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/base/colSums.html">rowSums</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">x</span>, <span class="fl">30</span>),
+      <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">x</span> <span class="op">+</span> <span class="fl">400</span>, <span class="fl">30</span>)
     )), <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fl">401</span>)
 )
 
 <span class="co"># creating idealized specs with varying saturation</span>
-<span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">vapply</a></span>(
   <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">500</span>, <span class="fl">300</span>, <span class="fl">150</span>, <span class="fl">105</span>, <span class="fl">75</span>, <span class="fl">55</span>, <span class="fl">40</span>, <span class="fl">30</span>),
-  <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fl">550</span>, <span class="no">x</span>),
+  <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fl">550</span>, <span class="kw">x</span>),
   <span class="fu"><a href="https://rdrr.io/r/base/numeric.html">numeric</a></span>(<span class="fl">401</span>)
 )
 
-<span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata1</span>))</pre></body></html></div>
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata1</span>))
+</pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
-<div class="sourceCode" id="cb79"><html><body><pre class="r"><span class="no">fakedata1</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata1</span>, <span class="st">"max"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb79"><pre class="downlit">
+<span class="kw">fakedata1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata1</span>, <span class="st">"max"</span>)
+</pre></div>
 <pre><code>## processing options applied:
 ## Scaling spectra to a maximum value of 1</code></pre>
-<div class="sourceCode" id="cb81"><html><body><pre class="r"><span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata2</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb81"><pre class="downlit">
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata2</span>))
+</pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
-<div class="sourceCode" id="cb83"><html><body><pre class="r"><span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata2</span>, <span class="st">"sum"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb83"><pre class="downlit">
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata2</span>, <span class="st">"sum"</span>)
+</pre></div>
 <pre><code>## processing options applied:
 ## Scaling spectra to a total area of 1</code></pre>
-<div class="sourceCode" id="cb85"><html><body><pre class="r"><span class="no">fakedata2</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="no">fakedata2</span>, <span class="st">"min"</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb85"><pre class="downlit">
+<span class="kw">fakedata2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span>(<span class="kw">fakedata2</span>, <span class="st">"min"</span>)
+</pre></div>
 <pre><code>## processing options applied:
 ## Scaling spectra to a minimum value of zero</code></pre>
-<div class="sourceCode" id="cb87"><html><body><pre class="r"><span class="co"># converting reflectance to percentage</span>
-<span class="no">fakedata1</span>[, -<span class="fl">1</span>] <span class="kw">&lt;-</span> <span class="no">fakedata1</span>[, -<span class="fl">1</span>] * <span class="fl">100</span>
-<span class="no">fakedata2</span>[, -<span class="fl">1</span>] <span class="kw">&lt;-</span> <span class="no">fakedata2</span>[, -<span class="fl">1</span>] / <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="no">fakedata2</span>[, -<span class="fl">1</span>]) * <span class="fl">100</span>
+<div class="sourceCode" id="cb87"><pre class="downlit">
+<span class="co"># converting reflectance to percentage</span>
+<span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">&lt;-</span> <span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">*</span> <span class="fl">100</span>
+<span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">&lt;-</span> <span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>] <span class="op">/</span> <span class="fu"><a href="https://rdrr.io/r/base/Extremes.html">max</a></span>(<span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>]) <span class="op">*</span> <span class="fl">100</span>
 
 <span class="co"># combining and converting to rspec</span>
-<span class="no">fakedata.c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakedata1</span>[, -<span class="fl">1</span>], <span class="no">fakedata2</span>[, -<span class="fl">1</span>])
-<span class="no">fakedata.c</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="no">fakedata.c</span>)</pre></body></html></div>
+<span class="kw">fakedata.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakedata1</span>[, <span class="op">-</span><span class="fl">1</span>], <span class="kw">fakedata2</span>[, <span class="op">-</span><span class="fl">1</span>])
+<span class="kw">fakedata.c</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">fakedata.c</span>)
+</pre></div>
 <pre><code>## wavelengths found in column 1</code></pre>
-<div class="sourceCode" id="cb89"><html><body><pre class="r"><span class="co"># segment classification analysis</span>
-<span class="no">seg.vis</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">fakedata.c</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">"segment"</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">"all"</span>)</pre></body></html></div>
-<pre><code>## Warning in as.matrix(S * illum) * B: longer object length is not a multiple of
-## shorter object length</code></pre>
-<div class="sourceCode" id="cb91"><html><body><pre class="r"><span class="no">seg.fdc</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">seg.vis</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">"segment"</span>)
+<div class="sourceCode" id="cb89"><pre class="downlit">
+<span class="co"># segment classification analysis</span>
+<span class="kw">seg.vis</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">fakedata.c</span>, visual = <span class="st">"segment"</span>, achromatic = <span class="st">"all"</span>)
+<span class="kw">seg.fdc</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">seg.vis</span>, space = <span class="st">"segment"</span>)
 
 <span class="co"># plot results</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">seg.fdc</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">fakedata.c</span>))</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">seg.fdc</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">fakedata.c</span>))
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-49-1.png" alt="Idealized reflectance spectra and their projection on the axes of segment classification" width="384"><p class="caption">
 Idealized reflectance spectra and their projection on the axes of segment classification
@@ -994,7 +1106,9 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <a href="#colourspace-distances-with-coldist" class="anchor"></a>Colourspace Distances with <code>coldist</code>
 </h4>
 <p>Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in <code>R</code> using the <code><a href="../reference/coldist.html">coldist()</a></code> function on the <code><a href="../reference/colspace.html">colspace()</a></code> output:</p>
-<div class="sourceCode" id="cb92"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">tetra.flowers</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb90"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">tetra.flowers</span>))
+</pre></div>
 <pre><code>## Warning: Quantum catch are relative, distances may not be meaningful</code></pre>
 <pre><code>## Calculating unweighted Euclidean distances</code></pre>
 <pre><code>##                  patch1              patch2         dS dL
@@ -1005,15 +1119,19 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 ## 5 Goodenia_heterophylla  Faradaya_splendida 0.05027645 NA
 ## 6 Goodenia_heterophylla  Gaultheria_hispida 0.03897671 NA</code></pre>
 <p>Specialised colourspace models such as the colour-hexagon, coc space, CIELab and CIELCh models have their own distance measures, which are returned be default when run through <code><a href="../reference/coldist.html">coldist()</a></code>. Be sure to read the <code><a href="../reference/coldist.html">?coldist</a></code> documentation, and the original publications, to understand what is being returned. As an example, if we run the results of colour-hexagon modelling through <code><a href="../reference/coldist.html">coldist()</a></code>:</p>
-<div class="sourceCode" id="cb96"><html><body><pre class="r"><span class="co"># Model flower colours according to a honeybee</span>
-<span class="no">vis.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">"apis"</span>, <span class="kw">qcatch</span> <span class="kw">=</span> <span class="st">"Ei"</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">vonkries</span> <span class="kw">=</span> <span class="fl">TRUE</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="st">"l"</span>, <span class="kw">bkg</span> <span class="kw">=</span> <span class="st">"green"</span>)
-<span class="no">hex.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="no">vis.flowers</span>, <span class="kw">space</span> <span class="kw">=</span> <span class="st">"hexagon"</span>)
+<div class="sourceCode" id="cb94"><pre class="downlit">
+<span class="co"># Model flower colours according to a honeybee</span>
+<span class="kw">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="st">"apis"</span>, qcatch = <span class="st">"Ei"</span>, relative = <span class="fl">FALSE</span>, vonkries = <span class="fl">TRUE</span>, achromatic = <span class="st">"l"</span>, bkg = <span class="st">"green"</span>)
+<span class="kw">hex.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">"hexagon"</span>)
 
 <span class="co"># Estimate colour distances. No need to specify relative receptor densities, noise etc.,</span>
 <span class="co"># which only apply in the case of receptor-noise modelling</span>
-<span class="no">dist.flowers</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">hex.flowers</span>)</pre></body></html></div>
+<span class="kw">dist.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">hex.flowers</span>)
+</pre></div>
 <pre><code>## Calculating unweighted Euclidean distances</code></pre>
-<div class="sourceCode" id="cb98"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">dist.flowers</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb96"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">dist.flowers</span>)
+</pre></div>
 <pre><code>##                  patch1              patch2        dS dL
 ## 1 Goodenia_heterophylla Goodenia_geniculata 0.3207265 NA
 ## 2 Goodenia_heterophylla   Goodenia_gracilis 0.6870945 NA
@@ -1027,25 +1145,31 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <h4 class="hasAnchor">
 <a href="#distances-in-n-dimensions" class="anchor"></a>Distances in N-Dimensions</h4>
 <p>The <code><a href="../reference/coldist.html">coldist()</a></code> function is no longer limited to di-, tri- or tetrachromatic visual systems. The function has been generalised, and can now calculate colour distances for n-dimensional visual phenotypes. This means there is no limit on the dimensionality of visual systems that may be input, which may prove useful for modelling nature’s extremes (e.g. butterflies, mantis shrimp) or for simulation-based work. Naturally, since these calculations aren’t largely implemented elsewhere, we recommend caution and validation of results prior to publication.</p>
-<div class="sourceCode" id="cb100"><html><body><pre class="r"><span class="co"># Create an arbitrary visual phenotype with 10 photoreceptors</span>
-<span class="no">fakemantisshrimp</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">325</span>, <span class="fl">350</span>, <span class="fl">400</span>, <span class="fl">425</span>, <span class="fl">450</span>, <span class="fl">500</span>, <span class="fl">550</span>, <span class="fl">600</span>, <span class="fl">650</span>, <span class="fl">700</span>), <span class="kw">beta</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">integrate</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb98"><pre class="downlit">
+<span class="co"># Create an arbitrary visual phenotype with 10 photoreceptors</span>
+<span class="kw">fakemantisshrimp</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/sensmodel.html">sensmodel</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">325</span>, <span class="fl">350</span>, <span class="fl">400</span>, <span class="fl">425</span>, <span class="fl">450</span>, <span class="fl">500</span>, <span class="fl">550</span>, <span class="fl">600</span>, <span class="fl">650</span>, <span class="fl">700</span>), beta = <span class="fl">FALSE</span>, integrate = <span class="fl">FALSE</span>)
 
 <span class="co"># Convert to percentages, just to colour the plot</span>
-<span class="no">fakemantisshrimp.colours</span> <span class="kw">&lt;-</span> <span class="no">fakemantisshrimp</span> * <span class="fl">100</span>
-<span class="no">fakemantisshrimp.colours</span>[, <span class="st">"wl"</span>] <span class="kw">&lt;-</span> <span class="no">fakemantisshrimp</span>[, <span class="st">"wl"</span>]
+<span class="kw">fakemantisshrimp.colours</span> <span class="op">&lt;-</span> <span class="kw">fakemantisshrimp</span> <span class="op">*</span> <span class="fl">100</span>
+<span class="kw">fakemantisshrimp.colours</span>[, <span class="st">"wl"</span>] <span class="op">&lt;-</span> <span class="kw">fakemantisshrimp</span>[, <span class="st">"wl"</span>]
 
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">fakemantisshrimp</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="no">fakemantisshrimp.colours</span>), <span class="kw">lwd</span> <span class="kw">=</span> <span class="fl">2</span>, <span class="kw">ylab</span> <span class="kw">=</span> <span class="st">"Absorbance"</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fakemantisshrimp</span>, col = <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span>(<span class="kw">fakemantisshrimp.colours</span>), lwd = <span class="fl">2</span>, ylab = <span class="st">"Absorbance"</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-52-1.png" alt="Visual system of a pretend mantis shrimp with 10 cones" width="384"><p class="caption">
 Visual system of a pretend mantis shrimp with 10 cones
 </p>
 </div>
-<div class="sourceCode" id="cb101"><html><body><pre class="r"><span class="co"># Run visual model and calculate colour distances</span>
-<span class="no">vm.fms</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">flowers</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="no">fakemantisshrimp</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">achromatic</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<div class="sourceCode" id="cb99"><pre class="downlit">
+<span class="co"># Run visual model and calculate colour distances</span>
+<span class="kw">vm.fms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">flowers</span>, visual = <span class="kw">fakemantisshrimp</span>, relative = <span class="fl">FALSE</span>, achromatic = <span class="fl">FALSE</span>)
 
-<span class="no">JND.fms</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vm.fms</span>, <span class="kw">n</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>))</pre></body></html></div>
+<span class="kw">JND.fms</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vm.fms</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span>, <span class="fl">5</span>, <span class="fl">5</span>))
+</pre></div>
 <pre><code>## Calculating noise-weighted Euclidean distances</code></pre>
-<div class="sourceCode" id="cb103"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">JND.fms</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb101"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">JND.fms</span>)
+</pre></div>
 <pre><code>##                  patch1              patch2        dS dL
 ## 1 Goodenia_heterophylla Goodenia_geniculata 16.297557 NA
 ## 2 Goodenia_heterophylla   Goodenia_gracilis 48.390309 NA
@@ -1065,36 +1189,48 @@ Visual system of a pretend mantis shrimp with 10 cones
 <h2 class="hasAnchor">
 <a href="#image-based-colour-classification" class="anchor"></a>Image-based colour classification</h2>
 <p>We first import our images with <code><a href="../reference/getimg.html">getimg()</a></code>, which functions in a similar manner to <code><a href="../reference/getspec.html">getspec()</a></code>. Since we are importing more than one image, we can simply point the function to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.</p>
-<div class="sourceCode" id="cb105"><html><body><pre class="r"><span class="no">butterflies</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pavo'</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb103"><pre class="downlit">
+<span class="kw">butterflies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/"</span>, package = <span class="st">'pavo'</span>))
+</pre></div>
 <pre><code>## 2 files found; importing images.</code></pre>
 <p>The segmentation of RGB images into discrete colour-classes is an useful step on the road to several analyses, and this is carried out in <code>pavo</code> via <code><a href="../reference/classify.html">classify()</a></code>. The function currently implements k-means clustering which, and offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each, and allow the k-means clustering algorithm to do its work. <strong>Note that the specification of <em>k</em>, the number of discrete colours in an image, is a crucial step to be estimated <em>a priori</em> beforehand</strong>, typically through the use of visual modelling to estimate the number of discriminable colours in an ‘objective’ manner. There are a suite of possible ways in which this may be achieved, though, with one detailed below as part of example 2.</p>
 <p>Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using <code>kcols</code>, before visualising the results with <code>summary</code>. The <code>summary</code> function, with <code>plot = TRUE</code>, is also particularly useful for understanding the colour-class labels, or ID’s, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting ‘false’ colours for plotting through the <code>col</code> argument.</p>
-<div class="sourceCode" id="cb107"><html><body><pre class="r"><span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">kcols</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb105"><pre class="downlit">
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, kcols = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))
+</pre></div>
 <pre><code>## Image classification in progress...</code></pre>
-<div class="sourceCode" id="cb109"><html><body><pre class="r"><span class="co"># Note that we could simply feed the list of images to summary, rather than</span>
+<div class="sourceCode" id="cb107"><pre class="downlit">
+<span class="co"># Note that we could simply feed the list of images to summary, rather than</span>
 <span class="co"># specifying individual images, and they would progress automatically</span>
 <span class="co"># with user input.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="no">butterflies_class</span><span class="kw">[[</span><span class="fl">2</span>]], <span class="kw">plot</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/summary.html">summary</a></span>(<span class="kw">butterflies_class</span>[[<span class="fl">2</span>]], plot = <span class="fl">TRUE</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-55-1.png" alt="The k-means classified images of our butterflies, along with their identified colour palettes" width="480"><p class="caption">
 The k-means classified images of our butterflies, along with their identified colour palettes
 </p>
 </div>
 <p>There are other options available, which may be of particular use when the classification process is not producing the results that might be expected. If analysing similar images with homologous colour patterns (e.g. individuals within a species), we could specify a single ‘reference’ image in a list to be initially classified, using <code>refID</code>, with the RGB centres identified in this reference image used as pre-specified cluster centres in subsequent images. This helps to ensure that homologous pattern elements are reliably identified and classified between images. The <code><a href="../reference/classify.html">classify()</a></code> function also offers an interactive option, via <code>interactive = TRUE</code>, wherein we can interactively click on representative colours within an image (or images individually), with the RGB values then used as cluster centres. This is particularly useful when images are being erroneously classified, since the standard k-means process randomly selects initial centres and so may (by chance) miss smaller patches, or confuse similar colours. By specifying the initial RGB centres interactively, it can be easier for the process to distinguish or ‘pull apart’ colours in such circumstances. Ultimately, there are several combinations of options available during classification, which are also documented in the help file. For our butterflies, for example, we could use any of the following (though some would be very ill-advised):</p>
-<div class="sourceCode" id="cb110"><html><body><pre class="r"><span class="co"># Automatic classification.</span>
-<span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">kcols</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb108"><pre class="downlit">
+<span class="co"># Automatic classification.</span>
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, kcols = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))
+</pre></div>
 <pre><code>## Image classification in progress...</code></pre>
-<div class="sourceCode" id="cb112"><html><body><pre class="r"><span class="co"># Automatic classification using a reference image, identified by name.</span>
-<span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">refID</span> <span class="kw">=</span> <span class="st">'h_melpomene'</span>, <span class="kw">kcols</span> <span class="kw">=</span> <span class="fl">3</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb110"><pre class="downlit">
+<span class="co"># Automatic classification using a reference image, identified by name.</span>
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, refID = <span class="st">'h_melpomene'</span>, kcols = <span class="fl">3</span>)
+</pre></div>
 <pre><code>## Image classification in progress...</code></pre>
-<div class="sourceCode" id="cb114"><html><body><pre class="r"><span class="co"># Classification using interactively-specified centres for each image, with no</span>
+<div class="sourceCode" id="cb112"><pre class="downlit">
+<span class="co"># Classification using interactively-specified centres for each image, with no</span>
 <span class="co"># need to specify kcols (since it will be inferred from the numbers of colours selected)</span>
-<span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">interactive</span> <span class="kw">=</span> <span class="fl">TRUE</span>)
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, interactive = <span class="fl">TRUE</span>)
 
 <span class="co"># Classification using interactively-specified centres for the single reference image</span>
 <span class="co"># (here, the first in the list). We could also specify reference image using it's name, </span>
 <span class="co"># as above.</span>
-<span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">refID</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">interactive</span> <span class="kw">=</span> <span class="fl">TRUE</span>)</pre></body></html></div>
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, refID = <span class="fl">1</span>, interactive = <span class="fl">TRUE</span>)
+</pre></div>
 </div>
 <div id="adjacency-and-boundary-strength-analyses-and-overall-pattern-contrasts" class="section level2">
 <h2 class="hasAnchor">
@@ -1104,19 +1240,25 @@ The k-means classified images of our butterflies, along with their identified co
 <h3 class="hasAnchor">
 <a href="#example-1-simple-mounted-butterflies" class="anchor"></a>Example 1 (simple): mounted butterflies</h3>
 <p>We’ll begin with a simple example using mounted butterflies, by first loading and classifying our images in the manner outlined above. For the adjacency analysis proper, we’ll specify a full x-dimension scale of 200 mm using <code>xscale</code> (which could be ignored if we specify scales using <code><a href="../reference/procimg.html">procimg()</a></code>), and a sampling density of 200, for a 200 x 200 grid. Since the white background of our images is fake and of no interest, we will also exclude it by specifying the colour-class ID that corresponds to it (for more complex backgrounds, we could instead use <code><a href="../reference/procimg.html">procimg()</a></code>, as above, and ignore this argument).</p>
-<div class="sourceCode" id="cb115"><html><body><pre class="r"><span class="co"># Load up our images</span>
-<span class="no">butterflies</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pavo'</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb113"><pre class="downlit">
+<span class="co"># Load up our images</span>
+<span class="kw">butterflies</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/"</span>, package = <span class="st">'pavo'</span>))
+</pre></div>
 <pre><code>## 2 files found; importing images.</code></pre>
-<div class="sourceCode" id="cb117"><html><body><pre class="r"><span class="co"># Automatically classify discrete colour patches (as confirmed by spectral modelling)</span>
+<div class="sourceCode" id="cb115"><pre class="downlit">
+<span class="co"># Automatically classify discrete colour patches (as confirmed by spectral modelling)</span>
 <span class="co"># using k-means clustering, with values of 'k' that have been validated a priori.</span>
-<span class="no">butterflies_class</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="no">butterflies</span>, <span class="kw">kcols</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))</pre></body></html></div>
+<span class="kw">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span>(<span class="kw">butterflies</span>, kcols = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">4</span>, <span class="fl">3</span>))
+</pre></div>
 <pre><code>## Image classification in progress...</code></pre>
-<div class="sourceCode" id="cb119"><html><body><pre class="r"><span class="co"># Run the adjacency analysis, subsampling the image in a 200x200 grid, and excluding</span>
+<div class="sourceCode" id="cb117"><pre class="downlit">
+<span class="co"># Run the adjacency analysis, subsampling the image in a 200x200 grid, and excluding</span>
 <span class="co"># the white background.</span>
-<span class="no">butterflies_adj</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="no">butterflies_class</span>, <span class="kw">xscale</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">xpts</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">bkgID</span> <span class="kw">=</span> <span class="fl">1</span>)
+<span class="kw">butterflies_adj</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="kw">butterflies_class</span>, xscale = <span class="fl">200</span>, xpts = <span class="fl">200</span>, bkgID = <span class="fl">1</span>)
 
 <span class="co"># Take a look</span>
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">butterflies_adj</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">butterflies_adj</span>)
+</pre></div>
 <pre><code>##             k     N n_off       p_1        p_2       p_3        p_4     q_1_1
 ## h_melpomene 4 54064  5103 0.5833456 0.03496324 0.3410294 0.04066176 0.5649231
 ## papilio     3 63241  4371 0.1995597 0.23949686 0.5609434         NA 0.1726728
@@ -1139,36 +1281,42 @@ The k-means classified images of our butterflies, along with their identified co
 ## h_melpomene    NA     NA
 ## papilio        NA     NA</code></pre>
 <p>The output is a suite of statistics describing colour pattern structure and geometry in a tidy data frame that, since we fed it a list of images, contains one row for each of our samples. As always, the function’s help file (<code><a href="../reference/adjacent.html">?adjacent</a></code>) summarises the meaning of each output variable, and the original references listed therein contain the full discussion. Note that some of the output is <code>NA</code>, which might occur when the focal statistic simply makes no sense for the image in question (such as the transition frequency between colour categories 3 and 4, for an image that contains only 3 colour categories). Others may result when we do not give <code><a href="../reference/adjacent.html">adjacent()</a></code> enough information, such as the colour-distances required to calculate the boundary-strength statistics, or the colourmetrics required for overall pattern contrast. If we do give the function this information, we can see that those final variables now contain sensible output.</p>
-<div class="sourceCode" id="cb121"><html><body><pre class="r"><span class="co"># Create a fake matrix of pairwise colour- and luminance distances between all</span>
+<div class="sourceCode" id="cb119"><pre class="downlit">
+<span class="co"># Create a fake matrix of pairwise colour- and luminance distances between all</span>
 <span class="co"># colour patten elements, as might be attained through visual modelling of spectral data.</span>
-<span class="no">distances</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">c1</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>),
-                        <span class="kw">c2</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>),
-                        <span class="kw">dS</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10.6</span>, <span class="fl">5.1</span>, <span class="fl">4.4</span>),
-                        <span class="kw">dL</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.1</span>, <span class="fl">2.5</span>, <span class="fl">3.2</span>))
+<span class="kw">distances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(c1 = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>),
+                        c2 = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">3</span>),
+                        dS = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10.6</span>, <span class="fl">5.1</span>, <span class="fl">4.4</span>),
+                        dL = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.1</span>, <span class="fl">2.5</span>, <span class="fl">3.2</span>))
 
 <span class="co"># Take a look</span>
-<span class="no">distances</span></pre></body></html></div>
+<span class="kw">distances</span>
+</pre></div>
 <pre><code>##   c1 c2   dS  dL
 ## 1  1  2 10.6 1.1
 ## 2  1  3  5.1 2.5
 ## 3  2  3  4.4 3.2</code></pre>
-<div class="sourceCode" id="cb123"><html><body><pre class="r"><span class="co"># And our fake hue angles (in radians), saturation, and luminance values, for each</span>
+<div class="sourceCode" id="cb121"><pre class="downlit">
+<span class="co"># And our fake hue angles (in radians), saturation, and luminance values, for each</span>
 <span class="co"># colour pattern element</span>
-<span class="no">hsl_vals</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">patch</span> <span class="kw">=</span> <span class="fl">1</span>:<span class="fl">3</span>,
-                       <span class="kw">hue</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.2</span>, <span class="fl">2.2</span>, <span class="fl">1.6</span>),
-                       <span class="kw">lum</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">7</span>),
-                       <span class="kw">sat</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3.5</span>, <span class="fl">1.1</span>, <span class="fl">6.3</span>))
+<span class="kw">hsl_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(patch = <span class="fl">1</span><span class="op">:</span><span class="fl">3</span>,
+                       hue = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1.2</span>, <span class="fl">2.2</span>, <span class="fl">1.6</span>),
+                       lum = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">7</span>),
+                       sat = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">3.5</span>, <span class="fl">1.1</span>, <span class="fl">6.3</span>))
 
 <span class="co"># Take a look</span>
-<span class="no">hsl_vals</span></pre></body></html></div>
+<span class="kw">hsl_vals</span>
+</pre></div>
 <pre><code>##   patch hue lum sat
 ## 1     1 1.2  10 3.5
 ## 2     2 2.2   5 1.1
 ## 3     3 1.6   7 6.3</code></pre>
-<div class="sourceCode" id="cb125"><html><body><pre class="r"><span class="co"># Now feed this information into the adjacency analysis using the 'less-colourful'</span>
+<div class="sourceCode" id="cb123"><pre class="downlit">
+<span class="co"># Now feed this information into the adjacency analysis using the 'less-colourful'</span>
 <span class="co"># of our two images, for convenience (though this could be readily extended to</span>
 <span class="co"># include a list of images along with a list of distances and hsl values)</span>
-<span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="no">butterflies_class</span><span class="kw">[[</span><span class="fl">2</span>]], <span class="kw">xscale</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">xpts</span> <span class="kw">=</span> <span class="fl">200</span>, <span class="kw">bkgID</span> <span class="kw">=</span> <span class="fl">1</span>, <span class="kw">coldists</span> <span class="kw">=</span> <span class="no">distances</span>, <span class="kw">hsl</span> <span class="kw">=</span> <span class="no">hsl_vals</span>)</pre></body></html></div>
+<span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="kw">butterflies_class</span>[[<span class="fl">2</span>]], xscale = <span class="fl">200</span>, xpts = <span class="fl">200</span>, bkgID = <span class="fl">1</span>, coldists = <span class="kw">distances</span>, hsl = <span class="kw">hsl_vals</span>)
+</pre></div>
 <pre><code>##         k     N n_off       p_1       p_2       p_3     q_1_1      q_1_2
 ## papilio 3 63241  4371 0.1995597 0.2394969 0.5609434 0.1726728 0.04901883
 ##             q_2_2       q_1_3      q_2_3     q_3_3     t_1_2     t_1_3
@@ -1186,68 +1334,80 @@ The k-means classified images of our butterflies, along with their identified co
 <h3 class="hasAnchor">
 <a href="#example-2-complex-whole-visual-environments" class="anchor"></a>Example 2 (complex): whole visual environments</h3>
 <p>Of course colour patterns are not always so simple, and we may want to analyse the spatial geometry of more complex or subtle scenes. In such cases, it may be preferable to largely forego image-based clustering and classification altogether and instead use spectral data directly in an adjacency-style analysis <span class="citation">(as per “method 1” in Endler 2012)</span>. One such approach would have us take spectral measurements across a patch in an evenly-spaced grid</p>
-<div class="sourceCode" id="cb127"><html><body><pre class="r"><span class="co"># Load up our image of a camouflaged lizard</span>
-<span class="no">lizard</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/vig/"</span>, <span class="kw">package</span> <span class="kw">=</span> <span class="st">'pavo'</span>))</pre></body></html></div>
+<div class="sourceCode" id="cb125"><pre class="downlit">
+<span class="co"># Load up our image of a camouflaged lizard</span>
+<span class="kw">lizard</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/getimg.html">getimg</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/system.file.html">system.file</a></span>(<span class="st">"testdata/images/vig/"</span>, package = <span class="st">'pavo'</span>))
+</pre></div>
 <pre><code>## 1 files found; importing images.</code></pre>
-<div class="sourceCode" id="cb129"><html><body><pre class="r"><span class="co"># Take a look at it</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(<span class="kw">mfrow</span> <span class="kw">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>))
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">lizard</span>)
+<div class="sourceCode" id="cb127"><pre class="downlit">
+<span class="co"># Take a look at it</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span>(mfrow = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>))
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">lizard</span>)
 
 <span class="co"># And overlay a simple 'sampling grid' that might guide us as to where we should collect</span>
 <span class="co"># our reflectance measurements. Note that the grid here is likely too coarse to capture the necessary detail,</span>
 <span class="co"># though the sampling density is something to be closely considered on a case-by-case basis</span>
-<span class="fu"><a href="https://rdrr.io/r/base/plot.html">plot</a></span>(<span class="no">lizard</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">lizard</span>)[<span class="fl">1</span>], <span class="fl">25</span>), <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="no">lizard</span>)[<span class="fl">1</span>], <span class="fl">25</span>)), <span class="kw">pch</span> <span class="kw">=</span> <span class="fl">16</span>, <span class="kw">col</span> <span class="kw">=</span> <span class="st">'red'</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">lizard</span>)
+<span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">lizard</span>)[<span class="fl">1</span>], <span class="fl">25</span>), <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span>(<span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span>(<span class="kw">lizard</span>)[<span class="fl">1</span>], <span class="fl">25</span>)), pch = <span class="fl">16</span>, col = <span class="st">'red'</span>)
+</pre></div>
 <div class="figure">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-60-1.png" alt="A cryptic lizard, along with a possible sampling grid for spectral measurement." width="480"><p class="caption">
 A cryptic lizard, along with a possible sampling grid for spectral measurement.
 </p>
 </div>
 <p>For the sake of this example we’ll simulate 100 reflectance spectra, as though we had collected them following the above grid. We’ll do this by creating four very similar groups of of 25 spectra, which will also allow us to get a sense of how our clustering methods perform. Of course real spectra will be more variable, but the same principles apply.</p>
-<div class="sourceCode" id="cb130"><html><body><pre class="r"><span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">12352</span>)  <span class="co"># For reprodicubility</span>
+<div class="sourceCode" id="cb128"><pre class="downlit">
+<span class="fu"><a href="https://rdrr.io/r/base/Random.html">set.seed</a></span>(<span class="fl">12352</span>)  <span class="co"># For reprodicubility</span>
 
 <span class="co"># Generate some fake spectra that were grid-sampled across our scene</span>
-<span class="no">fakescene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
-  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">25</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">320</span>, <span class="fl">330</span>), <span class="fl">20</span>))),
-  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">25</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">440</span>, <span class="fl">450</span>), <span class="fl">20</span>))),
-  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">25</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">550</span>, <span class="fl">560</span>), <span class="fl">20</span>))),
-  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="no">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span>:<span class="fl">25</span>, <span class="kw">function</span>(<span class="no">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span>:<span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">650</span>, <span class="fl">660</span>), <span class="fl">20</span>)))
+<span class="kw">fakescene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span>(
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">320</span>, <span class="fl">330</span>), <span class="fl">20</span>))),
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">440</span>, <span class="fl">450</span>), <span class="fl">20</span>))),
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">550</span>, <span class="fl">560</span>), <span class="fl">20</span>))),
+  <span class="fu"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(<span class="kw">cbind</span>, <span class="fu"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(<span class="fl">1</span><span class="op">:</span><span class="fl">25</span>, <span class="fu">function</span>(<span class="kw">x</span>) <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html">dnorm</a></span>(<span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Uniform.html">runif</a></span>(<span class="fl">1</span>, <span class="fl">650</span>, <span class="fl">660</span>), <span class="fl">20</span>)))
   )
 
 <span class="co"># Convert them to rspce objects</span>
-<span class="no">fakescene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="kw">wl</span> <span class="kw">=</span> <span class="fl">300</span>:<span class="fl">700</span>, <span class="no">fakescene</span>))</pre></body></html></div>
+<span class="kw">fakescene</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(wl = <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, <span class="kw">fakescene</span>))
+</pre></div>
 <p>Now instead of calling <code>cluster()</code> on the image and arbitrarily selecting <code>kcols</code> (which would likely be quite inaccurate due to the complexity of the scene), we can visually model the spectra, calculate the colour-distances between them, and cluster the results into a data-image that can be fed directly into <code><a href="../reference/adjacent.html">adjacent()</a></code>. Below we’ll use a centroid-based ‘hartigan’ clustering method via the package <code>NbClust</code>, but there are numerous possible approaches that might be used, which should be closely considered with reference to the original methods’ publications.</p>
-<div class="sourceCode" id="cb131"><html><body><pre class="r"><span class="co"># Visually model our spectra in a tetrahedral model of the blue tit, specifying</span>
+<div class="sourceCode" id="cb129"><pre class="downlit">
+<span class="co"># Visually model our spectra in a tetrahedral model of the blue tit, specifying</span>
 <span class="co"># relative = FALSE so that we can estimate noise-calibrated distances.</span>
-<span class="no">vis.fakescene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="no">fakescene</span>, <span class="kw">visual</span> <span class="kw">=</span> <span class="st">'bluetit'</span>, <span class="kw">relative</span> <span class="kw">=</span> <span class="fl">FALSE</span>, <span class="kw">scale</span> <span class="kw">=</span> <span class="fl">10000</span>)
+<span class="kw">vis.fakescene</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/vismodel.html">vismodel</a></span>(<span class="kw">fakescene</span>, visual = <span class="st">'bluetit'</span>, relative = <span class="fl">FALSE</span>, scale = <span class="fl">10000</span>)
 
 <span class="co"># Calculate noise-weighted distances, before converting them to xyz coordinates</span>
 <span class="co"># in noise-corrected colourspace.</span>
-<span class="no">jnd.fakescene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="../reference/jnd2xyz.html">jnd2xyz</a></span>(<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="no">vis.fakescene</span>))
+<span class="kw">jnd.fakescene</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/jnd2xyz.html">jnd2xyz</a></span>(<span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vis.fakescene</span>))
 
 <span class="co"># Create a distance matrix, for clustering</span>
-<span class="no">jnd.mat</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(<span class="no">jnd.fakescene</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">'euclidean'</span>, <span class="kw">diag</span> <span class="kw">=</span> <span class="fl">FALSE</span>)
+<span class="kw">jnd.mat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/dist.html">dist</a></span>(<span class="kw">jnd.fakescene</span>, method = <span class="st">'euclidean'</span>, diag = <span class="fl">FALSE</span>)
 
 <span class="co"># Zero all distance &lt; 1 ('just noticeable distance', in this model), which corresponds</span>
 <span class="co"># to a theoretical threshold of discrimination in the receptor-noise limited</span>
 <span class="co"># model.</span>
-<span class="no">jnd.mat</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="no">jnd.mat</span> <span class="kw">&lt;</span> <span class="fl">1</span>)] <span class="kw">&lt;-</span> <span class="fl">0</span>
+<span class="kw">jnd.mat</span>[<span class="fu"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw">jnd.mat</span> <span class="op">&lt;</span> <span class="fl">1</span>)] <span class="op">&lt;-</span> <span class="fl">0</span>
 
 <span class="co"># Load up a library and use k-means clustering to estimate the number of discrete</span>
 <span class="co"># colours present in our sample.</span>
-<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="no">NbClust</span>)
-<span class="no">clust</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html">NbClust</a></span>(<span class="no">jnd.fakescene</span>, <span class="kw">diss</span> <span class="kw">=</span> <span class="no">jnd.mat</span>, <span class="kw">distance</span> <span class="kw">=</span> <span class="kw">NULL</span>, <span class="kw">method</span> <span class="kw">=</span> <span class="st">'centroid'</span>, <span class="kw">index</span> <span class="kw">=</span> <span class="st">'hartigan'</span>)</pre></body></html></div>
+<span class="fu"><a href="https://rdrr.io/r/base/library.html">library</a></span>(<span class="kw"><a href="https://sites.google.com/site/malikacharrad/research/nbclust-package">NbClust</a></span>)
+<span class="kw">clust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html">NbClust</a></span>(<span class="kw">jnd.fakescene</span>, diss = <span class="kw">jnd.mat</span>, distance = <span class="kw">NULL</span>, method = <span class="st">'centroid'</span>, index = <span class="st">'hartigan'</span>)
+</pre></div>
 <pre><code>## Warning: partial match of 'value' to 'values'
 
 ## Warning: partial match of 'value' to 'values'</code></pre>
-<div class="sourceCode" id="cb133"><html><body><pre class="r"><span class="no">clust</span>$<span class="no">Best.nc</span></pre></body></html></div>
+<div class="sourceCode" id="cb131"><pre class="downlit">
+<span class="kw">clust</span><span class="op">$</span><span class="kw">Best.nc</span>
+</pre></div>
 <pre><code>## Number_clusters     Value_Index 
 ##           4.000        1639.353</code></pre>
 <p>This approach has identified four distinct colour patches, as simulated. To be able to feed this information directly in to <code><a href="../reference/adjacent.html">adjacent()</a></code> we need to arrange the now-classified spectral data into a xyz data-image matrix, in which <code>x</code> and <code>y</code> coordinates specify the location of the sample in our scene, and the z values at each location specify the colour-class, or group, into which each sample has been classified (an integer). Many clustering packages offers the data’s classification as output in some form, so we can simply rearrange it into our original 10 x 10 sampling matrix before passing it to <code><a href="../reference/adjacent.html">adjacent()</a></code>.</p>
-<div class="sourceCode" id="cb135"><html><body><pre class="r"><span class="co"># Rearrange the data into a colour-classified image matrix, and take a look at it.</span>
+<div class="sourceCode" id="cb133"><pre class="downlit">
+<span class="co"># Rearrange the data into a colour-classified image matrix, and take a look at it.</span>
 <span class="co"># Note that is the same structure as the output of 'classify()'.</span>
-<span class="no">mat.fakescene</span> <span class="kw">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="no">clust</span>$<span class="no">Best.partition</span>)), <span class="fl">10</span>, <span class="fl">10</span>)
-<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="no">mat.fakescene</span>)</pre></body></html></div>
+<span class="kw">mat.fakescene</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/matrix.html">matrix</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/numeric.html">as.numeric</a></span>(<span class="fu"><a href="https://rdrr.io/r/base/unlist.html">unlist</a></span>(<span class="kw">clust</span><span class="op">$</span><span class="kw">Best.partition</span>)), <span class="fl">10</span>, <span class="fl">10</span>)
+<span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">mat.fakescene</span>)
+</pre></div>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10]
 ## [1,]    1    1    1    2    2    3    3    3    4     4
 ## [2,]    1    1    1    2    2    3    3    3    4     4
@@ -1255,8 +1415,10 @@ A cryptic lizard, along with a possible sampling grid for spectral measurement.
 ## [4,]    1    1    1    2    2    3    3    3    4     4
 ## [5,]    1    1    1    2    2    3    3    3    4     4
 ## [6,]    1    1    2    2    2    3    3    4    4     4</code></pre>
-<div class="sourceCode" id="cb137"><html><body><pre class="r"><span class="co"># Run the adjacency analysis</span>
-<span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="no">mat.fakescene</span>, <span class="kw">xscale</span> <span class="kw">=</span> <span class="fl">200</span>)</pre></body></html></div>
+<div class="sourceCode" id="cb135"><pre class="downlit">
+<span class="co"># Run the adjacency analysis</span>
+<span class="fu"><a href="../reference/adjacent.html">adjacent</a></span>(<span class="kw">mat.fakescene</span>, xscale = <span class="fl">200</span>)
+</pre></div>
 <pre><code>##     k   N n_off  p_1  p_2  p_3  p_4     q_1_1      q_1_2     q_2_2      q_2_3
 ## img 4 180    32 0.25 0.25 0.25 0.25 0.2055556 0.06111111 0.2055556 0.05555556
 ##         q_3_3      q_3_4     q_4_4   t_1_2  t_2_3   t_3_4     m   m_r   m_c  A

@@ -159,7 +159,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rspec</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>object</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>wlmin</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>wlmax</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>object</span>, subset = <span class='fl'>FALSE</span>, wlmin = <span class='kw'>NULL</span>, wlmax = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -300,8 +300,8 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
     <p>Pierre-Paul Bitton <a href='mailto:bittonp@windsor.ca'>bittonp@windsor.ca</a>, Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>sicalis</span>)</div><div class='output co'>#&gt;              B1        B2        B3        S1U        S1V        S1B       S1G
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>sicalis</span>)</div><div class='output co'>#&gt;              B1        B2        B3        S1U        S1V        S1B       S1G
 #&gt; ind1.C 2119.199  5.284785 11.480677 0.10139621 0.10519791 0.03296790 0.3800012
 #&gt; ind1.T 4228.502 10.544894 18.382330 0.16749968 0.17514570 0.05047024 0.3773107
 #&gt; ind1.B 4661.737 11.625279 22.416179 0.12805744 0.13319517 0.03505705 0.3907354
@@ -366,7 +366,7 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
 #&gt; ind6.B -0.7819791 1.226706 0.7869571 0.2063397 644 357 358 0.5011247 502
 #&gt; ind7.C -0.7958861 2.200180 0.9763543 0.3524130 691 360 520 0.5688317 511
 #&gt; ind7.T -0.6461512 1.823614 0.9759692 0.3707725 672 371 510 0.5192949 504
-#&gt; ind7.B -0.6732006 1.797362 0.9655962 0.3953625 662 373 508 0.5819991 503</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>sicalis</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;               B2       S8  H1
+#&gt; ind7.B -0.6732006 1.797362 0.9655962 0.3953625 662 373 508 0.5819991 503</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>sicalis</span>, subset = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt;               B2       S8  H1
 #&gt; ind1.C  5.284785 2.138383 690
 #&gt; ind1.T 10.544894 1.678923 653
 #&gt; ind1.B 11.625279 1.917985 688
@@ -387,7 +387,7 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
 #&gt; ind6.B  9.335090 1.226706 644
 #&gt; ind7.C  5.747002 2.200180 691
 #&gt; ind7.T  8.984461 1.823614 672
-#&gt; ind7.B 11.561847 1.797362 662</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='no'>sicalis</span>, <span class='kw'>subset</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B1"</span>, <span class='st'>"H4"</span>))</div><div class='output co'>#&gt;              B1        H4
+#&gt; ind7.B 11.561847 1.797362 662</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>sicalis</span>, subset = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B1"</span>, <span class='st'>"H4"</span>))</div><div class='output co'>#&gt;              B1        H4
 #&gt; ind1.C 2119.199 0.4939207
 #&gt; ind1.T 4228.502 0.4726793
 #&gt; ind1.B 4661.737 0.5078910

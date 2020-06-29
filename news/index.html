@@ -160,26 +160,27 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-significant-changes" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
-<li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code><a href="../articles/pavo-5-alphashapes.html">vignette("pavo-5-alphashapes",  package = "pavo")</a></code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li>
+<li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="http://pavo.colrverse.com/reference/vol.html">vol()</a></code>, <code><a href="http://pavo.colrverse.com/reference/tcsplot.html">tcsvol()</a></code> and <code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code><a href="http://pavo.colrverse.com/articles/pavo-5-alphashapes.html">vignette("pavo-5-alphashapes",  package = "pavo")</a></code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>Maximum quantum catches computation (<code>data.maxqcatches</code> attribute) now works for segment “visual model” as well. As a side effect, this removes a warning that occurred when users ran <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel(..., visual = "segment")</a></code>.</li>
 <li>
-<code><a href="../reference/sensmodel.html">sensmodel()</a></code> now accepts the argument <code>sensnames</code>, for specifying the names of the resulting sensitivity curves on-the-fly.</li>
-<li>CIE models now accept data created outside of <code><a href="../reference/vismodel.html">vismodel()</a></code>, by allowing users to specify the illuminant and viewer sensitivity function used when estimating XYZ values (via <code>illum</code> and <code>visual</code> arguments in <code><a href="../reference/colspace.html">colspace()</a></code>).</li>
+<code><a href="http://pavo.colrverse.com/reference/sensmodel.html">sensmodel()</a></code> now accepts the argument <code>sensnames</code>, for specifying the names of the resulting sensitivity curves on-the-fly.</li>
+<li>CIE models now accept data created outside of <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code>, by allowing users to specify the illuminant and viewer sensitivity function used when estimating XYZ values (via <code>illum</code> and <code>visual</code> arguments in <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace()</a></code>).</li>
 <li>
-<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> is now laxer in its argument checks and accept objects that are neither <code>vismodel</code> or <code>colspace</code> objects. This means you can now use this function on quantum catches dataframe that you obtained outside of pavo, such as the MICA toolbox.</li>
+<code><a href="http://pavo.colrverse.com/reference/bootcoldist.html">bootcoldist()</a></code> is now laxer in its argument checks and accept objects that are neither <code>vismodel</code> or <code>colspace</code> objects. This means you can now use this function on quantum catches dataframe that you obtained outside of pavo, such as the MICA toolbox.</li>
 <li>
-<code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> now prints a more explicit error when the <code>by</code> argument value is not a multiple of the number of rows in the colspace object (i.e., the number of spectra)</li>
+<code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> now prints a more explicit error when the <code>by</code> argument value is not a multiple of the number of rows in the colspace object (i.e., the number of spectra)</li>
 <li>Added a continuous measure of hue to the output of the categorical model of Troje (1993)</li>
 <li>
 <code>teal</code> example dataset columns have been renamed to add an additional zero in front of single digit numbers, so that column names now sort in the correct order by default.</li>
 <li>Some very small negative values in the built-in visual system data have been corrected .</li>
 <li>
-<code><a href="../reference/as.rspec.html">as.rspec()</a></code> is now more lenient for wavelength trimming when <code>interp = FALSE</code> and now works even if the specified <code>lims</code> do not correspond to actual wl values from the input object.</li>
+<code><a href="http://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> is now more lenient for wavelength trimming when <code>interp = FALSE</code> and now works even if the specified <code>lims</code> do not correspond to actual wl values from the input object.</li>
 </ul>
 </div>
 </div>
@@ -191,22 +192,22 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-significant-changes-1" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
-<li>Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and S1V in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code>.</li>
-<li>several <code><a href="https://rdrr.io/r/base/plot.html">plot()</a></code> functions for colspace (<code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) gain a new <code>gamut</code> argument to plot the maximum gamut for a given visual system and illuminant. <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also now returns the maximum colour volume for a given visual system and illuminant that you can use to compare to the realised volume by a given dataset. More information in PR <a href='https://github.com/rmaia/pavo/issues/180'>#180</a>.</li>
-<li>parallel processing now relies on the <code>future</code> package, which offers windows and high performance computing (HPC) environments support. The progress bar is produced by the <code>progressr</code> package and can be customised as well. As a consequence, the <code>cores</code> argument in <code><a href="../reference/getspec.html">getspec()</a></code>, <code><a href="../reference/adjacent.html">adjacent()</a></code> and <code><a href="../reference/classify.html">classify()</a></code> has been deprecated.</li>
+<li>Fixed a bug introduced in version 2.3.0 that gave wrong values for S1UV and S1V in <code><a href="http://pavo.colrverse.com/reference/summary.rspec.html">summary.rspec()</a></code>.</li>
+<li>several <code><a href="https://rdrr.io/r/graphics/plot.default.html">plot()</a></code> functions for colspace (<code><a href="http://pavo.colrverse.com/reference/triplot.html">triplot()</a></code>, <code><a href="http://pavo.colrverse.com/reference/tcsplot.html">tcsplot()</a></code>, <code><a href="http://pavo.colrverse.com/reference/tetraplot.html">tetraplot()</a></code>) gain a new <code>gamut</code> argument to plot the maximum gamut for a given visual system and illuminant. <code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> also now returns the maximum colour volume for a given visual system and illuminant that you can use to compare to the realised volume by a given dataset. More information in PR <a href='https://github.com/rmaia/pavo/issues/180'>#180</a>.</li>
+<li>parallel processing now relies on the <code>future</code> package, which offers windows and high performance computing (HPC) environments support. The progress bar is produced by the <code>progressr</code> package and can be customised as well. As a consequence, the <code>cores</code> argument in <code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code>, <code><a href="http://pavo.colrverse.com/reference/adjacent.html">adjacent()</a></code> and <code><a href="http://pavo.colrverse.com/reference/classify.html">classify()</a></code> has been deprecated.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-1" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>fixed a plotting bug introduced in version 2.3.0 where it was required to run <code><a href="../reference/projplot.html">projplot()</a></code> twice for the background grid to be displayed.</li>
-<li>fixed a bug in <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> where <code>NULL</code> was returned instead of <code><a href="https://rdrr.io/r/base/summary.html">summary.data.frame()</a></code> for non-tcs colourspaces.</li>
+<li>fixed a plotting bug introduced in version 2.3.0 where it was required to run <code><a href="http://pavo.colrverse.com/reference/projplot.html">projplot()</a></code> twice for the background grid to be displayed.</li>
+<li>fixed a bug in <code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> where <code>NULL</code> was returned instead of <code><a href="https://rdrr.io/r/base/summary.html">summary.data.frame()</a></code> for non-tcs colourspaces.</li>
 <li>fix partial matching warnings in examples and in <code>bootcooldist()</code>
 </li>
 <li>the package has a new website at <code>pavo.colrverse.com</code>
 </li>
-<li>fixed a bug in <code><a href="../reference/coldist.html">coldist()</a></code>that prevented the calculation of achromatic contrast when using custom quantum catch data</li>
+<li>fixed a bug in <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code>that prevented the calculation of achromatic contrast when using custom quantum catch data</li>
 </ul>
 </div>
 </div>
@@ -219,16 +220,16 @@
 <a href="#new-features-and-significant-changes-2" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
 <li>
-<code><a href="../reference/plot.rspec.html">plot.rspec()</a></code> now adds a linear spectrum alongside the x-axis to show the hues corresponding to each wavelength (controlled by the <code>wl.guide</code> boolean argument).</li>
+<code><a href="http://pavo.colrverse.com/reference/plot.rspec.html">plot.rspec()</a></code> now adds a linear spectrum alongside the x-axis to show the hues corresponding to each wavelength (controlled by the <code>wl.guide</code> boolean argument).</li>
 <li>
-<code><a href="../reference/cieplot.html">cieplot()</a></code> (and therefore <code><a href="../reference/plot.colspace.html">plot.colspace()</a></code> for CIEXYZ model) now adds the background of the CIEXYZ colour space by default. This can be turned off by switching the <code>ciebg</code> argument to <code>FALSE</code>.</li>
+<code><a href="http://pavo.colrverse.com/reference/cieplot.html">cieplot()</a></code> (and therefore <code><a href="http://pavo.colrverse.com/reference/plot.colspace.html">plot.colspace()</a></code> for CIEXYZ model) now adds the background of the CIEXYZ colour space by default. This can be turned off by switching the <code>ciebg</code> argument to <code>FALSE</code>.</li>
 <li>
-<code><a href="../reference/voloverlap.html">voloverlap()</a></code> uses a different algorithm to determine volume overlaps, which means:
+<code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code> uses a different algorithm to determine volume overlaps, which means:
 <ul>
 <li>computation is now much more efficient</li>
 <li>
-<code><a href="../reference/voloverlap.html">voloverlap()</a></code> now works for <code><a href="../reference/trispace.html">trispace()</a></code> objects as well</li>
-<li>accordingly, first two arguments of <code><a href="../reference/voloverlap.html">voloverlap()</a></code> has been renamed <code>colsp1</code> and <code>colsp2</code> instead of <code>tcsres1</code> and <code>tcsres2</code>
+<code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code> now works for <code><a href="http://pavo.colrverse.com/reference/trispace.html">trispace()</a></code> objects as well</li>
+<li>accordingly, first two arguments of <code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code> has been renamed <code>colsp1</code> and <code>colsp2</code> instead of <code>tcsres1</code> and <code>tcsres2</code>
 </li>
 <li>slow and possibly inaccurate <code>montecarlo</code> option has been deprecated</li>
 </ul>
@@ -239,20 +240,20 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-2" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>errors during argument checks in <code><a href="../reference/vismodel.html">vismodel()</a></code> now have more explicit messages.</li>
-<li>all <code>pavo</code> functions (excepted <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/spec2rgb.html">spec2rgb()</a></code>) now work with sub-nm precision, for <code>rspec</code> objects with non-integer wavelengths.</li>
+<li>errors during argument checks in <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> now have more explicit messages.</li>
+<li>all <code>pavo</code> functions (excepted <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> and <code><a href="http://pavo.colrverse.com/reference/spec2rgb.html">spec2rgb()</a></code>) now work with sub-nm precision, for <code>rspec</code> objects with non-integer wavelengths.</li>
 <li>
-<code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> no longer fails for tcs objects with only one row.</li>
+<code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> no longer fails for tcs objects with only one row.</li>
 <li>
-<code><a href="../reference/vismodel.html">vismodel()</a></code> now works for monochromats as well.</li>
+<code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> now works for monochromats as well.</li>
 <li>
-<code><a href="../reference/procspec.html">procspec(opt = "bin")</a></code> no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.</li>
+<code><a href="http://pavo.colrverse.com/reference/procspec.html">procspec(opt = "bin")</a></code> no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.</li>
 <li>
-<code><a href="../reference/coc.html">coc()</a></code> and <code><a href="../reference/categorical.html">categorical()</a></code> spaces now return Weber luminance contrast by default when passed through <code><a href="../reference/coldist.html">coldist()</a></code>, rather than nothing (as per the original publications).</li>
+<code><a href="http://pavo.colrverse.com/reference/coc.html">coc()</a></code> and <code><a href="http://pavo.colrverse.com/reference/categorical.html">categorical()</a></code> spaces now return Weber luminance contrast by default when passed through <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code>, rather than nothing (as per the original publications).</li>
 <li>
-<code><a href="../reference/coldist.html">coldist()</a></code> can now take multiple values for <code>weber</code>, when Weber fractions are known for all receptor classes</li>
+<code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> can now take multiple values for <code>weber</code>, when Weber fractions are known for all receptor classes</li>
 <li>
-<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> no longer errors for a single spectrum when the wavelength range does not contain 450-700nm</li>
+<code><a href="http://pavo.colrverse.com/reference/summary.rspec.html">summary.rspec()</a></code> no longer errors for a single spectrum when the wavelength range does not contain 450-700nm</li>
 </ul>
 </div>
 </div>
@@ -264,32 +265,32 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-significant-changes-3" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
-<li>added k-medoids clustering as an option in <code><a href="../reference/classify.html">classify()</a></code>
+<li>added k-medoids clustering as an option in <code><a href="http://pavo.colrverse.com/reference/classify.html">classify()</a></code>
 </li>
 <li>
-<code><a href="../reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="../reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="../reference/coldist.html">coldist()</a></code> directly on <code><a href="../reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
+<code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> now returns unweighted Euclidean distances for generic di-, tri-, and tetra-chromatic <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace()</a></code> models. Users wishing to estimate noise-weighted distances (i.e. via the receptor-noise limited model) should continue to use <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> directly on <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> objects, as previously.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-3" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-3" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>added a message to indicate what distance metric is being calculated during calls to <code><a href="../reference/coldist.html">coldist()</a></code>
+<li>added a message to indicate what distance metric is being calculated during calls to <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code>
 </li>
 <li>
-<code><a href="../reference/vismodel.html">vismodel()</a></code>, <code><a href="../reference/colspace.html">colspace()</a></code>, and <code><a href="../reference/coldist.html">coldist()</a></code> now always return <code>lum</code> and <code>dL</code> columns, for consistency</li>
+<code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code>, <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace()</a></code>, and <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> now always return <code>lum</code> and <code>dL</code> columns, for consistency</li>
 <li>
-<code><a href="../reference/irrad2flux.html">irrad2flux()</a></code> and <code><a href="../reference/irrad2flux.html">flux2irrad()</a></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</li>
+<code><a href="http://pavo.colrverse.com/reference/irrad2flux.html">irrad2flux()</a></code> and <code><a href="http://pavo.colrverse.com/reference/irrad2flux.html">flux2irrad()</a></code> use slightly more precise constant values, which may lead to slightly different results (less than 0.1% difference between this new version and the previous versions)</li>
 <li>
-<code><a href="../reference/getimg.html">getimg()</a></code> can now import images from URL’s</li>
-<li>the <code>cores</code> argument in <code><a href="../reference/getimg.html">getimg()</a></code> is deprecated, as image import is vectorised</li>
-<li>fixed a small bug in <code><a href="../reference/classify.html">classify()</a></code> when using <code>refID</code> and <code>kcols</code> for multiple images</li>
-<li>the <code>resize</code> argument in <code><a href="../reference/procimg.html">procimg()</a></code> now takes a percentage, rather than scaling factor</li>
-<li>fixed a bug where <code><a href="../reference/colspace.html">colspace(space = segment)</a></code> would return both a <code>B</code> and (redundant) <code>lum</code> column</li>
-<li>fixed a bug where the rod sensitivity of <em>Canis familiaris</em> was inaccessible through <code><a href="../reference/vismodel.html">vismodel()</a></code>
+<code><a href="http://pavo.colrverse.com/reference/getimg.html">getimg()</a></code> can now import images from URL’s</li>
+<li>the <code>cores</code> argument in <code><a href="http://pavo.colrverse.com/reference/getimg.html">getimg()</a></code> is deprecated, as image import is vectorised</li>
+<li>fixed a small bug in <code><a href="http://pavo.colrverse.com/reference/classify.html">classify()</a></code> when using <code>refID</code> and <code>kcols</code> for multiple images</li>
+<li>the <code>resize</code> argument in <code><a href="http://pavo.colrverse.com/reference/procimg.html">procimg()</a></code> now takes a percentage, rather than scaling factor</li>
+<li>fixed a bug where <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace(space = segment)</a></code> would return both a <code>B</code> and (redundant) <code>lum</code> column</li>
+<li>fixed a bug where the rod sensitivity of <em>Canis familiaris</em> was inaccessible through <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code>
 </li>
-<li>fixed an issue in <code><a href="../reference/getspec.html">getspec()</a></code> where badly encoded characters in some spectral files would cause failure</li>
-<li>fixed a bug where <code><a href="../reference/coldist.html">coldist()</a></code> would attempt to estimate receptor-noise weighted distances rather than cie-distances for <code>cielch</code> model results</li>
+<li>fixed an issue in <code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> where badly encoded characters in some spectral files would cause failure</li>
+<li>fixed a bug where <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> would attempt to estimate receptor-noise weighted distances rather than cie-distances for <code>cielch</code> model results</li>
 </ul>
 </div>
 </div>
@@ -301,11 +302,11 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-potentially-breaking-changes" class="anchor"></a>NEW FEATURES AND POTENTIALLY BREAKING CHANGES</h2>
 <ul>
-<li>added the argument <code>reclass</code> to <code><a href="../reference/procimg.html">procimg()</a></code>, which allows users to interactively correct areas within images that have been misclassified</li>
+<li>added the argument <code>reclass</code> to <code><a href="http://pavo.colrverse.com/reference/procimg.html">procimg()</a></code>, which allows users to interactively correct areas within images that have been misclassified</li>
 <li>added the rod sensitivity of <em>Canis familiaris</em>
 </li>
 <li>
-<code><a href="../reference/peakshape.html">peakshape()</a></code> uses a completely different algorithm to find the FWHM. It now works as expected for spectra with multiple peaks. See <a href="https://github.com/rmaia/pavo/pull/137">PR <a href='https://github.com/rmaia/pavo/issues/137'>#137</a></a> for a detailed overview of the changes.</li>
+<code><a href="http://pavo.colrverse.com/reference/peakshape.html">peakshape()</a></code> uses a completely different algorithm to find the FWHM. It now works as expected for spectra with multiple peaks. See <a href="https://github.com/rmaia/pavo/pull/137">PR <a href='https://github.com/rmaia/pavo/issues/137'>#137</a></a> for a detailed overview of the changes.</li>
 <li>data used internally by pavo (<code>bgandilum</code>, <code>transmissiondata</code>, <code>ttvertex</code>, <code>vissyst</code>) is no longer exposed to users</li>
 </ul>
 </div>
@@ -313,25 +314,25 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-4" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>new functions <code><a href="../reference/is.vismodel.html">is.vismodel()</a></code> and <code><a href="../reference/is.colspace.html">is.colspace()</a></code> are exported to test whether an object is of class <code>vismodel</code> or <code>colspace</code>, respectively</li>
-<li>fixed a bug where images would sometimes be wrongly detected as user-classified in <code><a href="../reference/as.rimg.html">as.rimg()</a></code>
+<li>new functions <code><a href="http://pavo.colrverse.com/reference/is.vismodel.html">is.vismodel()</a></code> and <code><a href="http://pavo.colrverse.com/reference/is.colspace.html">is.colspace()</a></code> are exported to test whether an object is of class <code>vismodel</code> or <code>colspace</code>, respectively</li>
+<li>fixed a bug where images would sometimes be wrongly detected as user-classified in <code><a href="http://pavo.colrverse.com/reference/as.rimg.html">as.rimg()</a></code>
 </li>
-<li>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="../reference/vismodel.html">vismodel()</a></code> and <code><a href="../reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="../reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
-<li>the <code>achro</code> argument in <code><a href="../reference/coldist.html">coldist()</a></code> has been changed for <code>achromatic</code> to better match the arguments from <code><a href="../reference/vismodel.html">vismodel()</a></code>. Older scripts that use <code>achro</code> should not be affected and still work as before.</li>
-<li>the package <code>imager</code> is no longer a dependency, and is only loaded if using some features of <code><a href="../reference/procimg.html">procimg()</a></code>.</li>
-<li>the package <code>mapproj</code> is no longer a dependency, and is only loaded if using <code><a href="../reference/projplot.html">projplot()</a></code>.</li>
+<li>the UV-sensitive cone is now only always named “u”, even for VS species (such as <code>pfowl</code> and <code>avg.v</code> in <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> and <code><a href="http://pavo.colrverse.com/reference/sensdata.html">sensdata()</a></code>). This removes an unnecessary but harmless warning when <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace()</a></code> was used to place quantum catches of such species in the tetrahedral colour space.</li>
+<li>the <code>achro</code> argument in <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> has been changed for <code>achromatic</code> to better match the arguments from <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code>. Older scripts that use <code>achro</code> should not be affected and still work as before.</li>
+<li>the package <code>imager</code> is no longer a dependency, and is only loaded if using some features of <code><a href="http://pavo.colrverse.com/reference/procimg.html">procimg()</a></code>.</li>
+<li>the package <code>mapproj</code> is no longer a dependency, and is only loaded if using <code><a href="http://pavo.colrverse.com/reference/projplot.html">projplot()</a></code>.</li>
 <li>added the argument <code>labels.stack</code> to <code>plot.rspec</code>, which allows the use of custom spectra labels in stacked plots.</li>
 <li>users now receive a warning when interpolating beyond the limits of the data using <code>as.rspec</code>, and can control the behaviour with the new argument <code>exceed.limits</code>.</li>
 <li>all deprecated functions and arguments have now been fully removed.</li>
 <li>
-<code><a href="../reference/as.rspec.html">as.rspec()</a></code> now accepts both numeric and character vectors to identify the wavelength column using <code>whichwl</code> (eg. <code>whichwl = "wl"</code>).<br>
+<code><a href="http://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> now accepts both numeric and character vectors to identify the wavelength column using <code>whichwl</code> (eg. <code>whichwl = "wl"</code>).<br>
 </li>
-<li>Reference images in <code><a href="../reference/classify.html">classify()</a></code> can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).<br>
+<li>Reference images in <code><a href="http://pavo.colrverse.com/reference/classify.html">classify()</a></code> can now be specified using either a numeric vector (to identify by image position in a list) or character vector (to identify by image name).<br>
 </li>
-<li>fixed a bug in <code><a href="../reference/aggspec.html">aggspec()</a></code> when wavelength column was previously removed by the user.</li>
-<li>fixed a bug where <code><a href="../reference/cocplot.html">cocplot()</a></code> would failed whenever <code>type</code> graphical parameter was specified.</li>
+<li>fixed a bug in <code><a href="http://pavo.colrverse.com/reference/aggspec.html">aggspec()</a></code> when wavelength column was previously removed by the user.</li>
+<li>fixed a bug where <code><a href="http://pavo.colrverse.com/reference/cocplot.html">cocplot()</a></code> would failed whenever <code>type</code> graphical parameter was specified.</li>
 <li>
-<code><a href="../reference/spec2rgb.html">spec2rgb()</a></code> has been simplified to rely more on <code><a href="../reference/vismodel.html">vismodel()</a></code>. As a result, output values may be slightly different but upon testing, we found that differences between the old and the new version were barely noticeable.</li>
+<code><a href="http://pavo.colrverse.com/reference/spec2rgb.html">spec2rgb()</a></code> has been simplified to rely more on <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code>. As a result, output values may be slightly different but upon testing, we found that differences between the old and the new version were barely noticeable.</li>
 <li>the vignette have been split into three smaller parts, which should help new users to get started with pavo</li>
 <li>numerous under-the-hood changes for stability and speed, with thanks to three reviewers and an associate editor at MEE.</li>
 </ul>
@@ -349,19 +350,19 @@
 <li>added the visual systems of the (trichromatic) jumping spider <em>Habronattus pyrrithrix</em> and the (trichromatic) triggerfish <em>Rhinecanthus aculeatus</em>
 </li>
 <li>
-<code><a href="../reference/getspec.html">getspec()</a></code> can now read Avantes binary files (<code>.TRM</code> files)</li>
+<code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> can now read Avantes binary files (<code>.TRM</code> files)</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-5" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-5" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>Carotenoid chroma (S9) in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> has been fixed to (R700 - R450)/R700. This gives the same result as before but with a flipped sign, and better reflects the original formula in the literature.</li>
+<li>Carotenoid chroma (S9) in <code><a href="http://pavo.colrverse.com/reference/summary.rspec.html">summary.rspec()</a></code> has been fixed to (R700 - R450)/R700. This gives the same result as before but with a flipped sign, and better reflects the original formula in the literature.</li>
 <li>cieLAB values have been rescaled, and are expressed in the more standard range: L [0,100], ab [-128,127]</li>
 <li>
-<code><a href="../reference/getspec.html">getspec()</a></code> has an additional argument <code>ignore.case</code> set to <code>TRUE</code> by default to ignore case in file extension matching</li>
-<li>fix a bug where <code><a href="../reference/getspec.html">getspec()</a></code> would sometimes fail with files including numbers in scientific format</li>
-<li>add a new option in <code><a href="../reference/tetraplot.html">tetraplot()</a></code> to add cone names (u,s,m,l)</li>
+<code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> has an additional argument <code>ignore.case</code> set to <code>TRUE</code> by default to ignore case in file extension matching</li>
+<li>fix a bug where <code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> would sometimes fail with files including numbers in scientific format</li>
+<li>add a new option in <code><a href="http://pavo.colrverse.com/reference/tetraplot.html">tetraplot()</a></code> to add cone names (u,s,m,l)</li>
 </ul>
 </div>
 </div>
@@ -374,7 +375,7 @@
 <a href="#new-features-1" class="anchor"></a>NEW FEATURES</h2>
 <ul>
 <li>
-<code><a href="../reference/getspec.html">getspec()</a></code> can now read OceanOptics <code>.ProcSpec</code> files</li>
+<code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> can now read OceanOptics <code>.ProcSpec</code> files</li>
 <li>added the visual system of <em>Ctenophorus ornatus</em>, the (trichromatic) ornate dragon lizard</li>
 </ul>
 </div>
@@ -383,9 +384,9 @@
 <a href="#major-changes" class="anchor"></a>MAJOR CHANGES</h2>
 <ul>
 <li>
-<code>getspecf()</code> (and the argument <code>fast = TRUE</code> in <code><a href="../reference/getspec.html">getspec()</a></code>) have been deprecated</li>
+<code>getspecf()</code> (and the argument <code>fast = TRUE</code> in <code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code>) have been deprecated</li>
 <li>
-<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> returned incorrect values for S7. If you use S7, please re-run your analyses</li>
+<code><a href="http://pavo.colrverse.com/reference/summary.rspec.html">summary.rspec()</a></code> returned incorrect values for S7. If you use S7, please re-run your analyses</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-6" class="section level2">
@@ -393,28 +394,28 @@
 <a href="#minor-features-and-bug-fixes-6" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>
-<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> now properly outputs <code>NA</code> for monotonically decreasing spectra</li>
-<li>fixed warning when <code><a href="../reference/subset.rspec.html">subset.rspec()</a></code> was provided with a logical vector</li>
-<li>fixed harmless warning when <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> was used on a tcs object</li>
+<code><a href="http://pavo.colrverse.com/reference/summary.rspec.html">summary.rspec()</a></code> now properly outputs <code>NA</code> for monotonically decreasing spectra</li>
+<li>fixed warning when <code><a href="http://pavo.colrverse.com/reference/subset.rspec.html">subset.rspec()</a></code> was provided with a logical vector</li>
+<li>fixed harmless warning when <code><a href="http://pavo.colrverse.com/reference/summary.colspace.html">summary.colspace()</a></code> was used on a tcs object</li>
 <li>
-<code>by</code> argument in <code><a href="../reference/merge.rspec.html">merge.rspec()</a></code> is no longer ignored</li>
-<li>fixed bug in <code><a href="../reference/voloverlap.html">voloverlap()</a></code> when plot = TRUE</li>
-<li>fixed bug in <code><a href="../reference/vismodel.html">vismodel()</a></code> when transmission has more than one column</li>
-<li>fixed bug in <code><a href="../reference/vismodel.html">vismodel()</a></code> that applied von Kries correction to achromatic channel</li>
-<li>added argument <code>fill=FALSE</code> in <code><a href="../reference/voloverlap.html">voloverlap()</a></code>
+<code>by</code> argument in <code><a href="http://pavo.colrverse.com/reference/merge.rspec.html">merge.rspec()</a></code> is no longer ignored</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code> when plot = TRUE</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> when transmission has more than one column</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/vismodel.html">vismodel()</a></code> that applied von Kries correction to achromatic channel</li>
+<li>added argument <code>fill=FALSE</code> in <code><a href="http://pavo.colrverse.com/reference/voloverlap.html">voloverlap()</a></code>
 </li>
-<li>fixed bug in <code><a href="../reference/jndplot.html">jndplot()</a></code> when suppressing the plotting of arrows</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/jndplot.html">jndplot()</a></code> when suppressing the plotting of arrows</li>
 <li>better handling of subset data when using summary.colspace() and summary.vismodel()</li>
-<li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when <code>noise = "quantum"</code> and <code>achro = TRUE</code> were used</li>
-<li>fixed bug in <code><a href="../reference/jndplot.html">jndplot()</a></code> when <code>arrow = "none"</code> and <code>achro = TRUE</code>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> when <code>noise = "quantum"</code> and <code>achro = TRUE</code> were used</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/jndplot.html">jndplot()</a></code> when <code>arrow = "none"</code> and <code>achro = TRUE</code>
 </li>
 <li>
-<code><a href="../reference/spec2rgb.html">spec2rgb()</a></code> now takes into account the 390-400 nm wavelength range into account when possible</li>
+<code><a href="http://pavo.colrverse.com/reference/spec2rgb.html">spec2rgb()</a></code> now takes into account the 390-400 nm wavelength range into account when possible</li>
 <li>
-<code><a href="../reference/as.rspec.html">as.rspec()</a></code> no longer fails with tibbles</li>
-<li>bin option of <code><a href="../reference/procspec.html">procspec()</a></code> now works for all values of bins</li>
+<code><a href="http://pavo.colrverse.com/reference/as.rspec.html">as.rspec()</a></code> no longer fails with tibbles</li>
+<li>bin option of <code><a href="http://pavo.colrverse.com/reference/procspec.html">procspec()</a></code> now works for all values of bins</li>
 <li>non-relative quantum catches from dataframe object were not correctly scaled in “di”, “tri”, “categorical” and “coc” colorspaces</li>
-<li>fixed a bug in <code><a href="../reference/colspace.html">colspace()</a></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
+<li>fixed a bug in <code><a href="http://pavo.colrverse.com/reference/colspace.html">colspace()</a></code> where it would incorrectly infer a preference for a general trichromatic space, when a cie model is more appropriate</li>
 <li>fixed a bug so that cie color matching functions can be more easily be used in a general trichromatic space (i.e. maxwell triangle)</li>
 </ul>
 </div>
@@ -428,16 +429,16 @@
 <a href="#new-functions" class="anchor"></a>NEW FUNCTIONS</h2>
 <ul>
 <li>
-<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
+<code><a href="http://pavo.colrverse.com/reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-7" class="section level2">
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes-7" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
-<li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when fewer samples than the number of photoreceptors</li>
-<li>fixed bug in <code><a href="../reference/getspec.html">getspec()</a></code> that would cause it to crash with errors</li>
-<li>fixed bug in <code><a href="../reference/tetraplot.html">tetraplot()</a></code> when saving images</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/coldist.html">coldist()</a></code> when fewer samples than the number of photoreceptors</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/getspec.html">getspec()</a></code> that would cause it to crash with errors</li>
+<li>fixed bug in <code><a href="http://pavo.colrverse.com/reference/tetraplot.html">tetraplot()</a></code> when saving images</li>
 </ul>
 </div>
 </div>

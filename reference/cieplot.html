@@ -159,19 +159,19 @@
     </div>
 
     <pre class="usage"><span class='fu'>cieplot</span>(
-  <span class='no'>ciedata</span>,
-  <span class='kw'>mono</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>,
-  <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>box</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>ciebg</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>ciedata</span>,
+  mono = <span class='fl'>TRUE</span>,
+  out.lwd = <span class='kw'>NULL</span>,
+  out.lcol = <span class='st'>"black"</span>,
+  out.lty = <span class='fl'>1</span>,
+  theta = <span class='fl'>45</span>,
+  phi = <span class='fl'>10</span>,
+  r = <span class='fl'>1e+06</span>,
+  zoom = <span class='fl'>1</span>,
+  box = <span class='fl'>FALSE</span>,
+  margin = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  ciebg = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -180,7 +180,7 @@
     <tr>
       <th>ciedata</th>
       <td><p>(required). a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='cie.html'>cie()</a></code> function, containing values for 'x', 'y' and 'z'
+<code>colspace()</code> or <code>cie()</code> function, containing values for 'x', 'y' and 'z'
 coordinates for the CIEXYZ model, or LAB coordinates for the CIELAB (or
 CIELCh models), as columns (labeled as such).</p></td>
     </tr>
@@ -261,15 +261,15 @@ Internationale de l Eclairage.</p>
 <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
 
 <span class='co'># CIEXYZ</span>
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"cie10"</span>, <span class='kw'>illum</span> <span class='kw'>=</span> <span class='st'>"D65"</span>, <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>xyz.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"ciexyz"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>xyz.flowers</span>)</div><div class='img'><img src='cieplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"cie10"</span>, illum = <span class='st'>"D65"</span>, vonkries = <span class='fl'>TRUE</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>xyz.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"ciexyz"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>xyz.flowers</span>)</div><div class='img'><img src='cieplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># CIELAB</span>
-<span class='no'>lab.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"cielab"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>lab.flowers</span>)</div><div class='img'><img src='cieplot-2.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>lab.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielab"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>lab.flowers</span>)</div><div class='img'><img src='cieplot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

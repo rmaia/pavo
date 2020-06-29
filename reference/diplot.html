@@ -159,18 +159,18 @@
     </div>
 
     <pre class="usage"><span class='fu'>diplot</span>(
-  <span class='no'>didata</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>achrocol</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
-  <span class='kw'>achrosize</span> <span class='kw'>=</span> <span class='fl'>0.8</span>,
-  <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"black"</span>,
-  <span class='kw'>out.lty</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>margins</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-  <span class='kw'>square</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>didata</span>,
+  labels = <span class='fl'>TRUE</span>,
+  achro = <span class='fl'>TRUE</span>,
+  achrocol = <span class='st'>"grey"</span>,
+  achrosize = <span class='fl'>0.8</span>,
+  labels.cex = <span class='fl'>1</span>,
+  out.lwd = <span class='fl'>1</span>,
+  out.lcol = <span class='st'>"black"</span>,
+  out.lty = <span class='fl'>1</span>,
+  margins = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
+  square = <span class='fl'>TRUE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -179,7 +179,7 @@
     <tr>
       <th>didata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='dispace.html'>dispace()</a></code> function, containing values for the 'x'
+<code>colspace()</code> or <code>dispace()</code> function, containing values for the 'x'
 coordinates as a column (labeled as such).</p></td>
     </tr>
     <tr>
@@ -242,10 +242,10 @@ behavioural tests and physiological concepts. Biological Reviews, 78,
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"canis"</span>)
-<span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"di"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>di.flowers</span>)</div><div class='img'><img src='diplot-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
+<span class='kw'>di.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"di"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>di.flowers</span>)</div><div class='img'><img src='diplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

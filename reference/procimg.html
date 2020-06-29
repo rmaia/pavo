@@ -159,17 +159,17 @@
     </div>
 
     <pre class="usage"><span class='fu'>procimg</span>(
-  <span class='no'>image</span>,
-  <span class='kw'>resize</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>scaledist</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>reclass</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>smooth</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>iterations</span> <span class='kw'>=</span> <span class='fl'>1L</span>,
-  <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-  <span class='kw'>plotnew</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>image</span>,
+  resize = <span class='kw'>NULL</span>,
+  rotate = <span class='kw'>NULL</span>,
+  scaledist = <span class='kw'>NULL</span>,
+  outline = <span class='fl'>FALSE</span>,
+  reclass = <span class='kw'>NULL</span>,
+  smooth = <span class='fl'>FALSE</span>,
+  iterations = <span class='fl'>1L</span>,
+  col = <span class='st'>"red"</span>,
+  plotnew = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -178,7 +178,7 @@
     <tr>
       <th>image</th>
       <td><p>(required) image data. Either a single image array, or a number of images
-stored in a list. Preferably the result of <code><a href='getimg.html'>getimg()</a></code>.</p></td>
+stored in a list. Preferably the result of <code>getimg()</code>.</p></td>
     </tr>
     <tr>
       <th>resize</th>
@@ -248,15 +248,16 @@ Computer Graphics and Image Processing 3, 346-349.</p>
     <p>Thomas E. White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Single image</span>
-<span class='no'>papilio</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))
-<span class='no'>papilio</span> <span class='kw'>&lt;-</span> <span class='fu'>procimg</span>(<span class='no'>papilio</span>, <span class='kw'>scaledist</span> <span class='kw'>=</span> <span class='fl'>10</span>)
+<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>getimg</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
+<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span>(<span class='kw'>papilio</span>, scaledist = <span class='fl'>10</span>)
 
 <span class='co'># Assign individual scales to each image, after slightly reducing their size.</span>
-<span class='no'>snakes</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, <span class='kw'>package</span> <span class='kw'>=</span> <span class='st'>"pavo"</span>))
-<span class='no'>snakes</span> <span class='kw'>&lt;-</span> <span class='fu'>procimg</span>(<span class='no'>snakes</span>, <span class='kw'>scaledist</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>14</span>), <span class='kw'>resize</span> <span class='kw'>=</span> <span class='fl'>90</span>)
-}</div></pre>
+<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>getimg</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
+<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span>(<span class='kw'>snakes</span>, scaledist = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>14</span>), resize = <span class='fl'>90</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

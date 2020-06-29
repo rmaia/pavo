@@ -159,7 +159,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for colspace</span>
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>x</span>, <span class='no'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>x</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -172,15 +172,15 @@
       <th>...</th>
       <td><p>additional graphical options, which vary by modeled <code>space</code>. Refer
 to their individual documentation:</p><ul>
-<li><p><code><a href='diplot.html'>diplot()</a></code>: dichromat space</p></li>
-<li><p><code><a href='triplot.html'>triplot()</a></code>: trichromat space</p></li>
-<li><p><code><a href='tetraplot.html'>tetraplot()</a></code>: tetrahedral space</p></li>
-<li><p><code><a href='catplot.html'>catplot()</a></code>: categorical space</p></li>
-<li><p><code><a href='hexplot.html'>hexplot()</a></code>: colour hexagon</p></li>
-<li><p><code><a href='cocplot.html'>cocplot()</a></code>: colour-opponent-coding space</p></li>
-<li><p><code><a href='cieplot.html'>cieplot()</a></code>: cie spaces</p></li>
-<li><p><code><a href='segplot.html'>segplot()</a></code>: segment analysis space</p></li>
-<li><p><code><a href='jndplot.html'>jndplot()</a></code>: perceptual, 'noise corrected' space (for the results of <code><a href='jnd2xyz.html'>jnd2xyz()</a></code>)</p></li>
+<li><p><code>diplot()</code>: dichromat space</p></li>
+<li><p><code>triplot()</code>: trichromat space</p></li>
+<li><p><code>tetraplot()</code>: tetrahedral space</p></li>
+<li><p><code>catplot()</code>: categorical space</p></li>
+<li><p><code>hexplot()</code>: colour hexagon</p></li>
+<li><p><code>cocplot()</code>: colour-opponent-coding space</p></li>
+<li><p><code>cieplot()</code>: cie spaces</p></li>
+<li><p><code>segplot()</code>: segment analysis space</p></li>
+<li><p><code>jndplot()</code>: perceptual, 'noise corrected' space (for the results of <code>jnd2xyz()</code>)</p></li>
 </ul>
 
 <p>Also see <code><a href='https://rdrr.io/r/graphics/par.html'>par()</a></code>.</p></td>
@@ -220,7 +220,7 @@ color in studies of animal color patterns. Biological Journal of the
 Linnean Society, 41, 315-352.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='https://rdrr.io/r/base/plot.html'>plot()</a></code>, <code><a href='points.colspace.html'>points.colspace()</a></code></p></div>
+    <div class='dont-index'><p><code><a href='https://rdrr.io/r/graphics/plot.default.html'>plot()</a></code>, <code>points.colspace()</code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
@@ -228,40 +228,41 @@ Linnean Society, 41, 315-352.</p>
 <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
 
 <span class='co'># Dichromat</span>
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"canis"</span>)
-<span class='no'>di.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"di"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>di.flowers</span>)</div><div class='img'><img src='plot.colspace-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
+<span class='kw'>di.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"di"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>di.flowers</span>)</div><div class='img'><img src='plot.colspace-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Colour hexagon</span>
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>,
-  <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"apis"</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Ei"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>vonkries</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"l"</span>, <span class='kw'>bkg</span> <span class='kw'>=</span> <span class='st'>"green"</span>
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>,
+  visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>,
+  vonkries = <span class='fl'>TRUE</span>, achromatic = <span class='st'>"l"</span>, bkg = <span class='st'>"green"</span>
 )
-<span class='no'>hex.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>hex.flowers</span>, <span class='kw'>sectors</span> <span class='kw'>=</span> <span class='st'>"coarse"</span>)</div><div class='img'><img src='plot.colspace-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"hexagon"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>hex.flowers</span>, sectors = <span class='st'>"coarse"</span>)</div><div class='img'><img src='plot.colspace-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Tetrahedron (static)</span>
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='plot.colspace-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tcs.sicalis</span>)</div><div class='img'><img src='plot.colspace-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Tetrahedron (interactive)</span>
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span>(<span class='no'>tcs.sicalis</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='fu'>tcsplot</span>(<span class='kw'>tcs.sicalis</span>, size = <span class='fl'>0.005</span>)
 
 <span class='co'>## Add points to interactive tetrahedron</span>
-<span class='no'>patch</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span>), <span class='fl'>7</span>)
-<span class='no'>tcs.crown</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>tcs.sicalis</span>, <span class='st'>"C"</span>)
-<span class='no'>tcs.breast</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='no'>tcs.sicalis</span>, <span class='st'>"B"</span>)
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span>(<span class='no'>tcs.crown</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>)
-<span class='fu'><a href='tcsplot.html'>tcspoints</a></span>(<span class='no'>tcs.breast</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='kw'>patch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span>), <span class='fl'>7</span>)
+<span class='kw'>tcs.crown</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>tcs.sicalis</span>, <span class='st'>"C"</span>)
+<span class='kw'>tcs.breast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>tcs.sicalis</span>, <span class='st'>"B"</span>)
+<span class='fu'>tcsplot</span>(<span class='kw'>tcs.crown</span>, col = <span class='st'>"blue"</span>)
+<span class='fu'>tcspoints</span>(<span class='kw'>tcs.breast</span>, col = <span class='st'>"red"</span>)
 
 <span class='co'>## Plot convex hull in interactive tetrahedron</span>
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span>(<span class='no'>tcs.sicalis</span>, <span class='kw'>col</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>size</span> <span class='kw'>=</span> <span class='fl'>0.005</span>)
-<span class='fu'><a href='tcsplot.html'>tcsvol</a></span>(<span class='no'>tcs.sicalis</span>)
-}</div></pre>
+<span class='fu'>tcsplot</span>(<span class='kw'>tcs.sicalis</span>, col = <span class='st'>"blue"</span>, size = <span class='fl'>0.005</span>)
+<span class='fu'>tcsvol</span>(<span class='kw'>tcs.sicalis</span>)
+}
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

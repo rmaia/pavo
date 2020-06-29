@@ -158,7 +158,7 @@
     <p>Calculates segment classification measures as defined in Endler (1990).</p>
     </div>
 
-    <pre class="usage"><span class='fu'>segspace</span>(<span class='no'>vismodeldata</span>)</pre>
+    <pre class="usage"><span class='fu'>segspace</span>(<span class='kw'>vismodeldata</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the
-result from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
+result from <code>vismodel()</code> or independently calculated data (in the form of a
 data frame with columns named 'S1', 'S2', 'S3', 'S4', and, optionally,
 'lum', representing a generic 'tetrachromatic' viewer).</p></td>
     </tr>
@@ -174,7 +174,7 @@ data frame with columns named 'S1', 'S2', 'S3', 'S4', and, optionally,
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code><a href='colspace.html'>colspace</a></code> consisting of the following columns:</p><ul>
+    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p><ul>
 <li><p><code>S1</code>, <code>S2</code>, <code>S3</code>, <code>S4</code>: the relative reflectance at each of the four
 segments.</p></li>
 <li><p><code>LM</code>, <code>MS</code>: segment scores</p></li>
@@ -193,8 +193,9 @@ Linnean Society, 41, 315-352.</p>
 <p>Pierre-Paul Bitton <a href='mailto:bittonp@uwindsor.ca'>bittonp@uwindsor.ca</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='no'>vis.sic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"segment"</span>, <span class='kw'>achromatic</span> <span class='kw'>=</span> <span class='st'>"all"</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: longer object length is not a multiple of shorter object length</span></div><div class='input'><span class='no'>seg.sic</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sic</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"segment"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
+<span class='kw'>vis.sic</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"segment"</span>, achromatic = <span class='st'>"all"</span>)
+<span class='kw'>seg.sic</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sic</span>, space = <span class='st'>"segment"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

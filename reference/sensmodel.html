@@ -161,15 +161,15 @@ according to the models of Govardovskii et al. (2000) and Hart &amp; Vorobyev (2
     </div>
 
     <pre class="usage"><span class='fu'>sensmodel</span>(
-  <span class='no'>peaksens</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>300</span>, <span class='fl'>700</span>),
-  <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>Bmid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>om</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>integrate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>sensnames</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+  <span class='kw'>peaksens</span>,
+  range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>300</span>, <span class='fl'>700</span>),
+  lambdacut = <span class='kw'>NULL</span>,
+  Bmid = <span class='kw'>NULL</span>,
+  oiltype = <span class='kw'>NULL</span>,
+  beta = <span class='fl'>TRUE</span>,
+  om = <span class='kw'>NULL</span>,
+  integrate = <span class='fl'>TRUE</span>,
+  sensnames = <span class='kw'>NULL</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -247,14 +247,14 @@ Physiol A 186:375-387</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Blue tit visual system based on Hart et al (2000)</span>
-<span class='no'>bluesens</span> <span class='kw'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>371</span>, <span class='fl'>448</span>, <span class='fl'>502</span>, <span class='fl'>563</span>),
-  <span class='kw'>beta</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>lambdacut</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>413</span>, <span class='fl'>507</span>, <span class='fl'>572</span>),
-  <span class='kw'>oiltype</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"T"</span>, <span class='st'>"C"</span>, <span class='st'>"Y"</span>, <span class='st'>"R"</span>), <span class='kw'>om</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>
+<span class='kw'>bluesens</span> <span class='op'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>371</span>, <span class='fl'>448</span>, <span class='fl'>502</span>, <span class='fl'>563</span>),
+  beta = <span class='fl'>FALSE</span>,
+  lambdacut = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>413</span>, <span class='fl'>507</span>, <span class='fl'>572</span>),
+  oiltype = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"T"</span>, <span class='st'>"C"</span>, <span class='st'>"Y"</span>, <span class='st'>"R"</span>), om = <span class='fl'>TRUE</span>
 )
 
 <span class='co'># Danio aequipinnatus based on Govardovskii et al. (2000)</span>
-<span class='no'>daniosens</span> <span class='kw'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>357</span>, <span class='fl'>411</span>, <span class='fl'>477</span>, <span class='fl'>569</span>))</div></pre>
+<span class='kw'>daniosens</span> <span class='op'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>357</span>, <span class='fl'>411</span>, <span class='fl'>477</span>, <span class='fl'>569</span>))</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

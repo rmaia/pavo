@@ -156,19 +156,19 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
     </div>
 
     <div class="ref-description">
-    <p>Converts a <code><a href='coldist.html'>coldist()</a></code> output into Cartesian coordinates that are
+    <p>Converts a <code>coldist()</code> output into Cartesian coordinates that are
 perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     </div>
 
     <pre class="usage"><span class='fu'>jnd2xyz</span>(
-  <span class='no'>coldistres</span>,
-  <span class='kw'>center</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rotate</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>rotcenter</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
-  <span class='kw'>ref1</span> <span class='kw'>=</span> <span class='st'>"l"</span>,
-  <span class='kw'>ref2</span> <span class='kw'>=</span> <span class='st'>"u"</span>,
-  <span class='kw'>axis1</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>),
-  <span class='kw'>axis2</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
+  <span class='kw'>coldistres</span>,
+  center = <span class='fl'>TRUE</span>,
+  rotate = <span class='fl'>TRUE</span>,
+  rotcenter = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
+  ref1 = <span class='st'>"l"</span>,
+  ref2 = <span class='st'>"u"</span>,
+  axis1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>),
+  axis2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -176,7 +176,7 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>coldistres</th>
-      <td><p>(required) the output from a <code><a href='coldist.html'>coldist()</a></code> call.</p></td>
+      <td><p>(required) the output from a <code>coldist()</code> call.</p></td>
     </tr>
     <tr>
       <th>center</th>
@@ -196,13 +196,13 @@ center ("achro") or the data centroid ("mean", the default)?</p></td>
       <th>ref1</th>
       <td><p>the cone to be used as a the first reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'l'.</p></td>
+in the original data that was used for <code>coldist()</code>. Defaults to 'l'.</p></td>
     </tr>
     <tr>
       <th>ref2</th>
       <td><p>the cone to be used as a the second reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
-in the original data that was used for <code><a href='coldist.html'>coldist()</a></code>. Defaults to 'u'.
+in the original data that was used for <code>coldist()</code>. Defaults to 'u'.
 (only used if data has 3 dimensions).</p></td>
     </tr>
     <tr>
@@ -232,9 +232,9 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>)
-<span class='no'>cd.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='no'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jnd2xyz</span>(<span class='no'>cd.flowers</span>)</div><div class='output co'>#&gt;                                     x           y           z
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>)
+<span class='kw'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jnd2xyz</span>(<span class='kw'>cd.flowers</span>)</div><div class='output co'>#&gt;                                     x           y           z
 #&gt; Goodenia_heterophylla      1.53718118 -5.46159458   7.0514924
 #&gt; Goodenia_geniculata       -0.59310315 -2.65363603  -6.4010132
 #&gt; Goodenia_gracilis         -5.35249990 11.57575094 -22.9160486

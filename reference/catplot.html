@@ -158,7 +158,7 @@
     <p>Produces a plot based on Troje's (1993) categorical colour model.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>catplot</span>(<span class='no'>catdata</span>, <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>labels.cex</span> <span class='kw'>=</span> <span class='fl'>0.9</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>catplot</span>(<span class='kw'>catdata</span>, labels = <span class='fl'>TRUE</span>, labels.cex = <span class='fl'>0.9</span>, <span class='kw'>...</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -166,7 +166,7 @@
     <tr>
       <th>catdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='categorical.html'>categorical()</a></code> function, containing values for 'x' and 'y'
+<code>colspace()</code> or <code>categorical()</code> function, containing values for 'x' and 'y'
 coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -192,10 +192,10 @@ of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>flowers</span>)
-<span class='no'>vis.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>flowers</span>, <span class='kw'>qcatch</span> <span class='kw'>=</span> <span class='st'>"Qi"</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"musca"</span>, <span class='kw'>achro</span> <span class='kw'>=</span> <span class='st'>"none"</span>, <span class='kw'>relative</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>cat.flowers</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.flowers</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"categorical"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>cat.flowers</span>)</div><div class='img'><img src='catplot-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, qcatch = <span class='st'>"Qi"</span>, visual = <span class='st'>"musca"</span>, achro = <span class='st'>"none"</span>, relative = <span class='fl'>TRUE</span>)
+<span class='kw'>cat.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"categorical"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>cat.flowers</span>)</div><div class='img'><img src='catplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

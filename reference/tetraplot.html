@@ -159,29 +159,29 @@
     </div>
 
     <pre class="usage"><span class='fu'>tetraplot</span>(
-  <span class='no'>tcsdata</span>,
-  <span class='kw'>theta</span> <span class='kw'>=</span> <span class='fl'>45</span>,
-  <span class='kw'>phi</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>perspective</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
-  <span class='kw'>r</span> <span class='kw'>=</span> <span class='fl'>1e+06</span>,
-  <span class='kw'>zoom</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>achro</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>achro.col</span> <span class='kw'>=</span> <span class='st'>"grey"</span>,
-  <span class='kw'>achro.size</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>achro.line</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>achro.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>achro.lty</span> <span class='kw'>=</span> <span class='fl'>3</span>,
-  <span class='kw'>tetrahedron</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>vert.cex</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>vert.range</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
-  <span class='kw'>out.lwd</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>out.lcol</span> <span class='kw'>=</span> <span class='st'>"darkgrey"</span>,
-  <span class='kw'>margin</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"p"</span>,
-  <span class='kw'>labels</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>gamut</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='no'>...</span>
+  <span class='kw'>tcsdata</span>,
+  theta = <span class='fl'>45</span>,
+  phi = <span class='fl'>10</span>,
+  perspective = <span class='fl'>FALSE</span>,
+  range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
+  r = <span class='fl'>1e+06</span>,
+  zoom = <span class='fl'>1</span>,
+  achro = <span class='fl'>TRUE</span>,
+  achro.col = <span class='st'>"grey"</span>,
+  achro.size = <span class='fl'>1</span>,
+  achro.line = <span class='fl'>FALSE</span>,
+  achro.lwd = <span class='fl'>1</span>,
+  achro.lty = <span class='fl'>3</span>,
+  tetrahedron = <span class='fl'>TRUE</span>,
+  vert.cex = <span class='fl'>1</span>,
+  vert.range = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>),
+  out.lwd = <span class='fl'>1</span>,
+  out.lcol = <span class='st'>"darkgrey"</span>,
+  margin = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
+  type = <span class='st'>"p"</span>,
+  labels = <span class='fl'>FALSE</span>,
+  gamut = <span class='fl'>FALSE</span>,
+  <span class='kw'>...</span>
 )</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -190,7 +190,7 @@
     <tr>
       <th>tcsdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code><a href='colspace.html'>colspace()</a></code> or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y'
+<code>colspace()</code> or <code>tcspace()</code> function, containing values for the 'x', 'y'
 and 'z' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -297,10 +297,10 @@ patterns as birds see them. Biological Journal Of The Linnean Society,
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># For plotting</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/plot.html'>plot</a></span>(<span class='no'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div></pre>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tcs.sicalis</span>)</div><div class='img'><img src='tetraplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

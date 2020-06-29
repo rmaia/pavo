@@ -160,7 +160,7 @@ in the avian tetrahedral color space." />
 in the avian tetrahedral color space.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>tcspace</span>(<span class='no'>vismodeldata</span>)</pre>
+    <pre class="usage"><span class='fu'>tcspace</span>(<span class='kw'>vismodeldata</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -168,14 +168,14 @@ in the avian tetrahedral color space.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
+from <code>vismodel()</code> or independently calculated data (in the form of a data frame
 with four columns name 'u', 's', 'm', 'l', representing the avian cones).</p></td>
     </tr>
     </table>
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>A data frame of class <code><a href='colspace.html'>colspace</a></code> consisting of the following columns:</p><ul>
+    <p>A data frame of class <code>colspace</code> consisting of the following columns:</p><ul>
 <li><p><code>u</code>, <code>s</code>, <code>m</code>, <code>l</code>: the quantum catch data used to
 calculate the remaining variables. NOTE: even if visual system is of type V-VIS,
 the output column will be labeled <code>u</code>.</p></li>
@@ -203,9 +203,9 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>sicalis</span>)
-<span class='no'>vis.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='no'>sicalis</span>, <span class='kw'>visual</span> <span class='kw'>=</span> <span class='st'>"avg.uv"</span>)
-<span class='no'>tcs.sicalis</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='no'>vis.sicalis</span>, <span class='kw'>space</span> <span class='kw'>=</span> <span class='st'>"tcs"</span>)</div></pre>
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
