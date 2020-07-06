@@ -57,10 +57,12 @@ Suggests:
     NbClust,
     rgl,
     rmarkdown,
-    testthat(>= 2.1.0),
+    testthat(>= 2.99.0),
 VignetteBuilder: 
     knitr
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
+Remotes:
+    r-lib/testthat
