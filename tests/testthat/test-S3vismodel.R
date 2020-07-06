@@ -10,6 +10,6 @@ test_that("summary.vismodel", {
   expect_s3_class(summary_vis, "table")
 
   summary_subset <- expect_message(summary(vis.sicalis[, -5]), "subset data")
-  expect_equivalent(summary_subset, summary.data.frame(vis.sicalis[, -5]))
+  expect_identical(summary_subset, summary.data.frame(vis.sicalis[, -5]))
 
 })

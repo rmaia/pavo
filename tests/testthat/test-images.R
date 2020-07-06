@@ -42,7 +42,7 @@ test_that("as.rimg", {
   attributesuite(rimggrey)
   attributesuite(rimgfake2[[1]])
   attributesuite(rimgfake2[[2]])
-  expect_equivalent(unlist(attributes(rimgfake2)), c("rimg", "list", "raw"))
+  expect_equal(unlist(attributes(rimgfake2)), c("rimg", "list", "raw"), ignore_attr = TRUE)
   expect_true(is.rimg(rimgfake))
   expect_true(is.rimg(rimgfake2))
   expect_true(is.rimg(rimggrey))
@@ -52,14 +52,14 @@ test_that("as.rimg", {
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
-  expect_equal(papilio_class, pap2, check.attributes = FALSE)
+  expect_equal(papilio_class, pap2, ignore_attr = TRUE)
 
   # magick conversion
   magickpapilio <- rimg2magick(papilio)
   expect_equal(class(magickpapilio), "magick-image")
   papiliomagick <- as.rimg(magickpapilio)
   attr(papiliomagick, "imgname") <- "papilio"
-  expect_equal(papilio, papiliomagick, check.attributes = TRUE)
+  expect_equal(papilio, papiliomagick, ignore_attr = TRUE)
 })
 
 test_that("procimg", {
@@ -289,6 +289,6 @@ test_that("summary", {
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes_class <- classify(snakes, kcols = 3)
 
-  expect_equivalent(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4, stringsAsFactors = FALSE))
-  expect_equivalent(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16))
+  expect_equal(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4, stringsAsFactors = FALSE), ignore_attr = TRUE)
+  expect_equal(round(colSums(summary(snakes_class)[4:6]), 2), c(3.62, 1.82, 0.16), ignore_attr = TRUE)
 })

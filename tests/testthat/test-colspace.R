@@ -8,11 +8,12 @@ test_that("Receptor orders/names", {
   names(di) <- c("wl", "l", "s")
   di.vis <- vismodel(flowers, visual = di)
   di.space <- colspace(di.vis)
-  expect_equal(di.vis[, 1:2], di.space[, 2:1], check.attributes = FALSE)
+  expect_equal(di.vis[, 1:2], di.space[, 2:1], ignore_attr = TRUE)
 
-  expect_equivalent(
+  expect_equal(
     di.space[, 1:4],
-    dispace(di.vis)
+    dispace(di.vis),
+    ignore_attr = TRUE
   )
 
   # trichromat
@@ -20,11 +21,12 @@ test_that("Receptor orders/names", {
   names(tri) <- c("wl", "l", "m", "s")
   tri.vis <- vismodel(flowers, visual = tri)
   tri.space <- colspace(tri.vis)
-  expect_equal(tri.vis[, 1:3], tri.space[, 3:1], check.attributes = FALSE)
+  expect_equal(tri.vis[, 1:3], tri.space[, 3:1], ignore_attr = TRUE)
 
-  expect_equivalent(
+  expect_equal(
     tri.space[, 1:7],
-    trispace(tri.vis)
+    trispace(tri.vis),
+    ignore_attr = TRUE
   )
 
   # tetrachromat
@@ -32,14 +34,15 @@ test_that("Receptor orders/names", {
   names(tetra) <- c("wl", "l", "m", "s", "u")
   tetra.vis <- vismodel(flowers, visual = tetra)
   tetra.space <- colspace(tetra.vis)
-  expect_equal(tetra.vis[, 1:4], tetra.space[, 4:1], check.attributes = FALSE)
+  expect_equal(tetra.vis[, 1:4], tetra.space[, 4:1], ignore_attr = TRUE)
   expect_warning({
     sumtcs <- summary(tetra.space, by = 3)
   })
 
-  expect_equivalent(
+  expect_equal(
     tetra.space[, 1:16],
-    tcspace(tetra.vis)
+    tcspace(tetra.vis),
+    ignore_attr = TRUE
   )
 
 })
@@ -158,7 +161,7 @@ test_that("Errors/messages", {
   expect_message(colspace(vis.flowers, space = "tcs"), "treating columns as")
   expect_message(colspace(cbind(vis.flowers, vis.flowers[1:2]), space = "tcs"), "has more than four columns")
   expect_error(summary(colspace(vismodel(flowers)), by = 11), "not a multiple")
-  
+
   vis.flowers <- vismodel(flowers, visual = "bluetit")
   names(vis.flowers) <- c("a", "b", "c", "d", "e")
   expect_warning(colspace(vis.flowers, space = "tcs"), "Could not find columns")
@@ -173,19 +176,19 @@ test_that("CIE", {
   expect_s3_class(implicit_cie_flowers, "colspace")
   explicit_cie_flowers <- colspace(vis_flowers, space = "ciexyz")
   expect_identical(implicit_cie_flowers, explicit_cie_flowers)
-  
+
   # BYO data
-  fakedat <- data.frame(X = c(0.1, 0.2), 
+  fakedat <- data.frame(X = c(0.1, 0.2),
                         Y = c(0.3, 0.4),
                         Z = c(0.5, 0.6),
                         lum = c(NA, NA))
   expect_equal(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10'), illum = sensdata(illum = 'D65')),
                colspace(fakedat, space = "cielab", visual = 'cie10', illum = 'D65'))
-  
+
   # Should ignore custom options when data are class vismodel()
   expect_equal(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie10', illum = 'D65'),
                colspace(vismodel(flowers, "cie10"), space = "cielab", visual = 'cie2', illum = 'bluesky'))
-  
+
   # Message about the use of user-defined data
   expect_message(colspace(fakedat, space = "cielab", illum = sensdata(illum = 'D65')), 'custom illuminant')
   expect_message(colspace(fakedat, space = "cielab", visual = sensdata(visual = 'cie10')), 'custom visual system')

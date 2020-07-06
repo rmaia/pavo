@@ -19,7 +19,7 @@ test_that("Class assignment", {
 
 test_that("sensdata", {
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata("all", "all"))))
-  
+
   # Check for negative values
   expect_equal(min(sensdata(visual = 'all', illum = 'all', trans = 'all', achromatic = 'all', bkg = 'all')), 0)
 })
@@ -27,16 +27,20 @@ test_that("sensdata", {
 test_that("peakshape", {
   data(flowers)
 
-  expect_equivalent(round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])), c(216, 2617))
+  expect_equal(
+    round(colSums(peakshape(flowers, select = 1:5, lim = c(300, 700), plot = FALSE)[2:3])),
+    c(216, 2617),
+    ignore_attr = TRUE
+  )
 
   test <- readRDS("known_output/FWHM_lims.rds")
   expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
 
   expect_warning(peakshape(flowers[, -1], plot = FALSE), "wl column missing")
 
-  expect_equivalent(
+  expect_identical(
     nrow(peakshape(flowers, grepl("^Hibbertia", colnames(flowers)), plot = FALSE)),
-    6
+    6L
   )
 
   # Double peak

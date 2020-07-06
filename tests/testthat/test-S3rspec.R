@@ -21,7 +21,7 @@ test_that("as.rspec", {
 
   # Interpolation should not happen outside of wl range by default
   flowers3 <- flowers[-1, ]
-  expect_equivalent(flowers3, as.rspec(flowers3))
+  expect_identical(flowers3, as.rspec(flowers3), ignore_attr = TRUE)
 
   # With rule = 2, missing values outside of range are generated
   flowers3_fullrange <- expect_warning(
