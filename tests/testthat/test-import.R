@@ -36,11 +36,9 @@ test_that("getspec", {
 
   ## Error handling
   # should fail; ROH files only have scope data, which are not imported by getspec
-  expect_null(
-      expect_warning(
-      getspec(system.file("testdata", package = "lightr"), ext = "ROH"),
-      "File import failed"
-    )
+  expect_warning(
+    expect_null(getspec(system.file("testdata", package = "lightr"), ext = "ROH")),
+    "File import failed"
   )
 
   # should partly succeed (1/2)
@@ -60,7 +58,7 @@ test_that("getspec", {
 
   non_EN <- suppressMessages(getspec(system.file("testdata/non_english", package = "lightr"), ext = "txt", decimal = ","))
   expect_s3_class(non_EN, "rspec")
-  
+
 })
 
 
