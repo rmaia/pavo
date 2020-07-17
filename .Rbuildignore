@@ -33,3 +33,4 @@ CONDUCT.md
 ^vignettes/fig/workflow\.png$
 ^Dockerfile$
 ^vignettes/drafts$
+^data-raw$
