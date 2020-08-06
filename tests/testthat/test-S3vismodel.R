@@ -1,5 +1,3 @@
-context("vismodel")
-
 # File to test S3 functions related to the vismodel class
 
 test_that("summary.vismodel", {

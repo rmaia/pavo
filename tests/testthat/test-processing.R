@@ -1,5 +1,3 @@
-context("processing")
-
 test_that("Procspec", {
   data(sicalis)
 

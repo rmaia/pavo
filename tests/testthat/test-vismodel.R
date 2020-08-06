@@ -1,5 +1,3 @@
-context("vismodel")
-
 test_that("Warnings", {
   data(flowers)
   data(sicalis)

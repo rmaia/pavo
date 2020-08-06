@@ -1,5 +1,3 @@
-context("coldist")
-
 test_that("Errors", {
   data(flowers)
 

@@ -1,5 +1,3 @@
-context("colspace")
-
 test_that("Receptor orders/names", {
   data(flowers)
 

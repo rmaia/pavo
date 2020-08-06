@@ -1,5 +1,3 @@
-context("voloverlap")
-
 test_that("Overlap", {
   data(sicalis)
   tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")

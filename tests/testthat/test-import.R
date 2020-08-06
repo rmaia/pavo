@@ -1,5 +1,3 @@
-context("import")
-
 test_that("getspec", {
 
   ## Run through a bunch of file types

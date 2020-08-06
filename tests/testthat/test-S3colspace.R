@@ -1,5 +1,3 @@
-context("colspace")
-
 # File to test S3 functions related to the colspace class
 data(sicalis)
 

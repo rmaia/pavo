@@ -1,5 +1,3 @@
-context("rspec")
-
 # File to test S3 functions related to the rspec class
 
 test_that("as.rspec", {

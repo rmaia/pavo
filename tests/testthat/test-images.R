@@ -1,5 +1,3 @@
-context("adjacency")
-
 test_that("as.rimg", {
   attributesuite <- function(x) {
     expect_equal(class(x), c("rimg", "array"))
