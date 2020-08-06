@@ -20,7 +20,7 @@
 #'   range of input data. Defaults to `TRUE`.
 #'
 #' @return an object of class `rspec` for use in further `pavo` functions
-#' 
+#'
 #' @importFrom stats approx cor
 #'
 #' @export as.rspec is.rspec
@@ -52,6 +52,10 @@ as.rspec <- function(object, whichwl = NULL,
     name <- colnames(object)
   } else {
     stop("object must be a data frame or matrix")
+  }
+
+  if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j], logical(1))))) {
+    stop("all columns must contain numeric data", call. = FALSE)
   }
 
   if (anyNA(object)) {
