@@ -65,6 +65,9 @@ test_that("as.rspec", {
   expect_message(as.rspec(fakedat, whichwl = 1), "negative")
   expect_message(as.rspec(fakedat, whichwl = 1), "NA")
 
+  flowers[, 2] <- as.character(flower[, 2])
+  expect_error(as.rspec(flowers), "numeric")
+
 })
 
 test_that("summary.rspec", {

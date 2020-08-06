@@ -54,7 +54,7 @@ as.rspec <- function(object, whichwl = NULL,
     stop("object must be a data frame or matrix")
   }
 
-  if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j], logical(1))))) {
+  if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j]), logical(1)))) {
     stop("all columns must contain numeric data", call. = FALSE)
   }
 
