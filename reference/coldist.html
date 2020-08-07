@@ -159,10 +159,10 @@ or Manhattan distances (coc model only) are returned." />
     </div>
 
     <div class="ref-description">
-    <p>Calculates colour distances. When data are the result of <code>vismodel()</code>, it
+    <p>Calculates colour distances. When data are the result of <code><a href='vismodel.html'>vismodel()</a></code>, it
 applies the receptor-noise model of Vorobyev et al. (1998) to calculate
 colour distances with noise based on relative photoreceptor densities. It
-also accepts <code>colspace()</code> data in which case unweighted Euclidean distances
+also accepts <code><a href='colspace.html'>colspace()</a></code> data in which case unweighted Euclidean distances
 or Manhattan distances (coc model only) are returned.</p>
     </div>
 
@@ -184,7 +184,7 @@ or Manhattan distances (coc model only) are returned.</p>
     <tr>
       <th>modeldata</th>
       <td><p>(required) quantum catch colour data. Can be the result from
-<code>vismodel()</code> for noise-weighted Euclidean distances, or <code>colspace()</code> for
+<code><a href='vismodel.html'>vismodel()</a></code> for noise-weighted Euclidean distances, or <code><a href='colspace.html'>colspace()</a></code> for
 unweighted (typically) Euclidean distances. Data may also be independently
 calculated quantum catches, in the form of a data frame with columns
 representing photoreceptors.</p></td>
@@ -220,7 +220,7 @@ argument <code>weber.achro</code>.</p></td>
     </tr>
     <tr>
       <th>qcatch</th>
-      <td><p>if the object is of class <code>vismodel</code> or <code>colspace</code>, this
+      <td><p>if the object is of class <code><a href='vismodel.html'>vismodel</a></code> or <code><a href='colspace.html'>colspace</a></code>, this
 argument is ignored. If the object is a data frame of quantal catches from
 another source, this argument is used to specify what type of quantum catch
 is being used, so that the noise can be calculated accordingly: * <code>Qi</code>:
@@ -233,7 +233,7 @@ logarithm of the quantum catch)</p></td>
       <td><p>photoreceptor densities for the cones used in visual modeling. must
 have same length as number of columns (excluding achromatic receptor if
 used; defaults to the Pekin robin <em>Leiothrix lutea</em> densities:
-<code><a href='https://rdrr.io/r/base/c.html'>c(1,2,2,4)</a></code>). Ignored for <code>colspace</code> objects.</p></td>
+<code><a href='https://rdrr.io/r/base/c.html'>c(1,2,2,4)</a></code>). Ignored for <code><a href='colspace.html'>colspace</a></code> objects.</p></td>
     </tr>
     <tr>
       <th>weber</th>
@@ -279,7 +279,7 @@ message.</p>
 limited model to return noise-weighted Euclidean distances. This behaviour
 has been amended, and generic spaces now return unweighted Euclidean
 distances. Equivalent results to the former behaviour can be attained by
-sending the results of <code>vismodel()</code> directly to <code>coldist()</code> , as
+sending the results of <code><a href='vismodel.html'>vismodel()</a></code> directly to <code>coldist()</code> , as
 previously, which also offers greater flexibility and reliability. Thus
 <code>coldist()</code> now returns unweighted Euclidean distances for <code>colspace</code>
 objects (with the exception of Manhattan distances for the coc space), and
@@ -312,29 +312,29 @@ predictions. Behavioral Ecology, doi: <a href='https://doi.org/10.1093/beheco/ar
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># Dichromat</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>, relative = <span class='fl'>FALSE</span>)
 <span class='kw'>didist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.flowers</span>, n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>))
 
 <span class='co'># Trichromat</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, relative = <span class='fl'>FALSE</span>)
 <span class='kw'>tridist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.flowers</span>, n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span>))
 
 <span class='co'># Trichromat, colour-hexagon model (euclidean distances)</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>,
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>,
   visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>,
   relative = <span class='fl'>FALSE</span>, vonkries = <span class='fl'>TRUE</span>, achromatic = <span class='st'>"l"</span>, bkg = <span class='st'>"green"</span>
 )
-<span class='kw'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"hexagon"</span>)
+<span class='kw'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"hexagon"</span>)
 <span class='kw'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>hex.flowers</span>)
 
 <span class='co'># Trichromat, colour-opponent-coding model (manhattan distances)</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>, vonkries = <span class='fl'>TRUE</span>)
-<span class='kw'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"coc"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>, vonkries = <span class='fl'>TRUE</span>)
+<span class='kw'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"coc"</span>)
 <span class='kw'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>coc.flowers</span>)
 
 <span class='co'># Tetrachromat</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>, relative = <span class='fl'>FALSE</span>)
 <span class='kw'>tetradist.sicalis.n</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.sicalis</span>)
 }
 </div></pre>

@@ -187,7 +187,7 @@ data in remaining columns.</p></td>
     <tr>
       <th>visual</th>
       <td><p>the visual system to be used. Options are:</p><ul>
-<li><p>a data frame such as one produced containing by <code>sensmodel()</code>, containing
+<li><p>a data frame such as one produced containing by <code><a href='sensmodel.html'>sensmodel()</a></code>, containing
 user-defined sensitivity data for the receptors involved in colour vision.
 The data frame must contain a <code>'wl'</code> column with the range of wavelengths included,
 and the sensitivity for each other cone as a column.</p></li>
@@ -290,7 +290,7 @@ space model? Defaults to <code>TRUE</code>).</p></td>
 
     <p>An object of class <code>vismodel</code> containing the photon catches for each of the
 photoreceptors considered. Information on the parameters used in the calculation are also
-stored and can be called using the <code>summary.vismodel()</code> function.</p>
+stored and can be called using the <code><a href='summary.vismodel.html'>summary.vismodel()</a></code> function.</p>
     <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
 
     <p>Built-in <code>visual</code>, <code>achromatic</code>, <code>illum</code>, <code>bkg</code> and <code>trans</code> are only defined
@@ -335,27 +335,27 @@ Visual Neuroscience, 3, 119-125.</p>
     <pre class="examples"><div class='input'><span class='co'># Dichromat (dingo)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
 <span class='kw'>vis.dingo</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
-<span class='kw'>di.dingo</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.dingo</span>, space = <span class='st'>"di"</span>)
+<span class='kw'>di.dingo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.dingo</span>, space = <span class='st'>"di"</span>)
 
 <span class='co'># Trichromat (honeybee)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
 <span class='kw'>vis.bee</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
-<span class='kw'>tri.bee</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.bee</span>, space = <span class='st'>"tri"</span>)
+<span class='kw'>tri.bee</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.bee</span>, space = <span class='st'>"tri"</span>)
 
 <span class='co'># Tetrachromat (blue tit)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
 <span class='kw'>vis.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"bluetit"</span>)
-<span class='kw'>tcs.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.bluetit</span>, space = <span class='st'>"tcs"</span>)
+<span class='kw'>tcs.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.bluetit</span>, space = <span class='st'>"tcs"</span>)
 
 <span class='co'># Tetrachromat (starling), receptor-noise model</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
 <span class='kw'>vis.star</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"star"</span>, achromatic = <span class='st'>"bt.dc"</span>, relative = <span class='fl'>FALSE</span>)
-<span class='kw'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.star</span>, achromatic = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
+<span class='kw'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.star</span>, achromatic = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
 <span class='co'># Custom trichromatic visual system</span>
-<span class='kw'>custom</span> <span class='op'>&lt;-</span> <span class='fu'>sensmodel</span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span>))
+<span class='kw'>custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sensmodel.html'>sensmodel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>custom</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wl"</span>, <span class='st'>"s"</span>, <span class='st'>"m"</span>, <span class='st'>"l"</span>)
 <span class='kw'>vis.custom</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='kw'>custom</span>)
-<span class='kw'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.custom</span>, space = <span class='st'>"tri"</span>)</div></pre>
+<span class='kw'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.custom</span>, space = <span class='st'>"tri"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

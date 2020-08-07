@@ -181,7 +181,7 @@ contrast (Endler &amp; Mielke 2005).</p>
       <th>classimg</th>
       <td><p>(required) an xyz matrix, or list of matrices, in which x and
 y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
-specifying a colour-class. Preferably the result of <code>classify()</code>, or
+specifying a colour-class. Preferably the result of <code><a href='classify.html'>classify()</a></code>, or
 constructed from grid-sampled spectra that have been visually modelled and
 clustered (as per Endler 2012).</p></td>
     </tr>
@@ -196,7 +196,7 @@ should be carefully considered.</p></td>
       <th>xscale</th>
       <td><p>(required) an integer specifying the true length of the x-axis,
 in preferred units. Not required, and ignored, only if image scales have
-been set via <code>procimg()</code>.</p></td>
+been set via <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>bkgID</th>
@@ -204,15 +204,15 @@ been set via <code>procimg()</code>.</p></td>
 pertaining to the background alone, for relatively homogeneous and
 uniquely-identified backgrounds (e.g. the matte background of pinned
 specimens). Examine the attributes of, or call <code>summary</code> on, the result of
-<code>classify()</code> to visualise the RGB values corresponding to colour-class ID
+<code><a href='classify.html'>classify()</a></code> to visualise the RGB values corresponding to colour-class ID
 numbers for classified images. Ignored if the focal object and background
-has been identified using <code>procimg()</code>.</p></td>
+has been identified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>polygon</th>
       <td><p>a data.frame of x-y coordinates delineating a closed polygon
 that separates the focal object from the background. Not required, and
-ignored, if the focal object outline is specified using <code>procimg()</code>.</p></td>
+ignored, if the focal object outline is specified using <code><a href='procimg.html'>procimg()</a></code>.</p></td>
     </tr>
     <tr>
       <th>exclude</th>
@@ -220,12 +220,12 @@ ignored, if the focal object outline is specified using <code>procimg()</code>.<
 any.</p><ul>
 <li><p><code>'none'</code>: default</p></li>
 <li><p><code>'background'</code>: exclude everything <em>outside</em> the closed polygon specified
-using <code>procimg()</code>, or the argument <code>polygon</code>. Alternatively, if the
+using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>polygon</code>. Alternatively, if the
 background is relatively homogeneous the colour-class ID(s) uniquely
 corresponding to the background can be specified via <code>bkgID</code>, and
 subsequently excluded.</p></li>
 <li><p><code>'object'</code>: exclude everything <em>inside</em> the closed polygon specified
-using <code>procimg()</code>, or the argument <code>polygon</code>.</p></li>
+using <code><a href='procimg.html'>procimg()</a></code>, or the argument <code>polygon</code>.</p></li>
 </ul></td>
     </tr>
     <tr>
@@ -236,13 +236,13 @@ columns should be named 'c1' and 'c2', and specify all possible
 combinations of numeric colour-class ID's (viewable by calling
 <code><a href='https://rdrr.io/r/base/summary.html'>summary(image, plot = TRUE)</a></code> on a colour classified image), with the
 remaining columns named dS (for chromatic distances) and/or dL (for
-achromatic distances). See <code>vismodel()</code> and <code>colspace()</code> for visual
+achromatic distances). See <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code> for visual
 modelling with spectral data.</p></td>
     </tr>
     <tr>
       <th>hsl</th>
       <td><p>data.frame specifying the hue, saturation, and luminance of color
-patch elements, as might be estimated via <code>vismodel()</code> and <code>colspace()</code>.
+patch elements, as might be estimated via <code><a href='vismodel.html'>vismodel()</a></code> and <code><a href='colspace.html'>colspace()</a></code>.
 The first column, named 'patch', should contain numeric color category IDs,
 with the remaining columns specifying one or more of 'hue' (angle, in
 radians), 'sat', and/or 'lum'.</p></td>
@@ -320,7 +320,7 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 86(4), 405-431.</p>
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>classify()</code>, <code>summary.rimg()</code>, <code>procimg()</code></p></div>
+    <div class='dont-index'><p><code><a href='classify.html'>classify()</a></code>, <code><a href='summary.rimg.html'>summary.rimg()</a></code>, <code><a href='procimg.html'>procimg()</a></code></p></div>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Thomas E. White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
@@ -331,8 +331,8 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span>(<span class='fl'>153</span>)
 
 <span class='co'># Single image</span>
-<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>getimg</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'>classify</span>(<span class='kw'>papilio</span>, kcols = <span class='fl'>4</span>)
+<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
+<span class='kw'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span>(<span class='kw'>papilio</span>, kcols = <span class='fl'>4</span>)
 <span class='kw'>papilio_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span>(<span class='kw'>papilio_class</span>, xscale = <span class='fl'>100</span>)
 
 <span class='co'># Single image, with (fake) color distances and hsl values</span>
@@ -359,8 +359,8 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 )
 
 <span class='co'># Multiple images</span>
-<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>getimg</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'>classify</span>(<span class='kw'>snakes</span>, kcols = <span class='fl'>3</span>)
+<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
+<span class='kw'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span>(<span class='kw'>snakes</span>, kcols = <span class='fl'>3</span>)
 <span class='kw'>snakes_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span>(<span class='kw'>snakes_class</span>, xpts = <span class='fl'>120</span>, xscale = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>50</span>, <span class='fl'>55</span>))
 }</div></pre>
   </div>

@@ -155,7 +155,7 @@
     </div>
 
     <div class="ref-description">
-    <p>Plot options for <code>jnd2xyz</code> objects.</p>
+    <p>Plot options for <code><a href='jnd2xyz.html'>jnd2xyz</a></code> objects.</p>
     </div>
 
     <pre class="usage"><span class='fu'>jndplot</span>(
@@ -176,7 +176,7 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>(required) the output from a <code>jnd2xyz()</code> call.</p></td>
+      <td><p>(required) the output from a <code><a href='jnd2xyz.html'>jnd2xyz()</a></code> call.</p></td>
     </tr>
     <tr>
       <th>arrow</th>
@@ -254,8 +254,8 @@ chromaticity diagrams. Behavioral Ecology, 23, 723-728.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>)
-<span class='kw'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span>(<span class='kw'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='kw'>propxyz</span> <span class='op'>&lt;-</span> <span class='fu'>jnd2xyz</span>(<span class='kw'>cd.flowers</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>)
+<span class='kw'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.flowers</span>)</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='kw'>propxyz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span>(<span class='kw'>cd.flowers</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>propxyz</span>)</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

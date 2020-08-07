@@ -200,7 +200,7 @@ capabilities.</p>
     <tr>
       <th>tcsdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code>colspace()</code> or <code>tcspace()</code> function, containing values for the 'x', 'y'
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y'
 and 'z' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -314,8 +314,8 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='co'># For plotting</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
-<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
 <span class='fu'>tcsplot</span>(<span class='kw'>tcs.sicalis</span>, size = <span class='fl'>0.005</span>)
 <span class='kw'>rgl</span>::<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/postscript.html'>rgl.postscript</a></span>(<span class='st'>"testplot.pdf"</span>, fmt = <span class='st'>"pdf"</span>)
 <span class='kw'>rgl</span>::<span class='fu'><a href='https://rdrr.io/pkg/rgl/man/snapshot.html'>rgl.snapshot</a></span>(<span class='st'>"testplot.png"</span>)

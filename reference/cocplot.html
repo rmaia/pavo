@@ -179,7 +179,7 @@
     <tr>
       <th>cocdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code>colspace()</code> or <code>categorical()</code> function, containing values for 'x' and 'y'
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='categorical.html'>categorical()</a></code> function, containing values for 'x' and 'y'
 coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -235,8 +235,8 @@ of the honeybee. Vision Research, 31, 1381-1397.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>, vonkries = <span class='fl'>TRUE</span>)
-<span class='kw'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"coc"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>, vonkries = <span class='fl'>TRUE</span>)
+<span class='kw'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"coc"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>coc.flowers</span>)</div><div class='img'><img src='cocplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

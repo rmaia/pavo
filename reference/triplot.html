@@ -180,7 +180,7 @@
     <tr>
       <th>tridata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code>colspace()</code> or <code>trispace()</code> function, containing values for the 'x' and
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='trispace.html'>trispace()</a></code> function, containing values for the 'x' and
 'y' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -247,8 +247,8 @@ Society of America, 69, 1183-1186.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
-<span class='kw'>tri.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"tri"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
+<span class='kw'>tri.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"tri"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tri.flowers</span>)</div><div class='img'><img src='triplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

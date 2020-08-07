@@ -181,7 +181,7 @@ space.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>colsp1, colsp2</th>
-      <td><p>(required) data frame, possibly a result from the <code>colspace()</code>
+      <td><p>(required) data frame, possibly a result from the <code><a href='colspace.html'>colspace()</a></code>
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)</p></td>
     </tr>
@@ -240,7 +240,7 @@ used in the Monte Carlo computation.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments passed to the plot. See <code>vol()</code></p></td>
+      <td><p>additional arguments passed to the plot. See <code><a href='vol.html'>vol()</a></code></p></td>
     </tr>
     </table>
 
@@ -294,9 +294,9 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>tcs.sicalis.C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'>colspace</span>(<span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>)), <span class='st'>"C"</span>)
-<span class='kw'>tcs.sicalis.T</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'>colspace</span>(<span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>)), <span class='st'>"T"</span>)
-<span class='kw'>tcs.sicalis.B</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'>colspace</span>(<span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>)), <span class='st'>"B"</span>)
+<span class='kw'>tcs.sicalis.C</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>)), <span class='st'>"C"</span>)
+<span class='kw'>tcs.sicalis.T</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>)), <span class='st'>"T"</span>)
+<span class='kw'>tcs.sicalis.B</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>)), <span class='st'>"B"</span>)
 
 <span class='co'># Convex hull volume</span>
 <span class='fu'>voloverlap</span>(<span class='kw'>tcs.sicalis.T</span>, <span class='kw'>tcs.sicalis.B</span>, type = <span class='st'>"convex"</span>)</div><div class='output co'>#&gt;           vol1         vol2   overlapvol vsmallest      vboth

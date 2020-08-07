@@ -180,7 +180,7 @@
     <tr>
       <th>ciedata</th>
       <td><p>(required). a data frame, possibly a result from the
-<code>colspace()</code> or <code>cie()</code> function, containing values for 'x', 'y' and 'z'
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='cie.html'>cie()</a></code> function, containing values for 'x', 'y' and 'z'
 coordinates for the CIEXYZ model, or LAB coordinates for the CIELAB (or
 CIELCh models), as columns (labeled as such).</p></td>
     </tr>
@@ -264,11 +264,11 @@ Internationale de l Eclairage.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
 
 <span class='co'># CIEXYZ</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"cie10"</span>, illum = <span class='st'>"D65"</span>, vonkries = <span class='fl'>TRUE</span>, relative = <span class='fl'>FALSE</span>)
-<span class='kw'>xyz.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"ciexyz"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"cie10"</span>, illum = <span class='st'>"D65"</span>, vonkries = <span class='fl'>TRUE</span>, relative = <span class='fl'>FALSE</span>)
+<span class='kw'>xyz.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"ciexyz"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>xyz.flowers</span>)</div><div class='img'><img src='cieplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># CIELAB</span>
-<span class='kw'>lab.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielab"</span>)
+<span class='kw'>lab.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielab"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>lab.flowers</span>)</div><div class='img'><img src='cieplot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

@@ -177,7 +177,7 @@ non-interactive tetrahedral plot.</p>
     <tr>
       <th>tcsdata</th>
       <td><p>(required) a data frame, possibly a result from the
-<code>colspace()</code> or <code>tcspace()</code> function, containing values for the 'x', 'y'
+<code><a href='colspace.html'>colspace()</a></code> or <code><a href='tcspace.html'>tcspace()</a></code> function, containing values for the 'x', 'y'
 and 'z' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -211,7 +211,7 @@ Gruson (2020).</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional graphical options. See <code><a href='https://rdrr.io/r/graphics/polygon.html'>polygon()</a></code> and <code>tetraplot()</code>.</p></td>
+      <td><p>additional graphical options. See <code><a href='https://rdrr.io/r/graphics/polygon.html'>polygon()</a></code> and <code><a href='tetraplot.html'>tetraplot()</a></code>.</p></td>
     </tr>
     </table>
 
@@ -232,8 +232,8 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
     <pre class="examples"><div class='input'>
 <span class='co'># For plotting</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
-<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tcs.sicalis</span>)</div><div class='input'>
 <span class='co'># Convex hull</span>
 <span class='fu'>vol</span>(<span class='kw'>tcs.sicalis</span>, type = <span class='st'>"convex"</span>)</div><div class='input'>

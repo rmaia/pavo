@@ -157,7 +157,7 @@ arguments and graphical parameters, see plot.colspace()." />
 
     <div class="ref-description">
     <p>Models reflectance spectra in a colorspace. For information on plotting
-arguments and graphical parameters, see <code>plot.colspace()</code>.</p>
+arguments and graphical parameters, see <code><a href='plot.colspace.html'>plot.colspace()</a></code>.</p>
     </div>
 
     <pre class="usage"><span class='fu'>colspace</span>(
@@ -174,44 +174,44 @@ arguments and graphical parameters, see <code>plot.colspace()</code>.</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the
-result from <code>vismodel()</code> or independently calculated data (in the form of a
+result from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a
 data frame with columns representing quantum catches).</p></td>
     </tr>
     <tr>
       <th>space</th>
       <td><p>Which colorspace/model to use. Options are:</p><ul>
-<li><p><code>auto</code>: if data is a result from <code>vismodel()</code>, applies <code>di</code>, <code>tri</code> or <code>tcs</code>
+<li><p><code>auto</code>: if data is a result from <code><a href='vismodel.html'>vismodel()</a></code>, applies <code>di</code>, <code>tri</code> or <code>tcs</code>
 if input visual model had two, three or four cones, respectively.</p></li>
-<li><p><code>di</code>: dichromatic colourspace. See <code>dispace()</code> for details.
-(plotting arguments)</p></li>
-<li><p><code>tri</code>: trichromatic colourspace (i.e. Maxwell triangle). See <code>trispace()</code>
-for details. (plotting arguments)</p></li>
-<li><p><code>tcs</code>: tetrahedral colourspace. See <code>tcspace()</code> for details.
-(plotting arguments)</p></li>
+<li><p><code>di</code>: dichromatic colourspace. See <code><a href='dispace.html'>dispace()</a></code> for details.
+(<a href='diplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>tri</code>: trichromatic colourspace (i.e. Maxwell triangle). See <code><a href='trispace.html'>trispace()</a></code>
+for details. (<a href='triplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>tcs</code>: tetrahedral colourspace. See <code><a href='tcspace.html'>tcspace()</a></code> for details.
+(<a href='tetraplot.html'>plotting arguments</a>)</p></li>
 <li><p><code>hexagon</code>: the trichromatic colour-hexagon of Chittka (1992). See
-<code>hexagon()</code> for details. (plotting arguments)</p></li>
+<code><a href='hexagon.html'>hexagon()</a></code> for details. (<a href='hexplot.html'>plotting arguments</a>)</p></li>
 <li><p><code>coc</code>: the trichromatic colour-opponent-coding model of Backhaus (1991).
-See <code>coc()</code> for details. (plotting arguments)</p></li>
+See <code><a href='coc.html'>coc()</a></code> for details. (<a href='cocplot.html'>plotting arguments</a>)</p></li>
 <li><p><code>categorical</code>: the tetrachromatic categorical fly-model of Troje (1993).
-See <code>categorical()</code> for details. (plotting arguments)</p></li>
-<li><p><code>ciexyz</code>: CIEXYZ space. See <code>cie()</code> for details.
-(plotting arguments)</p></li>
-<li><p><code>cielab</code>: CIELAB space. See <code>cie()</code> for details.
-(plotting arguments)</p></li>
-<li><p><code>cielch</code>: CIELCh space. See <code>cie()</code> for details.
-(plotting arguments)</p></li>
-<li><p><code>segment</code>: segment analysis of Endler (1990). See <code>segspace()</code> for details.
-(plotting arguments)</p></li>
+See <code><a href='categorical.html'>categorical()</a></code> for details. (<a href='catplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>ciexyz</code>: CIEXYZ space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>cielab</code>: CIELAB space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>cielch</code>: CIELCh space. See <code><a href='cie.html'>cie()</a></code> for details.
+(<a href='cieplot.html'>plotting arguments</a>)</p></li>
+<li><p><code>segment</code>: segment analysis of Endler (1990). See <code><a href='segspace.html'>segspace()</a></code> for details.
+(<a href='segplot.html'>plotting arguments</a>)</p></li>
 </ul></td>
     </tr>
     <tr>
       <th>qcatch</th>
       <td><p>Which quantal catch metric is being inputted. Only used when
-input data is NOT an output from <code>vismodel()</code>. Must be <code>Qi</code>, <code>fi</code> or <code>Ei</code>.</p></td>
+input data is NOT an output from <code><a href='vismodel.html'>vismodel()</a></code>. Must be <code>Qi</code>, <code>fi</code> or <code>Ei</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>additional arguments passed to <code>cie()</code> for non <code>vismodel()</code> data.</p></td>
+      <td><p>additional arguments passed to <code><a href='cie.html'>cie()</a></code> for non <code><a href='vismodel.html'>vismodel()</a></code> data.</p></td>
     </tr>
     </table>
 
@@ -252,26 +252,26 @@ Linnean Society, 41, 315-352.</p>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
 
 <span class='co'># A dichromat in a segment colourspace</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
 <span class='kw'>di.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"di"</span>)
 
 <span class='co'># Honeybee in the colour hexagon</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>,
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>,
   visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>,
   vonkries = <span class='fl'>TRUE</span>, achromatic = <span class='st'>"l"</span>, bkg = <span class='st'>"green"</span>
 )
 <span class='kw'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"hexagon"</span>)
 
 <span class='co'># A trichromat in a Maxwell triangle</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
 <span class='kw'>tri.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"tri"</span>)
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tri.flowers</span>)</div><div class='img'><img src='colspace-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># A tetrachromat in a tetrahedral colourspace</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"bluetit"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"bluetit"</span>)
 <span class='kw'>tcs.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"tcs"</span>)
 
 <span class='co'># A housefly in the categorical colourspace</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"musca"</span>, achro = <span class='st'>"md.r1"</span>)
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"musca"</span>, achro = <span class='st'>"md.r1"</span>)
 <span class='kw'>cat.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"categorical"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

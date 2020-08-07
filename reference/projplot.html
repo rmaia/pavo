@@ -169,7 +169,7 @@ Adds points to a tetrahedral colorspace projection" />
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>tcsdata</th>
-      <td><p>(required) tetrahedral color space coordinates, possibly a result from <code>colspace()</code>,
+      <td><p>(required) tetrahedral color space coordinates, possibly a result from <code><a href='colspace.html'>colspace()</a></code>,
 containing values for the 'h.theta' and 'h.phi' coordinates as columns (labeled as such).</p></td>
     </tr>
     <tr>
@@ -202,8 +202,8 @@ as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.</p
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
-<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
+<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
 <span class='fu'>projplot</span>(<span class='kw'>tcs.sicalis</span>, pch = <span class='fl'>16</span>, col = <span class='fu'><a href='https://rdrr.io/r/stats/setNames.html'>setNames</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>3</span>), <span class='fl'>7</span>), <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span>), <span class='fl'>7</span>)))</div><div class='img'><img src='projplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

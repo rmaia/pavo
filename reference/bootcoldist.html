@@ -168,7 +168,7 @@ for the mean colour distance between two or more samples of colours</p>
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch colour data.
-Can be the result from <code>vismodel()</code>, or <code>colspace()</code>. Data may also be
+Can be the result from <code><a href='vismodel.html'>vismodel()</a></code>, or <code><a href='colspace.html'>colspace()</a></code>. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.</p></td>
     </tr>
@@ -192,8 +192,8 @@ customise your parallelisation strategy.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>other arguments to be passed to <code>coldist()</code>. Must at minimum
-include <code>n</code> and <code>weber</code>. See <code>coldist()</code> for details.</p></td>
+      <td><p>other arguments to be passed to <code><a href='coldist.html'>coldist()</a></code>. Must at minimum
+include <code>n</code> and <code>weber</code>. See <code><a href='coldist.html'>coldist()</a></code> for details.</p></td>
     </tr>
     </table>
 
@@ -216,7 +216,7 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vm</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, achromatic = <span class='st'>"bt.dc"</span>)
+<span class='kw'>vm</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, achromatic = <span class='st'>"bt.dc"</span>)
 <span class='kw'>gr</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/grep.html'>gsub</a></span>(<span class='st'>"ind.."</span>, <span class='st'>""</span>, <span class='fu'><a href='https://rdrr.io/r/base/colnames.html'>rownames</a></span>(<span class='kw'>vm</span>))
 <span class='fu'>bootcoldist</span>(<span class='kw'>vm</span>, by = <span class='kw'>gr</span>, n = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>4</span>), weber = <span class='fl'>0.1</span>, weber.achro = <span class='fl'>0.1</span>)
 }

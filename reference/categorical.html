@@ -166,7 +166,7 @@
     <tr>
       <th>vismodeldata</th>
       <td><p>(required) quantum catch color data. Can be either the result
-from <code>vismodel()</code> or independently calculated data (in the form of a data frame
+from <code><a href='vismodel.html'>vismodel()</a></code> or independently calculated data (in the form of a data frame
 with four columns named 'u' ,'s', 'm', 'l', representing a tetrachromatic viewer).</p></td>
     </tr>
     </table>
@@ -192,8 +192,8 @@ of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"musca"</span>, achromatic = <span class='st'>"md.r1"</span>)
-<span class='kw'>cat.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>colspace</span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"categorical"</span>)</div></pre>
+<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"musca"</span>, achromatic = <span class='st'>"md.r1"</span>)
+<span class='kw'>cat.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"categorical"</span>)</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
