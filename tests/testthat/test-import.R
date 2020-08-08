@@ -61,8 +61,16 @@ test_that("getspec", {
 
 
 test_that("getimg", {
-  expect_s3_class(
+
+  # This folder contains a 16 bit PNG image and an identical copy with an
+  # uppercase file extension
+  img <- expect_message(
     getimg(system.file("testdata", "images", "formats", package = "pavo")),
-    "rimg"
+    "2 files found"
   )
+
+  expect_s3_class(img, "rimg")
+  expect_length(img, 2)
+  expect_identical(img[[1]], img[[2]])
+
 })

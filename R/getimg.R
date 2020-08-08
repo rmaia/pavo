@@ -64,14 +64,15 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     # File names
     file_names <- list.files(imgpath,
       pattern = extension,
-      recursive = subdir, include.dirs = subdir
+      recursive = subdir, include.dirs = subdir,
+      ignore.case = TRUE
     )
     files <- paste0(imgpath, "/", file_names)
 
     if (subdir.names) {
-      file_names <- gsub(extension, "", file_names)
+      file_names <- gsub(extension, "", file_names, ignore.case = TRUE)
     } else {
-      file_names <- gsub(extension, "", basename(file_names))
+      file_names <- gsub(extension, "", basename(file_names), ignore.case = TRUE)
     }
 
     if (length(file_names) == 0) {
