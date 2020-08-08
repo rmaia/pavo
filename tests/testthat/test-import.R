@@ -71,6 +71,6 @@ test_that("getimg", {
 
   expect_s3_class(img, "rimg")
   expect_length(img, 2)
-  expect_identical(img[[1]], img[[2]])
+  expect_identical(img[[1]], img[[2]], ignore_attr = TRUE)
 
 })
