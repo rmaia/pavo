@@ -14,6 +14,8 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `getimg()` now imports image files with uppercase extensions (e.g., JPG or 
+PNG), such as those produced by some camera brands or processing software.
 * Maximum quantum catches computation (`data.maxqcatches` attribute) now works
 for segment "visual model" as well. As a side effect, this removes a warning
 that occurred when users ran `vismodel(..., visual = "segment")`.
