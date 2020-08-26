@@ -769,7 +769,7 @@ JND.fms <- coldist(vm.fms, n = c(1, 1, 2, 2, 3, 3, 4, 4, 5, 5))
 head(JND.fms)
 ```
 
-# Analyzing Spatial Data
+# Analysing Spatial Data
 
 `pavo` now allows for the combined analysis of spectral data and spatial data. Note that 'spatial' data of course include images, but may also draw on spatially-sampled _spectra_, as explored below. Thus while much of the below deals with image-based processing and analysis, images are not necessary for many spatial analyses and indeed may perform worse than spectrally-based analyses in some cases. Further, **image data should seldom be used without input from spectral measurements**. Even in the simple butterfly example below, users should first validate the presence and number of discrete colours in a patch via spectral measurement and visual modelling (i.e. the 'spectral' information), which is then augmented by image-based clustering of these _a priori_ identified patches to extract the 'spatial' information. Using uncalibrated images alone for inferences about colour pattern perception may well yield unreliable results, given the radical differences between human (camera) and non-human animal perception.
 
