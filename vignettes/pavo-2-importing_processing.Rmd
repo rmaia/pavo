@@ -126,7 +126,6 @@ Finally, the `lim` argument allows you to specify the range of wavelengths conta
 fakedat.new2 <- as.rspec(fakedat, lim = c(300, 500))
 
 plot(refl1 ~ wl, type = "l", data = fakedat.new2)
-plot(fakedat.new2)
 ```
 
 We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (`as.rspec()` will warn you when wavelengths in the data are not present in the range specified with `lim`), otherwise `as.rspec()` will assume that wavelengths exist when in fact they may not. For example, if we set `lim = c(300, 1000)` and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:
