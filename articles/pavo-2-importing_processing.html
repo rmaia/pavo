@@ -233,9 +233,8 @@ code.sourceCode {
 <span class="co">#&gt; The spectral data contain 231 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">refl1</span> <span class="op">~</span> <span class="kw">wl</span>, type = <span class="st">"l"</span>, data = <span class="kw">fakedat.new2</span>)
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span>(<span class="kw">fakedat.new2</span>)
 </pre></div>
-<p><img src="pavo-2-importing_processing_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"><img src="pavo-2-importing_processing_files/figure-html/unnamed-chunk-9-2.png" width="384" style="display: block; margin: auto;"></p>
+<p><img src="pavo-2-importing_processing_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"></p>
 <p>We want to stress that it is important to check the actual wavelengths contained in the data before setting this argument (<code><a href="../reference/as.rspec.html">as.rspec()</a></code> will warn you when wavelengths in the data are not present in the range specified with <code>lim</code>), otherwise <code><a href="../reference/as.rspec.html">as.rspec()</a></code> will assume that wavelengths exist when in fact they may not. For example, if we set <code>lim = c(300, 1000)</code> and plot the results, the reflectance values between 700 and 1000 nm are set to be equal since there is no information at these wavelengths in the original dataset:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit">
 <span class="kw">fakedat.new2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span>(<span class="kw">fakedat</span>, lim = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">300</span>, <span class="fl">1000</span>))
