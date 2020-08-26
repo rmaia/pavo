@@ -13,7 +13,8 @@ vignette: >
 ```{r setup, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.align = "center"
 )
 options(rgl.useNULL = TRUE)
 ```
@@ -119,26 +120,19 @@ rgl::bg3d()
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
-<!--
-This doesn't work right now because it returns an a that is too small
-
-# Exploring other values of alpha
+# Exploring other values of $\alpha$
 
 Depending on your biological question, it is possible you might want a different
 value of $\alpha$ than the $\alpha^*$ suggested earlier. 
 
-For example, you may want all your colour volume to only have one component,
+For example, you may want all your colour volumes to only have one component,
 instead of several multiple smaller volumes. Here is a quick demo of how you can
 do this.
 
-
 First, let's create a dummy dataset with two distinct clouds of points:
 
-```{r, include = FALSE}
-set.seed("20200126")
-```
-
 ```{r}
+set.seed("20200126")
 dvol = data.frame(
   "x" = c(rnorm(n = 10, mean = -0.7/sqrt(2)+.3, sd = 0.05),
           rnorm(n = 10, mean =  0.7/sqrt(2)-.3, sd = 0.05)),
@@ -152,54 +146,35 @@ dvol = data.frame(
 With the approach highlighted before, this will result in a colour volume with
 two distinct components:
 
-```{r, eval = F}
-distances <- get.knn(dvol, k = 1)$nn.dist
-annd <- max(distances)/2
-```
-
-```{r, include=FALSE}
-# This is a workaround to not depend on FNN
-annd <- 0.03829851
-```
-
 ```{r}
-shapes <- ashape3d(as.matrix(dvol), alpha = 0)
-avalues <- unname(shapes$tetra[, "rhoT"])
-avalues <- sort(avalues)
-avalues <- avalues[avalues >= annd]
-shapes <- ashape3d(as.matrix(dvol), alpha = avalues)
-isin <- inashape3d(shapes, indexAlpha = "all", as.matrix(dvol))
-allin <- vapply(isin, all, logical(1))
-astar_ind <- match(TRUE, allin)
-astar <- avalues[astar_ind]
 tetraplot(dvol)
-vol(dvol, type= "alpha", avalue = astar)
+vol(dvol, type= "alpha")
 ```
 
-To prevent this, we can add an additional test that uses 
-`components_ashape3d()`. This function tells you in which component is each data
-point:
+To prevent this, we can add an additional test with the following code:
 
 ```{r}
-comp <- components_ashape3d(shapes, indexAlpha = "all")
+library(alphashape3d)
+tetras <- ashape3d(as.matrix(dvol), alpha = 0)$tetra
+
+tetras <- tetras[order(tetras[, "rhoT"]), ]
+
+i <- 0
+all_in <- FALSE
+
+while (!all_in && i < nrow(tetras)) {
+  i <- i+1
+  
+  points_in <- unique(c(tetras[seq_len(i), 1:4]))
+  
+  all_in <- all(seq_len(nrow(dvol)) %in% points_in)
+}
+
+a_1 <- tetras[i, "rhoT"]
 ```
 
-So, to ensure we only have one component, we can do:
 
 ```{r}
-nb_comp <- sapply(comp, function(x) length(unique(x)) == 1)
+tetraplot(dvol)
+vol(dvol, type= "alpha", avalue = tetras[i+20, "rhoT"])
 ```
-
-We find the first `TRUE` value with `match()`:
-
-```{r}
-a_ind <- match(TRUE, nb_comp)
-a <- avalues[max(a_ind, astar_ind)]
-```
-
-```{r}
-tetraplot(as.data.frame(dvol))
-vol(dvol, type = "alpha", avalue = a)
-```
-
--->

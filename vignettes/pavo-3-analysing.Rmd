@@ -18,11 +18,6 @@ vignette: >
 .caption {
   font-style: italic;
 }
-/* Center all figures. This is actually better than using knitr::opts_chunk
-because the code is only written once in the output */
-.figure {
-  text-align: center;
-}
 /* Auto-wrap long code line */
 code.sourceCode {
   white-space: pre-wrap;
@@ -37,6 +32,11 @@ options(
    warnPartialMatchAttr = TRUE
 )
 knitr::knit_hooks$set(fig = knitr::hook_pngquant)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.align = "center"
+)
 ```
 
 [pavo_repo]: https://github.com/rmaia/pavo
