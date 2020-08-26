@@ -35,7 +35,8 @@ knitr::knit_hooks$set(fig = knitr::hook_pngquant)
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center"
+  fig.align = "center",
+  fig.show = "hold"
 )
 ```
 

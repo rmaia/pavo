@@ -14,7 +14,8 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  fig.align = "center"
+  fig.align = "center",
+  fig.show = "hold"
 )
 options(rgl.useNULL = TRUE)
 ```
