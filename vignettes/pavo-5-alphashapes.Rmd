@@ -121,61 +121,61 @@ rgl::bg3d()
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
-# Exploring other values of $\alpha$
+<!-- # Exploring other values of $\alpha$ -->
 
-Depending on your biological question, it is possible you might want a different
-value of $\alpha$ than the $\alpha^*$ suggested earlier. 
+<!-- Depending on your biological question, it is possible you might want a different -->
+<!-- value of $\alpha$ than the $\alpha^*$ suggested earlier.  -->
 
-For example, you may want all your colour volumes to only have one component,
-instead of several multiple smaller volumes. Here is a quick demo of how you can
-do this.
+<!-- For example, you may want all your colour volumes to only have one component, -->
+<!-- instead of several multiple smaller volumes. Here is a quick demo of how you can -->
+<!-- do this. -->
 
-First, let's create a dummy dataset with two distinct clouds of points:
+<!-- First, let's create a dummy dataset with two distinct clouds of points: -->
 
-```{r}
-set.seed("20200126")
-dvol = data.frame(
-  "x" = c(rnorm(n = 10, mean = -0.7/sqrt(2)+.3, sd = 0.05),
-          rnorm(n = 10, mean =  0.7/sqrt(2)-.3, sd = 0.05)),
-  "y" = c(rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3, sd = 0.05),
-          rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3  , sd = 0.05)),
-  "z" = c(rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3, sd = 0.05),
-          rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3  , sd = 0.05))
-)
-```
+<!-- ```{r} -->
+<!-- set.seed("20200126") -->
+<!-- dvol = data.frame( -->
+<!--   "x" = c(rnorm(n = 10, mean = -0.7/sqrt(2)+.3, sd = 0.05), -->
+<!--           rnorm(n = 10, mean =  0.7/sqrt(2)-.3, sd = 0.05)), -->
+<!--   "y" = c(rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3, sd = 0.05), -->
+<!--           rnorm(n = 10, mean = -0.25*sqrt(2/3)+.3  , sd = 0.05)), -->
+<!--   "z" = c(rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3, sd = 0.05), -->
+<!--           rnorm(n = 10, mean = -0.5*sqrt(2/3)+.3  , sd = 0.05)) -->
+<!-- ) -->
+<!-- ``` -->
 
-With the approach highlighted before, this will result in a colour volume with
-two distinct components:
+<!-- With the approach highlighted before, this will result in a colour volume with -->
+<!-- two distinct components: -->
 
-```{r}
-tetraplot(dvol)
-vol(dvol, type= "alpha")
-```
+<!-- ```{r} -->
+<!-- tetraplot(dvol) -->
+<!-- vol(dvol, type= "alpha") -->
+<!-- ``` -->
 
-To prevent this, we can add an additional test with the following code:
+<!-- To prevent this, we can add an additional test with the following code: -->
 
-```{r}
-library(alphashape3d)
-tetras <- ashape3d(as.matrix(dvol), alpha = 0)$tetra
+<!-- ```{r} -->
+<!-- library(alphashape3d) -->
+<!-- tetras <- ashape3d(as.matrix(dvol), alpha = 0)$tetra -->
 
-tetras <- tetras[order(tetras[, "rhoT"]), ]
+<!-- tetras <- tetras[order(tetras[, "rhoT"]), ] -->
 
-i <- 0
-all_in <- FALSE
+<!-- i <- 0 -->
+<!-- all_in <- FALSE -->
 
-while (!all_in && i < nrow(tetras)) {
-  i <- i+1
-  
-  points_in <- unique(c(tetras[seq_len(i), 1:4]))
-  
-  all_in <- all(seq_len(nrow(dvol)) %in% points_in)
-}
+<!-- while (!all_in && i < nrow(tetras)) { -->
+<!--   i <- i+1 -->
 
-a_1 <- tetras[i, "rhoT"]
-```
+<!--   points_in <- unique(c(tetras[seq_len(i), 1:4])) -->
+
+<!--   all_in <- all(seq_len(nrow(dvol)) %in% points_in) -->
+<!-- } -->
+
+<!-- a_1 <- tetras[i, "rhoT"] -->
+<!-- ``` -->
 
 
-```{r}
-tetraplot(dvol)
-vol(dvol, type= "alpha", avalue = tetras[i+20, "rhoT"])
-```
+<!-- ```{r} -->
+<!-- tetraplot(dvol) -->
+<!-- vol(dvol, type= "alpha", avalue = tetras[i+20, "rhoT"]) -->
+<!-- ``` -->
