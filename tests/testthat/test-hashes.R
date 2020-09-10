@@ -127,7 +127,7 @@ test_that("processing & general", {
   # Sensdata
   expect_known_hash(
     expect_silent(sensdata(illum = "all", bkg = "all", trans = "all")),
-    "ede7ead317"
+    "27b20f98dc"
   )
 
   # Peakshape
