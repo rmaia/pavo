@@ -73,15 +73,15 @@ test_that("colspace", {
   ) # hexagon
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4),
-    "0fdcf15ed6a2312de4617f1fb4bdeece66bafe77"
+    "99684793a0db286562bff697354496ac3ef0abfb"
   ) # ciexyz
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielab"), digits = 4),
-    "e17c94cbcf341840b5f46c3f78311cd86031f5c3"
+    "55961f7e22403fba0c0c658868918722befb5f2c"
   ) # cielab
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielch"), digits = 4),
-    "8fd1fa8eb0130a71095e6ae1a8d460ffe2f207db"
+    "e0ad250b695e97c9ffb53c0303f19d908e33d033"
   ) # cielch
 
   # sha1() has no method for the 'table' class
@@ -127,7 +127,7 @@ test_that("processing & general", {
   # Sensdata
   expect_known_hash(
     expect_silent(sensdata(illum = "all", bkg = "all", trans = "all")),
-    "b845b697e6"
+    "27b20f98dc"
   )
 
   # Peakshape
@@ -218,7 +218,7 @@ test_that("vismodel", {
   )
   expect_equal(
     digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4),
-    "a7e26d5d074354df757ab55916a6cfdd9549b18a"
+    "fc5f5f2f11fefdcff1bbdd264e28d520f0812712"
   )
 
   # Attributes

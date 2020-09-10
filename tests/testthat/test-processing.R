@@ -69,12 +69,11 @@ test_that("Aggregation", {
 test_that("Convert", {
   # Flux/irrad
   illum <- sensdata(illum = "forestshade")
-  expect_equal(sum(irrad2flux(illum)[2]), 6.619, tol = 10e-4)
-  expect_equal(sum(flux2irrad(illum)[2]), 3174.328, tol = 10e-4)
+  expect_equal(sum(irrad2flux(illum)[2]), 6.619, tolerance = 10e-4)
+  expect_equal(sum(flux2irrad(illum)[2]), 3174.328, tolerance = 10e-4)
 
   # RGB
   data(teal)
-
-  expect_identical(spec2rgb(teal)[1], c("Acrecca-01" = "#24B461FF"))
+  expect_identical(spec2rgb(teal)[1], c("Acrecca-01" = "#1EB860FF"))
 
 })
