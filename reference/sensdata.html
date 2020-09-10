@@ -258,11 +258,14 @@ a wavelength column <code>"wl"</code> and spectral data binned at 1 nm intervals
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Plot the honeybee's receptors</span>
-<span class='fu'>sensdata</span>(visual = <span class='st'>"apis"</span>, ylab = <span class='st'>"Absorbance"</span>, plot = <span class='fl'>TRUE</span>)</div><div class='img'><img src='sensdata-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>sensdata</span>(visual = <span class='st'>"apis"</span>, ylab = <span class='st'>"Absorbance"</span>, plot = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='sensdata-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Plot the average UV vs V avian receptors</span>
-<span class='fu'>sensdata</span>(visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"avg.v"</span>, <span class='st'>"avg.uv"</span>), ylab = <span class='st'>"Absorbance"</span>, plot = <span class='fl'>TRUE</span>)</div><div class='img'><img src='sensdata-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'>sensdata</span>(visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"avg.v"</span>, <span class='st'>"avg.uv"</span>), ylab = <span class='st'>"Absorbance"</span>, plot = <span class='fl'>TRUE</span>)
+</div><div class='img'><img src='sensdata-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Retrieve the CIE colour matching functions as an rspec object</span>
-<span class='kw'>ciedat</span> <span class='op'>&lt;-</span> <span class='fu'>sensdata</span>(visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>))</div></pre>
+<span class='kw'>ciedat</span> <span class='op'>&lt;-</span> <span class='fu'>sensdata</span>(visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>))
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -278,7 +281,7 @@ a wavelength column <code>"wl"</code> and spectral data binned at 1 nm intervals
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

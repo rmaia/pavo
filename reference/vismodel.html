@@ -350,12 +350,14 @@ Visual Neuroscience, 3, 119-125.</p>
 <span class='co'># Tetrachromat (starling), receptor-noise model</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
 <span class='kw'>vis.star</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"star"</span>, achromatic = <span class='st'>"bt.dc"</span>, relative = <span class='fl'>FALSE</span>)
-<span class='kw'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.star</span>, achromatic = <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
+<span class='kw'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.star</span>, achromatic = <span class='fl'>TRUE</span>)
+</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
 <span class='co'># Custom trichromatic visual system</span>
 <span class='kw'>custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sensmodel.html'>sensmodel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span>))
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>custom</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wl"</span>, <span class='st'>"s"</span>, <span class='st'>"m"</span>, <span class='st'>"l"</span>)
 <span class='kw'>vis.custom</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='kw'>custom</span>)
-<span class='kw'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.custom</span>, space = <span class='st'>"tri"</span>)</div></pre>
+<span class='kw'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.custom</span>, space = <span class='st'>"tri"</span>)
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -371,7 +373,7 @@ Visual Neuroscience, 3, 119-125.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

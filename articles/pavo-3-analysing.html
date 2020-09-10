@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-08-26</h4>
+            <h4 class="date">2020-09-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -373,19 +373,19 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <span class="co">#&gt;  * Transmission: ideal </span>
 <span class="co">#&gt;  * Relative: FALSE</span>
 <span class="co">#&gt;        u                 s                 m                l         </span>
-<span class="co">#&gt;  Min.   :0.01093   Min.   :0.03749   Min.   :0.1297   Min.   :0.2171  </span>
-<span class="co">#&gt;  1st Qu.:0.01509   1st Qu.:0.06137   1st Qu.:0.1695   1st Qu.:0.2318  </span>
-<span class="co">#&gt;  Median :0.01925   Median :0.06353   Median :0.2595   Median :0.2866  </span>
-<span class="co">#&gt;  Mean   :0.02321   Mean   :0.08854   Mean   :0.2262   Mean   :0.3197  </span>
-<span class="co">#&gt;  3rd Qu.:0.03059   3rd Qu.:0.12753   3rd Qu.:0.2722   3rd Qu.:0.3969  </span>
-<span class="co">#&gt;  Max.   :0.04177   Max.   :0.15716   Max.   :0.2923   Max.   :0.4807  </span>
+<span class="co">#&gt;  Min.   :0.02166   Min.   :0.04348   Min.   :0.1150   Min.   :0.1661  </span>
+<span class="co">#&gt;  1st Qu.:0.03166   1st Qu.:0.07075   1st Qu.:0.1541   1st Qu.:0.1763  </span>
+<span class="co">#&gt;  Median :0.03980   Median :0.07479   Median :0.2344   Median :0.2165  </span>
+<span class="co">#&gt;  Mean   :0.04689   Mean   :0.10302   Mean   :0.2054   Mean   :0.2420  </span>
+<span class="co">#&gt;  3rd Qu.:0.06160   3rd Qu.:0.14749   3rd Qu.:0.2482   3rd Qu.:0.2990  </span>
+<span class="co">#&gt;  Max.   :0.08229   Max.   :0.18393   Max.   :0.2682   Max.   :0.3638  </span>
 <span class="co">#&gt;       lum        </span>
-<span class="co">#&gt;  Min.   :0.1501  </span>
-<span class="co">#&gt;  1st Qu.:0.1965  </span>
-<span class="co">#&gt;  Median :0.2194  </span>
-<span class="co">#&gt;  Mean   :0.2215  </span>
-<span class="co">#&gt;  3rd Qu.:0.2618  </span>
-<span class="co">#&gt;  Max.   :0.2755</span>
+<span class="co">#&gt;  Min.   :0.1292  </span>
+<span class="co">#&gt;  1st Qu.:0.1663  </span>
+<span class="co">#&gt;  Median :0.1969  </span>
+<span class="co">#&gt;  Mean   :0.1926  </span>
+<span class="co">#&gt;  3rd Qu.:0.2257  </span>
+<span class="co">#&gt;  Max.   :0.2411</span>
 </pre></div>
 <p>We can visualise what <code><a href="../reference/vismodel.html">vismodel()</a></code> is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit">
@@ -457,21 +457,21 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
   weber = <span class="fl">0.1</span>, weber.achro = <span class="fl">0.1</span>
 )
 <span class="co">#&gt;      patch1   patch2        dS        dL</span>
-<span class="co">#&gt; 1  cardinal   jacana  8.423965 3.3449627</span>
-<span class="co">#&gt; 2  cardinal   oriole  7.905876 3.5110820</span>
-<span class="co">#&gt; 3  cardinal parakeet  7.999730 0.5177495</span>
-<span class="co">#&gt; 4  cardinal    robin  5.805562 2.5606167</span>
-<span class="co">#&gt; 5  cardinal  tanager 10.100311 1.9068807</span>
-<span class="co">#&gt; 6    jacana   oriole 10.151253 0.1661193</span>
-<span class="co">#&gt; 7    jacana parakeet  4.231570 2.8272132</span>
-<span class="co">#&gt; 8    jacana    robin  3.503769 5.9055794</span>
-<span class="co">#&gt; 9    jacana  tanager  5.126266 1.4380820</span>
-<span class="co">#&gt; 10   oriole parakeet  8.135793 2.9933325</span>
-<span class="co">#&gt; 11   oriole    robin  7.220505 6.0716987</span>
-<span class="co">#&gt; 12   oriole  tanager 13.608253 1.6042013</span>
-<span class="co">#&gt; 13 parakeet    robin  4.606847 3.0783661</span>
-<span class="co">#&gt; 14 parakeet  tanager  5.969760 1.3891312</span>
-<span class="co">#&gt; 15    robin  tanager  7.688707 4.4674974</span>
+<span class="co">#&gt; 1  cardinal   jacana  8.414712 4.0043790</span>
+<span class="co">#&gt; 2  cardinal   oriole  7.938730 3.5284929</span>
+<span class="co">#&gt; 3  cardinal parakeet  7.991687 1.1100855</span>
+<span class="co">#&gt; 4  cardinal    robin  5.888291 2.2326920</span>
+<span class="co">#&gt; 5  cardinal  tanager 10.054691 2.7802473</span>
+<span class="co">#&gt; 6    jacana   oriole 10.092518 0.4758862</span>
+<span class="co">#&gt; 7    jacana parakeet  4.351668 2.8942935</span>
+<span class="co">#&gt; 8    jacana    robin  3.470072 6.2370710</span>
+<span class="co">#&gt; 9    jacana  tanager  5.011207 1.2241317</span>
+<span class="co">#&gt; 10   oriole parakeet  8.071802 2.4184073</span>
+<span class="co">#&gt; 11   oriole    robin  7.221260 5.7611848</span>
+<span class="co">#&gt; 12   oriole  tanager 13.494597 0.7482455</span>
+<span class="co">#&gt; 13 parakeet    robin  4.751953 3.3427775</span>
+<span class="co">#&gt; 14 parakeet  tanager  5.933861 1.6701618</span>
+<span class="co">#&gt; 15    robin  tanager  7.620600 5.0129393</span>
 <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod.idi</span>, n = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="fl">1</span>, <span class="fl">2</span>), weber = <span class="fl">0.1</span>)
 <span class="co">#&gt;      patch1   patch2        dS dL</span>
 <span class="co">#&gt; 1  cardinal   jacana 2.0993283 NA</span>
@@ -495,17 +495,17 @@ w_3^2(\Delta f_1 - \Delta f_2)^2 }{ (w_1w_2)^2 + (w_1w_3)^2 + (w_2w_3)^2 }}\]</s
 <div class="sourceCode" id="cb15"><pre class="downlit">
 <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod1</span>, subset = <span class="st">'cardinal'</span>)
 <span class="co">#&gt;     patch1   patch2        dS dL</span>
-<span class="co">#&gt; 1 cardinal   jacana  8.423965 NA</span>
-<span class="co">#&gt; 2 cardinal   oriole  7.905876 NA</span>
-<span class="co">#&gt; 3 cardinal parakeet  7.999730 NA</span>
-<span class="co">#&gt; 4 cardinal    robin  5.805562 NA</span>
-<span class="co">#&gt; 5 cardinal  tanager 10.100311 NA</span>
+<span class="co">#&gt; 1 cardinal   jacana  8.414712 NA</span>
+<span class="co">#&gt; 2 cardinal   oriole  7.938730 NA</span>
+<span class="co">#&gt; 3 cardinal parakeet  7.991687 NA</span>
+<span class="co">#&gt; 4 cardinal    robin  5.888291 NA</span>
+<span class="co">#&gt; 5 cardinal  tanager 10.054691 NA</span>
 </pre></div>
 <p>to:</p>
 <div class="sourceCode" id="cb16"><pre class="downlit">
 <span class="fu"><a href="../reference/coldist.html">coldist</a></span>(<span class="kw">vismod1</span>, subset = <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">'cardinal'</span>, <span class="st">'jacana'</span>))
 <span class="co">#&gt;     patch1 patch2       dS dL</span>
-<span class="co">#&gt; 1 cardinal jacana 8.423965 NA</span>
+<span class="co">#&gt; 1 cardinal jacana 8.414712 NA</span>
 </pre></div>
 <p>A bootstrap-based variant of <code><a href="../reference/coldist.html">coldist()</a></code>, described in <span class="citation">Maia and White (2018)</span> as part of a more general analytical framework, is implemented via the function <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code>. As the name suggests, <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses a bootstrap procedure to generate confidence intervals for the mean chromatic and/or achromatic distance between two or more samples of colours. This has the benefit of generating useful errors around distance estimates, which can be inspected for the inclusion of appropriate ‘threshold’, when asking common kinds of questions that relate to between-group differences (e.g. animals-vs-backgrounds, sexual dichromatism, colour polymorphism). The function’s arguments are shared <code><a href="../reference/coldist.html">coldist()</a></code> save for a few extra requirements. The <code>by</code> argument is used to specify a grouping variable that defines the groups to be compared, while <code>boot.n</code> and <code>alpha</code> control the number of bootstrap replicates and the confidence level for the confidence interval, respectively. The latter two have sensible defaults, but the <code>by</code> argument is required.</p>
 <p>Here we run present a quick example that tests for colour differences across three body regions (breast, crown, and throat) of the finch <em>Sicalis citrina</em>, given seven measures of each region from different males.</p>
@@ -911,20 +911,20 @@ Flowers in the colour-opponent-coding space of Backhaus (1991), as modelling acc
 <div class="sourceCode" id="cb40"><pre class="downlit">
 <span class="kw">ciexyz.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'ciexyz'</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">ciexyz.flowers</span>)
-<span class="co">#&gt;                               X         Y         Z         x         y</span>
-<span class="co">#&gt; Goodenia_heterophylla 0.2074305 0.2067084 0.3013614 0.2899097 0.2889005</span>
-<span class="co">#&gt; Goodenia_geniculata   0.6472803 0.6752456 0.4240380 0.3706021 0.3866137</span>
-<span class="co">#&gt; Goodenia_gracilis     0.5153064 0.4587957 0.0153714 0.5207885 0.4636766</span>
-<span class="co">#&gt; Xyris_operculata      0.2884446 0.2353124 0.2224271 0.3865595 0.3153544</span>
-<span class="co">#&gt; Eucalyptus_sp         0.4431842 0.4470468 0.4019893 0.3429634 0.3459524</span>
-<span class="co">#&gt; Faradaya_splendida    0.6636975 0.6553481 0.2869075 0.4132733 0.4080743</span>
+<span class="co">#&gt;                               X         Y          Z         x         y</span>
+<span class="co">#&gt; Goodenia_heterophylla 0.2130116 0.2096604 0.30085962 0.2944054 0.2897736</span>
+<span class="co">#&gt; Goodenia_geniculata   0.6282685 0.6725795 0.41507113 0.3661411 0.3919646</span>
+<span class="co">#&gt; Goodenia_gracilis     0.4769607 0.4385423 0.01620888 0.5119187 0.4706845</span>
+<span class="co">#&gt; Xyris_operculata      0.2776811 0.2281172 0.22057916 0.3822820 0.3140478</span>
+<span class="co">#&gt; Eucalyptus_sp         0.4398245 0.4463310 0.40026285 0.3418985 0.3469563</span>
+<span class="co">#&gt; Faradaya_splendida    0.6351234 0.6442301 0.28463920 0.4060910 0.4119138</span>
 <span class="co">#&gt;                                z</span>
-<span class="co">#&gt; Goodenia_heterophylla 0.42118974</span>
-<span class="co">#&gt; Goodenia_geniculata   0.24278414</span>
-<span class="co">#&gt; Goodenia_gracilis     0.01553492</span>
-<span class="co">#&gt; Xyris_operculata      0.29808613</span>
-<span class="co">#&gt; Eucalyptus_sp         0.31108420</span>
-<span class="co">#&gt; Faradaya_splendida    0.17865248</span>
+<span class="co">#&gt; Goodenia_heterophylla 0.41582098</span>
+<span class="co">#&gt; Goodenia_geniculata   0.24189434</span>
+<span class="co">#&gt; Goodenia_gracilis     0.01739688</span>
+<span class="co">#&gt; Xyris_operculata      0.30367016</span>
+<span class="co">#&gt; Eucalyptus_sp         0.31114517</span>
+<span class="co">#&gt; Faradaya_splendida    0.18199523</span>
 </pre></div>
 <p>The output is simply the tristimulus values and chromaticity coordinates of stimuli, and we can visualise our results (along with a line connecting monochromatic loci, by default) by calling</p>
 <div class="sourceCode" id="cb41"><pre class="downlit">
@@ -957,20 +957,20 @@ x^\frac{1}{3} &amp; \text{if } x &gt; 0.008856 \\
 <div class="sourceCode" id="cb42"><pre class="downlit">
 <span class="kw">cielab.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/colspace.html">colspace</a></span>(<span class="kw">vis.flowers</span>, space = <span class="st">'cielab'</span>)
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(<span class="kw">cielab.flowers</span>)
-<span class="co">#&gt;                               X         Y         Z        L           a</span>
-<span class="co">#&gt; Goodenia_heterophylla 0.2074305 0.2067084 0.3013614 16.91253  0.91908831</span>
-<span class="co">#&gt; Goodenia_geniculata   0.6472803 0.6752456 0.4240380 55.24744 -7.78898966</span>
-<span class="co">#&gt; Goodenia_gracilis     0.5153064 0.4587957 0.0153714 37.53788 21.57990123</span>
-<span class="co">#&gt; Xyris_operculata      0.2884446 0.2353124 0.2224271 19.25286 19.66170677</span>
-<span class="co">#&gt; Eucalyptus_sp         0.4431842 0.4470468 0.4019893 36.57660  0.05744138</span>
-<span class="co">#&gt; Faradaya_splendida    0.6636975 0.6553481 0.2869075 53.61946  5.07048199</span>
+<span class="co">#&gt;                               X         Y          Z        L         a</span>
+<span class="co">#&gt; Goodenia_heterophylla 0.2130116 0.2096604 0.30085962 19.20722  5.972526</span>
+<span class="co">#&gt; Goodenia_geniculata   0.6282685 0.6725795 0.41507113 61.61574 -3.784589</span>
+<span class="co">#&gt; Goodenia_gracilis     0.4769607 0.4385423 0.01620888 40.17534 25.580630</span>
+<span class="co">#&gt; Xyris_operculata      0.2776811 0.2281172 0.22057916 20.89807 25.632161</span>
+<span class="co">#&gt; Eucalyptus_sp         0.4398245 0.4463310 0.40026285 40.88887  7.030413</span>
+<span class="co">#&gt; Faradaya_splendida    0.6351234 0.6442301 0.28463920 59.01862 10.266281</span>
 <span class="co">#&gt;                                b</span>
-<span class="co">#&gt; Goodenia_heterophylla -24.336189</span>
-<span class="co">#&gt; Goodenia_geniculata    19.981497</span>
-<span class="co">#&gt; Goodenia_gracilis      61.991586</span>
-<span class="co">#&gt; Xyris_operculata       -6.289287</span>
-<span class="co">#&gt; Eucalyptus_sp          -8.295538</span>
-<span class="co">#&gt; Faradaya_splendida     41.517115</span>
+<span class="co">#&gt; Goodenia_heterophylla -11.165703</span>
+<span class="co">#&gt; Goodenia_geniculata    45.142142</span>
+<span class="co">#&gt; Goodenia_gracilis      66.881871</span>
+<span class="co">#&gt; Xyris_operculata        3.565477</span>
+<span class="co">#&gt; Eucalyptus_sp          11.585827</span>
+<span class="co">#&gt; Faradaya_splendida     59.861744</span>
 </pre></div>
 <p>Our output now contains the tristimulus <code>XYZ</code> values, as well as their <code>Lab</code> counterparts, which are coordinates in the <code>Lab</code> space. These can also be visualised in three-dimensional <code>Lab</code> space by calling <code>plot</code>:</p>
 <div class="sourceCode" id="cb43"><pre class="downlit">
@@ -1483,7 +1483,7 @@ A cryptic lizard, along with a possible sampling grid for spectral measurement.
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

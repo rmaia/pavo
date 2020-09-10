@@ -256,13 +256,16 @@ and import of spectral metadata.</p></div>
 <p>Hugo Gruson <a href='mailto:hugo.gruson+R@normalesup.org'>hugo.gruson+R@normalesup.org</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='kw'>rspecdata</span> <span class='op'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, package = <span class='st'>"lightr"</span>), ext = <span class='st'>"ttt"</span>, lim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>rspecdata</span>)</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long
+    <pre class="examples"><div class='input'><span class='kw'>rspecdata</span> <span class='op'>&lt;-</span> <span class='fu'>getspec</span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata"</span>, package = <span class='st'>"lightr"</span>), ext = <span class='st'>"ttt"</span>, lim = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>400</span>, <span class='fl'>700</span>))
+</div><div class='output co'>#&gt; <span class='message'>2 files found; importing spectra:</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='kw'>rspecdata</span>)
+</div><div class='output co'>#&gt;    wl avantes_export avantes_export_long
 #&gt; 1 400         4.0899            5.639232
 #&gt; 2 401         3.9514            6.342615
 #&gt; 3 402         4.1269            6.147300
 #&gt; 4 403         4.2617            6.010692
 #&gt; 5 404         4.1683            6.333537
-#&gt; 6 405         4.0871            6.490569</div><div class='input'></div></pre>
+#&gt; 6 405         4.0871            6.490569</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -278,7 +281,7 @@ and import of spectral metadata.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

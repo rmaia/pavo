@@ -257,11 +257,14 @@ cluster ID's are desired between runs.</p>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Single image</span>
 <span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'>classify</span>(<span class='kw'>papilio</span>, kcols = <span class='fl'>4</span>)</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'>
+<span class='kw'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'>classify</span>(<span class='kw'>papilio</span>, kcols = <span class='fl'>4</span>)
+</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'>
 <span class='co'># Multiple images, with interactive classification and a reference image</span>
-<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
+</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
 <span class='kw'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'>classify</span>(<span class='kw'>snakes</span>, refID = <span class='st'>"snake_01"</span>, interactive = <span class='fl'>TRUE</span>)
 }
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -278,7 +281,7 @@ cluster ID's are desired between runs.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

@@ -234,13 +234,18 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>teal</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal</span>, select = <span class='fl'>10</span>)</div><div class='img'><img src='procspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal</span>, select = <span class='fl'>10</span>)
+</div><div class='img'><img src='procspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Smooth data to remove noise</span>
-<span class='kw'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='st'>"smooth"</span>, span = <span class='fl'>0.25</span>)</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>smoothing spectra with a span of 0.25</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.sm</span>, select = <span class='fl'>10</span>)</div><div class='img'><img src='procspec-2.png' alt='' width='700' height='433' /></div><div class='input'>
+<span class='kw'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='st'>"smooth"</span>, span = <span class='fl'>0.25</span>)
+</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
+#&gt; <span class='message'>smoothing spectra with a span of 0.25</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.sm</span>, select = <span class='fl'>10</span>)
+</div><div class='img'><img src='procspec-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Normalize to max of unity</span>
-<span class='kw'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"max"</span>))</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.max</span>, select = <span class='fl'>10</span>)</div><div class='img'><img src='procspec-3.png' alt='' width='700' height='433' /></div></pre>
+<span class='kw'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"max"</span>))
+</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
+#&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.max</span>, select = <span class='fl'>10</span>)
+</div><div class='img'><img src='procspec-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -256,7 +261,7 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>

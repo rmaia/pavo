@@ -195,11 +195,13 @@ conversion from class <code>rimg</code>, so it's best to use early in the analys
 <span class='co'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/ns-load.html'>requireNamespace</a></span>(<span class='st'>"imager"</span>, quiety=<span class='fl'>TRUE</span>)) {
   <span class='kw'>papilio_cimg</span> <span class='op'>&lt;-</span> <span class='fu'>rimg2cimg</span>(<span class='kw'>papilio</span>)
   <span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>papilio_cimg</span>)
-}</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: imager</span></div><div class='input'><span class='co'># }</span>
+}
+</div><div class='output co'>#&gt; <span class='message'>Loading required namespace: imager</span></div><div class='input'><span class='co'># }</span>
 
 <span class='co'># From class rimg to magick-image</span>
 <span class='kw'>papilio_magick</span> <span class='op'>&lt;-</span> <span class='fu'>rimg2magick</span>(<span class='kw'>papilio</span>)
-<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>papilio_magick</span>)</div><div class='output co'>#&gt; [1] "magick-image"</div></pre>
+<span class='fu'><a href='https://rdrr.io/r/base/class.html'>class</a></span>(<span class='kw'>papilio_magick</span>)
+</div><div class='output co'>#&gt; [1] "magick-image"</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
@@ -215,7 +217,7 @@ conversion from class <code>rimg</code>, so it's best to use early in the analys
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.9000.</p>
 </div>
 
       </footer>
