@@ -14,6 +14,10 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* `vismodel()` now works with spectral data that doesn't span the whole 
+300-700nm range as long as the spectral sensitivity is zero for the missing 
+range. This is useful if you have data covering the 390-700nm range and work 
+the CIE model for example.
 * `getimg()` now imports image files with uppercase extensions (e.g., JPG or 
 PNG), such as those produced by some camera brands or processing software.
 * Maximum quantum catches computation (`data.maxqcatches` attribute) now works

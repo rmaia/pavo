@@ -2,6 +2,7 @@
 #'
 #' Retrieve (as an rspec object) or plot pavo's in-built spectral sensitivity data.
 #'
+#' @inheritParams sensmodel
 #' @param visual visual systems. Options are:
 #' - `"none"`: no visual sensitivity data.
 #' - `"all"`: all visual sensitivity data.
@@ -77,6 +78,7 @@ sensdata <- function(visual = c(
                      trans = c("none", "all", "bluetit", "blackbird"),
                      bkg = c("none", "all", "green"),
                      plot = FALSE,
+                     range = c(300, 700),
                      ...) {
   visual2 <- match.arg(visual, several.ok = TRUE)
   achro2 <- match.arg(achromatic, several.ok = TRUE)
@@ -84,7 +86,9 @@ sensdata <- function(visual = c(
   bkg2 <- match.arg(bkg, several.ok = TRUE)
   trans2 <- match.arg(trans, several.ok = TRUE)
 
-  dat <- data.frame("wl" = 300:700)
+  wl <- seq(range[1], range[2])
+
+  dat <- data.frame("wl" = wl)
 
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
@@ -95,7 +99,7 @@ sensdata <- function(visual = c(
         "ctenophorus"
       )
     }
-    S <- vissyst[, grepl(paste(visual2, collapse = "|"), names(vissyst)), drop = FALSE]
+    S <- vissyst[vissyst$wl %in% wl, grepl(paste(visual2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, S)
   }
 
@@ -104,7 +108,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% achro2)) {
       achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r")
     }
-    achro <- vissyst[, grepl(paste(achro2, collapse = "|"), names(vissyst)), drop = FALSE]
+    achro <- vissyst[vissyst$wl %in% wl, grepl(paste(achro2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, achro)
   }
 
@@ -113,7 +117,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% illum2)) {
       illum2 <- c("bluesky", "D65", "forestshade")
     }
-    illum <- bgandilum[, grepl(paste(illum2, collapse = "|"), names(bgandilum)), drop = FALSE]
+    illum <- bgandilum[bgandilum$wl %in% wl, grepl(paste(illum2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, illum)
   }
 
@@ -122,7 +126,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% bkg2)) {
       bkg2 <- "green"
     }
-    bkg <- bgandilum[, grepl(paste(bkg2, collapse = "|"), names(bgandilum)), drop = FALSE]
+    bkg <- bgandilum[bgandilum$wl %in% wl, grepl(paste(bkg2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, bkg)
   }
 
@@ -131,7 +135,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% trans2)) {
       trans2 <- c("bluetit", "blackbird")
     }
-    trans <- transmissiondata[, grepl(paste(trans2, collapse = "|"), names(transmissiondata)), drop = FALSE]
+    trans <- transmissiondata[transmissiondata$wl %in% wl, grepl(paste(trans2, collapse = "|"), names(transmissiondata)), drop = FALSE]
     dat <- cbind(dat, trans)
   }
 

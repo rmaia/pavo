@@ -267,10 +267,6 @@ vismodel <- function(rspecdata,
     )
   }
 
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
-    stop("wavelength range in spectra and visual system data do not match")
-  }
-
   # DEFINING ILLUMINANT & BACKGROUND
 
   bgil <- bgandilum
@@ -279,14 +275,14 @@ vismodel <- function(rspecdata,
     illum <- bgil[, grep(illum2, names(bgil))]
   }
   if (illum2 == "ideal") {
-    illum <- rep(1, dim(rspecdata)[1])
+    illum <- rep_len(1, 401)
   }
 
   if (bg2 != "user-defined") {
     bkg <- bgil[, grep(bg2, names(bgil))]
   }
   if (bg2 == "ideal") {
-    bkg <- rep(1, dim(rspecdata)[1])
+    bkg <- rep_len(1, 401)
   }
 
   # Defining ocular  <- mission
@@ -296,7 +292,7 @@ vismodel <- function(rspecdata,
     trans <- trdat[, grep(tr2, names(trdat))]
   }
   if (tr2 == "ideal") {
-    trans <- rep(1, dim(rspecdata)[1])
+    trans <- rep_len(1, 401)
   }
 
   if (tr2 != "ideal" & visual2 == "user-defined") {
@@ -337,6 +333,18 @@ vismodel <- function(rspecdata,
   bkg <- prepare_userdefined(bkg)
   illum <- prepare_userdefined(illum)
   achromatic <- prepare_userdefined(achromatic)
+
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
+    if (length(sens_wl) > length(wl) && all(S[!sens_wl %in% wl, ] == 0)) {
+      S <- S[sens_wl %in% wl, ]
+      trans <- trans[sens_wl %in% wl]
+      bkg <- bkg[sens_wl %in% wl]
+      illum <- illum[sens_wl %in% wl]
+      achromatic <- achromatic[sens_wl %in% wl]
+    } else {
+      stop("wavelength range in spectra and visual system data do not match")
+    }
+  }
 
   # Transform from percentages to proportions (Vorobyev 2003)
   if (max(y) > 1) {

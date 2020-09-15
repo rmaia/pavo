@@ -35,6 +35,11 @@ test_that("Warnings", {
 
   expect_silent(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650), range = c(300, 1200))))
 
+  expect_identical(
+    vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE),
+    vismodel(flowers[91:401,], visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+  )
+
 })
 
 test_that("Sensmodel", {
@@ -63,8 +68,13 @@ test_that("sensdata()", {
   # No negative values, no NA
   expect_false(any(vis_all < 0))
   expect_false(anyNA(vis_all))
+  expect_identical(dim(vis_all), c(401L, 57L))
+  expect_s3_class(vis_all, "rspec")
+
+  vis_part <- sensdata(visual = "cie2", range = c(400, 700))
+
+  expect_identical(dim(vis_part), c(301L, 4L))
 
   colspace(vismodel(sensdata(illum = "D65"), visual = "cie10"))
-
 
 })

@@ -12,6 +12,7 @@ sensdata(
   trans = c("none", "all", "bluetit", "blackbird"),
   bkg = c("none", "all", "green"),
   plot = FALSE,
+  range = c(300, 700),
   ...
 )
 }
@@ -77,6 +78,9 @@ receptor stimulation. Options are:
 }}
 
 \item{plot}{should the spectral data be plotted, or returned instead (defaults to \code{FALSE})?}
+
+\item{range}{a vector of length 2 for the range over which to calculate the spectral
+sensitivities (defaults to 300nm to 700nm).}
 
 \item{...}{additional graphical options passed to \code{\link[=plot.rspec]{plot.rspec()}} when \code{plot = TRUE}.}
 }
