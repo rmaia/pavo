@@ -68,6 +68,12 @@ test_that("sensdata()", {
   # No negative values, no NA
   expect_false(any(vis_all < 0))
   expect_false(anyNA(vis_all))
+  expect_identical(dim(vis_all), c(401L, 57L))
+  expect_s3_class(vis_all, "rspec")
+
+  vis_part <- sensdata(visual = "cie2", range = c(400, 700))
+
+  expect_identical(dim(vis_part), c(301L, 4L))
 
   colspace(vismodel(sensdata(illum = "D65"), visual = "cie10"))
 
