@@ -160,20 +160,20 @@ can be returned, for use in a suite of colourspace and non-colourspace models." 
 can be returned, for use in a suite of colourspace and non-colourspace models.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vismodel</span>(
-  <span class='kw'>rspecdata</span>,
-  visual = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"ctenophorus"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>,
-    <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>, <span class='st'>"habronattus"</span>, <span class='st'>"rhinecanthus"</span>),
-  achromatic = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"cf.r"</span>, <span class='st'>"ml"</span>,
-    <span class='st'>"l"</span>, <span class='st'>"all"</span>),
-  illum = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ideal"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span>),
-  trans = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span>),
-  qcatch = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span>),
-  bkg = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"ideal"</span>, <span class='st'>"green"</span>),
-  vonkries = <span class='fl'>FALSE</span>,
-  scale = <span class='fl'>1</span>,
-  relative = <span class='fl'>TRUE</span>
-)</pre>
+    <pre class="usage"><span class='fu'>vismodel</span><span class='op'>(</span>
+  <span class='va'>rspecdata</span>,
+  visual <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"ctenophorus"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>,
+    <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>, <span class='st'>"habronattus"</span>, <span class='st'>"rhinecanthus"</span><span class='op'>)</span>,
+  achromatic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"cf.r"</span>, <span class='st'>"ml"</span>,
+    <span class='st'>"l"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+  illum <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ideal"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span><span class='op'>)</span>,
+  trans <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span><span class='op'>)</span>,
+  qcatch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span><span class='op'>)</span>,
+  bkg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ideal"</span>, <span class='st'>"green"</span><span class='op'>)</span>,
+  vonkries <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  scale <span class='op'>=</span> <span class='fl'>1</span>,
+  relative <span class='op'>=</span> <span class='cn'>TRUE</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -333,30 +333,30 @@ Visual Neuroscience, 3, 119-125.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># Dichromat (dingo)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.dingo</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"canis"</span>)
-<span class='kw'>di.dingo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.dingo</span>, space = <span class='st'>"di"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+<span class='va'>vis.dingo</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"canis"</span><span class='op'>)</span>
+<span class='va'>di.dingo</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.dingo</span>, space <span class='op'>=</span> <span class='st'>"di"</span><span class='op'>)</span>
 
 <span class='co'># Trichromat (honeybee)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.bee</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='st'>"apis"</span>)
-<span class='kw'>tri.bee</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.bee</span>, space = <span class='st'>"tri"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+<span class='va'>vis.bee</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"apis"</span><span class='op'>)</span>
+<span class='va'>tri.bee</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.bee</span>, space <span class='op'>=</span> <span class='st'>"tri"</span><span class='op'>)</span>
 
 <span class='co'># Tetrachromat (blue tit)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"bluetit"</span>)
-<span class='kw'>tcs.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.bluetit</span>, space = <span class='st'>"tcs"</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
+<span class='va'>vis.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"bluetit"</span><span class='op'>)</span>
+<span class='va'>tcs.bluetit</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.bluetit</span>, space <span class='op'>=</span> <span class='st'>"tcs"</span><span class='op'>)</span>
 
 <span class='co'># Tetrachromat (starling), receptor-noise model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.star</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"star"</span>, achromatic = <span class='st'>"bt.dc"</span>, relative = <span class='fl'>FALSE</span>)
-<span class='kw'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.star</span>, achromatic = <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
+<span class='va'>vis.star</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"star"</span>, achromatic <span class='op'>=</span> <span class='st'>"bt.dc"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>dist.star</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span><span class='op'>(</span><span class='va'>vis.star</span>, achromatic <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span></div><div class='input'>
 <span class='co'># Custom trichromatic visual system</span>
-<span class='kw'>custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sensmodel.html'>sensmodel</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span>))
-<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='kw'>custom</span>) <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"wl"</span>, <span class='st'>"s"</span>, <span class='st'>"m"</span>, <span class='st'>"l"</span>)
-<span class='kw'>vis.custom</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span>(<span class='kw'>flowers</span>, visual = <span class='kw'>custom</span>)
-<span class='kw'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.custom</span>, space = <span class='st'>"tri"</span>)
+<span class='va'>custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='sensmodel.html'>sensmodel</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>330</span>, <span class='fl'>440</span>, <span class='fl'>550</span><span class='op'>)</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>custom</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wl"</span>, <span class='st'>"s"</span>, <span class='st'>"m"</span>, <span class='st'>"l"</span><span class='op'>)</span>
+<span class='va'>vis.custom</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
+<span class='va'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.custom</span>, space <span class='op'>=</span> <span class='st'>"tri"</span><span class='op'>)</span>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -373,7 +373,7 @@ Visual Neuroscience, 3, 119-125.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

@@ -161,13 +161,13 @@ of data names.</p>
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rspec</span>
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>x</span>, <span class='kw'>subset</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subset</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for colspace</span>
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>x</span>, <span class='kw'>subset</span>, <span class='kw'>...</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subset</span>, <span class='va'>...</span><span class='op'>)</span>
 
 <span class='co'># S3 method for vismodel</span>
-<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>x</span>, <span class='kw'>subset</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>x</span>, <span class='va'>subset</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -202,19 +202,19 @@ intersect.</p>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
+<span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
+<span class='va'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span>, space <span class='op'>=</span> <span class='st'>"tcs"</span><span class='op'>)</span>
 
 <span class='co'># Subset all 'crown' patches (C in file names)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>sicalis</span>, <span class='st'>"C"</span>))
+<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>sicalis</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    wl    ind1.C    ind2.C     ind3.C    ind4.C    ind5.C     ind6.C    ind7.C
 #&gt; 1 300 0.7594984 0.2971167 0.05947619 0.3750159 0.4225349 0.06326984 0.1680730
 #&gt; 2 301 0.7727841 0.2326722 0.00000000 0.3465714 0.5361222 0.06136508 0.1043270
 #&gt; 3 302 0.8288000 0.3227833 0.11853968 0.4133333 0.6554556 0.01934921 0.1702476
 #&gt; 4 303 0.9414667 0.3535167 0.09427302 0.4339333 0.6816556 0.08594921 0.1939810
 #&gt; 5 304 1.0321333 0.4390214 0.21977778 0.3617143 0.7236937 0.08249206 0.2641048
-#&gt; 6 305 1.0845778 0.5022278 0.24920635 0.4820000 0.7076778 0.17968254 0.3900254</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>sicalis</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"B"</span>, <span class='st'>"C"</span>)))
+#&gt; 6 305 1.0845778 0.5022278 0.24920635 0.4820000 0.7076778 0.17968254 0.3900254</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>sicalis</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B"</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    wl    ind1.C   ind1.B    ind2.C   ind2.B     ind3.C   ind3.B    ind4.C
 #&gt; 1 300 0.7594984 1.794473 0.2971167 1.404333 0.05947619 1.783476 0.3750159
 #&gt; 2 301 0.7727841 1.861124 0.2326722 1.432270 0.00000000 1.917762 0.3465714
@@ -228,7 +228,7 @@ intersect.</p>
 #&gt; 3 0.7973333 0.6554556 2.464900 0.01934921 3.449667 0.1702476 0.9956667
 #&gt; 4 0.8617333 0.6816556 2.590300 0.08594921 3.703733 0.1939810 1.1890000
 #&gt; 5 1.0439048 0.7236937 2.827281 0.08249206 3.959571 0.2641048 1.3070476
-#&gt; 6 1.1046667 0.7076778 3.103233 0.17968254 4.258000 0.3900254 1.4298889</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>sicalis</span>, <span class='st'>"T"</span>, invert = <span class='fl'>TRUE</span>))
+#&gt; 6 1.1046667 0.7076778 3.103233 0.17968254 4.258000 0.3900254 1.4298889</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>sicalis</span>, <span class='st'>"T"</span>, invert <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    wl    ind1.C   ind1.B    ind2.C   ind2.B     ind3.C   ind3.B    ind4.C
 #&gt; 1 300 0.7594984 1.794473 0.2971167 1.404333 0.05947619 1.783476 0.3750159
 #&gt; 2 301 0.7727841 1.861124 0.2326722 1.432270 0.00000000 1.917762 0.3465714
@@ -242,7 +242,7 @@ intersect.</p>
 #&gt; 3 0.7973333 0.6554556 2.464900 0.01934921 3.449667 0.1702476 0.9956667
 #&gt; 4 0.8617333 0.6816556 2.590300 0.08594921 3.703733 0.1939810 1.1890000
 #&gt; 5 1.0439048 0.7236937 2.827281 0.08249206 3.959571 0.2641048 1.3070476
-#&gt; 6 1.1046667 0.7076778 3.103233 0.17968254 4.258000 0.3900254 1.4298889</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>vis.sicalis</span>, <span class='st'>"C"</span>)
+#&gt; 6 1.1046667 0.7076778 3.103233 0.17968254 4.258000 0.3900254 1.4298889</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span>, <span class='st'>"C"</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                 u          s         m         l lum
 #&gt; ind1.C 0.09841647 0.02988172 0.3894516 0.4822502  NA
 #&gt; ind2.C 0.10120471 0.02696028 0.3939779 0.4778571  NA
@@ -250,7 +250,7 @@ intersect.</p>
 #&gt; ind4.C 0.05539667 0.02761281 0.4087808 0.5082097  NA
 #&gt; ind5.C 0.06248511 0.02346180 0.4160001 0.4980530  NA
 #&gt; ind6.C 0.06136284 0.05713308 0.4057493 0.4757548  NA
-#&gt; ind7.C 0.05558762 0.02643794 0.4109604 0.5070140  NA</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span>(<span class='kw'>tcs.sicalis</span>, <span class='st'>"C"</span>)[, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span>(<span class='fl'>5</span>)]
+#&gt; ind7.C 0.05558762 0.02643794 0.4109604 0.5070140  NA</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, <span class='st'>"C"</span><span class='op'>)</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span>
 </div><div class='output co'>#&gt;                 u          s         m         l        u.r
 #&gt; ind1.C 0.09841647 0.02988172 0.3894516 0.4822502 -0.1515835
 #&gt; ind2.C 0.10120471 0.02696028 0.3939779 0.4778571 -0.1487953
@@ -274,7 +274,7 @@ intersect.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

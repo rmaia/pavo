@@ -160,7 +160,7 @@ or a vector of identities." />
 or a vector of identities.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>aggspec</span>(<span class='kw'>rspecdata</span>, by = <span class='kw'>NULL</span>, FUN = <span class='kw'>mean</span>, trim = <span class='fl'>TRUE</span>)</pre>
+    <pre class="usage"><span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>rspecdata</span>, by <span class='op'>=</span> <span class='cn'>NULL</span>, FUN <span class='op'>=</span> <span class='va'>mean</span>, trim <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -207,17 +207,17 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>teal</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
 
 <span class='co'># Average every two spectra</span>
-<span class='kw'>teal.sset1</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span>(<span class='kw'>teal</span>, by = <span class='fl'>2</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.sset1</span>)
+<span class='va'>teal.sset1</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset1</span><span class='op'>)</span>
 </div><div class='img'><img src='aggspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Create factor and average spectra by levels 'a' and 'b'</span>
-<span class='kw'>ind</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"a"</span>, <span class='st'>"b"</span>), times = <span class='fl'>6</span>)
-<span class='kw'>teal.sset2</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span>(<span class='kw'>teal</span>, by = <span class='kw'>ind</span>)
+<span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span>, times <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
+<span class='va'>teal.sset2</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='va'>ind</span><span class='op'>)</span>
 
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.sset2</span>)
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset2</span><span class='op'>)</span>
 </div><div class='img'><img src='aggspec-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -234,7 +234,7 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

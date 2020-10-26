@@ -160,16 +160,16 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
 perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
     </div>
 
-    <pre class="usage"><span class='fu'>jnd2xyz</span>(
-  <span class='kw'>coldistres</span>,
-  center = <span class='fl'>TRUE</span>,
-  rotate = <span class='fl'>TRUE</span>,
-  rotcenter = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"mean"</span>, <span class='st'>"achro"</span>),
-  ref1 = <span class='st'>"l"</span>,
-  ref2 = <span class='st'>"u"</span>,
-  axis1 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span>),
-  axis2 = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span>)
-)</pre>
+    <pre class="usage"><span class='fu'>jnd2xyz</span><span class='op'>(</span>
+  <span class='va'>coldistres</span>,
+  center <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  rotate <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  rotcenter <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"mean"</span>, <span class='st'>"achro"</span><span class='op'>)</span>,
+  ref1 <span class='op'>=</span> <span class='st'>"l"</span>,
+  ref2 <span class='op'>=</span> <span class='st'>"u"</span>,
+  axis1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  axis2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -232,10 +232,10 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span>(<span class='kw'>vis.flowers</span>)
-</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jnd2xyz</span>(<span class='kw'>cd.flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+<span class='va'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='warning'>Warning: Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jnd2xyz</span><span class='op'>(</span><span class='va'>cd.flowers</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;                                     x           y           z
 #&gt; Goodenia_heterophylla      1.53718118 -5.46159458   7.0514924
 #&gt; Goodenia_geniculata       -0.59310315 -2.65363603  -6.4010132
@@ -288,7 +288,7 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

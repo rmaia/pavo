@@ -158,19 +158,19 @@
     <p>Specify scales, resize, and/or define focal objects within images.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>procimg</span>(
-  <span class='kw'>image</span>,
-  resize = <span class='kw'>NULL</span>,
-  rotate = <span class='kw'>NULL</span>,
-  scaledist = <span class='kw'>NULL</span>,
-  outline = <span class='fl'>FALSE</span>,
-  reclass = <span class='kw'>NULL</span>,
-  smooth = <span class='fl'>FALSE</span>,
-  iterations = <span class='fl'>1L</span>,
-  col = <span class='st'>"red"</span>,
-  plotnew = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>procimg</span><span class='op'>(</span>
+  <span class='va'>image</span>,
+  resize <span class='op'>=</span> <span class='cn'>NULL</span>,
+  rotate <span class='op'>=</span> <span class='cn'>NULL</span>,
+  scaledist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  outline <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  reclass <span class='op'>=</span> <span class='cn'>NULL</span>,
+  smooth <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  iterations <span class='op'>=</span> <span class='fl'>1L</span>,
+  col <span class='op'>=</span> <span class='st'>"red"</span>,
+  plotnew <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -248,15 +248,15 @@ Computer Graphics and Image Processing 3, 346-349.</p>
     <p>Thomas E. White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'>if</span> (<span class='fl'>FALSE</span>) {
+    <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='cn'>FALSE</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='co'># Single image</span>
-<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span>(<span class='kw'>papilio</span>, scaledist = <span class='fl'>10</span>)
+<span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/papilio.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span><span class='op'>(</span><span class='va'>papilio</span>, scaledist <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
 <span class='co'># Assign individual scales to each image, after slightly reducing their size.</span>
-<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span>(<span class='kw'>snakes</span>, scaledist = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>10</span>, <span class='fl'>14</span>), resize = <span class='fl'>90</span>)
-}
+<span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/snakes"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span><span class='op'>(</span><span class='va'>snakes</span>, scaledist <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>14</span><span class='op'>)</span>, resize <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span>
+<span class='op'>}</span>
 
 </div></pre>
   </div>
@@ -274,7 +274,7 @@ Computer Graphics and Image Processing 3, 346-349.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

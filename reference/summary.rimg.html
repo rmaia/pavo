@@ -159,7 +159,7 @@
     </div>
 
     <pre class="usage"><span class='co'># S3 method for rimg</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>object</span>, plot = <span class='fl'>FALSE</span>, axes = <span class='fl'>TRUE</span>, col = <span class='kw'>NULL</span>, <span class='kw'>...</span>)</pre>
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>object</span>, plot <span class='op'>=</span> <span class='cn'>FALSE</span>, axes <span class='op'>=</span> <span class='cn'>TRUE</span>, col <span class='op'>=</span> <span class='cn'>NULL</span>, <span class='va'>...</span><span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,21 +198,21 @@ or a plot of both the image and specified colours (when <code>plot = TRUE</code>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='kw'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/papilio.png"</span>, package = <span class='st'>"pavo"</span>))
-<span class='kw'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span>(<span class='kw'>papilio</span>, kcols = <span class='fl'>4</span>)
-</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>papilio_class</span>)
+<span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/papilio.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+<span class='va'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span><span class='op'>(</span><span class='va'>papilio</span>, kcols <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: UNRELIABLE VALUE: Future (‘future_lapply-1’) unexpectedly generated random numbers without specifying argument '[future.]seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify argument '[future.]seed', e.g. 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use [future].seed=NULL, or set option 'future.rng.onMisuse' to "ignore".</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>papilio_class</span><span class='op'>)</span>
 </div><div class='output co'>#&gt;    img_ID col_ID name         R         G          B
 #&gt; 1 papilio      1    1 0.9993541 0.9992899 0.99896834
 #&gt; 2 papilio      2    2 0.2045941 0.1628906 0.05854719
 #&gt; 3 papilio      3    3 0.9625248 0.8923020 0.48144936
 #&gt; 4 papilio      4    4 0.5427427 0.4809863 0.22703139</div><div class='input'>
 <span class='co'># Plot the colour-classified image alongside the colour class palette</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>papilio_class</span>, plot = <span class='fl'>TRUE</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>papilio_class</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='img'><img src='summary.rimg-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Multiple images</span>
-<span class='kw'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span>(<span class='st'>"testdata/images/snakes"</span>, package = <span class='st'>"pavo"</span>))
-</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'><span class='kw'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span>(<span class='kw'>snakes</span>, kcols = <span class='fl'>3</span>)
-</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span>(<span class='kw'>snakes_class</span>, plot = <span class='fl'>TRUE</span>)
+<span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/snakes"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'><span class='va'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span><span class='op'>(</span><span class='va'>snakes</span>, kcols <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='output co'>#&gt; <span class='warning'>Warning: UNRELIABLE VALUE: Future (‘future_lapply-1’) unexpectedly generated random numbers without specifying argument '[future.]seed'. There is a risk that those random numbers are not statistically sound and the overall results might be invalid. To fix this, specify argument '[future.]seed', e.g. 'seed=TRUE'. This ensures that proper, parallel-safe random numbers are produced via the L'Ecuyer-CMRG method. To disable this check, use [future].seed=NULL, or set option 'future.rng.onMisuse' to "ignore".</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>snakes_class</span>, plot <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; Press [enter] for next plot.</div><div class='img'><img src='summary.rimg-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt; Press [enter] for next plot.</div><div class='img'><img src='summary.rimg-3.png' alt='' width='700' height='433' /></div><div class='input'><span class='co'># }</span>
 
 </div></pre>
@@ -231,7 +231,7 @@ or a plot of both the image and specified colours (when <code>plot = TRUE</code>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

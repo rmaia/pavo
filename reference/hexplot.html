@@ -158,22 +158,22 @@
     <p>Produces a colour hexagon plot.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>hexplot</span>(
-  <span class='kw'>hexdata</span>,
-  achro = <span class='fl'>TRUE</span>,
-  labels = <span class='fl'>TRUE</span>,
-  sectors = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"fine"</span>, <span class='st'>"coarse"</span>),
-  sec.col = <span class='st'>"grey"</span>,
-  out.lwd = <span class='fl'>1</span>,
-  out.lty = <span class='fl'>1</span>,
-  out.lcol = <span class='st'>"black"</span>,
-  labels.cex = <span class='fl'>1</span>,
-  achrosize = <span class='fl'>0.8</span>,
-  achrocol = <span class='st'>"grey"</span>,
-  margins = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>),
-  square = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>hexplot</span><span class='op'>(</span>
+  <span class='va'>hexdata</span>,
+  achro <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  labels <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  sectors <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"fine"</span>, <span class='st'>"coarse"</span><span class='op'>)</span>,
+  sec.col <span class='op'>=</span> <span class='st'>"grey"</span>,
+  out.lwd <span class='op'>=</span> <span class='fl'>1</span>,
+  out.lty <span class='op'>=</span> <span class='fl'>1</span>,
+  out.lcol <span class='op'>=</span> <span class='st'>"black"</span>,
+  labels.cex <span class='op'>=</span> <span class='fl'>1</span>,
+  achrosize <span class='op'>=</span> <span class='fl'>0.8</span>,
+  achrocol <span class='op'>=</span> <span class='st'>"grey"</span>,
+  margins <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span><span class='op'>)</span>,
+  square <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -260,13 +260,13 @@ Vision research, 34(11), 1489-1508.</p>
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>,
-  visual = <span class='st'>"apis"</span>, qcatch = <span class='st'>"Ei"</span>, relative = <span class='fl'>FALSE</span>,
-  vonkries = <span class='fl'>TRUE</span>, achromatic = <span class='st'>"l"</span>, bkg = <span class='st'>"green"</span>
-)
-<span class='kw'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"hexagon"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>hex.flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>,
+  visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, achromatic <span class='op'>=</span> <span class='st'>"l"</span>, bkg <span class='op'>=</span> <span class='st'>"green"</span>
+<span class='op'>)</span>
+<span class='va'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"hexagon"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>hex.flowers</span><span class='op'>)</span>
 </div><div class='img'><img src='hexplot-1.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -283,7 +283,7 @@ Vision research, 34(11), 1489-1508.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

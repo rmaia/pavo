@@ -158,13 +158,13 @@
     <p>Applies normalization and/or smoothing to spectra for further analysis or plotting.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>procspec</span>(
-  <span class='kw'>rspecdata</span>,
-  opt = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"smooth"</span>, <span class='st'>"maximum"</span>, <span class='st'>"minimum"</span>, <span class='st'>"bin"</span>, <span class='st'>"sum"</span>, <span class='st'>"center"</span>),
-  fixneg = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"none"</span>, <span class='st'>"addmin"</span>, <span class='st'>"zero"</span>),
-  span = <span class='fl'>0.25</span>,
-  bins = <span class='fl'>20</span>
-)</pre>
+    <pre class="usage"><span class='fu'>procspec</span><span class='op'>(</span>
+  <span class='va'>rspecdata</span>,
+  opt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"smooth"</span>, <span class='st'>"maximum"</span>, <span class='st'>"minimum"</span>, <span class='st'>"bin"</span>, <span class='st'>"sum"</span>, <span class='st'>"center"</span><span class='op'>)</span>,
+  fixneg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"addmin"</span>, <span class='st'>"zero"</span><span class='op'>)</span>,
+  span <span class='op'>=</span> <span class='fl'>0.25</span>,
+  bins <span class='op'>=</span> <span class='fl'>20</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -233,18 +233,18 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>teal</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal</span>, select = <span class='fl'>10</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='img'><img src='procspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Smooth data to remove noise</span>
-<span class='kw'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='st'>"smooth"</span>, span = <span class='fl'>0.25</span>)
+<span class='va'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='st'>"smooth"</span>, span <span class='op'>=</span> <span class='fl'>0.25</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>smoothing spectra with a span of 0.25</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.sm</span>, select = <span class='fl'>10</span>)
+#&gt; <span class='message'>smoothing spectra with a span of 0.25</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sm</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='img'><img src='procspec-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Normalize to max of unity</span>
-<span class='kw'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span>(<span class='kw'>teal</span>, opt = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"max"</span>))
+<span class='va'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"max"</span><span class='op'>)</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>teal.max</span>, select = <span class='fl'>10</span>)
+#&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.max</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 </div><div class='img'><img src='procspec-3.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -261,7 +261,7 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

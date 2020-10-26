@@ -160,16 +160,16 @@ non-interactive tetrahedral plot." />
 non-interactive tetrahedral plot.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>vol</span>(
-  <span class='kw'>tcsdata</span>,
-  type = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"convex"</span>, <span class='st'>"alpha"</span>),
-  avalue = <span class='st'>"auto"</span>,
-  alpha = <span class='fl'>0.2</span>,
-  grid = <span class='fl'>TRUE</span>,
-  fill = <span class='fl'>TRUE</span>,
-  new = <span class='fl'>FALSE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>vol</span><span class='op'>(</span>
+  <span class='va'>tcsdata</span>,
+  type <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"convex"</span>, <span class='st'>"alpha"</span><span class='op'>)</span>,
+  avalue <span class='op'>=</span> <span class='st'>"auto"</span>,
+  alpha <span class='op'>=</span> <span class='fl'>0.2</span>,
+  grid <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  fill <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  new <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -231,16 +231,16 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='co'># For plotting</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>sicalis</span>)
-<span class='kw'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>sicalis</span>, visual = <span class='st'>"avg.uv"</span>)
-<span class='kw'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.sicalis</span>, space = <span class='st'>"tcs"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>tcs.sicalis</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
+<span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span><span class='op'>)</span>
+<span class='va'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span>, space <span class='op'>=</span> <span class='st'>"tcs"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'># Convex hull</span>
-<span class='fu'>vol</span>(<span class='kw'>tcs.sicalis</span>, type = <span class='st'>"convex"</span>)
+<span class='fu'>vol</span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, type <span class='op'>=</span> <span class='st'>"convex"</span><span class='op'>)</span>
 </div><div class='input'>
 <span class='co'># Alpha-shape</span>
-<span class='fu'>vol</span>(<span class='kw'>tcs.sicalis</span>, type = <span class='st'>"alpha"</span>, avalue = <span class='fl'>1</span>)
+<span class='fu'>vol</span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, type <span class='op'>=</span> <span class='st'>"alpha"</span>, avalue <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
 </div><div class='img'><img src='vol-1.png' alt='' width='700' height='433' /></div><div class='input'>
 </div></pre>
   </div>
@@ -258,7 +258,7 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>

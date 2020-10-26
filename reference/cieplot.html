@@ -158,21 +158,21 @@
     <p>Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>cieplot</span>(
-  <span class='kw'>ciedata</span>,
-  mono = <span class='fl'>TRUE</span>,
-  out.lwd = <span class='kw'>NULL</span>,
-  out.lcol = <span class='st'>"black"</span>,
-  out.lty = <span class='fl'>1</span>,
-  theta = <span class='fl'>45</span>,
-  phi = <span class='fl'>10</span>,
-  r = <span class='fl'>1e+06</span>,
-  zoom = <span class='fl'>1</span>,
-  box = <span class='fl'>FALSE</span>,
-  margin = <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>),
-  ciebg = <span class='fl'>TRUE</span>,
-  <span class='kw'>...</span>
-)</pre>
+    <pre class="usage"><span class='fu'>cieplot</span><span class='op'>(</span>
+  <span class='va'>ciedata</span>,
+  mono <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  out.lwd <span class='op'>=</span> <span class='cn'>NULL</span>,
+  out.lcol <span class='op'>=</span> <span class='st'>"black"</span>,
+  out.lty <span class='op'>=</span> <span class='fl'>1</span>,
+  theta <span class='op'>=</span> <span class='fl'>45</span>,
+  phi <span class='op'>=</span> <span class='fl'>10</span>,
+  r <span class='op'>=</span> <span class='fl'>1e+06</span>,
+  zoom <span class='op'>=</span> <span class='fl'>1</span>,
+  box <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
+  ciebg <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  <span class='va'>...</span>
+<span class='op'>)</span></pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -261,16 +261,16 @@ Internationale de l Eclairage.</p>
 <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='kw'>flowers</span>)
+    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
 
 <span class='co'># CIEXYZ</span>
-<span class='kw'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span>(<span class='kw'>flowers</span>, visual = <span class='st'>"cie10"</span>, illum = <span class='st'>"D65"</span>, vonkries = <span class='fl'>TRUE</span>, relative = <span class='fl'>FALSE</span>)
-<span class='kw'>xyz.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"ciexyz"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>xyz.flowers</span>)
+<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"cie10"</span>, illum <span class='op'>=</span> <span class='st'>"D65"</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
+<span class='va'>xyz.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"ciexyz"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>xyz.flowers</span><span class='op'>)</span>
 </div><div class='img'><img src='cieplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># CIELAB</span>
-<span class='kw'>lab.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span>(<span class='kw'>vis.flowers</span>, space = <span class='st'>"cielab"</span>)
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span>(<span class='kw'>lab.flowers</span>)
+<span class='va'>lab.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"cielab"</span><span class='op'>)</span>
+<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>lab.flowers</span><span class='op'>)</span>
 </div><div class='img'><img src='cieplot-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
@@ -287,7 +287,7 @@ Internationale de l Eclairage.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.6.1.</p>
 </div>
 
       </footer>
