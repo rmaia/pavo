@@ -277,7 +277,6 @@ coldist <- function(modeldata,
     }
 
     # CREATE REFERENCE OBJECTS FOR CARTESIAN TRANSFORMATION
-
     refsamp <- min(dim(dat2)[1], ncone)
 
     visref <- matrix(NA,
@@ -309,7 +308,8 @@ coldist <- function(modeldata,
     if (achromatic) {
       resref[, "dL"] <- NA
     }
-
+    
+    ## Calculate dS
     res[, "dS"] <- switch(noise,
       "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
       "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, seq_len(ncone)])
@@ -318,7 +318,8 @@ coldist <- function(modeldata,
       "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
       "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, qndat = exp(visref))
     )
-
+    
+    ## Calculate dL
     if (achromatic) {
       note_dL <- " and noise-weighted luminance contrasts"
       visref <- cbind(visref, lum = log(1e-10))
@@ -468,6 +469,8 @@ coldist <- function(modeldata,
 # START RECEPTOR NOISE FUNCTIONS #
 ##################################
 
+# dat = raw qcatch
+# qndat = log-transformed qcatch
 newreceptornoise <- function(dat, n, weber, weber.ref, res, qndat = NULL) {
   reln <- n / sum(n)
   if (length(weber) == length(n)) { # For when weber is known for all receptors

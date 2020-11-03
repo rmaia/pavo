@@ -42,7 +42,7 @@ knitr::opts_chunk$set(
 
 [pavo_repo]: https://github.com/rmaia/pavo
 
-[data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
 Let's again begin by loading the package.
 

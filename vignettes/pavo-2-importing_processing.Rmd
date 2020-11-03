@@ -42,7 +42,7 @@ knitr::opts_chunk$set(
 
 [pavo_repo]: https://github.com/rmaia/pavo
 
-[data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+[data_location]: https://github.com/rmaia/pavo/tree/master/data_external/vignette
 
 # Organizing Spectral Data
 
@@ -64,7 +64,7 @@ In addition, `pavo` includes three datasets that can be called with the `data()`
 
 ## Importing
 
-The first thing we need to do is import spectral data into R using the function `getspec()`. It's worth noting that `getspec()` is simply a wrapper for `lr_get_spec()` from the package [`lightr`](http://docs.ropensci.org/lightr/), which is a more specialised and feature-rich package for the import of spectral data and metadata [@gruson2019]. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec()` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec()` also uses parallel processing thanks to the `future` package. You can check the documentation (`?future::plan()`) for more details but an easy way to set up parallel processing in most cases is to use the `plan("multiprocess")` command. A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
+The first thing we need to do is import spectral data into R using the function `getspec()`. It's worth noting that `getspec()` is simply a wrapper for `lr_get_spec()` from the package [`lightr`](https://docs.ropensci.org/lightr/), which is a more specialised and feature-rich package for the import of spectral data and metadata [@gruson2019]. Since the example spectra were obtained using Avantes software, we will need to specify that the files have the `.ttt` extension. Further, the data is organized in subdirectories for each species. `getspec()` will search through subdirectories recursively, and may include the names of the subdirectories in the spectra name if desired. `getspec()` also uses parallel processing thanks to the `future` package. You can check the documentation (`?future::plan()`) for more details but an easy way to set up parallel processing in most cases is to use the `plan("multiprocess")` command. A final issue with the data is that it was collected using a computer with international numbering input, which means it uses commas instead of periods as a decimal separator. We can specify that in the function call.
 
 If, for example, the raw spectral files were downloaded and placed in a directory called `/pavo/data_external/vignette`, you might execute the following command and see this output:
 

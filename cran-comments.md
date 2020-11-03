@@ -1,14 +1,12 @@
 ## Test environments
-* local macOS 10.15.3 install, R 3.6.2
-* ubuntu 16.04.6 (on travis-ci), R 3.6.2, R 3.5.3, R devel
-* win-builder (R 3.6.2 and devel)
-* rhub::check_for_cran()
+* local macOS 10.15.7 install, R 4.0.3
+* ubuntu 20.04 (on GitHub actions), R 3.6, R 3.5, R 4.0.3, R-devel
+* Windows (on GitHub actions), R 4.0.3
+* win-builder (R release and devel)  TODO
+* rhub::check_for_cran()  TODO
+* rhub::check_on_solaris()  TODO
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
-
-* checking package dependencies ... NOTE Suggests orphaned package: ‘imager’
-
-`imager` is only used conditionally in one convenience function for converting between image formats used by `pavo` and `imager`, and we understand there are plans to for `imager` to be actively maintained again in the near future.
+0 errors | 0 warnings | 0 note
 
