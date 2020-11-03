@@ -90,6 +90,6 @@ pavo:::overlap3d(tcs.sicalis.T, tcs.sicalis.C, plot = TRUE, col = seq_len(3), av
 }
 \references{
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
+\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
 Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 }
