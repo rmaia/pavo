@@ -30,7 +30,7 @@
 #' - `mean.ra` mean saturation.
 #' - `max.ra` maximum saturation achieved by the group of points.
 #' - `a.vol` colour volume computed with
-#'    \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes.
+#'    \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes.
 #'
 #' @export
 #'
@@ -58,7 +58,7 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 #' @references
 #' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
+#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
 summary.colspace <- function(object, by = NULL, ...) {
