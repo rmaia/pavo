@@ -43,7 +43,7 @@
 #' @importFrom graphics par polygon
 #' @importFrom grDevices trans3d adjustcolor
 #'
-#' @inherit overlap3d references
+#' @inherit voloverlap references
 #'
 
 vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
