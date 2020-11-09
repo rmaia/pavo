@@ -41,7 +41,7 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 (progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
-\dontrun{
+\donttest{
 data(sicalis)
 vm <- vismodel(sicalis, achromatic = "bt.dc")
 gr <- gsub("ind..", "", rownames(vm))

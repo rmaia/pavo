@@ -79,12 +79,12 @@
 #'   noise-weighted Euclidean distances for `vismodel` objects.
 #'
 #' @export
-#' 
+#'
 #' @importFrom stats dist setNames
 #' @importFrom utils combn
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Dichromat
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
@@ -308,7 +308,7 @@ coldist <- function(modeldata,
     if (achromatic) {
       resref[, "dL"] <- NA
     }
-    
+
     ## Calculate dS
     res[, "dS"] <- switch(noise,
       "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
@@ -318,7 +318,7 @@ coldist <- function(modeldata,
       "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
       "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, qndat = exp(visref))
     )
-    
+
     ## Calculate dL
     if (achromatic) {
       note_dL <- " and noise-weighted luminance contrasts"
