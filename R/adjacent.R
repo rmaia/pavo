@@ -20,8 +20,8 @@
 #'   any.
 #'   - `'none'`: default
 #'   - `'background'`: exclude everything *outside* the closed polygon specified
-#'      using [procimg()], or the argument `polygon`. Alternatively, if the 
-#'      background is relatively homogeneous the colour-class ID(s) uniquely 
+#'      using [procimg()], or the argument `polygon`. Alternatively, if the
+#'      background is relatively homogeneous the colour-class ID(s) uniquely
 #'      corresponding to the background can be specified via `bkgID`, and
 #'      subsequently excluded.
 #'   - `'object'`: exclude everything *inside* the closed polygon specified
@@ -50,7 +50,7 @@
 #'   with the remaining columns specifying one or more of 'hue' (angle, in
 #'   radians), 'sat', and/or 'lum'.
 #' @inheritParams getspec
-#' 
+#'
 #' @inherit getspec details
 #'
 #' @return a data frame of summary variables:
@@ -158,7 +158,7 @@
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = NULL) {
-  
+
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
             "about how you can choose your parallelisation strategy.",
@@ -293,7 +293,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
         coldists_i = coldists[[x]],
         hsl_i = hsl[[x]]
       )
-    })
+    }, future.seed = TRUE)
   })
 
   # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
