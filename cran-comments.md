@@ -8,7 +8,17 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 1 note
+0 errors | 0 warnings | 2 note
+
+* checking CRAN incoming feasibility ... NOTE
+Maintainer: 'Thomas White <thomas.white026@gmail.com>'
+New maintainer:
+  Thomas White <thomas.white026@gmail.com>
+Old maintainer(s):
+  Rafael Maia <rm72@zips.uakron.edu>
+  
+Thomas White is the new primary package maintainer, as confirmed via email from Rafael Maia.
+
 
 Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1515/znc-1993-1-218
