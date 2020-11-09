@@ -39,11 +39,11 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
                         cores = NULL, ...) {
-
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
-            "about how you can choose your parallelisation strategy.",
-            call. = FALSE)
+      "about how you can choose your parallelisation strategy.",
+      call. = FALSE
+    )
   }
 
   # geometric mean
@@ -210,7 +210,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
     bootcd <- future_lapply(bootgrouped, function(z) {
       p()
       tryCatch(suppressMessages(tmpbootcdfoo(z)),
-               error = function(e) NULL
+        error = function(e) NULL
       )
     })
   })
@@ -224,7 +224,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
   )
 
   if (dim(bootdS)[1] < boot.n) {
-    stop('Bootstrap sampling encountered errors.')
+    stop("Bootstrap sampling encountered errors.")
   }
   # ...subtract them from the empirical
   # bootdS <- bootdS - empdS

@@ -38,7 +38,6 @@
 #'
 #' # Alpha-shape
 #' vol(tcs.sicalis, type = "alpha", avalue = 1)
-#'
 #' @importFrom geometry convhulln
 #' @importFrom graphics par polygon
 #' @importFrom grDevices trans3d adjustcolor
@@ -48,7 +47,6 @@
 
 vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
                 alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE, ...) {
-
   type <- match.arg(type)
 
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") {
@@ -64,10 +62,11 @@ vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
     }
 
     ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]),
-                                     alpha = avalue)
+      alpha = avalue
+    )
 
     tri <- ashape$triang
-    vol <- t(tri[tri[, ncol(tri)] %in% c(2,3), c(1, 2, 3)])
+    vol <- t(tri[tri[, ncol(tri)] %in% c(2, 3), c(1, 2, 3)])
     coords <- ashape$x
   }
 

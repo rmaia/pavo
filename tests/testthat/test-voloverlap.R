@@ -88,7 +88,6 @@ test_that("Symmetric", {
   expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
   expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
   expect_equal(vol_hq$vboth, vol_hq$vboth)
-
 })
 
 test_that("Plane", {

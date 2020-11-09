@@ -15,7 +15,6 @@
 tcsvol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
                    col = "black", alpha = 0.2, grid.alpha = 1, grid = TRUE,
                    fill = TRUE, lwd = 1) {
-
   if (attr(tcsdata, "clrsp") != "tcs") {
     stop("object is not in tetrahedral color space")
   }
@@ -38,23 +37,24 @@ tcsvol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
     }
 
     ashape <- alphashape3d::ashape3d(as.matrix(tcsdata[, c("x", "y", "z")]),
-                                     alpha = avalue)
+      alpha = avalue
+    )
 
     tri <- ashape$triang
-    vol <- t(tri[tri[, ncol(tri)] %in% c(2,3), c(1, 2, 3)])
+    vol <- t(tri[tri[, ncol(tri)] %in% c(2, 3), c(1, 2, 3)])
     coords <- ashape$x
   }
 
   if (grid) {
     rgl::triangles3d(coords[vol, ],
-                     color = col, alpha = grid.alpha, lwd = lwd,
-                     front = "lines", back = "lines"
+      color = col, alpha = grid.alpha, lwd = lwd,
+      front = "lines", back = "lines"
     )
   }
 
   if (fill) {
     rgl::rgl.triangles(coords[vol, ],
-                       alpha = alpha, color = col
+      alpha = alpha, color = col
     )
   }
 

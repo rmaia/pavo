@@ -33,7 +33,6 @@
 #' Bird coloration. Harvard University Press, Cambridge, pp 90-147.
 
 aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
-
   wl <- isolate_wl(rspecdata, keep = "wl")
   y <- isolate_wl(rspecdata, keep = "spec")
 
@@ -113,5 +112,4 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   class(res) <- c("rspec", "data.frame")
 
   res
-
 }

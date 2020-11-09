@@ -28,16 +28,13 @@ test_that("summary.colspace", {
   data(flowers)
 
   expect_equal(sum(summary(colspace(vismodel(flowers)))), 4.0958993)
-
 })
 
 test_that("subset.colspace", {
-
   tcs_sicalis <- colspace(vismodel(sicalis))
 
   tcs_sicalis_T <- subset(tcs_sicalis, "T")
 
   expect_equal(dim(tcs_sicalis_T), c(7, 17))
   expect_s3_class(tcs_sicalis_T, "colspace")
-
 })

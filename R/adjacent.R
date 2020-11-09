@@ -158,11 +158,11 @@
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL, cores = NULL) {
-
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
-            "about how you can choose your parallelisation strategy.",
-            call. = FALSE)
+      "about how you can choose your parallelisation strategy.",
+      call. = FALSE
+    )
   }
 
   exclude2 <- match.arg(exclude)

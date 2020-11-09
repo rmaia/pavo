@@ -112,9 +112,11 @@ trispace <- function(vismodeldata) {
   }
 
   # cartesian coordinates
-  ref <- matrix(c(    0     ,  sqrt(2/3),
-                  -1/sqrt(2), -1/sqrt(6),
-                   1/sqrt(2), -1/sqrt(6)), nrow = 3, ncol = 2, byrow = TRUE)
+  ref <- matrix(c(
+    0, sqrt(2 / 3),
+    -1 / sqrt(2), -1 / sqrt(6),
+    1 / sqrt(2), -1 / sqrt(6)
+  ), nrow = 3, ncol = 2, byrow = TRUE)
 
   coords <- bary2cart(ref, cbind(s, m, l))
 
@@ -146,7 +148,7 @@ trispace <- function(vismodeldata) {
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
 
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
-  if (!is.null(maxqcatches) && ncol(maxqcatches)==3) {
+  if (!is.null(maxqcatches) && ncol(maxqcatches) == 3) {
     maxqcatches <- maxqcatches / rowSums(maxqcatches)
     attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
   } else {

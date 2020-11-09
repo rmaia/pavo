@@ -17,8 +17,7 @@ New maintainer:
 Old maintainer(s):
   Rafael Maia <rm72@zips.uakron.edu>
   
-Thomas White is the new primary package maintainer, as confirmed via email from Rafael Maia.
-
+Thomas White is now the package maintainer, as confirmed via email to CRAN submission from Rafael Maia.
 
 Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1515/znc-1993-1-218

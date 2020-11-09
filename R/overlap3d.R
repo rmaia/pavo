@@ -38,7 +38,6 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
                       fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
                       lwd = 1, ...) {
-
   if (length(avalue) == 1) {
     avalue1 <- avalue2 <- avalue
   } else if (length(avalue) == 2) {
@@ -98,8 +97,10 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
   ############
   if (plot) {
     if (!interactive) {
-      warning("interactive = FALSE has not been implemented yet, falling back to",
-              " interactive plot.")
+      warning(
+        "interactive = FALSE has not been implemented yet, falling back to",
+        " interactive plot."
+      )
     }
     if (length(col) < 3) {
       col <- c(rep(col, 2)[seq_len(2)], "darkgrey")
@@ -107,7 +108,7 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
     # check if rgl is installed and loaded
     if (!requireNamespace("rgl", quietly = TRUE)) {
       stop(dQuote("rgl"), " package needed for interactive plots. Please install it, or use interactive=FALSE.",
-           call. = FALSE
+        call. = FALSE
       )
     }
 
@@ -119,22 +120,22 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
       rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
     }
 
-    tcsvol(colsp1, type = "alpha", avalue = avalue1 ,col = col[1], fill = FALSE)
+    tcsvol(colsp1, type = "alpha", avalue = avalue1, col = col[1], fill = FALSE)
     tcsvol(colsp2, type = "alpha", avalue = avalue2, col = col[2], fill = FALSE)
 
     rgl::spheres3d(samples[which(invol1 & !invol2), ],
-                   type = "s",
-                   lit = FALSE, radius = psize, col = col[1]
+      type = "s",
+      lit = FALSE, radius = psize, col = col[1]
     )
     rgl::spheres3d(samples[which(invol2 & !invol1), ],
-                   type = "s",
-                   lit = FALSE, radius = psize, col = col[2]
+      type = "s",
+      lit = FALSE, radius = psize, col = col[2]
     )
 
     if (s_inboth > 0) {
       rgl::spheres3d(samples[which(invol1 & invol2), ],
-                     type = "s",
-                     lit = FALSE, radius = psize, col = col[3]
+        type = "s",
+        lit = FALSE, radius = psize, col = col[3]
       )
     }
   }

@@ -34,7 +34,6 @@ test_that("Warnings", {
   expect_error(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650))), "wavelength range")
 
   expect_silent(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650), range = c(300, 1200))))
-
 })
 
 test_that("Sensmodel", {
@@ -49,22 +48,21 @@ test_that("Sensmodel", {
   expect_error(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), Bmid = c(350, 450, 550), oiltype = "t"), "only 2")
 
   # Custom names
-  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm', 'l'))), c('wl', 's', 'm', 'l'))
-  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm'))), c('wl', 'lmax300', 'lmax400', 'lmax500'))
-  expect_message(names(sensmodel(c(300, 400, 500), sensnames = c('s', 'm'))), 'length of argument')
+  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m", "l"))), c("wl", "s", "m", "l"))
+  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m"))), c("wl", "lmax300", "lmax400", "lmax500"))
+  expect_message(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m"))), "length of argument")
 })
 
 test_that("sensdata()", {
-
-  vis_all <- sensdata(visual = "all", achromatic = "all",
-                      illum = "all", trans = "all",
-                      bkg = "all")
+  vis_all <- sensdata(
+    visual = "all", achromatic = "all",
+    illum = "all", trans = "all",
+    bkg = "all"
+  )
 
   # No negative values, no NA
   expect_false(any(vis_all < 0))
   expect_false(anyNA(vis_all))
 
   colspace(vismodel(sensdata(illum = "D65"), visual = "cie10"))
-
-
 })

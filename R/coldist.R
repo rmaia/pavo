@@ -79,7 +79,7 @@
 #'   noise-weighted Euclidean distances for `vismodel` objects.
 #'
 #' @export
-#' 
+#'
 #' @importFrom stats dist setNames
 #' @importFrom utils combn
 #'
@@ -149,8 +149,8 @@ coldist <- function(modeldata,
     ncol = 2, dimnames = list(NULL, c("patch1", "patch2"))
   ), stringsAsFactors = FALSE)
 
-  res[, "dS"] <- NA  # Chromatic contrasts
-  if (achromatic) {  # Achromatic contrasts
+  res[, "dS"] <- NA # Chromatic contrasts
+  if (achromatic) { # Achromatic contrasts
     res[, "dL"] <- NA
   }
 
@@ -255,7 +255,7 @@ coldist <- function(modeldata,
       Qi = dat,
       fi = exp(dat)
     )
-    
+
     # Keep only cone-catch data
     dat2 <- dat[, seq_len(ncone), drop = FALSE]
 
@@ -267,10 +267,11 @@ coldist <- function(modeldata,
         call. = FALSE
       )
     }
-    
+
     # Set weber cone reference
-    if (weber.ref == "longest") 
+    if (weber.ref == "longest") {
       weber.ref <- length(n)
+    }
 
     if (length(n) != ncone) {
       stop("vector of relative cone densities (", dQuote("n"),
@@ -311,7 +312,7 @@ coldist <- function(modeldata,
     if (achromatic) {
       resref[, "dL"] <- NA
     }
-    
+
     ## Calculate dS
     res[, "dS"] <- switch(noise,
       "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
@@ -321,7 +322,7 @@ coldist <- function(modeldata,
       "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
       "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, exp(visref))
     )
-    
+
     ## Calculate dL
     if (achromatic) {
       note_dL <- " and noise-weighted luminance contrasts"
@@ -473,10 +474,10 @@ coldist <- function(modeldata,
 ##################################
 
 newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = NULL) {
-  
+
   # Calculate relative receptor density
   reln <- n / sum(n)
-  
+
   # Back-calculate photoreceptor noise from channel-noise (weber fraction)
   if (length(weber) == length(n)) { # For when weber is known for all receptors
     v <- weber * sqrt(reln)
@@ -514,7 +515,7 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
   }
 
   # remaining 2 combinations (second part numerator)
-  n2combs <- apply(n1combs, 2, function(x) colnames(qcatch_raw)[ !colnames(qcatch_raw) %in% x ])
+  n2combs <- apply(n1combs, 2, function(x) colnames(qcatch_raw)[!colnames(qcatch_raw) %in% x])
 
   # f_d and f_e
   deltaqiqj <- lapply(1:dim(n1combs)[2], function(y) {

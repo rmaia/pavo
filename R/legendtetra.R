@@ -24,7 +24,7 @@
 #'   col = cols, pch = 16
 #' )
 #' @importFrom graphics legend grconvertX grconvertY
-#' 
+#'
 #' @export
 
 legendtetra <- function(x = 0.8, y = 1.2, ...) {

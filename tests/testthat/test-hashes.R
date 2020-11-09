@@ -34,7 +34,6 @@ test_that("coldist", {
     digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 4),
     "c6d1989e98abd7772c00475696c6e6dafe0a2e46"
   )
-
 })
 
 test_that("colspace", {
@@ -89,7 +88,6 @@ test_that("colspace", {
   #   digest::sha1(summary(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), digits = 4),
   #   "8d9c05ec7ae28b219c4c56edbce6a721bd68af82"
   # )
-
 })
 
 test_that("voloverlap()", {
@@ -116,7 +114,6 @@ test_that("voloverlap()", {
     digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
     "7932522b35c2c59365fe7c342f367f8ec35f601a"
   )
-
 })
 
 test_that("processing & general", {

@@ -64,7 +64,7 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @importFrom graphics par 
+#' @importFrom graphics par
 #'
 #' @export
 #'

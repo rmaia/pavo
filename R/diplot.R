@@ -15,7 +15,7 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
-#' 
+#'
 #' @importFrom graphics par points text
 #'
 #' @keywords internal

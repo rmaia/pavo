@@ -19,7 +19,7 @@ test_that("sensdata", {
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata("all", "all"))))
 
   # Check for negative values
-  expect_equal(min(sensdata(visual = 'all', illum = 'all', trans = 'all', achromatic = 'all', bkg = 'all')), 0)
+  expect_equal(min(sensdata(visual = "all", illum = "all", trans = "all", achromatic = "all", bkg = "all")), 0)
 })
 
 test_that("peakshape", {

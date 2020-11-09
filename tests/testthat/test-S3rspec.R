@@ -65,7 +65,6 @@ test_that("as.rspec", {
 
   flowers[, 2] <- as.character(flowers[, 2])
   expect_error(as.rspec(flowers), "numeric")
-
 })
 
 test_that("summary.rspec", {
@@ -101,15 +100,12 @@ test_that("summary.rspec", {
 })
 
 test_that("plot.rspec", {
-
   data(teal)
 
   expect_message(plot(teal, type = "heatmap"), "No varying vector supplied")
-
 })
 
 test_that("subset.rspec", {
-
   data(sicalis)
 
   sicalis_T <- subset(sicalis, "T")
@@ -118,11 +114,9 @@ test_that("subset.rspec", {
   expect_s3_class(sicalis_T, "rspec")
 
   expect_warning(subset(sicalis, "Z"), "Subset condition not found")
-
 })
 
 test_that("merge.rspec", {
-
   data(sicalis)
 
   sicalis_T <- subset(sicalis, "T")
@@ -135,10 +129,13 @@ test_that("merge.rspec", {
   expect_s3_class(sicalis_merged, "rspec")
   expect_mapequal(sicalis_TC, sicalis_merged)
 
-  expect_error(merge(sicalis_T, as.data.frame(sicalis_C)),
-               "invalid rspec objects")
+  expect_error(
+    merge(sicalis_T, as.data.frame(sicalis_C)),
+    "invalid rspec objects"
+  )
 
-  expect_error(merge(sicalis_T, sicalis_C[, -1]),
-               "Cannot find valid")
-
+  expect_error(
+    merge(sicalis_T, sicalis_C[, -1]),
+    "Cannot find valid"
+  )
 })

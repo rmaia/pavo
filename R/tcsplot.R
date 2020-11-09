@@ -87,9 +87,10 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
   )
 
   rgl::lines3d(unlist(ttv[c("xu", "xs", "xm", "xl", "xs", "xl", "xu", "xm")]),
-               unlist(ttv[c("yu", "ys", "ym", "yl", "ys", "yl", "yu", "ym")]),
-               unlist(ttv[c("zu", "zs", "zm", "zl", "zs", "zl", "zu", "zm")]),
-               color = lcol, lwd = lwd)
+    unlist(ttv[c("yu", "ys", "ym", "yl", "ys", "yl", "yu", "ym")]),
+    unlist(ttv[c("zu", "zs", "zm", "zl", "zs", "zl", "zu", "zm")]),
+    color = lcol, lwd = lwd
+  )
 
   if (achro) {
     rgl::spheres3d(0, 0, 0, col = achrocol, radius = achrosize, lit = FALSE)
@@ -116,8 +117,12 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
     colnames(maxgamut) <- c("x", "y", "z")
     attr(maxgamut, "clrsp") <- "tcs"
     tryCatch(tcsvol(maxgamut, grid = FALSE),
-             error = function(e) warning("Max gamut cannot be plotted.",
-                                         call. = FALSE))
+      error = function(e) {
+        warning("Max gamut cannot be plotted.",
+          call. = FALSE
+        )
+      }
+    )
   }
 
   if (hspin) {

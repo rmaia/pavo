@@ -3,16 +3,16 @@ Title: Perceptual Analysis, Visualization and Organization of
     Spectral Colour Data
 Version: 2.5.0
 Authors@R: 
-    c(person(given = "Rafael",
-             family = "Maia",
-             role = "aut",
-             email = "rafa.maia@gmail.com",
-             comment = c(ORCID = "0000-0002-7563-9795")),
-      person(given = "Thomas",
+    c(person(given = "Thomas",
              family = "White",
              role = c("aut", "cre"),
              email = "thomas.white026@gmail.com",
              comment = c(ORCID = "0000-0002-3976-1734")),
+     person(given = "Rafael",
+             family = "Maia",
+             role = "aut",
+             email = "rafa.maia@gmail.com",
+             comment = c(ORCID = "0000-0002-7563-9795")),
       person(given = "Hugo",
              family = "Gruson",
              role = "aut",
