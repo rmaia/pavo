@@ -40,7 +40,8 @@
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
-#' \dontrun{
+#'
+#' if (interactive()) {
 #' # Tetrahedron (interactive)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
@@ -64,7 +65,7 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @importFrom graphics par 
+#' @importFrom graphics par
 #'
 #' @export
 #'

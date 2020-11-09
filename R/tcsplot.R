@@ -21,7 +21,7 @@
 #' third button: zoom).
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' # For plotting
 #' data(sicalis)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")

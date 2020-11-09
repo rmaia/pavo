@@ -38,7 +38,7 @@
 #' @export
 #'
 #' @examples
-#' \dontrun{
+#' if (interactive()) {
 #' # Single image
 #' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #' papilio <- procimg(papilio, scaledist = 10)

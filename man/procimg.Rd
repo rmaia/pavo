@@ -63,7 +63,7 @@ an image, or list of images, for use in further
 Specify scales, resize, and/or define focal objects within images.
 }
 \examples{
-\dontrun{
+if (interactive()) {
 # Single image
 papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 papilio <- procimg(papilio, scaledist = 10)

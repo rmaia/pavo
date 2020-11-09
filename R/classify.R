@@ -28,7 +28,7 @@
 #' @param ... additional graphical parameters when `interactive = TRUE`.
 #' Also see [graphics::par()].
 #' @inheritParams getspec
-#' 
+#'
 #' @inherit getspec details
 #'
 #' @return A matrix, or list of matrices, of class `rimg` containing the colour
@@ -54,10 +54,10 @@
 #'
 #' # Multiple images, with interactive classification and a reference image
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-#' \dontrun{
+#' if (interactive()) {
 #' snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 #' }
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
@@ -251,7 +251,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
 classifier <- function(imgdat_i2, n_cols_i2, method_i2) {
-  
+
   with_progress({
     p <- progressor(along = imgdat_i2)
     outdata <- future_lapply(seq_along(imgdat_i2), function(x) {
