@@ -6,6 +6,7 @@ output:
   rmarkdown::html_vignette:
     toc: true
     toc_depth: 4
+link-citations: true
 bibliography: main.bib
 vignette: >
   %\VignetteIndexEntry{(3) Analysing Data}

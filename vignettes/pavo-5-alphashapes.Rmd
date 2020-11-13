@@ -4,6 +4,7 @@ author: "Hugo Gruson"
 date: "`r Sys.Date()`"
 output: rmarkdown::html_vignette
 bibliography: main.bib
+link-citations: true
 vignette: >
   %\VignetteIndexEntry{Colour volume estimation}
   %\VignetteEngine{knitr::rmarkdown}
