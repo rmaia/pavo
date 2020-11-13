@@ -21,7 +21,7 @@
 #'  confidence limits for dS (and dL if `achromatic = TRUE`).
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' data(sicalis)
 #' vm <- vismodel(sicalis, achromatic = "bt.dc")
 #' gr <- gsub("ind..", "", rownames(vm))

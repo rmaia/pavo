@@ -104,7 +104,7 @@
 #' @importFrom progressr with_progress progressor
 #'
 #' @examples
-#' \dontrun{
+#' \donttest{
 #' # Set a seed, for reproducibility
 #' set.seed(153)
 #'

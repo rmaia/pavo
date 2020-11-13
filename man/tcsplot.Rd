@@ -106,7 +106,7 @@ capabilities.
 Plots points in a tetrahedral colour space
 }
 \examples{
-\dontrun{
+if (interactive()) {
 # For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")

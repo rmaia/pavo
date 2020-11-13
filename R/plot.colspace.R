@@ -40,7 +40,8 @@
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 #' plot(tcs.sicalis)
-#' \dontrun{
+#'
+#' if (interactive()) {
 #' # Tetrahedron (interactive)
 #' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 #' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")

@@ -133,7 +133,7 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 (progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
-\dontrun{
+\donttest{
 # Set a seed, for reproducibility
 set.seed(153)
 

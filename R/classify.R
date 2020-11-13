@@ -54,7 +54,7 @@
 #'
 #' # Multiple images, with interactive classification and a reference image
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-#' \dontrun{
+#' if (interactive()) {
 #' snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 #' }
 #'

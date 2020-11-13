@@ -110,7 +110,7 @@ noise-weighted Euclidean distances for \code{vismodel} objects.
 }
 
 \examples{
-\dontrun{
+\donttest{
 # Dichromat
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
