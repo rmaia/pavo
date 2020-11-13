@@ -47,14 +47,17 @@ tcssum <- function(tcsres) {
     # summary(colspace(vismodel(flowers)), by = 4)
     # so we wrap it in tryCatch() to prevent the error from trickling down in
     # summary.colspace()
-    a.vol <- tryCatch({
-      astar <- find_astar(as.matrix(tcsres[, c("x", "y", "z")]))
-      ashape <- alphashape3d::ashape3d(as.matrix(tcsres[, c("x", "y", "z")]), astar)
-      alphashape3d::volume_ashape3d(ashape)
-    }, error = function(e) {
-      warning("There was an error in the computation of the alpha-shape volume", call. = FALSE)
-      return(NA_real_)
-    })
+    a.vol <- tryCatch(
+      {
+        astar <- find_astar(as.matrix(tcsres[, c("x", "y", "z")]))
+        ashape <- alphashape3d::ashape3d(as.matrix(tcsres[, c("x", "y", "z")]), astar)
+        alphashape3d::volume_ashape3d(ashape)
+      },
+      error = function(e) {
+        warning("There was an error in the computation of the alpha-shape volume", call. = FALSE)
+        return(NA_real_)
+      }
+    )
 
     # relative color volume
     rel.c.vol <- c.vol / tot.c.vol

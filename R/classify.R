@@ -62,11 +62,11 @@
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", cores = NULL, ...) {
-
   if (!missing(cores)) {
     warning("'cores' argument is deprecated. See ?future::plan for more info ",
-            "about how you can choose your parallelisation strategy.",
-            call. = FALSE)
+      "about how you can choose your parallelisation strategy.",
+      call. = FALSE
+    )
   }
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -251,7 +251,6 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
 classifier <- function(imgdat_i2, n_cols_i2, method_i2) {
-
   with_progress({
     p <- progressor(along = imgdat_i2)
     outdata <- future_lapply(seq_along(imgdat_i2), function(x) {

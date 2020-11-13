@@ -93,7 +93,7 @@
 
 colspace <- function(vismodeldata,
                      space = c("auto", "di", "tri", "tcs", "hexagon", "coc", "categorical", "ciexyz", "cielab", "cielch", "segment"),
-                     qcatch = NULL, 
+                     qcatch = NULL,
                      ...) {
   space2 <- try(match.arg(space), silent = TRUE)
 

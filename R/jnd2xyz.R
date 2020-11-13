@@ -32,7 +32,7 @@
 #' cd.flowers <- coldist(vis.flowers)
 #' jnd2xyz(cd.flowers)
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' 
+#'
 #' @importFrom stats dist
 #'
 #' @export
@@ -229,7 +229,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[2], "lum"] <- ldmat[ptnames[1], ptnames[2]]
 
     # subsequent points
-    coords[c(ptnames[-c(1:2)]), "lum" ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
+    coords[c(ptnames[-c(1:2)]), "lum"] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
       pos2(
         ldmat[ptnames[1], ptnames[2]],
         ldmat[ptnames[1], x],

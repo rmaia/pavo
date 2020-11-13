@@ -75,5 +75,4 @@ test_that("Convert", {
   # RGB
   data(teal)
   expect_identical(spec2rgb(teal)[1], c("Acrecca-01" = "#1EB860FF"))
-
 })

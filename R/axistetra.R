@@ -22,7 +22,7 @@
 #'
 #' @importFrom graphics arrows par
 #' @importFrom grDevices trans3d
-#' 
+#'
 #' @export
 #'
 #' @examples

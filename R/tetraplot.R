@@ -409,8 +409,11 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     colnames(maxgamut) <- c("x", "y", "z")
     attr(maxgamut, "clrsp") <- "tcs"
     tryCatch(vol(maxgamut, grid = FALSE),
-             error = function(e) warning("Max gamut cannot be plotted.",
-                                         call. = FALSE))
-
+      error = function(e) {
+        warning("Max gamut cannot be plotted.",
+          call. = FALSE
+        )
+      }
+    )
   }
 }

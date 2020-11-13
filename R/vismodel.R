@@ -319,15 +319,15 @@ vismodel <- function(rspecdata,
       dfwhichused <- names(df)[2]
       df <- df[, 2]
       warning(dfname, " is an rspec object; first spectrum (",
-              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-              call. = FALSE
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
       )
     } else if (is.data.frame(df) | is.matrix(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
       warning(dfname, " is a matrix or data frame; first column (",
-              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-              call. = FALSE
+        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+        call. = FALSE
       )
     }
     return(df)

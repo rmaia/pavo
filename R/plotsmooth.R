@@ -11,7 +11,7 @@
 #' @param ask logical. if `TRUE`, asks for user input before changing plot pages
 #'
 #' @return Series of plot with curves processed with varying level of loess smoothing
-#' 
+#'
 #' @importFrom graphics legend lines mtext par title
 #' @importFrom stats loess.smooth
 #'

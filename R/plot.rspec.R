@@ -108,7 +108,6 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     arg$z <- t(dat)
 
     do.call(image, arg)
-
   } else {
 
     # coloring for overlay plot & others

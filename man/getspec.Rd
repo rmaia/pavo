@@ -66,7 +66,6 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 \examples{
 rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 head(rspecdata)
-
 }
 \references{
 Gruson H, White TE, Maia R (2019) lightr: import spectral data

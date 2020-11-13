@@ -99,7 +99,7 @@ dispace <- function(vismodeldata) {
   }
 
   # coordinate
-  ref <- matrix(c(-1/sqrt(2), 1/sqrt(2)), nrow = 2, ncol = 1)
+  ref <- matrix(c(-1 / sqrt(2), 1 / sqrt(2)), nrow = 2, ncol = 1)
 
   x <- bary2cart(ref, cbind(s, l))
 
@@ -127,7 +127,7 @@ dispace <- function(vismodeldata) {
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
 
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
-  if (!is.null(maxqcatches) && ncol(maxqcatches)==2) {
+  if (!is.null(maxqcatches) && ncol(maxqcatches) == 2) {
     maxqcatches <- maxqcatches / rowSums(maxqcatches)
     attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
   } else {

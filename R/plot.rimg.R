@@ -12,7 +12,7 @@
 #' @param ... additional graphical parameters. Also see [par()].
 #'
 #' @return an image plot.
-#' 
+#'
 #' @importFrom graphics axis box title
 #' @importFrom stats setNames
 #'
@@ -25,7 +25,7 @@
 #' papilio_class <- classify(papilio, kcols = 4)
 #' plot(papilio_class)
 #' }
-#' 
+#'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #' plot(snakes)

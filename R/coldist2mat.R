@@ -33,8 +33,8 @@ coldist2mat <- function(coldistres) {
   rownames(dSM) <- uniquepatches
   colnames(dSM) <- uniquepatches
 
-  dSM[cdrep[, 1:2] ] <- cdrep[, 3]
-  dSM[cdrep[, 2:1] ] <- cdrep[, 3]
+  dSM[cdrep[, 1:2]] <- cdrep[, 3]
+  dSM[cdrep[, 2:1]] <- cdrep[, 3]
 
   class(dSM) <- "numeric"
   # dSM[is.na(dSM)] <- 0
@@ -49,8 +49,8 @@ coldist2mat <- function(coldistres) {
     rownames(dLM) <- uniquepatches
     colnames(dLM) <- uniquepatches
 
-    dLM[cdrepL[, 1:2] ] <- cdrepL[, 3]
-    dLM[cdrepL[, 2:1] ] <- cdrepL[, 3]
+    dLM[cdrepL[, 1:2]] <- cdrepL[, 3]
+    dLM[cdrepL[, 2:1]] <- cdrepL[, 3]
 
     class(dLM) <- "numeric"
     dLM[is.na(dLM)] <- 0

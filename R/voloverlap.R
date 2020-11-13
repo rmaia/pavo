@@ -76,7 +76,6 @@
 #'
 #' # Alpha-shape volume
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -89,7 +88,7 @@
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 #' @references
 #' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}‐shapes. Methods in
+#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 
 voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "auto",
@@ -97,20 +96,19 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
                        col = c("blue", "red", "darkgrey"), fill = FALSE,
                        new = TRUE, nsamp = 1000, psize = 0.001,
                        lwd = 1, ...) {
-
   type <- match.arg(type)
 
   if (type == "alpha") {
-
-    res <- overlap3d(colsp1, colsp2, avalue, plot, interactive, col,
-                     fill, new, nsamp, psize, lwd, ...)
-
+    res <- overlap3d(
+      colsp1, colsp2, avalue, plot, interactive, col,
+      fill, new, nsamp, psize, lwd, ...
+    )
   } else {
-
     if (!all(missing(nsamp), missing(psize))) {
       warning(
         'nsamp and psize arguments are deprecated for type = "convex" and will',
-        ' be ignored.', call.=FALSE
+        " be ignored.",
+        call. = FALSE
       )
     }
 

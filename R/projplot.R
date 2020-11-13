@@ -11,7 +11,7 @@
 #' @note [projplot()] uses the Mollweide projection, and not the Robinson projection, which
 #' has been used in the past. Among other advantages, the Mollweide projection preserves area
 #' relationships within latitudes without distortion.
-#' 
+#'
 #' @importFrom graphics par
 #'
 #' @export
@@ -30,7 +30,7 @@ projplot <- function(tcsdata, ...) {
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",
-         call. = FALSE
+      call. = FALSE
     )
   }
 

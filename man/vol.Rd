@@ -59,9 +59,18 @@ vol(tcs.sicalis, type = "convex")
 
 # Alpha-shape
 vol(tcs.sicalis, type = "alpha", avalue = 1)
-
 }
 \references{
+Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage color
+in a tetrahedral color space: A phylogenetic analysis of new world buntings. The
+American Naturalist, 171(6), 755-776.
+
+Stoddard, M. C., & Stevens, M. (2011). Avian vision and the evolution of
+egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
+
+Maia, R., White, T. E., (2018) Comparing colors using visual models.
+Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
+
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
 \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
 Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}

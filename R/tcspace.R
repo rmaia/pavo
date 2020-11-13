@@ -114,10 +114,12 @@ tcspace <- function(vismodeldata) {
     l <- dat[, 4]
   }
 
-  ref <- matrix(c(0, 0, 3/4,
-                  -sqrt(6)/4, -sqrt(2)/4, -1/4,
-                  0, 1/sqrt(2), -1/4,
-                  sqrt(6)/4, -sqrt(2)/4, -1/4), nrow = 4, ncol = 3, byrow = TRUE)
+  ref <- matrix(c(
+    0, 0, 3 / 4,
+    -sqrt(6) / 4, -sqrt(2) / 4, -1 / 4,
+    0, 1 / sqrt(2), -1 / 4,
+    sqrt(6) / 4, -sqrt(2) / 4, -1 / 4
+  ), nrow = 4, ncol = 3, byrow = TRUE)
   # cartesian coordinates
 
   coords <- bary2cart(ref, cbind(u, s, m, l))
@@ -192,7 +194,7 @@ tcspace <- function(vismodeldata) {
   attr(res, "data.background") <- attr(vismodeldata, "data.background")
 
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
-  if (!is.null(maxqcatches) && ncol(maxqcatches)==4) {
+  if (!is.null(maxqcatches) && ncol(maxqcatches) == 4) {
     maxqcatches <- maxqcatches / rowSums(maxqcatches)
     attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
   } else {

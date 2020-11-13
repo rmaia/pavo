@@ -2,7 +2,7 @@
 #'
 #' Some spectrometers will give illuminant values in units of irradiance
 #' (\ifelse{html}{\out{&mu;Watt.cm<sup>-2</sup>}}{\eqn{\mu Watt.cm^{-2}}}),
-#' but physiological models require illuminants in units of photon (quantum) flux 
+#' but physiological models require illuminants in units of photon (quantum) flux
 #' (\ifelse{html}{\out{&mu;mol.s<sup>-1</sup>.m<sup>-2</sup>}}{\eqn{\mu mol.s^{-1}.m^{-2}}}).
 #' The functions [irrad2flux()] and [flux2irrad()] allows for easy conversion of
 #' `rspec` objects between these units.

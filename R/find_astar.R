@@ -13,15 +13,17 @@
 #'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
 #'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
 find_astar <- function(coords) {
-
   tetras <- alphashape3d::ashape3d(coords,
-                                   alpha = 0)$tetra
-  tetras <- cbind(c(tetras[, c("v1", "v2", "v3", "v4")]),
-                  rep(tetras[, "rhoT"], 4))
+    alpha = 0
+  )$tetra
+  tetras <- cbind(
+    c(tetras[, c("v1", "v2", "v3", "v4")]),
+    rep(tetras[, "rhoT"], 4)
+  )
   astar <- max(by(tetras[, 2], tetras[, 1], min))
 
-  message("'avalue' automatically set to ", sprintf("%.4e", astar*(1+1e-15)))
+  message("'avalue' automatically set to ", sprintf("%.4e", astar * (1 + 1e-15)))
 
   # We have to round the value because of numerical precision issues
-  return(astar*(1+1e-15))
+  return(astar * (1 + 1e-15))
 }
