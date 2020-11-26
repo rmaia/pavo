@@ -96,7 +96,7 @@ volume_ashape3d(ashape_jnd)
 rgl::bg3d("white") 
 ```
 
-```{r, webgl=TRUE}
+```{r, webshot::is_phantomjs_installed(), webgl=TRUE}
 plot(ashape_jnd)
 ```
 
@@ -118,7 +118,7 @@ tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 rgl::bg3d()
 ```
 
-```{r, webgl=TRUE}
+```{r, eval = webshot::is_phantomjs_installed(), webgl=TRUE}
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
