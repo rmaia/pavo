@@ -55,7 +55,7 @@ Suggests:
     knitr,
     mapproj,
     NbClust,
-    rgl,
+    rgl(>= 0.103.5),
     rmarkdown,
     testthat(>= 2.99.0),
 VignetteBuilder: 
