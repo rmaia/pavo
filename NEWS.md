@@ -1,3 +1,12 @@
+# pavo 2.6.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* `bootcoldist()` and `adjacent()` now use a random number generator that 
+generates statistically sound values, even when ran in parallel. The output of
+these functions is thus expected to slightly change, even if you set the seed
+before.
+
 # pavo 2.5.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
