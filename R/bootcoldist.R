@@ -212,7 +212,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
       tryCatch(suppressMessages(tmpbootcdfoo(z)),
         error = function(e) NULL
       )
-    })
+    }, future.seed = TRUE)
   })
 
   # get deltaS and name by group difference
