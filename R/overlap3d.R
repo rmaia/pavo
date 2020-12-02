@@ -38,6 +38,15 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
                       interactive = TRUE, col = c("blue", "red", "darkgrey"),
                       fill = FALSE, new = TRUE, nsamp = 1000, psize = 0.001,
                       lwd = 1, ...) {
+
+  if (!requireNamespace("alphashape3d", quietly = TRUE)) {
+    stop(
+      "Please install the alphashape3d package to be able to use ",
+      "this function", call. = FALSE
+    )
+  }
+
+
   if (length(avalue) == 1) {
     avalue1 <- avalue2 <- avalue
   } else if (length(avalue) == 2) {
