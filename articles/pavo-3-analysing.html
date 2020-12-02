@@ -107,7 +107,7 @@
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-12-01</h4>
+            <h4 class="date">2020-12-02</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -1125,14 +1125,7 @@ Visual system of a pretend mantis shrimp with 10 cones
 <p>Since we have two images, with (arguably) four and three colours each, including the white background, we can specify this information using <code>kcols</code>, before visualising the results with <code>summary</code>. The <code>summary</code> function, with <code>plot = TRUE</code>, is also particularly useful for understanding the colour-class labels, or ID’s, assigned to each colour, as well as visualising the accuracy of the classification process, which may be enhanced by specifying strongly-contrasting ‘false’ colours for plotting through the <code>col</code> argument.</p>
 <div class="sourceCode" id="cb52"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span><span class="va">butterflies</span>, kcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Image classification in progress...</span>
-<span class="co">#&gt; Warning: UNRELIABLE VALUE: Future ('future_lapply-1') unexpectedly generated</span>
-<span class="co">#&gt; random numbers without specifying argument '[future.]seed'. There is a risk that</span>
-<span class="co">#&gt; those random numbers are not statistically sound and the overall results might</span>
-<span class="co">#&gt; be invalid. To fix this, specify argument '[future.]seed', e.g. 'seed=TRUE'.</span>
-<span class="co">#&gt; This ensures that proper, parallel-safe random numbers are produced via the</span>
-<span class="co">#&gt; L'Ecuyer-CMRG method. To disable this check, use [future].seed=NULL, or set</span>
-<span class="co">#&gt; option 'future.rng.onMisuse' to "ignore".</span></code></pre></div>
+<span class="co">#&gt; Image classification in progress...</span></code></pre></div>
 <div class="sourceCode" id="cb53"><pre class="downlit sourceCode r">
 <code class="sourceCode R">
 <span class="co"># Note that we could simply feed the list of images to summary, rather than</span>
@@ -1149,13 +1142,6 @@ The k-means classified images of our butterflies, along with their identified co
 <code class="sourceCode R"><span class="co"># Automatic classification.</span>
 <span class="va">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span><span class="va">butterflies</span>, kcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Image classification in progress...</span>
-<span class="co">#&gt; Warning: UNRELIABLE VALUE: Future ('future_lapply-1') unexpectedly generated</span>
-<span class="co">#&gt; random numbers without specifying argument '[future.]seed'. There is a risk that</span>
-<span class="co">#&gt; those random numbers are not statistically sound and the overall results might</span>
-<span class="co">#&gt; be invalid. To fix this, specify argument '[future.]seed', e.g. 'seed=TRUE'.</span>
-<span class="co">#&gt; This ensures that proper, parallel-safe random numbers are produced via the</span>
-<span class="co">#&gt; L'Ecuyer-CMRG method. To disable this check, use [future].seed=NULL, or set</span>
-<span class="co">#&gt; option 'future.rng.onMisuse' to "ignore".</span>
 
 <span class="co"># Automatic classification using a reference image, identified by name.</span>
 <span class="va">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span><span class="va">butterflies</span>, refID <span class="op">=</span> <span class="st">'h_melpomene'</span>, kcols <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>
@@ -1188,13 +1174,6 @@ The k-means classified images of our butterflies, along with their identified co
 <span class="co"># using k-means clustering, with values of 'k' that have been validated a priori.</span>
 <span class="va">butterflies_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/classify.html">classify</a></span><span class="op">(</span><span class="va">butterflies</span>, kcols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">4</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; Image classification in progress...</span>
-<span class="co">#&gt; Warning: UNRELIABLE VALUE: Future ('future_lapply-1') unexpectedly generated</span>
-<span class="co">#&gt; random numbers without specifying argument '[future.]seed'. There is a risk that</span>
-<span class="co">#&gt; those random numbers are not statistically sound and the overall results might</span>
-<span class="co">#&gt; be invalid. To fix this, specify argument '[future.]seed', e.g. 'seed=TRUE'.</span>
-<span class="co">#&gt; This ensures that proper, parallel-safe random numbers are produced via the</span>
-<span class="co">#&gt; L'Ecuyer-CMRG method. To disable this check, use [future].seed=NULL, or set</span>
-<span class="co">#&gt; option 'future.rng.onMisuse' to "ignore".</span>
 
 <span class="co"># Run the adjacency analysis, subsampling the image in a 200x200 grid, and excluding</span>
 <span class="co"># the white background.</span>
@@ -1202,21 +1181,21 @@ The k-means classified images of our butterflies, along with their identified co
 
 <span class="co"># Take a look</span>
 <span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="va">butterflies_adj</span><span class="op">)</span>
-<span class="co">#&gt;             k     N n_off        p_1       p_2        p_3       p_4      q_1_1</span>
-<span class="co">#&gt; h_melpomene 4 54064  4591 0.03606618 0.5501471 0.06220588 0.3515809 0.02358316</span>
-<span class="co">#&gt; papilio     3 63241  4371 0.23949686 0.1995597 0.56094340        NA 0.20964248</span>
-<span class="co">#&gt;                  q_1_2     q_2_2       q_1_3       q_2_3      q_3_3      q_1_4</span>
-<span class="co">#&gt; h_melpomene 0.01144939 0.5330349 0.003495857 0.004605653 0.03738162 0.01046907</span>
-<span class="co">#&gt; papilio     0.04901883 0.1726728 0.013156022 0.006941699 0.54856818         NA</span>
-<span class="co">#&gt;                  q_2_4      q_3_4     q_4_4     t_1_2     t_1_3      t_2_3</span>
-<span class="co">#&gt; h_melpomene 0.01257769 0.04232021 0.3210824 0.1348290 0.0411675 0.05423655</span>
-<span class="co">#&gt; papilio             NA         NA        NA 0.7092199 0.1903455 0.10043468</span>
-<span class="co">#&gt;                 t_1_4     t_2_4     t_3_4          m        m_r        m_c</span>
-<span class="co">#&gt; h_melpomene 0.1232847 0.1481159 0.4983664 0.08439338 0.07830882 0.09047794</span>
-<span class="co">#&gt; papilio            NA        NA        NA 0.06868910 0.07805031 0.05932789</span>
+<span class="co">#&gt;             k     N n_off       p_1       p_2       p_3        p_4     q_1_1</span>
+<span class="co">#&gt; h_melpomene 4 54064  5111 0.5833824 0.3408824 0.0406250 0.03511029 0.5649970</span>
+<span class="co">#&gt; papilio     3 63241  4371 0.1995597 0.5609434 0.2394969         NA 0.1726728</span>
+<span class="co">#&gt;                   q_1_2     q_2_2      q_2_3      q_3_3      q_1_4      q_2_4</span>
+<span class="co">#&gt; h_melpomene 0.018644569 0.3071175 0.01825614 0.02683856 0.01294762 0.03486608</span>
+<span class="co">#&gt; papilio     0.006941699 0.5485682 0.01315602 0.20964248         NA         NA</span>
+<span class="co">#&gt;                   q_3_4       q_4_4     t_1_2     t_2_3     t_1_4     t_2_4</span>
+<span class="co">#&gt; h_melpomene 0.009821693 0.006510802 0.1972217 0.1931129 0.1369595 0.3688124</span>
+<span class="co">#&gt; papilio              NA          NA 0.1004347 0.1903455        NA        NA</span>
+<span class="co">#&gt;                 t_3_4      q_1_3     t_1_3          m        m_r        m_c</span>
+<span class="co">#&gt; h_melpomene 0.1038936         NA        NA 0.09395221 0.08779412 0.10011029</span>
+<span class="co">#&gt; papilio            NA 0.04901883 0.7092199 0.06868910 0.07805031 0.05932789</span>
 <span class="co">#&gt;                     A       Sc       St        Jc        Jt         B        Rt</span>
-<span class="co">#&gt; h_melpomene 0.8655018 2.317813 3.243366 0.5794532 0.5405609 0.9043781 0.5599486</span>
-<span class="co">#&gt; papilio     1.3155754 2.428125 1.820461 0.8093752 0.6068204 0.1198810 0.5493113</span>
+<span class="co">#&gt; h_melpomene 0.8769739 2.176663 4.136277 0.5441657 0.6893795 0.8839757 0.5665327</span>
+<span class="co">#&gt; papilio     1.3155754 2.428125 1.820461 0.8093752 0.6068204 0.2150538 0.5493113</span>
 <span class="co">#&gt;             Rab m_dS s_dS cv_dS m_dL s_dL cv_dL m_hue s_hue var_hue m_sat s_sat</span>
 <span class="co">#&gt; h_melpomene   1   NA   NA    NA   NA   NA    NA    NA    NA      NA    NA    NA</span>
 <span class="co">#&gt; papilio       1   NA   NA    NA   NA   NA    NA    NA    NA      NA    NA    NA</span>
@@ -1257,18 +1236,18 @@ The k-means classified images of our butterflies, along with their identified co
 <span class="co"># of our two images, for convenience (though this could be readily extended to</span>
 <span class="co"># include a list of images along with a list of distances and hsl values)</span>
 <span class="fu"><a href="../reference/adjacent.html">adjacent</a></span><span class="op">(</span><span class="va">butterflies_class</span><span class="op">[[</span><span class="fl">2</span><span class="op">]</span><span class="op">]</span>, xscale <span class="op">=</span> <span class="fl">200</span>, xpts <span class="op">=</span> <span class="fl">200</span>, bkgID <span class="op">=</span> <span class="fl">1</span>, coldists <span class="op">=</span> <span class="va">distances</span>, hsl <span class="op">=</span> <span class="va">hsl_vals</span><span class="op">)</span>
-<span class="co">#&gt;         k     N n_off       p_1       p_2       p_3     q_1_1      q_1_2</span>
-<span class="co">#&gt; papilio 3 63241  4371 0.2394969 0.1995597 0.5609434 0.2096425 0.04901883</span>
-<span class="co">#&gt;             q_2_2      q_1_3       q_2_3     q_3_3     t_1_2     t_1_3</span>
-<span class="co">#&gt; papilio 0.1726728 0.01315602 0.006941699 0.5485682 0.7092199 0.1903455</span>
-<span class="co">#&gt;             t_2_3         m        m_r        m_c        A       Sc       St</span>
-<span class="co">#&gt; papilio 0.1004347 0.0686891 0.07805031 0.05932789 1.315575 2.428125 1.820461</span>
-<span class="co">#&gt;                Jc        Jt        B        Rt Rab     m_dS     s_dS     cv_dS</span>
-<span class="co">#&gt; papilio 0.8093752 0.6068204 0.119881 0.5493113   1 8.930405 3.893206 0.4359495</span>
-<span class="co">#&gt;             m_dL     s_dL     cv_dL    m_hue     s_hue   var_hue    m_sat</span>
-<span class="co">#&gt; papilio 1.577396 1.142306 0.7241716 1.663715 0.4154308 0.0826731 4.591698</span>
-<span class="co">#&gt;            s_sat    cv_sat    m_lum    s_lum    cv_lum</span>
-<span class="co">#&gt; papilio 2.721255 0.5926467 7.319371 2.201939 0.3008372</span></code></pre></div>
+<span class="co">#&gt;         k     N n_off       p_1       p_2       p_3     q_1_1       q_1_2</span>
+<span class="co">#&gt; papilio 3 63241  4371 0.1995597 0.5609434 0.2394969 0.1726728 0.006941699</span>
+<span class="co">#&gt;             q_2_2      q_1_3      q_2_3     q_3_3     t_1_2     t_1_3     t_2_3</span>
+<span class="co">#&gt; papilio 0.5485682 0.04901883 0.01315602 0.2096425 0.1004347 0.7092199 0.1903455</span>
+<span class="co">#&gt;                 m        m_r        m_c        A       Sc       St        Jc</span>
+<span class="co">#&gt; papilio 0.0686891 0.07805031 0.05932789 1.315575 2.428125 1.820461 0.8093752</span>
+<span class="co">#&gt;                Jt         B        Rt Rab     m_dS    s_dS     cv_dS     m_dL</span>
+<span class="co">#&gt; papilio 0.6068204 0.2150538 0.5493113   1 5.519149 2.56091 0.4640044 2.492633</span>
+<span class="co">#&gt;             s_dL     cv_dL    m_hue     s_hue   var_hue    m_sat    s_sat</span>
+<span class="co">#&gt; papilio 0.802252 0.3218492 1.663715 0.4154308 0.0826731 2.824327 2.812416</span>
+<span class="co">#&gt;            cv_sat    m_lum    s_lum    cv_lum</span>
+<span class="co">#&gt; papilio 0.9957825 6.476792 2.530441 0.3906936</span></code></pre></div>
 </div>
 <div id="example-2-complex-whole-visual-environments" class="section level3">
 <h3 class="hasAnchor">
