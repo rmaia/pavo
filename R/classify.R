@@ -256,7 +256,7 @@ classifier <- function(imgdat_i2, n_cols_i2, method_i2) {
     outdata <- future_lapply(seq_along(imgdat_i2), function(x) {
       p()
       classify_main(imgdat_i2[[x]], n_cols_i2[[x]], method_i2)
-    })
+    }, future.seed = TRUE)
   })
 
   outdata

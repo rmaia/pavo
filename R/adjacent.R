@@ -293,7 +293,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
         coldists_i = coldists[[x]],
         hsl_i = hsl[[x]]
       )
-    }, future.seed = TRUE)
+    })
   })
 
   # Combine output, preserving non-shared columns. Base equivalent of; do.call(dplyr::bind_rows, outdata).
