@@ -6,6 +6,10 @@
 generates statistically sound values, even when ran in parallel. The output of
 these functions is thus expected to slightly change, even if you set the seed
 before.
+* The alphashape3d package has been moved to `Suggests`, which means it will
+not be installed automatically when you install pavo from CRAN and that you
+will need to install it yourself if you need it (for `vol(type = "alpha")`,
+`vol(type = "alpha")` and `voloverlap(type = "alpha")`)
 
 # pavo 2.5.0
 
