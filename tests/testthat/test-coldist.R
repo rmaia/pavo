@@ -105,9 +105,8 @@ test_that("bootcoldist", {
   vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
   gr <- gsub("ind..", "", rownames(vm))
 
-  bcd <- expect_warning(
-    bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1),
-    "relative"
+  bcd <- suppressWarnings(
+    bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
   )
   expect_equal(dim(bcd), c(3, 6))
 })
