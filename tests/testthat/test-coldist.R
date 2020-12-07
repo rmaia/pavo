@@ -49,13 +49,13 @@ test_that("Equivalent", {
   expect_equal(
     coldist(vismodel(flowers, relative = TRUE), achromatic = FALSE),
     suppressWarnings(coldist(vismodel(flowers, relative = FALSE), achro = FALSE)),
-    check.attributes = FALSE
+    ignore_attr = TRUE
   )
 
   expect_equal(
     suppressWarnings(coldist(vismodel(flowers))),
     suppressWarnings(coldist(as.data.frame(vismodel(flowers)), qcatch = "Qi")),
-    check.attributes = FALSE
+    ignore_attr = TRUE
   )
 })
 
