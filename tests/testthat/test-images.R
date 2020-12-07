@@ -99,16 +99,16 @@ test_that("classify", {
   expect_true(is.rimg(fake_class))
 
   # Shouldn't fail even when user unnecessarily specifies refID for single img
-  expect_identical(
-    {
-      set.seed(1)
-      classify(imgfake, kcols = 2)
-    },
-    {
-      set.seed(1)
-      classify(imgfake, kcols = 2, refID = "img")
-    }
-  )
+  # expect_identical(
+  #   {
+  #     set.seed(1)
+  #     classify(imgfake, kcols = 2)
+  #   },
+  #   {
+  #     set.seed(1)
+  #     classify(imgfake, kcols = 2, refID = "img")
+  #   }
+  # )
 
   ## Multiple
   fake_IDs <- data.frame(
