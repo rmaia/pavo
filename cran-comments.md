@@ -10,15 +10,6 @@
 
 0 errors | 0 warnings | 2 note
 
-* checking CRAN incoming feasibility ... NOTE
-Maintainer: 'Thomas White <thomas.white026@gmail.com>'
-New maintainer:
-  Thomas White <thomas.white026@gmail.com>
-Old maintainer(s):
-  Rafael Maia <rm72@zips.uakron.edu>
-  
-Thomas White is now the package maintainer, as confirmed via email from Rafael to CRAN.submissions on 2020-11-12 AEDT.
-
 Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1515/znc-1993-1-218
     From: inst/doc/pavo-3-analysing.html
@@ -30,3 +21,5 @@ Found the following (possibly) invalid URLs:
     Message: Forbidden
 
 These are false positives, as both URLs are valid and resolve correctly on all broswers tested (Safari 14.0, Chrome 86.0.4240.111, Firefox 82.0).
+
+Apologies for the brief resubmission time. This is mainly to avoid archival given the upcoming archiving of a dependency (alphashape3D), which we now used conditionally and have moved to Suggests.
