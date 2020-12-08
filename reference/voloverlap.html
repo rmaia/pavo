@@ -307,11 +307,14 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
 </div><div class='img'><img src='voloverlap-2.png' alt='' width='700' height='433' /></div><div class='output co'>#&gt;           vol1         vol2 overlapvol vsmallest vboth
 #&gt; 1 5.183721e-06 4.739152e-06          0         0     0</div><div class='input'>
 <span class='co'># Alpha-shape volume</span>
+<span class='kw'>if</span> <span class='op'>(</span><span class='kw'><a href='https://rdrr.io/r/base/library.html'>require</a></span><span class='op'>(</span><span class='st'>"alphashape3d"</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
 <span class='fu'>voloverlap</span><span class='op'>(</span><span class='va'>tcs.sicalis.T</span>, <span class='va'>tcs.sicalis.B</span>, type <span class='op'>=</span> <span class='st'>"alpha"</span>, avalue <span class='op'>=</span> <span class='fl'>1</span><span class='op'>)</span>
+<span class='op'>}</span>
 </div><div class='output co'>#&gt;           vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest
 #&gt; 1 5.183721e-06 6.231493e-06     9     5        1         13 0.1111111
 #&gt;        pboth
-#&gt; 1 0.07692308</div></pre>
+#&gt; 1 0.07692308</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
