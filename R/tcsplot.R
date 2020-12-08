@@ -15,7 +15,7 @@
 #' @param vspin if `TRUE`, the graphic will spin vertically (around the 'x' axis)(defaults to `FALSE`)
 #' @param floor if `TRUE`, a reference xy plane is plotted under the tetrahedron (defaults to `TRUE`)
 #'
-#' @return [tcsplot()] creates a 3D plot using functions of the package `rgl`,
+#' @return [tcsplot()] creates a 3D plot using functions of the package \pkg{rgl},
 #' based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
 #' (left button: rotate along 'z' axis; right button: rotate along 'x' axis;
 #' third button: zoom).
@@ -41,9 +41,6 @@
 #' tcsplot(tcs.sicalis, col = "blue", size = 0.005)
 #' tcsvol(tcs.sicalis)
 #' }
-#'
-#' @seealso [rgl::spheres3d()],[rgl::rgl.postscript()],
-#' [rgl::rgl.snapshot()],[rgl::rgl.material()]
 #'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

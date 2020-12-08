@@ -89,7 +89,7 @@ Gruson (2020).}
 is not saved properly if exported using \code{rgl.postscript})(defaults to \code{TRUE}).}
 }
 \value{
-\code{\link[=tcsplot]{tcsplot()}} creates a 3D plot using functions of the package \code{rgl},
+\code{\link[=tcsplot]{tcsplot()}} creates a 3D plot using functions of the package \pkg{rgl},
 based on openGL capabilities. Plot is interactive and can be manipulated with the mouse
 (left button: rotate along 'z' axis; right button: rotate along 'x' axis;
 third button: zoom).
@@ -135,10 +135,6 @@ The American Naturalist, 171(6), 755-776.
 
 Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
-}
-\seealso{
-\code{\link[rgl:spheres]{rgl::spheres3d()}},\code{\link[rgl:postscript]{rgl::rgl.postscript()}},
-\code{\link[rgl:snapshot]{rgl::rgl.snapshot()}},\code{\link[rgl:material]{rgl::rgl.material()}}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
