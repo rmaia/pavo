@@ -27,6 +27,7 @@ jobs:
 
     env:
       R_REMOTES_NO_ERRORS_FROM_WARNINGS: true
+      _R_CHECK_FORCE_SUGGESTS_: false
       RSPM: ${{ matrix.config.rspm }}
       # prevent rgl issues because no X11 display is available
       RGL_USE_NULL: true
