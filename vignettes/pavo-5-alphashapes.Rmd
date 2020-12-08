@@ -41,13 +41,24 @@ You can plot the colour volume using $\alpha$-shape with the `vol()` function
 `type = "alpha"`. By default, this will use the $\alpha^*$ value defined in 
 @Gruson2020.
 
+```{r, include=FALSE}
+knitr::opts_knit$set(global.device = TRUE)
+```
+
 ```{r}
 library(pavo)
 data(flowers)
 vis_flowers <- vismodel(flowers, visual = "avg.uv")
 tcs_flowers <- colspace(vis_flowers)
 plot(tcs_flowers)
+```
+
+```{r, eval=require("alphashape3d")}
 vol(tcs_flowers, type = "alpha")
+```
+
+```{r, include=FALSE}
+knitr::opts_knit$set(global.device = FALSE)
 ```
 
 To get the colour volume value, you can use the `summary.colspace()` function. 
