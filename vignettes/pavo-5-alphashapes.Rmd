@@ -21,7 +21,7 @@ knitr::opts_chunk$set(
 options(rgl.useNULL = TRUE)
 ```
 
-```{r include = FALSE}
+```{r include = FALSE, eval=require("rgl")}
 knitr::knit_hooks$set(webgl = rgl::hook_webgl)
 ```
 
