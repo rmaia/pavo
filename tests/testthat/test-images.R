@@ -288,11 +288,7 @@ test_that("summary", {
   snakes_class <- classify(snakes, kcols = 3)
 
   expect_equal(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4, stringsAsFactors = FALSE), ignore_attr = TRUE)
-  ## Workaround for https://github.com/HenrikBengtsson/future/issues/446
-  if (packageVersion("future") > "1.20.1") {
-    truth <- c(3.62, 1.83, 0.16)
-  } else {
-    truth <- c(3.62, 1.82, 0.16)
-  }
+
+  truth <- c(3.62, 1.83, 0.16)
   expect_equal(round(colSums(summary(snakes_class)[4:6]), 2), truth, ignore_attr = TRUE)
 })
