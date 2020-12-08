@@ -107,13 +107,6 @@ test_that("voloverlap()", {
     digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"), digits = 4),
     "69b323778e83f2e43a91d60326f1e726eb2cd0e4"
   )
-  voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000)
-
-  set.seed(20200517)
-  expect_equal(
-    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
-    "7932522b35c2c59365fe7c342f367f8ec35f601a"
-  )
 })
 
 test_that("processing & general", {

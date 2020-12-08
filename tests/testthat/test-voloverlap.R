@@ -105,4 +105,12 @@ test_that("Alphashapes", {
   expect_equal(overlap_alpha[[1]], 5.183721e-06, tolerance = 1e-7)
   expect_equal(overlap_alpha[[2]], 6.231493e-06, tolerance = 1e-7)
 
+  skip_on_cran()
+
+  set.seed(20200517)
+  expect_equal(
+    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
+    "7932522b35c2c59365fe7c342f367f8ec35f601a"
+  )
+
 })
