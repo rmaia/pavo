@@ -37,7 +37,10 @@
 #' vol(tcs.sicalis, type = "convex")
 #'
 #' # Alpha-shape
+#' if (require("alphashape3d")) {
 #' vol(tcs.sicalis, type = "alpha", avalue = 1)
+#' }
+#'
 #' @importFrom geometry convhulln
 #' @importFrom graphics par polygon
 #' @importFrom grDevices trans3d adjustcolor

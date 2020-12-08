@@ -75,7 +75,10 @@
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq_len(3))
 #'
 #' # Alpha-shape volume
+#' if (require("alphashape3d")) {
 #' voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
+#' }
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
