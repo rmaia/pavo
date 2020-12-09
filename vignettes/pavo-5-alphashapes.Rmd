@@ -54,7 +54,7 @@ tcs_flowers <- colspace(vis_flowers)
 plot(tcs_flowers)
 ```
 
-```{r, eval=require("alphashape3d")}
+```{r}
 vol(tcs_flowers, type = "alpha")
 ```
 
@@ -74,7 +74,7 @@ summary(tcs_flowers)
 Alternatively, you can set the $\alpha$ parameter to the value of your choice via the `avalue` 
 argument:
 
-```{r, eval=require("alphashape3d")}
+```{r}
 plot(tcs_flowers)
 vol(tcs_flowers, type = "alpha", avalue = 0.5)
 ```
@@ -98,17 +98,17 @@ High-level functions to build the $\alpha$-shape directly in `pavo` have not yet
 been implemented but you can use the `alphashape3d` package directly to compute
 the $\alpha$-shapes, its volume and display it in a 3D interactive plot.
 
-```{r, eval=require("alphashape3d")}
+```{r}
 library(alphashape3d)
 ashape_jnd <- ashape3d(as.matrix(xy_flowers), alpha = 10)
 volume_ashape3d(ashape_jnd)
 ```
 
-```{r, echo = FALSE, eval=require("rgl")}
+```{r, echo = FALSE}
 rgl::bg3d("white") 
 ```
 
-```{r, webgl=TRUE, eval=require("alphashape3d")}
+```{r, webgl=TRUE}
 plot(ashape_jnd)
 ```
 
@@ -126,11 +126,11 @@ tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 ```
 
-```{r, echo = FALSE, eval=require("rgl")}
+```{r, echo = FALSE}
 rgl::bg3d()
 ```
 
-```{r, webgl=TRUE, eval=require("alphashape3d")}
+```{r, webgl=TRUE}
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
