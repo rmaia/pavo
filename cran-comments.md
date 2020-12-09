@@ -10,8 +10,6 @@
 
 0 errors | 0 warnings | 2 note
 
-Apologies for the rapid resubmission. This is mainly to avoid archival given the upcoming archiving of a dependency (alphashape3D), which we have moved to Suggests and now use conditionally.
-
 Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1515/znc-1993-1-218
     From: inst/doc/pavo-3-analysing.html
@@ -23,3 +21,8 @@ Found the following (possibly) invalid URLs:
     Message: Forbidden
 
 These are false positives, as both URLs are valid and resolve correctly on all broswers tested (Safari 14.0, Chrome 86.0.4240.111, Firefox 82.0).
+
+## Comments
+
+This is a resubmission to address the issue noted by Dr Uwe Ligges, that the package creates bin/phantomjs in the home dir. Our apologies, this appears to be a result of a bug when conditionally evaluating some interactive plots in a vignette. We were unable to reproduce locally and it was not caught on our CI systems, so we now simply prevent the evaluation of possibly-problematic chunks in the relevant vignette to be sure of no further issues.
+
