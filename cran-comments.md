@@ -10,7 +10,7 @@
 
 0 errors | 0 warnings | 2 note
 
-Apologies for the rapid resubmission time. This is mainly to avoid archival given the upcoming archiving of a dependency (alphashape3D), which we have moved to Suggests and now use conditionally.
+Apologies for the rapid resubmission. This is mainly to avoid archival given the upcoming archiving of a dependency (alphashape3D), which we have moved to Suggests and now use conditionally.
 
 Found the following (possibly) invalid URLs:
   URL: https://doi.org/10.1515/znc-1993-1-218
