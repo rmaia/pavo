@@ -1,3 +1,9 @@
+# pavo 2.6.1
+
+## MINOR FEATURES AND BUG FIXES
+
+* Minor fix to a vignette to avoid installation issues. 
+
 # pavo 2.6.0
 
 ## MINOR FEATURES AND BUG FIXES
