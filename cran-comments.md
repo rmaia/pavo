@@ -8,7 +8,7 @@
 
 ## R CMD check results
 
-0 errors | 0 warnings | 3 note
+0 errors | 0 warnings | 2 note
 
   New submission
   
@@ -17,10 +17,12 @@
 This is a resubmission to address the issue noted by Dr Uwe Ligges, that the package creates bin/phantomjs in the home dir, which necessitated it being archived. Our apologies, this appears to have been the result of a bug when conditionally evaluating some interactive plots in a vignette. We were unable to reproduce locally and it was not caught on our CI systems, so we now simply prevent the evaluation of possibly-problematic chunks in the relevant vignette to be sure of no further issues.
 
 Found the following (possibly) invalid URLs:
-  URL: https://doi.org/10.1515/znc-1993-1-218
-    From: inst/doc/pavo-3-analysing.html
-    Status: Error
-    Message: libcurl error code 35
+  URL: https://doi.org/10.1002/ecm.1287
+    From: man/flowers.Rd
+    Status: 522
+  URL: https://doi.org/10.1046/j.1365-2435.2003.00765.x
+    From: inst/doc/pavo-4-spectraldesc.html
+    Status: 522
   URL: https://doi.org/10.2307/3677129
     From: inst/doc/pavo-4-spectraldesc.html
     Status: 403
