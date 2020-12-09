@@ -24,5 +24,5 @@ These are false positives, as both URLs are valid and resolve correctly on all b
 
 ## Comments
 
-This is a resubmission to address the issue noted by Dr Uwe Ligges, that the package creates bin/phantomjs in the home dir. Our apologies, this appears to be a result of a bug when conditionally evaluating some interactive plots in a vignette. We were unable to reproduce locally and it was not caught on our CI systems, so we now simply prevent the evaluation of possibly-problematic chunks in the relevant vignette to be sure of no further issues.
+This is a resubmission to address the issue noted by Dr Uwe Ligges, that the package creates bin/phantomjs in the home dir. Our apologies, this appears to be a result of a bug when conditionally evaluating some interactive plots in a vignette. We were unable to reproduce locally and it was not caught on any CI systems, so we now simply prevent the evaluation of possibly-problematic chunks in the relevant vignette to be sure of no further issues.
 
