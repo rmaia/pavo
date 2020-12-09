@@ -16,7 +16,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.align = "center",
-  fig.show = "hold"
+  fig.show = "hold",
+  eval = identical(Sys.getenv("IN_PKGDOWN"), "true")
 )
 options(rgl.useNULL = TRUE)
 ```
@@ -107,7 +108,7 @@ volume_ashape3d(ashape_jnd)
 rgl::bg3d("white") 
 ```
 
-```{r, webshot::is_phantomjs_installed(), webgl=TRUE, eval=require("alphashape3d")}
+```{r, webgl=TRUE, eval=require("alphashape3d")}
 plot(ashape_jnd)
 ```
 
@@ -129,7 +130,7 @@ tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 rgl::bg3d()
 ```
 
-```{r, eval = webshot::is_phantomjs_installed(), webgl=TRUE, eval=require("alphashape3d")}
+```{r, webgl=TRUE, eval=require("alphashape3d")}
 voloverlap(tcs.sicalis.C, tcs.sicalis.B, type = "alpha", plot = TRUE)
 ```
 
