@@ -28,7 +28,7 @@ Ecology, 31(1), 1-20. \doi{10.1007/s10682-016-9876-x}
 Dalrymple, R. L., Flores-Moreno, H., Kemp, D. J., White, T. E.,
 Laffan, S. W., Hemmings, F. A., Tindall, M. L., & Moles, A. T. (2018). Abiotic
 and biotic predictors of macroecological patterns in bird and butterfly coloration.
-Ecological Monographs, 88(2), 204-224. \doi{10.1002/ecm.1287}
+Ecological Monographs, 88(2), 204-224.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

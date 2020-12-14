@@ -19,5 +19,5 @@
 #' @references Dalrymple, R. L., Flores-Moreno, H., Kemp, D. J., White, T. E.,
 #' Laffan, S. W., Hemmings, F. A., Tindall, M. L., & Moles, A. T. (2018). Abiotic
 #' and biotic predictors of macroecological patterns in bird and butterfly coloration.
-#' Ecological Monographs, 88(2), 204-224. \doi{10.1002/ecm.1287}
+#' Ecological Monographs, 88(2), 204-224.
 "flowers"
