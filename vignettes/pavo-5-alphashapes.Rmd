@@ -19,7 +19,6 @@ knitr::opts_chunk$set(
   fig.show = "hold",
   eval = identical(Sys.getenv("IN_PKGDOWN"), "true")
 )
-options(rgl.useNULL = TRUE)
 ```
 
 ```{r include = FALSE, eval=require("rgl")}
