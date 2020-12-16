@@ -34,9 +34,8 @@ projplot <- function(tcsdata, ...) {
     )
   }
 
-  # oPar <- par(no.readonly=TRUE)
-  oPar <- par("mar")
-  on.exit(par(oPar))
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   # plot
   cu <- "#984EA3"

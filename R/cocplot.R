@@ -29,6 +29,9 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
                     tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12),
                     achro = FALSE, achrosize = 0.8, achrocol = "grey",
                     margins = c(1, 1, 2, 2), square = TRUE, ...) {
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   par(mar = margins)
 
   if (square) {

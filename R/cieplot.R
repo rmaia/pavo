@@ -54,6 +54,10 @@
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
                     margin = c(0, 0, 0, 0), ciebg = TRUE, ...) {
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   arg <- list(...)
 
   # CIEXYZ

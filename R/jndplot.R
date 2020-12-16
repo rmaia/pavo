@@ -66,6 +66,9 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
   arrow <- match.arg(arrow)
 
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   if (square) {
     par(pty = "s")
   }

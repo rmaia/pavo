@@ -102,8 +102,10 @@ summary_main <- function(img, plot, axes, col, ...) {
   if (plot) {
 
     # Plotting
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+
     par(mfrow = c(1, 2))
-    on.exit(par(mfrow = c(1, 1)))
 
     plot(img, axes = axes, col = col, ...)
 

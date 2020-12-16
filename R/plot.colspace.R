@@ -74,9 +74,8 @@
 
 plot.colspace <- function(x, ...) {
 
-  # oPar <- par(no.readonly=TRUE)
-  oPar <- par("mar", "pty")
-  on.exit(par(oPar))
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   if ("jnd2xyz" %in% attr(x, "class")) {
     jndplot(x, ...)
