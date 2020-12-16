@@ -201,6 +201,7 @@ summary(vismod1)
 We can visualise what `vismodel()` is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:
 
 ```{r, fig=TRUE, include=TRUE, results = 'hide', fig.width=8.5, fig.height=5, fig.cap="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)."}
+oldpar <- par(no.readonly = TRUE)
 par(mfrow = c(2, 6), oma = c(3, 3, 0, 0))
 layout(rbind(c(2, 1, 4 , 3, 6 , 5),
              c(1, 1, 3 , 3, 5 , 5), 
@@ -218,6 +219,7 @@ for (i in 1:6) {
 
 mtext("Wavelength (nm)", side = 1, outer = TRUE, line = 1)
 mtext("Reflectance (%)", side = 2, outer = TRUE, line = 1)
+par(oldpar)
 ```
 
 As described above, `vismodel` also accepts user-defined visual systems, background and illuminants. We will illustrate this by showcasing the function `sensmodel`, which models spectral sensitivities of retinas based on their peak cone sensitivity, as described in @Govardovskii2000 and @Hart2005. `sensmodel` takes several optional arguments, but the main one is a vector containing the peak sensitivities for the cones being modelled. Let's model an idealized dichromat visual system, with cones peaking in sensitivity at 350 and 650 nm:
