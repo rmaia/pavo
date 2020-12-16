@@ -11,6 +11,10 @@
 
 ### Currently maintained by [Rafael Maia](https://github.com/rmaia), [Thomas White](https://github.com/thomased), and [Hugo Gruson](https://github.com/bisaloo).
 
+## NOTE (16/12/20)
+
+`pavo` is temporarily unavailable via CRAN, but will be back up shortly. In the meantime, the latest version can be installed following the instruction below (i.e. `remotes::install_github("rmaia/pavo")`). If there are any issues in the meantime just let us know!
+
 ## About
 
 `pavo` is an R package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
