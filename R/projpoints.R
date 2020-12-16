@@ -51,5 +51,4 @@ projpoints <- function(tcsdata, ...) {
 
   points(mp.p.phi ~ mp.p.theta, ...)
 
-  # par(par.old)
 }
