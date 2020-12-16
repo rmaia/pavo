@@ -239,10 +239,8 @@ specs.min <- procspec(sppspec, opt = "min")
 specs.str <- procspec(sppspec, opt = c("min", "max")) # multiple options
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Results for min (left), max (centre), and both normalisations (right)"}
+```{r, fig=TRUE, include=TRUE, fig.cap="Results for min (left), max (centre), and both normalisations (right)", fig.show="hold", out.width="30%"}
 # Plot results
-par(mfrow = c(1, 3), mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
-
 plot(specs.min[, 5] ~ c(300:700), xlab = "", ylab = "", type = "l")
 abline(h = 0, lty = 2)
 
@@ -276,8 +274,7 @@ summary(pca1)
 
 As can be seen by the summary, PC1 explains approximately 64% of the variation in spectral shape and describes the ratio of short to long wavelengths reflected. The flexibility of `R` and `pavo`'s plotting capabilities allows you to sort spectra by another variable (e.g., PC1 loading) and then plot in a stacked format using the `plot` function.
 
-```{r, fig=TRUE, include=TRUE, fig.width=7, fig.height=3, fig.cap="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities)."}
-
+```{r, fig=TRUE, include=TRUE, fig.cap="Plot of PC1 loading versus wavelength (left) and species mean spectra sorted vertically from lowest to highest PC1 value (right; values on right hand axis are column identities).", fig.show="hold", out.width="45%"}
 # Generate colours from spectra
 colr <- spec2rgb(sppspec)
 wls <- as.numeric(colnames(spec.bin))
@@ -287,7 +284,6 @@ sel <- rank(pca1$x[, 1])
 sel <- match(names(sort(sel)), names(sppspec))
 
 # Plot results
-par(mfrow = c(1, 2), mar = c(2, 4, 2, 5), oma = c(2, 0, 0, 0))
 plot(pca1$rotation[, 1] ~ wls, type = "l", ylab = "PC1 loading")
 abline(h = 0, lty = 2)
 plot(sppspec, select = sel, labels.stack = names(sppspec)[sel], type = "s", col = colr)
@@ -308,11 +304,8 @@ testspecs.fix1 <- procspec(testspecs, fixneg = "addmin")
 testspecs.fix2 <- procspec(testspecs, fixneg = "zero")
 ```
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.cap="Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (top right) and `fixneg = zero` (bottom right)."}
+```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=3.5, fig.cap="Plots showing original reflectance curve including negative values (left) and two processed curves using `fixneg = addmin` (center) and `fixneg = zero` (right).", fig.show="hold", out.width="30%"}
 # Plot it
-par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
-layout(cbind(c(1, 1), c(2, 3)), widths = c(2, 1, 1))
-
 plot(testspecs, select = 2, ylim = c(-10, 30))
 abline(h = 0, lty = 3)
 
@@ -349,7 +342,6 @@ These options are in addition to the exploratory plotting offered by `explorespe
 We can start out by visualizing these spectra with the `overlay` option in plot. Another neat option `pavo` offers is to convert reflectance spectra to their approximate perceived colour, by using the function `spec2rgb()`. This can make for some very interesting plots and even exploratory data analysis, as shown above.
 
 ```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="Overlay plot of the teal angle-dependent reflectance with colours of each curve being an approximation of the perceived colour."}
-par(mar = c(4, 4, 2, 2))
 data(teal)
 plot(teal, type = "o", col = spec2rgb(teal))
 ```
@@ -358,9 +350,8 @@ plot(teal, type = "o", col = spec2rgb(teal))
 
 Another option is the `stack` plot (again, with human vision approximations of the colour produced by the spectra using `spec2rgb()`).
 
-```{r, fig=TRUE, include=TRUE, fig.width=4, fig.height=5.5, fig.cap="Stacked plot of the raw (left) and normalized (right) teal angle-dependent reflectance"}
+```{r, fig=TRUE, include=TRUE, fig.cap="Stacked plot of the raw (left) and normalized (right) teal angle-dependent reflectance", fig.show="hold", out.width="45%"}
 teal.norm <- procspec(teal, opt = c("min", "max"))
-par(mfrow = c(1, 2), mar = c(2, 2, 2, 2), oma = c(2, 2, 0, 0))
 
 plot(teal, type = "s", col = spec2rgb(teal))
 plot(teal.norm, type = "s", col = spec2rgb(teal))
@@ -400,9 +391,7 @@ These plots can be very useful to observe changes over time, for example, or any
 
 `aggplot()` has a very similar interface to `aggspec()`, allowing for quick plotting of aggregated spectra combined by a factor, such as species, sex, experimental treatment, and so on. Its main output is a plot with lines of group mean spectra outlined by a shaded area indicating some measure of variability, such as the standard deviation of the group. Note that functions that aren't already implemented in R must be passed like they would be to functions such as `apply` (e.g., `function(x) sd(x)/sqrt(length(x))` in the example below).
 
-```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale"}
-par(mfrow = c(1, 2), mar = c(4, 4, 2, 2), oma = c(2, 0, 0, 0))
-
+```{r, fig=TRUE, include=TRUE, fig.width=6, fig.height=4, fig.cap="Example plots created using `aggplot`. Left: using median, standard deviation, and coloured lines. Right: using mean, standard error, and greyscale", fig.show="hold", out.width="45%"}
 # Plot using median and standard deviation, default colours
 aggplot(mspecs, spp, 
         FUN.center = median, 

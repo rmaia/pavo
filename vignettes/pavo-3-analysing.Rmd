@@ -106,8 +106,7 @@ Particularly in cases of reflectance spectra that have multiple discrete peaks (
 
 If this all sounds too esoteric, fear not: `peakshape()` has the option of returning plots indicating what it's calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (`HWHM.l` and `HWHM.r`) is the FWHM:
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=5, fig.cap="Plots from `peakshape`"}
-par(mfrow = c(2, 3))
+```{r, fig=TRUE, include=TRUE, fig.cap="Plots from `peakshape`", fig.show="hold", out.width="30%"}
 peakshape(spec.sm, plot = TRUE)
 ```
 
@@ -473,8 +472,7 @@ Two additional functions may help with tetrahedral colourspace plotting:
   * `axistetra()` function can be used to draw arrows showing the direction and magnitude of distortion of x, y and z in the tetrahedral plot.
   * `legendtetra()` allows you to add a legend to a plot.
 
-```{r, fig=TRUE, include=TRUE, fig.height=4, fig.width=6, fig.cap="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit."}
-par(mfrow = c(1, 2), pty = "s")
+```{r, fig=TRUE, include=TRUE, fig.cap="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit.", fig.show="hold", out.width="45%"}
 plot(tetra.flowers, pch = 21, bg = spec2rgb(flowers))
 axistetra(x = 0, y = 1.8)
 plot(tetra.flowers, theta = 110, phi = 10, pch = 21, bg = spec2rgb(flowers))
@@ -495,8 +493,7 @@ data(sicalis)
 
 We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colourspace (note the option `plot` for plotting of the volumes):
 
-```{r}
-par(mfrow = c(1, 2), pty = "s")
+```{r, plot = TRUE, fig.show='hold', out.width='40%'}
 tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
 tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
@@ -878,13 +875,12 @@ adjacent(butterflies_class[[2]], xscale = 200, xpts = 200, bkgID = 1, coldists =
 
 Of course colour patterns are not always so simple, and we may want to analyse the spatial geometry of more complex or subtle scenes. In such cases, it may be preferable to largely forego image-based clustering and classification altogether and instead use spectral data directly in an adjacency-style analysis [as per 'method 1' in @Endler2012]. One such approach would have us take spectral measurements across a patch in an evenly-spaced grid
 
-```{r, fig=TRUE, include=TRUE, fig.width=5, fig.height=4, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement."}
+```{r, fig=TRUE, fig.cap="A cryptic lizard, along with a possible sampling grid for spectral measurement.", fig.show="hold", out.width="45%"}
 
 # Load up our image of a camouflaged lizard
 lizard <- getimg(system.file("testdata/images/vig/", package = 'pavo'))
 
 # Take a look at it
-par(mfrow = c(1, 2))
 plot(lizard)
 
 # And overlay a simple 'sampling grid' that might guide us as to where we should collect
