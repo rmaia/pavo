@@ -26,12 +26,6 @@ code.sourceCode {
 </style>
 
 ```{r include = FALSE}
-# Do not use partial matching
-options(
-   warnPartialMatchDollar = TRUE,
-   warnPartialMatchArgs = TRUE,
-   warnPartialMatchAttr = TRUE
-)
 knitr::knit_hooks$set(fig = knitr::hook_pngquant)
 knitr::opts_chunk$set(
   collapse = TRUE,
