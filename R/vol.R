@@ -50,6 +50,10 @@
 
 vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
                 alpha = 0.2, grid = TRUE, fill = TRUE, new = FALSE, ...) {
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   type <- match.arg(type)
 
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") {
@@ -126,10 +130,6 @@ vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
     argempty$x <- argempty$xlim
     argempty$y <- argempty$ylim
     argempty$z <- matrix(c(argempty$zlim, argempty$zlim), nrow = 2)
-
-    # empty plot
-    oPar <- par("mar", "pty")
-    on.exit(par(oPar))
 
     par(mar = margin)
 

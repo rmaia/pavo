@@ -25,6 +25,9 @@
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
                    achrosize = 0.8, labels.cex = 1, out.lwd = 1, out.lcol = "black",
                    out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...) {
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   par(mar = margins)
 
   if (square) {

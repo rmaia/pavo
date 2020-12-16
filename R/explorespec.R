@@ -30,8 +30,9 @@
 explorespec <- function(rspecdata, by = NULL,
                         scale = c("equal", "free"),
                         legpos = "topright", ...) {
-  oPar <- par("mar", "oma", "ask", "mfrow")
-  on.exit(par(oPar))
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   wl <- isolate_wl(rspecdata, keep = "wl")
   rspecdata <- isolate_wl(rspecdata, keep = "spec")

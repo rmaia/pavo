@@ -113,8 +113,9 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
   Xb <- wlrange[Xi + FWHM_lims[2, ] - 1]
 
   if (plot) {
-    oPar <- par("ask")
-    on.exit(par(oPar))
+    oldpar <- par(no.readonly = TRUE)
+    on.exit(par(oldpar))
+
     par(ask = ask)
 
     for (i in seq_along(rspecdata)) {

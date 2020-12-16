@@ -41,6 +41,9 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
 
   arg <- list(...)
 
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
+
   par(mar = margins)
 
   if (square) {

@@ -26,8 +26,9 @@
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
                        curves = 5, specnum = "ALL", ask = TRUE) {
-  oPar <- par("mfrow", "ask", "mar", "oma")
-  on.exit(par(oPar))
+
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
 
   curves <- curves + 1
 

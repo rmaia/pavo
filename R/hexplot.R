@@ -38,6 +38,8 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...) {
   sectors <- match.arg(sectors)
 
+  oldpar <- par(no.readonly = TRUE)
+  on.exit(par(oldpar))
   par(mar = margins)
 
   if (square) {
