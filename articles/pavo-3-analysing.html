@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-12-16</h4>
+            <h4 class="date">2020-12-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -177,8 +177,7 @@ code.sourceCode {
 <p>Particularly in cases of reflectance spectra that have multiple discrete peaks (in which case the <code>summary</code> function will only return variables based on the tallest peak in the curve), it might be useful to obtain variables that describe individual peak’s properties. The <code><a href="../reference/peakshape.html">peakshape()</a></code> function identifies the peak location (<code>H1</code>), returns the reflectance at that point (<code>B3</code>), and identifies the wavelengths at which the reflectance is half that at the peak, calculating the wavelength bandwidth of that interval (the Full Width at Half Maximum, or <code>FWHM</code>). The function also returns the half widths, which are useful when the peaks are located near the edge of the measurement limit and half maximum reflectance can only be reliably estimated from one of its sides.</p>
 <p>If this all sounds too esoteric, fear not: <code><a href="../reference/peakshape.html">peakshape()</a></code> has the option of returning plots indicating what it’s calculating. The vertical continuous red line indicates the peak location, the horizontal continuous red line indicates the half-maximum reflectance, and the distance between the dashed lines (<code>HWHM.l</code> and <code>HWHM.r</code>) is the FWHM:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/peakshape.html">peakshape</a></span><span class="op">(</span><span class="va">spec.sm</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="../reference/peakshape.html">peakshape</a></span><span class="op">(</span><span class="va">spec.sm</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt;         id       B3  H1 FWHM HWHM.l HWHM.r incl.min</span>
 <span class="co">#&gt; 1 cardinal 52.70167 700   NA    114     NA      Yes</span>
 <span class="co">#&gt; 2   jacana 53.78744 700   NA    172     NA      Yes</span>
@@ -187,7 +186,7 @@ code.sourceCode {
 <span class="co">#&gt; 5    robin 37.85542 700   NA    107     NA      Yes</span>
 <span class="co">#&gt; 6  tanager 30.48108 557  166     81     85      Yes</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-1.png" alt="Plots from `peakshape`" width="480"><p class="caption">
+<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-1.png" alt="Plots from `peakshape`" width="30%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-2.png" alt="Plots from `peakshape`" width="30%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-3.png" alt="Plots from `peakshape`" width="30%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-4.png" alt="Plots from `peakshape`" width="30%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-5.png" alt="Plots from `peakshape`" width="30%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-7-6.png" alt="Plots from `peakshape`" width="30%"><p class="caption">
 Plots from <code>peakshape</code>
 </p>
 </div>
@@ -379,7 +378,8 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <span class="co">#&gt;  Max.   :0.2411</span></code></pre></div>
 <p>We can visualise what <code><a href="../reference/vismodel.html">vismodel()</a></code> is doing when estimating quantum catches by comparing the reflectance spectra to the estimates they are generating:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>, oma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">oldpar</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>no.readonly <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">6</span><span class="op">)</span>, oma <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">3</span>, <span class="fl">3</span>, <span class="fl">0</span>, <span class="fl">0</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/layout.html">layout</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">rbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">1</span>, <span class="fl">4</span> , <span class="fl">3</span>, <span class="fl">6</span> , <span class="fl">5</span><span class="op">)</span>,
              <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">3</span> , <span class="fl">3</span>, <span class="fl">5</span> , <span class="fl">5</span><span class="op">)</span>, 
              <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">8</span>, <span class="fl">7</span>, <span class="fl">10</span>, <span class="fl">9</span>, <span class="fl">12</span>, <span class="fl">11</span><span class="op">)</span>,
@@ -395,7 +395,8 @@ Plot from <code>peakshape</code>, setting the wavelength limits to 300 and 500 n
 <span class="op">}</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Wavelength (nm)"</span>, side <span class="op">=</span> <span class="fl">1</span>, outer <span class="op">=</span> <span class="cn">TRUE</span>, line <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Reflectance (%)"</span>, side <span class="op">=</span> <span class="fl">2</span>, outer <span class="op">=</span> <span class="cn">TRUE</span>, line <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="https://rdrr.io/r/graphics/mtext.html">mtext</a></span><span class="op">(</span><span class="st">"Reflectance (%)"</span>, side <span class="op">=</span> <span class="fl">2</span>, outer <span class="op">=</span> <span class="cn">TRUE</span>, line <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>
+<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span><span class="va">oldpar</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-13-1.png" alt="Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets)." width="816"><p class="caption">
 Plots of species mean reflectance curves with corresponding relative usml cone stimulations (insets).
@@ -724,23 +725,30 @@ Flowers in a tetrahedral colourspace modelled using the visual phenotype of the 
 <code><a href="../reference/legendtetra.html">legendtetra()</a></code> allows you to add a legend to a plot.</li>
 </ul>
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, pty <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
+<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span>
+<span class="co">#&gt; Warning in arrows(xarr$x[1], xarr$y[1], xarr$x[2], xarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
+<span class="co">#&gt; Warning in arrows(yarr$x[1], yarr$y[1], yarr$x[2], yarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
+<span class="co">#&gt; Warning in arrows(zarr$x[1], zarr$y[1], zarr$x[2], zarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, theta <span class="op">=</span> <span class="fl">110</span>, phi <span class="op">=</span> <span class="fl">10</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span></code></pre></div>
+<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span>
+<span class="co">#&gt; Warning in arrows(xarr$x[1], xarr$y[1], xarr$x[2], xarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
+<span class="co">#&gt; Warning in arrows(yarr$x[1], yarr$y[1], yarr$x[2], yarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
+<span class="co">#&gt; Warning in arrows(zarr$x[1], zarr$y[1], zarr$x[2], zarr$y[2], length =</span>
+<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-1.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="576"><p class="caption">
+<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-1.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="45%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-2.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="45%"><p class="caption">
 Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit.
 </p>
 </div>
 <p>For tetrahedral models, another plotting option available is <code>projplot</code>, which projects colour points in the surface of a sphere encompassing the tetrahedron. This plot is particularly useful to see differences in hue.</p>
 <div class="sourceCode" id="cb30"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="../reference/projplot.html">projplot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning in seq.default(lim[1], lim[2], len = 100): partial argument match of</span>
-<span class="co">#&gt; 'len' to 'length.out'</span>
-<span class="co">#&gt; Warning in seq.default(lim[3], lim[4], len = 100): partial argument match of</span>
-<span class="co">#&gt; 'len' to 'length.out'</span></code></pre></div>
+<code class="sourceCode R"><span class="fu"><a href="../reference/projplot.html">projplot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, pch <span class="op">=</span> <span class="fl">20</span>, col <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-32-1.png" alt="Projection plot from a tetrahedral colour space." width="480"><p class="caption">
 Projection plot from a tetrahedral colour space.
@@ -751,8 +759,7 @@ Projection plot from a tetrahedral colour space.
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/data.html">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></code></pre></div>
 <p>We will use this dataset to test for the overlap between the volume determined by the measurements of those body parts from multiple individuals in the tetrahedral colourspace (note the option <code>plot</code> for plotting of the volumes):</p>
 <div class="sourceCode" id="cb32"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span>, pty <span class="op">=</span> <span class="st">"s"</span><span class="op">)</span>
-<span class="va">tcs.sicalis.C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/colspace.html">colspace</a></span><span class="op">(</span><span class="fu"><a href="../reference/vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span>
+<code class="sourceCode R"><span class="va">tcs.sicalis.C</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/colspace.html">colspace</a></span><span class="op">(</span><span class="fu"><a href="../reference/vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span><span class="op">)</span>, <span class="st">"C"</span><span class="op">)</span>
 <span class="va">tcs.sicalis.T</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/colspace.html">colspace</a></span><span class="op">(</span><span class="fu"><a href="../reference/vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span><span class="op">)</span>, <span class="st">"T"</span><span class="op">)</span>
 <span class="va">tcs.sicalis.B</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/subset.html">subset</a></span><span class="op">(</span><span class="fu"><a href="../reference/colspace.html">colspace</a></span><span class="op">(</span><span class="fu"><a href="../reference/vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span><span class="op">)</span>, <span class="st">"B"</span><span class="op">)</span>
 <span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span><span class="op">(</span><span class="va">tcs.sicalis.T</span>, <span class="va">tcs.sicalis.B</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
@@ -761,7 +768,7 @@ Projection plot from a tetrahedral colour space.
 <span class="fu"><a href="../reference/voloverlap.html">voloverlap</a></span><span class="op">(</span><span class="va">tcs.sicalis.T</span>, <span class="va">tcs.sicalis.C</span>, plot <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span>
 <span class="co">#&gt;           vol1         vol2 overlapvol vsmallest vboth</span>
 <span class="co">#&gt; 1 5.183721e-06 4.739152e-06          0         0     0</span></code></pre></div>
-<p><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-34-1.png" width="700" style="display: block; margin: auto;"></p>
+<p><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-34-1.png" width="40%" style="display: block; margin: auto;"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-34-2.png" width="40%" style="display: block; margin: auto;"></p>
 <p>The function <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gives the volume (<span class="math inline">\(V\)</span>) of the convex hull delimited by the overlap between the two original volumes, and two proportions are calculated from that: <span class="math display">\[\text{vsmallest} = V_{overlap} / \min(V_A, V_B)\]</span> and <span class="math display">\[\text{vboth} = V_{overlap} / (V_A + V_B)\]</span>. Thus, if one of the volumes is entirely contained in the other, <code>vsmallest</code> will equal 1.</p>
 <p>So we can clearly see that there is overlap between the throat and breast colours (of about 6%), but not between the throat and the crown colours (Figures above).</p>
 <p><strong>Summary variables for groups of points</strong></p>
@@ -1259,7 +1266,6 @@ The k-means classified images of our butterflies, along with their identified co
 <span class="co">#&gt; 1 files found; importing images.</span>
 
 <span class="co"># Take a look at it</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/par.html">par</a></span><span class="op">(</span>mfrow <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lizard</span><span class="op">)</span>
 
 <span class="co"># And overlay a simple 'sampling grid' that might guide us as to where we should collect</span>
@@ -1268,7 +1274,7 @@ The k-means classified images of our butterflies, along with their identified co
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">lizard</span><span class="op">)</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/points.html">points</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/expand.grid.html">expand.grid</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">lizard</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">25</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/seq.html">seq</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fu"><a href="https://rdrr.io/r/base/dim.html">dim</a></span><span class="op">(</span><span class="va">lizard</span><span class="op">)</span><span class="op">[</span><span class="fl">1</span><span class="op">]</span>, <span class="fl">25</span><span class="op">)</span><span class="op">)</span>, pch <span class="op">=</span> <span class="fl">16</span>, col <span class="op">=</span> <span class="st">'red'</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
-<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-60-1.png" alt="A cryptic lizard, along with a possible sampling grid for spectral measurement." width="480"><p class="caption">
+<img src="pavo-3-analysing_files/figure-html/unnamed-chunk-60-1.png" alt="A cryptic lizard, along with a possible sampling grid for spectral measurement." width="45%"><p class="caption">
 A cryptic lizard, along with a possible sampling grid for spectral measurement.
 </p>
 </div>
@@ -1308,9 +1314,6 @@ A cryptic lizard, along with a possible sampling grid for spectral measurement.
 <span class="co"># colours present in our sample.</span>
 <span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span><span class="op">(</span><span class="va"><a href="https://sites.google.com/site/malikacharrad/research/nbclust-package">NbClust</a></span><span class="op">)</span>
 <span class="va">clust</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/NbClust/man/NbClust.html">NbClust</a></span><span class="op">(</span><span class="va">jnd.fakescene</span>, diss <span class="op">=</span> <span class="va">jnd.mat</span>, distance <span class="op">=</span> <span class="cn">NULL</span>, method <span class="op">=</span> <span class="st">'centroid'</span>, index <span class="op">=</span> <span class="st">'hartigan'</span><span class="op">)</span>
-<span class="co">#&gt; Warning: partial match of 'value' to 'values'</span>
-
-<span class="co">#&gt; Warning: partial match of 'value' to 'values'</span>
 <span class="va">clust</span><span class="op">$</span><span class="va">Best.nc</span>
 <span class="co">#&gt; Number_clusters     Value_Index </span>
 <span class="co">#&gt;           4.000        1639.353</span></code></pre></div>

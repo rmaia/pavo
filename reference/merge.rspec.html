@@ -207,10 +207,17 @@ Will use <code>by = "wl"</code> if unspecified, or automatically append <code>wl
 #&gt; 3     8.4943     6.7162     5.9854     5.5914     5.6945
 #&gt; 4     7.7345     7.1378     6.8542     5.8837     6.5800
 #&gt; 5     8.1755     6.9856     6.0488     4.7887     5.4050
-#&gt; 6     8.9242     7.6159     6.7029     6.4119     6.4612</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/par.html'>par</a></span><span class='op'>(</span>mfrow <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.mer</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-</div><div class='img'><img src='merge.rspec-1.png' alt='' width='700' height='433' /></div></pre>
+#&gt; 6     8.9242     7.6159     6.7029     6.4119     6.4612</div><div class='input'>
+<span class='co'># The original and the reconstructed (by merge.rspec()) datasets are</span>
+<span class='va'>identical</span>
+</div><div class='output co'>#&gt; function (x, y, num.eq = TRUE, single.NA = TRUE, attrib.as.set = TRUE, 
+#&gt;     ignore.bytecode = TRUE, ignore.environment = FALSE, ignore.srcref = TRUE) 
+#&gt; .Internal(identical(x, y, num.eq, single.NA, attrib.as.set, ignore.bytecode, 
+#&gt;     ignore.environment, ignore.srcref))
+#&gt; &lt;bytecode: 0x7fc2632dafc8&gt;
+#&gt; &lt;environment: namespace:base&gt;</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.mer</span><span class='op'>)</span>
+</div><div class='img'><img src='merge.rspec-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
+</div><div class='img'><img src='merge.rspec-2.png' alt='' width='700' height='433' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
