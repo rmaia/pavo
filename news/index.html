@@ -161,6 +161,8 @@
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
 <li>Minor fix to a vignette to avoid installation issues.</li>
+<li>
+<code><a href="https://rdrr.io/r/base/options.html">options()</a></code> and <code><a href="https://rdrr.io/r/graphics/par.html">par()</a></code> are now always set locally, including in vignettes and examples, as to prevent spillover of these changes in the user session</li>
 </ul>
 </div>
 </div>
