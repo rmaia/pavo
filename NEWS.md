@@ -1,3 +1,5 @@
+# pavo 2.7.0
+
 # pavo 2.6.1
 
 ## MINOR FEATURES AND BUG FIXES
