@@ -8,6 +8,7 @@ load("R/sysdata.rda")
 
 d65 <- readxl::read_xls("data-raw/ciedata.xls", skip = 5, col_names = c("wl", "d65"), sheet = "D65")
 d65 <- as.rspec(d65, lim = c(300, 700))
+d65 <- irrad2flux(d65)
 d65 <- procspec(d65, opt = "maximum")
 
 bgandilum$D65 <- d65$d65
