@@ -25,7 +25,8 @@
 
 - Read the [package documentation and vignettes](http://pavo.colrverse.com/index.html) (or via `browseVignettes("pavo")`) for detailed examples and discussion.
 - Check out the [latest news](http://pavo.colrverse.com/news/index.html) for changes and updates.
-- **Can't find what you're looking for? Send an email to the mailing list: <r-pavo@googlegroups.com>**
+- **Need help or advice and can't find what you're looking for? Head over to the [colRverse discussion board](https://github.com/thomased/colRverse/discussions) and feel free to get in touch.
+
 
 ## Citing pavo
 
