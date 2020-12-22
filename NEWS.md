@@ -2,7 +2,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
-* Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (μmol.s-1.m-2). 
+* Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2). 
 
 # pavo 2.6.1
 
