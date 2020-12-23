@@ -487,7 +487,17 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
 
   if (is.null(qcatch_log)) {
     e <- setNames(v / sqrt(reln), colnames(qcatch_raw))
-  } else {
+  } else {    
+    # Negative qcatch check
+    if (any(qcatch_log < 0)) {
+      stop(
+        length(qcatch_log[qcatch_log < 0]),
+        " negative quantum-catch value(s) returned following log-transformation, as required when noise = 'quantum',
+        so distances cannot be calculated. This typically results from very small raw quantum catches estimates (< 1).",
+        "Consider whether the illuminant is properly scaled, and/or the appropriate",
+        " form of noise is being calculated."
+      )
+    }
     ept1 <- setNames(v^2 / reln, colnames(qcatch_raw))
     ept2 <- 2 / t(apply(res, 1, function(x) qcatch_log[x[1], ] + qcatch_log[x[2], ]))
     e <- sqrt(sweep(ept2, 2, ept1, "+"))

@@ -31,6 +31,8 @@ test_that("Messages & warnings", {
 
   expect_warning(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_warning(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
+  
+  expect_error(coldist(vismodel(flowers, relative = FALSE), noise = 'quantum'), "negative quantum-catch")
 })
 
 test_that("Equivalent", {
