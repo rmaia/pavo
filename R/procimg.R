@@ -114,6 +114,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       image <- image_resize(image, size, "Quadratic")
     }
     image <- as.rimg(image, imgnames)
+    if (!inherits(image, "list")) {
+      image <- list(image)
+    }
   }
 
   ## Scale ##
