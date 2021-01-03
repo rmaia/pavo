@@ -37,12 +37,9 @@ acuityview <- function(image, obj_dist, obj_width, eye_res){
   from_srgb <- function(rgb_dat){
     ifelse(rgb_dat <= 0.04045, rgb_dat / 12.92, ((rgb_dat + 0.055) /(1 + 0.055))^2.4)
   }
-  linimg <- image
-  linimg[ , , 1] <- apply(linimg[ , , 1], c(1, 2), from_srgb)
-  linimg[ , , 2] <- apply(linimg[ , , 2], c(1, 2), from_srgb)
-  linimg[ , , 3] <- apply(linimg[ , , 3], c(1, 2), from_srgb)
-  # linimg_r <- linimg[,,1]
-  # linimg_r[] <- from_srgb(linred)
+  for(i in 1:3){
+    image[ , , i] <- apply(image[ , , i], c(1, 2), from_srgb)
+  }
   
   # 2D Fourier Transform -> blur matrix multiplication -> inverse fourier transform
   # Note: acuityview uses fftwtools::fftw2d(channel, inverse = 0) instead of fft().
@@ -54,33 +51,30 @@ acuityview <- function(image, obj_dist, obj_width, eye_res){
     ifft <- (1/width_pix) * fft(transform, inverse = TRUE)
     Mod(ifft)
   }
-  linimg[ , , 1] <- fft2d(linimg[ , , 1])
-  linimg[ , , 2] <- fft2d(linimg[ , , 2])
-  linimg[ , , 3] <- fft2d(linimg[ , , 3])
+  for(i in 1:3){
+    image[ , , i] <- fft2d(image[ , , i])
+  }
   
   # Transform back to sRGB
   to_srgb <- function(rgb_dat){
     ifelse(rgb_dat <= 0.0031308, rgb_dat * 12.92, (((1 + 0.055) * rgb_dat^(1 / 2.4)) - 0.055))
   }
-  # for(i in seq_along(linimg)){
-  #   linimg[ , , i] <- apply(linimg[ , , i], c(1, 2), to_srgb)
-  # }
-  linimg[ , , 1] <- apply(linimg[ , , 1], c(1, 2), to_srgb)
-  linimg[ , , 2] <- apply(linimg[ , , 2], c(1, 2), to_srgb)
-  linimg[ , , 3] <- apply(linimg[ , , 3], c(1, 2), to_srgb)
+  for(i in 1:3){
+    image[ , , i] <- apply(image[ , , i], c(1, 2), to_srgb)
+  }
   
   # Re-scale to a max of 1 if any values end up > 1
   rescale <- function(channel){
-    channel <- (channel - min(channel))/max(channel)
+    if(any(channel > 1)){
+      channel <- (channel - min(channel))/max(channel)
+    }
+    channel
   }
-  if(any(linimg[ , , 1] > 1))
-     linimg[ , , 1] <- rescale(linimg[ , , 1])
-  if(any(linimg[ , , 2] > 1))
-    linimg[ , , 2] <- rescale(linimg[ , , 2])
-  if(any(linimg[ , , 3] > 1))
-    linimg[ , , 3] <- rescale(linimg[ , , 3])
+  for(i in 1:3){
+    image[ , , i] <- rescale(image[ , , i])
+  }
   
-  linimg
+  image
 }
 
 # Rearrange the output of the FFT by moving 
