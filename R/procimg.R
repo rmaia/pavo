@@ -143,7 +143,6 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Model acuity
-  print(attr(image[[1]], "state"))
   if (attr(image[[1]], "state") == "colclass") {
     message("Acuity-modelling can only be run on non-colour-classified (raw) images")
     acuity <- c(NULL, NULL, NULL)
