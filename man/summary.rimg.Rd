@@ -28,7 +28,7 @@ Returns the attributes of, and optionally plots, an image.
 }
 \examples{
 \donttest{
-papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 summary(papilio_class)
 

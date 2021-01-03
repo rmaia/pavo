@@ -772,7 +772,7 @@ head(JND.fms)
 We first import our images with `getimg()`, which functions in a similar manner to `getspec()`. Since we are importing more than one image, we can simply point the function to the folder containing the images, and it will use parallel processing (where possible) to import any jpg, bmp, or png images in the folder. As with the raw spectra, these images are also available at the package repository [here][data-location], but are included in the package installation for convenience.
 
 ```{r}
-butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+butterflies <- getimg(system.file("testdata/images/butterflies/", package = 'pavo'))
 ```
 
 The segmentation of RGB images into discrete colour-classes is an useful step on the road to several analyses, and this is carried out in `pavo` via `classify()`. The function currently implements k-means clustering which, and offers some flexibility in the way in which it is carried out. In the simplest case, we can specify an image or image(s) as well as the number of discrete colours in each, and allow the k-means clustering algorithm to do its work. **Note that the specification of _k_, the number of discrete colours in an image, is a crucial step to be estimated _a priori_ beforehand**, typically through the use of visual modelling to estimate the number of discriminable colours in an 'objective' manner. There are a suite of possible ways in which this may be achieved, though, with one detailed below as part of example 2.
@@ -824,7 +824,7 @@ We'll begin with a simple example using mounted butterflies, by first loading an
 ```{r}
 
 # Load up our images
-butterflies <- getimg(system.file("testdata/images/", package = 'pavo'))
+butterflies <- getimg(system.file("testdata/images/butterflies/", package = 'pavo'))
 
 # Automatically classify discrete colour patches (as confirmed by spectral modelling)
 # using k-means clustering, with values of 'k' that have been validated a priori.

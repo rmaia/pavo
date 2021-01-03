@@ -73,21 +73,20 @@ Specify scales, resize, and/or define focal objects within images.
 }
 \examples{
 if (interactive()) {
-# Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
-papilio <- procimg(papilio, scaledist = 10)
+  # Single image
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
+  papilio <- procimg(papilio, scaledist = 10)
 
-# Assign individual scales to each image, after slightly reducing their size.
-snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
+  # Assign individual scales to each image, after slightly reducing their size.
+  snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+  snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 
-Model the appearance of a butterfly given the reduced visual acuity of another
-animal viewer. Here our butterfly is 60 cm away, the image width is 10 cm,
-and the spatial resolution of the viewer is 0.2-degrees.
-tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
-tiger_acuity <- procimg(tiger, acuity = c(60, 10, 0.2))
+  # Model the appearance of a butterfly given the reduced visual acuity of another
+  # animal viewer. Here our butterfly is 60 cm away, the image width is 10 cm,
+  # and the spatial resolution of the viewer is 0.2-degrees.
+  tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
+  tiger_acuity <- procimg(tiger, acuity = c(60, 10, 0.2))
 }
-
 }
 \references{
 Chaikin, G. 1974. An algorithm for high speed curve generation.

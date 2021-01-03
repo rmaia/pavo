@@ -29,7 +29,7 @@ test_that("as.rimg", {
   # Warnings/messages
   expect_message(as.rimg(imgfake), "[0,1]")
   expect_message(as.rimg(imgfake2), "[0,1]")
-  expect_warning(getimg(system.file("testdata/images/papilio.png", package = "pavo"), cores = 2), "deprecated")
+  expect_warning(getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"), cores = 2), "deprecated")
 
   # Classes/attributes/structure
   expect_equal(dim(rimgfake), c(10, 10, 3))
@@ -46,7 +46,7 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimggrey))
 
   # as.rimg can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
@@ -61,7 +61,7 @@ test_that("as.rimg", {
 })
 
 test_that("procimg", {
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 
   # Resize
   expect_equal(dim(procimg(papilio, resize = 50))[1:2], dim(papilio)[1:2] / 2)
@@ -268,7 +268,7 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_lum, 5.68)
 
   # Can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   papilio_adj <- adjacent(papilio_class, xscale = 100)
 
@@ -282,7 +282,7 @@ test_that("adjacency", {
 #   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
 #   set.seed(2231)
 # 
-#   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #   papilio_class <- classify(papilio, kcols = 4)
 #   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #   snakes_class <- classify(snakes, kcols = 3)

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+<meta charset="utf-8" />
+<meta name="generator" content="pandoc" />
+<meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
+
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+<meta name="author" content="Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason" />
+
+<meta name="date" content="2021-01-03" />
+
+<title>Spectral Shape Descriptors</title>
+
+<script src="data:application/javascript;base64,Ly8gUGFuZG9jIDIuOSBhZGRzIGF0dHJpYnV0ZXMgb24gYm90aCBoZWFkZXIgYW5kIGRpdi4gV2UgcmVtb3ZlIHRoZSBmb3JtZXIgKHRvCi8vIGJlIGNvbXBhdGlibGUgd2l0aCB0aGUgYmVoYXZpb3Igb2YgUGFuZG9jIDwgMi44KS4KZG9jdW1lbnQuYWRkRXZlbnRMaXN0ZW5lcignRE9NQ29udGVudExvYWRlZCcsIGZ1bmN0aW9uKGUpIHsKICB2YXIgaHMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yQWxsKCJkaXYuc2VjdGlvbltjbGFzcyo9J2xldmVsJ10gPiA6Zmlyc3QtY2hpbGQiKTsKICB2YXIgaSwgaCwgYTsKICBmb3IgKGkgPSAwOyBpIDwgaHMubGVuZ3RoOyBpKyspIHsKICAgIGggPSBoc1tpXTsKICAgIGlmICghL15oWzEtNl0kL2kudGVzdChoLnRhZ05hbWUpKSBjb250aW51ZTsgIC8vIGl0IHNob3VsZCBiZSBhIGhlYWRlciBoMS1oNgogICAgYSA9IGguYXR0cmlidXRlczsKICAgIHdoaWxlIChhLmxlbmd0aCA+IDApIGgucmVtb3ZlQXR0cmlidXRlKGFbMF0ubmFtZSk7CiAgfQp9KTsK"></script>
+
+<style type="text/css">
+  code{white-space: pre-wrap;}
+  span.smallcaps{font-variant: small-caps;}
+  span.underline{text-decoration: underline;}
+  div.column{display: inline-block; vertical-align: top; width: 50%;}
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+  ul.task-list{list-style: none;}
+    </style>
+
+
+
+
+
+<style type="text/css">
+/* for pandoc --citeproc since 2.11 */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
+</style>
+
+<link rel="stylesheet" href="data:text/css,body%20%7B%0Abackground%2Dcolor%3A%20%23fff%3B%0Amargin%3A%201em%20auto%3B%0Amax%2Dwidth%3A%20700px%3B%0Aoverflow%3A%20visible%3B%0Apadding%2Dleft%3A%202em%3B%0Apadding%2Dright%3A%202em%3B%0Afont%2Dfamily%3A%20%22Open%20Sans%22%2C%20%22Helvetica%20Neue%22%2C%20Helvetica%2C%20Arial%2C%20sans%2Dserif%3B%0Afont%2Dsize%3A%2014px%3B%0Aline%2Dheight%3A%201%2E35%3B%0A%7D%0A%23TOC%20%7B%0Aclear%3A%20both%3B%0Amargin%3A%200%200%2010px%2010px%3B%0Apadding%3A%204px%3B%0Awidth%3A%20400px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Aborder%2Dradius%3A%205px%3B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Afont%2Dsize%3A%2013px%3B%0Aline%2Dheight%3A%201%2E3%3B%0A%7D%0A%23TOC%20%2Etoctitle%20%7B%0Afont%2Dweight%3A%20bold%3B%0Afont%2Dsize%3A%2015px%3B%0Amargin%2Dleft%3A%205px%3B%0A%7D%0A%23TOC%20ul%20%7B%0Apadding%2Dleft%3A%2040px%3B%0Amargin%2Dleft%3A%20%2D1%2E5em%3B%0Amargin%2Dtop%3A%205px%3B%0Amargin%2Dbottom%3A%205px%3B%0A%7D%0A%23TOC%20ul%20ul%20%7B%0Amargin%2Dleft%3A%20%2D2em%3B%0A%7D%0A%23TOC%20li%20%7B%0Aline%2Dheight%3A%2016px%3B%0A%7D%0Atable%20%7B%0Amargin%3A%201em%20auto%3B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dcolor%3A%20%23DDDDDD%3B%0Aborder%2Dstyle%3A%20outset%3B%0Aborder%2Dcollapse%3A%20collapse%3B%0A%7D%0Atable%20th%20%7B%0Aborder%2Dwidth%3A%202px%3B%0Apadding%3A%205px%3B%0Aborder%2Dstyle%3A%20inset%3B%0A%7D%0Atable%20td%20%7B%0Aborder%2Dwidth%3A%201px%3B%0Aborder%2Dstyle%3A%20inset%3B%0Aline%2Dheight%3A%2018px%3B%0Apadding%3A%205px%205px%3B%0A%7D%0Atable%2C%20table%20th%2C%20table%20td%20%7B%0Aborder%2Dleft%2Dstyle%3A%20none%3B%0Aborder%2Dright%2Dstyle%3A%20none%3B%0A%7D%0Atable%20thead%2C%20table%20tr%2Eeven%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Ap%20%7B%0Amargin%3A%200%2E5em%200%3B%0A%7D%0Ablockquote%20%7B%0Abackground%2Dcolor%3A%20%23f6f6f6%3B%0Apadding%3A%200%2E25em%200%2E75em%3B%0A%7D%0Ahr%20%7B%0Aborder%2Dstyle%3A%20solid%3B%0Aborder%3A%20none%3B%0Aborder%2Dtop%3A%201px%20solid%20%23777%3B%0Amargin%3A%2028px%200%3B%0A%7D%0Adl%20%7B%0Amargin%2Dleft%3A%200%3B%0A%7D%0Adl%20dd%20%7B%0Amargin%2Dbottom%3A%2013px%3B%0Amargin%2Dleft%3A%2013px%3B%0A%7D%0Adl%20dt%20%7B%0Afont%2Dweight%3A%20bold%3B%0A%7D%0Aul%20%7B%0Amargin%2Dtop%3A%200%3B%0A%7D%0Aul%20li%20%7B%0Alist%2Dstyle%3A%20circle%20outside%3B%0A%7D%0Aul%20ul%20%7B%0Amargin%2Dbottom%3A%200%3B%0A%7D%0Apre%2C%20code%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0Aborder%2Dradius%3A%203px%3B%0Acolor%3A%20%23333%3B%0Awhite%2Dspace%3A%20pre%2Dwrap%3B%20%0A%7D%0Apre%20%7B%0Aborder%2Dradius%3A%203px%3B%0Amargin%3A%205px%200px%2010px%200px%3B%0Apadding%3A%2010px%3B%0A%7D%0Apre%3Anot%28%5Bclass%5D%29%20%7B%0Abackground%2Dcolor%3A%20%23f7f7f7%3B%0A%7D%0Acode%20%7B%0Afont%2Dfamily%3A%20Consolas%2C%20Monaco%2C%20%27Courier%20New%27%2C%20monospace%3B%0Afont%2Dsize%3A%2085%25%3B%0A%7D%0Ap%20%3E%20code%2C%20li%20%3E%20code%20%7B%0Apadding%3A%202px%200px%3B%0A%7D%0Adiv%2Efigure%20%7B%0Atext%2Dalign%3A%20center%3B%0A%7D%0Aimg%20%7B%0Abackground%2Dcolor%3A%20%23FFFFFF%3B%0Apadding%3A%202px%3B%0Aborder%3A%201px%20solid%20%23DDDDDD%3B%0Aborder%2Dradius%3A%203px%3B%0Aborder%3A%201px%20solid%20%23CCCCCC%3B%0Amargin%3A%200%205px%3B%0A%7D%0Ah1%20%7B%0Amargin%2Dtop%3A%200%3B%0Afont%2Dsize%3A%2035px%3B%0Aline%2Dheight%3A%2040px%3B%0A%7D%0Ah2%20%7B%0Aborder%2Dbottom%3A%204px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Apadding%2Dbottom%3A%202px%3B%0Afont%2Dsize%3A%20145%25%3B%0A%7D%0Ah3%20%7B%0Aborder%2Dbottom%3A%202px%20solid%20%23f7f7f7%3B%0Apadding%2Dtop%3A%2010px%3B%0Afont%2Dsize%3A%20120%25%3B%0A%7D%0Ah4%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23f7f7f7%3B%0Amargin%2Dleft%3A%208px%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Ah5%2C%20h6%20%7B%0Aborder%2Dbottom%3A%201px%20solid%20%23ccc%3B%0Afont%2Dsize%3A%20105%25%3B%0A%7D%0Aa%20%7B%0Acolor%3A%20%230033dd%3B%0Atext%2Ddecoration%3A%20none%3B%0A%7D%0Aa%3Ahover%20%7B%0Acolor%3A%20%236666ff%3B%20%7D%0Aa%3Avisited%20%7B%0Acolor%3A%20%23800080%3B%20%7D%0Aa%3Avisited%3Ahover%20%7B%0Acolor%3A%20%23BB00BB%3B%20%7D%0Aa%5Bhref%5E%3D%22http%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0Aa%5Bhref%5E%3D%22https%3A%22%5D%20%7B%0Atext%2Ddecoration%3A%20underline%3B%20%7D%0A%0Acode%20%3E%20span%2Ekw%20%7B%20color%3A%20%23555%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Edt%20%7B%20color%3A%20%23902000%3B%20%7D%20%0Acode%20%3E%20span%2Edv%20%7B%20color%3A%20%2340a070%3B%20%7D%20%0Acode%20%3E%20span%2Ebn%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Efl%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Ech%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Est%20%7B%20color%3A%20%23d14%3B%20%7D%20%0Acode%20%3E%20span%2Eco%20%7B%20color%3A%20%23888888%3B%20font%2Dstyle%3A%20italic%3B%20%7D%20%0Acode%20%3E%20span%2Eot%20%7B%20color%3A%20%23007020%3B%20%7D%20%0Acode%20%3E%20span%2Eal%20%7B%20color%3A%20%23ff0000%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Efu%20%7B%20color%3A%20%23900%3B%20font%2Dweight%3A%20bold%3B%20%7D%20%0Acode%20%3E%20span%2Eer%20%7B%20color%3A%20%23a61717%3B%20background%2Dcolor%3A%20%23e3d2d2%3B%20%7D%20%0A" type="text/css" />
+
+
+
+
+</head>
+
+<body>
+
+
+
+
+<h1 class="title toc-ignore">Spectral Shape Descriptors</h1>
+<h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason</h4>
+<h4 class="date">2021-01-03</h4>
+
+
+
+<style>
+tr:hover {
+  background-color: #eee;
+}
+</style>
+<p>This table is adapted from <span class="citation"><a href="#ref-Montgomerie2006" role="doc-biblioref">Montgomerie</a> (<a href="#ref-Montgomerie2006" role="doc-biblioref">2006</a>)</span> and lists all spectral descriptors that are computed by the <code>summary</code> function in <code>pavo</code>.</p>
+<table style="width:100%;">
+<colgroup>
+<col width="33%" />
+<col width="25%" />
+<col width="18%" />
+<col width="22%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left">Color variable</th>
+<th align="left">Names used</th>
+<th align="center">Formula</th>
+<th align="center">Reference</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Brightness</td>
+<td align="left">Total brightness, total reflectance, spectral intensity</td>
+<td align="center"><span class="math display">\[B_1=B_T=\int_{\lambda_{min}}^{\lambda_{max}} R_i = \sum_{\lambda_{min}}^{\lambda_{max}} R_i\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1999" role="doc-biblioref">Andersson</a> (<a href="#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation"><a href="#ref-Andersson2002" role="doc-biblioref">Andersson et al.</a> (<a href="#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Ornborg2002" role="doc-biblioref">Örnborg et al.</a> (<a href="#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Andersson1998" role="doc-biblioref">Andersson, Örnborg, and Andersson</a> (<a href="#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation"><a href="#ref-Saks2003" role="doc-biblioref">Saks, McGraw, and Horak</a> (<a href="#ref-Saks2003" role="doc-biblioref">2003</a>)</span>,<span class="citation"><a href="#ref-Pryke2001" role="doc-biblioref">Pryke, Lawes, and Andersson</a> (<a href="#ref-Pryke2001" role="doc-biblioref">2001</a>)</span>,<span class="citation"><a href="#ref-Shawkey2003" role="doc-biblioref">Shawkey et al.</a> (<a href="#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Mean brightness</td>
+<td align="center"><span class="math display">\[B_2=\frac{\sum_{\lambda_{min}}^{\lambda_{max}} R_i}{n_w}=\frac{B_1}{n_w}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Delhey2003" role="doc-biblioref">Delhey et al.</a> (<a href="#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation"><a href="#ref-Siefferman2005" role="doc-biblioref">Siefferman and Hill</a> (<a href="#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Intensity</td>
+<td align="center"><span class="math display">\[B_3=R_{max}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1999" role="doc-biblioref">Andersson</a> (<a href="#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation"><a href="#ref-Keyser2000" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation"><a href="#ref-Keyser1999" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Saturation</td>
+<td align="left">Chroma, reflectance ratio, spectral purity</td>
+<td align="center"><span class="math display">\[S_1= \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{\sum_{\lambda_{min}}^{\lambda_{max}} R_i} = \frac{\sum_{\lambda_a}^{\lambda_b} R_i}{B_1}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Ornborg2002" role="doc-biblioref">Örnborg et al.</a> (<a href="#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Andersson1998" role="doc-biblioref">Andersson, Örnborg, and Andersson</a> (<a href="#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation"><a href="#ref-Siefferman2005" role="doc-biblioref">Siefferman and Hill</a> (<a href="#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation"><a href="#ref-Peters2004" role="doc-biblioref">Peters et al.</a> (<a href="#ref-Peters2004" role="doc-biblioref">2004</a>)</span>,<span class="citation"><a href="#ref-Shawkey2003" role="doc-biblioref">Shawkey et al.</a> (<a href="#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Spectral saturation</td>
+<td align="center"><span class="math display">\[S_2 = \frac{R_{max}}{R_{min}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1999" role="doc-biblioref">Andersson</a> (<a href="#ref-Andersson1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_3 = \frac{\sum_{\lambda_{R_{max}}-50}^{\lambda_{R_{max}}+50} R_i}{B_1}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Shawkey2003" role="doc-biblioref">Shawkey et al.</a> (<a href="#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Spectral purity</td>
+<td align="center"><span class="math display">\[S_4 = \lvert b\text{max}_{neg}\lvert\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1999" role="doc-biblioref">Andersson</a> (<a href="#ref-Andersson1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_5=\sqrt{(B_r-B_g)^2+(B_y-B_b)^2}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Saks2003" role="doc-biblioref">Saks, McGraw, and Horak</a> (<a href="#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Constrast, amplitude</td>
+<td align="center"><span class="math display">\[S_6 = R_{max} - R_{min}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Keyser2000" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation"><a href="#ref-Keyser1999" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Spectral saturation</td>
+<td align="center"><span class="math display">\[S_7 = \frac{\left(\sum_{\lambda_{320}}^{\lambda_{R_{mid}}} R_i - \sum_{\lambda_{R_{mid}}}^{\lambda_{700}} R_i\right)}{B_1}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson2002" role="doc-biblioref">Andersson et al.</a> (<a href="#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Pryke2001" role="doc-biblioref">Pryke, Lawes, and Andersson</a> (<a href="#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Chroma</td>
+<td align="center"><span class="math display">\[S_8=\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson2002" role="doc-biblioref">Andersson et al.</a> (<a href="#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Carotenoid chroma</td>
+<td align="center"><span class="math display">\[S_9=\frac{R_{\lambda_{700}}-R_{\lambda_{450}}}{R_{\lambda_{700}}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Peters2004" role="doc-biblioref">Peters et al.</a> (<a href="#ref-Peters2004" role="doc-biblioref">2004</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Peaky chroma</td>
+<td align="center"><span class="math display">\[S_{10}=\lvert b\text{max}_{neg} \lvert\frac{R_{max}-R_{min}}{B_2}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Ornborg2002" role="doc-biblioref">Örnborg et al.</a> (<a href="#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left">Hue</td>
+<td align="left">Hue, peak wavelength, spectral location</td>
+<td align="center"><span class="math display">\[H_1=\lambda_{R_{max}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1999" role="doc-biblioref">Andersson</a> (<a href="#ref-Andersson1999" role="doc-biblioref">1999</a>)</span>,<span class="citation"><a href="#ref-Ornborg2002" role="doc-biblioref">Örnborg et al.</a> (<a href="#ref-Ornborg2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Andersson1998" role="doc-biblioref">Andersson, Örnborg, and Andersson</a> (<a href="#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation"><a href="#ref-Delhey2003" role="doc-biblioref">Delhey et al.</a> (<a href="#ref-Delhey2003" role="doc-biblioref">2003</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation"><a href="#ref-Keyser2000" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser2000" role="doc-biblioref">2000</a>)</span>,<span class="citation"><a href="#ref-Siefferman2005" role="doc-biblioref">Siefferman and Hill</a> (<a href="#ref-Siefferman2005" role="doc-biblioref">2005</a>)</span>,<span class="citation"><a href="#ref-Shawkey2003" role="doc-biblioref">Shawkey et al.</a> (<a href="#ref-Shawkey2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_2 = \lambda_{b\text{max}_{neg}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson1998" role="doc-biblioref">Andersson, Örnborg, and Andersson</a> (<a href="#ref-Andersson1998" role="doc-biblioref">1998</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_3 = \lambda_{R_{mid}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Andersson2002" role="doc-biblioref">Andersson et al.</a> (<a href="#ref-Andersson2002" role="doc-biblioref">2002</a>)</span>,<span class="citation"><a href="#ref-Smiseth2001" role="doc-biblioref">Smiseth et al.</a> (<a href="#ref-Smiseth2001" role="doc-biblioref">2001</a>)</span>,<span class="citation"><a href="#ref-Pryke2001" role="doc-biblioref">Pryke, Lawes, and Andersson</a> (<a href="#ref-Pryke2001" role="doc-biblioref">2001</a>)</span></td>
+</tr>
+<tr class="odd">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_4 = \arctan\left(\frac{B_y-B_b}{B_r-B_g}\right)\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Saks2003" role="doc-biblioref">Saks, McGraw, and Horak</a> (<a href="#ref-Saks2003" role="doc-biblioref">2003</a>)</span></td>
+</tr>
+<tr class="even">
+<td align="left"></td>
+<td align="left">Hue</td>
+<td align="center"><span class="math display">\[H_5 = \lambda_{b\text{max}_{pos}}\]</span></td>
+<td align="center"><span class="citation"><a href="#ref-Keyser1999" role="doc-biblioref">Keyser and Hill</a> (<a href="#ref-Keyser1999" role="doc-biblioref">1999</a>)</span></td>
+</tr>
+</tbody>
+</table>
+<ul>
+<li><span class="math inline">\(R_i\)</span>: percentage (or proportional) reflectance at the <span class="math inline">\(i\)</span>th wavelength</li>
+<li><span class="math inline">\(\lambda_{max}\)</span>, <span class="math inline">\(\lambda_{min}\)</span>: upper and lower (respectively) limits of wavelengths</li>
+<li><span class="math inline">\(n_w\)</span>: number of wavelength intervals used to calculate <span class="math inline">\(B_T\)</span></li>
+<li><span class="math inline">\(R_{max}\)</span>, <span class="math inline">\(R_{min}\)</span>: maximum and minimum percent reflectances, respectively</li>
+<li><span class="math inline">\(\lambda_{R_{max}}\)</span>: wavelength at maximum reflectance</li>
+<li><span class="math inline">\(b\text{max}_{neg}\)</span>, <span class="math inline">\(b\text{max}_{pos}\)</span>: maximum negative and positive slopes of reflectance curve in a region of interest</li>
+<li><span class="math inline">\(B_r\)</span>, <span class="math inline">\(B_y\)</span>, <span class="math inline">\(B_g\)</span>, <span class="math inline">\(B_b\)</span>: total brightness in red (<span class="math inline">\(r=625-700\,nm\)</span>), yellow (<span class="math inline">\(y=550-625\,nm\)</span>), green (<span class="math inline">\(g=475-550\,nm\)</span>) and blue (<span class="math inline">\(b=400-475\,nm\)</span>) segments of the spectrum</li>
+<li><span class="math inline">\(\lambda_{R_{mid}}\)</span>: wavelength at the reflectance midpoint between <span class="math inline">\(R_{max}\)</span> and <span class="math inline">\(R_{min}\)</span> (i.e., <span class="math inline">\(\frac{R_{max}+R_{min}}{2}\)</span>)</li>
+</ul>
+<div id="references" class="section level1 unnumbered">
+<h1 class="unnumbered">References</h1>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-Andersson1999" class="csl-entry">
+Andersson, Staffan. 1999. <span>“Morphology of <span>UV</span> Reflectance in a Whistling-Thrush: Implications for the Study of Structural Colour Signalling in Birds.”</span> <em>Journal of Avian Biology</em> 30 (2): 193–204.
+</div>
+<div id="ref-Andersson1998" class="csl-entry">
+Andersson, Staffan, Jonas Örnborg, and Malte Andersson. 1998. <span>“Ultraviolet Sexual Dimorphism and Assortative Mating in Blue Tits.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 265 (1395): 445–50. <a href="https://doi.org/10.1098/rspb.1998.0315">https://doi.org/10.1098/rspb.1998.0315</a>.
+</div>
+<div id="ref-Andersson2002" class="csl-entry">
+Andersson, Staffan, Sarah R. Pryke, Jonas Örnborg, Michael J. Lawes, and Malte Andersson. 2002. <span>“Multiple Receivers, Multiple Ornaments, and a Trade‐off Between Agonistic and Epigamic Signaling in a Widowbird.”</span> <em>The American Naturalist</em> 160 (5): 683–91. <a href="https://doi.org/10.1086/342817">https://doi.org/10.1086/342817</a>.
+</div>
+<div id="ref-Delhey2003" class="csl-entry">
+Delhey, Kaspar, Arild Johnsen, Anne Peters, Staffan Andersson, and Bart Kempenaers. 2003. <span>“Paternity Analysis Reveals Opposing Selection Pressures on Crown Coloration in the Blue Tit (<span>Parus</span> Caeruleus).”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 270 (1528): 2057–63. <a href="https://doi.org/10.1098/rspb.2003.2460">https://doi.org/10.1098/rspb.2003.2460</a>.
+</div>
+<div id="ref-Keyser1999" class="csl-entry">
+Keyser, Amber J., and Geoffrey E. Hill. 1999. <span>“Condition–Dependent Variation in the Blue–Ultraviolet Coloration of a Structurally Based Plumage Ornament.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 266 (1421): 771–77. <a href="https://doi.org/10.1098/rspb.1999.0704">https://doi.org/10.1098/rspb.1999.0704</a>.
+</div>
+<div id="ref-Keyser2000" class="csl-entry">
+———. 2000. <span>“Structurally Based Plumage Coloration Is an Honest Signal of Quality in Male Blue Grosbeaks.”</span> <em>Behavioral Ecology</em> 11 (2): 202–9. <a href="https://doi.org/10.1093/beheco/11.2.202">https://doi.org/10.1093/beheco/11.2.202</a>.
+</div>
+<div id="ref-Montgomerie2006" class="csl-entry">
+Montgomerie, Robert. 2006. <span>“Analyzing <span>Colors</span>.”</span> In <em>Bird <span>Coloration</span>, <span>Volume</span> 1: <span>Mechanisms</span> and <span>Measurements</span></em>, edited by Geoffrey E. Hill and Kevin J. McGraw, 1:640. Bird Coloration. Harvard University Press.
+</div>
+<div id="ref-Ornborg2002" class="csl-entry">
+Örnborg, Jonas, Staffan Andersson, Simon C. Griffith, and Ben C. Sheldon. 2002. <span>“Seasonal Changes in a Ultraviolet Structural Colour Signal in Blue Tits, <span>Parus</span> Caeruleus.”</span> <em>Biological Journal of the Linnean Society</em> 76 (2): 237–45. <a href="https://doi.org/10.1111/j.1095-8312.2002.tb02085.x">https://doi.org/10.1111/j.1095-8312.2002.tb02085.x</a>.
+</div>
+<div id="ref-Peters2004" class="csl-entry">
+Peters, A., A. G. Denk, K. Delhey, and B. Kempenaers. 2004. <span>“Carotenoid-Based Bill Colour as an Indicator of Immunocompetence and Sperm Performance in Male Mallards.”</span> <em>Journal of Evolutionary Biology</em> 17 (5): 1111–20. <a href="https://doi.org/10.1111/j.1420-9101.2004.00743.x">https://doi.org/10.1111/j.1420-9101.2004.00743.x</a>.
+</div>
+<div id="ref-Pryke2001" class="csl-entry">
+Pryke, Sarah R., Michael J. Lawes, and Staffan Andersson. 2001. <span>“Agonistic Carotenoid Signalling in Male Red-Collared Widowbirds: Aggression Related to the Colour Signal of Both the Territory Owner and Model Intruder.”</span> <em>Animal Behaviour</em> 62 (4): 695–704. <a href="https://doi.org/10.1006/anbe.2001.1804">https://doi.org/10.1006/anbe.2001.1804</a>.
+</div>
+<div id="ref-Saks2003" class="csl-entry">
+Saks, Lauri, Kevin McGraw, and Peeter Horak. 2003. <span>“How Feather Colour Reflects Its Carotenoid Content.”</span> <em>Functional Ecology</em> 17 (4): 555–61. <a href="https://doi.org/10.1046/j.1365-2435.2003.00765.x">https://doi.org/10.1046/j.1365-2435.2003.00765.x</a>.
+</div>
+<div id="ref-Shawkey2003" class="csl-entry">
+Shawkey, Matthew D., Anne M. Estes, Lynn M. Siefferman, and Geoffrey E. Hill. 2003. <span>“Nanostructure Predicts Intraspecific Variation in Ultraviolet–Blue Plumage Colour.”</span> <em>Proceedings of the Royal Society of London B: Biological Sciences</em> 270 (1523): 1455–60. <a href="https://doi.org/10.1098/rspb.2003.2390">https://doi.org/10.1098/rspb.2003.2390</a>.
+</div>
+<div id="ref-Siefferman2005" class="csl-entry">
+Siefferman, Lynn, and Geoffrey E. Hill. 2005. <span>“<span>UV</span>-Blue Structural Coloration and Competition for Nestboxes in Male Eastern Bluebirds.”</span> <em>Animal Behaviour</em> 69 (1): 67–72. <a href="https://doi.org/10.1016/j.anbehav.2003.12.026">https://doi.org/10.1016/j.anbehav.2003.12.026</a>.
+</div>
+<div id="ref-Smiseth2001" class="csl-entry">
+Smiseth, Per T., Jonas Örnborg, Staffan Andersson, and Trond Amundsen. 2001. <span>“Is Male Plumage Reflectance Correlated with Paternal Care in Bluethroats?”</span> <em>Behavioral Ecology</em> 12 (2): 164–70. <a href="https://doi.org/10.1093/beheco/12.2.164">https://doi.org/10.1093/beheco/12.2.164</a>.
+</div>
+</div>
+</div>
+
+
+
+<!-- code folding -->
+
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src  = "https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML";
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+
+</body>
+</html>
