@@ -30,8 +30,7 @@ acuityview <- function(image, obj_dist, obj_width, eye_res){
   }
   
   # Force the center pixel to value 1
-  blur[center, center] = 1
-  blur <<- blur
+  blur[center, center] <-  1
   
   # Linearise sRGB values
   from_srgb <- function(rgb_dat){
@@ -46,10 +45,9 @@ acuityview <- function(image, obj_dist, obj_width, eye_res){
   # Need to double-check check base fft() is fair replacement for fftw2d(). The values
   # do differ, but end-result is (visually) very similar.
   fft2d <- function(channel){
-    fft <- (1/width_pix) * fft_shift(fft(channel, inverse = FALSE))
-    transform <- fft * blur
-    ifft <- (1/width_pix) * fft(transform, inverse = TRUE)
-    Mod(ifft)
+    forward <- ((1/width_pix) * fft_shift(fft(channel, inverse = FALSE))) * blur
+    back <- (1/width_pix) * fft(forward, inverse = TRUE)
+    Mod(back)
   }
   for(i in 1:3){
     image[ , , i] <- fft2d(image[ , , i])
@@ -66,7 +64,10 @@ acuityview <- function(image, obj_dist, obj_width, eye_res){
   # Re-scale to a max of 1 if any values end up > 1
   rescale <- function(channel){
     if(any(channel > 1)){
-      channel <- (channel - min(channel))/max(channel)
+      chan_range <- range(channel)
+      mult <- (1 - chan_range[1])/(chan_range[2] - chan_range[1])
+      chan_range[1] + (channel - chan_range[1]) * mult
+      #channel <- (channel - min(channel))/max(channel)
     }
     channel
   }
