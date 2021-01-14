@@ -1,3 +1,4 @@
+#' @importFrom stats fft
 acuityview <- function(image, obj_dist, obj_width, eye_res){
   
   # Images must currently be square, with dimensions a power of 2
