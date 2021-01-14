@@ -34,13 +34,12 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
   on.exit(par(oldpar))
   par(mar = margins)
 
-  if (square) {
-    par(pty = "s")
-  }
-
   arg <- list(...)
 
   # Set defaults
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }

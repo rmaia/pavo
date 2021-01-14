@@ -44,13 +44,11 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   
   sectors <- match.arg(sectors)
 
-  if (square) {
-    par(pty = "s")
-  }
-
   # Set defaults
   arg <- list(...)
-
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }

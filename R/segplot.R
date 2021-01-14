@@ -45,11 +45,10 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
 
   arg <- list(...)
 
-  if (square) {
-    par(pty = "s")
-  }
-
   # Set defaults
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }
