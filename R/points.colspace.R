@@ -23,33 +23,16 @@ points.colspace <- function(x, ...) {
 
   # Defaults in line with those in the plots
   arg <- list(...)
-
-  # if(is.null(arg$col))
-  #  arg$col <- 'forestgreen'
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }
 
   if (attr(x, "clrsp") == "tcs") {
     last_tetraplot <- get("last_plot.tetra", envir = .PlotTetraEnv)
-
-    # arg$x <- x[ ,'x']
-    # arg$y <- x[ ,'y']
-    # arg$z <- x[ ,'z']
-
-    # do.call(last_tetraplot$points3d, arg)
-
     xy <- trans3d(x[, "x"], x[, "y"], x[, "z"], last_tetraplot)
     do.call(points, c(xy, arg))
   } else if (attr(x, "clrsp") == "CIELAB") {
     last_labplot <- get("last_plot.cielab", envir = .PlotCielabEnv)
-
-    # arg$x <- x[ ,'a']
-    # arg$y <- x[ ,'b']
-    # arg$z <- x[ ,'L']
-
-    # do.call(last_labplot$points3d, arg)
-
     xy <- trans3d(x[, "a"], x[, "b"], x[, "L"], last_labplot)
     do.call(points, c(xy, arg))
   } else {

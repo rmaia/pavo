@@ -14,12 +14,12 @@
 #' @param achrocol color of the point at the origin `achro = TRUE` (defaults to
 #'   `'grey'`).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the plot outline.
-#' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
 #'   (defaults to `TRUE`).
 #' @param gamut logical. Should the polygon showing the possible colours given
 #'   visual system and illuminant used in the analysis (defaults to `FALSE`).
 #'   This option currently only works when `qcatch = Qi`.
+#' @param margins Deprecated. Please use the standard par() method for custom margins. 
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -40,12 +40,11 @@
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
-                    margins = c(1, 1, 2, 2), square = TRUE, gamut = FALSE, ...) {
+                    square = TRUE, gamut = FALSE, margins = NULL, ...) {
 
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-
-  par(mar = margins)
+  if (!missing("margins"))
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
+            setting margins in the standard manner.")
 
   if (square) {
     par(pty = "s")

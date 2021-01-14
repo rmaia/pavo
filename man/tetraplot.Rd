@@ -23,10 +23,10 @@ tetraplot(
   vert.range = c(1, 2),
   out.lwd = 1,
   out.lcol = "darkgrey",
-  margin = c(0, 0, 0, 0),
   type = "p",
   labels = FALSE,
   gamut = FALSE,
+  margin = NULL,
   ...
 )
 }
@@ -68,9 +68,6 @@ coordinates.}
 
 \item{out.lwd, out.lcol}{graphical parameters for the tetrahedral outline.}
 
-\item{margin}{vector of four numbers specifying drawing margins (defaults to
-c(0, 0, 0, 0)).}
-
 \item{type}{accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
 for lines from the point to the base of the tetrahedron.}
 
@@ -80,6 +77,8 @@ corresponding vertex?}
 \item{gamut}{logical. Should the polygon showing the possible colours given
 visual system and illuminant used in the analysis (defaults to \code{FALSE}).
 This option currently only works when \code{qcatch = Qi}.}
+
+\item{margin}{Deprecated. Please use the standard par() method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
