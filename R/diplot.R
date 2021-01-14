@@ -24,12 +24,12 @@
 
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
                    achrosize = 0.8, labels.cex = 1, out.lwd = 1, out.lcol = "black",
-                   out.lty = 1, margins = c(1, 1, 2, 2), square = TRUE, ...) {
+                   out.lty = 1, square = TRUE, margins = NULL, ...) {
 
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-  par(mar = margins)
-
+  if (!missing("margins"))
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
+            setting margins in the standard manner.")
+  
   if (square) {
     par(pty = "s")
   }
