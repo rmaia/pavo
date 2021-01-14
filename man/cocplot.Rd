@@ -12,8 +12,8 @@ cocplot(
   achro = FALSE,
   achrosize = 0.8,
   achrocol = "grey",
-  margins = c(1, 1, 2, 2),
   square = TRUE,
+  margins = NULL,
   ...
 )
 }
@@ -38,10 +38,10 @@ y axes.}
 \item{achrocol}{color of the point at the origin \code{achro = TRUE} (defaults to
 \code{'grey'}).}
 
-\item{margins}{Deprecated. Please use the standard par() method for custom margins.}
-
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
+
+\item{margins}{Deprecated. Please use the standard par() method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
