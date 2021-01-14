@@ -29,14 +29,13 @@ diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
   if (!missing("margins"))
     message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
             setting margins in the standard manner.")
-  
-  if (square) {
-    par(pty = "s")
-  }
 
   arg <- list(...)
 
   # Set defaults
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- "|"
   }
