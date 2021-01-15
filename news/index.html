@@ -162,6 +162,7 @@
 <ul>
 <li>Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2).</li>
 <li>Added an informative error message when raw quantum catch estimates are &lt; 1, and an attempt is made to calculate colour distances in the receptor-noise model using noise = ‘quantum’. Taking the root of negative values following log-transformation, as required when noise = ‘quantum’, would previously produce an uninformative error, which has been rectified.</li>
+<li>The <code>margins</code> argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard <code><a href="https://rdrr.io/r/graphics/par.html">par(mar = c())</a></code> pathway.</li>
 </ul>
 </div>
 </div>

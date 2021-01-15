@@ -169,8 +169,8 @@
   r <span class='op'>=</span> <span class='fl'>1e+06</span>,
   zoom <span class='op'>=</span> <span class='fl'>1</span>,
   box <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
   ciebg <span class='op'>=</span> <span class='cn'>TRUE</span>,
+  margin <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -228,14 +228,13 @@ from the plotting area when <code>space = "cielab"</code>.</p></td>
 to <code>FALSE</code>)</p></td>
     </tr>
     <tr>
-      <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins for CIELAB
-plot (defaults to c(0,0,0,0))</p></td>
-    </tr>
-    <tr>
       <th>ciebg</th>
       <td><p>should the colour background be plotted for CIEXYZ plot?
 (defaults to <code>TRUE</code>)</p></td>
+    </tr>
+    <tr>
+      <th>margin</th>
+      <td><p>Deprecated. Please use the standard par() method for custom margins.</p></td>
     </tr>
     <tr>
       <th>...</th>

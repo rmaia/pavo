@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2020-12-23</h4>
+            <h4 class="date">2021-01-15</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -727,20 +727,8 @@ Flowers in a tetrahedral colourspace modelled using the visual phenotype of the 
 <div class="sourceCode" id="cb29"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
 <span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span>
-<span class="co">#&gt; Warning in arrows(xarr$x[1], xarr$y[1], xarr$x[2], xarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="co">#&gt; Warning in arrows(yarr$x[1], yarr$y[1], yarr$x[2], yarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="co">#&gt; Warning in arrows(zarr$x[1], zarr$y[1], zarr$x[2], zarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">tetra.flowers</span>, theta <span class="op">=</span> <span class="fl">110</span>, phi <span class="op">=</span> <span class="fl">10</span>, pch <span class="op">=</span> <span class="fl">21</span>, bg <span class="op">=</span> <span class="fu"><a href="../reference/spec2rgb.html">spec2rgb</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span><span class="op">)</span>
-<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span>
-<span class="co">#&gt; Warning in arrows(xarr$x[1], xarr$y[1], xarr$x[2], xarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="co">#&gt; Warning in arrows(yarr$x[1], yarr$y[1], yarr$x[2], yarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span>
-<span class="co">#&gt; Warning in arrows(zarr$x[1], zarr$y[1], zarr$x[2], zarr$y[2], length =</span>
-<span class="co">#&gt; arrowhead, : zero-length arrow is of indeterminate angle and so skipped</span></code></pre></div>
+<span class="fu"><a href="../reference/axistetra.html">axistetra</a></span><span class="op">(</span>x <span class="op">=</span> <span class="fl">0</span>, y <span class="op">=</span> <span class="fl">1.8</span><span class="op">)</span></code></pre></div>
 <div class="figure" style="text-align: center">
 <img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-1.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="45%"><img src="pavo-3-analysing_files/figure-html/unnamed-chunk-31-2.png" alt="Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit." width="45%"><p class="caption">
 Flowers in a tetrahedral colourspace, with varied orientations and perspectives, modelled using the visual phenotype of the blue tit.

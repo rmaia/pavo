@@ -177,10 +177,10 @@
   vert.range <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span>,
   out.lwd <span class='op'>=</span> <span class='fl'>1</span>,
   out.lcol <span class='op'>=</span> <span class='st'>"darkgrey"</span>,
-  margin <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span>, <span class='fl'>0</span><span class='op'>)</span>,
   type <span class='op'>=</span> <span class='st'>"p"</span>,
   labels <span class='op'>=</span> <span class='cn'>FALSE</span>,
   gamut <span class='op'>=</span> <span class='cn'>FALSE</span>,
+  margin <span class='op'>=</span> <span class='cn'>NULL</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
 
@@ -251,11 +251,6 @@ coordinates.</p></td>
       <td><p>graphical parameters for the tetrahedral outline.</p></td>
     </tr>
     <tr>
-      <th>margin</th>
-      <td><p>vector of four numbers specifying drawing margins (defaults to
-c(0, 0, 0, 0)).</p></td>
-    </tr>
-    <tr>
       <th>type</th>
       <td><p>accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
 for lines from the point to the base of the tetrahedron.</p></td>
@@ -270,6 +265,10 @@ corresponding vertex?</p></td>
       <td><p>logical. Should the polygon showing the possible colours given
 visual system and illuminant used in the analysis (defaults to <code>FALSE</code>).
 This option currently only works when <code>qcatch = Qi</code>.</p></td>
+    </tr>
+    <tr>
+      <th>margin</th>
+      <td><p>Deprecated. Please use the standard par() method for custom margins.</p></td>
     </tr>
     <tr>
       <th>...</th>
