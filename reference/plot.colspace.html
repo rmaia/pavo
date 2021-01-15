@@ -250,23 +250,22 @@ Linnean Society, 41, 315-352.</p>
 <span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span><span class='op'>)</span>
 </div><div class='img'><img src='plot.colspace-3.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-<span class='co'># Tetrahedron (interactive)</span>
-<span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span><span class='op'>)</span>
-<span class='va'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span>, space <span class='op'>=</span> <span class='st'>"tcs"</span><span class='op'>)</span>
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, size <span class='op'>=</span> <span class='fl'>0.005</span><span class='op'>)</span>
+  <span class='co'># Tetrahedron (interactive)</span>
+  <span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span><span class='op'>)</span>
+  <span class='va'>tcs.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span>, space <span class='op'>=</span> <span class='st'>"tcs"</span><span class='op'>)</span>
+  <span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, size <span class='op'>=</span> <span class='fl'>0.005</span><span class='op'>)</span>
 
-<span class='co'>## Add points to interactive tetrahedron</span>
-<span class='va'>patch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span><span class='op'>)</span>, <span class='fl'>7</span><span class='op'>)</span>
-<span class='va'>tcs.crown</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, <span class='st'>"C"</span><span class='op'>)</span>
-<span class='va'>tcs.breast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, <span class='st'>"B"</span><span class='op'>)</span>
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.crown</span>, col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
-<span class='fu'><a href='tcsplot.html'>tcspoints</a></span><span class='op'>(</span><span class='va'>tcs.breast</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
+  <span class='co'>## Add points to interactive tetrahedron</span>
+  <span class='va'>patch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span><span class='op'>)</span>, <span class='fl'>7</span><span class='op'>)</span>
+  <span class='va'>tcs.crown</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, <span class='st'>"C"</span><span class='op'>)</span>
+  <span class='va'>tcs.breast</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/subset.html'>subset</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, <span class='st'>"B"</span><span class='op'>)</span>
+  <span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.crown</span>, col <span class='op'>=</span> <span class='st'>"blue"</span><span class='op'>)</span>
+  <span class='fu'><a href='tcsplot.html'>tcspoints</a></span><span class='op'>(</span><span class='va'>tcs.breast</span>, col <span class='op'>=</span> <span class='st'>"red"</span><span class='op'>)</span>
 
-<span class='co'>## Plot convex hull in interactive tetrahedron</span>
-<span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, col <span class='op'>=</span> <span class='st'>"blue"</span>, size <span class='op'>=</span> <span class='fl'>0.005</span><span class='op'>)</span>
-<span class='fu'><a href='tcsplot.html'>tcsvol</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span><span class='op'>)</span>
+  <span class='co'>## Plot convex hull in interactive tetrahedron</span>
+  <span class='fu'><a href='tcsplot.html'>tcsplot</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span>, col <span class='op'>=</span> <span class='st'>"blue"</span>, size <span class='op'>=</span> <span class='fl'>0.005</span><span class='op'>)</span>
+  <span class='fu'><a href='tcsplot.html'>tcsvol</a></span><span class='op'>(</span><span class='va'>tcs.sicalis</span><span class='op'>)</span>
 <span class='op'>}</span>
-
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
