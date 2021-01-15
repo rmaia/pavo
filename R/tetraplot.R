@@ -175,6 +175,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   argblank$yaxt <- "n"
   argblank$ylab <- ""
   argblank$xlab <- ""
+  argblank$asp <- 1
 
   if (!plims) {
     prange <- cbind(x = arg$xlim, y = arg$ylim, z = arg$zlim, 1) %*% M
@@ -186,7 +187,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   }
 
 
-  par(pty = "s", new = TRUE)
+  par(new = TRUE)
   do.call(plot, argblank)
 
   # Get point coordinates
