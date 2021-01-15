@@ -487,7 +487,7 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
 
   if (is.null(qcatch_log)) {
     e <- setNames(v / sqrt(reln), colnames(qcatch_raw))
-  } else {    
+  } else {
     # Negative qcatch check
     if (any(qcatch_log < 0)) {
       stop(

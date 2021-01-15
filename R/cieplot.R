@@ -21,7 +21,7 @@
 #'   to `FALSE`)
 #' @param ciebg should the colour background be plotted for CIEXYZ plot?
 #'   (defaults to `TRUE`)
-#' @param margin Deprecated. Please use the standard [par()] method for custom margins. 
+#' @param margin Deprecated. Please use the standard [par()] method for custom margins.
 #' @inheritParams triplot
 #'
 #' @examples
@@ -53,13 +53,13 @@
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
                     ciebg = TRUE, margin = NULL, ...) {
-
-  if (!missing("margin"))
+  if (!missing("margin")) {
     message(
-      "The 'margin' argument is deprecated, and will be ignored. ", 
+      "The 'margin' argument is deprecated, and will be ignored. ",
       "See ?par() for guidance on setting margins in the standard manner."
     )
-  
+  }
+
   arg <- list(...)
 
   # CIEXYZ

@@ -58,7 +58,7 @@ uv-blue).
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
-\item{margins}{Deprecated. Please use the standard par() method for custom margins.}
+\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }
@@ -73,7 +73,6 @@ vis.flowers <- vismodel(flowers,
 )
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 plot(hex.flowers)
-
 }
 \references{
 Chittka L. (1992). The colour hexagon: a chromaticity diagram

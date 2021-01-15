@@ -32,11 +32,11 @@ tcsvol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
     coords <- tcsdata[, c("x", "y", "z")]
     vol <- t(convhulln(coords, options = "Tv"))
   } else {
-
     if (!requireNamespace("alphashape3d", quietly = TRUE)) {
       stop(
         "Please install the alphashape3d package to be able to use ",
-        'type = "alpha"', call. = FALSE
+        'type = "alpha"',
+        call. = FALSE
       )
     }
 

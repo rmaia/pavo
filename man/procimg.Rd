@@ -64,15 +64,14 @@ Specify scales, resize, and/or define focal objects within images.
 }
 \examples{
 if (interactive()) {
-# Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
-papilio <- procimg(papilio, scaledist = 10)
+  # Single image
+  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- procimg(papilio, scaledist = 10)
 
-# Assign individual scales to each image, after slightly reducing their size.
-snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
+  # Assign individual scales to each image, after slightly reducing their size.
+  snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+  snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 }
-
 }
 \references{
 Chaikin, G. 1974. An algorithm for high speed curve generation.

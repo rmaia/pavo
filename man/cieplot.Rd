@@ -54,7 +54,7 @@ to \code{FALSE})}
 \item{ciebg}{should the colour background be plotted for CIEXYZ plot?
 (defaults to \code{TRUE})}
 
-\item{margin}{Deprecated. Please use the standard par() method for custom margins.}
+\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

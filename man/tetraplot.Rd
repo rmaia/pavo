@@ -78,7 +78,7 @@ corresponding vertex?}
 visual system and illuminant used in the analysis (defaults to \code{FALSE}).
 This option currently only works when \code{qcatch = Qi}.}
 
-\item{margin}{Deprecated. Please use the standard par() method for custom margins.}
+\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

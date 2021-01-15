@@ -54,23 +54,22 @@ tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
 
 if (interactive()) {
-# Tetrahedron (interactive)
-vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
-tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
-tcsplot(tcs.sicalis, size = 0.005)
+  # Tetrahedron (interactive)
+  vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+  tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
+  tcsplot(tcs.sicalis, size = 0.005)
 
-## Add points to interactive tetrahedron
-patch <- rep(c("C", "T", "B"), 7)
-tcs.crown <- subset(tcs.sicalis, "C")
-tcs.breast <- subset(tcs.sicalis, "B")
-tcsplot(tcs.crown, col = "blue")
-tcspoints(tcs.breast, col = "red")
+  ## Add points to interactive tetrahedron
+  patch <- rep(c("C", "T", "B"), 7)
+  tcs.crown <- subset(tcs.sicalis, "C")
+  tcs.breast <- subset(tcs.sicalis, "B")
+  tcsplot(tcs.crown, col = "blue")
+  tcspoints(tcs.breast, col = "red")
 
-## Plot convex hull in interactive tetrahedron
-tcsplot(tcs.sicalis, col = "blue", size = 0.005)
-tcsvol(tcs.sicalis)
+  ## Plot convex hull in interactive tetrahedron
+  tcsplot(tcs.sicalis, col = "blue", size = 0.005)
+  tcsvol(tcs.sicalis)
 }
-
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their

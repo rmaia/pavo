@@ -27,7 +27,7 @@
 #' @param out.lwd,out.lcol graphical parameters for the tetrahedral outline.
 #' @param type accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
 #'   for lines from the point to the base of the tetrahedron.
-#' @param margin Deprecated. Please use the standard [par()] method for custom margins. 
+#' @param margin Deprecated. Please use the standard [par()] method for custom margins.
 
 #' @inheritParams triplot
 #'
@@ -65,10 +65,10 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
                       type = "p", labels = FALSE, gamut = FALSE, margin = NULL, ...) {
-
-  if (!missing("margin"))
+  if (!missing("margin")) {
     message("The 'margin' argument is deprecated, and will be ignored. See ?par() for guidance on 
             setting margins in the standard manner.")
+  }
 
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin

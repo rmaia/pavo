@@ -55,9 +55,8 @@
 #' # Multiple images, with interactive classification and a reference image
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #' if (interactive()) {
-#' snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
+#'   snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 #' }
-#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,

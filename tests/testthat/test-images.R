@@ -281,14 +281,14 @@ test_that("adjacency", {
 # test_that("summary", {
 #   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
 #   set.seed(2231)
-# 
+#
 #   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
 #   papilio_class <- classify(papilio, kcols = 4)
 #   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #   snakes_class <- classify(snakes, kcols = 3)
-# 
+#
 #   expect_equal(summary(papilio_class)[1:3], data.frame(rep("papilio", 4), 1:4, 1:4, stringsAsFactors = FALSE), ignore_attr = TRUE)
-# 
+#
 #   truth <- c(3.621, 1.827, 0.159)
 #   expect_equal(colSums(round(summary(snakes_class)[4:6], 3)), truth, ignore_attr = TRUE)
 # })

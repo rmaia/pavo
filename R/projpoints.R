@@ -50,5 +50,4 @@ projpoints <- function(tcsdata, ...) {
   mp.p.phi <- mp$y[-c(seq_len(9))]
 
   points(mp.p.phi ~ mp.p.theta, ...)
-
 }

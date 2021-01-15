@@ -21,7 +21,6 @@
 #' )
 #' hex.flowers <- colspace(vis.flowers, space = "hexagon")
 #' plot(hex.flowers)
-#' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @importFrom graphics par points polygon segments text
@@ -37,11 +36,11 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     out.lwd = 1, out.lty = 1, out.lcol = "black",
                     labels.cex = 1, achrosize = 0.8,
                     achrocol = "grey", square = TRUE, margins = NULL, ...) {
-  
-  if (!missing("margins"))
+  if (!missing("margins")) {
     message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
             setting margins in the standard manner.")
-  
+  }
+
   sectors <- match.arg(sectors)
 
   # Set defaults
