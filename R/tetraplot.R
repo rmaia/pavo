@@ -27,7 +27,7 @@
 #' @param out.lwd,out.lcol graphical parameters for the tetrahedral outline.
 #' @param type accepts a vector of length 1 or 2 with 'p' for points and/or 'l'
 #'   for lines from the point to the base of the tetrahedron.
-#' @param margin Deprecated. Please use the standard par() method for custom margins. 
+#' @param margin Deprecated. Please use the standard [par()] method for custom margins. 
 
 #' @inheritParams triplot
 #'
