@@ -4,7 +4,7 @@
 
 * Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2). 
 * Added an informative error message when raw quantum catch estimates are < 1, and an attempt is made to calculate colour distances in the receptor-noise model using noise = 'quantum'. Taking the root of negative values following log-transformation, as required when noise = 'quantum', would previously produce an uninformative error, which has been rectified. 
-* The `margins` argument has been deprecated for cie, coc, hexagon, segment, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard par(mar = c()) pathway.
+* The `margins` argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard par(mar = c()) pathway.
 
 # pavo 2.6.1
 
