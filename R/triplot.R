@@ -19,7 +19,7 @@
 #' @param gamut logical. Should the polygon showing the possible colours given
 #'   visual system and illuminant used in the analysis (defaults to `FALSE`).
 #'   This option currently only works when `qcatch = Qi`.
-#' @param margins Deprecated. Please use the standard par() method for custom margins. 
+#' @param margins Deprecated. Please use the standard [par()] method for custom margins. 
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
