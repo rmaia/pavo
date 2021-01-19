@@ -39,10 +39,30 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 }
 \examples{
 \donttest{
+# Run the receptor-noise limited model, using the visual phenotype
+# of the blue tit
 data(sicalis)
-vm <- vismodel(sicalis, achromatic = "bt.dc")
+vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 gr <- gsub("ind..", "", rownames(vm))
 bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+
+# Run the same again, though as a simple colourspace model
+data(sicalis)
+vm <- vismodel(sicalis, achromatic = "bt.dc")
+space <- colspace(vm)
+gr <- gsub("ind..", "", rownames(vm))
+bootcoldist(space, by = gr)
+
+# Estimate bootstrapped colour-distances for a more 'specialised' model,
+# like the colour hexagon
+data(flowers)
+vis.flowers <- vismodel(flowers,
+                        visual = "apis", qcatch = "Ei", relative = FALSE,
+                        vonkries = TRUE, achromatic = "l", bkg = "green"
+ )
+flowers.hex <- colspace(vis.flowers, space = "hexagon")
+pop_group <- c(rep('pop_1', nrow(flowers.hex)/2), rep('pop_2', nrow(flowers.hex)/2))
+bootcoldist(flowers.hex, by = pop_group)
 }
 
 }
