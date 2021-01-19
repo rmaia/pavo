@@ -8,23 +8,23 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   square <- dim(image)[1] == dim(image)[2] && is.element(dim(image)[1], pow2)
 
   # Zero-pad if not square with dimension power-2    
-  if(!square){
-    # Minimum necessary square dimension
-    necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))]) 
-    
-    # Number of rows and columns necessary for padding (per-edge)
-    row_pad <- (necessary_dim - nrow(image)) / 2
-    col_pad <- (necessary_dim - ncol(image)) / 2
-    
-    # Create & fill padded image
-    image_pad <- array(0, dim = c(necessary_dim, necessary_dim, 3))
-    for(i in 1:3){
-      image_pad[ , , i] <- zero_pad(image[ , , i], col_pad, row_pad, opt = 'pad')
-    }
-    image_pad
-  }else{
+  # if(!square){
+  #   # Minimum necessary square dimension
+  #   necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))]) 
+  #   
+  #   # Number of rows and columns necessary for padding (per-edge)
+  #   row_pad <- (necessary_dim - nrow(image)) / 2
+  #   col_pad <- (necessary_dim - ncol(image)) / 2
+  #   
+  #   # Create & fill padded image
+  #   image_pad <- array(0, dim = c(necessary_dim, necessary_dim, 3))
+  #   for(i in 1:3){
+  #     image_pad[ , , i] <- zero_pad(image[ , , i], col_pad, row_pad, opt = 'pad')
+  #   }
+  #   image_pad
+  # }else{
     image_pad <- image
-  }
+  #}
   
   # Image width in degrees
   width_deg <- 57.2958 * (2 * atan(obj_width / obj_dist / 2))
@@ -35,22 +35,25 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   # Image center
   center <- round(width_pix / 2) + 1
   
-  # Create a blur matrix with dimensions equal to the image
-  blur <- matrix(NA, nrow = dim(image_pad)[2], ncol = dim(image_pad)[1])
-  for (i in 1:width_pix){
-    for (j in 1:width_pix) {
-      x <- i - center
-      y <- j - center
-      freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
-      mySin <- y / sqrt(x^2 + y^2)
-      myCos <- x / sqrt(x^2 + y^2)
-      eye_res2 <- eye_res * eye_res /sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
-      blur[i,j] <- exp(-3.56 * (eye_res2 * freq)^2)
-    }
+  # Create an MTF matrix with dimensions equal to the image
+  MTF <- matrix(NA, nrow = dim(image_pad)[2], ncol = dim(image_pad)[1])
+    for (i in 1:width_pix){
+      for (j in 1:width_pix) {
+        x <- i - center
+        y <- j - center
+        freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
+        mySin <- y / sqrt(x^2 + y^2)
+        myCos <- x / sqrt(x^2 + y^2)
+        eye_res2 <- eye_res * eye_res /sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
+        MTF[i,j] <- exp(-3.56 * (eye_res2 * freq)^2)
+      }
   }
   
-  # Force the center pixel to value 1
-  blur[center, center] <-  1
+  # Force the center to 1
+  MTF[center, center] <-  1
+  
+  # Cancel effect of MTF for non-real (padded) image regions
+  #MTF <- zero_pad(MTF, col_pad, row_pad, opt = 'MTF')
   
   # Linearise sRGB values
   from_srgb <- function(rgb_dat){
@@ -60,12 +63,12 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
     image_pad[ , , i] <- apply(image_pad[ , , i], c(1, 2), from_srgb)
   }
   
-  # 2D Fourier Transform -> blur matrix multiplication -> inverse fourier transform
+  # 2D Fourier Transform -> MTF matrix multiplication -> inverse fourier transform
   # Note: acuityview uses fftwtools::fftw2d(channel, inverse = 0) instead of fft().
   # Need to double-check check base fft() is fair replacement for fftw2d(). The values
   # do differ, but end-result is (visually) very similar.
   fft2d <- function(channel){
-    forward <- ((1/width_pix) * fft_shift(fft(channel, inverse = FALSE))) * blur
+    forward <- ((1/width_pix) * fft_shift(fft(channel, inverse = FALSE))) * MTF
     back <- (1/width_pix) * fft(forward, inverse = TRUE)
     Mod(back)
   }
@@ -91,7 +94,7 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   }
   
   # Re-scale to a max of 1 if any values end up > 1
-  # TODO: Confirm correct re-scale
+  # TODO: Confirm correct re-scale (TOFIX)
   rescale <- function(channel){
     if(any(channel > 1)){
       # chan_range <- range(channel)
@@ -133,27 +136,17 @@ fft_shift <- function(input_matrix) {
 # dimensions. In those cases the image won't
 # be exactly centered within the padding, but
 # I don't know what else can be done.
-zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop")) {
+zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF")) {
   if (opt == "pad") {
     # Add column padding
-    if (col_zeros %% 1 == 0) {
-      mat_col <- matrix(0, nrow(dat), col_zeros)
-      out <- cbind(mat_col, dat, mat_col)
-    } else {
       mat_col_low <- matrix(0, nrow(dat), floor(col_zeros))
       mat_col_high <- matrix(0, nrow(dat), ceiling(col_zeros))
       out <- cbind(mat_col_low, dat, mat_col_high)
-    }
     
     # Add row padding
-    if (row_zeros %% 1 == 0) {
-      mat_colrow <- matrix(0, row_zeros, ncol(out))
-      out2 <- rbind(mat_colrow, out, mat_colrow)
-    } else {
       mat_colrow_low <- matrix(0, floor(row_zeros), ncol(out))
       mat_colrow_high <- matrix(0, ceiling(row_zeros), ncol(out))
       out2 <- rbind(mat_colrow_low, out, mat_colrow_high)
-    }
   }
   
   if (opt == "crop") {
@@ -171,6 +164,14 @@ zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop")) {
       out2 <- out[(ceiling(row_zeros)):(nrow(out) - ceiling(row_zeros)), ]
     }
   }
-  
+  if (opt == "MTF") {
+    out2 <- dat
+    # Rows
+    out2[1:floor(row_zeros), ] <- 1
+    out2[(nrow(dat) - ceiling(row_zeros)):nrow(dat), ] <- 1
+    # Columns
+    out2[, 1:floor(col_zeros)] <- 1
+    out2[, (ncol(dat) - ceiling(col_zeros)):ncol(dat)] <- 1
+  }
   out2
 }
