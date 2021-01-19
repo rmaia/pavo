@@ -74,9 +74,20 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   }
   
   # Convert any non-numeric columns to (nonsense) numeric values
-  # Subsetting etc. strips attributes, so this is just a simple workaround
+  # They're not used anyway, and subsetting etc. strips attributes, 
+  # so this is just a simple/lazy workaround
   num_cols <- unlist(lapply(vismodeldata, is.numeric))
   vismodeldata[ , !num_cols] <- 0
+  
+  # Rescale any x-y-z positional data by adding a constant
+  # Only applies to colspace objects, since (unlike for RN data) colour distances 
+  # are calculated based on coordinates, rather than qcatches. But this
+  # caused problems when calculating geometric means, because coordinate
+  # data often contain negative values. So this re-scales all coordinate
+  # systems so they can never be negative, without affecting
+  # the distances between points.
+  vismodeldata[intersect(names(vismodeldata), c('x', 'y', 'z'))] <- 
+    vismodeldata[intersect(names(vismodeldata), c('x', 'y', 'z'))] + 100
   
   # Start actual function
 
