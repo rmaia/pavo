@@ -62,47 +62,58 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   if (is.null(arg0$achromatic)) {
     arg0$achromatic <- arg0$achro
   }
-
-  if (is.null(arg0$n)) {
-    stop('argument "n" to be passed to "coldist" is missing', call. = FALSE)
-  }
-
-  if (is.null(arg0$weber)) {
-    stop('argument "weber" to be passed to "coldist" is missing', call. = FALSE)
-  }
-
-  if (is.null(arg0$qcatch)) {
-    if (is.null(attr(vismodeldata, "qcatch"))) {
-      stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
-    }
-
-    arg0$qcatch <- attr(vismodeldata, "qcatch")
-  }
-
+  
+  # Check if RN model is required (for all non-colspace objects)
+  useRNmodel <- !inherits(vismodeldata, "colspace")
+  
   if (is.null(arg0$achromatic)) {
     if (is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
       stop('argument "achromatic" to be passed to "coldist" is missing', call. = FALSE)
     }
-
+    
     if (attr(vismodeldata, "visualsystem.achromatic") == "none") {
       arg0$achromatic <- FALSE
     } else {
       arg0$achromatic <- TRUE
     }
   }
-
-  if (arg0$achromatic) {
-    if (is.null(arg0$weber.achro)) {
-      stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
+  
+  # Only require n & webers if using RN model
+  if(useRNmodel){
+    # Receptor density
+    if (is.null(arg0$n)) {
+      stop('argument "n" to be passed to "coldist" is missing', call. = FALSE)
     }
+    # Chromatic weber fraction
+    if (is.null(arg0$weber)) {
+      stop('argument "weber" to be passed to "coldist" is missing', call. = FALSE)
+    }
+    # Noise type
+    if (is.null(arg0$noise)) {
+      arg0$noise <- "neural"
+    }
+    # Weber cone ref
+    if (is.null(arg0$weber.ref)) {
+      arg0$weber.ref <- "longest"
+    }
+    if (arg0$achromatic) {
+      if (is.null(arg0$weber.achro)) {
+        stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
+      }
+    }
+  }else{
+    arg0$weber <- NULL
+    arg0$n <- NULL
+    arg0$noise <- NULL
+    arg0$weber.ref <- NULL
+    arg0$weber.achro <- NULL
   }
 
-  if (is.null(arg0$noise)) {
-    arg0$noise <- "neural"
-  }
-
-  if (is.null(arg0$weber.ref)) {
-    arg0$weber.ref <- "longest"
+  if (is.null(arg0$qcatch)) {
+    if (is.null(attr(vismodeldata, "qcatch"))) {
+      stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
+    }
+    arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
 
   sortinggroups <- order(by)
