@@ -27,23 +27,23 @@
 #' vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 #' gr <- gsub("ind..", "", rownames(vm))
 #' bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
-#' 
+#'
 #' # Run the same again, though as a simple colourspace model
 #' data(sicalis)
 #' vm <- vismodel(sicalis, achromatic = "bt.dc")
 #' space <- colspace(vm)
 #' gr <- gsub("ind..", "", rownames(space))
 #' bootcoldist(space, by = gr)
-#' 
+#'
 #' # Estimate bootstrapped colour-distances for a more 'specialised' model,
 #' # like the colour hexagon
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers,
-#'                         visual = "apis", qcatch = "Ei", relative = FALSE,
-#'                         vonkries = TRUE, achromatic = "l", bkg = "green"
-#'  )
+#'   visual = "apis", qcatch = "Ei", relative = FALSE,
+#'   vonkries = TRUE, achromatic = "l", bkg = "green"
+#' )
 #' flowers.hex <- colspace(vis.flowers, space = "hexagon")
-#' pop_group <- c(rep('pop_1', nrow(flowers.hex)/2), rep('pop_2', nrow(flowers.hex)/2))
+#' pop_group <- c(rep("pop_1", nrow(flowers.hex) / 2), rep("pop_2", nrow(flowers.hex) / 2))
 #' bootcoldist(flowers.hex, by = pop_group)
 #' }
 #'
@@ -72,23 +72,23 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
       exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
     }
   }
-  
+
   # Convert any non-numeric columns to (nonsense) numeric values
-  # They're not used anyway, and subsetting etc. strips attributes, 
+  # They're not used anyway, and subsetting etc. strips attributes,
   # so this is just a simple/lazy workaround
   num_cols <- unlist(lapply(vismodeldata, is.numeric))
-  vismodeldata[ , !num_cols] <- 0
-  
+  vismodeldata[, !num_cols] <- 0
+
   # Rescale any x-y-z positional data by adding a constant
-  # Only applies to colspace objects, since (unlike for RN data) colour distances 
+  # Only applies to colspace objects, since (unlike for RN data) colour distances
   # are calculated based on coordinates, rather than qcatches. But this
   # caused problems when calculating geometric means, because coordinate
   # data often contain negative values. So this re-scales all coordinate
   # systems so they can never be negative, without affecting
   # the distances between points.
-  vismodeldata[intersect(names(vismodeldata), c('x', 'y', 'z'))] <- 
-    vismodeldata[intersect(names(vismodeldata), c('x', 'y', 'z'))] + 100
-  
+  vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] <-
+    vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] + 100
+
   # Start actual function
 
   arg0 <- list(...)
@@ -98,24 +98,24 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   if (is.null(arg0$achromatic)) {
     arg0$achromatic <- arg0$achro
   }
-  
+
   # Check if RN model is required (for all non-colspace objects)
   useRNmodel <- !inherits(vismodeldata, "colspace")
-  
+
   if (is.null(arg0$achromatic)) {
     if (is.null(attr(vismodeldata, "visualsystem.achromatic"))) {
       stop('argument "achromatic" to be passed to "coldist" is missing', call. = FALSE)
     }
-    
+
     if (attr(vismodeldata, "visualsystem.achromatic") == "none") {
       arg0$achromatic <- FALSE
     } else {
       arg0$achromatic <- TRUE
     }
   }
-  
+
   # Only require n & webers if using RN model
-  if(useRNmodel){
+  if (useRNmodel) {
     # Receptor density
     if (is.null(arg0$n)) {
       stop('argument "n" to be passed to "coldist" is missing', call. = FALSE)
@@ -137,7 +137,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
         stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
       }
     }
-  }else{
+  } else {
     arg0$weber <- NULL
     arg0$n <- NULL
     arg0$noise <- NULL
@@ -261,13 +261,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   if (dim(bootdS)[1] < boot.n) {
     stop("Bootstrap sampling encountered errors.")
   }
-  
+
   # ...subtract them from the empirical and sort and find quantiles
   quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
   bootdS <- apply(bootdS, 2, sort)
   dsCI <- bootdS[quantileindices, , drop = FALSE]
   rownames(dsCI) <- c("dS.lwr", "dS.upr")
-  
+
   # make sure names match with empirical (they always should but just in case)
   dsCI <- dsCI[, names(empdS), drop = FALSE]
 
@@ -288,7 +288,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
     bootdL <- apply(bootdL, 2, sort)
     dlCI <- bootdL[quantileindices, , drop = FALSE]
     rownames(dlCI) <- c("dL.lwr", "dL.upr")
-    
+
     # make sure names match with empirical (they always should but just in case)
     dlCI <- dlCI[, names(empdL), drop = FALSE]
     dL.mean <- empdL

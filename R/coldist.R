@@ -167,7 +167,7 @@ coldist <- function(modeldata,
   ncone <- attr(modeldata, "conenumb")
 
   if (isTRUE(attr(modeldata, "relative"))) {
-    warning("Quantum catch are relative, distances may not be meaningful",
+    message("Quantum catch are relative, distances may not be meaningful",
       call. = FALSE
     )
   }
@@ -187,7 +187,7 @@ coldist <- function(modeldata,
     || is.null(attr(modeldata, "visualsystem.achromatic"))) {
       modeldata$lum <- 0
       if (achromatic) {
-        warning("achromatic = TRUE but visual model was calculated with achromatic = ",
+        message("achromatic = TRUE but visual model was calculated with achromatic = ",
           dQuote("none"), "; achromatic contrast not calculated.",
           call. = FALSE
         )
@@ -362,7 +362,7 @@ coldist <- function(modeldata,
       )
 
       if (dim(dat)[2] <= ncone) {
-        warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
+        warning("achromatic is set to TRUE, but input data has the same number of columns for sensory data as number of cones in the visual system. There is no column in the data that represents an exclusively achromatic channel, so the last column of the sensory data is being used. Treat achromatic results with caution, and check if this is the desired behavior.", call. = FALSE)
       }
     }
     message(note_dS, note_dL)
