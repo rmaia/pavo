@@ -49,7 +49,6 @@
 #'   The first column, named 'patch', should contain numeric color category IDs,
 #'   with the remaining columns specifying one or more of 'hue' (angle, in
 #'   radians), 'sat', and/or 'lum'.
-#' @inheritParams getspec
 #'
 #' @inherit getspec details
 #'
@@ -157,13 +156,7 @@
 
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
-                     coldists = NULL, hsl = NULL, cores = NULL) {
-  if (!missing(cores)) {
-    warning("'cores' argument is deprecated. See ?future::plan for more info ",
-      "about how you can choose your parallelisation strategy.",
-      call. = FALSE
-    )
-  }
+                     coldists = NULL, hsl = NULL) {
 
   exclude2 <- match.arg(exclude)
 

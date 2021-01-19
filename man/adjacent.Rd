@@ -12,8 +12,7 @@ adjacent(
   polygon = NULL,
   exclude = c("none", "background", "object"),
   coldists = NULL,
-  hsl = NULL,
-  cores = NULL
+  hsl = NULL
 )
 }
 \arguments{
@@ -71,9 +70,6 @@ patch elements, as might be estimated via \code{\link[=vismodel]{vismodel()}} an
 The first column, named 'patch', should contain numeric color category IDs,
 with the remaining columns specifying one or more of 'hue' (angle, in
 radians), 'sat', and/or 'lum'.}
-
-\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
-customise your parallelisation strategy.}
 }
 \value{
 a data frame of summary variables:

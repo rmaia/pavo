@@ -33,13 +33,7 @@
 
 getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
                     sep = NULL, subdir = FALSE, subdir.names = FALSE,
-                    cores = NULL, ignore.case = TRUE) {
-  if (!missing(cores)) {
-    warning(
-      "'cores' argument is deprecated. See ?future::plan for more info ",
-      "about how you can choose your parallelisation strategy."
-    )
-  }
+                    ignore.case = TRUE) {
 
   lr_get_spec(
     where = where, ext = ext, lim = lim, decimal = decimal, sep = sep,

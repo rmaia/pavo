@@ -27,7 +27,6 @@
 #' Defaults to `FALSE`.
 #' @param ... additional graphical parameters when `interactive = TRUE`.
 #' Also see [graphics::par()].
-#' @inheritParams getspec
 #'
 #' @inherit getspec details
 #'
@@ -60,13 +59,7 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
-                     plotnew = FALSE, col = "red", cores = NULL, ...) {
-  if (!missing(cores)) {
-    warning("'cores' argument is deprecated. See ?future::plan for more info ",
-      "about how you can choose your parallelisation strategy.",
-      call. = FALSE
-    )
-  }
+                     plotnew = FALSE, col = "red", ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 

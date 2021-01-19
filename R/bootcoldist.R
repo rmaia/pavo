@@ -13,7 +13,6 @@
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
-#' @inheritParams getspec
 #'
 #' @inherit getspec details
 #'
@@ -37,14 +36,7 @@
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
-bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95,
-                        cores = NULL, ...) {
-  if (!missing(cores)) {
-    warning("'cores' argument is deprecated. See ?future::plan for more info ",
-      "about how you can choose your parallelisation strategy.",
-      call. = FALSE
-    )
-  }
+bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
 
   # geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {

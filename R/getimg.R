@@ -11,7 +11,6 @@
 #' images? (defaults to `FALSE`).
 #' @param max.size maximum size of all images to be allowed in memory, in GB. Defaults to
 #' `1`.
-#' @param cores deprecated argument.
 #'
 #' @return a image, or list of images, of class `rimg`, for use in further
 #' `pavo` functions.
@@ -30,19 +29,12 @@
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
-                   max.size = 1, cores) {
+                   max.size = 1) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
   ## Allowed extensions
   ext <- c("jpg", "jpeg", "png", "bmp")
-
-  ## Cores
-  if (!missing(cores)) {
-    warning("the cores argument is deprecated as all image importing is now vectorised.",
-      call. = FALSE
-    )
-  }
 
   ## ------------------------------ Main ------------------------------ ##
 

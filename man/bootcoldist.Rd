@@ -4,7 +4,7 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, cores = NULL, ...)
+bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.
@@ -18,9 +18,6 @@ the object belongs to.}
 \item{boot.n}{number of bootstrap replicates (defaults to 1000)}
 
 \item{alpha}{the confidence level for the confidence intervals (defaults to 0.95)}
-
-\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
-customise your parallelisation strategy.}
 
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
