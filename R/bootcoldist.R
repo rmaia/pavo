@@ -11,13 +11,16 @@
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
+#' @param raw should the full set of bootstrapped distances (equal in length to boot.n) 
+#' be returned, instead of the summary distances and CI's? Defaults to FALSE.
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
 #'
 #' @inherit getspec details
 #'
 #' @return a matrix including the empirical mean and bootstrapped
-#'  confidence limits for dS (and dL if `achromatic = TRUE`).
+#'  confidence limits for dS (and dL if `achromatic = TRUE`), or a data.frame
+#'  of raw bootstraped dS (and dL if `achromatic = TRUE`) values equal in length to boot.n.
 #'
 #' @examples
 #' \donttest{
@@ -56,7 +59,7 @@
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 
-bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
+bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...) {
 
   # Geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
@@ -274,6 +277,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   dS.mean <- empdS
 
   res <- t(rbind(dS.mean, dsCI))
+  
+  # Create a new df if returning raw bootstrapped distances
+  # Note output will be sorted by this point
+  if(raw){
+    rawres <- as.data.frame(bootdS)
+    names(rawres) <- paste0(names(rawres), "_dS")
+  }
 
   if (arg0$achromatic) {
     empdL <- setNames(empcd$dL, paste(empcd$patch1, empcd$patch2, sep = "-"))
@@ -293,6 +303,16 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
     dlCI <- dlCI[, names(empdL), drop = FALSE]
     dL.mean <- empdL
     res <- cbind(res, t(rbind(dL.mean, dlCI)))
+    
+    if(raw){
+      bootdL <- as.data.frame(bootdL)
+      names(bootdL) <- paste0(names(bootdL), "_dL")
+      rawres <- cbind(rawres, bootdL)
+    }
+  }
+  
+  if(raw){
+    res <- rawres
   }
 
   res

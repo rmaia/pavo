@@ -50,8 +50,8 @@ test_that("coldist", {
   space <- colspace(vm)
   gr <- gsub("ind..", "", rownames(space))
   expect_equal(
-  digest::sha1(bootcoldist(space, by = gr)[, c(1, 4)],
-               "1abaef8c25cb8a91f79730be80207cea15e064d6")
+  digest::sha1(bootcoldist(space, by = gr)[, c(1, 4)]),
+               "1abaef8c25cb8a91f79730be80207cea15e064d6"
   )
   
   ## Hexagon
@@ -63,8 +63,8 @@ test_that("coldist", {
   flowers.hex <- colspace(vis.flowers, space = "hexagon")
   pop_group <- c(rep('pop_1', nrow(flowers.hex)/2), rep('pop_2', nrow(flowers.hex)/2))
   expect_equal(
-  digest::sha1(bootcoldist(flowers.hex, by = pop_group)[, c(1, 4)],
-               "ef5ac59c77071718d398e2a6e08ff7daa5cbe92c")
+  digest::sha1(bootcoldist(flowers.hex, by = pop_group)[, c(1, 4)]),
+               "ef5ac59c77071718d398e2a6e08ff7daa5cbe92c"
   )
 })
 

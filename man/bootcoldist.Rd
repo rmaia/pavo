@@ -4,7 +4,7 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...)
+bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.
@@ -19,12 +19,16 @@ the object belongs to.}
 
 \item{alpha}{the confidence level for the confidence intervals (defaults to 0.95)}
 
+\item{raw}{should the full set of bootstrapped distances (equal in length to boot.n)
+be returned, instead of the summary distances and CI's? Defaults to FALSE.}
+
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped
-confidence limits for dS (and dL if \code{achromatic = TRUE}).
+confidence limits for dS (and dL if \code{achromatic = TRUE}), or a data.frame
+of raw bootstraped dS (and dL if \code{achromatic = TRUE}) values equal in length to boot.n.
 }
 \description{
 Uses a bootstrap procedure to generate confidence intervals
@@ -57,11 +61,11 @@ bootcoldist(space, by = gr)
 # like the colour hexagon
 data(flowers)
 vis.flowers <- vismodel(flowers,
-                        visual = "apis", qcatch = "Ei", relative = FALSE,
-                        vonkries = TRUE, achromatic = "l", bkg = "green"
- )
+  visual = "apis", qcatch = "Ei", relative = FALSE,
+  vonkries = TRUE, achromatic = "l", bkg = "green"
+)
 flowers.hex <- colspace(vis.flowers, space = "hexagon")
-pop_group <- c(rep('pop_1', nrow(flowers.hex)/2), rep('pop_2', nrow(flowers.hex)/2))
+pop_group <- c(rep("pop_1", nrow(flowers.hex) / 2), rep("pop_2", nrow(flowers.hex) / 2))
 bootcoldist(flowers.hex, by = pop_group)
 }
 
