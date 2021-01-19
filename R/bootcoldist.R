@@ -32,7 +32,7 @@
 #' data(sicalis)
 #' vm <- vismodel(sicalis, achromatic = "bt.dc")
 #' space <- colspace(vm)
-#' gr <- gsub("ind..", "", rownames(vm))
+#' gr <- gsub("ind..", "", rownames(space))
 #' bootcoldist(space, by = gr)
 #' 
 #' # Estimate bootstrapped colour-distances for a more 'specialised' model,
@@ -58,7 +58,7 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
 
-  # geometric mean
+  # Geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
     if (any(x < 0, na.rm = TRUE)) {
       return(NaN)
@@ -72,8 +72,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
       exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
     }
   }
-
-  # start actual function
+  
+  # Convert any non-numeric columns to (nonsense) numeric values
+  # Subsetting etc. strips attributes, so this is just a simple workaround
+  num_cols <- unlist(lapply(vismodeldata, is.numeric))
+  vismodeldata[ , !num_cols] <- 0
+  
+  # Start actual function
 
   arg0 <- list(...)
 
@@ -142,13 +147,10 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
 
   samplesizes <- table(by)
 
-  # calculate empirical deltaS
+  # Calculate empirical deltaS
   empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
   row.names(empgroupmeans) <- empgroupmeans[, 1]
   empgroupmeans <- empgroupmeans[, -1]
-
-  # empcd <- coldist(empgroupmeans, ...)
-  # empcd <- do.call(coldist, list(modeldata=empgroupmeans, arg0))
 
   datattributes <- grep("names", names(attributes(vismodeldata)),
     invert = TRUE, value = TRUE
@@ -162,7 +164,6 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   empcd <- do.call(coldist, emparg)
 
   empdS <- setNames(empcd$dS, paste(empcd$patch1, empcd$patch2, sep = "-"))
-
 
   # separate data by group
   bygroup <- lapply(unique(by), function(x) vismodeldata[by == x, ])
@@ -249,19 +250,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
   if (dim(bootdS)[1] < boot.n) {
     stop("Bootstrap sampling encountered errors.")
   }
-  # ...subtract them from the empirical
-  # bootdS <- bootdS - empdS
-
-  # ... sort and find quantiles
-  # bootdS <- sort(bootdS)
-  # quantileindices <- round(length(bootdS)*((1+c(-alpha, alpha))/2))
-  # dsCI <- empdS + bootdS[quantileindices]
-
-  # which gives the same as just
+  
+  # ...subtract them from the empirical and sort and find quantiles
   quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
   bootdS <- apply(bootdS, 2, sort)
   dsCI <- bootdS[quantileindices, , drop = FALSE]
   rownames(dsCI) <- c("dS.lwr", "dS.upr")
+  
   # make sure names match with empirical (they always should but just in case)
   dsCI <- dsCI[, names(empdS), drop = FALSE]
 
@@ -282,6 +277,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, ...) {
     bootdL <- apply(bootdL, 2, sort)
     dlCI <- bootdL[quantileindices, , drop = FALSE]
     rownames(dlCI) <- c("dL.lwr", "dL.upr")
+    
     # make sure names match with empirical (they always should but just in case)
     dlCI <- dlCI[, names(empdL), drop = FALSE]
     dL.mean <- empdL

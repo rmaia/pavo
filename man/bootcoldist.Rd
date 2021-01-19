@@ -50,7 +50,7 @@ bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
 data(sicalis)
 vm <- vismodel(sicalis, achromatic = "bt.dc")
 space <- colspace(vm)
-gr <- gsub("ind..", "", rownames(vm))
+gr <- gsub("ind..", "", rownames(space))
 bootcoldist(space, by = gr)
 
 # Estimate bootstrapped colour-distances for a more 'specialised' model,
