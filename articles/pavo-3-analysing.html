@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(3) Analysing Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2021-01-15</h4>
+            <h4 class="date">2021-01-23</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-3-analysing.Rmd"><code>vignettes/pavo-3-analysing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-3-analysing.Rmd</code></div>
@@ -1038,7 +1038,7 @@ Idealized reflectance spectra and their projection on the axes of segment classi
 <p>Under the colour space framework, colour distances can be calculated simply as Euclidean distances of the relative cone stimulation data, either log-transformed or not, depending on how it was defined. However, these distances cannot be interpreted in terms of JNDs, since no receptor noise is incorporated in the model. Euclidean distances can be computed in <code>R</code> using the <code><a href="../reference/coldist.html">coldist()</a></code> function on the <code><a href="../reference/colspace.html">colspace()</a></code> output:</p>
 <div class="sourceCode" id="cb48"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/coldist.html">coldist</a></span><span class="op">(</span><span class="va">tetra.flowers</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; Warning: Quantum catch are relative, distances may not be meaningful</span>
+<span class="co">#&gt; Quantum catch are relative, distances may not be meaningfulFALSE</span>
 <span class="co">#&gt; Calculating unweighted Euclidean distances</span>
 <span class="co">#&gt;                  patch1              patch2         dS dL</span>
 <span class="co">#&gt; 1 Goodenia_heterophylla Goodenia_geniculata 0.06695922 NA</span>
