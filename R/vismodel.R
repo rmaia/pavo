@@ -1,17 +1,18 @@
 #' Visual models
 #'
-#' Calculates quantum catches at each photoreceptor. Both raw and relative values
+#' Calculates quantum catches for each photoreceptor. Both raw and relative values
 #' can be returned, for use in a suite of colourspace and non-colourspace models.
 #'
 #' @inheritParams aggplot
 #' @param qcatch Which quantal catch metric to return. Options are:
 #' - `'Qi'`: Quantum catch for each photoreceptor (default)
 #' - `'fi'`: Quantum catch according to Fechner's law (the signal of the receptor
-#'  channel is proportional to the logarithm of the quantum catch)
+#'  channel is proportional to the logarithm of the quantum catch). Hence fi =
+#'  log(Qi). 
 #' - `'Ei'`: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 #' @param visual the visual system to be used. Options are:
-#' - a data frame such as one produced containing by [sensmodel()], containing
-#'    user-defined sensitivity data for the receptors involved in colour vision.
+#' - a data frame, possibly of class `rspec` (such as one produced containing by [sensmodel()]), 
+#' containing user-defined sensitivity data for the receptors involved in colour vision.
 #'    The data frame must contain a `'wl'` column with the range of wavelengths included,
 #'    and the sensitivity for each other cone as a column.
 #' - `'apis'`: Honeybee *Apis mellifera*.
@@ -33,8 +34,9 @@
 #' - `'habronattus'`: Jumping spider *Habronattus pyrrithrix*.
 #' - `'rhinecanthus'`: Triggerfish *Rhinecanthus aculeatus*.
 #' @param achromatic the sensitivity data to be used to calculate luminance (achromatic)
-#'  receptor stimulation. Either a vector containing the sensitivity for a single receptor,
-#'  or one of the options:
+#'  receptor stimulation. Either a data frame, possibly of class `rspec`, containing a `'wl'` 
+#'  column specifying the range of wavelengthts included along with a column containing the 
+#'  sensitivity of a single receptor, or one of the options:
 #' - `'none'`: no achromatic stimulation calculated (default).
 #' - `'bt.dc'`: Blue tit *Cyanistes caeruleus* double cone.
 #' - `'ch.dc'`: Chicken *Gallus gallus* double cone.
@@ -45,13 +47,17 @@
 #' - `'ml'`: the summed response of the two longest-wavelength photoreceptors.
 #' - `'l'`: the longest-wavelength photoreceptor.
 #' - `'all'`: the summed response of all photoreceptors.
-#' @param illum either a vector containing the illuminant, or one of the options:
+#' @param illum Either a data frame, possibly of class `rspec`, containing a `'wl'` 
+#' column specifying the range of wavelengthts included along with a column 
+#' specifying the illuminant spectrum, or one of the options:
 #' - `'ideal'`: homogeneous illuminance of 1 across wavelengths (default)
 #' - `'bluesky'` open blue sky.
 #' - `'D65'`: standard daylight.
 #' - `'forestshade'` forest shade.
 #' @param bkg background spectrum. Note that this will have no effect when `vonkries = FALSE`.
-#' Either a vector containing the spectral data, or one of the options:
+#' Either a data frame, possibly of class `rspec`, containing a `'wl'` column specifying the range
+#'  of wavelengthts included along with a column specifying background spectrum,
+#'  or one of the options:
 #' - `'ideal'`: homogeneous illuminance of 1 across all wavelengths (default).
 #' - `'green'`: green foliage.
 #' @param trans either a vector containing the ocular or environmental transmission
@@ -111,6 +117,7 @@
 #' names(custom) <- c("wl", "s", "m", "l")
 #' vis.custom <- vismodel(flowers, visual = custom)
 #' tri.custom <- colspace(vis.custom, space = "tri")
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -205,6 +212,45 @@ vismodel <- function(rspecdata,
   }
 
   qcatch <- match.arg(qcatch)
+  
+  # Function to check that user-defined achromatic, 
+  # illuminant, background, and/or transmission data
+  # contains a wavelength column and only
+  # one spectrum
+  check_userdefined <- function(df) {
+    dfname <- deparse(substitute(df))
+    df <- as.data.frame(df)
+    
+    # Wavelength column check
+    if(!'wl' %in% names(df)){
+      
+      # This will always return a df with a 'wl' column.
+      # If there's no wl column supplied, it'll just be an
+      # arbitrary index though. So to ease the breaking change
+      # we can guess at a semi-sensible wl range until
+      # introducing a straight stop() in future versions.
+      df <- suppressWarnings(as.rspec(df))
+      df$wl <- 300:nrow(df)
+      
+      warning(dfname, " does not appear to contain a wavelength ('wl') column, which is required as of
+              v2.7.0. Attempting to coerce to class `rspec` and add a wavelength column ranging from 300 nm 
+              to the length of the data in 1 nm increments. Note this will simply fail in future releases.",
+              call. = FALSE
+      )
+    }
+    
+    # Size check. If > 1 spectrum supplied, take only the first.
+    if (ncol(df) > 2) {
+      dfwhichused <- names(df)[2]
+      df <- df[, 2]
+      warning(dfname, " contains more than one spectrum; the first spectrum (",
+              dQuote(dfwhichused), ") has been used, and remaining columns ignored.",
+              call. = FALSE
+      )
+    }
+    
+    return(df)
+  }
 
   # Model-specific defaults
   if (substr(visual2, 1, 3) == "cie") {
@@ -231,7 +277,7 @@ vismodel <- function(rspecdata,
     }
   }
 
-  # Grab the visual system
+  # Define the visual system
   if (visual2 == "segment") { # make a weird custom 'visual system' for segment analysis
     S <- data.frame(matrix(0, nrow = length(wl), ncol = 4))
     names(S) <- c("S1", "S2", "S3", "S4")
@@ -254,24 +300,10 @@ vismodel <- function(rspecdata,
     sens_wl <- isolate_wl(sens, keep = "wl")
   }
 
-  # Save cone numer
+  # Save cone number
   conenumb <- ifelse(identical(visual2, "segment"), "seg", dim(S)[2])
 
-  # Check if wavelength range matches
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
-    visual2 == "user-defined") {
-    stop(
-      "wavelength range in spectra and visual system data do not match - ",
-      "spectral data must range between 300 and 700 nm in 1-nm intervals.",
-      "Consider interpolating using as.rspec()."
-    )
-  }
-
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
-    stop("wavelength range in spectra and visual system data do not match")
-  }
-
-  # DEFINING ILLUMINANT & BACKGROUND
+  # Define the illuminant
 
   bgil <- bgandilum
 
@@ -281,15 +313,26 @@ vismodel <- function(rspecdata,
   if (illum2 == "ideal") {
     illum <- rep(1, dim(rspecdata)[1])
   }
-
+  if(illum2 == 'user-defined'){
+    illum <- check_userdefined(illum)
+    illum_wl <- isolate_wl(illum, keep = 'wl')
+    illum <- as.matrix(isolate_wl(illum, keep = 'spec'))
+  }
+    
+  # Define the background
   if (bg2 != "user-defined") {
     bkg <- bgil[, grep(bg2, names(bgil))]
   }
   if (bg2 == "ideal") {
     bkg <- rep(1, dim(rspecdata)[1])
   }
+  if(bg2 == 'user-defined'){
+    bkg <- check_userdefined(bkg)
+    bkg_wl <- isolate_wl(bkg, keep = 'wl')
+    bkg <- as.matrix(isolate_wl(bkg, keep = 'spec'))
+  }
 
-  # Defining ocular  <- mission
+  # Definine transmission
   trdat <- transmissiondata
 
   if (tr2 != "user-defined") {
@@ -298,7 +341,6 @@ vismodel <- function(rspecdata,
   if (tr2 == "ideal") {
     trans <- rep(1, dim(rspecdata)[1])
   }
-
   if (tr2 != "ideal" & visual2 == "user-defined") {
     if (inherits(fullS, "sensmod")) {
       if (attr(fullS, "om")) {
@@ -311,33 +353,33 @@ vismodel <- function(rspecdata,
       }
     }
   }
-
-  prepare_userdefined <- function(df) {
-    dfname <- deparse(substitute(df))
-
-    if (is.rspec(df)) {
-      dfwhichused <- names(df)[2]
-      df <- df[, 2]
-      warning(dfname, " is an rspec object; first spectrum (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    } else if (is.data.frame(df) | is.matrix(df)) {
-      dfwhichused <- names(df)[1]
-      df <- df[, 1]
-      warning(dfname, " is a matrix or data frame; first column (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
-      )
-    }
-    return(df)
+  if(tr2 == 'user-defined'){
+    trans <- check_userdefined(trans)
+    trans_wl <- isolate_wl(trans, keep = 'wl')
+    trans <- as.matrix(isolate_wl(trans, keep = 'spec'))
   }
-
-  trans <- prepare_userdefined(trans)
-  bkg <- prepare_userdefined(bkg)
-  illum <- prepare_userdefined(illum)
-  achromatic <- prepare_userdefined(achromatic)
-
+  
+  # Define achromatic
+  if(achromatic2 == 'user-defined'){
+    achromatic <- check_userdefined(achromatic)
+    achromatic_wl <- isolate_wl(achromatic, keep = 'wl')
+    achromatic <- as.matrix(isolate_wl(achromatic, keep = 'spec'))
+  }
+  
+  # Check if wavelength ranges match
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
+      visual2 == "user-defined") {
+    stop(
+      "wavelength range in spectra and visual system data do not match - ",
+      "spectral data must range between 300 and 700 nm in 1-nm intervals.",
+      "Consider interpolating using as.rspec()."
+    )
+  }
+  
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
+    stop("wavelength range in spectra and visual system data do not match")
+  }  
+  
   # Transform from percentages to proportions (Vorobyev 2003)
   if (max(y) > 1) {
     y <- y / 100

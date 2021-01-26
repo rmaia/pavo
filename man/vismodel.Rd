@@ -26,8 +26,8 @@ data in remaining columns.}
 
 \item{visual}{the visual system to be used. Options are:
 \itemize{
-\item a data frame such as one produced containing by \code{\link[=sensmodel]{sensmodel()}}, containing
-user-defined sensitivity data for the receptors involved in colour vision.
+\item a data frame, possibly of class \code{rspec} (such as one produced containing by \code{\link[=sensmodel]{sensmodel()}}),
+containing user-defined sensitivity data for the receptors involved in colour vision.
 The data frame must contain a \code{'wl'} column with the range of wavelengths included,
 and the sensitivity for each other cone as a column.
 \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
@@ -51,8 +51,9 @@ of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 }}
 
 \item{achromatic}{the sensitivity data to be used to calculate luminance (achromatic)
-receptor stimulation. Either a vector containing the sensitivity for a single receptor,
-or one of the options:
+receptor stimulation. Either a data frame, possibly of class \code{rspec}, containing a \code{'wl'}
+column specifying the range of wavelengthts included along with a column containing the
+sensitivity of a single receptor, or one of the options:
 \itemize{
 \item \code{'none'}: no achromatic stimulation calculated (default).
 \item \code{'bt.dc'}: Blue tit \emph{Cyanistes caeruleus} double cone.
@@ -66,7 +67,9 @@ or one of the options:
 \item \code{'all'}: the summed response of all photoreceptors.
 }}
 
-\item{illum}{either a vector containing the illuminant, or one of the options:
+\item{illum}{Either a data frame, possibly of class \code{rspec}, containing a \code{'wl'}
+column specifying the range of wavelengthts included along with a column
+specifying the illuminant spectrum, or one of the options:
 \itemize{
 \item \code{'ideal'}: homogeneous illuminance of 1 across wavelengths (default)
 \item \code{'bluesky'} open blue sky.
@@ -88,12 +91,15 @@ ocular transmission (from Hart et al. 2000).
 \itemize{
 \item \code{'Qi'}: Quantum catch for each photoreceptor (default)
 \item \code{'fi'}: Quantum catch according to Fechner's law (the signal of the receptor
-channel is proportional to the logarithm of the quantum catch)
+channel is proportional to the logarithm of the quantum catch). Hence fi =
+log(Qi).
 \item \code{'Ei'}: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).
 }}
 
 \item{bkg}{background spectrum. Note that this will have no effect when \code{vonkries = FALSE}.
-Either a vector containing the spectral data, or one of the options:
+Either a data frame, possibly of class \code{rspec}, containing a \code{'wl'} column specifying the range
+of wavelengthts included along with a column specifying background spectrum,
+or one of the options:
 \itemize{
 \item \code{'ideal'}: homogeneous illuminance of 1 across all wavelengths (default).
 \item \code{'green'}: green foliage.
@@ -118,7 +124,7 @@ photoreceptors considered. Information on the parameters used in the calculation
 stored and can be called using the \code{\link[=summary.vismodel]{summary.vismodel()}} function.
 }
 \description{
-Calculates quantum catches at each photoreceptor. Both raw and relative values
+Calculates quantum catches for each photoreceptor. Both raw and relative values
 can be returned, for use in a suite of colourspace and non-colourspace models.
 }
 \note{
@@ -152,6 +158,7 @@ custom <- sensmodel(c(330, 440, 550))
 names(custom) <- c("wl", "s", "m", "l")
 vis.custom <- vismodel(flowers, visual = custom)
 tri.custom <- colspace(vis.custom, space = "tri")
+
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
