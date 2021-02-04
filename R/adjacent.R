@@ -13,9 +13,9 @@
 #'   axis, from which the evenly-spaced sampling grid is constructed (if
 #'   required). Defaults to the smallest dimension of `classimg`, though this
 #'   should be carefully considered.
-#' @param xscale (required) an integer specifying the true length of the x-axis,
-#'   in preferred units. Not required, and ignored, only if image scales have
-#'   been set via [procimg()].
+#' @param xscale (required) an integer or list of integers equal in length to classimg()
+#'   specifying the true length of the x-axis, in preferred units. Not required,
+#'   and ignored, only if image scales have been set via [procimg()].
 #' @param exclude the portion of the scene to be excluded from the analysis, if
 #'   any.
 #'   - `'none'`: default
@@ -157,7 +157,6 @@
 adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
                      polygon = NULL, exclude = c("none", "background", "object"),
                      coldists = NULL, hsl = NULL) {
-
   exclude2 <- match.arg(exclude)
 
   ## ------------------------------ Checks ------------------------------ ##
@@ -249,12 +248,15 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   ## Setting scales
   if (!is.na(attr(classimg[[1]], "px_scale"))) {
     xscale <- lapply(classimg, function(x) attr(x, "px_scale") * dim(x)[2])
-  } else if (is.null(xscale)) {
-    stop("Required argument xscale is missing, and one or more images are uncalibrated. Either specify xscale or use procimg() to set a scale for each image.")
-  } else if (length(xscale) <= 1) {
+    if (!is.null(xscale)) {
+      message("Argument xscale specified, but the image already contains a scale. Ignoring xscale in favour of the image's current scale")
+    }
+  } else if (length(xscale) <= 1 && is.numeric(xscale)) {
     xscale <- as.list(rep(xscale, length(classimg)))
-  } else if (length(xscale) == length(classimg)) {
+  } else if (length(xscale) == length(classimg) && is.numeric(unlist(xscale))) {
     xscale <- xscale
+  } else {
+    stop("Required argument xscale is missing or incorrectly specified, and one or more images are uncalibrated. Either specify xscale (an integer or integers) or use procimg() to set a scale for each image.")
   }
 
   ## Sampling density

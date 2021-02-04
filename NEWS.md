@@ -11,6 +11,7 @@
 * The `margins` argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard `par(mar = c())` pathway.
 * Fixed a bug where `bootcoldist()` would not run until supplied with receptor-noise model arguments (n, weber, weber.ref), even when not running the receptor-noise model.
 * Fixed a bug where `bootcoldist()` would sometimes fail when given data from colourspace models containing lots of negative coordinate values. This was particularly common for the hexagon model.
+* Improved safety and error handling in `adjacent()`.
 
 # pavo 2.6.1
 

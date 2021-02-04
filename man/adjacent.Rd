@@ -27,9 +27,9 @@ axis, from which the evenly-spaced sampling grid is constructed (if
 required). Defaults to the smallest dimension of \code{classimg}, though this
 should be carefully considered.}
 
-\item{xscale}{(required) an integer specifying the true length of the x-axis,
-in preferred units. Not required, and ignored, only if image scales have
-been set via \code{\link[=procimg]{procimg()}}.}
+\item{xscale}{(required) an integer or list of integers equal in length to classimg()
+specifying the true length of the x-axis, in preferred units. Not required,
+and ignored, only if image scales have been set via \code{\link[=procimg]{procimg()}}.}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background alone, for relatively homogeneous and
