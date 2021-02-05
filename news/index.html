@@ -172,6 +172,7 @@
 <li>The <code>margins</code> argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard <code><a href="https://rdrr.io/r/graphics/par.html">par(mar = c())</a></code> pathway.</li>
 <li>Fixed a bug where <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> would not run until supplied with receptor-noise model arguments (n, weber, weber.ref), even when not running the receptor-noise model.</li>
 <li>Fixed a bug where <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> would sometimes fail when given data from colourspace models containing lots of negative coordinate values. This was particularly common for the hexagon model.</li>
+<li>Improved safety and error handling in <code><a href="../reference/adjacent.html">adjacent()</a></code>.</li>
 </ul>
 </div>
 </div>
