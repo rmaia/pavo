@@ -66,7 +66,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
                       type = "p", labels = FALSE, gamut = FALSE, margin = NULL, ...) {
   if (!missing("margin")) {
-    message("The 'margin' argument is deprecated, and will be ignored. See ?par() for guidance on 
+    message("The 'margin' argument is deprecated, and will be ignored. See ?par() for guidance on
             setting margins in the standard manner.")
   }
 
@@ -411,6 +411,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
   if (gamut) {
     maxgamut <- attr(tcsdata, "data.maxgamut")
+    maxgamut <- na.omit(maxgamut)
     colnames(maxgamut) <- c("x", "y", "z")
     attr(maxgamut, "clrsp") <- "tcs"
     tryCatch(vol(maxgamut, grid = FALSE),

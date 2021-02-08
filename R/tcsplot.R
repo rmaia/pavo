@@ -110,6 +110,7 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
 
   if (gamut) {
     maxgamut <- attr(tcsdata, "data.maxgamut")
+    maxgamut <- na.omit(maxgamut)
     colnames(maxgamut) <- c("x", "y", "z")
     attr(maxgamut, "clrsp") <- "tcs"
     tryCatch(tcsvol(maxgamut, grid = FALSE),
