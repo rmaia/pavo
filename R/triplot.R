@@ -42,7 +42,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
                     square = TRUE, gamut = FALSE, margins = NULL, ...) {
   if (!missing("margins")) {
-    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on
             setting margins in the standard manner.")
   }
 
@@ -85,9 +85,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
     coords_mono <- attr(tridata, "data.maxgamut")
     max_gamut <- tryCatch(
       {
-        convhulln(coords_mono)
+        coords_mono <- na.omit(coords_mono)
+        max_gamut <- geometry::convhulln(coords_mono)
         polygon(coords_mono[sort(c(max_gamut)), ],
-          col = "#55555555", border = NA
+                col = "#55555555", border = NA
         )
       },
       error = function(e) warning("Max gamut cannot be plotted.", call. = FALSE)
