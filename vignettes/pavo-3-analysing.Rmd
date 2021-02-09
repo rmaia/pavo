@@ -562,7 +562,7 @@ plot(coc.flowers, pch = 21, bg = spec2rgb(flowers), yaxt = "n")
 
 #### CIE Spaces
 
-The CIE (International Commission on Illumination) colourspaces are a suite of models of human colour vision and perception. `pavo 1.0` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space and its cylindrical CIE LCh transformation. Tristimulus values in XYZ space are calculated as:
+The CIE (International Commission on Illumination) colourspaces are a suite of models of human colour vision and perception. `pavo` now includes two of the most commonly used: the foundational 1931 CIE XYZ space, and the more modern, perceptually calibrated CIE LAB space and its cylindrical CIE LCh transformation. Tristimulus values in XYZ space are calculated as:
 
 $$X = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{x}(\lambda)\,d\lambda}$$
 $$Y = k\int_{300}^{700}{R(\lambda)I(\lambda)\bar{y}(\lambda)\,d\lambda}$$
