@@ -74,9 +74,11 @@ test_that("Symmetric", {
   vol_hq <- voloverlap(hrep, qux, type = "convex")
   vol_qh <- voloverlap(qux, hrep, type = "convex")
 
-  expect_identical(vol_hq$overlapvol, vol_qh$overlapvol)
-  expect_identical(vol_hq$vsmallest, vol_qh$vsmallest)
-  expect_identical(vol_hq$vboth, vol_hq$vboth)
+  # expect_identical() should work but for some reason, it fails on CRAN
+  # platform ATLAS
+  expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
+  expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
+  expect_equal(vol_hq$vboth, vol_hq$vboth)
 })
 
 test_that("Plane", {
