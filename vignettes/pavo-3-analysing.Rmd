@@ -509,6 +509,24 @@ Another advantage of colourspace models is that they allow for the calculation o
 summary(tetra.flowers)
 ```
 
+
+It is important to highlight that oftentimes, the properties of the visual system will make it impossible to reach the entirety of the Maxwell triangle space (or tetrahedron for tetrachromatic viewers). You can view the maximum gamut of a given viewer by switching the `gamut` argument to `TRUE` in `plot.colspace()`:
+
+```{r}
+vis.flowers <- vismodel(flowers, visual = "ctenophorus")
+
+tri.flowers <- colspace(vis.flowers)
+
+plot(tri.flowers, pch = 21, bg = spec2rgb(flowers), gamut = TRUE)
+```
+
+This information is also available in the summary, in the "Max possible chromatic volume" line:
+
+```{r}
+summary(tri.flowers)
+```
+
+
 #### The Colour Hexagon
 
 The hexagon colour space of @Chittka1992 is a generalised colour-opponent model of hymenopteran vision that has found extremely broad use, particularly in studies of bee-flower interactions. It's also often broadly applied across hymenopteran species, because the photopigments underlying trichromatic vision in Hymenoptera appear to be quite conserved [@Briscoe2001]. What's particularly useful is that colour distances within the hexagon have been extensively validated against behaviour, and thus offer a relatively reliable measure of perceptual distance.
