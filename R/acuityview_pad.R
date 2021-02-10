@@ -1,5 +1,5 @@
 #' @importFrom stats fft
-acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
+acuityview_pad <- function(image, obj_dist, obj_width, eye_res){
   
   # Vector of powers of 2 up until realistic maximum possible image dimension. Clumsy.
   pow2 <- 2^c(1:100)
@@ -8,23 +8,23 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   square <- dim(image)[1] == dim(image)[2] && is.element(dim(image)[1], pow2)
 
   # Zero-pad if not square with dimension power-2    
-  # if(!square){
-  #   # Minimum necessary square dimension
-  #   necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))]) 
-  #   
-  #   # Number of rows and columns necessary for padding (per-edge)
-  #   row_pad <- (necessary_dim - nrow(image)) / 2
-  #   col_pad <- (necessary_dim - ncol(image)) / 2
-  #   
-  #   # Create & fill padded image
-  #   image_pad <- array(0, dim = c(necessary_dim, necessary_dim, 3))
-  #   for(i in 1:3){
-  #     image_pad[ , , i] <- zero_pad(image[ , , i], col_pad, row_pad, opt = 'pad')
-  #   }
-  #   image_pad
-  # }else{
+  if(!square){
+    # Minimum necessary square dimension
+    necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))])
+
+    # Number of rows and columns necessary for padding (per-edge)
+    row_pad <- (necessary_dim - nrow(image)) / 2
+    col_pad <- (necessary_dim - ncol(image)) / 2
+
+    # Create & fill padded image
+    image_pad <- array(0, dim = c(necessary_dim, necessary_dim, 3))
+    for(i in 1:3){
+      image_pad[ , , i] <- zero_pad(image[ , , i], col_pad, row_pad, opt = 'pad', mean_rgb = median(image))
+    }
+    image_pad
+  }else{
     image_pad <- image
-  #}
+  }
   
   # Image width in degrees
   width_deg <- 57.2958 * (2 * atan(obj_width / obj_dist / 2))
@@ -53,6 +53,7 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   MTF[center, center] <-  1
   
   # Cancel effect of MTF for non-real (padded) image regions
+  # Don't think it's necessary, but keeping for now
   #MTF <- zero_pad(MTF, col_pad, row_pad, opt = 'MTF')
   
   # Linearise sRGB values
@@ -94,13 +95,10 @@ acuityview_zeropad <- function(image, obj_dist, obj_width, eye_res){
   }
   
   # Re-scale to a max of 1 if any values end up > 1
-  # TODO: Confirm correct re-scale (TOFIX)
   rescale <- function(channel){
     if(any(channel > 1)){
-      # chan_range <- range(channel)
-      # mult <- (1 - chan_range[1])/(chan_range[2] - chan_range[1])
-      # chan_range[1] + (channel - chan_range[1]) * mult
-      channel <- (channel - min(channel))/max(channel)
+      mfac <- (1 - min(channel))/(range(channel)[2] - range(channel)[1])
+      channel <- min(channel) + (channel - range(channel)[1]) * mfac
     }
     channel
   }
@@ -129,23 +127,23 @@ fft_shift <- function(input_matrix) {
   out_mat
 }
 
-## Zero padding function  ##
+## Padding function  ##
 # The control-flow handles cases
 # where an uneven number of rows/columns
 # need to be added to reach the power-of-2 square
 # dimensions. In those cases the image won't
 # be exactly centered within the padding, but
 # I don't know what else can be done.
-zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF")) {
+zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF"), mean_rgb) {
   if (opt == "pad") {
     # Add column padding
-      mat_col_low <- matrix(0, nrow(dat), floor(col_zeros))
-      mat_col_high <- matrix(0, nrow(dat), ceiling(col_zeros))
+      mat_col_low <- matrix(mean_rgb, nrow(dat), floor(col_zeros))
+      mat_col_high <- matrix(mean_rgb, nrow(dat), ceiling(col_zeros))
       out <- cbind(mat_col_low, dat, mat_col_high)
     
     # Add row padding
-      mat_colrow_low <- matrix(0, floor(row_zeros), ncol(out))
-      mat_colrow_high <- matrix(0, ceiling(row_zeros), ncol(out))
+      mat_colrow_low <- matrix(mean_rgb, floor(row_zeros), ncol(out))
+      mat_colrow_high <- matrix(mean_rgb, ceiling(row_zeros), ncol(out))
       out2 <- rbind(mat_colrow_low, out, mat_colrow_high)
   }
   
@@ -164,14 +162,15 @@ zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF")) {
       out2 <- out[(ceiling(row_zeros)):(nrow(out) - ceiling(row_zeros)), ]
     }
   }
-  if (opt == "MTF") {
-    out2 <- dat
-    # Rows
-    out2[1:floor(row_zeros), ] <- 1
-    out2[(nrow(dat) - ceiling(row_zeros)):nrow(dat), ] <- 1
-    # Columns
-    out2[, 1:floor(col_zeros)] <- 1
-    out2[, (ncol(dat) - ceiling(col_zeros)):ncol(dat)] <- 1
-  }
+  # Don't think this is needed, but keeping for now.
+  # if (opt == "MTF") {
+  #   out2 <- dat
+  #   # Rows
+  #   out2[1:floor(row_zeros), ] <- 1
+  #   out2[(nrow(dat) - ceiling(row_zeros)):nrow(dat), ] <- 1
+  #   # Columns
+  #   out2[, 1:floor(col_zeros)] <- 1
+  #   out2[, (ncol(dat) - ceiling(col_zeros)):ncol(dat)] <- 1
+  # }
   out2
 }

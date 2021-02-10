@@ -150,7 +150,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (!is.null(acuity)) {
     ## TODO: Add input checks
     for (i in seq_along(image)) {
-      image[[i]] <- acuityview(image[[i]], acuity[1], acuity[2], acuity[3])
+      image[[i]] <- acuityview_pad(image[[i]], acuity[1], acuity[2], acuity[3])
     }
   }
 
