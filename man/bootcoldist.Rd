@@ -4,7 +4,7 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, cores = NULL, ...)
+bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.
@@ -19,15 +19,16 @@ the object belongs to.}
 
 \item{alpha}{the confidence level for the confidence intervals (defaults to 0.95)}
 
-\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
-customise your parallelisation strategy.}
+\item{raw}{should the full set of bootstrapped distances (equal in length to boot.n)
+be returned, instead of the summary distances and CI's? Defaults to FALSE.}
 
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped
-confidence limits for dS (and dL if \code{achromatic = TRUE}).
+confidence limits for dS (and dL if \code{achromatic = TRUE}), or a data.frame
+of raw bootstraped dS (and dL if \code{achromatic = TRUE}) values equal in length to boot.n.
 }
 \description{
 Uses a bootstrap procedure to generate confidence intervals
@@ -42,10 +43,30 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 }
 \examples{
 \donttest{
+# Run the receptor-noise limited model, using the visual phenotype
+# of the blue tit
 data(sicalis)
-vm <- vismodel(sicalis, achromatic = "bt.dc")
+vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 gr <- gsub("ind..", "", rownames(vm))
 bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+
+# Run the same again, though as a simple colourspace model
+data(sicalis)
+vm <- vismodel(sicalis, achromatic = "bt.dc")
+space <- colspace(vm)
+gr <- gsub("ind..", "", rownames(space))
+bootcoldist(space, by = gr)
+
+# Estimate bootstrapped colour-distances for a more 'specialised' model,
+# like the colour hexagon
+data(flowers)
+vis.flowers <- vismodel(flowers,
+  visual = "apis", qcatch = "Ei", relative = FALSE,
+  vonkries = TRUE, achromatic = "l", bkg = "green"
+)
+flowers.hex <- colspace(vis.flowers, space = "hexagon")
+pop_group <- c(rep("pop_1", nrow(flowers.hex) / 2), rep("pop_2", nrow(flowers.hex) / 2))
+bootcoldist(flowers.hex, by = pop_group)
 }
 
 }

@@ -14,8 +14,8 @@ diplot(
   out.lwd = 1,
   out.lcol = "black",
   out.lty = 1,
-  margins = c(1, 1, 2, 2),
   square = TRUE,
+  margins = NULL,
   ...
 )
 }
@@ -43,10 +43,10 @@ corresponding vertex?}
 
 \item{out.lty}{graphical parameters for the plot outline.}
 
-\item{margins}{margins for the plot.}
-
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
+
+\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

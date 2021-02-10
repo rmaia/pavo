@@ -4,15 +4,12 @@ tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
 tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 
 test_that("Overlap", {
-
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 0.1972758, tolerance = 1e-5)
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 9.922872e-06, tolerance = 1e-7)
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 1.146523e-05, tolerance = 1e-6)
-
 })
 
 test_that("tcs", {
-
   tcs_sicalis <- colspace(vismodel(sicalis))
   vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis, type = "convex")
 
@@ -22,7 +19,6 @@ test_that("tcs", {
 })
 
 test_that("tri", {
-
   tri_sicalis <- colspace(vismodel(sicalis, visual = "ctenophorus"))
   vol_sicalis <- voloverlap(tri_sicalis, tri_sicalis, type = "convex")
 
@@ -78,9 +74,11 @@ test_that("Symmetric", {
   vol_hq <- voloverlap(hrep, qux, type = "convex")
   vol_qh <- voloverlap(qux, hrep, type = "convex")
 
-  expect_identical(vol_hq$overlapvol, vol_qh$overlapvol)
-  expect_identical(vol_hq$vsmallest, vol_qh$vsmallest)
-  expect_identical(vol_hq$vboth, vol_hq$vboth)
+  # expect_identical() should work but for some reason, it fails on CRAN
+  # platform ATLAS
+  expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
+  expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
+  expect_equal(vol_hq$vboth, vol_hq$vboth)
 })
 
 test_that("Plane", {
@@ -95,7 +93,6 @@ test_that("Plane", {
 })
 
 test_that("Alphashapes", {
-
   skip_if_not_installed("alphashape3d")
 
   overlap_alpha <- expect_silent(
@@ -112,5 +109,4 @@ test_that("Alphashapes", {
     digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
     "7932522b35c2c59365fe7c342f367f8ec35f601a"
   )
-
 })

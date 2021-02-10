@@ -22,26 +22,25 @@
 #'
 #' @examples
 #' if (interactive()) {
-#' # For plotting
-#' data(sicalis)
-#' vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
-#' tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
-#' tcsplot(tcs.sicalis, size = 0.005)
-#' rgl::rgl.postscript("testplot.pdf", fmt = "pdf")
-#' rgl::rgl.snapshot("testplot.png")
+#'   # For plotting
+#'   data(sicalis)
+#'   vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
+#'   tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
+#'   tcsplot(tcs.sicalis, size = 0.005)
+#'   rgl::rgl.postscript("testplot.pdf", fmt = "pdf")
+#'   rgl::rgl.snapshot("testplot.png")
 #'
-#' # For adding points
-#' patch <- rep(c("C", "T", "B"), 7)
-#' tcs.crown <- subset(tcs.sicalis, "C")
-#' tcs.breast <- subset(tcs.sicalis, "B")
-#' tcsplot(tcs.crown, col = "blue")
-#' tcspoints(tcs.breast, col = "red")
+#'   # For adding points
+#'   patch <- rep(c("C", "T", "B"), 7)
+#'   tcs.crown <- subset(tcs.sicalis, "C")
+#'   tcs.breast <- subset(tcs.sicalis, "B")
+#'   tcsplot(tcs.crown, col = "blue")
+#'   tcspoints(tcs.breast, col = "red")
 #'
-#' # For plotting convex hull
-#' tcsplot(tcs.sicalis, col = "blue", size = 0.005)
-#' tcsvol(tcs.sicalis)
+#'   # For plotting convex hull
+#'   tcsplot(tcs.sicalis, col = "blue", size = 0.005)
+#'   tcsvol(tcs.sicalis)
 #' }
-#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @export
@@ -111,6 +110,7 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
 
   if (gamut) {
     maxgamut <- attr(tcsdata, "data.maxgamut")
+    maxgamut <- na.omit(maxgamut)
     colnames(maxgamut) <- c("x", "y", "z")
     attr(maxgamut, "clrsp") <- "tcs"
     tryCatch(tcsvol(maxgamut, grid = FALSE),

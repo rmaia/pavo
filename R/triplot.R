@@ -14,12 +14,12 @@
 #' @param achrocol color of the point at the origin `achro = TRUE` (defaults to
 #'   `'grey'`).
 #' @param out.lwd,out.lcol,out.lty graphical parameters for the plot outline.
-#' @param margins margins for the plot.
 #' @param square logical. Should the aspect ratio of the plot be held to 1:1?
 #'   (defaults to `TRUE`).
 #' @param gamut logical. Should the polygon showing the possible colours given
 #'   visual system and illuminant used in the analysis (defaults to `FALSE`).
 #'   This option currently only works when `qcatch = Qi`.
+#' @param margins Deprecated. Please use the standard [par()] method for custom margins.
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -40,20 +40,18 @@
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
-                    margins = c(1, 1, 2, 2), square = TRUE, gamut = FALSE, ...) {
-
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-
-  par(mar = margins)
-
-  if (square) {
-    par(pty = "s")
+                    square = TRUE, gamut = FALSE, margins = NULL, ...) {
+  if (!missing("margins")) {
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on
+            setting margins in the standard manner.")
   }
 
   arg <- list(...)
 
   # Set defaults
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }
@@ -87,9 +85,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
     coords_mono <- attr(tridata, "data.maxgamut")
     max_gamut <- tryCatch(
       {
-        convhulln(coords_mono)
+        coords_mono <- na.omit(coords_mono)
+        max_gamut <- geometry::convhulln(coords_mono)
         polygon(coords_mono[sort(c(max_gamut)), ],
-          col = "#55555555", border = NA
+                col = "#55555555", border = NA
         )
       },
       error = function(e) warning("Max gamut cannot be plotted.", call. = FALSE)

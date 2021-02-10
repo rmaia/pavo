@@ -19,10 +19,9 @@
 #'   from the plotting area when `space = "cielab"`.
 #' @param box logical. Should the plot area box and axes be plotted? (defaults
 #'   to `FALSE`)
-#' @param margin vector of four numbers specifying drawing margins for CIELAB
-#'   plot (defaults to c(0,0,0,0))
 #' @param ciebg should the colour background be plotted for CIEXYZ plot?
 #'   (defaults to `TRUE`)
+#' @param margin Deprecated. Please use the standard [par()] method for custom margins.
 #' @inheritParams triplot
 #'
 #' @examples
@@ -53,10 +52,13 @@
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
-                    margin = c(0, 0, 0, 0), ciebg = TRUE, ...) {
-
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
+                    ciebg = TRUE, margin = NULL, ...) {
+  if (!missing("margin")) {
+    message(
+      "The 'margin' argument is deprecated, and will be ignored. ",
+      "See ?par() for guidance on setting margins in the standard manner."
+    )
+  }
 
   arg <- list(...)
 
@@ -166,8 +168,6 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
     # draw blank 3d plot
     # Using persp directly creates a white rectangle that cannot be removed. So
     # we have to use perspbox instead.
-
-    par(mar = margin)
 
     P <- do.call(perspbox, c(list(
       x = arg$xlim,

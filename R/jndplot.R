@@ -69,12 +69,10 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
 
-  if (square) {
-    par(pty = "s")
-  }
-
   arg <- list(...)
-
+  if (square) {
+    arg$asp <- 1
+  }
   if (achro) {
     plotdims <- sum(c("x", "y", "z", "lum") %in% colnames(x))
   } else {

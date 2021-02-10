@@ -12,8 +12,8 @@ segplot(
   out.lty = 1,
   out.lcol = "black",
   tick.loc = c(-1, -0.5, 0.5, 1),
-  margins = c(1, 1, 2, 2),
   square = TRUE,
+  margins = NULL,
   ...
 )
 }
@@ -28,10 +28,10 @@ corresponding vertex?}
 \item{tick.loc}{a numeric vector specifying the location of tick marks on x &
 y axes.}
 
-\item{margins}{margins for the plot.}
-
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
+
+\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

@@ -15,8 +15,8 @@ cieplot(
   r = 1e+06,
   zoom = 1,
   box = FALSE,
-  margin = c(0, 0, 0, 0),
   ciebg = TRUE,
+  margin = NULL,
   ...
 )
 }
@@ -51,11 +51,10 @@ from the plotting area when \code{space = "cielab"}.}
 \item{box}{logical. Should the plot area box and axes be plotted? (defaults
 to \code{FALSE})}
 
-\item{margin}{vector of four numbers specifying drawing margins for CIELAB
-plot (defaults to c(0,0,0,0))}
-
 \item{ciebg}{should the colour background be plotted for CIEXYZ plot?
 (defaults to \code{TRUE})}
+
+\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

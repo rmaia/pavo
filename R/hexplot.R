@@ -35,20 +35,19 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     sectors = c("none", "fine", "coarse"), sec.col = "grey",
                     out.lwd = 1, out.lty = 1, out.lcol = "black",
                     labels.cex = 1, achrosize = 0.8,
-                    achrocol = "grey", margins = c(1, 1, 2, 2), square = TRUE, ...) {
-  sectors <- match.arg(sectors)
-
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-  par(mar = margins)
-
-  if (square) {
-    par(pty = "s")
+                    achrocol = "grey", square = TRUE, margins = NULL, ...) {
+  if (!missing("margins")) {
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
+            setting margins in the standard manner.")
   }
+
+  sectors <- match.arg(sectors)
 
   # Set defaults
   arg <- list(...)
-
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }

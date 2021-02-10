@@ -12,8 +12,7 @@ adjacent(
   polygon = NULL,
   exclude = c("none", "background", "object"),
   coldists = NULL,
-  hsl = NULL,
-  cores = NULL
+  hsl = NULL
 )
 }
 \arguments{
@@ -28,9 +27,9 @@ axis, from which the evenly-spaced sampling grid is constructed (if
 required). Defaults to the smallest dimension of \code{classimg}, though this
 should be carefully considered.}
 
-\item{xscale}{(required) an integer specifying the true length of the x-axis,
-in preferred units. Not required, and ignored, only if image scales have
-been set via \code{\link[=procimg]{procimg()}}.}
+\item{xscale}{(required) an integer or list of integers equal in length to classimg()
+specifying the true length of the x-axis, in preferred units. Not required,
+and ignored, only if image scales have been set via \code{\link[=procimg]{procimg()}}.}
 
 \item{bkgID}{an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background alone, for relatively homogeneous and
@@ -71,9 +70,6 @@ patch elements, as might be estimated via \code{\link[=vismodel]{vismodel()}} an
 The first column, named 'patch', should contain numeric color category IDs,
 with the remaining columns specifying one or more of 'hue' (angle, in
 radians), 'sat', and/or 'lum'.}
-
-\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
-customise your parallelisation strategy.}
 }
 \value{
 a data frame of summary variables:

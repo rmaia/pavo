@@ -25,7 +25,11 @@
 segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
                     out.lwd = 1, out.lty = 1, out.lcol = "black",
                     tick.loc = c(-1, -0.5, 0.5, 1),
-                    margins = c(1, 1, 2, 2), square = TRUE, ...) {
+                    square = TRUE, margins = NULL, ...) {
+  if (!missing("margins")) {
+    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
+            setting margins in the standard manner.")
+  }
 
   # Check if object is of class colorspace and tetrachromat
   if (!is.colspace(segdata) & !all(c("LM", "MS") %in% names(segdata))) {
@@ -41,16 +45,10 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
 
   arg <- list(...)
 
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-
-  par(mar = margins)
-
-  if (square) {
-    par(pty = "s")
-  }
-
   # Set defaults
+  if (square) {
+    arg$asp <- 1
+  }
   if (is.null(arg$pch)) {
     arg$pch <- 19
   }

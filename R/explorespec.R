@@ -30,7 +30,6 @@
 explorespec <- function(rspecdata, by = NULL,
                         scale = c("equal", "free"),
                         legpos = "topright", ...) {
-
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
 

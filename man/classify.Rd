@@ -12,7 +12,6 @@ classify(
   interactive = FALSE,
   plotnew = FALSE,
   col = "red",
-  cores = NULL,
   ...
 )
 }
@@ -49,9 +48,6 @@ Defaults to \code{FALSE}.}
 
 \item{col}{the color of the marker points, when \code{interactive = TRUE}.}
 
-\item{cores}{deprecated. See \code{\link[future:plan]{future::plan()}} for more details on how to
-customise your parallelisation strategy.}
-
 \item{...}{additional graphical parameters when \code{interactive = TRUE}.
 Also see \code{\link[graphics:par]{graphics::par()}}.}
 }
@@ -83,9 +79,8 @@ papilio_class <- classify(papilio, kcols = 4)
 # Multiple images, with interactive classification and a reference image
 snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 if (interactive()) {
-snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
+  snakes_class <- classify(snakes, refID = "snake_01", interactive = TRUE)
 }
-
 }
 \seealso{
 \link[stats:kmeans]{stats::kmeans}

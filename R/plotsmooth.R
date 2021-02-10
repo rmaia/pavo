@@ -26,7 +26,6 @@
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
                        curves = 5, specnum = "ALL", ask = TRUE) {
-
   oldpar <- par(no.readonly = TRUE)
   on.exit(par(oldpar))
 

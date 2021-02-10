@@ -14,9 +14,9 @@ triplot(
   out.lwd = 1,
   out.lcol = "black",
   out.lty = 1,
-  margins = c(1, 1, 2, 2),
   square = TRUE,
   gamut = FALSE,
+  margins = NULL,
   ...
 )
 }
@@ -40,14 +40,14 @@ corresponding vertex?}
 
 \item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
-\item{margins}{margins for the plot.}
-
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
 
 \item{gamut}{logical. Should the polygon showing the possible colours given
 visual system and illuminant used in the analysis (defaults to \code{FALSE}).
 This option currently only works when \code{qcatch = Qi}.}
+
+\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

@@ -34,16 +34,12 @@ projplot <- function(tcsdata, ...) {
     )
   }
 
-  oldpar <- par(no.readonly = TRUE)
-  on.exit(par(oldpar))
-
   # plot
   cu <- "#984EA3"
   cs <- "#377EB8"
   cm <- "#4DAF4A"
   cl <- "#E41A1C"
 
-  par(mar = c(0, 0, 0, 0))
   plot(0, 0,
     axes = FALSE, xlab = "", ylab = "", type = "n", frame.plot = FALSE,
     xlim = c(-2, 2), ylim = c(-1, 1)
