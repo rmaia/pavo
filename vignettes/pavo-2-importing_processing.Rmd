@@ -453,7 +453,7 @@ Images often require some post-capture processing, depending on the intended use
 
 ## Setting Scales and Defining Objects
 
-The functionality of `procimg()` is currently centred on rotating and resizing images, setting a real-world image scale, and/or distinguishing the focal object from its background. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
+The functionality of `procimg()` is currently centred on rotating and resizing images, setting a real-world image scale, distinguishing the focal object from its background, and filtering the image to model the visual acuity of potential viewers. Rotating an image simply requires inputting an angle, in degrees, by which the image is rotated about its centre, while resizing requires a scaling factor by which the size of image(s) are to be decreased or increased. Setting scales and distinguishing backgrounds, in contrast, are both interactive procedures, meaning that we are presented with the focal image and must select points on it using the mouse (either a line, when setting a scale, or a polygon when identifying the focus). If setting a scale, we specify a scale in our preferred units via `scaledist`, and then click the endpoints of the scale within the image (which could be a 'formal' scale, or simply the length of a wing or another known reference object). This information, as usual, is attached to the image as an attribute.
 
 ```{r, eval = FALSE}
 # Interactively specify the real-world scale of the image. Here 100 mm.
@@ -466,6 +466,8 @@ Distinguishing a focal object from its background is important in cases where we
 # Interactively specify a smoothed polygon around the focal objects
 butterflies <- procimg(butterflies, outline = TRUE, iterations = 1)
 ```
+
+## Modelling visual acuity
 
 All of these options can be simultaneously specified in a single call to `procimg()`, and the `pavo 2.0` publication offers a useful example of such processing, since the more involved features are difficult to illustrate here due to their interactive nature.
 

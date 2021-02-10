@@ -30,8 +30,6 @@ test_that("as.rimg", {
   expect_message(as.rimg(imgfake), "[0,1]")
   expect_message(as.rimg(imgfake2), "[0,1]")
 
-  expect_warning(getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"), cores = 2), "deprecated")
-
   # Classes/attributes/structure
   expect_equal(dim(rimgfake), c(10, 10, 3))
   expect_equal(dim(rimggrey), c(10, 10, 3))
