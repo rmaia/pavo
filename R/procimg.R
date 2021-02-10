@@ -25,14 +25,12 @@
 #' using Chaikin's corner-cuting algorithm? Defaults to `FALSE`.
 #' @param iterations the number of smoothing iterations, when `smooth = TRUE`.
 #' Defaults to `1`.
-#' @param acuity blur the image to model the visual acuity of non-human animals
-#' (as per Caves & Johnsen 2018's AcuityView algorithm). The argument takes a vector
-#' of three numeric values in a fixed order: (1) the real-world distance between the viewer
-#' and the focal object in the image in the image, (2) the real-world width of the entire image,
-#' (3) the resolution of the viewer in degrees. Any units are suitable for (1) and (2), but they
-#' must match. If using this capability, please cite Caves & Johnsen (2018), as per the included
-#' reference.
-#'
+#' @param obj_dist,obj_width,eye_res blur the image to model the visual acuity of non-human animals
+#' as per Caves & Johnsen 2018's AcuityView algorithm. The procedure requires three arguments;
+#' obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
+#' obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
+#' All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
+#' If using this capability, please cite Caves & Johnsen (2018), as per the included reference.
 #' @param plotnew should plots be opened in a new window? Defaults to `FALSE`.
 #' @param ... additional graphical parameters. Also see [par()].
 #'
@@ -59,7 +57,7 @@
 #'   # animal viewer. Here our butterfly is 60 cm away, the image width is 10 cm,
 #'   # and the spatial resolution of the viewer is 0.2-degrees.
 #'   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
-#'   tiger_acuity <- procimg(tiger, acuity = c(60, 10, 0.2))
+#'   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
 #' }
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
@@ -71,7 +69,8 @@
 
 procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
                     outline = FALSE, reclass = NULL, smooth = FALSE, iterations = 1L,
-                    col = "red", acuity = c(NULL, NULL, NULL), plotnew = FALSE, ...) {
+                    col = "red", obj_dist = NULL, obj_width = NULL, eye_res = NULL,
+                    plotnew = FALSE, ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -82,7 +81,8 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Options
-  if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass) && is.null(acuity)) {
+  if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass) &&
+    is.null(obj_dist) && is.null(obj_width) && is.null(eye_res)) {
     stop("No options selected.")
   }
 
@@ -143,14 +143,20 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Model acuity
-  if (attr(image[[1]], "state") == "colclass") {
-    message("Acuity-modelling can only be run on non-colour-classified (raw) images")
-    acuity <- c(NULL, NULL, NULL)
-  }
-  if (!is.null(acuity)) {
-    ## TODO: Add input checks
-    for (i in seq_along(image)) {
-      image[[i]] <- acuityview_pad(image[[i]], acuity[1], acuity[2], acuity[3])
+  if (!is.null(c(obj_dist, obj_width, eye_res))) {
+    # Require all arguments
+    if (!(is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
+      warning("Each of obj_dist, obj_width, and eye_res must be specified for acuity modelling")
+    }
+    # Raw images only
+    if (attr(image[[1]], "state") == "colclass") {
+      warning("Acuity modelling can only be run on non-colour-classified (raw) images")
+    }
+    # Model
+    if ((is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
+      for (i in seq_along(image)) {
+        image[[i]] <- acuityview_pad(image[[i]], obj_dist, obj_width, eye_res)
+      }
     }
   }
 

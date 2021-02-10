@@ -14,7 +14,9 @@ procimg(
   smooth = FALSE,
   iterations = 1L,
   col = "red",
-  acuity = c(NULL, NULL, NULL),
+  obj_dist = NULL,
+  obj_width = NULL,
+  eye_res = NULL,
   plotnew = FALSE,
   ...
 )
@@ -52,13 +54,12 @@ Defaults to \code{1}.}
 
 \item{col}{the color of the marker points and/or line, when using interactive options.}
 
-\item{acuity}{blur the image to model the visual acuity of non-human animals
-(as per Caves & Johnsen 2018's AcuityView algorithm). The argument takes a vector
-of three numeric values in a fixed order: (1) the real-world distance between the viewer
-and the focal object in the image in the image, (2) the real-world width of the entire image,
-(3) the resolution of the viewer in degrees. Any units are suitable for (1) and (2), but they
-must match. If using this capability, please cite Caves & Johnsen (2018), as per the included
-reference.}
+\item{obj_dist, obj_width, eye_res}{blur the image to model the visual acuity of non-human animals
+as per Caves & Johnsen 2018's AcuityView algorithm. The procedure requires three arguments;
+obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
+obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
+All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
+If using this capability, please cite Caves & Johnsen (2018), as per the included reference.}
 
 \item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 
@@ -85,7 +86,7 @@ if (interactive()) {
   # animal viewer. Here our butterfly is 60 cm away, the image width is 10 cm,
   # and the spatial resolution of the viewer is 0.2-degrees.
   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
-  tiger_acuity <- procimg(tiger, acuity = c(60, 10, 0.2))
+  tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2))
 }
 }
 \references{
