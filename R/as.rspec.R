@@ -51,7 +51,7 @@ as.rspec <- function(object, whichwl = NULL,
   if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
   } else {
-    stop("object must be a data frame or matrix")
+    stop("object must be a data frame or matrix", call. = FALSE)
   }
 
   if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j]), logical(1)))) {
@@ -101,14 +101,16 @@ as.rspec <- function(object, whichwl = NULL,
     } else if (!is.null(lim)) {
       wl <- seq(lim[1], lim[2], length.out = nrow(object))
       warning(
-        "No wavelengths contained in dataset, using user-specified range. ",
-        "Check output carefully!"
+        "No wavelengths contained in dataset, using user-specified range.\n",
+        "Check output carefully!",
+        call. = FALSE
       )
     } else {
       wl <- seq_len(nrow(object))
       warning(
         "No wavelengths found or whichwl not provided; ",
-        "using arbitrary index values."
+        "using arbitrary index values.",
+        call. = FALSE
       )
     }
   }
@@ -126,8 +128,9 @@ as.rspec <- function(object, whichwl = NULL,
     if (l1.dat > lim[1] || l2.dat < lim[2]) {
       if (exceed.range) {
         warning(
-          "Interpolating beyond the range of actual data. ",
-          "Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour."
+          "Interpolating beyond the range of actual data.\n",
+          "Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour.",
+          call. = FALSE
         )
       }
     }
@@ -156,7 +159,7 @@ as.rspec <- function(object, whichwl = NULL,
   wl_index <- which(colnames(res) == "wl")
 
   if (length(wl_index) > 1) {
-    warning("Multiple columns named 'wl', check column names")
+    warning("Multiple columns named 'wl', check column names", call. = FALSE)
     colnames(res)[wl_index] <- c("wl", paste0("wl.", wl_index[-1] - 1))
   }
 
