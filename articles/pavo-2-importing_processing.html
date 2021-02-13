@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(2) Importing, Processing, and Visualising Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2021-02-10</h4>
+            <h4 class="date">2021-02-13</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-2-importing_processing.Rmd"><code>vignettes/pavo-2-importing_processing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-2-importing_processing.Rmd</code></div>
@@ -231,9 +231,8 @@ code.sourceCode {
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fakedat.new2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span><span class="op">(</span><span class="va">fakedat</span>, lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">1000</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; wavelengths found in column 3</span>
-<span class="co">#&gt; Warning in as.rspec(fakedat, lim = c(300, 1000)): Interpolating beyond the range</span>
-<span class="co">#&gt; of actual data. Check 'lim' and `exceed.range` arguments to confirm this is the</span>
-<span class="co">#&gt; desired behaviour.</span>
+<span class="co">#&gt; Warning: Interpolating beyond the range of actual data.</span>
+<span class="co">#&gt; Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour.</span>
 <span class="co">#&gt; The spectral data contain 743 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fakedat.new2</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">~</span> <span class="va">fakedat.new2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
