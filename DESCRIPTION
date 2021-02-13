@@ -54,7 +54,6 @@ Suggests:
     imager,
     knitr,
     mapproj,
-    NbClust,
     rgl,
     rmarkdown,
     testthat(>= 2.99.0),
