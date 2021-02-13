@@ -11,9 +11,20 @@ vignette: >
   \usepackage[utf8]{inputenc}
 ---
 
+```{r setup, echo = FALSE}
+knitr::opts_chunk$set(
+  echo = FALSE
+)
+```
+
 [pavo_repo]: https://github.com/rmaia/pavo
 
 [data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
+
+```{r}
+book_repo <- "https://github.com/Bisaloo/colsci-book"
+book_site <- "https://bisaloo.github.io/colsci-book"
+```
 
 `pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
 
@@ -23,9 +34,9 @@ vignette: >
 2. **Analyse** the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.
 3. **Visualise** the output, with multiple options provided for exploration and analysis.
 
-```{r, echo = FALSE, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '100%', dpi = 72}
-knitr::include_graphics("https://github.com/Bisaloo/colsci-book/blob/main/fig/workflow.png?raw=TRUE")
+```{r, fig.cap = "A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.", out.width = '100%', dpi = 72}
+knitr::include_graphics(file.path(book_repo, "blob/main/fig/workflow.png?raw=TRUE"))
 ```
 
-A comprehensive tutorial to get you started with pavo is available in [the pavo handbook](https://bisaloo.github.io/colsci-book/). In this book, we begin by detailing the [importing, processing and visualisation](https://bisaloo.github.io/colsci-book/importing-processing-and-visualising-data.html) of spectral and image data, before moving on to discussion of the [flexible analyses](https://bisaloo.github.io/colsci-book/analysing-data.html) of such data that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
+A comprehensive tutorial to get you started with pavo is available in [the pavo handbook](`r book_site`). In this book, we begin by detailing the [importing, processing and visualisation](`r file.path(book_site, "importing-processing-and-visualising-data.html")`) of spectral and image data, before moving on to discussion of the [flexible analyses](`r file.path(book_site, "analysing-data.html")`) of such data that `pavo` allows. Our hope is to demonstrate the flexibility of `pavo`, and to provide a cohesive, reproducible workflow for colour pattern analysis within `R`. As always, the development version of `pavo` can be found on [github][pavo_repo], while the stable release is available via CRAN.
 
