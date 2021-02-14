@@ -167,9 +167,7 @@ coldist <- function(modeldata,
   ncone <- attr(modeldata, "conenumb")
 
   if (isTRUE(attr(modeldata, "relative"))) {
-    message("Quantum catch are relative, distances may not be meaningful",
-      call. = FALSE
-    )
+    message("Quantum catch are relative, distances may not be meaningful")
   }
 
   # Pre-processing for colspace objects
@@ -188,8 +186,7 @@ coldist <- function(modeldata,
       modeldata$lum <- 0
       if (achromatic) {
         message("achromatic = TRUE but visual model was calculated with achromatic = ",
-          dQuote("none"), "; achromatic contrast not calculated.",
-          call. = FALSE
+          dQuote("none"), "; achromatic contrast not calculated."
         )
       }
       achromatic <- FALSE
