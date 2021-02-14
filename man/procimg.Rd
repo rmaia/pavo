@@ -55,11 +55,11 @@ Defaults to \code{1}.}
 \item{col}{the color of the marker points and/or line, when using interactive options.}
 
 \item{obj_dist, obj_width, eye_res}{blur the image to model the visual acuity of non-human animals
-as per Caves & Johnsen (2018)'s AcuityView 2 algorithm. The procedure requires three arguments;
+as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
 obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
 obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
 All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
-Note that this is the more flexible v2 implementation meaning that any rectangular image is suitable;
+Note that this is the more flexible v2.0 implementation meaning that any rectangular image is suitable;
 it need not be square with dimensions a power of 2. If using this capability, please cite
 Caves & Johnsen (2018), as per the included reference.}
 
