@@ -148,7 +148,8 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (!is.null(c(obj_dist, obj_width, eye_res))) {
     # Require all arguments
     if (!(is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
-      warning("Each of obj_dist, obj_width, and eye_res must be specified for acuity modelling. Skipping acuity modelling.")
+      warning("Numeric values for each of obj_dist, obj_width, and eye_res ",
+              "must be specified for acuity modelling. Skipping acuity modelling.")
     }
     # Raw images only
     if (attr(image[[1]], "state") == "colclass") {

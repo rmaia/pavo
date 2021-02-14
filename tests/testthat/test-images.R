@@ -73,6 +73,14 @@ test_that("procimg", {
   expect_message(procimg(papilio, "coerce"))
   class(papilio) <- "cimg"
   expect_message(procimg(papilio, "coerce"))
+  
+  # Acuity
+  expect_warning(procimg(papilio, obj_dist = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 3), "Skipping")
+  expect_warning(procimg(papilio, eye_res = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 3, obj_dist = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 'black', obj_dist = 3, eye_res = 10), "Skipping")
+  expect_warning(procimg(classify(papilio, kcols = 3), obj_width = 3, obj_dist = 3, eye_res = 10), "Skipping")
 })
 
 
