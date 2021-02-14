@@ -23,7 +23,7 @@ knitr::opts_chunk$set(
 
 ```{r}
 book_repo <- "https://github.com/Bisaloo/colsci-book"
-book_site <- "https://bisaloo.github.io/colsci-book"
+book_site <- "https://book.colrverse.com"
 ```
 
 `pavo` is an `R` package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.
