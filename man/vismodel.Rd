@@ -155,7 +155,6 @@ custom <- sensmodel(c(330, 440, 550))
 names(custom) <- c("wl", "s", "m", "l")
 vis.custom <- vismodel(flowers, visual = custom)
 tri.custom <- colspace(vis.custom, space = "tri")
-
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.

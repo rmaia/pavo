@@ -100,7 +100,6 @@ sensdata(visual = c("avg.v", "avg.uv"), ylab = "Absorbance", plot = TRUE)
 
 # Retrieve the CIE colour matching functions as an rspec object
 ciedat <- sensdata(visual = c("cie2", "cie10"))
-
 }
 \references{
 Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,

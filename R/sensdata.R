@@ -66,33 +66,34 @@
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c("cie2", "cie10"))
-#' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
-#' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D., 
-#' & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors. 
+#' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+#' & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
 #' Scientific reports, 10(1), 1-13.
 #'
 
 sensdata <- function(visual = c(
-  "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
-  "pfowl", "apis", "canis", "cie2", "cie10", "musca", "drosophila", "habronattus", "rhinecanthus"
-),
-achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "ra.dc", "cf.r"),
-illum = c("none", "all", "bluesky", "D65", "forestshade"),
-trans = c("none", "all", "bluetit", "blackbird"),
-bkg = c("none", "all", "green"),
-plot = FALSE,
-...) {
+                       "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
+                       "pfowl", "apis", "canis", "cie2", "cie10", "musca", 
+                       "drosophila", "habronattus", "rhinecanthus"
+                     ),
+                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", 
+                                    "dm.r1", "ra.dc", "cf.r"),
+                     illum = c("none", "all", "bluesky", "D65", "forestshade"),
+                     trans = c("none", "all", "bluetit", "blackbird"),
+                     bkg = c("none", "all", "green"),
+                     plot = FALSE,
+                     ...) {
   visual2 <- match.arg(visual, several.ok = TRUE)
   achro2 <- match.arg(achromatic, several.ok = TRUE)
   illum2 <- match.arg(illum, several.ok = TRUE)
   bkg2 <- match.arg(bkg, several.ok = TRUE)
   trans2 <- match.arg(trans, several.ok = TRUE)
-  
+
   dat <- data.frame("wl" = 300:700)
-  
+
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
     if (isTRUE("all" %in% visual2)) {
@@ -105,7 +106,7 @@ plot = FALSE,
     S <- vissyst[, grepl(paste(visual2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, S)
   }
-  
+
   # Achromatic receptor
   if (!isTRUE("none" %in% achro2)) {
     if (isTRUE("all" %in% achro2)) {
@@ -114,7 +115,7 @@ plot = FALSE,
     achro <- vissyst[, grepl(paste(achro2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, achro)
   }
-  
+
   # Illuminant
   if (!isTRUE("none" %in% illum2)) {
     if (isTRUE("all" %in% illum2)) {
@@ -123,7 +124,7 @@ plot = FALSE,
     illum <- bgandilum[, grepl(paste(illum2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, illum)
   }
-  
+
   # Background
   if (!isTRUE("none" %in% bkg2)) {
     if (isTRUE("all" %in% bkg2)) {
@@ -132,7 +133,7 @@ plot = FALSE,
     bkg <- bgandilum[, grepl(paste(bkg2, collapse = "|"), names(bgandilum)), drop = FALSE]
     dat <- cbind(dat, bkg)
   }
-  
+
   # Transmission
   if (!isTRUE("none" %in% trans2)) {
     if (isTRUE("all" %in% trans2)) {
@@ -141,9 +142,9 @@ plot = FALSE,
     trans <- transmissiondata[, grepl(paste(trans2, collapse = "|"), names(transmissiondata)), drop = FALSE]
     dat <- cbind(dat, trans)
   }
-  
+
   class(dat) <- c("rspec", "data.frame")
-  
+
   if (plot) {
     plot(dat, ...)
     invisible(dat)
