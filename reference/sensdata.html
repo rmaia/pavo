@@ -160,8 +160,10 @@
 
     <pre class="usage"><span class='fu'>sensdata</span><span class='op'>(</span>
   visual <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"ctenophorus"</span>, <span class='st'>"star"</span>,
-    <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"habronattus"</span>, <span class='st'>"rhinecanthus"</span><span class='op'>)</span>,
-  achromatic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"cf.r"</span><span class='op'>)</span>,
+    <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>, <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"drosophila"</span>, <span class='st'>"habronattus"</span>,
+    <span class='st'>"rhinecanthus"</span><span class='op'>)</span>,
+  achromatic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"dm.r1"</span>, <span class='st'>"ra.dc"</span>,
+    <span class='st'>"cf.r"</span><span class='op'>)</span>,
   illum <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span><span class='op'>)</span>,
   trans <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span><span class='op'>)</span>,
   bkg <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"all"</span>, <span class='st'>"green"</span><span class='op'>)</span>,
@@ -190,6 +192,7 @@ colour vision. Functions are linear transformations of the 10-degree cone fundam
 of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>"ctenophorus"</code>: Ornate dragon lizard <em>Ctenophorus ornatus</em>.</p></li>
 <li><p><code>"musca"</code>: Housefly <em>Musca domestica</em> visual system.</p></li>
+<li><p><code>'drosophila'</code>: Vinegar fly <em>Drosophila melanogaster</em> (Sharkey et al. 2020).</p></li>
 <li><p><code>"pfowl"</code>: Peafowl <em>Pavo cristatus</em> visual system.</p></li>
 <li><p><code>"star"</code>: Starling <em>Sturnus vulgaris</em> visual system.</p></li>
 <li><p><code>"habronattus"</code>: Jumping spider <em>Habronattus pyrrithrix</em>.</p></li>
@@ -207,6 +210,7 @@ receptor stimulation. Options are:</p><ul>
 <li><p><code>"st.dc"</code>: Starling <em>Sturnus vulgaris</em> double cone.</p></li>
 <li><p><code>"cf.r"</code>: Canid <em>Canis familiaris</em> rod</p></li>
 <li><p><code>"md.r1"</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor.</p></li>
+<li><p><code>'dm.r1'</code>: Vinegar fly <em>Drosophila melanogaster</em> R1-6 photoreceptor.</p></li>
 <li><p><code>"ra.dc"</code>: Triggerfish <em>Rhinecanthus aculeatus</em> double cone.</p></li>
 </ul></td>
     </tr>
@@ -251,6 +255,11 @@ receptor stimulation. Options are:</p><ul>
 
     <p>An object of class <code>rspec</code> (when <code>plot = FALSE</code>), containing
 a wavelength column <code>"wl"</code> and spectral data binned at 1 nm intervals from 300-700 nm.</p>
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+&amp; Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+Scientific reports, 10(1), 1-13.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
@@ -265,6 +274,7 @@ a wavelength column <code>"wl"</code> and spectral data binned at 1 nm intervals
 </div><div class='img'><img src='sensdata-2.png' alt='' width='700' height='433' /></div><div class='input'>
 <span class='co'># Retrieve the CIE colour matching functions as an rspec object</span>
 <span class='va'>ciedat</span> <span class='op'>&lt;-</span> <span class='fu'>sensdata</span><span class='op'>(</span>visual <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"cie2"</span>, <span class='st'>"cie10"</span><span class='op'>)</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">

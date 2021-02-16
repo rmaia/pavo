@@ -163,9 +163,10 @@ can be returned, for use in a suite of colourspace and non-colourspace models.</
     <pre class="usage"><span class='fu'>vismodel</span><span class='op'>(</span>
   <span class='va'>rspecdata</span>,
   visual <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"avg.uv"</span>, <span class='st'>"avg.v"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"ctenophorus"</span>, <span class='st'>"star"</span>, <span class='st'>"pfowl"</span>, <span class='st'>"apis"</span>,
-    <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"segment"</span>, <span class='st'>"habronattus"</span>, <span class='st'>"rhinecanthus"</span><span class='op'>)</span>,
-  achromatic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"cf.r"</span>, <span class='st'>"ml"</span>,
-    <span class='st'>"l"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
+    <span class='st'>"canis"</span>, <span class='st'>"cie2"</span>, <span class='st'>"cie10"</span>, <span class='st'>"musca"</span>, <span class='st'>"drosophila"</span>, <span class='st'>"segment"</span>, <span class='st'>"habronattus"</span>,
+    <span class='st'>"rhinecanthus"</span><span class='op'>)</span>,
+  achromatic <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"none"</span>, <span class='st'>"bt.dc"</span>, <span class='st'>"ch.dc"</span>, <span class='st'>"st.dc"</span>, <span class='st'>"md.r1"</span>, <span class='st'>"dm.r1"</span>, <span class='st'>"ra.dc"</span>, <span class='st'>"cf.r"</span>,
+    <span class='st'>"ml"</span>, <span class='st'>"l"</span>, <span class='st'>"all"</span><span class='op'>)</span>,
   illum <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ideal"</span>, <span class='st'>"bluesky"</span>, <span class='st'>"D65"</span>, <span class='st'>"forestshade"</span><span class='op'>)</span>,
   trans <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"ideal"</span>, <span class='st'>"bluetit"</span>, <span class='st'>"blackbird"</span><span class='op'>)</span>,
   qcatch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"Qi"</span>, <span class='st'>"fi"</span>, <span class='st'>"Ei"</span><span class='op'>)</span>,
@@ -204,6 +205,7 @@ colour vision. Functions are linear transformations of the 10-degree cone fundam
 of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>'ctenophorus'</code>: Ornate dragon lizard <em>Ctenophorus ornatus</em>.</p></li>
 <li><p><code>'musca'</code>: Housefly <em>Musca domestica</em>.</p></li>
+<li><p><code>'drosophila'</code>: Vinegar fly <em>Drosophila melanogaster</em> (Sharkey et al. 2020).</p></li>
 <li><p><code>'pfowl'</code>: Peafowl <em>Pavo cristatus</em>.</p></li>
 <li><p><code>'segment'</code>: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).</p></li>
 <li><p><code>'star'</code>: Starling <em>Sturnus vulgaris</em>.</p></li>
@@ -221,6 +223,7 @@ or one of the options:</p><ul>
 <li><p><code>'ch.dc'</code>: Chicken <em>Gallus gallus</em> double cone.</p></li>
 <li><p><code>'st.dc'</code>: Starling <em>Sturnus vulgaris</em> double cone.</p></li>
 <li><p><code>'md.r1'</code>: Housefly <em>Musca domestica</em> R1-6 photoreceptor.</p></li>
+<li><p><code>'dm.r1'</code>: Vinegar fly <em>Drosophila melanogaster</em> R1-6 photoreceptor.</p></li>
 <li><p><code>'ra.dc'</code>: Triggerfish <em>Rhinecanthus aculeatus</em> double cone.</p></li>
 <li><p><code>'cf.r'</code>: Canid <em>Canis familiaris</em> cone.</p></li>
 <li><p><code>'ml'</code>: the summed response of the two longest-wavelength photoreceptors.</p></li>
@@ -326,6 +329,9 @@ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 Internationale de l' Eclairage.</p>
 <p>Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 Visual Neuroscience, 3, 119-125.</p>
+<p>Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+&amp; Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+Scientific reports, 10(1), 1-13.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
@@ -357,6 +363,7 @@ Visual Neuroscience, 3, 119-125.</p>
 <span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span><span class='op'>(</span><span class='va'>custom</span><span class='op'>)</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"wl"</span>, <span class='st'>"s"</span>, <span class='st'>"m"</span>, <span class='st'>"l"</span><span class='op'>)</span>
 <span class='va'>vis.custom</span> <span class='op'>&lt;-</span> <span class='fu'>vismodel</span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='va'>custom</span><span class='op'>)</span>
 <span class='va'>tri.custom</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.custom</span>, space <span class='op'>=</span> <span class='st'>"tri"</span><span class='op'>)</span>
+
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
