@@ -27,6 +27,7 @@
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' - `'ctenophorus'`: Ornate dragon lizard *Ctenophorus ornatus*.
 #' - `'musca'`: Housefly *Musca domestica*.
+#' - `'drosophila'`: Vinegar fly *Drosophila melanogaster* (Sharkey et al. 2020).
 #' - `'pfowl'`: Peafowl *Pavo cristatus*.
 #' - `'segment'`: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
 #' - `'star'`: Starling *Sturnus vulgaris*.
@@ -40,6 +41,7 @@
 #' - `'ch.dc'`: Chicken *Gallus gallus* double cone.
 #' - `'st.dc'`: Starling *Sturnus vulgaris* double cone.
 #' - `'md.r1'`: Housefly *Musca domestica* R1-6 photoreceptor.
+#' - `'dm.r1'`: Vinegar fly *Drosophila melanogaster* R1-6 photoreceptor.
 #' - `'ra.dc'`: Triggerfish *Rhinecanthus aculeatus* double cone.
 #' - `'cf.r'`: Canid *Canis familiaris* cone.
 #' - `'ml'`: the summed response of the two longest-wavelength photoreceptors.
@@ -111,6 +113,7 @@
 #' names(custom) <- c("wl", "s", "m", "l")
 #' vis.custom <- vismodel(flowers, visual = custom)
 #' tri.custom <- colspace(vis.custom, space = "tri")
+#' 
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
@@ -142,24 +145,27 @@
 #'  Internationale de l' Eclairage.
 #' @references Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 #' Visual Neuroscience, 3, 119-125.
+#' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D., 
+#' & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors. 
+#' Scientific reports, 10(1), 1-13.
 #'
 
 vismodel <- function(rspecdata,
                      visual = c(
                        "avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis",
-                       "canis", "cie2", "cie10", "musca", "segment", "habronattus", "rhinecanthus"
+                       "canis", "cie2", "cie10", "musca", "drosophila", "segment", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r", "ml", "l", "all"),
+                     achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "ra.dc", "cf.r", "ml", "l", "all"),
                      illum = c("ideal", "bluesky", "D65", "forestshade"),
                      trans = c("ideal", "bluetit", "blackbird"),
                      qcatch = c("Qi", "fi", "Ei"),
                      bkg = c("ideal", "green"),
                      vonkries = FALSE, scale = 1, relative = TRUE) {
-
+  
   # remove & save colum with wavelengths
   wl <- isolate_wl(rspecdata, keep = "wl")
   y <- isolate_wl(rspecdata, keep = "spec")
-
+  
   # Negative value check
   if (any(y < 0)) {
     warning(
@@ -168,7 +174,7 @@ vismodel <- function(rspecdata,
       "Consider using procspec() to correct them."
     )
   }
-
+  
   visual2 <- tryCatch(
     match.arg(visual),
     error = function(e) "user-defined"
@@ -203,9 +209,9 @@ vismodel <- function(rspecdata,
       "already included in your `visual` argument, use `trans = 'ideal'`."
     )
   }
-
+  
   qcatch <- match.arg(qcatch)
-
+  
   # Model-specific defaults
   if (substr(visual2, 1, 3) == "cie") {
     if (!vonkries || relative || !identical(achromatic2, "none") || !identical(qcatch, "Qi")) {
@@ -216,10 +222,10 @@ vismodel <- function(rspecdata,
       warning("cie system chosen, overriding incompatible parameters.", call. = FALSE)
     }
   }
-
+  
   if (visual2 == "segment") {
     if (vonkries || !relative || !identical(achromatic2, "all") || !identical(qcatch, "Qi") ||
-      !identical(bg2, "ideal") || !identical(tr2, "ideal") || !identical(illum2, "ideal")) {
+        !identical(bg2, "ideal") || !identical(tr2, "ideal") || !identical(illum2, "ideal")) {
       vonkries <- FALSE
       relative <- TRUE
       achromatic2 <- "all"
@@ -230,18 +236,18 @@ vismodel <- function(rspecdata,
       warning("segment analysis chosen, overriding incompatible parameters.", call. = FALSE)
     }
   }
-
+  
   # Grab the visual system
   if (visual2 == "segment") { # make a weird custom 'visual system' for segment analysis
     S <- data.frame(matrix(0, nrow = length(wl), ncol = 4))
     names(S) <- c("S1", "S2", "S3", "S4")
     segmts <- trunc(as.numeric(quantile(min(wl):max(wl))))
-
+    
     S[wl %in% segmts[1]:segmts[2], 1] <- 1
     S[wl %in% segmts[2]:segmts[3], 2] <- 1
     S[wl %in% segmts[3]:segmts[4], 3] <- 1
     S[wl %in% segmts[4]:segmts[5], 4] <- 1
-
+    
     sens_wl <- wl
   } else if (visual2 == "user-defined") {
     S <- isolate_wl(visual, keep = "spec")
@@ -253,52 +259,52 @@ vismodel <- function(rspecdata,
     names(S) <- gsub(paste0(visual, "."), "", names(S))
     sens_wl <- isolate_wl(sens, keep = "wl")
   }
-
+  
   # Save cone numer
   conenumb <- ifelse(identical(visual2, "segment"), "seg", dim(S)[2])
-
+  
   # Check if wavelength range matches
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
-    visual2 == "user-defined") {
+      visual2 == "user-defined") {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
       "spectral data must range between 300 and 700 nm in 1-nm intervals.",
       "Consider interpolating using as.rspec()."
     )
   }
-
+  
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
     stop("wavelength range in spectra and visual system data do not match")
   }
-
+  
   # DEFINING ILLUMINANT & BACKGROUND
-
+  
   bgil <- bgandilum
-
+  
   if (illum2 != "user-defined") {
     illum <- bgil[, grep(illum2, names(bgil))]
   }
   if (illum2 == "ideal") {
     illum <- rep(1, dim(rspecdata)[1])
   }
-
+  
   if (bg2 != "user-defined") {
     bkg <- bgil[, grep(bg2, names(bgil))]
   }
   if (bg2 == "ideal") {
     bkg <- rep(1, dim(rspecdata)[1])
   }
-
-  # Defining ocular  <- mission
+  
+  # Defining ocular  transmission
   trdat <- transmissiondata
-
+  
   if (tr2 != "user-defined") {
     trans <- trdat[, grep(tr2, names(trdat))]
   }
   if (tr2 == "ideal") {
     trans <- rep(1, dim(rspecdata)[1])
   }
-
+  
   if (tr2 != "ideal" & visual2 == "user-defined") {
     if (inherits(fullS, "sensmod")) {
       if (attr(fullS, "om")) {
@@ -311,54 +317,54 @@ vismodel <- function(rspecdata,
       }
     }
   }
-
+  
   prepare_userdefined <- function(df) {
     dfname <- deparse(substitute(df))
-
+    
     if (is.rspec(df)) {
       dfwhichused <- names(df)[2]
       df <- df[, 2]
       warning(dfname, " is an rspec object; first spectrum (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     } else if (is.data.frame(df) | is.matrix(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
       warning(dfname, " is a matrix or data frame; first column (",
-        dQuote(dfwhichused), ") has been used (remaining columns ignored)",
-        call. = FALSE
+              dQuote(dfwhichused), ") has been used (remaining columns ignored)",
+              call. = FALSE
       )
     }
     return(df)
   }
-
+  
   trans <- prepare_userdefined(trans)
   bkg <- prepare_userdefined(bkg)
   illum <- prepare_userdefined(illum)
   achromatic <- prepare_userdefined(achromatic)
-
+  
   # Transform from percentages to proportions (Vorobyev 2003)
   if (max(y) > 1) {
     y <- y / 100
   }
-
+  
   # Scale background from percentage to proportion
   if (max(bkg) > 1) {
     bkg <- bkg / 100
   }
-
+  
   # Scale transmission from percentage to proportion
   if (max(trans) > 1) {
     trans <- trans / 100
   }
-
+  
   # Scale illuminant
   illum <- illum * scale
-
+  
   # Filter specs by transmission
   y <- y * trans
-
+  
   # Model-specific modifiers, if need be
   B <- K <- 1
   if (substr(visual2, 1, 3) == "cie") {
@@ -367,30 +373,31 @@ vismodel <- function(rspecdata,
   if (visual2 == "segment") {
     B <- colSums(y)
   }
-
+  
   # Calculate Qi
   Qi <- data.frame(
     crossprod(as.matrix(y), as.matrix(S * illum)) * B * K
   )
   maxQi <- as.matrix(S * illum) * K
-
+  
   names(Qi) <- names(S)
-
+  
   # Achromatic contrast
-
+  
   # Calculate lum
-  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "cf.r", "ra.dc", "ml", "l", "all", "user-defined")) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "cf.r", "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
-      "bt.dc" = ,
-      "ch.dc" = ,
-      "st.dc" = ,
-      "md.r1" = ,
-      "cf.r" = ,
-      "ra.dc" = sens[, grep(achromatic2, names(sens))],
-      "ml" = rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])]),
-      "l" = S[, dim(S)[2]],
-      "all" = rowSums(S),
-      "user-defined" = achromatic
+                "bt.dc" = ,
+                "ch.dc" = ,
+                "st.dc" = ,
+                "md.r1" = ,
+                "dm.r1" = ,
+                "cf.r" = ,
+                "ra.dc" = sens[, grep(achromatic2, names(sens))],
+                "ml" = rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])]),
+                "l" = S[, dim(S)[2]],
+                "all" = rowSums(S),
+                "user-defined" = achromatic
     )
     lum <- colSums(y * L * illum)
     Qi <- data.frame(cbind(Qi, lum))
@@ -400,10 +407,10 @@ vismodel <- function(rspecdata,
     L <- NULL
     lum <- NULL
   }
-
+  
   # von Kries correction (constant adapting background)
   vk <- "(von Kries colour correction not applied)"
-
+  
   # Quantum catch normalized to the background (qi = k*Qi)
   if (vonkries) {
     if (!is.null(lum)) {
@@ -417,21 +424,21 @@ vismodel <- function(rspecdata,
       Qi[, "lum"] <- uncqi
     }
   }
-
+  
   # Output
   res <- switch(qcatch,
-    Qi = Qi,
-    fi = log(Qi),
-    Ei = Qi / (Qi + 1)
+                Qi = Qi,
+                fi = log(Qi),
+                Ei = Qi / (Qi + 1)
   )
-
+  
   # TODO: implement max gamut for other types of quantum catches
   maxqcatches <- switch(qcatch,
-    Qi = maxQi,
-    fi = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi)),
-    Ei = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi))
+                        Qi = maxQi,
+                        fi = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi)),
+                        Ei = matrix(NA, nrow = nrow(Qi), ncol = ncol(Qi))
   )
-
+  
   # Negative qcatch check
   if (any(res < 0)) {
     warning(
@@ -441,19 +448,19 @@ vismodel <- function(rspecdata,
       " form of quantum catch is being calculated."
     )
   }
-
+  
   # Add NA lum column is lum not calculated
   if (achromatic2 == "none") {
     res$lum <- NA
   }
-
+  
   # Convert to relative
   if (relative) {
     res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(res) %in% "lum", drop = FALSE])
   }
-
+  
   class(res) <- c("vismodel", "data.frame")
-
+  
   # Descriptive attributes
   attr(res, "qcatch") <- qcatch
   attr(res, "visualsystem.chromatic") <- visual2
@@ -464,7 +471,7 @@ vismodel <- function(rspecdata,
   attr(res, "relative") <- relative
   attr(res, "conenumb") <- conenumb
   attr(res, "vonkries") <- vonkries
-
+  
   # Data attributes
   attr(res, "data.visualsystem.chromatic") <- S
   attr(res, "data.visualsystem.achromatic") <- L
@@ -472,6 +479,6 @@ vismodel <- function(rspecdata,
   attr(res, "data.background") <- bkg
   attr(res, "data.transmission") <- trans
   attr(res, "data.maxqcatches") <- maxqcatches
-
+  
   res
 }

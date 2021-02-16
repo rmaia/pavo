@@ -3,6 +3,7 @@
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
 * Added the argument `raw` to `bootcoldist()`. When `TRUE`, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by `boot.n`), rather than the summary statistics which are returned by default.
+* Added the visual phenotype of the Vinegar fly _Drosophila melanogaster_ (Sharkey et al. 2020). See `?vismodel()` or `?sensdata()` for instructions on selecting it. 
 
 ## MINOR FEATURES AND BUG FIXES
 
