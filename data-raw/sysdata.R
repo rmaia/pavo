@@ -32,8 +32,10 @@ cie10[is.na(cie10)] <- 0
 vissyst[, paste0("cie10_", c("X", "Y", "Z"))] <- cie10[, c("x", "y", "z")]
 
 # Drosophila melanogaster (Sharkey et al. 2020)
-dros <- read.csv("data-raw/drosophila_melanogaster_sharkey.csv")         
-vissyst <- cbind(vissyst, dros[2:6])
+dros <- procspec(as.rspec(read.csv("data-raw/drosophila_melanogaster_sharkey.csv")), fixneg = 'zero')         
+vissyst <- merge(vissyst, dros)
+
+# Convert
 
 # Output        
 usethis::use_data(
