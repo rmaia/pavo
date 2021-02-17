@@ -167,7 +167,9 @@ as.rspec <- function(object, whichwl = NULL,
   if (any(res < 0, na.rm = TRUE)) {
     message(
       "The spectral data contain ", sum(res < 0, na.rm = TRUE),
-      " negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them."
+      " negative value(s),\n",
+      " which may produce unexpected results if used in models.\n",
+      "Consider using procspec() to correct them."
     )
   }
 
