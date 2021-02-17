@@ -106,7 +106,7 @@
       <h1 data-toc-skip>(2) Importing, Processing, and Visualising Data</h1>
                         <h4 class="author">Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason</h4>
             
-            <h4 class="date">2021-02-16</h4>
+            <h4 class="date">2021-02-17</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/master/vignettes/pavo-2-importing_processing.Rmd"><code>vignettes/pavo-2-importing_processing.Rmd</code></a></small>
       <div class="hidden name"><code>pavo-2-importing_processing.Rmd</code></div>
@@ -195,7 +195,9 @@ code.sourceCode {
 
 <span class="va">fakedat.new</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span>
 <span class="co">#&gt; wavelengths found in column 3</span>
-<span class="co">#&gt; The spectral data contain 443 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
+<span class="co">#&gt; The spectral data contain 443 negative value(s),</span>
+<span class="co">#&gt;  which may produce unexpected results if used in models.</span>
+<span class="co">#&gt; Consider using procspec() to correct them.</span>
 
 <span class="fu"><a href="../reference/as.rspec.html">is.rspec</a></span><span class="op">(</span><span class="va">fakedat.new</span><span class="op">)</span>
 <span class="co">#&gt; [1] TRUE</span>
@@ -211,7 +213,9 @@ code.sourceCode {
 <p>As can be seen, <code><a href="../reference/as.rspec.html">as.rspec()</a></code> renames the column containing wavelengths, sets it as the first column, interpolates the data in 1-nm bins and converts the data to an <code>rspec</code> object. Note that the same output is returned with specifying <code>whichwl = 3</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="fu"><a href="https://rdrr.io/r/utils/head.html">head</a></span><span class="op">(</span><span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span><span class="op">(</span><span class="va">fakedat</span>, whichwl <span class="op">=</span> <span class="st">'wavelength'</span><span class="op">)</span><span class="op">)</span>
-<span class="co">#&gt; The spectral data contain 443 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
+<span class="co">#&gt; The spectral data contain 443 negative value(s),</span>
+<span class="co">#&gt;  which may produce unexpected results if used in models.</span>
+<span class="co">#&gt; Consider using procspec() to correct them.</span>
 <span class="co">#&gt;    wl       refl1       refl2</span>
 <span class="co">#&gt; 1 300 -0.03289339  0.50596119</span>
 <span class="co">#&gt; 2 301 -0.19068789 -1.07089518</span>
@@ -223,7 +227,9 @@ code.sourceCode {
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span class="va">fakedat.new2</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span><span class="op">(</span><span class="va">fakedat</span>, lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span>, <span class="fl">500</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; wavelengths found in column 3</span>
-<span class="co">#&gt; The spectral data contain 231 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
+<span class="co">#&gt; The spectral data contain 231 negative value(s),</span>
+<span class="co">#&gt;  which may produce unexpected results if used in models.</span>
+<span class="co">#&gt; Consider using procspec() to correct them.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">refl1</span> <span class="op">~</span> <span class="va">wl</span>, type <span class="op">=</span> <span class="st">"l"</span>, data <span class="op">=</span> <span class="va">fakedat.new2</span><span class="op">)</span></code></pre></div>
 <p><img src="pavo-2-importing_processing_files/figure-html/unnamed-chunk-9-1.png" width="384" style="display: block; margin: auto;"></p>
@@ -233,7 +239,9 @@ code.sourceCode {
 <span class="co">#&gt; wavelengths found in column 3</span>
 <span class="co">#&gt; Warning: Interpolating beyond the range of actual data.</span>
 <span class="co">#&gt; Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour.</span>
-<span class="co">#&gt; The spectral data contain 743 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
+<span class="co">#&gt; The spectral data contain 743 negative value(s),</span>
+<span class="co">#&gt;  which may produce unexpected results if used in models.</span>
+<span class="co">#&gt; Consider using procspec() to correct them.</span>
 
 <span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html">plot</a></span><span class="op">(</span><span class="va">fakedat.new2</span><span class="op">[</span>, <span class="fl">2</span><span class="op">]</span> <span class="op">~</span> <span class="va">fakedat.new2</span><span class="op">[</span>, <span class="fl">1</span><span class="op">]</span>, type <span class="op">=</span> <span class="st">"l"</span><span class="op">)</span></code></pre></div>
 <p><img src="pavo-2-importing_processing_files/figure-html/unnamed-chunk-10-1.png" width="384" style="display: block; margin: auto;"></p>
@@ -427,7 +435,9 @@ Plot of PC1 loading versus wavelength (left) and species mean spectra sorted ver
 <span class="va">refl</span> <span class="op">&lt;-</span> <span class="va">sppspec</span><span class="op">[</span>, <span class="fl">7</span><span class="op">]</span> <span class="op">-</span> <span class="fl">20</span>
 <span class="va">testspecs</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/as.rspec.html">as.rspec</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/cbind.html">cbind</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html">c</a></span><span class="op">(</span><span class="fl">300</span><span class="op">:</span><span class="fl">700</span><span class="op">)</span>, <span class="va">refl</span><span class="op">)</span><span class="op">)</span>
 <span class="co">#&gt; wavelengths found in column 1</span>
-<span class="co">#&gt; The spectral data contain 188 negative value(s), which may produce unexpected results if used in models. Consider using procspec() to correct them.</span>
+<span class="co">#&gt; The spectral data contain 188 negative value(s),</span>
+<span class="co">#&gt;  which may produce unexpected results if used in models.</span>
+<span class="co">#&gt; Consider using procspec() to correct them.</span>
 
 <span class="co"># Apply two different processing options</span>
 <span class="va">testspecs.fix1</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/procspec.html">procspec</a></span><span class="op">(</span><span class="va">testspecs</span>, fixneg <span class="op">=</span> <span class="st">"addmin"</span><span class="op">)</span>
