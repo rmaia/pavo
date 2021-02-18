@@ -94,29 +94,8 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/pavo-1-overview.html">Overview</a>
-    </li>
-    <li>
-      <a href="../articles/pavo-2-importing_processing.html">Importing and Processing Data</a>
-    </li>
-    <li>
-      <a href="../articles/pavo-3-analysing.html">Analysing Data</a>
-    </li>
-    <li>
-      <a href="../articles/pavo-5-alphashapes.html">Computing Colour Volumes</a>
-    </li>
-    <li>
-      <a href="../articles/pavo-4-spectraldesc.html">Spectral Shape Descriptors</a>
-    </li>
-  </ul>
+<li>
+  <a href="../articles/pavo.html">Get Started</a>
 </li>
 <li>
   <a href="../news/index.html">Changelog</a>
@@ -168,6 +147,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>vignettes have been moved to <a href="https://book.colrverse.com/" class="uri">https://book.colrverse.com/</a> and now use a book format</li>
 <li>Fixed a bug in <code><a href="../reference/plot.colspace.html">plot.colspace(gamut = TRUE)</a></code> (as well as <code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) where it would incorrectly display <code>"Max gamut cannot be plotted."</code> and fail to plot the max gamut each time.</li>
 <li>Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2).</li>
 <li>Added an informative error message when raw quantum catch estimates are &lt; 1, and an attempt is made to calculate colour distances in the receptor-noise model using <code>noise = 'quantum'</code>. Taking the root of negative values following log-transformation, as required when <code>noise = 'quantum'</code>, would previously produce an uninformative error, which has been rectified.</li>
@@ -214,7 +194,7 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-significant-changes-1" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
-<li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code><a href="http://pavo.colrverse.com/articles/pavo-5-alphashapes.html">vignette("pavo-5-alphashapes",  package = "pavo")</a></code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li>
+<li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code>vignette("pavo-5-alphashapes",  package = "pavo")</code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes-3" class="section level2">
