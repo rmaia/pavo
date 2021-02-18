@@ -7,6 +7,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+* vignettes have been moved to https://book.colrverse.com/ and now use a book format
 * Fixed a bug in `plot.colspace(gamut = TRUE)` (as well as `triplot()`, `tcsplot()`, `tetraplot()`) where it would incorrectly display `"Max gamut cannot be plotted."` and fail to plot the max gamut each time.
 * Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2). 
 * Added an informative error message when raw quantum catch estimates are < 1, and an attempt is made to calculate colour distances in the receptor-noise model using `noise = 'quantum'`. Taking the root of negative values following log-transformation, as required when `noise = 'quantum'`, would previously produce an uninformative error, which has been rectified. 
