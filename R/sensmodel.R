@@ -165,7 +165,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   sensecurves <- cbind(wl, sensecurves)
 
-  class(sensecurves) <- c("rspec", "sensmod", "data.frame")
+  class(sensecurves) <- c("sensmod", "rspec", "data.frame")
 
   if (is.null(om)) {
     attr(sensecurves, "om") <- FALSE
