@@ -84,5 +84,8 @@ navbar:
       href: reference/index.html
     - text: Get Started
       href: articles/pavo.html
+    - text: Book
+      icon: fa fa-book
+      href: https://book.colrverse.com
     - text: Changelog
       href: news/index.html
