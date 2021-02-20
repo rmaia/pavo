@@ -20,41 +20,46 @@ sensmodel(
 \item{peaksens}{(required) a vector with peak sensitivities for the cones to
 model.}
 
-\item{range}{a vector of length 2 for the range over which to calculate the spectral
-sensitivities (defaults to 300nm to 700nm).}
+\item{range}{a vector of length 2 for the range over which to calculate the
+spectral sensitivities (defaults to 300nm to 700nm).}
 
-\item{lambdacut}{a vector of same length as peaksens that lists the cut-off wavelength
-value for oil droplets. Needs either \code{Bmid} or \code{oiltype} to also be entered.
-See Hart and Vorobyev (2005).}
+\item{lambdacut}{a vector of same length as peaksens that lists the cut-off
+wavelength value for oil droplets. Needs either \code{Bmid} or \code{oiltype} to also
+be entered. See Hart and Vorobyev (2005).}
 
-\item{Bmid}{a vector of same length as peaksens that lists the gradient of line
-tangent to the absorbance spectrum of the oil droplets. See Hart and Vorobyev (2005).}
+\item{Bmid}{a vector of same length as peaksens that lists the gradient of
+line tangent to the absorbance spectrum of the oil droplets. See Hart and
+Vorobyev (2005).}
 
-\item{oiltype}{a list of same length as peaksens that lists the oil droplet types
-(currently accepts only "T", C", "Y", "R", "P") when Bmid is not known. Calculates
-Bmid based on the regression equations found in Hart ad Vorobyev (2005).}
+\item{oiltype}{a list of same length as peaksens that lists the oil droplet
+types (currently accepts only "T", C", "Y", "R", "P") when Bmid is not
+known. Calculates Bmid based on the regression equations found in Hart ad
+Vorobyev (2005).}
 
 \item{beta}{logical. If \code{TRUE} the sensitivities will include the beta peak
 See Govardovskii et al.(2000) (defaults to \code{TRUE}).}
 
-\item{om}{a vector of same length as \code{range1}-\code{range2} that contains ocular media transmission data.
-If included, cone sensitivity will be corrected for ocular media transmission. Currently accepts "bird" using
-values from Hart et al. (2005), or user-defined values.}
+\item{om}{a vector of same length as \code{range1}-\code{range2} that contains ocular
+media transmission data. If included, cone sensitivity will be corrected
+for ocular media transmission. Currently accepts "bird" using values from
+Hart et al. (2005), or user-defined values.}
 
-\item{integrate}{logical. If \code{TRUE}, each curve is transformed to have a total area
-under the curve of 1 (best for visual models; defaults to \code{TRUE}). NOTE:
-integration is applied before any effects of ocular media are considered, for
-compatibility with visual model procedures.}
+\item{integrate}{logical. If \code{TRUE}, each curve is transformed to have a
+total area under the curve of 1 (best for visual models; defaults to
+\code{TRUE}). NOTE: integration is applied before any effects of ocular media
+are considered, for compatibility with visual model procedures.}
 
-\item{sensnames}{A vector equal in length to \code{peaksens}, specifying custom names for the resulting sensitivity
-curves (e.g. c('s', 'm', 'l') for short-, medium- and long-wavelength sensitive receptors.)}
+\item{sensnames}{A vector equal in length to \code{peaksens}, specifying custom
+names for the resulting sensitivity curves (e.g. c('s', 'm', 'l') for
+short-, medium- and long-wavelength sensitive receptors.)}
 }
 \value{
 A data frame of class \code{rspec} containing each cone model as a column.
 }
 \description{
-Models spectral sensitivity (with oil droplets; optional) based on peak cone sensitivity
-according to the models of Govardovskii et al. (2000) and Hart & Vorobyev (2005).
+Models spectral sensitivity (with oil droplets; optional) based on peak cone
+sensitivity according to the models of Govardovskii et al. (2000) and Hart &
+Vorobyev (2005).
 }
 \examples{
 # Blue tit visual system based on Hart et al (2000)
@@ -66,6 +71,7 @@ bluesens <- sensmodel(c(371, 448, 502, 563),
 
 # Danio aequipinnatus based on Govardovskii et al. (2000)
 daniosens <- sensmodel(c(357, 411, 477, 569))
+
 }
 \references{
 Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K.
@@ -83,5 +89,7 @@ blackbird (\emph{Turdus merula} L.). J Comp Physiol A 186:375-387,
 \doi{10.1007/s003590050437}
 }
 \author{
-Pierre-Paul Bitton \email{bittonp@uwindsor.ca}, Chad Eliason \email{cme16@zips.uakron.edu}
+Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
+
+Chad Eliason \email{cme16@zips.uakron.edu}
 }
