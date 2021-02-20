@@ -27,7 +27,7 @@
 #' explorespec(sicalis, 3, ylim = c(0, 100), legpos = c(500, 80))
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
-explorespec <- function(rspecdata, by = NULL,
+explorespec <- function(rspecdata, by = 1,
                         scale = c("equal", "free"),
                         legpos = "topright", ...) {
   oldpar <- par(no.readonly = TRUE)
@@ -39,11 +39,6 @@ explorespec <- function(rspecdata, by = NULL,
   leg2 <- names(rspecdata)
 
   scale <- match.arg(scale)
-
-  # default by value
-  if (is.null(by)) {
-    by <- 1
-  }
 
   # check if the by argument has a 'wl' entry (e.g. if names were obtained through
   # regex conditions on the original spec names) and remove it
