@@ -65,7 +65,7 @@
 
 
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
-                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = NULL) {
+                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = paste0("lmax", peaksens)) {
   if (!is.null(lambdacut)) {
     if (is.null(Bmid) && is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
     if (length(lambdacut) != length(peaksens)) stop("lambdacut must be same length as peaksens", call. = FALSE)
@@ -156,23 +156,12 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   sensecurves <- as.data.frame(sensecurves)
 
-  if (!is.null(sensnames)) {
-    if (length(sensnames) != length(sensecurves)) {
-      message(
-        "The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. ",
-        "Reverting to default names."
-      )
-      sensnames <- NULL
-    } else {
-      names(sensecurves) <- sensnames
-    }
+  if (length(sensnames) != length(sensecurves)) {
+    message("The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. Reverting to default names.")
+    sensnames <- paste0("lmax", peaksens)
   }
 
-  if (is.null(sensnames)) {
-    names(sensecurves) <- paste0("lmax", peaksens)
-  }
-
-
+  names(sensecurves) <- sensnames
   sensecurves <- cbind(wl, sensecurves)
 
   class(sensecurves) <- c("sensmod", "rspec", "data.frame")
