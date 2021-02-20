@@ -43,15 +43,17 @@
 #' daniosens <- sensmodel(c(357, 411, 477, 569))
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}, Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
-#' @references Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K. 2000.
-#' In search of the visual pigment template. Visual Neuroscience 17:509-528
-#' @references Hart NS, and Vorobyev M. 2005. modeling oil droplet absorption
-#' spectra and spectral sensitivities of bird cone photoreceptors. Journal of
-#' Comparative Physiology A. 191: 381-392
-#' @references Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual pigments,
-#' oil droplets, ocular media and cone photoreceptor distribution in two species of
-#' passerine bird: the blue tit (Parus caeruleus L) and the blackbird (Turdus merula L). J Comp
-#' Physiol A 186:375-387
+#' @references Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K.
+#'   2000. In search of the visual pigment template. Visual Neuroscience
+#'   17:509-528, \doi{10.1017/S0952523800174036}
+#' @references Hart NS, and Vorobyev M. 2005. Modeling oil droplet absorption
+#'   spectra and spectral sensitivities of bird cone photoreceptors. Journal of
+#'   Comparative Physiology A. 191: 381-392, \doi{10.1007/s00359-004-0595-3}
+#' @references Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual
+#'   pigments, oil droplets, ocular media and cone photoreceptor distribution in
+#'   two species of passerine bird: the blue tit (*Parus caeruleus* L.) and the
+#'   blackbird (*Turdus merula* L.). J Comp Physiol A 186:375-387,
+#'   \doi{10.1007/s003590050437}
 
 
 
