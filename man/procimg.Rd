@@ -61,7 +61,7 @@ obj_width is the real-world width of the entire image; eye_res is the resolution
 All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
 Note that this is the more flexible v2.0 implementation meaning that any rectangular image is suitable;
 it need not be square with dimensions a power of 2. If using this capability, please cite
-Caves & Johnsen (2018), as per the included reference.}
+Caves & Johnsen (2018), as per the included reference, and see note below.}
 
 \item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 
@@ -74,30 +74,45 @@ an image, or list of images, for use in further
 \description{
 Specify scales, resize, and/or define focal objects within images.
 }
+\note{
+There are several caveats that should be considered when using the AcuityView
+algorithm. First and foremost, the convertedimage is not what the animal actually sees.
+For example, it does not account for edge enhancement and other processing by the retina and
+brain that may alter an image. It does, however, show what spatial information
+can be detected and then processed bythe visual system. Second, the converted
+image is static, which does not allow one to assess how movement may reveal the
+presence of an otherwise indiscernible object. Third, AcuityView makes several
+assumptions about the Modulation Transfer Function (MTF), which describes how
+the optical system affects image contrast as a function of the level of detail.
+These assumptions include that the MTF is constant over the region of the retina that views the
+scene, is circularly symmetrical, and is wavelength independent. For a full discusion and details,
+pleaes do read Caves & Johnsen (2018).
+}
 \examples{
 if (interactive()) {
-  # Single image
+  # Interactively add a scale to a single image
   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio <- procimg(papilio, scaledist = 10)
 
-  # Assign individual scales to each image, after slightly reducing their size.
+  # Interactively assign individual scales to each image, 
+  # after slightly reducing their size (to 90\% of original).
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 
   # Model the appearance of a butterfly given the reduced visual acuity of another
-  # animal viewer. Here our butterfly is 60 cm away, the image width is 10 cm,
-  # and the spatial resolution of the viewer is 0.2-degrees.
+  # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
+  # the image width is 10 cm, and the spatial resolution of the viewer is 0.2-degrees.
   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
 }
 }
 \references{
-Chaikin, G. 1974. An algorithm for high speed curve generation.
-Computer Graphics and Image Processing 3, 346-349.
-
 Caves, E. M., & Johnsen, S. (2018). AcuityView: An r package
 for portraying the effects of visual acuity on scenes observed by an animal.
-Methods in Ecology and Evolution, 9(3), 793-797.
+Methods in Ecology and Evolution, 9(3), 793-797 \doi{10.1111/2041-210X.12911}.
+
+Chaikin, G. 1974. An algorithm for high speed curve generation.
+Computer Graphics and Image Processing 3, 346-349.
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

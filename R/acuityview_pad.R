@@ -19,7 +19,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res){
     # Create & fill padded image
     image_pad <- array(0, dim = c(necessary_dim, necessary_dim, 3))
     for(i in 1:3){
-      image_pad[ , , i] <- zero_pad(image[ , , i], col_pad, row_pad, opt = 'pad', mean_rgb = median(image))
+      image_pad[ , , i] <- img_pad(image[ , , i], col_pad, row_pad, opt = 'pad', pad_fun = median(image))
     }
     image_pad
   }else{
@@ -54,7 +54,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res){
   
   # Cancel effect of MTF for non-real (padded) image regions
   # Don't think it's necessary, but keeping for now
-  #MTF <- zero_pad(MTF, col_pad, row_pad, opt = 'MTF')
+  #MTF <- img_pad(MTF, col_pad, row_pad, opt = 'MTF')
   
   # Linearise sRGB values
   from_srgb <- function(rgb_dat){
@@ -88,7 +88,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res){
   # Crop image back to original dimensions
   if(!square){
     for(i in 1:3){
-      image[ , , i] <- zero_pad(image_pad[ , , i], col_pad, row_pad, opt = 'crop')
+      image[ , , i] <- img_pad(image_pad[ , , i], col_pad, row_pad, opt = 'crop')
     }
   }else{
     image <- image_pad
@@ -134,16 +134,16 @@ fft_shift <- function(input_matrix) {
 # dimensions. In those cases the image won't
 # be exactly centered within the padding, but
 # I don't know what else can be done.
-zero_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF"), mean_rgb) {
+img_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF"), pad_fun) {
   if (opt == "pad") {
     # Add column padding
-      mat_col_low <- matrix(mean_rgb, nrow(dat), floor(col_zeros))
-      mat_col_high <- matrix(mean_rgb, nrow(dat), ceiling(col_zeros))
+      mat_col_low <- matrix(pad_fun, nrow(dat), floor(col_zeros))
+      mat_col_high <- matrix(pad_fun, nrow(dat), ceiling(col_zeros))
       out <- cbind(mat_col_low, dat, mat_col_high)
     
     # Add row padding
-      mat_colrow_low <- matrix(mean_rgb, floor(row_zeros), ncol(out))
-      mat_colrow_high <- matrix(mean_rgb, ceiling(row_zeros), ncol(out))
+      mat_colrow_low <- matrix(pad_fun, floor(row_zeros), ncol(out))
+      mat_colrow_high <- matrix(pad_fun, ceiling(row_zeros), ncol(out))
       out2 <- rbind(mat_colrow_low, out, mat_colrow_high)
   }
   
