@@ -60,8 +60,10 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 (progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
+# Import and inspect example spectral data with a range of set to 400-700nm.  
 rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 head(rspecdata)
+
 }
 \references{
 Gruson H, White TE, Maia R (2019) lightr: import spectral data
