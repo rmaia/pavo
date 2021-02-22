@@ -55,29 +55,30 @@ arguments and graphical parameters, see \code{\link[=plot.colspace]{plot.colspac
 \examples{
 data(flowers)
 
-# A dichromat in a segment colourspace
+# Model a dichromat viewer in a segment colourspace
 vis.flowers <- vismodel(flowers, visual = "canis")
 di.flowers <- colspace(vis.flowers, space = "di")
 
-# Honeybee in the colour hexagon
+# Model a honeybee viewer in the colour hexagon
 vis.flowers <- vismodel(flowers,
   visual = "apis", qcatch = "Ei", relative = FALSE,
   vonkries = TRUE, achromatic = "l", bkg = "green"
 )
 hex.flowers <- colspace(vis.flowers, space = "hexagon")
 
-# A trichromat in a Maxwell triangle
+# Model a trichromat (the honeybee) in a Maxwell triangle
 vis.flowers <- vismodel(flowers, visual = "apis")
 tri.flowers <- colspace(vis.flowers, space = "tri")
 plot(tri.flowers)
 
-# A tetrachromat in a tetrahedral colourspace
+# Model a tetrachromat (the Blue Tit) in a tetrahedral colourspace
 vis.flowers <- vismodel(flowers, visual = "bluetit")
 tcs.flowers <- colspace(vis.flowers, space = "tcs")
 
-# A housefly in the categorical colourspace
+# Model a housefly in the 'categorical' colourspace
 vis.flowers <- vismodel(flowers, visual = "musca", achro = "md.r1")
 cat.flowers <- colspace(vis.flowers, space = "categorical")
+
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their

@@ -45,7 +45,7 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimggrey))
 
   # as.rimg can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
@@ -60,7 +60,7 @@ test_that("as.rimg", {
 })
 
 test_that("procimg", {
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 
   # Resize
   expect_equal(dim(procimg(papilio, resize = 50))[1:2], dim(papilio)[1:2] / 2)
@@ -73,6 +73,14 @@ test_that("procimg", {
   expect_message(procimg(papilio, "coerce"))
   class(papilio) <- "cimg"
   expect_message(procimg(papilio, "coerce"))
+  
+  # Acuity
+  expect_warning(procimg(papilio, obj_dist = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 3), "Skipping")
+  expect_warning(procimg(papilio, eye_res = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 3, obj_dist = 3), "Skipping")
+  expect_warning(procimg(papilio, obj_width = 'black', obj_dist = 3, eye_res = 10), "Skipping")
+  expect_warning(procimg(classify(papilio, kcols = 3), obj_width = 3, obj_dist = 3, eye_res = 10), "Skipping")
 })
 
 
@@ -267,7 +275,7 @@ test_that("adjacency", {
   expect_equal(checker_adj$m_lum, 5.68)
 
   # Can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   papilio_adj <- adjacent(papilio_class, xscale = 100)
 
@@ -281,7 +289,7 @@ test_that("adjacency", {
 #   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
 #   set.seed(2231)
 #
-#   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #   papilio_class <- classify(papilio, kcols = 4)
 #   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #   snakes_class <- classify(snakes, kcols = 3)

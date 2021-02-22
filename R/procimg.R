@@ -25,6 +25,15 @@
 #' using Chaikin's corner-cuting algorithm? Defaults to `FALSE`.
 #' @param iterations the number of smoothing iterations, when `smooth = TRUE`.
 #' Defaults to `1`.
+#' @param obj_dist,obj_width,eye_res blur the image to model the visual acuity of non-human animals
+#' as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
+#' obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
+#' obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
+#' All three arguments are numeric, and any units of measurement are suitable for obj_dist and obj_width, 
+#' but they must match. Note that this is the more flexible v2.0 implementation meaning 
+#' that any rectangular image is suitable; it need not be square with dimensions a power of 2. 
+#' If using this capability, please citeCaves & Johnsen (2018), as per the included reference, 
+#' and see note below.
 #' @param plotnew should plots be opened in a new window? Defaults to `FALSE`.
 #' @param ... additional graphical parameters. Also see [par()].
 #'
@@ -35,26 +44,50 @@
 #' @importFrom grDevices dev.new dev.off
 #' @importFrom graphics lines
 #'
+#' @note There are several caveats that should be considered when using the AcuityView 
+#' algorithm. First and foremost, the convertedimage is not what the animal actually sees. 
+#' For example, it does not account for edge enhancement and other processing by the retina and 
+#' brain that may alter an image. It does, however, show what spatial information 
+#' can be detected and then processed bythe visual system. Second, the converted 
+#' image is static, which does not allow one to assess how movement may reveal the 
+#' presence of an otherwise indiscernible object. Third, AcuityView makes several 
+#' assumptions about the Modulation Transfer Function (MTF), which describes how 
+#' the optical system affects image contrast as a function of the level of detail. 
+#' These assumptions include that the MTF is constant over the region of the retina that views the 
+#' scene, is circularly symmetrical, and is wavelength independent. For a full discusion and details,
+#' pleaes do read Caves & Johnsen (2018).
+#'
 #' @export
 #'
 #' @examples
 #' if (interactive()) {
-#'   # Single image
-#'   papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#'   # Interactively add a scale to a single image
+#'   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #'   papilio <- procimg(papilio, scaledist = 10)
 #'
-#'   # Assign individual scales to each image, after slightly reducing their size.
+#'   # Interactively assign individual scales to each image, 
+#'   # after slightly reducing their size (to 90% of original).
 #'   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #'   snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
+#'
+#'   # Model the appearance of a butterfly given the reduced visual acuity of another
+#'   # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
+#'   # the image width is 10 cm, and the spatial resolution of the viewer is 0.2-degrees.
+#'   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
+#'   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
 #' }
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
+#' @references Caves, E. M., & Johnsen, S. (2018). AcuityView: An r package
+#' for portraying the effects of visual acuity on scenes observed by an animal.
+#' Methods in Ecology and Evolution, 9(3), 793-797 \doi{10.1111/2041-210X.12911}.
 #' @references Chaikin, G. 1974. An algorithm for high speed curve generation.
 #' Computer Graphics and Image Processing 3, 346-349.
 
 procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
                     outline = FALSE, reclass = NULL, smooth = FALSE, iterations = 1L,
-                    col = "red", plotnew = FALSE, ...) {
+                    col = "red", obj_dist = NULL, obj_width = NULL, eye_res = NULL,
+                    plotnew = FALSE, ...) {
 
   ## ------------------------------ Checks ------------------------------ ##
 
@@ -65,7 +98,8 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   }
 
   ## Options
-  if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass)) {
+  if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass) &&
+    is.null(obj_dist) && is.null(obj_width) && is.null(eye_res)) {
     stop("No options selected.")
   }
 
@@ -97,6 +131,9 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       image <- image_resize(image, size, "Quadratic")
     }
     image <- as.rimg(image, imgnames)
+    if (!inherits(image, "list")) {
+      image <- list(image)
+    }
   }
 
   ## Scale ##
@@ -120,6 +157,29 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       attr(image[[i]], "raw_scale") <- scaledist[[i]]
     }
     if (plotnew) dev.off()
+  }
+
+  ## Model acuity
+  if (!is.null(c(obj_dist, obj_width, eye_res))) {
+    # Require all arguments
+    if (!(is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
+      warning("Numeric values for each of obj_dist, obj_width, and eye_res ",
+              "must be specified for acuity modelling. Skipping acuity modelling.")
+    }
+    # Raw images only
+    if (attr(image[[1]], "state") == "colclass") {
+      warning("Acuity modelling can only be run on non-colour-classified (raw) images. Skipping acuity modelling.")
+    }
+    # Model
+    if ((is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res) && attr(image[[1]], "state") == "raw")) {
+      message("When using the AcuityView algorithm, please remember to read (for full discussion and caveats) and cite: ", 
+              "Caves EM & Johnsen S (2018). AcuityView: An r package for portraying ",
+              "the effects of visual acuity on scenes observed by an animal. Methods ",
+              "in Ecology and Evolution, 9(3), 793-797.")
+      for (i in seq_along(image)) {
+        image[[i]] <- acuityview_pad(image[[i]], obj_dist, obj_width, eye_res)
+      }
+    }
   }
 
   ## Select outline ##

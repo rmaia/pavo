@@ -191,7 +191,7 @@ is.rimg <- function(object) {
 #' conversion from class `rimg`, so it's best to use early in the analysis workflow.
 #'
 #' @examples
-#' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#' papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #' \donttest{
 #' # From class rimg to cimg
 #' if (requireNamespace("imager", quiety = TRUE)) {

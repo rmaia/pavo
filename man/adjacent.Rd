@@ -134,7 +134,7 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 set.seed(153)
 
 # Single image
-papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 papilio_adj <- adjacent(papilio_class, xscale = 100)
 

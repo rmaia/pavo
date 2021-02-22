@@ -22,7 +22,7 @@
 #'
 #' @examples
 #' # Single image
-#' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#' papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #'
 #' # Multiple images
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))

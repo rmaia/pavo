@@ -19,7 +19,7 @@
 #' @export
 #'
 #' @examples
-#' papilio <- getimg(system.file("testdata/images/papilio.png", package = "pavo"))
+#' papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #' plot(papilio)
 #' \donttest{
 #' papilio_class <- classify(papilio, kcols = 4)
