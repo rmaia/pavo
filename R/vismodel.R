@@ -27,6 +27,7 @@
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' - `'ctenophorus'`: Ornate dragon lizard *Ctenophorus ornatus*.
 #' - `'musca'`: Housefly *Musca domestica*.
+#' - `'drosophila'`: Vinegar fly *Drosophila melanogaster* (Sharkey et al. 2020).
 #' - `'pfowl'`: Peafowl *Pavo cristatus*.
 #' - `'segment'`: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
 #' - `'star'`: Starling *Sturnus vulgaris*.
@@ -40,6 +41,7 @@
 #' - `'ch.dc'`: Chicken *Gallus gallus* double cone.
 #' - `'st.dc'`: Starling *Sturnus vulgaris* double cone.
 #' - `'md.r1'`: Housefly *Musca domestica* R1-6 photoreceptor.
+#' - `'dm.r1'`: Vinegar fly *Drosophila melanogaster* R1-6 photoreceptor.
 #' - `'ra.dc'`: Triggerfish *Rhinecanthus aculeatus* double cone.
 #' - `'cf.r'`: Canid *Canis familiaris* cone.
 #' - `'ml'`: the summed response of the two longest-wavelength photoreceptors.
@@ -142,14 +144,21 @@
 #'  Internationale de l' Eclairage.
 #' @references Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 #' Visual Neuroscience, 3, 119-125.
+#' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+#' & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+#' Scientific reports, 10(1), 1-13.
 #'
 
 vismodel <- function(rspecdata,
                      visual = c(
-                       "avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis",
-                       "canis", "cie2", "cie10", "musca", "segment", "habronattus", "rhinecanthus"
+                       "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
+                       "pfowl", "apis", "canis", "cie2", "cie10", "musca",
+                       "drosophila", "segment", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r", "ml", "l", "all"),
+                     achromatic = c(
+                       "none", "bt.dc", "ch.dc", "st.dc", "md.r1",
+                       "dm.r1", "ra.dc", "cf.r", "ml", "l", "all"
+                     ),
                      illum = c("ideal", "bluesky", "D65", "forestshade"),
                      trans = c("ideal", "bluetit", "blackbird"),
                      qcatch = c("Qi", "fi", "Ei"),
@@ -289,7 +298,7 @@ vismodel <- function(rspecdata,
     bkg <- rep(1, dim(rspecdata)[1])
   }
 
-  # Defining ocular  <- mission
+  # Defining ocular  transmission
   trdat <- transmissiondata
 
   if (tr2 != "user-defined") {
@@ -379,12 +388,13 @@ vismodel <- function(rspecdata,
   # Achromatic contrast
 
   # Calculate lum
-  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "cf.r", "ra.dc", "ml", "l", "all", "user-defined")) {
+  if (achromatic2 %in% c("bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "cf.r", "ra.dc", "ml", "l", "all", "user-defined")) {
     L <- switch(achromatic2,
       "bt.dc" = ,
       "ch.dc" = ,
       "st.dc" = ,
       "md.r1" = ,
+      "dm.r1" = ,
       "cf.r" = ,
       "ra.dc" = sens[, grep(achromatic2, names(sens))],
       "ml" = rowSums(S[, c(dim(S)[2] - 1, dim(S)[2])]),

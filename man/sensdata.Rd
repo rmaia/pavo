@@ -6,8 +6,10 @@
 \usage{
 sensdata(
   visual = c("none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
-    "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"),
-  achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r"),
+    "pfowl", "apis", "canis", "cie2", "cie10", "musca", "drosophila", "habronattus",
+    "rhinecanthus"),
+  achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "ra.dc",
+    "cf.r"),
   illum = c("none", "all", "bluesky", "D65", "forestshade"),
   trans = c("none", "all", "bluetit", "blackbird"),
   bkg = c("none", "all", "green"),
@@ -33,6 +35,7 @@ colour vision. Functions are linear transformations of the 10-degree cone fundam
 of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{"ctenophorus"}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
 \item \code{"musca"}: Housefly \emph{Musca domestica} visual system.
+\item \code{'drosophila'}: Vinegar fly \emph{Drosophila melanogaster} (Sharkey et al. 2020).
 \item \code{"pfowl"}: Peafowl \emph{Pavo cristatus} visual system.
 \item \code{"star"}: Starling \emph{Sturnus vulgaris} visual system.
 \item \code{"habronattus"}: Jumping spider \emph{Habronattus pyrrithrix}.
@@ -49,6 +52,7 @@ receptor stimulation. Options are:
 \item \code{"st.dc"}: Starling \emph{Sturnus vulgaris} double cone.
 \item \code{"cf.r"}: Canid \emph{Canis familiaris} rod
 \item \code{"md.r1"}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+\item \code{'dm.r1'}: Vinegar fly \emph{Drosophila melanogaster} R1-6 photoreceptor.
 \item \code{"ra.dc"}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
 }}
 
@@ -96,6 +100,11 @@ sensdata(visual = c("avg.v", "avg.uv"), ylab = "Absorbance", plot = TRUE)
 
 # Retrieve the CIE colour matching functions as an rspec object
 ciedat <- sensdata(visual = c("cie2", "cie10"))
+}
+\references{
+Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+& Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+Scientific reports, 10(1), 1-13.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

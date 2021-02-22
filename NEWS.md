@@ -4,10 +4,12 @@
 
 * It is now possible to filter images according to the AcuityView 2.0 algorithm (Caves et al. 2018) in order to to model the visual acuity of animals, prior to analysis. The functionality is implemented in `procimg()`, with details and examples available in the function's help documentation and the vignette.
 * Added the argument `raw` to `bootcoldist()`. When `TRUE`, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by `boot.n`), rather than the summary statistics which are returned by default.
+* Added the visual phenotype of the Vinegar fly _Drosophila melanogaster_ (Sharkey et al. 2020). See `?vismodel()` or `?sensdata()` for instructions on selecting it. 
 
 ## MINOR FEATURES AND BUG FIXES
 
 * Fixed a bug where procimg() would fail when using resize/rotate followed by further options, on single images. 
+* vignettes have been moved to https://book.colrverse.com/ and now use a book format
 * Fixed a bug in `plot.colspace(gamut = TRUE)` (as well as `triplot()`, `tcsplot()`, `tetraplot()`) where it would incorrectly display `"Max gamut cannot be plotted."` and fail to plot the max gamut each time.
 * Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2). 
 * Added an informative error message when raw quantum catch estimates are < 1, and an attempt is made to calculate colour distances in the receptor-noise model using `noise = 'quantum'`. Taking the root of negative values following log-transformation, as required when `noise = 'quantum'`, would previously produce an uninformative error, which has been rectified. 

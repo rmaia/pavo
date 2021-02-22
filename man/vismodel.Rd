@@ -7,9 +7,10 @@
 vismodel(
   rspecdata,
   visual = c("avg.uv", "avg.v", "bluetit", "ctenophorus", "star", "pfowl", "apis",
-    "canis", "cie2", "cie10", "musca", "segment", "habronattus", "rhinecanthus"),
-  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r", "ml",
-    "l", "all"),
+    "canis", "cie2", "cie10", "musca", "drosophila", "segment", "habronattus",
+    "rhinecanthus"),
+  achromatic = c("none", "bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "ra.dc", "cf.r",
+    "ml", "l", "all"),
   illum = c("ideal", "bluesky", "D65", "forestshade"),
   trans = c("ideal", "bluetit", "blackbird"),
   qcatch = c("Qi", "fi", "Ei"),
@@ -43,6 +44,7 @@ colour vision. Functions are linear transformations of the 10-degree cone fundam
 of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 \item \code{'ctenophorus'}: Ornate dragon lizard \emph{Ctenophorus ornatus}.
 \item \code{'musca'}: Housefly \emph{Musca domestica}.
+\item \code{'drosophila'}: Vinegar fly \emph{Drosophila melanogaster} (Sharkey et al. 2020).
 \item \code{'pfowl'}: Peafowl \emph{Pavo cristatus}.
 \item \code{'segment'}: Generic tetrachromat 'viewer' for use in the segment analysis of Endler (1990).
 \item \code{'star'}: Starling \emph{Sturnus vulgaris}.
@@ -59,6 +61,7 @@ or one of the options:
 \item \code{'ch.dc'}: Chicken \emph{Gallus gallus} double cone.
 \item \code{'st.dc'}: Starling \emph{Sturnus vulgaris} double cone.
 \item \code{'md.r1'}: Housefly \emph{Musca domestica} R1-6 photoreceptor.
+\item \code{'dm.r1'}: Vinegar fly \emph{Drosophila melanogaster} R1-6 photoreceptor.
 \item \code{'ra.dc'}: Triggerfish \emph{Rhinecanthus aculeatus} double cone.
 \item \code{'cf.r'}: Canid \emph{Canis familiaris} cone.
 \item \code{'ml'}: the summed response of the two longest-wavelength photoreceptors.
@@ -191,6 +194,10 @@ Internationale de l' Eclairage.
 
 Neitz, J., Geist, T., Jacobs, G.H. (1989) Color vision in the dog.
 Visual Neuroscience, 3, 119-125.
+
+Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+& Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+Scientific reports, 10(1), 1-13.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

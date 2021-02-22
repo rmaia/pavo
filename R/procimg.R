@@ -29,10 +29,11 @@
 #' as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
 #' obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
 #' obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
-#' All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
-#' Note that this is the more flexible v2.0 implementation meaning that any rectangular image is suitable; 
-#' it need not be square with dimensions a power of 2. If using this capability, please cite 
-#' Caves & Johnsen (2018), as per the included reference, and see note below.
+#' All three arguments are numeric, and any units of measurement are suitable for obj_dist and obj_width, 
+#' but they must match. Note that this is the more flexible v2.0 implementation meaning 
+#' that any rectangular image is suitable; it need not be square with dimensions a power of 2. 
+#' If using this capability, please citeCaves & Johnsen (2018), as per the included reference, 
+#' and see note below.
 #' @param plotnew should plots be opened in a new window? Defaults to `FALSE`.
 #' @param ... additional graphical parameters. Also see [par()].
 #'

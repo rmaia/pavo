@@ -18,6 +18,7 @@
 #'  of Stockman & Sharpe (2000), as ratified by the CIE (2006).
 #' - `"ctenophorus"`: Ornate dragon lizard *Ctenophorus ornatus*.
 #' - `"musca"`: Housefly *Musca domestica* visual system.
+#' - `'drosophila'`: Vinegar fly *Drosophila melanogaster* (Sharkey et al. 2020).
 #' - `"pfowl"`: Peafowl *Pavo cristatus* visual system.
 #' - `"star"`: Starling *Sturnus vulgaris* visual system.
 #' - `"habronattus"`: Jumping spider *Habronattus pyrrithrix*.
@@ -31,6 +32,7 @@
 #' - `"st.dc"`: Starling *Sturnus vulgaris* double cone.
 #' - `"cf.r"`: Canid *Canis familiaris* rod
 #' - `"md.r1"`: Housefly *Musca domestica* R1-6 photoreceptor.
+#' - `'dm.r1'`: Vinegar fly *Drosophila melanogaster* R1-6 photoreceptor.
 #' - `"ra.dc"`: Triggerfish *Rhinecanthus aculeatus* double cone.
 #' @param illum illuminants. Options are:
 #' - `"none"`: no illuminant data.
@@ -53,6 +55,8 @@
 #' @return An object of class `rspec` (when `plot = FALSE`), containing
 #' a wavelength column `"wl"` and spectral data binned at 1 nm intervals from 300-700 nm.
 #'
+#' @export
+#'
 #' @examples
 #' # Plot the honeybee's receptors
 #' sensdata(visual = "apis", ylab = "Absorbance", plot = TRUE)
@@ -65,14 +69,18 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
-#' @export
+#' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
+#' & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
+#' Scientific reports, 10(1), 1-13.
 #'
 
 sensdata <- function(visual = c(
                        "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
-                       "pfowl", "apis", "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus"
+                       "pfowl", "apis", "canis", "cie2", "cie10", "musca", 
+                       "drosophila", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r"),
+                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", 
+                                    "dm.r1", "ra.dc", "cf.r"),
                      illum = c("none", "all", "bluesky", "D65", "forestshade"),
                      trans = c("none", "all", "bluetit", "blackbird"),
                      bkg = c("none", "all", "green"),
@@ -91,7 +99,7 @@ sensdata <- function(visual = c(
     if (isTRUE("all" %in% visual2)) {
       visual2 <- c(
         "avg.uv", "avg.v", "bluetit", "star", "pfowl", "apis",
-        "canis", "cie2", "cie10", "musca", "habronattus", "rhinecanthus",
+        "canis", "cie2", "cie10", "musca", "drosophila", "habronattus", "rhinecanthus",
         "ctenophorus"
       )
     }
@@ -102,7 +110,7 @@ sensdata <- function(visual = c(
   # Achromatic receptor
   if (!isTRUE("none" %in% achro2)) {
     if (isTRUE("all" %in% achro2)) {
-      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "ra.dc", "cf.r")
+      achro2 <- c("bt.dc", "ch.dc", "st.dc", "md.r1", "dm.r1", "ra.dc", "cf.r")
     }
     achro <- vissyst[, grepl(paste(achro2, collapse = "|"), names(vissyst)), drop = FALSE]
     dat <- cbind(dat, achro)
