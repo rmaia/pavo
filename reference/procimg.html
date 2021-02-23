@@ -154,6 +154,9 @@
   smooth <span class='op'>=</span> <span class='cn'>FALSE</span>,
   iterations <span class='op'>=</span> <span class='fl'>1L</span>,
   col <span class='op'>=</span> <span class='st'>"red"</span>,
+  obj_dist <span class='op'>=</span> <span class='cn'>NULL</span>,
+  obj_width <span class='op'>=</span> <span class='cn'>NULL</span>,
+  eye_res <span class='op'>=</span> <span class='cn'>NULL</span>,
   plotnew <span class='op'>=</span> <span class='cn'>FALSE</span>,
   <span class='va'>...</span>
 <span class='op'>)</span></pre>
@@ -212,6 +215,17 @@ Defaults to <code>1</code>.</p></td>
       <td><p>the color of the marker points and/or line, when using interactive options.</p></td>
     </tr>
     <tr>
+      <th>obj_dist, obj_width, eye_res</th>
+      <td><p>blur the image to model the visual acuity of non-human animals
+as per Caves &amp; Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
+obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
+obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
+All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
+Note that this is the more flexible v2.0 implementation meaning that any rectangular image is suitable;
+it need not be square with dimensions a power of 2. If using this capability, please cite
+Caves &amp; Johnsen (2018), as per the included reference, and see note below.</p></td>
+    </tr>
+    <tr>
       <th>plotnew</th>
       <td><p>should plots be opened in a new window? Defaults to <code>FALSE</code>.</p></td>
     </tr>
@@ -225,9 +239,27 @@ Defaults to <code>1</code>.</p></td>
 
     <p>an image, or list of images, for use in further
 <code>pavo</code> functions.</p>
+    <h2 class="hasAnchor" id="note"><a class="anchor" href="#note"></a>Note</h2>
+
+    <p>There are several caveats that should be considered when using the AcuityView
+algorithm. First and foremost, the convertedimage is not what the animal actually sees.
+For example, it does not account for edge enhancement and other processing by the retina and
+brain that may alter an image. It does, however, show what spatial information
+can be detected and then processed bythe visual system. Second, the converted
+image is static, which does not allow one to assess how movement may reveal the
+presence of an otherwise indiscernible object. Third, AcuityView makes several
+assumptions about the Modulation Transfer Function (MTF), which describes how
+the optical system affects image contrast as a function of the level of detail.
+These assumptions include that the MTF is constant over the region of the retina that views the
+scene, is circularly symmetrical, and is wavelength independent. For a full discusion and details,
+pleaes do read Caves &amp; Johnsen (2018).</p>
     <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
 
-    <p>Chaikin, G. 1974. An algorithm for high speed curve generation.
+    <p>Caves, E. M., &amp; Johnsen, S. (2018). AcuityView: An r package
+for portraying the effects of visual acuity on scenes observed by an animal.
+Methods in Ecology and Evolution, 9(3), 793-797 doi: <a href='https://doi.org/10.1111/2041-210X.12911'>10.1111/2041-210X.12911</a>
+.</p>
+<p>Chaikin, G. 1974. An algorithm for high speed curve generation.
 Computer Graphics and Image Processing 3, 346-349.</p>
     <h2 class="hasAnchor" id="author"><a class="anchor" href="#author"></a>Author</h2>
 
@@ -235,13 +267,20 @@ Computer Graphics and Image Processing 3, 346-349.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='kw'>if</span> <span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span><span class='op'>(</span><span class='op'>)</span><span class='op'>)</span> <span class='op'>{</span>
-  <span class='co'># Single image</span>
-  <span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/papilio.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='co'># Interactively add a scale to a single image</span>
+  <span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/butterflies/papilio.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span><span class='op'>(</span><span class='va'>papilio</span>, scaledist <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
 
-  <span class='co'># Assign individual scales to each image, after slightly reducing their size.</span>
+  <span class='co'># Interactively assign individual scales to each image, </span>
+  <span class='co'># after slightly reducing their size (to 90% of original).</span>
   <span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/snakes"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
   <span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span><span class='op'>(</span><span class='va'>snakes</span>, scaledist <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>10</span>, <span class='fl'>14</span><span class='op'>)</span>, resize <span class='op'>=</span> <span class='fl'>90</span><span class='op'>)</span>
+
+  <span class='co'># Model the appearance of a butterfly given the reduced visual acuity of another</span>
+  <span class='co'># animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, </span>
+  <span class='co'># the image width is 10 cm, and the spatial resolution of the viewer is 0.2-degrees.</span>
+  <span class='va'>tiger</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/tiger.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
+  <span class='va'>tiger_acuity</span> <span class='op'>&lt;-</span> <span class='fu'>procimg</span><span class='op'>(</span><span class='va'>tiger</span>, obj_dist <span class='op'>=</span> <span class='fl'>60</span>, obj_width <span class='op'>=</span> <span class='fl'>10</span>, eye_res <span class='op'>=</span> <span class='fl'>0.2</span><span class='op'>)</span>
 <span class='op'>}</span>
 </div></pre>
   </div>

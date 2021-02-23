@@ -146,6 +146,7 @@
 <h2 class="hasAnchor">
 <a href="#new-features-and-significant-changes" class="anchor"></a>NEW FEATURES AND SIGNIFICANT CHANGES</h2>
 <ul>
+<li>It is now possible to filter images according to the AcuityView 2.0 algorithm (Caves et al. 2018) in order to to model the visual acuity of animals, prior to analysis. The functionality is implemented in <code><a href="../reference/procimg.html">procimg()</a></code>, with details and examples available in the function’s help documentation and the vignette.</li>
 <li>Added the argument <code>raw</code> to <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code>. When <code>TRUE</code>, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by <code>boot.n</code>), rather than the summary statistics which are returned by default.</li>
 <li>Added the visual phenotype of the Vinegar fly <em>Drosophila melanogaster</em> (Sharkey et al. 2020). See <code>?vismodel()</code> or <code>?sensdata()</code> for instructions on selecting it.</li>
 </ul>
@@ -154,6 +155,7 @@
 <h2 class="hasAnchor">
 <a href="#minor-features-and-bug-fixes" class="anchor"></a>MINOR FEATURES AND BUG FIXES</h2>
 <ul>
+<li>Fixed a bug where procimg() would fail when using resize/rotate followed by further options, on single images.</li>
 <li>vignettes have been moved to <a href="https://book.colrverse.com/" class="uri">https://book.colrverse.com/</a> and now use a book format</li>
 <li>Fixed a bug in <code><a href="../reference/plot.colspace.html">plot.colspace(gamut = TRUE)</a></code> (as well as <code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) where it would incorrectly display <code>"Max gamut cannot be plotted."</code> and fail to plot the max gamut each time.</li>
 <li>Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2).</li>
