@@ -149,6 +149,8 @@
 <li>It is now possible to filter images according to the AcuityView 2.0 algorithm (Caves et al. 2018) in order to to model the visual acuity of animals, prior to analysis. The functionality is implemented in <code><a href="../reference/procimg.html">procimg()</a></code>, with details and examples available in the function’s help documentation and the vignette.</li>
 <li>Added the argument <code>raw</code> to <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code>. When <code>TRUE</code>, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by <code>boot.n</code>), rather than the summary statistics which are returned by default.</li>
 <li>Added the visual phenotype of the Vinegar fly <em>Drosophila melanogaster</em> (Sharkey et al. 2020). See <code>?vismodel()</code> or <code>?sensdata()</code> for instructions on selecting it.</li>
+<li>
+<code><a href="../reference/coldist.html">coldist()</a></code> now uses the package <code>farver</code> when calculating CIE2000 colour distances between points in the CIELab and CIELch spaces.</li>
 </ul>
 </div>
 <div id="minor-features-and-bug-fixes" class="section level2">
