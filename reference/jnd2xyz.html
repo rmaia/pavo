@@ -49,7 +49,7 @@
 
 <meta property="og:title" content="Convert JND distances into perceptually-corrected Cartesian coordinates — jnd2xyz" />
 <meta property="og:description" content="Converts a coldist() output into Cartesian coordinates that are
-perceptually-corrected (i.e. Euclidean distances = JND distances)" />
+perceptually-corrected (i.e. noise-weighted Euclidean distances)" />
 
 
 
@@ -143,7 +143,7 @@ perceptually-corrected (i.e. Euclidean distances = JND distances)" />
 
     <div class="ref-description">
     <p>Converts a <code><a href='coldist.html'>coldist()</a></code> output into Cartesian coordinates that are
-perceptually-corrected (i.e. Euclidean distances = JND distances)</p>
+perceptually-corrected (i.e. noise-weighted Euclidean distances)</p>
     </div>
 
     <pre class="usage"><span class='fu'>jnd2xyz</span><span class='op'>(</span>
@@ -194,14 +194,14 @@ in the original data that was used for <code><a href='coldist.html'>coldist()</a
     <tr>
       <th>axis1</th>
       <td><p>A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
+1's representing the axes (x, y, z) to rotate around. Defaults to c(1, 1, 0), such
 that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
 Ignored if <code>ref1</code> is <code>NULL</code> (in 3-dimensional case only)</p></td>
     </tr>
     <tr>
       <th>axis2</th>
       <td><p>A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
+1's representing the axes (x, y, z) to rotate around. Defaults to c(0, 0, 1), such
 that the rotation aligns with the z axis (only used if data has 3 dimensions).
 Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</p></td>
     </tr>
@@ -218,47 +218,55 @@ Behavioral Ecology, ary017 doi: <a href='https://doi.org/10.1093/beheco/ary017'>
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+    <pre class="examples"><div class='input'><span class='co'># Load floral reflectance spectra</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
+
+<span class='co'># Estimate quantum catches visual phenotype of a Blue Tit</span>
+<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>'bluetit'</span><span class='op'>)</span>
+
+<span class='co'># Estimate noise-weighted colour distances between all flowers </span>
 <span class='va'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='fu'>jnd2xyz</span><span class='op'>(</span><span class='va'>cd.flowers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;                                     x           y           z
-#&gt; Goodenia_heterophylla      1.53718118 -5.46159458   7.0514924
-#&gt; Goodenia_geniculata       -0.59310315 -2.65363603  -6.4010132
-#&gt; Goodenia_gracilis         -5.35249990 11.57575094 -22.9160486
-#&gt; Xyris_operculata           3.16707188 -1.34474081  -3.8107457
-#&gt; Eucalyptus_sp             -0.03134485 -3.32415657   3.2303526
-#&gt; Faradaya_splendida        -1.29639206  0.46232996  -2.7868330
-#&gt; Gaultheria_hispida         2.50443028 -4.15752823  -1.9683611
-#&gt; Geitonoplesium_cymosum     8.60482980 -7.04418816   8.3554048
-#&gt; Euryomyrtus_ramosissima   -2.05359168 -0.37250955   5.1435291
-#&gt; Genista_linifolia         -0.58649346 -1.81156877  -2.3301504
-#&gt; Genista_monspessulana     -0.14356310 -3.20065722  -2.8881030
-#&gt; Geranium_sp                7.78622533  6.78399481  11.3644393
-#&gt; Glycine_clandestina       -0.12166618 -2.82133147  -4.9021716
-#&gt; Gompholobium_ecostatum_1   2.32014969  0.01343586   5.9004073
-#&gt; Gompholobium_ecostatum_2  -0.35597946 -2.19758735  -6.2491817
-#&gt; Gompholobium_grandiflorum -3.21092428  4.62986466  -6.6125576
-#&gt; Gompholobium_huegelii      0.74658571 -1.85959598   6.5006043
-#&gt; Gompholobium_virgatum      1.64743911 -1.26454780   6.2822410
-#&gt; Gonocarpus_humilis         0.12111582 -3.92547632  -3.4985432
-#&gt; Gonocarpus_teucrioides    -0.10675135 -2.22322988   2.3336963
-#&gt; Hibbertia_obtusifolia     -0.52778583 -1.45422302  -1.8375439
-#&gt; Zieria_arborescens        -4.71335405  9.56162650   9.4440349
-#&gt; Goodenia_lanata           -4.52523519  7.81353151 -13.6100744
-#&gt; Goodenia_ovata            -3.57431799 10.83505159  10.3387120
-#&gt; Goodenia_rotundifolia      2.98213580 -6.44640439   6.1896101
-#&gt; Grevillea_buxifolia        2.59032352 -3.64441651   1.6394104
-#&gt; Grevillea_steiglitziana   -4.71094829  5.35795883  -0.6206625
-#&gt; Grevillea_oleoides        -0.10128482 -3.18245178  -4.3953309
-#&gt; Gymnostachys_anceps       -4.88100844 10.57079928  -9.2576390
-#&gt; Hakea_actites              1.28591187 -6.46308298   8.7478471
-#&gt; Hardenbergia_violaceae    -1.56087094  0.54787062  -3.1446578
-#&gt; Hibbertia_acicularis       0.05050284 -3.55267520   2.0046822
-#&gt; Hibbertia_bracteata        7.58267580 -2.46048123   1.5050828
-#&gt; Hibbertia_empetrifolia    -4.03056849  8.40782674   9.5245585
-#&gt; Hibbertia_procumbens       0.11607407 -3.47828825  -0.6629848
-#&gt; Hibbertia_linearis        -0.56496920 -2.21566927  -7.6635029</div></pre>
+</div><div class='output co'>#&gt; <span class='message'>Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'>
+<span class='co'># Convert points to Cartesian coordinates in which Euclidean distances are </span>
+<span class='co'># noise-weighted.</span>
+<span class='fu'>jnd2xyz</span><span class='op'>(</span><span class='va'>cd.flowers</span><span class='op'>)</span>
+</div><div class='output co'>#&gt;                                      x          y           z
+#&gt; Goodenia_heterophylla      1.312355137 -5.3667601   6.8629524
+#&gt; Goodenia_geniculata       -0.648798700 -2.5312331  -6.5456726
+#&gt; Goodenia_gracilis         -4.834850372 10.6831212 -22.9236622
+#&gt; Xyris_operculata           3.150779009 -1.0781817  -2.8997962
+#&gt; Eucalyptus_sp             -0.082973918 -3.1963203   3.1550303
+#&gt; Faradaya_splendida        -1.266831951  0.4892355  -2.8528294
+#&gt; Gaultheria_hispida         2.274592892 -3.9525120  -1.1742262
+#&gt; Geitonoplesium_cymosum     8.033650770 -6.9198494   8.2932612
+#&gt; Euryomyrtus_ramosissima   -2.010687966 -0.3710342   4.6922247
+#&gt; Genista_linifolia         -0.617218669 -1.7069294  -2.1501789
+#&gt; Genista_monspessulana     -0.202733928 -3.0304197  -2.4820412
+#&gt; Geranium_sp                7.705016804  6.7723067  10.8297259
+#&gt; Glycine_clandestina       -0.172096284 -2.6365121  -4.2701064
+#&gt; Gompholobium_ecostatum_1   2.342604074  0.1315023   5.5688334
+#&gt; Gompholobium_ecostatum_2  -0.394030123 -2.0067259  -5.3306567
+#&gt; Gompholobium_grandiflorum -3.043177182  4.4548815  -6.5433920
+#&gt; Gompholobium_huegelii      0.731726587 -1.7597445   6.1230907
+#&gt; Gompholobium_virgatum      1.595663823 -1.1755990   5.9025137
+#&gt; Gonocarpus_humilis         0.047486608 -3.7116414  -2.6939291
+#&gt; Gonocarpus_teucrioides    -0.143737261 -2.1236747   2.1280934
+#&gt; Hibbertia_obtusifolia     -0.546715949 -1.3648630  -2.0026397
+#&gt; Zieria_arborescens        -4.374219169  8.9888446   8.7021306
+#&gt; Goodenia_lanata           -4.221201078  7.4641726 -12.6997701
+#&gt; Goodenia_ovata            -3.131626826 10.5294641   9.6861976
+#&gt; Goodenia_rotundifolia      2.743882379 -6.2826784   6.1909786
+#&gt; Grevillea_buxifolia        2.422158828 -3.4693196   1.9123426
+#&gt; Grevillea_steiglitziana   -4.435969376  5.1580526  -1.1327863
+#&gt; Grevillea_oleoides        -0.165755432 -3.0178116  -4.1570956
+#&gt; Gymnostachys_anceps       -4.457785440  9.9350339  -9.8694685
+#&gt; Hakea_actites              1.020732338 -6.3835620   8.4297774
+#&gt; Hardenbergia_violaceae    -1.543741054  0.4977253  -3.4332417
+#&gt; Hibbertia_acicularis      -0.009957462 -3.4147937   1.9458170
+#&gt; Hibbertia_bracteata        7.213297113 -2.2921695   1.6605064
+#&gt; Hibbertia_empetrifolia    -3.739762049  8.0698186   8.8247528
+#&gt; Hibbertia_procumbens       0.056155445 -3.3090457  -0.3154626
+#&gt; Hibbertia_linearis        -0.606231617 -2.0727778  -7.4312733</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

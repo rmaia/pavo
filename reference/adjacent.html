@@ -310,13 +310,15 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 <span class='co'># Set a seed, for reproducibility</span>
 <span class='fu'><a href='https://rdrr.io/r/base/Random.html'>set.seed</a></span><span class='op'>(</span><span class='fl'>153</span><span class='op'>)</span>
 
-<span class='co'># Single image</span>
+<span class='co'># Run the adjacency analysis on a single image of a butterfly</span>
 <span class='va'>papilio</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/butterflies/papilio.png"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
 <span class='va'>papilio_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span><span class='op'>(</span><span class='va'>papilio</span>, kcols <span class='op'>=</span> <span class='fl'>4</span><span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'><span class='va'>papilio_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span><span class='op'>(</span><span class='va'>papilio_class</span>, xscale <span class='op'>=</span> <span class='fl'>100</span><span class='op'>)</span>
 
-<span class='co'># Single image, with (fake) color distances and hsl values</span>
-<span class='co'># Fake color distances</span>
+<span class='co'># Expand on the above, by including (fake) color distances and hsl values</span>
+<span class='co'># of colour elements in the image</span>
+
+<span class='co'># Generate fake color distances</span>
 <span class='va'>distances</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   c1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>2</span>, <span class='fl'>3</span><span class='op'>)</span>,
   c2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>2</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>4</span><span class='op'>)</span>,
@@ -324,7 +326,7 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
   dL <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>5.5</span>, <span class='fl'>6.6</span>, <span class='fl'>3.3</span>, <span class='fl'>2.2</span>, <span class='fl'>4.4</span>, <span class='fl'>6.6</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='co'># Fake hue, saturation, luminance values</span>
+<span class='co'># Generate some fake hue, saturation, luminance values</span>
 <span class='va'>hsl_vals</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>
   patch <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/seq.html'>seq_len</a></span><span class='op'>(</span><span class='fl'>4</span><span class='op'>)</span>,
   hue <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1.5</span>, <span class='fl'>2.2</span>, <span class='fl'>1.0</span>, <span class='fl'>0.5</span><span class='op'>)</span>,
@@ -332,16 +334,21 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
   sat <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>3.5</span>, <span class='fl'>1.1</span>, <span class='fl'>6.3</span>, <span class='fl'>1.3</span><span class='op'>)</span>
 <span class='op'>)</span>
 
-<span class='co'># Full analysis, including the white background's ID</span>
+<span class='co'># Run the full analysis, including the white background's ID</span>
 <span class='va'>papilio_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span><span class='op'>(</span><span class='va'>papilio_class</span>,
   xscale <span class='op'>=</span> <span class='fl'>100</span>, bkgID <span class='op'>=</span> <span class='fl'>1</span>,
   coldists <span class='op'>=</span> <span class='va'>distances</span>, hsl <span class='op'>=</span> <span class='va'>hsl_vals</span>
 <span class='op'>)</span>
 </div><div class='output co'>#&gt; <span class='message'>Using single set of coldists for all images.</span></div><div class='output co'>#&gt; <span class='message'>Using single set of hsl values for all images.</span></div><div class='input'>
-<span class='co'># Multiple images</span>
+<span class='co'># Run an adjacency analysis on multiple images.</span>
+<span class='co'># First load some images of coral snake colour patterns</span>
 <span class='va'>snakes</span> <span class='op'>&lt;-</span> <span class='fu'><a href='getimg.html'>getimg</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/system.file.html'>system.file</a></span><span class='op'>(</span><span class='st'>"testdata/images/snakes"</span>, package <span class='op'>=</span> <span class='st'>"pavo"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'><span class='va'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span><span class='op'>(</span><span class='va'>snakes</span>, kcols <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'><span class='va'>snakes_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span><span class='op'>(</span><span class='va'>snakes_class</span>, xpts <span class='op'>=</span> <span class='fl'>120</span>, xscale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>, <span class='fl'>55</span><span class='op'>)</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>2 files found; importing images.</span></div><div class='input'>
+<span class='co'># Automatically colour-classify the coral snake patterns</span>
+<span class='va'>snakes_class</span> <span class='op'>&lt;-</span> <span class='fu'><a href='classify.html'>classify</a></span><span class='op'>(</span><span class='va'>snakes</span>, kcols <span class='op'>=</span> <span class='fl'>3</span><span class='op'>)</span>
+</div><div class='output co'>#&gt; <span class='message'>Image classification in progress...</span></div><div class='input'>
+<span class='co'># Run the adjacency analysis, with varying real-world scales for each image</span>
+<span class='va'>snakes_adj</span> <span class='op'>&lt;-</span> <span class='fu'>adjacent</span><span class='op'>(</span><span class='va'>snakes_class</span>, xpts <span class='op'>=</span> <span class='fl'>120</span>, xscale <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>50</span>, <span class='fl'>55</span><span class='op'>)</span><span class='op'>)</span>
 <span class='co'># }</span>
 </div></pre>
   </div>
