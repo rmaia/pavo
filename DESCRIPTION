@@ -44,6 +44,7 @@ Imports:
     geometry(>= 0.4.0),
     lightr(>= 1.0),
     magick,
+    farver,
     plot3D,
     progressr,
     sp,

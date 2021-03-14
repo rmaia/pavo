@@ -112,7 +112,7 @@ noise-weighted Euclidean distances for \code{vismodel} objects.
 \examples{
 \donttest{
 # Dichromat
-data(flowers)
+data(flowers)  
 vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
 didist.flowers <- coldist(vis.flowers, n = c(1, 2))
 

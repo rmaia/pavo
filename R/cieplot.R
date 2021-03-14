@@ -29,7 +29,7 @@
 #' data(flowers)
 #'
 #' # CIEXYZ
-#' # Estimate quantum catches, using the cie10 view-matching function
+#' # Estimate quantum catches, using the cie10-degree viewer matching function
 #' vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
 #' 
 #' # Run the ciexyz model

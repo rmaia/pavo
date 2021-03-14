@@ -81,6 +81,7 @@
 #' @export
 #'
 #' @importFrom stats dist setNames
+#' @importFrom farver compare_colour
 #' @importFrom utils combn
 #'
 #' @examples
@@ -389,7 +390,7 @@ coldist <- function(modeldata,
       "categorical" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]))),
       "segment" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
       "CIELAB" = ,
-      "CIELCh" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("L", "a", "b")], dat[x[2], c("L", "a", "b")]))),
+      "CIELCh" = apply(pairsid, 1, function(x) compare_colour(as.data.frame(dat)[x[1], c("L", "a", "b")], as.data.frame(dat)[x[2], c("L", "a", "b")], from_space = 'lab', method = 'cie2000')),
       "coc" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]), method = "manhattan"))
     )
     if (achromatic) {
