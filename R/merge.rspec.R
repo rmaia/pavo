@@ -12,24 +12,25 @@
 #'
 #' @examples
 #'
-#' # Load and split dataset into 2 sections
+#' # Load angle-resolved reflectance data for a green-winged teal, and
+#' # split it in two
 #' data(teal)
 #' teal1 <- teal[, c(1, 3:5)]
 #' teal2 <- teal[, c(1, 2, 6:12)]
+#' 
+#' # Merge the two split datasets back into one, with a shared 'wl' column
 #' teal.mer <- merge(teal1, teal2, by = "wl")
-#' head(teal.mer)
-#'
-#' # The original and the reconstructed (by merge.rspec()) datasets are
-#' identical
+#' 
+#' # Examine the results, and compare the original to the (identical)
+#' # reconstructed version
 #' plot(teal.mer)
 #' plot(teal)
+#' 
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @seealso [as.rspec()], [aggspec()]
 
 merge.rspec <- function(x, y, ...) {
-
-  ## allowed arg has not yet been implemented
-  # chkDots(..., allowed = "by")
 
   if (!all(is.rspec(x), is.rspec(y))) {
     stop("One or more invalid rspec objects")
@@ -44,9 +45,6 @@ merge.rspec <- function(x, y, ...) {
   arg$x <- x
   arg$y <- y
 
-  # FIXME: this step converts altrep INTSXP wl column into simple INTSXP wl
-  # column. Probably something that needs to be changed in merge.data.frame()
-  # by R-Core.
   res <- do.call(merge.data.frame, arg)
   class(res) <- c("rspec", "data.frame")
   res

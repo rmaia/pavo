@@ -66,7 +66,8 @@
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c("cie2", "cie10"))
-#' @author Thomas White \email{thomas.white026@@gmail.com}
+#' 
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,

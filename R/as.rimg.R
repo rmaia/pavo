@@ -24,12 +24,13 @@
 #' # Inspect it
 #' head(fake)
 #'
-#' # Determine if is rimg object
+#' # Determine if is an rimg object
 #' is.rimg(fake)
 #'
 #' # Convert to rimg object and check again
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
+#' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -193,18 +194,20 @@ is.rimg <- function(object) {
 #' @examples
 #' papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #' \donttest{
-#' # From class rimg to cimg
+#' # Convert from class rimg to cimg
 #' if (requireNamespace("imager", quiety = TRUE)) {
 #'   papilio_cimg <- rimg2cimg(papilio)
 #'   class(papilio_cimg)
 #' }
 #' }
 #'
-#' # From class rimg to magick-image
+#' # Convert from class rimg to magick-image
 #' papilio_magick <- rimg2magick(papilio)
 #' class(papilio_magick)
+#' 
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
+#' 
 #' @name img_conversion
 #'
 NULL

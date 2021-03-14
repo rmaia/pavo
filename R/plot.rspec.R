@@ -27,12 +27,21 @@
 #' @export
 #'
 #' @examples
+#' # Load angle-resolved reflectance data for a green-winged teal
 #' data(teal)
-#' plot(teal, type = "overlay")
+#' 
+#' # Create an overlay plot (default)
+#' plot(teal)
+#' 
+#' # Create an stacked spectral plot
 #' plot(teal, type = "stack")
+#' 
+#' # Create a reflectance heatmap
 #' plot(teal, type = "heatmap")
-#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
+#' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
+#' @author Hugo Gruson
+#' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
 #' @seealso [spec2rgb()], [image()], [plot()]
 #'
@@ -41,8 +50,6 @@
 #' @importFrom grDevices colorRampPalette
 #' @importFrom stats approx
 #' @importFrom utils tail
-
-# TODO: add argument for padding region between x in stack plot
 
 plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap"),
                        varying = NULL, n = 100, labels.stack = NULL,

@@ -1,7 +1,7 @@
 #' Convert JND distances into perceptually-corrected Cartesian coordinates
 #'
 #' Converts a [coldist()] output into Cartesian coordinates that are
-#' perceptually-corrected (i.e. Euclidean distances = JND distances)
+#' perceptually-corrected (i.e. noise-weighted Euclidean distances)
 #'
 #' @param coldistres (required) the output from a [coldist()] call.
 #' @param center logical indicating if the data should be centered on its centroid
@@ -18,18 +18,26 @@
 #' in the original data that was used for [coldist()]. Defaults to 'u'.
 #' (only used if data has 3 dimensions).
 #' @param axis1 A vector of length 3 composed of 0's and 1's, with
-#' 1's representing the axes (x,y,z) to rotate around. Defaults to c(1,1,0), such
+#' 1's representing the axes (x, y, z) to rotate around. Defaults to c(1, 1, 0), such
 #' that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
 #' Ignored if `ref1` is `NULL` (in 3-dimensional case only)
 #' @param axis2 A vector of length 3 composed of 0's and 1's, with
-#' 1's representing the axes (x,y,z) to rotate around. Defaults to c(0,0,1), such
+#' 1's representing the axes (x, y, z) to rotate around. Defaults to c(0, 0, 1), such
 #' that the rotation aligns with the z axis (only used if data has 3 dimensions).
 #' Ignored if `ref2` is `NULL` (in 3-dimensional case only)
 #'
 #' @examples
+#' # Load floral reflectance spectra
 #' data(flowers)
-#' vis.flowers <- vismodel(flowers)
+#' 
+#' # Estimate quantum catches visual phenotype of a Blue Tit
+#' vis.flowers <- vismodel(flowers, visual = 'bluetit')
+#' 
+#' # Estimate noise-weighted colour distances between all flowers 
 #' cd.flowers <- coldist(vis.flowers)
+#' 
+#' # Convert points to Cartesian coordinates in which Euclidean distances are 
+#' # noise-weighted.
 #' jnd2xyz(cd.flowers)
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'

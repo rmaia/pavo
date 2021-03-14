@@ -166,5 +166,7 @@ achromatic vision: parameter choice and limitations for reliable model
 predictions. Behavioral Ecology, \doi{10.1093/beheco/arx133}
 }
 \author{
+Thomas E. White \email{thomas.white026@gmail.com}
+
 Rafael Maia \email{rm72@zips.uakron.edu}
 }

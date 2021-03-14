@@ -100,6 +100,7 @@ sensdata(visual = c("avg.v", "avg.uv"), ylab = "Absorbance", plot = TRUE)
 
 # Retrieve the CIE colour matching functions as an rspec object
 ciedat <- sensdata(visual = c("cie2", "cie10"))
+
 }
 \references{
 Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
@@ -107,7 +108,7 @@ Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
 Scientific reports, 10(1), 1-13.
 }
 \author{
-Thomas White \email{thomas.white026@gmail.com}
+Thomas E. White \email{thomas.white026@gmail.com}
 
 Rafael Maia \email{rm72@zips.uakron.edu}
 }

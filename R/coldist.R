@@ -86,7 +86,7 @@
 #' @examples
 #' \donttest{
 #' # Dichromat
-#' data(flowers)
+#' data(flowers)  
 #' vis.flowers <- vismodel(flowers, visual = "canis", relative = FALSE)
 #' didist.flowers <- coldist(vis.flowers, n = c(1, 2))
 #'
@@ -113,6 +113,7 @@
 #' tetradist.sicalis.n <- coldist(vis.sicalis)
 #' }
 #'
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill,

@@ -43,12 +43,13 @@ dim = c(750, 750, 3)
 # Inspect it
 head(fake)
 
-# Determine if is rimg object
+# Determine if is an rimg object
 is.rimg(fake)
 
 # Convert to rimg object and check again
 fake2 <- as.rimg(fake)
 is.rimg(fake2)
+
 }
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}

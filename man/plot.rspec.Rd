@@ -51,16 +51,26 @@ added to the x-axis.}
 Plots reflectance spectra in different arrangements.
 }
 \examples{
+# Load angle-resolved reflectance data for a green-winged teal
 data(teal)
-plot(teal, type = "overlay")
+
+# Create an overlay plot (default)
+plot(teal)
+
+# Create an stacked spectral plot
 plot(teal, type = "stack")
+
+# Create a reflectance heatmap
 plot(teal, type = "heatmap")
+
 }
 \seealso{
 \code{\link[=spec2rgb]{spec2rgb()}}, \code{\link[=image]{image()}}, \code{\link[=plot]{plot()}}
 }
 \author{
-Chad Eliason \email{cme16@zips.uakron.edu}
-
 Thomas White \email{thomas.white026@gmail.com}
+
+Hugo Gruson
+
+Chad Eliason \email{cme16@zips.uakron.edu}
 }

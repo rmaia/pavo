@@ -150,11 +150,12 @@ data(sicalis)
 vis.star <- vismodel(sicalis, visual = "star", achromatic = "bt.dc", relative = FALSE)
 dist.star <- coldist(vis.star, achromatic = TRUE)
 
-# Custom trichromatic visual system
+# Estimate quantum catches using a custom trichromatic visual phenotype
 custom <- sensmodel(c(330, 440, 550))
 names(custom) <- c("wl", "s", "m", "l")
 vis.custom <- vismodel(flowers, visual = custom)
 tri.custom <- colspace(vis.custom, space = "tri")
+
 }
 \references{
 Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
@@ -200,7 +201,7 @@ Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
 Scientific reports, 10(1), 1-13.
 }
 \author{
-Rafael Maia \email{rm72@zips.uakron.edu}
+Thomas E. White \email{thomas.white026@gmail.com}
 
-Thomas White \email{thomas.white026@gmail.com}
+Rafael Maia \email{rm72@zips.uakron.edu}
 }

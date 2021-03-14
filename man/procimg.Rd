@@ -58,10 +58,11 @@ Defaults to \code{1}.}
 as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
 obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
 obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
-All three arguments are numeric, and any units of measurement are for obj_dist and obj_width, but they must match.
-Note that this is the more flexible v2.0 implementation meaning that any rectangular image is suitable;
-it need not be square with dimensions a power of 2. If using this capability, please cite
-Caves & Johnsen (2018), as per the included reference, and see note below.}
+All three arguments are numeric, and any units of measurement are suitable for obj_dist and obj_width,
+but they must match. Note that this is the more flexible v2.0 implementation meaning
+that any rectangular image is suitable; it need not be square with dimensions a power of 2.
+If using this capability, please cite Caves & Johnsen (2018), as per the included reference,
+and see note below.}
 
 \item{plotnew}{should plots be opened in a new window? Defaults to \code{FALSE}.}
 
@@ -76,17 +77,17 @@ Specify scales, resize, and/or define focal objects within images.
 }
 \note{
 There are several caveats that should be considered when using the AcuityView
-algorithm. First and foremost, the convertedimage is not what the animal actually sees.
+algorithm. First and foremost, the converted image is not what the animal actually sees.
 For example, it does not account for edge enhancement and other processing by the retina and
 brain that may alter an image. It does, however, show what spatial information
-can be detected and then processed bythe visual system. Second, the converted
+can be detected and then processed by the visual system. Second, the converted
 image is static, which does not allow one to assess how movement may reveal the
 presence of an otherwise indiscernible object. Third, AcuityView makes several
 assumptions about the Modulation Transfer Function (MTF), which describes how
 the optical system affects image contrast as a function of the level of detail.
 These assumptions include that the MTF is constant over the region of the retina that views the
-scene, is circularly symmetrical, and is wavelength independent. For a full discusion and details,
-pleaes do read Caves & Johnsen (2018).
+scene, is circularly symmetrical, and is wavelength independent. For a full discussion and details,
+please do read Caves & Johnsen (2018).
 }
 \examples{
 if (interactive()) {

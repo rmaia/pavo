@@ -30,6 +30,7 @@ in a trichromatic chromaticity space.
 data(flowers)
 vis.flowers <- vismodel(flowers, visual = "apis", achromatic = "l")
 tri.flowers <- colspace(vis.flowers, space = "tri")
+
 }
 \references{
 Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
@@ -44,6 +45,6 @@ cone excitation by stimuli of equal luminance. Journal of the Optical
 Society of America, 69, 1183-1186.
 }
 \author{
-Thomas White \email{thomas.white026@gmail.com}
+Thomas E. White \email{thomas.white026@gmail.com}
 }
 \keyword{internal}

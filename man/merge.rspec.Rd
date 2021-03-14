@@ -21,17 +21,20 @@ Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} 
 }
 \examples{
 
-# Load and split dataset into 2 sections
+# Load angle-resolved reflectance data for a green-winged teal, and
+# split it in two
 data(teal)
 teal1 <- teal[, c(1, 3:5)]
 teal2 <- teal[, c(1, 2, 6:12)]
-teal.mer <- merge(teal1, teal2, by = "wl")
-head(teal.mer)
 
-# The original and the reconstructed (by merge.rspec()) datasets are
-identical
+# Merge the two split datasets back into one, with a shared 'wl' column
+teal.mer <- merge(teal1, teal2, by = "wl")
+
+# Examine the results, and compare the original to the (identical)
+# reconstructed version
 plot(teal.mer)
 plot(teal)
+
 }
 \seealso{
 \code{\link[=as.rspec]{as.rspec()}}, \code{\link[=aggspec]{aggspec()}}

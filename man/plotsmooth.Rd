@@ -36,8 +36,12 @@ Plots spectral curves with various levels of loess smoothing to help decide whic
 loess parameters are best for subsequently smoothing the data (e.g. via \code{\link[=procspec]{procspec()}}).
 }
 \examples{
+# Load reflectance spectra
 data(sicalis)
+
+# Visualise the spectral reflectance curves across a range of smoothing levels
 plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
+
 }
 \seealso{
 \code{\link[=procspec]{procspec()}}

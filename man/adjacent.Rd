@@ -133,13 +133,15 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 # Set a seed, for reproducibility
 set.seed(153)
 
-# Single image
+# Run the adjacency analysis on a single image of a butterfly
 papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 papilio_class <- classify(papilio, kcols = 4)
 papilio_adj <- adjacent(papilio_class, xscale = 100)
 
-# Single image, with (fake) color distances and hsl values
-# Fake color distances
+# Expand on the above, by including (fake) color distances and hsl values
+# of colour elements in the image
+
+# Generate fake color distances
 distances <- data.frame(
   c1 = c(1, 1, 1, 2, 2, 3),
   c2 = c(2, 3, 4, 3, 4, 4),
@@ -147,7 +149,7 @@ distances <- data.frame(
   dL = c(5.5, 6.6, 3.3, 2.2, 4.4, 6.6)
 )
 
-# Fake hue, saturation, luminance values
+# Generate some fake hue, saturation, luminance values
 hsl_vals <- data.frame(
   patch = seq_len(4),
   hue = c(1.5, 2.2, 1.0, 0.5),
@@ -155,15 +157,20 @@ hsl_vals <- data.frame(
   sat = c(3.5, 1.1, 6.3, 1.3)
 )
 
-# Full analysis, including the white background's ID
+# Run the full analysis, including the white background's ID
 papilio_adj <- adjacent(papilio_class,
   xscale = 100, bkgID = 1,
   coldists = distances, hsl = hsl_vals
 )
 
-# Multiple images
+# Run an adjacency analysis on multiple images.
+# First load some images of coral snake colour patterns
 snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
+
+# Automatically colour-classify the coral snake patterns
 snakes_class <- classify(snakes, kcols = 3)
+
+# Run the adjacency analysis, with varying real-world scales for each image
 snakes_adj <- adjacent(snakes_class, xpts = 120, xscale = c(50, 55))
 }
 }

@@ -29,6 +29,7 @@ Calculates segment classification measures as defined in Endler (1990).
 data(sicalis)
 vis.sic <- vismodel(sicalis, visual = "segment", achromatic = "all")
 seg.sic <- colspace(vis.sic, space = "segment")
+
 }
 \references{
 Endler, J. A. (1990) On the measurement and classification of
@@ -36,7 +37,7 @@ colour in studies of animal colour patterns. Biological Journal of the
 Linnean Society, 41, 315-352.
 }
 \author{
-Thomas White \email{thomas.white026@gmail.com}
+Thomas E. White \email{thomas.white026@gmail.com}
 
 Pierre-Paul Bitton \email{bittonp@uwindsor.ca}
 }

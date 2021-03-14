@@ -62,16 +62,27 @@ to \code{FALSE})}
 Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
 }
 \examples{
+# Load floral reflectance spectra
 data(flowers)
 
 # CIEXYZ
+# Estimate quantum catches, using the cie10 view-matching function
 vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
+
+# Run the ciexyz model
 xyz.flowers <- colspace(vis.flowers, space = "ciexyz")
+
+# Visualise the floral spectra in a ciexyz chromaticity diagram
 plot(xyz.flowers)
 
 # CIELAB
+# Using the quantum catches above, instead model the spectra in the CIELab
+# space
 lab.flowers <- colspace(vis.flowers, space = "cielab")
+
+# And plot in Lab space
 plot(lab.flowers)
+
 }
 \references{
 Smith T, Guild J. (1932) The CIE colorimetric standards and their use.
@@ -89,7 +100,7 @@ Parts 1 and 2. Technical Report 170-1. Vienna: Central Bureau of the Commission
 Internationale de l Eclairage.
 }
 \author{
-Thomas White \email{thomas.white026@gmail.com}
+Thomas E. White \email{thomas.white026@gmail.com}
 
 Rafael Maia \email{rm72@zips.uakron.edu}
 }

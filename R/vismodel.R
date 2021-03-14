@@ -108,13 +108,14 @@
 #' vis.star <- vismodel(sicalis, visual = "star", achromatic = "bt.dc", relative = FALSE)
 #' dist.star <- coldist(vis.star, achromatic = TRUE)
 #'
-#' # Custom trichromatic visual system
+#' # Estimate quantum catches using a custom trichromatic visual phenotype
 #' custom <- sensmodel(c(330, 440, 550))
 #' names(custom) <- c("wl", "s", "m", "l")
 #' vis.custom <- vismodel(flowers, visual = custom)
 #' tri.custom <- colspace(vis.custom, space = "tri")
+#' 
+#' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
-#' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
 #'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative
