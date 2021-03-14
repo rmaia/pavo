@@ -59,6 +59,13 @@ test_that("Equivalent", {
     suppressWarnings(coldist(as.data.frame(vismodel(flowers)), qcatch = "Qi")),
     ignore_attr = TRUE
   )
+  
+  expect_equal(
+  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielab')),
+  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielch')),
+  ignore_attr = TRUE
+  )
+  
 })
 
 test_that("Options", {

@@ -34,6 +34,10 @@ test_that("coldist", {
     digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 4),
     "c6d1989e98abd7772c00475696c6e6dafe0a2e46"
   )
+  expect_equal(
+    digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), 'cielab')), digits = 4),
+    "ab8d1c2eac211561f68759137baa2b5d3005b199"
+  )
   
   # Bootcoldist output (means only, since CI's are bootstrapped)
   ## RN model

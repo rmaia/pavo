@@ -5,6 +5,7 @@
 * It is now possible to filter images according to the AcuityView 2.0 algorithm (Caves et al. 2018) in order to to model the visual acuity of animals, prior to analysis. The functionality is implemented in `procimg()`, with details and examples available in the function's help documentation and the vignette.
 * Added the argument `raw` to `bootcoldist()`. When `TRUE`, the full raw list of bootstrapped colour-distances are returned (equal in length to the number of replicates specified by `boot.n`), rather than the summary statistics which are returned by default.
 * Added the visual phenotype of the Vinegar fly _Drosophila melanogaster_ (Sharkey et al. 2020). See `?vismodel()` or `?sensdata()` for instructions on selecting it. 
+* `coldist()` now uses the package `farver` when calculating CIE2000 colour distances between points in the CIELab and CIELch spaces.
 
 ## MINOR FEATURES AND BUG FIXES
 
