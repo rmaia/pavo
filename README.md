@@ -23,7 +23,7 @@
 
 ### Need more information, or help with the package?
 
-- Take a look at the [package documentation](http://book.colrverse.com) for detailed examples and discussion.
+- Take a look at the [package documentation](https://book.colrverse.com) for detailed examples and discussion.
 - Check out the [latest news](http://pavo.colrverse.com/news/index.html) for changes and updates.
 - **Need help or advice and can't find what you're looking for?** Head over to the [colRverse discussion board](https://github.com/colrverse/colRverse/discussions) and feel free to post a message.
 - **If all else fails** (or you don't have a GitHub account), [email Tom](mailto:thomas.white@sydney.edu.au)!
