@@ -22,7 +22,7 @@ knitr::opts_chunk$set(
 [data_location]: https://github.com/rmaia/pavo/blob/master/data_external/vignette
 
 ```{r}
-book_repo <- "https://github.com/Bisaloo/colsci-book"
+book_repo <- "https://github.com/colRverse/colsci-book"
 book_site <- "https://book.colrverse.com"
 ```
 
