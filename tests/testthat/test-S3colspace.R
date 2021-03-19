@@ -19,7 +19,7 @@ test_that("summary.colspace", {
   summary_subset <- expect_message(summary(tcs_sicalis[, -17]), "subset data")
   expect_equal(summary_subset, summary.data.frame(tcs_sicalis[, -17]))
 
-  tri_sicalis <- colspace(vismodel(sicalis, "cie10"), "tri")
+  tri_sicalis <- expect_warning(colspace(vismodel(sicalis, "cie10"), "tri"))
   expect_equal(
     expect_output(summary(tri_sicalis)),
     summary.data.frame(tri_sicalis)

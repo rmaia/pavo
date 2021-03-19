@@ -11,7 +11,10 @@ test_that("Procspec", {
   expect_message(dim(procspec(sicalis, opt = "smooth")), "smoothing")
   expect_equal(
     dim(procspec(sicalis, opt = "smooth", span = 0.1)),
-    dim(procspec(sicalis, opt = "smooth", span = 30)),
+    dim(procspec(sicalis, opt = "smooth", span = 30))
+  )
+  expect_equal(
+    dim(procspec(sicalis, opt = "smooth", span = 0.1)),
     dim(procspec(sicalis, opt = "smooth", span = 50))
   )
 

@@ -12,14 +12,18 @@ test_that("as.rspec", {
   expect_identical(flowers, flowers2)
 
   # Both text and numerically identify wavelength column
-  refl1 <- rnorm(401)
+  refl1 <- rnorm(401, mean = 5)
   fake1 <- data.frame(wave = 300:700, refl1)
   fake2 <- data.frame(refl1, wave = 300:700)
   expect_identical(as.rspec(fake1, whichwl = "wave"), as.rspec(fake2, whichwl = 2))
 
   # Interpolation should not happen outside of wl range by default
   flowers3 <- flowers[-1, ]
-  expect_identical(flowers3, as.rspec(flowers3), ignore_attr = TRUE)
+  rownames(flowers3) <- NULL
+  expect_identical(
+    flowers3,
+    expect_message(as.rspec(flowers3))
+  )
 
   # With rule = 2, missing values outside of range are generated
   flowers3_fullrange <- expect_warning(

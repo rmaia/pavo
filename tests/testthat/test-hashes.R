@@ -1,3 +1,5 @@
+local_edition(2)
+
 test_that("coldist", {
   skip_on_cran()
 
@@ -38,7 +40,7 @@ test_that("coldist", {
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), 'cielab')), digits = 4),
     "ab8d1c2eac211561f68759137baa2b5d3005b199"
   )
-  
+
   # Bootcoldist output (means only, since CI's are bootstrapped)
   ## RN model
   # data(sicalis)
@@ -48,7 +50,7 @@ test_that("coldist", {
   # digest::sha1(bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)[, c(1, 4)]),
   #              "5f29a9d9c57f922e439e419a4691445e7d67555d"
   # )
-  # 
+  #
   # ## Tcs
   # vm <- vismodel(sicalis, achromatic = "bt.dc")
   # space <- colspace(vm)
@@ -57,7 +59,7 @@ test_that("coldist", {
   # digest::sha1(bootcoldist(space, by = gr)[, c(1, 4)]),
   #              "1abaef8c25cb8a91f79730be80207cea15e064d6"
   # )
-  # 
+  #
   # ## Hexagon
   # data(flowers)
   # vis.flowers <- vismodel(flowers,
