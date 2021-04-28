@@ -31,7 +31,7 @@ Authors@R:
              role = "aut",
              email = "bittonp@uwindsor.ca",
              comment = c(ORCID = "0000-0001-5984-2331")))
-Description: A cohesive framework for for the spectral and spatial analysis of 
+Description: A cohesive framework for the spectral and spatial analysis of 
     colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013) 
     <doi:10.1111/2041-210X.12069> and Maia, Grsuon, Endler & White (2019)
     <doi:10.1111/2041-210X.13174>.
