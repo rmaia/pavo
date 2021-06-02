@@ -60,6 +60,9 @@ tcssum <- function(tcsres) {
         }
       )
     } else {
+      message(
+        "Please install the 'alphashape3d' package to get the value of a.vol"
+      )
       a.vol <- NA_real_
     }
 
