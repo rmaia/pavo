@@ -1,10 +1,13 @@
 local_edition(2)
 
-test_that("coldist", {
-  skip_on_cran()
+skip_on_cran()
 
-  data(flowers)
-  library(digest)
+library(digest)
+data(flowers)
+data(sicalis)
+data(teal)
+
+test_that("coldist", {
 
   # JND transform
   vis.flowers <- vismodel(flowers, visual = "apis")
@@ -75,10 +78,6 @@ test_that("coldist", {
 })
 
 test_that("colspace", {
-  skip_on_cran()
-
-  library(digest)
-  data(flowers)
 
   expect_equal(
     digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 4),
@@ -129,9 +128,7 @@ test_that("colspace", {
 })
 
 test_that("voloverlap()", {
-  skip_on_cran()
 
-  data(sicalis)
   tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
   tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
@@ -148,9 +145,6 @@ test_that("voloverlap()", {
 })
 
 test_that("processing & general", {
-  skip_on_cran()
-
-  library(digest)
 
   # Sensdata
   expect_known_hash(
@@ -165,7 +159,6 @@ test_that("processing & general", {
   )
 
   # Merge
-  data(teal)
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
   expect_known_hash(
@@ -174,7 +167,6 @@ test_that("processing & general", {
   )
 
   # Subset
-  data(sicalis)
   vis.sicalis <- vismodel(sicalis)
   tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
   expect_equal(
@@ -198,9 +190,7 @@ test_that("processing & general", {
 })
 
 test_that("images", {
-  skip_on_cran()
 
-  library(digest)
   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
 
@@ -218,10 +208,6 @@ test_that("images", {
 })
 
 test_that("vismodel", {
-  skip_on_cran()
-
-  library(digest)
-  data(flowers)
 
   # Output
   expect_equal(
