@@ -4,8 +4,8 @@ test_that("as.rspec", {
   data(flowers)
   expect_true(is.rspec(flowers))
 
-  flowers2 <- expect_message(
-    as.rspec(as.data.frame(flowers)),
+  expect_message(
+    flowers2 <- as.rspec(as.data.frame(flowers)),
     "wavelengths found in column 1"
   )
   expect_s3_class(flowers2, "rspec")
@@ -15,19 +15,23 @@ test_that("as.rspec", {
   refl1 <- rnorm(401, mean = 5)
   fake1 <- data.frame(wave = 300:700, refl1)
   fake2 <- data.frame(refl1, wave = 300:700)
-  expect_identical(as.rspec(fake1, whichwl = "wave"), as.rspec(fake2, whichwl = 2))
+  expect_identical(
+    as.rspec(fake1, whichwl = "wave"),
+    as.rspec(fake2, whichwl = 2)
+  )
 
   # Interpolation should not happen outside of wl range by default
   flowers3 <- flowers[-1, ]
   rownames(flowers3) <- NULL
+  expect_message(converted_flowers <- as.rspec(flowers3))
   expect_identical(
     flowers3,
-    expect_message(as.rspec(flowers3))
+    converted_flowers
   )
 
   # With rule = 2, missing values outside of range are generated
-  flowers3_fullrange <- expect_warning(
-    as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE),
+  expect_warning(
+    flowers3_fullrange <- as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE),
     "beyond the range"
   )
   expect_equal(dim(flowers3_fullrange), c(401, 37))
@@ -91,9 +95,9 @@ test_that("summary.rspec", {
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
   expect_equal(dim(summary(one_spec)), c(1, 23))
-  expect_length(
-    expect_warning(summary(one_spec, wlmin = 500), "blue chroma"),
-    23
+  expect_warning(
+    expect_length(summary(one_spec, wlmin = 500), 23),
+    "blue chroma"
   )
 
   # Error if subset vars do not exist

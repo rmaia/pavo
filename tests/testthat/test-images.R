@@ -73,7 +73,7 @@ test_that("procimg", {
   expect_message(procimg(papilio, "coerce"))
   class(papilio) <- "cimg"
   expect_message(procimg(papilio, "coerce"))
-  
+
   # Acuity
   expect_warning(procimg(papilio, obj_dist = 3), "Skipping")
   expect_warning(procimg(papilio, obj_width = 3), "Skipping")

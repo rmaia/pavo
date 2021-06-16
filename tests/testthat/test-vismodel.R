@@ -15,20 +15,28 @@ test_that("Warnings", {
   test_rspec <- as.rspec(flowers[1:2])
   test_matrix <- as.matrix(flowers[, 2, drop = FALSE])
 
+  expect_warning(vm_rspec <- vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec")
+  expect_warning(vm_matrix <- vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
+
   expect_identical(
-    expect_warning(vismodel(flowers, visual = "bluetit", illum = test_rspec), "illum is an rspec"),
-    expect_warning(vismodel(flowers, visual = "bluetit", illum = test_matrix), "illum is a matrix")
+    vm_rspec,
+    vm_matrix
   )
+
+  expect_warning(vm_rspec <- vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec")
+  expect_warning(vm_matrix <- vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
+
   expect_identical(
-    expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_rspec), "achromatic is an rspec"),
-    expect_warning(vismodel(flowers, visual = "bluetit", achromatic = test_matrix), "achromatic is a matrix")
+    vm_rspec,
+    vm_matrix
   )
+
   expect_silent(vismodel(flowers, visual = "bluetit", achromatic = FALSE))
 
   expect_error(vismodel(flowers, vonkries = TRUE, bkg = NULL), "background is NULL")
   expect_error(vismodel(flowers, trans = NULL), "transmission is NULL")
 
-  flowers_NIR <- expect_warning(as.rspec(flowers, lim = c(300, 1200)), "Interpolating beyond")
+  expect_warning(flowers_NIR <- as.rspec(flowers, lim = c(300, 1200)), "Interpolating beyond")
 
   expect_error(vismodel(flowers_NIR), "wavelength range")
   expect_error(vismodel(flowers_NIR, sensmodel(c(350, 450, 550, 650))), "wavelength range")
@@ -47,5 +55,4 @@ test_that("sensdata()", {
   expect_false(any(vis_all < 0))
   expect_false(anyNA(vis_all))
 
-  colspace(vismodel(sensdata(illum = "D65"), visual = "cie10"))
 })
