@@ -63,8 +63,8 @@ test_that("getimg", {
 
   # This folder contains a 16 bit PNG image and an identical copy with an
   # uppercase file extension
-  img <- expect_message(
-    getimg(system.file("testdata", "images", "formats", package = "pavo")),
+  expect_message(
+    img <- getimg(system.file("testdata", "images", "formats", package = "pavo")),
     "2 files found"
   )
 

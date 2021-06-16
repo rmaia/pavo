@@ -59,13 +59,13 @@ test_that("Equivalent", {
     suppressWarnings(coldist(as.data.frame(vismodel(flowers)), qcatch = "Qi")),
     ignore_attr = TRUE
   )
-  
+
   expect_equal(
   coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielab')),
   coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielch')),
   ignore_attr = TRUE
   )
-  
+
 })
 
 test_that("Options", {
@@ -116,7 +116,7 @@ test_that("bootcoldist", {
     bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
   )
   expect_equal(dim(bcd), c(3, 6))
-  
+
   # Raw size
   raw <- bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 30, raw = TRUE)
   expect_equal(nrow(raw), 30)

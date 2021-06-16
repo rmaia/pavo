@@ -185,9 +185,11 @@ test_that("CIE", {
   )
 
   # Should ignore custom options when data are class vismodel()
+  expect_warning(vm_d65 <- colspace(vismodel(flowers, "cie10"), space = "cielab", visual = "cie10", illum = "D65"))
+  expect_warning(vm_bluesky <- colspace(vismodel(flowers, "cie10"), space = "cielab", visual = "cie2", illum = "bluesky"))
   expect_equal(
-    expect_warning(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = "cie10", illum = "D65")),
-    expect_warning(colspace(vismodel(flowers, "cie10"), space = "cielab", visual = "cie2", illum = "bluesky"))
+    vm_d65,
+    vm_bluesky
   )
 
   # Message about the use of user-defined data
