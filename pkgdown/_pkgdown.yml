@@ -60,10 +60,7 @@ reference:
 
 - title: Data
   desc: "Included example datasets"
-  contents:
-  - '`flowers`'
-  - '`sicalis`'
-  - '`teal`'
+  contents: has_keyword("datasets")
 
 template:
   params:
