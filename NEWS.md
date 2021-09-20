@@ -1,3 +1,9 @@
+# pavo 2.7.1
+
+## MINOR FEATURES AND BUG FIXES
+
+* Minor release to avoid breaking changes to tests.
+
 # pavo 2.7.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
