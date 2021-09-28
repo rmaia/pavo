@@ -28,9 +28,9 @@
 #' @param obj_dist,obj_width,eye_res blur the image to model the visual acuity of non-human animals
 #' as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
 #' obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
-#' obj_width is the real-world width of the entire image; eye_res is the resolution of the viewer in degrees.
-#' All three arguments are numeric, and any units of measurement are suitable for obj_dist and obj_width, 
-#' but they must match. Note that this is the more flexible v2.0 implementation meaning 
+#' obj_width is the real-world width of the entire image; eye_res is the minimum resolvable angle of the viewer 
+#' in degrees. All three arguments are numeric, and any units of measurement are suitable for 
+#' obj_dist and obj_width, but they must match. Note that this is the more flexible v2.0 implementation meaning 
 #' that any rectangular image is suitable; it need not be square with dimensions a power of 2. 
 #' If using this capability, please cite Caves & Johnsen (2018), as per the included reference, 
 #' and see note below.
@@ -72,7 +72,7 @@
 #'
 #'   # Model the appearance of a butterfly given the reduced visual acuity of another
 #'   # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
-#'   # the image width is 10 cm, and the spatial resolution of the viewer is 0.2-degrees.
+#'   # the image width is 10 cm, and the minimum resolvable angle of the viewer is 0.2-degrees.
 #'   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
 #'   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
 #' }
