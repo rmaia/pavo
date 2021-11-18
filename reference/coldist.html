@@ -219,7 +219,7 @@ logarithm of the quantum catch)</p></td>
       <td><p>photoreceptor densities for the cones used in visual modeling. must
 have same length as number of columns (excluding achromatic receptor if
 used; defaults to the Pekin robin <em>Leiothrix lutea</em> densities:
-<code><a href='https://rdrr.io/r/base/c.html'>c(1,2,2,4)</a></code>). Ignored for <code><a href='colspace.html'>colspace</a></code> objects.</p></td>
+<code>c(1,2,2,4)</code>). Ignored for <code><a href='colspace.html'>colspace</a></code> objects.</p></td>
     </tr>
     <tr>
       <th>weber</th>
@@ -296,36 +296,41 @@ predictions. Behavioral Ecology, doi: <a href='https://doi.org/10.1093/beheco/ar
 <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># \donttest{</span>
-<span class='co'># Dichromat</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>  
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"canis"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>didist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.flowers</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'>
-<span class='co'># Trichromat</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"apis"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>tridist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.flowers</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'>
-<span class='co'># Trichromat, colour-hexagon model (euclidean distances)</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>,
-  visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>,
-  relative <span class='op'>=</span> <span class='cn'>FALSE</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, achromatic <span class='op'>=</span> <span class='st'>"l"</span>, bkg <span class='op'>=</span> <span class='st'>"green"</span>
-<span class='op'>)</span>
-<span class='va'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"hexagon"</span><span class='op'>)</span>
-<span class='va'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>hex.flowers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating unweighted Euclidean distances</span></div><div class='input'>
-<span class='co'># Trichromat, colour-opponent-coding model (manhattan distances)</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-<span class='va'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"coc"</span><span class='op'>)</span>
-<span class='va'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>coc.flowers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating Manhattan distances</span></div><div class='input'>
-<span class='co'># Tetrachromat</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
-<span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-<span class='va'>tetradist.sicalis.n</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.sicalis</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'><span class='co'># }</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># \donttest{</span></span>
+<span class='r-in'><span class='co'># Dichromat</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>  </span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"canis"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>didist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.flowers</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating noise-weighted Euclidean distances</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Trichromat</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"apis"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tridist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.flowers</span>, n <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>1</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating noise-weighted Euclidean distances</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Trichromat, colour-hexagon model (euclidean distances)</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>,</span>
+<span class='r-in'>  visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>,</span>
+<span class='r-in'>  relative <span class='op'>=</span> <span class='cn'>FALSE</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, achromatic <span class='op'>=</span> <span class='st'>"l"</span>, bkg <span class='op'>=</span> <span class='st'>"green"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hex.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"hexagon"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>hex.flowers</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating unweighted Euclidean distances</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Trichromat, colour-opponent-coding model (manhattan distances)</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>coc.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"coc"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>hexdist.flowers</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>coc.flowers</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating Manhattan distances</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Tetrachromat</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>tetradist.sicalis.n</span> <span class='op'>&lt;-</span> <span class='fu'>coldist</span><span class='op'>(</span><span class='va'>vis.sicalis</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating noise-weighted Euclidean distances</span>
+<span class='r-in'><span class='co'># }</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

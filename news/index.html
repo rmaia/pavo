@@ -171,10 +171,10 @@
 <ul>
 <li>Fixed a bug where procimg() would fail when using resize/rotate followed by further options, on single images.</li>
 <li>vignettes have been moved to <a href="https://book.colrverse.com/" class="uri">https://book.colrverse.com/</a> and now use a book format</li>
-<li>Fixed a bug in <code><a href="../reference/plot.colspace.html">plot.colspace(gamut = TRUE)</a></code> (as well as <code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) where it would incorrectly display <code>"Max gamut cannot be plotted."</code> and fail to plot the max gamut each time.</li>
+<li>Fixed a bug in <code>plot.colspace(gamut = TRUE)</code> (as well as <code><a href="../reference/triplot.html">triplot()</a></code>, <code><a href="../reference/tcsplot.html">tcsplot()</a></code>, <code><a href="../reference/tetraplot.html">tetraplot()</a></code>) where it would incorrectly display <code>"Max gamut cannot be plotted."</code> and fail to plot the max gamut each time.</li>
 <li>Fixed a recent bug whereby the D65 illuminant was expressed in units of radiant flux, by default. It has instead been converted to photon flux (umol.s-1.m-2).</li>
 <li>Added an informative error message when raw quantum catch estimates are &lt; 1, and an attempt is made to calculate colour distances in the receptor-noise model using <code>noise = 'quantum'</code>. Taking the root of negative values following log-transformation, as required when <code>noise = 'quantum'</code>, would previously produce an uninformative error, which has been rectified.</li>
-<li>The <code>margins</code> argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard <code><a href="https://rdrr.io/r/graphics/par.html">par(mar = c())</a></code> pathway.</li>
+<li>The <code>margins</code> argument has been deprecated for cie, coc, hexagon, segment, projplot, di-, tri-, and tetra-chromatic plots. It was causing problems when later adding points to plots, and margin-handling is best left to the user anyway. The default plots may therefore look slightly different, but the margins can be adjusted to taste using the standard <code>par(mar = c())</code> pathway.</li>
 <li>Fixed a bug where <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> would not run until supplied with receptor-noise model arguments (n, weber, weber.ref), even when not running the receptor-noise model.</li>
 <li>Fixed a bug where <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> would sometimes fail when given data from colourspace models containing lots of negative coordinate values. This was particularly common for the hexagon model.</li>
 <li>Improved safety and error handling in <code><a href="../reference/adjacent.html">adjacent()</a></code>.</li>
@@ -205,7 +205,7 @@
 <ul>
 <li>
 <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> and <code><a href="../reference/adjacent.html">adjacent()</a></code> now use a random number generator that generates statistically sound values, even when ran in parallel. The output of these functions is thus expected to slightly change, even if you set the seed before.</li>
-<li>The alphashape3d package has been moved to <code>Suggests</code>, which means it will not be installed automatically when you install pavo from CRAN and that you will need to install it yourself if you need it (for <code><a href="../reference/vol.html">vol(type = "alpha")</a></code>, <code><a href="../reference/vol.html">vol(type = "alpha")</a></code> and <code><a href="../reference/voloverlap.html">voloverlap(type = "alpha")</a></code>)</li>
+<li>The alphashape3d package has been moved to <code>Suggests</code>, which means it will not be installed automatically when you install pavo from CRAN and that you will need to install it yourself if you need it (for <code>vol(type = "alpha")</code>, <code>vol(type = "alpha")</code> and <code>voloverlap(type = "alpha")</code>)</li>
 </ul>
 </div>
 </div>
@@ -226,7 +226,7 @@
 <ul>
 <li>
 <code><a href="../reference/getimg.html">getimg()</a></code> now imports image files with uppercase extensions (e.g., JPG or PNG), such as those produced by some camera brands or processing software.</li>
-<li>Maximum quantum catches computation (<code>data.maxqcatches</code> attribute) now works for segment “visual model” as well. As a side effect, this removes a warning that occurred when users ran <code><a href="../reference/vismodel.html">vismodel(..., visual = "segment")</a></code>.</li>
+<li>Maximum quantum catches computation (<code>data.maxqcatches</code> attribute) now works for segment “visual model” as well. As a side effect, this removes a warning that occurred when users ran <code>vismodel(..., visual = "segment")</code>.</li>
 <li>
 <code><a href="../reference/sensmodel.html">sensmodel()</a></code> now accepts the argument <code>sensnames</code>, for specifying the names of the resulting sensitivity curves on-the-fly.</li>
 <li>CIE models now accept data created outside of <code><a href="../reference/vismodel.html">vismodel()</a></code>, by allowing users to specify the illuminant and viewer sensitivity function used when estimating XYZ values (via <code>illum</code> and <code>visual</code> arguments in <code><a href="../reference/colspace.html">colspace()</a></code>).</li>
@@ -306,7 +306,7 @@
 <li>
 <code><a href="../reference/vismodel.html">vismodel()</a></code> now works for monochromats as well.</li>
 <li>
-<code><a href="../reference/procspec.html">procspec(opt = "bin")</a></code> no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.</li>
+<code>procspec(opt = "bin")</code> no longer counts bin edges twice (once in each consecutive bin). This will cause changes in the bin stops compared to earlier versions of this function.</li>
 <li>
 <code><a href="../reference/coc.html">coc()</a></code> and <code><a href="../reference/categorical.html">categorical()</a></code> spaces now return Weber luminance contrast by default when passed through <code><a href="../reference/coldist.html">coldist()</a></code>, rather than nothing (as per the original publications).</li>
 <li>
@@ -345,7 +345,7 @@
 <li>the <code>cores</code> argument in <code><a href="../reference/getimg.html">getimg()</a></code> is deprecated, as image import is vectorised</li>
 <li>fixed a small bug in <code><a href="../reference/classify.html">classify()</a></code> when using <code>refID</code> and <code>kcols</code> for multiple images</li>
 <li>the <code>resize</code> argument in <code><a href="../reference/procimg.html">procimg()</a></code> now takes a percentage, rather than scaling factor</li>
-<li>fixed a bug where <code><a href="../reference/colspace.html">colspace(space = segment)</a></code> would return both a <code>B</code> and (redundant) <code>lum</code> column</li>
+<li>fixed a bug where <code>colspace(space = segment)</code> would return both a <code>B</code> and (redundant) <code>lum</code> column</li>
 <li>fixed a bug where the rod sensitivity of <em>Canis familiaris</em> was inaccessible through <code><a href="../reference/vismodel.html">vismodel()</a></code>
 </li>
 <li>fixed an issue in <code><a href="../reference/getspec.html">getspec()</a></code> where badly encoded characters in some spectral files would cause failure</li>

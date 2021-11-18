@@ -208,70 +208,77 @@ Ecology and Evolution, early view doi: <a href='https://doi.org/10.1111/2041-210
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Colour hexagon</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>,
-  visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>,
-  vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, bkg <span class='op'>=</span> <span class='st'>"green"</span>
-<span class='op'>)</span>
-<span class='va'>flowers.hex</span> <span class='op'>&lt;-</span> <span class='fu'><a href='hexagon.html'>hexagon</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>flowers.hex</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Colorspace &amp; visual model options:
-#&gt;  * Colorspace: hexagon 
-#&gt;  * Quantal catch: Ei 
-#&gt;  * Visual system, chromatic: apis 
-#&gt;  * Visual system, achromatic: none 
-#&gt;  * Illuminant: ideal, scale = 1 (von Kries colour correction applied) 
-#&gt;  * Background: green 
-#&gt;  * Relative: FALSE 
-#&gt;  * Max possible chromatic volume: NA 
-#&gt; </div><div class='output co'>#&gt;        s                 m                l                x           
-#&gt;  Min.   :0.01889   Min.   :0.1623   Min.   :0.1863   Min.   :-0.27348  
-#&gt;  1st Qu.:0.33717   1st Qu.:0.7202   1st Qu.:0.6943   1st Qu.: 0.09593  
-#&gt;  Median :0.47192   Median :0.7827   Median :0.8103   Median : 0.27697  
-#&gt;  Mean   :0.46048   Mean   :0.7190   Mean   :0.7559   Mean   : 0.25584  
-#&gt;  3rd Qu.:0.57925   3rd Qu.:0.8456   3rd Qu.:0.8484   3rd Qu.: 0.40041  
-#&gt;  Max.   :0.90735   Max.   :0.9112   Max.   :0.9001   Max.   : 0.66006  
-#&gt;        y               h.theta            r.vec            sec.fine    
-#&gt;  Min.   :-0.23770   Min.   :  1.103   Min.   :0.09195   Min.   :  0.0  
-#&gt;  1st Qu.: 0.06693   1st Qu.: 52.549   1st Qu.:0.23098   1st Qu.: 50.0  
-#&gt;  Median : 0.15522   Median : 61.741   Median :0.32881   Median : 60.0  
-#&gt;  Mean   : 0.11077   Mean   : 77.206   Mean   :0.34600   Mean   : 72.5  
-#&gt;  3rd Qu.: 0.20693   3rd Qu.: 77.511   3rd Qu.:0.45400   3rd Qu.: 72.5  
-#&gt;  Max.   : 0.30778   Max.   :271.076   Max.   :0.70155   Max.   :270.0  
-#&gt;   sec.coarse       
-#&gt;  Length:36         
-#&gt;  Class :character  
-#&gt;  Mode  :character  
-#&gt;                    
-#&gt;                    
-#&gt;                    </div><div class='input'>
-<span class='co'># Tetrahedral model</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
-<span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span><span class='op'>)</span>
-<span class='va'>csp.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>csp.sicalis</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span><span class='op'>)</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; Colorspace &amp; visual model options:
-#&gt;  * Colorspace: tcs 
-#&gt;  * Quantal catch: Qi 
-#&gt;  * Visual system, chromatic: avg.uv 
-#&gt;  * Visual system, achromatic: none 
-#&gt;  * Illuminant: ideal, scale = 1 (von Kries colour correction not applied) 
-#&gt;  * Background: ideal 
-#&gt;  * Relative: TRUE 
-#&gt;  * Max possible chromatic volume: 0.215735 
-#&gt; </div><div class='output co'>#&gt; <span class='message'>'avalue' automatically set to 2.6255e-01</span></div><div class='output co'>#&gt; <span class='message'>'avalue' automatically set to 2.4445e-02</span></div><div class='output co'>#&gt; <span class='message'>'avalue' automatically set to 1.6251e-01</span></div><div class='output co'>#&gt;   centroid.u centroid.s centroid.m centroid.l        c.vol    rel.c.vol
-#&gt; B 0.14091298 0.04946432  0.3838526  0.4257701 6.281511e-06 2.901306e-05
-#&gt; C 0.06947461 0.03144895  0.4054651  0.4936114 4.739152e-06 2.188920e-05
-#&gt; T 0.15368451 0.06413428  0.3766734  0.4055078 5.183721e-06 2.394258e-05
-#&gt;    colspan.m    colspan.v  huedisp.m    huedisp.v   mean.ra    max.ra
-#&gt; B 0.05758429 0.0013841927 0.06717740 0.0011466898 0.8021427 0.9039261
-#&gt; C 0.03193253 0.0003263454 0.06164553 0.0013887690 0.8742042 0.9061528
-#&gt; T 0.06171418 0.0012215063 0.05595025 0.0005378623 0.7434629 0.8816377
-#&gt;          a.vol
-#&gt; B 4.586381e-06
-#&gt; C 1.849436e-06
-#&gt; T 2.388383e-06</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Colour hexagon</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>,</span>
+<span class='r-in'>  visual <span class='op'>=</span> <span class='st'>"apis"</span>, qcatch <span class='op'>=</span> <span class='st'>"Ei"</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span>,</span>
+<span class='r-in'>  vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, bkg <span class='op'>=</span> <span class='st'>"green"</span></span>
+<span class='r-in'><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>flowers.hex</span> <span class='op'>&lt;-</span> <span class='fu'><a href='hexagon.html'>hexagon</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>flowers.hex</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Colorspace &amp; visual model options:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Colorspace: hexagon </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Quantal catch: Ei </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Visual system, chromatic: apis </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Visual system, achromatic: none </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Illuminant: ideal, scale = 1 (von Kries colour correction applied) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Background: green </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Relative: FALSE </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Max possible chromatic volume: NA </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        s                 m                l                x           </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :0.01889   Min.   :0.1623   Min.   :0.1863   Min.   :-0.27348  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.:0.33717   1st Qu.:0.7202   1st Qu.:0.6943   1st Qu.: 0.09593  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median :0.47192   Median :0.7827   Median :0.8103   Median : 0.27697  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   :0.46048   Mean   :0.7190   Mean   :0.7559   Mean   : 0.25584  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.:0.57925   3rd Qu.:0.8456   3rd Qu.:0.8484   3rd Qu.: 0.40041  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   :0.90735   Max.   :0.9112   Max.   :0.9001   Max.   : 0.66006  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>        y               h.theta            r.vec            sec.fine    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Min.   :-0.23770   Min.   :  1.103   Min.   :0.09195   Min.   :  0.0  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  1st Qu.: 0.06693   1st Qu.: 52.549   1st Qu.:0.23098   1st Qu.: 50.0  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Median : 0.15522   Median : 61.741   Median :0.32881   Median : 60.0  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mean   : 0.11077   Mean   : 77.206   Mean   :0.34600   Mean   : 72.5  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  3rd Qu.: 0.20693   3rd Qu.: 77.511   3rd Qu.:0.45400   3rd Qu.: 72.5  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Max.   : 0.30778   Max.   :271.076   Max.   :0.70155   Max.   :270.0  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   sec.coarse       </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Length:36         </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Class :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Mode  :character  </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                    </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Tetrahedral model</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>vis.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>sicalis</span>, visual <span class='op'>=</span> <span class='st'>"avg.uv"</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>csp.sicalis</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.sicalis</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>csp.sicalis</span>, by <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"C"</span>, <span class='st'>"T"</span>, <span class='st'>"B"</span><span class='op'>)</span>, <span class='fl'>7</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> Colorspace &amp; visual model options:</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Colorspace: tcs </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Quantal catch: Qi </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Visual system, chromatic: avg.uv </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Visual system, achromatic: none </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Illuminant: ideal, scale = 1 (von Kries colour correction not applied) </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Background: ideal </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Relative: TRUE </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  * Max possible chromatic volume: 0.215735 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> </span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 'avalue' automatically set to 2.6255e-01</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 'avalue' automatically set to 2.4445e-02</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> 'avalue' automatically set to 1.6251e-01</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>   centroid.u centroid.s centroid.m centroid.l        c.vol    rel.c.vol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 0.14091298 0.04946432  0.3838526  0.4257701 6.281511e-06 2.901306e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 0.06947461 0.03144895  0.4054651  0.4936114 4.739152e-06 2.188920e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> T 0.15368451 0.06413428  0.3766734  0.4055078 5.183721e-06 2.394258e-05</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    colspan.m    colspan.v  huedisp.m    huedisp.v   mean.ra    max.ra</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 0.05758429 0.0013841927 0.06717740 0.0011466898 0.8021427 0.9039261</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 0.03193253 0.0003263454 0.06164553 0.0013887690 0.8742042 0.9061528</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> T 0.06171418 0.0012215063 0.05595025 0.0005378623 0.7434629 0.8816377</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>          a.vol</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> B 4.586381e-06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> C 1.849436e-06</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> T 2.388383e-06</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

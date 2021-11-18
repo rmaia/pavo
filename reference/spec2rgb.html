@@ -174,15 +174,17 @@ for passing to further plotting functions.</p>
 <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-<span class='fu'>spec2rgb</span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;  Acrecca-01  Acrecca-02  Acrecca-03  Acrecca-04  Acrecca-05  Acrecca-06 
-#&gt; "#21B662FF" "#00A860FF" "#00965FFF" "#00835DFF" "#006F5DFF" "#00595AFF" 
-#&gt;  Acrecca-07  Acrecca-08  Acrecca-09  Acrecca-10  Acrecca-11  Acrecca-12 
-#&gt; "#0F4756FF" "#1E364EFF" "#242944FF" "#26223AFF" "#2C2339FF" "#2A2230FF" </div><div class='input'>
-<span class='co'># Plot data using estimated perceived colour</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span>, col <span class='op'>=</span> <span class='fu'>spec2rgb</span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"overlay"</span><span class='op'>)</span>
-</div><div class='img'><img src='spec2rgb-1.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'>spec2rgb</span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Acrecca-01  Acrecca-02  Acrecca-03  Acrecca-04  Acrecca-05  Acrecca-06 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#21B662FF" "#00A860FF" "#00965FFF" "#00835DFF" "#006F5DFF" "#00595AFF" </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>  Acrecca-07  Acrecca-08  Acrecca-09  Acrecca-10  Acrecca-11  Acrecca-12 </span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> "#0F4756FF" "#1E364EFF" "#242944FF" "#26223AFF" "#2C2339FF" "#2A2230FF" </span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Plot data using estimated perceived colour</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span>, col <span class='op'>=</span> <span class='fu'>spec2rgb</span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>, type <span class='op'>=</span> <span class='st'>"overlay"</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='spec2rgb-1.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

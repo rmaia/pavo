@@ -196,7 +196,7 @@ dimension? (only available for dichromats and trichromats, defaults to
     <tr>
       <th>margin</th>
       <td><p>accepts either <code>"recommended"</code>, where the function will choose
-margin attributes, or a numerical vector of the form <code><a href='https://rdrr.io/r/base/c.html'>c(bottom, left, top, right)</a></code> which gives the number of lines of margin to be specified on the
+margin attributes, or a numerical vector of the form <code>c(bottom, left, top, right)</code> which gives the number of lines of margin to be specified on the
 four sides of the plot. (Default varies depending on plot dimensionality).</p></td>
     </tr>
     <tr>
@@ -239,23 +239,26 @@ chromaticity diagrams. Behavioral Ecology, 23, 723-728.</p>
     <p>Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Load floral reflectance spectra</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
-
-<span class='co'># Estimate quantum catches visual phenotype of a Blue Tit</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>'bluetit'</span><span class='op'>)</span>
-
-<span class='co'># Estimate noise-weighted colour distances between all flowers </span>
-<span class='va'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>Quantum catch are relative, distances may not be meaningful</span></div><div class='output co'>#&gt; <span class='message'>Calculating noise-weighted Euclidean distances</span></div><div class='input'>
-<span class='co'># Convert points to Cartesian coordinates in which Euclidean distances are </span>
-<span class='co'># noise-weighted.</span>
-<span class='va'>propxyz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span><span class='op'>(</span><span class='va'>cd.flowers</span><span class='op'>)</span>
-
-<span class='co'># Plot the floral spectra in 'noise-corrected' space</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>propxyz</span><span class='op'>)</span>
-</div><div class='img'><img src='jndplot-1.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Load floral reflectance spectra</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Estimate quantum catches visual phenotype of a Blue Tit</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>'bluetit'</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Estimate noise-weighted colour distances between all flowers </span></span>
+<span class='r-in'><span class='va'>cd.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='coldist.html'>coldist</a></span><span class='op'>(</span><span class='va'>vis.flowers</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Quantum catch are relative, distances may not be meaningful</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Calculating noise-weighted Euclidean distances</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Convert points to Cartesian coordinates in which Euclidean distances are </span></span>
+<span class='r-in'><span class='co'># noise-weighted.</span></span>
+<span class='r-in'><span class='va'>propxyz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='jnd2xyz.html'>jnd2xyz</a></span><span class='op'>(</span><span class='va'>cd.flowers</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Plot the floral spectra in 'noise-corrected' space</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>propxyz</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='jndplot-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

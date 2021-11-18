@@ -193,18 +193,20 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-
-<span class='co'># Average every two spectra</span>
-<span class='va'>teal.sset1</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset1</span><span class='op'>)</span>
-</div><div class='img'><img src='aggspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Create factor and average spectra by levels 'a' and 'b'</span>
-<span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span>, times <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span>
-<span class='va'>teal.sset2</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='va'>ind</span><span class='op'>)</span>
-
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset2</span><span class='op'>)</span>
-</div><div class='img'><img src='aggspec-2.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Average every two spectra</span></span>
+<span class='r-in'><span class='va'>teal.sset1</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='fl'>2</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset1</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='aggspec-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Create factor and average spectra by levels 'a' and 'b'</span></span>
+<span class='r-in'><span class='va'>ind</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/rep.html'>rep</a></span><span class='op'>(</span><span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"a"</span>, <span class='st'>"b"</span><span class='op'>)</span>, times <span class='op'>=</span> <span class='fl'>6</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>teal.sset2</span> <span class='op'>&lt;-</span> <span class='fu'>aggspec</span><span class='op'>(</span><span class='va'>teal</span>, by <span class='op'>=</span> <span class='va'>ind</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sset2</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='aggspec-2.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

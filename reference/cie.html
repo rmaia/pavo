@@ -226,22 +226,22 @@ Internationale de l Eclairage.</p>
     <p>Thomas White <a href='mailto:thomas.white026@gmail.com'>thomas.white026@gmail.com</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Load floral reflectance spectra</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span>
-
-<span class='co'># Estimate quantum catches, using the cie10-degree viewer matching function</span>
-<span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"cie10"</span>, illum <span class='op'>=</span> <span class='st'>"D65"</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span>
-
-<span class='co'># Model floral spectra in the CIEXYZ space</span>
-<span class='va'>flowers.ciexyz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"ciexyz"</span><span class='op'>)</span>
-
-<span class='co'># Model floral spectra in the CIELab space</span>
-<span class='va'>flowers.cielab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"cielab"</span><span class='op'>)</span>
-
-<span class='co'># Model floral spectra in the CIELch space</span>
-<span class='va'>flowers.cielch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"cielch"</span><span class='op'>)</span>
-
-</div></pre>
+    <pre class="examples"><span class='r-in'><span class='co'># Load floral reflectance spectra</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>flowers</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Estimate quantum catches, using the cie10-degree viewer matching function</span></span>
+<span class='r-in'><span class='va'>vis.flowers</span> <span class='op'>&lt;-</span> <span class='fu'><a href='vismodel.html'>vismodel</a></span><span class='op'>(</span><span class='va'>flowers</span>, visual <span class='op'>=</span> <span class='st'>"cie10"</span>, illum <span class='op'>=</span> <span class='st'>"D65"</span>, vonkries <span class='op'>=</span> <span class='cn'>TRUE</span>, relative <span class='op'>=</span> <span class='cn'>FALSE</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Model floral spectra in the CIEXYZ space</span></span>
+<span class='r-in'><span class='va'>flowers.ciexyz</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"ciexyz"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Model floral spectra in the CIELab space</span></span>
+<span class='r-in'><span class='va'>flowers.cielab</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"cielab"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Model floral spectra in the CIELch space</span></span>
+<span class='r-in'><span class='va'>flowers.cielch</span> <span class='op'>&lt;-</span> <span class='fu'><a href='colspace.html'>colspace</a></span><span class='op'>(</span><span class='va'>vis.flowers</span>, space <span class='op'>=</span> <span class='st'>"cielch"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

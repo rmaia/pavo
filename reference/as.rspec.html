@@ -179,7 +179,7 @@ are found or <code>whichwl</code> is not given, returns arbitrary index values.<
     <tr>
       <th>lim</th>
       <td><p>vector specifying wavelength range to interpolate over (e.g.
-<code><a href='https://rdrr.io/r/base/c.html'>c(300, 700)</a></code>).</p></td>
+<code>c(300, 700)</code>).</p></td>
     </tr>
     <tr>
       <th>exceed.range</th>
@@ -200,33 +200,39 @@ range of input data. Defaults to <code>TRUE</code>.</p></td>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Generate some fake reflectance data</span>
-<span class='va'>fakedat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>wl <span class='op'>=</span> <span class='fl'>300</span><span class='op'>:</span><span class='fl'>700</span>, refl1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>401</span><span class='op'>)</span>, refl2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>401</span><span class='op'>)</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    wl      refl1      refl2
-#&gt; 1 300  1.1947611 -0.1074917
-#&gt; 2 301 -1.7410191 -0.5953402
-#&gt; 3 302 -0.4499410  0.4799968
-#&gt; 4 303 -0.3191096 -0.6647274
-#&gt; 5 304 -1.3198173 -1.2601080
-#&gt; 6 305 -2.2864853 -1.4044018</div><div class='input'>
-<span class='co'># Determine if is rspec object</span>
-<span class='fu'>is.rspec</span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'>
-<span class='co'># Convert to rspec object</span>
-<span class='va'>fakedat2</span> <span class='op'>&lt;-</span> <span class='fu'>as.rspec</span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>wavelengths found in column 1</span></div><div class='output co'>#&gt; <span class='message'>The spectral data contain 428 negative value(s),</span>
-#&gt; <span class='message'> which may produce unexpected results if used in models.</span>
-#&gt; <span class='message'>Consider using procspec() to correct them.</span></div><div class='input'><span class='fu'>is.rspec</span><span class='op'>(</span><span class='va'>fakedat2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fakedat2</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;    wl      refl1      refl2
-#&gt; 1 300  1.1947611 -0.1074917
-#&gt; 2 301 -1.7410191 -0.5953402
-#&gt; 3 302 -0.4499410  0.4799968
-#&gt; 4 303 -0.3191096 -0.6647274
-#&gt; 5 304 -1.3198173 -1.2601080
-#&gt; 6 305 -2.2864853 -1.4044018</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'># Generate some fake reflectance data</span></span>
+<span class='r-in'><span class='va'>fakedat</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/data.frame.html'>data.frame</a></span><span class='op'>(</span>wl <span class='op'>=</span> <span class='fl'>300</span><span class='op'>:</span><span class='fl'>700</span>, refl1 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>401</span><span class='op'>)</span>, refl2 <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span><span class='op'>(</span><span class='fl'>401</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    wl      refl1      refl2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 300  1.1947611 -0.1074917</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 301 -1.7410191 -0.5953402</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 302 -0.4499410  0.4799968</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 303 -0.3191096 -0.6647274</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 304 -1.3198173 -1.2601080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 305 -2.2864853 -1.4044018</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Determine if is rspec object</span></span>
+<span class='r-in'><span class='fu'>is.rspec</span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] FALSE</span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Convert to rspec object</span></span>
+<span class='r-in'><span class='va'>fakedat2</span> <span class='op'>&lt;-</span> <span class='fu'>as.rspec</span><span class='op'>(</span><span class='va'>fakedat</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> wavelengths found in column 1</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> The spectral data contain 428 negative value(s),</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span>  which may produce unexpected results if used in models.</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Consider using procspec() to correct them.</span>
+<span class='r-in'><span class='fu'>is.rspec</span><span class='op'>(</span><span class='va'>fakedat2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> [1] TRUE</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/head.html'>head</a></span><span class='op'>(</span><span class='va'>fakedat2</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>    wl      refl1      refl2</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 1 300  1.1947611 -0.1074917</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 2 301 -1.7410191 -0.5953402</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 3 302 -0.4499410  0.4799968</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 4 303 -0.3191096 -0.6647274</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 5 304 -1.3198173 -1.2601080</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> 6 305 -2.2864853 -1.4044018</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

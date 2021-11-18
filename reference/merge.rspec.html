@@ -173,22 +173,24 @@ Will use <code>by = "wl"</code> if unspecified, or automatically append <code>wl
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='co'># Load angle-resolved reflectance data for a green-winged teal, and</span>
-<span class='co'># split it in two</span>
-<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-<span class='va'>teal1</span> <span class='op'>&lt;-</span> <span class='va'>teal</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span>
-<span class='va'>teal2</span> <span class='op'>&lt;-</span> <span class='va'>teal</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span><span class='op'>]</span>
-
-<span class='co'># Merge the two split datasets back into one, with a shared 'wl' column</span>
-<span class='va'>teal.mer</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>teal1</span>, <span class='va'>teal2</span>, by <span class='op'>=</span> <span class='st'>"wl"</span><span class='op'>)</span>
-
-<span class='co'># Examine the results, and compare the original to the (identical)</span>
-<span class='co'># reconstructed version</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.mer</span><span class='op'>)</span>
-</div><div class='img'><img src='merge.rspec-1.png' alt='' width='700' height='433' /></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-</div><div class='img'><img src='merge.rspec-2.png' alt='' width='700' height='433' /></div><div class='input'>
-</div></pre>
+    <pre class="examples"><span class='r-in'></span>
+<span class='r-in'><span class='co'># Load angle-resolved reflectance data for a green-winged teal, and</span></span>
+<span class='r-in'><span class='co'># split it in two</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-in'><span class='va'>teal1</span> <span class='op'>&lt;-</span> <span class='va'>teal</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>3</span><span class='op'>:</span><span class='fl'>5</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'><span class='va'>teal2</span> <span class='op'>&lt;-</span> <span class='va'>teal</span><span class='op'>[</span>, <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='fl'>1</span>, <span class='fl'>2</span>, <span class='fl'>6</span><span class='op'>:</span><span class='fl'>12</span><span class='op'>)</span><span class='op'>]</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Merge the two split datasets back into one, with a shared 'wl' column</span></span>
+<span class='r-in'><span class='va'>teal.mer</span> <span class='op'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/merge.html'>merge</a></span><span class='op'>(</span><span class='va'>teal1</span>, <span class='va'>teal2</span>, by <span class='op'>=</span> <span class='st'>"wl"</span><span class='op'>)</span></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Examine the results, and compare the original to the (identical)</span></span>
+<span class='r-in'><span class='co'># reconstructed version</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.mer</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='merge.rspec-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='merge.rspec-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

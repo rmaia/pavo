@@ -219,19 +219,24 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
     <p>Chad Eliason <a href='mailto:cme16@zips.uakron.edu'>cme16@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='img'><img src='procspec-1.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Smooth data to remove noise</span>
-<span class='va'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='st'>"smooth"</span>, span <span class='op'>=</span> <span class='fl'>0.25</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>smoothing spectra with a span of 0.25</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sm</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='img'><img src='procspec-2.png' alt='' width='700' height='433' /></div><div class='input'>
-<span class='co'># Normalize to max of unity</span>
-<span class='va'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"max"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt; <span class='message'>processing options applied:</span>
-#&gt; <span class='message'>Scaling spectra to a maximum value of 1</span></div><div class='input'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.max</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span>
-</div><div class='img'><img src='procspec-3.png' alt='' width='700' height='433' /></div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>teal</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='procspec-1.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Smooth data to remove noise</span></span>
+<span class='r-in'><span class='va'>teal.sm</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='st'>"smooth"</span>, span <span class='op'>=</span> <span class='fl'>0.25</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> processing options applied:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> smoothing spectra with a span of 0.25</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.sm</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='procspec-2.png' alt='' width='700' height='433' /></span>
+<span class='r-in'></span>
+<span class='r-in'><span class='co'># Normalize to max of unity</span></span>
+<span class='r-in'><span class='va'>teal.max</span> <span class='op'>&lt;-</span> <span class='fu'>procspec</span><span class='op'>(</span><span class='va'>teal</span>, opt <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"max"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> processing options applied:</span>
+<span class='r-msg co'><span class='r-pr'>#&gt;</span> Scaling spectra to a maximum value of 1</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/graphics/plot.default.html'>plot</a></span><span class='op'>(</span><span class='va'>teal.max</span>, select <span class='op'>=</span> <span class='fl'>10</span><span class='op'>)</span></span>
+<span class='r-plt img'><img src='procspec-3.png' alt='' width='700' height='433' /></span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">

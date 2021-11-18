@@ -286,118 +286,121 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
     <p>Pierre-Paul Bitton <a href='mailto:bittonp@windsor.ca'>bittonp@windsor.ca</a>, Rafael Maia <a href='mailto:rm72@zips.uakron.edu'>rm72@zips.uakron.edu</a></p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
-<span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;              B1        B2        B3        S1U        S1V        S1B       S1G
-#&gt; ind1.C 2119.199  5.284785 11.480677 0.10139621 0.10519791 0.03296790 0.3800012
-#&gt; ind1.T 4228.502 10.544894 18.382330 0.16749968 0.17514570 0.05047024 0.3773107
-#&gt; ind1.B 4661.737 11.625279 22.416179 0.12805744 0.13319517 0.03505705 0.3907354
-#&gt; ind2.C 1489.012  3.713247  7.950941 0.10443940 0.10776916 0.03111694 0.3872188
-#&gt; ind2.T 4749.733 11.844721 17.666000 0.16898260 0.19009547 0.14985909 0.3362127
-#&gt; ind2.B 4029.299 10.048126 18.798193 0.13982701 0.14753272 0.04991560 0.3817275
-#&gt; ind3.C 1262.223  3.147687  7.099364 0.05462321 0.05711636 0.02833939 0.4100711
-#&gt; ind3.T 3263.289  8.137879 14.530602 0.15035083 0.15975700 0.06524310 0.3744151
-#&gt; ind3.B 3579.135  8.925523 15.729018 0.15145968 0.16159127 0.06915787 0.3735250
-#&gt; ind4.C 1968.496  4.908968 10.841193 0.05690729 0.05943224 0.02654925 0.4070187
-#&gt; ind4.T 3171.646  7.909342 15.120628 0.11906265 0.12428112 0.03644519 0.4018344
-#&gt; ind4.B 3445.256  8.591660 17.348351 0.10121531 0.10465131 0.02846872 0.4033740
-#&gt; ind5.C 2012.597  5.018945 10.856122 0.06637746 0.06760992 0.02150395 0.4137053
-#&gt; ind5.T 4262.107 10.628696 17.494281 0.16767310 0.17962515 0.08310969 0.3697689
-#&gt; ind5.B 3928.916  9.797796 17.235251 0.16146846 0.17129421 0.06631031 0.3667264
-#&gt; ind6.C 1532.047  3.820567  7.870314 0.05553119 0.06180647 0.06339422 0.4066800
-#&gt; ind6.T 4646.488 11.587253 18.021718 0.16784225 0.18491930 0.11868596 0.3546784
-#&gt; ind6.B 3743.371  9.335090 14.286825 0.18810555 0.20620975 0.12412678 0.3361703
-#&gt; ind7.C 2304.548  5.747002 12.748766 0.05543984 0.05778121 0.02588584 0.4091563
-#&gt; ind7.T 3602.769  8.984461 16.769351 0.13480462 0.14073370 0.04386295 0.3896885
-#&gt; ind7.B 4636.301 11.561847 21.458737 0.11569397 0.12324325 0.05456175 0.3999047
-#&gt;              S1Y       S1R          S2        S3        S4        S5        S6
-#&gt; ind1.C 0.3465924 0.4925339   63.858407 0.3207961 0.1566825 1194.0689 11.300894
-#&gt; ind1.T 0.3201331 0.4119075   27.101921 0.4203749 0.2772540 1898.4115 17.704063
-#&gt; ind1.B 0.3405822 0.4534892  188.265781 0.3000137 0.2301429 2441.2895 22.297112
-#&gt; ind2.C 0.3483800 0.4843646 1025.927900 0.4408823 0.1750760  837.6618  7.943191
-#&gt; ind2.T 0.2766227 0.3529501    6.250010 0.2572655 0.1600000 1425.9737 14.839444
-#&gt; ind2.B 0.3279281 0.4360649   46.247810 0.2799718 0.2008571 1965.7910 18.391726
-#&gt; ind3.C 0.3760838 0.5139648         Inf 0.4417202 0.1476349  785.9810  7.099364
-#&gt; ind3.T 0.3167555 0.4175822   20.563790 0.3495591 0.1638730 1474.4569 13.823991
-#&gt; ind3.B 0.3149097 0.4136324   17.963702 0.3670592 0.1810476 1594.6494 14.853418
-#&gt; ind4.C 0.3791043 0.5163566   42.337385 0.3624346 0.1449333 1222.3778 10.585126
-#&gt; ind4.T 0.3470729 0.4500148  134.048121 0.4269055 0.1675825 1679.2657 15.007828
-#&gt; ind4.B 0.3560180 0.4742115         Inf 0.3378708 0.1495714 1948.8945 17.348351
-#&gt; ind5.C 0.3781326 0.5050957   90.981563 0.5296151 0.1399048 1236.1465 10.736800
-#&gt; ind5.T 0.3066297 0.3871819   10.515918 0.4092463 0.1995397 1707.2772 15.830681
-#&gt; ind5.B 0.3122132 0.4129738   17.507196 0.4338811 0.2110317 1716.0492 16.250784
-#&gt; ind6.C 0.3611584 0.4820243  406.751263 0.3370464 0.1153509  877.9857  7.850965
-#&gt; ind6.T 0.2917194 0.3666806    8.071089 0.3877408 0.1881587 1609.4250 15.788845
-#&gt; ind6.B 0.2786324 0.3593469    5.038704 0.3776780 0.1682063 1180.2304 11.451408
-#&gt; ind7.C 0.3798748 0.5164016  122.200083 0.3258905 0.1601746 1437.3003 12.644439
-#&gt; ind7.T 0.3341666 0.4390682   43.537908 0.3626842 0.2033175 1805.7103 16.384184
-#&gt; ind7.B 0.3392472 0.4375820   31.653945 0.4057965 0.2199683 2359.6213 20.780820
-#&gt;                S7       S8        S9       S10  H1  H2  H3        H4  H5
-#&gt; ind1.C -0.6961547 2.138383 0.9834295 0.3350473 690 370 518 0.4939207 511
-#&gt; ind1.T -0.8663394 1.678923 0.9611978 0.4654880 653 368 340 0.4726793 503
-#&gt; ind1.B -0.6723061 1.917985 0.9935632 0.4414106 688 372 511 0.5078910 503
-#&gt; ind2.C -0.7072618 2.139150 0.9941764 0.3745138 664 672 515 0.5064552 310
-#&gt; ind2.T -0.4079394 1.252832 0.7207146 0.2004531 681 476 502 0.6114315 503
-#&gt; ind2.B -0.6291428 1.830364 0.9748007 0.3676416 690 371 509 0.5072664 504
-#&gt; ind3.C -0.7945205 2.255422 0.9775159 0.3329791 669 316 519 0.5765260 511
-#&gt; ind3.T -0.5828885 1.698722 0.9499352 0.2783746 671 373 508 0.5134585 503
-#&gt; ind3.B -0.5784684 1.664151 0.9416535 0.3012905 666 376 507 0.5192813 503
-#&gt; ind4.C -0.7912440 2.156283 0.9730692 0.3125173 684 363 520 0.5644332 511
-#&gt; ind4.T -0.6874327 1.897481 0.9912217 0.3179847 660 369 511 0.5447549 505
-#&gt; ind4.B -0.7292254 2.019208 0.9994012 0.3020159 683 376 513 0.5421156 504
-#&gt; ind5.C -0.7922622 2.139254 0.9822172 0.2992919 646 372 518 0.5672300 511
-#&gt; ind5.T -0.7952962 1.489428 0.8985084 0.2972001 627 374 360 0.5282006 503
-#&gt; ind5.B -0.5580865 1.658616 0.9400573 0.3500207 650 376 508 0.4820736 503
-#&gt; ind6.C -0.7508585 2.054922 0.9235435 0.2370370 684 688 513 0.6397880 506
-#&gt; ind6.T -0.8300176 1.362605 0.8030938 0.2563860 632 397 355 0.5781974 502
-#&gt; ind6.B -0.7819791 1.226706 0.7869571 0.2063397 644 357 358 0.5011247 502
-#&gt; ind7.C -0.7958861 2.200180 0.9763543 0.3524130 691 360 520 0.5688317 511
-#&gt; ind7.T -0.6461512 1.823614 0.9759692 0.3707725 672 371 510 0.5192949 504
-#&gt; ind7.B -0.6732006 1.797362 0.9655962 0.3953625 662 373 508 0.5819991 503</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;               B2       S8  H1
-#&gt; ind1.C  5.284785 2.138383 690
-#&gt; ind1.T 10.544894 1.678923 653
-#&gt; ind1.B 11.625279 1.917985 688
-#&gt; ind2.C  3.713247 2.139150 664
-#&gt; ind2.T 11.844721 1.252832 681
-#&gt; ind2.B 10.048126 1.830364 690
-#&gt; ind3.C  3.147687 2.255422 669
-#&gt; ind3.T  8.137879 1.698722 671
-#&gt; ind3.B  8.925523 1.664151 666
-#&gt; ind4.C  4.908968 2.156283 684
-#&gt; ind4.T  7.909342 1.897481 660
-#&gt; ind4.B  8.591660 2.019208 683
-#&gt; ind5.C  5.018945 2.139254 646
-#&gt; ind5.T 10.628696 1.489428 627
-#&gt; ind5.B  9.797796 1.658616 650
-#&gt; ind6.C  3.820567 2.054922 684
-#&gt; ind6.T 11.587253 1.362605 632
-#&gt; ind6.B  9.335090 1.226706 644
-#&gt; ind7.C  5.747002 2.200180 691
-#&gt; ind7.T  8.984461 1.823614 672
-#&gt; ind7.B 11.561847 1.797362 662</div><div class='input'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span>, subset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>, <span class='st'>"H4"</span><span class='op'>)</span><span class='op'>)</span>
-</div><div class='output co'>#&gt;              B1        H4
-#&gt; ind1.C 2119.199 0.4939207
-#&gt; ind1.T 4228.502 0.4726793
-#&gt; ind1.B 4661.737 0.5078910
-#&gt; ind2.C 1489.012 0.5064552
-#&gt; ind2.T 4749.733 0.6114315
-#&gt; ind2.B 4029.299 0.5072664
-#&gt; ind3.C 1262.223 0.5765260
-#&gt; ind3.T 3263.289 0.5134585
-#&gt; ind3.B 3579.135 0.5192813
-#&gt; ind4.C 1968.496 0.5644332
-#&gt; ind4.T 3171.646 0.5447549
-#&gt; ind4.B 3445.256 0.5421156
-#&gt; ind5.C 2012.597 0.5672300
-#&gt; ind5.T 4262.107 0.5282006
-#&gt; ind5.B 3928.916 0.4820736
-#&gt; ind6.C 1532.047 0.6397880
-#&gt; ind6.T 4646.488 0.5781974
-#&gt; ind6.B 3743.371 0.5011247
-#&gt; ind7.C 2304.548 0.5688317
-#&gt; ind7.T 3602.769 0.5192949
-#&gt; ind7.B 4636.301 0.5819991</div></pre>
+    <pre class="examples"><span class='r-in'><span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span></span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              B1        B2        B3        S1U        S1V        S1B       S1G</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.C 2119.199  5.284785 11.480677 0.10139621 0.10519791 0.03296790 0.3800012</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.T 4228.502 10.544894 18.382330 0.16749968 0.17514570 0.05047024 0.3773107</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.B 4661.737 11.625279 22.416179 0.12805744 0.13319517 0.03505705 0.3907354</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.C 1489.012  3.713247  7.950941 0.10443940 0.10776916 0.03111694 0.3872188</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.T 4749.733 11.844721 17.666000 0.16898260 0.19009547 0.14985909 0.3362127</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.B 4029.299 10.048126 18.798193 0.13982701 0.14753272 0.04991560 0.3817275</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.C 1262.223  3.147687  7.099364 0.05462321 0.05711636 0.02833939 0.4100711</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.T 3263.289  8.137879 14.530602 0.15035083 0.15975700 0.06524310 0.3744151</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.B 3579.135  8.925523 15.729018 0.15145968 0.16159127 0.06915787 0.3735250</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.C 1968.496  4.908968 10.841193 0.05690729 0.05943224 0.02654925 0.4070187</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.T 3171.646  7.909342 15.120628 0.11906265 0.12428112 0.03644519 0.4018344</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.B 3445.256  8.591660 17.348351 0.10121531 0.10465131 0.02846872 0.4033740</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.C 2012.597  5.018945 10.856122 0.06637746 0.06760992 0.02150395 0.4137053</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.T 4262.107 10.628696 17.494281 0.16767310 0.17962515 0.08310969 0.3697689</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.B 3928.916  9.797796 17.235251 0.16146846 0.17129421 0.06631031 0.3667264</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.C 1532.047  3.820567  7.870314 0.05553119 0.06180647 0.06339422 0.4066800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.T 4646.488 11.587253 18.021718 0.16784225 0.18491930 0.11868596 0.3546784</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.B 3743.371  9.335090 14.286825 0.18810555 0.20620975 0.12412678 0.3361703</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.C 2304.548  5.747002 12.748766 0.05543984 0.05778121 0.02588584 0.4091563</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.T 3602.769  8.984461 16.769351 0.13480462 0.14073370 0.04386295 0.3896885</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.B 4636.301 11.561847 21.458737 0.11569397 0.12324325 0.05456175 0.3999047</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              S1Y       S1R          S2        S3        S4        S5        S6</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.C 0.3465924 0.4925339   63.858407 0.3207961 0.1566825 1194.0689 11.300894</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.T 0.3201331 0.4119075   27.101921 0.4203749 0.2772540 1898.4115 17.704063</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.B 0.3405822 0.4534892  188.265781 0.3000137 0.2301429 2441.2895 22.297112</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.C 0.3483800 0.4843646 1025.927900 0.4408823 0.1750760  837.6618  7.943191</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.T 0.2766227 0.3529501    6.250010 0.2572655 0.1600000 1425.9737 14.839444</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.B 0.3279281 0.4360649   46.247810 0.2799718 0.2008571 1965.7910 18.391726</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.C 0.3760838 0.5139648         Inf 0.4417202 0.1476349  785.9810  7.099364</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.T 0.3167555 0.4175822   20.563790 0.3495591 0.1638730 1474.4569 13.823991</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.B 0.3149097 0.4136324   17.963702 0.3670592 0.1810476 1594.6494 14.853418</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.C 0.3791043 0.5163566   42.337385 0.3624346 0.1449333 1222.3778 10.585126</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.T 0.3470729 0.4500148  134.048121 0.4269055 0.1675825 1679.2657 15.007828</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.B 0.3560180 0.4742115         Inf 0.3378708 0.1495714 1948.8945 17.348351</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.C 0.3781326 0.5050957   90.981563 0.5296151 0.1399048 1236.1465 10.736800</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.T 0.3066297 0.3871819   10.515918 0.4092463 0.1995397 1707.2772 15.830681</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.B 0.3122132 0.4129738   17.507196 0.4338811 0.2110317 1716.0492 16.250784</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.C 0.3611584 0.4820243  406.751263 0.3370464 0.1153509  877.9857  7.850965</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.T 0.2917194 0.3666806    8.071089 0.3877408 0.1881587 1609.4250 15.788845</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.B 0.2786324 0.3593469    5.038704 0.3776780 0.1682063 1180.2304 11.451408</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.C 0.3798748 0.5164016  122.200083 0.3258905 0.1601746 1437.3003 12.644439</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.T 0.3341666 0.4390682   43.537908 0.3626842 0.2033175 1805.7103 16.384184</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.B 0.3392472 0.4375820   31.653945 0.4057965 0.2199683 2359.6213 20.780820</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>                S7       S8        S9       S10  H1  H2  H3        H4  H5</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.C -0.6961547 2.138383 0.9834295 0.3350473 690 370 518 0.4939207 511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.T -0.8663394 1.678923 0.9611978 0.4654880 653 368 340 0.4726793 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.B -0.6723061 1.917985 0.9935632 0.4414106 688 372 511 0.5078910 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.C -0.7072618 2.139150 0.9941764 0.3745138 664 672 515 0.5064552 310</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.T -0.4079394 1.252832 0.7207146 0.2004531 681 476 502 0.6114315 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.B -0.6291428 1.830364 0.9748007 0.3676416 690 371 509 0.5072664 504</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.C -0.7945205 2.255422 0.9775159 0.3329791 669 316 519 0.5765260 511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.T -0.5828885 1.698722 0.9499352 0.2783746 671 373 508 0.5134585 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.B -0.5784684 1.664151 0.9416535 0.3012905 666 376 507 0.5192813 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.C -0.7912440 2.156283 0.9730692 0.3125173 684 363 520 0.5644332 511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.T -0.6874327 1.897481 0.9912217 0.3179847 660 369 511 0.5447549 505</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.B -0.7292254 2.019208 0.9994012 0.3020159 683 376 513 0.5421156 504</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.C -0.7922622 2.139254 0.9822172 0.2992919 646 372 518 0.5672300 511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.T -0.7952962 1.489428 0.8985084 0.2972001 627 374 360 0.5282006 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.B -0.5580865 1.658616 0.9400573 0.3500207 650 376 508 0.4820736 503</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.C -0.7508585 2.054922 0.9235435 0.2370370 684 688 513 0.6397880 506</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.T -0.8300176 1.362605 0.8030938 0.2563860 632 397 355 0.5781974 502</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.B -0.7819791 1.226706 0.7869571 0.2063397 644 357 358 0.5011247 502</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.C -0.7958861 2.200180 0.9763543 0.3524130 691 360 520 0.5688317 511</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.T -0.6461512 1.823614 0.9759692 0.3707725 672 371 510 0.5192949 504</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.B -0.6732006 1.797362 0.9655962 0.3953625 662 373 508 0.5819991 503</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span>, subset <span class='op'>=</span> <span class='cn'>TRUE</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>               B2       S8  H1</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.C  5.284785 2.138383 690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.T 10.544894 1.678923 653</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.B 11.625279 1.917985 688</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.C  3.713247 2.139150 664</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.T 11.844721 1.252832 681</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.B 10.048126 1.830364 690</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.C  3.147687 2.255422 669</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.T  8.137879 1.698722 671</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.B  8.925523 1.664151 666</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.C  4.908968 2.156283 684</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.T  7.909342 1.897481 660</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.B  8.591660 2.019208 683</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.C  5.018945 2.139254 646</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.T 10.628696 1.489428 627</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.B  9.797796 1.658616 650</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.C  3.820567 2.054922 684</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.T 11.587253 1.362605 632</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.B  9.335090 1.226706 644</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.C  5.747002 2.200180 691</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.T  8.984461 1.823614 672</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.B 11.561847 1.797362 662</span>
+<span class='r-in'><span class='fu'><a href='https://rdrr.io/r/base/summary.html'>summary</a></span><span class='op'>(</span><span class='va'>sicalis</span>, subset <span class='op'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span><span class='op'>(</span><span class='st'>"B1"</span>, <span class='st'>"H4"</span><span class='op'>)</span><span class='op'>)</span></span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span>              B1        H4</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.C 2119.199 0.4939207</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.T 4228.502 0.4726793</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind1.B 4661.737 0.5078910</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.C 1489.012 0.5064552</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.T 4749.733 0.6114315</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind2.B 4029.299 0.5072664</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.C 1262.223 0.5765260</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.T 3263.289 0.5134585</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind3.B 3579.135 0.5192813</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.C 1968.496 0.5644332</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.T 3171.646 0.5447549</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind4.B 3445.256 0.5421156</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.C 2012.597 0.5672300</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.T 4262.107 0.5282006</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind5.B 3928.916 0.4820736</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.C 1532.047 0.6397880</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.T 4646.488 0.5781974</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind6.B 3743.371 0.5011247</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.C 2304.548 0.5688317</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.T 3602.769 0.5192949</span>
+<span class='r-out co'><span class='r-pr'>#&gt;</span> ind7.B 4636.301 0.5819991</span>
+</pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <nav id="toc" data-toggle="toc" class="sticky-top">
