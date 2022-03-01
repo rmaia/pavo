@@ -3,8 +3,9 @@
 #' Calculates colour distances. When data are the result of [vismodel()], it
 #' applies the receptor-noise model of Vorobyev et al. (1998) to calculate
 #' colour distances with noise based on relative photoreceptor densities. It
-#' also accepts [colspace()] data in which case unweighted Euclidean distances
-#' or Manhattan distances (coc model only) are returned.
+#' also accepts [colspace()] data in which case unweighted Euclidean distances,
+#' CIE2000 distances (cielab and cielch only), or Manhattan distances (coc model only) 
+#' are returned.
 #'
 #' @param modeldata (required) quantum catch colour data. Can be the result from
 #'   [vismodel()] for noise-weighted Euclidean distances, or [colspace()] for
@@ -75,8 +76,9 @@
 #'   sending the results of [vismodel()] directly to [coldist()] , as
 #'   previously, which also offers greater flexibility and reliability. Thus
 #'   [coldist()] now returns unweighted Euclidean distances for `colspace`
-#'   objects (with the exception of Manhattan distances for the coc space), and
-#'   noise-weighted Euclidean distances for `vismodel` objects.
+#'   objects (with the exception of Manhattan distances for the coc space, and CIE2000,
+#'   distances for CIELab and CIELCh spaces), and noise-weighted Euclidean distances 
+#'   for `vismodel` objects.
 #'
 #' @export
 #'
@@ -603,48 +605,6 @@ lumcont <- function(coord1, coord2, type = c("simple", "weber", "michelson")) {
                   "michelson" = (pmax(coord1, coord2) - pmin(coord1, coord2)) / (pmax(coord1, coord2) + pmin(coord1, coord2))
   )
   dLout
-}
-
-# CIE2000 colour distance for CIELCh (LOLWAT)
-cie2000 <- function(coord1, coord2) {
-  
-  # Lightness difference
-  dL <- coord2["L"] - coord1["L"]
-  
-  # Mean lightness
-  mL <- (coord2["L"] + coord1["L"]) / 2
-  
-  # Chroma difference
-  dC <- coord2["C"] - coord1["C"]
-  
-  # Mean chroma
-  mC <- (coord2["C"] + coord1["C"]) / 2
-  
-  # Hue difference
-  if (coord1["h"] - coord2["h"] <= 180) {
-    dh <- coord2["h"] - coord1["h"]
-  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] <= coord1["h"]) {
-    dh <- coord2["h"] + coord1["h"] + 360
-  } else if (coord1["h"] - coord2["h"] > 180 & coord2["h"] > coord1["h"]) {
-    dh <- coord2["h"] + coord1["h"] - 360
-  }
-  
-  # Mean hue
-  if (abs(coord2["h"] - coord1["h"]) <= 180) {
-    mh <- (coord2["h"] + coord1["h"]) / 2
-  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] < 360) {
-    mh <- (coord2["h"] + coord1["h"] + 360) / 2
-  } else if (abs(coord2["h"] - coord1["h"]) > 180 & coord2["h"] + coord1["h"] >= 360) {
-    mh <- (coord2["h"] + coord1["h"] - 360) / 2
-  }
-  
-  t <- 1 - (0.17 * cos(mh - 30)) + (0.24 * cos(2 * mh)) + (0.32 * cos(3 * mh + 6)) - (0.2 * cos(4 * mh - 63))
-  sL <- 1 + ((0.17 * (mL - 50)^2) / sqrt(20 + (mL - 50)^2))
-  sC <- 1 + 0.045 * mC
-  sH <- 1 + 0.015 * mC * t
-  Rt <- -2 * sqrt(mC^7 / (mC^7 + 25^7)) * sin(60 * exp(-1 * (((mh - 275) / 25)^2)))
-  
-  sqrt((dL / sL)^2 + (dC / sC)^2 + (dh / sH)^2 + (Rt * (dC / sC) * (dh / sH)))
 }
 
 #######################

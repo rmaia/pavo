@@ -93,8 +93,9 @@ message.
 Calculates colour distances. When data are the result of \code{\link[=vismodel]{vismodel()}}, it
 applies the receptor-noise model of Vorobyev et al. (1998) to calculate
 colour distances with noise based on relative photoreceptor densities. It
-also accepts \code{\link[=colspace]{colspace()}} data in which case unweighted Euclidean distances
-or Manhattan distances (coc model only) are returned.
+also accepts \code{\link[=colspace]{colspace()}} data in which case unweighted Euclidean distances,
+CIE2000 distances (cielab and cielch only), or Manhattan distances (coc model only)
+are returned.
 }
 \section{Note on previous versions}{
  Generic di- tri- and tetra-chromatic
@@ -105,8 +106,9 @@ distances. Equivalent results to the former behaviour can be attained by
 sending the results of \code{\link[=vismodel]{vismodel()}} directly to \code{\link[=coldist]{coldist()}} , as
 previously, which also offers greater flexibility and reliability. Thus
 \code{\link[=coldist]{coldist()}} now returns unweighted Euclidean distances for \code{colspace}
-objects (with the exception of Manhattan distances for the coc space), and
-noise-weighted Euclidean distances for \code{vismodel} objects.
+objects (with the exception of Manhattan distances for the coc space, and CIE2000,
+distances for CIELab and CIELCh spaces), and noise-weighted Euclidean distances
+for \code{vismodel} objects.
 }
 
 \examples{
