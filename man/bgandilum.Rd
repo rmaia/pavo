@@ -14,3 +14,4 @@ Endler, J. (1993). The Color of Light in Forests and Its Implications. Ecologica
 Rafael Maia \email{rm72@zips.uakron.edu}
 }
 \keyword{data}
+\keyword{internal}

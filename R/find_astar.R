@@ -8,6 +8,8 @@
 #'
 #' @seealso [alphashape3d::ashape3d()]
 #'
+#' @keywords internal
+#'
 #' @references
 #' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
 #'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in

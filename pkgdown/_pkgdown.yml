@@ -37,6 +37,7 @@ reference:
   - '`projplot`'
   - '`sensdata`'
   - '`tcsplot`'
+  - '`plot.sensmod`'
 
 - title: Analysis
   desc: "Functions for analysing spectral data"
