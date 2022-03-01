@@ -18,6 +18,7 @@ test_that("Messages & warnings", {
   expect_message(coldist(colspace(vismodel(flowers, visual = "musca"), space = "categorical")), "unweighted Euclidean")
   expect_message(coldist(colspace(vismodel(flowers, visual = "cie2"), space = "cielab")), "CIE2000 distances")
   expect_message(coldist(colspace(vismodel(flowers, visual = "cie10"), space = "cielch")), "CIE2000 distances")
+  expect_message(coldist(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz")), "unweighted Euclidean")
   expect_message(coldist(colspace(vismodel(flowers,
     visual = "apis", relative = FALSE,
     qcatch = "Ei", vonkries = TRUE
