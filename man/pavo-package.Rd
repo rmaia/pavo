@@ -4,13 +4,9 @@
 \name{pavo-package}
 \alias{pavo}
 \alias{pavo-package}
-\title{pavo: Perceptual Analysis, Visualization and Organization of
-    Spectral Colour Data}
+\title{pavo: Perceptual Analysis, Visualization and Organization of Spectral Colour Data}
 \description{
-A cohesive framework for the spectral and spatial analysis of 
-    colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013) 
-    <doi:10.1111/2041-210X.12069> and Maia, Grsuon, Endler & White (2019)
-    <doi:10.1111/2041-210X.13174>.
+A cohesive framework for the spectral and spatial analysis of colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013) <doi:10.1111/2041-210X.12069> and Maia, Grsuon, Endler & White (2019) <doi:10.1111/2041-210X.13174>.
 }
 \seealso{
 Useful links:

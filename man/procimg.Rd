@@ -102,7 +102,7 @@ if (interactive()) {
 
   # Model the appearance of a butterfly given the reduced visual acuity of another
   # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
-  # the image width is 10 cm, and the spatial resolution of the viewer is 0.2-degrees.
+  # the image width is 10 cm, and the minimum resolvable angle of the viewer is 0.2-degrees.
   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
 }
