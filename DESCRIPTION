@@ -1,7 +1,7 @@
 Package: pavo
 Title: Perceptual Analysis, Visualization and Organization of
     Spectral Colour Data
-Version: 2.7.1
+Version: 2.8.0
 Authors@R: 
     c(person(given = "Thomas",
              family = "White",

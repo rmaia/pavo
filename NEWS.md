@@ -1,3 +1,9 @@
+# pavo 2.8.0
+
+## MINOR FEATURES AND BUG FIXES
+
+* `coldist()` now returns Euclidean distances when given data from the `ciexyz` model. 
+
 # pavo 2.7.1
 
 ## MINOR FEATURES AND BUG FIXES
