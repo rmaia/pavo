@@ -113,9 +113,12 @@
 #' names(custom) <- c("wl", "s", "m", "l")
 #' vis.custom <- vismodel(flowers, visual = custom)
 #' tri.custom <- colspace(vis.custom, space = "tri")
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
+#'
+#' @seealso [sensdata()] to retrieve or plot in-built spectral sensitivity data
+#' used in [vismodel()]
 #'
 #' @references Vorobyev, M., Osorio, D., Bennett, A., Marshall, N., & Cuthill, I.
 #'  (1998). Tetrachromacy, oil droplets and bird plumage colours. Journal Of Comparative

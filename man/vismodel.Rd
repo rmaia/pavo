@@ -200,6 +200,10 @@ Sharkey, C. R., Blanco, J., Leibowitz, M. M., Pinto-Benito, D.,
 & Wardill, T. J. (2020). The spectral sensitivity of Drosophila photoreceptors.
 Scientific reports, 10(1), 1-13.
 }
+\seealso{
+\code{\link[=sensdata]{sensdata()}} to retrieve or plot in-built spectral sensitivity data
+used in \code{\link[=vismodel]{vismodel()}}
+}
 \author{
 Thomas E. White \email{thomas.white026@gmail.com}
 
