@@ -3,7 +3,7 @@ pkgdown: 2.0.2
 pkgdown_sha: ~
 articles:
   pavo: pavo.html
-last_built: 2022-03-01T08:29Z
+last_built: 2022-03-06T09:06Z
 urls:
   reference: http://pavo.colrverse.com/reference
   article: http://pavo.colrverse.com/articles
