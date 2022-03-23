@@ -33,7 +33,7 @@ Authors@R:
              comment = c(ORCID = "0000-0001-5984-2331")))
 Description: A cohesive framework for the spectral and spatial analysis of 
     colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013) 
-    <doi:10.1111/2041-210X.12069> and Maia, Grsuon, Endler & White (2019)
+    <doi:10.1111/2041-210X.12069> and Maia, Gruson, Endler & White (2019)
     <doi:10.1111/2041-210X.13174>.
 License: GPL (>= 2)
 URL: http://pavo.colrverse.com, https://github.com/rmaia/pavo/
