@@ -62,6 +62,8 @@ Suggests:
     testthat(>= 2.99.0),
 VignetteBuilder: 
     knitr
+Config/Needs/website:
+    pkgdown
 Encoding: UTF-8
 Language: en-GB
 Roxygen: list(markdown = TRUE)
