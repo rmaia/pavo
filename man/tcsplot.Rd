@@ -106,7 +106,7 @@ capabilities.
 Plots points in a tetrahedral colour space
 }
 \examples{
-if (interactive()) {
+\dontshow{if (interactive() | identical(Sys.getenv("IN_PKGDOWN"), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
   # For plotting
   data(sicalis)
   vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
@@ -125,7 +125,7 @@ if (interactive()) {
   # For plotting convex hull
   tcsplot(tcs.sicalis, col = "blue", size = 0.005)
   tcsvol(tcs.sicalis)
-}
+\dontshow{\}) # examplesIf}
 }
 \references{
 Stoddard, M. C., & Prum, R. O. (2008). Evolution of avian plumage
