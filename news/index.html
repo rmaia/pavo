@@ -73,15 +73,13 @@
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-8-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-8-0"></a></h3>
 <ul><li>
-<code><a href="../reference/coldist.html">coldist()</a></code> now returns Euclidean distances when given data from the <code>ciexyz</code> model.</li>
-</ul></div>
+<code><a href="../reference/coldist.html">coldist()</a></code> now returns Euclidean distances when given data from the <code>ciexyz</code> model.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.1" id="pavo-271">pavo 2.7.1<small>2021-09-21</small><a class="anchor" aria-label="anchor" href="#pavo-271"></a></h2>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-7-1">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-7-1"></a></h3>
-<ul><li>Minor release to avoid breaking changes to tests.</li>
-</ul></div>
+<ul><li>Minor release to avoid breaking changes to tests.</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="2.7.0" id="pavo-270">pavo 2.7.0<small>2021-03-23</small><a class="anchor" aria-label="anchor" href="#pavo-270"></a></h2>
@@ -128,8 +126,7 @@
 <h2 class="page-header" data-toc-text="2.5.0" id="pavo-250">pavo 2.5.0<small>2020-11-12</small><a class="anchor" aria-label="anchor" href="#pavo-250"></a></h2>
 <div class="section level3">
 <h3 id="new-features-and-significant-changes-2-5-0">NEW FEATURES AND SIGNIFICANT CHANGES<a class="anchor" aria-label="anchor" href="#new-features-and-significant-changes-2-5-0"></a></h3>
-<ul><li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code>vignette("pavo-5-alphashapes",    package = "pavo")</code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li>
-</ul></div>
+<ul><li>Add ability to compute colour volume by using alphashapes instead of convex hulls. The functions <code><a href="../reference/vol.html">vol()</a></code>, <code><a href="../reference/tcsplot.html">tcsvol()</a></code> and <code><a href="../reference/voloverlap.html">voloverlap()</a></code> gain a new argument <code>type = c("convex", "alpha")</code> to decide how you want to compute the colour volume. Please refer to the vignette <code>vignette("pavo-5-alphashapes",    package = "pavo")</code> for more information. As a result, the argument order in these 3 function has changed. Check the documentation to update your scripts accordingly. The function <code><a href="../reference/summary.colspace.html">summary.colspace()</a></code> also gains an additional column that returns that colour volume computed with an alpha-shape of parameter alpha* in the case of <code>tcs</code> objects.</li></ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-5-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-5-0"></a></h3>
 <ul><li>
@@ -178,8 +175,7 @@
 <li>
 <code><a href="../reference/cieplot.html">cieplot()</a></code> (and therefore <code><a href="../reference/plot.colspace.html">plot.colspace()</a></code> for CIEXYZ model) now adds the background of the CIEXYZ colour space by default. This can be turned off by switching the <code>ciebg</code> argument to <code>FALSE</code>.</li>
 <li>
-<code><a href="../reference/voloverlap.html">voloverlap()</a></code> uses a different algorithm to determine volume overlaps, which means:
-<ul><li>computation is now much more efficient</li>
+<code><a href="../reference/voloverlap.html">voloverlap()</a></code> uses a different algorithm to determine volume overlaps, which means:<ul><li>computation is now much more efficient</li>
 <li>
 <code><a href="../reference/voloverlap.html">voloverlap()</a></code> now works for <code><a href="../reference/trispace.html">trispace()</a></code> objects as well</li>
 <li>accordingly, first two arguments of <code><a href="../reference/voloverlap.html">voloverlap()</a></code> has been renamed <code>colsp1</code> and <code>colsp2</code> instead of <code>tcsres1</code> and <code>tcsres2</code>
@@ -336,8 +332,7 @@
 <div class="section level3">
 <h3 id="new-functions-1-3-1">NEW FUNCTIONS<a class="anchor" aria-label="anchor" href="#new-functions-1-3-1"></a></h3>
 <ul><li>
-<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li>
-</ul></div>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> uses bootstrap to calculate the confidence intervals on the mean color distance between samples</li></ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-1-3-1">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-1-3-1"></a></h3>
 <ul><li>fixed bug in <code><a href="../reference/coldist.html">coldist()</a></code> when fewer samples than the number of photoreceptors</li>
@@ -416,8 +411,7 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="1.0" id="pavo-10">pavo 1.0<a class="anchor" aria-label="anchor" href="#pavo-10"></a></h2>
-<ul><li>See vignette for detailed description of changes.</li>
-</ul><div class="section level3">
+<ul><li>See vignette for detailed description of changes.</li></ul><div class="section level3">
 <h3 id="major-changes-1-0">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes-1-0"></a></h3>
 <ul><li>coldist() arguments have been changed. Now the empirically estimated value for the Weber fraction must be entered, instead of the noise-to-signal ratio. The noise-to-signal ratio is then calculated based on the empirically estimated Weber fraction for the reference cone type, and applied to the remaining cone types. This should avoid confusion between empirically estimated values for the Weber fraction and the noise-to-signal ratio, which are currently prevalent in the literature.</li>
 <li>coldist() now has an additional argument, weber.achro, so that the value for the Weber fraction to be used to calculate achromatic contrast can be input independently of the cone ratios.</li>
@@ -453,29 +447,25 @@
 <h2 class="page-header" data-toc-text="0.5-6" id="pavo-05-6">pavo 0.5-6<small>2016-10-20</small><a class="anchor" aria-label="anchor" href="#pavo-05-6"></a></h2>
 <div class="section level3">
 <h3 id="bug-fixes-0-5-6">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-0-5-6"></a></h3>
-<ul><li>fixed bug in calculation of dichromat contrast in coldist()</li>
-</ul></div>
+<ul><li>fixed bug in calculation of dichromat contrast in coldist()</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-5" id="pavo-05-5">pavo 0.5-5<small>2016-03-09</small><a class="anchor" aria-label="anchor" href="#pavo-05-5"></a></h2>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-0-5-5">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-0-5-5"></a></h3>
-<ul><li>fixed bug in calculation of H3 in summary.rspec()</li>
-</ul></div>
+<ul><li>fixed bug in calculation of H3 in summary.rspec()</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-4" id="pavo-05-4">pavo 0.5-4<small>2016-01-28</small><a class="anchor" aria-label="anchor" href="#pavo-05-4"></a></h2>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-0-5-4">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-0-5-4"></a></h3>
-<ul><li>changed default values for coldist()</li>
-</ul></div>
+<ul><li>changed default values for coldist()</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-2" id="pavo-05-2">pavo 0.5-2<small>2015-06-11</small><a class="anchor" aria-label="anchor" href="#pavo-05-2"></a></h2>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-0-5-2">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-0-5-2"></a></h3>
-<ul><li>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</li>
-</ul></div>
+<ul><li>fixes to the blue tit visual system, changed vismodel() argument to “bluetit”</li></ul></div>
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5-1" id="pavo-05-1">pavo 0.5-1<small>2013-09-04</small><a class="anchor" aria-label="anchor" href="#pavo-05-1"></a></h2>
@@ -489,8 +479,7 @@
 </div>
     <div class="section level2">
 <h2 class="page-header" data-toc-text="0.5" id="pavo-05">pavo 0.5<small>2013-06-09</small><a class="anchor" aria-label="anchor" href="#pavo-05"></a></h2>
-<ul><li>updated citation()</li>
-</ul><div class="section level3">
+<ul><li>updated citation()</li></ul><div class="section level3">
 <h3 id="minor-features-and-bug-fixes-0-5">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-0-5"></a></h3>
 <ul><li>vismodel() vonkries = TRUE does not return a NULL result</li>
 <li>vismodel() works with a single spectrum object</li>
@@ -502,8 +491,7 @@
 <h2 class="page-header" data-toc-text="0.3-1" id="pavo-03-1">pavo 0.3-1<small>2013-05-06</small><a class="anchor" aria-label="anchor" href="#pavo-03-1"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-0-3-1">NEW FUNCTIONS<a class="anchor" aria-label="anchor" href="#new-functions-0-3-1"></a></h3>
-<ul><li>irrad2flux() and flux2irrad() to convert illuminant measurements</li>
-</ul></div>
+<ul><li>irrad2flux() and flux2irrad() to convert illuminant measurements</li></ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-0-3-1">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-0-3-1"></a></h3>
 <ul><li>vismodel() less cryptic error messages</li>
@@ -542,8 +530,7 @@
 <h2 class="page-header" data-toc-text="0.1-2" id="pavo-01-2">pavo 0.1-2<small>2013-01-12</small><a class="anchor" aria-label="anchor" href="#pavo-01-2"></a></h2>
 <div class="section level3">
 <h3 id="new-functions-0-1-2">NEW FUNCTIONS<a class="anchor" aria-label="anchor" href="#new-functions-0-1-2"></a></h3>
-<ul><li>merge.rspec() combines rspec objects in a single object</li>
-</ul></div>
+<ul><li>merge.rspec() combines rspec objects in a single object</li></ul></div>
 <div class="section level3">
 <h3 id="visual-model-0-1-2">VISUAL MODEL<a class="anchor" aria-label="anchor" href="#visual-model-0-1-2"></a></h3>
 <ul><li>Changed vismodel() output: von Kries correction is now an optional argument, output includes only Qi and fi</li>
@@ -586,7 +573,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>

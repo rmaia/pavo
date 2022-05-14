@@ -138,14 +138,16 @@ the way progress is shown with the <code><a href="https://progressr.futureverse.
     <h2>References</h2>
     <p>Gruson H, White TE, Maia R (2019) lightr: import spectral data
 and metadata in R. Journal of Open Source Software, 4(43), 1857,
-doi: <a href="https://doi.org/10.21105/joss.01857" class="external-link">10.21105/joss.01857</a>
+<a href="https://doi.org/10.21105/joss.01857" class="external-link">doi:10.21105/joss.01857</a>
 .</p>
     </div>
     <div id="see-also">
     <h2>See also</h2>
     <div class="dont-index"><p><code><a href="https://docs.ropensci.org/lightr/reference/lr_get_spec.html" class="external-link">lightr::lr_get_spec()</a></code> for a more flexible version of this function
 (e.g. uninterpolated wavelengths), and <code><a href="https://docs.ropensci.org/lightr/reference/lr_get_metadata.html" class="external-link">lightr::lr_get_metadata()</a></code> for the retrieval
-and import of spectral metadata.</p></div>
+and import of spectral metadata.
+See <a href="https://docs.ropensci.org/lightr" class="external-link">https://docs.ropensci.org/lightr</a> for the complete, and up-to-date, list
+of supported file formats.</p></div>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -155,7 +157,7 @@ and import of spectral metadata.</p></div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Import and inspect example spectral data with a range of set to 400-700nm.  </span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Import and inspect example spectral data with a range of set to 400-700nm.</span></span>
 <span class="r-in"><span class="va">rspecdata</span> <span class="op">&lt;-</span> <span class="fu">getspec</span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata"</span>, package <span class="op">=</span> <span class="st">"lightr"</span><span class="op">)</span>, ext <span class="op">=</span> <span class="st">"ttt"</span>, lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">700</span><span class="op">)</span><span class="op">)</span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 files found; importing spectra:</span>
 <span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">rspecdata</span><span class="op">)</span></span>
@@ -181,7 +183,7 @@ and import of spectral metadata.</p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.2.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
 </div>
 
       </footer></div>
