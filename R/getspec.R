@@ -20,12 +20,14 @@
 #' @seealso [lightr::lr_get_spec()] for a more flexible version of this function
 #' (e.g. uninterpolated wavelengths), and [lightr::lr_get_metadata()] for the retrieval
 #' and import of spectral metadata.
+#' See <https://docs.ropensci.org/lightr> for the complete, and up-to-date, list
+#' of supported file formats.
 #'
 #' @examples
-#' # Import and inspect example spectral data with a range of set to 400-700nm.  
+#' # Import and inspect example spectral data with a range of set to 400-700nm.
 #' rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 #' head(rspecdata)
-#' 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'

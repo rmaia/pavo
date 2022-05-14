@@ -60,7 +60,7 @@ the way progress is shown with the \code{\link[progressr:handlers]{progressr::ha
 (progress bar, acoustic feedback, nothing, etc.)
 }
 \examples{
-# Import and inspect example spectral data with a range of set to 400-700nm.  
+# Import and inspect example spectral data with a range of set to 400-700nm.
 rspecdata <- getspec(system.file("testdata", package = "lightr"), ext = "ttt", lim = c(400, 700))
 head(rspecdata)
 
@@ -74,6 +74,8 @@ and metadata in R. Journal of Open Source Software, 4(43), 1857,
 \code{\link[lightr:lr_get_spec]{lightr::lr_get_spec()}} for a more flexible version of this function
 (e.g. uninterpolated wavelengths), and \code{\link[lightr:lr_get_metadata]{lightr::lr_get_metadata()}} for the retrieval
 and import of spectral metadata.
+See \url{https://docs.ropensci.org/lightr} for the complete, and up-to-date, list
+of supported file formats.
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}
