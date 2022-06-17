@@ -26,7 +26,7 @@
 #'
 #' @return A data frame of class `rspec` with the processed data.
 #'
-#' @importFrom stats loess.smooth median
+#' @importFrom stats loess predict median
 #'
 #' @export
 #'
@@ -81,12 +81,18 @@ procspec <- function(rspecdata, opt = c(
   nam <- names(rspecdata)
 
   if (any(opt == "smooth")) {
+    # We use loess() instead of the high-level wrapper loess.smooth() because,
+    # as per the docs, loess.smooth() can only evaluate at equally spaced
+    # points, which doesn't work with uninterpolated spectra (since the wl are
+    # not spaced evenly)
     rspecdata <- apply(rspecdata, 2, function(z) {
-      loess.smooth(
-        x = wl,
-        y = z, span = span, degree = 2,
-        family = "gaussian", evaluation = length(wl)
-      )$y
+      predict(
+        loess(
+          z ~ wl,
+          span = span, degree = 2,
+          family = "gaussian"
+        )
+      )
     })
     applied <- c(applied, paste("smoothing spectra with a span of", span))
   }

@@ -48,6 +48,15 @@ test_that("Procspec", {
     )),
     c(24, 22)
   )
+
+  # Uninterpolated spectra
+  uninterp <- lightr::lr_get_spec(
+    system.file("testdata", "heliomaster", package = "lightr"),
+    ext = "jdx", interpolate = FALSE
+  )
+  uninterp_sm <- procspec(uninterp, "smooth", span = 0.1)
+  expect_snapshot(uninterp_sm)
+
 })
 
 test_that("Aggregation", {
