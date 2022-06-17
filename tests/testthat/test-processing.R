@@ -55,7 +55,11 @@ test_that("Procspec", {
     ext = "jdx", interpolate = FALSE
   )
   uninterp_sm <- procspec(uninterp, "smooth", span = 0.1)
-  expect_snapshot(uninterp_sm)
+
+  vdiffr::expect_doppelganger(
+    "uninterpolated_procspec",
+    plot(uninterp_sm)
+  )
 
 })
 
