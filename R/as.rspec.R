@@ -45,7 +45,7 @@ as.rspec <- function(object, whichwl = NULL,
 
   # tibble dodge
   if (inherits(object, "tbl_df")) {
-    object <- data.frame(object)
+    object <- data.frame(object, check.names = FALSE)
   }
 
   if (is.matrix(object) || is.data.frame(object)) {
