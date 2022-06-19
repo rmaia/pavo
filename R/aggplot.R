@@ -192,7 +192,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   if (legend) {
     legend("topleft",
       bty = "n", legend = names(cntplotspecs),
-      lty = lty, col = lcol
+      lty = lty, col = lcol, lwd = lwd
     )
   }
 }
