@@ -2,6 +2,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+-   Line width in the legend of `aggplot()` (as specified by `lwd`) is now consistent with line width on the plot (#235)
 -   `procspec(spec, opt = "smooth")` now works correctly with uninterpolated spectra. Previously, it was causing a shift of the spectra towards long-wavelengths (#234).
 -   `coldist()` now returns Euclidean distances when given data from the `ciexyz` model.
 -   `as.rspec()` now preserves numeric column names when converting from a tibble.
