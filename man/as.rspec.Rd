@@ -25,7 +25,9 @@ equally spaced numbers and sets it as wavelengths "wl". If no wavelengths
 are found or \code{whichwl} is not given, returns arbitrary index values.}
 
 \item{interp}{whether to interpolate wavelengths in 1-nm bins (defaults to
-\code{TRUE}).}
+\code{TRUE}). It is rarely recommended to turn off this option, as
+uninterpolated spectra are incompatible with some downstream analyses,
+including notably colour vision models.}
 
 \item{lim}{vector specifying wavelength range to interpolate over (e.g.
 \code{c(300, 700)}).}
