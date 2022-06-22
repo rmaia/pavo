@@ -92,33 +92,48 @@ perceptually-corrected (i.e. noise-weighted Euclidean distances)</p>
     <h2>Arguments</h2>
     <dl><dt>coldistres</dt>
 <dd><p>(required) the output from a <code><a href="coldist.html">coldist()</a></code> call.</p></dd>
+
+
 <dt>center</dt>
 <dd><p>logical indicating if the data should be centered on its centroid
 (defaults to <code>TRUE</code>).</p></dd>
+
+
 <dt>rotate</dt>
 <dd><p>logical indicating if the data should be rotated (defaults to <code>TRUE</code>).</p></dd>
+
+
 <dt>rotcenter</dt>
 <dd><p>should the vectors for rotation be centered in the achromatic
 center ("achro") or the data centroid ("mean", the default)?</p></dd>
+
+
 <dt>ref1</dt>
 <dd><p>the cone to be used as a the first reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for <code><a href="coldist.html">coldist()</a></code>. Defaults to 'l'.</p></dd>
+
+
 <dt>ref2</dt>
 <dd><p>the cone to be used as a the second reference. May be <code>NULL</code>
 (for no first rotation in the 3-dimensional case) or must match name
 in the original data that was used for <code><a href="coldist.html">coldist()</a></code>. Defaults to 'u'.
 (only used if data has 3 dimensions).</p></dd>
+
+
 <dt>axis1</dt>
 <dd><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x, y, z) to rotate around. Defaults to c(1, 1, 0), such
 that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
 Ignored if <code>ref1</code> is <code>NULL</code> (in 3-dimensional case only)</p></dd>
+
+
 <dt>axis2</dt>
 <dd><p>A vector of length 3 composed of 0's and 1's, with
 1's representing the axes (x, y, z) to rotate around. Defaults to c(0, 0, 1), such
 that the rotation aligns with the z axis (only used if data has 3 dimensions).
 Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</p></dd>
+
 </dl></div>
     <div id="references">
     <h2>References</h2>
@@ -199,7 +214,7 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

@@ -105,6 +105,8 @@ are returned.</p>
 unweighted (typically) Euclidean distances. Data may also be independently
 calculated quantum catches, in the form of a data frame with columns
 representing photoreceptors.</p></dd>
+
+
 <dt>noise</dt>
 <dd><p>how the noise will be calculated (ignored for <code>colspace</code>
 objects):</p><ul><li><p><code>neural</code> (default): noise is proportional to the Weber fraction and is
@@ -116,17 +118,23 @@ the intensity of the signal received (the quantum catches).
 Note that the <code>quantum</code> option will only work with objects of
 class <code>vismodel</code>.</p></li>
 </ul></dd>
+
+
 <dt>subset</dt>
 <dd><p>If only some of the comparisons should be returned, a character
 vector of length 1 or 2 can be provided, indicating which samples are
 desired. The subset vector must match the labels of the input samples, but
 partial matching (and regular expressions) are supported.</p></dd>
+
+
 <dt>achromatic</dt>
 <dd><p>Logical. If <code>TRUE</code>, last column of the data frame is used
 to calculate the achromatic contrast, the form of which will depend on the
 input data and will be indicated by a message during execution. For
 noise-weighted distances, noise is based on the Weber fraction given by the
 argument <code>weber.achro</code>.</p></dd>
+
+
 <dt>qcatch</dt>
 <dd><p>if the object is of class <code><a href="vismodel.html">vismodel</a></code> or <code><a href="colspace.html">colspace</a></code>, this
 argument is ignored. If the object is a data frame of quantal catches from
@@ -135,11 +143,15 @@ is being used, so that the noise can be calculated accordingly: * <code>Qi</code
 Quantum catch for each photoreceptor * <code>fi</code>: Quantum catch according to
 Fechner's law (the signal of the receptor channel is proportional to the
 logarithm of the quantum catch)</p></dd>
+
+
 <dt>n</dt>
 <dd><p>photoreceptor densities for the cones used in visual modeling. must
 have same length as number of columns (excluding achromatic receptor if
 used; defaults to the Pekin robin <em>Leiothrix lutea</em> densities:
 <code>c(1,2,2,4)</code>). Ignored for <code><a href="colspace.html">colspace</a></code> objects.</p></dd>
+
+
 <dt>weber</dt>
 <dd><p>The Weber fraction(s) to be used (often also referred to as
 receptor noise, or <em>e</em>). The noise-to-signal ratio <code>v</code> is unknown, and
@@ -150,19 +162,26 @@ Weber fraction of the other cones. By default, the value of 0.1 is used
 (the empirically estimated value for the LWS cone from <em>Leiothrix lutea</em>).
 See Olsson et al. 2017 for a review of published values in the literature.
 Ignored for <code>colspace</code> objects.</p></dd>
+
+
 <dt>weber.ref</dt>
 <dd><p>the cone class used to obtain the empirical estimate of the
 Weber fraction used for the <code>weber</code> argument, if a single value is
 specified. By default, <code>n4</code> is used, representing the LWS cone for
 <em>Leiothrix lutea</em>. Ignored for <code>colspace</code> objects.</p></dd>
+
+
 <dt>weber.achro</dt>
 <dd><p>the Weber fraction to be used to calculate achromatic
 contrast, when <code>achromatic = TRUE</code>. Defaults to 0.1. Ignored for <code>colspace</code>
 objects.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame containing up to 4 columns. The first two
+    
+
+<p>A data frame containing up to 4 columns. The first two
 (<code>patch1, patch2</code>) refer to the two colors being contrasted; <code>dS</code> is the
 chromatic contrast (delta S) and <code>dL</code> is the achromatic contrast (delta L).
 Units of <code>dS</code> JND's in the receptor-noise model, unweighted Euclidean
@@ -262,7 +281,7 @@ predictions. Behavioral Ecology, <a href="https://doi.org/10.1093/beheco/arx133"
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

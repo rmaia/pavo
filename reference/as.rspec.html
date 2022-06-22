@@ -92,28 +92,45 @@ object</p>
     <dl><dt>object</dt>
 <dd><p>(required) a data frame or matrix containing spectra to
 process.</p></dd>
+
+
 <dt>whichwl</dt>
 <dd><p>a numeric or character vector specifying which column contains
 wavelengths. If <code>NULL</code> (default), function searches for column containing
 equally spaced numbers and sets it as wavelengths "wl". If no wavelengths
 are found or <code>whichwl</code> is not given, returns arbitrary index values.</p></dd>
+
+
 <dt>interp</dt>
 <dd><p>whether to interpolate wavelengths in 1-nm bins (defaults to
-<code>TRUE</code>).</p></dd>
+<code>TRUE</code>). It is rarely recommended to turn off this option, as
+uninterpolated spectra are incompatible with some downstream analyses,
+including notably colour vision models.</p></dd>
+
+
 <dt>lim</dt>
 <dd><p>vector specifying wavelength range to interpolate over (e.g.
 <code>c(300, 700)</code>).</p></dd>
+
+
 <dt>exceed.range</dt>
 <dd><p>logical. Should data be interpolated to the limits
 specified by <code>lim</code> if <code>lim</code> exceeds the range of the actual data? Useful,
 and relatively safe, when the data range falls slightly within <code>lim</code> (e.g.
 300.1 - 699 nm), but will produce spurious results if <code>lim</code> far exceeds the
 range of input data. Defaults to <code>TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an object of class <code>rspec</code> for use in further <code>pavo</code> functions
-a logical value indicating whether the object is of class <code>rspec</code></p>
+    
+
+<p>an object of class <code>rspec</code> for use in further <code>pavo</code> functions</p>
+
+
+<p>a logical value indicating whether the object is of class <code>rspec</code></p>
+
+
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -168,7 +185,7 @@ a logical value indicating whether the object is of class <code>rspec</code></p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

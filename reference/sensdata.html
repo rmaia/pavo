@@ -112,6 +112,8 @@ of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>"habronattus"</code>: Jumping spider <em>Habronattus pyrrithrix</em>.</p></li>
 <li><p><code>"rhinecanthus"</code>: Triggerfish <em>Rhinecanthus aculeatus</em>.</p></li>
 </ul></dd>
+
+
 <dt>achromatic</dt>
 <dd><p>the sensitivity data used to calculate luminance (achromatic)
 receptor stimulation. Options are:</p><ul><li><p><code>"none"</code>: no achromatic sensitivity data.</p></li>
@@ -124,6 +126,8 @@ receptor stimulation. Options are:</p><ul><li><p><code>"none"</code>: no achroma
 <li><p><code>'dm.r1'</code>: Vinegar fly <em>Drosophila melanogaster</em> R1-6 photoreceptor.</p></li>
 <li><p><code>"ra.dc"</code>: Triggerfish <em>Rhinecanthus aculeatus</em> double cone.</p></li>
 </ul></dd>
+
+
 <dt>illum</dt>
 <dd><p>illuminants. Options are:</p><ul><li><p><code>"none"</code>: no illuminant data.</p></li>
 <li><p><code>"all"</code>: all background spectral data.</p></li>
@@ -131,25 +135,36 @@ receptor stimulation. Options are:</p><ul><li><p><code>"none"</code>: no achroma
 <li><p><code>"D65"</code>: standard daylight.</p></li>
 <li><p><code>"forestshade"</code> forest shade.</p></li>
 </ul></dd>
+
+
 <dt>trans</dt>
 <dd><p>Ocular transmission data. Options are:</p><ul><li><p><code>"none"</code>: no transmission data.</p></li>
 <li><p><code>"all"</code>: all transmission data.</p></li>
 <li><p><code>"bluetit"</code>: blue tit <em>Cyanistes caeruleus</em> ocular transmission (from Hart et al. 2000).</p></li>
 <li><p><code>"blackbird"</code>: blackbird <em>Turdus merula</em> ocular transmission (from Hart et al. 2000).</p></li>
 </ul></dd>
+
+
 <dt>bkg</dt>
 <dd><p>background spectra. Options are:</p><ul><li><p><code>"none"</code>: no background spectral data.</p></li>
 <li><p><code>"all"</code>: all background spectral data.</p></li>
 <li><p><code>"green"</code>: green foliage.</p></li>
 </ul></dd>
+
+
 <dt>plot</dt>
 <dd><p>should the spectral data be plotted, or returned instead (defaults to <code>FALSE</code>)?</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional graphical options passed to <code><a href="plot.rspec.html">plot.rspec()</a></code> when <code>plot = TRUE</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>rspec</code> (when <code>plot = FALSE</code>), containing
+    
+
+<p>An object of class <code>rspec</code> (when <code>plot = FALSE</code>), containing
 a wavelength column <code>"wl"</code> and spectral data binned at 1 nm intervals from 300-700 nm.</p>
     </div>
     <div id="references">
@@ -191,7 +206,7 @@ Scientific reports, 10(1), 1-13.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

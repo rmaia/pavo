@@ -99,45 +99,70 @@ space.</p>
 <dd><p>(required) data frame, possibly a result from the <code><a href="colspace.html">colspace()</a></code>
 function, containing
 values for the 'x', 'y' (and possibly 'z') coordinates as columns (labeled as such)</p></dd>
+
+
 <dt>type</dt>
 <dd><p>if "convex", the colour volume is plotted using a convex hull
 and if "alpha", it is plotted using alphashapes.</p></dd>
+
+
 <dt>avalue</dt>
 <dd><p>if <code>type = alpha</code>, the alpha parameter values for <code>colsp1</code> and
 <code>colsp2</code> respectively to compute the alphashapes. Can be a numeric of length
 one if the same value is used in both cases. <code>avalue = "auto"</code> (default)
 finds and use the α*
 value as defined in Gruson (2020).</p></dd>
+
+
 <dt>plot</dt>
 <dd><p>logical. Should the volumes and points be plotted? (defaults to <code>FALSE</code>).
 This only works for tetrahedral colourspaces at the moment.</p></dd>
+
+
 <dt>interactive</dt>
 <dd><p>logical. If <code>TRUE</code>, uses the rgl engine for interactive plotting;
 if <code>FALSE</code> then a static plot is generated.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>a vector of length 3 with the colours for (in order) the first volume,
 the second volume, and the overlap.</p></dd>
+
+
 <dt>fill</dt>
 <dd><p>logical. should the two volumes be filled in the plot? (defaults to <code>FALSE</code>)</p></dd>
+
+
 <dt>new</dt>
 <dd><p>logical. Should a new plot window be called? If <code>FALSE</code>, volumes and their
 overlap are plotted over the current plot (defaults to <code>TRUE</code>).</p></dd>
+
+
 <dt>nsamp</dt>
 <dd><p>if <code>type = "alpha"</code>, the number of points to be sampled for the
 Monte Carlo computation. Stoddard &amp; Stevens(2011) use around 750,000 points,
 but more or fewer might be required depending on the
 degree of overlap.</p></dd>
+
+
 <dt>psize</dt>
 <dd><p>if <code>type = "alpha"</code> and <code>plot = TRUE</code>, sets the size to plot the points
 used in the Monte Carlo computation.</p></dd>
+
+
 <dt>lwd</dt>
 <dd><p>if <code>plot = TRUE</code>, sets the line width for volume grids.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional arguments passed to the plot. See <code><a href="vol.html">vol()</a></code></p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Calculates the overlap between the volumes defined by two set of points in
+    
+
+<p>Calculates the overlap between the volumes defined by two set of points in
 colourspace. The volume from the overlap is then given relative to:</p><ul><li><p><code>vsmallest</code> the volume of the overlap divided by the smallest of that defined
 by the the two input sets of colour points. Thus, if one of the volumes is entirely
 contained within the other, this overlap will be <code>vsmallest = 1</code>.</p></li>
@@ -224,7 +249,7 @@ Ecology and Evolution, early view <a href="https://doi.org/10.1111/2041-210X.133
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

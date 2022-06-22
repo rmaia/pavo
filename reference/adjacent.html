@@ -98,15 +98,21 @@ y correspond to spatial (e.g. pixel) coordinates, and z is a numeric code
 specifying a colour-class. Preferably the result of <code><a href="classify.html">classify()</a></code>, or
 constructed from grid-sampled spectra that have been visually modelled and
 clustered (as per Endler 2012).</p></dd>
+
+
 <dt>xpts</dt>
 <dd><p>an integer specifying the number of sample points along the x
 axis, from which the evenly-spaced sampling grid is constructed (if
 required). Defaults to the smallest dimension of <code>classimg</code>, though this
 should be carefully considered.</p></dd>
+
+
 <dt>xscale</dt>
 <dd><p>(required) an integer or list of integers equal in length to classimg()
 specifying the true length of the x-axis, in preferred units. Not required,
 and ignored, only if image scales have been set via <code><a href="procimg.html">procimg()</a></code>.</p></dd>
+
+
 <dt>bkgID</dt>
 <dd><p>an integer or vector specifying the colour-class ID number(s) of
 pertaining to the background alone, for relatively homogeneous and
@@ -115,10 +121,14 @@ specimens). Examine the attributes of, or call <code>summary</code> on, the resu
 <code><a href="classify.html">classify()</a></code> to visualise the RGB values corresponding to colour-class ID
 numbers for classified images. Ignored if the focal object and background
 has been identified using <code><a href="procimg.html">procimg()</a></code>.</p></dd>
+
+
 <dt>polygon</dt>
 <dd><p>a data.frame of x-y coordinates delineating a closed polygon
 that separates the focal object from the background. Not required, and
 ignored, if the focal object outline is specified using <code><a href="procimg.html">procimg()</a></code>.</p></dd>
+
+
 <dt>exclude</dt>
 <dd><p>the portion of the scene to be excluded from the analysis, if
 any.</p><ul><li><p><code>'none'</code>: default</p></li>
@@ -130,6 +140,8 @@ subsequently excluded.</p></li>
 <li><p><code>'object'</code>: exclude everything <em>inside</em> the closed polygon specified
 using <code><a href="procimg.html">procimg()</a></code>, or the argument <code>polygon</code>.</p></li>
 </ul></dd>
+
+
 <dt>coldists</dt>
 <dd><p>a data.frame specifying the visually-modelled chromatic (dS)
 and/or achromatic (dL) distances between colour-categories. The first two
@@ -139,16 +151,21 @@ combinations of numeric colour-class ID's (viewable by calling
 remaining columns named dS (for chromatic distances) and/or dL (for
 achromatic distances). See <code><a href="vismodel.html">vismodel()</a></code> and <code><a href="colspace.html">colspace()</a></code> for visual
 modelling with spectral data.</p></dd>
+
+
 <dt>hsl</dt>
 <dd><p>data.frame specifying the hue, saturation, and luminance of color
 patch elements, as might be estimated via <code><a href="vismodel.html">vismodel()</a></code> and <code><a href="colspace.html">colspace()</a></code>.
 The first column, named 'patch', should contain numeric color category IDs,
 with the remaining columns specifying one or more of 'hue' (angle, in
 radians), 'sat', and/or 'lum'.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a data frame of summary variables:</p><ul><li><p><code>'k'</code>: The number of user-specified colour and/or luminance classes.</p></li>
+    
+
+<p>a data frame of summary variables:</p><ul><li><p><code>'k'</code>: The number of user-specified colour and/or luminance classes.</p></li>
 <li><p><code>'N'</code>: The grand total (sum of diagonal and off-diagonal) transitions.</p></li>
 <li><p><code>'n_off'</code>: The total off-diagonal transitions.</p></li>
 <li><p><code>'p_i'</code>: The overall frequency of colour class <em>i</em>.</p></li>
@@ -284,7 +301,7 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

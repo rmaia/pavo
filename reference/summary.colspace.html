@@ -82,6 +82,8 @@
     <h2>Arguments</h2>
     <dl><dt>object</dt>
 <dd><p>(required) a <code>colspace</code> object.</p></dd>
+
+
 <dt>by</dt>
 <dd><p>when the input is in <code>tcs</code> colourspace, <code>by</code> is either
 a single value specifying the range of colour points for which
@@ -92,12 +94,17 @@ the rows in the quantum catch colour data frame (in which case summaries will be
 calculated for each group of points sharing the same identification). If <code>by</code>
 is left blank, the summary statistics are calculated across all colour points in the
 data.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>class consistency (ignored).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>returns all attributes of the data as mapped to the selected colourspace, including
+    
+
+<p>returns all attributes of the data as mapped to the selected colourspace, including
 options specified when calculating the visual model. Also return the default
 <code>data.frame</code> summary, except when the object is the result of <code><a href="tcspace.html">tcspace()</a></code>,
 in which case the following variables are output instead:</p><ul><li><p><code>centroid.u, .s, .m, .l</code> the centroids of <code>usml</code> coordinates of points.</p></li>
@@ -216,7 +223,7 @@ Ecology and Evolution, early view <a href="https://doi.org/10.1111/2041-210X.133
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

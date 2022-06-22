@@ -85,6 +85,8 @@ or a vector of identities.</p>
 <dd><p>(required) a data frame, possibly of class <code>rspec</code>, which
 contains a column containing a wavelength range, named 'wl', and spectra
 data in remaining columns.</p></dd>
+
+
 <dt>by</dt>
 <dd><p>(required) either a single value specifying the range of spectra
 within the data frame to be combined (for example, <code>by</code> = 3 indicates the
@@ -93,17 +95,24 @@ data frame); a vector containing identifications for the columns in the
 spectra data frame (in which case the function will be applied to each
 group of spectra sharing the same identification); or a list of vectors,
 e.g., <code>by = list(sex, species)</code>.</p></dd>
+
+
 <dt>FUN</dt>
 <dd><p>the function to be applied to the groups of spectra. (defaults to
 <code><a href="https://rdrr.io/r/base/mean.html" class="external-link">mean()</a></code>)</p></dd>
+
+
 <dt>trim</dt>
 <dd><p>logical. if <code>TRUE</code> (default), the function will try to identify
 and remove numbers at the end of the names of the columns in the new rspec
 object.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame of class <code>rspec</code> containing the spectra after applying
+    
+
+<p>A data frame of class <code>rspec</code> containing the spectra after applying
 the aggregating function.</p>
     </div>
     <div id="references">
@@ -145,7 +154,7 @@ Bird coloration. Harvard University Press, Cambridge, pp 90-147.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

@@ -89,6 +89,8 @@
 <dd><p>(required) a data frame, possibly of class <code>rspec</code>, which
 contains a column containing a wavelength range, named 'wl', and spectra
 data in remaining columns.</p></dd>
+
+
 <dt>opt</dt>
 <dd><p>what type of processing options to apply. User can select multiple
 options by providing a vector. Possibilities are:</p><ul><li><p><code>"none"</code> does not perform any processing (default).</p></li>
@@ -102,6 +104,8 @@ argument must be set.</p></li>
 <li><p><code>"center"</code> centers individual spectra by subtracting mean reflectance from
 all values.</p></li>
 </ul></dd>
+
+
 <dt>fixneg</dt>
 <dd><p>how to handle negative values. Possibilities are:</p><ul><li><p><code>"none"</code> does not perform negative value correction (default).</p></li>
 <li><p><code>"zero"</code> sets all negative values to zero.</p></li>
@@ -109,14 +113,21 @@ all values.</p></li>
 spectra to the reflectance at all other wavelengths (setting the minimum
 value to zero, but scaling other values accordingly).</p></li>
 </ul></dd>
+
+
 <dt>span</dt>
 <dd><p>sets the smoothing parameter used by <code><a href="https://rdrr.io/r/stats/scatter.smooth.html" class="external-link">loess.smooth()</a></code>.</p></dd>
+
+
 <dt>bins</dt>
 <dd><p>sets the number of equally sized wavelength bins for <code>opt = "bin"</code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame of class <code>rspec</code> with the processed data.</p>
+    
+
+<p>A data frame of class <code>rspec</code> with the processed data.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -172,7 +183,7 @@ of biological coloration. Animal Behaviour, 106, 51-57.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

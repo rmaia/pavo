@@ -86,23 +86,36 @@ for the mean colour distance between two or more samples of colours</p>
 Can be the result from <code><a href="vismodel.html">vismodel()</a></code>, or <code><a href="colspace.html">colspace()</a></code>. Data may also be
 independently calculated quantum catches, in the form of a data frame with
 columns representing photoreceptors.</p></dd>
+
+
 <dt>by</dt>
 <dd><p>(required) a numeric or character vector indicating the group to which each row from
 the object belongs to.</p></dd>
+
+
 <dt>boot.n</dt>
 <dd><p>number of bootstrap replicates (defaults to 1000)</p></dd>
+
+
 <dt>alpha</dt>
 <dd><p>the confidence level for the confidence intervals (defaults to 0.95)</p></dd>
+
+
 <dt>raw</dt>
 <dd><p>should the full set of bootstrapped distances (equal in length to boot.n)
 be returned, instead of the summary distances and CI's? Defaults to FALSE.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>other arguments to be passed to <code><a href="coldist.html">coldist()</a></code>. Must at minimum
 include <code>n</code> and <code>weber</code>. See <code><a href="coldist.html">coldist()</a></code> for details.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>a matrix including the empirical mean and bootstrapped
+    
+
+<p>a matrix including the empirical mean and bootstrapped
 confidence limits for dS (and dL if <code>achromatic = TRUE</code>), or a data.frame
 of raw bootstraped dS (and dL if <code>achromatic = TRUE</code>) values equal in length to boot.n.</p>
     </div>
@@ -177,7 +190,7 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

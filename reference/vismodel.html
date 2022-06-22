@@ -99,6 +99,8 @@ can be returned, for use in a suite of colourspace and non-colourspace models.</
 <dd><p>(required) a data frame, possibly of class <code>rspec</code>, which
 contains a column containing a wavelength range, named 'wl', and spectra
 data in remaining columns.</p></dd>
+
+
 <dt>visual</dt>
 <dd><p>the visual system to be used. Options are:</p><ul><li><p>a data frame such as one produced containing by <code><a href="sensmodel.html">sensmodel()</a></code>, containing
 user-defined sensitivity data for the receptors involved in colour vision.
@@ -124,6 +126,8 @@ of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 <li><p><code>'habronattus'</code>: Jumping spider <em>Habronattus pyrrithrix</em>.</p></li>
 <li><p><code>'rhinecanthus'</code>: Triggerfish <em>Rhinecanthus aculeatus</em>.</p></li>
 </ul></dd>
+
+
 <dt>achromatic</dt>
 <dd><p>the sensitivity data to be used to calculate luminance (achromatic)
 receptor stimulation. Either a vector containing the sensitivity for a single receptor,
@@ -139,12 +143,16 @@ or one of the options:</p><ul><li><p><code>'none'</code>: no achromatic stimulat
 <li><p><code>'l'</code>: the longest-wavelength photoreceptor.</p></li>
 <li><p><code>'all'</code>: the summed response of all photoreceptors.</p></li>
 </ul></dd>
+
+
 <dt>illum</dt>
 <dd><p>either a vector containing the illuminant, or one of the options:</p><ul><li><p><code>'ideal'</code>: homogeneous illuminance of 1 across wavelengths (default)</p></li>
 <li><p><code>'bluesky'</code> open blue sky.</p></li>
 <li><p><code>'D65'</code>: standard daylight.</p></li>
 <li><p><code>'forestshade'</code> forest shade.</p></li>
 </ul></dd>
+
+
 <dt>trans</dt>
 <dd><p>either a vector containing the ocular or environmental transmission
 spectra, or one of the options:</p><ul><li><p><code>'ideal'</code>: homogeneous transmission of 1 across all wavelengths (default)</p></li>
@@ -153,20 +161,28 @@ ocular transmission (from Hart et al. 2000).</p></li>
 <li><p><code>'blackbird'</code>: blackbird <em>Turdus merula</em>
 ocular transmission (from Hart et al. 2000).</p></li>
 </ul></dd>
+
+
 <dt>qcatch</dt>
 <dd><p>Which quantal catch metric to return. Options are:</p><ul><li><p><code>'Qi'</code>: Quantum catch for each photoreceptor (default)</p></li>
 <li><p><code>'fi'</code>: Quantum catch according to Fechner's law (the signal of the receptor
 channel is proportional to the logarithm of the quantum catch)</p></li>
 <li><p><code>'Ei'</code>: Hyperbolic-transformed quantum catch, where Ei = Qi / (Qi + 1).</p></li>
 </ul></dd>
+
+
 <dt>bkg</dt>
 <dd><p>background spectrum. Note that this will have no effect when <code>vonkries = FALSE</code>.
 Either a vector containing the spectral data, or one of the options:</p><ul><li><p><code>'ideal'</code>: homogeneous illuminance of 1 across all wavelengths (default).</p></li>
 <li><p><code>'green'</code>: green foliage.</p></li>
 </ul></dd>
+
+
 <dt>vonkries</dt>
 <dd><p>logical. Should the von Kries colour correction transformation be applied?
 (defaults to <code>FALSE</code>).</p></dd>
+
+
 <dt>scale</dt>
 <dd><p>a value by which the illuminant will be multiplied. Useful for when the
 illuminant is a relative value (i.e. transformed to a maximum of 1 or to a percentage),
@@ -174,13 +190,18 @@ and does not correspond to quantum flux units
 (μmol.s<sup>-1</sup>.m<sup>-2</sup>).
 Useful values are, for example, 500 (for dim light) and 10000 (for bright
 illumination). Note that if <code>vonkries = TRUE</code> this transformation has no effect.</p></dd>
+
+
 <dt>relative</dt>
 <dd><p>should relative quantum catches be returned (i.e. is it a colour
 space model? Defaults to <code>TRUE</code>).</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>An object of class <code>vismodel</code> containing the photon catches for each of the
+    
+
+<p>An object of class <code>vismodel</code> containing the photon catches for each of the
 photoreceptors considered. Information on the parameters used in the calculation are also
 stored and can be called using the <code><a href="summary.vismodel.html">summary.vismodel()</a></code> function.</p>
     </div>
@@ -278,7 +299,7 @@ used in <code>vismodel()</code></p></div>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

@@ -91,11 +91,15 @@
     <dl><dt>imgdat</dt>
 <dd><p>(required) image data. Either a single image, or a series of images
 stored in a list. Preferably the result of <code><a href="getimg.html">getimg()</a></code>.</p></dd>
+
+
 <dt>method</dt>
 <dd><p>methods for image segmentation/classification.</p><ul><li><p><code>'kMeans'</code>: k-means clustering (default)</p></li>
 <li><p><code>'kMedoids'</code>: k-medoids clustering, using the partitioning-around-medoids ('pam')
 algorithm for large datasets.</p></li>
 </ul></dd>
+
+
 <dt>kcols</dt>
 <dd><p>the number of discrete colour classes present in the input image(s).
 Can be a single integer when only a single image is present, or if kcols is identical for all
@@ -103,28 +107,41 @@ images. When passing a list of images, <code>kcols</code> can also be a vector t
 as <code>imgdat</code>, or a data.frame with two columns specifying image file names and
 corresponding kcols. This argument can optionally be disregarded when <code>interactive = TRUE</code>,
 and kcols will be inferred from the number of selections.</p></dd>
+
+
 <dt>refID</dt>
 <dd><p>either the numeric index or name of a 'reference' image, for use when passing
 a list of images. Other images will be k-means classified using centres identified
 in the single reference image, thus helping to ensure that homologous pattern elements
 will be reliably classified between images, if so desired.</p></dd>
+
+
 <dt>interactive</dt>
 <dd><p>interactively specify the colour-category 'centers', for k-means clustering.
 When <code>TRUE</code>, the user is asked to click a number of points (equal to <code>kcols</code>,
 if specified, otherwise user-determined) that represent the distinct colours of interest.
 If a reference image is specified, it will be the only image presented.</p></dd>
+
+
 <dt>plotnew</dt>
 <dd><p>Should plots be opened in a new window when <code>interactive = TRUE</code>?
 Defaults to <code>FALSE</code>.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>the color of the marker points, when <code>interactive = TRUE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional graphical parameters when <code>interactive = TRUE</code>.
 Also see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">graphics::par()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A matrix, or list of matrices, of class <code>rimg</code> containing the colour
+    
+
+<p>A matrix, or list of matrices, of class <code>rimg</code> containing the colour
 class classifications ID at each pixel location. The RGB values corresponding to
 cluster centres (i.e. colour classes) are stored as object attributes.</p>
     </div>
@@ -178,7 +195,7 @@ cluster ID's are desired between runs.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

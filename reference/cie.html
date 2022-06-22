@@ -90,8 +90,12 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
 <dd><p>(required) quantum catch color data. Can be either the result
 from <code><a href="vismodel.html">vismodel()</a></code> or independently calculated data (in the form of a
 data frame with three columns representing trichromatic viewer).</p></dd>
+
+
 <dt>space</dt>
 <dd><p>(required) Choice between XYZ (default), LAB, or LCh colour models.</p></dd>
+
+
 <dt>visual</dt>
 <dd><p>the visual system used when estimating XYZ values, if <code>vismodeldata</code> are
 not the result of a call to <code><a href="vismodel.html">vismodel()</a></code> (otherwise the argument is ignored). Options are:</p><ul><li><p>a data frame such as one produced containing by <code><a href="sensmodel.html">sensmodel()</a></code>, containing
@@ -105,6 +109,8 @@ of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 colour vision. Functions are linear transformations of the 10-degree cone fundamentals
 of Stockman &amp; Sharpe (2000), as ratified by the CIE (2006).</p></li>
 </ul></dd>
+
+
 <dt>illum</dt>
 <dd><p>the illuminant used when estimating XYZ values, if <code>vismodeldata</code> are
 not the result of a call to <code><a href="vismodel.html">vismodel()</a></code> (otherwise the argument is ignored).
@@ -113,10 +119,13 @@ one of the built-in options:</p><ul><li><p><code>'D65'</code>: standard daylight
 <li><p><code>'bluesky'</code> open blue sky.</p></li>
 <li><p><code>'forestshade'</code> forest shade.</p></li>
 </ul></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>Object of class <code><a href="colspace.html">colspace</a></code> containing:</p><ul><li><p><code>X, Y, Z</code>: Tristimulus values.</p></li>
+    
+
+<p>Object of class <code><a href="colspace.html">colspace</a></code> containing:</p><ul><li><p><code>X, Y, Z</code>: Tristimulus values.</p></li>
 <li><p><code>x, y, z</code>: Cartesian coordinates, when using <code>space = XYZ</code>.</p></li>
 <li><p><code>L, a, b</code>: Lightness, <code>L</code>, and colour-opponent <code>a</code> (redness-greenness) and
 <code>b</code> (yellowness-blueness) values, in a Cartesian coordinate space. Returned
@@ -175,7 +184,7 @@ Internationale de l Eclairage.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

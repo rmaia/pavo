@@ -97,35 +97,53 @@
     <dl><dt>image</dt>
 <dd><p>(required) image data. Either a single image array, or a number of images
 stored in a list. Preferably the result of <code><a href="getimg.html">getimg()</a></code>.</p></dd>
+
+
 <dt>resize</dt>
 <dd><p>an integer specifying a percentage for resizing images, if so desired.
 E.g. 50 to half the size of an image, 200 to double it.</p></dd>
+
+
 <dt>rotate</dt>
 <dd><p>an integer specifying the angle of image rotation, in degrees. Images
 are rotated around the centre, and linearly interpolated.</p></dd>
+
+
 <dt>scaledist</dt>
 <dd><p>an integer, or numeric vector equal in length to the number of images,
 specifying the length of the scale in the image(s). Image(s) will then be presented,
 and the user asked to select either end of the scale corresponding to the input value.</p></dd>
+
+
 <dt>outline</dt>
 <dd><p>interactively specify the focal object in
 an image by clicking around its outline. The xy-coordinates of the resulting
 closed polygon are saved as an attribute, for use in generating a masking layer &amp;
 separating animals/plants from backgrounds in further analyses. This is particularly
 useful when backgrounds are complex, such as in natural settings.</p></dd>
+
+
 <dt>reclass</dt>
 <dd><p>interactively specify an area on a colour-classified image that is
 to be reclassified as the numeric value provided. e.g. when <code>reclass = 1</code>, the user
 will be asked to select a polygon on the image, within which all colour-category values will be
 changes to <code>1</code>.</p></dd>
+
+
 <dt>smooth</dt>
 <dd><p>should the polygon specified when <code>outline = TRUE</code> be smoothed
 using Chaikin's corner-cuting algorithm? Defaults to <code>FALSE</code>.</p></dd>
+
+
 <dt>iterations</dt>
 <dd><p>the number of smoothing iterations, when <code>smooth = TRUE</code>.
 Defaults to <code>1</code>.</p></dd>
+
+
 <dt>col</dt>
 <dd><p>the color of the marker points and/or line, when using interactive options.</p></dd>
+
+
 <dt>obj_dist, obj_width, eye_res</dt>
 <dd><p>blur the image to model the visual acuity of non-human animals
 as per Caves &amp; Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
@@ -136,14 +154,21 @@ obj_dist and obj_width, but they must match. Note that this is the more flexible
 that any rectangular image is suitable; it need not be square with dimensions a power of 2.
 If using this capability, please cite Caves &amp; Johnsen (2018), as per the included reference,
 and see note below.</p></dd>
+
+
 <dt>plotnew</dt>
 <dd><p>should plots be opened in a new window? Defaults to <code>FALSE</code>.</p></dd>
+
+
 <dt>...</dt>
 <dd><p>additional graphical parameters. Also see <code><a href="https://rdrr.io/r/graphics/par.html" class="external-link">par()</a></code>.</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>an image, or list of images, for use in further
+    
+
+<p>an image, or list of images, for use in further
 <code>pavo</code> functions.</p>
     </div>
     <div id="note">
@@ -207,7 +232,7 @@ Computer Graphics and Image Processing 3, 346-349.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>

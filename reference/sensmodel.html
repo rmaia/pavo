@@ -96,43 +96,62 @@ Vorobyev (2005).</p>
     <dl><dt>peaksens</dt>
 <dd><p>(required) a vector with peak sensitivities for the cones to
 model.</p></dd>
+
+
 <dt>range</dt>
 <dd><p>a vector of length 2 for the range over which to calculate the
 spectral sensitivities (defaults to 300nm to 700nm).</p></dd>
+
+
 <dt>lambdacut</dt>
 <dd><p>a vector of same length as peaksens that lists the cut-off
 wavelength value for oil droplets. Needs either <code>Bmid</code> or <code>oiltype</code> to also
 be entered. See Hart and Vorobyev (2005).</p></dd>
+
+
 <dt>Bmid</dt>
 <dd><p>a vector of same length as peaksens that lists the gradient of
 line tangent to the absorbance spectrum of the oil droplets. See Hart and
 Vorobyev (2005).</p></dd>
+
+
 <dt>oiltype</dt>
 <dd><p>a list of same length as peaksens that lists the oil droplet
 types (currently accepts only "T", C", "Y", "R", "P") when Bmid is not
 known. Calculates Bmid based on the regression equations found in Hart ad
 Vorobyev (2005).</p></dd>
+
+
 <dt>beta</dt>
 <dd><p>logical. If <code>TRUE</code> the sensitivities will include the beta peak
 See Govardovskii et al.(2000) (defaults to <code>TRUE</code>).</p></dd>
+
+
 <dt>om</dt>
 <dd><p>a vector of same length as <code>range1</code>-<code>range2</code> that contains ocular
 media transmission data. If included, cone sensitivity will be corrected
 for ocular media transmission. Currently accepts "bird" using values from
 Hart et al. (2005), or user-defined values.</p></dd>
+
+
 <dt>integrate</dt>
 <dd><p>logical. If <code>TRUE</code>, each curve is transformed to have a
 total area under the curve of 1 (best for visual models; defaults to
 <code>TRUE</code>). NOTE: integration is applied before any effects of ocular media
 are considered, for compatibility with visual model procedures.</p></dd>
+
+
 <dt>sensnames</dt>
 <dd><p>A vector equal in length to <code>peaksens</code>, specifying custom
 names for the resulting sensitivity curves (e.g. c('s', 'm', 'l') for
 short-, medium- and long-wavelength sensitive receptors.)</p></dd>
+
 </dl></div>
     <div id="value">
     <h2>Value</h2>
-    <p>A data frame of class <code>rspec</code> containing each cone model as a column.</p>
+    
+
+<p>A data frame of class <code>rspec</code> containing each cone model as a column.</p>
     </div>
     <div id="references">
     <h2>References</h2>
@@ -180,7 +199,7 @@ blackbird (<em>Turdus merula</em> L.). J Comp Physiol A 186:375-387,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.3.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
 </div>
 
       </footer></div>
