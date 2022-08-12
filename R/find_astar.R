@@ -11,9 +11,9 @@
 #' @keywords internal
 #'
 #' @references
-#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-#'  \eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
-#'  \doi{10.1111/2041-210X.13398}
+#' Gruson H. (2020). Estimation of colour volumes as concave hypervolumes using
+#' \eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, 11(8), 955-963
+#' \doi{10.1111/2041-210X.13398}
 find_astar <- function(coords) {
   tetras <- alphashape3d::ashape3d(coords,
     alpha = 0

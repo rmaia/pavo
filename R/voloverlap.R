@@ -88,9 +88,9 @@
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 #' @references
-#' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-#'  \eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
-#'  \doi{10.1111/2041-210X.13398}
+#' Gruson H. (2020). Estimation of colour volumes as concave hypervolumes using
+#' \eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, 11(8), 955-963
+#' \doi{10.1111/2041-210X.13398}
 
 voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "auto",
                        plot = FALSE, interactive = FALSE,

@@ -72,8 +72,8 @@ egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.
 Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
-Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
+Gruson H. (2020). Estimation of colour volumes as concave hypervolumes using
+\eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, 11(8), 955-963
 \doi{10.1111/2041-210X.13398}
 }
 \author{
