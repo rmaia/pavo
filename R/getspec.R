@@ -20,7 +20,7 @@
 #' @seealso [lightr::lr_get_spec()] for a more flexible version of this function
 #' (e.g. uninterpolated wavelengths), and [lightr::lr_get_metadata()] for the retrieval
 #' and import of spectral metadata.
-#' See <https://docs.ropensci.org/lightr> for the complete, and up-to-date, list
+#' See <https://docs.ropensci.org/lightr/> for the complete, and up-to-date, list
 #' of supported file formats.
 #'
 #' @examples
