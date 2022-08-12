@@ -1,9 +1,9 @@
-#' Compute the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value
+#' Compute the \eqn{\alpha^*}{alpha*} value
 #'
 #' @param coords coordinates of the points for which you want to compute the
 #'   alphashape
 #'
-#' @return The \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value
+#' @return The \eqn{\alpha^*}{alpha*} value
 #'  as defined in Gruson (2020).
 #'
 #' @seealso [alphashape3d::ashape3d()]
@@ -12,8 +12,8 @@
 #'
 #' @references
 #' Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-#'  \ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
-#'  Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
+#'  \eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
+#'  \doi{10.1111/2041-210X.13398}
 find_astar <- function(coords) {
   tetras <- alphashape3d::ashape3d(coords,
     alpha = 0

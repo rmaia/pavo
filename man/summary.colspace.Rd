@@ -38,8 +38,7 @@ the tetrahedron volume.
 \item \code{huedisp.v} the variance in hue disparity.
 \item \code{mean.ra} mean saturation.
 \item \code{max.ra} maximum saturation achieved by the group of points.
-\item \code{a.vol} colour volume computed with
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes.
+\item \code{a.vol} colour volume computed with \eqn{\alpha}{alpha}-shapes.
 }
 }
 \description{
@@ -70,8 +69,8 @@ Endler, J. A., & Mielke, P. (2005). Comparing entire colour patterns
 as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
-Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
+\eqn{\alpha}{alpha}}-shapes. Methods in Ecology and Evolution, early view
+\doi{10.1111/2041-210X.13398}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

@@ -25,8 +25,7 @@ and if "alpha", it is plotted using alphashapes.}
 
 \item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
 to compute the alphashape. \code{avalue = "auto"} (default) finds and use the
-\ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value as defined in
-Gruson (2020).}
+\eqn{\alpha^*}{alpha*} value as defined in Gruson (2020).}
 
 \item{alpha}{transparency of volume (if \code{fill = TRUE}).}
 
@@ -74,8 +73,8 @@ Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
-Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
+\eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
+\doi{10.1111/2041-210X.13398}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

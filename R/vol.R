@@ -9,8 +9,7 @@
 #'   and 'z' coordinates as columns (labeled as such).
 #' @param avalue if `type = "alpha"`, which alpha parameter value should be used
 #'   to compute the alphashape. `avalue = "auto"` (default) finds and use the
-#'   \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value as defined in
-#'    Gruson (2020).
+#'   \eqn{\alpha^*}{alpha*} value as defined in Gruson (2020).
 #' @param alpha transparency of volume (if `fill = TRUE`).
 #' @param grid logical. if `TRUE` (default), draws the polygon outline defined by the points.
 #' @param fill logical. if `TRUE` (default), fills the volume defined by the points.

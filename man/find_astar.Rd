@@ -2,7 +2,7 @@
 % Please edit documentation in R/find_astar.R
 \name{find_astar}
 \alias{find_astar}
-\title{Compute the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value}
+\title{Compute the \eqn{\alpha^*}{alpha*} value}
 \usage{
 find_astar(coords)
 }
@@ -11,16 +11,16 @@ find_astar(coords)
 alphashape}
 }
 \value{
-The \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value
+The \eqn{\alpha^*}{alpha*} value
 as defined in Gruson (2020).
 }
 \description{
-Compute the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value
+Compute the \eqn{\alpha^*}{alpha*} value
 }
 \references{
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
-Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
+\eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
+\doi{10.1111/2041-210X.13398}
 }
 \seealso{
 \code{\link[alphashape3d:ashape3d]{alphashape3d::ashape3d()}}

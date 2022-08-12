@@ -31,8 +31,7 @@ and if "alpha", it is plotted using alphashapes.}
 \item{avalue}{if \code{type = alpha}, the alpha parameter values for \code{colsp1} and
 \code{colsp2} respectively to compute the alphashapes. Can be a numeric of length
 one if the same value is used in both cases. \code{avalue = "auto"} (default)
-finds and use the \ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}}
-value as defined in Gruson (2020).}
+finds and use the \eqn{\alpha^*}{alpha*} value as defined in Gruson (2020).}
 
 \item{plot}{logical. Should the volumes and points be plotted? (defaults to \code{FALSE}).
 This only works for tetrahedral colourspaces at the moment.}
@@ -124,8 +123,8 @@ Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-\ifelse{html}{\out{&alpha;}}{\eqn{$\alpha$}{alpha}}-shapes. Methods in
-Ecology and Evolution, early view \doi{10.1111/2041-210X.13398}
+\eqn{\alpha}{alpha}-shapes. Methods in Ecology and Evolution, early view
+\doi{10.1111/2041-210X.13398}
 }
 \author{
 Rafael Maia \email{rm72@zips.uakron.edu}

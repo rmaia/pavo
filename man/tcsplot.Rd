@@ -78,8 +78,7 @@ for lines from the point to the base of the tetrahedron.}
 
 \item{avalue}{if \code{type = "alpha"}, which alpha parameter value should be used
 to compute the alphashape. \code{avalue = "auto"} (default) finds and use the
-\ifelse{html}{\out{&alpha;*}}{\eqn{$\alpha^*$}{alpha*}} value as defined in
-Gruson (2020).}
+\eqn{\alpha^*}{alpha*} value as defined in Gruson (2020).}
 
 \item{grid.alpha}{transparency of the volume polygon grid lines}
 
