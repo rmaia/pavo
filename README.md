@@ -4,7 +4,7 @@
 [![cran version](https://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
 [![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
 [![R build status](https://github.com/rmaia/pavo/workflows/R-CMD-check/badge.svg)](https://github.com/rmaia/pavo/actions)
-[![cran checks](https://cranchecks.info/badges/worst/pavo)](https://cranchecks.info/pkgs/pavo)
+[![cran checks](https://badges.cranchecks.info/worst/pavo.svg)](https://cran.r-project.org/web/checks/check_results_pavo.html)
 <!-- badges: end -->
 
 ## An `R` package for the spectral and spatial analysis of color patterns
