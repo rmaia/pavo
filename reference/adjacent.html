@@ -78,16 +78,16 @@ contrast (Endler &amp; Mielke 2005).</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">adjacent</span><span class="op">(</span>
-  <span class="va">classimg</span>,
-  xpts <span class="op">=</span> <span class="cn">NULL</span>,
-  xscale <span class="op">=</span> <span class="cn">NULL</span>,
-  bkgID <span class="op">=</span> <span class="cn">NULL</span>,
-  polygon <span class="op">=</span> <span class="cn">NULL</span>,
-  exclude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"background"</span>, <span class="st">"object"</span><span class="op">)</span>,
-  coldists <span class="op">=</span> <span class="cn">NULL</span>,
-  hsl <span class="op">=</span> <span class="cn">NULL</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">adjacent</span><span class="op">(</span></span>
+<span>  <span class="va">classimg</span>,</span>
+<span>  xpts <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  xscale <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  bkgID <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  polygon <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  exclude <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"background"</span>, <span class="st">"object"</span><span class="op">)</span>,</span>
+<span>  coldists <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  hsl <span class="op">=</span> <span class="cn">NULL</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -238,55 +238,55 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># Set a seed, for reproducibility</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">153</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run the adjacency analysis on a single image of a butterfly</span></span>
-<span class="r-in"><span class="va">papilio</span> <span class="op">&lt;-</span> <span class="fu"><a href="getimg.html">getimg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata/images/butterflies/papilio.png"</span>, package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">papilio_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="classify.html">classify</a></span><span class="op">(</span><span class="va">papilio</span>, kcols <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Set a seed, for reproducibility</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/Random.html" class="external-link">set.seed</a></span><span class="op">(</span><span class="fl">153</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run the adjacency analysis on a single image of a butterfly</span></span></span>
+<span class="r-in"><span><span class="va">papilio</span> <span class="op">&lt;-</span> <span class="fu"><a href="getimg.html">getimg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata/images/butterflies/papilio.png"</span>, package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">papilio_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="classify.html">classify</a></span><span class="op">(</span><span class="va">papilio</span>, kcols <span class="op">=</span> <span class="fl">4</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Image classification in progress...</span>
-<span class="r-in"><span class="va">papilio_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">papilio_class</span>, xscale <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Expand on the above, by including (fake) color distances and hsl values</span></span>
-<span class="r-in"><span class="co"># of colour elements in the image</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate fake color distances</span></span>
-<span class="r-in"><span class="va">distances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  c1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">  c2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>,</span>
-<span class="r-in">  dS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.3</span>, <span class="fl">3.5</span>, <span class="fl">5.7</span>, <span class="fl">2.9</span>, <span class="fl">6.1</span>, <span class="fl">3.2</span><span class="op">)</span>,</span>
-<span class="r-in">  dL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.5</span>, <span class="fl">6.6</span>, <span class="fl">3.3</span>, <span class="fl">2.2</span>, <span class="fl">4.4</span>, <span class="fl">6.6</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate some fake hue, saturation, luminance values</span></span>
-<span class="r-in"><span class="va">hsl_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span>
-<span class="r-in">  patch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>,</span>
-<span class="r-in">  hue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">1.0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span>
-<span class="r-in">  lum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">3</span><span class="op">)</span>,</span>
-<span class="r-in">  sat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.5</span>, <span class="fl">1.1</span>, <span class="fl">6.3</span>, <span class="fl">1.3</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run the full analysis, including the white background's ID</span></span>
-<span class="r-in"><span class="va">papilio_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">papilio_class</span>,</span>
-<span class="r-in">  xscale <span class="op">=</span> <span class="fl">100</span>, bkgID <span class="op">=</span> <span class="fl">1</span>,</span>
-<span class="r-in">  coldists <span class="op">=</span> <span class="va">distances</span>, hsl <span class="op">=</span> <span class="va">hsl_vals</span></span>
-<span class="r-in"><span class="op">)</span></span>
+<span class="r-in"><span><span class="va">papilio_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">papilio_class</span>, xscale <span class="op">=</span> <span class="fl">100</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Expand on the above, by including (fake) color distances and hsl values</span></span></span>
+<span class="r-in"><span><span class="co"># of colour elements in the image</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate fake color distances</span></span></span>
+<span class="r-in"><span><span class="va">distances</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  c1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  c2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">2</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">3</span>, <span class="fl">4</span>, <span class="fl">4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dS <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.3</span>, <span class="fl">3.5</span>, <span class="fl">5.7</span>, <span class="fl">2.9</span>, <span class="fl">6.1</span>, <span class="fl">3.2</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  dL <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">5.5</span>, <span class="fl">6.6</span>, <span class="fl">3.3</span>, <span class="fl">2.2</span>, <span class="fl">4.4</span>, <span class="fl">6.6</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate some fake hue, saturation, luminance values</span></span></span>
+<span class="r-in"><span><span class="va">hsl_vals</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>  patch <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq_len</a></span><span class="op">(</span><span class="fl">4</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  hue <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1.5</span>, <span class="fl">2.2</span>, <span class="fl">1.0</span>, <span class="fl">0.5</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  lum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">5</span>, <span class="fl">7</span>, <span class="fl">3</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  sat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">3.5</span>, <span class="fl">1.1</span>, <span class="fl">6.3</span>, <span class="fl">1.3</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run the full analysis, including the white background's ID</span></span></span>
+<span class="r-in"><span><span class="va">papilio_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">papilio_class</span>,</span></span>
+<span class="r-in"><span>  xscale <span class="op">=</span> <span class="fl">100</span>, bkgID <span class="op">=</span> <span class="fl">1</span>,</span></span>
+<span class="r-in"><span>  coldists <span class="op">=</span> <span class="va">distances</span>, hsl <span class="op">=</span> <span class="va">hsl_vals</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using single set of coldists for all images.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Using single set of hsl values for all images.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run an adjacency analysis on multiple images.</span></span>
-<span class="r-in"><span class="co"># First load some images of coral snake colour patterns</span></span>
-<span class="r-in"><span class="va">snakes</span> <span class="op">&lt;-</span> <span class="fu"><a href="getimg.html">getimg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata/images/snakes"</span>, package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run an adjacency analysis on multiple images.</span></span></span>
+<span class="r-in"><span><span class="co"># First load some images of coral snake colour patterns</span></span></span>
+<span class="r-in"><span><span class="va">snakes</span> <span class="op">&lt;-</span> <span class="fu"><a href="getimg.html">getimg</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/system.file.html" class="external-link">system.file</a></span><span class="op">(</span><span class="st">"testdata/images/snakes"</span>, package <span class="op">=</span> <span class="st">"pavo"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 2 files found; importing images.</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Automatically colour-classify the coral snake patterns</span></span>
-<span class="r-in"><span class="va">snakes_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="classify.html">classify</a></span><span class="op">(</span><span class="va">snakes</span>, kcols <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Automatically colour-classify the coral snake patterns</span></span></span>
+<span class="r-in"><span><span class="va">snakes_class</span> <span class="op">&lt;-</span> <span class="fu"><a href="classify.html">classify</a></span><span class="op">(</span><span class="va">snakes</span>, kcols <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Image classification in progress...</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run the adjacency analysis, with varying real-world scales for each image</span></span>
-<span class="r-in"><span class="va">snakes_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">snakes_class</span>, xpts <span class="op">=</span> <span class="fl">120</span>, xscale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">55</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="co"># }</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run the adjacency analysis, with varying real-world scales for each image</span></span></span>
+<span class="r-in"><span><span class="va">snakes_adj</span> <span class="op">&lt;-</span> <span class="fu">adjacent</span><span class="op">(</span><span class="va">snakes_class</span>, xpts <span class="op">=</span> <span class="fl">120</span>, xscale <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">50</span>, <span class="fl">55</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -301,7 +301,7 @@ patterns  as birds see them. Biological Journal Of The Linnean Society,
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

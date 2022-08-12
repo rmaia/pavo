@@ -78,15 +78,15 @@ spectra using <code><a href="procspec.html">procspec()</a></code> is also recomm
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">peakshape</span><span class="op">(</span>
-  <span class="va">rspecdata</span>,
-  select <span class="op">=</span> <span class="cn">NULL</span>,
-  lim <span class="op">=</span> <span class="cn">NULL</span>,
-  plot <span class="op">=</span> <span class="cn">TRUE</span>,
-  ask <span class="op">=</span> <span class="cn">FALSE</span>,
-  absolute.min <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">peakshape</span><span class="op">(</span></span>
+<span>  <span class="va">rspecdata</span>,</span>
+<span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  plot <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  ask <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  absolute.min <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -148,19 +148,19 @@ Function will return a warning if not.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">teal</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">teal</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">3</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="peakshape-1.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           id      B3  H1 FWHM HWHM.l HWHM.r incl.min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Acrecca-02 56.4446 517   71     35     36      Yes</span>
-<span class="r-in"><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="peakshape-2.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           id     B3  H1 FWHM HWHM.l HWHM.r incl.min</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 Acrecca-09 7.2747 307   NA     NA     53      Yes</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Use wavelength bounds to narrow in on peak of interest</span></span>
-<span class="r-in"><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">10</span>, lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Use wavelength bounds to narrow in on peak of interest</span></span></span>
+<span class="r-in"><span><span class="fu">peakshape</span><span class="op">(</span><span class="va">teal</span>, select <span class="op">=</span> <span class="fl">10</span>, lim <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">400</span>, <span class="fl">550</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>Consider fixing “lim” in spectra with “incl.min” marked “No” to incorporate all minima in spectral curves</span>
 <span class="r-plt img"><img src="peakshape-3.png" alt="" width="700" height="433"></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>           id    B3  H1 FWHM HWHM.l HWHM.r incl.min</span>
@@ -179,7 +179,7 @@ Function will return a warning if not.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

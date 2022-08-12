@@ -74,14 +74,14 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">jndrot</span><span class="op">(</span>
-  <span class="va">jnd2xyzres</span>,
-  center <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"achro"</span><span class="op">)</span>,
-  ref1 <span class="op">=</span> <span class="st">"l"</span>,
-  ref2 <span class="op">=</span> <span class="st">"u"</span>,
-  axis1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,
-  axis2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">jndrot</span><span class="op">(</span></span>
+<span>  <span class="va">jnd2xyzres</span>,</span>
+<span>  center <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"achro"</span><span class="op">)</span>,</span>
+<span>  ref1 <span class="op">=</span> <span class="st">"l"</span>,</span>
+<span>  ref2 <span class="op">=</span> <span class="st">"u"</span>,</span>
+<span>  axis1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>  axis2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -129,20 +129,20 @@ Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load floral reflectance spectra</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Estimate quantum catches visual phenotype of a Blue Tit</span></span>
-<span class="r-in"><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>, visual <span class="op">=</span> <span class="st">'bluetit'</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Estimate noise-weighted colour distances between all flowers </span></span>
-<span class="r-in"><span class="va">cd.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="coldist.html">coldist</a></span><span class="op">(</span><span class="va">vis.flowers</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load floral reflectance spectra</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Estimate quantum catches visual phenotype of a Blue Tit</span></span></span>
+<span class="r-in"><span><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>, visual <span class="op">=</span> <span class="st">'bluetit'</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Estimate noise-weighted colour distances between all flowers </span></span></span>
+<span class="r-in"><span><span class="va">cd.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="coldist.html">coldist</a></span><span class="op">(</span><span class="va">vis.flowers</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Quantum catch are relative, distances may not be meaningful</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating noise-weighted Euclidean distances</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Convert points to Cartesian coordinates in which Euclidean distances are </span></span>
-<span class="r-in"><span class="co"># noise-weighted, before rotating them about the data centroid</span></span>
-<span class="r-in"><span class="fu">jndrot</span><span class="op">(</span><span class="fu"><a href="jnd2xyz.html">jnd2xyz</a></span><span class="op">(</span><span class="va">cd.flowers</span><span class="op">)</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert points to Cartesian coordinates in which Euclidean distances are </span></span></span>
+<span class="r-in"><span><span class="co"># noise-weighted, before rotating them about the data centroid</span></span></span>
+<span class="r-in"><span><span class="fu">jndrot</span><span class="op">(</span><span class="fu"><a href="jnd2xyz.html">jnd2xyz</a></span><span class="op">(</span><span class="va">cd.flowers</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>                                    x            y           z</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Goodenia_heterophylla      0.3043555 -5.516498701   6.8629524</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Goodenia_geniculata       -1.1026561 -2.369014577  -6.5456726</span>
@@ -180,7 +180,7 @@ Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hibbertia_empetrifolia    -2.1940185  8.619401043   8.8247528</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hibbertia_procumbens      -0.5525492 -3.263070039  -0.3154626</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Hibbertia_linearis        -0.9766118 -1.926175986  -7.4312733</span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -195,7 +195,7 @@ Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

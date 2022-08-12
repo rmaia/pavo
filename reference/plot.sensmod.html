@@ -74,17 +74,17 @@
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="co"># S3 method for sensmod</span>
-<span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span>
-  <span class="va">x</span>,
-  select <span class="op">=</span> <span class="cn">NULL</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overlay"</span>, <span class="st">"stack"</span>, <span class="st">"heatmap"</span><span class="op">)</span>,
-  varying <span class="op">=</span> <span class="cn">NULL</span>,
-  n <span class="op">=</span> <span class="fl">100</span>,
-  labels.stack <span class="op">=</span> <span class="cn">NULL</span>,
-  wl.guide <span class="op">=</span> <span class="cn">TRUE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for sensmod</span></span>
+<span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span></span>
+<span>  <span class="va">x</span>,</span>
+<span>  select <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overlay"</span>, <span class="st">"stack"</span>, <span class="st">"heatmap"</span><span class="op">)</span>,</span>
+<span>  varying <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  labels.stack <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  wl.guide <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -141,19 +141,19 @@ added to the x-axis.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Blue tit visual system based on Hart et al (2000)</span></span>
-<span class="r-in"><span class="va">bluesens</span> <span class="op">&lt;-</span> <span class="fu"><a href="sensmodel.html">sensmodel</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">371</span>, <span class="fl">448</span>, <span class="fl">502</span>, <span class="fl">563</span><span class="op">)</span>,</span>
-<span class="r-in">  beta <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">  lambdacut <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">330</span>, <span class="fl">413</span>, <span class="fl">507</span>, <span class="fl">572</span><span class="op">)</span>,</span>
-<span class="r-in">  oiltype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"C"</span>, <span class="st">"Y"</span>, <span class="st">"R"</span><span class="op">)</span>, om <span class="op">=</span> <span class="cn">TRUE</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bluesens</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Blue tit visual system based on Hart et al (2000)</span></span></span>
+<span class="r-in"><span><span class="va">bluesens</span> <span class="op">&lt;-</span> <span class="fu"><a href="sensmodel.html">sensmodel</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">371</span>, <span class="fl">448</span>, <span class="fl">502</span>, <span class="fl">563</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  beta <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  lambdacut <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">330</span>, <span class="fl">413</span>, <span class="fl">507</span>, <span class="fl">572</span><span class="op">)</span>,</span></span>
+<span class="r-in"><span>  oiltype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"T"</span>, <span class="st">"C"</span>, <span class="st">"Y"</span>, <span class="st">"R"</span><span class="op">)</span>, om <span class="op">=</span> <span class="cn">TRUE</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bluesens</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.sensmod-1.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alternatively, you can specify your own ylab</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bluesens</span>, ylab <span class="op">=</span> <span class="st">"absor."</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alternatively, you can specify your own ylab</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">bluesens</span>, ylab <span class="op">=</span> <span class="st">"absor."</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plot.sensmod-2.png" alt="" width="700" height="433"></span>
-<span class="r-in"></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -168,7 +168,7 @@ added to the x-axis.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

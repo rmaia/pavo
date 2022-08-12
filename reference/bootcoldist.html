@@ -76,7 +76,7 @@ for the mean colour distance between two or more samples of colours</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vismodeldata</span>, <span class="va">by</span>, boot.n <span class="op">=</span> <span class="fl">1000</span>, alpha <span class="op">=</span> <span class="fl">0.95</span>, raw <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vismodeldata</span>, <span class="va">by</span>, boot.n <span class="op">=</span> <span class="fl">1000</span>, alpha <span class="op">=</span> <span class="fl">0.95</span>, raw <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -135,47 +135,47 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># \donttest{</span></span>
-<span class="r-in"><span class="co"># Run the receptor-noise limited model, using the visual phenotype</span></span>
-<span class="r-in"><span class="co"># of the blue tit</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, achromatic <span class="op">=</span> <span class="st">"bt.dc"</span>, relative <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ind.."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">vm</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>, by <span class="op">=</span> <span class="va">gr</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
+<span class="r-in"><span><span class="co"># Run the receptor-noise limited model, using the visual phenotype</span></span></span>
+<span class="r-in"><span><span class="co"># of the blue tit</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, achromatic <span class="op">=</span> <span class="st">"bt.dc"</span>, relative <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ind.."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">vm</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>, by <span class="op">=</span> <span class="va">gr</span>, n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      dS.mean    dS.lwr   dS.upr   dL.mean    dL.lwr   dL.upr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.626548 3.0446919 6.861227 7.4677171 5.6748829 9.282542</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-T 1.741764 0.2188554 5.014370 0.2340913 0.0193291 1.616231</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> C-T 6.110519 4.1550209 8.637632 7.2336258 5.4127958 9.045694</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Run the same again, though as a simple colourspace model</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, achromatic <span class="op">=</span> <span class="st">"bt.dc"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">space</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vm</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ind.."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">space</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">space</span>, by <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Run the same again, though as a simple colourspace model</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, achromatic <span class="op">=</span> <span class="st">"bt.dc"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">space</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vm</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">gr</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">gsub</a></span><span class="op">(</span><span class="st">"ind.."</span>, <span class="st">""</span>, <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">space</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">space</span>, by <span class="op">=</span> <span class="va">gr</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Quantum catch are relative, distances may not be meaningful</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating unweighted Euclidean distances and Weber luminance contrast</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        dS.mean      dS.lwr     dS.upr    dL.mean      dL.lwr    dL.upr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-C 0.08873222 0.057492091 0.12509677 1.11017675 0.770862609 1.5208958</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.02510854 0.005678686 0.07323532 0.02368528 0.002474378 0.1646752</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> C-T 0.11208967 0.080721573 0.14476401 1.06135304 0.722669275 1.4676965</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Estimate bootstrapped colour-distances for a more 'specialised' model,</span></span>
-<span class="r-in"><span class="co"># like the colour hexagon</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>,</span>
-<span class="r-in">  visual <span class="op">=</span> <span class="st">"apis"</span>, qcatch <span class="op">=</span> <span class="st">"Ei"</span>, relative <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span class="r-in">  vonkries <span class="op">=</span> <span class="cn">TRUE</span>, achromatic <span class="op">=</span> <span class="st">"l"</span>, bkg <span class="op">=</span> <span class="st">"green"</span></span>
-<span class="r-in"><span class="op">)</span></span>
-<span class="r-in"><span class="va">flowers.hex</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"hexagon"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">pop_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">flowers.hex</span>, by <span class="op">=</span> <span class="va">pop_group</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Estimate bootstrapped colour-distances for a more 'specialised' model,</span></span></span>
+<span class="r-in"><span><span class="co"># like the colour hexagon</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>,</span></span>
+<span class="r-in"><span>  visual <span class="op">=</span> <span class="st">"apis"</span>, qcatch <span class="op">=</span> <span class="st">"Ei"</span>, relative <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>  vonkries <span class="op">=</span> <span class="cn">TRUE</span>, achromatic <span class="op">=</span> <span class="st">"l"</span>, bkg <span class="op">=</span> <span class="st">"green"</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">flowers.hex</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"hexagon"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">pop_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">flowers.hex</span>, by <span class="op">=</span> <span class="va">pop_group</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating unweighted Euclidean distances and simple luminance contrast</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> pop_1-pop_2 0.0736203 0.02299502 0.2012074 0.9016919 0.7288422 1.057964</span>
-<span class="r-in"><span class="co"># }</span></span>
-<span class="r-in"></span>
+<span class="r-in"><span><span class="co"># }</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -190,7 +190,7 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

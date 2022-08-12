@@ -76,12 +76,12 @@ in either the CIEXYZ (1931), CIELAB (1971), or CIELCh (1971) colourspaces.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">cie</span><span class="op">(</span>
-  <span class="va">vismodeldata</span>,
-  space <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"XYZ"</span>, <span class="st">"LAB"</span>, <span class="st">"LCh"</span><span class="op">)</span>,
-  visual <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cie2"</span>, <span class="st">"cie10"</span><span class="op">)</span>,
-  illum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"D65"</span>, <span class="st">"bluesky"</span>, <span class="st">"forestshade"</span><span class="op">)</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">cie</span><span class="op">(</span></span>
+<span>  <span class="va">vismodeldata</span>,</span>
+<span>  space <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"XYZ"</span>, <span class="st">"LAB"</span>, <span class="st">"LCh"</span><span class="op">)</span>,</span>
+<span>  visual <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cie2"</span>, <span class="st">"cie10"</span><span class="op">)</span>,</span>
+<span>  illum <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"D65"</span>, <span class="st">"bluesky"</span>, <span class="st">"forestshade"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -155,21 +155,21 @@ Internationale de l Eclairage.</p>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span class="co"># Load floral reflectance spectra</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Estimate quantum catches, using the cie10-degree viewer matching function</span></span>
-<span class="r-in"><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>, visual <span class="op">=</span> <span class="st">"cie10"</span>, illum <span class="op">=</span> <span class="st">"D65"</span>, vonkries <span class="op">=</span> <span class="cn">TRUE</span>, relative <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Model floral spectra in the CIEXYZ space</span></span>
-<span class="r-in"><span class="va">flowers.ciexyz</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"ciexyz"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Model floral spectra in the CIELab space</span></span>
-<span class="r-in"><span class="va">flowers.cielab</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"cielab"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Model floral spectra in the CIELch space</span></span>
-<span class="r-in"><span class="va">flowers.cielch</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"cielch"</span><span class="op">)</span></span>
-<span class="r-in"></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load floral reflectance spectra</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">flowers</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Estimate quantum catches, using the cie10-degree viewer matching function</span></span></span>
+<span class="r-in"><span><span class="va">vis.flowers</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">flowers</span>, visual <span class="op">=</span> <span class="st">"cie10"</span>, illum <span class="op">=</span> <span class="st">"D65"</span>, vonkries <span class="op">=</span> <span class="cn">TRUE</span>, relative <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Model floral spectra in the CIEXYZ space</span></span></span>
+<span class="r-in"><span><span class="va">flowers.ciexyz</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"ciexyz"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Model floral spectra in the CIELab space</span></span></span>
+<span class="r-in"><span><span class="va">flowers.cielab</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"cielab"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Model floral spectra in the CIELch space</span></span></span>
+<span class="r-in"><span><span class="va">flowers.cielch</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.flowers</span>, space <span class="op">=</span> <span class="st">"cielch"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
@@ -184,7 +184,7 @@ Internationale de l Eclairage.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

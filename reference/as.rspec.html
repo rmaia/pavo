@@ -76,15 +76,15 @@ object</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">as.rspec</span><span class="op">(</span>
-  <span class="va">object</span>,
-  whichwl <span class="op">=</span> <span class="cn">NULL</span>,
-  interp <span class="op">=</span> <span class="cn">TRUE</span>,
-  lim <span class="op">=</span> <span class="cn">NULL</span>,
-  exceed.range <span class="op">=</span> <span class="cn">TRUE</span>
-<span class="op">)</span>
-
-<span class="fu">is.rspec</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">as.rspec</span><span class="op">(</span></span>
+<span>  <span class="va">object</span>,</span>
+<span>  whichwl <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  interp <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  lim <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  exceed.range <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">is.rspec</span><span class="op">(</span><span class="va">object</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -139,10 +139,10 @@ range of input data. Defaults to <code>TRUE</code>.</p></dd>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># Generate some fake reflectance data</span></span>
-<span class="r-in"><span class="va">fakedat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>wl <span class="op">=</span> <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, refl1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">401</span><span class="op">)</span>, refl2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">401</span><span class="op">)</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Generate some fake reflectance data</span></span></span>
+<span class="r-in"><span><span class="va">fakedat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/data.frame.html" class="external-link">data.frame</a></span><span class="op">(</span>wl <span class="op">=</span> <span class="fl">300</span><span class="op">:</span><span class="fl">700</span>, refl1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">401</span><span class="op">)</span>, refl2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">401</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    wl      refl1      refl2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 300  1.1947611 -0.1074917</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 301 -1.7410191 -0.5953402</span>
@@ -150,20 +150,20 @@ range of input data. Defaults to <code>TRUE</code>.</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 4 303 -0.3191096 -0.6647274</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 5 304 -1.3198173 -1.2601080</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 6 305 -2.2864853 -1.4044018</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Determine if is rspec object</span></span>
-<span class="r-in"><span class="fu">is.rspec</span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Determine if is rspec object</span></span></span>
+<span class="r-in"><span><span class="fu">is.rspec</span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Convert to rspec object</span></span>
-<span class="r-in"><span class="va">fakedat2</span> <span class="op">&lt;-</span> <span class="fu">as.rspec</span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convert to rspec object</span></span></span>
+<span class="r-in"><span><span class="va">fakedat2</span> <span class="op">&lt;-</span> <span class="fu">as.rspec</span><span class="op">(</span><span class="va">fakedat</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> wavelengths found in column 1</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> The spectral data contain 428 negative value(s),</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>  which may produce unexpected results if used in models.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Consider using procspec() to correct them.</span>
-<span class="r-in"><span class="fu">is.rspec</span><span class="op">(</span><span class="va">fakedat2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu">is.rspec</span><span class="op">(</span><span class="va">fakedat2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fakedat2</span><span class="op">)</span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">fakedat2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    wl      refl1      refl2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 1 300  1.1947611 -0.1074917</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> 2 301 -1.7410191 -0.5953402</span>
@@ -185,7 +185,7 @@ range of input data. Defaults to <code>TRUE</code>.</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>

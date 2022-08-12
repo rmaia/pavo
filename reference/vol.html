@@ -76,16 +76,16 @@ non-interactive tetrahedral plot.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="fu">vol</span><span class="op">(</span>
-  <span class="va">tcsdata</span>,
-  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"convex"</span>, <span class="st">"alpha"</span><span class="op">)</span>,
-  avalue <span class="op">=</span> <span class="st">"auto"</span>,
-  alpha <span class="op">=</span> <span class="fl">0.2</span>,
-  grid <span class="op">=</span> <span class="cn">TRUE</span>,
-  fill <span class="op">=</span> <span class="cn">TRUE</span>,
-  new <span class="op">=</span> <span class="cn">FALSE</span>,
-  <span class="va">...</span>
-<span class="op">)</span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">vol</span><span class="op">(</span></span>
+<span>  <span class="va">tcsdata</span>,</span>
+<span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"convex"</span>, <span class="st">"alpha"</span><span class="op">)</span>,</span>
+<span>  avalue <span class="op">=</span> <span class="st">"auto"</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.2</span>,</span>
+<span>  grid <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  fill <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  new <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -104,8 +104,7 @@ and if "alpha", it is plotted using alphashapes.</p></dd>
 <dt>avalue</dt>
 <dd><p>if <code>type = "alpha"</code>, which alpha parameter value should be used
 to compute the alphashape. <code>avalue = "auto"</code> (default) finds and use the
-α* value as defined in
-Gruson (2020).</p></dd>
+\(\alpha^*\) value as defined in Gruson (2020).</p></dd>
 
 
 <dt>alpha</dt>
@@ -144,9 +143,9 @@ American Naturalist, 171(6), 755-776.</p>
 egg color mimicry in the common cuckoo. Evolution, 65(7), 2004-2013.</p>
 <p>Maia, R., White, T. E., (2018) Comparing colors using visual models.
 Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class="external-link">doi:10.1093/beheco/ary017</a></p>
-<p>Gruson H. 2020. Estimation of colour volumes as concave hypervolumes using
-α-shapes. Methods in
-Ecology and Evolution, early view <a href="https://doi.org/10.1111/2041-210X.13398" class="external-link">doi:10.1111/2041-210X.13398</a></p>
+<p>Gruson H. (2020). Estimation of colour volumes as concave hypervolumes using
+\(\alpha\)-shapes. Methods in Ecology and Evolution, 11(8), 955-963
+<a href="https://doi.org/10.1111/2041-210X.13398" class="external-link">doi:10.1111/2041-210X.13398</a></p>
     </div>
     <div id="author">
     <h2>Author</h2>
@@ -156,20 +155,20 @@ Ecology and Evolution, early view <a href="https://doi.org/10.1111/2041-210X.133
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"></span>
-<span class="r-in"><span class="co"># For plotting</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">vis.sicalis</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, visual <span class="op">=</span> <span class="st">"avg.uv"</span><span class="op">)</span></span>
-<span class="r-in"><span class="va">tcs.sicalis</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.sicalis</span>, space <span class="op">=</span> <span class="st">"tcs"</span><span class="op">)</span></span>
-<span class="r-in"><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tcs.sicalis</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Convex hull</span></span>
-<span class="r-in"><span class="fu">vol</span><span class="op">(</span><span class="va">tcs.sicalis</span>, type <span class="op">=</span> <span class="st">"convex"</span><span class="op">)</span></span>
-<span class="r-in"></span>
-<span class="r-in"><span class="co"># Alpha-shape</span></span>
-<span class="r-in"><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"alphashape3d"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
-<span class="r-in">  <span class="fu">vol</span><span class="op">(</span><span class="va">tcs.sicalis</span>, type <span class="op">=</span> <span class="st">"alpha"</span>, avalue <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span>
-<span class="r-in"><span class="op">}</span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># For plotting</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">vis.sicalis</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, visual <span class="op">=</span> <span class="st">"avg.uv"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="va">tcs.sicalis</span> <span class="op">&lt;-</span> <span class="fu"><a href="colspace.html">colspace</a></span><span class="op">(</span><span class="va">vis.sicalis</span>, space <span class="op">=</span> <span class="st">"tcs"</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/graphics/plot.default.html" class="external-link">plot</a></span><span class="op">(</span><span class="va">tcs.sicalis</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Convex hull</span></span></span>
+<span class="r-in"><span><span class="fu">vol</span><span class="op">(</span><span class="va">tcs.sicalis</span>, type <span class="op">=</span> <span class="st">"convex"</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Alpha-shape</span></span></span>
+<span class="r-in"><span><span class="kw">if</span> <span class="op">(</span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">require</a></span><span class="op">(</span><span class="st">"alphashape3d"</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span></span>
+<span class="r-in"><span>  <span class="fu">vol</span><span class="op">(</span><span class="va">tcs.sicalis</span>, type <span class="op">=</span> <span class="st">"alpha"</span>, avalue <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="op">}</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: alphashape3d</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: geometry</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Loading required package: rgl</span>
@@ -188,7 +187,7 @@ Ecology and Evolution, early view <a href="https://doi.org/10.1111/2041-210X.133
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.4.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.9000.</p>
 </div>
 
       </footer></div>
