@@ -152,7 +152,7 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
   }
 
   # CIELAB or CIELch
-  if (attr(ciedata, "clrsp") == "CIELAB" | attr(ciedata, "clrsp") == "CIELCh") {
+  if (attr(ciedata, "clrsp") %in% c("CIELAB", "CIELCh")) {
 
     # Set defaults
     arg <- list(...)

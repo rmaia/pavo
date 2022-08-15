@@ -67,21 +67,21 @@
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
                       oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = NULL) {
   if (!is.null(lambdacut)) {
-    if (is.null(Bmid) & is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
+    if (is.null(Bmid) && is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
     if (length(lambdacut) != length(peaksens)) stop("lambdacut must be same length as peaksens", call. = FALSE)
   }
 
-  if (!is.null(Bmid) & is.null(lambdacut)) { # Change once oil type corrected
+  if (!is.null(Bmid) && is.null(lambdacut)) { # Change once oil type corrected
     stop("lambdacut has to be provided together with Bmid")
   }
 
-  if (!is.null(lambdacut) & !is.null(Bmid) & !is.null(oiltype)) {
+  if (!is.null(lambdacut) && !is.null(Bmid) && !is.null(oiltype)) {
     stop("only 2 of lambdacut, Bmid, and oiltype can be provided")
   }
-  if (!is.null(lambdacut) & !is.null(oiltype)) {
+  if (!is.null(lambdacut) && !is.null(oiltype)) {
     if (length(lambdacut) != length(oiltype)) stop("lambdacut and oiltype must be of same length")
   }
-  if (!is.null(lambdacut) & !is.null(Bmid)) {
+  if (!is.null(lambdacut) && !is.null(Bmid)) {
     if (length(lambdacut) != length(Bmid)) stop("lambdacut and Bmid must be of same length")
   }
 
@@ -102,8 +102,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
     peak <- peak / max(peak)
 
-    if (!is.null(lambdacut) & !is.null(Bmid)) {
-      if (is.na(lambdacut[i]) & !is.na(Bmid[i])) {
+    if (!is.null(lambdacut) && !is.null(Bmid)) {
+      if (is.na(lambdacut[i]) && !is.na(Bmid[i])) {
         warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
         T.oil <- 1
       } else {
@@ -112,7 +112,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
       }
     }
 
-    if (!is.null(lambdacut) & !is.null(oiltype)) {
+    if (!is.null(lambdacut) && !is.null(oiltype)) {
       if (oiltype[i] == "T") {
         T.oil <- 1
       } else {

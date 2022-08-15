@@ -199,7 +199,7 @@ vismodel <- function(rspecdata,
     match.arg(bkg),
     error = function(e) "user-defined"
   )
-  if (is.null(bkg) & vonkries) {
+  if (is.null(bkg) && vonkries) {
     stop(
       "Chosen background is NULL. ",
       "This argument is required with `vonkries = TRUE`."
@@ -271,7 +271,7 @@ vismodel <- function(rspecdata,
   conenumb <- ifelse(identical(visual2, "segment"), "seg", dim(S)[2])
 
   # Check if wavelength range matches
-  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &
+  if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE)) &&
     visual2 == "user-defined") {
     stop(
       "wavelength range in spectra and visual system data do not match - ",
@@ -312,7 +312,7 @@ vismodel <- function(rspecdata,
     trans <- rep(1, dim(rspecdata)[1])
   }
 
-  if (tr2 != "ideal" & visual2 == "user-defined") {
+  if (tr2 != "ideal" && visual2 == "user-defined") {
     if (inherits(fullS, "sensmod")) {
       if (attr(fullS, "om")) {
         warning(
@@ -335,7 +335,7 @@ vismodel <- function(rspecdata,
         dQuote(dfwhichused), ") has been used (remaining columns ignored)",
         call. = FALSE
       )
-    } else if (is.data.frame(df) | is.matrix(df)) {
+    } else if (is.data.frame(df) || is.matrix(df)) {
       dfwhichused <- names(df)[1]
       df <- df[, 1]
       warning(dfname, " is a matrix or data frame; first column (",

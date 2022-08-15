@@ -196,7 +196,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   # Chromas
 
   # Red
-  if (lambdamin <= 605 & lambdamax >= 700) {
+  if (lambdamin <= 605 && lambdamax >= 700) {
     Redchromamat <- object[wl >= 605 & wl <= 700, , drop = FALSE] # red 605-700nm inclusive
     Redchroma <- colSums(Redchromamat) / B1 # S1 red
     output.mat[, 9] <- Redchroma
@@ -205,7 +205,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   }
 
   # Yellow
-  if (lambdamin <= 550 & lambdamax >= 625) {
+  if (lambdamin <= 550 && lambdamax >= 625) {
     Yellowchromamat <- object[wl >= 550 & wl <= 625, , drop = FALSE] # yellow 550-625nm
     Yellowchroma <- colSums(Yellowchromamat) / B1 # S1 yellow
     output.mat[, 8] <- Yellowchroma
@@ -214,7 +214,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   }
 
   # Green
-  if (lambdamin <= 510 & lambdamax >= 605) {
+  if (lambdamin <= 510 && lambdamax >= 605) {
     Greenchromamat <- object[wl >= 510 & wl <= 605, , drop = FALSE] # green 510-605nm inlusive
     Greenchroma <- colSums(Greenchromamat) / B1 # S1 green
     output.mat[, 7] <- Greenchroma
@@ -223,7 +223,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   }
 
   # Blue
-  if (lambdamin <= 400 & lambdamax >= 510) {
+  if (lambdamin <= 400 && lambdamax >= 510) {
     Bluechromamat <- object[wl >= 400 & wl <= 510, , drop = FALSE] # blue 400-510nm inclusive
     Bluechroma <- colSums(Bluechromamat) / B1 # S1 blue
     output.mat[, 6] <- Bluechroma
@@ -232,7 +232,7 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
   }
 
   # UV
-  if (lambdamin <= 400 & lambdamax >= 400) {
+  if (lambdamin <= 400 && lambdamax >= 400) {
     UVchromamat <- object[wl >= lambdamin & wl <= 400, , drop = FALSE]
     UVchroma <- colSums(UVchromamat) / B1 # S1 UV
     output.mat [, 4] <- UVchroma
@@ -240,12 +240,12 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
     warning("cannot calculate UV chroma; wavelength range not below 400 nm", call. = FALSE)
   }
 
-  if (lambdamin > 300 & lambdamin < 400) {
+  if (lambdamin > 300 && lambdamin < 400) {
     warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful", call. = FALSE)
   }
 
   # Violet
-  if (lambdamin <= 415 & lambdamax >= 415) {
+  if (lambdamin <= 415 && lambdamax >= 415) {
     Vchromamat <- object[wl >= lambdamin & wl <= 415, , drop = FALSE]
     Vchroma <- colSums(Vchromamat) / B1 # S1 Violet
     output.mat[, 5] <- Vchroma
