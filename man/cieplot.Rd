@@ -29,11 +29,7 @@ CIELCh models), as columns (labeled as such).}
 \item{mono}{should the monochromatic loci (the 'horseshoe') be plotted when
 \code{space = "ciexyz"}? Defaults to \code{TRUE}.}
 
-\item{out.lwd}{graphical parameters for the plot outline.}
-
-\item{out.lcol}{graphical parameters for the plot outline.}
-
-\item{out.lty}{graphical parameters for the plot outline.}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
 \item{theta}{angle to rotate the plot in the xy plane  when
 \code{space = "cielab"} (defaults to 10).}

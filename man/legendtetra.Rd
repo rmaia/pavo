@@ -7,11 +7,7 @@
 legendtetra(x = 0.8, y = 1.2, ...)
 }
 \arguments{
-\item{x}{position of the legend relative to plot limits
-(usually a value between 0 and 1, but because of the perspective distortion,
-values greater than 1 are possible)}
-
-\item{y}{position of the legend relative to plot limits
+\item{x, y}{position of the legend relative to plot limits
 (usually a value between 0 and 1, but because of the perspective distortion,
 values greater than 1 are possible)}
 

@@ -37,11 +37,7 @@ corresponding vertex?}
 
 \item{labels.cex}{size of the arrow labels.}
 
-\item{out.lwd}{graphical parameters for the plot outline.}
-
-\item{out.lcol}{graphical parameters for the plot outline.}
-
-\item{out.lty}{graphical parameters for the plot outline.}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}

@@ -41,11 +41,7 @@ uv-blue).
 
 \item{sec.col}{line colour of hue sector dividers. Defaults to \code{"grey"}.}
 
-\item{out.lwd}{graphical parameters for the plot outline.}
-
-\item{out.lty}{graphical parameters for the plot outline.}
-
-\item{out.lcol}{graphical parameters for the plot outline.}
+\item{out.lwd, out.lcol, out.lty}{graphical parameters for the plot outline.}
 
 \item{labels.cex}{size of the arrow labels.}
 
