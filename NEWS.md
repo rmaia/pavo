@@ -1,3 +1,9 @@
+# pavo 2.9.0
+
+## MINOR FEATURES AND BUG FIXES
+
+- Removed the start-up message
+
 # pavo 2.8.0
 
 ## MINOR FEATURES AND BUG FIXES
