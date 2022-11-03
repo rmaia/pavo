@@ -36,7 +36,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">pavo</a>
-        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.8.0</span>
+        <span class="version label label-danger" data-toggle="tooltip" data-placement="bottom" title="Unreleased version">2.9.0</span>
       </span>
     </div>
 
@@ -92,7 +92,9 @@
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1 data-toc-skip>Introduction to pavo</h1>
-                        <h4 data-toc-skip class="author">Rafael Maia, Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad Eliason</h4>
+                        <h4 data-toc-skip class="author">Rafael Maia,
+Thomas White, Hugo Gruson, John Endler, Pierre-Paul Bitton, Chad
+Eliason</h4>
             
       
       <small class="dont-index">Source: <a href="https://github.com/rmaia/pavo/blob/HEAD/vignettes/pavo.Rmd" class="external-link"><code>vignettes/pavo.Rmd</code></a></small>
@@ -102,22 +104,47 @@
 
     
     
-<p><code>pavo</code> is an <code>R</code> package developed with the goal of establishing a flexible and integrated workflow for working with spectral and spatial colour data. It includes functions that take advantage of new data classes to work seamlessly from importing raw spectra and images, to visualisation and analysis. It provides flexible ways to input spectral data from a variety of equipment manufacturers, process these data, extract variables, and produce publication-quality figures.</p>
-<p><code>pavo</code> was written with the following workflow in mind:</p>
+<p><code>pavo</code> is an <code>R</code> package developed with the
+goal of establishing a flexible and integrated workflow for working with
+spectral and spatial colour data. It includes functions that take
+advantage of new data classes to work seamlessly from importing raw
+spectra and images, to visualisation and analysis. It provides flexible
+ways to input spectral data from a variety of equipment manufacturers,
+process these data, extract variables, and produce publication-quality
+figures.</p>
+<p><code>pavo</code> was written with the following workflow in
+mind:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Organise</strong> data by importing and processing spectral and image data (e.g., to remove noise, negative values, smooth curves, etc.).</li>
+<strong>Organise</strong> data by importing and processing spectral
+and image data (e.g., to remove noise, negative values, smooth curves,
+etc.).</li>
 <li>
-<strong>Analyse</strong> the resulting files, using spectral analyses of shape (hue, saturation, brightness), visual models based on perceptual data, and/or spatial adjacency and boundary strength analyses.</li>
+<strong>Analyse</strong> the resulting files, using spectral
+analyses of shape (hue, saturation, brightness), visual models based on
+perceptual data, and/or spatial adjacency and boundary strength
+analyses.</li>
 <li>
-<strong>Visualise</strong> the output, with multiple options provided for exploration and analysis.</li>
+<strong>Visualise</strong> the output, with multiple options
+provided for exploration and analysis.</li>
 </ol>
 <div class="figure">
 <img src="https://github.com/colRverse/colsci-book/blob/main/fig/workflow.png?raw=TRUE" alt="A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage." width="100%"><p class="caption">
-A non-exhaustive overview of the colour-pattern analysis workflow in pavo, as of version 2.0, displaying some key functions at each stage.
+A non-exhaustive overview of the colour-pattern analysis workflow in
+pavo, as of version 2.0, displaying some key functions at each stage.
 </p>
 </div>
-<p>A comprehensive tutorial to get you started with pavo is available in <a href="https://book.colrverse.com" class="external-link">the pavo handbook</a>. In this book, we begin by detailing the <a href="https://book.colrverse.com/importing-processing-and-visualising-data.html" class="external-link">importing, processing and visualisation</a> of spectral and image data, before moving on to discussion of the <a href="https://book.colrverse.com/analysing-data.html" class="external-link">flexible analyses</a> of such data that <code>pavo</code> allows. Our hope is to demonstrate the flexibility of <code>pavo</code>, and to provide a cohesive, reproducible workflow for colour pattern analysis within <code>R</code>. As always, the development version of <code>pavo</code> can be found on <a href="https://github.com/rmaia/pavo" class="external-link">github</a>, while the stable release is available via CRAN.</p>
+<p>A comprehensive tutorial to get you started with pavo is available in
+<a href="https://book.colrverse.com" class="external-link">the pavo handbook</a>. In this
+book, we begin by detailing the <a href="https://book.colrverse.com/importing-processing-and-visualising-data.html" class="external-link">importing,
+processing and visualisation</a> of spectral and image data, before
+moving on to discussion of the <a href="https://book.colrverse.com/analysing-data.html" class="external-link">flexible
+analyses</a> of such data that <code>pavo</code> allows. Our hope is to
+demonstrate the flexibility of <code>pavo</code>, and to provide a
+cohesive, reproducible workflow for colour pattern analysis within
+<code>R</code>. As always, the development version of <code>pavo</code>
+can be found on <a href="https://github.com/rmaia/pavo" class="external-link">github</a>,
+while the stable release is available via CRAN.</p>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
