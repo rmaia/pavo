@@ -11,7 +11,7 @@
 #'  the object belongs to.
 #' @param boot.n number of bootstrap replicates (defaults to 1000)
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
-#' @param raw should the full set of bootstrapped distances (equal in length to boot.n) 
+#' @param raw should the full set of bootstrapped distances (equal in length to boot.n)
 #' be returned, instead of the summary distances and CI's? Defaults to FALSE.
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
@@ -167,7 +167,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   empgroupmeans <- empgroupmeans[, -1]
 
   datattributes <- grep("names", names(attributes(vismodeldata)),
-    invert = TRUE, value = TRUE
+    invert = TRUE, value = TRUE, fixed = TRUE
   )
 
   attributes(empgroupmeans)[datattributes] <- attributes(vismodeldata)[datattributes]
@@ -212,14 +212,14 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # returns a list with length = number of by
   # each row in these = the (geometric) mean of bootstrap replicates
   groupcolmeans <- lapply(bootbygroup, function(z) {
-    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean)))
+    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))) # nolint
   })
 
   # now "split and merge"
   # creating a list with length = number of bootstrap replicates
   # and rows in each entry = mean per group in that replicate
   bootgrouped <- lapply(seq_len(boot.n), function(x) {
-    do.call(rbind, lapply(groupcolmeans, "[", x, ))
+    do.call(rbind, lapply(groupcolmeans, "[", x, )) # nolint: false positive
   })
 
   # ...name the rows by group
@@ -277,10 +277,10 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   dS.mean <- empdS
 
   res <- t(rbind(dS.mean, dsCI))
-  
+
   # Create a new df if returning raw bootstrapped distances
   # Note output will be sorted by this point
-  if(raw){
+  if (raw) {
     rawres <- as.data.frame(bootdS)
     names(rawres) <- paste0(names(rawres), "_dS")
   }
@@ -303,15 +303,15 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     dlCI <- dlCI[, names(empdL), drop = FALSE]
     dL.mean <- empdL
     res <- cbind(res, t(rbind(dL.mean, dlCI)))
-    
-    if(raw){
+
+    if (raw) {
       bootdL <- as.data.frame(bootdL)
       names(bootdL) <- paste0(names(bootdL), "_dL")
       rawres <- cbind(rawres, bootdL)
     }
   }
-  
-  if(raw){
+
+  if (raw) {
     res <- rawres
   }
 

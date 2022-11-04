@@ -29,14 +29,14 @@
 #' @examples
 #' # Load floral reflectance spectra
 #' data(flowers)
-#' 
+#'
 #' # Estimate quantum catches visual phenotype of a Blue Tit
 #' vis.flowers <- vismodel(flowers, visual = 'bluetit')
-#' 
-#' # Estimate noise-weighted colour distances between all flowers 
+#'
+#' # Estimate noise-weighted colour distances between all flowers
 #' cd.flowers <- coldist(vis.flowers)
-#' 
-#' # Convert points to Cartesian coordinates in which Euclidean distances are 
+#'
+#' # Convert points to Cartesian coordinates in which Euclidean distances are
 #' # noise-weighted.
 #' jnd2xyz(cd.flowers)
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
@@ -98,8 +98,8 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
   references <- attr(coldistres, "resref")
   references <- references[intersect(
-    grep("jnd2xyzrrf", references$patch1, invert = TRUE),
-    grep("jnd2xyzrrf", references$patch2)
+    grep("jnd2xyzrrf", references$patch1, invert = TRUE, fixed = TRUE),
+    grep("jnd2xyzrrf", references$patch2, fixed = TRUE)
   ), ]
 
   # Strip 'lum' column if it's all NA
@@ -130,7 +130,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[2], ] <- cdmat[ptnames[1], ptnames[2]]
 
     # subsequent points
-    coords[c(ptnames[-c(1:2)]), ] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
+    coords[c(ptnames[-(1:2)]), ] <- do.call(rbind, lapply(ptnames[-(1:2)], function(x) {
       pos2(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
@@ -156,14 +156,14 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
 
     # subsequent points
-    positions <- lapply(ptnames[-c(1:3)], function(x) {
+    positions <- lapply(ptnames[-(1:3)], function(x) {
       pos3(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
         cdmat[ptnames[2], x]
       )
     })
-    names(positions) <- ptnames[-c(1:3)]
+    names(positions) <- ptnames[-(1:3)]
 
 
     eucdis <- lapply(positions, function(x) dist(rbind(x, coords[ptnames[3], ]))[c(2, 3)])
@@ -204,7 +204,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[4], ] <- fourthpointxyz
 
     # subsequent points
-    positions <- lapply(ptnames[-c(1:4)], function(x) {
+    positions <- lapply(ptnames[-(1:4)], function(x) {
       pos4(
         cdmat[ptnames[1], ptnames[2]],
         cdmat[ptnames[1], x],
@@ -212,7 +212,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
         cdmat[ptnames[3], x]
       )
     })
-    names(positions) <- ptnames[-c(1:4)]
+    names(positions) <- ptnames[-(1:4)]
 
 
     eucdis <- lapply(positions, function(x) dist(rbind(x, coords[4, ]))[c(2, 3)])
@@ -237,7 +237,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
     coords[ptnames[2], "lum"] <- ldmat[ptnames[1], ptnames[2]]
 
     # subsequent points
-    coords[c(ptnames[-c(1:2)]), "lum"] <- do.call(rbind, lapply(ptnames[-c(1:2)], function(x) {
+    coords[c(ptnames[-(1:2)]), "lum"] <- do.call(rbind, lapply(ptnames[-(1:2)], function(x) {
       pos2(
         ldmat[ptnames[1], ptnames[2]],
         ldmat[ptnames[1], x],
@@ -253,17 +253,17 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
   }
 
   # Center variables
-  centroids <- colMeans(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE), , drop = FALSE])
+  centroids <- colMeans(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE, fixed = TRUE), , drop = FALSE])
   if (center) {
     coords <- sweep(coords, 2, centroids, "-")
   }
 
-  jnd2xyzrrf.ctrd <- colMeans(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE), , drop = FALSE])
+  jnd2xyzrrf.ctrd <- colMeans(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE, fixed = TRUE), , drop = FALSE])
 
-  chromcoords <- as.data.frame(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE), , drop = FALSE])
+  chromcoords <- as.data.frame(coords[grep("jnd2xyzrrf", rownames(coords), invert = TRUE, fixed = TRUE), , drop = FALSE])
 
   refstosave <- as.data.frame(rbind(
-    coords[grep("jnd2xyzrrf", rownames(coords)), , drop = FALSE], jnd2xyzrrf.ctrd
+    coords[grep("jnd2xyzrrf", rownames(coords), fixed = TRUE), , drop = FALSE], jnd2xyzrrf.ctrd
   ))
 
   attr(chromcoords, "class") <- c("colspace", "jnd2xyz", "data.frame")

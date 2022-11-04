@@ -114,7 +114,7 @@
 #'
 #' # Expand on the above, by including (fake) color distances and hsl values
 #' # of colour elements in the image
-#' 
+#'
 #' # Generate fake color distances
 #' distances <- data.frame(
 #'   c1 = c(1, 1, 1, 2, 2, 3),
@@ -140,10 +140,10 @@
 #' # Run an adjacency analysis on multiple images.
 #' # First load some images of coral snake colour patterns
 #' snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
-#' 
+#'
 #' # Automatically colour-classify the coral snake patterns
 #' snakes_class <- classify(snakes, kcols = 3)
-#' 
+#'
 #' # Run the adjacency analysis, with varying real-world scales for each image
 #' snakes_adj <- adjacent(snakes_class, xpts = 120, xscale = c(50, 55))
 #' }
@@ -189,7 +189,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   ## Colour-classified
-  if (any(unlist(lapply(classimg, function(x) attr(x, "state"))) != "colclass")) {
+  if (any(unlist(lapply(classimg, attr, "state")) == "colclass")) {
     stop("One or more images has not yet been colour-classified. See classify().")
   }
 
@@ -200,7 +200,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       coldists <- rep(list(coldists), length(classimg))
     }
     if (!all(unlist(lapply(coldists, function(x) c("c1", "c2") %in% names(x))))) {
-      message("Cannot find columns named 'c1', 'c2' in coldists. Assuming first two columns contain colour-category IDs.")
+      message(
+        "Cannot find columns named 'c1', 'c2' in coldists. ",
+        "Assuming first two columns contain colour-category IDs."
+      )
       coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
     }
     if (any(unlist(lapply(coldists, function(x) !any(c("dS", "dL") %in% names(x)))))) {
@@ -215,7 +218,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       hsl <- rep(list(hsl), length(classimg))
     }
     if (!all(unlist(lapply(hsl, function(x) "patch" %in% names(x))))) {
-      message("Cannot find column named 'patch' one or more set of hsl values. Assuming first column contains colour-category ID's")
+      message(
+        "Cannot find column named 'patch' one or more set of hsl values. ",
+        "Assuming first column contains colour-category ID's"
+      )
       hsl <- lapply(hsl, function(x) names(x)[1] <- "patch")
     }
     if (any(unlist(lapply(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x)))))) {
@@ -243,7 +249,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   ## Exclusion checks
   if ("background" %in% exclude2) {
     if (is.null(bkgID) && is.null(attr(classimg, "outline"))) {
-      stop("Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), or one or more colour-class ID's via the argument bkgID.")
+      stop(
+        "Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), ",
+        "or one or more colour-class ID's via the argument bkgID."
+      )
     }
   }
   if ("object" %in% exclude2) {
@@ -263,7 +272,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   } else if (length(xscale) == length(classimg) && is.numeric(unlist(xscale))) {
     xscale <- xscale
   } else {
-    stop("Required argument xscale is missing or incorrectly specified, and one or more images are uncalibrated. Either specify xscale (an integer or integers) or use procimg() to set a scale for each image.")
+    stop(
+      "Required argument xscale is missing or incorrectly specified, and one or more images are uncalibrated. ",
+      "Either specify xscale (an integer or integers) or use procimg() to set a scale for each image."
+    )
   }
 
   ## Sampling density
@@ -338,7 +350,7 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   colournames <- attr(classimg_i, "colnames")
 
   # Simple or 'complex' background?
-  bkgoutline <- any(!is.na(attr(classimg_i, "outline")))
+  bkgoutline <- !all(is.na(attr(classimg_i, "outline")))
 
   # Exclude selection, if specified
   if ("background" %in% exclude2_i) {
@@ -545,7 +557,10 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         # Name-match check. Could be more robust.
         if (!all(c(as.character(offdiagprop$c1), as.character(offdiagprop$c2)) %in%
           c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
-          stop("Color-classes IDs listed in coldists do not match those of the image data. Edit the IDs in coldists, or rename the color categories in the classified image data.")
+          stop(
+            "Color-classes IDs listed in coldists do not match those of the image data. ",
+            "Edit the IDs in coldists, or rename the color categories in the classified image data."
+          )
         }
 
         offdiagprop <- merge(offdiagprop, coldists_i)
@@ -667,8 +682,8 @@ transitioncalc <- function(classimgdat, colornames) {
     }
   )
   rt <- aggregate(unlist(rt_temp) ~ names(unlist(rt_temp)), FUN = sum)
-  rt <- rt[!grepl("NA", rt[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
-  rnames <- as.numeric(unlist(strsplit(rt[, 1], "[.]"))) # split up transition names
+  rt <- rt[!grepl("NA", rt[, 1], fixed = TRUE), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
+  rnames <- as.numeric(unlist(strsplit(rt[, 1], ".", fixed = TRUE))) # split up transition names
   rowtrans <- data.frame(
     "c1" = rnames[seq(1, length(rnames), 2)],
     "c2" = rnames[seq(2, length(rnames), 2)],
@@ -687,8 +702,8 @@ transitioncalc <- function(classimgdat, colornames) {
     }
   )
   ct <- aggregate(unlist(ct_temp) ~ names(unlist(ct_temp)), FUN = sum)
-  ct <- ct[!grepl("NA", ct[, 1]), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
-  cnames <- as.numeric(unlist(strsplit(ct[, 1], "[.]"))) # split up transition names
+  ct <- ct[!grepl("NA", ct[, 1], fixed = TRUE), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
+  cnames <- as.numeric(unlist(strsplit(ct[, 1], ".", fixed = TRUE))) # split up transition names
   coltrans <- data.frame(
     "c1" = cnames[seq(1, length(cnames), 2)],
     "c2" = cnames[seq(2, length(cnames), 2)],

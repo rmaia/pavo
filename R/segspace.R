@@ -22,7 +22,7 @@
 #' data(sicalis)
 #' vis.sic <- vismodel(sicalis, visual = "segment", achromatic = "all")
 #' seg.sic <- colspace(vis.sic, space = "segment")
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 #'
@@ -44,10 +44,7 @@ segspace <- function(vismodeldata) {
     if (attr(dat, "conenumb") != "seg" && attr(dat, "conenumb") > 4) {
       warning("vismodel input is not tetrachromatic, considering first four columns only", call. = FALSE)
     }
-  }
-
-  # if not, check if it has more (or less) than 4 columns
-  else {
+  } else { # if not, check if it has more (or less) than 4 columns
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"),
         " object and has fewer than four columns",

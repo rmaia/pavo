@@ -66,7 +66,7 @@
 #'
 #' # Retrieve the CIE colour matching functions as an rspec object
 #' ciedat <- sensdata(visual = c("cie2", "cie10"))
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
@@ -77,10 +77,10 @@
 
 sensdata <- function(visual = c(
                        "none", "all", "avg.uv", "avg.v", "bluetit", "ctenophorus", "star",
-                       "pfowl", "apis", "canis", "cie2", "cie10", "musca", 
+                       "pfowl", "apis", "canis", "cie2", "cie10", "musca",
                        "drosophila", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1", 
+                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1",
                                     "dm.r1", "ra.dc", "cf.r"),
                      illum = c("none", "all", "bluesky", "D65", "forestshade"),
                      trans = c("none", "all", "bluetit", "blackbird"),

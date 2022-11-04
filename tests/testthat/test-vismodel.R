@@ -1,7 +1,7 @@
 test_that("Warnings", {
   data(flowers)
   data(sicalis)
-  fakedat <- as.rspec(data.frame(wl = c(300:700), refl1 = rnorm(401), refl2 = rnorm(401)))
+  fakedat <- as.rspec(data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401)))
 
   expect_s3_class(vismodel(flowers), "vismodel")
 

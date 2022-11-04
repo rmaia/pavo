@@ -44,7 +44,7 @@
 #' aggplot(sicalis, bysic, FUN.error = function(x) quantile(x, c(0.0275, 0.975)))
 #' aggplot(sicalis, bysic, shadecol = spec2rgb(sicalis), lcol = 1)
 #' aggplot(sicalis, bysic, lcol = 1, FUN.error = function(x) sd(x) / sqrt(length(x)))
-#' 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 #'
@@ -73,8 +73,8 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   if (as.integer(dim(errplotspecs)[1] / 2) == as.integer(dim(cntplotspecs)[1]) &&
     as.integer(dim(errplotspecs)[1] %% 2) == 0) {
     # When FUN.error returns length 2 output for each spectrum (e.g. quantiles)
-    lower <- errplotspecs[seq(nrow(errplotspecs)) %% 2 == 0, ]
-    upper <- errplotspecs[seq(nrow(errplotspecs)) %% 2 == 1, ]
+    lower <- errplotspecs[seq_len(nrow(errplotspecs)) %% 2 == 0, ]
+    upper <- errplotspecs[seq_len(nrow(errplotspecs)) %% 2 == 1, ]
   } else {
     lower <- cntplotspecs - errplotspecs
     upper <- cntplotspecs + errplotspecs
@@ -82,7 +82,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
 
   polygon_data <- rbind(
     upper,
-    lower[rev(seq(nrow(lower))), , drop = FALSE]
+    lower[rev(seq_len(nrow(lower))), , drop = FALSE]
   )
 
 

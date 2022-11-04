@@ -28,11 +28,11 @@
 #' @param obj_dist,obj_width,eye_res blur the image to model the visual acuity of non-human animals
 #' as per Caves & Johnsen (2018)'s AcuityView 2.0 algorithm. The procedure requires three arguments;
 #' obj_dist is the real-world distance between the viewer and the focal object in the image in the image,
-#' obj_width is the real-world width of the entire image; eye_res is the minimum resolvable angle of the viewer 
-#' in degrees. All three arguments are numeric, and any units of measurement are suitable for 
-#' obj_dist and obj_width, but they must match. Note that this is the more flexible v2.0 implementation meaning 
-#' that any rectangular image is suitable; it need not be square with dimensions a power of 2. 
-#' If using this capability, please cite Caves & Johnsen (2018), as per the included reference, 
+#' obj_width is the real-world width of the entire image; eye_res is the minimum resolvable angle of the viewer
+#' in degrees. All three arguments are numeric, and any units of measurement are suitable for
+#' obj_dist and obj_width, but they must match. Note that this is the more flexible v2.0 implementation meaning
+#' that any rectangular image is suitable; it need not be square with dimensions a power of 2.
+#' If using this capability, please cite Caves & Johnsen (2018), as per the included reference,
 #' and see note below.
 #' @param plotnew should plots be opened in a new window? Defaults to `FALSE`.
 #' @param ... additional graphical parameters. Also see [par()].
@@ -44,16 +44,16 @@
 #' @importFrom grDevices dev.new dev.off
 #' @importFrom graphics lines
 #'
-#' @note There are several caveats that should be considered when using the AcuityView 
-#' algorithm. First and foremost, the converted image is not what the animal actually sees. 
-#' For example, it does not account for edge enhancement and other processing by the retina and 
-#' brain that may alter an image. It does, however, show what spatial information 
-#' can be detected and then processed by the visual system. Second, the converted 
-#' image is static, which does not allow one to assess how movement may reveal the 
-#' presence of an otherwise indiscernible object. Third, AcuityView makes several 
-#' assumptions about the Modulation Transfer Function (MTF), which describes how 
-#' the optical system affects image contrast as a function of the level of detail. 
-#' These assumptions include that the MTF is constant over the region of the retina that views the 
+#' @note There are several caveats that should be considered when using the AcuityView
+#' algorithm. First and foremost, the converted image is not what the animal actually sees.
+#' For example, it does not account for edge enhancement and other processing by the retina and
+#' brain that may alter an image. It does, however, show what spatial information
+#' can be detected and then processed by the visual system. Second, the converted
+#' image is static, which does not allow one to assess how movement may reveal the
+#' presence of an otherwise indiscernible object. Third, AcuityView makes several
+#' assumptions about the Modulation Transfer Function (MTF), which describes how
+#' the optical system affects image contrast as a function of the level of detail.
+#' These assumptions include that the MTF is constant over the region of the retina that views the
 #' scene, is circularly symmetrical, and is wavelength independent. For a full discussion and details,
 #' please do read Caves & Johnsen (2018).
 #'
@@ -65,13 +65,13 @@
 #'   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 #'   papilio <- procimg(papilio, scaledist = 10)
 #'
-#'   # Interactively assign individual scales to each image, 
+#'   # Interactively assign individual scales to each image,
 #'   # after slightly reducing their size (to 90% of original).
 #'   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
 #'   snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 #'
 #'   # Model the appearance of a butterfly given the reduced visual acuity of another
-#'   # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
+#'   # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away,
 #'   # the image width is 10 cm, and the minimum resolvable angle of the viewer is 0.2-degrees.
 #'   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
 #'   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)
@@ -121,7 +121,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     rotate <- NULL
   }
   if (is.numeric(resize) || is.numeric(rotate)) {
-    imgnames <- lapply(image, function(x) attr(x, "imgname"))
+    imgnames <- lapply(image, attr, "imgname")
     image <- rimg2magick(image)
     if (is.numeric(rotate)) {
       image <- image_rotate(image, rotate)
@@ -172,7 +172,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     # Model
     if ((is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res) && attr(image[[1]], "state") == "raw")) {
-      message("When using the AcuityView algorithm, please remember to read (for full discussion and caveats) and cite: ", 
+      message("When using the AcuityView algorithm, please remember to read (for full discussion and caveats) and cite: ",
               "Caves EM & Johnsen S (2018). AcuityView: An r package for portraying ",
               "the effects of visual acuity on scenes observed by an animal. Methods ",
               "in Ecology and Evolution, 9(3), 793-797.")

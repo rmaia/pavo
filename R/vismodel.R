@@ -220,7 +220,7 @@ vismodel <- function(rspecdata,
   qcatch <- match.arg(qcatch)
 
   # Model-specific defaults
-  if (substr(visual2, 1, 3) == "cie") {
+  if (startsWith(visual2, "cie")) {
     if (!vonkries || relative || !identical(achromatic2, "none") || !identical(qcatch, "Qi")) {
       vonkries <- TRUE
       relative <- FALSE
@@ -374,7 +374,7 @@ vismodel <- function(rspecdata,
 
   # Model-specific modifiers, if need be
   B <- K <- 1
-  if (substr(visual2, 1, 3) == "cie") {
+  if (startsWith(visual2, "cie")) {
     K <- 100 / colSums(S[2] * illum)
   }
   if (visual2 == "segment") {

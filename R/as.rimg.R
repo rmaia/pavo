@@ -30,7 +30,7 @@
 #' # Convert to rimg object and check again
 #' fake2 <- as.rimg(fake)
 #' is.rimg(fake2)
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #'
@@ -204,10 +204,10 @@ is.rimg <- function(object) {
 #' # Convert from class rimg to magick-image
 #' papilio_magick <- rimg2magick(papilio)
 #' class(papilio_magick)
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
-#' 
+#'
 #' @name img_conversion
 #'
 NULL

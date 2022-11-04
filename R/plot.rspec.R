@@ -29,16 +29,16 @@
 #' @examples
 #' # Load angle-resolved reflectance data for a green-winged teal
 #' data(teal)
-#' 
+#'
 #' # Create an overlay plot (default)
 #' plot(teal)
-#' 
+#'
 #' # Create an stacked spectral plot
 #' plot(teal, type = "stack")
-#' 
+#'
 #' # Create a reflectance heatmap
 #' plot(teal, type = "heatmap")
-#' 
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}

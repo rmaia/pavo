@@ -19,7 +19,7 @@ test_that("sensdata", {
   expect_true(all(names(as.data.frame(vissyst)) %in% names(sensdata("all", "all"))))
 
   # Check for negative values
-  expect_equal(min(sensdata(visual = "all", illum = "all", trans = "all", achromatic = "all", bkg = "all")), 0)
+  expect_identical(min(sensdata(visual = "all", illum = "all", trans = "all", achromatic = "all", bkg = "all")), 0)
 })
 
 test_that("peakshape", {
@@ -32,12 +32,12 @@ test_that("peakshape", {
   )
 
   test <- readRDS("known_output/FWHM_lims.rds")
-  expect_equal(peakshape(test, plot = FALSE)[, 4], c(144, 52))
+  expect_identical(peakshape(test, plot = FALSE)[, 4], c(144L, 52L))
 
   expect_warning(peakshape(flowers[, -1], plot = FALSE), "wl column missing")
 
   expect_identical(
-    nrow(peakshape(flowers, grepl("^Hibbertia", colnames(flowers)), plot = FALSE)),
+    nrow(peakshape(flowers, startsWith(colnames(flowers), "Hibbertia"), plot = FALSE)),
     6L
   )
 

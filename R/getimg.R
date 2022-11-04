@@ -82,7 +82,10 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
     # Warn of slowness if size is large
     if (totalsize > 0.2) {
-      message("Total size of images exceeds 200 mb in memory, which may result in slowed performance. Consider resizing images with procimg() prior to analysis, if speed is a priority.")
+      message(
+        "Total size of images exceeds 200 mb in memory, which may result in slowed performance. ",
+        "Consider resizing images with procimg() prior to analysis, if speed is a priority."
+      )
     }
 
     # Get images

@@ -44,8 +44,7 @@ subset.rspec <- function(x, subset, ...) {
       warning("Subset doesn't match length of spectral data")
     }
     subsample <- which(subset)
-  }
-  else {
+  } else {
     subsample <- grep(pattern = paste(subset, collapse = "|"), x = colnames(x), ...)
   }
   if (length(subsample) == 0) {

@@ -75,7 +75,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   ## Convert refID to numeric identifier
   if (!is.null(refID)) {
     if (is.character(refID)) {
-      refID <- which(unlist(lapply(imgdat, function(x) attr(x, "imgname"))) == refID)
+      refID <- which(unlist(lapply(imgdat, attr, "imgname")) == refID)
       if (length(refID) == 0) {
         stop("No image found with that name, specify another reference image using refID.")
       }
@@ -121,7 +121,10 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   ## Doesn't work for interactive atm though
   if (!is.null(kcols)) {
     if (any(unlist(lapply(imgdat, function(x) nrow(unique(apply(x, 3, rbind))))) < max(kcols))) {
-      stop('The specified number of cluster centers exceeds the number of distinct data points in one or more images, consider a new value for argument "kcols"')
+      stop(
+        "The specified number of cluster centers exceeds the number of distinct data points in one or more images, ",
+        "consider a new value for argument 'kcols'"
+      )
     }
   }
 
@@ -138,8 +141,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     if (!is.null(refID)) { ## (2) Single k, with reference image ##
       ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method2), "classRGB")
       ref_centers <- rep(list(ref_centers), length(imgdat))
-    }
-    else { ## (1) Non-interactive, with a reference image. ##
+    } else { ## (1) Non-interactive, with a reference image. ##
       ref_centers <- kcols
     }
 
@@ -188,7 +190,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
       if (inherits(centers[[i]], "try-error")) {
         message("One or more coorodinates out-of bounds. Try again.")
         i <- i
-      } else if (any(duplicated(centers[[i]]))) {
+      } else if (anyDuplicated(centers[[i]]) > 0) {
         message("Duplicate colours specified. Try again.")
         i <- i
       } else if (!is.null(refID)) {
@@ -323,7 +325,8 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     imageIDs <- data.frame(
       names = unlist(lapply(
         imgdat_i,
-        function(x) attr(x, "imgname")
+        attr,
+        "imgname"
       )),
       stringsAsFactors = FALSE
     )

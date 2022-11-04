@@ -91,8 +91,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   if (numby <= 16) {
     par(mfrow = n2mfrow(numby))
-  }
-  else {
+  } else {
     par(ask = TRUE)
   }
 
