@@ -2,11 +2,11 @@ library(pavo)
 
 # FIXME: at some point, this line should be removed because all data will be
 # generated from this file and we won't have to rely on existing data anymore.
-load("R/sysdata.rda")
+load(file.path("R", "sysdata.rda"))
 
 # bgandilum
 
-d65 <- readxl::read_xls("data-raw/ciedata.xls", skip = 5, col_names = c("wl", "d65"), sheet = "D65")
+d65 <- readxl::read_xls(file.path("data-raw", "ciedata.xls"), skip = 5, col_names = c("wl", "d65"), sheet = "D65")
 d65 <- as.rspec(d65, lim = c(300, 700))
 d65 <- irrad2flux(d65)
 d65 <- procspec(d65, opt = "maximum")
@@ -20,7 +20,7 @@ bgandilum$ideal <- 1
 
 # CIE
 cie2 <- readxl::read_xls(
-  "data-raw/ciedata.xls",
+  file.path("data-raw", "ciedata.xls"),
   range = "1931 col observer!A6:D86",
   col_names = c("wl", "x", "y", "z")
 )
@@ -30,7 +30,7 @@ cie2[is.na(cie2)] <- 0
 vissyst[, paste0("cie2_", c("X", "Y", "Z"))] <- cie2[, c("x", "y", "z")]
 
 cie10 <- readxl::read_xls(
-  "data-raw/ciedata.xls",
+  file.path("data-raw", "ciedata.xls"),
   range = "1964 col observer!A6:D86",
   col_names = c("wl", "x", "y", "z")
 )
@@ -40,7 +40,7 @@ cie10[is.na(cie10)] <- 0
 vissyst[, paste0("cie10_", c("X", "Y", "Z"))] <- cie10[, c("x", "y", "z")]
 
 # Drosophila melanogaster (Sharkey et al. 2020)
-dros <- procspec(as.rspec(read.csv("data-raw/drosophila_melanogaster_sharkey.csv")), fixneg = "zero")
+dros <- procspec(as.rspec(read.csv(file.path("data-raw", "drosophila_melanogaster_sharkey.csv"))), fixneg = "zero")
 vissyst <- merge(vissyst, dros)
 
 # Convert

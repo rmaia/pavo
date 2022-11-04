@@ -13,12 +13,12 @@ test_that("getspec", {
   jazirrad <- suppressMessages(getspec(system.file("testdata", package = "lightr"), ext = "JazIrrad"))
   expect_s3_class(jazirrad, "rspec")
 
-  proc <- suppressMessages(getspec(system.file("testdata/procspec_files", package = "lightr"), ext = "ProcSpec"))
+  proc <- suppressMessages(getspec(system.file("testdata", "procspec_files", package = "lightr"), ext = "ProcSpec"))
   expect_s3_class(proc, "rspec")
   expect_length(proc, 5)
 
   # getspec should ignore the case of the ext argument by default
-  proccase <- getspec(system.file("testdata/procspec_files", package = "lightr"), ext = "procspec")
+  proccase <- getspec(system.file("testdata", "procspec_files", package = "lightr"), ext = "procspec")
   expect_length(proccase, 5)
   expect_identical(proccase, proc)
 
@@ -46,7 +46,7 @@ test_that("getspec", {
 
   # should fail if ignore.case is set to FALSE and user don't use correct case
   expect_warning(
-    getspec(system.file("testdata/procspec_files", package = "lightr"), ext = "procspec", ignore.case = FALSE),
+    getspec(system.file("testdata", "procspec_files", package = "lightr"), ext = "procspec", ignore.case = FALSE),
     "No files found."
   )
 
@@ -54,7 +54,7 @@ test_that("getspec", {
   irr <- suppressMessages(getspec(system.file("testdata", package = "lightr"), ext = "IRR"))
   expect_s3_class(irr, "rspec")
 
-  non_EN <- suppressMessages(getspec(system.file("testdata/non_english", package = "lightr"), ext = "txt", decimal = ","))
+  non_EN <- suppressMessages(getspec(system.file("testdata", "non_english", package = "lightr"), ext = "txt", decimal = ","))
   expect_s3_class(non_EN, "rspec")
 })
 

@@ -31,7 +31,7 @@ test_that("peakshape", {
     ignore_attr = TRUE
   )
 
-  test <- readRDS("known_output/FWHM_lims.rds")
+  test <- readRDS(file.path("known_output", "FWHM_lims.rds"))
   expect_identical(peakshape(test, plot = FALSE)[, 4], c(144L, 52L))
 
   expect_warning(peakshape(flowers[, -1], plot = FALSE), "wl column missing")

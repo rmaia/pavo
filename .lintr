@@ -10,6 +10,5 @@ linters: linters_with_tags(
     object_usage_linter = NULL,
     commented_code_linter = NULL,
     indentation_linter = NULL,
-    nonportable_path_linter = NULL,
     cyclocomp_linter = NULL
   )

@@ -1,4 +1,4 @@
-test_that("Receptor orders/names", {
+test_that("Receptor orders & names", {
   data(flowers)
 
   # dichromat
@@ -80,7 +80,7 @@ test_that("Relative quantum catches", {
   )
 })
 
-test_that("Errors/messages", {
+test_that("Errors & messages", {
   data(flowers)
 
   # Categorical

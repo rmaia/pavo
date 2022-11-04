@@ -45,7 +45,7 @@ test_that("as.rimg", {
   expect_true(is.rimg(rimggrey))
 
   # as.rimg can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata", "images", "butterflies", "papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   pap2 <- as.rimg(matrix(papilio_class, nrow = (nrow(papilio_class)), ncol = ncol(papilio_class)))
   expect_true(is.rimg(pap2))
@@ -255,7 +255,7 @@ test_that("adjacency", {
     sat = c(1, 6)
   )
   set.seed(1)
-  checker <- getimg(system.file("testdata/images/validation/checkerboard.png", package = "pavo"))
+  checker <- getimg(system.file("testdata", "images", "validation", "checkerboard.png", package = "pavo"))
   checker_class <- classify(checker, kcols = 2)
   checker_adj <- adjacent(checker_class, xscale = 10, xpts = 220, coldists = distances, hsl = hsl_vals)
   expect_identical(checker_adj$k, 2L)
@@ -277,7 +277,7 @@ test_that("adjacency", {
   expect_identical(checker_adj$m_lum, 5.68)
 
   # Can handle user-classified images
-  papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
+  papilio <- getimg(system.file("testdata", "images", "butterflies", "papilio.png", package = "pavo"))
   papilio_class <- classify(papilio, kcols = 4)
   papilio_adj <- adjacent(papilio_class, xscale = 100)
 

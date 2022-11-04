@@ -451,7 +451,7 @@ vismodel <- function(rspecdata,
     warning(
       length(res[res < 0]),
       " negative quantum-catch value(s) returned, which may be unreliable. ",
-      "Consider whether the illuminant is properly scaled, and/or the appropriate",
+      "Consider whether the illuminant is properly scaled, and the appropriate",
       " form of quantum catch is being calculated."
     )
   }
