@@ -34,3 +34,4 @@ CONDUCT.md
 ^Dockerfile$
 ^vignettes/drafts$
 ^data-raw$
+^\.lintr$
