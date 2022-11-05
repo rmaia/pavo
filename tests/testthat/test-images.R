@@ -234,7 +234,7 @@ test_that("adjacency", {
   fake3_class <- classify(img1col, kcols = 1)
   fake3_adjacent <- adjacent(fake3_class, xpts = 100, xscale = 10)
   expect_identical(fake3_adjacent$k, 1L)
-  expect_identical(fake3_adjacent$p_1, 1L)
+  expect_identical(fake3_adjacent$p_1, 1)
   expect_identical(fake3_adjacent$q_1_1, 1)
   expect_identical(fake3_adjacent$q_1_1, 1)
   expect_identical(fake3_adjacent$m, 0)
