@@ -189,7 +189,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   ## Colour-classified
-  if (any(unlist(lapply(classimg, attr, "state")) == "colclass")) {
+  if (any(unlist(lapply(classimg, attr, "state")) != "colclass")) {
     stop("One or more images has not yet been colour-classified. See classify().")
   }
 
