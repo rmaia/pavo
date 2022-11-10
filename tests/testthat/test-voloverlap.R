@@ -14,7 +14,7 @@ test_that("tcs", {
   vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis, type = "convex")
 
   expect_length(vol_sicalis, 5)
-  expect_equal(vol_sicalis$vboth, 1)
+  expect_equal(vol_sicalis$vboth, 1, tolerance = 1e-14)
   expect_identical(vol_sicalis$vol1, vol_sicalis$vol2)
 })
 
@@ -49,8 +49,8 @@ test_that("Dataframe", {
   vol <- voloverlap(hrep, qux, type = "convex")
 
   expect_length(vol, 5)
-  expect_equal(vol$vol1, 2.5 / 3)
-  expect_equal(vol$vol2, 1)
+  expect_equal(vol$vol1, 2.5 / 3, tolerance = 1e-15)
+  expect_equal(vol$vol2, 1, tolerance = 1e-15)
 })
 
 test_that("Symmetric", {
@@ -76,9 +76,11 @@ test_that("Symmetric", {
 
   # expect_identical() should work but for some reason, it fails on CRAN
   # platform ATLAS
+  # nolint start
   expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
   expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
   expect_equal(vol_hq$vboth, vol_hq$vboth)
+  # nolint end
 })
 
 test_that("Plane", {
@@ -105,7 +107,7 @@ test_that("Alphashapes", {
   skip_on_cran()
 
   set.seed(20200517)
-  expect_equal(
+  expect_identical(
     digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5, nsamp = 10000), digits = 4),
     "7932522b35c2c59365fe7c342f367f8ec35f601a"
   )

@@ -22,10 +22,10 @@
 #' @examples
 #' # Load reflectance spectra
 #' data(sicalis)
-#' 
+#'
 #' # Visualise the spectral reflectance curves across a range of smoothing levels
 #' plotsmooth(sicalis, minsmooth = 0.05, maxsmooth = 0.1, curves = 7, specnum = 6)
-#' 
+#'
 #' @author Pierre-Paul Bitton \email{bittonp@@uwindsor.ca}
 
 plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,

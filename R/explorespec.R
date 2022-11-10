@@ -59,7 +59,7 @@ explorespec <- function(rspecdata, by = NULL,
   # TODO: this is actually alright if you are not plotting by a character vector
   # describing the species, type of patch, etc. (by=3 should work fine here, last
   # plot will only have fewer lines)
-  if (dim(rspecdata)[2] != length(by) & !is.integer(by)) {
+  if (dim(rspecdata)[2] != length(by) && !is.integer(by)) {
     stop(
       dQuote(deparse(substitute(by))),
       " is not of same length as columns in ",
@@ -91,8 +91,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   if (numby <= 16) {
     par(mfrow = n2mfrow(numby))
-  }
-  else {
+  } else {
     par(ask = TRUE)
   }
 

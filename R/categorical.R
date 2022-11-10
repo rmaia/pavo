@@ -46,11 +46,7 @@ categorical <- function(vismodeldata) {
     if (!attr(dat, "relative")) {
       warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
     }
-  }
-
-  # if not, check if it has more (or less) than 4 columns
-
-  else {
+  } else {  # if not, check if it has more (or less) than 4 columns
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"),
         " object and has fewer than four columns",

@@ -67,21 +67,21 @@
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
                       oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = NULL) {
   if (!is.null(lambdacut)) {
-    if (is.null(Bmid) & is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
+    if (is.null(Bmid) && is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
     if (length(lambdacut) != length(peaksens)) stop("lambdacut must be same length as peaksens", call. = FALSE)
   }
 
-  if (!is.null(Bmid) & is.null(lambdacut)) { # Change once oil type corrected
+  if (!is.null(Bmid) && is.null(lambdacut)) { # Change once oil type corrected
     stop("lambdacut has to be provided together with Bmid")
   }
 
-  if (!is.null(lambdacut) & !is.null(Bmid) & !is.null(oiltype)) {
+  if (!is.null(lambdacut) && !is.null(Bmid) && !is.null(oiltype)) {
     stop("only 2 of lambdacut, Bmid, and oiltype can be provided")
   }
-  if (!is.null(lambdacut) & !is.null(oiltype)) {
+  if (!is.null(lambdacut) && !is.null(oiltype)) {
     if (length(lambdacut) != length(oiltype)) stop("lambdacut and oiltype must be of same length")
   }
-  if (!is.null(lambdacut) & !is.null(Bmid)) {
+  if (!is.null(lambdacut) && !is.null(Bmid)) {
     if (length(lambdacut) != length(Bmid)) stop("lambdacut and Bmid must be of same length")
   }
 
@@ -92,8 +92,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   for (i in seq_along(peaksens)) {
 
     # Sensitivities w/o oil droplets
-    peak <- 1 / (exp(69.7 * (.8795 + .0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / wl)))
-    + exp(28 * (.922 - peaksens[i] / wl)) + exp(-14.9 * (1.104 - (peaksens[i] / wl))) + .674)
+    peak <- 1 / (exp(69.7 * (0.8795 + 0.0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / wl)))
+    + exp(28 * (0.922 - peaksens[i] / wl)) + exp(-14.9 * (1.104 - (peaksens[i] / wl))) + 0.674)
 
     if (beta) {
       betaband <- 0.26 * exp(-((wl - (189 + 0.315 * peaksens[i])) / (-40.5 + 0.195 * peaksens[i]))^2)
@@ -102,8 +102,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
     peak <- peak / max(peak)
 
-    if (!is.null(lambdacut) & !is.null(Bmid)) {
-      if (is.na(lambdacut[i]) & !is.na(Bmid[i])) {
+    if (!is.null(lambdacut) && !is.null(Bmid)) {
+      if (is.na(lambdacut[i]) && !is.na(Bmid[i])) {
         warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
         T.oil <- 1
       } else {
@@ -112,7 +112,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
       }
     }
 
-    if (!is.null(lambdacut) & !is.null(oiltype)) {
+    if (!is.null(lambdacut) && !is.null(oiltype)) {
       if (oiltype[i] == "T") {
         T.oil <- 1
       } else {
@@ -122,7 +122,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
         if (oiltype[i] == "P") oil <- c(0.96, 33.57)
 
         # Oil droplet transmission from Hart and Vorobyev (2005)
-        T.oil <- exp(-exp(-2.89 * (.5 / ((oil[1] * lambdacut[i] + oil[2]) - lambdacut[i])) *
+        T.oil <- exp(-exp(-2.89 * (0.5 / ((oil[1] * lambdacut[i] + oil[2]) - lambdacut[i])) *
           (wl - lambdacut[i]) + 1.08))
       }
 
@@ -141,13 +141,12 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
         if (om == "bird") {
           T.e <- log(8.928 * 10^-13 * wl^5 - 2.595 * 10^-9 *
             wl^4 + 3.006 * 10^-6 *
-            wl^3 - .001736 * wl^2 + .5013 *
+            wl^3 - 0.001736 * wl^2 + 0.5013 *
             wl - 55.56)
           T.e[which(T.e < 0)] <- 0
           peak <- peak * T.e
         }
-      }
-      else {
+      } else {
         T.e <- om
         peak <- peak * T.e
       }
@@ -160,7 +159,10 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   if (!is.null(sensnames)) {
     if (length(sensnames) != length(sensecurves)) {
-      message("The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. Reverting to default names.")
+      message(
+        "The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. ",
+        "Reverting to default names."
+      )
       sensnames <- NULL
     } else {
       names(sensecurves) <- sensnames

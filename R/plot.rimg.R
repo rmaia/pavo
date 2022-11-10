@@ -117,7 +117,7 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
 rot90 <- function(x) {
   permVec <- c(2, 1, 3:length(dim(x)))
   rotA <- aperm(x, permVec)
-  rotA <- rotA[dim(x)[2]:1, , ]
+  rotA <- rotA[seq(dim(x)[2], 1), , ]
   rotA
 }
 

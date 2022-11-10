@@ -46,20 +46,20 @@
 #' @examples
 #' # Load floral reflectance spectra
 #' data(flowers)
-#' 
+#'
 #' # Estimate quantum catches visual phenotype of a Blue Tit
 #' vis.flowers <- vismodel(flowers, visual = 'bluetit')
-#' 
-#' # Estimate noise-weighted colour distances between all flowers 
+#'
+#' # Estimate noise-weighted colour distances between all flowers
 #' cd.flowers <- coldist(vis.flowers)
-#' 
-#' # Convert points to Cartesian coordinates in which Euclidean distances are 
+#'
+#' # Convert points to Cartesian coordinates in which Euclidean distances are
 #' # noise-weighted.
 #' propxyz <- jnd2xyz(cd.flowers)
-#' 
+#'
 #' # Plot the floral spectra in 'noise-corrected' space
 #' plot(propxyz)
-#' 
+#'
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Pike, T.W. (2012). Preserving perceptual distances in

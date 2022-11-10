@@ -7,17 +7,17 @@
 #' @examples
 #' # Load floral reflectance spectra
 #' data(flowers)
-#' 
+#'
 #' # Estimate quantum catches visual phenotype of a Blue Tit
 #' vis.flowers <- vismodel(flowers, visual = 'bluetit')
-#' 
-#' # Estimate noise-weighted colour distances between all flowers 
+#'
+#' # Estimate noise-weighted colour distances between all flowers
 #' cd.flowers <- coldist(vis.flowers)
-#' 
-#' # Convert points to Cartesian coordinates in which Euclidean distances are 
+#'
+#' # Convert points to Cartesian coordinates in which Euclidean distances are
 #' # noise-weighted, before rotating them about the data centroid
 #' jndrot(jnd2xyz(cd.flowers))
-#' 
+#'
 #' @author Rafael Maia \email{rm72@zips.uakron.edu}
 #'
 #' @export
@@ -31,8 +31,8 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
 
   if (!is.null(ref1) && !paste0("jnd2xyzrrf.", ref1) %in% rownames(attr(jnd2xyzres, "resref"))) {
     stop('"ref1" does not match the name of a photoreceptor; must be one of: ',
-      paste0(gsub("jnd2xyzrrf.", "", rownames(attr(jnd2xyzres, "resref")))
-      [-c(1, length(rownames(attr(jnd2xyzres, "resref"))))], collapse = ", "),
+      toString(gsub("jnd2xyzrrf.", "", rownames(attr(jnd2xyzres, "resref")))
+      [-c(1, length(rownames(attr(jnd2xyzres, "resref"))))]),
       call. = FALSE
     )
   }
@@ -40,8 +40,8 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
   if (!is.null(ref2) && all(c("x", "y", "z") %in% colnames(jnd2xyzres)) &&
     !paste0("jnd2xyzrrf.", ref2) %in% rownames(attr(jnd2xyzres, "resref"))) {
     stop('"ref2" does not match the name of a photoreceptor; must be one of: ',
-      paste0(gsub("jnd2xyzrrf.", "", rownames(attr(jnd2xyzres, "resref")))
-      [-c(1, length(rownames(attr(jnd2xyzres, "resref"))))], collapse = ", "),
+      toString(gsub("jnd2xyzrrf.", "", rownames(attr(jnd2xyzres, "resref")))
+      [-c(1, length(rownames(attr(jnd2xyzres, "resref"))))]),
       call. = FALSE
     )
   }
@@ -189,11 +189,11 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
     res <- cbind(res, lum = coordsall[, "lum"])
   }
 
-  chromcoords <- res[grep("jnd2xyzrrf", rownames(res), invert = TRUE), , drop = FALSE]
+  chromcoords <- res[grep("jnd2xyzrrf", rownames(res), invert = TRUE, fixed = TRUE), , drop = FALSE]
 
   chromcoords <- as.data.frame(chromcoords)
 
-  refstosave <- as.data.frame(res[grep("jnd2xyzrrf", rownames(res)), , drop = FALSE])
+  refstosave <- as.data.frame(res[grep("jnd2xyzrrf", rownames(res), fixed = TRUE), , drop = FALSE])
 
   attr(chromcoords, "class") <- c("colspace", "jnd2xyz", "data.frame")
   attr(chromcoords, "resref") <- refstosave

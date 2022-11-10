@@ -19,7 +19,7 @@
 #' data(flowers)
 #' vis.flowers <- vismodel(flowers, visual = "apis", achromatic = "l")
 #' tri.flowers <- colspace(vis.flowers, space = "tri")
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -61,11 +61,7 @@ trispace <- function(vismodeldata) {
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
     }
-  }
-
-  # if not, check if it has more (or less) than 3 columns
-
-  else {
+  } else { # if not, check if it has more (or less) than 3 columns
     if (ncol(dat) < 3) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
     }

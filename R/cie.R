@@ -41,19 +41,19 @@
 #' @examples
 #' # Load floral reflectance spectra
 #' data(flowers)
-#' 
+#'
 #' # Estimate quantum catches, using the cie10-degree viewer matching function
 #' vis.flowers <- vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE)
-#' 
+#'
 #' # Model floral spectra in the CIEXYZ space
 #' flowers.ciexyz <- colspace(vis.flowers, space = "ciexyz")
-#' 
+#'
 #' # Model floral spectra in the CIELab space
 #' flowers.cielab <- colspace(vis.flowers, space = "cielab")
-#' 
+#'
 #' # Model floral spectra in the CIELch space
 #' flowers.cielch <- colspace(vis.flowers, space = "cielch")
-#' 
+#'
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #'
 #' @export
@@ -91,7 +91,7 @@ cie <- function(vismodeldata,
     x <- X / (X + Y + Z)
     y <- Y / (X + Y + Z)
     z <- Z / (X + Y + Z)
-  } else if (space == "LAB" | space == "LCh") {
+  } else if (space %in% c("LAB", "LCh")) {
 
     # Calculate tristimulus values for neutral point. First need to
     # re-grab original sensitivity and illuminant data.

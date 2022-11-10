@@ -17,17 +17,17 @@
 #' data(teal)
 #' teal1 <- teal[, c(1, 3:5)]
 #' teal2 <- teal[, c(1, 2, 6:12)]
-#' 
+#'
 #' # Merge the two split datasets back into one, with a shared 'wl' column
 #' teal.mer <- merge(teal1, teal2, by = "wl")
-#' 
+#'
 #' # Examine the results, and compare the original to the (identical)
 #' # reconstructed version
 #' plot(teal.mer)
 #' plot(teal)
-#' 
+#'
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
-#' 
+#'
 #' @seealso [as.rspec()], [aggspec()]
 
 merge.rspec <- function(x, y, ...) {

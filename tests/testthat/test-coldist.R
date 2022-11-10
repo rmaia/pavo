@@ -39,12 +39,12 @@ test_that("Messages & warnings", {
 test_that("Equivalent", {
   data(flowers)
 
-  expect_equal(
+  expect_identical(
     coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achro = FALSE),
     coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achro = FALSE)
   )
 
-  expect_equal(
+  expect_identical(
     coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achro = FALSE),
     coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achro = FALSE)
   )
@@ -62,8 +62,8 @@ test_that("Equivalent", {
   )
 
   expect_equal(
-  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielab')),
-  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), 'cielch')),
+  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielab")),
+  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielch")),
   ignore_attr = TRUE
   )
 
@@ -86,8 +86,8 @@ test_that("jnd transform", {
   jnd.flowers <- jnd2xyz(cd.flowers)
 
   # Errors
-  expect_equal(dim(jnd2xyz(cd.flowers)), c(36, 2))
-  expect_equal(dim(coldist(vismodel(flowers))), c(630, 4))
+  expect_identical(dim(jnd2xyz(cd.flowers)), c(36L, 2L))
+  expect_identical(dim(coldist(vismodel(flowers))), c(630L, 4L))
 
   rownames(attr(jnd.flowers, "resref"))[4] <- "nope"
   expect_error(jndrot(jnd.flowers), "does not match")
@@ -99,13 +99,13 @@ test_that("jnd transform", {
 test_that("Output", {
   # Maximum possible unweighted Euclidean distances
   di <- data.frame(s = c(0, 1), l = c(1, 0))
-  expect_equal(coldist(colspace(di, space = "di"))[["dS"]], (1 / sqrt(2)) * 2)
+  expect_identical(coldist(colspace(di, space = "di"))[["dS"]], (1 / sqrt(2)) * 2)
 
   tri <- data.frame(s = c(0, 0), m = c(0, 1), l = c(1, 0))
-  expect_equal(coldist(colspace(tri, space = "tri"))[["dS"]], (1 / sqrt(2)) * 2)
+  expect_identical(coldist(colspace(tri, space = "tri"))[["dS"]], (1 / sqrt(2)) * 2)
 
   tetra <- data.frame(u = c(0, 1), s = c(0, 0), m = c(0, 0), l = c(1, 0))
-  expect_equal(coldist(colspace(tetra, space = "tcs"))[["dS"]], (sqrt(3) / (2 * sqrt(2))) * 2)
+  expect_identical(coldist(colspace(tetra, space = "tcs"))[["dS"]], (sqrt(3) / (2 * sqrt(2))) * 2)
 })
 
 test_that("bootcoldist", {
@@ -116,11 +116,11 @@ test_that("bootcoldist", {
   bcd <- suppressWarnings(
     bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
   )
-  expect_equal(dim(bcd), c(3, 6))
+  expect_identical(dim(bcd), c(3L, 6L))
 
   # Raw size
   raw <- bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 30, raw = TRUE)
-  expect_equal(nrow(raw), 30)
+  expect_identical(nrow(raw), 30L)
   raw2 <- bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 437, raw = TRUE)
-  expect_equal(nrow(raw2), 437)
+  expect_identical(nrow(raw2), 437L)
 })

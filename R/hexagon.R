@@ -68,11 +68,7 @@ hexagon <- function(vismodeldata) {
     if (!isTRUE(attr(dat, "vonkries"))) {
       warning("Quantum catches are not von-Kries transformed, as required for the hexagon model. This may produce unexpected results.", call. = FALSE)
     }
-  }
-
-  # if not, check if it has more (or less) than 3 columns
-
-  else {
+  } else { # if not, check if it has more (or less) than 3 columns
     if (ncol(dat) < 3) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
     }

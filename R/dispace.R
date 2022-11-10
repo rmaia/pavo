@@ -51,10 +51,7 @@ dispace <- function(vismodeldata) {
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
     }
-  }
-
-  # if not, check if it has more (or less) than 2 columns
-  else {
+  } else { # if not, check if it has more (or less) than 2 columns
     if (ncol(dat) < 2) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than two columns", call. = FALSE)
     }

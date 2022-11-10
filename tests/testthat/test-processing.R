@@ -7,31 +7,35 @@ test_that("Procspec", {
   expect_error(procspec(sicalis, opt = "smooth", span = 0), "span")
 
   # Smoothing
-  expect_equal(dim(procspec(sicalis, opt = "smooth")), dim(sicalis))
+  expect_identical(dim(procspec(sicalis, opt = "smooth")), dim(sicalis))
   expect_message(dim(procspec(sicalis, opt = "smooth")), "smoothing")
-  expect_equal(
+  expect_identical(
     dim(procspec(sicalis, opt = "smooth", span = 0.1)),
     dim(procspec(sicalis, opt = "smooth", span = 30))
   )
-  expect_equal(
+  expect_identical(
     dim(procspec(sicalis, opt = "smooth", span = 0.1)),
     dim(procspec(sicalis, opt = "smooth", span = 50))
   )
 
   # Binning
-  expect_equal(dim(procspec(sicalis, opt = "bin", bins = 24)), c(24, 22))
-  expect_equal(dim(procspec(sicalis, opt = "bin", bins = 33)), c(33, 22))
+  expect_identical(dim(procspec(sicalis, opt = "bin", bins = 24)), c(24L, 22L))
+  expect_identical(dim(procspec(sicalis, opt = "bin", bins = 33)), c(33L, 22L))
 
   # Minmax
-  expect_equal(max(procspec(sicalis, opt = "maximum")[, -1]), 1)
-  expect_equal(min(procspec(sicalis, opt = "minimum")[, -1]), 0)
-  expect_equal(range(procspec(sicalis, opt = c("minimum", "maximum"))), c(0, 700))
+  expect_identical(max(procspec(sicalis, opt = "maximum")[, -1]), 1)
+  expect_identical(min(procspec(sicalis, opt = "minimum")[, -1]), 0)
+  expect_identical(range(procspec(sicalis, opt = c("minimum", "maximum"))[, -1]), c(0, 1))
 
   # Summing
-  expect_equal(sum(apply(procspec(sicalis, opt = "sum")[, -1], 2, sum)), ncol(sicalis[, -1]))
+  expect_equal(
+    sum(colSums(procspec(sicalis, opt = "sum")[, -1])),
+    ncol(sicalis[, -1]),
+    tolerance = 1e-14
+  )
 
   # Centering
-  expect_equal(dim(procspec(sicalis, opt = "center")), dim(sicalis))
+  expect_identical(dim(procspec(sicalis, opt = "center")), dim(sicalis))
 
   # Fixing negs
   sicalis2 <- sicalis
@@ -40,13 +44,13 @@ test_that("Procspec", {
   expect_false(any(procspec(sicalis2, fixneg = "addmin") < 0))
 
   # Everything
-  expect_equal(
+  expect_identical(
     dim(procspec(sicalis,
       opt = c("minimum", "maximum", "bin", "center", "sum"),
       span = 0.5,
       bins = 24
     )),
-    c(24, 22)
+    c(24L, 22L)
   )
 
   # Uninterpolated spectra
@@ -67,10 +71,10 @@ test_that("Aggregation", {
   data(teal)
 
   ind <- rep(c("a", "b"), times = 6)
-  expect_equal(dim(aggspec(teal, by = ind)), c(401, 3))
-  expect_equal(dim(aggspec(teal, by = 6)), c(401, 3))
-  expect_equal(dim(aggspec(teal[, -1], by = ind)), c(401, 3))
-  expect_equal(dim(aggspec(teal)), c(401, 2))
+  expect_identical(dim(aggspec(teal, by = ind)), c(401L, 3L))
+  expect_identical(dim(aggspec(teal, by = 6)), c(401L, 3L))
+  expect_identical(dim(aggspec(teal[, -1], by = ind)), c(401L, 3L))
+  expect_identical(dim(aggspec(teal)), c(401L, 2L))
 
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]

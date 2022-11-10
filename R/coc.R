@@ -51,10 +51,7 @@ coc <- function(vismodeldata) {
     if (!isTRUE(attr(dat, "vonkries"))) {
       stop("Quantum catches are not von-Kries transformed, as required for the coc model", call. = FALSE)
     }
-  }
-
-  # if not, check if it has more (or less) than 3 columns
-  else {
+  } else { # if not, check if it has more (or less) than 3 columns
     if (ncol(dat) < 3) {
       stop("Input data is not a ", dQuote("vismodel"),
         " object and has fewer than three columns",
@@ -83,7 +80,10 @@ coc <- function(vismodeldata) {
     names(dat) <- c("s", "m", "l")
 
     if (isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      stop("Quantum catches are relative, which is not required in the coc model and may produce unexpected results", call. = FALSE)
+      stop(
+        "Quantum catches are relative, which is not required in the coc model and may produce unexpected results",
+        call. = FALSE
+      )
     }
   }
 

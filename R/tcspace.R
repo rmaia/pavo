@@ -64,16 +64,17 @@ tcspace <- function(vismodeldata) {
       warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
       attr(vismodeldata, "relative") <- TRUE
     }
-  }
-
-  # if not, check if it has more (or less) than 4 columns
-  else {
+  } else { # if not, check if it has more (or less) than 4 columns
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
     }
     if (ncol(dat) == 4) {
       if (!all(c("u", "s", "m", "l") %in% names(dat))) {
-        message("Input data is not a ", dQuote("vismodel"), " object; treating columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+        message(
+          'Input data is not a "vismodel" object; ',
+          'treating columns as unstandardized quantum catch for "u", "s", "m", ""l" receptors, respectively',
+          call. = FALSE
+        )
       }
     }
 
@@ -81,7 +82,11 @@ tcspace <- function(vismodeldata) {
       if (all(c("u", "s", "m", "l") %in% names(dat))) {
         dat <- dat[, c("u", "s", "m", "l")]
       } else {
-        message("Input data is not a ", dQuote("vismodel"), " object and has more than four columns; treating the first four columns as unstandardized quantum catch for ", dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively", call. = FALSE)
+        message(
+          'Input data is not a "vismodel" object and has more than four columns; ',
+          'treating the first four columns as unstandardized quantum catch for "u", "s", "m" and "l" receptors, respectively',
+          call. = FALSE
+        )
       }
       attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(4)]
     }
