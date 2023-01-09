@@ -2,7 +2,8 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
-- Removed the start-up message
+- Removed the start-up message.
+- Replace `rgl.triangles` with `triangles3d()` internally to avoid a deprecation issue.
 
 # pavo 2.8.0
 
