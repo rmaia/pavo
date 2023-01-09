@@ -61,7 +61,7 @@ tcsvol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
   }
 
   if (fill) {
-    rgl::rgl.triangles(coords[vol, ],
+    rgl::triangles3d(coords[vol, ],
       alpha = alpha, color = col
     )
   }
