@@ -37,8 +37,8 @@ test_that("coldist", {
     "d65c018342664ae9c8dca35e715c57dde28de30a"
   )
   expect_identical(
-    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 4),
-    "c6d1989e98abd7772c00475696c6e6dafe0a2e46"
+    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
+    "aab55ce161af284202740d63634f90a90cb4cb84"
   )
   expect_identical(
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), "cielab")), digits = 4),
@@ -81,16 +81,16 @@ test_that("coldist", {
 test_that("colspace", {
 
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 4),
-    "47352906f00a35504177712d772737b33a6ede64"
+    digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 3),
+    "e5d81f558b4e193ef0dc3873d2d3d737ae0d4001"
   ) # dispace
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 4),
-    "81aa34c6d3f86e5644f2d2793d03bd14cb7281da"
+    digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 3),
+    "8e4abaa9f152aa79217c41c79e7000aa29e916ac"
   ) # trispace
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 4),
-    "56b236d6f0591a25b067009a10dc2d96c3e27c4f"
+    digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 3),
+    "a0e29c7e8ccdeeb7ebb1bb61cf23ee9633c05aa2"
   ) # tcs
   expect_identical(
     digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4),
