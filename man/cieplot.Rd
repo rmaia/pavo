@@ -16,7 +16,6 @@ cieplot(
   zoom = 1,
   box = FALSE,
   ciebg = TRUE,
-  margin = NULL,
   ...
 )
 }
@@ -50,9 +49,9 @@ to \code{FALSE})}
 \item{ciebg}{should the colour background be plotted for CIEXYZ plot?
 (defaults to \code{TRUE})}
 
-\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
-
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
+
+\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 }
 \description{
 Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.

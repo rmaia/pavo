@@ -63,13 +63,7 @@
 
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
-                    ciebg = TRUE, margin = NULL, ...) {
-  if (!missing("margin")) {
-    message(
-      "The 'margin' argument is deprecated, and will be ignored. ",
-      "See ?par() for guidance on setting margins in the standard manner."
-    )
-  }
+                    ciebg = TRUE, ...) {
 
   arg <- list(...)
 

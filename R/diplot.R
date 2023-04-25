@@ -24,11 +24,7 @@
 
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
                    achrosize = 0.8, labels.cex = 1, out.lwd = 1, out.lcol = "black",
-                   out.lty = 1, square = TRUE, margins = NULL, ...) {
-  if (!missing("margins")) {
-    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
-            setting margins in the standard manner.")
-  }
+                   out.lty = 1, square = TRUE, ...) {
 
   arg <- list(...)
 

@@ -13,7 +13,6 @@ cocplot(
   achrosize = 0.8,
   achrocol = "grey",
   square = TRUE,
-  margins = NULL,
   ...
 )
 }
@@ -40,8 +39,6 @@ y axes.}
 
 \item{square}{logical. Should the aspect ratio of the plot be held to 1:1?
 (defaults to \code{TRUE}).}
-
-\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

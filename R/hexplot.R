@@ -35,11 +35,7 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     sectors = c("none", "fine", "coarse"), sec.col = "grey",
                     out.lwd = 1, out.lty = 1, out.lcol = "black",
                     labels.cex = 1, achrosize = 0.8,
-                    achrocol = "grey", square = TRUE, margins = NULL, ...) {
-  if (!missing("margins")) {
-    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on 
-            setting margins in the standard manner.")
-  }
+                    achrocol = "grey", square = TRUE, ...) {
 
   sectors <- match.arg(sectors)
 

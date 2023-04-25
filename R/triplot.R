@@ -19,7 +19,6 @@
 #' @param gamut logical. Should the polygon showing the possible colours given
 #'   visual system and illuminant used in the analysis (defaults to `FALSE`).
 #'   This option currently only works when `qcatch = Qi`.
-#' @param margins Deprecated. Please use the standard [par()] method for custom margins.
 #' @param ... additional graphical options. See [par()].
 #'
 #' @examples
@@ -40,11 +39,7 @@
 
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
-                    square = TRUE, gamut = FALSE, margins = NULL, ...) {
-  if (!missing("margins")) {
-    message("The 'margins' argument is deprecated, and will be ignored. See ?par() for guidance on
-            setting margins in the standard manner.")
-  }
+                    square = TRUE, gamut = FALSE, ...) {
 
   arg <- list(...)
 

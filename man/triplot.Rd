@@ -16,7 +16,6 @@ triplot(
   out.lty = 1,
   square = TRUE,
   gamut = FALSE,
-  margins = NULL,
   ...
 )
 }
@@ -46,8 +45,6 @@ corresponding vertex?}
 \item{gamut}{logical. Should the polygon showing the possible colours given
 visual system and illuminant used in the analysis (defaults to \code{FALSE}).
 This option currently only works when \code{qcatch = Qi}.}
-
-\item{margins}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
 }

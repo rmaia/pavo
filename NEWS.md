@@ -7,6 +7,7 @@
 ## MINOR FEATURES AND BUG FIXES
 
 - Removed the start-up message.
+- Removed the previously-deprecated `margins` argument from various colourspace plots.
 
 # pavo 2.8.0
 
