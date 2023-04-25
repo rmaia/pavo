@@ -81,7 +81,9 @@
 <span>  type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"overlay"</span>, <span class="st">"stack"</span>, <span class="st">"heatmap"</span><span class="op">)</span>,</span>
 <span>  varying <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  n <span class="op">=</span> <span class="fl">100</span>,</span>
+<span>  labels <span class="op">=</span> <span class="cn">FALSE</span>,</span>
 <span>  labels.stack <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  labels.cex <span class="op">=</span> <span class="fl">1</span>,</span>
 <span>  wl.guide <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  <span class="va">...</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -97,7 +99,7 @@ containing spectra to plot.</p></dd>
 
 <dt>select</dt>
 <dd><p>specification of which spectra to plot. Can be a numeric vector
-or factor (e.g., <code>sex=="male"</code>)</p></dd>
+or factor (e.g., <code>sex == "male"</code>)</p></dd>
 
 
 <dt>type</dt>
@@ -119,9 +121,20 @@ variable (<code>varying</code>).</p></li>
 the heatplot.</p></dd>
 
 
+<dt>labels</dt>
+<dd><p>logical. Add labels identifying each spectrum to the outer plot
+margin? Defaults to <code>FALSE</code>. Ignored when <code>type = 'heatmap'</code>.</p></dd>
+
+
 <dt>labels.stack</dt>
-<dd><p>a vector of labels for the stacked spectra when using
-<code>type = "stack"</code>. Defaults to the numeric column ID's.</p></dd>
+<dd><p>a vector of labels for spectra when <code>labels = TRUE</code>.
+Defaults to the column names from spectral data. Note you will likely want
+to adjust the plot margins to accommodate the text labels. See <code>?par()</code> for
+guidance on setting margins.</p></dd>
+
+
+<dt>labels.cex</dt>
+<dd><p>size of the text labels when <code>labels = TRUE</code>.</p></dd>
 
 
 <dt>wl.guide</dt>
