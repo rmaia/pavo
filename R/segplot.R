@@ -28,14 +28,14 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
                     square = TRUE, ...) {
 
   # Check if object is of class colorspace and tetrachromat
-  if (!is.colspace(segdata) & !all(c("LM", "MS") %in% names(segdata))) {
+  if (!is.colspace(segdata) && !all(c("LM", "MS") %in% names(segdata))) {
     stop(
       "object is not of class ", dQuote("colspace"),
       ", and does not contain LM, MS segment data"
     )
   }
 
-  if (is.colspace(segdata) & attr(segdata, "clrsp") != "segment") {
+  if (is.colspace(segdata) && attr(segdata, "clrsp") != "segment") {
     stop(dQuote("colspace"), " object is not a result of segspace()")
   }
 

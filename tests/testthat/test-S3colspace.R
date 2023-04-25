@@ -17,10 +17,10 @@ test_that("summary.colspace", {
   expect_true(is.na(sumtcs_sicalis$huedisp.v))
 
   expect_message(summary_subset <- summary(tcs_sicalis[, -17]), "subset data")
-  expect_equal(summary_subset, summary.data.frame(tcs_sicalis[, -17]))
+  expect_identical(summary_subset, summary.data.frame(tcs_sicalis[, -17]))
 
   expect_warning(tri_sicalis <- colspace(vismodel(sicalis, "cie10"), "tri"))
-  expect_equal(
+  expect_identical(
     summary(tri_sicalis),
     summary.data.frame(tri_sicalis)
   )
@@ -35,6 +35,6 @@ test_that("subset.colspace", {
 
   tcs_sicalis_T <- subset(tcs_sicalis, "T")
 
-  expect_equal(dim(tcs_sicalis_T), c(7, 17))
+  expect_identical(dim(tcs_sicalis_T), c(7L, 17L))
   expect_s3_class(tcs_sicalis_T, "colspace")
 })

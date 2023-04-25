@@ -8,6 +8,7 @@
 
 - Removed the start-up message.
 - Removed the previously-deprecated `margins` argument from various colourspace plots.
+- Replace `rgl.triangles` with `triangles3d()` internally to avoid a deprecation issue.
 
 # pavo 2.8.0
 

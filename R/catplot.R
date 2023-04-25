@@ -26,14 +26,14 @@
 catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
 
   # Check if object is of class colorspace and tetrachromat
-  if (!is.colspace(catdata) & !all(c("x", "y") %in% names(catdata))) {
+  if (!is.colspace(catdata) && !all(c("x", "y") %in% names(catdata))) {
     stop(
       "object is not of class ", dQuote("colspace"),
       ", and does not contain x, y coordinates"
     )
   }
 
-  if (is.colspace(catdata) & attr(catdata, "clrsp") != "categorical") {
+  if (is.colspace(catdata) && attr(catdata, "clrsp") != "categorical") {
     stop(dQuote("colspace"), " object is not a result of categorical()")
   }
 

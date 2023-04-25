@@ -34,35 +34,35 @@ test_that("as.rspec", {
     flowers3_fullrange <- as.rspec(flowers3, lim = c(300, 700), exceed.range = TRUE),
     "beyond the range"
   )
-  expect_equal(dim(flowers3_fullrange), c(401, 37))
+  expect_identical(dim(flowers3_fullrange), c(401L, 37L))
 
-  expect_error(as.rspec(c(300:700)), "must be a data frame or matrix")
+  expect_error(as.rspec(300:700), "must be a data frame or matrix")
 
   colnames(flowers)[2] <- "wl"
   expect_warning(as.rspec(flowers), "Multiple columns named 'wl'")
 
   fakedat <- data.frame(wl = seq(200, 800, 0.5), refl1 = rnorm(1201), refl2 = rnorm(1201))
-  expect_equal(dim(as.rspec(fakedat, lim = c(300, 700), interp = FALSE)), c(801, 3))
-  expect_equal(dim(as.rspec(fakedat, lim = c(200, 800), interp = FALSE)), c(1201, 3))
-  expect_equal(dim(as.rspec(fakedat, lim = c(300, 700), interp = TRUE)), c(401, 3))
-  expect_equal(as.data.frame(as.rspec(fakedat, lim = c(300, 700))["wl"]), data.frame(wl = as.numeric(c(300:700))))
+  expect_identical(dim(as.rspec(fakedat, lim = c(300, 700), interp = FALSE)), c(801L, 3L))
+  expect_identical(dim(as.rspec(fakedat, lim = c(200, 800), interp = FALSE)), c(1201L, 3L))
+  expect_identical(dim(as.rspec(fakedat, lim = c(300, 700), interp = TRUE)), c(401L, 3L))
+  expect_identical(as.data.frame(as.rspec(fakedat, lim = c(300, 700))["wl"]), data.frame(wl = 300L:700L))
 
   # Matrix and df input should have the same output
   expect_identical(as.rspec(fakedat), as.rspec(as.matrix(fakedat)))
 
   # Single column df should work and output a 2 columns rspec object
-  expect_equal(dim(suppressWarnings(as.rspec(fakedat[, 2, drop = FALSE]))), c(1201, 2))
+  expect_identical(dim(suppressWarnings(as.rspec(fakedat[, 2, drop = FALSE]))), c(1201L, 2L))
 
   expect_message(as.rspec(fakedat), "wavelengths found")
 
   expect_warning(as.rspec(fakedat[, -1], lim = c(300, 700)), "user-specified range")
   expect_warning(as.rspec(fakedat[, -1]), "arbitrary index")
 
-  expect_equal(
+  expect_identical(
     as.rspec(fakedat, lim = c(300.1, 700), interp = FALSE)$wl,
     seq(300.5, 700, 0.5)
   )
-  expect_equal(
+  expect_identical(
     as.rspec(fakedat, lim = c(300, 699.1), interp = FALSE)$wl,
     seq(300, 699, 0.5)
   )
@@ -78,7 +78,7 @@ test_that("as.rspec", {
 test_that("summary.rspec", {
   data(sicalis)
 
-  expect_equal(dim(summary(sicalis)), c(21, 23))
+  expect_identical(dim(summary(sicalis)), c(21L, 23L))
   # expect_known_hash(summary(sicalis), "66129550f3")
 
   # Subset
@@ -94,7 +94,7 @@ test_that("summary.rspec", {
 
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
-  expect_equal(dim(summary(one_spec)), c(1, 23))
+  expect_identical(dim(summary(one_spec)), c(1L, 23L))
   expect_warning(
     expect_length(summary(one_spec, wlmin = 500), 23),
     "blue chroma"
@@ -118,7 +118,7 @@ test_that("subset.rspec", {
 
   sicalis_T <- subset(sicalis, "T")
 
-  expect_equal(dim(sicalis_T), c(401, 8))
+  expect_identical(dim(sicalis_T), c(401L, 8L))
   expect_s3_class(sicalis_T, "rspec")
 
   expect_warning(subset(sicalis, "Z"), "Subset condition not found")

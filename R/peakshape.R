@@ -82,7 +82,7 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     # Keep only first peak of each spectrum
     dblpeak_nms <- nms[dblpeaks > 1]
     warning("Multiple wavelengths have the same reflectance value (",
-      paste(dblpeak_nms, collapse = ", "), "). Using first peak found. ",
+      toString(dblpeak_nms), "). Using first peak found. ",
       "Please check the data or try smoothing.",
       call. = FALSE
     )

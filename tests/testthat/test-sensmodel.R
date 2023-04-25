@@ -1,11 +1,15 @@
 test_that("sensmodel() values", {
 
   expect_equal(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "Y", "R"))[, -1]), c(1, 1, 1), ignore_attr = TRUE)
-  expect_equal(round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "T", "P"), beta = FALSE, integrate = FALSE, om = "bird")[, -1]), 4), 68.271, ignore_attr = TRUE)
+  expect_equal(
+    round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "T", "P"), beta = FALSE, integrate = FALSE, om = "bird")[, -1]), 4),
+    68.271,
+    ignore_attr = TRUE
+  )
 
   # Custom names
-  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m", "l"))), c("wl", "s", "m", "l"))
-  expect_equal(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m"))), c("wl", "lmax300", "lmax400", "lmax500"))
+  expect_named(sensmodel(c(300, 400, 500), sensnames = c("s", "m", "l")), c("wl", "s", "m", "l"))
+  expect_named(sensmodel(c(300, 400, 500), sensnames = c("s", "m")), c("wl", "lmax300", "lmax400", "lmax500"))
   expect_message(names(sensmodel(c(300, 400, 500), sensnames = c("s", "m"))), "length of argument")
 
   # S3 class

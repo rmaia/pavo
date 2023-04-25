@@ -91,9 +91,8 @@ as.rspec <- function(object, whichwl = NULL,
   } else {
     # try to automatically find wavelength column. for increasing wavelengths,
     # expect a near perfect correlation between lambda values and row indices
-    ind <- apply(object, 2, function(x) {
-      cor(x, seq_len(nrow(object)))
-    })
+    ind <- apply(object, 2, cor, seq_len(nrow(object)))
+
     if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
       wl <- object[, wl_index]
