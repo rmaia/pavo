@@ -95,13 +95,13 @@ if (interactive()) {
   papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
   papilio <- procimg(papilio, scaledist = 10)
 
-  # Interactively assign individual scales to each image, 
+  # Interactively assign individual scales to each image,
   # after slightly reducing their size (to 90\% of original).
   snakes <- getimg(system.file("testdata/images/snakes", package = "pavo"))
   snakes <- procimg(snakes, scaledist = c(10, 14), resize = 90)
 
   # Model the appearance of a butterfly given the reduced visual acuity of another
-  # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away, 
+  # animal viewer as per the AcuityView algorithm. Here our butterfly is 60 cm away,
   # the image width is 10 cm, and the minimum resolvable angle of the viewer is 0.2-degrees.
   tiger <- getimg(system.file("testdata/images/tiger.png", package = "pavo"))
   tiger_acuity <- procimg(tiger, obj_dist = 60, obj_width = 10, eye_res = 0.2)

@@ -48,10 +48,10 @@ data(flowers)
 # Estimate quantum catches visual phenotype of a Blue Tit
 vis.flowers <- vismodel(flowers, visual = 'bluetit')
 
-# Estimate noise-weighted colour distances between all flowers 
+# Estimate noise-weighted colour distances between all flowers
 cd.flowers <- coldist(vis.flowers)
 
-# Convert points to Cartesian coordinates in which Euclidean distances are 
+# Convert points to Cartesian coordinates in which Euclidean distances are
 # noise-weighted, before rotating them about the data centroid
 jndrot(jnd2xyz(cd.flowers))
 
