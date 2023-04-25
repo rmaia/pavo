@@ -10,7 +10,9 @@
   type = c("overlay", "stack", "heatmap"),
   varying = NULL,
   n = 100,
+  labels = FALSE,
   labels.stack = NULL,
+  labels.cex = 1,
   wl.guide = TRUE,
   ...
 )
@@ -21,7 +23,7 @@ column with wavelength data, named 'wl', and the remaining column
 containing spectra to plot.}
 
 \item{select}{specification of which spectra to plot. Can be a numeric vector
-or factor (e.g., \code{sex=="male"})}
+or factor (e.g., \code{sex == "male"})}
 
 \item{type}{what type of plot should be drawn. Possibilities are:
 \itemize{
@@ -38,8 +40,15 @@ variable (\code{varying}).
 \item{n}{number of bins with which to interpolate colors and \code{varying} for
 the heatplot.}
 
-\item{labels.stack}{a vector of labels for the stacked spectra when using
-\code{type = "stack"}. Defaults to the numeric column ID's.}
+\item{labels}{logical. Add labels identifying each spectrum to the outer plot
+margin? Defaults to \code{FALSE}. Ignored when \code{type = 'heatmap'}.}
+
+\item{labels.stack}{a vector of labels for spectra when \code{labels = TRUE}.
+Defaults to the column names from spectral data. Note you will likely want
+to adjust the plot margins to accommodate the text labels. See \code{?par()} for
+guidance on setting margins.}
+
+\item{labels.cex}{size of the text labels when \code{labels = TRUE}.}
 
 \item{wl.guide}{logical determining whether visible light spectrum should be
 added to the x-axis.}

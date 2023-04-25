@@ -20,14 +20,15 @@
 
 plot.sensmod <- function(x, select = NULL,
                          type = c("overlay", "stack", "heatmap"),
-                         varying = NULL, n = 100, labels.stack = NULL,
+                         varying = NULL, n = 100, labels = FALSE, 
+                         labels.stack = NULL, labels.cex = 1,
                          wl.guide = TRUE, ...) {
 
   if ("ylab" %in% names(match.call()[-1])) {
     NextMethod()
   } else {
     plot.rspec(
-      x, select, type, varying, n, labels.stack, wl.guide,
+      x, select, type, varying, n, labels, labels.stack, labels.cex, wl.guide,
       ylab = "Absorbance",
       ...
     )

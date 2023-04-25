@@ -1,8 +1,12 @@
 # pavo 2.9.0
 
+## NEW FEATURES AND SIGNIFICANT CHANGES
+
+- `plot.rspec()` now accepts a logical `labels` argument (and `labels.cex`), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for 'stacked' plot types, but is now optional for both 'overlay' (the default) and 'stacked' spectral plots.
+
 ## MINOR FEATURES AND BUG FIXES
 
-- Removed the start-up message
+- Removed the start-up message.
 
 # pavo 2.8.0
 
