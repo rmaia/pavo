@@ -58,20 +58,23 @@
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
-
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...) {
 
-  # Geometric mean
+  # Define an inner function to calculate the geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
+    # If any of the values are negative, return NaN
     if (any(x < 0, na.rm = TRUE)) {
       return(NaN)
     }
+    # If zero.propagate is TRUE and there are zeros in x, return 0
     if (zero.propagate) {
       if (any(x == 0, na.rm = TRUE)) {
         return(0)
       }
+      # Otherwise, return the geometric mean
       exp(mean(log(x), na.rm = na.rm))
     } else {
+      # If zero.propagate is FALSE, calculate the geometric mean excluding zeros
       exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
     }
   }
@@ -92,17 +95,19 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] <-
     vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] + 100
 
-  # Start actual function
+  # Start preparing the arguments
 
   arg0 <- list(...)
 
-  # 'achromatic' used to be called just 'achro' so let's work around it.
+  # Check for achromatic argument. 'achromatic' was previously called 'achro', 
+  # so this handles backward compatibility.
   # TODO: add a warning about this so users update their scripts??
   if (is.null(arg0$achromatic)) {
     arg0$achromatic <- arg0$achro
   }
 
-  # Check if RN model is required (for all non-colspace objects)
+  # Determine if RN model should be used. 
+  # For non-colspace objects, the RN model is required.
   useRNmodel <- !inherits(vismodeldata, "colspace")
 
   if (is.null(arg0$achromatic)) {
@@ -147,31 +152,41 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$weber.ref <- NULL
     arg0$weber.achro <- NULL
   }
-
+  
+  # Check if qcatch attribute exists, if not then stop the function with an error
   if (is.null(arg0$qcatch)) {
     if (is.null(attr(vismodeldata, "qcatch"))) {
       stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
     }
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
-
+  
+  # Reorder the visual model data by group
   sortinggroups <- order(by)
   vismodeldata <- vismodeldata[sortinggroups, ]
   by <- by[sortinggroups]
 
+  # Sample sizes for each group
   samplesizes <- table(by)
 
-  # Calculate empirical deltaS
+  # Group-wise geometric mean deltaS for the empirical data
   empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
   row.names(empgroupmeans) <- empgroupmeans[, 1]
   empgroupmeans <- empgroupmeans[, -1]
 
+  # Set the attributes for the grouped means
   datattributes <- grep("names", names(attributes(vismodeldata)),
     invert = TRUE, value = TRUE, fixed = TRUE
   )
 
+  # Prepare empirical argument list and calculate empirical color distances
   attributes(empgroupmeans)[datattributes] <- attributes(vismodeldata)[datattributes]
-
+  
+  # Begin bootstrapping procedure
+  # This involves sampling with replacement from the original data (group-wise), calculating 
+  # group-wise means for each bootstrap sample, and then performing the color distance calculation for each.
+  # After obtaining the bootstrap color distance calculations, calculate confidence intervals and 
+  # possibly return raw bootstrap results.
   emparg <- arg0
   emparg$modeldata <- empgroupmeans
 
@@ -192,8 +207,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # returns a list with length = number of by
   # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
   bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
-
-
+  
   # next, split by bootstrap replicate
   # preserving the same sample size as that original group had
   #
@@ -236,13 +250,15 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   for (i in seq_along(bootgrouped)) {
     attributes(bootgrouped[[i]])[names(attribs)] <- attribs
   }
-
+  
+  # Creates temporary bootstrap function, which is applied to each bootstrap sample
   tmpbootcdfoo <- function(x) {
     tmparg <- arg0
     tmparg$modeldata <- x
     do.call(coldist, tmparg)
   }
-
+  
+  # Handles progress bar for running bootstrap calculations
   with_progress({
     p <- progressor(along = bootgrouped)
     bootcd <- future_lapply(bootgrouped, function(z) {
@@ -253,7 +269,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     }, future.seed = TRUE)
   })
 
-  # get deltaS and name by group difference
+  # Extract deltaS values from bootcd and restructure in one dataframe
   bootdS <- do.call(
     rbind,
     lapply(bootcd, function(x) {
@@ -261,30 +277,34 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     })
   )
 
+  # Error handling: if the dimension of bootdS is less than boot.n, 
+  # stop function and print error message
   if (dim(bootdS)[1] < boot.n) {
     stop("Bootstrap sampling encountered errors.")
   }
 
-  # ...subtract them from the empirical and sort and find quantiles
+  # Order, find quantiles, and set up deltaS confidence intervals
   quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
   bootdS <- apply(bootdS, 2, sort)
   dsCI <- bootdS[quantileindices, , drop = FALSE]
   rownames(dsCI) <- c("dS.lwr", "dS.upr")
 
-  # make sure names match with empirical (they always should but just in case)
+  # Ensure names match with empirical values (even though they should match already)
   dsCI <- dsCI[, names(empdS), drop = FALSE]
 
+  # Define empirical deltaS mean
   dS.mean <- empdS
 
+  # Combine empirical and bootstrap deltaS statistics into a results dataframe
   res <- t(rbind(dS.mean, dsCI))
 
-  # Create a new df if returning raw bootstrapped distances
-  # Note output will be sorted by this point
+  # If raw = TRUE, create a new dataframe with raw bootstrapped deltaS distances
   if (raw) {
     rawres <- as.data.frame(bootdS)
     names(rawres) <- paste0(names(rawres), "_dS")
   }
 
+  # If achromatic = TRUE, calculate empirical and bootstrap statistics for achromatic distances (deltaL)
   if (arg0$achromatic) {
     empdL <- setNames(empcd$dL, paste(empcd$patch1, empcd$patch2, sep = "-"))
 
@@ -299,11 +319,16 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     dlCI <- bootdL[quantileindices, , drop = FALSE]
     rownames(dlCI) <- c("dL.lwr", "dL.upr")
 
-    # make sure names match with empirical (they always should but just in case)
+    # Ensure names match with empirical values (even though they should match already)
     dlCI <- dlCI[, names(empdL), drop = FALSE]
+    
+    # Define empirical deltaL mean
     dL.mean <- empdL
+    
+    # Combine empirical and bootstrap deltaL statistics into a results dataframe
     res <- cbind(res, t(rbind(dL.mean, dlCI)))
 
+    # If raw = TRUE, create a new dataframe with raw bootstrapped deltaL distances
     if (raw) {
       bootdL <- as.data.frame(bootdL)
       names(bootdL) <- paste0(names(bootdL), "_dL")
