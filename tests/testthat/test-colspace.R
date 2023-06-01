@@ -44,6 +44,15 @@ test_that("Receptor orders & names", {
   )
 })
 
+test_that("colcat()", {
+
+  # https://github.com/rmaia/pavo/issues/244
+  # colcat() works even for points close to the origin
+  test <- data.frame(u = 0, s = 0, m = 0, l = 0)
+  expect_no_error(colspace(test, space = "categorical"))
+
+})
+
 test_that("Relative quantum catches", {
   data(flowers)
 
