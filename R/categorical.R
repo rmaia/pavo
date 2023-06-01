@@ -105,18 +105,18 @@ categorical <- function(vismodeldata) {
   # Colour category calculator
   colcat <- function(object) {
     if (object$x == 0 && object$y == 0) {
-      return(NA)
+      return(NA_character_)
     }
     if (object$x == 0) {
       return(ifelse(object$y > 0, "y+", "y-"))
     }
     if (object$y == 0) {
-      return(ifelse(object$x > 0, "x+", "x-"))
+      return(ifelse(object$x > 0, "p+", "p-"))
     }
-    
+
     paste0(
-      ifelse(object$x > 0, "p+y", "p-y"),
-      ifelse(object$y > 0, "+", "-")
+      ifelse(object$x > 0, "p+", "p-"),
+      ifelse(object$y > 0, "y+", "y-")
     )
   }
 
