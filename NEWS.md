@@ -9,6 +9,7 @@
 - Removed the start-up message.
 - Removed the previously-deprecated `margins` argument from various colourspace plots.
 - Replace `rgl.triangles` with `triangles3d()` internally to avoid a deprecation issue.
+- Fixed a bug in the categorical colourspace, so it now returns sensible category values when `x` and/or `y` is equal to 0.
 
 # pavo 2.8.0
 
