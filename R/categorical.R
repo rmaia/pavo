@@ -111,7 +111,7 @@ categorical <- function(vismodeldata) {
       return(ifelse(object$y > 0, "y+", "y-"))
     }
     if (object$y == 0) {
-      return(ifelse(object$x > 0, "x+", "x-"))
+      return(ifelse(object$x > 0, "p+", "p-"))
     }
 
     paste0(
