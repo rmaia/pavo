@@ -96,3 +96,16 @@ test_that("Convert", {
   data(teal)
   expect_identical(spec2rgb(teal)[1], c("Acrecca-01" = "#21B662FF"))
 })
+
+test_that("Merge", {
+  
+  # Data
+  data(teal)
+  
+  # Merge 2
+  teal1 <- teal[, c(1, 2:5)]
+  teal2 <- teal[, c(1, 6:13)]
+  teal.mer <- merge(teal1, teal2)
+  expect_identical(teal, merge(teal1, teal2))
+  
+})
