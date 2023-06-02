@@ -3,6 +3,7 @@
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
 - `plot.rspec()` now accepts a logical `labels` argument (and `labels.cex`), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for 'stacked' plot types, but is now optional for both 'overlay' (the default) and 'stacked' spectral plots.
+- `merge.rspec()` can now accept and merge an arbitrary number of `rspec` objects.
 
 ## MINOR FEATURES AND BUG FIXES
 
