@@ -44,6 +44,19 @@ test_that("coldist", {
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), "cielab")), digits = 4),
     "ab8d1c2eac211561f68759137baa2b5d3005b199"
   )
+  
+  # Bootcoldist (empirical means)
+  data(sicalis)
+  vm.sic <- vismodel(sicalis, visual = "apis", achromatic = "l")
+  gr.sic <- gsub("ind..", "", rownames(vm.sic))
+  bcd.sic <- suppressWarnings(
+    bootcoldist(vm.sic, by = gr.sic, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
+  )
+  
+  expect_identical(
+    digest::sha1(c(bcd.sic[,1], bcd.sic[,4])),
+    "9d10fc3ed22e787974464b30a0c5254209522388"
+    )
 })
 
 test_that("colspace", {
