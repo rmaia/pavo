@@ -102,10 +102,15 @@ test_that("Merge", {
   # Data
   data(teal)
   
-  # Merge 2
+  # Merge 2, as per original functionality
   teal1 <- teal[, c(1, 2:5)]
   teal2 <- teal[, c(1, 6:13)]
-  teal.mer <- merge(teal1, teal2)
-  expect_identical(teal, merge(teal1, teal2))
+  expect_identical(teal, merge(x = teal1, y = teal2, by = 'wl'))
+  
+  # Merge 3
+  teal1 <- teal[, c(1, 2:5)]
+  teal2 <- teal[, c(1, 6:8)]
+  teal3 <- teal[, c(1, 9:13)]
+  expect_identical(teal, merge(teal1, teal2, teal3))
   
 })

@@ -137,10 +137,12 @@ test_that("merge.rspec", {
   expect_s3_class(sicalis_merged, "rspec")
   expect_mapequal(sicalis_TC, sicalis_merged)
 
-  expect_error(
-    merge(sicalis_T, as.data.frame(sicalis_C)),
-    "invalid rspec objects"
-  )
+  # This now works as it should (by combining both into a single rspec object) 
+  # with the rewritten function. It should, shouldn't it?
+  # expect_error(
+  #   merge(sicalis_T, as.data.frame(sicalis_C)),
+  #   "invalid rspec objects"
+  # )
 
   expect_error(
     merge(sicalis_T, sicalis_C[, -1]),

@@ -2,43 +2,47 @@
 % Please edit documentation in R/merge.rspec.R
 \name{merge.rspec}
 \alias{merge.rspec}
-\title{Merge two rspec objects}
+\title{Merge rspec objects}
 \usage{
-\method{merge}{rspec}(x, y, ...)
+\method{merge}{rspec}(x, ...)
 }
 \arguments{
-\item{x, y}{(required) \code{rspec} objects to merge.}
+\item{x}{(required) an \code{rspec} object}
 
-\item{...}{additional class arguments.}
+\item{...}{(required) further \code{rspec} objects to merge by their wavelength ('wl') values,
+and any additional parameters.}
 }
 \value{
-an object of class \code{rspec} for use with \code{pavo} functions.
-Will use \code{by = "wl"} if unspecified, or automatically append \code{wl} to the
-\code{by} argument if one is specified.
+an object of class \code{rspec} comprising multiple spectra with a single
+shared wavelength (\code{wl}) column, for use with \code{pavo} functions.
 }
 \description{
-Merges two \code{rspec} or \code{data.frame} objects into a single \code{rspec} object.
+Merges two or more \code{rspec} objects into a single \code{rspec} object.
 }
 \examples{
 
 # Load angle-resolved reflectance data for a green-winged teal, and
-# split it in two
+# split it into three objects, each with a 'wl' column
 data(teal)
-teal1 <- teal[, c(1, 3:5)]
-teal2 <- teal[, c(1, 2, 6:12)]
+teal1 <- teal[, c(1, 2:5)]
+teal2 <- teal[, c(1, 6:8)]
+teal3 <- teal[, c(1, 9:13)]
 
-# Merge the two split datasets back into one, with a shared 'wl' column
-teal.mer <- merge(teal1, teal2, by = "wl")
+# Merge the three split datasets back into one, with a shared 'wl' column
+teal.mer <- merge(teal1, teal2, teal3)
 
 # Examine the results, and compare the original to the (identical)
 # reconstructed version
 plot(teal.mer)
 plot(teal)
+identical(teal.mer, teal)
 
 }
 \seealso{
 \code{\link[=as.rspec]{as.rspec()}}, \code{\link[=aggspec]{aggspec()}}
 }
 \author{
+Thomas White \email{thomas.white026@gmail.com}
+
 Chad Eliason \email{cme16@zips.uakron.edu}
 }
