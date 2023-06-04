@@ -76,7 +76,7 @@ simulate_spec2 <- function(wl.inflect = NULL,
   sigma.gauss <- width.gauss / (2 * sqrt(2 * log(2)))
   
   # Simulate the specs
-  # Gaussian
+  # Sigmoidal
   if (!is.null(wl.inflect)) {
     spec.sig <- mapply(function(wli, wsi) {
       (ylim[2] - ylim[1]) / (1 + exp(-(wl - wli)/wsi)) + ylim[1]
@@ -84,7 +84,7 @@ simulate_spec2 <- function(wl.inflect = NULL,
     spec <- spec + rowSums(spec.sig, na.rm = TRUE)
   }
   
-  # Sigmoidal
+  # Gaussian
   if (!is.null(wl.peak)) {
     spec.gauss <- mapply(function(wlp, wga) {
       (ylim[2] - ylim[1]) * exp(-((wl - wlp)^2)/(2 * wga^2)) + ylim[1]
