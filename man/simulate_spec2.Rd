@@ -5,28 +5,28 @@
 \title{Simulate a reflectance spectrum}
 \usage{
 simulate_spec2(
-  wl.inflect = NULL,
-  wl.peak = NULL,
-  width.sig = 20,
-  width.gauss = 70,
+  wl_inflect = NULL,
+  wl_peak = NULL,
+  width_sig = 20,
+  width_gauss = 70,
   xlim = c(300, 700),
   ylim = c(0, 100)
 )
 }
 \arguments{
-\item{wl.inflect}{A numeric vector specifying the wavelength location (in nm)
+\item{wl_inflect}{A numeric vector specifying the wavelength location (in nm)
 for one or more inflection point(s) for a 'sigmoid' shaped curve, if desired.}
 
-\item{wl.peak}{A numeric vector specifying the wavelength location (in nm)
+\item{wl_peak}{A numeric vector specifying the wavelength location (in nm)
 for one or more inflection point(s) for a 'Gaussian' (or 'bell') shaped curve,
 if desired.}
 
-\item{width.sig}{A numeric value or vector (if multiple wl.inflect values are specified)
+\item{width_sig}{A numeric value or vector (if multiple wl_inflect values are specified)
 specifying the steepness of the change, for any sigmoidal curve(s). Required when
-\code{wl-peak} is specified. Defaults to 20 nm.}
+\code{wl_peak} is specified. Defaults to 20 nm.}
 
-\item{width.gauss}{A numeric value or vector specifying the the full-width at half-maximum
-of any Gaussian curve(s). Required when \code{wl-peak} is specified. Defaults to 70 nm.}
+\item{width_gauss}{A numeric value or vector specifying the the full-width at half-maximum
+of any Gaussian curve(s). Required when \code{wl_peak} is specified. Defaults to 70 nm.}
 
 \item{xlim}{A vector specifying the wavelength range of the simulated spectra. Defaults to
 300-700nm (\code{c(300, 700)}).}
@@ -44,20 +44,20 @@ a single spectrum, to simulate more complex reflectance functions.
 }
 \examples{
 # Single sigmoidal spectrum, with an inflection at 500 nm.
-spec <- as.rspec(simulate_spec2(wl.inflect = 500))
+spec <- as.rspec(simulate_spec2(wl_inflect = 500))
 
 # Single Gaussian spectrum, with a peak at 400 nm
-spec2 <- as.rspec(simulate_spec2(wl.peak = 400))
+spec2 <- as.rspec(simulate_spec2(wl_peak = 400))
 
 # Combination of both Gaussian (with peak at 340 nm) and sigmoidal (with inflection
 # at 560 nm)
-spec3 <- as.rspec(simulate_spec2(wl.peak = 340, wl.inflect = 560))
+spec3 <- as.rspec(simulate_spec2(wl_peak = 340, wl_inflect = 560))
 
 # Double-Gaussian peaks of differing widths
-spec4 <- as.rspec(simulate_spec2(wl.peak = c(340, 560), width.gauss = c(12, 40)))
+spec4 <- as.rspec(simulate_spec2(wl_peak = c(340, 560), width_gauss = c(12, 40)))
 
 # Complex spectrim with multi-Gaussian and single sigmoidal peak
-spec5 <- as.rspec(simulate_spec2(wl.peak = c(340, 430), width.gauss = c(20, 60), wl.inflect = 575)) 
+spec5 <- as.rspec(simulate_spec2(wl_peak = c(340, 430), width_gauss = c(20, 60), wl_inflect = 575)) 
 
 }
 \author{
