@@ -96,6 +96,7 @@ simulate_spec2 <- function(wl.inflect = NULL,
   spec <- spec * (ylim[2] - ylim[1]) + ylim[1]  # Rescale to ylim
   
   # Final
-  spec_df <- data.frame(wl, spec)
+  spec_df <- as.data.frame(cbind(wl, spec))
+  class(spec_df) <- c("rspec", "data.frame")
   return(spec_df)
 }
