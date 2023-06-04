@@ -56,6 +56,7 @@ simulate_spec2 <- function(wl.inflect = NULL,
   }
   
   # Check that the size of wl.inflect and width.sig match, or width.sig is a single value
+  # https://vctrs.r-lib.org/reference/vector_recycling_rules.html
   if (!is.null(wl.inflect) && length(width.sig) != 1 && length(wl.inflect) != length(width.sig)) {
     stop("Size of wl.inflect and width.sig must match, or width.sig must be a single value")
   }
