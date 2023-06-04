@@ -11,9 +11,9 @@
 #' if desired. 
 #' @param width.sig A numeric value or vector (if multiple wl.inflect values are specified) 
 #' specifying the steepness of the change, for any sigmoidal curve(s). Required when 
-#' `wl-peak` is specified. Defaults to 20 nm.
+#' `wl.peak` is specified. Defaults to 20 nm.
 #' @param width.gauss A numeric value or vector specifying the the full-width at half-maximum
-#' of any Gaussian curve(s). Required when `wl-peak` is specified. Defaults to 70 nm.
+#' of any Gaussian curve(s). Required when `wl.peak` is specified. Defaults to 70 nm.
 #' @param xlim A vector specifying the wavelength range of the simulated spectra. Defaults to
 #' 300-700nm (`c(300, 700)`).
 #' @param ylim A vector specifying the minimum and maximum reflectance values of the resulting
