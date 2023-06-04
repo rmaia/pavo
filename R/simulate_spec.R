@@ -30,13 +30,13 @@
 #'
 #' # Combination of both Gaussian (with peak at 340 nm) and sigmoidal (with inflection
 #' # at 560 nm)
-#' spec3 <- simulate_spec(wl_peak = 340, wl_inflect = 560)
+#' spec3 <- simulate_spec(wl_inflect = 560, wl_peak)
 #'
 #' # Double-Gaussian peaks of differing widths
 #' spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 #'
-#' # Complex spectrim with multi-Gaussian and single sigmoidal peak
-#' spec5 <- simulate_spec(wl_peak = c(340, 430), width_gauss = c(20, 60), wl_inflect = 575)
+#' # Complex spectrim with single sigmoidal peak and multi-Gaussian peaks
+#' spec5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 #' 
 #' # Simulate a set of Gaussian reflectance curves with peaks varying between 400-600 in 
 #' 10 nm increments, then combine into a single rspec object, and plot the result
@@ -103,8 +103,21 @@ simulate_spec <- function(wl_inflect = NULL,
   spec <- (spec - min(spec)) / (max(spec) - min(spec))  # Scale to [0, 1]
   spec <- spec * (ylim[2] - ylim[1]) + ylim[1]  # Rescale to ylim
   
+  # Construct unique name for the spectrum
+  name <- "spec_"
+  # If sigmoidal, append `i-` followed by inflection point locations
+  if (!is.null(wl_inflect)) {
+    name <- paste0(name, "i-", paste(wl_inflect, collapse="-"))
+  }
+  # If gaussian, append `p-` followed by peak locations
+  if (!is.null(wl_peak)) {
+    if (!is.null(wl_inflect)) name <- paste0(name, "_")  # Also add separator if both specified
+    name <- paste0(name, "p-", paste(wl_peak, collapse="-"))
+  }
+  
   # Final output
   spec_df <- as.data.frame(cbind(wl, spec))
+  names(spec_df)[2] <- name
   class(spec_df) <- c("rspec", "data.frame")
   return(spec_df)
 }
