@@ -43,7 +43,7 @@
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' 
-simulate_spec2 <- function(wl_inflect = NULL, 
+simulate_spec <- function(wl_inflect = NULL, 
                            wl_peak = NULL, 
                            width_sig = 20,
                            width_gauss = 70,
