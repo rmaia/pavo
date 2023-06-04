@@ -22,8 +22,11 @@
 #' @return An object of class `rspec`.
 #' 
 #' @examples
+#' # Single ideal 'grey' reflectance spectrum, with 50% reflectance across 300 - 700 nm.
+#' spec0 <- simulate_spec(ylim = c(0, 50))
+#' 
 #' # Single sigmoidal spectrum, with a low-to-high inflection at 550 nm.
-#' spec <- simulate_spec(wl_inflect = 550)
+#' spec1 <- simulate_spec(wl_inflect = 550)
 #'
 #' # Single Gaussian spectrum, with a peak at 400 nm
 #' spec2 <- simulate_spec(wl_peak = 400)
@@ -57,9 +60,19 @@ simulate_spec <- function(wl_inflect = NULL,
                           xlim = c(300, 700), 
                           ylim = c(0, 100)) {
   
-  # Error handling
+  # Generate wavelengths from the specified range
+  wl <- seq(xlim[1], xlim[2], by = 1)
+  
+  # Initialize the reflectance vector
+  spec <- vector("numeric", length(wl))
+  
+  # When neither wl_inflect nor wl_peak are specified, return ideal 100% reflectance
   if (is.null(wl_inflect) && is.null(wl_peak)) {
-    stop("Either wl_inflect or wl_peak must be specified")
+    spec <- rep(ylim[2], length(wl))
+    spec_df <- as.data.frame(cbind(wl, spec))
+    names(spec_df)[2] <- paste0("spec_ideal-", ylim[2])
+    class(spec_df) <- c("rspec", "data.frame")
+    return(spec_df)
   }
   
   # Check that the size of wl_inflect and width_sig match, or width_sig is a single value
@@ -72,12 +85,6 @@ simulate_spec <- function(wl_inflect = NULL,
   if (!is.null(wl_peak) && length(width_gauss) != 1 && length(wl_peak) != length(width_gauss)) {
     stop("Size of wl_peak and width_gauss must match, or width_gauss must be a single value")
   }
-  
-  # Generate wavelengths from the specified range
-  wl <- seq(xlim[1], xlim[2], by = 1)
-  
-  # Initialize the reflectance vector
-  spec <- vector("numeric", length(wl))
   
   # Convert FWHM to standard deviation for Gaussian function
   sigma.gauss <- width_gauss / (2 * sqrt(2 * log(2)))

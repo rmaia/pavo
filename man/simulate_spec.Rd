@@ -43,8 +43,11 @@ Simulate a natural reflectance spectrum with sigmoidal (s-shaped) and/or Gaussia
 a single spectrum, to simulate more complex reflectance functions.
 }
 \examples{
+# Single ideal 'grey' reflectance spectrum, with 50\% reflectance across 300 - 700 nm.
+spec0 <- simulate_spec(ylim = c(0, 50))
+
 # Single sigmoidal spectrum, with a low-to-high inflection at 550 nm.
-spec <- simulate_spec(wl_inflect = 550)
+spec1 <- simulate_spec(wl_inflect = 550)
 
 # Single Gaussian spectrum, with a peak at 400 nm
 spec2 <- simulate_spec(wl_peak = 400)
