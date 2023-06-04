@@ -22,33 +22,40 @@
 #' @return An object of class `rspec`.
 #' 
 #' @examples
-#' # Single sigmoidal spectrum, with an inflection at 500 nm.
-#' spec <- as.rspec(simulate_spec2(wl_inflect = 500))
+#' # Single sigmoidal spectrum, with a low-to-high inflection at 550 nm.
+#' spec <- simulate_spec(wl_inflect = 550)
 #'
 #' # Single Gaussian spectrum, with a peak at 400 nm
-#' spec2 <- as.rspec(simulate_spec2(wl_peak = 400))
+#' spec2 <- simulate_spec(wl_peak = 400)
 #'
 #' # Combination of both Gaussian (with peak at 340 nm) and sigmoidal (with inflection
 #' # at 560 nm)
-#' spec3 <- as.rspec(simulate_spec2(wl_peak = 340, wl_inflect = 560))
+#' spec3 <- simulate_spec(wl_peak = 340, wl_inflect = 560)
 #'
 #' # Double-Gaussian peaks of differing widths
-#' spec4 <- as.rspec(simulate_spec2(wl_peak = c(340, 560), width_gauss = c(12, 40)))
+#' spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 #'
 #' # Complex spectrim with multi-Gaussian and single sigmoidal peak
-#' spec5 <- as.rspec(simulate_spec2(wl_peak = c(340, 430), width_gauss = c(20, 60), wl_inflect = 575)) 
+#' spec5 <- simulate_spec(wl_peak = c(340, 430), width_gauss = c(20, 60), wl_inflect = 575)
 #' 
+#' # Simulate a set of Gaussian reflectance curves with peaks varying between 400-600 in 
+#' 10 nm increments, then combine into a single rspec object, and plot the result
+#' peaks <- seq(400, 600, 10)  # Peak locations
+#' spectra <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
+#' spectra <- Reduce(function(...) merge(..., all = TRUE), spectra). # Combine
+#' plot(spectra). # Plot
+#'
 #' @export
 #' 
 #' @author Thomas White \email{thomas.white026@@gmail.com}
 #' @author Hugo Gruson \email{hugo.gruson+R@@normalesup.org}
 #' 
 simulate_spec <- function(wl_inflect = NULL, 
-                           wl_peak = NULL, 
-                           width_sig = 20,
-                           width_gauss = 70,
-                           xlim = c(300, 700), 
-                           ylim = c(0, 100)) {
+                          wl_peak = NULL, 
+                          width_sig = 20,
+                          width_gauss = 70,
+                          xlim = c(300, 700), 
+                          ylim = c(0, 100)) {
   
   # Error handling
   if (is.null(wl_inflect) && is.null(wl_peak)) {
@@ -96,7 +103,7 @@ simulate_spec <- function(wl_inflect = NULL,
   spec <- (spec - min(spec)) / (max(spec) - min(spec))  # Scale to [0, 1]
   spec <- spec * (ylim[2] - ylim[1]) + ylim[1]  # Rescale to ylim
   
-  # Final
+  # Final output
   spec_df <- as.data.frame(cbind(wl, spec))
   class(spec_df) <- c("rspec", "data.frame")
   return(spec_df)
