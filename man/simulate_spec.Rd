@@ -66,8 +66,16 @@ spec5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(
 10 nm increments, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10)  # Peak locations
 spectra <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
-spectra <- Reduce(function(...) merge(..., all = TRUE), spectra). # Combine
-plot(spectra). # Plot
+spectra <- Reduce(function(...) merge(..., all = TRUE), spectra)  # Combine
+plot(spectra)  # Plot
+
+Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
+with maximum reflectance varying from 30 to 90\% in 10\% increments, then combine 
+into a single rspec object, and plot the result
+ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
+spectra2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
+spectra2 <- Reduce(function(...) merge(..., all = TRUE), spectra2)  # Combine
+plot(spectra2)  # Plot
 
 }
 \author{
