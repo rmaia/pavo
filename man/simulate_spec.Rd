@@ -62,8 +62,8 @@ spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 # Complex spectrim with single sigmoidal peak and multi-Gaussian peaks
 spec5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 
-# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600 in 
-10 nm increments, then combine into a single rspec object, and plot the result
+# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600 nm 
+in increments of 10, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10)  # Peak locations
 spectra <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
 spectra <- Reduce(function(...) merge(..., all = TRUE), spectra)  # Combine
