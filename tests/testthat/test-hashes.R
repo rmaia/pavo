@@ -142,7 +142,29 @@ test_that("processing & general", {
     expect_silent(peakshape(flowers, absolute.min = TRUE)),
     "7fbaba1738"
   )
-
+  
+  # Simulate
+  # Ideal
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(ylim = c(0, 50))), digits = 4),
+    "88a30943a99d1ea14bc42ac4e4f4d54d"
+  )
+  # Sigmoidd low-high
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(wl_inflect = 550)), digits = 4),
+    "dc2a5e5fd3456ee240e37c6d8ded3c04"
+  )
+  # Sigmoid high-low
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(wl_inflect = 550, ylim = c(100, 0))), digits = 4),
+    "7bf4ed5601a6bd144dfd81c0ad68502e"
+  )
+  # Gaussian
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(wl_peak = 400)), digits = 4),
+    "c1a55531ce0e321d44fdbef2ad20e5fd"
+  )
+  
   # Merge
   teal1 <- teal[, c(1, 3:5)]
   teal2 <- teal[, c(1, 2, 6:12)]
