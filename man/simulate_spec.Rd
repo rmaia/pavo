@@ -32,7 +32,12 @@ of any Gaussian curve(s). Required when \code{wl_peak} is specified. Defaults to
 300-700nm (\code{c(300, 700)}).}
 
 \item{ylim}{A vector specifying the minimum and maximum reflectance values of the resulting
-curve. Defaults to 0 - 100 \% (\code{c(0, 100)}).}
+curve. Defaults to 0 - 100 \% (\code{c(0, 100)}). Note: sigmoidal curves, by default, move
+from low to high reflectance. But if high-to-low sigmoidal curves are desired this
+can be controlled by the ordering of the values given to \code{ylim()}. E.g. \code{c(0, 100)}
+will generate a low-to-high sigmoidal curve, whereas \code{c(100, 0)} will generate a high-
+to-low curve. The ordering of values has no effect on the Gaussian portions of the
+final curve.}
 }
 \value{
 An object of class \code{rspec}.
@@ -54,7 +59,7 @@ spec2 <- simulate_spec(wl_peak = 400)
 
 # Combination of both Gaussian (with peak at 340 nm) and sigmoidal (with inflection
 # at 560 nm)
-spec3 <- simulate_spec(wl_inflect = 560, wl_peak)
+spec3 <- simulate_spec(wl_inflect = 560, wl_peak = 340)
 
 # Double-Gaussian peaks of differing widths
 spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
@@ -62,16 +67,16 @@ spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 # Complex spectrim with single sigmoidal peak and multi-Gaussian peaks
 spec5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 
-# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600 nm 
-in increments of 10, then combine into a single rspec object, and plot the result
+# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm 
+# in increments of 10, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10)  # Peak locations
 spectra <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
 spectra <- Reduce(function(...) merge(..., all = TRUE), spectra)  # Combine
 plot(spectra)  # Plot
 
-Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
-with maximum reflectance varying from 30 to 90\% in 10\% increments, then combine 
-into a single rspec object, and plot the result
+# Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
+# with maximum reflectance varying from 30 to 90\% in 10\% increments, then combine 
+# into a single rspec object, and plot the result
 ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
 spectra2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
 spectra2 <- Reduce(function(...) merge(..., all = TRUE), spectra2)  # Combine
