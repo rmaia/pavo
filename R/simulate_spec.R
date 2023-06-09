@@ -99,13 +99,13 @@ simulate_spec <- function(wl_inflect = NULL,
   if (ylim[1] > ylim[2]) {
     sig_hightolow <- TRUE
   }
-  
+
   # Generate wavelengths from the specified range
   wl <- seq(xlim[1], xlim[2], by = 1)
-  
+
   # Initialize the reflectance vector
   spec <- vector("numeric", length(wl))
-  
+
   # When neither wl_inflect nor wl_peak are specified, return ideal 100% reflectance
   if (is.null(wl_inflect) && is.null(wl_peak)) {
     spec <- rep(ylim[2], length(wl))
@@ -114,7 +114,7 @@ simulate_spec <- function(wl_inflect = NULL,
     class(spec_df) <- c("rspec", "data.frame")
     return(spec_df)
   }
-  
+
   # Check that the size of wl_inflect and width_sig match, or width_sig is a single value
   # https://vctrs.r-lib.org/reference/vector_recycling_rules.html
   if (!is.null(wl_inflect) &&
@@ -122,21 +122,22 @@ simulate_spec <- function(wl_inflect = NULL,
       length(wl_inflect) != length(width_sig)) {
     stop("Size of wl_inflect and width_sig must match, or width_sig must be a single value")
   }
-  
+
   # Check that the size of wl_peak and width_gauss match, or width_gauss is a single value
   if (!is.null(wl_peak) &&
       length(width_gauss) != 1 &&
       length(wl_peak) != length(width_gauss)) {
     stop("Size of wl_peak and width_gauss must match, or width_gauss must be a single value")
   }
-  
+
   # Convert FWHM to standard deviation for Gaussian function
   sigma.gauss <- width_gauss / (2 * sqrt(2 * log(2)))
-  
+
   # Skew-normal error distribution
-  erf <- function(x)
+  erf <- function(x) {
     2 * pnorm(x * sqrt(2)) - 1
-  
+    }
+
   # Simulate the specs
   # Sigmoidal
   if (!is.null(wl_inflect)) {
@@ -149,8 +150,8 @@ simulate_spec <- function(wl_inflect = NULL,
     }, wl_inflect, width_sig)
     spec <- spec + rowSums(spec.sig, na.rm = TRUE)
   }
-  
-  # Gaussian
+
+
   # Gaussian
   if (!is.null(wl_peak)) {
     spec.gauss <- mapply(function(wlp, wga) {
@@ -162,12 +163,12 @@ simulate_spec <- function(wl_inflect = NULL,
     }, wl_peak, sigma.gauss)
     spec <- spec + rowSums(spec.gauss, na.rm = TRUE)
   }
-  
+
   # Normalize the final spectrum to span the range specified by ylim
   spec <-
     (spec - min(spec)) / (max(spec) - min(spec))  # Scale to [0, 1]
   spec <- spec * (ylim[2] - ylim[1]) + ylim[1]  # Rescale to ylim
-  
+
   # Construct unique name for the spectrum
   name <- "spec_"
   # If sigmoidal, append `i` followed by inflection point locations
@@ -180,7 +181,7 @@ simulate_spec <- function(wl_inflect = NULL,
       name <- paste0(name, "_")  # Also add separator if both specified
     name <- paste0(name, "p", paste(wl_peak, collapse = "_"))
   }
-  
+
   # Final output
   spec_df <- as.data.frame(cbind(wl, spec))
   names(spec_df)[2] <- name

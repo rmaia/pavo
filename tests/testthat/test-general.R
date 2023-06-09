@@ -57,32 +57,25 @@ test_that("peakshape", {
 })
 
 test_that("simulate", {
-  
   # Ideal reflectance
   spec_50 <- simulate_spec(ylim = c(0, 50))
-  expect_identical(summary(spec_50)$B2, 50)  # recover brightness
-  expect_identical(summary(spec_50)$B3, 50)  # recover brightness
-  
+  expect_identical(summary(spec_50)$B2, 50) # recover brightness
+  expect_identical(summary(spec_50)$B3, 50) # recover brightness
+
   # Sigmoidal
-  spec_sig1 <- simulate_spec(wl_inflect = 550)  # low-high
-  expect_identical(summary(spec_sig1)$H3, 550)  # recover hue
-  expect_identical(summary(spec_sig1)$S6, 100)  # recover sat
-  expect_identical(summary(spec_sig1)$B3, 100)  # recover brightness
-  
-  spec_sig2 <- simulate_spec(wl_inflect = 550, ylim = c(100, 0))  # high-low
-  expect_identical(summary(spec_sig2)$H3, 550)  # recover hue
-  expect_identical(summary(spec_sig2)$S6, 100)  # recover sat
-  expect_identical(summary(spec_sig2)$B3, 100)  # recover brightness
+  spec_sig1 <- simulate_spec(wl_inflect = 550) # low-high
+  expect_identical(summary(spec_sig1)$H3, 550) # recover hue
+  expect_identical(summary(spec_sig1)$S6, 100) # recover sat
+  expect_identical(summary(spec_sig1)$B3, 100) # recover brightness
+
+  spec_sig2 <- simulate_spec(wl_inflect = 550, ylim = c(100, 0)) # high-low
+  expect_identical(summary(spec_sig2)$H3, 550) # recover hue
+  expect_identical(summary(spec_sig2)$S6, 100) # recover sat
+  expect_identical(summary(spec_sig2)$B3, 100) # recover brightness
 
   # Gaussian
   spec_gauss1 <- simulate_spec(wl_peak = 400)
-  expect_identical(summary(spec_gauss1)$H1, 400)  # recover hue
-  expect_identical(summary(spec_gauss1)$S6, 100)  # recover sat
-  expect_identical(summary(spec_gauss1)$B3, 100)  # recover brightness
-  
-})  
-
-
-
-
-
+  expect_identical(summary(spec_gauss1)$H1, 400) # recover hue
+  expect_identical(summary(spec_gauss1)$S6, 100) # recover sat
+  expect_identical(summary(spec_gauss1)$B3, 100) # recover brightness
+})
