@@ -72,14 +72,14 @@ reflect3 <- simulate_spec(wl_inflect = 560, wl_peak = 340)
 # Double-Gaussian peaks of differing widths
 reflect4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 
-# Complex spectrim with single sigmoidal peak and multi-Gaussian peaks
+# Complex spectrum with single sigmoidal peak and multi-Gaussian peaks
 reflect5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 
 # Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm
 # in increments of 10, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10)  # Peak locations
 reflectances <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
-reflectances <- Reduce(function(...) merge(..., all = TRUE), reflectances)  # Combine
+reflectances <- Reduce(merge, reflectances)  # Combine
 plot(reflectances)  # Plot
 
 # Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
@@ -87,7 +87,7 @@ plot(reflectances)  # Plot
 # into a single rspec object, and plot the result
 ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
 reflectances2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
-reflectances2 <- Reduce(function(...) merge(..., all = TRUE), reflectances2)  # Combine
+reflectances2 <- Reduce(merge.rspec, reflectances2)  # Combine
 plot(reflectances2)  # Plot
 
 # To simulate non-reflectance spectra (like irradiances or radiances), it's often useful
@@ -99,7 +99,7 @@ D65_sim <- simulate_spec(wl_peak = 400,
                          skew_gauss = 10,
                          ylim = c(0, 1))  # Simulated D65
 cor.test(D65_real$D65, D65_sim$spec_p400)  # >0.99 correlation
-plot(merge(D65_real, D65_sim), lty = 1:2)  # Merge and plot the two spectra
+plot(merge(D65_real, D65_sim), lty = 1:2, ylab = 'Irradiance (\%)')  # Merge and plot the two spectra
 
 }
 \references{
