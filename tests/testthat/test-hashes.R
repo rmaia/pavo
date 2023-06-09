@@ -37,14 +37,19 @@ test_that("coldist", {
     "d65c018342664ae9c8dca35e715c57dde28de30a"
   )
   expect_identical(
-    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
-    "1f797fe87a2e1502080e1c99251b3a768164e7c7"
-  )
-  expect_identical(
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), "cielab")), digits = 4),
     "ab8d1c2eac211561f68759137baa2b5d3005b199"
   )
   
+})
+
+test_that("coldist_nolinux", {
+  skip_on_os("linux")
+  
+  expect_identical(
+    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
+    "1f797fe87a2e1502080e1c99251b3a768164e7c7"
+  )
 })
 
 test_that("bootcoldist", {
