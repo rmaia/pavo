@@ -9,7 +9,7 @@ simulate_spec(
   wl_peak = NULL,
   width_sig = 20,
   width_gauss = 70,
-  skew_alpha = 0,
+  skew_gauss = 0,
   xlim = c(300, 700),
   ylim = c(0, 100)
 )
@@ -29,10 +29,11 @@ specifying the steepness of the change, for any sigmoidal curve(s). Required whe
 \item{width_gauss}{A numeric value or vector specifying the the full-width at half-maximum
 of any Gaussian curve(s). Required when \code{wl_peak} is specified. Defaults to 70 nm.}
 
-\item{skew_alpha}{Skewness parameter for controlling the direction and magnitude of
+\item{skew_gauss}{Skewness parameter for controlling the direction and magnitude of
 skew, when simulating for Gaussian curves (ignored when simulating only sigmoidal curves).
-Curves will have no skew when \code{skew_alpha = 0} (default), right skew when \code{skew_alpha > 0},
-and left skew when \code{skew_alpha < 0}.}
+Curves will have no skew when \code{skew_gauss = 0} (default), right skew when \code{skew_gauss > 0},
+and left skew when \code{skew_gauss < 0}. The parameter corresponds to 'alpha' in the
+the skew-normal distribution (Azzalini 1985).}
 
 \item{xlim}{A vector specifying the wavelength range of the simulated spectra. Defaults to
 300-700nm (\code{c(300, 700)}).}
@@ -93,9 +94,9 @@ plot(reflectances2)  # Plot
 # to explore more 'extreme' parameters. Here's a simple example which simulates
 # natural daylight, as represented by the D65 standard daylight spectrum.
 D65_real <- procspec(sensdata(illum = 'D65'), opt = 'smooth')  # Official D65 daylight spectrum
-D65_sim <- simulate_spec(wl_peak = 400, 
-                         width_gauss = 1300, 
-                         skew_alpha = 10, 
+D65_sim <- simulate_spec(wl_peak = 400,
+                         width_gauss = 1300,
+                         skew_gauss = 10,
                          ylim = c(0, 1))  # Simulated D65
 cor.test(D65_real$D65, D65_sim$spec_p400)  # >0.99 correlation
 plot(merge(D65_real, D65_sim), lty = 1:2)  # Merge and plot the two spectra
