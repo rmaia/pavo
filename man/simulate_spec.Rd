@@ -2,13 +2,14 @@
 % Please edit documentation in R/simulate_spec.R
 \name{simulate_spec}
 \alias{simulate_spec}
-\title{Simulate a reflectance spectrum}
+\title{Simulate a spectrum}
 \usage{
 simulate_spec(
   wl_inflect = NULL,
   wl_peak = NULL,
   width_sig = 20,
   width_gauss = 70,
+  skew_alpha = 0,
   xlim = c(300, 700),
   ylim = c(0, 100)
 )
@@ -28,6 +29,11 @@ specifying the steepness of the change, for any sigmoidal curve(s). Required whe
 \item{width_gauss}{A numeric value or vector specifying the the full-width at half-maximum
 of any Gaussian curve(s). Required when \code{wl_peak} is specified. Defaults to 70 nm.}
 
+\item{skew_alpha}{Skewness parameter for controlling the direction and magnitude of
+skew, when simulating for Gaussian curves (ignored when simulating only sigmoidal curves).
+Curves will have no skew when \code{skew_alpha = 0} (default), right skew when \code{skew_alpha > 0},
+and left skew when \code{skew_alpha < 0}.}
+
 \item{xlim}{A vector specifying the wavelength range of the simulated spectra. Defaults to
 300-700nm (\code{c(300, 700)}).}
 
@@ -43,45 +49,61 @@ final curve.}
 An object of class \code{rspec}.
 }
 \description{
-Simulate a natural reflectance spectrum with sigmoidal (s-shaped) and/or Gaussian
-(bell-shaped) curves. Multiple Gaussian and sigmoidal curves can be combined in
-a single spectrum, to simulate more complex reflectance functions.
+Simulate a naturalistic reflectance, radiance, irradiance, or transmission spectrum.
+Curves may have sigmoidal (s-shaped) and/or Gaussian (bell-shaped) features.
+Multiple Gaussian and sigmoidal curves can be combined in a single spectrum,
+to simulate more complex spectral functions.
 }
 \examples{
 # Single ideal 'grey' reflectance spectrum, with 50\% reflectance across 300 - 700 nm.
-spec0 <- simulate_spec(ylim = c(0, 50))
+reflect0 <- simulate_spec(ylim = c(0, 50))
 
 # Single sigmoidal spectrum, with a low-to-high inflection at 550 nm.
-spec1 <- simulate_spec(wl_inflect = 550)
+reflect1 <- simulate_spec(wl_inflect = 550)
 
 # Single Gaussian spectrum, with a peak at 400 nm
-spec2 <- simulate_spec(wl_peak = 400)
+reflect2 <- simulate_spec(wl_peak = 400)
 
 # Combination of both Gaussian (with peak at 340 nm) and sigmoidal (with inflection
 # at 560 nm)
-spec3 <- simulate_spec(wl_inflect = 560, wl_peak = 340)
+reflect3 <- simulate_spec(wl_inflect = 560, wl_peak = 340)
 
 # Double-Gaussian peaks of differing widths
-spec4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
+reflect4 <- simulate_spec(wl_peak = c(340, 560), width_gauss = c(12, 40))
 
 # Complex spectrim with single sigmoidal peak and multi-Gaussian peaks
-spec5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
+reflect5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss = c(20, 60))
 
-# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm 
+# Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm
 # in increments of 10, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10)  # Peak locations
-spectra <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
-spectra <- Reduce(function(...) merge(..., all = TRUE), spectra)  # Combine
-plot(spectra)  # Plot
+reflectances <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
+reflectances <- Reduce(function(...) merge(..., all = TRUE), reflectances)  # Combine
+plot(reflectances)  # Plot
 
 # Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
-# with maximum reflectance varying from 30 to 90\% in 10\% increments, then combine 
+# with maximum reflectance varying from 30 to 90\% in 10\% increments, then combine
 # into a single rspec object, and plot the result
 ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
-spectra2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
-spectra2 <- Reduce(function(...) merge(..., all = TRUE), spectra2)  # Combine
-plot(spectra2)  # Plot
+reflectances2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
+reflectances2 <- Reduce(function(...) merge(..., all = TRUE), reflectances2)  # Combine
+plot(reflectances2)  # Plot
 
+# To simulate non-reflectance spectra (like irradiances or radiances), it's often useful
+# to explore more 'extreme' parameters. Here's a simple example which simulates
+# natural daylight, as represented by the D65 standard daylight spectrum.
+D65_real <- procspec(sensdata(illum = 'D65'), opt = 'smooth')  # Official D65 daylight spectrum
+D65_sim <- simulate_spec(wl_peak = 400, 
+                         width_gauss = 1300, 
+                         skew_alpha = 10, 
+                         ylim = c(0, 1))  # Simulated D65
+cor.test(D65_real$D65, D65_sim$spec_p400)  # >0.99 correlation
+plot(merge(D65_real, D65_sim), lty = 1:2)  # Merge and plot the two spectra
+
+}
+\references{
+Azzalini A (1985). A class of distributions which includes the
+normal ones. Scan. J. Stat. 171-178.
 }
 \author{
 Thomas White \email{thomas.white026@gmail.com}

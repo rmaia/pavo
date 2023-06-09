@@ -166,17 +166,17 @@ test_that("processing & general", {
   # Sigmoidd low-high
   expect_known_hash(
     digest::sha1(summary(simulate_spec(wl_inflect = 550)), digits = 4),
-    "dc2a5e5fd3456ee240e37c6d8ded3c04"
+    "8e3891ab1c6cf8a10bcab6410fa2f4a0"
   )
   # Sigmoid high-low
   expect_known_hash(
     digest::sha1(summary(simulate_spec(wl_inflect = 550, ylim = c(100, 0))), digits = 4),
-    "7bf4ed5601a6bd144dfd81c0ad68502e"
+    "2b9191b2b7107e2903702b77a80c432d"
   )
   # Gaussian
   expect_known_hash(
     digest::sha1(summary(simulate_spec(wl_peak = 400)), digits = 4),
-    "c1a55531ce0e321d44fdbef2ad20e5fd"
+    "9e86606691410fa965031f7b6b180c48"
   )
   
   # Merge
