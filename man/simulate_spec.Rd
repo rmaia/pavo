@@ -87,7 +87,7 @@ plot(reflectances)  # Plot
 # into a single rspec object, and plot the result
 ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
 reflectances2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
-reflectances2 <- Reduce(merge.rspec, reflectances2)  # Combine
+reflectances2 <- Reduce(merge, reflectances2)  # Combine
 plot(reflectances2)  # Plot
 
 # To simulate non-reflectance spectra (like irradiances or radiances), it's often useful
