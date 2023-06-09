@@ -37,30 +37,41 @@ test_that("coldist", {
     "d65c018342664ae9c8dca35e715c57dde28de30a"
   )
   expect_identical(
-    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
-    "1f797fe87a2e1502080e1c99251b3a768164e7c7"
-  )
-  expect_identical(
     digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), "cielab")), digits = 4),
     "ab8d1c2eac211561f68759137baa2b5d3005b199"
   )
   
-  # Bootcoldist (empirical means)
+})
+
+test_that("coldist_nolinux", {
+  skip_on_os("linux")
+  
+  expect_identical(
+    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
+    "1f797fe87a2e1502080e1c99251b3a768164e7c7"
+  )
+})
+
+test_that("bootcoldist", {
+  skip_on_os("linux")
+  
+  # Empirical means
   data(sicalis)
   vm.sic <- vismodel(sicalis, visual = "apis", achromatic = "l")
   gr.sic <- gsub("ind..", "", rownames(vm.sic))
   bcd.sic <- suppressWarnings(
     bootcoldist(vm.sic, by = gr.sic, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
   )
-  
   expect_identical(
     digest::sha1(c(bcd.sic[,1], bcd.sic[,4])),
     "9d10fc3ed22e787974464b30a0c5254209522388"
-    )
+  )
+  
 })
 
-test_that("colspace", {
-
+test_that("special_colspace", {
+  skip_on_os("linux")
+  
   expect_identical(
     digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 3),
     "41e6dafe465f01a883abd395c00be168aec45b2d"
@@ -73,6 +84,9 @@ test_that("colspace", {
     digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 3),
     "d6d882283d9f005f436066b7da0d5e9a4c4b1e15"
   ) # tcs
+}) 
+
+test_that("special_colspace", {
   expect_identical(
     digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4),
     "b20853b3e52a60f2dd17b418a48b681d7f49e7d1"
