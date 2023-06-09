@@ -2,6 +2,7 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- Added a new function `simulate_spec()`, which allows for the flexible simulation of naturalistic spectra (inc. reflectance, irradiance, radiance, absorbance). See `?simulate_spec` for examples and information, and the handbook for further discussion.
 - `plot.rspec()` now accepts a logical `labels` argument (and `labels.cex`), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for 'stacked' plot types, but is now optional for both 'overlay' (the default) and 'stacked' spectral plots.
 
 ## MINOR FEATURES AND BUG FIXES
