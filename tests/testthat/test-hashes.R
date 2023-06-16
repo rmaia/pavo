@@ -7,7 +7,6 @@ data(sicalis)
 data(teal)
 
 test_that("coldist", {
-
   # JND transform
   vis.flowers <- vismodel(flowers, visual = "apis")
   cd.flowers <- coldist(vis.flowers, n = c(1, 1, 1))
@@ -17,105 +16,191 @@ test_that("coldist", {
 
   # Output
   expect_identical(
-    digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "ml")), achromatic = TRUE), digits = 4),
+    digest::sha1(coldist(colspace(
+      vismodel(flowers, visual = "canis", achromatic = "ml")
+    ), achromatic = TRUE), digits = 4),
     "bc460149b2263a857c9d573e77169556fa641f56"
   )
   # expect_equal(digest::sha1(coldist(vismodel(flowers, visual = 'canis', achromatic = 'ml'), achromatic = TRUE, n = c(1, 1)), digits = 4),
   #              "7329a3c550fe1d2939423e4104066c868891914f")
   expect_identical(
-    digest::sha1(coldist(colspace(vismodel(flowers, visual = "canis", achromatic = "all")),
-                         n = c(1, 2), achromatic = TRUE, subset = "Hibbertia_acicularis"), digits = 4),
+    digest::sha1(
+      coldist(
+        colspace(vismodel(
+          flowers,
+          visual = "canis", achromatic = "all"
+        )),
+        n = c(1, 2),
+        achromatic = TRUE,
+        subset = "Hibbertia_acicularis"
+      ),
+      digits = 4
+    ),
     "27ab9af8efe2b1651cd36f8506262f87e2b127a7"
   )
   expect_identical(
-    digest::sha1(coldist(colspace(vismodel(flowers, visual = "apis", achromatic = "all", relative = FALSE, vonkries = TRUE), space = "hexagon"),
-                         n = c(1, 2), achromatic = TRUE, subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")), digits = 4),
+    digest::sha1(
+      coldist(
+        colspace(
+          vismodel(
+            flowers,
+            visual = "apis",
+            achromatic = "all",
+            relative = FALSE,
+            vonkries = TRUE
+          ),
+          space = "hexagon"
+        ),
+        n = c(1, 2),
+        achromatic = TRUE,
+        subset = c("Hibbertia_acicularis", "Grevillea_buxifolia")
+      ),
+      digits = 4
+    ),
     "754c01809100bdacc80d40db2359797f41180c23"
   )
   expect_identical(
-    digest::sha1(coldist(colspace(vismodel(flowers, visual = "segment")), achromatic = TRUE), digits = 4),
+    digest::sha1(coldist(colspace(
+      vismodel(flowers, visual = "segment")
+    ), achromatic = TRUE), digits = 4),
     "d65c018342664ae9c8dca35e715c57dde28de30a"
   )
   expect_identical(
-    digest::sha1(coldist(colspace(vismodel(flowers, visual = "cie10", illum = "D65", vonkries = TRUE, relative = FALSE), "cielab")), digits = 4),
+    digest::sha1(coldist(colspace(
+      vismodel(
+        flowers,
+        visual = "cie10",
+        illum = "D65",
+        vonkries = TRUE,
+        relative = FALSE
+      ),
+      "cielab"
+    )), digits = 4),
     "ab8d1c2eac211561f68759137baa2b5d3005b199"
   )
-  
 })
 
 test_that("coldist_nolinux", {
   skip_on_os("linux")
-  
+
   expect_identical(
-    digest::sha1(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), digits = 3),
+    digest::sha1(coldist(
+      as.matrix(vismodel(flowers, achro = "bt.dc")),
+      qcatch = "Qi",
+      achromatic = TRUE
+    ), digits = 3),
     "1f797fe87a2e1502080e1c99251b3a768164e7c7"
   )
 })
 
 test_that("bootcoldist", {
   skip_on_os("linux")
-  
+
   # Empirical means
   data(sicalis)
   vm.sic <- vismodel(sicalis, visual = "apis", achromatic = "l")
   gr.sic <- gsub("ind..", "", rownames(vm.sic))
-  bcd.sic <- suppressWarnings(
-    bootcoldist(vm.sic, by = gr.sic, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1)
-  )
+  bcd.sic <- suppressWarnings(bootcoldist(
+    vm.sic,
+    by = gr.sic,
+    n = c(1, 2, 3),
+    weber = 0.1,
+    weber.achro = 0.1
+  ))
   expect_identical(
-    digest::sha1(c(bcd.sic[,1], bcd.sic[,4])),
+    digest::sha1(c(bcd.sic[, 1], bcd.sic[, 4])),
     "9d10fc3ed22e787974464b30a0c5254209522388"
   )
-  
 })
 
 test_that("special_colspace", {
   skip_on_os("linux")
-  
+
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "canis", achromatic = "all")), digits = 3),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "canis", achromatic = "all")
+    ), digits = 3),
     "41e6dafe465f01a883abd395c00be168aec45b2d"
   ) # dispace
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "apis", achromatic = "l")), digits = 3),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "apis", achromatic = "l")
+    ), digits = 3),
     "f327404a1e417cef90d5c79a5cfd6ecb8c494de4"
   ) # trispace
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")), digits = 3),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")
+    ), digits = 3),
     "d6d882283d9f005f436066b7da0d5e9a4c4b1e15"
   ) # tcs
-}) 
+})
 
 test_that("special_colspace", {
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "musca", achro = "md.r1"), space = "categorical"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "musca", achro = "md.r1"),
+      space = "categorical"
+    ), digits = 4),
     "b20853b3e52a60f2dd17b418a48b681d7f49e7d1"
   ) # categorical
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "segment", achromatic = "bt.dc"), space = "segment"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "segment", achromatic = "bt.dc"),
+      space = "segment"
+    ), digits = 4),
     "f47081fbc5f3f896fc50b2223937d91b6f61069e"
   ) # segment
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", vonkries = TRUE, achromatic = "l"), space = "coc"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(
+        flowers,
+        visual = "apis",
+        relative = FALSE,
+        qcatch = "Ei",
+        vonkries = TRUE,
+        achromatic = "l"
+      ),
+      space = "coc"
+    ), digits = 4),
     "d6e5c22dd45d2604c0d2fc16509b8887cb7812d2"
   ) # coc
   expect_identical(
     digest::sha1(
-      colspace(vismodel(flowers, visual = "apis", qcatch = "Ei", vonkries = TRUE, relative = FALSE, achromatic = "l"), space = "hexagon"),
+      colspace(
+        vismodel(
+          flowers,
+          visual = "apis",
+          qcatch = "Ei",
+          vonkries = TRUE,
+          relative = FALSE,
+          achromatic = "l"
+        ),
+        space = "hexagon"
+      ),
       digits = 4
     ),
     "a1fdd24e315413825c94d4caf1164b8be57c8156"
   ) # hexagon
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "ciexyz"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "cie10"),
+      space = "ciexyz"
+    ), digits = 4),
     "99684793a0db286562bff697354496ac3ef0abfb"
   ) # ciexyz
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielab"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "cie10"),
+      space = "cielab"
+    ), digits = 4),
     "55961f7e22403fba0c0c658868918722befb5f2c"
   ) # cielab
   expect_identical(
-    digest::sha1(colspace(vismodel(flowers, visual = "cie10"), space = "cielch"), digits = 4),
+    digest::sha1(colspace(
+      vismodel(flowers, visual = "cie10"),
+      space = "cielch"
+    ), digits = 4),
     "e0ad250b695e97c9ffb53c0303f19d908e33d033"
   ) # cielch
 
@@ -127,27 +212,35 @@ test_that("special_colspace", {
 })
 
 test_that("voloverlap()", {
-
   tcs.sicalis.C <- subset(colspace(vismodel(sicalis)), "C")
   tcs.sicalis.T <- subset(colspace(vismodel(sicalis)), "T")
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 
   expect_identical(
-    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex"), digits = 4),
+    digest::sha1(
+      voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex"),
+      digits = 4
+    ),
     "3717422024683f1e3e1bd8dbfe832b177147afce"
   )
 
   expect_identical(
-    digest::sha1(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"), digits = 4),
+    digest::sha1(
+      voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"),
+      digits = 4
+    ),
     "69b323778e83f2e43a91d60326f1e726eb2cd0e4"
   )
 })
 
 test_that("processing & general", {
-
   # Sensdata
   expect_known_hash(
-    expect_silent(sensdata(illum = "all", bkg = "all", trans = "all")),
+    expect_silent(sensdata(
+      illum = "all",
+      bkg = "all",
+      trans = "all"
+    )),
     "b084b37ec7"
   )
 
@@ -155,6 +248,32 @@ test_that("processing & general", {
   expect_known_hash(
     expect_silent(peakshape(flowers, absolute.min = TRUE)),
     "7fbaba1738"
+  )
+
+  # Simulate
+  # Ideal
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(ylim = c(
+      0, 50
+    ))), digits = 4),
+    "88a30943a99d1ea14bc42ac4e4f4d54d"
+  )
+  # Sigmoidd low-high
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(wl_inflect = 550)), digits = 4),
+    "8e3891ab1c6cf8a10bcab6410fa2f4a0"
+  )
+  # Sigmoid high-low
+  expect_known_hash(
+    digest::sha1(summary(
+      simulate_spec(wl_inflect = 550, ylim = c(100, 0))
+    ), digits = 4),
+    "2b9191b2b7107e2903702b77a80c432d"
+  )
+  # Gaussian
+  expect_known_hash(
+    digest::sha1(summary(simulate_spec(wl_peak = 400)), digits = 4),
+    "9e86606691410fa965031f7b6b180c48"
   )
 
   # Merge
@@ -189,12 +308,13 @@ test_that("processing & general", {
 })
 
 test_that("images", {
-
   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
   set.seed(2231)
 
-  papilio <- getimg(system.file("testdata", "images", "butterflies", "papilio.png", package = "pavo"))
-  snakes <- getimg(system.file("testdata", "images", "snakes", package = "pavo"))
+  papilio <-
+    getimg(system.file("testdata", "images", "butterflies", "papilio.png", package = "pavo"))
+  snakes <-
+    getimg(system.file("testdata", "images", "snakes", package = "pavo"))
 
   expect_identical(
     digest::sha1(summary(papilio), digits = 4),
@@ -207,26 +327,69 @@ test_that("images", {
 })
 
 test_that("vismodel", {
-
   # Output
   expect_identical(
-    digest::sha1(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky"), digits = 4),
+    digest::sha1(
+      vismodel(
+        flowers,
+        visual = "canis",
+        achromatic = "all",
+        illum = "bluesky"
+      ),
+      digits = 4
+    ),
     "61879badc0cb518ebd8f62f9c8838c7b32cb51ff"
   )
   expect_identical(
-    digest::sha1(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000), digits = 4),
+    digest::sha1(
+      vismodel(
+        flowers,
+        visual = "apis",
+        qcatch = "fi",
+        achromatic = "ml",
+        scale = 10000
+      ),
+      digits = 4
+    ),
     "4a3539c87d1c672510df68992b9dc6954337a736"
   )
   expect_identical(
-    digest::sha1(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit"), digits = 4),
+    digest::sha1(
+      vismodel(
+        flowers,
+        visual = "bluetit",
+        achromatic = "ch.dc",
+        trans = "bluetit"
+      ),
+      digits = 4
+    ),
     "fbd9f6b5368f2c81f11ec86a78322e7a14cc7f47"
   )
   expect_identical(
-    digest::sha1(vismodel(flowers, visual = "musca", achromatic = "md.r1", relative = FALSE), digits = 4),
+    digest::sha1(
+      vismodel(
+        flowers,
+        visual = "musca",
+        achromatic = "md.r1",
+        relative = FALSE
+      ),
+      digits = 4
+    ),
     "edcb721c2093c7af40efdae94837c4e01031c8ae"
   )
   expect_identical(
-    digest::sha1(vismodel(flowers, visual = "apis", relative = FALSE, qcatch = "Ei", bkg = "green", vonkries = TRUE, achromatic = "l"), digits = 4),
+    digest::sha1(
+      vismodel(
+        flowers,
+        visual = "apis",
+        relative = FALSE,
+        qcatch = "Ei",
+        bkg = "green",
+        vonkries = TRUE,
+        achromatic = "l"
+      ),
+      digits = 4
+    ),
     "a6bc51f272c930a4ac9e69a1851eca16f5a3a1a0"
   )
   expect_identical(
@@ -237,28 +400,72 @@ test_that("vismodel", {
   # Attributes
   if (getRversion() < "4.0.0") {
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "canis",
+          achromatic = "all",
+          illum = "bluesky"
+        )
+      ), digits = 4),
       "0f788526e4db68c9921e441066779146f8a4c377"
     )
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "apis",
+          qcatch = "fi",
+          achromatic = "ml",
+          scale = 10000
+        )
+      ), digits = 4),
       "b9d488a8e36bca04a66e4513e781c21b66c10ce9"
     )
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "bluetit",
+          achromatic = "ch.dc",
+          trans = "bluetit"
+        )
+      ), digits = 4),
       "0a3fb5b639d4c4224cf91045d5f8a13cc06f8550"
     )
   } else {
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "canis", achromatic = "all", illum = "bluesky")), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "canis",
+          achromatic = "all",
+          illum = "bluesky"
+        )
+      ), digits = 4),
       "397eda31c6948884e09ef58a1b8f0ec5d4f3401c"
     )
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "apis", qcatch = "fi", achromatic = "ml", scale = 10000)), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "apis",
+          qcatch = "fi",
+          achromatic = "ml",
+          scale = 10000
+        )
+      ), digits = 4),
       "60744da46c20782fa8af0bf2a93316ed0d2e6e9d"
     )
     expect_identical(
-      digest::sha1(attributes(vismodel(flowers, visual = "bluetit", achromatic = "ch.dc", trans = "bluetit")), digits = 4),
+      digest::sha1(attributes(
+        vismodel(
+          flowers,
+          visual = "bluetit",
+          achromatic = "ch.dc",
+          trans = "bluetit"
+        )
+      ), digits = 4),
       "7bca56baefdd2a42fcb59c26614fe0bbec326865"
     )
   }
