@@ -168,11 +168,11 @@ summary2.rspec <-
     chkDots(...)
     
     wl <- isolate_wl(object, keep = "wl")
-    
-    # Set WL min & max
+  
     lambdamin <- max(wlmin, min(wl))
     lambdamax <- min(wlmax, max(wl))
     
+    # wl-range checks
     if (!is.null(wlmin) && lambdamin > wlmin) {
       stop("wlmin is smaller than the range of spectral data")
     }
@@ -192,6 +192,7 @@ summary2.rspec <-
       "B3" = calc_B3,
       'S2' = calc_S2,
       'S3' = calc_S3,
+      'S4' = calc_S4,
       'H1' = calc_H1,
       'H2' = calc_H2,
       'H3' = calc_H3,
@@ -213,29 +214,22 @@ summary2.rspec <-
       }
     }
     
-    color.var <- data.frame(matrix(ncol = length(var_names), nrow = ncol(object)), row.names = names(object))
+    color.var <- data.frame(matrix(ncol = length(var_names), 
+                                   nrow = ncol(object)), 
+                            row.names = names(object))
     names(color.var) <- var_names
     
     for (var in var_names) {
-      color.var[, var] <- var_funcs[[var]](object, wl)
+      color.var[, var] <- var_funcs[[var]](object, wl, lambdamin, lambdamax)
     }
     
     color.var
   }
 
-calc_B1 <- function(object, wl) {
-  colSums(object)
-}
 
-calc_B2 <- function(object, wl) {
-  colMeans(object)
-}
+## ----- Common intermediaries ----- ##
 
-calc_B3 <- function(object, wl) {
-  vapply(object, max, numeric(1))
-}
-
-calc_Rmin <- function(object) {
+calc_Rmin <- function(object, wl) {
   vapply(object, min, numeric(1))
 }
 
@@ -243,24 +237,51 @@ calc_Rmid <- function(B3, Rmin) {
   (B3 + Rmin) / 2
 }
 
+## ----- Brightness ----- ##
+
+calc_B1 <- function(object, ...) {
+  colSums(object)
+}
+
+calc_B2 <- function(object, ...) {
+  colMeans(object)
+}
+
+calc_B3 <- function(object, ...) {
+  vapply(object, max, numeric(1))
+}
+
+## ----- Saturation ----- ##
+
 calc_Carotchroma <- function(object, wl) {
   R450 <- as.numeric(object[which(wl == 450), , drop = FALSE])
   R700 <- as.numeric(object[which(wl == 700), , drop = FALSE])
   (R700 - R450) / R700
 }
 
-calc_S2 <- function(object, Rmin) {
+calc_S2 <- function(object, ...) {
   B3 <- calc_B3(object)
+  Rmin <- calc_Rmin(object)
   B3 / Rmin
 }
 
-calc_S3 <- function(object, wl, H1, B1) {
+calc_S3 <- function(object, wl) {
+  H1 <- calc_H1(object, wl)
+  B1 <- calc_B1(object, wl)
   S3 <- vapply(seq_len(ncol(object)), function(col) {
     spec <- object[, col]
     H1_spec <- H1[col]
     sum(spec[wl >= (H1_spec - 50) & wl <= (H1_spec + 50)])
   }, numeric(1))
   S3 / B1
+}
+
+calc_S4 <- function(object, wl) {
+  diffsmooth <- apply(object, 2, diff)
+  incr <- apply(diffsmooth, 2, min) > 0
+  bmaxneg <- abs(apply(diffsmooth, 2, min))
+  bmaxneg[incr] <- NA
+  bmaxneg
 }
 
 calc_S5 <- function(object, wl, lambdamin, lambdamax) {
@@ -305,6 +326,7 @@ calc_S10 <- function(S8, diffsmooth, wl) {
   S8 * bmaxneg
 }
 
+## ----- Hue ----- ##
 
 calc_H1 <- function(object, wl) {
   B3 <- vapply(object, max, numeric(1))
