@@ -168,7 +168,7 @@ summary2.rspec <-
     chkDots(...)
     
     wl <- isolate_wl(object, keep = "wl")
-  
+    
     lambdamin <- max(wlmin, min(wl))
     lambdamax <- min(wlmax, max(wl))
     
@@ -181,7 +181,7 @@ summary2.rspec <-
     }
     
     # Restrict to range of wlmin:wlmax
-    object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
+    object <- object[which(wl == lambdamin):which(wl == lambdamax),]
     
     wl <- isolate_wl(object, keep = "wl")
     object <- isolate_wl(object, keep = "spec")
@@ -190,9 +190,16 @@ summary2.rspec <-
       "B1" = calc_B1,
       "B2" = calc_B2,
       "B3" = calc_B3,
+      'S1' = calc_S1,
       'S2' = calc_S2,
       'S3' = calc_S3,
       'S4' = calc_S4,
+      'S5' = calc_S5,
+      'S6' = calc_S6,
+      'S7' = calc_S7,
+      'S8' = calc_S8,
+      'S9' = calc_S9,
+      'S10' = calc_S10,
       'H1' = calc_H1,
       'H2' = calc_H2,
       'H3' = calc_H3,
@@ -200,27 +207,39 @@ summary2.rspec <-
       'H5' = calc_H5
     )
     
-    if (is.logical(subset)) {
+    var_names <- names(var_funcs)
+    
+    if(is.logical(subset)) {
       if (subset) {
         var_names <- c("B2", "S8", "H1")
-      } else {
-        var_names <- names(var_funcs)
       }
     } else {
-      if (all(subset %in% names(var_funcs))) {
+      if(all(subset %in% names(var_funcs))) {
         var_names <- subset
       } else {
         stop("Names in ", dQuote("subset"), " do not match color variable names")
       }
     }
     
-    color.var <- data.frame(matrix(ncol = length(var_names), 
-                                   nrow = ncol(object)), 
+    if ("S1" %in% var_names) {
+      s1_index <- which(var_names == "S1") # find index of 'S1'
+      var_names <- var_names[-s1_index] # remove 'S1'
+      new_var_names <- c('S1U', 'S1V', 'S1B', 'S1G', 'S1Y', 'S1R') # new var names
+      var_names <- append(var_names, new_var_names, after = s1_index - 1) # append new var names at the right place
+    }
+    
+    color.var <- data.frame(matrix(ncol = length(var_names),
+                                   nrow = ncol(object)),
                             row.names = names(object))
     names(color.var) <- var_names
     
     for (var in var_names) {
-      color.var[, var] <- var_funcs[[var]](object, wl, lambdamin, lambdamax)
+      if (var %in% c('S1U', 'S1V', 'S1B', 'S1G', 'S1Y', 'S1R')) {
+        s1_values <- var_funcs[["S1"]](object, wl, lambdamin, lambdamax)
+        color.var[, var] <- s1_values[[var]]
+      } else {
+        color.var[, var] <- var_funcs[[var]](object, wl, lambdamin, lambdamax)
+      }
     }
     
     color.var
@@ -229,43 +248,84 @@ summary2.rspec <-
 
 ## ----- Common intermediaries ----- ##
 
-calc_Rmin <- function(object, wl) {
+calc_Rmin <- function(object, wl, lambdamin, lambdamax) {
   vapply(object, min, numeric(1))
 }
 
-calc_Rmid <- function(B3, Rmin) {
-  (B3 + Rmin) / 2
+calc_Rmid <- function(object, wl, lambdamin, lambdamax) {
+  (calc_B3(object) + calc_Rmin(object)) / 2
 }
+
+# calc_index_Rmid <- function(object, wl, lambdamin, lambdamax) {
+#   vapply(seq_len(ncol(object)), function(x) {
+#     which.min(abs(object[, x] - calc_Rmid[x]))
+#   }, numeric(1))
+# }
 
 ## ----- Brightness ----- ##
 
-calc_B1 <- function(object, ...) {
+calc_B1 <- function(object, wl, lambdamin, lambdamax, ...) {
   colSums(object)
 }
 
-calc_B2 <- function(object, ...) {
+calc_B2 <- function(object, wl, lambdamin, lambdamax, ...) {
   colMeans(object)
 }
 
-calc_B3 <- function(object, ...) {
+calc_B3 <- function(object, wl, lambdamin, lambdamax, ...) {
   vapply(object, max, numeric(1))
 }
 
 ## ----- Saturation ----- ##
 
-calc_Carotchroma <- function(object, wl) {
-  R450 <- as.numeric(object[which(wl == 450), , drop = FALSE])
-  R700 <- as.numeric(object[which(wl == 700), , drop = FALSE])
-  (R700 - R450) / R700
+calc_S1 <- function(object, wl, lambdamin, lambdamax) {
+  
+  B1 <- calc_B1(object)
+  
+  # Define the chroma ranges
+  chroma_ranges <- list(
+    S1U = list(min = lambdamin, max = 400, 
+               message = "cannot calculate UV chroma; wavelength range not below 400 nm"),
+    S1V = list(min = lambdamin, max = 415, 
+               message = "cannot calculate violet chroma; wavelength below 415 nm"),
+    S1B = list(min = 400, max = 510, 
+               message = "cannot calculate blue chroma; wavelength range not between 400 and 510 nm"),
+    S1G = list(min = 510, max = 605, 
+               message = "cannot calculate green chroma; wavelength range not between 510 and 605 nm"),
+    S1Y = list(min = 550, max = 625, 
+               message = "cannot calculate yellow chroma; wavelength range not between 550 and 625 nm"),
+    S1R = list(min = 605, max = 700, 
+               message = "cannot calculate red chroma; wavelength range not between 605 and 700 nm")
+  )
+  
+  output.mat <- matrix(ncol = length(chroma_ranges), nrow = ncol(object))
+  
+  for (i in seq_along(chroma_ranges)) {
+    if (lambdamin <= chroma_ranges[[i]]$min && lambdamax >= chroma_ranges[[i]]$max) {
+      chromamat <- object[wl >= chroma_ranges[[i]]$min & wl <= chroma_ranges[[i]]$max, , drop = FALSE]
+      chroma <- colSums(chromamat) / B1
+      output.mat[, i] <- chroma
+    } else {
+      warning(chroma_ranges[[i]]$message, call. = FALSE)
+    }
+  }
+  
+  if (lambdamin > 300 && lambdamin < 400) {
+    warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful", call. = FALSE)
+  }
+  
+  return(list(S1U = output.mat[, 1], S1V = output.mat[, 2], S1B = output.mat[, 3], 
+              S1G = output.mat[, 4], S1Y = output.mat[, 5], S1R = output.mat[, 6]))
 }
 
-calc_S2 <- function(object, ...) {
+
+calc_S2 <- function(object, wl, lambdamin, lambdamax, ...) {
   B3 <- calc_B3(object)
   Rmin <- calc_Rmin(object)
   B3 / Rmin
 }
 
-calc_S3 <- function(object, wl) {
+calc_S3 <- function(object, wl, lambdamin, lambdamax, ...) {
   H1 <- calc_H1(object, wl)
   B1 <- calc_B1(object, wl)
   S3 <- vapply(seq_len(ncol(object)), function(col) {
@@ -276,7 +336,7 @@ calc_S3 <- function(object, wl) {
   S3 / B1
 }
 
-calc_S4 <- function(object, wl) {
+calc_S4 <- function(object, wl, lambdamin, lambdamax, ...) {
   diffsmooth <- apply(object, 2, diff)
   incr <- apply(diffsmooth, 2, min) > 0
   bmaxneg <- abs(apply(diffsmooth, 2, min))
@@ -294,15 +354,19 @@ calc_S5 <- function(object, wl, lambdamin, lambdamax) {
   S5Y <- colSums(object[Q3, , drop = FALSE])
   S5G <- colSums(object[Q2, , drop = FALSE])
   S5B <- colSums(object[Q1, , drop = FALSE])
-  sqrt((S5R - S5G)^2 + (S5Y - S5B)^2)
+  sqrt((S5R - S5G) ^ 2 + (S5Y - S5B) ^ 2)
 }
 
-calc_S6 <- function(B3, Rmin) {
-  B3 - Rmin
+calc_S6 <- function(object, wl, lambdamin, lambdamax) {
+  calc_B3(object) - calc_Rmin(object)
 }
 
-calc_S7 <- function(object, wl, B1) {
+calc_S7 <- function(object, wl, lambdamin, lambdamax) {
   Rmid <- calc_Rmid(object)
+  B1 <- calc_B1(object)
+  index_Rmid <- vapply(seq_len(ncol(object)), function(x) {
+    which.min(abs(object[, x] - Rmid[x]))
+  }, numeric(1))
   S7 <- vapply(seq_len(ncol(object)), function(col) {
     spec <- object[, col]
     index_Rmid_spec <- index_Rmid[col]
@@ -313,27 +377,30 @@ calc_S7 <- function(object, wl, B1) {
   S7 / B1
 }
 
-calc_S8 <- function(B3, Rmin, object) {
-  S2 <- calc_S2(object, Rmin)
+calc_S8 <- function(object, wl, lambdamin, lambdamax) {
+  S6 <- calc_S6(object)
   B2 <- calc_B2(object)
-  S2 / B2
+  S6 / B2
 }
 
-calc_S10 <- function(S8, diffsmooth, wl) {
-  bmaxneg <- abs(apply(diffsmooth, 2, min))
-  incr <- apply(diffsmooth, 2, min) > 0
-  bmaxneg[incr] <- NA
-  S8 * bmaxneg
+calc_S9 <- function(object, wl, lambdamin, lambdamax) {
+  R450 <- as.numeric(object[which(wl == 450), , drop = FALSE])
+  R700 <- as.numeric(object[which(wl == 700), , drop = FALSE])
+  (R700 - R450) / R700
+}
+
+calc_S10 <- function(object, wl, lambdamin, lambdamax) {
+  calc_S8(object) * calc_S4(object)
 }
 
 ## ----- Hue ----- ##
 
-calc_H1 <- function(object, wl) {
+calc_H1 <- function(object, wl, ...) {
   B3 <- vapply(object, max, numeric(1))
   wl[max.col(t(object), ties.method = "first")]
 }
 
-calc_H2 <- function(object, wl) {
+calc_H2 <- function(object, wl, ...) {
   diffsmooth <- apply(object, 2, diff)
   incr <- apply(diffsmooth, 2, min) > 0
   decr <- apply(diffsmooth, 2, max) < 0
@@ -342,7 +409,7 @@ calc_H2 <- function(object, wl) {
   lambdabmaxneg
 }
 
-calc_H3 <- function(object, wl) {
+calc_H3 <- function(object, wl, ...) {
   B3 <- vapply(object, max, numeric(1))
   Rmin <- vapply(object, min, numeric(1))
   Rmid <- (B3 + Rmin) / 2
@@ -352,7 +419,7 @@ calc_H3 <- function(object, wl) {
   wl[index_Rmid]
 }
 
-calc_H4 <- function(object, wl) {
+calc_H4 <- function(object, wl, ...) {
   lambdamin <- min(wl)
   lambdamax <- max(wl)
   segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
@@ -370,11 +437,10 @@ calc_H4 <- function(object, wl) {
   atan2(S5Y - S5B, S5R - S5G)
 }
 
-calc_H5 <- function(object, wl) {
+calc_H5 <- function(object, wl, ...) {
   diffsmooth <- apply(object, 2, diff)
   incr <- apply(diffsmooth, 2, min) > 0
   lambdabmax <- wl[apply(diffsmooth, 2, which.max)]
   lambdabmax[incr] <- NA
   lambdabmax
 }
-
