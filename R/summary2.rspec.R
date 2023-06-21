@@ -229,8 +229,7 @@ summary2.rspec <-
     }
     
     color.var <- data.frame(matrix(ncol = length(var_names),
-                                   nrow = ncol(object)),
-                            row.names = names(object))
+                                   nrow = ncol(object)))
     names(color.var) <- var_names
     
     for (var in var_names) {
@@ -242,7 +241,11 @@ summary2.rspec <-
       }
     }
     
-    color.var
+    row.names(color.var) <- names(object)
+    
+    # The double-conversion here is just so the attributes are in the same order
+    # as in the original formulation, for CI test consistency.
+    as.data.frame(as.matrix(color.var))
   }
 
 
