@@ -106,18 +106,18 @@
 #' @examples
 #' # Load data
 #' data(sicalis)
-#' 
+#'
 #' # Calculate and display all spectral summary variables
 #' summary(sicalis)
-#' 
+#'
 #' # Calculate only subset of B2, S8 and H1 as per Andersson (1999)
 #' summary(sicalis, subset = TRUE)
-#' 
+#'
 #' # Calculate user-specified subset of B1 and H4
 #' summary(sicalis, subset = c("B1", "H4"))
-#' 
+#'
 #' @author Thomas E. White \email{thomas.white026@@gmail.com}
-#' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca} 
+#' @author Pierre-Paul Bitton \email{bittonp@@windsor.ca}
 #' @author Rafael Maia \email{rm72@@zips.uakron.edu}
 #'
 #' @references Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.
@@ -171,12 +171,12 @@
 #'
 summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
     chkDots(...)
-    
+  
     wl <- isolate_wl(object, keep = "wl")
-    
+
     lambdamin <- max(wlmin, min(wl))
     lambdamax <- min(wlmax, max(wl))
-    
+
     # wl-range checks
     if (!is.null(wlmin) && lambdamin > wlmin) {
       stop("wlmin is smaller than the range of spectral data")
@@ -184,61 +184,61 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
     if (!is.null(wlmax) && lambdamax < wlmax) {
       stop("wlmax is larger than the range of spectral data")
     }
-    
+
     # Restrict to range of wlmin:wlmax
-    object <- object[which(wl == lambdamin):which(wl == lambdamax),]
-    
+    object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
+
     wl <- isolate_wl(object, keep = "wl")
     object <- isolate_wl(object, keep = "spec")
-    
+
     var_funcs <- list(
       "B1" = calc_B1,
       "B2" = calc_B2,
       "B3" = calc_B3,
-      'S1' = calc_S1,
-      'S2' = calc_S2,
-      'S3' = calc_S3,
-      'S4' = calc_S4,
-      'S5' = calc_S5,
-      'S6' = calc_S6,
-      'S7' = calc_S7,
-      'S8' = calc_S8,
-      'S9' = calc_S9,
-      'S10' = calc_S10,
-      'H1' = calc_H1,
-      'H2' = calc_H2,
-      'H3' = calc_H3,
-      'H4' = calc_H4,
-      'H5' = calc_H5
+      "S1" = calc_S1,
+      "S2" = calc_S2,
+      "S3" = calc_S3,
+      "S4" = calc_S4,
+      "S5" = calc_S5,
+      "S6" = calc_S6,
+      "S7" = calc_S7,
+      "S8" = calc_S8,
+      "S9" = calc_S9,
+      "S10" = calc_S10,
+      "H1" = calc_H1,
+      "H2" = calc_H2,
+      "H3" = calc_H3,
+      "H4" = calc_H4,
+      "H5" = calc_H5
     )
-    
+
     var_names <- names(var_funcs)
-    
-    if(is.logical(subset)) {
+
+    if (is.logical(subset)) {
       if (subset) {
         var_names <- c("B2", "S8", "H1")
       }
     } else {
-      if(all(subset %in% names(var_funcs))) {
+      if (all(subset %in% names(var_funcs))) {
         var_names <- subset
       } else {
         stop("Names in ", dQuote("subset"), " do not match color variable names")
       }
     }
-    
+
     if ("S1" %in% var_names) {
       s1_index <- which(var_names == "S1") # find index of 'S1'
       var_names <- var_names[-s1_index] # remove 'S1'
-      new_var_names <- c('S1U', 'S1V', 'S1B', 'S1G', 'S1Y', 'S1R') # new var names
+      new_var_names <- c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R") # new var names
       var_names <- append(var_names, new_var_names, after = s1_index - 1) # append new var names at the right place
     }
-    
+
     color.var <- data.frame(matrix(ncol = length(var_names),
                                    nrow = ncol(object)))
     names(color.var) <- var_names
-    
+
     ## Dependent variable structure  ##
-    
+
     # S1 <- B1
     # S2 <- B3, Rmin
     # S3 <- H1, B1
@@ -248,20 +248,20 @@ summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ..
     # S10 <- S8 (S6, B3, Rmin), S4
     # H1 <- B3
     # H3 <- B3, Rmin, Rmid
-    
+
     ## ----------------------------  ##
-    
+
     for (var in var_names) {
-      if (var %in% c('S1U', 'S1V', 'S1B', 'S1G', 'S1Y', 'S1R')) {
+      if (var %in% c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R")) {
         s1_values <- var_funcs[["S1"]](object, wl, lambdamin, lambdamax)
         color.var[, var] <- s1_values[[var]]
       } else {
         color.var[, var] <- var_funcs[[var]](object, wl, lambdamin, lambdamax)
       }
     }
-    
+
     row.names(color.var) <- names(object)
-    
+
     # The double-conversion here is just so the attributes are in the same order
     # as in the original formulation, for CI test consistency
     as.data.frame(as.matrix(color.var))
@@ -301,27 +301,27 @@ calc_B3 <- function(object, wl, lambdamin, lambdamax, ...) {
 ## ----- Saturation ----- ##
 
 calc_S1 <- function(object, wl, lambdamin, lambdamax) {
-  
+
   B1 <- calc_B1(object)
-  
+
   # Define the chroma ranges
   chroma_ranges <- list(
-    S1U = list(min = lambdamin, max = 400, 
+    S1U = list(min = lambdamin, max = 400,
                message = "cannot calculate UV chroma; wavelength range not below 400 nm"),
-    S1V = list(min = lambdamin, max = 415, 
+    S1V = list(min = lambdamin, max = 415,
                message = "cannot calculate violet chroma; wavelength below 415 nm"),
-    S1B = list(min = 400, max = 510, 
+    S1B = list(min = 400, max = 510,
                message = "cannot calculate blue chroma; wavelength range not between 400 and 510 nm"),
-    S1G = list(min = 510, max = 605, 
+    S1G = list(min = 510, max = 605,
                message = "cannot calculate green chroma; wavelength range not between 510 and 605 nm"),
-    S1Y = list(min = 550, max = 625, 
+    S1Y = list(min = 550, max = 625,
                message = "cannot calculate yellow chroma; wavelength range not between 550 and 625 nm"),
-    S1R = list(min = 605, max = 700, 
+    S1R = list(min = 605, max = 700,
                message = "cannot calculate red chroma; wavelength range not between 605 and 700 nm")
   )
-  
+
   output.mat <- matrix(ncol = length(chroma_ranges), nrow = ncol(object))
-  
+
   for (i in seq_along(chroma_ranges)) {
     if (lambdamin <= chroma_ranges[[i]]$min && lambdamax >= chroma_ranges[[i]]$max) {
       chromamat <- object[wl >= chroma_ranges[[i]]$min & wl <= chroma_ranges[[i]]$max, , drop = FALSE]
@@ -331,12 +331,12 @@ calc_S1 <- function(object, wl, lambdamin, lambdamax) {
       warning(chroma_ranges[[i]]$message, call. = FALSE)
     }
   }
-  
+
   if (lambdamin > 300 && lambdamin < 400) {
     warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful", call. = FALSE)
   }
-  
-  return(list(S1U = output.mat[, 1], S1V = output.mat[, 2], S1B = output.mat[, 3], 
+
+  return(list(S1U = output.mat[, 1], S1V = output.mat[, 2], S1B = output.mat[, 3],
               S1G = output.mat[, 4], S1Y = output.mat[, 5], S1R = output.mat[, 6]))
 }
 
@@ -445,17 +445,17 @@ calc_H4 <- function(object, wl, ...) {
   lambdamin <- min(wl)
   lambdamax <- max(wl)
   segmts <- trunc(quantile(lambdamin:lambdamax, names = FALSE))
-  
+
   Q1 <- wl >= segmts[1] & wl <= segmts[2]
   Q2 <- wl >= segmts[2] & wl <= segmts[3]
   Q3 <- wl >= segmts[3] & wl <= segmts[4]
   Q4 <- wl >= segmts[4] & wl <= segmts[5]
-  
+
   S5R <- colSums(object[Q4, , drop = FALSE])
   S5Y <- colSums(object[Q3, , drop = FALSE])
   S5G <- colSums(object[Q2, , drop = FALSE])
   S5B <- colSums(object[Q1, , drop = FALSE])
-  
+
   atan2(S5Y - S5B, S5R - S5G)
 }
 
