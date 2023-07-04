@@ -86,25 +86,24 @@ test_that("summary.rspec", {
   expect_named(summary(sicalis, subset = c("B1", "H4")), c("B1", "H4"))
 
   # Different wl ranges
-  expect_warning(summary(sicalis, wlmin = 500), "wavelength range not between")
+  expect_warning(summary(sicalis, lim = c(500, 700)), "wavelength range not between")
   expect_warning(summary(sicalis[1:200, ]), "wavelength range not between")
-  expect_warning(summary(sicalis, wlmax = 600), "wavelength range not between")
-  expect_error(summary(sicalis, wlmin = 200), "wlmin is smaller")
-  expect_error(summary(sicalis, wlmax = 1000), "wlmax is larger")
+  expect_warning(summary(sicalis, lim = c(300, 600)), "wavelength range not between")
+  expect_error(summary(sicalis, lim = c(200, 700)), "smaller than the range")
+  expect_error(summary(sicalis, lim = c(300, 1000)), "larger than the range")
 
   # Test one spectrum rspec object
   one_spec <- sicalis[, c(1, 2)]
   expect_identical(dim(summary(one_spec)), c(1L, 23L))
   expect_warning(
-    expect_length(summary(one_spec, wlmin = 500), 23),
-    "blue chroma"
+    expect_length(summary(one_spec, lim = c(500, 700)), 23), "blue chroma"
   )
 
   # Error if subset vars do not exist
   expect_error(summary(sicalis, subset = "H9"), "do not match color variable names")
 
   # Warning about UV variables if full UV range is not included
-  expect_warning(summary(sicalis, wlmin = 350), "UV-related variables may not be meaningful")
+  expect_warning(summary(sicalis, lim = c(350, 700)), "UV-related variables may not be meaningful")
 })
 
 test_that("plot.rspec", {

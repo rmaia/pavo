@@ -4,7 +4,7 @@
 \alias{summary.rspec}
 \title{Colourimetric variables}
 \usage{
-\method{summary}{rspec}(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...)
+\method{summary}{rspec}(object, subset = FALSE, lim = NULL, wlmin = NULL, wlmax = NULL, ...)
 }
 \arguments{
 \item{object}{(required) a data frame, possibly an object of class \code{rspec},
@@ -17,8 +17,10 @@ of the complete output (composed of B2, S8 and H1; the variables described in
 Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 names can be used in order to filter and show only those variables.}
 
-\item{wlmin, wlmax}{minimum and maximum used to define the range of wavelengths used in
-calculations (default is to use entire range in the \code{rspec} object).}
+\item{lim}{The range of wavelengths used in calculations. The default is to use
+the entire range in the \code{rspec} object (typically equivalent to \code{lim = c(300, 700)}).}
+
+\item{wlmin, wlmax}{Deprecated. Use the \code{lim} argument instead.}
 
 \item{...}{class consistency (ignored)}
 }

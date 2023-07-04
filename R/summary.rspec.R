@@ -10,8 +10,9 @@
 #' of the complete output (composed of B2, S8 and H1; the variables described in
 #' Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 #' names can be used in order to filter and show only those variables.
-#' @param wlmin,wlmax minimum and maximum used to define the range of wavelengths used in
-#' calculations (default is to use entire range in the `rspec` object).
+#' @param lim The range of wavelengths used in calculations. The default is to use
+#' the entire range in the `rspec` object (typically equivalent to `lim = c(300, 700)`).
+#' @param wlmin,wlmax Deprecated. Use the `lim` argument instead.
 #' @param ... class consistency (ignored)
 #'
 #' @return A data frame containing either 23 or 5 (`subset = TRUE`) variables described
@@ -169,20 +170,28 @@
 #' 13- Smiseth, P., J. Ornborg, S. Andersson, and T. Amundsen. 2001. Is male plumage reflectance
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
-summary.rspec <- function(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...) {
+summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlmax = NULL, ...) {
     chkDots(...)
+
+    if (!all(missing("wlmin"), missing("wlmin"))) {
+      warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0, 
+      and will be removed in future releases. Use the lim() argument instead.")
+      lim  <- c(wlmin, wlmax)
+    }
 
     wl <- isolate_wl(object, keep = "wl")
 
-    lambdamin <- max(wlmin, min(wl))
-    lambdamax <- min(wlmax, max(wl))
+    lambdamin <- max(lim[1], min(wl))
+    lambdamax <- min(lim[2], max(wl))
 
     # wl-range checks
-    if (!is.null(wlmin) && lambdamin > wlmin) {
-      stop("wlmin is smaller than the range of spectral data")
-    }
-    if (!is.null(wlmax) && lambdamax < wlmax) {
-      stop("wlmax is larger than the range of spectral data")
+    if (!missing(lim)) {
+      if (lambdamin > lim[1]) {
+        stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim() argument.")
+      }
+      if (lambdamax < lim[2]) {
+        stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim() argument.")
+      }
     }
 
     # Restrict to range of wlmin:wlmax
