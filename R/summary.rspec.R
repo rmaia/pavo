@@ -360,7 +360,7 @@ calc_S1 <- function(object, wl, computed_vars, ...) {
     S1G = list(min = 510, max = 605,
       message = "cannot calculate green chroma; wavelength range not between 510 and 605 nm"
     ),
-    S1Y = list( min = 550, max = 625,
+    S1Y = list(min = 550, max = 625,
       message = "cannot calculate yellow chroma; wavelength range not between 550 and 625 nm"
     ),
     S1R = list(min = 605, max = 700,
@@ -368,7 +368,7 @@ calc_S1 <- function(object, wl, computed_vars, ...) {
     )
   )
 
-  output.mat <-matrix(ncol = length(chroma_ranges), nrow = ncol(object))
+  output.mat <- matrix(ncol = length(chroma_ranges), nrow = ncol(object))
 
   for (i in seq_along(chroma_ranges)) {
     if (lambdamin <= chroma_ranges[[i]]$min && lambdamax >= chroma_ranges[[i]]$max) {
@@ -381,7 +381,7 @@ calc_S1 <- function(object, wl, computed_vars, ...) {
   }
 
   if (lambdamin > 300 && lambdamin < 400) {
-    warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful",call. = FALSE)
+    warning("Minimum wavelength is ", lambdamin, "; UV-related variables may not be meaningful", call. = FALSE)
   }
 
   return(
