@@ -266,7 +266,8 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
       Rmid = list(fun = calc_Rmid, deps = NULL)
     )
 
-    # Function to calculate a variable
+    # Function to calculate a variable, which ensures each variable
+    # is calculated only once
     compute_color_var <- function(var_name) {
 
        # If the variable is already computed, return it
