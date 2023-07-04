@@ -7,6 +7,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+- summary.rspec() has been rewritten for efficiency, and now only calculates the required variables when `subset` is used. As a result, the function is also slightly slower (0.5 x) when calculating the full set of variables, but much faster (10 x) when calculating a subset.
 - Removed the start-up message.
 - Removed the previously-deprecated `margins` argument from various colourspace plots.
 - Replace `rgl.triangles` with `triangles3d()` internally to avoid a deprecation issue.
