@@ -4,11 +4,11 @@
 
 - Added a new function `simulate_spec()`, which allows for the flexible simulation of naturalistic spectra (inc. reflectance, irradiance, radiance, absorbance). See `?simulate_spec` for examples and information, and the handbook for further discussion.
 - `plot.rspec()` now accepts a logical `labels` argument (and `labels.cex`), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for 'stacked' plot types, but is now optional for both 'overlay' (the default) and 'stacked' spectral plots.
+- the `wlmin` and `wlmax` arguments in `summary.rspec()` are being deprecated in favour of a single `lim` argument, for consistency across functions.
 
 ## MINOR FEATURES AND BUG FIXES
 
 - `summary.rspec()` has been rewritten for efficiency, and now only calculates the required variables when `subset` is used. As a result, the function is also slightly slower (0.5 x) when calculating the full set of variables, but much faster (10 x) when calculating a subset.
-- the `wlmin` and `wlmax` arguments in `summary.rspec()` are now deprecated in favour of a single `lim` argument, for consistency.
 - Removed the start-up message.
 - Removed the previously-deprecated `margins` argument from various colourspace plots.
 - Replace `rgl.triangles` with `triangles3d()` internally to avoid a deprecation issue.
