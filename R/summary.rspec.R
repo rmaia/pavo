@@ -174,7 +174,7 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     chkDots(...)
 
     if (!all(missing("wlmin"), missing("wlmin"))) {
-      warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0, 
+      warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,
       and will be removed in future releases. Use the lim() argument instead.")
       lim  <- c(wlmin, wlmax)
     }
@@ -187,10 +187,10 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     # wl-range checks
     if (!missing(lim)) {
       if (lambdamin > lim[1]) {
-        stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim() argument.")
+        stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim argument.")
       }
       if (lambdamax < lim[2]) {
-        stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim() argument.")
+        stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim argument.")
       }
     }
 
