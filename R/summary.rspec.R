@@ -242,7 +242,9 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     # Dictionary to store computed variables
     computed_vars <- list()
 
-    # Define a dependency structure among variables
+    # Define a dependency structure among variables.
+    # This allows us to speed up computation by computing only the necessary
+    # variables (and their dependencies) when subset is not FALSE.
     dependencies <- list(
       B1 = list(fun = calc_B1, deps = NULL),
       B2 = list(fun = calc_B2, deps = NULL),
