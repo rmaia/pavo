@@ -37,24 +37,18 @@ catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
     stop(dQuote("colspace"), " object is not a result of categorical()", call. = FALSE)
   }
 
-  arg <- list(...)
-
   # Set defaults
-  if (is.null(arg$pch)) {
-    arg$pch <- 19
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- c(-1, 1)
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- c(-1, 1)
-  }
-  if (is.null(arg$xlab)) {
-    arg$xlab <- "R7p - R8p"
-  }
-  if (is.null(arg$ylab)) {
-    arg$ylab <- "R7y - R8y"
-  }
+  defaults <- list(
+    pch = 19,
+    xlim = c(-1, 1),
+    ylim = c(-1, 1),
+    xlab = "R7p - R8p",
+    ylab = "R7y - R8y"
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
 
   # Plot
   arg$x <- catdata$x

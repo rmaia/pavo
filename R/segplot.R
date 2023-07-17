@@ -39,26 +39,22 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
     stop(dQuote("colspace"), " object is not a result of segspace()", call. = FALSE)
   }
 
-  arg <- list(...)
+  defaults <- list(
+    pch = 19,
+    xlim = c(-1.05, 1.01),
+    ylim = c(-1.05, 1.05),
+    xlab = " ",
+    ylab = " "
+  )
+
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
 
   # Set defaults
   if (square) {
     arg$asp <- 1
-  }
-  if (is.null(arg$pch)) {
-    arg$pch <- 19
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- c(-1.05, 1.01)
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- c(-1.05, 1.05)
-  }
-  if (is.null(arg$xlab)) {
-    arg$xlab <- " "
-  }
-  if (is.null(arg$ylab)) {
-    arg$ylab <- " "
   }
   arg$bty <- "n"
   arg$axes <- FALSE

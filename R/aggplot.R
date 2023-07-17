@@ -88,41 +88,26 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
   polygon_wl <- c(wl, rev(wl))
 
   # Set sensible plotting defaults
-  arg <- list(...)
-
-  if (is.null(arg$xlab)) {
-    arg$xlab <- "Wavelength (nm)"
-  }
-  if (is.null(arg$ylab)) {
-    arg$ylab <- "Reflectance (%)"
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- range(wl)
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- range(polygon_data, cntplotspecs, na.rm = TRUE)
-  }
+  defaults <- list(
+    xlab = "Wavelegth (nm)",
+    ylab = "Reflectance (%)",
+    xlim = range(wl),
+    ylim = range(polygon_data, cntplotspecs, na.rm = TRUE),
+    lwd = 1,
+    lty = 1
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
 
   # line width
-  if (!is.null(arg$lwd)) {
-    lwd <- arg$lwd
-  }
-
-  if (is.null(arg$lwd)) {
-    lwd <- 1
-  }
+  lwd <- arg$lwd
+  # coloring for overlay plot & others
+  lty <- arg$lty
 
   if (length(lwd) < ncol(cntplotspecs)) {
     lwd <- rep(lwd, ncol(cntplotspecs))
-  }
-
-  # coloring for overlay plot & others
-  if (!is.null(arg$lty)) {
-    lty <- arg$lty
-  }
-
-  if (is.null(arg$lty)) {
-    lty <- 1
   }
 
   if (length(lty) < ncol(cntplotspecs)) {

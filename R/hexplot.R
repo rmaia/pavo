@@ -39,21 +39,19 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
   sectors <- match.arg(sectors)
 
   # Set defaults
-  arg <- list(...)
+  defaults <- list(
+    pch = 19,
+    cex = 0.9,
+    xlim = c(-1.2, 1.2),
+    ylim = c(-1.2, 1.2)
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
+
   if (square) {
     arg$asp <- 1
-  }
-  if (is.null(arg$pch)) {
-    arg$pch <- 19
-  }
-  if (is.null(arg$cex)) {
-    arg$cex <- 0.9
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- c(-1.2, 1.2)
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- c(-1.2, 1.2)
   }
 
   # Hexagon edge coordinates
