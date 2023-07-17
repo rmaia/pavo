@@ -40,20 +40,20 @@
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
                     square = TRUE, gamut = FALSE, ...) {
-  arg <- list(...)
 
   # Set defaults
+  defaults <- list(
+    pch = 19,
+    xlim = c(-1 / sqrt(2), 1 / sqrt(2)),
+    ylim = c(-sqrt(2) / (2 * (sqrt(3))), sqrt(2) / sqrt(3))
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
+
   if (square) {
     arg$asp <- 1
-  }
-  if (is.null(arg$pch)) {
-    arg$pch <- 19
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- c(-1 / sqrt(2), 1 / sqrt(2))
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- c(-sqrt(2) / (2 * (sqrt(3))), sqrt(2) / sqrt(3))
   }
 
   # Verticy coordinates

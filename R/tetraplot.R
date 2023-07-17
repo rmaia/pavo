@@ -69,18 +69,21 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   }
 
   # get arguments
-  arg <- list(...)
-
-  if (is.null(arg$col)) arg$col <- 1
-  if (is.null(arg$cex)) arg$cex <- 1
-  if (is.null(arg$pch)) arg$pch <- 19
-  if (is.null(arg$xlab)) arg$xlab <- "x"
-  if (is.null(arg$ylab)) arg$ylab <- "y"
-  if (is.null(arg$zlab)) arg$zlab <- "z"
+  defaults <- list(
+    col = 1,
+    cex = 1,
+    pch = 19,
+    xlab = "x",
+    ylab = "y",
+    zlab = "z"
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
 
   col <- arg$col
   arg$col <- NULL
-
 
   # tetrahedron vertices
   verts <- matrix(

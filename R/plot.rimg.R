@@ -91,15 +91,20 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
   }
 
   # Defaults
-  arg <- list(...)
-  if (is.null(arg$xlab)) arg$xlab <- "x"
-  if (is.null(arg$ylab)) arg$ylab <- "y"
-  if (is.null(arg$main)) arg$main <- attr(imagedata, "imgname")
-  if (is.null(arg$asp)) arg$asp <- dim(imagedata2)[1] / dim(imagedata2)[2]
-  if (is.null(arg$xlim)) arg$xlim <- c(1, dim(imagedata2)[2])
-  if (is.null(arg$ylim)) arg$ylim <- c(dim(imagedata2)[1], 1)
-  if (is.null(arg$xaxs)) arg$xaxs <- "i"
-  if (is.null(arg$yaxs)) arg$yaxs <- "i"
+  defaults <- list(
+    xlab = "x",
+    ylab = "y",
+    main = attr(imagedata, "imgname"),
+    asp = dim(imagedata2)[1] / dim(imagedata2)[2],
+    xlim = c(1, dim(imagedata2)[2]),
+    ylim = c(dim(imagedata2)[1], 1),
+    xaxs = "i",
+    yaxs = "i"
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
 
   plot.new()
   do.call(plot.window, arg)

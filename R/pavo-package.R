@@ -2,6 +2,7 @@
 "_PACKAGE"
 
 #' @importFrom graphics plot.default
+#' @importFrom utils modifyList
 # This functions has been moved to base since R 4.0.0
 NULL
 

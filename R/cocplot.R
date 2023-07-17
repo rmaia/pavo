@@ -29,29 +29,23 @@ cocplot <- function(cocdata, labels = TRUE, labels.cex = 0.9,
                     tick.loc = c(-12, -9, -6, -3, 3, 6, 9, 12),
                     achro = FALSE, achrosize = 0.8, achrocol = "grey",
                     square = TRUE, ...) {
-  arg <- list(...)
 
   # Set defaults
+  defaults <- list(
+    pch = 19,
+    xlim = range(tick.loc),
+    ylim = range(tick.loc),
+    xlab = "",
+    ylab = "",
+    bty = "n"
+  )
+  arg <- modifyList(
+    defaults,
+    list(...)
+  )
+
   if (square) {
     arg$asp <- 1
-  }
-  if (is.null(arg$pch)) {
-    arg$pch <- 19
-  }
-  if (is.null(arg$xlim)) {
-    arg$xlim <- range(tick.loc)
-  }
-  if (is.null(arg$ylim)) {
-    arg$ylim <- range(tick.loc)
-  }
-  if (is.null(arg$xlab)) {
-    arg$xlab <- ""
-  }
-  if (is.null(arg$ylab)) {
-    arg$ylab <- ""
-  }
-  if (is.null(arg$bty)) {
-    arg$bty <- "n"
   }
 
   # Plot
