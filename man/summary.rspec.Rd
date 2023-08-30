@@ -4,7 +4,7 @@
 \alias{summary.rspec}
 \title{Colourimetric variables}
 \usage{
-\method{summary}{rspec}(object, subset = FALSE, wlmin = NULL, wlmax = NULL, ...)
+\method{summary}{rspec}(object, subset = FALSE, lim = NULL, wlmin = NULL, wlmax = NULL, ...)
 }
 \arguments{
 \item{object}{(required) a data frame, possibly an object of class \code{rspec},
@@ -17,8 +17,10 @@ of the complete output (composed of B2, S8 and H1; the variables described in
 Andersson and Prager 2006) are returned. Finally, a user-specified string of variable
 names can be used in order to filter and show only those variables.}
 
-\item{wlmin, wlmax}{minimum and maximum used to define the range of wavelengths used in
-calculations (default is to use entire range in the \code{rspec} object).}
+\item{lim}{The range of wavelengths used in calculations. The default is to use
+the entire range in the \code{rspec} object (typically equivalent to \code{lim = c(300, 700)}).}
+
+\item{wlmin, wlmax}{Deprecated. Use the \code{lim} argument instead.}
 
 \item{...}{class consistency (ignored)}
 }
@@ -115,10 +117,18 @@ Smoothing affects only B3, S2, S4, S6, S10, H2, and H5 calculation. All other
 variables can be reliably extracted using non-smoothed data.
 }
 \examples{
+# Load data
 data(sicalis)
+
+# Calculate and display all spectral summary variables
 summary(sicalis)
+
+# Calculate only subset of B2, S8 and H1 as per Andersson (1999)
 summary(sicalis, subset = TRUE)
+
+# Calculate user-specified subset of B1 and H4
 summary(sicalis, subset = c("B1", "H4"))
+
 }
 \references{
 Montgomerie R. 2006. Analyzing colors. In Hill, G.E, and McGraw, K.J., eds.
@@ -172,5 +182,9 @@ eastern bluebirds. Animal Behaviour 69:67-72.
 correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 }
 \author{
-Pierre-Paul Bitton \email{bittonp@windsor.ca}, Rafael Maia \email{rm72@zips.uakron.edu}
+Thomas E. White \email{thomas.white026@gmail.com}
+
+Pierre-Paul Bitton \email{bittonp@windsor.ca}
+
+Rafael Maia \email{rm72@zips.uakron.edu}
 }
