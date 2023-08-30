@@ -75,10 +75,13 @@
 <ul><li>Added a new function <code><a href="../reference/simulate_spec.html">simulate_spec()</a></code>, which allows for the flexible simulation of naturalistic spectra (inc. reflectance, irradiance, radiance, absorbance). See <code><a href="../reference/simulate_spec.html">?simulate_spec</a></code> for examples and information, and the handbook for further discussion.</li>
 <li>
 <code><a href="../reference/plot.rspec.html">plot.rspec()</a></code> now accepts a logical <code>labels</code> argument (and <code>labels.cex</code>), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for ‘stacked’ plot types, but is now optional for both ‘overlay’ (the default) and ‘stacked’ spectral plots.</li>
+<li>the <code>wlmin</code> and <code>wlmax</code> arguments in <code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> are being deprecated in favour of a single <code>lim</code> argument, for consistency across functions.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-9-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-9-0"></a></h3>
-<ul><li>Removed the start-up message.</li>
+<ul><li>
+<code><a href="../reference/summary.rspec.html">summary.rspec()</a></code> has been rewritten for efficiency, and now only calculates the required variables when <code>subset</code> is used. As a result, the function is also slightly slower (0.5 x) when calculating the full set of variables, but much faster (10 x) when calculating a subset.</li>
+<li>Removed the start-up message.</li>
 <li>Removed the previously-deprecated <code>margins</code> argument from various colourspace plots.</li>
 <li>Replace <code>rgl.triangles</code> with <code><a href="https://dmurdoch.github.io/rgl/dev/reference/primitives.html" class="external-link">triangles3d()</a></code> internally to avoid a deprecation issue.</li>
 <li>Fixed a bug in the categorical colourspace, so it now returns sensible category values when <code>x</code> and/or <code>y</code> is equal to 0.</li>

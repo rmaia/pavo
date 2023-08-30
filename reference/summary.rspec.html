@@ -75,7 +75,7 @@
 
     <div id="ref-usage">
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="co"># S3 method for rspec</span></span>
-<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, subset <span class="op">=</span> <span class="cn">FALSE</span>, wlmin <span class="op">=</span> <span class="cn">NULL</span>, wlmax <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">object</span>, subset <span class="op">=</span> <span class="cn">FALSE</span>, lim <span class="op">=</span> <span class="cn">NULL</span>, wlmin <span class="op">=</span> <span class="cn">NULL</span>, wlmax <span class="op">=</span> <span class="cn">NULL</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -94,9 +94,13 @@ Andersson and Prager 2006) are returned. Finally, a user-specified string of var
 names can be used in order to filter and show only those variables.</p></dd>
 
 
+<dt>lim</dt>
+<dd><p>The range of wavelengths used in calculations. The default is to use
+the entire range in the <code>rspec</code> object (typically equivalent to <code>lim = c(300, 700)</code>).</p></dd>
+
+
 <dt>wlmin, wlmax</dt>
-<dd><p>minimum and maximum used to define the range of wavelengths used in
-calculations (default is to use entire range in the <code>rspec</code> object).</p></dd>
+<dd><p>Deprecated. Use the <code>lim</code> argument instead.</p></dd>
 
 
 <dt>...</dt>
@@ -252,12 +256,17 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
     </div>
     <div id="author">
     <h2>Author</h2>
-    <p>Pierre-Paul Bitton <a href="mailto:bittonp@windsor.ca">bittonp@windsor.ca</a>, Rafael Maia <a href="mailto:rm72@zips.uakron.edu">rm72@zips.uakron.edu</a></p>
+    <p>Thomas E. White <a href="mailto:thomas.white026@gmail.com">thomas.white026@gmail.com</a></p>
+<p>Pierre-Paul Bitton <a href="mailto:bittonp@windsor.ca">bittonp@windsor.ca</a></p>
+<p>Rafael Maia <a href="mailto:rm72@zips.uakron.edu">rm72@zips.uakron.edu</a></p>
     </div>
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># Load data</span></span></span>
+<span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate and display all spectral summary variables</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              B1        B2        B3        S1U        S1V        S1B       S1G</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind1.C 2119.199  5.284785 11.480677 0.10139621 0.10519791 0.03296790 0.3800012</span>
@@ -325,6 +334,8 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.C -0.7958861 2.200180 0.9763543 0.3524130 691 360 520 0.5688317 511</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.T -0.6461512 1.823614 0.9759692 0.3707725 672 371 510 0.5192949 504</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.B -0.6732006 1.797362 0.9655962 0.3953625 662 373 508 0.5819991 503</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate only subset of B2, S8 and H1 as per Andersson (1999)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sicalis</span>, subset <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>               B2       S8  H1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind1.C  5.284785 2.138383 690</span>
@@ -348,6 +359,8 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.C  5.747002 2.200180 691</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.T  8.984461 1.823614 672</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.B 11.561847 1.797362 662</span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># Calculate user-specified subset of B1 and H4</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">sicalis</span>, subset <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"B1"</span>, <span class="st">"H4"</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>              B1        H4</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind1.C 2119.199 0.4939207</span>
@@ -371,6 +384,7 @@ correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.</p
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.C 2304.548 0.5688317</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.T 3602.769 0.5192949</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> ind7.B 4636.301 0.5819991</span>
+<span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
   </div>
