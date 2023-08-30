@@ -174,17 +174,17 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     chkDots(...)
 
     wl <- isolate_wl(object, keep = "wl")
-    
+
     # The control-flow here is for cases when users specify only of the deprecated
     # wlmin or wlmax arguments. Can be removed once deprecated in next release.
     if (!all(missing("wlmin"), missing("wlmin"))) {
       warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,
       and will be removed in future releases. Use the lim() argument instead.")
-      if(!missing('wlmin') && missing('wlmax'))
+      if (!missing("wlmin") && missing("wlmax"))
         lim  <- c(wlmin, max(wl))
-      if(missing('wlmin') && !missing('wlmax'))
+      if (missing("wlmin") && !missing("wlmax"))
         lim  <- c(min(wl), wlmax)
-      if(all(missing("wlmin"), missing("wlmin")))
+      if (all(missing("wlmin"), missing("wlmin")))
         lim  <- c(wlmin, wlmax)
     }
 
