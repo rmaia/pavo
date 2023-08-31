@@ -89,7 +89,7 @@ test_that("coldist_nolinux", {
       qcatch = "Qi",
       achromatic = TRUE
     ), digits = 3),
-    "1f797fe87a2e1502080e1c99251b3a768164e7c7"
+    "295406b4943d398fc19585feaea438cacae787d5"
   )
 })
 
@@ -120,19 +120,19 @@ test_that("special_colspace", {
     digest::sha1(colspace(
       vismodel(flowers, visual = "canis", achromatic = "all")
     ), digits = 3),
-    "41e6dafe465f01a883abd395c00be168aec45b2d"
+    "fe8b01b931ac4dbfa37973bf93496ba9d8d21cf8"
   ) # dispace
   expect_identical(
     digest::sha1(colspace(
       vismodel(flowers, visual = "apis", achromatic = "l")
     ), digits = 3),
-    "f327404a1e417cef90d5c79a5cfd6ecb8c494de4"
+    "98a18305b49c799e2c923c24f142f0d24e88d641"
   ) # trispace
   expect_identical(
     digest::sha1(colspace(
       vismodel(flowers, visual = "bluetit", achromatic = "ch.dc")
     ), digits = 3),
-    "d6d882283d9f005f436066b7da0d5e9a4c4b1e15"
+    "15eec70d8c4508dc774ff40b484ca97a4b894999"
   ) # tcs
 })
 
@@ -299,11 +299,11 @@ test_that("processing & general", {
   # Summary
   expect_known_hash(
     expect_silent(summary(teal)),
-    "c64e1fd403"
+    "4479c3c296"
   )
   expect_known_hash(
     expect_silent(summary(sicalis)),
-    "66129550f3"
+    "f3f3e74050"
   )
 })
 
@@ -394,7 +394,7 @@ test_that("vismodel", {
   )
   expect_identical(
     digest::sha1(vismodel(flowers, visual = "cie10"), digits = 4),
-    "fc5f5f2f11fefdcff1bbdd264e28d520f0812712"
+    "ebf856a100eb0763978aa26483802f04b65d55ca"
   )
 
   # Attributes
