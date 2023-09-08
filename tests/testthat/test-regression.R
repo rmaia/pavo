@@ -1,7 +1,3 @@
-local_edition(2)
-
-skip_on_cran()
-
 data(flowers)
 data(sicalis)
 data(teal)
