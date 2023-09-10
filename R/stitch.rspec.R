@@ -63,14 +63,15 @@
 #' @seealso [as.rspec()], [merge.rspec()]
 
 stitch <- function(rspec1, rspec2, overlap_method, interp) {
-  UseMethod("stitch", x)
+  UseMethod("stitch")
 }
 
 #' @rdname stitch
+#'
 #' @export
-stitch.rspec.default <- function(rspec1, rspec2,
-                         overlap_method = c("mean", "minimum", "maximum"),
-                         interp = TRUE) {
+stitch.rspec <- function(rspec1, rspec2,
+                                 overlap_method = c("mean", "minimum", "maximum"),
+                                 interp = TRUE) {
 
   # Class check
   if (!inherits(rspec1, "rspec") || !inherits(rspec2, "rspec")) {
@@ -147,4 +148,3 @@ stitch.rspec.default <- function(rspec1, rspec2,
 
   res
 }
-
