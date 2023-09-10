@@ -4,9 +4,9 @@
 #' a single `rspec` object.
 #'
 #' @param rspec1,rspec2 (required) `rspec` objects of differing wavelength ranges
-#' to stitch together.
+#' to stitch together by row.
 #' @param overlap_method the method for modifying reflectance values if regions
-#' of the spectra overlap in their wavelength range. Defaults to `average`.
+#' of the spectra overlap in their wavelength range. Defaults to `mean`.
 #' @param interp logical argument specifying whether reflectance values should be
 #' interpolated between the two sets of spectra if their wavelength ranges
 #' do not overlap. Defaults to `TRUE`.
@@ -62,9 +62,9 @@
 #'
 #' @seealso [as.rspec()], [merge.rspec()]
 
-stitch <- function(rspec1, rspec2,
-                   overlap_method = c("average", "minimum", "maximum"),
-                   interp = TRUE) {
+stitch.rspec <- function(rspec1, rspec2,
+                         overlap_method = c("mean", "minimum", "maximum"),
+                         interp = TRUE) {
 
   # Class check
   if (!inherits(rspec1, "rspec") || !inherits(rspec2, "rspec")) {
@@ -103,7 +103,7 @@ stitch <- function(rspec1, rspec2,
 
       # Replace with a switch statement
       switch(overlap_method,
-             average = res[idx[1], -1] <- colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
+             mean = res[idx[1], -1] <- colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
              minimum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, min, na.rm = TRUE),
              maximum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, max, na.rm = TRUE)
       )
@@ -140,4 +140,9 @@ stitch <- function(rspec1, rspec2,
   class(res) <- c("rspec", "data.frame")
 
   res
+}
+
+#' @export
+stitch <- function(x, ...) {
+  UseMethod("stitch", x)
 }
