@@ -62,7 +62,13 @@
 #'
 #' @seealso [as.rspec()], [merge.rspec()]
 
-stitch.rspec <- function(rspec1, rspec2,
+stitch <- function(rspec1, rspec2, overlap_method, interp) {
+  UseMethod("stitch", x)
+}
+
+#' @rdname stitch
+#' @export
+stitch.rspec.default <- function(rspec1, rspec2,
                          overlap_method = c("mean", "minimum", "maximum"),
                          interp = TRUE) {
 
@@ -142,7 +148,3 @@ stitch.rspec <- function(rspec1, rspec2,
   res
 }
 
-#' @export
-stitch <- function(x, ...) {
-  UseMethod("stitch", x)
-}

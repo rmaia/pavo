@@ -53,14 +53,14 @@ Imports:
     viridisLite
 Suggests:
     alphashape3d,
-    digest,
     imager,
     knitr,
     mapproj,
     rgl,
     rmarkdown,
     testthat(>= 2.99.0),
-    vdiffr
+    vdiffr,
+    digest
 VignetteBuilder: 
     knitr
 Config/Needs/website:
