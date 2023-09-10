@@ -656,6 +656,8 @@ polymask <- function(imagedat,
   )
   poly <- sf::st_polygon(list(as.matrix(polygon)))
 
+  # It's safe to extract just the first column since at the moment, we can only
+  # have a single polygon
   inpoly <- sf::st_intersects(pts, poly, sparse = FALSE)[, 1]
 
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))

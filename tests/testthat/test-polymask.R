@@ -1,5 +1,6 @@
+set.seed(1234)
 imgfake <- as.rimg(matrix(
-  c(rep(1, 12), rep(2, 13)), nrow = 10, ncol = 10)
+  sample(c(0, 1), 100, replace = TRUE), nrow = 10, ncol = 10)
 )
 polyfake <- data.frame(
   x = c(3, 5, 7, 7, 3),
