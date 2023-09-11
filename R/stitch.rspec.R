@@ -86,7 +86,7 @@ stitch.rspec <- function(rspec1, rspec2,
   if (length(common_cols) <= 1) {
     stop("At least one spectrum in both rspec objects must have a matching name")
   }
-  
+
   # Warn if only subset is present across both rspec objects
   if (length(common_cols) != ncol(rspec1) || length(common_cols) != ncol(rspec2)) {
     warning("Not all spectra are present in both objects. Stitching only the common samples.")
