@@ -78,13 +78,18 @@ stitch.rspec <- function(rspec1, rspec2,
     stop("Both inputs must be of class 'rspec'")
   }
 
-  # Valied overlap_method
+  # Validate overlap_method
   overlap_method <- match.arg(overlap_method)
 
   # Check that at least one spectrum has a matching name in both objects
   common_cols <- intersect(names(rspec1), names(rspec2))
   if (length(common_cols) <= 1) {
     stop("At least one spectrum in both rspec objects must have a matching name")
+  }
+  
+  # Warn if only subset is present across both rspec objects
+  if (length(common_cols) != ncol(rspec1) || length(common_cols) != ncol(rspec2)) {
+    warning("Not all spectra are present in both objects. Stitching only the common samples.")
   }
 
   # Identify unique spectra in both objects

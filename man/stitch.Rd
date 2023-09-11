@@ -5,7 +5,7 @@
 \alias{stitch.rspec}
 \title{Stitch together two rspec objects}
 \usage{
-stitch(rspec1, rspec2, overlap_method, interp = TRUE)
+stitch(rspec1, rspec2, overlap_method, interp)
 
 \method{stitch}{rspec}(
   rspec1,
