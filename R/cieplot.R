@@ -21,7 +21,6 @@
 #'   to `FALSE`)
 #' @param ciebg should the colour background be plotted for CIEXYZ plot?
 #'   (defaults to `TRUE`)
-#' @param margin Deprecated. Please use the standard [par()] method for custom margins.
 #' @inheritParams triplot
 #'
 #' @examples

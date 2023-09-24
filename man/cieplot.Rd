@@ -50,8 +50,6 @@ to \code{FALSE})}
 (defaults to \code{TRUE})}
 
 \item{...}{additional graphical options. See \code{\link[=par]{par()}}.}
-
-\item{margin}{Deprecated. Please use the standard \code{\link[=par]{par()}} method for custom margins.}
 }
 \description{
 Plot a CIE (XYZ, LAB, or LCH) chromaticity diagram.
