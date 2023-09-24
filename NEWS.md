@@ -1,3 +1,5 @@
+# pavo 2.10.0
+
 # pavo 2.9.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES

@@ -35,3 +35,4 @@ CONDUCT.md
 ^vignettes/drafts$
 ^data-raw$
 ^\.lintr$
+^CRAN-SUBMISSION$
