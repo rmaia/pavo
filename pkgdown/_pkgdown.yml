@@ -20,6 +20,7 @@ reference:
   - '`procspec`'
   - '`rimg2cimg`'
   - '`spec2rgb`'
+  - '`stitch.rspec`'
   - '`subset.rspec`'
   - '`simulate_spec`'
 

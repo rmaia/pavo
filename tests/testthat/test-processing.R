@@ -86,6 +86,46 @@ test_that("Aggregation", {
   expect_error(aggspec(teal, by = 7), "by not a multiple")
 })
 
+test_that("Stitch", {
+  
+  # Overlapping ranges
+  r1 <- simulate_spec(wl_peak = 550, xlim = c(300, 700))
+  r2 <- simulate_spec(wl_inflect = 1100, xlim = c(650, 1200))
+  names(r1) <- names(r2) <- c('wl', 'sample_1')
+  r_stitch <- stitch(r1, r2)
+  
+  expect_equal(dim(r_stitch), c(901, 2))
+  expect_equal(r_stitch$wl, 300:1200)
+  expect_equal(summary(r_stitch)$H5, 520)
+  expect_equal(summary(r_stitch)$S6, 100)
+  expect_equal(summary(r_stitch)$B3, 100)
+
+  # Non-overlapping ranges
+  r_vis <- merge(simulate_spec(wl_peak = 550, xlim = c(300, 700)),
+                 simulate_spec(wl_peak = 550, xlim = c(300, 700)))
+  r_nir <- merge(simulate_spec(wl_inflect = 1000, xlim = c(800, 1250)),
+                 simulate_spec(wl_inflect = 1100, xlim = c(800, 1250)))
+  names(r_vis) <- c('wl', 'sample_1', 'sample_2')  # Names match, different order
+  names(r_nir) <- c('wl', 'sample_2', 'sample_1')
+  r_vis_nir <- stitch(r_vis, r_nir)
+  
+  expect_equal(dim(r_vis_nir), c(951, 3))
+  expect_equal(r_vis_nir$wl, 300:1250)
+  expect_equal(summary(r_vis_nir)$H5, c(520, 520))
+  expect_equal(summary(r_vis_nir)$S6, c(100, 100))
+  expect_equal(summary(r_vis_nir)$B3, c(100, 100))
+  
+  # Errors and warnings
+  names(r_vis) <- c('wl', 'sample_1', 'sample_2')
+  names(r_nir) <- c('wl', 'sample_3', 'sample_4')
+  expect_error(stitch(r_vis, r_nir), "matching name")
+  
+  names(r_vis) <- c('wl', 'sample_1', 'sample_2')
+  names(r_nir) <- c('wl', 'sample_1', 'sample_3')
+  expect_warning(stitch(r_vis, r_nir), "Not all spectra are present")
+  
+})
+
 test_that("Convert", {
   # Flux/irrad
   illum <- sensdata(illum = "forestshade")

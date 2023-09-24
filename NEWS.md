@@ -2,6 +2,7 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- Added a new function `stitch.rspec()`, which facilitates the row-wise merging of spectra. For example, when combining spectra whose wavelength ranges do not overlap, or overlap only slightly (as is common when recording separate UV-VIS and NIR spectra). See `?stitch.rspec` for examples and information, as well as the handbook.
 - Added a new function `simulate_spec()`, which allows for the flexible simulation of naturalistic spectra (inc. reflectance, irradiance, radiance, absorbance). See `?simulate_spec` for examples and information, and the handbook for further discussion.
 - `plot.rspec()` now accepts a logical `labels` argument (and `labels.cex`), to control whether text labels identifying each spectrum should be added to the outer plot margins. This was previously only available, and was required, for 'stacked' plot types, but is now optional for both 'overlay' (the default) and 'stacked' spectral plots.
 - the `wlmin` and `wlmax` arguments in `summary.rspec()` are being deprecated in favour of a single `lim` argument, for consistency across functions.
