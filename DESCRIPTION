@@ -49,7 +49,7 @@ Imports:
     farver,
     plot3D,
     progressr,
-    sp,
+    sf,
     viridisLite
 Suggests:
     alphashape3d,

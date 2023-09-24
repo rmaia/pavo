@@ -643,7 +643,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
 
 # Internal function for masking color-classified image data that fall inside/outside a polygon
-#' @importFrom sp point.in.polygon
 polymask <- function(imagedat,
                      polygon,
                      alter_which = c("outside", "inside"),
@@ -651,18 +650,24 @@ polymask <- function(imagedat,
   imglong <- data.frame(expand.grid(seq_len(ncol(imagedat)), seq_len(nrow(imagedat))), z = c(imagedat))
   names(imglong) <- c("x", "y", "z")
 
-  inpoly <- point.in.polygon(imglong$x, imglong$y, polygon$x, polygon$y, mode.checked = FALSE) # todo: replace with base
+  pts <- do.call(
+    sf::st_sfc,
+    apply(imglong[, c("x", "y")], 1, sf::st_point, simplify = FALSE)
+  )
+  poly <- sf::st_polygon(list(as.matrix(polygon)))
+
+  # It's safe to extract just the first column since at the moment, we can only
+  # have a single polygon
+  inpoly <- sf::st_intersects(pts, poly, sparse = FALSE)[, 1]
 
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
   maskmat <- apply(as.matrix(maskmat), 1, rev)
   maskmat <- rev(t(apply(as.matrix(maskmat), 1, rev))) # mirror (DOUBLECHECK)
   if (alter_which == "inside") {
-    imagedat[which(maskmat == 1)] <- replacement_value
-    imagedat[which(maskmat == 2)] <- replacement_value
-    imagedat[which(maskmat == 3)] <- replacement_value
+    imagedat[maskmat] <- replacement_value
   }
   if (alter_which == "outside") {
-    imagedat[which(maskmat == 0)] <- replacement_value
+    imagedat[!maskmat] <- replacement_value
   }
   imagedat
 }
