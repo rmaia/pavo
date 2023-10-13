@@ -113,16 +113,15 @@ stitch.rspec <- function(rspec1, rspec2,
     idx <- which(res$wl == wl)
 
     # Replace with a switch statement
-    switch(overlap_method,
-           mean = res[idx[1], -1] <- colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
-           minimum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, min, na.rm = TRUE),
-           maximum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, max, na.rm = TRUE)
+    res[idx[1], -1] <- switch(
+      overlap_method,
+      mean =  colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
+      minimum = apply(as.matrix(res[idx, -1]), 2, min, na.rm = TRUE),
+      maximum = apply(as.matrix(res[idx, -1]), 2, max, na.rm = TRUE)
     )
 
     # Remove extra rows
-    if (length(idx) > 1) {
-      res <- res[-idx[-1], ]
-    }
+    res <- res[-idx[2], ]
   }
 
   # Interpolate missing values
