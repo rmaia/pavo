@@ -129,19 +129,17 @@ stitch.rspec <- function(rspec1, rspec2,
     full_wl_range <- min(res$wl):max(res$wl)
     missing_wl <- setdiff(full_wl_range, res$wl)
 
-    if (length(missing_wl) > 0) {
-      # Interpolate only common spectra
-      new_rows <- as.data.frame(vapply(
-        common_cols[-1],
-        function(i) {
-          approx(res$wl, res[, i], xout = missing_wl)$y
-        },
-        FUN.VALUE = numeric(length(missing_wl))
-      ))
-      new_rows$wl <- missing_wl
+    # Interpolate only common spectra
+    new_rows <- as.data.frame(vapply(
+      common_cols[-1],
+      function(i) {
+        approx(res$wl, res[, i], xout = missing_wl)$y
+      },
+      FUN.VALUE = numeric(length(missing_wl))
+    ))
+    new_rows$wl <- missing_wl
 
-      res <- rbind(res, new_rows)
-    }
+    res <- rbind(res, new_rows)
   }
 
   # Sort stitched spec by wl
