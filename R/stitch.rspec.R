@@ -107,23 +107,21 @@ stitch.rspec <- function(rspec1, rspec2,
   res <- rbind(rspec1, rspec2)
 
   # Handle overlapping wl values
-  if (anyDuplicated(res$wl) > 0) {
-    overlap_wl <- unique(res$wl[duplicated(res$wl)])
+  overlap_wl <- res$wl[duplicated(res$wl)]
 
-    for (wl in overlap_wl) {
-      idx <- which(res$wl == wl)
+  for (wl in overlap_wl) {
+    idx <- which(res$wl == wl)
 
-      # Replace with a switch statement
-      switch(overlap_method,
-             mean = res[idx[1], -1] <- colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
-             minimum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, min, na.rm = TRUE),
-             maximum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, max, na.rm = TRUE)
-      )
+    # Replace with a switch statement
+    switch(overlap_method,
+           mean = res[idx[1], -1] <- colMeans(as.matrix(res[idx, -1]), na.rm = TRUE),
+           minimum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, min, na.rm = TRUE),
+           maximum = res[idx[1], -1] <- apply(as.matrix(res[idx, -1]), 2, max, na.rm = TRUE)
+    )
 
-      # Remove extra rows
-      if (length(idx) > 1) {
-        res <- res[-idx[-1], ]
-      }
+    # Remove extra rows
+    if (length(idx) > 1) {
+      res <- res[-idx[-1], ]
     }
   }
 
