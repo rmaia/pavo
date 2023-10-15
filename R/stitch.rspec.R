@@ -131,9 +131,9 @@ stitch.rspec <- function(rspec1, rspec2,
 
     # Interpolate only common spectra
     new_rows <- as.data.frame(vapply(
-      common_cols[-1],
-      function(i) {
-        approx(res$wl, res[, i], xout = missing_wl)$y
+      res[, -1, drop = FALSE],
+      function(values) {
+        approx(res$wl, values, xout = missing_wl)$y
       },
       FUN.VALUE = numeric(length(missing_wl))
     ))
