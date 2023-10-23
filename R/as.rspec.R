@@ -121,14 +121,12 @@ as.rspec <- function(object, whichwl = NULL,
   } else {
     l1 <- lim[1]
     l2 <- lim[2]
-    if (l1.dat > lim[1] || l2.dat < lim[2]) {
-      if (exceed.range) {
-        warning(
-          "Interpolating beyond the range of actual data.\n",
-          "Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour.",
-          call. = FALSE
-        )
-      }
+    if ((l1.dat > lim[1] || l2.dat < lim[2]) && exceed.range) {
+      warning(
+        "Interpolating beyond the range of actual data.\n",
+        "Check 'lim' and `exceed.range` arguments to confirm this is the desired behaviour.",
+        call. = FALSE
+      )
     }
   }
 
