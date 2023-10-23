@@ -45,18 +45,13 @@
 as.rspec <- function(object, whichwl = NULL,
                      interp = TRUE, lim = NULL, exceed.range = TRUE) {
 
-  # tibble dodge
-  if (inherits(object, "tbl_df")) {
-    object <- data.frame(object, check.names = FALSE)
-  }
-
   if (is.matrix(object) || is.data.frame(object)) {
     name <- colnames(object)
   } else {
     stop("object must be a data frame or matrix", call. = FALSE)
   }
 
-  if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j]), logical(1)))) {
+  if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j, drop = TRUE]), logical(1)))) {
     stop("all columns must contain numeric data", call. = FALSE)
   }
 
@@ -85,7 +80,7 @@ as.rspec <- function(object, whichwl = NULL,
     } else if (is.character(whichwl)) {
       wl_index <- which(colnames(object) == whichwl)
     }
-    wl <- object[, wl_index]
+    wl <- object[, wl_index, drop = TRUE]
     object <- object[, -wl_index, drop = FALSE]
     name <- name[-wl_index]
   } else {
@@ -95,7 +90,7 @@ as.rspec <- function(object, whichwl = NULL,
 
     if (any(ind > 0.999)) {
       wl_index <- which(ind > 0.999)[1]
-      wl <- object[, wl_index]
+      wl <- object[, wl_index, drop = TRUE]
       object <- object[, -wl_index, drop = FALSE]
       name <- name[-wl_index]
       message("wavelengths found in column ", wl_index)
