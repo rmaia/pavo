@@ -39,13 +39,13 @@
 plot.rimg <- function(x, axes = TRUE, col = NULL, ...) {
   multi_image <- inherits(x, "list") # Single or multiple images?
 
-  if (!multi_image) {
-    defaultrasterImageplot(x, axes = axes, col = col, ...)
-  } else {
+  if (multi_image) {
     for (i in seq_along(x)) {
       readline(prompt = "Press [enter] for next plot")
       defaultrasterImageplot(x[[i]], axes = axes, col = col, ...)
     }
+  } else {
+    defaultrasterImageplot(x, axes = axes, col = col, ...)
   }
 }
 
