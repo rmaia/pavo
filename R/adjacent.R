@@ -98,7 +98,7 @@
 #'
 #' @seealso [classify()], [summary.rimg()], [procimg()]
 #'
-#' @importFrom utils head object.size tail
+#' @importFrom utils head object.size tail hasName
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
 #'
@@ -217,7 +217,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       message("Using single set of hsl values for all images.")
       hsl <- rep(list(hsl), length(classimg))
     }
-    if (!all(unlist(lapply(hsl, function(x) "patch" %in% names(x))))) {
+    if (!all(vapply(hsl, hasName, "patch", FUN.VALUE = logical(1)))) {
       message(
         "Cannot find column named 'patch' one or more set of hsl values. ",
         "Assuming first column contains colour-category ID's"
