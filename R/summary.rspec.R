@@ -329,10 +329,10 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
   row.names(color.var) <- names(object)
 
   if ("Rmid" %in% names(color.var)) {
-    color.var <- color.var[, !names(color.var) %in% "Rmid"]
+    color.var <- color.var[, names(color.var) != "Rmid"]
   }
   if ("Rmin" %in% names(color.var)) {
-    color.var <- color.var[, !names(color.var) %in% "Rmin"]
+    color.var <- color.var[, names(color.var) != "Rmin"]
   }
 
   # The double-conversion here is just so the attributes are in the same order
