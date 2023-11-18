@@ -57,7 +57,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
       recursive = subdir, include.dirs = subdir,
       ignore.case = TRUE
     )
-    files <- paste0(imgpath, "/", file_names)
+    files <- file.path(imgpath, file_names)
 
     if (subdir.names) {
       file_names <- gsub(extension, "", file_names, ignore.case = TRUE)
