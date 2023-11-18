@@ -103,7 +103,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
 
   # Strip 'lum' column if it's all NA
   if (all(is.na(coldistres$dL))) {
-    coldistres <- coldistres[, !names(coldistres) %in% "dL"]
+    coldistres <- coldistres[, names(coldistres) != "dL"]
   }
 
   combined <- rbind(coldistres, references)

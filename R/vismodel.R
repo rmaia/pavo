@@ -462,7 +462,7 @@ vismodel <- function(rspecdata,
 
   # Convert to relative
   if (relative) {
-    res[, !names(res) %in% "lum"] <- res[, !names(res) %in% "lum"] / rowSums(res[, !names(res) %in% "lum", drop = FALSE])
+    res[, names(res) != "lum"] <- res[, names(res) != "lum"] / rowSums(res[, names(res) != "lum", drop = FALSE])
   }
 
   class(res) <- c("vismodel", "data.frame")

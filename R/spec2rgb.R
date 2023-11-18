@@ -29,7 +29,7 @@ spec2rgb <- function(rspecdata, alpha = 1) {
     vonkries = TRUE, relative = FALSE
   )
 
-  XYZ <- XYZ[, !(names(XYZ) %in% "lum")]
+  XYZ <- XYZ[, names(XYZ) != "lum"]
 
   rgb1 <- convertColor(XYZ, from = "XYZ", to = "sRGB")
 
