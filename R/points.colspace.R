@@ -20,7 +20,6 @@
 #'
 
 points.colspace <- function(x, ...) {
-
   # Defaults in line with those in the plots
   arg <- list(...)
   if (is.null(arg$pch)) {

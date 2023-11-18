@@ -36,7 +36,6 @@ hexplot <- function(hexdata, achro = TRUE, labels = TRUE,
                     out.lwd = 1, out.lty = 1, out.lcol = "black",
                     labels.cex = 1, achrosize = 0.8,
                     achrocol = "grey", square = TRUE, ...) {
-
   sectors <- match.arg(sectors)
 
   # Set defaults

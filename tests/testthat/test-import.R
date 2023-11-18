@@ -1,5 +1,4 @@
 test_that("getspec", {
-
   ## Run through a bunch of file types
   avantes1 <- suppressMessages(getspec(system.file("testdata", package = "lightr"), ext = "ttt"))
   expect_s3_class(avantes1, "rspec")
@@ -60,7 +59,6 @@ test_that("getspec", {
 
 
 test_that("getimg", {
-
   # This folder contains a 16 bit PNG image and an identical copy with an
   # uppercase file extension
   expect_message(

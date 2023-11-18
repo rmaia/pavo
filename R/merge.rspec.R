@@ -26,11 +26,11 @@
 #' plot(teal.mer)
 #' plot(teal)
 #' identical(teal.mer, teal)
-#' 
+#'
 #' # Or an equivalent method, which also allows for the merging of more than one rspec
 #' # object at a time (simply add further objects to the list())
 #' teal.mer2 <- do.call(merge, list(teal1, teal2))
-#' 
+#'
 #' # Check equivalence
 #' identical(teal.mer2, teal)
 #'
@@ -39,7 +39,6 @@
 #' @seealso [as.rspec()], [aggspec()]
 
 merge.rspec <- function(x, y, ...) {
-
   if (!all(is.rspec(x), is.rspec(y))) {
     stop("One or more invalid rspec objects")
   }

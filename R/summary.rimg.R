@@ -100,7 +100,6 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
 
 summary_main <- function(img, plot, axes, col, ...) {
   if (plot) {
-
     # Plotting
     oldpar <- par(no.readonly = TRUE)
     on.exit(par(oldpar))

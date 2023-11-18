@@ -17,11 +17,11 @@
 #' `type = "heatmap"`.
 #' @param n number of bins with which to interpolate colors and `varying` for
 #'   the heatplot.
-#' @param labels logical. Add labels identifying each spectrum to the outer plot 
+#' @param labels logical. Add labels identifying each spectrum to the outer plot
 #' margin? Defaults to `FALSE`. Ignored when `type = 'heatmap'`.
-#' @param labels.stack a vector of labels for spectra when `labels = TRUE`. 
+#' @param labels.stack a vector of labels for spectra when `labels = TRUE`.
 #'   Defaults to the column names from spectral data. Note you will likely want
-#'   to adjust the plot margins to accommodate the text labels. See `?par()` for 
+#'   to adjust the plot margins to accommodate the text labels. See `?par()` for
 #'   guidance on setting margins.
 #' @param labels.cex  size of the text labels when `labels = TRUE`.
 #' @param wl.guide logical determining whether visible light spectrum should be
@@ -64,7 +64,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
   # Save wl vector
   wl <- isolate_wl(x, keep = "wl")
-  
+
   # Select subset of spectra, if specified
   if (is.null(select)) {
     x <- isolate_wl(x, keep = "spec")
@@ -82,30 +82,29 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
   arg$x <- wl
 
   ### --- Heat plot --- ###
-  
+
   if (type == "heatmap") {
-    
     # Set default arguments
     if (is.null(arg$ylab)) {
       arg$ylab <- "Index"
     }
-    
+
     if (is.null(varying)) {
       varying <- seq_along(x)
       message("No varying vector supplied; using arbitrary values")
     }
-    
+
     if (is.null(arg$ylim)) {
       arg$ylim <- range(varying, na.rm = TRUE)
     }
-    
+
     if (is.null(arg$col)) {
       arg$col <- viridisLite::cividis(n)
     } else {
       jc <- colorRampPalette(arg$col)
       arg$col <- jc(n)
     }
-    
+
     if (is.null(arg$lty)) {
       arg$lty <- 1
     }
@@ -124,9 +123,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     arg$z <- t(dat)
 
     do.call(image, arg)
-    
   } else {
-
     # Default arguments for overlay and stacked plot
     if (length(arg$col) < ncol(x)) {
       arg$col <- rep(arg$col, ncol(x))
@@ -145,21 +142,20 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     if (any(names(arg$lty) %in% names(x))) {
       arg$col <- arg$lty[select - 1]
     }
-    
+
     arg$type <- "l"
 
     ### --- Overlay plot --- ###
-    
+
     if (type == "overlay") {
-      
       if (is.null(arg$ylim)) {
         arg$ylim <- range(x, na.rm = TRUE)
       }
-      
+
       if (is.null(arg$ylab)) {
         arg$ylab <- "Reflectance (%)"
       }
-      
+
       # TW: the heck is this?
       arg$y <- x[, 1]
       col <- arg$col
@@ -179,52 +175,49 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
           do.call(lines, arg)
         }
       }
-      
+
       if (labels) {
-        
-      # Calculate the y position of labels, by combining their ymin with the last 
-      # y value of each spec
-      yend <- tail(x, 1)
-      yloc <- yend
-      
-      # Generate default labels if none specified
-      if (is.null(labels.stack)) {
-        labels.stack <- names(x)
+        # Calculate the y position of labels, by combining their ymin with the last
+        # y value of each spec
+        yend <- tail(x, 1)
+        yloc <- yend
+
+        # Generate default labels if none specified
+        if (is.null(labels.stack)) {
+          labels.stack <- names(x)
+        }
+
+        # Add labels
+        mtext(labels.stack, side = 4, at = yloc, las = 1, line = 0.5, cex = labels.cex)
       }
-      
-      # Add labels
-      mtext(labels.stack, side = 4, at = yloc, las = 1, line = 0.5, cex = labels.cex)
-      }
-      
     }
 
     ### --- Stacked plot --- ###
-    
+
     if (type == "stack") {
-      
       if (is.null(arg$ylab)) {
         arg$ylab <- "Cumulative reflectance (arb. units)"
       }
-      
+
       # Create a copy of the spectral data in reversed order
       x_rev <- as.data.frame(x[, c(rev(seq_along(x)))])
-      
+
       # Calculate maximum reflectance value from each sample
       if (length(select) == 1) {
         y <- max(x_rev)
       } else {
         y <- apply(x_rev, 2, max)
       }
-      
+
       # Calculate cumulative maximum reflectance across samples
       ym <- cumsum(y)
-      
+
       # Calculate cumulative minimum reflectance across samples
       ymins <- c(0, ym[-length(ym)])
-      
+
       # Specify first spectrum
       arg$y <- x_rev[, 1]
-      
+
       # Set ylim to be cumulative max reflectance
       if (is.null(arg$ylim)) {
         arg$ylim <- c(0, sum(y))
@@ -232,10 +225,10 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
 
       col <- rev(arg$col)
       arg$col <- col[1]
-      
+
       # Plot first spectrum
       do.call(plot, arg)
-      
+
       # Add remaining spectra
       if (ncol(x_rev) > 1) {
         for (i in 2:ncol(x_rev)) {
@@ -244,26 +237,25 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
           do.call(lines, arg)
         }
       }
-      
-      if (labels) {
-        
-      # Calculate the y position of labels, by combining their ymin with the last 
-      # y value of each spec
-      yend <- tail(x_rev, 1)
-      yloc <- ymins + yend
 
-      # Generate default labels if none specified
-      if (is.null(labels.stack)) {
-        labels.stack <- names(x_rev)
-      }else{
-        labels.stack <- rev(labels.stack)  # Reverse if user-supplied
-      }
-      
-      # Add labels
-      mtext(labels.stack, side = 4, at = yloc, las = 1, line = 0.5, cex = labels.cex)
+      if (labels) {
+        # Calculate the y position of labels, by combining their ymin with the last
+        # y value of each spec
+        yend <- tail(x_rev, 1)
+        yloc <- ymins + yend
+
+        # Generate default labels if none specified
+        if (is.null(labels.stack)) {
+          labels.stack <- names(x_rev)
+        } else {
+          labels.stack <- rev(labels.stack) # Reverse if user-supplied
+        }
+
+        # Add labels
+        mtext(labels.stack, side = 4, at = yloc, las = 1, line = 0.5, cex = labels.cex)
       }
     }
-    
+
     # Add wavelength guide
     if (wl.guide) {
       vislight <- image_read(system.file("linear_visible_spectrum.png", package = "pavo"))

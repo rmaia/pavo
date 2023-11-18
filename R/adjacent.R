@@ -338,7 +338,6 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 #' @importFrom utils head tail
 adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = NULL,
                           exclude2_i = NULL, coldists_i = NULL, hsl_i = NULL) {
-
   ## ------------------------------ Summarising ------------------------------ ##
 
   c1 <- c2 <- NULL
@@ -445,7 +444,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       m_lum <- s_lum <- cv_lum <- NA
     }
   } else {
-
     # n colour classes
     k <- n_class
 
@@ -501,7 +499,6 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
 
     ## Things involving the background
     if ("none" %in% exclude2_i && any(bkgoutline, !is.null(bkgID_i))) {
-
       # Animal only
       if (bkgoutline) {
         anim <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")

@@ -171,166 +171,174 @@
 #' correlated with paternal care in bluethroats? Behavioural Ecology 12:164-170.
 #'
 summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlmax = NULL, ...) {
-    chkDots(...)
+  chkDots(...)
 
-    wl <- isolate_wl(object, keep = "wl")
+  wl <- isolate_wl(object, keep = "wl")
 
-    # The control-flow here is for cases when users specify only of the deprecated
-    # wlmin or wlmax arguments. Can be removed once deprecated in next release.
-    if (!all(missing("wlmin"), missing("wlmin"))) {
-      warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,
+  # The control-flow here is for cases when users specify only of the deprecated
+  # wlmin or wlmax arguments. Can be removed once deprecated in next release.
+  if (!all(missing("wlmin"), missing("wlmin"))) {
+    warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,
       and will be removed in future releases. Use the lim() argument instead.")
-      if (!missing("wlmin") && missing("wlmax"))
-        lim  <- c(wlmin, max(wl))
-      if (missing("wlmin") && !missing("wlmax"))
-        lim  <- c(min(wl), wlmax)
-      if (all(missing("wlmin"), missing("wlmin")))
-        lim  <- c(wlmin, wlmax)
+    if (!missing("wlmin") && missing("wlmax")) {
+      lim <- c(wlmin, max(wl))
     }
-
-    lambdamin <- max(lim[1], min(wl))
-    lambdamax <- min(lim[2], max(wl))
-
-    # wl-range checks
-    if (!missing(lim)) {
-      if (lambdamin > lim[1]) {
-        stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim argument.")
-      }
-      if (lambdamax < lim[2]) {
-        stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim argument.")
-      }
+    if (missing("wlmin") && !missing("wlmax")) {
+      lim <- c(min(wl), wlmax)
     }
+    if (all(missing("wlmin"), missing("wlmin"))) {
+      lim <- c(wlmin, wlmax)
+    }
+  }
 
-    # Restrict to range of wlmin:wlmax
-    object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
+  lambdamin <- max(lim[1], min(wl))
+  lambdamax <- min(lim[2], max(wl))
 
-    wl <- isolate_wl(object, keep = "wl")
-    object <- isolate_wl(object, keep = "spec")
+  # wl-range checks
+  if (!missing(lim)) {
+    if (lambdamin > lim[1]) {
+      stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim argument.")
+    }
+    if (lambdamax < lim[2]) {
+      stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim argument.")
+    }
+  }
 
-    # Establish variables and handle any subsetting
-    variable_names <- c("B1", "B2", "B3", "S1", "S2", "S3", "S4", "S5", "S6",
-                        "S7", "S8", "S9", "S10", "H1", "H2", "H3", "H4", "H5")
+  # Restrict to range of wlmin:wlmax
+  object <- object[which(wl == lambdamin):which(wl == lambdamax), ]
 
-    if (is.logical(subset)) {
-      if (subset) {
-        variable_names <- c("B2", "S8", "H1")
-      }
+  wl <- isolate_wl(object, keep = "wl")
+  object <- isolate_wl(object, keep = "spec")
+
+  # Establish variables and handle any subsetting
+  variable_names <- c(
+    "B1", "B2", "B3", "S1", "S2", "S3", "S4", "S5", "S6",
+    "S7", "S8", "S9", "S10", "H1", "H2", "H3", "H4", "H5"
+  )
+
+  if (is.logical(subset)) {
+    if (subset) {
+      variable_names <- c("B2", "S8", "H1")
+    }
+  } else {
+    if (all(subset %in% variable_names)) {
+      variable_names <- subset
     } else {
-      if (all(subset %in% variable_names)) {
-        variable_names <- subset
-      } else {
-        stop("Names in ", dQuote("subset"), " do not match color variable names")
-      }
+      stop("Names in ", dQuote("subset"), " do not match color variable names")
     }
+  }
 
-    # Preserve original variable names
-    variable_names_orig <- variable_names
+  # Preserve original variable names
+  variable_names_orig <- variable_names
 
-    # Replace S1 with sub-variables
-    if ("S1" %in% variable_names) {
-      # Find index of 'S1'
-      s1_index <- which(variable_names == "S1")
+  # Replace S1 with sub-variables
+  if ("S1" %in% variable_names) {
+    # Find index of 'S1'
+    s1_index <- which(variable_names == "S1")
 
-      # Remove 'S1'
-      variable_names <- variable_names[-s1_index]
+    # Remove 'S1'
+    variable_names <- variable_names[-s1_index]
 
-      # Full names
-      new_var_names <- c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R")
+    # Full names
+    new_var_names <- c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R")
 
-      # Append full names at the right place
-      variable_names <- append(variable_names, new_var_names, after = s1_index - 1)
-    }
+    # Append full names at the right place
+    variable_names <- append(variable_names, new_var_names, after = s1_index - 1)
+  }
 
-    # Define final summary output df
-    color.var <- data.frame(matrix(ncol = length(variable_names),
-                                   nrow = ncol(object)))
-    names(color.var) <- variable_names
+  # Define final summary output df
+  color.var <- data.frame(matrix(
+    ncol = length(variable_names),
+    nrow = ncol(object)
+  ))
+  names(color.var) <- variable_names
 
-    # Dictionary to store computed variables
-    computed_vars <- list()
+  # Dictionary to store computed variables
+  computed_vars <- list()
 
-    # Define a dependency structure among variables.
-    # This allows us to speed up computation by computing only the necessary
-    # variables (and their dependencies) when subset is not FALSE.
-    dependencies <- list(
-      B1 = list(fun = calc_B1, deps = NULL),
-      B2 = list(fun = calc_B2, deps = NULL),
-      B3 = list(fun = calc_B3, deps = NULL),
-      S1 = list(fun = calc_S1, deps = "B1"),
-      S2 = list(fun = calc_S2, deps = c("B3", "Rmin")),
-      S3 = list(fun = calc_S3, deps = c("H1", "B1")),
-      S4 = list(fun = calc_S4, deps = NULL),
-      S5 = list(fun = calc_S5, deps = NULL),
-      S6 = list(fun = calc_S6, deps = c("B3", "Rmin")),
-      S7 = list(fun = calc_S7, deps = c("B1", "Rmid")),
-      S8 = list(fun = calc_S8, deps = c("S6", "B2")),
-      S9 = list(fun = calc_S9, deps = NULL),
-      S10 = list(fun = calc_S10, deps = c("S8", "S4")),
-      H1 = list(fun = calc_H1, deps = NULL),
-      H2 = list(fun = calc_H2, deps = NULL),
-      H3 = list(fun = calc_H3, deps = c("B3", "Rmin", "Rmid")),
-      H4 = list(fun = calc_H4, deps = NULL),
-      H5 = list(fun = calc_H5, deps = NULL),
-      Rmin = list(fun = calc_Rmin, deps = NULL),
-      Rmid = list(fun = calc_Rmid, deps = NULL)
-    )
+  # Define a dependency structure among variables.
+  # This allows us to speed up computation by computing only the necessary
+  # variables (and their dependencies) when subset is not FALSE.
+  dependencies <- list(
+    B1 = list(fun = calc_B1, deps = NULL),
+    B2 = list(fun = calc_B2, deps = NULL),
+    B3 = list(fun = calc_B3, deps = NULL),
+    S1 = list(fun = calc_S1, deps = "B1"),
+    S2 = list(fun = calc_S2, deps = c("B3", "Rmin")),
+    S3 = list(fun = calc_S3, deps = c("H1", "B1")),
+    S4 = list(fun = calc_S4, deps = NULL),
+    S5 = list(fun = calc_S5, deps = NULL),
+    S6 = list(fun = calc_S6, deps = c("B3", "Rmin")),
+    S7 = list(fun = calc_S7, deps = c("B1", "Rmid")),
+    S8 = list(fun = calc_S8, deps = c("S6", "B2")),
+    S9 = list(fun = calc_S9, deps = NULL),
+    S10 = list(fun = calc_S10, deps = c("S8", "S4")),
+    H1 = list(fun = calc_H1, deps = NULL),
+    H2 = list(fun = calc_H2, deps = NULL),
+    H3 = list(fun = calc_H3, deps = c("B3", "Rmin", "Rmid")),
+    H4 = list(fun = calc_H4, deps = NULL),
+    H5 = list(fun = calc_H5, deps = NULL),
+    Rmin = list(fun = calc_Rmin, deps = NULL),
+    Rmid = list(fun = calc_Rmid, deps = NULL)
+  )
 
-    # Function to calculate a variable, which ensures each variable
-    # is calculated only once
-    compute_color_var <- function(var_name) {
-
-       # If the variable is already computed, return it
-      if (!is.null(computed_vars[[var_name]])) {
-        return(computed_vars[[var_name]])
-      }
-
-      # Get the function and its dependencies
-      fun <- dependencies[[var_name]]$fun
-      deps <- dependencies[[var_name]]$deps
-
-      # If the function has dependencies, calculate them first
-      if (!is.null(deps)) {
-        for (dep in deps) {
-          computed_vars[[dep]] <- compute_color_var(dep)
-        }
-      }
-
-      # Calculate and store variable
-      computed_vars[[var_name]] <- fun(object, wl, computed_vars)
-
-      # Special case handling for S1, which returns a list
-      if (var_name == "S1") {
-        for (sub_var_name in names(computed_vars[[var_name]])) {
-          color.var[, sub_var_name] <- computed_vars[[var_name]][[sub_var_name]]
-        }
-      } else {
-        color.var[, var_name] <- computed_vars[[var_name]]
-      }
-
-      # Return the computed variable
+  # Function to calculate a variable, which ensures each variable
+  # is calculated only once
+  compute_color_var <- function(var_name) {
+    # If the variable is already computed, return it
+    if (!is.null(computed_vars[[var_name]])) {
       return(computed_vars[[var_name]])
     }
 
-    # Calculate all specified variables
-    for (var_name in variable_names_orig) {
-      if (var_name == "S1") {
-        color.var[, c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R")] <- compute_color_var("S1")
-      } else {
-        color.var[, var_name] <- compute_color_var(var_name)
+    # Get the function and its dependencies
+    fun <- dependencies[[var_name]]$fun
+    deps <- dependencies[[var_name]]$deps
+
+    # If the function has dependencies, calculate them first
+    if (!is.null(deps)) {
+      for (dep in deps) {
+        computed_vars[[dep]] <- compute_color_var(dep)
       }
     }
 
-    row.names(color.var) <- names(object)
+    # Calculate and store variable
+    computed_vars[[var_name]] <- fun(object, wl, computed_vars)
 
-    if ("Rmid" %in% names(color.var))
-      color.var <- color.var[, !names(color.var) %in% "Rmid"]
-    if ("Rmin" %in% names(color.var))
-      color.var <- color.var[, !names(color.var) %in% "Rmin"]
+    # Special case handling for S1, which returns a list
+    if (var_name == "S1") {
+      for (sub_var_name in names(computed_vars[[var_name]])) {
+        color.var[, sub_var_name] <- computed_vars[[var_name]][[sub_var_name]]
+      }
+    } else {
+      color.var[, var_name] <- computed_vars[[var_name]]
+    }
 
-    # The double-conversion here is just so the attributes are in the same order
-    # as in the original formulation, for CI test consistency
-    as.data.frame(as.matrix(color.var))
+    # Return the computed variable
+    return(computed_vars[[var_name]])
   }
+
+  # Calculate all specified variables
+  for (var_name in variable_names_orig) {
+    if (var_name == "S1") {
+      color.var[, c("S1U", "S1V", "S1B", "S1G", "S1Y", "S1R")] <- compute_color_var("S1")
+    } else {
+      color.var[, var_name] <- compute_color_var(var_name)
+    }
+  }
+
+  row.names(color.var) <- names(object)
+
+  if ("Rmid" %in% names(color.var)) {
+    color.var <- color.var[, !names(color.var) %in% "Rmid"]
+  }
+  if ("Rmin" %in% names(color.var)) {
+    color.var <- color.var[, !names(color.var) %in% "Rmin"]
+  }
+
+  # The double-conversion here is just so the attributes are in the same order
+  # as in the original formulation, for CI test consistency
+  as.data.frame(as.matrix(color.var))
+}
 
 
 ## ----- Common intermediaries ----- ##
@@ -367,22 +375,28 @@ calc_S1 <- function(object, wl, computed_vars, ...) {
 
   # Define the chroma ranges
   chroma_ranges <- list(
-    S1U = list(min = lambdamin, max = 400,
+    S1U = list(
+      min = lambdamin, max = 400,
       message = "cannot calculate UV chroma; wavelength range not below 400 nm"
     ),
-    S1V = list(min = lambdamin, max = 415,
+    S1V = list(
+      min = lambdamin, max = 415,
       message = "cannot calculate violet chroma; wavelength below 415 nm"
     ),
-    S1B = list(min = 400, max = 510,
+    S1B = list(
+      min = 400, max = 510,
       message = "cannot calculate blue chroma; wavelength range not between 400 and 510 nm"
     ),
-    S1G = list(min = 510, max = 605,
+    S1G = list(
+      min = 510, max = 605,
       message = "cannot calculate green chroma; wavelength range not between 510 and 605 nm"
     ),
-    S1Y = list(min = 550, max = 625,
+    S1Y = list(
+      min = 550, max = 625,
       message = "cannot calculate yellow chroma; wavelength range not between 550 and 625 nm"
     ),
-    S1R = list(min = 605, max = 700,
+    S1R = list(
+      min = 605, max = 700,
       message = "cannot calculate red chroma; wavelength range not between 605 and 700 nm"
     )
   )
@@ -464,7 +478,7 @@ calc_S5 <- function(object, wl, computed_vars, ...) {
   S5Y <- colSums(object[Q3, , drop = FALSE])
   S5G <- colSums(object[Q2, , drop = FALSE])
   S5B <- colSums(object[Q1, , drop = FALSE])
-  sqrt((S5R - S5G) ^ 2 + (S5Y - S5B) ^ 2)
+  sqrt((S5R - S5G)^2 + (S5Y - S5B)^2)
 }
 
 calc_S6 <- function(object, wl, computed_vars, ...) {

@@ -168,7 +168,6 @@ vismodel <- function(rspecdata,
                      qcatch = c("Qi", "fi", "Ei"),
                      bkg = c("ideal", "green"),
                      vonkries = FALSE, scale = 1, relative = TRUE) {
-
   # remove & save colum with wavelengths
   wl <- isolate_wl(rspecdata, keep = "wl")
   y <- isolate_wl(rspecdata, keep = "spec")

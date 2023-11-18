@@ -13,12 +13,13 @@
 #' @examples
 #'
 #' # Generate some fake image data
-#' fake <- array(c(
-#'   as.matrix(rep(c(0.2, 0.4, 0.6), each = 250)),
-#'   as.matrix(rep(c(0.4, 0.7, 0.8), each = 250)),
-#'   as.matrix(rep(c(0.6, 0.1, 0.2), each = 250))
-#' ),
-#' dim = c(750, 750, 3)
+#' fake <- array(
+#'   c(
+#'     as.matrix(rep(c(0.2, 0.4, 0.6), each = 250)),
+#'     as.matrix(rep(c(0.4, 0.7, 0.8), each = 250)),
+#'     as.matrix(rep(c(0.6, 0.1, 0.2), each = 250))
+#'   ),
+#'   dim = c(750, 750, 3)
 #' )
 #'
 #' # Inspect it
@@ -71,10 +72,10 @@ as.rimg.default <- function(object, name = "img") {
   }
 
   # Control flow for multi-images
-  if (!inherits(object, "list")) {
-    object2 <- list(object)
-  } else {
+  if (inherits(object, "list")) {
     object2 <- object
+  } else {
+    object2 <- list(object)
   }
 
   # Is it already colour-classified by the user?
@@ -93,7 +94,6 @@ as.rimg.default <- function(object, name = "img") {
   }
 
   if (!colclass) {
-
     # Array check
     if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
       stop("Images must be an array.")

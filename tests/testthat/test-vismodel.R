@@ -54,5 +54,4 @@ test_that("sensdata()", {
   # No negative values, no NA
   expect_false(any(vis_all < 0))
   expect_false(anyNA(vis_all))
-
 })

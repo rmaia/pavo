@@ -24,7 +24,6 @@
 #' @inherit categorical references
 
 catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
-
   # Check if object is of class colorspace and tetrachromat
   if (!is.colspace(catdata) && !all(c("x", "y") %in% names(catdata))) {
     stop(

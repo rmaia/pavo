@@ -40,7 +40,6 @@
 triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", achrosize = 0.8,
                     labels.cex = 1, out.lwd = 1, out.lcol = "black", out.lty = 1,
                     square = TRUE, gamut = FALSE, ...) {
-
   arg <- list(...)
 
   # Set defaults
@@ -83,7 +82,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
         coords_mono <- na.omit(coords_mono)
         max_gamut <- geometry::convhulln(coords_mono)
         polygon(coords_mono[sort(c(max_gamut)), ],
-                col = "#55555555", border = NA
+          col = "#55555555", border = NA
         )
       },
       error = function(e) warning("Max gamut cannot be plotted.", call. = FALSE)
