@@ -59,7 +59,6 @@
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...) {
-
   # Define an inner function to calculate the geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
     # If any of the values are negative, return NaN
@@ -99,14 +98,14 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   arg0 <- list(...)
 
-  # Check for achromatic argument. 'achromatic' was previously called 'achro', 
+  # Check for achromatic argument. 'achromatic' was previously called 'achro',
   # so this handles backward compatibility.
   # TODO: add a warning about this so users update their scripts??
   if (is.null(arg0$achromatic)) {
     arg0$achromatic <- arg0$achro
   }
 
-  # Determine if RN model should be used. 
+  # Determine if RN model should be used.
   # For non-colspace objects, the RN model is required.
   useRNmodel <- !inherits(vismodeldata, "colspace")
 
@@ -152,7 +151,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$weber.ref <- NULL
     arg0$weber.achro <- NULL
   }
-  
+
   # Check if qcatch attribute exists, if not then stop the function with an error
   if (is.null(arg0$qcatch)) {
     if (is.null(attr(vismodeldata, "qcatch"))) {
@@ -160,7 +159,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     }
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
-  
+
   # Reorder the visual model data by group
   sortinggroups <- order(by)
   vismodeldata <- vismodeldata[sortinggroups, ]
@@ -181,11 +180,11 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   # Prepare empirical argument list and calculate empirical color distances
   attributes(empgroupmeans)[datattributes] <- attributes(vismodeldata)[datattributes]
-  
+
   # Begin bootstrapping procedure
-  # This involves sampling with replacement from the original data (group-wise), calculating 
+  # This involves sampling with replacement from the original data (group-wise), calculating
   # group-wise means for each bootstrap sample, and then performing the color distance calculation for each.
-  # After obtaining the bootstrap color distance calculations, calculate confidence intervals and 
+  # After obtaining the bootstrap color distance calculations, calculate confidence intervals and
   # possibly return raw bootstrap results.
   emparg <- arg0
   emparg$modeldata <- empgroupmeans
@@ -207,7 +206,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # returns a list with length = number of by
   # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
   bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
-  
+
   # next, split by bootstrap replicate
   # preserving the same sample size as that original group had
   #
@@ -250,14 +249,14 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   for (i in seq_along(bootgrouped)) {
     attributes(bootgrouped[[i]])[names(attribs)] <- attribs
   }
-  
+
   # Creates temporary bootstrap function, which is applied to each bootstrap sample
   tmpbootcdfoo <- function(x) {
     tmparg <- arg0
     tmparg$modeldata <- x
     do.call(coldist, tmparg)
   }
-  
+
   # Handles progress bar for running bootstrap calculations
   with_progress({
     p <- progressor(along = bootgrouped)
@@ -277,7 +276,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     })
   )
 
-  # Error handling: if the dimension of bootdS is less than boot.n, 
+  # Error handling: if the dimension of bootdS is less than boot.n,
   # stop function and print error message
   if (dim(bootdS)[1] < boot.n) {
     stop("Bootstrap sampling encountered errors.")
@@ -321,10 +320,10 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
     # Ensure names match with empirical values (even though they should match already)
     dlCI <- dlCI[, names(empdL), drop = FALSE]
-    
+
     # Define empirical deltaL mean
     dL.mean <- empdL
-    
+
     # Combine empirical and bootstrap deltaL statistics into a results dataframe
     res <- cbind(res, t(rbind(dL.mean, dlCI)))
 

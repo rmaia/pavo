@@ -12,7 +12,6 @@
 #' @export
 
 projpoints <- function(tcsdata, ...) {
-
   # Check for mapproj
   if (!requireNamespace("mapproj", quietly = TRUE)) {
     stop("Package \"mapproj\" needed for projection plots. Please install it.",

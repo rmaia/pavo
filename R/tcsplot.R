@@ -53,7 +53,6 @@ tcsplot <- function(tcsdata, size = 0.02, alpha = 1, col = "black",
                     vertexsize = 0.02, achro = TRUE, achrosize = 0.01, achrocol = "grey",
                     lwd = 1, lcol = "lightgrey", new = FALSE, hspin = FALSE,
                     vspin = FALSE, floor = TRUE, gamut = FALSE) {
-
   # check if rgl is installed and loaded
   if (!requireNamespace("rgl", quietly = TRUE)) {
     stop(dQuote("rgl"), " package needed for this function to work. Please install it.",

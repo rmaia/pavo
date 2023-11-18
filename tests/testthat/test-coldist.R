@@ -62,11 +62,10 @@ test_that("Equivalent", {
   )
 
   expect_equal(
-  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielab")),
-  coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielch")),
-  ignore_attr = TRUE
+    coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielab")),
+    coldist(colspace(vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE), "cielch")),
+    ignore_attr = TRUE
   )
-
 })
 
 test_that("Options", {

@@ -32,7 +32,6 @@ categorical <- function(vismodeldata) {
 
   # if object is vismodel:
   if (is.vismodel(dat)) {
-
     # check if tetrachromat
     if (attr(dat, "conenumb") < 4) {
       stop("vismodel input is not tetrachromatic", call. = FALSE)
@@ -46,7 +45,7 @@ categorical <- function(vismodeldata) {
     if (!attr(dat, "relative")) {
       warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
     }
-  } else {  # if not, check if it has more (or less) than 4 columns
+  } else { # if not, check if it has more (or less) than 4 columns
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"),
         " object and has fewer than four columns",

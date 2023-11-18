@@ -20,10 +20,9 @@
 
 plot.sensmod <- function(x, select = NULL,
                          type = c("overlay", "stack", "heatmap"),
-                         varying = NULL, n = 100, labels = FALSE, 
+                         varying = NULL, n = 100, labels = FALSE,
                          labels.stack = NULL, labels.cex = 1,
                          wl.guide = TRUE, ...) {
-
   if ("ylab" %in% names(match.call()[-1])) {
     NextMethod()
   } else {

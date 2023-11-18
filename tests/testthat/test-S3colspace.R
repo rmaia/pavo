@@ -2,7 +2,6 @@
 data(sicalis)
 
 test_that("summary.colspace", {
-
   # Single spectrum for summary.colspace with tcspace
 
   sicalis <- sicalis[, c(1, 2)]

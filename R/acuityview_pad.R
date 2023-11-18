@@ -1,6 +1,5 @@
 #' @importFrom stats fft
 acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
-
   # Vector of powers of 2 up until realistic maximum possible image dimension. Clumsy.
   pow2 <- 2^(1:100)
 
@@ -36,24 +35,24 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
 
   # Create an MTF matrix with dimensions equal to the image
   MTF <- matrix(NA, nrow = dim(image_pad)[2], ncol = dim(image_pad)[1])
-    for (i in 1:width_pix){
-      for (j in 1:width_pix) {
-        x <- i - center
-        y <- j - center
-        freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
-        mySin <- y / sqrt(x^2 + y^2)
-        myCos <- x / sqrt(x^2 + y^2)
-        eye_res2 <- eye_res * eye_res / sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
-        MTF[i, j] <- exp(-3.56 * (eye_res2 * freq)^2)
-      }
+  for (i in 1:width_pix) {
+    for (j in 1:width_pix) {
+      x <- i - center
+      y <- j - center
+      freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
+      mySin <- y / sqrt(x^2 + y^2)
+      myCos <- x / sqrt(x^2 + y^2)
+      eye_res2 <- eye_res * eye_res / sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
+      MTF[i, j] <- exp(-3.56 * (eye_res2 * freq)^2)
+    }
   }
 
   # Force the center to 1
-  MTF[center, center] <-  1
+  MTF[center, center] <- 1
 
   # Cancel effect of MTF for non-real (padded) image regions
   # Don't think it's necessary, but keeping for now
-  #MTF <- img_pad(MTF, col_pad, row_pad, opt = 'MTF')
+  # MTF <- img_pad(MTF, col_pad, row_pad, opt = 'MTF')
 
   # Linearise sRGB values
   from_srgb <- function(rgb_dat) {
@@ -111,7 +110,6 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
 # Rearrange the output of the FFT by moving
 # the zero frequency component to the center
 fft_shift <- function(input_matrix) {
-
   rows <- dim(input_matrix)[1]
   cols <- dim(input_matrix)[2]
 
@@ -136,14 +134,14 @@ fft_shift <- function(input_matrix) {
 img_pad <- function(dat, col_zeros, row_zeros, opt = c("pad", "crop", "MTF"), pad_fun) {
   if (opt == "pad") {
     # Add column padding
-      mat_col_low <- matrix(pad_fun, nrow(dat), floor(col_zeros))
-      mat_col_high <- matrix(pad_fun, nrow(dat), ceiling(col_zeros))
-      out <- cbind(mat_col_low, dat, mat_col_high)
+    mat_col_low <- matrix(pad_fun, nrow(dat), floor(col_zeros))
+    mat_col_high <- matrix(pad_fun, nrow(dat), ceiling(col_zeros))
+    out <- cbind(mat_col_low, dat, mat_col_high)
 
     # Add row padding
-      mat_colrow_low <- matrix(pad_fun, floor(row_zeros), ncol(out))
-      mat_colrow_high <- matrix(pad_fun, ceiling(row_zeros), ncol(out))
-      out2 <- rbind(mat_colrow_low, out, mat_colrow_high)
+    mat_colrow_low <- matrix(pad_fun, floor(row_zeros), ncol(out))
+    mat_colrow_high <- matrix(pad_fun, ceiling(row_zeros), ncol(out))
+    out2 <- rbind(mat_colrow_low, out, mat_colrow_high)
   }
 
   if (opt == "crop") {

@@ -63,12 +63,10 @@
 cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
                     out.lty = 1, theta = 45, phi = 10, r = 1e6, zoom = 1, box = FALSE,
                     ciebg = TRUE, ...) {
-
   arg <- list(...)
 
   # CIEXYZ
   if (attr(ciedata, "clrsp") == "CIEXYZ") {
-
     # Set defaults
     if (is.null(arg$pch)) {
       arg$pch <- 19
@@ -146,7 +144,6 @@ cieplot <- function(ciedata, mono = TRUE, out.lwd = NULL, out.lcol = "black",
 
   # CIELAB or CIELch
   if (attr(ciedata, "clrsp") %in% c("CIELAB", "CIELCh")) {
-
     # Set defaults
     arg <- list(...)
 

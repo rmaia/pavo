@@ -32,7 +32,6 @@ dispace <- function(vismodeldata) {
 
   # if object is vismodel:
   if (is.vismodel(dat)) {
-
     # check if trichromat
     if (attr(dat, "conenumb") < 2) {
       stop("vismodel input is not dichromatic", call. = FALSE)

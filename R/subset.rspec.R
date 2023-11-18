@@ -31,7 +31,6 @@
 #' @author Chad Eliason \email{cme16@@zips.uakron.edu}
 
 subset.rspec <- function(x, subset, ...) {
-
   # This could be simplified a lot by using grepl instead of grep, removing
   # which and using boolean operations. But at the moment, grep supports an
   # additional argument `invert` that grepl doesn't. Because some scripts maybe

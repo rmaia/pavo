@@ -30,7 +30,6 @@ coc <- function(vismodeldata) {
 
   # if object is vismodel:
   if (is.vismodel(dat)) {
-
     # check if trichromat
     if (attr(dat, "conenumb") < 3) {
       stop("vismodel input is not trichromatic", call. = FALSE)

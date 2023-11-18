@@ -25,7 +25,6 @@
 diplot <- function(didata, labels = TRUE, achro = TRUE, achrocol = "grey",
                    achrosize = 0.8, labels.cex = 1, out.lwd = 1, out.lcol = "black",
                    out.lty = 1, square = TRUE, ...) {
-
   arg <- list(...)
 
   # Set defaults

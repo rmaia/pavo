@@ -30,7 +30,6 @@
 
 getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
                    max.size = 1) {
-
   ## ------------------------------ Checks ------------------------------ ##
 
   ## Allowed extensions
@@ -49,7 +48,6 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
 
     # Otherwise it's a directory of images
   } else {
-
     # Set allowed file extensions
     extension <- paste0("\\.", ext, "$", collapse = "|")
 

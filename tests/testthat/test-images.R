@@ -10,12 +10,13 @@ test_that("as.rimg", {
   }
 
   # Fake image(s)
-  imgfake <- array(c(
-    matrix(c(155, 1, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 0, 0), nrow = 10, ncol = 10),
-    matrix(c(0, 0, 1, 1), nrow = 10, ncol = 10)
-  ),
-  dim = c(10, 10, 3)
+  imgfake <- array(
+    c(
+      matrix(c(155, 1, 0, 0), nrow = 10, ncol = 10),
+      matrix(c(0, 0, 0, 0), nrow = 10, ncol = 10),
+      matrix(c(0, 0, 1, 1), nrow = 10, ncol = 10)
+    ),
+    dim = c(10, 10, 3)
   )
   rimgfake <- as.rimg(imgfake, "image")
   c <- rimg2magick(rimgfake)
@@ -85,14 +86,14 @@ test_that("procimg", {
 
 
 test_that("classify", {
-
   # Images
-  imgfake <- as.rimg(array(c(
-    matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
-    matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
-    matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
-  ),
-  dim = c(12, 8, 3)
+  imgfake <- as.rimg(array(
+    c(
+      matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+      matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+      matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
+    ),
+    dim = c(12, 8, 3)
   ))
 
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
@@ -158,24 +159,25 @@ test_that("classify", {
 })
 
 test_that("adjacency", {
-
   # Images
-  imgfake <- as.rimg(array(c(
-    matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
-    matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
-    matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
-  ),
-  dim = c(12, 8, 3)
+  imgfake <- as.rimg(array(
+    c(
+      matrix(c(1, 1, 0, 0), nrow = 12, ncol = 8),
+      matrix(c(0, 0, 0, 0), nrow = 12, ncol = 8),
+      matrix(c(0, 0, 1, 1), nrow = 12, ncol = 8)
+    ),
+    dim = c(12, 8, 3)
   ))
 
   imgfakes <- as.rimg(list(imgfake, imgfake), name = c("fake_01", "fake_02"))
 
-  img1col <- as.rimg(array(c(
-    matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100),
-    matrix(c(0, 0, 0, 0), nrow = 100, ncol = 100),
-    matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100)
-  ),
-  dim = c(100, 100, 3)
+  img1col <- as.rimg(array(
+    c(
+      matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100),
+      matrix(c(0, 0, 0, 0), nrow = 100, ncol = 100),
+      matrix(c(1, 1, 1, 1), nrow = 100, ncol = 100)
+    ),
+    dim = c(100, 100, 3)
   ))
 
   distances <- data.frame(

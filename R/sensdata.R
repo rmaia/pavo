@@ -80,8 +80,10 @@ sensdata <- function(visual = c(
                        "pfowl", "apis", "canis", "cie2", "cie10", "musca",
                        "drosophila", "habronattus", "rhinecanthus"
                      ),
-                     achromatic = c("none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1",
-                                    "dm.r1", "ra.dc", "cf.r"),
+                     achromatic = c(
+                       "none", "all", "bt.dc", "ch.dc", "st.dc", "md.r1",
+                       "dm.r1", "ra.dc", "cf.r"
+                     ),
                      illum = c("none", "all", "bluesky", "D65", "forestshade"),
                      trans = c("none", "all", "bluetit", "blackbird"),
                      bkg = c("none", "all", "green"),

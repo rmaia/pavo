@@ -54,29 +54,31 @@
 #'
 #' # Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm
 #' # in increments of 10, then combine into a single rspec object, and plot the result
-#' peaks <- seq(400, 600, 10)  # Peak locations
-#' reflectances <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x]))  # Simulate
-#' reflectances <- Reduce(merge, reflectances)  # Combine
-#' plot(reflectances)  # Plot
+#' peaks <- seq(400, 600, 10) # Peak locations
+#' reflectances <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x])) # Simulate
+#' reflectances <- Reduce(merge, reflectances) # Combine
+#' plot(reflectances) # Plot
 #'
 #' # Simulate a set of Gaussian reflectance curves with a single peak at 500 nm, but
 #' # with maximum reflectance varying from 30 to 90% in 10% increments, then combine
 #' # into a single rspec object, and plot the result
-#' ymax <- lapply(seq(30, 90, 10), function(x) c(0, x))  # Varying reflectance maxima
-#' reflectances2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x))  # Simulate
-#' reflectances2 <- Reduce(merge, reflectances2)  # Combine
-#' plot(reflectances2)  # Plot
+#' ymax <- lapply(seq(30, 90, 10), function(x) c(0, x)) # Varying reflectance maxima
+#' reflectances2 <- lapply(ymax, function(x) simulate_spec(wl_peak = 500, ylim = x)) # Simulate
+#' reflectances2 <- Reduce(merge, reflectances2) # Combine
+#' plot(reflectances2) # Plot
 #'
 #' # To simulate non-reflectance spectra (like irradiances or radiances), it's often useful
 #' # to explore more 'extreme' parameters. Here's a simple example which simulates
 #' # natural daylight, as represented by the D65 standard daylight spectrum.
-#' D65_real <- procspec(sensdata(illum = 'D65'), opt = 'smooth')  # Official D65 daylight spectrum
-#' D65_sim <- simulate_spec(wl_peak = 400,
-#'                          width_gauss = 1300,
-#'                          skew_gauss = 10,
-#'                          ylim = c(0, 1))  # Simulated D65
-#' cor.test(D65_real$D65, D65_sim$spec_p400)  # >0.99 correlation
-#' plot(merge(D65_real, D65_sim), lty = 1:2, ylab = 'Irradiance (%)')  # Merge and plot the two spectra
+#' D65_real <- procspec(sensdata(illum = "D65"), opt = "smooth") # Official D65 daylight spectrum
+#' D65_sim <- simulate_spec(
+#'   wl_peak = 400,
+#'   width_gauss = 1300,
+#'   skew_gauss = 10,
+#'   ylim = c(0, 1)
+#' ) # Simulated D65
+#' cor.test(D65_real$D65, D65_sim$spec_p400) # >0.99 correlation
+#' plot(merge(D65_real, D65_sim), lty = 1:2, ylab = "Irradiance (%)") # Merge and plot the two spectra
 #'
 #' @importFrom stats pnorm
 #' @export
@@ -118,15 +120,15 @@ simulate_spec <- function(wl_inflect = NULL,
   # Check that the size of wl_inflect and width_sig match, or width_sig is a single value
   # https://vctrs.r-lib.org/reference/vector_recycling_rules.html
   if (!is.null(wl_inflect) &&
-      length(width_sig) != 1 &&
-      length(wl_inflect) != length(width_sig)) {
+    length(width_sig) != 1 &&
+    length(wl_inflect) != length(width_sig)) {
     stop("Size of wl_inflect and width_sig must match, or width_sig must be a single value")
   }
 
   # Check that the size of wl_peak and width_gauss match, or width_gauss is a single value
   if (!is.null(wl_peak) &&
-      length(width_gauss) != 1 &&
-      length(wl_peak) != length(width_gauss)) {
+    length(width_gauss) != 1 &&
+    length(wl_peak) != length(width_gauss)) {
     stop("Size of wl_peak and width_gauss must match, or width_gauss must be a single value")
   }
 
@@ -136,7 +138,7 @@ simulate_spec <- function(wl_inflect = NULL,
   # Skew-normal error distribution
   erf <- function(x) {
     2 * pnorm(x * sqrt(2)) - 1
-    }
+  }
 
   # Simulate the specs
   # Sigmoidal
@@ -156,18 +158,18 @@ simulate_spec <- function(wl_inflect = NULL,
   if (!is.null(wl_peak)) {
     spec.gauss <- mapply(function(wlp, wga) {
       (ylim[2] - ylim[1]) *
-        (exp(-((wl - wlp) ^ 2) / (2 * wga ^ 2)) *
-           (1 + erf(
-             skew_gauss * (wl - wlp) / sqrt(2 * wga ^ 2)
-           ))) + ylim[1]  # Skew-normal distribution
+        (exp(-((wl - wlp)^2) / (2 * wga^2)) *
+          (1 + erf(
+            skew_gauss * (wl - wlp) / sqrt(2 * wga^2)
+          ))) + ylim[1] # Skew-normal distribution
     }, wl_peak, sigma.gauss)
     spec <- spec + rowSums(spec.gauss, na.rm = TRUE)
   }
 
   # Normalize the final spectrum to span the range specified by ylim
   spec <-
-    (spec - min(spec)) / (max(spec) - min(spec))  # Scale to [0, 1]
-  spec <- spec * (ylim[2] - ylim[1]) + ylim[1]  # Rescale to ylim
+    (spec - min(spec)) / (max(spec) - min(spec)) # Scale to [0, 1]
+  spec <- spec * (ylim[2] - ylim[1]) + ylim[1] # Rescale to ylim
 
   # Construct unique name for the spectrum
   name <- "spec_"
@@ -177,8 +179,9 @@ simulate_spec <- function(wl_inflect = NULL,
   }
   # If Gaussian, append `p` followed by peak locations
   if (!is.null(wl_peak)) {
-    if (!is.null(wl_inflect))
-      name <- paste0(name, "_")  # Also add separator if both specified
+    if (!is.null(wl_inflect)) {
+      name <- paste0(name, "_")
+    } # Also add separator if both specified
     name <- paste0(name, "p", paste(wl_peak, collapse = "_"))
   }
 

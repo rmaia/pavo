@@ -88,7 +88,6 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
                     outline = FALSE, reclass = NULL, smooth = FALSE, iterations = 1L,
                     col = "red", obj_dist = NULL, obj_width = NULL, eye_res = NULL,
                     plotnew = FALSE, ...) {
-
   ## ------------------------------ Checks ------------------------------ ##
 
   ## Class
@@ -138,7 +137,6 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 
   ## Scale ##
   if (is.numeric(scaledist)) {
-
     # Formatting
     if (length(scaledist) == 1) {
       scaledist <- as.list(rep(scaledist, length(image)))
@@ -163,8 +161,10 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   if (!is.null(c(obj_dist, obj_width, eye_res))) {
     # Require all arguments
     if (!(is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
-      warning("Numeric values for each of obj_dist, obj_width, and eye_res ",
-              "must be specified for acuity modelling. Skipping acuity modelling.")
+      warning(
+        "Numeric values for each of obj_dist, obj_width, and eye_res ",
+        "must be specified for acuity modelling. Skipping acuity modelling."
+      )
     }
     # Raw images only
     if (attr(image[[1]], "state") == "colclass") {
@@ -172,10 +172,12 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     }
     # Model
     if ((is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res) && attr(image[[1]], "state") == "raw")) {
-      message("When using the AcuityView algorithm, please remember to read (for full discussion and caveats) and cite: ",
-              "Caves EM & Johnsen S (2018). AcuityView: An r package for portraying ",
-              "the effects of visual acuity on scenes observed by an animal. Methods ",
-              "in Ecology and Evolution, 9(3), 793-797.")
+      message(
+        "When using the AcuityView algorithm, please remember to read (for full discussion and caveats) and cite: ",
+        "Caves EM & Johnsen S (2018). AcuityView: An r package for portraying ",
+        "the effects of visual acuity on scenes observed by an animal. Methods ",
+        "in Ecology and Evolution, 9(3), 793-797."
+      )
       for (i in seq_along(image)) {
         image[[i]] <- acuityview_pad(image[[i]], obj_dist, obj_width, eye_res)
       }
@@ -222,7 +224,6 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 #' @importFrom graphics plot rasterImage locator
 #' @importFrom stats dist
 scaler <- function(image_i, scaledist_i, col, ...) {
-
   # Plot
   if (attr(image_i, "state") == "raw") {
     plot(image_i, axes = TRUE, col = NULL, ...)
@@ -239,7 +240,6 @@ scaler <- function(image_i, scaledist_i, col, ...) {
 
 # Internal function for selecting focal-stimulus outline
 outliner <- function(image_i, smooth_i, iterations_i, col, ...) {
-
   # Plot
   if (attr(image_i, "state") == "raw") {
     plot(image_i, axes = TRUE, col = NULL, ...)

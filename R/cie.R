@@ -92,7 +92,6 @@ cie <- function(vismodeldata,
     y <- Y / (X + Y + Z)
     z <- Z / (X + Y + Z)
   } else if (space %in% c("LAB", "LCh")) {
-
     # Calculate tristimulus values for neutral point. First need to
     # re-grab original sensitivity and illuminant data.
     if (inherits(vismodeldata, "vismodel")) {

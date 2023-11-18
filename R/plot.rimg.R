@@ -56,7 +56,6 @@ defaultrasterImageplot <- function(imagedata, axes, col, ...) {
   if (missing(axes)) axes <- TRUE
 
   if (attr(imagedata, "state") == "colclass") {
-
     # Transform again
     img3 <- rev(t(apply(imagedata, 1, rev))) # mirror
     dim(img3) <- dim(imagedata)

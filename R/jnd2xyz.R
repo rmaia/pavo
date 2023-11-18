@@ -31,7 +31,7 @@
 #' data(flowers)
 #'
 #' # Estimate quantum catches visual phenotype of a Blue Tit
-#' vis.flowers <- vismodel(flowers, visual = 'bluetit')
+#' vis.flowers <- vismodel(flowers, visual = "bluetit")
 #'
 #' # Estimate noise-weighted colour distances between all flowers
 #' cd.flowers <- coldist(vis.flowers)
@@ -54,7 +54,6 @@
 jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
                     rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u",
                     axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
-
   # Accessory functions
   pos2 <- function(d12, d13, d23) {
     x3 <- d13
@@ -140,7 +139,6 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
   }
 
   if (ncone == "3") {
-
     # first point
     coords[ptnames[1], ] <- c(0, 0)
 

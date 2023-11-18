@@ -35,7 +35,6 @@ segspace <- function(vismodeldata) {
 
   # if object is vismodel:
   if (is.vismodel(dat)) {
-
     # check if tetrachromat
     if (attr(dat, "conenumb") < 4) {
       stop("vismodel input is not tetrachromatic", call. = FALSE)

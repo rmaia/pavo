@@ -38,7 +38,6 @@
 getspec <- function(where = getwd(), ext = "txt", lim = c(300, 700), decimal = ".",
                     sep = NULL, subdir = FALSE, subdir.names = FALSE,
                     ignore.case = TRUE) {
-
   lr_get_spec(
     where = where, ext = ext, lim = lim, decimal = decimal, sep = sep,
     subdir = subdir, subdir.names = subdir.names,

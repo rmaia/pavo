@@ -64,7 +64,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
                       achro = TRUE, achro.col = "grey", achro.size = 1, achro.line = FALSE, achro.lwd = 1, achro.lty = 3,
                       tetrahedron = TRUE, vert.cex = 1, vert.range = c(1, 2), out.lwd = 1, out.lcol = "darkgrey",
                       type = "p", labels = FALSE, gamut = FALSE, ...) {
-
   trange <- function(x, newmin, newmax) {
     (((x - min(x)) * (newmax - newmin)) / (max(x) - min(x))) + newmin
   }
@@ -84,14 +83,15 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
 
   # tetrahedron vertices
-  verts <- matrix(c(
-    0, 0, 0.75,
-    (-0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25,
-    0, (1 / sqrt(2)), -0.25,
-    (0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25
-  ),
-  byrow = TRUE, nrow = 4,
-  dimnames = list(c("u", "s", "m", "l"), c("x", "y", "z"))
+  verts <- matrix(
+    c(
+      0, 0, 0.75,
+      (-0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25,
+      0, (1 / sqrt(2)), -0.25,
+      (0.5 * sqrt(1.5)), (-1 / (2 * sqrt(2))), -0.25
+    ),
+    byrow = TRUE, nrow = 4,
+    dimnames = list(c("u", "s", "m", "l"), c("x", "y", "z"))
   )
 
   # combinations of vertices to make facets
@@ -108,7 +108,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
 
   # if no limits are given, estimate based on tetrahedron or tcsdataa limits
   if (plims) {
-
     # first check if all xyzlim are null
     if (!all(vapply(list(arg$xlim, arg$ylim, arg$zlim), is.null, logical(1)))) {
       stop('"xlim", "ylim" and "zlim" must either all be NULL or all be vectors of length 2', call. = FALSE)
@@ -227,7 +226,6 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
   # add tetrahedron lines and vertices behind the data
 
   if (tetrahedron) {
-
     # vertice colours
     vcols <- setNames(
       c("darkorchid1", "cornflowerblue", "mediumseagreen", "firebrick1"),

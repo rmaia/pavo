@@ -64,7 +64,6 @@ test_that("Procspec", {
     "uninterpolated_procspec",
     plot(uninterp_sm)
   )
-
 })
 
 test_that("Aggregation", {

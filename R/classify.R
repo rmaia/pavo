@@ -60,7 +60,6 @@
 
 classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, refID = NULL, interactive = FALSE,
                      plotnew = FALSE, col = "red", ...) {
-
   ## ------------------------------ Checks ------------------------------ ##
 
   ## Single or multiple images?
@@ -149,7 +148,6 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
     message("Image classification in progress...")
     outdata <- classifier(imgdat, ref_centers, method2)
   } else if (interactive) {
-
     ## (3) Interactive, no reference image. ##
     if (is.null(kcols)) {
       kcols <- rep(list(512), length(imgdat))
@@ -177,11 +175,12 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
       if (plotnew) dev.off()
 
-      ref_centers <- try(do.call(rbind, lapply(
-        seq_len(nrow(reference)),
-        function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
-      )),
-      silent = TRUE
+      ref_centers <- try(
+        do.call(rbind, lapply(
+          seq_len(nrow(reference)),
+          function(x) as.data.frame(t(imgdat[[i]][reference$x[x], reference$y[x], 1:3]))
+        )),
+        silent = TRUE
       )
       centers[[i]] <- ref_centers
       tag_loc[[i]] <- reference
@@ -259,7 +258,6 @@ classifier <- function(imgdat_i2, n_cols_i2, method_i2) {
 # Main function for identifying colour classes in an image for adjacency analyses
 #' @importFrom cluster clara
 classify_main <- function(imgdat_i, n_cols_i, method_i) {
-
   ## Dimensions
   imgdim <- dim(imgdat_i)
 
@@ -305,10 +303,8 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
 ## k structure parser
 #' @importFrom tools file_path_sans_ext
 parse_kcols <- function(kcols_i, imgdat_i) {
-
   # If kcols is a 2-col data frame/matrix
   if (!is.vector(kcols_i)) {
-
     # TODO more safety
     if (ncol(kcols_i) > 2) {
       warning("More than two columns included in kcols. Taking the first two columns only.")

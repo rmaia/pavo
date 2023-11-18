@@ -38,14 +38,12 @@
 #'    Vision research, 34(11), 1489-1508.
 
 hexagon <- function(vismodeldata) {
-
   ## Note: requires von kries & hyperbolic transform
 
   dat <- vismodeldata
 
   # if object is vismodel:
   if (is.vismodel(dat)) {
-
     # check if trichromat
     if (attr(dat, "conenumb") < 3) {
       stop("vismodel input is not trichromatic")
