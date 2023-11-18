@@ -119,7 +119,7 @@ colspace <- function(vismodeldata,
           "2" = "di",
           "3" = "tri",
           "4" = "tcs",
-          "seg" = "segment"
+          seg = "segment"
         )
     }
   }
@@ -127,16 +127,16 @@ colspace <- function(vismodeldata,
   # Run the model
   res <-
     switch(space2,
-      "di" = dispace(vismodeldata),
-      "tri" = trispace(vismodeldata),
-      "hexagon" = hexagon(vismodeldata),
-      "tcs" = tcspace(vismodeldata),
-      "coc" = coc(vismodeldata),
-      "categorical" = categorical(vismodeldata),
-      "ciexyz" = cie(vismodeldata, "XYZ", ...),
-      "cielab" = cie(vismodeldata, "LAB", ...),
-      "cielch" = cie(vismodeldata, "LCh", ...),
-      "segment" = segspace(vismodeldata)
+      di = dispace(vismodeldata),
+      tri = trispace(vismodeldata),
+      hexagon = hexagon(vismodeldata),
+      tcs = tcspace(vismodeldata),
+      coc = coc(vismodeldata),
+      categorical = categorical(vismodeldata),
+      ciexyz = cie(vismodeldata, "XYZ", ...),
+      cielab = cie(vismodeldata, "LAB", ...),
+      cielch = cie(vismodeldata, "LCh", ...),
+      segment = segspace(vismodeldata)
     )
 
   # Include lum for appropriate spaces

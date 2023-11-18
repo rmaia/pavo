@@ -687,9 +687,9 @@ transitioncalc <- function(classimgdat, colornames) {
   rt <- rt[!grepl("NA", rt[, 1], fixed = TRUE), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   rnames <- as.numeric(unlist(strsplit(rt[, 1], ".", fixed = TRUE))) # split up transition names
   rowtrans <- data.frame(
-    "c1" = rnames[seq(1, length(rnames), 2)],
-    "c2" = rnames[seq(2, length(rnames), 2)],
-    "N" = rt[, 2]
+    c1 = rnames[seq(1, length(rnames), 2)],
+    c2 = rnames[seq(2, length(rnames), 2)],
+    N = rt[, 2]
   )
 
   # All column transitions
@@ -707,9 +707,9 @@ transitioncalc <- function(classimgdat, colornames) {
   ct <- ct[!grepl("NA", ct[, 1], fixed = TRUE), ] # Remove columns containing NA's (i.e. bkg, if chosen to exclude)
   cnames <- as.numeric(unlist(strsplit(ct[, 1], ".", fixed = TRUE))) # split up transition names
   coltrans <- data.frame(
-    "c1" = cnames[seq(1, length(cnames), 2)],
-    "c2" = cnames[seq(2, length(cnames), 2)],
-    "N" = ct[, 2]
+    c1 = cnames[seq(1, length(cnames), 2)],
+    c2 = cnames[seq(2, length(cnames), 2)],
+    N = ct[, 2]
   )
 
   # Sort

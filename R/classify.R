@@ -273,16 +273,16 @@ classify_main <- function(imgdat_i, n_cols_i, method_i) {
 
   # Cluster analysis, then format as image matrix
   kMeans <- switch(method_i,
-    "kMeans" = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
-    "kMedoids" = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
+    kMeans = kmeans(imgRGB[, c("R", "G", "B")], centers = n_cols_i),
+    kMedoids = clara(imgRGB[, c("R", "G", "B")], k = n_cols_i, samples = 100, sampsize = samsize, pamLike = TRUE)
   )
   outmat3 <- switch(method_i,
-    "kMeans" = matrix(kMeans$cluster, nrow = imgdim[1]),
-    "kMedoids" = matrix(kMeans$clustering, nrow = imgdim[1])
+    kMeans = matrix(kMeans$cluster, nrow = imgdim[1]),
+    kMedoids = matrix(kMeans$clustering, nrow = imgdim[1])
   )
   centers <- switch(method_i,
-    "kMeans" = as.data.frame(kMeans$centers),
-    "kMedoids" = as.data.frame(kMeans$medoids)
+    kMeans = as.data.frame(kMeans$centers),
+    kMedoids = as.data.frame(kMeans$medoids)
   )
 
   # Rotate to match original orientation

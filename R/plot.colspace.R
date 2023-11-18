@@ -78,16 +78,16 @@ plot.colspace <- function(x, ...) {
     space <- attr(x, "clrsp")
 
     switch(space,
-      "dispace" = diplot(x, ...),
-      "trispace" = triplot(x, ...),
-      "hexagon" = hexplot(x, ...),
-      "tcs" = tetraplot(x, ...),
-      "coc" = cocplot(x, ...),
-      "categorical" = catplot(x, ...),
-      "CIEXYZ" = cieplot(x, ...),
-      "CIELAB" = cieplot(x, ...),
-      "CIELCh" = cieplot(x, ...),
-      "segment" = segplot(x, ...)
+      dispace = diplot(x, ...),
+      trispace = triplot(x, ...),
+      hexagon = hexplot(x, ...),
+      tcs = tetraplot(x, ...),
+      coc = cocplot(x, ...),
+      categorical = catplot(x, ...),
+      CIEXYZ = cieplot(x, ...),
+      CIELAB = cieplot(x, ...),
+      CIELCh = cieplot(x, ...),
+      segment = segplot(x, ...)
     )
   }
 }

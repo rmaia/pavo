@@ -95,7 +95,7 @@ sensdata <- function(visual = c(
   bkg2 <- match.arg(bkg, several.ok = TRUE)
   trans2 <- match.arg(trans, several.ok = TRUE)
 
-  dat <- data.frame("wl" = 300:700)
+  dat <- data.frame(wl = 300:700)
 
   # Visual system
   if (!isTRUE("none" %in% visual2)) {
