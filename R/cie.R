@@ -120,15 +120,15 @@ cie <- function(vismodeldata,
 
       # Grab the relevant data
       S <- switch(visual2,
-        "user-defined" = isolate_wl(visual, keep = "spec"),
-        "cie2" = sens[, grep(visual2, names(sens))],
-        "cie10" = sens[, grep(visual2, names(sens))]
+        `user-defined` = isolate_wl(visual, keep = "spec"),
+        cie2 = sens[, grep(visual2, names(sens))],
+        cie10 = sens[, grep(visual2, names(sens))]
       )
       illum <- switch(illum2,
-        "user-defined" = isolate_wl(illum, keep = "spec"),
-        "D65" = bgil[, grep(illum2, names(bgil))],
-        "bluesky" = bgil[, grep(illum2, names(bgil))],
-        "forestshade" = bgil[, grep(illum2, names(bgil))]
+        `user-defined` = isolate_wl(illum, keep = "spec"),
+        D65 = bgil[, grep(illum2, names(bgil))],
+        bluesky = bgil[, grep(illum2, names(bgil))],
+        forestshade = bgil[, grep(illum2, names(bgil))]
       )
     }
 

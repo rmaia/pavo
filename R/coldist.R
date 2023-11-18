@@ -314,12 +314,12 @@ coldist <- function(modeldata,
 
     ## Calculate dS
     res[, "dS"] <- switch(noise,
-      "neural" = newreceptornoise(dat2, n, weber, weber.ref, res),
-      "quantum" = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, seq_len(ncone)])
+      neural = newreceptornoise(dat2, n, weber, weber.ref, res),
+      quantum = newreceptornoise(dat2, n, weber, weber.ref, res, qndat[, seq_len(ncone)])
     )
     resref[, "dS"] <- switch(noise,
-      "neural" = newreceptornoise(visref, n, weber, weber.ref, resref),
-      "quantum" = newreceptornoise(visref, n, weber, weber.ref, resref, exp(visref))
+      neural = newreceptornoise(visref, n, weber, weber.ref, resref),
+      quantum = newreceptornoise(visref, n, weber, weber.ref, resref, exp(visref))
     )
 
     ## Calculate dL
@@ -330,13 +330,13 @@ coldist <- function(modeldata,
         dat[seq(refsamp), dim(dat)[2]]
 
       res[, "dL"] <- switch(noise,
-        "neural" = unlist(lapply(seq_len(nrow(res)), function(x) {
+        neural = unlist(lapply(seq_len(nrow(res)), function(x) {
           ttdistcalcachro(
             dat[res[x, 1], ], dat[res[x, 2], ],
             NULL, NULL, weber.achro
           )
         })),
-        "quantum" = unlist(lapply(seq_len(nrow(res)), function(x) {
+        quantum = unlist(lapply(seq_len(nrow(res)), function(x) {
           ttdistcalcachro(
             dat[res[x, 1], ], dat[res[x, 2], ],
             qndat[res[x, 1], ], qndat[res[x, 2], ], weber.achro
@@ -345,14 +345,14 @@ coldist <- function(modeldata,
       )
 
       resref[, "dL"] <- switch(noise,
-        "neural" = unlist(lapply(seq_len(nrow(resref)), function(x) {
+        neural = unlist(lapply(seq_len(nrow(resref)), function(x) {
           ttdistcalcachro(
             visref[resref[x, 1], ], visref[resref[x, 2], ],
             NULL, NULL,
             weber.achro = weber.achro
           )
         })),
-        "quantum" = unlist(lapply(seq_len(nrow(resref)), function(x) {
+        quantum = unlist(lapply(seq_len(nrow(resref)), function(x) {
           ttdistcalcachro(
             visref[resref[x, 1], ], visref[resref[x, 2], ],
             exp(visref)[resref[x, 1], ], exp(visref)[resref[x, 2], ], weber.achro
@@ -375,57 +375,57 @@ coldist <- function(modeldata,
 
     # Message about the distances being calculated
     note_dS <- switch(attr(modeldata, "clrsp"),
-      "dispace" = ,
-      "trispace" = ,
-      "tcs" = ,
-      "hexagon" = ,
-      "categorical" = ,
-      "CIEXYZ" = ,
-      "segment" = "Calculating unweighted Euclidean distances",
-      "CIELAB" = ,
-      "CIELCh" = "Calculating CIE2000 distances",
-      "coc" = "Calculating Manhattan distances"
+      dispace = ,
+      trispace = ,
+      tcs = ,
+      hexagon = ,
+      categorical = ,
+      CIEXYZ = ,
+      segment = "Calculating unweighted Euclidean distances",
+      CIELAB = ,
+      CIELCh = "Calculating CIE2000 distances",
+      coc = "Calculating Manhattan distances"
     )
     note_dL <- NULL
 
     res[, "dS"] <- switch(attr(modeldata, "clrsp"),
-      "dispace" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], "x"], dat[x[2], "x"]))),
-      "tcs" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y", "z")], dat[x[2], c("x", "y", "z")]))),
-      "trispace" = ,
-      "hexagon" = ,
-      "CIEXYZ" = ,
-      "categorical" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]))),
-      "segment" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
-      "CIELAB" = ,
-      "CIELCh" = apply(pairsid, 1, function(x) {
+      dispace = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], "x"], dat[x[2], "x"]))),
+      tcs = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y", "z")], dat[x[2], c("x", "y", "z")]))),
+      trispace = ,
+      hexagon = ,
+      CIEXYZ = ,
+      categorical = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]))),
+      segment = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("MS", "LM")], dat[x[2], c("MS", "LM")]))),
+      CIELAB = ,
+      CIELCh = apply(pairsid, 1, function(x) {
         d <- as.data.frame(dat)
         compare_colour(d[x[1], c("L", "a", "b")], d[x[2], c("L", "a", "b")], from_space = "lab", method = "cie2000")
       }),
-      "coc" = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]), method = "manhattan"))
+      coc = apply(pairsid, 1, function(x) dist(rbind(dat[x[1], c("x", "y")], dat[x[2], c("x", "y")]), method = "manhattan"))
     )
     if (achromatic) {
       note_dL <- switch(attr(modeldata, "clrsp"),
-        "dispace" = ,
-        "trispace" = ,
-        "tcs" = " and Weber luminance contrast",
-        "hexagon" = " and simple luminance contrast",
-        "segment" = " and Michelson luminance contrast",
-        "CIELAB" = ,
-        "categorical" = ,
-        "coc" = ,
-        "CIELCh" = " and Weber luminance contrast",
+        dispace = ,
+        trispace = ,
+        tcs = " and Weber luminance contrast",
+        hexagon = " and simple luminance contrast",
+        segment = " and Michelson luminance contrast",
+        CIELAB = ,
+        categorical = ,
+        coc = ,
+        CIELCh = " and Weber luminance contrast",
       )
 
       res[, "dL"] <- switch(attr(modeldata, "clrsp"),
-        "dispace" = ,
-        "trispace" = ,
-        "categorical" = ,
-        "coc" = ,
-        "tcs" = lumcont(dat[pairsid[, 1], "lum"], dat[pairsid[, 2], "lum"], type = "weber"),
-        "hexagon" = lumcont(dat[pairsid[, 1], "l"], dat[pairsid[, 2], "l"], type = "simple"),
-        "CIELAB" = ,
-        "CIELCh" = lumcont(dat[pairsid[, 1], "L"], dat[pairsid[, 2], "L"], type = "weber"),
-        "segment" = lumcont(dat[pairsid[, 1], "B"], dat[pairsid[, 2], "B"], type = "michelson")
+        dispace = ,
+        trispace = ,
+        categorical = ,
+        coc = ,
+        tcs = lumcont(dat[pairsid[, 1], "lum"], dat[pairsid[, 2], "lum"], type = "weber"),
+        hexagon = lumcont(dat[pairsid[, 1], "l"], dat[pairsid[, 2], "l"], type = "simple"),
+        CIELAB = ,
+        CIELCh = lumcont(dat[pairsid[, 1], "L"], dat[pairsid[, 2], "L"], type = "weber"),
+        segment = lumcont(dat[pairsid[, 1], "B"], dat[pairsid[, 2], "B"], type = "michelson")
       )
     }
     message(note_dS, note_dL)
@@ -605,9 +605,9 @@ lumcont <- function(coord1, coord2, type = c("simple", "weber", "michelson")) {
   contrast <- match.arg(type)
 
   dLout <- switch(contrast,
-    "simple" = coord1 / coord2,
-    "weber" = (pmax(coord1, coord2) - pmin(coord1, coord2)) / pmin(coord1, coord2),
-    "michelson" = (pmax(coord1, coord2) - pmin(coord1, coord2)) / (pmax(coord1, coord2) + pmin(coord1, coord2))
+    simple = coord1 / coord2,
+    weber = (pmax(coord1, coord2) - pmin(coord1, coord2)) / pmin(coord1, coord2),
+    michelson = (pmax(coord1, coord2) - pmin(coord1, coord2)) / (pmax(coord1, coord2) + pmin(coord1, coord2))
   )
   dLout
 }
