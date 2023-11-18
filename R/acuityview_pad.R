@@ -7,7 +7,9 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   square <- dim(image)[1] == dim(image)[2] && is.element(dim(image)[1], pow2)
 
   # Zero-pad if not square with dimension power-2
-  if (!square) {
+  if (square) {
+    image_pad <- image
+  } else {
     # Minimum necessary square dimension
     necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))])
 
@@ -20,8 +22,6 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     for (i in 1:3) {
       image_pad[, , i] <- img_pad(image[, , i], col_pad, row_pad, opt = "pad", pad_fun = median(image))
     }
-  } else {
-    image_pad <- image
   }
 
   # Image width in degrees
@@ -84,12 +84,12 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   }
 
   # Crop image back to original dimensions
-  if (!square) {
+  if (square) {
+    image <- image_pad
+  } else {
     for (i in 1:3) {
       image[, , i] <- img_pad(image_pad[, , i], col_pad, row_pad, opt = "crop")
     }
-  } else {
-    image <- image_pad
   }
 
   # Re-scale to a max of 1 if any values end up > 1

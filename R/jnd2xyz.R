@@ -58,7 +58,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
   pos2 <- function(d12, d13, d23) {
     x3 <- d13
 
-    if (!d23 < d12 + d13) {
+    if (d23 >= d12 + d13) {
       x3 <- x3 * -1
     }
 

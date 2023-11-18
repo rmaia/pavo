@@ -93,7 +93,27 @@ as.rimg.default <- function(object, name = "img") {
     colclass <- FALSE
   }
 
-  if (!colclass) {
+  if (colclass) { # colour classified object
+    # Attributes
+    if (length(name) == 1) {
+      name <- rep(name, length(object2))
+    }
+    object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]])) # names
+    for (i in seq_along(object2)) {
+      attr(object2[[i]], "state") <- "colclass" # classification state
+      attr(object2[[i]], "k") <- length(table(object2[[i]])) # kcols
+      attr(object2[[i]], "class") <- c("rimg", "matrix") # class
+      attr(object2[[i]], "colnames") <- data.frame(name = seq_along(table(object2[[i]]))) # colour-category names (in progress)
+      attr(object2[[i]], "classRGB") <- data.frame(
+        R = rep(NA, length(table(object2[[i]]))),
+        G = rep(NA, length(table(object2[[i]]))),
+        B = rep(NA, length(table(object2[[i]])))
+      )
+    }
+    # The list itself needs attributes
+    class(object2) <- c("rimg", "list")
+    attr(object2, "state") <- "colclass"
+  } else {
     # Array check
     if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
       stop("Images must be an array.")
@@ -121,27 +141,6 @@ as.rimg.default <- function(object, name = "img") {
     # The list itself needs attributes
     class(object2) <- c("rimg", "list")
     attr(object2, "state") <- "raw"
-  } else { # colour classified object
-
-    # Attributes
-    if (length(name) == 1) {
-      name <- rep(name, length(object2))
-    }
-    object2 <- lapply(seq_along(object2), function(j) attrgiver(object2[[j]], name[[j]])) # names
-    for (i in seq_along(object2)) {
-      attr(object2[[i]], "state") <- "colclass" # classification state
-      attr(object2[[i]], "k") <- length(table(object2[[i]])) # kcols
-      attr(object2[[i]], "class") <- c("rimg", "matrix") # class
-      attr(object2[[i]], "colnames") <- data.frame(name = seq_along(table(object2[[i]]))) # colour-category names (in progress)
-      attr(object2[[i]], "classRGB") <- data.frame(
-        R = rep(NA, length(table(object2[[i]]))),
-        G = rep(NA, length(table(object2[[i]]))),
-        B = rep(NA, length(table(object2[[i]])))
-      )
-    }
-    # The list itself needs attributes
-    class(object2) <- c("rimg", "list")
-    attr(object2, "state") <- "colclass"
   }
   # Output
   if (!inherits(object, "list") || length(object) == 1) {
