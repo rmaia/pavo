@@ -219,28 +219,24 @@ vismodel <- function(rspecdata,
   qcatch <- match.arg(qcatch)
 
   # Model-specific defaults
-  if (startsWith(visual2, "cie")) {
-    if (!vonkries || relative || !identical(achromatic2, "none") || !identical(qcatch, "Qi")) {
-      vonkries <- TRUE
-      relative <- FALSE
-      achromatic2 <- "none"
-      qcatch <- "Qi"
-      warning("cie system chosen, overriding incompatible parameters.", call. = FALSE)
-    }
+  if (startsWith(visual2, "cie") && (!vonkries || relative || !identical(achromatic2, "none") || !identical(qcatch, "Qi"))) {
+    vonkries <- TRUE
+    relative <- FALSE
+    achromatic2 <- "none"
+    qcatch <- "Qi"
+    warning("cie system chosen, overriding incompatible parameters.", call. = FALSE)
   }
 
-  if (visual2 == "segment") {
-    if (vonkries || !relative || !identical(achromatic2, "all") || !identical(qcatch, "Qi") ||
-      !identical(bg2, "ideal") || !identical(tr2, "ideal") || !identical(illum2, "ideal")) {
-      vonkries <- FALSE
-      relative <- TRUE
-      achromatic2 <- "all"
-      qcatch <- "Qi"
-      bg2 <- "ideal"
-      tr2 <- "ideal"
-      illum2 <- "ideal"
-      warning("segment analysis chosen, overriding incompatible parameters.", call. = FALSE)
-    }
+  if (visual2 == "segment" && (vonkries || !relative || !identical(achromatic2, "all") || !identical(qcatch, "Qi") ||
+      !identical(bg2, "ideal") || !identical(tr2, "ideal") || !identical(illum2, "ideal"))) {
+    vonkries <- FALSE
+    relative <- TRUE
+    achromatic2 <- "all"
+    qcatch <- "Qi"
+    bg2 <- "ideal"
+    tr2 <- "ideal"
+    illum2 <- "ideal"
+    warning("segment analysis chosen, overriding incompatible parameters.", call. = FALSE)
   }
 
   # Grab the visual system
@@ -311,17 +307,13 @@ vismodel <- function(rspecdata,
     trans <- rep(1, dim(rspecdata)[1])
   }
 
-  if (tr2 != "ideal" && visual2 == "user-defined") {
-    if (inherits(fullS, "sensmod")) {
-      if (attr(fullS, "om")) {
-        warning(
-          "The visual system being used appears to already incorporate ocular ",
-          'transmission. Using anything other than trans = "ideal", means ',
-          "ocular media effects are being applied a second time.",
-          call. = FALSE
-        )
-      }
-    }
+  if (tr2 != "ideal" && visual2 == "user-defined" && inherits(fullS, "sensmod") && attr(fullS, "om")) {
+    warning(
+      "The visual system being used appears to already incorporate ocular ",
+      'transmission. Using anything other than trans = "ideal", means ',
+      "ocular media effects are being applied a second time.",
+      call. = FALSE
+    )
   }
 
   prepare_userdefined <- function(df) {

@@ -67,14 +67,12 @@ tcspace <- function(vismodeldata) {
     if (ncol(dat) < 4) {
       stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
     }
-    if (ncol(dat) == 4) {
-      if (!all(c("u", "s", "m", "l") %in% names(dat))) {
-        message(
-          'Input data is not a "vismodel" object; ',
-          'treating columns as unstandardized quantum catch for "u", "s", "m", ""l" receptors, respectively',
-          call. = FALSE
-        )
-      }
+    if (ncol(dat) == 4 && !all(c("u", "s", "m", "l") %in% names(dat))) {
+      message(
+        'Input data is not a "vismodel" object; ',
+        'treating columns as unstandardized quantum catch for "u", "s", "m", ""l" receptors, respectively',
+        call. = FALSE
+      )
     }
 
     if (ncol(dat) > 4) {

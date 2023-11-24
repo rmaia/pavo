@@ -72,12 +72,10 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   }
 
   ## Convert refID to numeric identifier
-  if (!is.null(refID)) {
-    if (is.character(refID)) {
-      refID <- which(unlist(lapply(imgdat, attr, "imgname")) == refID)
-      if (length(refID) == 0) {
-        stop("No image found with that name, specify another reference image using refID.")
-      }
+  if (is.character(refID)) {
+    refID <- which(unlist(lapply(imgdat, attr, "imgname")) == refID)
+    if (length(refID) == 0) {
+      stop("No image found with that name, specify another reference image using refID.")
     }
   }
 
@@ -118,13 +116,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
   ## Check distinct data points > kcols, otherwise it'll give an uninformative error or hang.
   ## Doesn't work for interactive atm though
-  if (!is.null(kcols)) {
-    if (any(unlist(lapply(imgdat, function(x) nrow(unique(apply(x, 3, rbind))))) < max(kcols))) {
-      stop(
-        "The specified number of cluster centers exceeds the number of distinct data points in one or more images, ",
-        "consider a new value for argument 'kcols'"
-      )
-    }
+  if (!is.null(kcols) && any(unlist(lapply(imgdat, function(x) nrow(unique(apply(x, 3, rbind))))) < max(kcols))) {
+    stop(
+      "The specified number of cluster centers exceeds the number of distinct data points in one or more images, ",
+      "consider a new value for argument 'kcols'"
+    )
   }
 
   ## ------------------------------ Main ------------------------------ ##
@@ -333,11 +329,8 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     # Extract kcols
     kcols_i <- as.numeric(unlist(kcols_i[vapply(kcols_i, is.numeric, logical(1))]))
   }
-  if (length(kcols_i) > 1) {
-    # Must have k's for each image
-    if (length(kcols_i) < length(imgdat_i)) {
-      stop("When supplying more than one value, the length of kcols must equal the number of images.")
-    }
+  if (!length(kcols_i) %in% c(1, length(imgdat_i))) {
+    stop("When supplying more than one value, the length of kcols must equal the number of images.")
   }
   # Return a list of identical kcols if only one is supplied
   if (length(kcols_i) == 1 && length(imgdat_i) > 1) {
