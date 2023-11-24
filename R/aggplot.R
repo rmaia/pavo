@@ -142,7 +142,7 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     "#FF7F00", "#FFFF33", "#A65628", "#F781BF"
   )
 
-  col_list <- rep(col_list, length.out = dim(cntplotspecs)[2])
+  col_list <- rep_len(col_list, dim(cntplotspecs)[2])
 
   if (is.null(shadecol)) {
     shadecol <- col_list
