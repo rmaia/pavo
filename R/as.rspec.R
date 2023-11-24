@@ -45,11 +45,11 @@
 as.rspec <- function(object, whichwl = NULL,
                      interp = TRUE, lim = NULL, exceed.range = TRUE) {
 
-  if (is.matrix(object) || is.data.frame(object)) {
-    name <- colnames(object)
-  } else {
+  if (!is.matrix(object) && !is.data.frame(object)) {
     stop("object must be a data frame or matrix", call. = FALSE)
   }
+
+  name <- colnames(object)
 
   if (!all(vapply(seq_len(ncol(object)), function(j) is.numeric(object[, j, drop = TRUE]), logical(1)))) {
     stop("all columns must contain numeric data", call. = FALSE)

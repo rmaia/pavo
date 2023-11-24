@@ -221,11 +221,10 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
       variable_names <- c("B2", "S8", "H1")
     }
   } else {
-    if (all(subset %in% variable_names)) {
-      variable_names <- subset
-    } else {
+    if (!all(subset %in% variable_names)) {
       stop("Names in ", dQuote("subset"), " do not match color variable names")
     }
+    variable_names <- subset
   }
 
   # Preserve original variable names

@@ -63,11 +63,10 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
       by[id] <- lapply(by[id], "[", -unlist(wl_id)[id])
     }
     # check that wl column is the same for all vectors
-    if (length(unique(wl_id)) == 1) {
-      by <- do.call("paste", c(by, sep = "."))
-    } else {
+    if (length(unique(wl_id)) != 1) {
       stop("mismatch in column names of input vectors")
     }
+    by <- do.call("paste", c(by, sep = "."))
   }
 
   # retain original 'by' values
