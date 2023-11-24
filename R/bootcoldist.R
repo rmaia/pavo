@@ -198,7 +198,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   names(bygroup) <- unique(by)
 
   # create vectors of indices to sample
-  its <- lapply(samplesizes, function(x) sample(seq_len(x), x * boot.n, replace = TRUE))
+  its <- lapply(samplesizes, function(x) sample.int(x, x * boot.n, replace = TRUE))
 
   # use the indices from its to sample from the data
   # returns a list with length = number of by

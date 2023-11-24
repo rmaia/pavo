@@ -156,7 +156,7 @@ explorespec <- function(rspecdata, by = NULL,
     leg <- names(bloc)
 
     if (!is.null(dim(bloc))) {
-      legcolor <- rep(col_list, length.out = dim(bloc)[2])
+      legcolor <- rep_len(col_list, dim(bloc)[2])
     } else {
       legcolor <- col_list
     }
