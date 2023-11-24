@@ -247,18 +247,14 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   ## Exclusion checks
-  if ("background" %in% exclude2) {
-    if (is.null(bkgID) && is.null(attr(classimg, "outline"))) {
-      stop(
-        "Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), ",
-        "or one or more colour-class ID's via the argument bkgID."
-      )
-    }
+  if ("background" %in% exclude2 && is.null(bkgID) && is.null(attr(classimg, "outline"))) {
+    stop(
+      "Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), ",
+      "or one or more colour-class ID's via the argument bkgID."
+    )
   }
-  if ("object" %in% exclude2) {
-    if (is.null(attr(classimg, "outline"))) {
-      stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
-    }
+  if ("object" %in% exclude2 && is.null(attr(classimg, "outline"))) {
+    stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
   }
 
   ## Setting scales
@@ -366,16 +362,13 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       classimg_i[classimg_i %in% bkgID_i] <- 999
     }
   }
-  if ("object" %in% exclude2_i) {
-    # Complex backgrounds only
-    if (bkgoutline) {
-      # NA everything *inside* the outlined polyogn
-      classimg_i <- polymask(classimg_i,
-        attr(classimg_i, "outline"),
-        "inside",
-        replacement_value = 999
-      )
-    }
+  if ("object" %in% exclude2_i && bkgoutline) { # Complex backgrounds only
+    # NA everything *inside* the outlined polyogn
+    classimg_i <- polymask(classimg_i,
+      attr(classimg_i, "outline"),
+      "inside",
+      replacement_value = 999
+    )
   }
 
   # Grid subsample

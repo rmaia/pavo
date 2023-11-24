@@ -139,10 +139,8 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     if (is.null(arg0$weber.ref)) {
       arg0$weber.ref <- "longest"
     }
-    if (arg0$achromatic) {
-      if (is.null(arg0$weber.achro)) {
-        stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
-      }
+    if (arg0$achromatic && is.null(arg0$weber.achro)) {
+      stop('argument "weber.achro" to be passed to "coldist" is missing', call. = FALSE)
     }
   } else {
     arg0$weber <- NULL

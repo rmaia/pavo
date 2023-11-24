@@ -69,10 +69,8 @@
 jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
                     arrow.labels = TRUE, arrow.col = "darkgrey", arrow.p = 1, labels.cex = 1,
                     margin = "recommended", square = TRUE, ...) {
-  if (achro) {
-    if (!"lum" %in% colnames(x)) {
-      stop('"achro" is set to TRUE but data does not have a "lum" column.')
-    }
+  if (achro && !"lum" %in% colnames(x)) {
+    stop('"achro" is set to TRUE but data does not have a "lum" column.')
   }
 
   arrow <- match.arg(arrow)
@@ -321,16 +319,14 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
       do.call(arrows, arrowarg)
     }
 
-    if (arrow != "none") {
-      if (arrow.labels) {
-        if (achro) {
-          lbl <- c("S", "L", "lum")
-        } else {
-          lbl <- c("S", "M", "L")
-        }
-
-        text(labelpos, lbl, xpd = TRUE, cex = labels.cex, col = arrow.col)
+    if (arrow != "none" && arrow.labels) {
+      if (achro) {
+        lbl <- c("S", "L", "lum")
+      } else {
+        lbl <- c("S", "M", "L")
       }
+
+      text(labelpos, lbl, xpd = TRUE, cex = labels.cex, col = arrow.col)
     }
 
 

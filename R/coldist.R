@@ -161,10 +161,8 @@ coldist <- function(modeldata,
 
   usereceptornoisemodel <- !inherits(modeldata, "colspace")
 
-  if (noise == "quantum") {
-    if (!is.vismodel(modeldata) && !is.colspace(modeldata)) {
-      stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
-    }
+  if (noise == "quantum" && !is.vismodel(modeldata) && !is.colspace(modeldata)) {
+    stop("Object must be of class vismodel or colspace to calculate quantum receptor noise model", call. = FALSE)
   }
 
   ncone <- attr(modeldata, "conenumb")
@@ -177,10 +175,8 @@ coldist <- function(modeldata,
   if (is.colspace(modeldata) || is.vismodel(modeldata)) {
     qcatch <- attr(modeldata, "qcatch")
     # Pre-processing for vismodel objects
-    if (is.vismodel(modeldata)) {
-      if (qcatch == "Ei") {
-        stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
-      }
+    if (is.vismodel(modeldata) && qcatch == "Ei") {
+      stop("Receptor-noise model not compatible with hyperbolically transformed quantum catches (Ei)", call. = FALSE)
     }
     # Convert lum values to 0 instead of NA, for convenient
     # processing. Converted back to NA at the end.
@@ -464,13 +460,9 @@ coldist <- function(modeldata,
   }
 
   # Set achro contrasts to NA if no lum values supplied
-  if (((is.vismodel(modeldata) || is.colspace(modeldata)) && attr(modeldata, "visualsystem.achromatic") == "none") || !(achromatic)) {
+  if (((is.vismodel(modeldata) || is.colspace(modeldata)) && attr(modeldata, "visualsystem.achromatic") == "none") || !achromatic) {
     res$dL <- NA
   }
-
-  # if (attr(modeldata, "visualsystem.achromatic") == "none" || !(achromatic)) {
-  #   res$dL <- NA
-  # }
 
   attr(res, "ncone") <- ncone
   attr(res, "isrnoise") <- usereceptornoisemodel
