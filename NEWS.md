@@ -1,5 +1,9 @@
 # pavo 2.10.0
 
+## MINOR FEATURES AND BUG FIXES
+
+- `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
+
 # pavo 2.9.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
