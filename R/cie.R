@@ -163,13 +163,12 @@ cie <- function(vismodeldata,
     h[h < 0] <- h[h < 0] + 360
   }
 
-  if (space == "XYZ") {
-    res <- data.frame(X, Y, Z, x, y, z, row.names = rownames(vismodeldata))
-  } else if (space == "LAB") {
-    res <- data.frame(X, Y, Z, L, a, b, row.names = rownames(vismodeldata))
-  } else if (space == "LCh") {
-    res <- data.frame(X, Y, Z, L, a, b, C, h, row.names = rownames(vismodeldata))
-  }
+  res <- switch(
+    space,
+    XYZ = data.frame(X, Y, Z, x, y, z, row.names = rownames(vismodeldata)),
+    LAB = data.frame(X, Y, Z, L, a, b, row.names = rownames(vismodeldata)),
+    LCh = data.frame(X, Y, Z, L, a, b, C, h, row.names = rownames(vismodeldata))
+  )
 
   class(res) <- c("colspace", "data.frame")
 
