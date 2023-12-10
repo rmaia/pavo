@@ -26,7 +26,7 @@
 
 jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "u", axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
   if (!inherits(jnd2xyzres, "jnd2xyz")) {
-    stop('object must be a result from the "jnd2xyz" function')
+    stop('object must be a result from the "jnd2xyz" function', call. = FALSE)
   }
 
   if (!is.null(ref1) && !paste0("jnd2xyzrrf.", ref1) %in% rownames(attr(jnd2xyzres, "resref"))) {
@@ -77,7 +77,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
     coords <- cbind(coords, tempcol = 0)
 
     if (length(axis1) != 3) {
-      stop('"axis1" must be a vector of length 3')
+      stop('"axis1" must be a vector of length 3', call. = FALSE)
     }
 
     cent <- switch(center,
@@ -115,7 +115,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
   # three dimensions
   if (round(sum(c("x", "y", "z") %in% colnames(coords))) == 3) {
     if (length(axis1) != 3) {
-      stop('"axis1" must be a vector of length 3')
+      stop('"axis1" must be a vector of length 3', call. = FALSE)
     }
 
     cent <- switch(center,
@@ -156,7 +156,7 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
 
     if (!is.null(ref2)) {
       if (length(axis2) != 3) {
-        stop('"axis2" must be a vector of length 3')
+        stop('"axis2" must be a vector of length 3', call. = FALSE)
       }
 
       aa <- vectornorm(res[grep(paste0("jnd2xyzrrf.", ref2), rownames(res)), ] -

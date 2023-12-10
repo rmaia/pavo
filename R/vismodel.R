@@ -177,7 +177,8 @@ vismodel <- function(rspecdata,
     warning(
       "The spectral data contain ", length(y[y < 0]),
       " negative value(s), which may produce unexpected results. ",
-      "Consider using procspec() to correct them."
+      "Consider using procspec() to correct them.",
+      call. = FALSE
     )
   }
 
@@ -201,7 +202,8 @@ vismodel <- function(rspecdata,
   if (is.null(bkg) && vonkries) {
     stop(
       "Chosen background is NULL. ",
-      "This argument is required with `vonkries = TRUE`."
+      "This argument is required with `vonkries = TRUE`.",
+      call. = FALSE
     )
   }
   tr2 <- tryCatch(
@@ -212,7 +214,8 @@ vismodel <- function(rspecdata,
     stop(
       "Chosen transmission is NULL. ",
       "If you want to model a completely transparent medium or if this is ",
-      "already included in your `visual` argument, use `trans = 'ideal'`."
+      "already included in your `visual` argument, use `trans = 'ideal'`.",
+      call. = FALSE
     )
   }
 
@@ -271,12 +274,13 @@ vismodel <- function(rspecdata,
     stop(
       "wavelength range in spectra and visual system data do not match - ",
       "spectral data must range between 300 and 700 nm in 1-nm intervals.",
-      "Consider interpolating using as.rspec()."
+      "Consider interpolating using as.rspec().",
+      call. = FALSE
     )
   }
 
   if (!isTRUE(all.equal(wl, sens_wl, check.attributes = FALSE))) {
-    stop("wavelength range in spectra and visual system data do not match")
+    stop("wavelength range in spectra and visual system data do not match", call. = FALSE)
   }
 
   # DEFINING ILLUMINANT & BACKGROUND
@@ -443,7 +447,8 @@ vismodel <- function(rspecdata,
       length(res[res < 0]),
       " negative quantum-catch value(s) returned, which may be unreliable. ",
       "Consider whether the illuminant is properly scaled, and the appropriate",
-      " form of quantum catch is being calculated."
+      " form of quantum catch is being calculated.",
+      call. = FALSE
     )
   }
 

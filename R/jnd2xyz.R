@@ -92,7 +92,7 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
   ncone <- attr(coldistres, "ncone")
 
   if (as.numeric(ncone) < 2 || as.numeric(ncone) > 4) {
-    stop("only methods for di-, tri- and tetrachromatic models are implemented so far", call. = TRUE)
+    stop("only methods for di-, tri- and tetrachromatic models are implemented so far", call. = FALSE)
   }
 
   references <- attr(coldistres, "resref")

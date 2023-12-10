@@ -66,7 +66,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     }
 
     if (length(file_names) == 0) {
-      stop("No files found at specified location.")
+      stop("No files found at specified location.", call. = FALSE)
     }
 
     message(length(files), " files found; importing images.")
@@ -75,7 +75,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
     imgsize <- image_info(image_read(files[1]))["filesize"]
     totalsize <- ((imgsize * 8) * length(file_names)) / (1024^3)
     if (totalsize > max.size) {
-      stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.")
+      stop("Total size of images likely exceeds available memory. Check max.size is set appropriately.", call. = FALSE)
     }
 
     # Warn of slowness if size is large

@@ -122,14 +122,14 @@ simulate_spec <- function(wl_inflect = NULL,
   if (!is.null(wl_inflect) &&
     length(width_sig) != 1 &&
     length(wl_inflect) != length(width_sig)) {
-    stop("Size of wl_inflect and width_sig must match, or width_sig must be a single value")
+    stop("Size of wl_inflect and width_sig must match, or width_sig must be a single value", call. = FALSE)
   }
 
   # Check that the size of wl_peak and width_gauss match, or width_gauss is a single value
   if (!is.null(wl_peak) &&
     length(width_gauss) != 1 &&
     length(wl_peak) != length(width_gauss)) {
-    stop("Size of wl_peak and width_gauss must match, or width_gauss must be a single value")
+    stop("Size of wl_peak and width_gauss must match, or width_gauss must be a single value", call. = FALSE)
   }
 
   # Convert FWHM to standard deviation for Gaussian function

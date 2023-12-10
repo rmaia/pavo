@@ -16,7 +16,7 @@ tcsvol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
                    col = "black", alpha = 0.2, grid.alpha = 1, grid = TRUE,
                    fill = TRUE, lwd = 1) {
   if (attr(tcsdata, "clrsp") != "tcs") {
-    stop("object is not in tetrahedral color space")
+    stop("object is not in tetrahedral color space", call. = FALSE)
   }
 
   # check if rgl is installed and loaded

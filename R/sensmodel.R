@@ -72,14 +72,14 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   }
 
   if (!is.null(Bmid) && is.null(lambdacut)) { # Change once oil type corrected
-    stop("lambdacut has to be provided together with Bmid")
+    stop("lambdacut has to be provided together with Bmid", call. = FALSE)
   }
 
   if (!is.null(lambdacut) && !is.null(Bmid) && !is.null(oiltype)) {
-    stop("only 2 of lambdacut, Bmid, and oiltype can be provided")
+    stop("only 2 of lambdacut, Bmid, and oiltype can be provided", call. = FALSE)
   }
   if (!is.null(lambdacut) && !is.null(oiltype) && length(lambdacut) != length(oiltype)) {
-    stop("lambdacut and oiltype must be of same length")
+    stop("lambdacut and oiltype must be of same length", call. = FALSE)
   }
   if (!is.null(lambdacut) && !is.null(Bmid)) {
 
@@ -103,7 +103,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
     if (!is.null(lambdacut) && !is.null(Bmid)) {
       if (is.na(lambdacut[i]) && !is.na(Bmid[i])) {
-        warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted")
+        warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted", call. = FALSE)
         T.oil <- 1
       } else {
         T.oil <- exp(-exp(-2.89 * Bmid[i] * (wl - lambdacut[i]) + 1.08))

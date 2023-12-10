@@ -75,13 +75,13 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   if (is.character(refID)) {
     refID <- which(unlist(lapply(imgdat, attr, "imgname")) == refID)
     if (length(refID) == 0) {
-      stop("No image found with that name, specify another reference image using refID.")
+      stop("No image found with that name, specify another reference image using refID.", call. = FALSE)
     }
   }
 
   # Need options
   if (!interactive && is.null(kcols)) {
-    stop("Either kcols must be specified, or interactive classification used (via interactive = TRUE)")
+    stop("Either kcols must be specified, or interactive classification used (via interactive = TRUE)", call. = FALSE)
   }
 
   # Method
@@ -92,10 +92,10 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
   # Cannot currently use pre-specified centres with k-medoids. Annoying.
   if (interactive && method2 == "kMedoids") {
-    stop("Cannot currently interactively classify images using k-medoids, set kcols instead.")
+    stop("Cannot currently interactively classify images using k-medoids, set kcols instead.", call. = FALSE)
   }
   if (!is.null(refID) && method2 == "kMedoids") {
-    stop("Cannot currently use a reference image when using k-medoids")
+    stop("Cannot currently use a reference image when using k-medoids", call. = FALSE)
   }
 
   ## Class/structure
@@ -119,7 +119,8 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   if (!is.null(kcols) && any(unlist(lapply(imgdat, function(x) nrow(unique(apply(x, 3, rbind))))) < max(kcols))) {
     stop(
       "The specified number of cluster centers exceeds the number of distinct data points in one or more images, ",
-      "consider a new value for argument 'kcols'"
+      "consider a new value for argument 'kcols'",
+      call. = FALSE
     )
   }
 
@@ -303,7 +304,7 @@ parse_kcols <- function(kcols_i, imgdat_i) {
   if (!is.vector(kcols_i)) {
     # TODO more safety
     if (ncol(kcols_i) > 2) {
-      warning("More than two columns included in kcols. Taking the first two columns only.")
+      warning("More than two columns included in kcols. Taking the first two columns only.", call. = FALSE)
       kcols_i <- as.data.frame(kcols_i[, 1:2])
     }
 
@@ -330,7 +331,7 @@ parse_kcols <- function(kcols_i, imgdat_i) {
     kcols_i <- as.numeric(unlist(kcols_i[vapply(kcols_i, is.numeric, logical(1))]))
   }
   if (!length(kcols_i) %in% c(1, length(imgdat_i))) {
-    stop("When supplying more than one value, the length of kcols must equal the number of images.")
+    stop("When supplying more than one value, the length of kcols must equal the number of images.", call. = FALSE)
   }
   # Return a list of identical kcols if only one is supplied
   if (length(kcols_i) == 1 && length(imgdat_i) > 1) {
