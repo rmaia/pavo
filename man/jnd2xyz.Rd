@@ -54,7 +54,7 @@ perceptually-corrected (i.e. noise-weighted Euclidean distances)
 data(flowers)
 
 # Estimate quantum catches visual phenotype of a Blue Tit
-vis.flowers <- vismodel(flowers, visual = 'bluetit')
+vis.flowers <- vismodel(flowers, visual = "bluetit")
 
 # Estimate noise-weighted colour distances between all flowers
 cd.flowers <- coldist(vis.flowers)
