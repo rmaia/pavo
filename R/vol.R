@@ -54,7 +54,7 @@ vol <- function(tcsdata, type = c("convex", "alpha"), avalue = "auto",
   type <- match.arg(type)
 
   if (!is.null(attr(tcsdata, "clrsp")) && attr(tcsdata, "clrsp") != "tcs") {
-    stop("object is not in tetrahedral color space")
+    stop("object is not in tetrahedral color space", call. = FALSE)
   }
 
   if (type == "convex") {

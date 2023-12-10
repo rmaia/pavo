@@ -40,14 +40,14 @@ subset.rspec <- function(x, subset, ...) {
 
   if (is.logical(subset)) {
     if (length(subset) != ncol(x)) {
-      warning("Subset doesn't match length of spectral data")
+      warning("Subset doesn't match length of spectral data", call. = FALSE)
     }
     subsample <- which(subset)
   } else {
     subsample <- grep(pattern = paste(subset, collapse = "|"), x = colnames(x), ...)
   }
   if (length(subsample) == 0) {
-    warning("Subset condition not found")
+    warning("Subset condition not found", call. = FALSE)
   }
 
   # We don't drop the "wl" column if it exists, no matter what subset says.
@@ -69,7 +69,7 @@ subset.colspace <- function(x, subset, ...) {
   res <- x[subset, ]
 
   if (nrow(res) == 0) {
-    warning("Subset condition not found")
+    warning("Subset condition not found", call. = FALSE)
   }
 
   class(res) <- c("colspace", "data.frame")

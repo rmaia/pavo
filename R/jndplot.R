@@ -70,7 +70,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
                     arrow.labels = TRUE, arrow.col = "darkgrey", arrow.p = 1, labels.cex = 1,
                     margin = "recommended", square = TRUE, ...) {
   if (achro && !"lum" %in% colnames(x)) {
-    stop('"achro" is set to TRUE but data does not have a "lum" column.')
+    stop('"achro" is set to TRUE but data does not have a "lum" column.', call. = FALSE)
   }
 
   arrow <- match.arg(arrow)
@@ -89,7 +89,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
   }
 
   if (plotdims == 4) {
-    stop('cannot use "achro=TRUE" when chromatic space is three-dimensional.')
+    stop('cannot use "achro=TRUE" when chromatic space is three-dimensional.', call. = FALSE)
   }
 
   # CRAN won't accept triple : arguments and persp.default is not exported,

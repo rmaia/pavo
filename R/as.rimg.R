@@ -116,7 +116,7 @@ as.rimg.default <- function(object, name = "img") {
   } else {
     # Array check
     if (any(unlist(lapply(seq_along(object2), function(x) !is.array(object2[[x]]))))) {
-      stop("Images must be an array.")
+      stop("Images must be an array.", call. = FALSE)
     }
 
     # Duplicate channels if grayscale

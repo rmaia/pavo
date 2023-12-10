@@ -190,7 +190,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
 
   ## Colour-classified
   if (any(unlist(lapply(classimg, attr, "state")) != "colclass")) {
-    stop("One or more images has not yet been colour-classified. See classify().")
+    stop("One or more images has not yet been colour-classified. See classify().", call. = FALSE)
   }
 
   ## Coldists formatting
@@ -207,7 +207,7 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
     }
     if (any(unlist(lapply(coldists, function(x) !any(c("dS", "dL") %in% names(x)))))) {
-      stop("One or more set of coldists without columns labelled either 'dS' or 'dL'.")
+      stop("One or more set of coldists without columns labelled either 'dS' or 'dL'.", call. = FALSE)
     }
   }
 
@@ -225,14 +225,14 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
       hsl <- lapply(hsl, function(x) names(x)[1] <- "patch")
     }
     if (any(unlist(lapply(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x)))))) {
-      stop("One or more sets of hsl values without columns labelled either 'hue', 'sat', or 'lum'.")
+      stop("One or more sets of hsl values without columns labelled either 'hue', 'sat', or 'lum'.", call. = FALSE)
     }
   }
 
   ## Outline formatting
   if (!is.null(polygon)) {
     if (length(polygon) != length(classimg)) {
-      stop("One polygon per image is required.")
+      stop("One polygon per image is required.", call. = FALSE)
     }
     if (!all(c("x", "y") %in% names(unlist(polygon)))) {
       message("Cannot find columns named x and y in outline, taking the first two columns as x-y coordinates")
@@ -250,11 +250,12 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   if ("background" %in% exclude2 && is.null(bkgID) && is.null(attr(classimg, "outline"))) {
     stop(
       "Background cannot be excluded without specifying a focal object outline (e.g. using procimg()), ",
-      "or one or more colour-class ID's via the argument bkgID."
+      "or one or more colour-class ID's via the argument bkgID.",
+      call. = FALSE
     )
   }
   if ("object" %in% exclude2 && is.null(attr(classimg, "outline"))) {
-    stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).")
+    stop("Focal object cannot be excluded without specifying its outline, (e.g. via procimg()).", call. = FALSE)
   }
 
   ## Setting scales
@@ -270,7 +271,8 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   } else {
     stop(
       "Required argument xscale is missing or incorrectly specified, and one or more images are uncalibrated. ",
-      "Either specify xscale (an integer or integers) or use procimg() to set a scale for each image."
+      "Either specify xscale (an integer or integers) or use procimg() to set a scale for each image.",
+      call. = FALSE
     )
   }
 
@@ -395,11 +397,11 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
   transitions <- transitioncalc(subclass, colournames)
 
   # Raw diag/offdiag
-  diag <- subset(transitions[["all"]], c1 == c2)
+  ondiag <- subset(transitions[["all"]], c1 == c2)
   offdiag <- subset(transitions[["all"]], c1 != c2)
 
   # Proportion diag/offdiag
-  diagprop <- diag
+  diagprop <- ondiag
   diagprop$N <- diagprop$N / sum(diagprop$N)
   offdiagprop <- offdiag
   offdiagprop$N <- offdiagprop$N / sum(offdiagprop$N)
@@ -549,7 +551,8 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
           c(as.character(coldists_i$c1), as.character(coldists_i$c2)))) {
           stop(
             "Color-classes IDs listed in coldists do not match those of the image data. ",
-            "Edit the IDs in coldists, or rename the color categories in the classified image data."
+            "Edit the IDs in coldists, or rename the color categories in the classified image data.",
+            call. = FALSE
           )
         }
 
@@ -644,11 +647,11 @@ polymask <- function(imagedat,
     sf::st_sfc,
     apply(imglong[, c("x", "y")], 1, sf::st_point, simplify = FALSE)
   )
-  poly <- sf::st_polygon(list(as.matrix(polygon)))
+  sf_poly <- sf::st_polygon(list(as.matrix(polygon)))
 
   # It's safe to extract just the first column since at the moment, we can only
   # have a single polygon
-  inpoly <- sf::st_intersects(pts, poly, sparse = FALSE)[, 1]
+  inpoly <- sf::st_intersects(pts, sf_poly, sparse = FALSE)[, 1]
 
   maskmat <- matrix(data = inpoly, ncol(imagedat), nrow(imagedat))
   maskmat <- apply(as.matrix(maskmat), 1, rev)

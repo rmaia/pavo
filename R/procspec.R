@@ -73,7 +73,7 @@ procspec <- function(rspecdata, opt = c(
     opt <- "none"
 
     if (fixneg == "none") {
-      stop("No processing options selected")
+      stop("No processing options selected", call. = FALSE)
     }
   }
 

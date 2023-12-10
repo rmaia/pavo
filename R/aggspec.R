@@ -44,7 +44,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   }
 
   if (is.numeric(by) && ncol(y) %% by != 0) {
-    stop("by not a multiple of number of spectra")
+    stop("by not a multiple of number of spectra", call. = FALSE)
   }
 
   # Check if the by argument has a 'wl' entry (e.g. if names were obtained
@@ -64,7 +64,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     }
     # check that wl column is the same for all vectors
     if (length(unique(wl_id)) != 1) {
-      stop("mismatch in column names of input vectors")
+      stop("mismatch in column names of input vectors", call. = FALSE)
     }
     by <- do.call("paste", c(by, sep = "."))
   }
@@ -85,7 +85,8 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     stop(
       dQuote(deparse(substitute(by))),
       " is not of same length as columns in ",
-      dQuote(deparse(substitute(data)))
+      dQuote(deparse(substitute(data))),
+      call. = FALSE
     )
   }
 

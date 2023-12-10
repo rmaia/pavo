@@ -63,7 +63,8 @@ explorespec <- function(rspecdata, by = NULL,
     stop(
       dQuote(deparse(substitute(by))),
       " is not of same length as columns in ",
-      dQuote(deparse(substitute(data)))
+      dQuote(deparse(substitute(data))),
+      call. = FALSE
     )
   }
 
@@ -114,7 +115,7 @@ explorespec <- function(rspecdata, by = NULL,
 
   # TODO: should be able to deal with this if there are NAs in the by vector
   if (anyNA(by)) {
-    warning("NA values in by vector. please check.")
+    warning("NA values in by vector. please check.", call. = FALSE)
   }
 
   # Do the plotting
@@ -207,6 +208,6 @@ explorespec <- function(rspecdata, by = NULL,
 
   # do we need this still?
   if ((dim(rspecdata)[2] / numby) != round((dim(rspecdata)[2] / numby))) {
-    warning("by is not a factor of the number of column in rspecdata")
+    warning("by is not a factor of the number of column in rspecdata", call. = FALSE)
   }
 }

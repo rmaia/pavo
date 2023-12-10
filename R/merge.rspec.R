@@ -40,11 +40,11 @@
 
 merge.rspec <- function(x, y, ...) {
   if (!all(is.rspec(x), is.rspec(y))) {
-    stop("One or more invalid rspec objects")
+    stop("One or more invalid rspec objects", call. = FALSE)
   }
 
   if (!all("wl" %in% names(x), "wl" %in% names(y))) {
-    stop("Cannot find valid 'wl' column in one or both input objects")
+    stop("Cannot find valid 'wl' column in one or both input objects", call. = FALSE)
   }
 
   arg <- list(...)

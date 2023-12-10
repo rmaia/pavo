@@ -99,7 +99,7 @@ colspace <- function(vismodeldata,
   space2 <- try(match.arg(space), silent = TRUE)
 
   if (inherits(space2, "try-error")) {
-    stop("Invalid colorspace selected")
+    stop("Invalid colorspace selected", call. = FALSE)
   }
 
   # Auto-define an appropriate space
@@ -111,7 +111,8 @@ colspace <- function(vismodeldata,
         stop(
           "conenumb attribute is missing from vismodeldata. Please check",
           " that is a valid vismodel object or manually specify the space",
-          " argument"
+          " argument",
+          call. = FALSE
         )
       }
       space2 <-

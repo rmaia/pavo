@@ -136,7 +136,7 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
     ##############
     if (plot) {
       if (ncol(dat1) < 3 || ncol(dat2) < 3) {
-        warning("plot argument only works for tetrahedral colourspaces at the moment.")
+        warning("plot argument only works for tetrahedral colourspaces at the moment.", call. = FALSE)
         return(res)
       }
 

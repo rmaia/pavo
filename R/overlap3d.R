@@ -74,10 +74,10 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
   vol2 <- alphashape3d::volume_ashape3d(shape2)
 
   # sample random points
-  pmin <- apply(rbind(dat1, dat2), 2, min)
-  pmax <- apply(rbind(dat1, dat2), 2, max)
+  colmin <- apply(rbind(dat1, dat2), 2, min)
+  colmax <- apply(rbind(dat1, dat2), 2, max)
 
-  samples <- apply(rbind(pmin, pmax), 2, function(x) runif(nsamp, x[1], x[2]))
+  samples <- apply(rbind(colmin, colmax), 2, function(x) runif(nsamp, x[1], x[2]))
 
   invol1 <- alphashape3d::inashape3d(shape1, points = samples)
   invol2 <- alphashape3d::inashape3d(shape2, points = samples)

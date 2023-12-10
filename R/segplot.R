@@ -30,12 +30,13 @@ segplot <- function(segdata, labels = TRUE, lab.cex = 0.9,
   if (!is.colspace(segdata) && !all(c("LM", "MS") %in% names(segdata))) {
     stop(
       "object is not of class ", dQuote("colspace"),
-      ", and does not contain LM, MS segment data"
+      ", and does not contain LM, MS segment data",
+      call. = FALSE
     )
   }
 
   if (is.colspace(segdata) && attr(segdata, "clrsp") != "segment") {
-    stop(dQuote("colspace"), " object is not a result of segspace()")
+    stop(dQuote("colspace"), " object is not a result of segspace()", call. = FALSE)
   }
 
   arg <- list(...)

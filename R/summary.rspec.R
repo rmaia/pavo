@@ -178,8 +178,11 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
   # The control-flow here is for cases when users specify only of the deprecated
   # wlmin or wlmax arguments. Can be removed once deprecated in next release.
   if (!all(missing("wlmin"), missing("wlmin"))) {
-    warning("The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,
-      and will be removed in future releases. Use the lim() argument instead.")
+    warning(
+      "The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,",
+      "and will be removed in future releases. Use the lim() argument instead.",
+      call. = FALSE
+    )
     if (!missing("wlmin") && missing("wlmax")) {
       lim <- c(wlmin, max(wl))
     }
@@ -197,10 +200,10 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
   # wl-range checks
   if (!missing(lim)) {
     if (lambdamin > lim[1]) {
-      stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim argument.")
+      stop("Minimum specified wavelength is smaller than the range of spectral data. Check the lim argument.", call. = FALSE)
     }
     if (lambdamax < lim[2]) {
-      stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim argument.")
+      stop("Maximum specified wavelength is larger than the range of spectral data. Check the lim argument.", call. = FALSE)
     }
   }
 
@@ -222,7 +225,7 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     }
   } else {
     if (!all(subset %in% variable_names)) {
-      stop("Names in ", dQuote("subset"), " do not match color variable names")
+      stop("Names in ", dQuote("subset"), " do not match color variable names", call. = FALSE)
     }
     variable_names <- subset
   }

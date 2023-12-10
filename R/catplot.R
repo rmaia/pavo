@@ -28,12 +28,13 @@ catplot <- function(catdata, labels = TRUE, labels.cex = 0.9, ...) {
   if (!is.colspace(catdata) && !all(c("x", "y") %in% names(catdata))) {
     stop(
       "object is not of class ", dQuote("colspace"),
-      ", and does not contain x, y coordinates"
+      ", and does not contain x, y coordinates",
+      call. = FALSE
     )
   }
 
   if (is.colspace(catdata) && attr(catdata, "clrsp") != "categorical") {
-    stop(dQuote("colspace"), " object is not a result of categorical()")
+    stop(dQuote("colspace"), " object is not a result of categorical()", call. = FALSE)
   }
 
   arg <- list(...)

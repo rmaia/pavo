@@ -99,7 +99,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
   ## Options
   if (is.null(scaledist) && !outline && is.null(resize) && is.null(rotate) && is.null(reclass) &&
     is.null(obj_dist) && is.null(obj_width) && is.null(eye_res)) {
-    stop("No options selected.")
+    stop("No options selected.", call. = FALSE)
   }
 
   ## If it's a single image, store it in a list for processing convenience,
@@ -142,7 +142,10 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
       scaledist <- as.list(rep(scaledist, length(image)))
     }
     if (length(scaledist) > 1 && length(scaledist) != length(image)) {
-      stop("Number of scales provided greater than one, but unequal to the the number of images. Provide a single scale to be recycled, or one per image.")
+      stop(
+        "Number of scales provided greater than one, but unequal to the the number of images. Provide a single scale to be recycled, or one per image.",
+        call. = FALSE
+      )
     }
 
     if (plotnew) dev.new(noRStudioGD = TRUE)
@@ -163,12 +166,13 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
     if (!(is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res))) {
       warning(
         "Numeric values for each of obj_dist, obj_width, and eye_res ",
-        "must be specified for acuity modelling. Skipping acuity modelling."
+        "must be specified for acuity modelling. Skipping acuity modelling.",
+        call. = FALSE
       )
     }
     # Raw images only
     if (attr(image[[1]], "state") == "colclass") {
-      warning("Acuity modelling can only be run on non-colour-classified (raw) images. Skipping acuity modelling.")
+      warning("Acuity modelling can only be run on non-colour-classified (raw) images. Skipping acuity modelling.", call. = FALSE)
     }
     # Model
     if ((is.numeric(obj_dist) && is.numeric(obj_width) && is.numeric(eye_res) && attr(image[[1]], "state") == "raw")) {

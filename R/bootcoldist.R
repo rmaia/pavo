@@ -277,7 +277,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # Error handling: if the dimension of bootdS is less than boot.n,
   # stop function and print error message
   if (dim(bootdS)[1] < boot.n) {
-    stop("Bootstrap sampling encountered errors.")
+    stop("Bootstrap sampling encountered errors.", call. = FALSE)
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
