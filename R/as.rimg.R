@@ -213,15 +213,15 @@ NULL
 
 #' @rdname img_conversion
 #'
-#' @export
-rimg2cimg <- function(image) {
+#' @exportS3Method imager::as.cimg
+as.cimg.rimg <- function(image) {
   ## Check for imager
   if (!requireNamespace("imager", quietly = TRUE)) {
     stop("Package \"imager\" needed for conversion to cimg. Please install it.",
          call. = FALSE
     )
   }
-  suppressWarnings(imager::as.cimg(image, cc = 3))
+  NextMethod("as.cimg", image, cc = 3)
 }
 #' @rdname img_conversion
 #'
