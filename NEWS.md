@@ -4,6 +4,10 @@
 
 - `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
 
+## INTERNAL CHANGES
+
+- dependency on the `viridisLite` package has been removed in favour of recent base R functions
+
 # pavo 2.9.0
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES

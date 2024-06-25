@@ -39,7 +39,7 @@ License: GPL (>= 2)
 URL: http://pavo.colrverse.com, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
-    R (>= 3.5.0)
+    R (>= 3.6.0)
 Imports:
     cluster,
     future.apply,
@@ -49,8 +49,7 @@ Imports:
     farver,
     plot3D,
     progressr,
-    sf,
-    viridisLite
+    sf
 Suggests:
     alphashape3d,
     imager,
