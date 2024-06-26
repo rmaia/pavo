@@ -225,7 +225,7 @@ procimg <- function(image, resize = NULL, rotate = NULL, scaledist = NULL,
 }
 
 # Internal function for calibrating image scale
-#' @importFrom graphics plot rasterImage locator
+#' @importFrom graphics rasterImage locator
 #' @importFrom stats dist
 scaler <- function(image_i, scaledist_i, col, ...) {
   # Plot

@@ -39,7 +39,7 @@ License: GPL (>= 2)
 URL: http://pavo.colrverse.com, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
-    R (>= 3.6.0)
+    R (>= 4.0.0)
 Imports:
     cluster,
     future.apply,
