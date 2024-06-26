@@ -137,9 +137,11 @@ aggplot <- function(rspecdata, by = NULL, FUN.center = mean, FUN.error = sd,
     lcol <- rep(lcol, ncol(cntplotspecs))
   }
 
-  col_list <- c(
-    "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-    "#FF7F00", "#FFFF33", "#A65628", "#F781BF"
+  col_list <- grDevices::palette.colors(
+    ncol(cntplotspecs),
+    palette = "Okabe-Ito",
+    alpha = 1,
+    recycle = TRUE
   )
 
   col_list <- rep_len(col_list, dim(cntplotspecs)[2])

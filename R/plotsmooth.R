@@ -81,11 +81,12 @@ plotsmooth <- function(rspecdata, minsmooth = 0.05, maxsmooth = 0.20,
 
   par(mar = c(2, 2, 2, 2), oma = c(3, 3, 0, 0))
 
-  col_list <- c(
-    "#000000", "#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
-    "#FF7F00", "#ffdd33", "#A65628", "#F781BF"
+  cols <- grDevices::palette.colors(
+    n = length(curves),
+    palette = "Okabe-Ito",
+    alpha = 1,
+    recycle = TRUE
   )
-  cols <- col_list[seq_len(curves)]
 
   # Creates the smooth data matrix
   for (i in seq_len(nplots)) {
