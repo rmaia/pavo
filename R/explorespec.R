@@ -102,7 +102,7 @@ explorespec <- function(rspecdata, by = NULL,
   arg$x <- wl
 
   if (is.null(arg$col)) {
-    col_list <- viridisLite::viridis(max(table(by)))
+    col_list <- grDevices::hcl.colors(max(table(by)))
   } else {
     col_list <- arg$col
   }

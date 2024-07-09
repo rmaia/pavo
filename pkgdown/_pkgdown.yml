@@ -1,4 +1,4 @@
-url: http://pavo.colrverse.com
+url: https://pavo.colrverse.com
 
 home:
   title: Perceptual Analysis, Visualization and Organization of Spectral Colour Data in R
@@ -18,27 +18,24 @@ reference:
   - '`merge.rspec`'
   - '`procimg`'
   - '`procspec`'
-  - '`rimg2cimg`'
   - '`spec2rgb`'
   - '`subset.rspec`'
   - '`simulate_spec`'
+  - img_conversion
 
 - title: Visualisation
   desc: "Functions for visualising spectral data, including the results of visual modelling"
   contents:
+  - starts_with("plot.")
   - '`aggplot`'
   - '`axistetra`'
   - '`explorespec`'
   - '`legendtetra`'
-  - '`plot.colspace`'
-  - '`plot.rimg`'
-  - '`plot.rspec`'
   - '`plotsmooth`'
   - '`points.colspace`'
   - '`projplot`'
   - '`sensdata`'
   - '`tcsplot`'
-  - '`plot.sensmod`'
 
 - title: Analysis
   desc: "Functions for analysing spectral data"

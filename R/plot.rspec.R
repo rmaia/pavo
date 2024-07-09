@@ -99,7 +99,7 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
     }
 
     if (is.null(arg$col)) {
-      arg$col <- viridisLite::cividis(n)
+      arg$col <- grDevices::hcl.colors(n, palette = "cividis")
     } else {
       jc <- colorRampPalette(arg$col)
       arg$col <- jc(n)

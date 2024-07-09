@@ -2,11 +2,11 @@
 % Please edit documentation in R/as.rimg.R
 \name{img_conversion}
 \alias{img_conversion}
-\alias{rimg2cimg}
+\alias{as.cimg.rimg}
 \alias{rimg2magick}
 \title{Convert images between class rimg and cimg or magick-image}
 \usage{
-rimg2cimg(image)
+\method{as.cimg}{rimg}(image)
 
 rimg2magick(image)
 }

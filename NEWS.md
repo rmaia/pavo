@@ -1,8 +1,16 @@
 # pavo 2.10.0
 
+## NEW FEATURES AND SIGNIFICANT CHANGES
+
+- the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method. 
+
 ## MINOR FEATURES AND BUG FIXES
 
 - `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
+
+## INTERNAL CHANGES
+
+- dependency on the `viridisLite` package has been removed in favour of recent base R functions
 
 # pavo 2.9.0
 

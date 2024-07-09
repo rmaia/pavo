@@ -1,7 +1,7 @@
 #' @keywords internal
 "_PACKAGE"
 
-#' @importFrom graphics plot
+#' @importFrom graphics plot.default
 # This functions has been moved to base since R 4.0.0
 NULL
 
