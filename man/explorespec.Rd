@@ -6,7 +6,7 @@
 \usage{
 explorespec(
   rspecdata,
-  by = NULL,
+  by = 1,
   scale = c("equal", "free"),
   legpos = "topright",
   ...

@@ -13,7 +13,7 @@ sensmodel(
   beta = TRUE,
   om = NULL,
   integrate = TRUE,
-  sensnames = NULL
+  sensnames = paste0("lmax", peaksens)
 )
 }
 \arguments{
