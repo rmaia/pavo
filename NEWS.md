@@ -6,6 +6,7 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+- default values for some arguments in `explorespec()` and `sensmodel()` are now explicit in the function definition.
 - `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
 
 ## INTERNAL CHANGES
