@@ -131,15 +131,13 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     # Apply ocular media transmission correction
 
     if (!is.null(om)) {
-      if (length(om) == 1) {
-        if (om == "bird") {
+      if (identical(om, "bird")) {
           T.e <- log(8.928 * 10^-13 * wl^5 - 2.595 * 10^-9 *
             wl^4 + 3.006 * 10^-6 *
             wl^3 - 0.001736 * wl^2 + 0.5013 *
             wl - 55.56)
           T.e[which(T.e < 0)] <- 0
           peak <- peak * T.e
-        }
       } else {
         T.e <- om
         peak <- peak * T.e
