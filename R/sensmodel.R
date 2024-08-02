@@ -128,11 +128,6 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
       peak <- peak * T.oil
     }
 
-    # Apply integration
-    if (integrate) {
-      peak <- peak / sum(peak)
-    }
-
     # Apply ocular media transmission correction
 
     if (!is.null(om)) {
@@ -152,6 +147,11 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     }
 
     sensecurves[, i] <- peak
+  }
+
+  # Apply integration
+  if (integrate) {
+    sensecurves <- sensecurves / colSums(sensecurves)
   }
 
   sensecurves <- as.data.frame(sensecurves)
