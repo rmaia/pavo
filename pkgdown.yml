@@ -1,9 +1,9 @@
 pandoc: 3.1.11
 pkgdown: 2.1.0.9000
-pkgdown_sha: f20a64976d359c3f763c34f92cae9c0bc87ba5be
+pkgdown_sha: 502c3e2ce0df6c7236d87098637073eaba61c5f4
 articles:
   pavo: pavo.html
-last_built: 2024-07-09T06:15Z
+last_built: 2024-08-02T14:42Z
 urls:
   reference: https://pavo.colrverse.com/reference
   article: https://pavo.colrverse.com/articles
