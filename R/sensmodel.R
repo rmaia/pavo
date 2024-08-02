@@ -137,11 +137,10 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
             wl^3 - 0.001736 * wl^2 + 0.5013 *
             wl - 55.56)
           T.e[which(T.e < 0)] <- 0
-          peak <- peak * T.e
       } else {
         T.e <- om
-        peak <- peak * T.e
       }
+      peak <- peak * T.e
     }
 
     sensecurves[, i] <- peak
