@@ -133,7 +133,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   # Apply integration
   if (integrate) {
-    sensecurves <- sensecurves / colSums(sensecurves)
+    sensecurves <- t(t(sensecurves) / colSums(sensecurves))
+  }
 
   # Apply ocular media transmission correction
   if (!is.null(om)) {
