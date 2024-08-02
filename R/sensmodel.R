@@ -81,8 +81,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   if (!is.null(lambdacut) && !is.null(oiltype) && length(lambdacut) != length(oiltype)) {
     stop("lambdacut and oiltype must be of same length", call. = FALSE)
   }
-  if (!is.null(lambdacut) && !is.null(Bmid)) {
-
+  if (!is.null(lambdacut) && !is.null(Bmid) && length(lambdacut) != length(Bmid)) {
+    stop("lambdacut and Bmid must be of same length")
   }
 
   sensecurves <- matrix(ncol = length(peaksens), nrow = (range[2] - range[1] + 1))
