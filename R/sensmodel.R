@@ -99,12 +99,14 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   peaks <- peaks / apply(peaks, 1, max)
 
-  # FIXME: re-add handling of NA
   if (!is.null(lambdacut) && !is.null(Bmid)) {
     T.oil <- exp(-exp(-2.89 * Bmid * (sensecurves - lambdacut) + 1.08))
+    if (!identical(is.na(lambdacut), is.na(Bmid))) {
+      warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted", call. = FALSE)
+      T.oil[is.na(lambdacut)] <- 1
+    }
     peaks <- peaks * T.oil
   }
-
 
   for (i in seq_along(peaksens)) {
     if (!is.null(lambdacut) && !is.null(oiltype)) {
