@@ -1,9 +1,18 @@
 test_that("sensmodel() values", {
-  expect_equal(colSums(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "Y", "R"))[, -1]), c(1, 1, 1), ignore_attr = TRUE)
-  expect_equal(
-    round(sum(sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "T", "P"), beta = FALSE, integrate = FALSE, om = "bird")[, -1]), 4),
-    68.271,
-    ignore_attr = TRUE
+  expect_snapshot_value(
+    sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "Y", "R")),
+    style = "json2", tolerance = 1e-5
+  )
+
+  expect_snapshot_value(
+    sensmodel(c(300, 400, 500), lambdacut = c(350, 450, 550), oiltype = c("C", "T", "P"), beta = FALSE, integrate = FALSE, om = "bird"),
+    style = "json2", tolerance = 5e-5
+  )
+
+  expect_snapshot_value(
+    # Danio aequipinnatus based on Govardovskii et al. (2000)
+    sensmodel(c(357, 411, 477, 569)),
+    style = "json2", tolerance = 1e-5
   )
 
   # Custom names

@@ -81,36 +81,34 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   if (!is.null(lambdacut) && !is.null(oiltype) && length(lambdacut) != length(oiltype)) {
     stop("lambdacut and oiltype must be of same length", call. = FALSE)
   }
-  if (!is.null(lambdacut) && !is.null(Bmid)) {
-
+  if (!is.null(lambdacut) && !is.null(Bmid) && length(lambdacut) != length(Bmid)) {
+    stop("lambdacut and Bmid must be of same length")
   }
-
-  sensecurves <- matrix(ncol = length(peaksens), nrow = (range[2] - range[1] + 1))
 
   wl <- range[1]:range[2]
 
+  sensecurves <- matrix(wl, ncol = length(wl), nrow = length(peaksens), byrow = TRUE)
+
+  peaks <- 1 / (exp(69.7 * (0.8795 + 0.0459 * exp(-(peaksens - range[1])^2 / 11940) - (peaksens / sensecurves)))
+       + exp(28 * (0.922 - peaksens / sensecurves)) + exp(-14.9 * (1.104 - (peaksens / sensecurves))) + 0.674)
+
+  if (beta) {
+    betabands <- 0.26 * exp(-((sensecurves - (189 + 0.315 * peaksens)) / (-40.5 + 0.195 * peaksens))^2)
+    peaks <- peaks + betabands
+  }
+
+  peaks <- peaks / apply(peaks, 1, max)
+
+  if (!is.null(lambdacut) && !is.null(Bmid)) {
+    T.oil <- exp(-exp(-2.89 * Bmid * (sensecurves - lambdacut) + 1.08))
+    if (!identical(is.na(lambdacut), is.na(Bmid))) {
+      warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted", call. = FALSE)
+      T.oil[is.na(lambdacut)] <- 1
+    }
+    peaks <- peaks * T.oil
+  }
+
   for (i in seq_along(peaksens)) {
-    # Sensitivities w/o oil droplets
-    peak <- 1 / (exp(69.7 * (0.8795 + 0.0459 * exp(-(peaksens[i] - range[1])^2 / 11940) - (peaksens[i] / wl)))
-    + exp(28 * (0.922 - peaksens[i] / wl)) + exp(-14.9 * (1.104 - (peaksens[i] / wl))) + 0.674)
-
-    if (beta) {
-      betaband <- 0.26 * exp(-((wl - (189 + 0.315 * peaksens[i])) / (-40.5 + 0.195 * peaksens[i]))^2)
-      peak <- peak + betaband
-    }
-
-    peak <- peak / max(peak)
-
-    if (!is.null(lambdacut) && !is.null(Bmid)) {
-      if (is.na(lambdacut[i]) && !is.na(Bmid[i])) {
-        warning("NA in lambdacut not paired with NA in Bmid, value of Bmid omitted", call. = FALSE)
-        T.oil <- 1
-      } else {
-        T.oil <- exp(-exp(-2.89 * Bmid[i] * (wl - lambdacut[i]) + 1.08))
-        peak <- peak * T.oil
-      }
-    }
-
     if (!is.null(lambdacut) && !is.null(oiltype)) {
       if (oiltype[i] == "T") {
         T.oil <- 1
@@ -122,39 +120,32 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
         # Oil droplet transmission from Hart and Vorobyev (2005)
         T.oil <- exp(-exp(-2.89 * (0.5 / ((oil[1] * lambdacut[i] + oil[2]) - lambdacut[i])) *
-          (wl - lambdacut[i]) + 1.08))
+          (sensecurves[i, ] - lambdacut[i]) + 1.08))
       }
-
-      peak <- peak * T.oil
+      peaks[i, ] <- peaks[i, ] * T.oil
     }
-
-    # Apply integration
-    if (integrate) {
-      peak <- peak / sum(peak)
-    }
-
-    # Apply ocular media transmission correction
-
-    if (!is.null(om)) {
-      if (length(om) == 1) {
-        if (om == "bird") {
-          T.e <- log(8.928 * 10^-13 * wl^5 - 2.595 * 10^-9 *
-            wl^4 + 3.006 * 10^-6 *
-            wl^3 - 0.001736 * wl^2 + 0.5013 *
-            wl - 55.56)
-          T.e[which(T.e < 0)] <- 0
-          peak <- peak * T.e
-        }
-      } else {
-        T.e <- om
-        peak <- peak * T.e
-      }
-    }
-
-    sensecurves[, i] <- peak
   }
 
-  sensecurves <- as.data.frame(sensecurves)
+  # Apply integration
+  if (integrate) {
+    peaks <- peaks / rowSums(peaks)
+  }
+
+  # Apply ocular media transmission correction
+  if (!is.null(om)) {
+    if (identical(om, "bird")) {
+      T.e <- log(8.928 * 10^-13 * sensecurves^5 - 2.595 * 10^-9 *
+                   sensecurves^4 + 3.006 * 10^-6 *
+                   sensecurves^3 - 0.001736 * sensecurves^2 + 0.5013 *
+                   sensecurves - 55.56)
+      T.e[which(T.e < 0)] <- 0
+    } else {
+      T.e <- om
+    }
+    peaks <- peaks * T.e
+  }
+
+  sensecurves <- as.data.frame(t(peaks))
 
   if (length(sensnames) != length(sensecurves)) {
     message("The length of argument 'sensnames' does not equal the number of curves specified by 'peaksens'. Reverting to default names.")
