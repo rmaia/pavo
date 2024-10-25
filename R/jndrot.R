@@ -74,41 +74,11 @@ jndrot <- function(jnd2xyzres, center = c("mean", "achro"), ref1 = "l", ref2 = "
 
   # two dimensions
   if (round(sum(c("x", "y", "z") %in% colnames(coords))) == 2) {
-    coords <- cbind(coords, tempcol = 0)
-
-    if (length(axis1) != 3) {
-      stop('"axis1" must be a vector of length 3', call. = FALSE)
+    if (length(axis1) != 2 && sum(axis1) != 1) {
+      stop('"axis1" must be (0, 1) or (1, 0)', call. = FALSE)
     }
 
-    cent <- switch(center,
-      achro = coords["jnd2xyzrrf.achro", ],
-      mean = coords["jnd2xyzrrf.ctrd", ]
-    )
-
-    aa <- vectornorm(coords[grep(paste0("jnd2xyzrrf.", ref1), rownames(coords)), ] -
-      cent)
-    bb <- vectornorm(axis1)
-    daabb <- drop(crossprod(aa, bb))
-    ncaabb <- vectormag(vectorcross(aa, bb))
-    GG <- rbind(
-      c(daabb, -ncaabb, 0),
-      c(ncaabb, daabb, 0),
-      c(0, 0, 1)
-    )
-    FF <- cbind(
-      aa,
-      vectornorm(bb - daabb * aa),
-      vectorcross(bb, aa)
-    )
-
-    RR <- FF %*% GG %*% solve(FF)
-
-    res <- sweep(coords, 2, cent, "-")
-    res <- tcrossprod(res, RR)
-    # res <- sweep(res, 2, coords['jnd2xyzrrf.achro',], '+')
-
-    res <- res[, -dim(res)[2]]
-    coords <- coords[, -dim(coords)[2]]
+    res <- t(t(coords) * (-2 * axis1 + 1))
     colnames(res) <- colnames(coords)
   }
 
