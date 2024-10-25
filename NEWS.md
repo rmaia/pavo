@@ -3,6 +3,13 @@
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
 - the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method. 
+- `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
+  only allow rotations in the 2D plane. Until now, 3D rotations were allowed and
+  the result was projected back in 2D but this meant that the output was no
+  longer representing JNDs distances. Because `rotate = TRUE` is the default in
+  `jnd2xyz()`, we recommend you re-run any `jnd2xyz()` computation on
+  trichromats. From our tests, results stay qualitatively similar but specific
+  values may change.
 
 ## MINOR FEATURES AND BUG FIXES
 
