@@ -1,7 +1,7 @@
 # JND space for dichromat
 
     Code
-      jnd_x
+      jnd_x_rot
     Output
                                            x
       Goodenia_heterophylla       6.98369053
@@ -44,7 +44,7 @@
 # JND space for trichromat
 
     Code
-      jnd_xy
+      jnd_xy_rot
     Output
                                           x          y
       Goodenia_heterophylla       6.3480194 -2.8326663
@@ -87,7 +87,7 @@
 # JND space for tetrachromat
 
     Code
-      jnd_xyz
+      jnd_xyz_rot
     Output
                                            x          y           z
       Goodenia_heterophylla      1.312355137 -5.3667601   6.8629524

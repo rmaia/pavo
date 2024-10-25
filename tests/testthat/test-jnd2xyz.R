@@ -7,20 +7,15 @@ test_that("JND space for dichromat", {
 
   jnd_x <- jnd2xyz(cd.flowers, rotate = FALSE)
 
-  # After conversion to coordinates, the distance should not be modified
+  jnd_x_rot <- jnd2xyz(cd.flowers, rotate = TRUE)
+
+  expect_snapshot(jnd_x_rot)
+
+  # Rotation doesn't change the distances
   expect_equal(
-    as.matrix(dist(jnd_x, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
-  )
-
-  # Including after rotation
-  jnd_x <- jnd2xyz(cd.flowers, rotate = TRUE)
-
-  expect_snapshot(jnd_x)
-
-  expect_equal(
-    as.matrix(dist(jnd_x, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
+    dist(jnd_x),
+    dist(jnd_x_rot),
+    ignore_attr = "call"
   )
 
 })
@@ -32,22 +27,16 @@ test_that("JND space for trichromat", {
 
   jnd_xy <- jnd2xyz(cd.flowers, rotate = FALSE)
 
-  # After conversion to coordinates, the distance should not be modified
+  jnd_xy_rot <- jnd2xyz(cd.flowers, rotate = TRUE)
+
+  expect_snapshot(jnd_xy_rot)
+
+  # Rotation doesn't change the distances
   expect_equal(
-    as.matrix(dist(jnd_xy, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
+    dist(jnd_xy),
+    dist(jnd_xy_rot),
+    ignore_attr = "call"
   )
-
-  # Including after rotation
-  jnd_xy <- jnd2xyz(cd.flowers, rotate = TRUE)
-
-  expect_snapshot(jnd_xy)
-
-  expect_equal(
-    as.matrix(dist(jnd_xy, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
-  )
-
 
 })
 
@@ -56,22 +45,16 @@ test_that("JND space for tetrachromat", {
   bluetit.flowers <- vismodel(flowers, visual = "bluetit")
   cd.flowers <- coldist(bluetit.flowers)
 
-  jnd_xyz <- jnd2xyz(cd.flowers)
+  jnd_xyz <- jnd2xyz(cd.flowers, rotate = FALSE)
 
-  # After conversion to coordinates, the distance should not be modified
+  jnd_xyz_rot <- jnd2xyz(cd.flowers, rotate = TRUE)
+
+  expect_snapshot(jnd_xyz_rot)
+
+  # Rotation doesn't change the distances
   expect_equal(
-    as.matrix(dist(jnd_xyz, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
+    dist(jnd_xyz),
+    dist(jnd_xyz_rot),
+    ignore_attr = "call"
   )
-
-  # Including after rotation
-  jnd_xyz <- jnd2xyz(cd.flowers, rotate = TRUE)
-
-  expect_snapshot(jnd_xyz)
-
-  expect_equal(
-    as.matrix(dist(jnd_xyz, diag = TRUE, upper = TRUE)),
-    coldist2mat(cd.flowers)[["dS"]]
-  )
-
 })
