@@ -53,7 +53,7 @@
 
 jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
                     rotcenter = c("mean", "achro"), ref1 = "l", ref2 = "u",
-                    axis1 = c(1, 1, 0), axis2 = c(0, 0, 1)) {
+                    axis1, axis2) {
   # Accessory functions
   pos2 <- function(d12, d13, d23) {
     x3 <- d13
@@ -268,14 +268,16 @@ jnd2xyz <- function(coldistres, center = TRUE, rotate = TRUE,
   attr(chromcoords, "resref") <- refstosave
 
   if (rotate) {
-    rotcenter <- match.arg(rotcenter)
-    rotarg <- list(
-      jnd2xyzres = chromcoords, center = rotcenter,
-      ref1 = ref1, ref2 = ref2, axis1 = axis1, axis2 = axis2
-    )
+      axis1 <- c(rep_len(1, as.numeric(ncone) - 2), 0)
+      axis2 <- c(0, 0, 1)
+      rotcenter <- match.arg(rotcenter)
+      rotarg <- list(
+        jnd2xyzres = chromcoords, center = rotcenter,
+        ref1 = ref1, ref2 = ref2, axis1 = axis1, axis2 = axis2
+      )
 
-    chromcoords <- do.call(jndrot, rotarg)
-  }
+      chromcoords <- do.call(jndrot, rotarg)
+    }
 
   chromcoords
 }
