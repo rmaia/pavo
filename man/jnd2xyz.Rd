@@ -11,8 +11,8 @@ jnd2xyz(
   rotcenter = c("mean", "achro"),
   ref1 = "l",
   ref2 = "u",
-  axis1 = c(1, 1, 0),
-  axis2 = c(0, 0, 1)
+  axis1,
+  axis2
 )
 }
 \arguments{
