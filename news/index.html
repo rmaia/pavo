@@ -73,6 +73,8 @@
 <div class="section level3">
 <h3 id="new-features-and-significant-changes-2-10-0">NEW FEATURES AND SIGNIFICANT CHANGES<a class="anchor" aria-label="anchor" href="#new-features-and-significant-changes-2-10-0"></a></h3>
 <ul><li>the <code>rimg2cimg()</code> function has been removed in favour of a custom <code>as.cimg()</code> method.</li>
+<li>
+<code><a href="../reference/jndrot.html">jndrot()</a></code> and by extension <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> have been adjusted for trichromats to only allow rotations in the 2D plane. Until now, 3D rotations were allowed and the result was projected back in 2D but this meant that the output was no longer representing JNDs distances. Because <code>rotate = TRUE</code> is the default in <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code>, we recommend you re-run any <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> computation on trichromats. From our tests, results stay qualitatively similar but specific values may change.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-10-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-10-0"></a></h3>

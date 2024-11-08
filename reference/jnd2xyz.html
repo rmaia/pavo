@@ -83,8 +83,8 @@ perceptually-corrected (i.e. noise-weighted Euclidean distances)</p>
 <span>  rotcenter <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"mean"</span>, <span class="st">"achro"</span><span class="op">)</span>,</span>
 <span>  ref1 <span class="op">=</span> <span class="st">"l"</span>,</span>
 <span>  ref2 <span class="op">=</span> <span class="st">"u"</span>,</span>
-<span>  axis1 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">1</span>, <span class="fl">0</span><span class="op">)</span>,</span>
-<span>  axis2 <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="va">axis1</span>,</span>
+<span>  <span class="va">axis2</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -124,17 +124,21 @@ in the original data that was used for <code><a href="coldist.html">coldist()</a
 
 
 <dt id="arg-axis-">axis1<a class="anchor" aria-label="anchor" href="#arg-axis-"></a></dt>
-<dd><p>A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x, y, z) to rotate around. Defaults to c(1, 1, 0), such
-that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
-Ignored if <code>ref1</code> is <code>NULL</code> (in 3-dimensional case only)</p></dd>
+<dd><p>A vector of length number of cones minus 1 composed of 0's and
+1's, with 1's representing the axes (x, y, z) to rotate around. Defaults to
+c(1, 1, 0) in 3 dimensions, such that the rotation aligns with the xy plane,
+and c(1, 0) in 2 dimentions, such that the rotation is centered on the x
+axis. Ignored if <code>ref1</code> is <code>NULL</code> (in 3-dimensional case only). Ignored for
+dichromats.</p></dd>
 
 
 <dt id="arg-axis-">axis2<a class="anchor" aria-label="anchor" href="#arg-axis-"></a></dt>
-<dd><p>A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x, y, z) to rotate around. Defaults to c(0, 0, 1), such
-that the rotation aligns with the z axis (only used if data has 3 dimensions).
-Ignored if <code>ref2</code> is <code>NULL</code> (in 3-dimensional case only)</p></dd>
+<dd><p>A vector of length number of cones minus 1 composed of 0's and
+1's, with 1's representing the axes (x, y, z) to rotate around. Defaults to
+c(0, 0, 1) in 3 dimensions, such that the rotation aligns with the z axis,
+and c(0, 1) in 2 dimentions, such that the rotation is centered on the y
+axis. Ignored if <code>ref1</code> is <code>NULL</code> (in 3-dimensional case only). Ignored for
+dichromats.</p></dd>
 
 </dl></div>
     <div id="references">
