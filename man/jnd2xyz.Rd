@@ -35,15 +35,19 @@ in the original data that was used for \code{\link[=coldist]{coldist()}}. Defaul
 in the original data that was used for \code{\link[=coldist]{coldist()}}. Defaults to 'u'.
 (only used if data has 3 dimensions).}
 
-\item{axis1}{A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x, y, z) to rotate around. Defaults to c(1, 1, 0), such
-that the rotation aligns with the xy plane (only used if data has 2 or 3 dimensions).
-Ignored if \code{ref1} is \code{NULL} (in 3-dimensional case only)}
+\item{axis1}{A vector of length number of cones minus 1 composed of 0's and
+1's, with 1's representing the axes (x, y, z) to rotate around. Defaults to
+c(1, 1, 0) in 3 dimensions, such that the rotation aligns with the xy plane,
+and c(1, 0) in 2 dimentions, such that the rotation is centered on the x
+axis. Ignored if \code{ref1} is \code{NULL} (in 3-dimensional case only). Ignored for
+dichromats.}
 
-\item{axis2}{A vector of length 3 composed of 0's and 1's, with
-1's representing the axes (x, y, z) to rotate around. Defaults to c(0, 0, 1), such
-that the rotation aligns with the z axis (only used if data has 3 dimensions).
-Ignored if \code{ref2} is \code{NULL} (in 3-dimensional case only)}
+\item{axis2}{A vector of length number of cones minus 1 composed of 0's and
+1's, with 1's representing the axes (x, y, z) to rotate around. Defaults to
+c(0, 0, 1) in 3 dimensions, such that the rotation aligns with the z axis,
+and c(0, 1) in 2 dimentions, such that the rotation is centered on the y
+axis. Ignored if \code{ref1} is \code{NULL} (in 3-dimensional case only). Ignored for
+dichromats.}
 }
 \description{
 Converts a \code{\link[=coldist]{coldist()}} output into Cartesian coordinates that are
