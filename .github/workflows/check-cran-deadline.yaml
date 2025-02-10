@@ -31,7 +31,7 @@ jobs:
         run: |
           crandb <- tools::CRAN_package_db()
 
-          deadline <- crandb[Package == "pavo", "Deadline"]
+          deadline <- crandb[crandb$Package == "pavo", "Deadline"]
 
           if (!is.na(deadline)) {
             gh::gh(
