@@ -6,6 +6,7 @@
 #' Avantes (before or after exporting).
 #'
 #' @inheritParams lightr::lr_get_spec
+#' @inheritParams lightr::lr_parse_generic
 #'
 #' @inherit lightr::lr_get_spec details
 #'
