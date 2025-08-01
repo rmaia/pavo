@@ -81,6 +81,10 @@
 <ul><li>default values for some arguments in <code><a href="../reference/explorespec.html">explorespec()</a></code> and <code><a href="../reference/sensmodel.html">sensmodel()</a></code> are now explicit in the function definition.</li>
 <li>
 <code><a href="../reference/as.rspec.html">as.rspec()</a></code> now works out of the box with <code>tibble</code>, rather than requiring users to pass a standard data.frame.</li>
+<li>argument checks in <code><a href="../reference/colspace.html">colspace()</a></code> internal functions (<code><a href="../reference/dispace.html">dispace()</a></code>, <code><a href="../reference/trispace.html">trispace()</a></code>, <code><a href="../reference/hexagon.html">hexagon()</a></code>, etc.) have been refactored (<a href="https://github.com/rmaia/pavo/issues/263" class="external-link">#263</a>), with two minor user-facing consequences:
+<ul><li>some messages in <code><a href="../reference/tcspace.html">tcspace()</a></code> have been converted to warnings for consistency with the other internal colspace functions</li>
+<li>some error messages are been reorder, which means that errors produced for inputs invalid for multiple reasons may appear in a different order than in previous versions.</li>
+</ul></li>
 </ul></div>
 <div class="section level3">
 <h3 id="internal-changes-2-10-0">INTERNAL CHANGES<a class="anchor" aria-label="anchor" href="#internal-changes-2-10-0"></a></h3>
