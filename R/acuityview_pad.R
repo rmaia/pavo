@@ -1,17 +1,14 @@
 #' @importFrom stats fft
 acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
-  # Vector of powers of 2 up until realistic maximum possible image dimension. Clumsy.
-  pow2 <- 2^(1:100)
-
   # Square & power-2 check
-  square <- dim(image)[1] == dim(image)[2] && is.element(dim(image)[1], pow2)
+  square <- dim(image)[1] == dim(image)[2] && log(dim(image)[1]) %% log(2) == 0
 
   # Zero-pad if not square with dimension power-2
   if (square) {
     image_pad <- image
   } else {
-    # Minimum necessary square dimension
-    necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))])
+    # Minimum necessary square dimension (power of 2)
+    necessary_dim <- ceiling(log(max(dim(image)[1:2])) / log(2))
 
     # Number of rows and columns necessary for padding (per-edge)
     row_pad <- (necessary_dim - nrow(image)) / 2
