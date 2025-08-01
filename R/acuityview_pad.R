@@ -56,7 +56,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     ifelse(rgb_dat <= 0.04045, rgb_dat / 12.92, ((rgb_dat + 0.055) / (1 + 0.055))^2.4)
   }
   for (i in 1:3) {
-    image_pad[, , i] <- apply(image_pad[, , i], c(1, 2), from_srgb)
+    image_pad[, , i] <- from_srgb(image_pad[, , i])
   }
 
   # 2D Fourier Transform -> MTF matrix multiplication -> inverse fourier transform
@@ -77,7 +77,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     ifelse(rgb_dat <= 0.0031308, rgb_dat * 12.92, (((1 + 0.055) * rgb_dat^(1 / 2.4)) - 0.055))
   }
   for (i in 1:3) {
-    image_pad[, , i] <- apply(image_pad[, , i], c(1, 2), to_srgb)
+    image_pad[, , i] <- to_srgb(image_pad[, , i])
   }
 
   # Crop image back to original dimensions
