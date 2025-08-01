@@ -95,8 +95,8 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   # Re-scale to a max of 1 if any values end up > 1
   rescale <- function(channel) {
     if (any(channel > 1)) {
-      mfac <- (1 - min(channel)) / (range(channel)[2] - range(channel)[1])
-      channel <- min(channel) + (channel - range(channel)[1]) * mfac
+      mfac <- (1 - min(channel)) / (max(channel) - min(channel))
+      channel <- min(channel) + (channel - min(channel)) * mfac
     }
     channel
   }
