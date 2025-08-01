@@ -62,6 +62,7 @@ reference:
   contents: has_keyword("datasets")
 
 template:
+  bootstrap: 5
   params:
     docsearch:
       api_key: 1988255e7e235678bc3c7f1b86b9ecc5
