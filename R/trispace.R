@@ -38,74 +38,11 @@
 #'  Society of America, 69, 1183-1186.
 
 trispace <- function(vismodeldata) {
-  dat <- vismodeldata
-
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if trichromat
-    if (attr(dat, "conenumb") < 3) {
-      stop("vismodel input is not trichromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") > 3) {
-      warning("vismodel input is not trichromatic, considering first three receptors only", call. = FALSE)
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(3)]
-    }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
-      dat <- dat[, seq_len(3)]
-      dat <- dat / rowSums(dat)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  } else { # if not, check if it has more (or less) than 3 columns
-    if (ncol(dat) < 3) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than three columns", call. = FALSE)
-    }
-    if (ncol(dat) == 3) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object; treating columns as standardized quantum catch for ",
-        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
-        call. = FALSE
-      )
-    }
-
-    if (ncol(dat) > 3) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object *and* has more than three columns; treating the first three columns as standardized quantum catch for ",
-        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), " receptors, respectively",
-        call. = FALSE
-      )
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(3)]
-    }
-
-    dat <- dat[, seq_len(3)]
-    names(dat) <- c("s", "m", "l")
-
-    # Check that all rows sum to 1 (taking into account R floating point issue)
-    if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      dat <- dat / rowSums(dat)
-      warning("Quantum catch are not relative, and have been transformed.", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  }
-
-  if (all(c("s", "m", "l") %in% names(dat))) {
-    s <- dat[, "s"]
-    m <- dat[, "m"]
-    l <- dat[, "l"]
-  } else if (all(c("X", "Y", "Z") %in% names(dat))) {
-    s <- dat[, "Z"]
-    m <- dat[, "Y"]
-    l <- dat[, "X"]
-  } else {
-    warning("Could not find columns named ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"), ", using first three columns instead.", call. = FALSE)
-    s <- dat[, 1]
-    m <- dat[, 2]
-    l <- dat[, 3]
-  }
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    c("s", "m", "l"),
+    force_relative = TRUE
+  )
 
   # cartesian coordinates
   ref <- matrix(c(
@@ -114,7 +51,7 @@ trispace <- function(vismodeldata) {
     1 / sqrt(2), -1 / sqrt(6)
   ), nrow = 3, ncol = 2, byrow = TRUE)
 
-  coords <- bary2cart(ref, cbind(s, m, l))
+  coords <- bary2cart(ref, as.matrix(dat))
 
   x <- coords[, 1]
   y <- coords[, 2]
@@ -123,7 +60,7 @@ trispace <- function(vismodeldata) {
   r.vec <- sqrt(x^2 + y^2)
   h.theta <- atan2(y, x)
 
-  res <- data.frame(s, m, l, x, y, h.theta, r.vec, row.names = rownames(dat))
+  res <- data.frame(dat, x, y, h.theta, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 

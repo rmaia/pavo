@@ -28,81 +28,21 @@
 #'  81 - 118.
 
 dispace <- function(vismodeldata) {
-  dat <- vismodeldata
-
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if trichromat
-    if (attr(dat, "conenumb") < 2) {
-      stop("vismodel input is not dichromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") > 2) {
-      warning("vismodel input is not dichromatic, considering first two receptors only", call. = FALSE)
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(2)]
-    }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
-      dat <- dat[, 1:2]
-      dat <- dat / rowSums(dat)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  } else { # if not, check if it has more (or less) than 2 columns
-    if (ncol(dat) < 2) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than two columns", call. = FALSE)
-    }
-    if (ncol(dat) == 2) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object; treating columns as standardized quantum catch for ",
-        dQuote("s"), " and ", dQuote("l"), " receptors, respectively",
-        call. = FALSE
-      )
-    }
-
-    if (ncol(dat) > 2) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object *and* has more than two columns; treating the first two columns as standardized quantum catch for ",
-        dQuote("s"), ", and ", dQuote("l"), " receptors, respectively",
-        call. = FALSE
-      )
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(2)]
-    }
-
-    dat <- dat[, 1:2]
-    names(dat) <- c("s", "l")
-
-    # Check that all rows sum to 1 (taking into account R floating point issue)
-    if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      dat <- dat / rowSums(dat)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  }
-
-  if (all(c("s", "l") %in% names(dat))) {
-    s <- dat[, "s"]
-    l <- dat[, "l"]
-  } else {
-    warning("Could not find columns named ", dQuote("s"), ", and ",
-      dQuote("l"), ", using first two columns instead.",
-      call. = FALSE
-    )
-    s <- dat[, 1]
-    l <- dat[, 2]
-  }
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    c("s", "l"),
+    force_relative = TRUE
+  )
 
   # coordinate
   ref <- matrix(c(-1 / sqrt(2), 1 / sqrt(2)), nrow = 2, ncol = 1)
 
-  x <- bary2cart(ref, cbind(s, l))
+  x <- bary2cart(ref, as.matrix(dat))
 
   # colorimetrics?
   r.vec <- abs(x)
 
-  res <- data.frame(s, l, x, r.vec, row.names = rownames(dat))
+  res <- data.frame(dat, x, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 

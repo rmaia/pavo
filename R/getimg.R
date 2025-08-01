@@ -38,7 +38,7 @@ getimg <- function(imgpath = getwd(), subdir = FALSE, subdir.names = FALSE,
   ## ------------------------------ Main ------------------------------ ##
 
   # If file extensions are in 'imgpath', it's a single image being directly specified
-  if (grepl(paste(ext, collapse = "|"), imgpath, ignore.case = TRUE)) {
+  if (any(endsWith(tolower(imgpath), ext))) {
     imgdat <- as.rimg(image_read(imgpath), name = file_path_sans_ext(basename(imgpath)))
 
     # Warn of slowness if dimensions are large

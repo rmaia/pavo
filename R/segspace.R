@@ -31,84 +31,30 @@
 #' Linnean Society, 41, 315-352.
 
 segspace <- function(vismodeldata) {
-  dat <- vismodeldata
 
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if tetrachromat
-    if (attr(dat, "conenumb") < 4) {
-      stop("vismodel input is not tetrachromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") != "seg" && attr(dat, "conenumb") > 4) {
-      warning("vismodel input is not tetrachromatic, considering first four columns only", call. = FALSE)
-    }
-  } else { # if not, check if it has more (or less) than 4 columns
-    if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"),
-        " object and has fewer than four columns",
-        call. = FALSE
-      )
-    }
-    if (ncol(dat) == 4) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object; treating columns as unstandardized quantum catch for ",
-        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
-        " segments, respectively",
-        call. = FALSE
-      )
-    }
-
-    if (ncol(dat) > 4) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object *and* has more than four columns; treating the first four columns as unstandardized quantum catch for ",
-        dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"), " segments, respectively",
-        call. = FALSE
-      )
-    }
-
-    dat <- dat[, seq_len(4)]
-    names(dat) <- c("S1", "S2", "S3", "S4")
-
-    dat <- dat / rowSums(dat)
-    warning("Quantum catch have been transformed to be relative (sum of 1)", call. = FALSE)
-    attr(vismodeldata, "relative") <- TRUE
-  }
-
-  if (all(c("S1", "S2", "S3", "S4") %in% names(dat))) {
-    Q1 <- dat[, "S1"]
-    Q2 <- dat[, "S2"]
-    Q3 <- dat[, "S3"]
-    Q4 <- dat[, "S4"]
-  } else {
-    warning("Could not find columns named ",
-      dQuote("S1"), ", ", dQuote("S2"), ", ", dQuote("S3"), ", and ", dQuote("S4"),
-      ", using first four columns instead.",
-      call. = FALSE
-    )
-    Q1 <- dat[, 1]
-    Q2 <- dat[, 2]
-    Q3 <- dat[, 3]
-    Q4 <- dat[, 4]
-  }
-
-  if (!is.null(dat$lum)) {
-    B <- dat$lum
+  if (!is.null(vismodeldata$lum)) {
+    B <- vismodeldata$lum
   } else {
     B <- NA
   }
 
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    paste0("S", 1:4),
+    force_relative = TRUE
+  )
+
   # LM/MS
 
-  LM <- Q4 - Q2
-  MS <- Q3 - Q1
+  LM <- dat$S4 - dat$S2
+  MS <- dat$S3 - dat$S1
 
   # Colormetrics
   C <- sqrt(LM^2 + MS^2)
   H <- asin(MS / C) * (180 / pi)
 
   res <- data.frame(
-    S1 = Q1, S2 = Q2, S3 = Q3, S4 = Q4, LM, MS, C, H, B,
+    dat, LM, MS, C, H, B,
     row.names = rownames(dat),
     stringsAsFactors = FALSE
   )

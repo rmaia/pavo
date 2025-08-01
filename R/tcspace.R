@@ -41,80 +41,11 @@
 #'  as birds see them. Biological Journal Of The Linnean Society, 86(4), 405-431.
 
 tcspace <- function(vismodeldata) {
-  dat <- vismodeldata
-
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if tetrachromat
-    if (attr(dat, "conenumb") < 4) {
-      stop("vismodel input is not tetrachromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") > 4) {
-      warning("vismodel input is not tetrachromatic, considering first four receptors only", call. = FALSE)
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(4)]
-    }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
-      dat <- dat[, seq_len(4)]
-      dat <- dat / rowSums(dat)
-      class(dat) <- class(vismodeldata)
-      warning("Quantum catch are not relative, and have been transformed", call. = FALSE)
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  } else { # if not, check if it has more (or less) than 4 columns
-    if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"), " object and has fewer than four columns", call. = FALSE)
-    }
-    if (ncol(dat) == 4 && !all(c("u", "s", "m", "l") %in% names(dat))) {
-      message(
-        'Input data is not a "vismodel" object; ',
-        'treating columns as unstandardized quantum catch for "u", "s", "m", ""l" receptors, respectively',
-        call. = FALSE
-      )
-    }
-
-    if (ncol(dat) > 4) {
-      if (all(c("u", "s", "m", "l") %in% names(dat))) {
-        dat <- dat[, c("u", "s", "m", "l")]
-      } else {
-        message(
-          'Input data is not a "vismodel" object and has more than four columns; ',
-          'treating the first four columns as unstandardized quantum catch for "u", "s", "m" and "l" receptors, respectively',
-          call. = FALSE
-        )
-      }
-      attr(vismodeldata, "data.maxqcatches") <- attr(vismodeldata, "data.maxqcatches")[, seq_len(4)]
-    }
-
-    dat <- dat[, seq_len(4)]
-    names(dat) <- c("u", "s", "m", "l")
-
-    # Transform to relative if necessary
-    if (!isTRUE(all.equal(rowSums(dat), rowSums(dat / rowSums(dat)), tol = 0.001))) {
-      dat <- dat / rowSums(dat)
-      message("Quantum catch have been transformed to be relative (sum of 1)")
-      attr(vismodeldata, "relative") <- TRUE
-    }
-  }
-
-  if (all(c("u", "s", "m", "l") %in% names(dat))) {
-    u <- dat[, "u"]
-    s <- dat[, "s"]
-    m <- dat[, "m"]
-    l <- dat[, "l"]
-  } else {
-    warning("Could not find columns named ",
-      dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
-      ", using first four columns instead.",
-      call. = FALSE
-    )
-    u <- dat[, 1]
-    s <- dat[, 2]
-    m <- dat[, 3]
-    l <- dat[, 4]
-  }
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    c("u", "s", "m", "l"),
+    force_relative = TRUE
+  )
 
   ref <- matrix(c(
     0, 0, 3 / 4,
@@ -124,7 +55,7 @@ tcspace <- function(vismodeldata) {
   ), nrow = 4, ncol = 3, byrow = TRUE)
   # cartesian coordinates
 
-  coords <- bary2cart(ref, cbind(u, s, m, l))
+  coords <- bary2cart(ref, as.matrix(dat))
 
   x <- coords[, 1]
   y <- coords[, 2]
@@ -171,7 +102,7 @@ tcspace <- function(vismodeldata) {
   m.r <- r.vec * cosalpha.m
   l.r <- r.vec * cosalpha.l
 
-  res <- data.frame(u, s, m, l, u.r, s.r, m.r, l.r,
+  res <- data.frame(dat, u.r, s.r, m.r, l.r,
     x, y, z, h.theta, h.phi,
     r.vec, r.max, r.achieved,
     row.names = rownames(dat)
