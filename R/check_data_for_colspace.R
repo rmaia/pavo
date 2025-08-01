@@ -64,7 +64,7 @@ check_data_for_colspace <- function(
   } else {
     warning(
       sprintf(
-        "Could not find columns named %s using first %i columns instead.",
+        "Could not find columns named %s, using first %i columns instead.",
         toString(expected_colnames),
         expected_conenumb
       ),
