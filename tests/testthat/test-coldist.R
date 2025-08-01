@@ -1,9 +1,9 @@
 test_that("Errors", {
   data(flowers)
 
-  expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3, 4, 5), achro = FALSE), "different length")
-  expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3), achro = FALSE), "different length")
-  expect_error(coldist(vismodel(flowers, relative = FALSE), subset = c("Goodenia", "Xyris", "Eucalyptus"), achro = FALSE), "Too many")
+  expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3, 4, 5), achromatic = FALSE), "different length")
+  expect_error(coldist(vismodel(flowers, relative = FALSE), n = c(1, 2, 3), achromatic = FALSE), "different length")
+  expect_error(coldist(vismodel(flowers, relative = FALSE), subset = c("Goodenia", "Xyris", "Eucalyptus"), achromatic = FALSE), "Too many")
   expect_error(coldist(as.matrix(vismodel(flowers)), noise = "quantum"), "quantum receptor noise model")
   expect_error(coldist(vismodel(flowers, qcatch = "Ei")), "not compatible with hyperbolically")
   expect_error(coldist(as.matrix(vismodel(flowers))), "quantum catches not defined")
@@ -27,7 +27,7 @@ test_that("Messages & warnings", {
     visual = "apis", relative = FALSE,
     qcatch = "Ei", vonkries = TRUE
   ), space = "hexagon")), "unweighted Euclidean")
-  expect_message(coldist(as.matrix(vismodel(flowers, achro = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
+  expect_message(coldist(as.matrix(vismodel(flowers, achromatic = "bt.dc")), qcatch = "Qi", achromatic = TRUE), "last column ignored for chromatic contrast")
   expect_message(coldist(as.matrix(vismodel(flowers)), qcatch = "Qi"), "Number of cones assumed to be 4")
 
   expect_message(coldist(vismodel(flowers)), "Quantum catch are relative")
@@ -40,18 +40,18 @@ test_that("Equivalent", {
   data(flowers)
 
   expect_identical(
-    coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achro = FALSE),
-    coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achro = FALSE)
+    coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achromatic = FALSE),
+    coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achromatic = FALSE)
   )
 
   expect_identical(
-    coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achro = FALSE),
-    coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achro = FALSE)
+    coldist(vismodel(flowers, relative = FALSE), weber.ref = "longest", achromatic = FALSE),
+    coldist(vismodel(flowers, relative = FALSE), weber.ref = 4, achromatic = FALSE)
   )
 
   expect_equal(
     coldist(vismodel(flowers, relative = TRUE), achromatic = FALSE),
-    suppressWarnings(coldist(vismodel(flowers, relative = FALSE), achro = FALSE)),
+    suppressWarnings(coldist(vismodel(flowers, relative = FALSE), achromatic = FALSE)),
     ignore_attr = TRUE
   )
 
