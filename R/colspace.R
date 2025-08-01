@@ -137,7 +137,7 @@ colspace <- function(vismodeldata,
     )
 
   # Include lum for appropriate spaces
-  if (!any(space2 %in% c("segment", "ciexyz", "cielab", "cielch"))) {
+  if (!space2 %in% c("segment", "ciexyz", "cielab", "cielch")) {
     res$lum <- vismodeldata$lum
   }
 
