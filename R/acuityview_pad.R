@@ -38,7 +38,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     for (j in 1:width_pix) {
       x <- i - center
       y <- j - center
-      freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
+      freq <- round(sqrt(x^2 + y^2)) / width_deg
       mySin <- y / sqrt(x^2 + y^2)
       myCos <- x / sqrt(x^2 + y^2)
       eye_res2 <- eye_res * eye_res / sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
@@ -83,7 +83,6 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   for (i in 1:3) {
     image_pad[, , i] <- to_srgb(image_pad[, , i])
   }
-  browser()
 
   # Crop image back to original dimensions
   if (square) {
