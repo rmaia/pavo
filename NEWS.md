@@ -2,7 +2,7 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
-- the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method. 
+- the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
 - `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
   only allow rotations in the 2D plane. Until now, 3D rotations were allowed and
   the result was projected back in 2D but this meant that the output was no
@@ -15,6 +15,9 @@
 
 - default values for some arguments in `explorespec()` and `sensmodel()` are now explicit in the function definition.
 - `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
+- argument checks in `colspace()` internal functions (`dispace()`, `trispace()`, `hexagon()`, etc.) have been refactored (#263), with two minor user-facing consequences:
+   - some messages in `tcspace()` have been converted to warnings for consistency with the other internal colspace functions
+   - some error messages are been reorder, which means that errors produced for inputs invalid for multiple reasons may appear in a different order than in previous versions.
 
 ## INTERNAL CHANGES
 
