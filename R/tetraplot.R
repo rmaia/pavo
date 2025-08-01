@@ -255,7 +255,7 @@ tetraplot <- function(tcsdata, theta = 45, phi = 10, perspective = FALSE,
     # get 3 most in back
     inback <- names(sort(combdist)[seq_len(3)])
 
-    linback <- grepl(paste0(inback, collapse = "|"), rownames(segs))
+    linback <- grepl(paste(inback, collapse = "|"), rownames(segs))
 
     segments(
       segs[linback, 1, drop = FALSE],
