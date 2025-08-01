@@ -155,11 +155,13 @@ colspace <- function(vismodeldata,
 
   # Check relative if user-defined input
   if (is.null(attr(res, "relative"))) {
-    attr(res, "relative") <- FALSE
     receptcols <- res[, colnames(res) %in% c("u", "s", "m", "l")]
-    if (isTRUE(all.equal(rowSums(receptcols), rowSums(receptcols / rowSums(receptcols)), tol = 0.001))) {
-      attr(res, "relative") <- TRUE
-    }
+
+    attr(res, "relative") <- isTRUE(all.equal(
+      rowSums(receptcols),
+      rep_len(1, nrow(receptcols)),
+      tolerance = 1e-4
+    ))
   }
 
   res
