@@ -55,6 +55,8 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   from_srgb <- function(rgb_dat) {
     ifelse(rgb_dat <= 0.04045, rgb_dat / 12.92, ((rgb_dat + 0.055) / (1 + 0.055))^2.4)
   }
+  # We have to keep the for loop here to avoid conversion to an array that would
+  # drop all the custom rimg attributes
   for (i in 1:3) {
     image_pad[, , i] <- from_srgb(image_pad[, , i])
   }
@@ -79,6 +81,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   for (i in 1:3) {
     image_pad[, , i] <- to_srgb(image_pad[, , i])
   }
+  browser()
 
   # Crop image back to original dimensions
   if (square) {
