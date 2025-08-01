@@ -32,6 +32,8 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
 
   # Create an MTF matrix with dimensions equal to the image
   MTF <- matrix(NA, nrow = dim(image_pad)[2], ncol = dim(image_pad)[1])
+
+  # FIXME: This can properly be entirely vectorized without loops (nor *apply())
   for (i in 1:width_pix) {
     for (j in 1:width_pix) {
       x <- i - center
