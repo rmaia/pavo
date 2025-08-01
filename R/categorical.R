@@ -28,74 +28,26 @@
 #'  of blowflies. Zeitschrift fur Naturforschung C, 48, 96-96.
 
 categorical <- function(vismodeldata) {
-  dat <- vismodeldata
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    c("u", "s", "m", "l"),
+    force_relative = FALSE
+  )
 
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if tetrachromat
-    if (attr(dat, "conenumb") < 4) {
-      stop("vismodel input is not tetrachromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") > 4) {
-      warning("vismodel input is not tetrachromatic, considering first four receptors only", call. = FALSE)
-    }
-
-    # check if relative
-    if (!attr(dat, "relative")) {
+  if (is.vismodel(vismodeldata)) {
+    if (!attr(vismodeldata, "relative")) {
       warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
     }
-  } else { # if not, check if it has more (or less) than 4 columns
-    if (ncol(dat) < 4) {
-      stop("Input data is not a ", dQuote("vismodel"),
-        " object and has fewer than four columns",
-        call. = FALSE
-      )
-    }
-    if (ncol(dat) == 4) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object; treating columns as standardized quantum catch for ",
-        dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
-        " receptors, respectively",
-        call. = FALSE
-      )
-    }
-
-    if (ncol(dat) > 4) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object *and* has more than four columns; treating the first four columns as standardized quantum catch for ",
-        dQuote("u"), ", ", dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
-        " receptors, respectively",
-        call. = FALSE
-      )
-    }
-
-    dat <- dat[, 1:4]
-    names(dat) <- c("u", "s", "m", "l")
-
-    # Check that all rows sum to 1 (taking into account R floating point issue)
-    if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      # dat <- dat/apply(dat, 1, sum)
-      warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
-      # attr(vismodeldata,'relative') <- TRUE
-    }
-  }
-
-  if (all(c("u", "s", "m", "l") %in% names(dat))) {
-    R7p <- dat[, "u"]
-    R7y <- dat[, "s"]
-    R8p <- dat[, "m"]
-    R8y <- dat[, "l"]
   } else {
-    warning("Could not find columns named ", dQuote("u"), ", ", dQuote("s"), ", ",
-      dQuote("m"), ", and ", dQuote("l"), ", using first four columns instead.",
-      call. = FALSE
-    )
-    R7p <- dat[, 1]
-    R7y <- dat[, 2]
-    R8p <- dat[, 3]
-    R8y <- dat[, 4]
+    if (!isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
+      warning("Quantum catch are not relative, which may produce unexpected results", call. = FALSE)
+    }
   }
+
+  R7p <- dat[, "u"]
+  R7y <- dat[, "s"]
+  R8p <- dat[, "m"]
+  R8y <- dat[, "l"]
 
   # x & y coordinates
   x <- R7p - R8p

@@ -82,7 +82,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     stop("lambdacut and oiltype must be of same length", call. = FALSE)
   }
   if (!is.null(lambdacut) && !is.null(Bmid) && length(lambdacut) != length(Bmid)) {
-    stop("lambdacut and Bmid must be of same length")
+    stop("lambdacut and Bmid must be of same length", call. = FALSE)
   }
 
   wl <- range[1]:range[2]

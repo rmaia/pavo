@@ -26,89 +26,42 @@
 #'  of the honeybee. Vision Research, 31, 1381-1397.
 
 coc <- function(vismodeldata) {
-  dat <- vismodeldata
-
-  # if object is vismodel:
-  if (is.vismodel(dat)) {
-    # check if trichromat
-    if (attr(dat, "conenumb") < 3) {
-      stop("vismodel input is not trichromatic", call. = FALSE)
-    }
-
-    if (attr(dat, "conenumb") > 3) {
-      warning("vismodel input is not trichromatic, considering first three receptors only", call. = FALSE)
-    }
-
-    if (attr(dat, "relative")) {
+  if (is.vismodel(vismodeldata)) {
+    if (attr(vismodeldata, "relative")) {
       stop("Quantum catches are relative, which is not required in the coc model", call. = FALSE)
     }
-
-    if (attr(dat, "qcatch") != "Ei") { # todo: more flexible
+    if (attr(vismodeldata, "qcatch") != "Ei") { # todo: more flexible
       stop("Quantum catches are not hyperbolically transformed, as required for the coc model", call. = FALSE)
     }
-
-    if (!isTRUE(attr(dat, "vonkries"))) {
+    if (!isTRUE(attr(vismodeldata, "vonkries"))) {
       stop("Quantum catches are not von-Kries transformed, as required for the coc model", call. = FALSE)
     }
-  } else { # if not, check if it has more (or less) than 3 columns
-    if (ncol(dat) < 3) {
-      stop("Input data is not a ", dQuote("vismodel"),
-        " object and has fewer than three columns",
-        call. = FALSE
-      )
-    }
-    if (ncol(dat) == 3) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object; treating columns as quantum catch for ",
-        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
-        " receptors, respectively",
-        call. = FALSE
-      )
-    }
+  } else {
 
-    if (ncol(dat) > 3) {
-      warning("Input data is not a ", dQuote("vismodel"),
-        " object *and* has more than three columns; treating the first three columns as quantum catch for ",
-        dQuote("s"), ", ", dQuote("m"), ", and ", dQuote("l"),
-        " receptors, respectively",
-        call. = FALSE
-      )
-    }
-
-    dat <- dat[, 1:3]
-    names(dat) <- c("s", "m", "l")
-
-    if (isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
-      stop(
-        "Quantum catches are relative, which is not required in the coc model and may produce unexpected results",
-        call. = FALSE
-      )
-    }
   }
 
-  if (all(c("s", "m", "l") %in% names(dat))) {
-    s <- dat[, "s"]
-    m <- dat[, "m"]
-    l <- dat[, "l"]
-  } else {
-    warning("Could not find columns named ", dQuote("s"), ", ", dQuote("m"), ", and ",
-      dQuote("l"), ", using first three columns instead.",
+  dat <- check_data_for_colspace(
+    vismodeldata,
+    c("s", "m", "l"),
+    force_relative = FALSE
+  )
+
+  if (isTRUE(all.equal(rowSums(dat), rep(1, nrow(dat)), check.attributes = FALSE))) {
+    stop(
+      "Quantum catches are relative, which is not required in the coc model and may produce unexpected results",
       call. = FALSE
     )
-    s <- dat[, 1]
-    m <- dat[, 2]
-    l <- dat[, 3]
   }
 
   # coordinates
-  x <- (-9.86 * s) + (7.7 * m) + (2.16 * l)
-  y <- (-5.17 * s) + (20.25 * m) - (15.08 * l)
+  x <- (-9.86 * dat$s) + (7.7 * dat$m) + (2.16 * dat$l)
+  y <- (-5.17 * dat$s) + (20.25 * dat$m) - (15.08 * dat$l)
 
   # colorimetrics
   r.vec <- abs(x) + abs(y) # city-block from origin
   # h.theta <- atan2(y, x)
 
-  res <- data.frame(s, m, l, x, y, r.vec, row.names = rownames(dat))
+  res <- data.frame(dat, x, y, r.vec, row.names = rownames(dat))
 
   class(res) <- c("colspace", "data.frame")
 
