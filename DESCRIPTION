@@ -2,7 +2,7 @@ Package: pavo
 Title: Perceptual Analysis, Visualization and Organization of
     Spectral Colour Data
 Version: 2.10.0
-Authors@R: 
+Authors@R:
     c(person(given = "Thomas",
              family = "White",
              role = c("aut", "cre"),
@@ -31,12 +31,12 @@ Authors@R:
              role = "aut",
              email = "bittonp@uwindsor.ca",
              comment = c(ORCID = "0000-0001-5984-2331")))
-Description: A cohesive framework for the spectral and spatial analysis of 
-    colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013) 
+Description: A cohesive framework for the spectral and spatial analysis of
+    colour described in Maia, Eliason, Bitton, Doucet & Shawkey (2013)
     <doi:10.1111/2041-210X.12069> and Maia, Gruson, Endler & White (2019)
     <doi:10.1111/2041-210X.13174>.
 License: GPL (>= 2)
-URL: http://pavo.colrverse.com, https://github.com/rmaia/pavo/
+URL: https://pavo.colrverse.com, https://github.com/rmaia/pavo/
 BugReports: https://github.com/rmaia/pavo/issues
 Depends:
     R (>= 4.0.0)
@@ -60,7 +60,7 @@ Suggests:
     testthat(>= 2.99.0),
     vdiffr,
     digest
-VignetteBuilder: 
+VignetteBuilder:
     knitr
 Config/Needs/website:
     pkgdown
