@@ -78,7 +78,7 @@ reflect5 <- simulate_spec(wl_inflect = 575, wl_peak = c(340, 430), width_gauss =
 # Simulate a set of Gaussian reflectance curves with peaks varying between 400-600nm
 # in increments of 10, then combine into a single rspec object, and plot the result
 peaks <- seq(400, 600, 10) # Peak locations
-reflectances <- lapply(seq_along(peaks), function(x) simulate_spec(wl_peak = peaks[x])) # Simulate
+reflectances <- lapply(peaks, function(p) simulate_spec(wl_peak = p)) # Simulate
 reflectances <- Reduce(merge, reflectances) # Combine
 plot(reflectances) # Plot
 
