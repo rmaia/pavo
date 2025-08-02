@@ -13,7 +13,7 @@ linters: linters_with_tags(
     indentation_linter = NULL,
     cyclocomp_linter = NULL,
     undesirable_function_linter(
-      default_undesirable_functions[!names(default_undesirable_functions) %in% c("library", "par")]
+      default_undesirable_functions[!names(default_undesirable_functions) %in% c("library", "par", "mapply")]
     ),
     implicit_assignment_linter(
       except = c("bquote", "expression", "expr", "quo", "quos", "quote",
