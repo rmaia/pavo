@@ -1,17 +1,14 @@
 #' @importFrom stats fft
 acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
-  # Vector of powers of 2 up until realistic maximum possible image dimension. Clumsy.
-  pow2 <- 2^(1:100)
-
   # Square & power-2 check
-  square <- dim(image)[1] == dim(image)[2] && is.element(dim(image)[1], pow2)
+  square <- dim(image)[1] == dim(image)[2] && log(dim(image)[1]) %% log(2) == 0
 
   # Zero-pad if not square with dimension power-2
   if (square) {
     image_pad <- image
   } else {
-    # Minimum necessary square dimension
-    necessary_dim <- max(pow2[min(which(pow2 >= nrow(image)))], pow2[min(which(pow2 >= ncol(image)))])
+    # Minimum necessary square dimension (power of 2)
+    necessary_dim <- ceiling(log(max(dim(image)[1:2])) / log(2))
 
     # Number of rows and columns necessary for padding (per-edge)
     row_pad <- (necessary_dim - nrow(image)) / 2
@@ -34,12 +31,14 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   center <- round(width_pix / 2) + 1
 
   # Create an MTF matrix with dimensions equal to the image
-  MTF <- matrix(NA, nrow = dim(image_pad)[2], ncol = dim(image_pad)[1])
+  MTF <- matrix(NA, nrow = width_pix, ncol = width_pix)
+
+  # FIXME: This can properly be entirely vectorized without loops (nor *apply())
   for (i in 1:width_pix) {
     for (j in 1:width_pix) {
       x <- i - center
       y <- j - center
-      freq <- round(sqrt(x^2 + y^2)) / width_pix * (width_pix / width_deg)
+      freq <- round(sqrt(x^2 + y^2)) / width_deg
       mySin <- y / sqrt(x^2 + y^2)
       myCos <- x / sqrt(x^2 + y^2)
       eye_res2 <- eye_res * eye_res / sqrt((eye_res * myCos)^2 + (eye_res * mySin)^2)
@@ -58,8 +57,10 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   from_srgb <- function(rgb_dat) {
     ifelse(rgb_dat <= 0.04045, rgb_dat / 12.92, ((rgb_dat + 0.055) / (1 + 0.055))^2.4)
   }
+  # We have to keep the for loop here to avoid conversion to an array that would
+  # drop all the custom rimg attributes
   for (i in 1:3) {
-    image_pad[, , i] <- apply(image_pad[, , i], c(1, 2), from_srgb)
+    image_pad[, , i] <- from_srgb(image_pad[, , i])
   }
 
   # 2D Fourier Transform -> MTF matrix multiplication -> inverse fourier transform
@@ -80,7 +81,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     ifelse(rgb_dat <= 0.0031308, rgb_dat * 12.92, (((1 + 0.055) * rgb_dat^(1 / 2.4)) - 0.055))
   }
   for (i in 1:3) {
-    image_pad[, , i] <- apply(image_pad[, , i], c(1, 2), to_srgb)
+    image_pad[, , i] <- to_srgb(image_pad[, , i])
   }
 
   # Crop image back to original dimensions
@@ -95,8 +96,8 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
   # Re-scale to a max of 1 if any values end up > 1
   rescale <- function(channel) {
     if (any(channel > 1)) {
-      mfac <- (1 - min(channel)) / (range(channel)[2] - range(channel)[1])
-      channel <- min(channel) + (channel - range(channel)[1]) * mfac
+      mfac <- (1 - min(channel)) / (max(channel) - min(channel))
+      channel <- min(channel) + (channel - min(channel)) * mfac
     }
     channel
   }
