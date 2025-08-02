@@ -326,34 +326,34 @@ coldist <- function(modeldata,
         dat[seq(refsamp), dim(dat)[2]]
 
       res[, "dL"] <- switch(noise,
-        neural = unlist(lapply(seq_len(nrow(res)), function(x) {
+        neural = apply(res[, 1:2], 1, function(x) {
           ttdistcalcachro(
-            dat[res[x, 1], ], dat[res[x, 2], ],
+            dat[x[1], ], dat[x[2], ],
             NULL, NULL, weber.achro
           )
-        })),
-        quantum = unlist(lapply(seq_len(nrow(res)), function(x) {
+        }),
+        quantum = apply(res[, 1:2], 1, function(x) {
           ttdistcalcachro(
-            dat[res[x, 1], ], dat[res[x, 2], ],
-            qndat[res[x, 1], ], qndat[res[x, 2], ], weber.achro
+            dat[x[1], ], dat[x[2], ],
+            qndat[x[1], ], qndat[x[2], ], weber.achro
           )
-        }))
+        })
       )
 
       resref[, "dL"] <- switch(noise,
-        neural = unlist(lapply(seq_len(nrow(resref)), function(x) {
+        neural = apply(resref[, 1:2], 1, function(x) {
           ttdistcalcachro(
-            visref[resref[x, 1], ], visref[resref[x, 2], ],
+            visref[x[1], ], visref[x[2], ],
             NULL, NULL,
             weber.achro = weber.achro
           )
-        })),
-        quantum = unlist(lapply(seq_len(nrow(resref)), function(x) {
+        }),
+        quantum = apply(resref[, 1:2], 1, function(x) {
           ttdistcalcachro(
-            visref[resref[x, 1], ], visref[resref[x, 2], ],
-            exp(visref)[resref[x, 1], ], exp(visref)[resref[x, 2], ], weber.achro
+            visref[x[1], ], visref[x[2], ],
+            exp(visref)[x[1]], exp(visref)[x[2], ], weber.achro
           )
-        }))
+        })
       )
 
       if (dim(dat)[2] <= ncone) {
