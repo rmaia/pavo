@@ -1,7 +1,6 @@
 linters: linters_with_tags(
     tags = NULL, # include all linters
     object_name_linter = NULL,
-    undesirable_function_linter = NULL,
     implicit_integer_linter = NULL,
     todo_comment_linter = NULL,
     function_argument_linter = NULL,
@@ -13,6 +12,9 @@ linters: linters_with_tags(
     commented_code_linter = NULL,
     indentation_linter = NULL,
     cyclocomp_linter = NULL,
+    undesirable_function_linter(
+      default_undesirable_functions[!names(default_undesirable_functions) %in% c("library", "par")]
+    ),
     implicit_assignment_linter(
       except = c("bquote", "expression", "expr", "quo", "quos", "quote",
         "expect_message", "expect_warning")
