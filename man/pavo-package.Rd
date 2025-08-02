@@ -11,7 +11,7 @@ A cohesive framework for the spectral and spatial analysis of colour described i
 \seealso{
 Useful links:
 \itemize{
-  \item \url{http://pavo.colrverse.com}
+  \item \url{https://pavo.colrverse.com}
   \item \url{https://github.com/rmaia/pavo/}
   \item Report bugs at \url{https://github.com/rmaia/pavo/issues}
 }
