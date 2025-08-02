@@ -18,6 +18,7 @@
 - argument checks in `colspace()` internal functions (`dispace()`, `trispace()`, `hexagon()`, etc.) have been refactored (#263), with two minor user-facing consequences:
    - some messages in `tcspace()` have been converted to warnings for consistency with the other internal colspace functions
    - some error messages are been reorder, which means that errors produced for inputs invalid for multiple reasons may appear in a different order than in previous versions.
+- pavo now uses R 4.1 (released in 2021) as the minimum required R version.
 
 ## INTERNAL CHANGES
 
