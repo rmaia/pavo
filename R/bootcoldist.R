@@ -81,7 +81,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # Convert any non-numeric columns to (nonsense) numeric values
   # They're not used anyway, and subsetting etc. strips attributes,
   # so this is just a simple/lazy workaround
-  num_cols <- unlist(lapply(vismodeldata, is.numeric))
+  num_cols <- vapply(vismodeldata, is.numeric, logical(1))
   vismodeldata[, !num_cols] <- 0
 
   # Rescale any x-y-z positional data by adding a constant
