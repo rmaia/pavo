@@ -117,7 +117,7 @@ summary.colspace <- function(object, by = NULL, ...) {
       }
 
       by <- factor(by)
-      res.c <- data.frame(t(sapply(levels(by), function(z) tcssum(object[which(by == z), ]))))
+      res.c <- data.frame(t(vapply(levels(by), function(z) tcssum(object[which(by == z), ]), numeric(13))))
       row.names(res.c) <- levels(by)
     } else {
       res.c <- data.frame(t(tcssum(object)))

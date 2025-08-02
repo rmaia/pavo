@@ -95,6 +95,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
   by <- factor(by) # is this necessary?
 
   # Convert to data.frame now as to retain ALTREP wl when using cbind() later
+  # nolint next: undesirable_function_linter. Since FUN can have return of length > 1
   dat <- data.frame(sapply(unique(by), function(z) {
     apply(y[which(by == z)], 1, FUN)
   }))

@@ -91,12 +91,12 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
 
   hilo <- t(t(rspecdata2) - halfmax) < 0
 
-  FWHM_lims <- sapply(seq_len(ncol(rspecdata2)), function(x) {
+  FWHM_lims <- vapply(seq_len(ncol(rspecdata2)), function(x) {
     # Start at H1 and find first value below halfmax
     fstHM <- match(TRUE, hilo[seq(Xi[x], 1, -1), x])
     sndHM <- match(TRUE, hilo[Xi[x]:nrow(rspecdata2), x])
     return(c(fstHM, sndHM))
-  })
+  }, numeric(2))
 
   if (any(Bmin > Bmin_all)) {
     warning("Consider fixing ", dQuote("lim"), " in spectra with ",
