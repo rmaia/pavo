@@ -208,10 +208,11 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
   # Names & attributes
   for (i in seq_along(outdata)) {
-    attr(outdata[[i]], "imgname") <- attr(imgdat[[i]], "imgname")
-    attr(outdata[[i]], "outline") <- attr(imgdat[[i]], "outline")
-    attr(outdata[[i]], "px_scale") <- attr(imgdat[[i]], "px_scale")
-    attr(outdata[[i]], "raw_scale") <- attr(imgdat[[i]], "raw_scale")
+    outdata[[i]] <- copy_attributes(
+      outdata[[i]],
+      imgdat[[i]],
+      which = c("imgname", "outline", "px_scale", "raw_scale")
+    )
     attr(outdata[[i]], "state") <- "colclass"
     if (interactive) {
       if (!is.null(refID)) {
