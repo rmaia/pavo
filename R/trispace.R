@@ -24,8 +24,6 @@
 #'
 #' @export
 #'
-#' @importFrom geometry bary2cart
-#'
 #' @keywords internal
 #'
 #' @references Maxwell JC. (1970). On color vision. In: Macadam, D. L. (ed)
@@ -44,29 +42,9 @@ trispace <- function(vismodeldata) {
     force_relative = TRUE
   )
 
-  # cartesian coordinates
-  ref <- matrix(c(
-    0, sqrt(2 / 3),
-    -1 / sqrt(2), -1 / sqrt(6),
-    1 / sqrt(2), -1 / sqrt(6)
-  ), nrow = 3, ncol = 2, byrow = TRUE)
+  res <- nspace(dat)
 
-  coords <- bary2cart(ref, as.matrix(dat))
-
-  x <- coords[, 1]
-  y <- coords[, 2]
-
-  # colorimetrics
-  r.vec <- sqrt(x^2 + y^2)
-  h.theta <- atan2(y, x)
-
-  res <- data.frame(dat, x, y, h.theta, r.vec, row.names = rownames(dat))
-
-  class(res) <- c("colspace", "data.frame")
-
-  # Descriptive attributes (largely preserved from vismodel)
   attr(res, "clrsp") <- "trispace"
-  attr(res, "conenumb") <- 3
   res <- copy_attributes(
     res,
     vismodeldata,
@@ -81,7 +59,7 @@ trispace <- function(vismodeldata) {
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
   if (!is.null(maxqcatches) && ncol(maxqcatches) == 3) {
     maxqcatches <- maxqcatches / rowSums(maxqcatches)
-    attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
+    attr(res, "data.maxgamut") <- bary2cart(simplex(3), maxqcatches)
   } else {
     attr(res, "data.maxgamut") <- NA
   }
