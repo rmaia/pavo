@@ -12,9 +12,11 @@ jobs:
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v5
 
       - uses: r-lib/actions/setup-r@v2
+        with:
+          use-public-rspm: true
 
       - uses: r-lib/actions/setup-r-dependencies@v2
         with:
@@ -22,15 +24,13 @@ jobs:
             any::gh
             any::lintr
             any::purrr
+            local::.
           needs: check
 
       - name: Add lintr options
         run: |
           cat('\noptions(lintr.linter_file = ".lintr")\n', file = "~/.Rprofile", append = TRUE)
         shell: Rscript {0}
-
-      - name: Install package
-        run: R CMD INSTALL .
 
       - name: Extract and lint files changed by this PR
         run: |
