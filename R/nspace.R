@@ -28,10 +28,10 @@ nspace <- function(vismodeldata) {
   # Keep names for retrocompatibility
   colnames(bary_coords) <- switch(
     as.character(ncones),
-    "2" = c("x"),
+    "2" = "x",
     "3" = c("x", "y"),
     "4" = c("x", "y", "z"),
-    paste0("coord", seq_len(ncones-1))
+    paste0("coord", seq_len(ncones - 1))
   )
 
   polar_coords <- cart2sph(bary_coords)

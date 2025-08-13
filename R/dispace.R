@@ -34,21 +34,10 @@ dispace <- function(vismodeldata) {
     force_relative = TRUE
   )
 
-  # coordinate
-  ref <- matrix(c(-1 / sqrt(2), 1 / sqrt(2)), nrow = 2, ncol = 1)
-
-  x <- bary2cart(ref, as.matrix(dat))
-
-  # colorimetrics?
-  r.vec <- abs(x)
-
-  res <- data.frame(dat, x, r.vec, row.names = rownames(dat))
-
-  class(res) <- c("colspace", "data.frame")
+  res <- nspace(dat)
 
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, "clrsp") <- "dispace"
-  attr(res, "conenumb") <- 2
   res <- copy_attributes(
     res,
     vismodeldata,
@@ -63,7 +52,7 @@ dispace <- function(vismodeldata) {
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
   if (!is.null(maxqcatches) && ncol(maxqcatches) == 2) {
     maxqcatches <- maxqcatches / rowSums(maxqcatches)
-    attr(res, "data.maxgamut") <- bary2cart(ref, maxqcatches)
+    attr(res, "data.maxgamut") <- bary2cart(simplex(2), maxqcatches)
   } else {
     attr(res, "data.maxgamut") <- NA
   }
