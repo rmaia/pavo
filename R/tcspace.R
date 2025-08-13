@@ -113,18 +113,16 @@ tcspace <- function(vismodeldata) {
   # Descriptive attributes (largely preserved from vismodel)
   attr(res, "clrsp") <- "tcs"
   attr(res, "conenumb") <- 4
-  attr(res, "qcatch") <- attr(vismodeldata, "qcatch")
-  attr(res, "visualsystem.chromatic") <- attr(vismodeldata, "visualsystem.chromatic")
-  attr(res, "visualsystem.achromatic") <- attr(vismodeldata, "visualsystem.achromatic")
-  attr(res, "illuminant") <- attr(vismodeldata, "illuminant")
-  attr(res, "background") <- attr(vismodeldata, "background")
-  attr(res, "relative") <- attr(vismodeldata, "relative")
-  attr(res, "vonkries") <- attr(vismodeldata, "vonkries")
-
-  # Data attributes
-  attr(res, "data.visualsystem.chromatic") <- attr(vismodeldata, "data.visualsystem.chromatic")
-  attr(res, "data.visualsystem.achromatic") <- attr(vismodeldata, "data.visualsystem.achromatic")
-  attr(res, "data.background") <- attr(vismodeldata, "data.background")
+  res <- copy_attributes(
+    res,
+    vismodeldata,
+    which = c(
+      "qcatch", "visualsystem.chromatic", "visualsystem.achromatic",
+      "illuminant", "background", "relative", "vonkries",
+      "data.visualsystem.chromatic", "data.visualsystem.achromatic",
+      "data.background"
+    )
+  )
 
   maxqcatches <- attr(vismodeldata, "data.maxqcatches")
   if (!is.null(maxqcatches) && ncol(maxqcatches) == 4) {
