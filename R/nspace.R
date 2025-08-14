@@ -8,6 +8,13 @@
 #'
 #' @importFrom geometry bary2cart
 #'
+#' @export
+#'
+#' @references
+#' Pike, T.W. Generalised Chromaticity Diagrams for Animals with n-chromatic
+#' Colour Vision. J Insect Behav 25, 277–286 (2012).
+#' \doi{10.1007/s10905-011-9296-2}
+#'
 #' @examples
 #' fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
 #'
@@ -31,7 +38,7 @@ nspace <- function(vismodeldata) {
     "2" = "x",
     "3" = c("x", "y"),
     "4" = c("x", "y", "z"),
-    paste0("coord", seq_len(ncones - 1))
+    paste0("X", seq_len(ncones - 1))
   )
 
   polar_coords <- cart2sph(bary_coords)
@@ -79,7 +86,13 @@ nspace <- function(vismodeldata) {
 }
 
 simplex <- function(n) {
-  qr.Q(qr(matrix(1, nrow = n)), complete = TRUE)[, -1]
+  res <- matrix(NA_real_, nrow = n, ncol = n - 1)
+
+  for (k in seq_len(n - 1)) {
+    res[, k] <- 1/sqrt(k+ k^2) * c(rep_len(-1, k), k, rep_len(0, n - k - 1))
+  }
+
+  return(res)
 }
 
 cart2sph <- function(mat) {
