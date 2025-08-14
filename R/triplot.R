@@ -57,9 +57,10 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   }
 
   # Verticy coordinates
-  verts <- simplex(3)
-  colnames(verts) <- c("x", "y")
-  rownames(verts) <- c("s", "m", "l")
+  vert <- data.frame(
+    x = c(0, -1 / sqrt(2), 1 / sqrt(2)),
+    y = c(sqrt(2) / sqrt(3), -sqrt(2) / (2 * (sqrt(3))), -sqrt(2) / (2 * (sqrt(3))))
+  )
 
   # Plot
   arg$x <- tridata$x
