@@ -16,10 +16,14 @@
 #' \doi{10.1007/s10905-011-9296-2}
 #'
 #' @examples
-#' fakemantisshrimp <- sensmodel(c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700), beta = FALSE, integrate = FALSE)
+#' decachromat <- sensmodel(
+#'   c(325, 350, 400, 425, 450, 500, 550, 600, 650, 700),
+#'   beta = FALSE,
+#'   integrate = FALSE
+#' )
 #'
 #' data(flowers)
-#' vis_flowers <- vismodel(flowers, visual = fakemantisshrimp)
+#' vis_flowers <- vismodel(flowers, visual = decachromat)
 #' colsp_flowers <- nspace(vis_flowers)
 
 nspace <- function(vismodeldata) {
