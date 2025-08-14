@@ -79,19 +79,7 @@ nspace <- function(vismodeldata) {
 }
 
 simplex <- function(n) {
-  # For backward compatibility, we have to manually specify the "standard"
-  # simplices used for trichromatic and tetrachromatic spaces.
-  switch(
-    as.character(n),
-    "3" = matrix(c(
-        0, sqrt(2 / 3),
-        -1 / sqrt(2), -1 / sqrt(6),
-        1 / sqrt(2), -1 / sqrt(6)
-      ), nrow = 3, ncol = 2, byrow = TRUE
-    ),
-    # https://mathoverflow.net/a/184585
-    qr.Q(qr(matrix(1, nrow = n)), complete = TRUE)[, -1]
-  )
+  qr.Q(qr(matrix(1, nrow = n)), complete = TRUE)[, -1]
 }
 
 cart2sph <- function(mat) {
