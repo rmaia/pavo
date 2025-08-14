@@ -45,6 +45,7 @@ reference:
   - '`classify`'
   - '`coldist`'
   - '`colspace`'
+  - '`nspace`'
   - '`jnd2xyz`'
   - '`jndrot`'
   - '`peakshape`'

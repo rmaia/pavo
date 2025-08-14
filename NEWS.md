@@ -10,6 +10,13 @@
   `jnd2xyz()`, we recommend you re-run any `jnd2xyz()` computation on
   trichromats. From our tests, results stay qualitatively similar but specific
   values may change.
+- an experimental `nspace()` function for arbitrary n-chromatic colour spaces,
+  as described in Pike (2011), has been added.
+  While this might be used internally for `dispace()`, `trispace()`, and
+  `tcspace()` in the future, please note that it will produce different results
+  than the usual models described in Kelber et al. (2003) and Stoddard & Prum
+  (2008), because of different choices in arbitrary coordinate values for the
+  reference triangle / tetrahedron.
 
 ## MINOR FEATURES AND BUG FIXES
 
