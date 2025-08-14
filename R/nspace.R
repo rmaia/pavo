@@ -89,6 +89,7 @@ simplex <- function(n) {
         1 / sqrt(2), -1 / sqrt(6)
       ), nrow = 3, ncol = 2, byrow = TRUE
     ),
+    # https://mathoverflow.net/a/184585
     qr.Q(qr(matrix(1, nrow = n)), complete = TRUE)[, -1]
   )
 }
