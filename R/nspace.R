@@ -93,7 +93,7 @@ simplex <- function(n) {
   res <- matrix(NA_real_, nrow = n, ncol = n - 1)
 
   for (k in seq_len(n - 1)) {
-    res[, k] <- 1/sqrt(k+ k^2) * c(rep_len(-1, k), k, rep_len(0, n - k - 1))
+    res[, k] <- 1 / sqrt(k + k^2) * c(rep_len(-1, k), k, rep_len(0, n - k - 1))
   }
 
   return(res)
