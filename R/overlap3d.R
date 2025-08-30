@@ -107,8 +107,8 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
   if (plot) {
     if (!interactive) {
       warning(
-        "interactive = FALSE has not been implemented yet,\n",
-        "falling back tointeractive plot.",
+        "interactive = FALSE has not been implemented yet, ",
+        "falling back to interactive plot.",
         call. = FALSE
       )
     }
