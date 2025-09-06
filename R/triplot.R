@@ -57,7 +57,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   }
 
   # Verticy coordinates
-  vert <- data.frame(
+  verts <- data.frame(
     x = c(0, -1 / sqrt(2), 1 / sqrt(2)),
     y = c(sqrt(2) / sqrt(3), -sqrt(2) / (2 * (sqrt(3))), -sqrt(2) / (2 * (sqrt(3))))
   )
@@ -73,7 +73,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
   do.call(plot, c(arg, type = "n"))
 
   # Add lines
-  polygon(vert, lwd = out.lwd, lty = out.lty, border = out.lcol)
+  polygon(verts, lwd = out.lwd, lty = out.lty, border = out.lcol)
 
   if (gamut) {
     coords_mono <- attr(tridata, "data.maxgamut")
@@ -104,7 +104,7 @@ triplot <- function(tridata, labels = TRUE, achro = TRUE, achrocol = "grey", ach
 
   # Add text (coloured points better as in tcsplot?)
   if (isTRUE(labels)) {
-    text(vert,
+    text(verts,
       labels = c("S", "M", "L"),
       pos = c(3, 2, 4),
       xpd = TRUE,
