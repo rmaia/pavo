@@ -10,6 +10,11 @@
   `jnd2xyz()`, we recommend you re-run any `jnd2xyz()` computation on
   trichromats. From our tests, results stay qualitatively similar but specific
   values may change.
+- new function `clipspec()` allows to cut some wavelengths out of an `rspec`
+  object, with possibility of linear interpolation for the missing wavelengths.
+  May be useful in case of artifactual reflectance values which may bias the
+  output of `procspec()`. Code contributed for by @rscherrer.
+  Addressing [Issue #271](https://github.com/rmaia/pavo/issues/271).
 
 ## MINOR FEATURES AND BUG FIXES
 

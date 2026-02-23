@@ -95,3 +95,55 @@ test_that("Convert", {
   data(teal)
   expect_identical(spec2rgb(teal)[1], c("Acrecca-01" = "#21B662FF"))
 })
+
+# Test the spectrum-clipping functionality
+test_that("Clipspec", {
+  
+  # Load data
+  data(teal)
+  
+  # Clip around 470nm
+  teal_clipped <- clipspec(teal, from = 460, to = 480)
+  
+  # Check that wavelength 470nm has been removed
+  expect_false(470 %in% teal_clipped[["wl"]])
+  
+  # Check that boundries of the clipping range are still in
+  expect_true(460 %in% teal_clipped[["wl"]])
+  expect_true(480 %in% teal_clipped[["wl"]])
+  
+  # Now with interpolation
+  teal_clipped_int <- clipspec(teal, from = 460, to = 480, interpolate = TRUE)
+  
+  # Check that 470nm is still there
+  expect_true(470 %in% teal_clipped_int[["wl"]])
+  
+  # Get relevant rows
+  from <- teal_clipped_int[["wl"]] == 460
+  mid <- teal_clipped_int[["wl"]] == 470
+  to <- teal_clipped_int[["wl"]] == 480
+  
+  # Corresponding reflectance values
+  rfrom <- teal_clipped_int[from, 2]
+  rmid <- teal_clipped_int[mid, 2]
+  rto <- teal_clipped_int[to, 2]
+  
+  # Interpolated value should be exactly halfway between those of 460 and 480nm
+  expect_equal(rmid, (rfrom + rto) / 2)
+  
+  # Test abuse cases
+  expect_error(clipspec("hello", from = 460, to = 480))
+  expect_error(clipspec(teal, from = "hello", to = 480))
+  expect_error(clipspec(teal, from = 460, to = "hello"))
+  expect_error(clipspec(teal, from = 480, to = 460))
+  expect_error(clipspec(teal, from = 460, to = 480, interpolate = "hello"))
+  expect_error(clipspec(teal[, -1], from = 460, to = 480))
+  
+  # Create bad dataset
+  teal_bad <- teal
+  teal_bad[["wl"]] <- rep("hello", nrow(teal_bad))
+  
+  # Check error
+  expect_error(clipspec(teal_bad, from = 460, to = 480))
+  
+})
