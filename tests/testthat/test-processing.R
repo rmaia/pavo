@@ -106,11 +106,11 @@ test_that("Clipspec", {
   teal_clipped <- clipspec(teal, from = 460, to = 480)
   
   # Check that wavelength 470nm has been removed
-  expect_false(470 %in% teal_clipped[["wl"]])
+  expect_disjoint(470, teal_clipped[["wl"]])
   
-  # Check that boundries of the clipping range are still in
-  expect_true(460 %in% teal_clipped[["wl"]])
-  expect_true(480 %in% teal_clipped[["wl"]])
+  # Check that boundaries of the clipping range are still in
+  expect_in(460, teal_clipped[["wl"]])
+  expect_in(480, teal_clipped[["wl"]])
   
   # Now with interpolation
   teal_clipped_int <- clipspec(teal, from = 460, to = 480, interpolate = TRUE)
