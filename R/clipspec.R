@@ -45,11 +45,13 @@
 clipspec <- function(rspecdata, from, to, interpolate = FALSE) {
   
   # Check
-  if (!is.rspec(rspecdata)) if (!is.data.frame(rspecdata)) stop("rspecdata must be an rspec object or at least a data frame")
-  if (!is.numeric(from)) stop("from must be numeric")
-  if (!is.numeric(to)) stop("to must be numeric")
-  if (to < from) stop("from must be smaller than or equal to to")
-  if (!is.logical(interpolate)) stop("interpolate must be logical")
+  stopifnot(
+    "rspecdata must be an rspec object or at least a data frame" = is.data.frame(rspecdata),
+    "from must be numeric" = is.numeric(from),
+    "to must be numeric" = is.numeric(to),
+    "from must be smaller than or equal to to" =  to < from,
+    "interpolate must be logical" = is.logical(interpolate)
+  )
   
   # Check
   if (!("wl" %in% colnames(rspecdata))) stop("column wl not found")
