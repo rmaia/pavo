@@ -105,28 +105,18 @@ test_that("Clipspec", {
   # Clip around 470nm
   teal_clipped <- clipspec(teal, from = 460, to = 480)
   
-  # Check that wavelength 470nm has been removed
-  expect_disjoint(470, teal_clipped[["wl"]])
-  
-  # Check that boundaries of the clipping range are still in
-  expect_in(460, teal_clipped[["wl"]])
-  expect_in(480, teal_clipped[["wl"]])
-  
-  # Now with interpolation
-  teal_clipped_int <- clipspec(teal, from = 460, to = 480, interpolate = TRUE)
-  
   # Check that 470nm is still there
-  expect_true(470 %in% teal_clipped_int[["wl"]])
+  expect_true(470 %in% teal_clipped[["wl"]])
   
   # Get relevant rows
-  from <- teal_clipped_int[["wl"]] == 460
-  mid <- teal_clipped_int[["wl"]] == 470
-  to <- teal_clipped_int[["wl"]] == 480
+  from <- teal_clipped[["wl"]] == 460
+  mid <- teal_clipped[["wl"]] == 470
+  to <- teal_clipped[["wl"]] == 480
   
   # Corresponding reflectance values
-  rfrom <- teal_clipped_int[from, 2]
-  rmid <- teal_clipped_int[mid, 2]
-  rto <- teal_clipped_int[to, 2]
+  rfrom <- teal_clipped[from, 2]
+  rmid <- teal_clipped[mid, 2]
+  rto <- teal_clipped[to, 2]
   
   # Interpolated value should be exactly halfway between those of 460 and 480nm
   expect_equal(rmid, (rfrom + rto) / 2)

@@ -9,14 +9,9 @@
 #' meaning that wavelengths equal to `from` or `to` will not be clipped. `to`
 #' must be greater or equal to `from`.
 #' 
-#' @param interpolate (logical) whether to linearly interpolate reflectance
-#' values across missing wavelengths once the latter have been removed. If
-#' FALSE (default), missing wavelengths are not replaced.
-#' 
 #' @return A data frame of class `rspec` with the clipped data.
 #' 
-#' @details The interpolation step internally calls the `as.rspec()` function
-#' with its `interp` argument set to TRUE.
+#' @details The clipped range will be replaced by linearly interpolated values.
 #' 
 #' @note Preferably use this function before `procspec()`, otherwise artifacts
 #' may affect the smoothing.
@@ -39,18 +34,17 @@
 #' # Check again
 #' plot(sicalis, select = 10:14)
 #' 
-#' @seealso [procspec()], [as.rspec()]
+#' @seealso [procspec()]
 
 # Function to clip a segment out of spectra
-clipspec <- function(rspecdata, from, to, interpolate = FALSE) {
+clipspec <- function(rspecdata, from, to) {
   
   # Check
   stopifnot(
     "rspecdata must be an rspec object or at least a data frame" = is.data.frame(rspecdata),
     "from must be numeric" = is.numeric(from),
     "to must be numeric" = is.numeric(to),
-    "from must be smaller than or equal to to" =  from <= to,
-    "interpolate must be logical" = is.logical(interpolate)
+    "from must be smaller than or equal to to" =  from <= to
   )
   
   # Check
@@ -68,17 +62,18 @@ clipspec <- function(rspecdata, from, to, interpolate = FALSE) {
   # Clip
   rspecdata <- rspecdata[!ii,]
   
-  # Interpolate if needed
-  if (interpolate) {
-    clipped_wl <- wl[!ii]
-    rspecdata <- vapply(
-      isolate_wl(rspecdata, keep = "spec"),
-      function(spec) {
-        approx(x = clipped_wl, y = spec, xout = wl, rule = 2)$y
-      },
-      numeric(length(wl))
-    )
-  }
+  # Interpolate
+  clipped_wl <- wl[!ii]
+  rspecdata <- vapply(
+    isolate_wl(rspecdata, keep = "spec"),
+    function(spec) {
+      approx(x = clipped_wl, y = spec, xout = wl, rule = 2)$y
+    },
+    numeric(length(wl))
+  )
+  
+  # Add wavelengths back in
+  rspecdata <- data.frame(wl = wl, rspecdata)
   
   # Exit
   return(rspecdata)
