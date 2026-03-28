@@ -6,9 +6,10 @@
 \usage{
 procspec(
   rspecdata,
-  opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center"),
+  opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center", "clip"),
   fixneg = c("none", "addmin", "zero"),
   span = 0.25,
+  clip_range = c(),
   bins = 20
 )
 }
@@ -30,6 +31,8 @@ Optimal smoothing parameter can be assessed by using \code{\link[=plotsmooth]{pl
 argument must be set.
 \item \code{"center"} centers individual spectra by subtracting mean reflectance from
 all values.
+\item \code{"clip"} removes a specified range of wavelengths and replaces them by
+linear interpolation (clipping occurs before smoothing). \code{clip_range} must be provided.
 }}
 
 \item{fixneg}{how to handle negative values. Possibilities are:
@@ -42,6 +45,10 @@ value to zero, but scaling other values accordingly).
 }}
 
 \item{span}{sets the smoothing parameter used by \code{\link[=loess.smooth]{loess.smooth()}}.}
+
+\item{clip_range}{either a numeric vector indicating the two bounds of the range
+of wavelengths to clip for \code{opt = "clip"}, or a list of such numeric vectors if multiple ranges
+are to be clipped.}
 
 \item{bins}{sets the number of equally sized wavelength bins for \code{opt = "bin"}.}
 }
