@@ -49,7 +49,7 @@ clipspec <- function(rspecdata, from, to, interpolate = FALSE) {
     "rspecdata must be an rspec object or at least a data frame" = is.data.frame(rspecdata),
     "from must be numeric" = is.numeric(from),
     "to must be numeric" = is.numeric(to),
-    "from must be smaller than or equal to to" =  to < from,
+    "from must be smaller than or equal to to" =  from <= to,
     "interpolate must be logical" = is.logical(interpolate)
   )
   
