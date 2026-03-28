@@ -6,6 +6,28 @@ test_that("Procspec", {
   expect_error(procspec(sicalis, opt = "none", fixneg = "none"), "options selected")
   expect_error(procspec(sicalis, opt = "smooth", span = 0), "span")
 
+  # Clipping
+  expect_identical(dim(procspec(sicalis, opt = "clip", clip_range = c(400, 500))), dim(sicalis))
+  expect_message(dim(procspec(sicalis, opt = "clip", clip_range = c(400, 500))), "clipping")
+  expect_identical(
+    dim(procspec(sicalis, opt = "clip", clip_range = list(c(400, 500), c(550, 650)))),
+    dim(sicalis)
+  )
+  expect_error(procspec(sicalis, opt = "clip"), "clip_range")
+  expect_error(procspec(sicalis, opt = "clip", clip_range = "hello"), "clip_range")
+  expect_error(procspec(sicalis, opt = "clip", clip_range = c(400, 500, 600)), "clip_range")
+  expect_error(procspec(sicalis, opt = "clip", clip_range = c(500, 400)), "clip_range")
+  clipped <- procspec(sicalis, opt = "clip", clip_range = c(400, 500))
+  rfrom <- clipped[clipped$wl == 400, -1]
+  rto <- clipped[clipped$wl == 500, -1]
+  rmid <- clipped[clipped$wl == 450, -1]
+  expect_true(all(abs(rmid - (rto + rfrom) / 2) < 1e-06))
+  clipped <- procspec(sicalis, opt = "clip", clip_range = list(c(400, 500), c(550, 650)))
+  rfrom <- clipped[clipped$wl == 550, -1]
+  rto <- clipped[clipped$wl == 650, -1]
+  rmid <- clipped[clipped$wl == 600, -1]
+  expect_true(all(abs(rmid - (rto + rfrom) / 2) < 1e-06))
+                      
   # Smoothing
   expect_identical(dim(procspec(sicalis, opt = "smooth")), dim(sicalis))
   expect_message(dim(procspec(sicalis, opt = "smooth")), "smoothing")
