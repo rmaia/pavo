@@ -67,7 +67,16 @@ clipspec <- function(rspecdata, from, to, interpolate = FALSE) {
   rspecdata <- rspecdata[!ii,]
   
   # Interpolate if needed
-  if (interpolate) rspecdata <- as.rspec(rspecdata, lim = range(wl), interp = TRUE)
+  if (interpolate) {
+    clipped_wl <- wl[!ii]
+    rspecdata <- vapply(
+      isolate_wl(rspecdata, keep = "spec"),
+      function(spec) {
+        approx(x = clipped_wl, y = spec, xout = wl, rule = 2)$y
+      },
+      numeric(length(wl))
+    )
+  }
   
   # Exit
   return(rspecdata)
