@@ -45,9 +45,11 @@ vismodel(
 
   - `'apis'`: Honeybee *Apis mellifera*.
 
-  - `'avg.uv'`: average avian UV system (default).
+  - `'avg.uv'`: average avian UV system (default), as defined in Endler
+    and Mielke (2005).
 
-  - `'avg.v'`: average avian V system.
+  - `'avg.v'`: average avian V system, as defined in Endler and Mielke
+    (2005).
 
   - `'bluetit'`: Blue tit *Cyanistes caeruleus*.
 

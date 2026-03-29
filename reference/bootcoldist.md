@@ -95,9 +95,9 @@ bootcoldist(space, by = gr)
 #> Quantum catch are relative, distances may not be meaningful
 #> Calculating unweighted Euclidean distances and Weber luminance contrast
 #>        dS.mean      dS.lwr     dS.upr    dL.mean      dL.lwr    dL.upr
-#> B-C 0.08873222 0.057492091 0.12509677 1.11017675 0.770862609 1.5208958
+#> B-C 0.08873221 0.057492084 0.12509675 1.11017675 0.770862609 1.5208958
 #> B-T 0.02510854 0.005678686 0.07323532 0.02368528 0.002474378 0.1646752
-#> C-T 0.11208967 0.080721573 0.14476401 1.06135304 0.722669275 1.4676965
+#> C-T 0.11208966 0.080721564 0.14476399 1.06135304 0.722669275 1.4676965
 
 # Estimate bootstrapped colour-distances for a more 'specialised' model,
 # like the colour hexagon

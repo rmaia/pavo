@@ -46,6 +46,14 @@
     different order than in previous versions.
 - pavo now uses R 4.1 (released in 2021) as the minimum required R
   version.
+- the values of `avg.uv` and `avg.v` visual systems used in
+  [`sensdata()`](https://pavo.colrverse.com/reference/sensdata.md) and
+  [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md) have
+  been updated to match exactly the ones provided in the original source
+  (Endler & Mielke 2005). This may result in minute changes in the
+  values returned by
+  [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md) if
+  you are using these parameters.
 
 ### INTERNAL CHANGES
 

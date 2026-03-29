@@ -32,9 +32,11 @@ sensdata(
 
   - `"apis"`: Honeybee *Apis mellifera* visual system.
 
-  - `"avg.uv"`: average avian UV system.
+  - `"avg.uv"`: average avian UV system, as defined in Endler and Mielke
+    (2005).
 
-  - `"avg.v"`: average avian V system.
+  - `"avg.v"`: average avian V system, as defined in Endler and Mielke
+    (2005).
 
   - `"bluetit"`: Blue tit *Cyanistes caeruleus* visual system.
 

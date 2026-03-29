@@ -168,21 +168,21 @@ tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 
 # Convex hull volume
 voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")
-#>           vol1         vol2   overlapvol vsmallest      vboth
-#> 1 5.183721e-06 6.281511e-06 6.904074e-07 0.1331876 0.06407598
+#>          vol1        vol2   overlapvol vsmallest      vboth
+#> 1 5.18372e-06 6.28151e-06 6.904073e-07 0.1331876 0.06407598
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE)
 
-#>           vol1         vol2 overlapvol vsmallest vboth
-#> 1 5.183721e-06 4.739152e-06          0         0     0
+#>          vol1         vol2 overlapvol vsmallest vboth
+#> 1 5.18372e-06 4.739151e-06          0         0     0
 voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq_len(3))
 
-#>           vol1         vol2 overlapvol vsmallest vboth
-#> 1 5.183721e-06 4.739152e-06          0         0     0
+#>          vol1         vol2 overlapvol vsmallest vboth
+#> 1 5.18372e-06 4.739151e-06          0         0     0
 
 # Alpha-shape volume
 if (require("alphashape3d")) {
   voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
 }
-#>           vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
-#> 1 5.183721e-06 6.231493e-06    14    14        3         25 0.2142857  0.12
+#>          vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
+#> 1 5.18372e-06 6.231492e-06    14    14        3         25 0.2142857  0.12
 ```
