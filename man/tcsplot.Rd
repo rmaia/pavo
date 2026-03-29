@@ -105,7 +105,7 @@ capabilities.
 Plots points in a tetrahedral colour space
 }
 \examples{
-\dontshow{if (interactive() | identical(Sys.getenv("IN_PKGDOWN"), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive() | identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 # For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
