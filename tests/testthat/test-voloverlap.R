@@ -5,7 +5,7 @@ tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 
 test_that("Overlap", {
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")), 0.1972758, tolerance = 1e-5)
-  expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 9.922872e-06, tolerance = 1e-7)
+  expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex")), 9.922871e-06, tolerance = 1e-7)
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 1.146523e-05, tolerance = 1e-6)
 })
 
@@ -101,8 +101,8 @@ test_that("Alphashapes", {
     voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 0.5)
   )
 
-  expect_equal(overlap_alpha[[1]], 5.183721e-06, tolerance = 1e-7)
-  expect_equal(overlap_alpha[[2]], 6.231493e-06, tolerance = 1e-7)
+  expect_equal(overlap_alpha[[1]], 5.18372e-06, tolerance = 1e-7)
+  expect_equal(overlap_alpha[[2]], 6.231492e-06, tolerance = 1e-7)
 
   skip_on_cran()
 

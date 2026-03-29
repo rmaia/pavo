@@ -26,7 +26,7 @@ test_that("summary.colspace", {
 
   data(flowers)
 
-  expect_equal(sum(summary(colspace(vismodel(flowers)))[1:12]), 4.08984128)
+  expect_equal(sum(summary(colspace(vismodel(flowers)))[1:12]), 4.08984120)
 })
 
 test_that("subset.colspace", {

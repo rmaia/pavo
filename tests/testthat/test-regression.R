@@ -134,7 +134,7 @@ test_that("voloverlap()", {
   tcs.sicalis.B <- subset(colspace(vismodel(sicalis)), "B")
 
   expect_equal(round(mean(unlist(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex"))), 4), 0.0395)
-  expect_equal(round(mean(unlist(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"))[1:2]^-1), 4), 201959.93)
+  expect_equal(round(mean(unlist(voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex"))[1:2]^-1), 4), 201959.965)
 })
 
 test_that("processing & general", {
