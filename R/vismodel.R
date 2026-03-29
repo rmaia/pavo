@@ -15,8 +15,8 @@
 #'    The data frame must contain a `'wl'` column with the range of wavelengths included,
 #'    and the sensitivity for each other cone as a column.
 #' - `'apis'`: Honeybee *Apis mellifera*.
-#' - `'avg.uv'`: average avian UV system (default).
-#' - `'avg.v'`: average avian V system.
+#' - `'avg.uv'`: average avian UV system (default), as defined in Endler and Mielke (2005).
+#' - `'avg.v'`: average avian V system, as defined in Endler and Mielke (2005).
 #' - `'bluetit'`: Blue tit *Cyanistes caeruleus*.
 #' - `'canis'`: Canid *Canis familiaris*.
 #' - `'cie2'`: 2-degree colour matching functions for CIE models of human

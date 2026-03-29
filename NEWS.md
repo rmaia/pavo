@@ -19,6 +19,10 @@
    - some messages in `tcspace()` have been converted to warnings for consistency with the other internal colspace functions
    - some error messages are been reorder, which means that errors produced for inputs invalid for multiple reasons may appear in a different order than in previous versions.
 - pavo now uses R 4.1 (released in 2021) as the minimum required R version.
+- the values of `avg.uv` and `avg.v` visual systems used in `sensdata()` and
+  `vismodel()` have been updated to match exactly the ones provided in the 
+  original source (Endler & Mielke 2005). This may result in minute changes 
+  in the values returned by `vismodel()` if you are using these parameters.
 
 ## INTERNAL CHANGES
 

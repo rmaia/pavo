@@ -32,8 +32,8 @@ user-defined sensitivity data for the receptors involved in colour vision.
 The data frame must contain a \code{'wl'} column with the range of wavelengths included,
 and the sensitivity for each other cone as a column.
 \item \code{'apis'}: Honeybee \emph{Apis mellifera}.
-\item \code{'avg.uv'}: average avian UV system (default).
-\item \code{'avg.v'}: average avian V system.
+\item \code{'avg.uv'}: average avian UV system (default), as defined in Endler and Mielke (2005).
+\item \code{'avg.v'}: average avian V system, as defined in Endler and Mielke (2005).
 \item \code{'bluetit'}: Blue tit \emph{Cyanistes caeruleus}.
 \item \code{'canis'}: Canid \emph{Canis familiaris}.
 \item \code{'cie2'}: 2-degree colour matching functions for CIE models of human

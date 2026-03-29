@@ -6,8 +6,8 @@
 #' - `"none"`: no visual sensitivity data.
 #' - `"all"`: all visual sensitivity data.
 #' - `"apis"`: Honeybee *Apis mellifera* visual system.
-#' - `"avg.uv"`: average avian UV system.
-#' - `"avg.v"`: average avian V system.
+#' - `"avg.uv"`: average avian UV system, as defined in Endler and Mielke (2005).
+#' - `"avg.v"`: average avian V system, as defined in Endler and Mielke (2005).
 #' - `"bluetit"`: Blue tit *Cyanistes caeruleus* visual system.
 #' - `"canis"`: Canid *Canis familiaris* visual system.
 #' - `"cie2"`: 2-degree colour matching functions for CIE models of human
