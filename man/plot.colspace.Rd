@@ -53,7 +53,7 @@ vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")
 plot(tcs.sicalis)
 
-\dontshow{if (interactive() | identical(Sys.getenv("IN_PKGDOWN"), "true")) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (interactive() | identical(Sys.getenv("IN_PKGDOWN"), "true")) withAutoprint(\{ # examplesIf}
 # Tetrahedron (interactive)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")
 tcs.sicalis <- colspace(vis.sicalis, space = "tcs")

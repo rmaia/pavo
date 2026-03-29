@@ -23,8 +23,8 @@ sensdata(
 \item \code{"none"}: no visual sensitivity data.
 \item \code{"all"}: all visual sensitivity data.
 \item \code{"apis"}: Honeybee \emph{Apis mellifera} visual system.
-\item \code{"avg.uv"}: average avian UV system.
-\item \code{"avg.v"}: average avian V system.
+\item \code{"avg.uv"}: average avian UV system, as defined in Endler and Mielke (2005).
+\item \code{"avg.v"}: average avian V system, as defined in Endler and Mielke (2005).
 \item \code{"bluetit"}: Blue tit \emph{Cyanistes caeruleus} visual system.
 \item \code{"canis"}: Canid \emph{Canis familiaris} visual system.
 \item \code{"cie2"}: 2-degree colour matching functions for CIE models of human
