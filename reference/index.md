@@ -1,0 +1,165 @@
+# Package index
+
+## Processing, Organisation, and Simulation
+
+Functions for importing, processing, and/or simulating spectral data
+
+- [`aggspec()`](https://pavo.colrverse.com/reference/aggspec.md) :
+  Aggregate reflectance spectra
+- [`as.rspec()`](https://pavo.colrverse.com/reference/as.rspec.md)
+  [`is.rspec()`](https://pavo.colrverse.com/reference/as.rspec.md) :
+  Convert data to an rspec object
+- [`as.rimg()`](https://pavo.colrverse.com/reference/as.rimg.md)
+  [`is.rimg()`](https://pavo.colrverse.com/reference/as.rimg.md) :
+  Convert data to an rimg object
+- [`is.colspace()`](https://pavo.colrverse.com/reference/is.colspace.md)
+  : Test if object is of class 'colspace'
+- [`is.vismodel()`](https://pavo.colrverse.com/reference/is.vismodel.md)
+  : Test if object is of class 'vismodel'
+- [`getspec()`](https://pavo.colrverse.com/reference/getspec.md) :
+  Import spectra files
+- [`getimg()`](https://pavo.colrverse.com/reference/getimg.md) : Import
+  image data
+- [`irrad2flux()`](https://pavo.colrverse.com/reference/irrad2flux.md)
+  [`flux2irrad()`](https://pavo.colrverse.com/reference/irrad2flux.md) :
+  Converts between irradiance and photon (quantum) flux
+- [`merge(`*`<rspec>`*`)`](https://pavo.colrverse.com/reference/merge.rspec.md)
+  : Merge two rspec objects
+- [`procimg()`](https://pavo.colrverse.com/reference/procimg.md) :
+  Process images
+- [`procspec()`](https://pavo.colrverse.com/reference/procspec.md) :
+  Process spectra
+- [`spec2rgb()`](https://pavo.colrverse.com/reference/spec2rgb.md) :
+  Spectrum to rgb colour conversion
+- [`subset(`*`<rspec>`*`)`](https://pavo.colrverse.com/reference/subset.rspec.md)
+  [`subset(`*`<colspace>`*`)`](https://pavo.colrverse.com/reference/subset.rspec.md)
+  [`subset(`*`<vismodel>`*`)`](https://pavo.colrverse.com/reference/subset.rspec.md)
+  : Subset rspec, vismodel, and colspace objects
+- [`simulate_spec()`](https://pavo.colrverse.com/reference/simulate_spec.md)
+  : Simulate a spectrum
+- [`as.cimg(`*`<rimg>`*`)`](https://pavo.colrverse.com/reference/img_conversion.md)
+  [`rimg2magick()`](https://pavo.colrverse.com/reference/img_conversion.md)
+  : Convert images between class rimg and cimg or magick-image
+
+## Visualisation
+
+Functions for visualising spectral data, including the results of visual
+modelling
+
+- [`plot(`*`<colspace>`*`)`](https://pavo.colrverse.com/reference/plot.colspace.md)
+  : Plot spectra in a colourspace
+
+- [`plot(`*`<rimg>`*`)`](https://pavo.colrverse.com/reference/plot.rimg.md)
+  : Plot unprocessed or colour-classified images
+
+- [`plot(`*`<rspec>`*`)`](https://pavo.colrverse.com/reference/plot.rspec.md)
+  : Plot spectra
+
+- [`plot(`*`<sensmod>`*`)`](https://pavo.colrverse.com/reference/plot.sensmod.md)
+  :
+
+  Plot absorbance spectra from
+  [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
+
+- [`plotsmooth()`](https://pavo.colrverse.com/reference/plotsmooth.md) :
+  Plot loess smoothed curves
+
+- [`aggplot()`](https://pavo.colrverse.com/reference/aggplot.md) : Plot
+  aggregated reflectance spectra
+
+- [`axistetra()`](https://pavo.colrverse.com/reference/axistetra.md) :
+  Plot reference axes in a static tetrahedral colourspace
+
+- [`explorespec()`](https://pavo.colrverse.com/reference/explorespec.md)
+  : Plot spectral curves
+
+- [`legendtetra()`](https://pavo.colrverse.com/reference/legendtetra.md)
+  : Add legend to a static tetrahedral colourspace
+
+- [`points(`*`<colspace>`*`)`](https://pavo.colrverse.com/reference/points.colspace.md)
+  : Plot points in a colourspace
+
+- [`projplot()`](https://pavo.colrverse.com/reference/projplot.md)
+  [`projpoints()`](https://pavo.colrverse.com/reference/projplot.md) :
+  2D projection of a tetrahedral colourspace
+
+- [`sensdata()`](https://pavo.colrverse.com/reference/sensdata.md) :
+  Retrieve or plot in-built spectral sensitivity data
+
+- [`tcsplot()`](https://pavo.colrverse.com/reference/tcsplot.md)
+  [`tcspoints()`](https://pavo.colrverse.com/reference/tcsplot.md)
+  [`tcsvol()`](https://pavo.colrverse.com/reference/tcsplot.md) :
+  Interactive plot of a tetrahedral colourspace
+
+## Analysis
+
+Functions for analysing spectral data
+
+- [`adjacent()`](https://pavo.colrverse.com/reference/adjacent.md) : Run
+  an adjacency and boundary strength analysis
+
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  : Bootstrap colour distance confidence intervals
+
+- [`classify()`](https://pavo.colrverse.com/reference/classify.md) :
+  Identify colour classes in an image for adjacency analyses
+
+- [`coldist()`](https://pavo.colrverse.com/reference/coldist.md) :
+  Colour distances
+
+- [`colspace()`](https://pavo.colrverse.com/reference/colspace.md) :
+  Model spectra in a colorspace
+
+- [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md) :
+  Convert JND distances into perceptually-corrected Cartesian
+  coordinates
+
+- [`jndrot()`](https://pavo.colrverse.com/reference/jndrot.md) :
+
+  Rotate Cartesian coordinates obtained from
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md)
+
+- [`peakshape()`](https://pavo.colrverse.com/reference/peakshape.md) :
+  Peak shape descriptors
+
+- [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md) :
+  Modeling spectral sensitivity
+
+- [`summary(`*`<colspace>`*`)`](https://pavo.colrverse.com/reference/summary.colspace.md)
+  : Colourspace data summary
+
+- [`summary(`*`<rimg>`*`)`](https://pavo.colrverse.com/reference/summary.rimg.md)
+  : Image summary
+
+- [`summary(`*`<rspec>`*`)`](https://pavo.colrverse.com/reference/summary.rspec.md)
+  : Colourimetric variables
+
+- [`summary(`*`<vismodel>`*`)`](https://pavo.colrverse.com/reference/summary.vismodel.md)
+  : Visual model summary
+
+- [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md) :
+  Visual models
+
+- [`vol()`](https://pavo.colrverse.com/reference/vol.md) : Plot a
+  tetrahedral colour space
+
+- [`voloverlap()`](https://pavo.colrverse.com/reference/voloverlap.md) :
+  Colour volume overlap
+
+## Data
+
+Included example datasets
+
+- [`flowers`](https://pavo.colrverse.com/reference/flowers.md) :
+  Reflectance spectra from a suite of native Australian flowers,
+  collected around Cairns, Queensland.
+
+- [`sicalis`](https://pavo.colrverse.com/reference/sicalis.md) :
+
+  Spectral curves from three body regions of stripe-tailed yellow finch
+  (*Sicalis citrina*) males
+
+- [`teal`](https://pavo.colrverse.com/reference/teal.md) :
+
+  Angle-resolved reflectance data for the iridescent wing patch of a
+  male green-winged teal (*Anas carolinensis*)
