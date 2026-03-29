@@ -204,7 +204,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
         "Cannot find columns named 'c1', 'c2' in coldists. ",
         "Assuming first two columns contain colour-category IDs."
       )
-      coldists <- lapply(coldists, function(x) names(x)[1:2] <- c("c1", "c2"))
+      coldists <- lapply(coldists, function(x) {
+        names(x)[1:2] <- c("c1", "c2")
+        return(x)
+      })
     }
     if (any(unlist(lapply(coldists, function(x) !any(c("dS", "dL") %in% names(x)))))) {
       stop("One or more set of coldists without columns labelled either 'dS' or 'dL'.", call. = FALSE)
@@ -222,7 +225,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
         "Cannot find column named 'patch' one or more set of hsl values. ",
         "Assuming first column contains colour-category ID's"
       )
-      hsl <- lapply(hsl, function(x) names(x)[1] <- "patch")
+      hsl <- lapply(hsl, function(x) {
+        names(x)[1] <- "patch"
+        return(x)
+      })
     }
     if (any(unlist(lapply(hsl, function(x) !any(c("hue", "sat", "lum") %in% names(x)))))) {
       stop("One or more sets of hsl values without columns labelled either 'hue', 'sat', or 'lum'.", call. = FALSE)
@@ -241,7 +247,10 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
     if (all(unlist(lapply(classimg, function(x) is.na(attr(x, "outline")))))) {
       classimg <- lapply(
         seq_along(classimg),
-        function(x) attr(classimg[[x]], "outline") <- polygon[[x]]
+        function(x) {
+          attr(classimg[[x]], "outline") <- polygon[[x]]
+          return(classimg[[x]])
+        }
       )
     }
   }
