@@ -133,14 +133,14 @@ coarse_sec <- function(x) {
 
 ## Weighted stats
 weightmean <- function(x, wt) {
-  s <- which(is.finite(x * wt))
+  s <- is.finite(x * wt)
   wt <- wt[s]
   x <- x[s]
   sum(wt * x) / sum(wt)
 }
 
 weightsd <- function(x, wt) {
-  s <- which(is.finite(x + wt))
+  s <- is.finite(x + wt)
   wt <- wt[s]
   x <- x[s]
   xbar <- weightmean(x, wt)

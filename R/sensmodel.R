@@ -138,7 +138,7 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
                    sensecurves^4 + 3.006 * 10^-6 *
                    sensecurves^3 - 0.001736 * sensecurves^2 + 0.5013 *
                    sensecurves - 55.56)
-      T.e[which(T.e < 0)] <- 0
+      T.e[T.e < 0] <- 0
     } else {
       T.e <- om
     }
