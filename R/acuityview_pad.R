@@ -8,7 +8,7 @@ acuityview_pad <- function(image, obj_dist, obj_width, eye_res) {
     image_pad <- image
   } else {
     # Minimum necessary square dimension (power of 2)
-    necessary_dim <- ceiling(log(max(dim(image)[1:2])) / log(2))
+    necessary_dim <- 2^ceiling(log(max(dim(image)[1:2])) / log(2))
 
     # Number of rows and columns necessary for padding (per-edge)
     row_pad <- (necessary_dim - nrow(image)) / 2
