@@ -43,7 +43,7 @@ explorespec <- function(rspecdata, by = 1,
   # check if the by argument has a 'wl' entry (e.g. if names were obtained through
   # regex conditions on the original spec names) and remove it
   if ("wl" %in% by) {
-    by <- by[-which(by == "wl")]
+    by <- by[by != "wl"]
   }
   # Allow for means of every "by" data, if "by" is a single number
   # i.e. if by=3, average every 3 consecutive data of "data"

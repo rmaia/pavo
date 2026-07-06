@@ -133,17 +133,17 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
     tcsvol(colsp1, type = "alpha", avalue = avalue1, col = col[1], fill = FALSE)
     tcsvol(colsp2, type = "alpha", avalue = avalue2, col = col[2], fill = FALSE)
 
-    rgl::spheres3d(samples[which(invol1 & !invol2), ],
+    rgl::spheres3d(samples[invol1 & !invol2, ],
       type = "s",
       lit = FALSE, radius = psize, col = col[1]
     )
-    rgl::spheres3d(samples[which(invol2 & !invol1), ],
+    rgl::spheres3d(samples[invol2 & !invol1, ],
       type = "s",
       lit = FALSE, radius = psize, col = col[2]
     )
 
     if (s_inboth > 0) {
-      rgl::spheres3d(samples[which(invol1 & invol2), ],
+      rgl::spheres3d(samples[invol1 & invol2, ],
         type = "s",
         lit = FALSE, radius = psize, col = col[3]
       )

@@ -522,8 +522,8 @@ calc_S8 <- function(object, wl, computed_vars, ...) {
 
 calc_S9 <- function(object, wl, computed_vars, ...) {
   # Dependencies
-  R450 <- as.numeric(object[which(wl == 450), , drop = FALSE])
-  R700 <- as.numeric(object[which(wl == 700), , drop = FALSE])
+  R450 <- as.numeric(object[wl == 450, , drop = FALSE])
+  R700 <- as.numeric(object[wl == 700, , drop = FALSE])
 
   # Calc
   (R700 - R450) / R700
