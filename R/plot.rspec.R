@@ -156,25 +156,23 @@ plot.rspec <- function(x, select = NULL, type = c("overlay", "stack", "heatmap")
         arg$ylab <- "Reflectance (%)"
       }
 
-      # TW: the heck is this?
-      arg$y <- x[, 1]
       col <- arg$col
-      arg$col <- col[1]
       lty <- arg$lty
-      arg$lty <- lty[1]
-
-      # Plot first spectrum
-      do.call(plot, arg)
 
       # Add remaining spectra
-      if (ncol(x) > 1) {
-        for (i in 2:ncol(x)) {
-          arg$col <- col[i]
-          arg$lty <- lty[i]
-          arg$y <- x[, i]
+      for (i in seq_len(ncol(x))) {
+        arg$col <- col[i]
+        arg$lty <- lty[i]
+        arg$y <- x[, i]
+        if (i == 1) {
+          # FIXME: a better approach would be to create dev, axes, etc.
+          # before the loop and then treat all elements the same
+          do.call(plot, arg)
+        } else {
           do.call(lines, arg)
         }
       }
+
 
       if (labels) {
         # Calculate the y position of labels, by combining their ymin with the last
