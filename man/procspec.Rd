@@ -69,6 +69,13 @@ plot(teal.sm, select = 10)
 # Normalize to max of unity
 teal.max <- procspec(teal, opt = c("max"))
 plot(teal.max, select = 10)
+
+# Smoothing directly severe artifacts can artificially modify the shape of
+# the entire spectrum. In this case, it is better to clip the artifact and
+# then smooth the data.
+teal_clip <- procspec(teal, opt = c("clip", "smooth"), clip_range = c(600, 650), span = 0.25)
+plot(teal_clip, select = 10)
+
 }
 \references{
 Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
