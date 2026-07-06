@@ -10,7 +10,7 @@
 
 ## An `R` package for the spectral and spatial analysis of color patterns
 
-### Currently maintained by [Thomas White](https://github.com/thomased) and [Hugo Gruson](https://github.com/bisaloo).
+**Currently maintained by [Thomas White](https://github.com/thomased) and [Hugo Gruson](https://github.com/bisaloo).**
 
 ## About
 
