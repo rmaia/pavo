@@ -72,12 +72,8 @@ peakshape <- function(rspecdata, select = NULL, lim = NULL,
     halfmax <- (Bmax + Bmin) / 2
   }
 
-  Xi <- lapply(
-    seq_along(rspecdata2),
-    function(x) which(rspecdata2[, x] == Bmax[x])
-  ) # lambda_max index
+  dblpeaks <- colSums(rspecdata2 == Bmax)
 
-  dblpeaks <- lengths(Xi)
   if (any(dblpeaks > 1)) {
     # Keep only first peak of each spectrum
     dblpeak_nms <- nms[dblpeaks > 1]
