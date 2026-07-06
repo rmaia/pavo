@@ -36,3 +36,4 @@ CONDUCT.md
 ^data-raw$
 ^\.lintr$
 ^CRAN-SUBMISSION$
+^README\.qmd$
