@@ -74,6 +74,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       exp(mean(log(x), na.rm = na.rm))
     } else {
       # If zero.propagate is FALSE, calculate the geometric mean excluding zeros
+      # TODO: double check if we should take length(x) or length(x[x > 0]) for the denominator
       exp(sum(log(x[x > 0]), na.rm = na.rm) / length(x))
     }
   }
