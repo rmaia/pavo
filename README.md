@@ -31,9 +31,13 @@
 
 ## Citing pavo
 
-The manuscript describing the current iteration of the package has been published and is free to access:
+pavo went through several major revisions since its first release in 2013, and two publications describe this work.
 
-Maia R., Gruson H., Endler J.A., and White T.E. 2019 [pavo 2: New tools for the spectral and spatial analysis of colour in R](https://doi.org/10.1111/2041-210X.13174). *Methods in Ecology and Evolution*, 10(7):1097‑1107.
+When citing the package pavo in publications, please include **both** citations:
+
+Maia R, Eliason C, Bitton P, Doucet S, Shawkey M (2013). “pavo: an R Package for the analysis, visualization and organization of spectral data.” *Methods in Ecology and Evolution*, *4*, 609-613. doi:10.1111/2041-210X.12069 <https://doi.org/10.1111/2041-210X.12069>.
+
+Maia R, Gruson H, Endler J, White T (2019). “pavo 2: new tools for the spectral and spatial analysis of colour in R.” *Methods in Ecology and Evolution*, *10*(7). doi:10.1111/2041-210X.13174 <https://doi.org/10.1111/2041-210X.13174>.
 
 ## Install
 
