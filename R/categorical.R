@@ -53,27 +53,12 @@ categorical <- function(vismodeldata) {
   x <- R7p - R8p
   y <- R7y - R8y
 
-  # Colour category calculator
-  colcat <- function(object) {
-    if (object$x == 0 && object$y == 0) {
-      return(NA_character_)
-    }
-    if (object$x == 0) {
-      return(ifelse(object$y > 0, "y+", "y-"))
-    }
-    if (object$y == 0) {
-      return(ifelse(object$x > 0, "p+", "p-"))
-    }
-
-    paste0(
-      ifelse(object$x > 0, "p+", "p-"),
-      ifelse(object$y > 0, "y+", "y-")
-    )
-  }
-
   res <- data.frame(R7p, R7y, R8p, R8y, x, y, row.names = rownames(dat))
 
-  res$category <- vapply(seq_len(nrow(res)), function(x) colcat(res[x, ]), character(1))
+  res$category <- paste0(
+    ifelse(res$x == 0, "", ifelse(res$x > 0, "p+", "p-")),
+    ifelse(res$y == 0, "", ifelse(res$y > 0, "y+", "y-"))
+  )
   res$r.vec <- sqrt(res$x^2 + res$y^2)
   res$h.theta <- atan2(res$y, res$x)
 
