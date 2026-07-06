@@ -23,6 +23,9 @@ Useful links:
 
 Authors:
 
+- Thomas White <thomas.white026@gmail.com>
+  ([ORCID](https://orcid.org/0000-0002-3976-1734))
+
 - Rafael Maia <rafa.maia@gmail.com>
   ([ORCID](https://orcid.org/0000-0002-7563-9795))
 

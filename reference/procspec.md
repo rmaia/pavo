@@ -8,9 +8,10 @@ or plotting.
 ``` r
 procspec(
   rspecdata,
-  opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center"),
+  opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center", "clip"),
   fixneg = c("none", "addmin", "zero"),
   span = 0.25,
+  clip_range = c(),
   bins = 20
 )
 ```
@@ -47,6 +48,10 @@ procspec(
   - `"center"` centers individual spectra by subtracting mean
     reflectance from all values.
 
+  - `"clip"` removes a specified range of wavelengths and replaces them
+    by linear interpolation (clipping occurs before smoothing).
+    `clip_range` must be provided.
+
 - fixneg:
 
   how to handle negative values. Possibilities are:
@@ -63,6 +68,12 @@ procspec(
 
   sets the smoothing parameter used by
   [`loess.smooth()`](https://rdrr.io/r/stats/scatter.smooth.html).
+
+- clip_range:
+
+  either a numeric vector indicating the two bounds of the range of
+  wavelengths to clip for `opt = "clip"`, or a list of such numeric
+  vectors if multiple ranges are to be clipped.
 
 - bins:
 
@@ -114,4 +125,15 @@ teal.max <- procspec(teal, opt = c("max"))
 #> processing options applied:
 #> Scaling spectra to a maximum value of 1
 plot(teal.max, select = 10)
+
+
+# Smoothing directly severe artifacts can artificially modify the shape of
+# the entire spectrum. In this case, it is better to clip the artifact and
+# then smooth the data.
+teal_clip <- procspec(teal, opt = c("clip", "smooth"), clip_range = c(600, 650), span = 0.25)
+#> processing options applied:
+#> clipping spectra in the following wavelength ranges: 600-650
+#> smoothing spectra with a span of 0.25
+plot(teal_clip, select = 10)
+
 ```

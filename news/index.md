@@ -18,6 +18,13 @@
   [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md)
   computation on trichromats. From our tests, results stay qualitatively
   similar but specific values may change.
+- [`procspec()`](https://pavo.colrverse.com/reference/procspec.md) gains
+  a new `"clip"` option, controlled by the new `clip_range` argument to
+  remove entire regions of the spectra and replace them by linear
+  interpolation. Code contributed for by
+  [@rscherrer](https://github.com/rscherrer), addressing
+  [issue](https://github.com/rmaia/pavo/issues/271)
+  [\#271](https://github.com/rmaia/pavo/issues/271).
 
 ### MINOR FEATURES AND BUG FIXES
 

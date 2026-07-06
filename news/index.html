@@ -42,6 +42,8 @@
 <ul><li>the <code>rimg2cimg()</code> function has been removed in favour of a custom <code>as.cimg()</code> method.</li>
 <li>
 <code><a href="../reference/jndrot.html">jndrot()</a></code> and by extension <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> have been adjusted for trichromats to only allow rotations in the 2D plane. Until now, 3D rotations were allowed and the result was projected back in 2D but this meant that the output was no longer representing JNDs distances. Because <code>rotate = TRUE</code> is the default in <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code>, we recommend you re-run any <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> computation on trichromats. From our tests, results stay qualitatively similar but specific values may change.</li>
+<li>
+<code><a href="../reference/procspec.html">procspec()</a></code> gains a new <code>"clip"</code> option, controlled by the new <code>clip_range</code> argument to remove entire regions of the spectra and replace them by linear interpolation. Code contributed for by <a href="https://github.com/rscherrer" class="external-link">@rscherrer</a>, addressing <a href="https://github.com/rmaia/pavo/issues/271" class="external-link">issue </a><a href="https://github.com/rmaia/pavo/issues/271" class="external-link">#271</a>.</li>
 </ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-10-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-10-0"></a></h3>
