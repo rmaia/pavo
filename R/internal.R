@@ -153,16 +153,11 @@ circmean <- function(x) {
   sinr <- sum(sin(x))
   cosr <- sum(cos(x))
   circmean <- atan2(sinr, cosr)
-  circmean
 }
 
 circsd <- function(x) {
-  n <- length(x)
-  sinr <- sum(sin(x))
-  cosr <- sum(cos(x))
-  result <- sqrt(sinr^2 + cosr^2) / n
+  result <- 1 - circvar(x)
   circsd <- sqrt(-2 * log(result))
-  circsd
 }
 
 circvar <- function(x) {
@@ -170,5 +165,4 @@ circvar <- function(x) {
   sinr <- sum(sin(x))
   cosr <- sum(cos(x))
   circvar <- 1 - (sqrt(sinr^2 + cosr^2) / n)
-  circvar
 }
