@@ -1,12 +1,19 @@
-
+---
+format:
+  gfm:
+    wrap: none
+---
 
 <!-- README.md is generated from README.qmd. Please edit that file -->
 
 # `pavo`
 
 <!-- badges: start -->
-
-[![cran version](https://www.r-pkg.org/badges/version-ago/pavo.png)](https://cran.r-project.org/package=pavo/) [![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo.png)](https://cran.r-project.org/package=pavo/) [![R build status](https://github.com/rmaia/pavo/workflows/R-CMD-check/badge.svg)](https://github.com/rmaia/pavo/actions) [![cran checks](https://badges.cranchecks.info/worst/pavo.svg)](https://cran.r-project.org/web/checks/check_results_pavo.html) <!-- badges: end -->
+[![cran version](https://www.r-pkg.org/badges/version-ago/pavo)](https://cran.r-project.org/package=pavo/)
+[![cran downloads](https://cranlogs.r-pkg.org/badges/grand-total/pavo)](https://cran.r-project.org/package=pavo/)
+[![R build status](https://github.com/rmaia/pavo/workflows/R-CMD-check/badge.svg)](https://github.com/rmaia/pavo/actions)
+[![cran checks](https://badges.cranchecks.info/worst/pavo.svg)](https://cran.r-project.org/web/checks/check_results_pavo.html)
+<!-- badges: end -->
 
 ## An `R` package for the spectral and spatial analysis of color patterns
 
@@ -26,14 +33,16 @@
 
 - Take a look at the [package documentation](https://book.colrverse.com) for detailed examples and discussion.
 - Check out the [latest news](http://pavo.colrverse.com/news/index.html) for changes and updates.
-- **Need help or advice and can’t find what you’re looking for?** Head over to the [colRverse discussion board](https://github.com/colrverse/colRverse/discussions) and feel free to post a message.
-- **If all else fails** (or you don’t have a GitHub account), [email Tom](mailto:thomas.white@sydney.edu.au)!
+- **Need help or advice and can't find what you're looking for?** Head over to the [colRverse discussion board](https://github.com/colrverse/colRverse/discussions) and feel free to post a message.
+- **If all else fails** (or you don't have a GitHub account), [email Tom](mailto:thomas.white@sydney.edu.au)!
 
 ## Citing pavo
 
 The manuscript describing the current iteration of the package has been published and is free to access:
 
-Maia R., Gruson H., Endler J.A., and White T.E. 2019 [pavo 2: New tools for the spectral and spatial analysis of colour in R](https://doi.org/10.1111/2041-210X.13174). *Methods in Ecology and Evolution*, 10(7):1097‑1107.
+Maia R., Gruson H., Endler J.A., and White T.E. 2019 [pavo 2: New tools for the spectral 
+and spatial analysis of colour in R](https://doi.org/10.1111/2041-210X.13174). _Methods in Ecology and Evolution_, 10(7):1097‑1107. 
+
 
 ## Install
 
@@ -41,15 +50,15 @@ This is the development page for `pavo`. The stable release is available from CR
 
 If you want to install the bleeding edge version of `pavo`, you can:
 
-- use the [`remotes`](https://github.com/r-lib/remotes) package:
+* use the [`remotes`](https://github.com/r-lib/remotes) package:
 
-``` r
+```r
 # install.packages("remotes")
 remotes::install_github("rmaia/pavo")
 ```
 
-- download files from GitHub and install using `$R CMD INSTALL` or, from within R:
+* download files from GitHub and install using `$R CMD INSTALL` or, from within R:
 
-``` r
+```r
 install.packages(path, type = "source", repos = NULL)
 ```
