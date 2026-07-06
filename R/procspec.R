@@ -135,7 +135,13 @@ procspec <- function(rspecdata, opt = c(
       )
 
     }
-    applied <- c(applied, paste0("clipping spectra in the following wavelength ranges: ", paste(sapply(clip_range, paste, collapse = "-"), collapse = ", ")))
+    applied <- c(
+      applied,
+      paste0(
+        "clipping spectra in the following wavelength ranges: ",
+        toString(vapply(clip_range, paste, collapse = "-", FUN.VALUE = character(1)))
+      )
+    )
   }
 
   if (any(opt == "smooth")) {
