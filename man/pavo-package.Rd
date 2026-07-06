@@ -22,6 +22,7 @@ Useful links:
 
 Authors:
 \itemize{
+  \item Thomas White \email{thomas.white026@gmail.com} (\href{https://orcid.org/0000-0002-3976-1734}{ORCID})
   \item Rafael Maia \email{rafa.maia@gmail.com} (\href{https://orcid.org/0000-0002-7563-9795}{ORCID})
   \item Hugo Gruson \email{hugo.gruson+R@normalesup.org} (\href{https://orcid.org/0000-0002-4094-1476}{ORCID})
   \item John Endler \email{john.endler@deakin.edu.au}
