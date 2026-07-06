@@ -1,12 +1,36 @@
-citHeader("To cite the package pavo in publications please use:")
+citHeader("When citing the package pavo in publications, please include **both** citations:")
+
+bibentry(
+  bibtype = "Article",
+  title = "pavo: an R Package for the analysis, visualization and organization of spectral data",
+  author = c(
+    person("Rafael", "Maia"),
+    person("Chad M.", "Eliason"),
+    person("Pierre-Paul", "Bitton"),
+    person("Stephanie M.", "Doucet"),
+    person("Matthew D.", "Shawkey")
+  ),
+	journal = "Methods in Ecology and Evolution",
+  year = "2013",
+	volume = "4",
+  issue = "10",
+	pages = "609-613",
+  doi = "10.1111/2041-210X.12069",
+)
 
 bibentry(
   bibtype = "Article",
   title = "pavo 2: new tools for the spectral and spatial analysis of colour in R",
-  author = "Rafael Maia and Hugo Gruson and John A. Endler and Thomas E. White",
+  author = c(
+    person("Rafael", "Maia"),
+    person("Hugo", "Gruson"),
+    person("John A.", "Endler"),
+    person("Thomas E.", "White")
+  ),
   journal = "Methods in Ecology and Evolution",
   year = "2019",
   volume = "10",
   number = "7",
   page = "1097-1107",
-  doi = "10.1111/2041-210X.13174")
+  doi = "10.1111/2041-210X.13174"
+)
