@@ -72,7 +72,7 @@ procspec <- function(rspecdata, opt = c(
                        "bin", "sum", "center", "clip"
                      ),
                      fixneg = c("none", "addmin", "zero"),
-                     span = 0.25, clip_range = c(), bins = 20) {
+                     span = 0.25, clip_range = NULL, bins = 20) {
   opt <- match.arg(opt, several.ok = TRUE)
 
   fixneg <- match.arg(fixneg)
@@ -122,7 +122,7 @@ procspec <- function(rspecdata, opt = c(
       if (!any(ii)) break
 
       # Clip
-      rspecdata <- rspecdata[!ii,]
+      rspecdata <- rspecdata[!ii, ]
       remaining_wl <- wl[!ii]
 
       # Interpolate
