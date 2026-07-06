@@ -85,16 +85,13 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
   }
 
   # Method
-  method2 <- tryCatch(
-    match.arg(method),
-    error = function(e) "kMeans"
-  )
+  method <- match.arg(method)
 
   # Cannot currently use pre-specified centres with k-medoids. Annoying.
-  if (interactive && method2 == "kMedoids") {
+  if (interactive && method == "kMedoids") {
     stop("Cannot currently interactively classify images using k-medoids, set kcols instead.", call. = FALSE)
   }
-  if (!is.null(refID) && method2 == "kMedoids") {
+  if (!is.null(refID) && method == "kMedoids") {
     stop("Cannot currently use a reference image when using k-medoids", call. = FALSE)
   }
 
@@ -135,7 +132,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
   if (!interactive) {
     if (!is.null(refID)) { ## (2) Single k, with reference image ##
-      ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method2), "classRGB")
+      ref_centers <- attr(classify_main(imgdat[[refID]], kcols[[refID]], method), "classRGB")
       ref_centers <- rep(list(ref_centers), length(imgdat))
     } else { ## (1) Non-interactive, with a reference image. ##
       ref_centers <- kcols
@@ -143,7 +140,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, ref_centers, method2)
+    outdata <- classifier(imgdat, ref_centers, method)
   } else if (interactive) {
     ## (3) Interactive, no reference image. ##
     if (is.null(kcols)) {
@@ -203,7 +200,7 @@ classify <- function(imgdat, method = c("kMeans", "kMedoids"), kcols = NULL, ref
 
     # Classify
     message("Image classification in progress...")
-    outdata <- classifier(imgdat, centers, method2)
+    outdata <- classifier(imgdat, centers, method)
   }
 
   # Names & attributes
