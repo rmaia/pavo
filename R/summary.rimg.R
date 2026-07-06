@@ -55,7 +55,7 @@ summary.rimg <- function(object, plot = FALSE, axes = TRUE, col = NULL, ...) {
         out <- lapply(object, function(x) {
           data.frame(
             ID = attr(x, "imgname"),
-            col_ID = seq(seq_len(nrow(attr(x, "classRGB")))),
+            col_ID = seq_len(nrow(attr(x, "classRGB"))),
             col_name = attr(x, "colnames"),
             attr(x, "classRGB"),
             stringsAsFactors = FALSE
