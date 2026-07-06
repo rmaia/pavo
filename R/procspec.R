@@ -48,6 +48,13 @@
 #' # Normalize to max of unity
 #' teal.max <- procspec(teal, opt = c("max"))
 #' plot(teal.max, select = 10)
+#'
+#' # Smoothing directly severe artifacts can artificially modify the shape of
+#' # the entire spectrum. In this case, it is better to clip the artifact and
+#' # then smooth the data.
+#' teal_clip <- procspec(teal, opt = c("clip", "smooth"), clip_range = c(600, 650), span = 0.25)
+#' plot(teal_clip, select = 10)
+#'
 #' @seealso [loess.smooth()], [plotsmooth()]
 #'
 #' @references Cuthill, I., Bennett, A. T. D., Partridge, J. & Maier, E. 1999.
@@ -88,11 +95,11 @@ procspec <- function(rspecdata, opt = c(
   nam <- names(rspecdata)
 
   if (any(opt == "clip")) {
-    
+
     # Here we clip the requested ranges of wavelengths out of the data (e.g.
     # due to the presence of artifacts), and replace them with linearly
     # interpolated values.
-    
+
     # Check
     if (is.null(clip_range)) stop("clip_range must be provided for opt = 'clip'", call. = FALSE)
     if (!is.list(clip_range)) clip_range <- list(clip_range)
@@ -101,23 +108,23 @@ procspec <- function(rspecdata, opt = c(
       if (length(x) != 2) stop("clip_range must be a numeric vector of length 2 or a list of such vectors", call. = FALSE)
       if (x[1] > x[2]) stop("clip_range must have the first value smaller than or equal to the second value", call. = FALSE)
     })
-    
+
     # For each range to clip...
     for (j in seq_along(clip_range)) {
-    
+
       # Current range
       curr_range <- clip_range[[j]]
-      
+
       # Identify rows to clip out
       ii <- wl > curr_range[1] & wl < curr_range[2]
-      
+
       # Exit if none
       if (sum(ii) == 0) break
-      
+
       # Clip
       rspecdata <- rspecdata[!ii,]
       remaining_wl <- wl[!ii]
-      
+
       # Interpolate
       rspecdata <- apply(
         rspecdata,
@@ -126,11 +133,11 @@ procspec <- function(rspecdata, opt = c(
           approx(x = remaining_wl, y = spec, xout = wl, rule = 2)$y
         }
       )
-      
+
     }
     applied <- c(applied, paste0("clipping spectra in the following wavelength ranges: ", paste(sapply(clip_range, paste, collapse = "-"), collapse = ", ")))
   }
-  
+
   if (any(opt == "smooth")) {
     # We use loess() instead of the high-level wrapper loess.smooth() because,
     # as per the docs, loess.smooth() can only evaluate at equally spaced
