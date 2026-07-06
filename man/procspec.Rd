@@ -9,8 +9,8 @@ procspec(
   opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center", "clip"),
   fixneg = c("none", "addmin", "zero"),
   span = 0.25,
-  clip_range = c(),
-  bins = 20
+  bins = 20,
+  clip_range = NULL
 )
 }
 \arguments{
@@ -46,11 +46,11 @@ value to zero, but scaling other values accordingly).
 
 \item{span}{sets the smoothing parameter used by \code{\link[=loess.smooth]{loess.smooth()}}.}
 
+\item{bins}{sets the number of equally sized wavelength bins for \code{opt = "bin"}.}
+
 \item{clip_range}{either a numeric vector indicating the two bounds of the range
 of wavelengths to clip for \code{opt = "clip"}, or a list of such numeric vectors if multiple ranges
 are to be clipped.}
-
-\item{bins}{sets the number of equally sized wavelength bins for \code{opt = "bin"}.}
 }
 \value{
 A data frame of class \code{rspec} with the processed data.
