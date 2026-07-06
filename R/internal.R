@@ -2,20 +2,19 @@
 # SUMMARY VARIABLES #
 #####################
 
-#' @importFrom utils combn
 huedisp <- function(tcsres) {
   if (nrow(tcsres) == 1) {
     return(NA)
   }
-  # This function can probably also be expressed with x,y,z or u,s,m,l, which
-  # might help write a more efficient code using linear algebra libs.
-  alphas <- combn(nrow(tcsres), 2, function(x) {
-    phi <- tcsres[x, "h.phi"]
-    theta <- tcsres[x, "h.theta"]
+  # Hue disparity is the angle between each pair of points' hue vectors
+  # (i.e. their (x, y, z) coordinates relative to the achromatic origin).
+  # Normalising each vector to unit length turns this into a simple dot
+  # product: for unit vectors, dot(v1, v2) == cos(angle between them).
+  xyz <- as.matrix(tcsres[c("x", "y", "z")])
+  unitvec <- xyz / sqrt(rowSums(xyz^2))
 
-    prod(cos(phi), cos(diff(theta))) + prod(sin(phi))
-  })
-  acos(alphas)
+  cosalphas <- tcrossprod(unitvec)
+  acos(cosalphas[upper.tri(cosalphas)])
 }
 
 
