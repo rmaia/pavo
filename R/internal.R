@@ -104,12 +104,7 @@ tcssum <- function(tcsres) {
 # Calculate hexagon hue angle (in degrees, moving clockwise, with 1200 as 0)
 # in the colour hexagon
 angle360 <- function(x, y) {
-  theta <- 90 - (atan2(y, x) * (180 / pi))
-  if (theta < 0) {
-    theta <- theta + 360
-  }
-
-  theta
+  (90 - atan2(y, x) * 180 / pi) %% 360
 }
 
 # Calculate the coarse hexagon sector
