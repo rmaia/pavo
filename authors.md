@@ -21,7 +21,23 @@
 Source:
 [`inst/CITATION`](https://github.com/rmaia/pavo/blob/master/inst/CITATION)
 
-Maia R, Gruson H, Endler JA, White TE (2019). “pavo 2: new tools for the
+Maia R, Eliason C, Bitton P, Doucet S, Shawkey M (2013). “pavo: an R
+Package for the analysis, visualization and organization of spectral
+data.” *Methods in Ecology and Evolution*, **4**, 609-613.
+[doi:10.1111/2041-210X.12069](https://doi.org/10.1111/2041-210X.12069).
+
+    @Article{,
+      title = {pavo: an R Package for the analysis, visualization and organization of spectral data},
+      author = {Rafael Maia and Chad M. Eliason and Pierre-Paul Bitton and Stephanie M. Doucet and Matthew D. Shawkey},
+      journal = {Methods in Ecology and Evolution},
+      year = {2013},
+      volume = {4},
+      issue = {10},
+      pages = {609-613},
+      doi = {10.1111/2041-210X.12069},
+    }
+
+Maia R, Gruson H, Endler J, White T (2019). “pavo 2: new tools for the
 spectral and spatial analysis of colour in R.” *Methods in Ecology and
 Evolution*, **10**(7).
 [doi:10.1111/2041-210X.13174](https://doi.org/10.1111/2041-210X.13174).
