@@ -72,7 +72,7 @@ procspec <- function(rspecdata, opt = c(
                        "bin", "sum", "center", "clip"
                      ),
                      fixneg = c("none", "addmin", "zero"),
-                     span = 0.25, clip_range = NULL, bins = 20) {
+                     span = 0.25, bins = 20, clip_range = NULL) {
   opt <- match.arg(opt, several.ok = TRUE)
 
   fixneg <- match.arg(fixneg)
