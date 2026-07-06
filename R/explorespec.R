@@ -125,7 +125,7 @@ explorespec <- function(rspecdata, by = 1,
     }
 
     # SET OPTIONAL ARGUMENTS
-    if (all(is.null(arg$ylim), scale == "free")) {
+    if (is.null(arg$ylim) && scale == "free") {
       arg$ylim <- c(min(bloc), max(bloc)) * yaxismult
     }
 
