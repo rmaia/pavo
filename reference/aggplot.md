@@ -87,6 +87,7 @@ Chad Eliason <cme16@zips.uakron.edu>
 ## Examples
 
 ``` r
+
 # Load reflectance data
 data(sicalis)
 

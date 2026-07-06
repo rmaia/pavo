@@ -94,6 +94,7 @@ Hugo Gruson
 ## Examples
 
 ``` r
+
 # For plotting
 data(sicalis)
 vis.sicalis <- vismodel(sicalis, visual = "avg.uv")

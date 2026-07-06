@@ -42,6 +42,7 @@ Hugo Gruson <hugo.gruson+R@normalesup.org>
 ## Examples
 
 ``` r
+
 # Generate some fake image data
 fake <- array(
   c(

@@ -37,6 +37,7 @@ Chad Eliason <cme16@zips.uakron.edu>
 ## Examples
 
 ``` r
+
 # Load angle-resolved reflectance data for a green-winged teal, and
 # split it in two
 data(teal)

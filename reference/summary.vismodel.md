@@ -71,7 +71,7 @@ summary(vis.sicalis)
 #>  Max.   :0.18836   Max.   :0.12580   Max.   :0.4160   Max.   :0.5082  
 #>    lum         
 #>  Mode:logical  
-#>  NA's:21       
+#>  NAs :21       
 #>                
 #>                
 #>                

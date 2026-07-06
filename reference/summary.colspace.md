@@ -118,13 +118,13 @@ summary(flowers.hex)
 #>  Mean   : 0.11077   Mean   : 77.206   Mean   :0.34600   Mean   : 72.5  
 #>  3rd Qu.: 0.20693   3rd Qu.: 77.511   3rd Qu.:0.45400   3rd Qu.: 72.5  
 #>  Max.   : 0.30778   Max.   :271.076   Max.   :0.70155   Max.   :270.0  
-#>   sec.coarse       
-#>  Length:36         
-#>  Class :character  
-#>  Mode  :character  
-#>                    
-#>                    
-#>                    
+#>      sec.coarse
+#>  Length   :36  
+#>  N.unique : 6  
+#>  N.blank  : 0  
+#>  Min.nchar: 2  
+#>  Max.nchar: 9  
+#>                
 
 # Tetrahedral model
 data(sicalis)

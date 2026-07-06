@@ -64,6 +64,7 @@ Chad Eliason <cme16@zips.uakron.edu>
 ## Examples
 
 ``` r
+
 # Generate some fake reflectance data
 fakedat <- data.frame(wl = 300:700, refl1 = rnorm(401), refl2 = rnorm(401))
 head(fakedat)
