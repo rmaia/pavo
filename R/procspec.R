@@ -119,7 +119,7 @@ procspec <- function(rspecdata, opt = c(
       ii <- wl > curr_range[1] & wl < curr_range[2]
 
       # Exit if none
-      if (sum(ii) == 0) break
+      if (!any(ii)) break
 
       # Clip
       rspecdata <- rspecdata[!ii,]
