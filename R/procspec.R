@@ -198,7 +198,7 @@ procspec <- function(rspecdata, opt = c(
   # Method follows Cuthill et al. (1999)
   if (any(opt == "bin")) {
     bw <- floor(length(wl) / (bins - 1))
-    wl_bin <- wl_bin <- seq(min(wl), by = bw, length.out = bins)
+    wl_bin <- seq(min(wl), by = bw, length.out = bins)
     rspecdata <- by(rspecdata, findInterval(wl, wl_bin), function(x) apply(x, 2, median)) # nolint
     rspecdata <- do.call(rbind, rspecdata)
     rspecdata <- cbind(wl_bin, rspecdata)
