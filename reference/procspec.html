@@ -47,8 +47,8 @@
 <span>  opt <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"smooth"</span>, <span class="st">"maximum"</span>, <span class="st">"minimum"</span>, <span class="st">"bin"</span>, <span class="st">"sum"</span>, <span class="st">"center"</span>, <span class="st">"clip"</span><span class="op">)</span>,</span>
 <span>  fixneg <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"none"</span>, <span class="st">"addmin"</span>, <span class="st">"zero"</span><span class="op">)</span>,</span>
 <span>  span <span class="op">=</span> <span class="fl">0.25</span>,</span>
-<span>  clip_range <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="op">)</span>,</span>
-<span>  bins <span class="op">=</span> <span class="fl">20</span></span>
+<span>  bins <span class="op">=</span> <span class="fl">20</span>,</span>
+<span>  clip_range <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -92,14 +92,14 @@ value to zero, but scaling other values accordingly).</p></li>
 <dd><p>sets the smoothing parameter used by <code><a href="https://rdrr.io/r/stats/scatter.smooth.html" class="external-link">loess.smooth()</a></code>.</p></dd>
 
 
+<dt id="arg-bins">bins<a class="anchor" aria-label="anchor" href="#arg-bins"></a></dt>
+<dd><p>sets the number of equally sized wavelength bins for <code>opt = "bin"</code>.</p></dd>
+
+
 <dt id="arg-clip-range">clip_range<a class="anchor" aria-label="anchor" href="#arg-clip-range"></a></dt>
 <dd><p>either a numeric vector indicating the two bounds of the range
 of wavelengths to clip for <code>opt = "clip"</code>, or a list of such numeric vectors if multiple ranges
 are to be clipped.</p></dd>
-
-
-<dt id="arg-bins">bins<a class="anchor" aria-label="anchor" href="#arg-bins"></a></dt>
-<dd><p>sets the number of equally sized wavelength bins for <code>opt = "bin"</code>.</p></dd>
 
 </dl></div>
     <div class="section level2">

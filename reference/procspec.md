@@ -11,8 +11,8 @@ procspec(
   opt = c("none", "smooth", "maximum", "minimum", "bin", "sum", "center", "clip"),
   fixneg = c("none", "addmin", "zero"),
   span = 0.25,
-  clip_range = c(),
-  bins = 20
+  bins = 20,
+  clip_range = NULL
 )
 ```
 
@@ -69,15 +69,15 @@ procspec(
   sets the smoothing parameter used by
   [`loess.smooth()`](https://rdrr.io/r/stats/scatter.smooth.html).
 
+- bins:
+
+  sets the number of equally sized wavelength bins for `opt = "bin"`.
+
 - clip_range:
 
   either a numeric vector indicating the two bounds of the range of
   wavelengths to clip for `opt = "clip"`, or a list of such numeric
   vectors if multiple ranges are to be clipped.
-
-- bins:
-
-  sets the number of equally sized wavelength bins for `opt = "bin"`.
 
 ## Value
 
