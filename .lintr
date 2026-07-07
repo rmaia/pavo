@@ -13,6 +13,7 @@ linters: linters_with_tags(
     indentation_linter = NULL,
     cyclocomp_linter = NULL,
     nested_ifelse_linter = NULL,
+    nrow_subset_linter = NULL,
     undesirable_function_linter(
       default_undesirable_functions[!names(default_undesirable_functions) %in% c("library", "par", "mapply")],
       symbol_is_undesirable = FALSE
