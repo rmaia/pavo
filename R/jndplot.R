@@ -220,7 +220,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
       # Find angle (atan2(y2-y1, x2-x1))
       endpoints <- as.matrix(attr(dat, "resref")[arrowindex, colstouse])
-      angle <- apply(sweep(endpoints, 2, arrowstart, "-"), 1, function(s) atan2(s[2], s[1]))
+      angle <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) atan2(s[2], s[1]))
 
       rad <- mean(dist(x2)) / 2 * arrow.p
 
@@ -233,16 +233,16 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         relative = sweep(
           sweep(
             arrowlims,
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p * 0.9,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         ),
         absolute = sweep(
           sweep(
             as.matrix(attr(dat, "resref")[arrowindex, colstouse]),
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p * 0.9,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         )
       )
 
@@ -250,16 +250,16 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         relative = sweep(
           sweep(
             arrowlims,
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         ),
         absolute = sweep(
           sweep(
             as.matrix(attr(dat, "resref")[arrowindex, colstouse]),
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         )
       )
 
@@ -379,8 +379,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
       # Find angles (atan2(y2-y1, x2-x1))
       endpoints <- as.matrix(attr(dat, "resref")[arrowindex, colstouse])
-      anglethe <- apply(sweep(endpoints, 2, arrowstart, "-"), 1, function(s) atan2(s[2], s[1]))
-      anglephi <- apply(sweep(endpoints, 2, arrowstart, "-"), 1, function(s) acos(s[3] / sqrt(s[1]^2 + s[2]^2 + s[3]^2)))
+      anglethe <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) atan2(s[2], s[1]))
+      anglephi <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) acos(s[3] / sqrt(s[1]^2 + s[2]^2 + s[3]^2)))
 
       rad <- mean(dist(x2)) * arrow.p / 2
 
@@ -389,7 +389,7 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         rad * sin(anglephi) * cos(anglethe),
         rad * sin(anglephi) * sin(anglethe),
         rad * cos(anglephi)
-      ), 2, arrowstart, "+")
+      ), 2, arrowstart, `+`)
 
 
       rownames(arrowlims) <- rownames(endpoints)
@@ -399,16 +399,16 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         relative = sweep(
           sweep(
             arrowlims,
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p * 0.9,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         ),
         absolute = sweep(
           sweep(
             as.matrix(attr(dat, "resref")[arrowindex, colstouse]),
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p * 0.9,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         )
       )
 
@@ -416,16 +416,16 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
         relative = sweep(
           sweep(
             arrowlims,
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         ),
         absolute = sweep(
           sweep(
             as.matrix(attr(dat, "resref")[arrowindex, colstouse]),
-            2, arrowstart, "-"
+            2, arrowstart, `-`
           ) * arrow.p,
-          2, arrowstart, "+"
+          2, arrowstart, `+`
         )
       )
 

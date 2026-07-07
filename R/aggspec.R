@@ -66,7 +66,7 @@ aggspec <- function(rspecdata, by = NULL, FUN = mean, trim = TRUE) {
     if (length(unique(wl_id)) != 1) {
       stop("mismatch in column names of input vectors", call. = FALSE)
     }
-    by <- do.call("paste", c(by, sep = "."))
+    by <- do.call(paste, c(by, sep = "."))
   }
 
   # retain original 'by' values
