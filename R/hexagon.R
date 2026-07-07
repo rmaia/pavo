@@ -72,7 +72,7 @@ hexagon <- function(vismodeldata) {
   r.vec <- sqrt(x^2 + y^2)
   h.theta <- angle360(x, y)
   sec.fine <- round(floor(h.theta / 10), 0) * 10
-  sec.coarse <- vapply(seq_along(x), function(x) coarse_sec(h.theta[x]), character(1))
+  sec.coarse <- vapply(seq_along(x), function(i) coarse_sec(h.theta[i]), character(1))
 
   res <- data.frame(dat, x, y, h.theta, r.vec, sec.fine, sec.coarse,
     row.names = rownames(dat),
