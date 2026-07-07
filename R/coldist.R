@@ -519,7 +519,7 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
     )
   } else {
     # get those combinations of ei and prod(ei)^2
-    num1 <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z) {
+    num1 <- do.call(rbind, lapply(seq_len(dim(res)[1]), function(z) {
       apply(n1combs, 2, function(x) prod(e[z, x]))
     }))
     colnames(num1) <- apply(n1combs, 2, paste, collapse = "")
@@ -563,7 +563,7 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
     )
     denominator <- sum(den^2)
   } else {
-    den <- do.call("rbind", lapply(seq_len(dim(res)[1]), function(z) {
+    den <- do.call(rbind, lapply(seq_len(dim(res)[1]), function(z) {
       apply(dcombs, 2, function(x) prod(e[z, x]))
     }))
     colnames(den) <- apply(dcombs, 2, paste, collapse = "")
