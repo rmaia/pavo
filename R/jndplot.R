@@ -220,7 +220,8 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
       # Find angle (atan2(y2-y1, x2-x1))
       endpoints <- as.matrix(attr(dat, "resref")[arrowindex, colstouse])
-      angle <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) atan2(s[2], s[1]))
+      s <- sweep(endpoints, 2, arrowstart, `-`)
+      angle <- atan2(s[, 2], s[, 1])
 
       rad <- mean(dist(x2)) / 2 * arrow.p
 
@@ -379,8 +380,9 @@ jndplot <- function(x, arrow = c("relative", "absolute", "none"), achro = FALSE,
 
       # Find angles (atan2(y2-y1, x2-x1))
       endpoints <- as.matrix(attr(dat, "resref")[arrowindex, colstouse])
-      anglethe <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) atan2(s[2], s[1]))
-      anglephi <- apply(sweep(endpoints, 2, arrowstart, `-`), 1, function(s) acos(s[3] / sqrt(s[1]^2 + s[2]^2 + s[3]^2)))
+      s <- sweep(endpoints, 2, arrowstart, `-`)
+      anglethe <- atan2(s[, 2], s[, 1])
+      anglephi <- acos(s[, 3] / sqrt(s[, 1]^2 + s[, 2]^2 + s[, 3]^2))
 
       rad <- mean(dist(x2)) * arrow.p / 2
 
