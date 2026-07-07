@@ -286,13 +286,14 @@ adjacent <- function(classimg, xpts = NULL, xscale = NULL, bkgID = NULL,
   }
 
   ## Sampling density
-  if (any(xpts > unlist(lapply(classimg, function(x) dim(x)[1:2])))) {
+  img_dims <- unlist(lapply(classimg, function(x) dim(x)[1:2]))
+  if (any(xpts > img_dims)) {
     message("Specified grid-sampling density exceeds dimensions of at least one image. Overwriting xpts to equal the smallest dimension in the image set.")
-    xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
+    xpts <- min(img_dims)
   }
   # Set to smallest dimension by default
   if (is.null(xpts)) {
-    xpts <- min(unlist(lapply(classimg, function(x) dim(x)[1:2])))
+    xpts <- min(img_dims)
   }
 
   xpts <- as.list(rep(xpts, length(classimg)))
