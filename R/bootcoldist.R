@@ -15,6 +15,25 @@
 #' be returned, instead of the summary distances and CI's? Defaults to FALSE.
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
+#' @param cluster an optional numeric or character vector, of the same length as
+#'  `by`, identifying the higher-level unit (e.g. the individual, colony, or
+#'  patch-bearing pattern) that each row belongs to. When supplied, resampling is
+#'  done over whole clusters rather than over individual rows, which is
+#'  appropriate whenever rows are not independent of one another. Defaults to
+#'  NULL, in which case rows are resampled independently within each group, as in
+#'  previous versions.
+#' @param nesting the relationship between `cluster` and `by`, one of `"auto"`
+#'  (the default), `"crossed"`, or `"nested"`. Under `"crossed"`, clusters span
+#'  the levels of `by` (e.g. the same individual contributes a crown, throat and
+#'  breast measurement) and a single draw of clusters is shared across groups,
+#'  which preserves the pairing between them. Under `"nested"`, each cluster
+#'  belongs to exactly one group (e.g. repeated measurements of an individual
+#'  within a population) and clusters are drawn independently within each group.
+#'  `"auto"` chooses between the two by checking whether any cluster appears
+#'  under more than one level of `by`. Ignored when `cluster` is NULL.
+#'
+#'  Note that `cluster` and `nesting` follow `...`, and so must both be named in
+#'  full when used.
 #'
 #' @inherit getspec details
 #'
@@ -30,6 +49,16 @@
 #' vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 #' gr <- gsub("ind..", "", rownames(vm))
 #' bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+#'
+#' # These data are hierarchically structured, since each of the seven individuals
+#' # contributes one crown, throat, and breast measurement. Rows sharing an
+#' # individual are therefore not independent, and we can resample whole
+#' # individuals rather than individual rows to account for it.
+#' ind <- substr(rownames(vm), 1, 4)
+#' bootcoldist(vm,
+#'   by = gr, cluster = ind,
+#'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+#' )
 #'
 #' # Run the same again, though as a simple colourspace model
 #' data(sicalis)
@@ -58,7 +87,15 @@
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
-bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...) {
+bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...,
+                        cluster = NULL, nesting = c("auto", "crossed", "nested")) {
+  # 'cluster' and 'nesting' deliberately sit after the dots, so that they have to
+  # be named in full. Were they to come before, R's partial matching would bind
+  # arguments meant for coldist() to them instead: coldist()'s 'n' is a prefix of
+  # 'nesting', so bootcoldist(vm, by = gr, n = c(1, 2, 2, 4)) would silently pass
+  # the receptor densities as the nesting structure.
+  nesting <- match.arg(nesting)
+
   # Define an inner function to calculate the geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
     # If any of the values are negative, return NaN
@@ -159,13 +196,28 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
 
+  # Validate the clustering variable, if one was given
+  if (!is.null(cluster)) {
+    if (length(cluster) != nrow(vismodeldata)) {
+      stop('argument "cluster" must have one entry per row of "vismodeldata"',
+        call. = FALSE
+      )
+    }
+    if (anyNA(cluster)) {
+      stop('argument "cluster" cannot contain missing values', call. = FALSE)
+    }
+    cluster <- as.character(cluster)
+  }
+
   # Reorder the visual model data by group
   sortinggroups <- order(by)
   vismodeldata <- vismodeldata[sortinggroups, ]
   by <- by[sortinggroups]
 
-  # Sample sizes for each group
-  samplesizes <- table(by)
+  # The clustering variable is row-wise, so it has to follow the same reordering
+  if (!is.null(cluster)) {
+    cluster <- cluster[sortinggroups]
+  }
 
   # Group-wise geometric mean deltaS for the empirical data
   empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
@@ -198,26 +250,16 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # split(dat, by) also works but is about twice as slow
   names(bygroup) <- unique(by)
 
-  # create vectors of indices to sample
-  its <- lapply(samplesizes, function(x) sample.int(x, x * boot.n, replace = TRUE))
+  # create the row indices to sample, for every group and every replicate.
+  # When 'cluster' is NULL this resamples rows independently within each group,
+  # otherwise it resamples whole clusters. See bootindices() below.
+  its <- bootindices(by, cluster, boot.n, nesting)
 
-  # use the indices from its to sample from the data
-  # returns a list with length = number of by
-  # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
-  bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
-
-  # next, split by bootstrap replicate
-  # preserving the same sample size as that original group had
-  #
-  # list with length = number of by
-  # and values = index for the bootstrap replicate that sample belongs to
-  bootindex <- lapply(samplesizes, function(x) as.character(rep(seq_len(boot.n), each = x)))
-
-  # use the index to break samples into bootstrap replicates
+  # use the indices to break each group's data into bootstrap replicates
   # returns a list with length = number of by
   # each entry is itself a list with length = number of replicates
   bootbygroup <- lapply(seq_along(bygroup), function(x) {
-    lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]] == z, ])
+    lapply(its[[x]], function(z) bygroup[[x]][z, , drop = FALSE])
   })
 
   # now take the column means for all bootstrapped by
@@ -339,4 +381,110 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   res
+}
+
+# Generate the row indices used by each bootstrap replicate.
+#
+# Returns a list with length = number of groups (in the order given by
+# unique(by)), each entry itself a list with length = boot.n, containing the
+# positions of the sampled rows *within that group's block of data*.
+#
+# `by` and `cluster` are assumed to have already been reordered by order(by).
+bootindices <- function(by, cluster, boot.n, nesting = "auto") {
+  groups <- unique(by)
+  samplesizes <- table(by)
+
+  # No clustering variable, so rows are resampled independently within each
+  # group. The sampling call is deliberately left as it was in earlier versions
+  # of pavo, so that results generated under a given seed are unchanged.
+  if (is.null(cluster)) {
+    its <- lapply(samplesizes, function(x) sample.int(x, x * boot.n, replace = TRUE))
+    its <- lapply(names(samplesizes), function(g) {
+      split(its[[g]], rep(seq_len(boot.n), each = samplesizes[[g]]))
+    })
+    names(its) <- names(samplesizes)
+    return(its[as.character(groups)])
+  }
+
+  # Row positions within each group's block, keyed by cluster. Clusters that
+  # contribute nothing to a group are simply absent from that group's entry.
+  # This list is kept in the order of unique(by), and is indexed by position
+  # rather than by name, since 'by' itself may be numeric.
+  rowsbycluster <- lapply(groups, function(g) {
+    split(seq_len(sum(by == g)), cluster[by == g])
+  })
+
+  # Do clusters span the levels of 'by' (crossed), or does each belong to a
+  # single level (nested)?
+  if (nesting == "auto") {
+    spread <- vapply(
+      split(as.character(by), cluster),
+      function(x) length(unique(x)) > 1L,
+      logical(1)
+    )
+    nesting <- if (any(spread)) "crossed" else "nested"
+  }
+
+  ids <- unique(cluster)
+
+  if (nesting == "crossed") {
+    # A single draw of clusters per replicate, shared across all groups, which
+    # preserves the pairing of observations within a cluster.
+    #
+    # A draw is rejected if it leaves any group with no rows at all, which can
+    # happen when a group is represented by only a handful of clusters.
+    present <- lapply(rowsbycluster, names)
+    complete <- function(x) all(vapply(present, function(p) any(x %in% p), logical(1)))
+
+    draws <- vector("list", boot.n)
+    attempts <- 0L
+    maxattempts <- 10L * boot.n
+
+    for (i in seq_len(boot.n)) {
+      repeat {
+        drawn <- sample(ids, length(ids), replace = TRUE)
+        if (complete(drawn)) break
+        attempts <- attempts + 1L
+        if (attempts > maxattempts) {
+          stop(
+            "Cluster resampling repeatedly left one or more groups empty. ",
+            "Some group(s) are represented by too few clusters to bootstrap.",
+            call. = FALSE
+          )
+        }
+      }
+      draws[[i]] <- drawn
+    }
+
+    its <- lapply(rowsbycluster, function(have) {
+      lapply(draws, function(d) unlist(have[d[d %in% names(have)]], use.names = FALSE))
+    })
+  } else {
+    # Clusters sit inside a single group, so each group's clusters are drawn
+    # independently of the others.
+    its <- lapply(rowsbycluster, function(have) {
+      replicate(boot.n,
+        unlist(have[sample(names(have), length(have), replace = TRUE)], use.names = FALSE),
+        simplify = FALSE
+      )
+    })
+  }
+
+  names(its) <- groups
+
+  # The effective sample size is now the number of clusters, not the number of
+  # rows, so flag the cases where there are too few of them to say much.
+  nclusters <- if (nesting == "crossed") {
+    length(ids)
+  } else {
+    min(vapply(rowsbycluster, length, integer(1)))
+  }
+  if (nclusters < 5) {
+    message(
+      "Fewer than five clusters are available for resampling, so the ",
+      "resulting confidence intervals should be interpreted with caution."
+    )
+  }
+
+  its
 }

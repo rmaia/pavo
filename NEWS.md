@@ -2,6 +2,18 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- `bootcoldist()` gains a `cluster` argument for hierarchically structured data,
+  such as several patches measured on each of a number of individuals, or
+  repeated measurements of the same individual. When it is supplied, bootstrap
+  replicates are built by resampling whole clusters rather than individual rows,
+  so that non-independent observations are kept together and the effective sample
+  size is the number of clusters. The accompanying `nesting` argument controls
+  whether clusters are treated as spanning the levels of `by` (`"crossed"`, where
+  a single draw of clusters is shared across groups and their pairing is
+  preserved) or as sitting within a single level (`"nested"`, where clusters are
+  drawn independently within each group), and defaults to detecting which of the
+  two applies. Empirical means are unaffected, and results are unchanged from
+  previous versions when `cluster` is left as NULL.
 - the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
 - `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
   only allow rotations in the 2D plane. Until now, 3D rotations were allowed and

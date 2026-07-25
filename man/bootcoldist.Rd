@@ -4,7 +4,16 @@
 \alias{bootcoldist}
 \title{Bootstrap colour distance confidence intervals}
 \usage{
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
+bootcoldist(
+  vismodeldata,
+  by,
+  boot.n = 1000,
+  alpha = 0.95,
+  raw = FALSE,
+  ...,
+  cluster = NULL,
+  nesting = c("auto", "crossed", "nested")
+)
 }
 \arguments{
 \item{vismodeldata}{(required) quantum catch colour data.
@@ -24,6 +33,27 @@ be returned, instead of the summary distances and CI's? Defaults to FALSE.}
 
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}
+
+\item{cluster}{an optional numeric or character vector, of the same length as
+\code{by}, identifying the higher-level unit (e.g. the individual, colony, or
+patch-bearing pattern) that each row belongs to. When supplied, resampling is
+done over whole clusters rather than over individual rows, which is
+appropriate whenever rows are not independent of one another. Defaults to
+NULL, in which case rows are resampled independently within each group, as in
+previous versions.}
+
+\item{nesting}{the relationship between \code{cluster} and \code{by}, one of \code{"auto"}
+(the default), \code{"crossed"}, or \code{"nested"}. Under \code{"crossed"}, clusters span
+the levels of \code{by} (e.g. the same individual contributes a crown, throat and
+breast measurement) and a single draw of clusters is shared across groups,
+which preserves the pairing between them. Under \code{"nested"}, each cluster
+belongs to exactly one group (e.g. repeated measurements of an individual
+within a population) and clusters are drawn independently within each group.
+\code{"auto"} chooses between the two by checking whether any cluster appears
+under more than one level of \code{by}. Ignored when \code{cluster} is NULL.
+
+Note that \code{cluster} and \code{nesting} follow \code{...}, and so must both be named in
+full when used.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped
@@ -49,6 +79,16 @@ data(sicalis)
 vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 gr <- gsub("ind..", "", rownames(vm))
 bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+
+# These data are hierarchically structured, since each of the seven individuals
+# contributes one crown, throat, and breast measurement. Rows sharing an
+# individual are therefore not independent, and we can resample whole
+# individuals rather than individual rows to account for it.
+ind <- substr(rownames(vm), 1, 4)
+bootcoldist(vm,
+  by = gr, cluster = ind,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
 
 # Run the same again, though as a simple colourspace model
 data(sicalis)
