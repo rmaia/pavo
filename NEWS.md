@@ -33,7 +33,7 @@
   for the requested `alpha`. Previously the lower quantile index rounded down to
   zero, and the interval failed to assemble with an unrelated message about
   mismatched dimnames. With the default `alpha` this affected any `boot.n` below
-  21.
+  20.
 - default values for some arguments in `explorespec()` and `sensmodel()` are now explicit in the function definition.
 - `as.rspec()` now works out of the box with `tibble`, rather than requiring users to pass a standard data.frame.
 - argument checks in `colspace()` internal functions (`dispace()`, `trispace()`, `hexagon()`, etc.) have been refactored (#263), with two minor user-facing consequences:

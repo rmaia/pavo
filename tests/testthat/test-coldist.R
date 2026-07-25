@@ -138,11 +138,12 @@ test_that("bootcoldist requires enough replicates for alpha", {
     "too small to estimate"
   )
 
-  # ...as does round(20 * 0.025), since R rounds halves to even
+  # 19 is the last replicate count that fails at the default alpha: 20 * 0.025
+  # lands a hair above one half in floating point, and so rounds up to 1
   expect_error(
     suppressWarnings(bootcoldist(
       vm,
-      by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 20
+      by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 19
     )),
     "too small to estimate"
   )
@@ -220,6 +221,63 @@ test_that("bootcoldist hierarchical resampling", {
     weber = 0.1, weber.achro = 0.1, boot.n = 50
   )))
   expect_identical(dim(nested), c(1L, 6L))
+})
+
+test_that("bootcoldist widens intervals for pseudoreplicated data", {
+  # Two populations of ten individuals, each measured five times. Individuals
+  # differ in colour, repeated measurements of one individual barely differ at
+  # all, so there are ten independent colours per group and not fifty.
+  #
+  # Note that the variation has to sit in the ratios between cones. Scaling
+  # every cone by the same factor is a pure intensity difference, and cancels
+  # out of the chromatic distance entirely.
+  set.seed(20250725)
+
+  nind <- 10
+  nrep <- 5
+  base <- c(u = 0.05, s = 0.10, m = 0.15, l = 0.20)
+
+  simulate_group <- function(group, shift) {
+    ind <- rep(seq_len(nind), each = nrep)
+    colours <- exp(matrix(rnorm(nind * length(base), 0, 0.25), nrow = nind))
+    catches <- colours[ind, ] * exp(rnorm(nind * nrep * length(base), 0, 0.01))
+    catches <- sweep(catches, 2, base * shift, "*")
+
+    out <- as.data.frame(catches)
+    names(out) <- names(base)
+    out$by <- group
+    out$cluster <- paste0(group, "_ind", ind)
+    out
+  }
+
+  # a chromatic difference between the groups, not merely a brighter one
+  dat <- rbind(
+    simulate_group("g1", c(u = 1, s = 1, m = 1, l = 1)),
+    simulate_group("g2", c(u = 1, s = 1, m = 1, l = 1.15))
+  )
+  qcatches <- dat[names(base)]
+
+  naive <- suppressMessages(bootcoldist(
+    qcatches,
+    by = dat$by, n = c(1, 2, 2, 4), weber = 0.1,
+    achromatic = FALSE, qcatch = "Qi", boot.n = 200
+  ))
+  clustered <- suppressMessages(bootcoldist(
+    qcatches,
+    by = dat$by, n = c(1, 2, 2, 4), weber = 0.1,
+    achromatic = FALSE, qcatch = "Qi", boot.n = 200,
+    cluster = dat$cluster
+  ))
+
+  expect_equal(clustered[, "dS.mean"], naive[, "dS.mean"])
+
+  width <- function(x) unname(x[, "dS.upr"] - x[, "dS.lwr"])
+  expect_gt(width(clustered), width(naive))
+
+  # Five near-identical measurements per individual, so the naive interval is
+  # roughly sqrt(5) too narrow. The bound is loose because ten clusters make
+  # for a noisy bootstrap
+  expect_gt(width(clustered) / width(naive), 1.3)
 })
 
 test_that("bootcoldist cluster errors", {
