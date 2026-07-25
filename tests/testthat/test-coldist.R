@@ -179,8 +179,8 @@ test_that("bootcoldist BCa intervals", {
   expect_identical(dimnames(bca), dimnames(perc))
 
   # Same resampling, same point estimates, only the limits move
-  expect_equal(bca[, "dS.mean"], perc[, "dS.mean"])
-  expect_equal(bca[, "dL.mean"], perc[, "dL.mean"])
+  expect_identical(bca[, "dS.mean"], perc[, "dS.mean"])
+  expect_identical(bca[, "dL.mean"], perc[, "dL.mean"])
   limits <- c("dS.lwr", "dS.upr", "dL.lwr", "dL.upr")
   expect_false(isTRUE(all.equal(bca[, limits], perc[, limits])))
 
@@ -206,7 +206,7 @@ test_that("bootcoldist BCa intervals", {
     cluster = ind, ci.type = "bca"
   ))
   expect_identical(dim(clustered), dim(bca))
-  expect_equal(clustered[, "dS.mean"], bca[, "dS.mean"])
+  expect_identical(clustered[, "dS.mean"], bca[, "dS.mean"])
 
   expect_error(
     bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, ci.type = "student"),
@@ -300,8 +300,8 @@ test_that("bootcoldist hierarchical resampling", {
 
   expect_identical(dim(clustered), c(3L, 6L))
   expect_identical(dimnames(clustered), dimnames(flat))
-  expect_equal(clustered[, "dS.mean"], flat[, "dS.mean"])
-  expect_equal(clustered[, "dL.mean"], flat[, "dL.mean"])
+  expect_identical(clustered[, "dS.mean"], flat[, "dS.mean"])
+  expect_identical(clustered[, "dL.mean"], flat[, "dL.mean"])
 
   # Confidence limits are still bracketing, and the resampling is reproducible
   expect_true(all(clustered[, "dS.lwr"] <= clustered[, "dS.upr"]))
@@ -311,7 +311,7 @@ test_that("bootcoldist hierarchical resampling", {
     by = gr, cluster = ind, n = c(1, 2, 3),
     weber = 0.1, weber.achro = 0.1, boot.n = 50
   ))
-  expect_equal(again, clustered)
+  expect_identical(again, clustered)
 
   # Clusters can also be supplied as a factor or as numbers
   set.seed(1)
@@ -320,7 +320,7 @@ test_that("bootcoldist hierarchical resampling", {
     by = gr, cluster = factor(ind), n = c(1, 2, 3),
     weber = 0.1, weber.achro = 0.1, boot.n = 50
   ))
-  expect_equal(asfactor, clustered)
+  expect_identical(asfactor, clustered)
 
   # Nested designs, where each individual belongs to a single group
   grp <- ifelse(ind %in% paste0("ind", 1:3), "g1", "g2")
@@ -378,7 +378,7 @@ test_that("bootcoldist widens intervals for pseudoreplicated data", {
     cluster = dat$cluster
   ))
 
-  expect_equal(clustered[, "dS.mean"], naive[, "dS.mean"])
+  expect_identical(clustered[, "dS.mean"], naive[, "dS.mean"])
 
   width <- function(x) unname(x[, "dS.upr"] - x[, "dS.lwr"])
   expect_gt(width(clustered), width(naive))

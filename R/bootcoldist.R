@@ -480,7 +480,12 @@ bootlimits <- function(bootvals, empvals, jackvals, probs) {
 # one of the groups, since there is then no jackknife estimate to be had.
 jackdist <- function(vismodeldata, by, cluster, gmean, attribs, arg0) {
   groups <- unique(by)
-  unitof <- if (is.null(cluster)) as.character(seq_along(by)) else cluster
+  # Without a clustering variable, every row is its own unit. Written out rather
+  # than as x %||% y, which needs R 4.4 and so is off limits here
+  unitof <- cluster
+  if (is.null(unitof)) {
+    unitof <- as.character(seq_along(by))
+  }
   units <- unique(unitof)
 
   groupmean <- function(rows) apply(vismodeldata[rows, , drop = FALSE], 2, gmean) # nolint
@@ -637,7 +642,7 @@ bootindices <- function(by, cluster, boot.n, nesting = "auto") {
   nclusters <- if (nesting == "crossed") {
     length(ids)
   } else {
-    min(vapply(rowsbycluster, length, integer(1)))
+    min(lengths(rowsbycluster))
   }
   if (nclusters < 5) {
     message(
