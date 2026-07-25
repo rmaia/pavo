@@ -123,6 +123,32 @@ test_that("bootcoldist", {
   raw2 <- bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 437, raw = TRUE)
   expect_identical(nrow(raw2), 437L)
 })
+
+test_that("bootcoldist requires enough replicates for alpha", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
+  gr <- gsub("ind..", "", rownames(vm))
+
+  # round(10 * 0.025) is 0, which would quietly drop a row from the interval
+  expect_error(
+    suppressWarnings(bootcoldist(
+      vm,
+      by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 10
+    )),
+    "too small to estimate"
+  )
+
+  # ...as does round(20 * 0.025), since R rounds halves to even
+  expect_error(
+    suppressWarnings(bootcoldist(
+      vm,
+      by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 20
+    )),
+    "too small to estimate"
+  )
+})
+
+test_that("bootcoldist arguments don't capture coldist arguments", {
   # Any formal placed before the dots can swallow an argument meant for
   # coldist() by partial matching. 'n' is a prefix of 'nesting', so keeping the
   # clustering arguments after the dots is what stops n = c(1, 2, 3) from being

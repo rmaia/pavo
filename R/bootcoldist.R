@@ -325,6 +325,20 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   # Order, find quantiles, and set up deltaS confidence intervals
   quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
+
+  # Too few replicates for the requested alpha rounds the lower index down to
+  # zero, which drops a row rather than selecting one, and the interval then
+  # fails to assemble with an error that says nothing useful.
+  if (any(quantileindices < 1)) {
+    stop(
+      "boot.n (", boot.n, ") is too small to estimate a ", alpha,
+      " confidence interval, since its lower limit falls below the first ",
+      "bootstrap replicate. Increase boot.n to at least ",
+      ceiling(2 / (1 - alpha)), " for this value of alpha.",
+      call. = FALSE
+    )
+  }
+
   bootdS <- apply(bootdS, 2, sort)
   dsCI <- bootdS[quantileindices, , drop = FALSE]
   rownames(dsCI) <- c("dS.lwr", "dS.upr")
