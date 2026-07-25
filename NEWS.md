@@ -2,6 +2,15 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- `bootcoldist()` gains a `ci.type` argument, allowing bias-corrected and
+  accelerated (BCa) confidence limits as an alternative to the percentile limits
+  it has always returned. Colour distances are bounded below by zero and
+  typically right-skewed, so percentile limits tend to sit off-centre; BCa
+  corrects for that skew and for the position of the empirical distance within
+  the bootstrap distribution. The acceleration term is estimated by a jackknife
+  that leaves out one row at a time, or one cluster at a time where `cluster` is
+  supplied. The default remains `"perc"`, so results are unchanged unless it is
+  asked for.
 - `bootcoldist()` gains a `cluster` argument for hierarchically structured data,
   such as several patches measured on each of a number of individuals, or
   repeated measurements of the same individual. When it is supplied, bootstrap

@@ -124,6 +124,115 @@ test_that("bootcoldist", {
   expect_identical(nrow(raw2), 437L)
 })
 
+test_that("bootlimits", {
+  # A known bootstrap distribution, so the limits can be checked by hand
+  bootvals <- matrix(as.numeric(seq_len(1000)), ncol = 1, dimnames = list(NULL, "a-b"))
+  probs <- c(0.025, 0.975)
+
+  # Without jackknife values these are plain percentiles: the 25th and 975th
+  # of a thousand sorted replicates
+  plain <- bootlimits(bootvals, c(`a-b` = 500), NULL, probs)
+  expect_identical(unname(plain[, 1]), c(25, 975))
+  expect_identical(colnames(plain), "a-b")
+
+  # A symmetric jackknife has no skew to correct for, and an empirical value at
+  # the median of the bootstrap distribution has no bias, so BCa should return
+  # the percentile limits unchanged
+  symmetric <- matrix(c(-2, -1, 0, 1, 2), ncol = 1)
+  expect_identical(
+    bootlimits(bootvals, c(`a-b` = 500.5), symmetric, probs),
+    plain
+  )
+
+  # An empirical value sitting below the middle of the bootstrap distribution
+  # pulls both limits down, and above it pushes them up
+  low <- bootlimits(bootvals, c(`a-b` = 250), symmetric, probs)
+  high <- bootlimits(bootvals, c(`a-b` = 750), symmetric, probs)
+  expect_true(all(low[, 1] < plain[, 1]))
+  expect_true(all(high[, 1] > plain[, 1]))
+
+  # Limits stay inside the bootstrap distribution however extreme the correction
+  extreme <- bootlimits(bootvals, c(`a-b` = 1), symmetric, probs)
+  expect_gte(min(extreme), 1)
+  expect_lte(max(extreme), 1000)
+})
+
+test_that("bootcoldist BCa intervals", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
+  gr <- gsub("ind..", "", rownames(vm))
+  ind <- substr(rownames(vm), 1, 4)
+
+  set.seed(1)
+  perc <- suppressWarnings(bootcoldist(
+    vm,
+    by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 200
+  ))
+  set.seed(1)
+  bca <- suppressWarnings(bootcoldist(
+    vm,
+    by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 200,
+    ci.type = "bca"
+  ))
+
+  expect_identical(dim(bca), dim(perc))
+  expect_identical(dimnames(bca), dimnames(perc))
+
+  # Same resampling, same point estimates, only the limits move
+  expect_equal(bca[, "dS.mean"], perc[, "dS.mean"])
+  expect_equal(bca[, "dL.mean"], perc[, "dL.mean"])
+  limits <- c("dS.lwr", "dS.upr", "dL.lwr", "dL.upr")
+  expect_false(isTRUE(all.equal(bca[, limits], perc[, limits])))
+
+  expect_true(all(bca[, "dS.lwr"] <= bca[, "dS.upr"]))
+  expect_true(all(bca[, "dL.lwr"] <= bca[, "dL.upr"]))
+
+  # Limits are order statistics of the bootstrap distribution, so they cannot
+  # fall outside the range of the distances that were actually resampled
+  set.seed(1)
+  rawvals <- suppressWarnings(bootcoldist(
+    vm,
+    by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 200,
+    raw = TRUE
+  ))
+  expect_gte(bca["B-C", "dS.lwr"], min(rawvals[["B-C_dS"]]))
+  expect_lte(bca["B-C", "dS.upr"], max(rawvals[["B-C_dS"]]))
+
+  # BCa also works with cluster resampling, jackknifing whole individuals
+  set.seed(1)
+  clustered <- suppressWarnings(bootcoldist(
+    vm,
+    by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 200,
+    cluster = ind, ci.type = "bca"
+  ))
+  expect_identical(dim(clustered), dim(bca))
+  expect_equal(clustered[, "dS.mean"], bca[, "dS.mean"])
+
+  expect_error(
+    bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, ci.type = "student"),
+    "should be one of"
+  )
+})
+
+test_that("bootcoldist falls back to percentile limits", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
+
+  # A group of one cannot be jackknifed, since leaving its only row out leaves
+  # nothing to take a mean of
+  gr <- gsub("ind..", "", rownames(vm))
+  gr[1] <- "solo"
+
+  expect_warning(
+    bootcoldist(
+      vm,
+      by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1, boot.n = 100,
+      ci.type = "bca"
+    ),
+    "[Ff]alling back to percentile"
+  )
+})
+
 test_that("bootcoldist requires enough replicates for alpha", {
   data(sicalis)
   vm <- vismodel(sicalis, visual = "apis", achromatic = "l")

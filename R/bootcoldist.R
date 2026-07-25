@@ -32,8 +32,17 @@
 #'  `"auto"` chooses between the two by checking whether any cluster appears
 #'  under more than one level of `by`. Ignored when `cluster` is NULL.
 #'
-#'  Note that `cluster` and `nesting` follow `...`, and so must both be named in
-#'  full when used.
+#' @param ci.type the type of confidence interval, either `"perc"` (the default)
+#'  for percentiles of the bootstrap distribution, or `"bca"` for bias-corrected
+#'  and accelerated limits. Colour distances are bounded below by zero and are
+#'  usually right-skewed, which is the situation in which percentile limits sit
+#'  off-centre; BCa shifts them to account for both that skew and for where the
+#'  empirical distance falls within the bootstrap distribution. It costs one
+#'  additional jackknife pass, leaving out a single row at a time, or a whole
+#'  cluster at a time when `cluster` is given.
+#'
+#'  Note that `cluster`, `nesting` and `ci.type` follow `...`, and so must all be
+#'  named in full when used.
 #'
 #' @inherit getspec details
 #'
@@ -82,19 +91,21 @@
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
-#' @importFrom stats aggregate setNames
+#' @importFrom stats aggregate setNames pnorm qnorm
 #'
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...,
-                        cluster = NULL, nesting = c("auto", "crossed", "nested")) {
-  # 'cluster' and 'nesting' deliberately sit after the dots, so that they have to
-  # be named in full. Were they to come before, R's partial matching would bind
+                        cluster = NULL, nesting = c("auto", "crossed", "nested"),
+                        ci.type = c("perc", "bca")) {
+  # These arguments deliberately sit after the dots, so that they have to be
+  # named in full. Were they to come before, R's partial matching would bind
   # arguments meant for coldist() to them instead: coldist()'s 'n' is a prefix of
   # 'nesting', so bootcoldist(vm, by = gr, n = c(1, 2, 2, 4)) would silently pass
   # the receptor densities as the nesting structure.
   nesting <- match.arg(nesting)
+  ci.type <- match.arg(ci.type)
 
   # Define an inner function to calculate the geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
@@ -324,7 +335,8 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
-  quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
+  probs <- (1 + c(-alpha, alpha)) / 2
+  quantileindices <- round(boot.n * probs)
 
   # Too few replicates for the requested alpha rounds the lower index down to
   # zero, which drops a row rather than selecting one, and the interval then
@@ -339,12 +351,23 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     )
   }
 
+  # For BCa limits, each contrast needs its own pair of percentiles, which in
+  # turn need leave-one-out distances. The jackknife is skipped entirely for
+  # plain percentile limits, and falls back to them if it cannot be computed.
+  jack <- NULL
+  if (ci.type == "bca") {
+    jack <- jackdist(vismodeldata, by, cluster, gmean, attribs, arg0)
+  }
+
   bootdS <- apply(bootdS, 2, sort)
-  dsCI <- bootdS[quantileindices, , drop = FALSE]
-  rownames(dsCI) <- c("dS.lwr", "dS.upr")
 
   # Ensure names match with empirical values (even though they should match already)
-  dsCI <- dsCI[, names(empdS), drop = FALSE]
+  dsCI <- bootlimits(
+    bootdS[, names(empdS), drop = FALSE], empdS,
+    if (is.null(jack)) NULL else jack$dS[, names(empdS), drop = FALSE],
+    probs
+  )
+  rownames(dsCI) <- c("dS.lwr", "dS.upr")
 
   # Define empirical deltaS mean
   dS.mean <- empdS
@@ -370,11 +393,14 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     )
 
     bootdL <- apply(bootdL, 2, sort)
-    dlCI <- bootdL[quantileindices, , drop = FALSE]
-    rownames(dlCI) <- c("dL.lwr", "dL.upr")
 
     # Ensure names match with empirical values (even though they should match already)
-    dlCI <- dlCI[, names(empdL), drop = FALSE]
+    dlCI <- bootlimits(
+      bootdL[, names(empdL), drop = FALSE], empdL,
+      if (is.null(jack)) NULL else jack$dL[, names(empdL), drop = FALSE],
+      probs
+    )
+    rownames(dlCI) <- c("dL.lwr", "dL.upr")
 
     # Define empirical deltaL mean
     dL.mean <- empdL
@@ -395,6 +421,126 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   res
+}
+
+# Confidence limits from a matrix of bootstrap distances, sorted within each
+# column, with one column per pairwise contrast.
+#
+# Without jackknife values these are plain percentiles of the bootstrap
+# distribution. With them, the limits are bias-corrected and accelerated: the
+# bias term shifts the interval according to where the empirical distance sits
+# within the bootstrap distribution, and the acceleration term, taken from the
+# skewness of the leave-one-out distances, allows for the standard error of a
+# distance changing with the size of that distance.
+bootlimits <- function(bootvals, empvals, jackvals, probs) {
+  boot.n <- nrow(bootvals)
+  indices <- matrix(round(boot.n * probs), nrow = 2, ncol = ncol(bootvals))
+
+  if (!is.null(jackvals)) {
+    # Median bias, as the proportion of replicates below the empirical value.
+    # Held away from zero and one, since either sends the correction to infinity
+    # and takes the whole interval with it.
+    below <- colMeans(bootvals < rep(empvals, each = boot.n))
+    below <- pmin(pmax(below, 1 / (2 * boot.n)), 1 - 1 / (2 * boot.n))
+    z0 <- qnorm(below)
+
+    # Acceleration, from the skewness of the leave-one-out distances. Identical
+    # jackknife values leave it undefined, in which case there is no skew to
+    # correct for anyway
+    deviations <- -sweep(jackvals, 2, colMeans(jackvals))
+    accel <- colSums(deviations^3) / (6 * colSums(deviations^2)^1.5)
+    accel[!is.finite(accel)] <- 0
+
+    z <- qnorm(probs)
+    adjusted <- vapply(seq_along(z0), function(i) {
+      pnorm(z0[i] + (z0[i] + z) / (1 - accel[i] * (z0[i] + z)))
+    }, numeric(2))
+
+    # A contrast whose correction blows up keeps its uncorrected percentiles
+    usable <- apply(is.finite(adjusted), 2, all)
+    indices[, usable] <- round(boot.n * adjusted[, usable, drop = FALSE])
+  }
+
+  indices <- pmin(pmax(indices, 1L), boot.n)
+
+  limits <- vapply(
+    seq_len(ncol(bootvals)),
+    function(i) bootvals[indices[, i], i],
+    numeric(2)
+  )
+  colnames(limits) <- colnames(bootvals)
+  limits
+}
+
+# Leave-one-out colour distances, for the acceleration term of a BCa interval.
+# The unit left out is a single row, or a whole cluster where one is given, to
+# match whatever the bootstrap itself is resampling.
+#
+# Returns NULL, with a warning, if any unit cannot be left out without emptying
+# one of the groups, since there is then no jackknife estimate to be had.
+jackdist <- function(vismodeldata, by, cluster, gmean, attribs, arg0) {
+  groups <- unique(by)
+  unitof <- if (is.null(cluster)) as.character(seq_along(by)) else cluster
+  units <- unique(unitof)
+
+  groupmean <- function(rows) apply(vismodeldata[rows, , drop = FALSE], 2, gmean) # nolint
+
+  # Leaving out a unit only changes the groups it contributed to, so the rest of
+  # the group means carry over untouched
+  empirical <- do.call(rbind, lapply(groups, function(g) groupmean(by == g)))
+  rownames(empirical) <- groups
+
+  jackmeans <- lapply(units, function(u) {
+    left.out <- unitof == u
+    means <- empirical
+    for (g in unique(by[left.out])) {
+      keep <- by == g & !left.out
+      if (!any(keep)) {
+        return(NULL)
+      }
+      means[match(g, groups), ] <- groupmean(keep)
+    }
+    means
+  })
+
+  if (any(vapply(jackmeans, is.null, logical(1)))) {
+    warning(
+      "Accelerated limits need every group to survive leaving out one ",
+      "observation, and at least one group here does not. Falling back to ",
+      "percentile limits.",
+      call. = FALSE
+    )
+    return(NULL)
+  }
+
+  jackcd <- lapply(jackmeans, function(x) {
+    x <- as.data.frame(x)
+    attributes(x)[names(attribs)] <- attribs
+
+    tmparg <- arg0
+    tmparg$modeldata <- x
+    tryCatch(suppressMessages(do.call(coldist, tmparg)), error = function(e) NULL)
+  })
+
+  if (any(vapply(jackcd, is.null, logical(1)))) {
+    warning(
+      "Jackknife colour distances could not be calculated, so percentile ",
+      "limits were used in place of accelerated ones.",
+      call. = FALSE
+    )
+    return(NULL)
+  }
+
+  bind <- function(what) {
+    do.call(rbind, lapply(jackcd, function(x) {
+      setNames(x[[what]], paste(x$patch1, x$patch2, sep = "-"))
+    }))
+  }
+
+  list(
+    dS = bind("dS"),
+    dL = if (isTRUE(arg0$achromatic)) bind("dL") else NULL
+  )
 }
 
 # Generate the row indices used by each bootstrap replicate.

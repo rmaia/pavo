@@ -12,7 +12,8 @@ bootcoldist(
   raw = FALSE,
   ...,
   cluster = NULL,
-  nesting = c("auto", "crossed", "nested")
+  nesting = c("auto", "crossed", "nested"),
+  ci.type = c("perc", "bca")
 )
 }
 \arguments{
@@ -50,10 +51,19 @@ which preserves the pairing between them. Under \code{"nested"}, each cluster
 belongs to exactly one group (e.g. repeated measurements of an individual
 within a population) and clusters are drawn independently within each group.
 \code{"auto"} chooses between the two by checking whether any cluster appears
-under more than one level of \code{by}. Ignored when \code{cluster} is NULL.
+under more than one level of \code{by}. Ignored when \code{cluster} is NULL.}
 
-Note that \code{cluster} and \code{nesting} follow \code{...}, and so must both be named in
-full when used.}
+\item{ci.type}{the type of confidence interval, either \code{"perc"} (the default)
+for percentiles of the bootstrap distribution, or \code{"bca"} for bias-corrected
+and accelerated limits. Colour distances are bounded below by zero and are
+usually right-skewed, which is the situation in which percentile limits sit
+off-centre; BCa shifts them to account for both that skew and for where the
+empirical distance falls within the bootstrap distribution. It costs one
+additional jackknife pass, leaving out a single row at a time, or a whole
+cluster at a time when \code{cluster} is given.
+
+Note that \code{cluster}, \code{nesting} and \code{ci.type} follow \code{...}, and so must all be
+named in full when used.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped

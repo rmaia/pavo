@@ -1,6 +1,6 @@
 # Hierarchical resampling in `bootcoldist()`
 
-**Status: implemented on `bootcoldist_heirarchical`.** Kept for the rationale; the code
+**Status: implemented on `bootcoldist_enhancement`.** Kept for the rationale; the code
 below is the sketch, not the final version (see `R/bootcoldist.R` for that).
 
 Design sketch for adding cluster-aware (nested/crossed) bootstrapping. Nothing here changes
