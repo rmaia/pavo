@@ -15,3 +15,5 @@ vignette/fig/
 .Rapp.history
 .Rproj.user
 pavo.Rproj
+.claude/worktrees/vigilant-mestorf/
+R_temp/

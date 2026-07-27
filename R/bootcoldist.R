@@ -13,8 +13,39 @@
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
 #' @param raw should the full set of bootstrapped distances (equal in length to boot.n)
 #' be returned, instead of the summary distances and CI's? Defaults to FALSE.
+#' Each row is one bootstrap replicate, so values sharing a row, whether for
+#' different contrasts or for dS and dL, were calculated from the same resampled
+#' data and can be compared with one another.
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
+#' @param cluster an optional numeric or character vector, of the same length as
+#'  `by`, identifying the higher-level unit (e.g. the individual, colony, or
+#'  patch-bearing pattern) that each row belongs to. When supplied, resampling is
+#'  done over whole clusters rather than over individual rows, which is
+#'  appropriate whenever rows are not independent of one another. Defaults to
+#'  NULL, in which case rows are resampled independently within each group, as in
+#'  previous versions.
+#' @param nesting the relationship between `cluster` and `by`, one of `"auto"`
+#'  (the default), `"crossed"`, or `"nested"`. Under `"crossed"`, clusters span
+#'  the levels of `by` (e.g. the same individual contributes a crown, throat and
+#'  breast measurement) and a single draw of clusters is shared across groups,
+#'  which preserves the pairing between them. Under `"nested"`, each cluster
+#'  belongs to exactly one group (e.g. repeated measurements of an individual
+#'  within a population) and clusters are drawn independently within each group.
+#'  `"auto"` chooses between the two by checking whether any cluster appears
+#'  under more than one level of `by`. Ignored when `cluster` is NULL.
+#'
+#' @param ci.type the type of confidence interval, either `"perc"` (the default)
+#'  for percentiles of the bootstrap distribution, or `"bca"` for bias-corrected
+#'  and accelerated limits. Colour distances are bounded below by zero and are
+#'  usually right-skewed, which is the situation in which percentile limits sit
+#'  off-centre; BCa shifts them to account for both that skew and for where the
+#'  empirical distance falls within the bootstrap distribution. It costs one
+#'  additional jackknife pass, leaving out a single row at a time, or a whole
+#'  cluster at a time when `cluster` is given.
+#'
+#'  Note that `cluster`, `nesting` and `ci.type` follow `...`, and so must all be
+#'  named in full when used.
 #'
 #' @inherit getspec details
 #'
@@ -30,6 +61,16 @@
 #' vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
 #' gr <- gsub("ind..", "", rownames(vm))
 #' bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+#'
+#' # These data are hierarchically structured, since each of the seven individuals
+#' # contributes one crown, throat, and breast measurement. Rows sharing an
+#' # individual are therefore not independent, and we can resample whole
+#' # individuals rather than individual rows to account for it.
+#' ind <- substr(rownames(vm), 1, 4)
+#' bootcoldist(vm,
+#'   by = gr, cluster = ind,
+#'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+#' )
 #'
 #' # Run the same again, though as a simple colourspace model
 #' data(sicalis)
@@ -53,12 +94,22 @@
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
-#' @importFrom stats aggregate setNames
+#' @importFrom stats setNames pnorm qnorm
 #'
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
 
-bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...) {
+bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...,
+                        cluster = NULL, nesting = c("auto", "crossed", "nested"),
+                        ci.type = c("perc", "bca")) {
+  # These arguments deliberately sit after the dots, so that they have to be
+  # named in full. Were they to come before, R's partial matching would bind
+  # arguments meant for coldist() to them instead: coldist()'s 'n' is a prefix of
+  # 'nesting', so bootcoldist(vm, by = gr, n = c(1, 2, 2, 4)) would silently pass
+  # the receptor densities as the nesting structure.
+  nesting <- match.arg(nesting)
+  ci.type <- match.arg(ci.type)
+
   # Define an inner function to calculate the geometric mean
   gmean <- function(x, na.rm = TRUE, zero.propagate = FALSE) {
     # If any of the values are negative, return NaN
@@ -85,15 +136,44 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   num_cols <- vapply(vismodeldata, is.numeric, logical(1))
   vismodeldata[, !num_cols] <- 0
 
-  # Rescale any x-y-z positional data by adding a constant
-  # Only applies to colspace objects, since (unlike for RN data) colour distances
-  # are calculated based on coordinates, rather than qcatches. But this
-  # caused problems when calculating geometric means, because coordinate
-  # data often contain negative values. So this re-scales all coordinate
-  # systems so they can never be negative, without affecting
-  # the distances between points.
-  vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] <-
-    vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] + 100
+  # Decide how each column is averaged when a group is summarised.
+  #
+  # Receptor-noise distances are linear in the log of the quantum catches, so
+  # the centroid of a group of catches is their geometric mean. Distances
+  # between colspace objects are measured in their coordinates directly, so
+  # there the centroid is the arithmetic mean of those coordinates. Luminance
+  # channels stay geometric, since achromatic contrast is a ratio.
+  #
+  # Coordinates are listed per space, and have to match the columns coldist()
+  # reads for that space.
+  spacecoordinates <- list(
+    dispace = "x",
+    trispace = c("x", "y"),
+    tcs = c("x", "y", "z"),
+    hexagon = c("x", "y"),
+    categorical = c("x", "y"),
+    CIEXYZ = c("x", "y"),
+    CIELAB = c("L", "a", "b"),
+    CIELCh = c("L", "a", "b"),
+    coc = c("x", "y"),
+    segment = c("MS", "LM")
+  )
+
+  coordinates <- NULL
+  if (inherits(vismodeldata, "colspace")) {
+    coordinates <- spacecoordinates[[attr(vismodeldata, "clrsp")]]
+  }
+  arithmetic <- names(vismodeldata) %in% coordinates
+
+  # Summarise a set of rows down to one value per column
+  groupsummary <- function(x) {
+    x <- as.matrix(x)
+    out <- vapply(seq_len(ncol(x)), function(i) {
+      if (arithmetic[i]) mean(x[, i], na.rm = TRUE) else gmean(x[, i])
+    }, numeric(1))
+    names(out) <- colnames(x)
+    out
+  }
 
   # Start preparing the arguments
 
@@ -159,18 +239,35 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
 
+  # Validate the clustering variable, if one was given
+  if (!is.null(cluster)) {
+    if (length(cluster) != nrow(vismodeldata)) {
+      stop('argument "cluster" must have one entry per row of "vismodeldata"',
+        call. = FALSE
+      )
+    }
+    if (anyNA(cluster)) {
+      stop('argument "cluster" cannot contain missing values', call. = FALSE)
+    }
+    cluster <- as.character(cluster)
+  }
+
   # Reorder the visual model data by group
   sortinggroups <- order(by)
   vismodeldata <- vismodeldata[sortinggroups, ]
   by <- by[sortinggroups]
 
-  # Sample sizes for each group
-  samplesizes <- table(by)
+  # The clustering variable is row-wise, so it has to follow the same reordering
+  if (!is.null(cluster)) {
+    cluster <- cluster[sortinggroups]
+  }
 
-  # Group-wise geometric mean deltaS for the empirical data
-  empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
-  row.names(empgroupmeans) <- empgroupmeans[, 1]
-  empgroupmeans <- empgroupmeans[, -1]
+  # Group-wise mean deltaS for the empirical data
+  empgroupmeans <- do.call(rbind, lapply(unique(by), function(g) {
+    groupsummary(vismodeldata[by == g, , drop = FALSE])
+  }))
+  row.names(empgroupmeans) <- unique(by)
+  empgroupmeans <- as.data.frame(empgroupmeans)
 
   # Set the attributes for the grouped means
   datattributes <- grep("names", names(attributes(vismodeldata)),
@@ -198,33 +295,23 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # split(dat, by) also works but is about twice as slow
   names(bygroup) <- unique(by)
 
-  # create vectors of indices to sample
-  its <- lapply(samplesizes, function(x) sample.int(x, x * boot.n, replace = TRUE))
+  # create the row indices to sample, for every group and every replicate.
+  # When 'cluster' is NULL this resamples rows independently within each group,
+  # otherwise it resamples whole clusters. See bootindices() below.
+  its <- bootindices(by, cluster, boot.n, nesting)
 
-  # use the indices from its to sample from the data
-  # returns a list with length = number of by
-  # and rows = (sample size for that group) * (the number of bootstrap replicates) in each
-  bootsamples <- lapply(seq_along(bygroup), function(x) bygroup[[x]][its[[x]], ])
-
-  # next, split by bootstrap replicate
-  # preserving the same sample size as that original group had
-  #
-  # list with length = number of by
-  # and values = index for the bootstrap replicate that sample belongs to
-  bootindex <- lapply(samplesizes, function(x) as.character(rep(seq_len(boot.n), each = x)))
-
-  # use the index to break samples into bootstrap replicates
+  # use the indices to break each group's data into bootstrap replicates
   # returns a list with length = number of by
   # each entry is itself a list with length = number of replicates
   bootbygroup <- lapply(seq_along(bygroup), function(x) {
-    lapply(unique(bootindex[[x]]), function(z) bootsamples[[x]][bootindex[[x]] == z, ])
+    lapply(its[[x]], function(z) bygroup[[x]][z, , drop = FALSE])
   })
 
   # now take the column means for all bootstrapped by
   # returns a list with length = number of by
-  # each row in these = the (geometric) mean of bootstrap replicates
+  # each row in these = the mean of bootstrap replicates
   groupcolmeans <- lapply(bootbygroup, function(z) {
-    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))) # nolint
+    do.call(rbind, lapply(z, groupsummary))
   })
 
   # now "split and merge"
@@ -262,10 +349,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     bootcd <- future_lapply(bootgrouped, function(z) {
       p()
       tryCatch(suppressMessages(tmpbootcdfoo(z)),
-        error = function(e) NULL
+        error = function(e) e
       )
     }, future.seed = TRUE)
   })
+
+  checkreplicates(bootcd, boot.n)
 
   # Extract deltaS values from bootcd and restructure in one dataframe
   bootdS <- do.call(
@@ -275,20 +364,52 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     })
   )
 
-  # Error handling: if the dimension of bootdS is less than boot.n,
-  # stop function and print error message
-  if (dim(bootdS)[1] < boot.n) {
-    stop("Bootstrap sampling encountered errors.", call. = FALSE)
+  # Backstop for a replicate that returned a different set of contrasts instead
+  # of failing outright, which would leave the distances the wrong shape
+  if (nrow(bootdS) < boot.n) {
+    stop(
+      "Bootstrap replicates did not all return the same colour distances.",
+      call. = FALSE
+    )
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
-  quantileindices <- round(boot.n * ((1 + c(-alpha, alpha)) / 2))
-  bootdS <- apply(bootdS, 2, sort)
-  dsCI <- bootdS[quantileindices, , drop = FALSE]
-  rownames(dsCI) <- c("dS.lwr", "dS.upr")
+  probs <- (1 + c(-alpha, alpha)) / 2
+  quantileindices <- round(boot.n * probs)
+
+  # Too few replicates for the requested alpha rounds the lower index down to
+  # zero, which drops a row rather than selecting one, and the interval then
+  # fails to assemble with an error that says nothing useful.
+  if (any(quantileindices < 1)) {
+    stop(
+      "boot.n (", boot.n, ") is too small to estimate a ", alpha,
+      " confidence interval, since its lower limit falls below the first ",
+      "bootstrap replicate. Increase boot.n to at least ",
+      ceiling(2 / (1 - alpha)), " for this value of alpha.",
+      call. = FALSE
+    )
+  }
+
+  # For BCa limits, each contrast needs its own pair of percentiles, which in
+  # turn need leave-one-out distances. The jackknife is skipped entirely for
+  # plain percentile limits, and falls back to them if it cannot be computed.
+  jack <- NULL
+  if (ci.type == "bca") {
+    jack <- jackdist(vismodeldata, by, cluster, groupsummary, attribs, arg0)
+  }
+
+  # Only the copy used for the quantiles is sorted. Sorting bootdS itself would
+  # order every contrast independently, which breaks the correspondence between
+  # them, and rows of the raw output are meant to be whole replicates.
+  sorteddS <- apply(bootdS, 2, sort)
 
   # Ensure names match with empirical values (even though they should match already)
-  dsCI <- dsCI[, names(empdS), drop = FALSE]
+  dsCI <- bootlimits(
+    sorteddS[, names(empdS), drop = FALSE], empdS,
+    if (is.null(jack)) NULL else jack$dS[, names(empdS), drop = FALSE],
+    probs
+  )
+  rownames(dsCI) <- c("dS.lwr", "dS.upr")
 
   # Define empirical deltaS mean
   dS.mean <- empdS
@@ -313,12 +434,15 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       })
     )
 
-    bootdL <- apply(bootdL, 2, sort)
-    dlCI <- bootdL[quantileindices, , drop = FALSE]
-    rownames(dlCI) <- c("dL.lwr", "dL.upr")
+    sorteddL <- apply(bootdL, 2, sort)
 
     # Ensure names match with empirical values (even though they should match already)
-    dlCI <- dlCI[, names(empdL), drop = FALSE]
+    dlCI <- bootlimits(
+      sorteddL[, names(empdL), drop = FALSE], empdL,
+      if (is.null(jack)) NULL else jack$dL[, names(empdL), drop = FALSE],
+      probs
+    )
+    rownames(dlCI) <- c("dL.lwr", "dL.upr")
 
     # Define empirical deltaL mean
     dL.mean <- empdL
@@ -339,4 +463,258 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   res
+}
+
+# Check the results of the bootstrap replicates, where a replicate that failed
+# is the condition that stopped it rather than a set of distances.
+#
+# One failure is enough to stop the whole run. The resamples that fail are not a
+# random subset of them, being the awkward ones by definition, so quietly
+# carrying on with those that survived would bias the distribution.
+checkreplicates <- function(bootcd, boot.n) {
+  failed <- vapply(bootcd, inherits, logical(1), what = "error")
+
+  if (any(failed)) {
+    stop(
+      sum(failed), " of ", boot.n, " bootstrap replicates failed, the first ",
+      "of them reporting: ", conditionMessage(bootcd[[which(failed)[1]]]),
+      call. = FALSE
+    )
+  }
+
+  invisible(bootcd)
+}
+
+# Confidence limits from a matrix of bootstrap distances, sorted within each
+# column, with one column per pairwise contrast.
+#
+# Without jackknife values these are plain percentiles of the bootstrap
+# distribution. With them, the limits are bias-corrected and accelerated: the
+# bias term shifts the interval according to where the empirical distance sits
+# within the bootstrap distribution, and the acceleration term, taken from the
+# skewness of the leave-one-out distances, allows for the standard error of a
+# distance changing with the size of that distance.
+bootlimits <- function(bootvals, empvals, jackvals, probs) {
+  boot.n <- nrow(bootvals)
+  indices <- matrix(round(boot.n * probs), nrow = 2, ncol = ncol(bootvals))
+
+  if (!is.null(jackvals)) {
+    # Median bias, as the proportion of replicates below the empirical value.
+    # Held away from zero and one, since either sends the correction to infinity
+    # and takes the whole interval with it.
+    below <- colMeans(bootvals < rep(empvals, each = boot.n))
+    below <- pmin(pmax(below, 1 / (2 * boot.n)), 1 - 1 / (2 * boot.n))
+    z0 <- qnorm(below)
+
+    # Acceleration, from the skewness of the leave-one-out distances. Identical
+    # jackknife values leave it undefined, in which case there is no skew to
+    # correct for anyway
+    deviations <- -sweep(jackvals, 2, colMeans(jackvals))
+    accel <- colSums(deviations^3) / (6 * colSums(deviations^2)^1.5)
+    accel[!is.finite(accel)] <- 0
+
+    z <- qnorm(probs)
+    adjusted <- vapply(seq_along(z0), function(i) {
+      pnorm(z0[i] + (z0[i] + z) / (1 - accel[i] * (z0[i] + z)))
+    }, numeric(2))
+
+    # A contrast whose correction blows up keeps its uncorrected percentiles
+    usable <- apply(is.finite(adjusted), 2, all)
+    indices[, usable] <- round(boot.n * adjusted[, usable, drop = FALSE])
+  }
+
+  indices <- pmin(pmax(indices, 1L), boot.n)
+
+  limits <- vapply(
+    seq_len(ncol(bootvals)),
+    function(i) bootvals[indices[, i], i],
+    numeric(2)
+  )
+  colnames(limits) <- colnames(bootvals)
+  limits
+}
+
+# Leave-one-out colour distances, for the acceleration term of a BCa interval.
+# The unit left out is a single row, or a whole cluster where one is given, to
+# match whatever the bootstrap itself is resampling.
+#
+# Returns NULL, with a warning, if any unit cannot be left out without emptying
+# one of the groups, since there is then no jackknife estimate to be had.
+jackdist <- function(vismodeldata, by, cluster, groupsummary, attribs, arg0) {
+  groups <- unique(by)
+  # Without a clustering variable, every row is its own unit. Written out rather
+  # than as x %||% y, which needs R 4.4 and so is off limits here
+  unitof <- cluster
+  if (is.null(unitof)) {
+    unitof <- as.character(seq_along(by))
+  }
+  units <- unique(unitof)
+
+  groupmean <- function(rows) groupsummary(vismodeldata[rows, , drop = FALSE])
+
+  # Leaving out a unit only changes the groups it contributed to, so the rest of
+  # the group means carry over untouched
+  empirical <- do.call(rbind, lapply(groups, function(g) groupmean(by == g)))
+  rownames(empirical) <- groups
+
+  jackmeans <- lapply(units, function(u) {
+    left.out <- unitof == u
+    means <- empirical
+    for (g in unique(by[left.out])) {
+      keep <- by == g & !left.out
+      if (!any(keep)) {
+        return(NULL)
+      }
+      means[match(g, groups), ] <- groupmean(keep)
+    }
+    means
+  })
+
+  if (any(vapply(jackmeans, is.null, logical(1)))) {
+    warning(
+      "Accelerated limits need every group to survive leaving out one ",
+      "observation, and at least one group here does not. Falling back to ",
+      "percentile limits.",
+      call. = FALSE
+    )
+    return(NULL)
+  }
+
+  jackcd <- lapply(jackmeans, function(x) {
+    x <- as.data.frame(x)
+    attributes(x)[names(attribs)] <- attribs
+
+    tmparg <- arg0
+    tmparg$modeldata <- x
+    tryCatch(suppressMessages(do.call(coldist, tmparg)), error = function(e) e)
+  })
+
+  failed <- vapply(jackcd, inherits, logical(1), what = "error")
+
+  if (any(failed)) {
+    warning(
+      "Jackknife colour distances could not be calculated, so percentile ",
+      "limits were used in place of accelerated ones. The first failure ",
+      "reported: ", conditionMessage(jackcd[[which(failed)[1]]]),
+      call. = FALSE
+    )
+    return(NULL)
+  }
+
+  bind <- function(what) {
+    do.call(rbind, lapply(jackcd, function(x) {
+      setNames(x[[what]], paste(x$patch1, x$patch2, sep = "-"))
+    }))
+  }
+
+  list(
+    dS = bind("dS"),
+    dL = if (isTRUE(arg0$achromatic)) bind("dL") else NULL
+  )
+}
+
+# Generate the row indices used by each bootstrap replicate.
+#
+# Returns a list with length = number of groups (in the order given by
+# unique(by)), each entry itself a list with length = boot.n, containing the
+# positions of the sampled rows *within that group's block of data*.
+#
+# `by` and `cluster` are assumed to have already been reordered by order(by).
+bootindices <- function(by, cluster, boot.n, nesting = "auto") {
+  groups <- unique(by)
+  samplesizes <- table(by)
+
+  # No clustering variable, so rows are resampled independently within each
+  # group. The sampling call is deliberately left as it was in earlier versions
+  # of pavo, so that results generated under a given seed are unchanged.
+  if (is.null(cluster)) {
+    its <- lapply(samplesizes, function(x) sample.int(x, x * boot.n, replace = TRUE))
+    its <- lapply(names(samplesizes), function(g) {
+      split(its[[g]], rep(seq_len(boot.n), each = samplesizes[[g]]))
+    })
+    names(its) <- names(samplesizes)
+    return(its[as.character(groups)])
+  }
+
+  # Row positions within each group's block, keyed by cluster. Clusters that
+  # contribute nothing to a group are simply absent from that group's entry.
+  # This list is kept in the order of unique(by), and is indexed by position
+  # rather than by name, since 'by' itself may be numeric.
+  rowsbycluster <- lapply(groups, function(g) {
+    split(seq_len(sum(by == g)), cluster[by == g])
+  })
+
+  # Do clusters span the levels of 'by' (crossed), or does each belong to a
+  # single level (nested)?
+  if (nesting == "auto") {
+    spread <- vapply(
+      split(as.character(by), cluster),
+      function(x) length(unique(x)) > 1L,
+      logical(1)
+    )
+    nesting <- if (any(spread)) "crossed" else "nested"
+  }
+
+  ids <- unique(cluster)
+
+  if (nesting == "crossed") {
+    # A single draw of clusters per replicate, shared across all groups, which
+    # preserves the pairing of observations within a cluster.
+    #
+    # A draw is rejected if it leaves any group with no rows at all, which can
+    # happen when a group is represented by only a handful of clusters.
+    present <- lapply(rowsbycluster, names)
+    complete <- function(x) all(vapply(present, function(p) any(x %in% p), logical(1)))
+
+    draws <- vector("list", boot.n)
+    attempts <- 0L
+    maxattempts <- 10L * boot.n
+
+    for (i in seq_len(boot.n)) {
+      repeat {
+        drawn <- sample(ids, length(ids), replace = TRUE)
+        if (complete(drawn)) break
+        attempts <- attempts + 1L
+        if (attempts > maxattempts) {
+          stop(
+            "Cluster resampling repeatedly left one or more groups empty. ",
+            "Some group(s) are represented by too few clusters to bootstrap.",
+            call. = FALSE
+          )
+        }
+      }
+      draws[[i]] <- drawn
+    }
+
+    its <- lapply(rowsbycluster, function(have) {
+      lapply(draws, function(d) unlist(have[d[d %in% names(have)]], use.names = FALSE))
+    })
+  } else {
+    # Clusters sit inside a single group, so each group's clusters are drawn
+    # independently of the others.
+    its <- lapply(rowsbycluster, function(have) {
+      replicate(boot.n,
+        unlist(have[sample(names(have), length(have), replace = TRUE)], use.names = FALSE),
+        simplify = FALSE
+      )
+    })
+  }
+
+  names(its) <- groups
+
+  # The effective sample size is now the number of clusters, not the number of
+  # rows, so flag the cases where there are too few of them to say much.
+  nclusters <- if (nesting == "crossed") {
+    length(ids)
+  } else {
+    min(lengths(rowsbycluster))
+  }
+  if (nclusters < 5) {
+    message(
+      "Fewer than five clusters are available for resampling, so the ",
+      "resulting confidence intervals should be interpreted with caution."
+    )
+  }
+
+  its
 }
