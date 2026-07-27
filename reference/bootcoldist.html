@@ -45,7 +45,17 @@ for the mean colour distance between two or more samples of colours</p>
 
     <div class="section level2">
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vismodeldata</span>, <span class="va">by</span>, boot.n <span class="op">=</span> <span class="fl">1000</span>, alpha <span class="op">=</span> <span class="fl">0.95</span>, raw <span class="op">=</span> <span class="cn">FALSE</span>, <span class="va">...</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bootcoldist</span><span class="op">(</span></span>
+<span>  <span class="va">vismodeldata</span>,</span>
+<span>  <span class="va">by</span>,</span>
+<span>  boot.n <span class="op">=</span> <span class="fl">1000</span>,</span>
+<span>  alpha <span class="op">=</span> <span class="fl">0.95</span>,</span>
+<span>  raw <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  <span class="va">...</span>,</span>
+<span>  cluster <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  nesting <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"auto"</span>, <span class="st">"crossed"</span>, <span class="st">"nested"</span><span class="op">)</span>,</span>
+<span>  ci.type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"perc"</span>, <span class="st">"bca"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div class="section level2">
@@ -74,12 +84,50 @@ the object belongs to.</p></dd>
 
 <dt id="arg-raw">raw<a class="anchor" aria-label="anchor" href="#arg-raw"></a></dt>
 <dd><p>should the full set of bootstrapped distances (equal in length to boot.n)
-be returned, instead of the summary distances and CI's? Defaults to FALSE.</p></dd>
+be returned, instead of the summary distances and CI's? Defaults to FALSE.
+Each row is one bootstrap replicate, so values sharing a row, whether for
+different contrasts or for dS and dL, were calculated from the same resampled
+data and can be compared with one another.</p></dd>
 
 
 <dt id="arg--">...<a class="anchor" aria-label="anchor" href="#arg--"></a></dt>
 <dd><p>other arguments to be passed to <code><a href="coldist.html">coldist()</a></code>. Must at minimum
 include <code>n</code> and <code>weber</code>. See <code><a href="coldist.html">coldist()</a></code> for details.</p></dd>
+
+
+<dt id="arg-cluster">cluster<a class="anchor" aria-label="anchor" href="#arg-cluster"></a></dt>
+<dd><p>an optional numeric or character vector, of the same length as
+<code>by</code>, identifying the higher-level unit (e.g. the individual, colony, or
+patch-bearing pattern) that each row belongs to. When supplied, resampling is
+done over whole clusters rather than over individual rows, which is
+appropriate whenever rows are not independent of one another. Defaults to
+NULL, in which case rows are resampled independently within each group, as in
+previous versions.</p></dd>
+
+
+<dt id="arg-nesting">nesting<a class="anchor" aria-label="anchor" href="#arg-nesting"></a></dt>
+<dd><p>the relationship between <code>cluster</code> and <code>by</code>, one of <code>"auto"</code>
+(the default), <code>"crossed"</code>, or <code>"nested"</code>. Under <code>"crossed"</code>, clusters span
+the levels of <code>by</code> (e.g. the same individual contributes a crown, throat and
+breast measurement) and a single draw of clusters is shared across groups,
+which preserves the pairing between them. Under <code>"nested"</code>, each cluster
+belongs to exactly one group (e.g. repeated measurements of an individual
+within a population) and clusters are drawn independently within each group.
+<code>"auto"</code> chooses between the two by checking whether any cluster appears
+under more than one level of <code>by</code>. Ignored when <code>cluster</code> is NULL.</p></dd>
+
+
+<dt id="arg-ci-type">ci.type<a class="anchor" aria-label="anchor" href="#arg-ci-type"></a></dt>
+<dd><p>the type of confidence interval, either <code>"perc"</code> (the default)
+for percentiles of the bootstrap distribution, or <code>"bca"</code> for bias-corrected
+and accelerated limits. Colour distances are bounded below by zero and are
+usually right-skewed, which is the situation in which percentile limits sit
+off-centre; BCa shifts them to account for both that skew and for where the
+empirical distance falls within the bootstrap distribution. It costs one
+additional jackknife pass, leaving out a single row at a time, or a whole
+cluster at a time when <code>cluster</code> is given.</p>
+<p>Note that <code>cluster</code>, <code>nesting</code> and <code>ci.type</code> follow <code>...</code>, and so must all be
+named in full when used.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -117,6 +165,21 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 <span class="r-out co"><span class="r-pr">#&gt;</span> B-T 1.741764 0.2188554 5.014370 0.2340913 0.0193291 1.616231</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> C-T 6.110519 4.1550209 8.637632 7.2336258 5.4127958 9.045694</span>
 <span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="co"># These data are hierarchically structured, since each of the seven individuals</span></span></span>
+<span class="r-in"><span><span class="co"># contributes one crown, throat, and breast measurement. Rows sharing an</span></span></span>
+<span class="r-in"><span><span class="co"># individual are therefore not independent, and we can resample whole</span></span></span>
+<span class="r-in"><span><span class="co"># individuals rather than individual rows to account for it.</span></span></span>
+<span class="r-in"><span><span class="va">ind</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/substr.html" class="external-link">substr</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="va">vm</span><span class="op">)</span>, <span class="fl">1</span>, <span class="fl">4</span><span class="op">)</span></span></span>
+<span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>,</span></span>
+<span class="r-in"><span>  by <span class="op">=</span> <span class="va">gr</span>, cluster <span class="op">=</span> <span class="va">ind</span>,</span></span>
+<span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span></span></span>
+<span class="r-in"><span><span class="op">)</span></span></span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>      dS.mean    dS.lwr   dS.upr   dL.mean    dL.lwr   dL.upr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.626548 2.9651177 6.345287 7.4677171 6.3149932 8.576842</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 1.741764 0.2656546 3.990978 0.2340913 0.0196446 1.510707</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 6.110519 4.6425355 7.981340 7.2336258 5.3982137 8.953411</span>
+<span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run the same again, though as a simple colourspace model</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">vm</span> <span class="op">&lt;-</span> <span class="fu"><a href="vismodel.html">vismodel</a></span><span class="op">(</span><span class="va">sicalis</span>, achromatic <span class="op">=</span> <span class="st">"bt.dc"</span><span class="op">)</span></span></span>
@@ -126,9 +189,9 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Quantum catch are relative, distances may not be meaningful</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating unweighted Euclidean distances and Weber luminance contrast</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        dS.mean      dS.lwr     dS.upr    dL.mean      dL.lwr    dL.upr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 0.08873221 0.057492084 0.12509675 1.11017675 0.770862609 1.5208958</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.02510854 0.005678686 0.07323532 0.02368528 0.002474378 0.1646752</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 0.11208966 0.080721564 0.14476399 1.06135304 0.722669275 1.4676965</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 0.08873077 0.057723440 0.12517782 1.11017675 0.768266483 1.5310851</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.02510607 0.005219538 0.06967889 0.02368528 0.002706663 0.1742986</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 0.11208534 0.082122989 0.14400045 1.06135304 0.732571803 1.4575228</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Estimate bootstrapped colour-distances for a more 'specialised' model,</span></span></span>
 <span class="r-in"><span><span class="co"># like the colour hexagon</span></span></span>
@@ -141,8 +204,8 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 <span class="r-in"><span><span class="va">pop_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_1"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/rep.html" class="external-link">rep</a></span><span class="op">(</span><span class="st">"pop_2"</span>, <span class="fu"><a href="https://rdrr.io/r/base/nrow.html" class="external-link">nrow</a></span><span class="op">(</span><span class="va">flowers.hex</span><span class="op">)</span> <span class="op">/</span> <span class="fl">2</span><span class="op">)</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">flowers.hex</span>, by <span class="op">=</span> <span class="va">pop_group</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating unweighted Euclidean distances and simple luminance contrast</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>               dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> pop_1-pop_2 0.0736203 0.02299502 0.2012074 0.9016919 0.7288422 1.057964</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> pop_1-pop_2 0.07360865 0.02334336 0.2011393 0.9016919 0.7291812 1.050853</span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -156,7 +219,7 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer></div>

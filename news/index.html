@@ -39,7 +39,13 @@
 <h2 class="pkg-version" data-toc-text="2.10.0" id="pavo-2100">pavo 2.10.0<a class="anchor" aria-label="anchor" href="#pavo-2100"></a></h2>
 <div class="section level3">
 <h3 id="new-features-and-significant-changes-2-10-0">NEW FEATURES AND SIGNIFICANT CHANGES<a class="anchor" aria-label="anchor" href="#new-features-and-significant-changes-2-10-0"></a></h3>
-<ul><li>the <code>rimg2cimg()</code> function has been removed in favour of a custom <code>as.cimg()</code> method.</li>
+<ul><li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> now summarises <code><a href="../reference/colspace.html">colspace()</a></code> objects by the arithmetic mean of their coordinates, rather than by a geometric mean of those coordinates shifted by an arbitrary constant of 100. Distances between points in a colour space are measured in the coordinates themselves, so the centroid of a group is their arithmetic mean; quantum catches and luminance channels continue to be summarised geometrically, since those distances are linear in the logged values. Reported distances for colspace objects will change slightly, though the old constant was large enough that the previous result was already close to the arithmetic mean. Spaces whose coordinates can be negative, namely CIELAB, CIELCh and segment, previously returned NaN and now work.</li>
+<li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> gains a <code>ci.type</code> argument, allowing bias-corrected and accelerated (BCa) confidence limits as an alternative to the percentile limits it has always returned. Colour distances are bounded below by zero and typically right-skewed, so percentile limits tend to sit off-centre; BCa corrects for that skew and for the position of the empirical distance within the bootstrap distribution. The acceleration term is estimated by a jackknife that leaves out one row at a time, or one cluster at a time where <code>cluster</code> is supplied. The default remains <code>"perc"</code>, so results are unchanged unless it is asked for.</li>
+<li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> gains a <code>cluster</code> argument for hierarchically structured data, such as several patches measured on each of a number of individuals, or repeated measurements of the same individual. When it is supplied, bootstrap replicates are built by resampling whole clusters rather than individual rows, so that non-independent observations are kept together and the effective sample size is the number of clusters. The accompanying <code>nesting</code> argument controls whether clusters are treated as spanning the levels of <code>by</code> (<code>"crossed"</code>, where a single draw of clusters is shared across groups and their pairing is preserved) or as sitting within a single level (<code>"nested"</code>, where clusters are drawn independently within each group), and defaults to detecting which of the two applies. Empirical means are unaffected, and results are unchanged from previous versions when <code>cluster</code> is left as NULL.</li>
+<li>the <code>rimg2cimg()</code> function has been removed in favour of a custom <code>as.cimg()</code> method.</li>
 <li>
 <code><a href="../reference/jndrot.html">jndrot()</a></code> and by extension <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> have been adjusted for trichromats to only allow rotations in the 2D plane. Until now, 3D rotations were allowed and the result was projected back in 2D but this meant that the output was no longer representing JNDs distances. Because <code>rotate = TRUE</code> is the default in <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code>, we recommend you re-run any <code><a href="../reference/jnd2xyz.html">jnd2xyz()</a></code> computation on trichromats. From our tests, results stay qualitatively similar but specific values may change.</li>
 <li>
@@ -47,7 +53,15 @@
 </ul></div>
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-10-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-10-0"></a></h3>
-<ul><li>default values for some arguments in <code><a href="../reference/explorespec.html">explorespec()</a></code> and <code><a href="../reference/sensmodel.html">sensmodel()</a></code> are now explicit in the function definition.</li>
+<ul><li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> now says how many bootstrap replicates failed and why, where it previously discarded the error and reported only that “Bootstrap sampling encountered errors”. A run in which every replicate failed used to produce an unrelated error about a comparison of length zero, and is now reported like any other failure.</li>
+<li>
+<code>bootcoldist(raw = TRUE)</code> now returns bootstrap distances in replicate order. Each contrast was previously sorted independently before being returned, so values sharing a row came from different resamplings, and neither different contrasts nor dS and dL could be compared with one another. The values themselves are unchanged, only their order.</li>
+<li>
+<code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> now fails with an informative error when <code>boot.n</code> is too small for the requested <code>alpha</code>. Previously the lower quantile index rounded down to zero, and the interval failed to assemble with an unrelated message about mismatched dimnames. With the default <code>alpha</code> this affected any <code>boot.n</code> below
+<ol start="20" style="list-style-type: decimal"><li>
+</li></ol></li>
+<li>default values for some arguments in <code><a href="../reference/explorespec.html">explorespec()</a></code> and <code><a href="../reference/sensmodel.html">sensmodel()</a></code> are now explicit in the function definition.</li>
 <li>
 <code><a href="../reference/as.rspec.html">as.rspec()</a></code> now works out of the box with <code>tibble</code>, rather than requiring users to pass a standard data.frame.</li>
 <li>argument checks in <code><a href="../reference/colspace.html">colspace()</a></code> internal functions (<code><a href="../reference/dispace.html">dispace()</a></code>, <code><a href="../reference/trispace.html">trispace()</a></code>, <code><a href="../reference/hexagon.html">hexagon()</a></code>, etc.) have been refactored (<a href="https://github.com/rmaia/pavo/issues/263" class="external-link">#263</a>), with two minor user-facing consequences:
@@ -600,7 +614,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.9000.</p>
 </div>
 
     </footer></div>

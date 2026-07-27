@@ -55,10 +55,10 @@ papilio_class <- classify(papilio, kcols = 4)
 #> Image classification in progress...
 summary(papilio_class)
 #>    img_ID col_ID name         R         G          B
-#> 1 papilio      1    1 0.9613800 0.8933067 0.48321219
-#> 2 papilio      2    2 0.2018490 0.1602989 0.05771096
-#> 3 papilio      3    3 0.9994688 0.9994303 0.99910729
-#> 4 papilio      4    4 0.5421227 0.4805653 0.23031847
+#> 1 papilio      1    1 0.9612793 0.8932084 0.48314864
+#> 2 papilio      2    2 0.9994688 0.9994303 0.99910729
+#> 3 papilio      3    3 0.5414235 0.4798840 0.22992296
+#> 4 papilio      4    4 0.2017427 0.1602007 0.05766217
 
 # Plot the colour-classified image alongside the colour class palette
 summary(papilio_class, plot = TRUE)

@@ -184,5 +184,5 @@ if (require("alphashape3d")) {
   voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
 }
 #>          vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
-#> 1 5.18372e-06 6.231492e-06    14    14        3         25 0.2142857  0.12
+#> 1 5.18372e-06 6.231492e-06     9    14        3         20 0.3333333  0.15
 ```

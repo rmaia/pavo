@@ -6,7 +6,17 @@ colour distance between two or more samples of colours
 ## Usage
 
 ``` r
-bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
+bootcoldist(
+  vismodeldata,
+  by,
+  boot.n = 1000,
+  alpha = 0.95,
+  raw = FALSE,
+  ...,
+  cluster = NULL,
+  nesting = c("auto", "crossed", "nested"),
+  ci.type = c("perc", "bca")
+)
 ```
 
 ## Arguments
@@ -36,7 +46,10 @@ bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
 
   should the full set of bootstrapped distances (equal in length to
   boot.n) be returned, instead of the summary distances and CI's?
-  Defaults to FALSE.
+  Defaults to FALSE. Each row is one bootstrap replicate, so values
+  sharing a row, whether for different contrasts or for dS and dL, were
+  calculated from the same resampled data and can be compared with one
+  another.
 
 - ...:
 
@@ -45,6 +58,44 @@ bootcoldist(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...)
   at minimum include `n` and `weber`. See
   [`coldist()`](https://pavo.colrverse.com/reference/coldist.md) for
   details.
+
+- cluster:
+
+  an optional numeric or character vector, of the same length as `by`,
+  identifying the higher-level unit (e.g. the individual, colony, or
+  patch-bearing pattern) that each row belongs to. When supplied,
+  resampling is done over whole clusters rather than over individual
+  rows, which is appropriate whenever rows are not independent of one
+  another. Defaults to NULL, in which case rows are resampled
+  independently within each group, as in previous versions.
+
+- nesting:
+
+  the relationship between `cluster` and `by`, one of `"auto"` (the
+  default), `"crossed"`, or `"nested"`. Under `"crossed"`, clusters span
+  the levels of `by` (e.g. the same individual contributes a crown,
+  throat and breast measurement) and a single draw of clusters is shared
+  across groups, which preserves the pairing between them. Under
+  `"nested"`, each cluster belongs to exactly one group (e.g. repeated
+  measurements of an individual within a population) and clusters are
+  drawn independently within each group. `"auto"` chooses between the
+  two by checking whether any cluster appears under more than one level
+  of `by`. Ignored when `cluster` is NULL.
+
+- ci.type:
+
+  the type of confidence interval, either `"perc"` (the default) for
+  percentiles of the bootstrap distribution, or `"bca"` for
+  bias-corrected and accelerated limits. Colour distances are bounded
+  below by zero and are usually right-skewed, which is the situation in
+  which percentile limits sit off-centre; BCa shifts them to account for
+  both that skew and for where the empirical distance falls within the
+  bootstrap distribution. It costs one additional jackknife pass,
+  leaving out a single row at a time, or a whole cluster at a time when
+  `cluster` is given.
+
+  Note that `cluster`, `nesting` and `ci.type` follow `...`, and so must
+  all be named in full when used.
 
 ## Value
 
@@ -86,6 +137,21 @@ bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
 #> B-T 1.741764 0.2188554 5.014370 0.2340913 0.0193291 1.616231
 #> C-T 6.110519 4.1550209 8.637632 7.2336258 5.4127958 9.045694
 
+# These data are hierarchically structured, since each of the seven individuals
+# contributes one crown, throat, and breast measurement. Rows sharing an
+# individual are therefore not independent, and we can resample whole
+# individuals rather than individual rows to account for it.
+ind <- substr(rownames(vm), 1, 4)
+bootcoldist(vm,
+  by = gr, cluster = ind,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
+#> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts
+#>      dS.mean    dS.lwr   dS.upr   dL.mean    dL.lwr   dL.upr
+#> B-C 4.626548 2.9651177 6.345287 7.4677171 6.3149932 8.576842
+#> B-T 1.741764 0.2656546 3.990978 0.2340913 0.0196446 1.510707
+#> C-T 6.110519 4.6425355 7.981340 7.2336258 5.3982137 8.953411
+
 # Run the same again, though as a simple colourspace model
 data(sicalis)
 vm <- vismodel(sicalis, achromatic = "bt.dc")
@@ -95,9 +161,9 @@ bootcoldist(space, by = gr)
 #> Quantum catch are relative, distances may not be meaningful
 #> Calculating unweighted Euclidean distances and Weber luminance contrast
 #>        dS.mean      dS.lwr     dS.upr    dL.mean      dL.lwr    dL.upr
-#> B-C 0.08873221 0.057492084 0.12509675 1.11017675 0.770862609 1.5208958
-#> B-T 0.02510854 0.005678686 0.07323532 0.02368528 0.002474378 0.1646752
-#> C-T 0.11208966 0.080721564 0.14476399 1.06135304 0.722669275 1.4676965
+#> B-C 0.08873077 0.057723440 0.12517782 1.11017675 0.768266483 1.5310851
+#> B-T 0.02510607 0.005219538 0.06967889 0.02368528 0.002706663 0.1742986
+#> C-T 0.11208534 0.082122989 0.14400045 1.06135304 0.732571803 1.4575228
 
 # Estimate bootstrapped colour-distances for a more 'specialised' model,
 # like the colour hexagon
@@ -110,7 +176,7 @@ flowers.hex <- colspace(vis.flowers, space = "hexagon")
 pop_group <- c(rep("pop_1", nrow(flowers.hex) / 2), rep("pop_2", nrow(flowers.hex) / 2))
 bootcoldist(flowers.hex, by = pop_group)
 #> Calculating unweighted Euclidean distances and simple luminance contrast
-#>               dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr
-#> pop_1-pop_2 0.0736203 0.02299502 0.2012074 0.9016919 0.7288422 1.057964
+#>                dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr
+#> pop_1-pop_2 0.07360865 0.02334336 0.2011393 0.9016919 0.7291812 1.050853
 # }
 ```
