@@ -125,7 +125,7 @@ test_that("bootcoldist", {
 })
 
 test_that("checkreplicates", {
-  distances <- data.frame(patch1 = "a", patch2 = "b", dS = 1)
+  distances <- data.frame(patch1 = "a", patch2 = "b", dS = 1, stringsAsFactors = FALSE)
 
   expect_silent(checkreplicates(list(distances, distances), 2))
 
