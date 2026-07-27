@@ -349,10 +349,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     bootcd <- future_lapply(bootgrouped, function(z) {
       p()
       tryCatch(suppressMessages(tmpbootcdfoo(z)),
-        error = function(e) NULL
+        error = function(e) e
       )
     }, future.seed = TRUE)
   })
+
+  checkreplicates(bootcd, boot.n)
 
   # Extract deltaS values from bootcd and restructure in one dataframe
   bootdS <- do.call(
@@ -362,10 +364,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     })
   )
 
-  # Error handling: if the dimension of bootdS is less than boot.n,
-  # stop function and print error message
-  if (dim(bootdS)[1] < boot.n) {
-    stop("Bootstrap sampling encountered errors.", call. = FALSE)
+  # Backstop for a replicate that returned a different set of contrasts instead
+  # of failing outright, which would leave the distances the wrong shape
+  if (nrow(bootdS) < boot.n) {
+    stop(
+      "Bootstrap replicates did not all return the same colour distances.",
+      call. = FALSE
+    )
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
@@ -458,6 +463,26 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   res
+}
+
+# Check the results of the bootstrap replicates, where a replicate that failed
+# is the condition that stopped it rather than a set of distances.
+#
+# One failure is enough to stop the whole run. The resamples that fail are not a
+# random subset of them, being the awkward ones by definition, so quietly
+# carrying on with those that survived would bias the distribution.
+checkreplicates <- function(bootcd, boot.n) {
+  failed <- vapply(bootcd, inherits, logical(1), what = "error")
+
+  if (any(failed)) {
+    stop(
+      sum(failed), " of ", boot.n, " bootstrap replicates failed, the first ",
+      "of them reporting: ", conditionMessage(bootcd[[which(failed)[1]]]),
+      call. = FALSE
+    )
+  }
+
+  invisible(bootcd)
 }
 
 # Confidence limits from a matrix of bootstrap distances, sorted within each
@@ -561,13 +586,16 @@ jackdist <- function(vismodeldata, by, cluster, groupsummary, attribs, arg0) {
 
     tmparg <- arg0
     tmparg$modeldata <- x
-    tryCatch(suppressMessages(do.call(coldist, tmparg)), error = function(e) NULL)
+    tryCatch(suppressMessages(do.call(coldist, tmparg)), error = function(e) e)
   })
 
-  if (any(vapply(jackcd, is.null, logical(1)))) {
+  failed <- vapply(jackcd, inherits, logical(1), what = "error")
+
+  if (any(failed)) {
     warning(
       "Jackknife colour distances could not be calculated, so percentile ",
-      "limits were used in place of accelerated ones.",
+      "limits were used in place of accelerated ones. The first failure ",
+      "reported: ", conditionMessage(jackcd[[which(failed)[1]]]),
       call. = FALSE
     )
     return(NULL)

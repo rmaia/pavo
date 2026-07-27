@@ -124,6 +124,25 @@ test_that("bootcoldist", {
   expect_identical(nrow(raw2), 437L)
 })
 
+test_that("checkreplicates", {
+  distances <- data.frame(patch1 = "a", patch2 = "b", dS = 1)
+
+  expect_silent(checkreplicates(list(distances, distances), 2))
+
+  # The count and the reason both make it into the message, rather than the
+  # bare "encountered errors" of earlier versions
+  failures <- list(distances, simpleError("system is computationally singular"), distances)
+  expect_error(checkreplicates(failures, 3), "1 of 3 bootstrap replicates failed")
+  expect_error(checkreplicates(failures, 3), "computationally singular")
+
+  # Every replicate failing is reported the same way, where it used to fall
+  # through to an error about a comparison of length zero
+  expect_error(
+    checkreplicates(list(simpleError("no good"), simpleError("worse")), 2),
+    "2 of 2 bootstrap replicates failed"
+  )
+})
+
 test_that("bootcoldist raw output keeps replicates intact", {
   data(sicalis)
   vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
