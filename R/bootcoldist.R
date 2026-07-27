@@ -91,7 +91,7 @@
 #' @export
 #' @importFrom future.apply future_lapply
 #' @importFrom progressr with_progress progressor
-#' @importFrom stats aggregate setNames pnorm qnorm
+#' @importFrom stats setNames pnorm qnorm
 #'
 #' @references Maia, R., White, T. E., (2018) Comparing colors using visual models.
 #'  Behavioral Ecology, ary017 \doi{10.1093/beheco/ary017}
@@ -133,15 +133,44 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   num_cols <- vapply(vismodeldata, is.numeric, logical(1))
   vismodeldata[, !num_cols] <- 0
 
-  # Rescale any x-y-z positional data by adding a constant
-  # Only applies to colspace objects, since (unlike for RN data) colour distances
-  # are calculated based on coordinates, rather than qcatches. But this
-  # caused problems when calculating geometric means, because coordinate
-  # data often contain negative values. So this re-scales all coordinate
-  # systems so they can never be negative, without affecting
-  # the distances between points.
-  vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] <-
-    vismodeldata[intersect(names(vismodeldata), c("x", "y", "z"))] + 100
+  # Decide how each column is averaged when a group is summarised.
+  #
+  # Receptor-noise distances are linear in the log of the quantum catches, so
+  # the centroid of a group of catches is their geometric mean. Distances
+  # between colspace objects are measured in their coordinates directly, so
+  # there the centroid is the arithmetic mean of those coordinates. Luminance
+  # channels stay geometric, since achromatic contrast is a ratio.
+  #
+  # Coordinates are listed per space, and have to match the columns coldist()
+  # reads for that space.
+  spacecoordinates <- list(
+    dispace = "x",
+    trispace = c("x", "y"),
+    tcs = c("x", "y", "z"),
+    hexagon = c("x", "y"),
+    categorical = c("x", "y"),
+    CIEXYZ = c("x", "y"),
+    CIELAB = c("L", "a", "b"),
+    CIELCh = c("L", "a", "b"),
+    coc = c("x", "y"),
+    segment = c("MS", "LM")
+  )
+
+  coordinates <- NULL
+  if (inherits(vismodeldata, "colspace")) {
+    coordinates <- spacecoordinates[[attr(vismodeldata, "clrsp")]]
+  }
+  arithmetic <- names(vismodeldata) %in% coordinates
+
+  # Summarise a set of rows down to one value per column
+  groupsummary <- function(x) {
+    x <- as.matrix(x)
+    out <- vapply(seq_len(ncol(x)), function(i) {
+      if (arithmetic[i]) mean(x[, i], na.rm = TRUE) else gmean(x[, i])
+    }, numeric(1))
+    names(out) <- colnames(x)
+    out
+  }
 
   # Start preparing the arguments
 
@@ -230,10 +259,12 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     cluster <- cluster[sortinggroups]
   }
 
-  # Group-wise geometric mean deltaS for the empirical data
-  empgroupmeans <- aggregate(vismodeldata, list(by), gmean, simplify = TRUE)
-  row.names(empgroupmeans) <- empgroupmeans[, 1]
-  empgroupmeans <- empgroupmeans[, -1]
+  # Group-wise mean deltaS for the empirical data
+  empgroupmeans <- do.call(rbind, lapply(unique(by), function(g) {
+    groupsummary(vismodeldata[by == g, , drop = FALSE])
+  }))
+  row.names(empgroupmeans) <- unique(by)
+  empgroupmeans <- as.data.frame(empgroupmeans)
 
   # Set the attributes for the grouped means
   datattributes <- grep("names", names(attributes(vismodeldata)),
@@ -275,9 +306,9 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   # now take the column means for all bootstrapped by
   # returns a list with length = number of by
-  # each row in these = the (geometric) mean of bootstrap replicates
+  # each row in these = the mean of bootstrap replicates
   groupcolmeans <- lapply(bootbygroup, function(z) {
-    do.call(rbind, lapply(z, function(x) apply(x, 2, gmean))) # nolint
+    do.call(rbind, lapply(z, groupsummary))
   })
 
   # now "split and merge"
@@ -356,7 +387,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # plain percentile limits, and falls back to them if it cannot be computed.
   jack <- NULL
   if (ci.type == "bca") {
-    jack <- jackdist(vismodeldata, by, cluster, gmean, attribs, arg0)
+    jack <- jackdist(vismodeldata, by, cluster, groupsummary, attribs, arg0)
   }
 
   bootdS <- apply(bootdS, 2, sort)
@@ -478,7 +509,7 @@ bootlimits <- function(bootvals, empvals, jackvals, probs) {
 #
 # Returns NULL, with a warning, if any unit cannot be left out without emptying
 # one of the groups, since there is then no jackknife estimate to be had.
-jackdist <- function(vismodeldata, by, cluster, gmean, attribs, arg0) {
+jackdist <- function(vismodeldata, by, cluster, groupsummary, attribs, arg0) {
   groups <- unique(by)
   # Without a clustering variable, every row is its own unit. Written out rather
   # than as x %||% y, which needs R 4.4 and so is off limits here
@@ -488,7 +519,7 @@ jackdist <- function(vismodeldata, by, cluster, gmean, attribs, arg0) {
   }
   units <- unique(unitof)
 
-  groupmean <- function(rows) apply(vismodeldata[rows, , drop = FALSE], 2, gmean) # nolint
+  groupmean <- function(rows) groupsummary(vismodeldata[rows, , drop = FALSE])
 
   # Leaving out a unit only changes the groups it contributed to, so the rest of
   # the group means carry over untouched

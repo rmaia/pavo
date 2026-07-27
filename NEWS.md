@@ -2,6 +2,16 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
+  their coordinates, rather than by a geometric mean of those coordinates shifted
+  by an arbitrary constant of 100. Distances between points in a colour space are
+  measured in the coordinates themselves, so the centroid of a group is their
+  arithmetic mean; quantum catches and luminance channels continue to be
+  summarised geometrically, since those distances are linear in the logged
+  values. Reported distances for colspace objects will change slightly, though
+  the old constant was large enough that the previous result was already close to
+  the arithmetic mean. Spaces whose coordinates can be negative, namely CIELAB,
+  CIELCh and segment, previously returned NaN and now work.
 - `bootcoldist()` gains a `ci.type` argument, allowing bias-corrected and
   accelerated (BCa) confidence limits as an alternative to the percentile limits
   it has always returned. Colour distances are bounded below by zero and

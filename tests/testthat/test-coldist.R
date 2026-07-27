@@ -124,6 +124,48 @@ test_that("bootcoldist", {
   expect_identical(nrow(raw2), 437L)
 })
 
+test_that("bootcoldist averages colspace coordinates arithmetically", {
+  data(sicalis)
+  space <- colspace(vismodel(sicalis, visual = "apis", achromatic = "l"))
+  gr <- gsub("ind..", "", rownames(space))
+
+  bcd <- suppressMessages(bootcoldist(space, by = gr, boot.n = 100))
+
+  # Distances between colspace objects are measured in their coordinates, so a
+  # group's centroid is the arithmetic mean of those coordinates and the
+  # empirical distances are simply the distances between centroids. Averaging
+  # geometrically, as earlier versions did, would not give this
+  centroids <- t(vapply(
+    split(space[c("x", "y")], gr),
+    function(x) colMeans(as.matrix(x)),
+    numeric(2)
+  ))
+  expected <- as.matrix(dist(centroids))
+
+  expect_equal(bcd["B-C", "dS.mean"], expected["B", "C"], tolerance = 1e-10)
+  expect_equal(bcd["B-T", "dS.mean"], expected["B", "T"], tolerance = 1e-10)
+  expect_equal(bcd["C-T", "dS.mean"], expected["C", "T"], tolerance = 1e-10)
+})
+
+test_that("bootcoldist handles spaces with negative coordinates", {
+  data(flowers)
+
+  # CIELAB's a and b axes are routinely negative, which a geometric mean cannot
+  # summarise, so these spaces previously came back as NaN
+  lab <- colspace(
+    vismodel(flowers, visual = "cie10", vonkries = TRUE, relative = FALSE),
+    space = "cielab"
+  )
+  gr <- rep(c("a", "b"), each = nrow(lab) / 2)
+
+  res <- suppressMessages(bootcoldist(lab, by = gr, boot.n = 100, achromatic = FALSE))
+
+  expect_identical(dim(res), c(1L, 3L))
+  expect_false(anyNA(res))
+  expect_gt(res[, "dS.mean"], 0)
+  expect_true(all(res[, "dS.lwr"] <= res[, "dS.upr"]))
+})
+
 test_that("bootlimits", {
   # A known bootstrap distribution, so the limits can be checked by hand
   bootvals <- matrix(as.numeric(seq_len(1000)), ncol = 1, dimnames = list(NULL, "a-b"))
