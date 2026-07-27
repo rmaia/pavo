@@ -30,7 +30,10 @@ the object belongs to.}
 \item{alpha}{the confidence level for the confidence intervals (defaults to 0.95)}
 
 \item{raw}{should the full set of bootstrapped distances (equal in length to boot.n)
-be returned, instead of the summary distances and CI's? Defaults to FALSE.}
+be returned, instead of the summary distances and CI's? Defaults to FALSE.
+Each row is one bootstrap replicate, so values sharing a row, whether for
+different contrasts or for dS and dL, were calculated from the same resampled
+data and can be compared with one another.}
 
 \item{...}{other arguments to be passed to \code{\link[=coldist]{coldist()}}. Must at minimum
 include \code{n} and \code{weber}. See \code{\link[=coldist]{coldist()}} for details.}

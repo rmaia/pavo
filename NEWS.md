@@ -2,6 +2,11 @@
 
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
+- `bootcoldist(raw = TRUE)` now returns bootstrap distances in replicate order.
+  Each contrast was previously sorted independently before being returned, so
+  values sharing a row came from different resamplings, and neither different
+  contrasts nor dS and dL could be compared with one another. The values
+  themselves are unchanged, only their order.
 - `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
   their coordinates, rather than by a geometric mean of those coordinates shifted
   by an arbitrary constant of 100. Distances between points in a colour space are

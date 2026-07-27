@@ -124,6 +124,32 @@ test_that("bootcoldist", {
   expect_identical(nrow(raw2), 437L)
 })
 
+test_that("bootcoldist raw output keeps replicates intact", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
+  gr <- gsub("ind..", "", rownames(vm))
+
+  raw <- suppressWarnings(bootcoldist(
+    vm,
+    by = gr, n = c(1, 2, 3), weber = 0.1, weber.achro = 0.1,
+    boot.n = 100, raw = TRUE
+  ))
+
+  expect_identical(nrow(raw), 100L)
+
+  # Rows are replicates, not sorted columns, so a column has no reason to come
+  # back in ascending order
+  expect_false(all(diff(raw[["B-C_dS"]]) >= 0))
+  expect_false(all(diff(raw[["B-C_dL"]]) >= 0))
+
+  # Receptor-noise distances are metric, so within any one replicate the three
+  # contrasts have to satisfy the triangle inequality. Sorting each contrast
+  # separately would put unrelated replicates on the same row and lose that
+  expect_true(all(raw[["B-T_dS"]] <= raw[["B-C_dS"]] + raw[["C-T_dS"]] + 1e-8))
+  expect_true(all(raw[["B-C_dS"]] <= raw[["B-T_dS"]] + raw[["C-T_dS"]] + 1e-8))
+  expect_true(all(raw[["C-T_dS"]] <= raw[["B-C_dS"]] + raw[["B-T_dS"]] + 1e-8))
+})
+
 test_that("bootcoldist averages colspace coordinates arithmetically", {
   data(sicalis)
   space <- colspace(vismodel(sicalis, visual = "apis", achromatic = "l"))

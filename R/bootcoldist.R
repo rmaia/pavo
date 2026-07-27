@@ -13,6 +13,9 @@
 #' @param alpha the confidence level for the confidence intervals (defaults to 0.95)
 #' @param raw should the full set of bootstrapped distances (equal in length to boot.n)
 #' be returned, instead of the summary distances and CI's? Defaults to FALSE.
+#' Each row is one bootstrap replicate, so values sharing a row, whether for
+#' different contrasts or for dS and dL, were calculated from the same resampled
+#' data and can be compared with one another.
 #' @param ... other arguments to be passed to [coldist()]. Must at minimum
 #' include `n` and `weber`. See [coldist()] for details.
 #' @param cluster an optional numeric or character vector, of the same length as
@@ -390,11 +393,14 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     jack <- jackdist(vismodeldata, by, cluster, groupsummary, attribs, arg0)
   }
 
-  bootdS <- apply(bootdS, 2, sort)
+  # Only the copy used for the quantiles is sorted. Sorting bootdS itself would
+  # order every contrast independently, which breaks the correspondence between
+  # them, and rows of the raw output are meant to be whole replicates.
+  sorteddS <- apply(bootdS, 2, sort)
 
   # Ensure names match with empirical values (even though they should match already)
   dsCI <- bootlimits(
-    bootdS[, names(empdS), drop = FALSE], empdS,
+    sorteddS[, names(empdS), drop = FALSE], empdS,
     if (is.null(jack)) NULL else jack$dS[, names(empdS), drop = FALSE],
     probs
   )
@@ -423,11 +429,11 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       })
     )
 
-    bootdL <- apply(bootdL, 2, sort)
+    sorteddL <- apply(bootdL, 2, sort)
 
     # Ensure names match with empirical values (even though they should match already)
     dlCI <- bootlimits(
-      bootdL[, names(empdL), drop = FALSE], empdL,
+      sorteddL[, names(empdL), drop = FALSE], empdL,
       if (is.null(jack)) NULL else jack$dL[, names(empdL), drop = FALSE],
       probs
     )
