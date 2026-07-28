@@ -53,6 +53,7 @@ Habronattus
 Hadfield
 Hemmings
 Herberstein
+Hoenders
 Horak
 Icterus
 Incl
@@ -119,6 +120,7 @@ Sicalis
 Siefferman
 Smiseth
 SpectraSuite
+Stavenga
 Sturnus
 Taeniopygia
 Tetrachromacy
@@ -160,6 +162,7 @@ cbind
 center
 centered
 centers
+chromophore
 cie
 cieLAB
 cielab
@@ -262,6 +265,7 @@ peaksens
 peakshape
 photopigments
 png
+porphyropsin
 pos
 procspec
 projplot
@@ -271,6 +275,7 @@ qcatch
 reflectances
 rgb
 rgl
+rhodopsin
 rimg
 rm
 rspec

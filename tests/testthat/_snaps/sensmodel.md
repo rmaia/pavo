@@ -22,6 +22,11 @@
           "type": "logical",
           "attributes": {},
           "value": [false]
+        },
+        "template": {
+          "type": "character",
+          "attributes": {},
+          "value": ["govardovskii_a1"]
         }
       },
       "value": [
@@ -72,6 +77,11 @@
           "type": "logical",
           "attributes": {},
           "value": [true]
+        },
+        "template": {
+          "type": "character",
+          "attributes": {},
+          "value": ["govardovskii_a1"]
         }
       },
       "value": [
@@ -122,6 +132,11 @@
           "type": "logical",
           "attributes": {},
           "value": [false]
+        },
+        "template": {
+          "type": "character",
+          "attributes": {},
+          "value": ["govardovskii_a1"]
         }
       },
       "value": [

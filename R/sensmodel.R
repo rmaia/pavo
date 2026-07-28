@@ -31,6 +31,32 @@
 #' @param sensnames A vector equal in length to `peaksens`, specifying custom
 #'   names for the resulting sensitivity curves (e.g. c('s', 'm', 'l') for
 #'   short-, medium- and long-wavelength sensitive receptors.)
+#' @param template the pigment template used to generate the curves. Both the
+#'   author and the chromophore are named, since a template's shape depends on
+#'   both. One of:
+#'   * `"govardovskii_a1"` (default): Govardovskii et al. (2000), vitamin A1
+#'     chromophore (rhodopsin). The most widely used template, and previously 
+#'     the only implemented option.
+#'   * `"ssh_a1"`: Stavenga, Smits and Hoenders (1993), vitamin A1. Differs from
+#'     `"govardovskii_a1"` by only a few percent above 450 nm, but diverges in the
+#'     ultraviolet, where Stavenga (2010) judges both to be unreliable.
+#'   * `"ssh_a2"`: Stavenga, Smits and Hoenders (1993), vitamin A2 chromophore
+#'     (porphyropsin), found in freshwater fish, amphibians, and species that
+#'     switch chromophore seasonally. At a given `peaksens` an A2 band is around
+#'     19% broader than the A1 equivalent, so a porphyropsin pigment is not
+#'     recovered by shifting `peaksens` alone.
+#'
+#'  
+#'    `beta = FALSE` is recommended with either SSH template. Their beta band has
+#'   a fixed peak wavelength, rather than one that scales with `peaksens` as
+#'   Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
+#'   the summed curve away from the `peaksens` that was asked for (by up to 8 nm
+#'   for `"ssh_a1"` between 388 and 402 nm, and by more than 5 nm for `"ssh_a2"`
+#'   anywhere below about 475 nm). Stavenga (2010) notes that a fixed beta peak is
+#'   a known shortcoming of the template, the beta peak being correlated with the
+#'   alpha peak in practice. The A2 template is calibrated on carp porphyropsin, and
+#'   A2 pigments are generally long-wavelength, so short-wavelength A2 requests
+#'   sit outside its validated range in any case.
 #'
 #' @return A data frame of class `rspec` containing each cone model as a column.
 #'
@@ -56,6 +82,12 @@
 #' @references Hart NS, and Vorobyev M. 2005. Modeling oil droplet absorption
 #'   spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 #'   Comparative Physiology A. 191: 381-392, \doi{10.1007/s00359-004-0595-3}
+#' @references Stavenga DG, Smits RP, Hoenders BJ. 1993. Simple exponential
+#'   functions describing the absorbance bands of visual pigment spectra. Vision
+#'   Research 33:1011-1017, \doi{10.1016/0042-6989(93)90237-Q}
+#' @references Stavenga DG. 2010. On visual pigment templates and the spectral
+#'   shape of invertebrate rhodopsins and metarhodopsins. Journal of Comparative
+#'   Physiology A 196:869-878, \doi{10.1007/s00359-010-0568-7}
 #' @references Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual
 #'   pigments, oil droplets, ocular media and cone photoreceptor distribution in
 #'   two species of passerine bird: the blue tit (*Parus caeruleus* L.) and the
@@ -65,7 +97,10 @@
 
 
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
-                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = paste0("lmax", peaksens)) {
+                      oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = paste0("lmax", peaksens),
+                      template = c("govardovskii_a1", "ssh_a1", "ssh_a2")) {
+  template <- match.arg(template)
+
   if (!is.null(lambdacut)) {
     if (is.null(Bmid) && is.null(oiltype)) stop("Bmid or oiltype must be included when including a lambdacut vector", call. = FALSE)
     if (length(lambdacut) != length(peaksens)) stop("lambdacut must be same length as peaksens", call. = FALSE)
@@ -91,8 +126,15 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   # Pigment absorbance. See R/sensmodel-templates.R for the calling contract.
   # Everything below this point is template-agnostic.
-  peaks <- sens_govardovskii(peaksens, sensecurves, beta = beta)
+  peaks <- sens_template(template, peaksens, sensecurves, beta = beta)
 
+  # Note that summing an alpha and a beta band can put the maximum of the result
+  # a little away from the requested peak sensitivity. This is slight for
+  # Govardovskii, whose beta band tracks peaksens, but the SSH beta band sits at
+  # a fixed wavelength and so shifts the peak of short-wavelength pigments by
+  # several nm. That is a property of the published template rather than an
+  # error, and is documented under the `template` argument along with the
+  # recommendation to use beta = FALSE.
   peaks <- peaks / apply(peaks, 1, max)
 
   if (!is.null(lambdacut) && !is.null(Bmid)) {
@@ -158,6 +200,8 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   } else {
     attr(sensecurves, "om") <- TRUE
   }
+
+  attr(sensecurves, "template") <- template
 
   sensecurves
 }
