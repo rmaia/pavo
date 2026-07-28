@@ -48,7 +48,7 @@ test_that("sensmodel() curves do not depend on range", {
 
 test_that("sensmodel() templates", {
   # Alpha bands peak where they were asked to, for every template
-  for (tmpl in c("govardovskii_a1", "ssh_a1", "ssh_a2")) {
+  for (tmpl in c("govardovskii_a1", "govardovskii_a2", "ssh_a1", "ssh_a2")) {
     s <- sensmodel(c(400, 500, 600), template = tmpl, beta = FALSE, integrate = FALSE)
     peaks <- s$wl[apply(s[-1], 2, which.max)]
     expect_equal(peaks, c(400, 500, 600), info = tmpl)
@@ -65,35 +65,45 @@ test_that("sensmodel() templates", {
   expect_identical(attr(sensmodel(400), "template"), "govardovskii_a1")
   expect_identical(attr(sensmodel(600, template = "ssh_a2"), "template"), "ssh_a2")
 
-  # Unambiguous abbreviations resolve, as match.arg intends, but one that could
-  # mean either SSH chromophore is rejected rather than silently picking A1
-  expect_identical(attr(sensmodel(400, template = "govardovskii"), "template"), "govardovskii_a1")
   expect_identical(attr(sensmodel(600, template = "ssh_a1"), "template"), "ssh_a1")
-  expect_error(sensmodel(400, template = "ssh"), "should be one of")
 
-  # A2 is not A1 shifted: at matched peaksens the band is markedly broader.
-  # Stavenga et al. (1993) Table 1 gives a0 = 263 for A2 against 380 for A1.
+  # Naming both author and chromophore means no abbreviation is unique, which is
+  # the intended trade: an ambiguous template is rejected rather than silently
+  # resolved to one chromophore
+  expect_error(sensmodel(400, template = "ssh"), "should be one of")
+  expect_error(sensmodel(400, template = "govardovskii"), "should be one of")
+
+  # A2 is not A1 shifted: at matched peaksens the band is markedly broader. Both
+  # template families agree on this independently, Govardovskii et al. (2000)
+  # from a broad MSP sample and Stavenga et al. (1993) from carp porphyropsin.
   hbw <- function(x) {
     above <- x$wl[x[[2]] >= 0.5]
     max(above) - min(above)
   }
+  band <- function(...) hbw(sensmodel(..., beta = FALSE, integrate = FALSE))
   for (lmax in c(500, 550, 600)) {
-    ratio <- hbw(sensmodel(lmax, template = "ssh_a2", beta = FALSE, integrate = FALSE)) /
-      hbw(sensmodel(lmax, template = "ssh_a1", beta = FALSE, integrate = FALSE))
-    expect_gt(ratio, 1.15)
-    expect_lt(ratio, 1.25)
+    expect_gt(band(lmax, template = "ssh_a2") / band(lmax, template = "ssh_a1"), 1.15)
+    expect_lt(band(lmax, template = "ssh_a2") / band(lmax, template = "ssh_a1"), 1.25)
+    expect_gt(band(lmax, template = "govardovskii_a2") / band(lmax, template = "govardovskii_a1"), 1.10)
+    expect_lt(band(lmax, template = "govardovskii_a2") / band(lmax, template = "govardovskii_a1"), 1.25)
   }
 
   # Stavenga (2010) reports the Govardovskii and SSH alpha bands to be close for
   # peaksens above 400 nm, and to diverge in the ultraviolet
-  dev <- function(lmax) {
-    a <- sensmodel(lmax, template = "govardovskii_a1", beta = FALSE, integrate = FALSE)
-    b <- sensmodel(lmax, template = "ssh_a1", beta = FALSE, integrate = FALSE)
+  dev <- function(lmax, x, y) {
+    a <- sensmodel(lmax, template = x, beta = FALSE, integrate = FALSE)
+    b <- sensmodel(lmax, template = y, beta = FALSE, integrate = FALSE)
     max(abs(a[[2]] - b[[2]]))
   }
-  expect_lt(dev(500), 0.05)
-  expect_lt(dev(600), 0.05)
-  expect_gt(dev(360), 0.10)
+  expect_lt(dev(500, "govardovskii_a1", "ssh_a1"), 0.05)
+  expect_lt(dev(600, "govardovskii_a1", "ssh_a1"), 0.05)
+  expect_gt(dev(360, "govardovskii_a1", "ssh_a1"), 0.10)
+
+  # The two A2 templates are independent fits to different data, so they are not
+  # expected to agree as closely as the A1 pair, but they should be in the same
+  # place across the range where both were fitted
+  expect_lt(dev(500, "govardovskii_a2", "ssh_a2"), 0.10)
+  expect_lt(dev(600, "govardovskii_a2", "ssh_a2"), 0.10)
 })
 
 test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigments", {
@@ -121,6 +131,13 @@ test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigment
   # Long-wavelength pigments, where the fixed beta band is far from the alpha
   # band, are unaffected
   expect_equal(realised(600, template = "ssh_a2"), 600)
+
+  # Govardovskii's A2 beta band scales with peaksens, so unlike ssh_a2 it stays
+  # within a couple of nm across the range it was fitted over. This is the reason
+  # govardovskii_a2 is the documented recommendation for porphyropsins.
+  for (lmax in c(440, 470, 500, 560, 620)) {
+    expect_lt(abs(realised(lmax, template = "govardovskii_a2") - lmax), 3)
+  }
 
   # None of this warns
   expect_silent(sensmodel(430, template = "ssh_a2"))

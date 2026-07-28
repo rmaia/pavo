@@ -30,7 +30,8 @@
 
 sens_template <- function(template, peaksens, wlmat, beta) {
   switch(template,
-    govardovskii_a1 = sens_govardovskii(peaksens, wlmat, beta),
+    govardovskii_a1 = sens_govardovskii(peaksens, wlmat, beta, chromophore = "A1"),
+    govardovskii_a2 = sens_govardovskii(peaksens, wlmat, beta, chromophore = "A2"),
     ssh_a1 = sens_ssh(peaksens, wlmat, beta, chromophore = "A1"),
     ssh_a2 = sens_ssh(peaksens, wlmat, beta, chromophore = "A2"),
     stop("unknown template '", template, "'", call. = FALSE)
@@ -38,28 +39,62 @@ sens_template <- function(template, peaksens, wlmat, beta) {
 }
 
 
-# Govardovskii et al. (2000), vitamin A1 chromophore.
+# Govardovskii et al. (2000).
 #
-# The alpha band is equation 2 of Stavenga (2010), which restates Govardovskii
-# et al. (2000). The 300 in the `a` term is a constant of that expression, not a
-# reference to the `range` argument of sensmodel(); coding it as `range[1]`
-# applies the short-wavelength narrowing correction according to the requested
-# range rather than the pigment's peak sensitivity, which was the bug fixed in
-# pavo 2.10.0. The beta band is Govardovskii's Gaussian, whose peak wavelength
-# and width both scale with peaksens.
-sens_govardovskii <- function(peaksens, wlmat, beta = TRUE) {
+# The alpha band is their equation 1, a form due to Lamb (1995), refitted. Under
+# the Mansfield-MacNichol transform the parameters governing the long-wave slope
+# would be constant; they are not, so Govardovskii et al. make them functions of
+# peaksens. For A1 that is `a` alone, their equation 2; for A2 it is both `A` and
+# `a`, their equations 6a and 6b, and the remaining five constants differ too.
+#
+# The 300 in the A1 `a` term is a constant of that expression, not a reference to
+# the `range` argument of sensmodel(); coding it as `range[1]` applies the
+# short-wavelength narrowing correction according to the requested range rather
+# than the pigment's peak sensitivity, which was the bug fixed in pavo 2.10.0.
+#
+# The beta band is their equation 4, a Gaussian whose peak wavelength and width
+# are both linear in peaksens for A1 (equations 5a, 5b); for A2 the peak is
+# linear but the width is quadratic (equations 8a, 8b), and the amplitude is
+# higher. Because both scale with peaksens, neither chromophore suffers the peak
+# displacement that the fixed-wavelength SSH beta band produces.
+#
+# Fitted over lmax 357-620 nm. The A2 sample spans roughly 440-620 nm.
+sens_govardovskii <- function(peaksens, wlmat, beta = TRUE, chromophore = "A1") {
   x <- peaksens / wlmat
 
-  a <- 0.8795 + 0.0459 * exp(-(peaksens - 300)^2 / 11940)
+  if (identical(chromophore, "A1")) {
+    A <- 69.7
+    a <- 0.8795 + 0.0459 * exp(-(peaksens - 300)^2 / 11940)
+    B <- 28
+    b <- 0.922
+    Cc <- -14.9
+    cc <- 1.104
+    D <- 0.674
 
-  peaks <- 1 / (exp(69.7 * (a - x)) +
-    exp(28 * (0.922 - x)) +
-    exp(-14.9 * (1.104 - x)) +
-    0.674)
+    beta_amp <- 0.26
+    beta_peak <- 189 + 0.315 * peaksens
+    beta_width <- -40.5 + 0.195 * peaksens
+  } else {
+    A <- 62.7 + 1.834 * exp((peaksens - 625) / 54.2)
+    a <- 0.875 + 0.0268 * exp((peaksens - 665) / 40.7)
+    B <- 20.85
+    b <- 0.9101
+    Cc <- -10.37
+    cc <- 1.1123
+    D <- 0.5343
+
+    beta_amp <- 0.37
+    beta_peak <- 216.7 + 0.287 * peaksens
+    beta_width <- 317 - 1.149 * peaksens + 0.00124 * peaksens^2
+  }
+
+  peaks <- 1 / (exp(A * (a - x)) +
+    exp(B * (b - x)) +
+    exp(Cc * (cc - x)) +
+    D)
 
   if (beta) {
-    betabands <- 0.26 * exp(-((wlmat - (189 + 0.315 * peaksens)) /
-      (-40.5 + 0.195 * peaksens))^2)
+    betabands <- beta_amp * exp(-((wlmat - beta_peak) / beta_width)^2)
     peaks <- peaks + betabands
   }
 

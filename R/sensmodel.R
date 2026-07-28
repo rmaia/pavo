@@ -37,26 +37,32 @@
 #'   * `"govardovskii_a1"` (default): Govardovskii et al. (2000), vitamin A1
 #'     chromophore (rhodopsin). The most widely used template, and previously 
 #'     the only implemented option.
+#'   * `"govardovskii_a2"`: Govardovskii et al. (2000), vitamin A2 chromophore
+#'     (porphyropsin), found in freshwater fish, amphibians, and species that
+#'     switch chromophore seasonally. Fitted to microspectrophotometric data from
+#'     pigments peaking between roughly 440 and 620 nm. The recommended choice for
+#'     A2 pigments, and the one to pair with the default when comparing
+#'     chromophores, since staying within one template family avoids confounding
+#'     chromophore with template.
 #'   * `"ssh_a1"`: Stavenga, Smits and Hoenders (1993), vitamin A1. Differs from
 #'     `"govardovskii_a1"` by only a few percent above 450 nm, but diverges in the
 #'     ultraviolet, where Stavenga (2010) judges both to be unreliable.
-#'   * `"ssh_a2"`: Stavenga, Smits and Hoenders (1993), vitamin A2 chromophore
-#'     (porphyropsin), found in freshwater fish, amphibians, and species that
-#'     switch chromophore seasonally. At a given `peaksens` an A2 band is around
-#'     19% broader than the A1 equivalent, so a porphyropsin pigment is not
-#'     recovered by shifting `peaksens` alone.
+#'   * `"ssh_a2"`: Stavenga, Smits and Hoenders (1993), vitamin A2, calibrated on
+#'     carp porphyropsin alone.
 #'
-#'  
-#'    `beta = FALSE` is recommended with either SSH template. Their beta band has
+#'   At a given `peaksens` an A2 band is substantially broader than the A1
+#'   equivalent, so a porphyropsin pigment is not recovered by shifting `peaksens`
+#'   alone.
+#'
+#'   `beta = FALSE` is recommended with either SSH template. Their beta band has
 #'   a fixed peak wavelength, rather than one that scales with `peaksens` as
 #'   Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
 #'   the summed curve away from the `peaksens` that was asked for (by up to 8 nm
 #'   for `"ssh_a1"` between 388 and 402 nm, and by more than 5 nm for `"ssh_a2"`
 #'   anywhere below about 475 nm). Stavenga (2010) notes that a fixed beta peak is
 #'   a known shortcoming of the template, the beta peak being correlated with the
-#'   alpha peak in practice. The A2 template is calibrated on carp porphyropsin, and
-#'   A2 pigments are generally long-wavelength, so short-wavelength A2 requests
-#'   sit outside its validated range in any case.
+#'   alpha peak in practice. Both Govardovskii beta bands scale with `peaksens`
+#'   and do not have this problem.
 #'
 #' @return A data frame of class `rspec` containing each cone model as a column.
 #'
@@ -98,7 +104,7 @@
 
 sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NULL,
                       oiltype = NULL, beta = TRUE, om = NULL, integrate = TRUE, sensnames = paste0("lmax", peaksens),
-                      template = c("govardovskii_a1", "ssh_a1", "ssh_a2")) {
+                      template = c("govardovskii_a1", "govardovskii_a2", "ssh_a1", "ssh_a2")) {
   template <- match.arg(template)
 
   if (!is.null(lambdacut)) {

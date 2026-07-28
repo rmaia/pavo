@@ -6,18 +6,21 @@
   template used to generate sensitivity curves. It names both the author and the
   chromophore, since a template's shape depends on both, and defaults to
   `"govardovskii_a1"`, which is what every previous version of the function used.
-  `"ssh_a1"` and `"ssh_a2"` add the Stavenga, Smits and Hoenders (1993)
-  templates. The A2 template covers porphyropsin pigments, found in freshwater
-  fish, amphibians, and species that switch chromophore seasonally, which pavo
-  previously could not model at all. An A2 band is around 19% broader than the A1
-  band at the same peak sensitivity, so it is not recovered by adjusting
-  `peaksens`. The template used is recorded as a `"template"` attribute on the
-  result. Note that `beta = FALSE` is recommended with either SSH template: their
-  beta band has a fixed peak wavelength rather than one that scales with
-  `peaksens`, so for short-wavelength pigments it pulls the maximum of the summed
-  curve several nm away from the value asked for. The alpha band on its own is
-  unaffected, and Stavenga (2010) notes the fixed beta peak to be a known
-  shortcoming of the template.
+  `"govardovskii_a2"` adds the vitamin A2 template from the same paper, and
+  `"ssh_a1"` and `"ssh_a2"` the two from Stavenga, Smits and Hoenders (1993). The
+  A2 templates cover porphyropsin pigments, found in freshwater fish, amphibians,
+  and species that switch chromophore seasonally, which pavo previously could not
+  model at all: an A2 band is close to 20% broader than the A1 band at the same
+  peak sensitivity, so it is not recovered by adjusting `peaksens`.
+  `"govardovskii_a2"` is the one to reach for, since pairing it with the default
+  compares chromophores without also changing template family. The template used
+  is recorded as a `"template"` attribute on the result. Note that
+  `beta = FALSE` is recommended with either SSH template: their beta band has a
+  fixed peak wavelength rather than one that scales with `peaksens`, so for
+  short-wavelength pigments it pulls the maximum of the summed curve several nm
+  away from the value asked for. The alpha band on its own is unaffected, both
+  Govardovskii beta bands scale with `peaksens` and do not have this problem, and
+  Stavenga (2010) notes the fixed beta peak to be a known shortcoming.
 - `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
   their coordinates, rather than by a geometric mean of those coordinates shifted
   by an arbitrary constant of 100. Distances between points in a colour space are
