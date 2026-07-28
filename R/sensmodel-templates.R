@@ -29,13 +29,20 @@
 
 
 sens_template <- function(template, peaksens, wlmat, beta) {
-  switch(template,
+  # switch() returns NULL when nothing matches and no default is given, which
+  # keeps the error out of the switch call itself
+  out <- switch(template,
     govardovskii_a1 = sens_govardovskii(peaksens, wlmat, beta, chromophore = "A1"),
     govardovskii_a2 = sens_govardovskii(peaksens, wlmat, beta, chromophore = "A2"),
     ssh_a1 = sens_ssh(peaksens, wlmat, beta, chromophore = "A1"),
-    ssh_a2 = sens_ssh(peaksens, wlmat, beta, chromophore = "A2"),
-    stop("unknown template '", template, "'", call. = FALSE)
+    ssh_a2 = sens_ssh(peaksens, wlmat, beta, chromophore = "A2")
   )
+
+  if (is.null(out)) {
+    stop("unknown template '", template, "'", call. = FALSE)
+  }
+
+  out
 }
 
 

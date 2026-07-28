@@ -38,12 +38,12 @@ test_that("sensmodel() curves do not depend on range", {
   # Raising the lower bound
   full <- sensmodel(c(450, 500, 560), range = c(300, 700), integrate = FALSE)
   raised <- sensmodel(c(450, 500, 560), range = c(400, 700), integrate = FALSE)
-  expect_equal(sens_cols(full, 400), sens_cols(raised, 400))
+  expect_identical(sens_cols(full, 400), sens_cols(raised, 400))
 
   # Lowering it, which affects UV pigments in the other direction
   lowered <- sensmodel(c(360, 450, 560), range = c(250, 700), integrate = FALSE)
   base <- sensmodel(c(360, 450, 560), range = c(300, 700), integrate = FALSE)
-  expect_equal(sens_cols(lowered, 300), sens_cols(base, 300))
+  expect_identical(sens_cols(lowered, 300), sens_cols(base, 300))
 })
 
 test_that("sensmodel() templates", {
@@ -51,11 +51,11 @@ test_that("sensmodel() templates", {
   for (tmpl in c("govardovskii_a1", "govardovskii_a2", "ssh_a1", "ssh_a2")) {
     s <- sensmodel(c(400, 500, 600), template = tmpl, beta = FALSE, integrate = FALSE)
     peaks <- s$wl[apply(s[-1], 2, which.max)]
-    expect_equal(peaks, c(400, 500, 600), info = tmpl)
+    expect_identical(peaks, c(400L, 500L, 600L), info = tmpl)
   }
 
   # Default is unchanged, and is the Govardovskii A1 template
-  expect_equal(
+  expect_identical(
     sensmodel(c(400, 500)),
     sensmodel(c(400, 500), template = "govardovskii_a1")
   )
@@ -121,16 +121,15 @@ test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigment
   expect_lt(realised(395, template = "ssh_a1"), 395 - 5)
 
   # The alpha band alone recovers peaksens exactly, and the default template is
-  # unaffected at the same peak sensitivities. expect_equal rather than
-  # expect_identical because wl is an integer sequence, and the type is beside
-  # the point here.
-  expect_equal(realised(430, template = "ssh_a2", beta = FALSE), 430)
-  expect_equal(realised(395, template = "ssh_a1", beta = FALSE), 395)
-  expect_equal(realised(430, template = "govardovskii_a1"), 430)
+  # unaffected at the same peak sensitivities. Integer literals because wl is an
+  # integer sequence.
+  expect_identical(realised(430, template = "ssh_a2", beta = FALSE), 430L)
+  expect_identical(realised(395, template = "ssh_a1", beta = FALSE), 395L)
+  expect_identical(realised(430, template = "govardovskii_a1"), 430L)
 
   # Long-wavelength pigments, where the fixed beta band is far from the alpha
   # band, are unaffected
-  expect_equal(realised(600, template = "ssh_a2"), 600)
+  expect_identical(realised(600, template = "ssh_a2"), 600L)
 
   # Govardovskii's A2 beta band scales with peaksens, so unlike ssh_a2 it stays
   # within a couple of nm across the range it was fitted over. This is the reason

@@ -35,7 +35,7 @@
 #'   author and the chromophore are named, since a template's shape depends on
 #'   both. One of:
 #'   * `"govardovskii_a1"` (default): Govardovskii et al. (2000), vitamin A1
-#'     chromophore (rhodopsin). The most widely used template, and previously 
+#'     chromophore (rhodopsin). The most widely used template, and previously
 #'     the only implemented option.
 #'   * `"govardovskii_a2"`: Govardovskii et al. (2000), vitamin A2 chromophore
 #'     (porphyropsin), found in freshwater fish, amphibians, and species that
