@@ -89,7 +89,11 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
 
   sensecurves <- matrix(wl, ncol = length(wl), nrow = length(peaksens), byrow = TRUE)
 
-  peaks <- 1 / (exp(69.7 * (0.8795 + 0.0459 * exp(-(peaksens - range[1])^2 / 11940) - (peaksens / sensecurves)))
+  # The 300 below is a constant of the Govardovskii et al. (2000) alpha-band
+  # expression, not a reference to `range`. It must not be replaced by
+  # `range[1]`: doing so applies the short-wavelength narrowing correction
+  # according to the requested range rather than the pigment's peak sensitivity.
+  peaks <- 1 / (exp(69.7 * (0.8795 + 0.0459 * exp(-(peaksens - 300)^2 / 11940) - (peaksens / sensecurves)))
        + exp(28 * (0.922 - peaksens / sensecurves)) + exp(-14.9 * (1.104 - (peaksens / sensecurves))) + 0.674)
 
   if (beta) {

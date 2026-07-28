@@ -48,6 +48,14 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+- `sensmodel()` now generates the same sensitivity curve for a given `peaksens`
+  whatever `range` is requested. The alpha-band expression of Govardovskii et al.
+  (2000) contains a constant of 300 nm, which was coded as `range[1]`. Since the
+  two coincide at the default `range = c(300, 700)`, curves were correct for that
+  range and for any range sharing its lower bound. Users who called
+  `sensmodel()` with a lower bound other than 300 nm should consider regenerating their
+  sensitivities and rerun any downstream `vismodel()` or `coldist()` results.
+  Everyone else is unaffected and results are unchanged.
 - `bootcoldist()` now says how many bootstrap replicates failed and why, where
   it previously discarded the error and reported only that "Bootstrap sampling
   encountered errors". A run in which every replicate failed used to produce an
