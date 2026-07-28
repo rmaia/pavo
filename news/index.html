@@ -54,6 +54,10 @@
 <div class="section level3">
 <h3 id="minor-features-and-bug-fixes-2-10-0">MINOR FEATURES AND BUG FIXES<a class="anchor" aria-label="anchor" href="#minor-features-and-bug-fixes-2-10-0"></a></h3>
 <ul><li>
+<code><a href="../reference/sensmodel.html">sensmodel()</a></code> now generates the same sensitivity curve for a given <code>peaksens</code> whatever <code>range</code> is requested. The alpha-band expression of Govardovskii et al.
+<ol start="2000" style="list-style-type: decimal"><li>contains a constant of 300 nm, which was coded as <code>range[1]</code>. Since the two coincide at the default <code>range = c(300, 700)</code>, curves were correct for that range and for any range sharing its lower bound. Users who called <code><a href="../reference/sensmodel.html">sensmodel()</a></code> with a lower bound other than 300 nm should consider regenerating their sensitivities and rerun any downstream <code><a href="../reference/vismodel.html">vismodel()</a></code> or <code><a href="../reference/coldist.html">coldist()</a></code> results. Everyone else is unaffected and results are unchanged.</li>
+</ol></li>
+<li>
 <code><a href="../reference/bootcoldist.html">bootcoldist()</a></code> now says how many bootstrap replicates failed and why, where it previously discarded the error and reported only that “Bootstrap sampling encountered errors”. A run in which every replicate failed used to produce an unrelated error about a comparison of length zero, and is now reported like any other failure.</li>
 <li>
 <code>bootcoldist(raw = TRUE)</code> now returns bootstrap distances in replicate order. Each contrast was previously sorted independently before being returned, so values sharing a row came from different resamplings, and neither different contrasts nor dS and dL could be compared with one another. The values themselves are unchanged, only their order.</li>
