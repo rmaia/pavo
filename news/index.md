@@ -42,6 +42,26 @@
   independently within each group), and defaults to detecting which of
   the two applies. Empirical means are unaffected, and results are
   unchanged from previous versions when `cluster` is left as NULL.
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  gains a `correct` argument, which removes the upward bias in the
+  distance between group means that arises from those means being
+  estimated rather than known. Distance is a convex function of the
+  error in a mean, so a distance computed between two noisy centroids
+  exceeds the distance between the true ones, and two samples drawn from
+  a single population are separated by an apparently non-zero distance.
+  On the squared scale the displacement is exactly the sum, over groups,
+  of the mean squared pairwise distance among a group’s observations
+  divided by twice their number, so it is worst for small, internally
+  variable groups and does not fall away as the true separation
+  approaches zero. It is therefore largest in the situations where the
+  discriminability of two colours is in question. With `correct = TRUE`
+  the displacement is subtracted from the empirical distance and from
+  every bootstrap replicate, each using the observations it drew. Where
+  `cluster` is supplied the correction is applied to clusters rather
+  than rows, matching what is resampled; with several measurements per
+  individual, computing it from rows can understate the displacement
+  several-fold. The default is `FALSE`, so results are unchanged unless
+  it is asked for.
 - the `rimg2cimg()` function has been removed in favour of a custom
   `as.cimg()` method.
 - [`jndrot()`](https://pavo.colrverse.com/reference/jndrot.md) and by

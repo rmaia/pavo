@@ -183,6 +183,8 @@ voloverlap(tcs.sicalis.T, tcs.sicalis.C, type = "convex", plot = TRUE, col = seq
 if (require("alphashape3d")) {
   voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "alpha", avalue = 1)
 }
-#>          vol1         vol2 s_in1 s_in2 s_inboth s_ineither psmallest pboth
-#> 1 5.18372e-06 6.231492e-06     9    14        3         20 0.3333333  0.15
+#>          vol1         vol2 s_in1 s_in2 s_inboth s_ineither  psmallest
+#> 1 5.18372e-06 6.231492e-06    12    16        1         27 0.08333333
+#>        pboth
+#> 1 0.03703704
 ```

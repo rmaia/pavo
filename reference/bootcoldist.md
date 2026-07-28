@@ -15,7 +15,8 @@ bootcoldist(
   ...,
   cluster = NULL,
   nesting = c("auto", "crossed", "nested"),
-  ci.type = c("perc", "bca")
+  ci.type = c("perc", "bca"),
+  correct = FALSE
 )
 ```
 
@@ -88,14 +89,46 @@ bootcoldist(
   percentiles of the bootstrap distribution, or `"bca"` for
   bias-corrected and accelerated limits. Colour distances are bounded
   below by zero and are usually right-skewed, which is the situation in
-  which percentile limits sit off-centre; BCa shifts them to account for
-  both that skew and for where the empirical distance falls within the
-  bootstrap distribution. It costs one additional jackknife pass,
-  leaving out a single row at a time, or a whole cluster at a time when
-  `cluster` is given.
+  which percentile limits sit off-centre. `bca` shifts them to account
+  for both that skew and for where the empirical distance falls within
+  the bootstrap distribution.
 
-  Note that `cluster`, `nesting` and `ci.type` follow `...`, and so must
-  all be named in full when used.
+- correct:
+
+  logical. Should the distance be corrected for the sampling error in
+  the group means? Defaults to `FALSE` for consistency with previous
+  versions, but `TRUE` is recommended wherever it is available: the
+  uncorrected distance is biased upwards for any data at all, and the
+  correction removes that bias exactly rather than approximately. Both
+  the estimate and its interval move downwards, so a contrast will less
+  often have its lower limit above the theoretical threshold. The
+  interval is if anything slightly wider, since the correction is
+  estimated rather than known and the bootstrap carries that uncertainty
+  as well.
+
+  The distance between two group means is biased upwards, because each
+  mean is estimated with error and distance is a convex function of that
+  error. On the squared scale the displacement is exactly the sum, over
+  groups, of the mean squared pairwise distance among that group's
+  observations divided by twice their number, so it is largest when
+  groups are small and internally variable and it does not vanish as the
+  true separation goes to zero. Two samples drawn from a single
+  population will therefore be separated by an apparently non-zero
+  distance. Setting `correct = TRUE` subtracts that displacement from
+  the empirical distance and from every bootstrap replicate, using in
+  each case the observations that replicate drew, and returns the square
+  root of what remains. Distances that would become negative are
+  returned as zero, in the same way and for the same reason as a
+  negative variance component.
+
+  The correction relies on the distance being one that arises from an
+  inner product, and so is unavailable with `noise = "quantum"`, in the
+  `CIELAB`, `CIELCh` and `coc` spaces, and for achromatic contrast in a
+  colourspace model, where luminance contrast is a ratio rather than a
+  distance. It cannot currently be combined with `ci.type = "bca"`.
+
+  Note that `cluster`, `nesting`, `ci.type` and `correct` follow `...`,
+  and so must all be named in full when used.
 
 ## Value
 
@@ -152,6 +185,42 @@ bootcoldist(vm,
 #> B-T 1.741764 0.2656546 3.990978 0.2340913 0.0196446 1.510707
 #> C-T 6.110519 4.6425355 7.981340 7.2336258 5.3982137 8.953411
 
+# The distances themselves are still inflated, since each group mean is
+# estimated from only seven birds and the distance between two noisy means
+# exceeds the distance between the true ones. correct = TRUE removes that
+# displacement. Note what happens to the breast-throat contrast: an estimate
+# of 1.74, comfortably above the theoretical threshold, is entirely accounted
+# for by sampling error and falls to zero.
+bootcoldist(vm,
+  by = gr, cluster = ind, correct = TRUE,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
+#> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts
+#>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr
+#> B-C 4.108526 2.129681 5.925022 7.384813 6.302973 8.570131
+#> B-T 0.000000 0.000000 3.527475 0.000000 0.000000 1.110461
+#> C-T 5.728305 4.205223 7.837879 7.148008 5.492774 8.912263
+
+# The two arguments do different jobs, and this design shows it cleanly.
+# Dropping cluster leaves the corrected distances unchanged, because each bird
+# contributes exactly one measurement to each patch: within a group the seven
+# rows are the seven clusters, so there is nothing for the correction to do
+# differently. The intervals do change, and are wider here without the pairing
+# between patches that resampling whole birds preserves.
+#
+# Where the estimates themselves would differ is when a group contains several
+# measurements of the same individual, since the correction is then governed
+# by how many individuals there are rather than how many rows.
+bootcoldist(vm,
+  by = gr, correct = TRUE,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
+#> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts
+#>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr
+#> B-C 4.108526 2.209315 6.476223 7.384813 5.650389 9.287107
+#> B-T 0.000000 0.000000 4.573293 0.000000 0.000000 1.250814
+#> C-T 5.728305 3.482210 8.464476 7.148008 5.312734 8.821955
+
 # Run the same again, though as a simple colourspace model
 data(sicalis)
 vm <- vismodel(sicalis, achromatic = "bt.dc")
@@ -161,9 +230,9 @@ bootcoldist(space, by = gr)
 #> Quantum catch are relative, distances may not be meaningful
 #> Calculating unweighted Euclidean distances and Weber luminance contrast
 #>        dS.mean      dS.lwr     dS.upr    dL.mean      dL.lwr    dL.upr
-#> B-C 0.08873077 0.057723440 0.12517782 1.11017675 0.768266483 1.5310851
-#> B-T 0.02510607 0.005219538 0.06967889 0.02368528 0.002706663 0.1742986
-#> C-T 0.11208534 0.082122989 0.14400045 1.06135304 0.732571803 1.4575228
+#> B-C 0.08873077 0.058818120 0.12513336 1.11017675 0.768082432 1.4990065
+#> B-T 0.02510607 0.005610291 0.06946696 0.02368528 0.002664469 0.1671409
+#> C-T 0.11208534 0.080853592 0.14561773 1.06135304 0.724331098 1.4656737
 
 # Estimate bootstrapped colour-distances for a more 'specialised' model,
 # like the colour hexagon
@@ -176,7 +245,7 @@ flowers.hex <- colspace(vis.flowers, space = "hexagon")
 pop_group <- c(rep("pop_1", nrow(flowers.hex) / 2), rep("pop_2", nrow(flowers.hex) / 2))
 bootcoldist(flowers.hex, by = pop_group)
 #> Calculating unweighted Euclidean distances and simple luminance contrast
-#>                dS.mean     dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr
-#> pop_1-pop_2 0.07360865 0.02334336 0.2011393 0.9016919 0.7291812 1.050853
+#>                dS.mean    dS.lwr    dS.upr   dL.mean    dL.lwr   dL.upr
+#> pop_1-pop_2 0.07360865 0.0251154 0.1921055 0.9016919 0.7456218 1.056268
 # }
 ```
