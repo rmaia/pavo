@@ -111,14 +111,16 @@ test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigment
   expect_lt(realised(395, template = "ssh_a1"), 395 - 5)
 
   # The alpha band alone recovers peaksens exactly, and the default template is
-  # unaffected at the same peak sensitivities
-  expect_identical(realised(430, template = "ssh_a2", beta = FALSE), 430)
-  expect_identical(realised(395, template = "ssh_a1", beta = FALSE), 395)
-  expect_identical(realised(430, template = "govardovskii_a1"), 430)
+  # unaffected at the same peak sensitivities. expect_equal rather than
+  # expect_identical because wl is an integer sequence, and the type is beside
+  # the point here.
+  expect_equal(realised(430, template = "ssh_a2", beta = FALSE), 430)
+  expect_equal(realised(395, template = "ssh_a1", beta = FALSE), 395)
+  expect_equal(realised(430, template = "govardovskii_a1"), 430)
 
   # Long-wavelength pigments, where the fixed beta band is far from the alpha
   # band, are unaffected
-  expect_identical(realised(600, template = "ssh_a2"), 600)
+  expect_equal(realised(600, template = "ssh_a2"), 600)
 
   # None of this warns
   expect_silent(sensmodel(430, template = "ssh_a2"))
