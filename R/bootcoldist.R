@@ -34,18 +34,43 @@
 #'  within a population) and clusters are drawn independently within each group.
 #'  `"auto"` chooses between the two by checking whether any cluster appears
 #'  under more than one level of `by`. Ignored when `cluster` is NULL.
-#'
 #' @param ci.type the type of confidence interval, either `"perc"` (the default)
 #'  for percentiles of the bootstrap distribution, or `"bca"` for bias-corrected
 #'  and accelerated limits. Colour distances are bounded below by zero and are
 #'  usually right-skewed, which is the situation in which percentile limits sit
-#'  off-centre; BCa shifts them to account for both that skew and for where the
-#'  empirical distance falls within the bootstrap distribution. It costs one
-#'  additional jackknife pass, leaving out a single row at a time, or a whole
-#'  cluster at a time when `cluster` is given.
+#'  off-centre. `bca` shifts them to account for both that skew and for where the
+#'  empirical distance falls within the bootstrap distribution.
+#' @param correct logical. Should the distance be corrected for the sampling
+#'  error in the group means? Defaults to `FALSE` for consistency with previous
+#'  versions, but `TRUE` is recommended wherever it is available: the
+#'  uncorrected distance is biased upwards for any data at all, and the
+#'  correction removes that bias exactly rather than approximately. Both the
+#'  estimate and its interval move downwards, so a contrast will less often have
+#'  its lower limit above the theoretical threshold. The interval is if anything
+#'  slightly wider, since the correction is estimated rather than known and the
+#'  bootstrap carries that uncertainty as well.
 #'
-#'  Note that `cluster`, `nesting` and `ci.type` follow `...`, and so must all be
-#'  named in full when used.
+#'  The distance between two group means is biased upwards, because each mean is
+#'  estimated with error and distance is a convex function of that error. On the
+#'  squared scale the displacement is exactly the sum, over groups, of the mean
+#'  squared pairwise distance among that group's observations divided by twice
+#'  their number, so it is largest when groups are small and internally variable
+#'  and it does not vanish as the true separation goes to zero. Two samples drawn
+#'  from a single population will therefore be separated by an apparently
+#'  non-zero distance. Setting `correct = TRUE` subtracts that displacement from
+#'  the empirical distance and from every bootstrap replicate, using in each case
+#'  the observations that replicate drew, and returns the square root of what
+#'  remains. Distances that would become negative are returned as zero, in the
+#'  same way and for the same reason as a negative variance component.
+#'
+#'  The correction relies on the distance being one that arises from an inner
+#'  product, and so is unavailable with `noise = "quantum"`, in the `CIELAB`,
+#'  `CIELCh` and `coc` spaces, and for achromatic contrast in a colourspace
+#'  model, where luminance contrast is a ratio rather than a distance. It cannot
+#'  currently be combined with `ci.type = "bca"`.
+#'
+#'  Note that `cluster`, `nesting`, `ci.type` and `correct` follow `...`, and so
+#'  must all be named in full when used.
 #'
 #' @inherit getspec details
 #'
@@ -69,6 +94,32 @@
 #' ind <- substr(rownames(vm), 1, 4)
 #' bootcoldist(vm,
 #'   by = gr, cluster = ind,
+#'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+#' )
+#'
+#' # The distances themselves are still inflated, since each group mean is
+#' # estimated from only seven birds and the distance between two noisy means
+#' # exceeds the distance between the true ones. correct = TRUE removes that
+#' # displacement. Note what happens to the breast-throat contrast: an estimate
+#' # of 1.74, comfortably above the theoretical threshold, is entirely accounted
+#' # for by sampling error and falls to zero.
+#' bootcoldist(vm,
+#'   by = gr, cluster = ind, correct = TRUE,
+#'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+#' )
+#'
+#' # The two arguments do different jobs, and this design shows it cleanly.
+#' # Dropping cluster leaves the corrected distances unchanged, because each bird
+#' # contributes exactly one measurement to each patch: within a group the seven
+#' # rows are the seven clusters, so there is nothing for the correction to do
+#' # differently. The intervals do change, and are wider here without the pairing
+#' # between patches that resampling whole birds preserves.
+#' #
+#' # Where the estimates themselves would differ is when a group contains several
+#' # measurements of the same individual, since the correction is then governed
+#' # by how many individuals there are rather than how many rows.
+#' bootcoldist(vm,
+#'   by = gr, correct = TRUE,
 #'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
 #' )
 #'
@@ -101,7 +152,7 @@
 
 bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FALSE, ...,
                         cluster = NULL, nesting = c("auto", "crossed", "nested"),
-                        ci.type = c("perc", "bca")) {
+                        ci.type = c("perc", "bca"), correct = FALSE) {
   # These arguments deliberately sit after the dots, so that they have to be
   # named in full. Were they to come before, R's partial matching would bind
   # arguments meant for coldist() to them instead: coldist()'s 'n' is a prefix of
@@ -239,6 +290,50 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$qcatch <- attr(vismodeldata, "qcatch")
   }
 
+  # The sampling-error correction is only defined where the distance is a norm
+  # arising from an inner product, since it rests on the identity
+  #   sum_{i<j} ||u_i - u_j||^2 = m * sum_i ||u_i - mean||^2
+  # which fails otherwise. That rules out quantum noise, whose per-receptor term
+  # depends on the pair being compared; CIE2000, which is not a metric of that
+  # kind; and the Manhattan distances of the colour-opponent space.
+  if (correct) {
+    clrsp <- attr(vismodeldata, "clrsp")
+
+    if (identical(arg0$noise, "quantum")) {
+      stop(
+        'correct = TRUE is not available with noise = "quantum", because the ',
+        "receptor noise then depends on the pair of colours being compared and ",
+        "the distance is no longer a fixed quadratic form.",
+        call. = FALSE
+      )
+    }
+    if (!is.null(clrsp) && clrsp %in% c("CIELAB", "CIELCh", "coc")) {
+      stop(
+        "correct = TRUE is not available in the ", clrsp, " space, whose ",
+        "distances do not arise from an inner product.",
+        call. = FALSE
+      )
+    }
+    if (!is.null(clrsp) && isTRUE(arg0$achromatic)) {
+      stop(
+        "correct = TRUE cannot be combined with achromatic = TRUE for a ",
+        "colspace object, because luminance contrast is then a ratio rather ",
+        "than a distance. Either set achromatic = FALSE, or pass the ",
+        "vismodel object rather than the colspace one.",
+        call. = FALSE
+      )
+    }
+    if (identical(ci.type, "bca")) {
+      stop(
+        'correct = TRUE cannot yet be combined with ci.type = "bca". The ',
+        "corrected distance is bounded below by zero and piles up there when ",
+        "groups are close, which leaves the bias term of an accelerated ",
+        'interval undefined. Use ci.type = "perc".',
+        call. = FALSE
+      )
+    }
+  }
+
   # Validate the clustering variable, if one was given
   if (!is.null(cluster)) {
     if (length(cluster) != nrow(vismodeldata)) {
@@ -289,6 +384,11 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   empdS <- setNames(empcd$dS, paste(empcd$patch1, empcd$patch2, sep = "-"))
 
+  # Attributes carried onto every set of group means handed back to coldist().
+  # Defined here rather than further down because the correction needs them too.
+  attribs <- attributes(vismodeldata)
+  attribs <- attribs[grep("data|names", names(attribs), invert = TRUE)]
+
   # separate data by group
   bygroup <- lapply(unique(by), function(x) vismodeldata[by == x, ])
 
@@ -299,6 +399,22 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # When 'cluster' is NULL this resamples rows independently within each group,
   # otherwise it resamples whole clusters. See bootindices() below.
   its <- bootindices(by, cluster, boot.n, nesting)
+
+  # Machinery for the sampling-error correction. The displacement of the squared
+  # centroid distance is the sum over groups of the mean squared pairwise
+  # distance among that group's resampling units, divided by twice their number.
+  # Every replicate draws from the same pool of units, so the pairwise distances
+  # are computed once per group here and each replicate then only needs a
+  # quadratic form in how many times it drew each unit. See pairsqdist() below.
+  if (correct) {
+    unitdists <- lapply(seq_along(bygroup), function(g) {
+      units <- resamplingunits(bygroup[[g]], cluster[by == unique(by)[g]], groupsummary)
+      pairsqdist(units, arg0, attribs)
+    })
+
+    empdisp <- displacement(unitdists, lapply(unitdists, function(u) rep(1, u$m)))
+    empdS <- sqrt(pmax(empdS^2 - empdisp[["dS"]], 0))
+  }
 
   # use the indices to break each group's data into bootstrap replicates
   # returns a list with length = number of by
@@ -327,10 +443,8 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     x
   })
 
-  # ...and give them the necessary attributes
+  # ...and give them the necessary attributes (see 'attribs' above)
   bootgrouped <- lapply(bootgrouped, as.data.frame)
-  attribs <- attributes(vismodeldata)
-  attribs <- attribs[grep("data|names", names(attribs), invert = TRUE)]
 
   for (i in seq_along(bootgrouped)) {
     attributes(bootgrouped[[i]])[names(attribs)] <- attribs
@@ -371,6 +485,26 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       "Bootstrap replicates did not all return the same colour distances.",
       call. = FALSE
     )
+  }
+
+  # Each replicate is corrected by the displacement of its own resample, not by
+  # a single figure taken from the observed data. Subtracting a constant would
+  # shift the interval without changing its shape, and the shape is part of what
+  # is wrong: the correction is itself estimated, and the bootstrap has to see
+  # that variability to reproduce the sampling distribution of the corrected
+  # statistic.
+  if (correct) {
+    bootdisp <- vapply(seq_len(boot.n), function(b) {
+      counts <- lapply(seq_along(unitdists), function(g) {
+        drawn <- attr(its[[g]][[b]], "unitdraw")
+        if (is.null(drawn)) drawn <- its[[g]][[b]]
+        tabulate(drawn, nbins = unitdists[[g]]$m)
+      })
+      displacement(unitdists, counts)
+    }, numeric(if (isTRUE(arg0$achromatic)) 2L else 1L))
+    bootdisp <- if (is.matrix(bootdisp)) t(bootdisp) else cbind(dS = bootdisp)
+
+    bootdS <- sqrt(pmax(bootdS^2 - bootdisp[, "dS"], 0))
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
@@ -434,6 +568,15 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       })
     )
 
+    # Achromatic contrast under the receptor-noise model is the absolute
+    # difference in log luminance over a Weber fraction, which is a distance in
+    # one dimension and so takes the same correction. The ratio-based luminance
+    # contrasts of the colourspace models do not, and are refused above.
+    if (correct) {
+      empdL <- sqrt(pmax(empdL^2 - empdisp[["dL"]], 0))
+      bootdL <- sqrt(pmax(bootdL^2 - bootdisp[, "dL"], 0))
+    }
+
     sorteddL <- apply(bootdL, 2, sort)
 
     # Ensure names match with empirical values (even though they should match already)
@@ -463,6 +606,86 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   }
 
   res
+}
+
+# The units that resampling draws from: single rows when there is no clustering
+# variable, and per-cluster means when there is one.
+resamplingunits <- function(rows, cluster, groupsummary) {
+  if (is.null(cluster)) {
+    return(rows)
+  }
+  do.call(rbind, lapply(
+    split(seq_len(nrow(rows)), cluster),
+    function(i) groupsummary(rows[i, , drop = FALSE])
+  ))
+}
+
+# Squared distances between every pair of a group's resampling units.
+#
+# Computed once per group and reused by every replicate, since each replicate
+# draws from the same pool. Returned as a full symmetric matrix so that a
+# replicate's mean squared pairwise distance is a quadratic form in the number
+# of times it drew each unit.
+pairsqdist <- function(units, arg0, attribs) {
+  m <- nrow(units)
+
+  if (m < 2L) {
+    stop(
+      "The sampling-error correction needs at least two resampling units per ",
+      "group, and one group has ", m, ".",
+      call. = FALSE
+    )
+  }
+
+  units <- as.data.frame(units)
+  rownames(units) <- seq_len(m)
+  attributes(units)[names(attribs)] <- attribs
+
+  tmparg <- arg0
+  tmparg$modeldata <- units
+  d <- suppressMessages(do.call(coldist, tmparg))
+
+  i <- as.integer(d$patch1)
+  j <- as.integer(d$patch2)
+  square <- function(v) {
+    out <- matrix(0, m, m)
+    out[cbind(i, j)] <- v^2
+    out[cbind(j, i)] <- v^2
+    out
+  }
+
+  list(
+    m = m,
+    dS = square(d$dS),
+    dL = if (isTRUE(arg0$achromatic)) square(d$dL) else NULL
+  )
+}
+
+# Displacement of the squared centroid distance for one resample.
+#
+# `counts[[g]]` says how many times each of group g's units was drawn. For a
+# multiset of k units the mean squared pairwise distance is c'Dc / (k(k - 1)),
+# since c'Dc counts every ordered pair, and the displacement contributed by that
+# group is that mean over 2k. The identity behind it is
+#   sum_{i<j} ||u_i - u_j||^2 = k * sum_i ||u_i - mean||^2
+# so no separate estimate of the noise covariance is needed.
+displacement <- function(unitdists, counts) {
+  channels <- if (is.null(unitdists[[1]]$dL)) "dS" else c("dS", "dL")
+
+  vapply(channels, function(channel) {
+    sum(vapply(seq_along(unitdists), function(g) {
+      cg <- counts[[g]]
+      k <- sum(cg)
+      if (k < 2L) {
+        stop(
+          "A bootstrap replicate drew fewer than two resampling units for one ",
+          "group, so the sampling-error correction is undefined for it.",
+          call. = FALSE
+        )
+      }
+      drop(cg %*% unitdists[[g]][[channel]] %*% cg) / (2 * k^2 * (k - 1))
+    }, numeric(1)))
+  }, numeric(1))
 }
 
 # Check the results of the bootstrap replicates, where a replicate that failed
@@ -613,6 +836,19 @@ jackdist <- function(vismodeldata, by, cluster, groupsummary, attribs, arg0) {
   )
 }
 
+# Row positions for a draw of whole clusters, carrying a record of which
+# clusters were drawn.
+#
+# The rows are all that the resampling itself needs. The 'unitdraw' attribute is
+# for the sampling-error correction, which works at the level of the units being
+# resampled rather than the rows: it holds the position, among the group's
+# clusters, of each cluster in the draw, so a cluster drawn twice appears twice.
+withunits <- function(have, drawn) {
+  idx <- unlist(have[drawn], use.names = FALSE)
+  attr(idx, "unitdraw") <- match(drawn, names(have))
+  idx
+}
+
 # Generate the row indices used by each bootstrap replicate.
 #
 # Returns a list with length = number of groups (in the order given by
@@ -687,14 +923,14 @@ bootindices <- function(by, cluster, boot.n, nesting = "auto") {
     }
 
     its <- lapply(rowsbycluster, function(have) {
-      lapply(draws, function(d) unlist(have[d[d %in% names(have)]], use.names = FALSE))
+      lapply(draws, function(d) withunits(have, d[d %in% names(have)]))
     })
   } else {
     # Clusters sit inside a single group, so each group's clusters are drawn
     # independently of the others.
     its <- lapply(rowsbycluster, function(have) {
       replicate(boot.n,
-        unlist(have[sample(names(have), length(have), replace = TRUE)], use.names = FALSE),
+        withunits(have, sample(names(have), length(have), replace = TRUE)),
         simplify = FALSE
       )
     })

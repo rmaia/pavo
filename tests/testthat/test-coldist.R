@@ -556,3 +556,133 @@ test_that("bootindices", {
     "[Ff]ewer than five clusters"
   )
 })
+
+test_that("bootcoldist sampling-error correction", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l")
+  gr <- gsub("ind..", "", rownames(vm))
+  args <- list(vismodeldata = vm, by = gr, n = c(1, 2, 3), weber = 0.1,
+               weber.achro = 0.1, boot.n = 60)
+
+  # Off by default, and identical to not asking for it
+  set.seed(1)
+  default <- suppressWarnings(do.call(bootcoldist, args))
+  set.seed(1)
+  explicit <- suppressWarnings(do.call(bootcoldist, c(args, list(correct = FALSE))))
+  expect_identical(default, explicit)
+
+  set.seed(1)
+  corrected <- suppressWarnings(do.call(bootcoldist, c(args, list(correct = TRUE))))
+  expect_identical(dim(corrected), dim(default))
+  expect_identical(dimnames(corrected), dimnames(default))
+
+  # Correcting can only shrink a distance, and cannot take it below zero
+  expect_true(all(corrected[, "dS.mean"] <= default[, "dS.mean"] + 1e-12))
+  expect_true(all(corrected[, "dL.mean"] <= default[, "dL.mean"] + 1e-12))
+  expect_true(all(corrected >= 0))
+})
+
+test_that("bootcoldist correction matches the covariance form it stands for", {
+  # The displacement is the sum over groups of tr(A S) / n, with S the covariance
+  # of that group's log catches. Computing it from pairwise distances instead
+  # should be exact, so this checks the identity the implementation rests on
+  # rather than merely that the numbers look plausible.
+  set.seed(20)
+  n <- c(1, 2, 2, 4)
+  weber <- 0.1
+
+  reln <- n / sum(n)
+  e <- weber * sqrt(reln[length(n)]) / sqrt(reln)
+  k <- length(n)
+  A <- matrix(0, k, k)
+  for (keep in asplit(combn(k, k - 2), 2)) {
+    pair <- setdiff(seq_len(k), keep)
+    v <- numeric(k)
+    v[pair[1]] <- 1
+    v[pair[2]] <- -1
+    A <- A + prod(e[keep])^2 * tcrossprod(v)
+  }
+  A <- A / sum(apply(combn(k, k - 1), 2, function(cc) prod(e[cc])^2))
+
+  logq <- matrix(rnorm(12 * k, 0, 0.4), ncol = k)
+  units <- as.data.frame(exp(logq))
+  names(units) <- c("u", "s", "m", "l")
+
+  arg0 <- list(n = n, weber = weber, achromatic = FALSE, qcatch = "Qi",
+               noise = "neural", weber.ref = "longest")
+  pd <- pairsqdist(units, arg0, list())
+  counts <- rep(1, pd$m)
+  fromdistances <- displacement(list(pd), list(counts))[["dS"]]
+
+  fromcovariance <- sum(diag(A %*% cov(logq))) / nrow(logq)
+
+  expect_equal(fromdistances, fromcovariance, tolerance = 1e-10)
+})
+
+test_that("bootcoldist correction follows the resampling unit", {
+  # Five individuals, four measurements each. The displacement is governed by the
+  # number of individuals, so estimating it from rows understates it badly.
+  set.seed(3)
+  ind <- rep(seq_len(5), each = 4)
+  between <- matrix(rnorm(5 * 4, 0, 0.4), nrow = 5)
+  logq <- between[ind, ] + matrix(rnorm(20 * 4, 0, 0.05), nrow = 20)
+
+  # The two groups have to differ in the *ratios* between their cones. Adding a
+  # constant to every log catch is a pure intensity shift, which lies in the null
+  # space of the chromatic metric and would leave the groups identical.
+  shifted <- sweep(logq, 2, c(0, 0, 0, 0.6), "+")
+
+  dat <- as.data.frame(exp(rbind(logq, shifted)))
+  names(dat) <- c("u", "s", "m", "l")
+  gr <- rep(c("a", "b"), each = 20)
+  cl <- paste0(gr, rep(ind, 2))
+
+  args <- list(vismodeldata = dat, by = gr, n = c(1, 2, 2, 4), weber = 0.1,
+               achromatic = FALSE, qcatch = "Qi", boot.n = 50)
+
+  uncorrected <- suppressWarnings(suppressMessages(do.call(bootcoldist, args)))
+  rowlevel <- suppressWarnings(suppressMessages(
+    do.call(bootcoldist, c(args, list(correct = TRUE)))
+  ))
+  clustered <- suppressWarnings(suppressMessages(
+    do.call(bootcoldist, c(args, list(cluster = cl, correct = TRUE)))
+  ))
+
+  # Both corrections have to be off the floor for the comparison to mean anything
+  expect_gt(clustered[1, "dS.mean"], 0)
+
+  # Correcting removes something, and correcting at the cluster level removes
+  # more, because the effective sample size is five individuals not twenty rows
+  expect_lt(rowlevel[1, "dS.mean"], uncorrected[1, "dS.mean"])
+  expect_lt(clustered[1, "dS.mean"], rowlevel[1, "dS.mean"])
+})
+
+test_that("bootcoldist refuses to correct where the distance is not Euclidean", {
+  data(sicalis)
+  vm <- vismodel(sicalis, visual = "apis", achromatic = "l", relative = FALSE)
+  gr <- gsub("ind..", "", rownames(vm))
+
+  expect_error(
+    suppressWarnings(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1,
+                                 weber.achro = 0.1, boot.n = 20,
+                                 noise = "quantum", correct = TRUE)),
+    "quantum"
+  )
+  expect_error(
+    suppressWarnings(bootcoldist(vm, by = gr, n = c(1, 2, 3), weber = 0.1,
+                                 weber.achro = 0.1, boot.n = 20,
+                                 ci.type = "bca", correct = TRUE)),
+    "bca"
+  )
+
+  data(flowers)
+  vf <- vismodel(flowers, visual = "apis", qcatch = "Ei", relative = FALSE,
+                 vonkries = TRUE, bkg = "green")
+  lab <- colspace(vismodel(flowers, visual = "cie10"), space = "cielab")
+  grf <- rep(c("a", "b"), each = nrow(lab) / 2)
+  expect_error(
+    suppressMessages(bootcoldist(lab, by = grf, boot.n = 20, achromatic = FALSE,
+                                 correct = TRUE)),
+    "CIELAB"
+  )
+})

@@ -13,7 +13,8 @@ bootcoldist(
   ...,
   cluster = NULL,
   nesting = c("auto", "crossed", "nested"),
-  ci.type = c("perc", "bca")
+  ci.type = c("perc", "bca"),
+  correct = FALSE
 )
 }
 \arguments{
@@ -60,13 +61,40 @@ under more than one level of \code{by}. Ignored when \code{cluster} is NULL.}
 for percentiles of the bootstrap distribution, or \code{"bca"} for bias-corrected
 and accelerated limits. Colour distances are bounded below by zero and are
 usually right-skewed, which is the situation in which percentile limits sit
-off-centre; BCa shifts them to account for both that skew and for where the
-empirical distance falls within the bootstrap distribution. It costs one
-additional jackknife pass, leaving out a single row at a time, or a whole
-cluster at a time when \code{cluster} is given.
+off-centre. \code{bca} shifts them to account for both that skew and for where the
+empirical distance falls within the bootstrap distribution.}
 
-Note that \code{cluster}, \code{nesting} and \code{ci.type} follow \code{...}, and so must all be
-named in full when used.}
+\item{correct}{logical. Should the distance be corrected for the sampling
+error in the group means? Defaults to \code{FALSE} for consistency with previous
+versions, but \code{TRUE} is recommended wherever it is available: the
+uncorrected distance is biased upwards for any data at all, and the
+correction removes that bias exactly rather than approximately. Both the
+estimate and its interval move downwards, so a contrast will less often have
+its lower limit above the theoretical threshold. The interval is if anything
+slightly wider, since the correction is estimated rather than known and the
+bootstrap carries that uncertainty as well.
+
+The distance between two group means is biased upwards, because each mean is
+estimated with error and distance is a convex function of that error. On the
+squared scale the displacement is exactly the sum, over groups, of the mean
+squared pairwise distance among that group's observations divided by twice
+their number, so it is largest when groups are small and internally variable
+and it does not vanish as the true separation goes to zero. Two samples drawn
+from a single population will therefore be separated by an apparently
+non-zero distance. Setting \code{correct = TRUE} subtracts that displacement from
+the empirical distance and from every bootstrap replicate, using in each case
+the observations that replicate drew, and returns the square root of what
+remains. Distances that would become negative are returned as zero, in the
+same way and for the same reason as a negative variance component.
+
+The correction relies on the distance being one that arises from an inner
+product, and so is unavailable with \code{noise = "quantum"}, in the \code{CIELAB},
+\code{CIELCh} and \code{coc} spaces, and for achromatic contrast in a colourspace
+model, where luminance contrast is a ratio rather than a distance. It cannot
+currently be combined with \code{ci.type = "bca"}.
+
+Note that \code{cluster}, \code{nesting}, \code{ci.type} and \code{correct} follow \code{...}, and so
+must all be named in full when used.}
 }
 \value{
 a matrix including the empirical mean and bootstrapped
@@ -100,6 +128,32 @@ bootcoldist(vm, by = gr, n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
 ind <- substr(rownames(vm), 1, 4)
 bootcoldist(vm,
   by = gr, cluster = ind,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
+
+# The distances themselves are still inflated, since each group mean is
+# estimated from only seven birds and the distance between two noisy means
+# exceeds the distance between the true ones. correct = TRUE removes that
+# displacement. Note what happens to the breast-throat contrast: an estimate
+# of 1.74, comfortably above the theoretical threshold, is entirely accounted
+# for by sampling error and falls to zero.
+bootcoldist(vm,
+  by = gr, cluster = ind, correct = TRUE,
+  n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+)
+
+# The two arguments do different jobs, and this design shows it cleanly.
+# Dropping cluster leaves the corrected distances unchanged, because each bird
+# contributes exactly one measurement to each patch: within a group the seven
+# rows are the seven clusters, so there is nothing for the correction to do
+# differently. The intervals do change, and are wider here without the pairing
+# between patches that resampling whole birds preserves.
+#
+# Where the estimates themselves would differ is when a group contains several
+# measurements of the same individual, since the correction is then governed
+# by how many individuals there are rather than how many rows.
+bootcoldist(vm,
+  by = gr, correct = TRUE,
   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
 )
 
