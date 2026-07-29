@@ -130,25 +130,37 @@ empirical distance falls within the bootstrap distribution.</p></dd>
 <dt id="arg-correct">correct<a class="anchor" aria-label="anchor" href="#arg-correct"></a></dt>
 <dd><p>logical. Should the distance be corrected for the sampling
 error in the group means? Defaults to <code>FALSE</code> for consistency with previous
-versions, but <code>TRUE</code> is recommended wherever it is available: the
-uncorrected distance is biased upwards for any data at all, and the
-correction removes that bias exactly rather than approximately. Both the
-estimate and its interval move downwards, so a contrast will less often have
-its lower limit above the theoretical threshold. The interval is if anything
-slightly wider, since the correction is estimated rather than known and the
-bootstrap carries that uncertainty as well.</p>
+versions, but <code>TRUE</code> is recommended wherever it is available, since the
+uncorrected distance is biased upwards for any data at all. Both the estimate
+and its interval move downwards, so a contrast will less often have its lower
+limit above a given threshold. The interval is if anything slightly wider,
+since the correction is estimated rather than known and the bootstrap carries
+that uncertainty as well.</p>
 <p>The distance between two group means is biased upwards, because each mean is
 estimated with error and distance is a convex function of that error. On the
-squared scale the displacement is exactly the sum, over groups, of the mean
-squared pairwise distance among that group's observations divided by twice
-their number, so it is largest when groups are small and internally variable
-and it does not vanish as the true separation goes to zero. Two samples drawn
-from a single population will therefore be separated by an apparently
-non-zero distance. Setting <code>correct = TRUE</code> subtracts that displacement from
-the empirical distance and from every bootstrap replicate, using in each case
-the observations that replicate drew, and returns the square root of what
-remains. Distances that would become negative are returned as zero, in the
-same way and for the same reason as a negative variance component.</p>
+squared scale that displacement is the mean squared pairwise distance among a
+group's observations divided by twice their number, summed over the two
+groups, so it is largest when groups are small and internally variable and it
+does not vanish as the true separation goes to zero. Two samples drawn from a
+single population will therefore be separated by an apparently non-zero
+distance. Setting <code>correct = TRUE</code> subtracts the displacement from the
+empirical distance and from every bootstrap replicate, using in each case the
+observations that replicate drew, and returns the square root of what
+remains. A distance that would turn negative becomes zero, in the same way
+and for the same reason as a negative variance component.</p>
+<p>The subtraction is exactly unbiased on the squared scale. Taking the square
+root of an unbiased estimate of a squared distance is not itself unbiased,
+and errs slightly low, so a corrected distance is a little conservative.</p>
+<p>Where <code>cluster</code> is given and the design is crossed, so that the same
+individuals contribute to both groups of a contrast, the two group means are
+correlated and their covariance belongs in the displacement. The correction
+then works from the differences between each individual's own pair of
+measurements, which carries that covariance. Treating the groups as
+independent in this case would subtract far too much. Designs in which only
+some individuals are shared between two groups are refused, since neither
+estimator applies. Exact unbiasedness assumes clusters of roughly equal size.
+Under marked imbalance the correction is a little too small, because the group mean is
+taken over rows while the displacement is estimated over clusters.</p>
 <p>The correction relies on the distance being one that arises from an inner
 product, and so is unavailable with <code>noise = "quantum"</code>, in the <code>CIELAB</code>,
 <code>CIELCh</code> and <code>coc</code> spaces, and for achromatic contrast in a colourspace
@@ -211,38 +223,31 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 <span class="r-in"><span><span class="co"># The distances themselves are still inflated, since each group mean is</span></span></span>
 <span class="r-in"><span><span class="co"># estimated from only seven birds and the distance between two noisy means</span></span></span>
 <span class="r-in"><span><span class="co"># exceeds the distance between the true ones. correct = TRUE removes that</span></span></span>
-<span class="r-in"><span><span class="co"># displacement. Note what happens to the breast-throat contrast: an estimate</span></span></span>
-<span class="r-in"><span><span class="co"># of 1.74, comfortably above the theoretical threshold, is entirely accounted</span></span></span>
-<span class="r-in"><span><span class="co"># for by sampling error and falls to zero.</span></span></span>
+<span class="r-in"><span><span class="co"># displacement, and every contrast shrinks.</span></span></span>
 <span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">gr</span>, cluster <span class="op">=</span> <span class="va">ind</span>, correct <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.108526 2.129681 5.925022 7.384813 6.302973 8.570131</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.000000 0.000000 3.527475 0.000000 0.000000 1.110461</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 5.728305 4.205223 7.837879 7.148008 5.492774 8.912263</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.483111 2.652781 6.134086 7.438802 6.337863 8.634343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 1.242004 0.000000 3.716494 0.000000 0.000000 1.420668</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 5.952550 4.460446 7.890805 7.167584 5.506746 8.916083</span>
 <span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="co"># The two arguments do different jobs, and this design shows it cleanly.</span></span></span>
-<span class="r-in"><span><span class="co"># Dropping cluster leaves the corrected distances unchanged, because each bird</span></span></span>
-<span class="r-in"><span><span class="co"># contributes exactly one measurement to each patch: within a group the seven</span></span></span>
-<span class="r-in"><span><span class="co"># rows are the seven clusters, so there is nothing for the correction to do</span></span></span>
-<span class="r-in"><span><span class="co"># differently. The intervals do change, and are wider here without the pairing</span></span></span>
-<span class="r-in"><span><span class="co"># between patches that resampling whole birds preserves.</span></span></span>
-<span class="r-in"><span><span class="co">#</span></span></span>
-<span class="r-in"><span><span class="co"># Where the estimates themselves would differ is when a group contains several</span></span></span>
-<span class="r-in"><span><span class="co"># measurements of the same individual, since the correction is then governed</span></span></span>
-<span class="r-in"><span><span class="co"># by how many individuals there are rather than how many rows.</span></span></span>
+<span class="r-in"><span><span class="co"># These data are crossed, since every bird supplies all three patches, so the</span></span></span>
+<span class="r-in"><span><span class="co"># three group means are correlated with one another. Supplying cluster lets</span></span></span>
+<span class="r-in"><span><span class="co"># the correction work from each bird's own differences between patches, which</span></span></span>
+<span class="r-in"><span><span class="co"># accounts for that shared bird-level variation. Leaving it out treats the</span></span></span>
+<span class="r-in"><span><span class="co"># groups as independent samples and removes more than it should.</span></span></span>
 <span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">gr</span>, correct <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span></span></span>
 <span class="r-in"><span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.108526 2.209315 6.476223 7.384813 5.650389 9.287107</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.000000 0.000000 4.573293 0.000000 0.000000 1.250814</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 5.728305 3.482210 8.464476 7.148008 5.312734 8.821955</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-C 4.346417 2.547929 6.605633 7.402004 5.679732 9.298240</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> B-T 0.000000 0.000000 4.635976 0.000000 0.000000 1.442776</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> C-T 5.875929 3.636683 8.632430 7.167270 5.346247 8.839410</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Run the same again, though as a simple colourspace model</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/data.html" class="external-link">data</a></span><span class="op">(</span><span class="va">sicalis</span><span class="op">)</span></span></span>

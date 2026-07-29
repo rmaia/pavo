@@ -97,29 +97,43 @@ bootcoldist(
 
   logical. Should the distance be corrected for the sampling error in
   the group means? Defaults to `FALSE` for consistency with previous
-  versions, but `TRUE` is recommended wherever it is available: the
-  uncorrected distance is biased upwards for any data at all, and the
-  correction removes that bias exactly rather than approximately. Both
+  versions, but `TRUE` is recommended wherever it is available, since
+  the uncorrected distance is biased upwards for any data at all. Both
   the estimate and its interval move downwards, so a contrast will less
-  often have its lower limit above the theoretical threshold. The
-  interval is if anything slightly wider, since the correction is
-  estimated rather than known and the bootstrap carries that uncertainty
-  as well.
+  often have its lower limit above a given threshold. The interval is if
+  anything slightly wider, since the correction is estimated rather than
+  known and the bootstrap carries that uncertainty as well.
 
   The distance between two group means is biased upwards, because each
   mean is estimated with error and distance is a convex function of that
-  error. On the squared scale the displacement is exactly the sum, over
-  groups, of the mean squared pairwise distance among that group's
-  observations divided by twice their number, so it is largest when
-  groups are small and internally variable and it does not vanish as the
-  true separation goes to zero. Two samples drawn from a single
-  population will therefore be separated by an apparently non-zero
-  distance. Setting `correct = TRUE` subtracts that displacement from
-  the empirical distance and from every bootstrap replicate, using in
-  each case the observations that replicate drew, and returns the square
-  root of what remains. Distances that would become negative are
-  returned as zero, in the same way and for the same reason as a
-  negative variance component.
+  error. On the squared scale that displacement is the mean squared
+  pairwise distance among a group's observations divided by twice their
+  number, summed over the two groups, so it is largest when groups are
+  small and internally variable and it does not vanish as the true
+  separation goes to zero. Two samples drawn from a single population
+  will therefore be separated by an apparently non-zero distance.
+  Setting `correct = TRUE` subtracts the displacement from the empirical
+  distance and from every bootstrap replicate, using in each case the
+  observations that replicate drew, and returns the square root of what
+  remains. A distance that would turn negative becomes zero, in the same
+  way and for the same reason as a negative variance component.
+
+  The subtraction is exactly unbiased on the squared scale. Taking the
+  square root of an unbiased estimate of a squared distance is not
+  itself unbiased, and errs slightly low, so a corrected distance is a
+  little conservative.
+
+  Where `cluster` is given and the design is crossed, so that the same
+  individuals contribute to both groups of a contrast, the two group
+  means are correlated and their covariance belongs in the displacement.
+  The correction then works from the differences between each
+  individual's own pair of measurements, which carries that covariance.
+  Treating the groups as independent in this case would subtract far too
+  much. Designs in which only some individuals are shared between two
+  groups are refused, since neither estimator applies. Exact
+  unbiasedness assumes clusters of roughly equal size. Under marked
+  imbalance the correction is a little too small, because the group mean
+  is taken over rows while the displacement is estimated over clusters.
 
   The correction relies on the distance being one that arises from an
   inner product, and so is unavailable with `noise = "quantum"`, in the
@@ -188,38 +202,31 @@ bootcoldist(vm,
 # The distances themselves are still inflated, since each group mean is
 # estimated from only seven birds and the distance between two noisy means
 # exceeds the distance between the true ones. correct = TRUE removes that
-# displacement. Note what happens to the breast-throat contrast: an estimate
-# of 1.74, comfortably above the theoretical threshold, is entirely accounted
-# for by sampling error and falls to zero.
+# displacement, and every contrast shrinks.
 bootcoldist(vm,
   by = gr, cluster = ind, correct = TRUE,
   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
 )
 #> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts
 #>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr
-#> B-C 4.108526 2.129681 5.925022 7.384813 6.302973 8.570131
-#> B-T 0.000000 0.000000 3.527475 0.000000 0.000000 1.110461
-#> C-T 5.728305 4.205223 7.837879 7.148008 5.492774 8.912263
+#> B-C 4.483111 2.652781 6.134086 7.438802 6.337863 8.634343
+#> B-T 1.242004 0.000000 3.716494 0.000000 0.000000 1.420668
+#> C-T 5.952550 4.460446 7.890805 7.167584 5.506746 8.916083
 
-# The two arguments do different jobs, and this design shows it cleanly.
-# Dropping cluster leaves the corrected distances unchanged, because each bird
-# contributes exactly one measurement to each patch: within a group the seven
-# rows are the seven clusters, so there is nothing for the correction to do
-# differently. The intervals do change, and are wider here without the pairing
-# between patches that resampling whole birds preserves.
-#
-# Where the estimates themselves would differ is when a group contains several
-# measurements of the same individual, since the correction is then governed
-# by how many individuals there are rather than how many rows.
+# These data are crossed, since every bird supplies all three patches, so the
+# three group means are correlated with one another. Supplying cluster lets
+# the correction work from each bird's own differences between patches, which
+# accounts for that shared bird-level variation. Leaving it out treats the
+# groups as independent samples and removes more than it should.
 bootcoldist(vm,
   by = gr, correct = TRUE,
   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
 )
 #> Calculating noise-weighted Euclidean distances and noise-weighted luminance contrasts
 #>      dS.mean   dS.lwr   dS.upr  dL.mean   dL.lwr   dL.upr
-#> B-C 4.108526 2.209315 6.476223 7.384813 5.650389 9.287107
-#> B-T 0.000000 0.000000 4.573293 0.000000 0.000000 1.250814
-#> C-T 5.728305 3.482210 8.464476 7.148008 5.312734 8.821955
+#> B-C 4.346417 2.547929 6.605633 7.402004 5.679732 9.298240
+#> B-T 0.000000 0.000000 4.635976 0.000000 0.000000 1.442776
+#> C-T 5.875929 3.636683 8.632430 7.167270 5.346247 8.839410
 
 # Run the same again, though as a simple colourspace model
 data(sicalis)
