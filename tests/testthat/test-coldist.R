@@ -582,41 +582,36 @@ test_that("bootcoldist sampling-error correction", {
   expect_true(all(corrected >= 0))
 })
 
-test_that("bootcoldist correction matches the covariance form it stands for", {
-  # The displacement is the sum over groups of tr(A S) / n, with S the covariance
-  # of that group's log catches. Computing it from pairwise distances instead
-  # should be exact, so this checks the identity the implementation rests on
-  # rather than merely that the numbers look plausible.
+test_that("the displacement identity holds against the covariance form", {
+  # The displacement for one group is tr(A S) / m, with S the covariance of its
+  # log catches. The implementation instead uses the identity
+  #   sum_{i<j} ||u_i - u_j||^2 = m sum_i ||u_i - mean||^2
+  # to get the same quantity from pairwise distances. This checks the two agree,
+  # which is the step the whole correction rests on, and is a guard against the
+  # factor-of-two that this kind of algebra invites.
   set.seed(20)
   n <- c(1, 2, 2, 4)
-  weber <- 0.1
+  A <- rnlmatrix(n, weber = 0.1)
 
-  reln <- n / sum(n)
-  e <- weber * sqrt(reln[length(n)]) / sqrt(reln)
-  k <- length(n)
-  A <- matrix(0, k, k)
-  for (keep in asplit(combn(k, k - 2), 2)) {
-    pair <- setdiff(seq_len(k), keep)
-    v <- numeric(k)
-    v[pair[1]] <- 1
-    v[pair[2]] <- -1
-    A <- A + prod(e[keep])^2 * tcrossprod(v)
-  }
-  A <- A / sum(apply(combn(k, k - 1), 2, function(cc) prod(e[cc])^2))
+  logq <- matrix(rnorm(12 * length(n), 0, 0.4), ncol = length(n))
+  m <- nrow(logq)
 
-  logq <- matrix(rnorm(12 * k, 0, 0.4), ncol = k)
-  units <- as.data.frame(exp(logq))
-  names(units) <- c("u", "s", "m", "l")
-
-  arg0 <- list(n = n, weber = weber, achromatic = FALSE, qcatch = "Qi",
-               noise = "neural", weber.ref = "longest")
-  pd <- pairsqdist(units, arg0, list())
-  counts <- rep(1, pd$m)
-  fromdistances <- displacement(list(pd), list(counts))[["dS"]]
-
-  fromcovariance <- sum(diag(A %*% cov(logq))) / nrow(logq)
+  D <- sqdistmatrix(logq, A)
+  counts <- rep(1, m)
+  fromdistances <- drop(counts %*% D %*% counts) / (2 * m^2 * (m - 1))
+  fromcovariance <- sum(diag(A %*% cov(logq))) / m
 
   expect_equal(fromdistances, fromcovariance, tolerance = 1e-10)
+
+  # And with a unit drawn more than once, as a bootstrap replicate would
+  counts <- c(3, 2, rep(1, m - 4), 0, 0)
+  k <- sum(counts)
+  resampled <- logq[rep(seq_len(m), counts), , drop = FALSE]
+  expect_equal(
+    drop(counts %*% D %*% counts) / (2 * k^2 * (k - 1)),
+    sum(diag(A %*% cov(resampled))) / k,
+    tolerance = 1e-10
+  )
 })
 
 test_that("bootcoldist correction follows the resampling unit", {
@@ -684,5 +679,83 @@ test_that("bootcoldist refuses to correct where the distance is not Euclidean", 
     suppressMessages(bootcoldist(lab, by = grf, boot.n = 20, achromatic = FALSE,
                                  correct = TRUE)),
     "CIELAB"
+  )
+})
+
+test_that("rnlmatrix reproduces the receptor-noise distance", {
+  # dS^2 = delta' A delta with A = diag(w) - ww'/sum(w), w = 1/e^2. Checked
+  # against coldist() rather than against a transcription of it.
+  set.seed(11)
+  n <- c(1, 2, 2, 4)
+  A <- rnlmatrix(n, weber = 0.1)
+
+  expect_equal(qr(A)$rank, length(n) - 1L)
+  expect_lt(max(abs(A %*% rep(1, length(n)))), 1e-12)   # intensity in null space
+
+  logq <- matrix(rnorm(10 * 4, 0, 0.5), ncol = 4)
+  dat <- as.data.frame(exp(logq))
+  names(dat) <- c("u", "s", "m", "l")
+  rownames(dat) <- seq_len(nrow(dat))
+  d <- suppressMessages(
+    coldist(dat, n = n, weber = 0.1, achromatic = FALSE, qcatch = "Qi")
+  )
+  mine <- mapply(function(i, j) {
+    v <- logq[i, ] - logq[j, ]
+    sqrt(drop(t(v) %*% A %*% v))
+  }, as.integer(d$patch1), as.integer(d$patch2))
+
+  expect_equal(d$dS, mine, tolerance = 1e-10)
+})
+
+test_that("bootcoldist correction handles crossed designs by pairing", {
+  # Every individual contributes to both groups, so the two centroids are
+  # correlated. Summing the two groups' scatter ignores that covariance and
+  # removes far too much; differencing within individual is the right quantity.
+  set.seed(9)
+  ni <- 10
+  ind <- rep(seq_len(ni), 2)
+  bird <- matrix(rnorm(ni * 4, 0, 0.5), nrow = ni)       # shared by both patches
+  logq <- rbind(bird, bird) + matrix(rnorm(2 * ni * 4, 0, 0.05), ncol = 4)
+  dat <- as.data.frame(exp(logq))
+  names(dat) <- c("u", "s", "m", "l")
+  gr <- rep(c("a", "b"), each = ni)
+
+  args <- list(vismodeldata = dat, by = gr, cluster = ind, boot.n = 40,
+               n = c(1, 2, 2, 4), weber = 0.1, achromatic = FALSE, qcatch = "Qi")
+
+  plain <- suppressMessages(do.call(bootcoldist, args))
+  corrected <- suppressMessages(do.call(bootcoldist, c(args, list(correct = TRUE))))
+
+  # The groups are identical up to measurement noise, so the true separation is
+  # zero and the correction should remove nearly all of a small distance. What
+  # it must not do is remove the between-individual variance twice over, which
+  # would drive a large distance to zero as well.
+  expect_lte(corrected[1, "dS.mean"], plain[1, "dS.mean"])
+  expect_gte(corrected[1, "dS.mean"], 0)
+
+  # Compare against the paired quantity computed directly
+  A <- rnlmatrix(c(1, 2, 2, 4), 0.1)
+  d <- logq[seq_len(ni), ] - logq[ni + seq_len(ni), ]
+  paired <- sum(diag(A %*% cov(d))) / ni
+  expect_equal(corrected[1, "dS.mean"],
+               sqrt(max(plain[1, "dS.mean"]^2 - paired, 0)),
+               tolerance = 1e-8)
+})
+
+test_that("bootcoldist refuses a partly crossed correction", {
+  set.seed(4)
+  # cluster i3 appears in group a only, so the design is neither fully crossed
+  # nor nested and neither estimator of the displacement is right
+  by <- rep(c("a", "b"), c(3, 2))
+  cl <- c("i1", "i2", "i3", "i1", "i2")
+  dat <- as.data.frame(matrix(runif(5 * 4, 1, 5), ncol = 4))
+  names(dat) <- c("u", "s", "m", "l")
+
+  expect_error(
+    suppressMessages(bootcoldist(
+      dat, by = by, cluster = cl, boot.n = 20, correct = TRUE,
+      n = c(1, 2, 2, 4), weber = 0.1, achromatic = FALSE, qcatch = "Qi"
+    )),
+    "partly crossed"
   )
 })

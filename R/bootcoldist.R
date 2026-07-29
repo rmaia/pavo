@@ -42,26 +42,40 @@
 #'  empirical distance falls within the bootstrap distribution.
 #' @param correct logical. Should the distance be corrected for the sampling
 #'  error in the group means? Defaults to `FALSE` for consistency with previous
-#'  versions, but `TRUE` is recommended wherever it is available: the
-#'  uncorrected distance is biased upwards for any data at all, and the
-#'  correction removes that bias exactly rather than approximately. Both the
-#'  estimate and its interval move downwards, so a contrast will less often have
-#'  its lower limit above the theoretical threshold. The interval is if anything
-#'  slightly wider, since the correction is estimated rather than known and the
-#'  bootstrap carries that uncertainty as well.
+#'  versions, but `TRUE` is recommended wherever it is available, since the
+#'  uncorrected distance is biased upwards for any data at all. Both the estimate
+#'  and its interval move downwards, so a contrast will less often have its lower
+#'  limit above a given threshold. The interval is if anything slightly wider,
+#'  since the correction is estimated rather than known and the bootstrap carries
+#'  that uncertainty as well.
 #'
 #'  The distance between two group means is biased upwards, because each mean is
 #'  estimated with error and distance is a convex function of that error. On the
-#'  squared scale the displacement is exactly the sum, over groups, of the mean
-#'  squared pairwise distance among that group's observations divided by twice
-#'  their number, so it is largest when groups are small and internally variable
-#'  and it does not vanish as the true separation goes to zero. Two samples drawn
-#'  from a single population will therefore be separated by an apparently
-#'  non-zero distance. Setting `correct = TRUE` subtracts that displacement from
-#'  the empirical distance and from every bootstrap replicate, using in each case
-#'  the observations that replicate drew, and returns the square root of what
-#'  remains. Distances that would become negative are returned as zero, in the
-#'  same way and for the same reason as a negative variance component.
+#'  squared scale that displacement is the mean squared pairwise distance among a
+#'  group's observations divided by twice their number, summed over the two
+#'  groups, so it is largest when groups are small and internally variable and it
+#'  does not vanish as the true separation goes to zero. Two samples drawn from a
+#'  single population will therefore be separated by an apparently non-zero
+#'  distance. Setting `correct = TRUE` subtracts the displacement from the
+#'  empirical distance and from every bootstrap replicate, using in each case the
+#'  observations that replicate drew, and returns the square root of what
+#'  remains. A distance that would turn negative becomes zero, in the same way
+#'  and for the same reason as a negative variance component.
+#'
+#'  The subtraction is exactly unbiased on the squared scale. Taking the square
+#'  root of an unbiased estimate of a squared distance is not itself unbiased,
+#'  and errs slightly low, so a corrected distance is a little conservative.
+#'
+#'  Where `cluster` is given and the design is crossed, so that the same
+#'  individuals contribute to both groups of a contrast, the two group means are
+#'  correlated and their covariance belongs in the displacement. The correction
+#'  then works from the differences between each individual's own pair of
+#'  measurements, which carries that covariance. Treating the groups as
+#'  independent in this case would subtract far too much. Designs in which only
+#'  some individuals are shared between two groups are refused, since neither
+#'  estimator applies. Exact unbiasedness assumes clusters of roughly equal size. 
+#'  Under marked imbalance the correction is a little too small, because the group mean is
+#'  taken over rows while the displacement is estimated over clusters.
 #'
 #'  The correction relies on the distance being one that arises from an inner
 #'  product, and so is unavailable with `noise = "quantum"`, in the `CIELAB`,
@@ -100,24 +114,17 @@
 #' # The distances themselves are still inflated, since each group mean is
 #' # estimated from only seven birds and the distance between two noisy means
 #' # exceeds the distance between the true ones. correct = TRUE removes that
-#' # displacement. Note what happens to the breast-throat contrast: an estimate
-#' # of 1.74, comfortably above the theoretical threshold, is entirely accounted
-#' # for by sampling error and falls to zero.
+#' # displacement, and every contrast shrinks.
 #' bootcoldist(vm,
 #'   by = gr, cluster = ind, correct = TRUE,
 #'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
 #' )
 #'
-#' # The two arguments do different jobs, and this design shows it cleanly.
-#' # Dropping cluster leaves the corrected distances unchanged, because each bird
-#' # contributes exactly one measurement to each patch: within a group the seven
-#' # rows are the seven clusters, so there is nothing for the correction to do
-#' # differently. The intervals do change, and are wider here without the pairing
-#' # between patches that resampling whole birds preserves.
-#' #
-#' # Where the estimates themselves would differ is when a group contains several
-#' # measurements of the same individual, since the correction is then governed
-#' # by how many individuals there are rather than how many rows.
+#' # These data are crossed, since every bird supplies all three patches, so the
+#' # three group means are correlated with one another. Supplying cluster lets
+#' # the correction work from each bird's own differences between patches, which
+#' # accounts for that shared bird-level variation. Leaving it out treats the
+#' # groups as independent samples and removes more than it should.
 #' bootcoldist(vm,
 #'   by = gr, correct = TRUE,
 #'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
@@ -405,15 +412,47 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # distance among that group's resampling units, divided by twice their number.
   # Every replicate draws from the same pool of units, so the pairwise distances
   # are computed once per group here and each replicate then only needs a
-  # quadratic form in how many times it drew each unit. See pairsqdist() below.
+  # quadratic form in how many times it drew each unit. See correctionsetup() below.
   if (correct) {
-    unitdists <- lapply(seq_along(bygroup), function(g) {
-      units <- resamplingunits(bygroup[[g]], cluster[by == unique(by)[g]], groupsummary)
-      pairsqdist(units, arg0, attribs)
-    })
+    crossed <- identical(resolvenesting(by, cluster, nesting), "crossed")
+    channels <- if (isTRUE(arg0$achromatic)) c("dS", "dL") else "dS"
 
-    empdisp <- displacement(unitdists, lapply(unitdists, function(u) rep(1, u$m)))
-    empdS <- sqrt(pmax(empdS^2 - empdisp[["dS"]], 0))
+    # The metric each channel is measured in. Chromatic distance is the fixed
+    # quadratic form of the receptor-noise model, or plain Euclidean distance in
+    # the colourspace coordinates. Achromatic contrast is an absolute difference
+    # in log luminance over a Weber fraction, so a one-dimensional metric.
+    metrics <- list(dS = if (is.null(coordinates)) {
+      rnlmatrix(arg0$n, arg0$weber, arg0$weber.ref)
+    } else {
+      diag(1, length(coordinates))
+    })
+    if ("dL" %in% channels) metrics$dL <- matrix(1 / arg0$weber.achro^2, 1, 1)
+
+    # coldist() logs quantum catches and reports how many cones it used; the
+    # luminance channel, when there is one, is the last column.
+    tolog <- is.null(coordinates) && identical(arg0$qcatch, "Qi")
+    dscols <- if (is.null(coordinates)) seq_len(attr(empcd, "ncone")) else coordinates
+    contrasts <- cbind(empcd$patch1, empcd$patch2)
+
+    setup <- correctionsetup(
+      bygroup, by, cluster, groupsummary, crossed, contrasts,
+      metrics = metrics["dS"], cols = dscols, tolog = tolog
+    )
+    if ("dL" %in% channels) {
+      lumsetup <- correctionsetup(
+        bygroup, by, cluster, groupsummary, crossed, contrasts,
+        metrics = metrics["dL"], cols = ncol(vismodeldata), tolog = tolog
+      )
+    }
+
+    unitcounts <- lapply(seq_along(bygroup), function(g) {
+      rep(1, nrow(resamplingunits(
+        bygroup[[g]], if (is.null(cluster)) NULL else cluster[by == unique(by)[g]],
+        groupsummary
+      )))
+    })
+    empdisp <- displacement(setup, unitcounts, "dS")
+    empdS <- sqrt(pmax(empdS^2 - drop(empdisp), 0))
   }
 
   # use the indices to break each group's data into bootstrap replicates
@@ -494,17 +533,26 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # that variability to reproduce the sampling distribution of the corrected
   # statistic.
   if (correct) {
-    bootdisp <- vapply(seq_len(boot.n), function(b) {
-      counts <- lapply(seq_along(unitdists), function(g) {
+    replicatecounts <- function(b) {
+      lapply(seq_along(bygroup), function(g) {
         drawn <- attr(its[[g]][[b]], "unitdraw")
         if (is.null(drawn)) drawn <- its[[g]][[b]]
-        tabulate(drawn, nbins = unitdists[[g]]$m)
+        tabulate(drawn, nbins = length(unitcounts[[g]]))
       })
-      displacement(unitdists, counts)
-    }, numeric(if (isTRUE(arg0$achromatic)) 2L else 1L))
-    bootdisp <- if (is.matrix(bootdisp)) t(bootdisp) else cbind(dS = bootdisp)
+    }
 
-    bootdS <- sqrt(pmax(bootdS^2 - bootdisp[, "dS"], 0))
+    # One displacement per contrast per replicate, matching the shape of bootdS.
+    # vapply returns a bare vector when there is a single contrast, so the
+    # result is reshaped explicitly rather than transposed.
+    perreplicate <- function(setup, channel, ncontrast) {
+      d <- vapply(seq_len(boot.n), function(b) {
+        drop(displacement(setup, replicatecounts(b), channel))
+      }, numeric(ncontrast))
+      matrix(d, nrow = boot.n, ncol = ncontrast, byrow = TRUE)
+    }
+
+    bootdisp <- perreplicate(setup, "dS", ncol(bootdS))
+    bootdS <- sqrt(pmax(bootdS^2 - bootdisp, 0))
   }
 
   # Order, find quantiles, and set up deltaS confidence intervals
@@ -573,8 +621,11 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     # one dimension and so takes the same correction. The ratio-based luminance
     # contrasts of the colourspace models do not, and are refused above.
     if (correct) {
-      empdL <- sqrt(pmax(empdL^2 - empdisp[["dL"]], 0))
-      bootdL <- sqrt(pmax(bootdL^2 - bootdisp[, "dL"], 0))
+      empdispL <- displacement(lumsetup, unitcounts, "dL")
+      empdL <- sqrt(pmax(empdL^2 - drop(empdispL), 0))
+
+      bootdispL <- perreplicate(lumsetup, "dL", ncol(bootdL))
+      bootdL <- sqrt(pmax(bootdL^2 - bootdispL, 0))
     }
 
     sorteddL <- apply(bootdL, 2, sort)
@@ -608,6 +659,41 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   res
 }
 
+# Is each cluster confined to one level of 'by' (nested), or does it span them
+# (crossed)? Both the resampling and the sampling-error correction need to know,
+# so the decision is made once and shared rather than taken twice.
+resolvenesting <- function(by, cluster, nesting = "auto") {
+  if (is.null(cluster)) {
+    return("nested")
+  }
+  if (!identical(nesting, "auto")) {
+    return(nesting)
+  }
+  spread <- vapply(
+    split(as.character(by), cluster),
+    function(x) length(unique(x)) > 1L,
+    logical(1)
+  )
+  if (any(spread)) "crossed" else "nested"
+}
+
+# The matrix behind the receptor-noise distance.
+#
+# Under neural noise the per-receptor noise term does not depend on the pair of
+# colours being compared, so dS^2 is a fixed quadratic form in the difference of
+# log quantum catches. Writing w_i for the reciprocal squared noise of receptor
+# i, that form is diag(w) - w w' / sum(w), which is to say dS^2 is a weighted
+# variance of the log-catch differences. Its rank is one less than the number of
+# receptors, the null direction being a common scaling of all catches.
+rnlmatrix <- function(n, weber, weber.ref = "longest") {
+  reln <- n / sum(n)
+  ref <- if (identical(weber.ref, "longest")) length(n) else weber.ref
+  v <- if (length(weber) == length(n)) weber * sqrt(reln) else weber * sqrt(reln[ref])
+  e <- v / sqrt(reln)
+  w <- 1 / e^2
+  diag(w, length(w)) - tcrossprod(w) / sum(w)
+}
+
 # The units that resampling draws from: single rows when there is no clustering
 # variable, and per-cluster means when there is one.
 resamplingunits <- function(rows, cluster, groupsummary) {
@@ -620,72 +706,118 @@ resamplingunits <- function(rows, cluster, groupsummary) {
   ))
 }
 
-# Squared distances between every pair of a group's resampling units.
-#
-# Computed once per group and reused by every replicate, since each replicate
-# draws from the same pool. Returned as a full symmetric matrix so that a
-# replicate's mean squared pairwise distance is a quadratic form in the number
-# of times it drew each unit.
-pairsqdist <- function(units, arg0, attribs) {
-  m <- nrow(units)
-
-  if (m < 2L) {
-    stop(
-      "The sampling-error correction needs at least two resampling units per ",
-      "group, and one group has ", m, ".",
-      call. = FALSE
-    )
-  }
-
-  units <- as.data.frame(units)
-  rownames(units) <- seq_len(m)
-  attributes(units)[names(attribs)] <- attribs
-
-  tmparg <- arg0
-  tmparg$modeldata <- units
-  d <- suppressMessages(do.call(coldist, tmparg))
-
-  i <- as.integer(d$patch1)
-  j <- as.integer(d$patch2)
-  square <- function(v) {
-    out <- matrix(0, m, m)
-    out[cbind(i, j)] <- v^2
-    out[cbind(j, i)] <- v^2
-    out
-  }
-
-  list(
-    m = m,
-    dS = square(d$dS),
-    dL = if (isTRUE(arg0$achromatic)) square(d$dL) else NULL
-  )
+# Squared distances between every pair of rows of X under the metric A.
+sqdistmatrix <- function(X, A) {
+  q <- rowSums((X %*% A) * X)
+  out <- outer(q, q, "+") - 2 * X %*% A %*% t(X)
+  out[out < 0] <- 0
+  out
 }
 
-# Displacement of the squared centroid distance for one resample.
+# Set up the sampling-error correction, one entry per contrast.
 #
-# `counts[[g]]` says how many times each of group g's units was drawn. For a
-# multiset of k units the mean squared pairwise distance is c'Dc / (k(k - 1)),
-# since c'Dc counts every ordered pair, and the displacement contributed by that
-# group is that mean over 2k. The identity behind it is
-#   sum_{i<j} ||u_i - u_j||^2 = k * sum_i ||u_i - mean||^2
-# so no separate estimate of the noise covariance is needed.
-displacement <- function(unitdists, counts) {
-  channels <- if (is.null(unitdists[[1]]$dL)) "dS" else c("dS", "dL")
+# The displacement of a squared centroid distance is tr(A Var(xbarA - xbarB)).
+# Where the two groups are made up of different individuals that separates into
+# a term per group. Where the same individuals contribute to both, as when every
+# animal supplies a measurement of each patch being compared, the two centroids
+# are correlated and the covariance between them has to come off as well. Adding
+# the two group terms and stopping there subtracts far too much, by a factor
+# that grows with the ratio of between- to within-individual variation.
+#
+# So a crossed contrast is handled by differencing. Take each individual's pair
+# of measurements, difference them, and the displacement is the scatter of those
+# differences over their number, which is the paired quantity and carries the
+# covariance automatically.
+#
+# Each entry holds squared distances among whatever units that contrast is built
+# from, so that a replicate's displacement is a quadratic form in how many times
+# it drew each unit.
+correctionsetup <- function(bygroup, by, cluster, groupsummary, crossed,
+                            contrasts, metrics, cols, tolog) {
+  groups <- unique(by)
 
-  vapply(channels, function(channel) {
-    sum(vapply(seq_along(unitdists), function(g) {
-      cg <- counts[[g]]
-      k <- sum(cg)
-      if (k < 2L) {
+  # `cols` selects the columns the metric acts on: the cone catches for
+  # chromatic distance, the luminance channel for achromatic, or the named
+  # coordinates of a colourspace. `tolog` matches coldist(), which logs quantum
+  # catches but leaves colourspace coordinates alone.
+  asmetric <- function(x) {
+    x <- as.matrix(x[, cols, drop = FALSE])
+    if (tolog) log(x) else x
+  }
+
+  unitsof <- function(g) {
+    rows <- bygroup[[g]]
+    cl <- if (is.null(cluster)) NULL else cluster[by == groups[g]]
+    u <- resamplingunits(rows, cl, groupsummary)
+    list(x = asmetric(u), ids = if (is.null(cl)) NULL else sort(unique(cl)))
+  }
+
+  units <- lapply(seq_along(groups), unitsof)
+
+  lapply(seq_len(nrow(contrasts)), function(k) {
+    g1 <- match(contrasts[k, 1], groups)
+    g2 <- match(contrasts[k, 2], groups)
+
+    if (crossed) {
+      shared <- intersect(units[[g1]]$ids, units[[g2]]$ids)
+      if (!setequal(units[[g1]]$ids, shared) || !setequal(units[[g2]]$ids, shared)) {
         stop(
-          "A bootstrap replicate drew fewer than two resampling units for one ",
-          "group, so the sampling-error correction is undefined for it.",
+          "correct = TRUE needs every cluster to appear in both groups of a ",
+          "contrast when the design is crossed, and contrast ",
+          paste(contrasts[k, ], collapse = "-"), " is only partly crossed. ",
+          "Either complete the design, or analyse the contrast on its own.",
           call. = FALSE
         )
       }
-      drop(cg %*% unitdists[[g]][[channel]] %*% cg) / (2 * k^2 * (k - 1))
-    }, numeric(1)))
-  }, numeric(1))
+      d <- units[[g1]]$x[match(shared, units[[g1]]$ids), , drop = FALSE] -
+        units[[g2]]$x[match(shared, units[[g2]]$ids), , drop = FALSE]
+      parts <- list(list(D = lapply(metrics, function(A) sqdistmatrix(d, A)), group = g1))
+    } else {
+      parts <- lapply(c(g1, g2), function(g) {
+        list(D = lapply(metrics, function(A) sqdistmatrix(units[[g]]$x, A)), group = g)
+      })
+    }
+
+    for (p in parts) {
+      if (nrow(p$D[[1]]) < 2L) {
+        stop(
+          "The sampling-error correction needs at least two resampling units ",
+          "per group, and one group has ", nrow(p$D[[1]]), ".",
+          call. = FALSE
+        )
+      }
+    }
+    parts
+  })
+}
+
+# Displacement of each contrast's squared distance, for one resample.
+#
+# `counts[[g]]` says how many times each of group g's units was drawn. For a
+# multiset of m units the mean squared pairwise distance is c'Dc / (m(m - 1)),
+# since c'Dc counts every ordered pair, and the displacement is that mean over
+# 2m. The identity behind it is
+#   sum_{i<j} ||u_i - u_j||^2 = m * sum_i ||u_i - mean||^2
+# so no separate estimate of the noise covariance is needed. Under a crossed
+# design there is a single part, built from paired differences, and the same
+# arithmetic applies to it.
+displacement <- function(setup, counts, channels) {
+  vapply(channels, function(channel) {
+    vapply(setup, function(parts) {
+      sum(vapply(parts, function(p) {
+        cg <- counts[[p$group]]
+        m <- sum(cg)
+        if (m < 2L) {
+          stop(
+            "A bootstrap replicate drew fewer than two resampling units for ",
+            "one group, so the sampling-error correction is undefined for it.",
+            call. = FALSE
+          )
+        }
+        drop(cg %*% p$D[[channel]] %*% cg) / (2 * m^2 * (m - 1))
+      }, numeric(1)))
+    }, numeric(1))
+  }, numeric(length(setup)))
 }
 
 # Check the results of the bootstrap replicates, where a replicate that failed

@@ -47,7 +47,14 @@
   distance and from every bootstrap replicate, each using the observations it drew.
   Where `cluster` is supplied the correction is applied to clusters rather than rows,
   matching what is resampled; with several measurements per individual, computing it
-  from rows can understate the displacement several-fold. The default is `FALSE`, so
+  from rows can understate the displacement several-fold. Where the design is crossed,
+  so that the same individuals contribute to both groups of a contrast, the two group
+  means are correlated and the correction works from each individual's own paired
+  difference, which carries that covariance; treating the groups as independent there
+  would subtract several times too much. Partly crossed designs, in which only some
+  individuals are shared between two groups, are refused. The subtraction is exactly
+  unbiased on the squared scale, and taking the square root of it errs slightly low,
+  so a corrected distance is a little conservative. The default is `FALSE`, so
   results are unchanged unless it is asked for.
 - the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
 - `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
