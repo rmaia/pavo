@@ -306,11 +306,34 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   if (correct) {
     clrsp <- attr(vismodeldata, "clrsp")
 
-    if (identical(arg0$noise, "quantum")) {
+    # coldist() runs match.arg() on 'noise', so an abbreviation such as "q"
+    # reaches the quantum model. Resolve it the same way before testing, or the
+    # guard sits out and a neural-noise displacement is subtracted from a
+    # quantum-noise distance.
+    noisetype <- if (is.null(arg0$noise)) {
+      NA_character_
+    } else {
+      match.arg(arg0$noise, c("neural", "quantum"))
+    }
+
+    if (identical(noisetype, "quantum")) {
       stop(
         'correct = TRUE is not available with noise = "quantum", because the ',
         "receptor noise then depends on the pair of colours being compared and ",
         "the distance is no longer a fixed quadratic form.",
+        call. = FALSE
+      )
+    }
+    # The correction assumes the group centroid is the arithmetic mean in the
+    # space the metric acts on. With qcatch = "Qi" the geometric mean of catches
+    # is exactly that, being the arithmetic mean of their logs. With "fi" the
+    # values are already logged, so the geometric mean groupsummary() takes is
+    # not the centroid the displacement belongs to.
+    if (identical(arg0$qcatch, "fi")) {
+      stop(
+        'correct = TRUE is not available with qcatch = "fi", because groups are ',
+        "summarised by a geometric mean, which is the centroid the correction ",
+        'needs only when the catches are untransformed. Use qcatch = "Qi".',
         call. = FALSE
       )
     }

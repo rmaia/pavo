@@ -759,3 +759,40 @@ test_that("bootcoldist refuses a partly crossed correction", {
     "partly crossed"
   )
 })
+
+test_that("bootcoldist correction is not fooled by an abbreviated noise argument", {
+  # coldist() match.arg()s 'noise', so "q" reaches the quantum model. The guard
+  # has to resolve the abbreviation too, or a neural-noise displacement gets
+  # subtracted from a quantum-noise distance and the estimate collapses.
+  data(sicalis)
+  vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
+  gr <- gsub("ind..", "", rownames(vm))
+  args <- list(vismodeldata = vm, by = gr, boot.n = 20, correct = TRUE,
+               n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1)
+
+  for (spelling in c("quantum", "quant", "qu", "q")) {
+    expect_error(
+      suppressMessages(do.call(bootcoldist, c(args, list(noise = spelling)))),
+      "quantum"
+    )
+  }
+
+  # and the neural spellings still work
+  expect_silent(suppressMessages(
+    do.call(bootcoldist, c(args, list(noise = "neu")))
+  ))
+})
+
+test_that("bootcoldist correction refuses log-transformed quantum catches", {
+  data(sicalis)
+  vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
+  gr <- gsub("ind..", "", rownames(vm))
+
+  expect_error(
+    suppressMessages(bootcoldist(
+      vm, by = gr, boot.n = 20, correct = TRUE, qcatch = "fi",
+      n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+    )),
+    "fi"
+  )
+})
