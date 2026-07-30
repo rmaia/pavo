@@ -115,7 +115,15 @@ which preserves the pairing between them. Under <code>"nested"</code>, each clus
 belongs to exactly one group (e.g. repeated measurements of an individual
 within a population) and clusters are drawn independently within each group.
 <code>"auto"</code> chooses between the two by checking whether any cluster appears
-under more than one level of <code>by</code>. Ignored when <code>cluster</code> is NULL.</p></dd>
+under more than one level of <code>by</code>. Ignored when <code>cluster</code> is NULL.</p>
+<p>Crossed resampling assumes the crossing is complete, so that every group of a
+contrast holds every cluster. Where only some clusters are shared, a group
+holding a subset of them contributes a varying number of rows from one
+replicate to the next, and its interval will be wider than it should be. Give
+such designs one contrast at a time, or label clusters so that groups which do
+not genuinely share individuals do not appear to. Reusing the labels
+<code>ind1</code>, <code>ind2</code>, ... within each of several populations is the usual way this
+happens by accident.</p></dd>
 
 
 <dt id="arg-ci-type">ci.type<a class="anchor" aria-label="anchor" href="#arg-ci-type"></a></dt>
@@ -158,14 +166,21 @@ then works from the differences between each individual's own pair of
 measurements, which carries that covariance. Treating the groups as
 independent in this case would subtract far too much. Designs in which only
 some individuals are shared between two groups are refused, since neither
-estimator applies. Exact unbiasedness assumes clusters of roughly equal size.
-Under marked imbalance the correction is a little too small, because the group mean is
-taken over rows while the displacement is estimated over clusters.</p>
+estimator applies. Exact unbiasedness assumes clusters of roughly equal size,
+because the group mean is taken over rows while the displacement is estimated
+over clusters. Under marked imbalance the two no longer agree: the
+between-cluster part of the displacement is under-corrected and the
+within-cluster part over-corrected, so the net direction depends on which
+source of variation dominates and the departure is not necessarily small.
+Where cluster sizes are very uneven, treat the result as approximate.</p>
 <p>The correction relies on the distance being one that arises from an inner
 product, and so is unavailable with <code>noise = "quantum"</code>, in the <code>CIELAB</code>,
 <code>CIELCh</code> and <code>coc</code> spaces, and for achromatic contrast in a colourspace
 model, where luminance contrast is a ratio rather than a distance. It cannot
 currently be combined with <code>ci.type = "bca"</code>.</p>
+<p>A design in which clusters span the levels of <code>by</code> is crossed whatever
+<code>nesting</code> says, so <code>correct = TRUE</code> refuses <code>nesting = "nested"</code> in that
+case rather than treating correlated group means as independent.</p>
 <p>Note that <code>cluster</code>, <code>nesting</code>, <code>ci.type</code> and <code>correct</code> follow <code>...</code>, and so
 must all be named in full when used.</p></dd>
 
@@ -235,10 +250,11 @@ Behavioral Ecology, ary017 <a href="https://doi.org/10.1093/beheco/ary017" class
 <span class="r-out co"><span class="r-pr">#&gt;</span> C-T 5.952550 4.460446 7.890805 7.167584 5.506746 8.916083</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># These data are crossed, since every bird supplies all three patches, so the</span></span></span>
-<span class="r-in"><span><span class="co"># three group means are correlated with one another. Supplying cluster lets</span></span></span>
-<span class="r-in"><span><span class="co"># the correction work from each bird's own differences between patches, which</span></span></span>
-<span class="r-in"><span><span class="co"># accounts for that shared bird-level variation. Leaving it out treats the</span></span></span>
-<span class="r-in"><span><span class="co"># groups as independent samples and removes more than it should.</span></span></span>
+<span class="r-in"><span><span class="co"># three group means are correlated with one another. Supplying cluster, as</span></span></span>
+<span class="r-in"><span><span class="co"># above, lets the correction work from each bird's own differences between</span></span></span>
+<span class="r-in"><span><span class="co"># patches, which carries that shared bird-level variation. Omitting it treats</span></span></span>
+<span class="r-in"><span><span class="co"># the groups as independent samples and removes more than it should, so</span></span></span>
+<span class="r-in"><span><span class="co"># compare the two and prefer the clustered one.</span></span></span>
 <span class="r-in"><span><span class="fu">bootcoldist</span><span class="op">(</span><span class="va">vm</span>,</span></span>
 <span class="r-in"><span>  by <span class="op">=</span> <span class="va">gr</span>, correct <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
 <span class="r-in"><span>  n <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">1</span>, <span class="fl">2</span>, <span class="fl">2</span>, <span class="fl">4</span><span class="op">)</span>, weber <span class="op">=</span> <span class="fl">0.1</span>, weber.achro <span class="op">=</span> <span class="fl">0.1</span></span></span>
