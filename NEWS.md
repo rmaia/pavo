@@ -3,59 +3,64 @@
 ## NEW FEATURES AND SIGNIFICANT CHANGES
 
 - `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
-  their coordinates, rather than by a geometric mean of those coordinates shifted
-  by an arbitrary constant of 100. Distances between points in a colour space are
-  measured in the coordinates themselves, so the centroid of a group is their
-  arithmetic mean; quantum catches and luminance channels continue to be
-  summarised geometrically, since those distances are linear in the logged
-  values. Reported distances for colspace objects will change slightly, though
-  the old constant was large enough that the previous result was already close to
-  the arithmetic mean. Spaces whose coordinates can be negative, namely CIELAB,
-  CIELCh and segment, previously returned NaN and now work.
+  their coordinates, rather than a geometric mean of coordinates shifted by an
+  arbitrary constant of 100. Distances in a colour space are measured in the
+  coordinates themselves, so a group's centroid is their arithmetic mean. Quantum
+  catches and luminance channels stay geometric, since those distances are linear
+  in the logged values. Colspace distances change slightly. CIELAB, CIELCh and
+  segment, whose coordinates can be negative, previously returned NaN and now work.
+- `bootcoldist()` now summarises `qcatch = "fi"` models by an arithmetic mean of
+  the log catches rather than a geometric one, so reported distances for such
+  models change. `fi` values are already `log(Qi)`, and their geometric mean is
+  not a centroid: `"Qi"` and `"fi"` models of the same data disagreed by around 6%
+  on the bundled `sicalis` data, and the distance depended on the factor the
+  illuminant was scaled by, though scaling shifts every log catch equally and
+  cannot change a chromatic distance. Calls that returned NaN because an unscaled
+  illuminant made log catches negative now work.
 - `bootcoldist()` gains a `ci.type` argument, allowing bias-corrected and
   accelerated (BCa) confidence limits as an alternative to the percentile limits
-  it has always returned. Colour distances are bounded below by zero and
-  typically right-skewed, so percentile limits tend to sit off-centre; BCa
-  corrects for that skew and for the position of the empirical distance within
-  the bootstrap distribution. The acceleration term is estimated by a jackknife
-  that leaves out one row at a time, or one cluster at a time where `cluster` is
-  supplied. The default remains `"perc"`, so results are unchanged unless it is
-  asked for.
+  it has always returned. Colour distances are bounded below by zero and typically
+  right-skewed, so percentile limits tend to sit off-centre; BCa corrects for that
+  skew and for where the empirical distance falls in the bootstrap distribution.
+  The acceleration term comes from a jackknife leaving out one row at a time, or
+  one cluster where `cluster` is supplied. The default remains `"perc"`.
 - `bootcoldist()` gains a `cluster` argument for hierarchically structured data,
-  such as several patches measured on each of a number of individuals, or
-  repeated measurements of the same individual. When it is supplied, bootstrap
-  replicates are built by resampling whole clusters rather than individual rows,
-  so that non-independent observations are kept together and the effective sample
-  size is the number of clusters. The accompanying `nesting` argument controls
-  whether clusters are treated as spanning the levels of `by` (`"crossed"`, where
-  a single draw of clusters is shared across groups and their pairing is
-  preserved) or as sitting within a single level (`"nested"`, where clusters are
-  drawn independently within each group), and defaults to detecting which of the
-  two applies. Empirical means are unaffected, and results are unchanged from
-  previous versions when `cluster` is left as NULL.
+  such as several patches per individual, or repeated measurements of one
+  individual. Bootstrap replicates then resample whole clusters rather than rows,
+  so non-independent observations stay together and the effective sample size is
+  the number of clusters. The `nesting` argument controls whether clusters span
+  the levels of `by` (`"crossed"`, one draw shared across groups, preserving their
+  pairing) or sit within one level (`"nested"`, drawn independently per group),
+  and defaults to detecting which applies. Empirical means are unaffected, and
+  results are unchanged when `cluster` is NULL.
 - `bootcoldist()` gains a `correct` argument, which removes the upward bias in the
-  distance between group means that arises from those means being estimated rather
-  than known. Distance is a convex function of the error in a mean, so a distance
-  computed between two noisy centroids exceeds the distance between the true ones,
-  and two samples drawn from a single population are separated by an apparently
-  non-zero distance. On the squared scale the displacement is exactly the sum, over
-  groups, of the mean squared pairwise distance among a group's observations divided
-  by twice their number, so it is worst for small, internally variable groups and
-  does not fall away as the true separation approaches zero. It is therefore largest
-  in the situations where the discriminability of two colours is in
-  question. With `correct = TRUE` the displacement is subtracted from the empirical
-  distance and from every bootstrap replicate, each using the observations it drew.
-  Where `cluster` is supplied the correction is applied to clusters rather than rows,
-  matching what is resampled; with several measurements per individual, computing it
-  from rows can understate the displacement several-fold. Where the design is crossed,
-  so that the same individuals contribute to both groups of a contrast, the two group
-  means are correlated and the correction works from each individual's own paired
-  difference, which carries that covariance; treating the groups as independent there
-  would subtract several times too much. Partly crossed designs, in which only some
-  individuals are shared between two groups, are refused. The subtraction is exactly
-  unbiased on the squared scale, and taking the square root of it errs slightly low,
-  so a corrected distance is a little conservative. The default is `FALSE`, so
-  results are unchanged unless it is asked for.
+  distance between group means that comes of those means being estimated rather
+  than known. Distance is convex in the error of a mean, so two noisy centroids
+  sit further apart than the true ones, and two samples of one population are
+  separated by an apparently non-zero distance. On the squared scale the
+  displacement is the sum over groups of the mean squared pairwise distance among
+  a group's observations divided by twice their number, so it is worst for small,
+  variable groups and does not fall away as the true separation approaches zero.
+  It is therefore largest exactly where discriminability is in question.
+  `correct = TRUE` subtracts it from the empirical distance and from every
+  bootstrap replicate, each using the observations it drew.
+
+  Where `cluster` is supplied the correction works on clusters rather than rows,
+  matching what is resampled; from rows it can understate the displacement
+  several-fold. Where the design is crossed, the two group means are correlated
+  and the correction uses each individual's own paired difference, which carries
+  that covariance; treating the groups as independent would subtract several times
+  too much. Partly crossed designs are refused, as is `nesting = "nested"` where
+  clusters in fact span groups.
+
+  The subtraction is exactly unbiased on the squared scale. Its square root errs
+  slightly low, so a corrected distance is a little conservative. Exactness also
+  assumes clusters of roughly equal size; under marked imbalance the
+  between-cluster part is under-corrected and the within-cluster part
+  over-corrected, so the net direction depends on which dominates. The correction
+  is unavailable under quantum noise, in the CIELAB, CIELCh and coc spaces, for
+  achromatic contrast in a colourspace model, and with `ci.type = "bca"`. The
+  default is `FALSE`, so results are unchanged unless it is asked for.
 - the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
 - `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
   only allow rotations in the 2D plane. Until now, 3D rotations were allowed and
@@ -71,6 +76,15 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+- `bootcoldist()` now validates `achromatic`, erroring where it is not a single
+  `TRUE` or `FALSE`.
+- `bootcoldist()` now errors where any bootstrapped distance is `NA`, rather than
+  silently taking confidence limits from the wrong order statistics. The usual
+  cause is `achromatic = TRUE` on a model built without an achromatic channel.
+- `bootcoldist()` now takes `qcatch` from a `vismodel` or `colspace` object's
+  attribute, as `coldist()` always has, rather than letting an argument override
+  it. Results change only where the two disagreed, in which case the old
+  behaviour was wrong.
 - `sensmodel()` now generates the same sensitivity curve for a given `peaksens`
   whatever `range` is requested. The alpha-band expression of Govardovskii et al.
   (2000) contains a constant of 300 nm, which was coded as `range[1]`. Since the

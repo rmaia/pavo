@@ -550,6 +550,14 @@ test_that("bootindices", {
   expect_true(all(lengths(partial[["b"]]) > 0))
   expect_true(all(unlist(partial[["b"]]) %in% seq_len(2)))
 
+  # A group holding only some of the shared clusters can be handed a replicate
+  # built from a single cluster, which is not a usable bootstrap sample even
+  # though it is non-empty. Documented here rather than asserted away: the
+  # corrected path refuses partial crossing outright, and this records what the
+  # uncorrected path does with it.
+  drawn <- vapply(partial[["b"]], function(i) length(unique(indpart[i])), integer(1))
+  expect_true(any(drawn == 1L))
+
   # Too few clusters to say anything useful
   expect_message(
     bootindices(rep(c("a", "b"), each = 3), rep(c("x", "y", "z"), 2), boot.n = 5),
@@ -783,16 +791,130 @@ test_that("bootcoldist correction is not fooled by an abbreviated noise argument
   ))
 })
 
-test_that("bootcoldist correction refuses log-transformed quantum catches", {
+test_that("bootcoldist agrees between qcatch Qi and fi", {
+  data(sicalis)
+  gr <- gsub("ind..", "", rownames(vismodel(sicalis, relative = FALSE)))
+  args <- list(by = gr, boot.n = 20, achromatic = FALSE,
+               n = c(1, 2, 2, 4), weber = 0.1)
+
+  # scale matters. The built-in illuminants are normalised, so quantum catches
+  # come out below one unless the illuminant is scaled, and fi = log(Qi) is then
+  # negative throughout. That is a misconfiguration rather than a supported case,
+  # and it is pinned separately below.
+  vq <- vismodel(sicalis, relative = FALSE, qcatch = "Qi", scale = 10000)
+  vf <- vismodel(sicalis, relative = FALSE, qcatch = "fi", scale = 10000)
+  expect_true(all(as.matrix(vf[, c("u", "s", "m", "l")]) > 0))
+
+  # coldist() logs Qi on the way in and leaves fi alone, so the two describe the
+  # same points in the same space and the distances must agree.
+  rq <- suppressMessages(do.call(bootcoldist, c(list(vq), args)))
+  rf <- suppressMessages(do.call(bootcoldist, c(list(vf), args)))
+  expect_false(anyNA(rf))
+  expect_equal(rq[, "dS.mean"], rf[, "dS.mean"], tolerance = 1e-8)
+
+  # Chromatic distance cannot depend on how the illuminant was scaled, since
+  # scaling adds a constant to every log catch and a constant shift lies in the
+  # null space of the chromatic metric.
+  vf100 <- vismodel(sicalis, relative = FALSE, qcatch = "fi", scale = 1e6)
+  rf100 <- suppressMessages(do.call(bootcoldist, c(list(vf100), args)))
+  expect_equal(rf[, "dS.mean"], rf100[, "dS.mean"], tolerance = 1e-8)
+
+  # And the same for the correction, which has no guard against fi input
+  cq <- suppressMessages(do.call(bootcoldist, c(list(vq), args, list(correct = TRUE))))
+  cf <- suppressMessages(do.call(bootcoldist, c(list(vf), args, list(correct = TRUE))))
+  expect_equal(cq[, "dS.mean"], cf[, "dS.mean"], tolerance = 1e-8)
+  expect_true(all(cq[, "dS.mean"] <= rq[, "dS.mean"] + 1e-12))
+})
+
+test_that("bootcoldist handles fi input whose log catches are negative", {
+  data(sicalis)
+  gr <- gsub("ind..", "", rownames(vismodel(sicalis, relative = FALSE)))
+  args <- list(by = gr, boot.n = 20, achromatic = FALSE,
+               n = c(1, 2, 2, 4), weber = 0.1)
+
+  # Left unscaled, the built-in illuminants give catches below one and so
+  # negative log catches. Their arithmetic mean is perfectly well defined, and
+  # since scaling only shifts every log catch by a constant the distances have
+  # to match the scaled case exactly. A geometric mean returned NaN here.
+  vbad <- suppressWarnings(vismodel(sicalis, relative = FALSE, qcatch = "fi"))
+  expect_true(all(as.matrix(vbad[, c("u", "s", "m", "l")]) < 0))
+
+  rbad <- suppressMessages(do.call(bootcoldist, c(list(vbad), args)))
+  rgood <- suppressMessages(do.call(bootcoldist, c(list(
+    vismodel(sicalis, relative = FALSE, qcatch = "fi", scale = 10000)
+  ), args)))
+  expect_false(anyNA(rbad))
+  expect_equal(rbad[, "dS.mean"], rgood[, "dS.mean"], tolerance = 1e-8)
+})
+
+test_that("bootcoldist correction refuses nesting = 'nested' on a crossed design", {
   data(sicalis)
   vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
   gr <- gsub("ind..", "", rownames(vm))
-
-  expect_error(
-    suppressMessages(bootcoldist(
-      vm, by = gr, boot.n = 20, correct = TRUE, qcatch = "fi",
-      n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
-    )),
-    "fi"
+  ind <- substr(rownames(vm), 1, 4)
+  args <- list(
+    vismodeldata = vm, by = gr, cluster = ind, boot.n = 20,
+    n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
   )
+
+  # Every bird supplies all three patches, so the group means are correlated and
+  # declaring the design nested would have the correction remove roughly twice
+  # what it should, silently.
+  expect_error(
+    suppressMessages(do.call(bootcoldist, c(
+      args, list(nesting = "nested", correct = TRUE)
+    ))),
+    "not independent"
+  )
+
+  # The same declaration is only a resampling choice without the correction, so
+  # it is still honoured there.
+  expect_silent(suppressMessages(do.call(bootcoldist, c(
+    args, list(nesting = "nested", correct = FALSE)
+  ))))
+
+  # And the correct declaration goes through
+  expect_silent(suppressMessages(do.call(bootcoldist, c(
+    args, list(nesting = "crossed", correct = TRUE)
+  ))))
+})
+
+test_that("bootcoldist correction treats achromatic = 1 as achromatic = TRUE", {
+  data(sicalis)
+  vm <- vismodel(sicalis, achromatic = "bt.dc", relative = FALSE)
+  gr <- gsub("ind..", "", rownames(vm))
+  ind <- substr(rownames(vm), 1, 4)
+
+  # A truthy non-logical used to take one branch when building the correction
+  # and the other when applying it, erroring on a missing object rather than
+  # returning a dL column.
+  res <- suppressMessages(bootcoldist(
+    vm, by = gr, cluster = ind, correct = TRUE, achromatic = 1,
+    n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+  ))
+  expect_true("dL.mean" %in% colnames(res))
+})
+
+test_that("bootcoldist reads qcatch from the object, not the argument", {
+  data(sicalis)
+  gr <- gsub("ind..", "", rownames(vismodel(sicalis, relative = FALSE)))
+  args <- list(by = gr, boot.n = 20, achromatic = FALSE, correct = TRUE,
+               n = c(1, 2, 2, 4), weber = 0.1)
+  vmfi <- vismodel(sicalis, relative = FALSE, qcatch = "fi", scale = 10000)
+
+  # coldist() takes qcatch from a vismodel object's attribute and ignores the
+  # argument, so bootcoldist() has to resolve it the same way. Otherwise its view
+  # of how the catches were transformed disagrees with what coldist() did, and
+  # the displacement is computed on the wrong scale.
+  told <- suppressMessages(do.call(bootcoldist, c(list(vmfi), args, list(qcatch = "Qi"))))
+  quiet <- suppressMessages(do.call(bootcoldist, c(list(vmfi), args)))
+  expect_equal(told[, "dS.mean"], quiet[, "dS.mean"], tolerance = 1e-8)
+
+  # A plain data frame is not a vismodel, so there the argument is what coldist()
+  # honours and bootcoldist() must not override it from a leftover attribute.
+  # as.data.frame() drops the class but keeps the attribute, so this is reachable.
+  df <- as.data.frame(vismodel(sicalis, relative = FALSE, qcatch = "Qi", scale = 10000))
+  expect_silent(suppressMessages(
+    do.call(bootcoldist, c(list(df), args, list(qcatch = "Qi")))
+  ))
 })

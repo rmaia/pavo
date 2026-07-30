@@ -34,6 +34,15 @@
 #'  within a population) and clusters are drawn independently within each group.
 #'  `"auto"` chooses between the two by checking whether any cluster appears
 #'  under more than one level of `by`. Ignored when `cluster` is NULL.
+#'
+#'  Crossed resampling assumes the crossing is complete, so that every group of a
+#'  contrast holds every cluster. Where only some clusters are shared, a group
+#'  holding a subset of them contributes a varying number of rows from one
+#'  replicate to the next, and its interval will be wider than it should be. Give
+#'  such designs one contrast at a time, or label clusters so that groups which do
+#'  not genuinely share individuals do not appear to. Reusing the labels
+#'  `ind1`, `ind2`, ... within each of several populations is the usual way this
+#'  happens by accident.
 #' @param ci.type the type of confidence interval, either `"perc"` (the default)
 #'  for percentiles of the bootstrap distribution, or `"bca"` for bias-corrected
 #'  and accelerated limits. Colour distances are bounded below by zero and are
@@ -73,15 +82,23 @@
 #'  measurements, which carries that covariance. Treating the groups as
 #'  independent in this case would subtract far too much. Designs in which only
 #'  some individuals are shared between two groups are refused, since neither
-#'  estimator applies. Exact unbiasedness assumes clusters of roughly equal size. 
-#'  Under marked imbalance the correction is a little too small, because the group mean is
-#'  taken over rows while the displacement is estimated over clusters.
+#'  estimator applies. Exact unbiasedness assumes clusters of roughly equal size,
+#'  because the group mean is taken over rows while the displacement is estimated
+#'  over clusters. Under marked imbalance the two no longer agree: the
+#'  between-cluster part of the displacement is under-corrected and the
+#'  within-cluster part over-corrected, so the net direction depends on which
+#'  source of variation dominates and the departure is not necessarily small.
+#'  Where cluster sizes are very uneven, treat the result as approximate.
 #'
 #'  The correction relies on the distance being one that arises from an inner
 #'  product, and so is unavailable with `noise = "quantum"`, in the `CIELAB`,
 #'  `CIELCh` and `coc` spaces, and for achromatic contrast in a colourspace
 #'  model, where luminance contrast is a ratio rather than a distance. It cannot
 #'  currently be combined with `ci.type = "bca"`.
+#'
+#'  A design in which clusters span the levels of `by` is crossed whatever
+#'  `nesting` says, so `correct = TRUE` refuses `nesting = "nested"` in that
+#'  case rather than treating correlated group means as independent.
 #'
 #'  Note that `cluster`, `nesting`, `ci.type` and `correct` follow `...`, and so
 #'  must all be named in full when used.
@@ -121,10 +138,11 @@
 #' )
 #'
 #' # These data are crossed, since every bird supplies all three patches, so the
-#' # three group means are correlated with one another. Supplying cluster lets
-#' # the correction work from each bird's own differences between patches, which
-#' # accounts for that shared bird-level variation. Leaving it out treats the
-#' # groups as independent samples and removes more than it should.
+#' # three group means are correlated with one another. Supplying cluster, as
+#' # above, lets the correction work from each bird's own differences between
+#' # patches, which carries that shared bird-level variation. Omitting it treats
+#' # the groups as independent samples and removes more than it should, so
+#' # compare the two and prefer the clustered one.
 #' bootcoldist(vm,
 #'   by = gr, correct = TRUE,
 #'   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
@@ -221,7 +239,9 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   if (inherits(vismodeldata, "colspace")) {
     coordinates <- spacecoordinates[[attr(vismodeldata, "clrsp")]]
   }
-  arithmetic <- names(vismodeldata) %in% coordinates
+
+  # Filled in once qcatch is known, below. groupsummary() is only called later.
+  arithmetic <- NULL
 
   # Summarise a set of rows down to one value per column
   groupsummary <- function(x) {
@@ -260,6 +280,17 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     }
   }
 
+  # Normalise once. Downstream this value is tested both as `arg0$achromatic` and
+  # as `isTRUE(arg0$achromatic)`, and a truthy non-logical such as 1 would take
+  # different branches in the two places, building no achromatic correction setup
+  # and then asking for it. Coerce rather than use isTRUE(), which is FALSE for
+  # 1 and would silently drop the achromatic channel instead of keeping it.
+  achro <- as.logical(arg0$achromatic)
+  if (length(achro) != 1L || is.na(achro)) {
+    stop("`achromatic` must be a single TRUE or FALSE.", call. = FALSE)
+  }
+  arg0$achromatic <- achro
+
   # Only require n & webers if using RN model
   if (useRNmodel) {
     # Receptor density
@@ -289,13 +320,42 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     arg0$weber.achro <- NULL
   }
 
-  # Check if qcatch attribute exists, if not then stop the function with an error
-  if (is.null(arg0$qcatch)) {
-    if (is.null(attr(vismodeldata, "qcatch"))) {
-      stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
-    }
-    arg0$qcatch <- attr(vismodeldata, "qcatch")
+  # coldist() takes qcatch from the object's own attribute for vismodel and
+  # colspace input, overriding whatever was passed. Resolve it the same way here,
+  # so that the correction's view of how the catches were transformed cannot
+  # disagree with what coldist() actually did. Reading only the argument would
+  # let a user pass qcatch = "Qi" over an "fi" object and have the displacement
+  # computed from the log of already-logged values.
+  # Gate on class, not on the attribute. A plain data frame can carry a qcatch
+  # attribute, since as.data.frame() drops the subclass but keeps everything else,
+  # and coldist() honours the argument for those. Testing the attribute would
+  # override the argument for such input and silently change the distances.
+  fromobject <- if (inherits(vismodeldata, c("vismodel", "colspace"))) {
+    attr(vismodeldata, "qcatch")
+  } else {
+    NULL
   }
+  if (!is.null(fromobject)) {
+    arg0$qcatch <- fromobject
+  } else if (is.null(arg0$qcatch)) {
+    stop('argument "qcatch" to be passed to "coldist" is missing', call. = FALSE)
+  }
+
+  # Which columns take an arithmetic mean rather than a geometric one. The test
+  # is whether the column already lives in the space the distance is measured in,
+  # because the centroid of a group is the ordinary mean there.
+  #
+  # Colourspace coordinates do. So do log-transformed quantum catches. coldist()
+  # logs "Qi" on the way in and leaves "fi" alone, so "fi" values are already on
+  # the log scale and their centroid is their arithmetic mean. A geometric mean of
+  # them is not the centroid of anything, and because it does not commute with
+  # adding a constant it made the reported distance depend on the factor the
+  # illuminant happened to be scaled by. Scaling adds a constant to every log
+  # catch, which is a pure intensity shift and lies in the null space of the
+  # chromatic metric, so chromatic distance must be invariant to it.
+  arithmetic <- names(vismodeldata) %in% coordinates |
+    identical(arg0$qcatch, "fi")
+
 
   # The sampling-error correction is only defined where the distance is a norm
   # arising from an inner product, since it rests on the identity
@@ -329,14 +389,6 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     # is exactly that, being the arithmetic mean of their logs. With "fi" the
     # values are already logged, so the geometric mean groupsummary() takes is
     # not the centroid the displacement belongs to.
-    if (identical(arg0$qcatch, "fi")) {
-      stop(
-        'correct = TRUE is not available with qcatch = "fi", because groups are ',
-        "summarised by a geometric mean, which is the centroid the correction ",
-        'needs only when the catches are untransformed. Use qcatch = "Qi".',
-        call. = FALSE
-      )
-    }
     if (!is.null(clrsp) && clrsp %in% c("CIELAB", "CIELCh", "coc")) {
       stop(
         "correct = TRUE is not available in the ", clrsp, " space, whose ",
@@ -438,6 +490,25 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
   # quadratic form in how many times it drew each unit. See correctionsetup() below.
   if (correct) {
     crossed <- identical(resolvenesting(by, cluster, nesting), "crossed")
+
+    # A design declared nested that is not nested is the one way to get a
+    # silently wrong answer here. Treating correlated group means as independent
+    # subtracts both groups' scatter instead of the scatter of their differences,
+    # which removes roughly twice what it should and can floor a real separation
+    # to zero without any warning. The declaration is honoured for resampling,
+    # where it is merely a choice, but not for the correction, where it is a
+    # statement about the data that can be checked.
+    if (!crossed &&
+        identical(resolvenesting(by, cluster, "auto"), "crossed")) {
+      stop(
+        'nesting = "nested" was given, but at least one cluster appears under ',
+        "more than one level of `by`, so the group means being compared are not ",
+        "independent. The correction would remove far more than it should. Use ",
+        'nesting = "crossed", or drop `correct = TRUE`.',
+        call. = FALSE
+      )
+    }
+
     channels <- if (isTRUE(arg0$achromatic)) c("dS", "dL") else "dS"
 
     # The metric each channel is measured in. Chromatic distance is the fixed
@@ -603,6 +674,30 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
     jack <- jackdist(vismodeldata, by, cluster, groupsummary, attribs, arg0)
   }
 
+  # NA would be silently dropped by the sort below. If every contrast lost the
+  # same number, apply() would return a shorter matrix and the limits would be
+  # read from the wrong order statistics without any complaint, so this has to be
+  # caught rather than left to surface as a dimension error further on.
+  # sort() drops NA silently. If every column loses the same count, apply() returns
+  # a shorter matrix and the limits come from the wrong order statistics with no
+  # complaint; if the loss is ragged it returns a list and fails obscurely later.
+  checkfinite <- function(x, channel) {
+    if (anyNA(x)) {
+      stop(
+        sum(is.na(x)), " of ", length(x), " bootstrapped ", channel,
+        " values are NA, so confidence limits cannot be taken from them.",
+        if (identical(channel, "dL")) {
+          " This usually means achromatic = TRUE was passed for a model carrying no achromatic channel."
+        } else {
+          " This usually means some resampled group had a non-positive quantum catch."
+        },
+        call. = FALSE
+      )
+    }
+    invisible(x)
+  }
+  checkfinite(bootdS, "dS")
+
   # Only the copy used for the quantiles is sorted. Sorting bootdS itself would
   # order every contrast independently, which breaks the correspondence between
   # them, and rows of the raw output are meant to be whole replicates.
@@ -651,6 +746,7 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       bootdL <- sqrt(pmax(bootdL^2 - bootdispL, 0))
     }
 
+    checkfinite(bootdL, "dL")
     sorteddL <- apply(bootdL, 2, sort)
 
     # Ensure names match with empirical values (even though they should match already)

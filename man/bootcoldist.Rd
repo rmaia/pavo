@@ -55,7 +55,16 @@ which preserves the pairing between them. Under \code{"nested"}, each cluster
 belongs to exactly one group (e.g. repeated measurements of an individual
 within a population) and clusters are drawn independently within each group.
 \code{"auto"} chooses between the two by checking whether any cluster appears
-under more than one level of \code{by}. Ignored when \code{cluster} is NULL.}
+under more than one level of \code{by}. Ignored when \code{cluster} is NULL.
+
+Crossed resampling assumes the crossing is complete, so that every group of a
+contrast holds every cluster. Where only some clusters are shared, a group
+holding a subset of them contributes a varying number of rows from one
+replicate to the next, and its interval will be wider than it should be. Give
+such designs one contrast at a time, or label clusters so that groups which do
+not genuinely share individuals do not appear to. Reusing the labels
+\code{ind1}, \code{ind2}, ... within each of several populations is the usual way this
+happens by accident.}
 
 \item{ci.type}{the type of confidence interval, either \code{"perc"} (the default)
 for percentiles of the bootstrap distribution, or \code{"bca"} for bias-corrected
@@ -97,15 +106,23 @@ then works from the differences between each individual's own pair of
 measurements, which carries that covariance. Treating the groups as
 independent in this case would subtract far too much. Designs in which only
 some individuals are shared between two groups are refused, since neither
-estimator applies. Exact unbiasedness assumes clusters of roughly equal size.
-Under marked imbalance the correction is a little too small, because the group mean is
-taken over rows while the displacement is estimated over clusters.
+estimator applies. Exact unbiasedness assumes clusters of roughly equal size,
+because the group mean is taken over rows while the displacement is estimated
+over clusters. Under marked imbalance the two no longer agree: the
+between-cluster part of the displacement is under-corrected and the
+within-cluster part over-corrected, so the net direction depends on which
+source of variation dominates and the departure is not necessarily small.
+Where cluster sizes are very uneven, treat the result as approximate.
 
 The correction relies on the distance being one that arises from an inner
 product, and so is unavailable with \code{noise = "quantum"}, in the \code{CIELAB},
 \code{CIELCh} and \code{coc} spaces, and for achromatic contrast in a colourspace
 model, where luminance contrast is a ratio rather than a distance. It cannot
 currently be combined with \code{ci.type = "bca"}.
+
+A design in which clusters span the levels of \code{by} is crossed whatever
+\code{nesting} says, so \code{correct = TRUE} refuses \code{nesting = "nested"} in that
+case rather than treating correlated group means as independent.
 
 Note that \code{cluster}, \code{nesting}, \code{ci.type} and \code{correct} follow \code{...}, and so
 must all be named in full when used.}
@@ -155,10 +172,11 @@ bootcoldist(vm,
 )
 
 # These data are crossed, since every bird supplies all three patches, so the
-# three group means are correlated with one another. Supplying cluster lets
-# the correction work from each bird's own differences between patches, which
-# accounts for that shared bird-level variation. Leaving it out treats the
-# groups as independent samples and removes more than it should.
+# three group means are correlated with one another. Supplying cluster, as
+# above, lets the correction work from each bird's own differences between
+# patches, which carries that shared bird-level variation. Omitting it treats
+# the groups as independent samples and removes more than it should, so
+# compare the two and prefer the clustered one.
 bootcoldist(vm,
   by = gr, correct = TRUE,
   n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
