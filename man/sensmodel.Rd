@@ -13,7 +13,8 @@ sensmodel(
   beta = TRUE,
   om = NULL,
   integrate = TRUE,
-  sensnames = paste0("lmax", peaksens)
+  sensnames = paste0("lmax", peaksens),
+  template = c("govardovskii_a1", "govardovskii_a2", "ssh_a1", "ssh_a2")
 )
 }
 \arguments{
@@ -52,6 +53,41 @@ are considered, for compatibility with visual model procedures.}
 \item{sensnames}{A vector equal in length to \code{peaksens}, specifying custom
 names for the resulting sensitivity curves (e.g. c('s', 'm', 'l') for
 short-, medium- and long-wavelength sensitive receptors.)}
+
+\item{template}{the pigment template used to generate the curves. Both the
+author and the chromophore are named, since a template's shape depends on
+both. One of:
+\itemize{
+\item \code{"govardovskii_a1"} (default): Govardovskii et al. (2000), vitamin A1
+chromophore (rhodopsin). The most widely used template, and previously
+the only implemented option.
+\item \code{"govardovskii_a2"}: Govardovskii et al. (2000), vitamin A2 chromophore
+(porphyropsin), found in freshwater fish, amphibians, and species that
+switch chromophore seasonally. Fitted to microspectrophotometric data from
+pigments peaking between roughly 440 and 620 nm. The recommended choice for
+A2 pigments, and the one to pair with the default when comparing
+chromophores, since staying within one template family avoids confounding
+chromophore with template.
+\item \code{"ssh_a1"}: Stavenga, Smits and Hoenders (1993), vitamin A1. Differs from
+\code{"govardovskii_a1"} by only a few percent above 450 nm, but diverges in the
+ultraviolet, where Stavenga (2010) judges both to be unreliable.
+\item \code{"ssh_a2"}: Stavenga, Smits and Hoenders (1993), vitamin A2, calibrated on
+carp porphyropsin alone.
+}
+
+At a given \code{peaksens} an A2 band is substantially broader than the A1
+equivalent, so a porphyropsin pigment is not recovered by shifting \code{peaksens}
+alone.
+
+\code{beta = FALSE} is recommended with either SSH template. Their beta band has
+a fixed peak wavelength, rather than one that scales with \code{peaksens} as
+Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
+the summed curve away from the \code{peaksens} that was asked for (by up to 8 nm
+for \code{"ssh_a1"} between 388 and 402 nm, and by more than 5 nm for \code{"ssh_a2"}
+anywhere below about 475 nm). Stavenga (2010) notes that a fixed beta peak is
+a known shortcoming of the template, the beta peak being correlated with the
+alpha peak in practice. Both Govardovskii beta bands scale with \code{peaksens}
+and do not have this problem.}
 }
 \value{
 A data frame of class \code{rspec} containing each cone model as a column.
@@ -81,6 +117,14 @@ Govardovskii VI, Fyhrquist N, Reuter T, Kuzmin DG and Donner K.
 Hart NS, and Vorobyev M. 2005. Modeling oil droplet absorption
 spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 Comparative Physiology A. 191: 381-392, \doi{10.1007/s00359-004-0595-3}
+
+Stavenga DG, Smits RP, Hoenders BJ. 1993. Simple exponential
+functions describing the absorbance bands of visual pigment spectra. Vision
+Research 33:1011-1017, \doi{10.1016/0042-6989(93)90237-Q}
+
+Stavenga DG. 2010. On visual pigment templates and the spectral
+shape of invertebrate rhodopsins and metarhodopsins. Journal of Comparative
+Physiology A 196:869-878, \doi{10.1007/s00359-010-0568-7}
 
 Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual
 pigments, oil droplets, ocular media and cone photoreceptor distribution in
