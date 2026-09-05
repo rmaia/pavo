@@ -137,11 +137,26 @@ Uses a bootstrap procedure to generate confidence intervals
 for the mean colour distance between two or more samples of colours
 }
 \details{
+\subsection{Parallel processing}{
+
 You can customise the type of parallel processing used by this function with
 the \code{\link[future:plan]{future::plan()}} function. This works on all operating systems, as well
 as high performance computing (HPC) environment. Similarly, you can customise
 the way progress is shown with the \code{\link[progressr:handlers]{progressr::handlers()}} functions
 (progress bar, acoustic feedback, nothing, etc.)
+}
+
+\subsection{Custom parsers}{
+
+To create a custom parser to pass to the \code{parser} argument, you need to create
+with the following signature:
+\itemize{
+\item input: a file path (string) as a first argument, and optionally, any
+additional arguments needed to parse the file. These arguments can be passed
+to the \code{lr_get_spec()} function via the \code{...} argument.
+\item output: a named list of two elements, as defined in \code{lr_parse_generic()}.
+}
+}
 }
 \examples{
 \donttest{
