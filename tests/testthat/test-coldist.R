@@ -918,3 +918,23 @@ test_that("bootcoldist reads qcatch from the object, not the argument", {
     do.call(bootcoldist, c(list(df), args, list(qcatch = "Qi")))
   ))
 })
+
+test_that("bootcoldist returns the signed corrected square", {
+  data(sicalis)
+  vm <- vismodel(sicalis, relative = FALSE)
+  gr <- gsub("ind..", "", rownames(vm))
+  args <- list(by = gr, boot.n = 20, achromatic = FALSE,
+               n = c(1, 2, 2, 4), weber = 0.1)
+
+  plain <- suppressMessages(do.call(bootcoldist, c(list(vm), args)))
+  corr <- suppressMessages(do.call(bootcoldist, c(list(vm), args, list(correct = TRUE))))
+
+  sq <- attr(corr, "dS.sq")
+  expect_null(attr(plain, "dS.sq"))
+  expect_equal(names(sq), rownames(corr))
+
+  # The reported distance is the floored square root of it, and the attribute is
+  # the displacement subtracted from the uncorrected square, signed.
+  expect_equal(unname(sqrt(pmax(sq, 0))), unname(corr[, "dS.mean"]))
+  expect_true(all(sq <= plain[, "dS.mean"]^2 + 1e-12))
+})

@@ -96,6 +96,11 @@
 
 ## MINOR FEATURES AND BUG FIXES
 
+- `bootcoldist()` with `correct = TRUE` now returns the signed corrected square as
+  the `"dS.sq"` attribute of the result. Flooring at zero is a presentation choice,
+  since a negative squared distance cannot be reported as a distance, but the
+  signed value is the quantity the correction is unbiased for and the one to carry
+  into a further calculation.
 - `bootcoldist()` now validates `achromatic`, erroring where it is not a single
   `TRUE` or `FALSE`.
 - `bootcoldist()` now errors where any bootstrapped distance is `NA`, rather than

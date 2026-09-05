@@ -75,6 +75,12 @@
 #'  root of an unbiased estimate of a squared distance is not itself unbiased,
 #'  and errs slightly low, so a corrected distance is a little conservative.
 #'
+#'  Because flooring at zero is a presentation choice rather than part of the
+#'  estimator, the signed corrected square is returned as the `"dS.sq"` attribute
+#'  of the result. That is the quantity the correction is unbiased for, and the
+#'  one to carry into any further calculation or meta-analysis; the distance in
+#'  the table is its square root with negatives set to zero.
+#'
 #'  Where `cluster` is given and the design is crossed, so that the same
 #'  individuals contribute to both groups of a contrast, the two group means are
 #'  correlated and their covariance belongs in the displacement. The correction
@@ -384,11 +390,6 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
         call. = FALSE
       )
     }
-    # The correction assumes the group centroid is the arithmetic mean in the
-    # space the metric acts on. With qcatch = "Qi" the geometric mean of catches
-    # is exactly that, being the arithmetic mean of their logs. With "fi" the
-    # values are already logged, so the geometric mean groupsummary() takes is
-    # not the centroid the displacement belongs to.
     if (!is.null(clrsp) && clrsp %in% c("CIELAB", "CIELCh", "coc")) {
       stop(
         "correct = TRUE is not available in the ", clrsp, " space, whose ",
@@ -546,7 +547,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
       )))
     })
     empdisp <- displacement(setup, unitcounts, "dS")
-    empdS <- sqrt(pmax(empdS^2 - drop(empdisp), 0))
+
+    # The unbiased quantity is the signed square. Flooring it is a presentation
+    # choice, since a negative squared distance cannot be reported as a distance,
+    # but the signed value is what a meta-analysis or a further calculation
+    # should combine, and it is discarded by the square root. Keep it.
+    signedsq <- empdS^2 - drop(empdisp)
+    empdS <- sqrt(pmax(signedsq, 0))
   }
 
   # use the indices to break each group's data into bootstrap replicates
@@ -716,6 +723,13 @@ bootcoldist <- function(vismodeldata, by, boot.n = 1000, alpha = 0.95, raw = FAL
 
   # Combine empirical and bootstrap deltaS statistics into a results dataframe
   res <- t(rbind(dS.mean, dsCI))
+
+  # The corrected square before flooring, which is the quantity the correction is
+  # unbiased for. Carried as an attribute rather than a column so the shape of the
+  # returned matrix is unchanged.
+  if (correct) {
+    attr(res, "dS.sq") <- setNames(signedsq, names(empdS))
+  }
 
   # If raw = TRUE, create a new dataframe with raw bootstrapped deltaS distances
   if (raw) {
