@@ -174,6 +174,8 @@ a data frame of summary variables:
 
 ## Details
 
+### Parallel processing
+
 You can customise the type of parallel processing used by this function
 with the
 [`future::plan()`](https://future.futureverse.org/reference/plan.html)
@@ -182,6 +184,18 @@ performance computing (HPC) environment. Similarly, you can customise
 the way progress is shown with the
 [`progressr::handlers()`](https://progressr.futureverse.org/reference/handlers.html)
 functions (progress bar, acoustic feedback, nothing, etc.)
+
+### Custom parsers
+
+To create a custom parser to pass to the `parser` argument, you need to
+create with the following signature:
+
+- input: a file path (string) as a first argument, and optionally, any
+  additional arguments needed to parse the file. These arguments can be
+  passed to the `lr_get_spec()` function via the `...` argument.
+
+- output: a named list of two elements, as defined in
+  `lr_parse_generic()`.
 
 ## References
 

@@ -4,6 +4,32 @@
 
 ### NEW FEATURES AND SIGNIFICANT CHANGES
 
+- [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
+  gains a `template` argument, selecting the visual pigment template
+  used to generate sensitivity curves. It names both the author and the
+  chromophore, since a template’s shape depends on both, and defaults to
+  `"govardovskii_a1"`, which is what every previous version of the
+  function used. `"govardovskii_a2"` adds the vitamin A2 template from
+  the same paper, and `"ssh_a1"` and `"ssh_a2"` the two from Stavenga,
+  Smits and Hoenders (1993). The A2 templates cover porphyropsin
+  pigments, found in freshwater fish, amphibians, and species that
+  switch chromophore seasonally, which pavo previously could not model
+  at all: an A2 band is close to 20% broader than the A1 band at the
+  same peak sensitivity, so it is not recovered by adjusting `peaksens`.
+  `"govardovskii_a2"` is the one to reach for, since pairing it with the
+  default compares chromophores without also changing template family.
+  The template used is recorded as a `"template"` attribute on the
+  result. Note that `beta = FALSE` is recommended with either SSH
+  template: their beta band has a fixed peak wavelength rather than one
+  that scales with `peaksens`, so for short-wavelength pigments it pulls
+  the maximum of the summed curve several nm away from the value asked
+  for, and
+  [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
+  warns where that shift exceeds 5 nm. The alpha band on its own is
+  unaffected, both Govardovskii beta bands scale with `peaksens` and do
+  not have this problem, and Stavenga (2010) notes the fixed beta peak
+  to be a known shortcoming.
+
 - [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
   now summarises
   [`colspace()`](https://pavo.colrverse.com/reference/colspace.md)

@@ -57,7 +57,8 @@ Vorobyev (2005).</p>
 <span>  beta <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  om <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  integrate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  sensnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"lmax"</span>, <span class="va">peaksens</span><span class="op">)</span></span>
+<span>  sensnames <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"lmax"</span>, <span class="va">peaksens</span><span class="op">)</span>,</span>
+<span>  template <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"govardovskii_a1"</span>, <span class="st">"govardovskii_a2"</span>, <span class="st">"ssh_a1"</span>, <span class="st">"ssh_a2"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -118,6 +119,39 @@ are considered, for compatibility with visual model procedures.</p></dd>
 names for the resulting sensitivity curves (e.g. c('s', 'm', 'l') for
 short-, medium- and long-wavelength sensitive receptors.)</p></dd>
 
+
+<dt id="arg-template">template<a class="anchor" aria-label="anchor" href="#arg-template"></a></dt>
+<dd><p>the pigment template used to generate the curves. Both the
+author and the chromophore are named, since a template's shape depends on
+both. One of:</p><ul><li><p><code>"govardovskii_a1"</code> (default): Govardovskii et al. (2000), vitamin A1
+chromophore (rhodopsin). The most widely used template, and previously
+the only implemented option.</p></li>
+<li><p><code>"govardovskii_a2"</code>: Govardovskii et al. (2000), vitamin A2 chromophore
+(porphyropsin), found in freshwater fish, amphibians, and species that
+switch chromophore seasonally. Fitted to microspectrophotometric data from
+pigments peaking between roughly 440 and 620 nm. The recommended choice for
+A2 pigments, and the one to pair with the default when comparing
+chromophores, since staying within one template family avoids confounding
+chromophore with template.</p></li>
+<li><p><code>"ssh_a1"</code>: Stavenga, Smits and Hoenders (1993), vitamin A1. Differs from
+<code>"govardovskii_a1"</code> by only a few percent above 450 nm, but diverges in the
+ultraviolet, where Stavenga (2010) judges both to be unreliable.</p></li>
+<li><p><code>"ssh_a2"</code>: Stavenga, Smits and Hoenders (1993), vitamin A2, calibrated on
+carp porphyropsin alone.</p></li>
+</ul><p>At a given <code>peaksens</code> an A2 band is substantially broader than the A1
+equivalent, so a porphyropsin pigment is not recovered by shifting <code>peaksens</code>
+alone.</p>
+<p><code>beta = FALSE</code> is recommended with either SSH template. Their beta band has
+a fixed peak wavelength, rather than one that scales with <code>peaksens</code> as
+Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
+the summed curve away from the <code>peaksens</code> that was asked for (by up to 8 nm
+for <code>"ssh_a1"</code> between 388 and 402 nm, and by more than 5 nm for <code>"ssh_a2"</code>
+anywhere below about 475 nm), and a warning is given wherever the shift
+exceeds 5 nm. Stavenga (2010) notes that a fixed beta peak is a known
+shortcoming of the template, the beta peak being correlated with the alpha
+peak in practice. Both Govardovskii beta bands scale with <code>peaksens</code> and do
+not have this problem.</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -131,6 +165,12 @@ short-, medium- and long-wavelength sensitive receptors.)</p></dd>
 <p>Hart NS, and Vorobyev M. 2005. Modeling oil droplet absorption
 spectra and spectral sensitivities of bird cone photoreceptors. Journal of
 Comparative Physiology A. 191: 381-392, <a href="https://doi.org/10.1007/s00359-004-0595-3" class="external-link">doi:10.1007/s00359-004-0595-3</a></p>
+<p>Stavenga DG, Smits RP, Hoenders BJ. 1993. Simple exponential
+functions describing the absorbance bands of visual pigment spectra. Vision
+Research 33:1011-1017, <a href="https://doi.org/10.1016/0042-6989%2893%2990237-Q" class="external-link">doi:10.1016/0042-6989(93)90237-Q</a></p>
+<p>Stavenga DG. 2010. On visual pigment templates and the spectral
+shape of invertebrate rhodopsins and metarhodopsins. Journal of Comparative
+Physiology A 196:869-878, <a href="https://doi.org/10.1007/s00359-010-0568-7" class="external-link">doi:10.1007/s00359-010-0568-7</a></p>
 <p>Hart NS, Partridge JC, Cuthill IC, Bennett AT (2000) Visual
 pigments, oil droplets, ocular media and cone photoreceptor distribution in
 two species of passerine bird: the blue tit (<em>Parus caeruleus</em> L.) and the
