@@ -69,39 +69,50 @@ sens_template <- function(template, peaksens, wlmat, beta) {
 sens_govardovskii <- function(peaksens, wlmat, beta = TRUE, chromophore = "A1") {
   x <- peaksens / wlmat
 
+  # A, a, B, b, C, c and D are the symbols of their equation 1, kept as-is so the
+  # implementation can be read against the paper. Only the first pair carries an
+  # interpretation: A and a set the slope and the intercept of the long-wave limb,
+  # which is close to linear when log sensitivity is plotted against x. The rest
+  # shape the peak and the short-wave limb and have no individual meaning, being
+  # a refit of Lamb's (1995) empirical form. They are held in a list so that `c`
+  # does not shadow base::c.
   if (identical(chromophore, "A1")) {
-    A <- 69.7
-    a <- 0.8795 + 0.0459 * exp(-(peaksens - 300)^2 / 11940)
-    B <- 28
-    b <- 0.922
-    Cc <- -14.9
-    cc <- 1.104
-    D <- 0.674
+    pars <- list(
+      A = 69.7,
+      a = 0.8795 + 0.0459 * exp(-(peaksens - 300)^2 / 11940),
+      B = 28,
+      b = 0.922,
+      C = -14.9,
+      c = 1.104,
+      D = 0.674
+    )
 
-    beta_amp <- 0.26
+    beta_amplitude <- 0.26
     beta_peak <- 189 + 0.315 * peaksens
     beta_width <- -40.5 + 0.195 * peaksens
   } else {
-    A <- 62.7 + 1.834 * exp((peaksens - 625) / 54.2)
-    a <- 0.875 + 0.0268 * exp((peaksens - 665) / 40.7)
-    B <- 20.85
-    b <- 0.9101
-    Cc <- -10.37
-    cc <- 1.1123
-    D <- 0.5343
+    pars <- list(
+      A = 62.7 + 1.834 * exp((peaksens - 625) / 54.2),
+      a = 0.875 + 0.0268 * exp((peaksens - 665) / 40.7),
+      B = 20.85,
+      b = 0.9101,
+      C = -10.37,
+      c = 1.1123,
+      D = 0.5343
+    )
 
-    beta_amp <- 0.37
+    beta_amplitude <- 0.37
     beta_peak <- 216.7 + 0.287 * peaksens
     beta_width <- 317 - 1.149 * peaksens + 0.00124 * peaksens^2
   }
 
-  peaks <- 1 / (exp(A * (a - x)) +
-    exp(B * (b - x)) +
-    exp(Cc * (cc - x)) +
-    D)
+  peaks <- 1 / (exp(pars$A * (pars$a - x)) +
+    exp(pars$B * (pars$b - x)) +
+    exp(pars$C * (pars$c - x)) +
+    pars$D)
 
   if (beta) {
-    betabands <- beta_amp * exp(-((wlmat - beta_peak) / beta_width)^2)
+    betabands <- beta_amplitude * exp(-((wlmat - beta_peak) / beta_width)^2)
     peaks <- peaks + betabands
   }
 
@@ -122,8 +133,9 @@ sens_govardovskii <- function(peaksens, wlmat, beta = TRUE, chromophore = "A1") 
 #    Fig. 4), restated in Stavenga (2010); the 340 nm in Table 1 is the value
 #    fitted to bovine rhodopsin specifically, not the value used for prediction.
 #    For A2 no prediction value is published, so the Table 1 fit to carp
-#    porphyropsin (368 nm) is used. A fixed beta band distorts the summed curve
-#    for short-wavelength pigments, so sensmodel() checks peak recovery and warns.
+#    porphyropsin (368 nm) is used. A fixed beta band pulls the maximum of the
+#    summed curve away from peaksens for short-wavelength pigments, which is why
+#    the documentation recommends beta = FALSE with these two templates.
 #
 # 2. Table 1 also lists a gamma band for A1 and A4. It is excluded here: it peaks
 #    near 276 nm, outside the default range of sensmodel(), and Govardovskii has
@@ -132,37 +144,49 @@ sens_govardovskii <- function(peaksens, wlmat, beta = TRUE, chromophore = "A1") 
 # A4 coefficients are stored but not reachable from sensmodel(), pending a use
 # case. Note this is A4 (Table 1 of the paper), not the more widely encountered
 # A3 chromophore of many insects.
+# `amplitude` is the height of the band relative to the alpha peak, `a0` its
+# width and `a1` its skew towards higher energies; a0 and a1 are the paper's own
+# symbols. The alpha band peaks at the requested peaksens, so only the beta band
+# carries a `peak` of its own.
 ssh_bands <- list(
   A1 = list(
-    alpha = c(A = 1, a0 = 380, a1 = 6.09),
-    beta = c(A = 0.29, a0 = 247, a1 = 3.59),
-    beta_peak = 350
+    alpha = list(amplitude = 1, a0 = 380, a1 = 6.09),
+    beta = list(amplitude = 0.29, a0 = 247, a1 = 3.59, peak = 350)
   ),
   A2 = list(
-    alpha = c(A = 1, a0 = 263, a1 = 4.45),
-    beta = c(A = 0.50, a0 = 176, a1 = 1.52),
-    beta_peak = 368
+    alpha = list(amplitude = 1, a0 = 263, a1 = 4.45),
+    beta = list(amplitude = 0.50, a0 = 176, a1 = 1.52, peak = 368)
   ),
   A4 = list(
-    alpha = c(A = 1, a0 = 420, a1 = 7.73),
-    beta = c(A = 0.23, a0 = 252, a1 = 2.97),
-    beta_peak = 329
+    alpha = list(amplitude = 1, a0 = 420, a1 = 7.73),
+    beta = list(amplitude = 0.23, a0 = 252, a1 = 2.97, peak = 329)
   )
 )
 
-ssh_band <- function(peak, wlmat, par) {
-  par <- unname(par)
+ssh_band <- function(wlmat, peak, amplitude, a0, a1) {
   x <- log10(wlmat / peak)
-  par[1] * exp(-par[2] * x^2 * (1 + par[3] * x + (3 / 8) * (par[3] * x)^2))
+  amplitude * exp(-a0 * x^2 * (1 + a1 * x + (3 / 8) * (a1 * x)^2))
 }
 
 sens_ssh <- function(peaksens, wlmat, beta = TRUE, chromophore = "A1") {
   pars <- ssh_bands[[chromophore]]
 
-  peaks <- ssh_band(peaksens, wlmat, pars$alpha)
+  peaks <- ssh_band(
+    wlmat,
+    peak = peaksens,
+    amplitude = pars$alpha$amplitude,
+    a0 = pars$alpha$a0,
+    a1 = pars$alpha$a1
+  )
 
   if (beta) {
-    peaks <- peaks + ssh_band(pars$beta_peak, wlmat, pars$beta)
+    peaks <- peaks + ssh_band(
+      wlmat,
+      peak = pars$beta$peak,
+      amplitude = pars$beta$amplitude,
+      a0 = pars$beta$a0,
+      a1 = pars$beta$a1
+    )
   }
 
   peaks

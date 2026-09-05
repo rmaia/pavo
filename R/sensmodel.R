@@ -59,10 +59,11 @@
 #'   Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
 #'   the summed curve away from the `peaksens` that was asked for (by up to 8 nm
 #'   for `"ssh_a1"` between 388 and 402 nm, and by more than 5 nm for `"ssh_a2"`
-#'   anywhere below about 475 nm). Stavenga (2010) notes that a fixed beta peak is
-#'   a known shortcoming of the template, the beta peak being correlated with the
-#'   alpha peak in practice. Both Govardovskii beta bands scale with `peaksens`
-#'   and do not have this problem.
+#'   anywhere below about 475 nm), and a warning is given wherever the shift
+#'   exceeds 5 nm. Stavenga (2010) notes that a fixed beta peak is a known
+#'   shortcoming of the template, the beta peak being correlated with the alpha
+#'   peak in practice. Both Govardovskii beta bands scale with `peaksens` and do
+#'   not have this problem.
 #'
 #' @return A data frame of class `rspec` containing each cone model as a column.
 #'
@@ -134,13 +135,29 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
   # Everything below this point is template-agnostic.
   peaks <- sens_template(template, peaksens, sensecurves, beta = beta)
 
-  # Note that summing an alpha and a beta band can put the maximum of the result
-  # a little away from the requested peak sensitivity. This is slight for
-  # Govardovskii, whose beta band tracks peaksens, but the SSH beta band sits at
-  # a fixed wavelength and so shifts the peak of short-wavelength pigments by
-  # several nm. That is a property of the published template rather than an
-  # error, and is documented under the `template` argument along with the
-  # recommendation to use beta = FALSE.
+  # Summing an alpha and a beta band can put the maximum of the result away from
+  # the requested peak sensitivity. The check is deliberately scoped to the SSH
+  # templates, whose beta band sits at a fixed wavelength: Govardovskii's tracks
+  # peaksens and shifts the peak by at most a couple of nm across the range it
+  # was fitted over, but it does exceed 5 nm for A1 pigments peaking near 320 nm,
+  # and warning there would be a behaviour change for existing users of the
+  # default template rather than a caveat about a newly added one.
+  if (beta && startsWith(template, "ssh")) {
+    realised <- wl[max.col(peaks, ties.method = "first")]
+    off <- abs(realised - peaksens) > 5
+    if (any(off)) {
+      warning(
+        "the SSH beta band has a fixed peak wavelength, and for ",
+        paste(peaksens[off], collapse = ", "),
+        " nm it shifts the maximum of the modelled curve to ",
+        paste(realised[off], collapse = ", "),
+        " nm. Consider beta = FALSE, or one of the Govardovskii templates, ",
+        "whose beta band scales with peaksens.",
+        call. = FALSE
+      )
+    }
+  }
+
   peaks <- peaks / apply(peaks, 1, max)
 
   if (!is.null(lambdacut) && !is.null(Bmid)) {

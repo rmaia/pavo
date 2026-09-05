@@ -18,9 +18,10 @@
   `beta = FALSE` is recommended with either SSH template: their beta band has a
   fixed peak wavelength rather than one that scales with `peaksens`, so for
   short-wavelength pigments it pulls the maximum of the summed curve several nm
-  away from the value asked for. The alpha band on its own is unaffected, both
-  Govardovskii beta bands scale with `peaksens` and do not have this problem, and
-  Stavenga (2010) notes the fixed beta peak to be a known shortcoming.
+  away from the value asked for, and `sensmodel()` warns where that shift exceeds
+  5 nm. The alpha band on its own is unaffected, both Govardovskii beta bands
+  scale with `peaksens` and do not have this problem, and Stavenga (2010) notes
+  the fixed beta peak to be a known shortcoming.
 - `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
   their coordinates, rather than by a geometric mean of those coordinates shifted
   by an arbitrary constant of 100. Distances between points in a colour space are

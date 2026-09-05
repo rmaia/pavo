@@ -109,11 +109,10 @@ test_that("sensmodel() templates", {
 test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigments", {
   # The SSH beta band sits at a fixed wavelength rather than scaling with
   # peaksens, so summing it with the alpha band moves the maximum of the result.
-  # This is a property of the published template, not an error, which is why
-  # beta = FALSE is the documented recommendation rather than a warning. The test
-  # exists so that anyone changing the beta band notices they have done so.
+  # Warnings are suppressed here because these assertions are about where the
+  # peak lands; the warning itself is checked separately below.
   realised <- function(...) {
-    s <- sensmodel(..., integrate = FALSE)
+    s <- suppressWarnings(sensmodel(..., integrate = FALSE))
     s$wl[which.max(s[[2]])]
   }
 
@@ -138,9 +137,17 @@ test_that("sensmodel() SSH beta band shifts the peak of short-wavelength pigment
     expect_lt(abs(realised(lmax, template = "govardovskii_a2") - lmax), 3)
   }
 
-  # None of this warns
-  expect_silent(sensmodel(430, template = "ssh_a2"))
-  expect_silent(sensmodel(395, template = "ssh_a1"))
+  # The shift is warned about, since a caveat in the documentation is easy to
+  # miss. Scoped to the SSH templates and to shifts beyond 5 nm, so it stays
+  # silent for the Govardovskii templates, for long-wavelength pigments where the
+  # fixed beta band is far from the alpha band, and when beta is switched off.
+  expect_warning(sensmodel(430, template = "ssh_a2"), "fixed peak wavelength")
+  expect_warning(sensmodel(395, template = "ssh_a1"), "fixed peak wavelength")
+
+  expect_silent(sensmodel(600, template = "ssh_a2"))
+  expect_silent(sensmodel(430, template = "ssh_a2", beta = FALSE))
+  expect_silent(sensmodel(430, template = "govardovskii_a1"))
+  expect_silent(sensmodel(470, template = "govardovskii_a2"))
 })
 
 test_that("sensmodel() errors", {

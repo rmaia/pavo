@@ -84,10 +84,11 @@ a fixed peak wavelength, rather than one that scales with \code{peaksens} as
 Govardovskii's does, so for short-wavelength pigments it pulls the maximum of
 the summed curve away from the \code{peaksens} that was asked for (by up to 8 nm
 for \code{"ssh_a1"} between 388 and 402 nm, and by more than 5 nm for \code{"ssh_a2"}
-anywhere below about 475 nm). Stavenga (2010) notes that a fixed beta peak is
-a known shortcoming of the template, the beta peak being correlated with the
-alpha peak in practice. Both Govardovskii beta bands scale with \code{peaksens}
-and do not have this problem.}
+anywhere below about 475 nm), and a warning is given wherever the shift
+exceeds 5 nm. Stavenga (2010) notes that a fixed beta peak is a known
+shortcoming of the template, the beta peak being correlated with the alpha
+peak in practice. Both Govardovskii beta bands scale with \code{peaksens} and do
+not have this problem.}
 }
 \value{
 A data frame of class \code{rspec} containing each cone model as a column.

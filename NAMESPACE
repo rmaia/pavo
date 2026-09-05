@@ -77,72 +77,86 @@ export(voloverlap)
 importFrom(cluster,clara)
 importFrom(farver,compare_colour)
 importFrom(future.apply,future_lapply)
-importFrom(geometry,bary2cart)
-importFrom(geometry,convhulln)
-importFrom(geometry,intersectn)
-importFrom(grDevices,adjustcolor)
-importFrom(grDevices,as.raster)
-importFrom(grDevices,col2rgb)
-importFrom(grDevices,colorRampPalette)
-importFrom(grDevices,convertColor)
-importFrom(grDevices,dev.new)
-importFrom(grDevices,dev.off)
-importFrom(grDevices,n2mfrow)
-importFrom(grDevices,rgb)
-importFrom(grDevices,trans3d)
-importFrom(graphics,abline)
-importFrom(graphics,arrows)
-importFrom(graphics,axis)
-importFrom(graphics,box)
-importFrom(graphics,grconvertX)
-importFrom(graphics,grconvertY)
-importFrom(graphics,image)
-importFrom(graphics,legend)
-importFrom(graphics,lines)
-importFrom(graphics,locator)
-importFrom(graphics,mtext)
-importFrom(graphics,par)
-importFrom(graphics,plot.default)
-importFrom(graphics,plot.new)
-importFrom(graphics,plot.window)
-importFrom(graphics,points)
-importFrom(graphics,polygon)
-importFrom(graphics,rasterImage)
-importFrom(graphics,segments)
-importFrom(graphics,text)
-importFrom(graphics,title)
+importFrom(geometry,
+  bary2cart,
+  convhulln,
+  intersectn
+)
+importFrom(grDevices,
+  adjustcolor,
+  as.raster,
+  col2rgb,
+  colorRampPalette,
+  convertColor,
+  dev.new,
+  dev.off,
+  n2mfrow,
+  rgb,
+  trans3d
+)
+importFrom(graphics,
+  abline,
+  arrows,
+  axis,
+  box,
+  grconvertX,
+  grconvertY,
+  image,
+  legend,
+  lines,
+  locator,
+  mtext,
+  par,
+  plot.default,
+  plot.new,
+  plot.window,
+  points,
+  polygon,
+  rasterImage,
+  segments,
+  text,
+  title
+)
 importFrom(lightr,lr_get_spec)
-importFrom(magick,image_data)
-importFrom(magick,image_flop)
-importFrom(magick,image_info)
-importFrom(magick,image_read)
-importFrom(magick,image_resize)
-importFrom(magick,image_rotate)
+importFrom(magick,
+  image_data,
+  image_flop,
+  image_info,
+  image_read,
+  image_resize,
+  image_rotate
+)
 importFrom(plot3D,perspbox)
-importFrom(progressr,progressor)
-importFrom(progressr,with_progress)
-importFrom(stats,aggregate)
-importFrom(stats,approx)
-importFrom(stats,cor)
-importFrom(stats,dist)
-importFrom(stats,fft)
-importFrom(stats,kmeans)
-importFrom(stats,loess)
-importFrom(stats,loess.smooth)
-importFrom(stats,median)
-importFrom(stats,na.omit)
-importFrom(stats,pnorm)
-importFrom(stats,predict)
-importFrom(stats,qnorm)
-importFrom(stats,quantile)
-importFrom(stats,runif)
-importFrom(stats,sd)
-importFrom(stats,setNames)
-importFrom(stats,var)
+importFrom(progressr,
+  progressor,
+  with_progress
+)
+importFrom(stats,
+  aggregate,
+  approx,
+  cor,
+  dist,
+  fft,
+  kmeans,
+  loess,
+  loess.smooth,
+  median,
+  na.omit,
+  pnorm,
+  predict,
+  qnorm,
+  quantile,
+  runif,
+  sd,
+  setNames,
+  var
+)
 importFrom(tools,file_path_sans_ext)
-importFrom(utils,combn)
-importFrom(utils,hasName)
-importFrom(utils,head)
-importFrom(utils,modifyList)
-importFrom(utils,object.size)
-importFrom(utils,tail)
+importFrom(utils,
+  combn,
+  hasName,
+  head,
+  modifyList,
+  object.size,
+  tail
+)
