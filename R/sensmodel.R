@@ -148,9 +148,9 @@ sensmodel <- function(peaksens, range = c(300, 700), lambdacut = NULL, Bmid = NU
     if (any(off)) {
       warning(
         "the SSH beta band has a fixed peak wavelength, and for ",
-        paste(peaksens[off], collapse = ", "),
+        toString(peaksens[off]),
         " nm it shifts the maximum of the modelled curve to ",
-        paste(realised[off], collapse = ", "),
+        toString(realised[off]),
         " nm. Consider beta = FALSE, or one of the Govardovskii templates, ",
         "whose beta band scales with peaksens.",
         call. = FALSE
