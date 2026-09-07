@@ -28,9 +28,9 @@ pavo, as of version 2.0, displaying some key functions at each stage.
 A comprehensive tutorial to get you started with pavo is available in
 [the pavo handbook](https://book.colrverse.com). In this book, we begin
 by detailing the [importing, processing and
-visualisation](https://book.colrverse.com/importing-processing-and-visualising-data.html)
+visualisation](https://book.colrverse.com/01-importing_processing.html)
 of spectral and image data, before moving on to discussion of the
-[flexible analyses](https://book.colrverse.com/analysing-data.html) of
+[flexible analyses](https://book.colrverse.com/02-analysing.html) of
 such data that `pavo` allows. Our hope is to demonstrate the flexibility
 of `pavo`, and to provide a cohesive, reproducible workflow for colour
 pattern analysis within `R`. As always, the development version of

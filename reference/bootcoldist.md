@@ -132,6 +132,13 @@ bootcoldist(
   itself unbiased, and errs slightly low, so a corrected distance is a
   little conservative.
 
+  Because flooring at zero is a presentation choice rather than part of
+  the estimator, the signed corrected square is returned as the
+  `"dS.sq"` attribute of the result. That is the quantity the correction
+  is unbiased for, and the one to carry into any further calculation or
+  meta-analysis; the distance in the table is its square root with
+  negatives set to zero.
+
   Where `cluster` is given and the design is crossed, so that the same
   individuals contribute to both groups of a contrast, the two group
   means are correlated and their covariance belongs in the displacement.
