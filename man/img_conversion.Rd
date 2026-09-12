@@ -30,7 +30,7 @@ papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package
 \donttest{
 # Convert from class rimg to cimg
 if (requireNamespace("imager", quietly = TRUE)) {
-  papilio_cimg <- rimg2cimg(papilio)
+  papilio_cimg <- imager::as.cimg(papilio)
   class(papilio_cimg)
 }
 }
