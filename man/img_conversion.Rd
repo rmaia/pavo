@@ -29,7 +29,7 @@ conversion from class \code{rimg}, so it's best to use early in the analysis wor
 papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 \donttest{
 # Convert from class rimg to cimg
-if (requireNamespace("imager", quiety = TRUE)) {
+if (requireNamespace("imager", quietly = TRUE)) {
   papilio_cimg <- rimg2cimg(papilio)
   class(papilio_cimg)
 }
