@@ -93,6 +93,20 @@
   argument to remove entire regions of the spectra and replace them by linear
   interpolation. Code contributed for by @rscherrer, addressing 
   [issue #271](https://github.com/rmaia/pavo/issues/271).
+- `coldist()` with `noise = "quantum"` built the photon-noise term from
+  log-transformed quantum catches whenever `qcatch = "Qi"`, rather than from the
+  catches themselves. The term is `2 / (Qa + Qb)` and was being computed as
+  `2 / (log Qa + log Qb)`, which inflates the noise, deflates the resulting
+  distances, and leaves the quantum model short of the neural one however bright
+  the illuminant. Results were correct for `qcatch = "fi"` input throughout. If
+  you have run `coldist()` or `bootcoldist()` with `noise = "quantum"` and
+  `qcatch = "Qi"` on any version from 2.4.0 onward, those distances need
+  recalculating. Reported by Changku Kang,
+  [issue #281](https://github.com/rmaia/pavo/issues/281).
+- Following the above, quantum catches below one are no longer an error in
+  `coldist()`. They describe a dim, photon-limited stimulus, and give small
+  distances rather than negative log catches. Non-positive catches remain an
+  error, since the noise term is undefined for them.
 
 ## MINOR FEATURES AND BUG FIXES
 

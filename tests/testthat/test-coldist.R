@@ -33,7 +33,6 @@ test_that("Messages & warnings", {
   expect_message(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_message(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
 
-  expect_error(coldist(vismodel(flowers, relative = FALSE), noise = "quantum"), "negative quantum-catch")
 })
 
 test_that("Equivalent", {
@@ -1059,4 +1058,38 @@ test_that("quantum noise approaches neural noise as quantum catches grow", {
   expect_gt(bright_q$dS, dim_q$dS)
   expect_equal(bright_q$dS, neural$dS, tolerance = 1e-5)
   expect_equal(bright_q$dL, neural$dL, tolerance = 1e-5)
+})
+
+test_that("quantum noise treats catches below one as dim rather than invalid", {
+  # Raw catches under one are a photon-limited stimulus, not a broken one: shot
+  # noise dominates and distances collapse toward zero. coldist() used to stop
+  # here, because the noise term was built from log catches and those go
+  # negative below one. See #281.
+  data(flowers)
+
+  vm <- vismodel(flowers, relative = FALSE)
+  expect_true(any(as.matrix(vm[, c("u", "s", "m", "l")]) < 1))
+
+  quantum <- suppressMessages(coldist(vm, noise = "quantum", achromatic = FALSE))
+  neural <- suppressMessages(coldist(vm, noise = "neural", achromatic = FALSE))
+
+  expect_false(anyNA(quantum$dS))
+  expect_true(all(quantum$dS >= 0))
+  expect_true(all(quantum$dS <= neural$dS + 1e-12))
+})
+
+test_that("quantum noise rejects non-positive quantum catches", {
+  # 2 / (Qa + Qb) is undefined there, so it has to fail rather than return NaN
+  fake <- as.rspec(data.frame(
+    wl = 300:700, patch1 = rep(-1, 401), patch2 = rep(-2, 401)
+  ))
+  vm <- suppressWarnings(vismodel(fake, visual = "bluetit", relative = FALSE))
+  expect_true(all(as.matrix(vm[, c("u", "s", "m", "l")]) < 0))
+
+  expect_error(
+    suppressWarnings(suppressMessages(
+      coldist(vm, noise = "quantum", achromatic = FALSE)
+    )),
+    "non-positive quantum-catch"
+  )
 })

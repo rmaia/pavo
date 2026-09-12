@@ -239,16 +239,17 @@ coldist <- function(modeldata,
     rownames(dat) <- rownames(modeldata)
     colnames(dat) <- colnames(modeldata)
 
+    # Quantum catch models need Qi in original scale (not log transformed)
+    # to calculate the noise, so build qndat before dat is log transformed below.
+    qndat <- switch(qcatch,
+      Qi = dat,
+      fi = exp(dat)
+    )
+
     # Ensure catches are log transformed
     dat <- switch(qcatch,
       fi = dat,
       Qi = log(dat)
-    )
-    # Quantum catch models need Qi in original scale (not log transformed)
-    # to calculate the noise. Save as qndat object.
-    qndat <- switch(qcatch,
-      Qi = dat,
-      fi = exp(dat)
     )
 
     # Keep only cone-catch data
@@ -474,7 +475,7 @@ coldist <- function(modeldata,
 # START RECEPTOR NOISE FUNCTIONS #
 ##################################
 
-newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = NULL) {
+newreceptornoise <- function(qcatch_log, n, weber, weber.ref, res, qcatch_raw = NULL) {
   # Calculate relative receptor density
   reln <- n / sum(n)
 
@@ -485,22 +486,22 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
     v <- weber * sqrt(reln[weber.ref])
   } # When weber is known for one receptor (typical)
 
-  if (is.null(qcatch_log)) {
-    e <- setNames(v / sqrt(reln), colnames(qcatch_raw))
+  if (is.null(qcatch_raw)) {
+    e <- setNames(v / sqrt(reln), colnames(qcatch_log))
   } else {
-    # Negative qcatch check
-    if (any(qcatch_log < 0)) {
+    # Photon noise is 2 / (Qa + Qb), which is only defined for positive catches.
+    # Catches below one are dim rather than invalid, and are handled normally.
+    if (any(qcatch_raw <= 0)) {
       stop(
-        length(qcatch_log[qcatch_log < 0]),
-        " negative quantum-catch value(s) returned following log-transformation, as required when noise = 'quantum',
-        so distances cannot be calculated. This typically results from very small raw quantum catches estimates (< 1).",
-        "Consider whether the illuminant is properly scaled, and the appropriate",
-        " form of noise is being calculated.",
+        length(qcatch_raw[qcatch_raw <= 0]),
+        " non-positive quantum-catch value(s) in the model data, so photon noise",
+        " cannot be calculated. Consider whether the illuminant is properly",
+        " scaled, and the appropriate form of quantum catch is being calculated.",
         call. = FALSE
       )
     }
-    ept1 <- setNames(v^2 / reln, colnames(qcatch_raw))
-    ept2 <- 2 / t(apply(res, 1, function(x) qcatch_log[x[1], ] + qcatch_log[x[2], ]))
+    ept1 <- setNames(v^2 / reln, colnames(qcatch_log))
+    ept2 <- 2 / t(apply(res, 1, function(x) qcatch_raw[x[1], ] + qcatch_raw[x[2], ]))
     e <- sqrt(sweep(ept2, 2, ept1, "+"))
   }
 
@@ -509,9 +510,9 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
   ###############
 
   # all n-2 combinations (first part numerator)
-  n1combs <- combn(colnames(qcatch_raw), dim(qcatch_raw)[2] - 2)
+  n1combs <- combn(colnames(qcatch_log), dim(qcatch_log)[2] - 2)
 
-  if (is.null(qcatch_log)) {
+  if (is.null(qcatch_raw)) {
     # get those combinations of ei and prod(ei)^2
     num1 <- setNames(
       apply(n1combs, 2, function(x) prod(e[x])),
@@ -526,12 +527,12 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
   }
 
   # remaining 2 combinations (second part numerator)
-  n2combs <- apply(n1combs, 2, function(x) colnames(qcatch_raw)[!colnames(qcatch_raw) %in% x])
+  n2combs <- apply(n1combs, 2, function(x) colnames(qcatch_log)[!colnames(qcatch_log) %in% x])
 
   # f_d and f_e
   deltaqiqj <- lapply(seq_len(dim(n1combs)[2]), function(y) {
     t(apply(res, 1, function(x) {
-      qcatch_raw[x[1], n2combs[, y]] - qcatch_raw[x[2], n2combs[, y]]
+      qcatch_log[x[1], n2combs[, y]] - qcatch_log[x[2], n2combs[, y]]
     }))
   })
   names(deltaqiqj) <- apply(n2combs, 2, paste, collapse = "")
@@ -540,7 +541,7 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
   num2 <- do.call(cbind, lapply(deltaqiqj, function(x) x[, 1] - x[, 2]))
 
   # (e_abc)^2*(f_d-f_e)^2
-  if (is.null(qcatch_log)) {
+  if (is.null(qcatch_raw)) {
     etimesq <- num2 %*% diag(num1)
   } else {
     etimesq <- num2 * num1
@@ -554,9 +555,9 @@ newreceptornoise <- function(qcatch_raw, n, weber, weber.ref, res, qcatch_log = 
   ###############
 
   # all n-1 combinations
-  dcombs <- combn(colnames(qcatch_raw), dim(qcatch_raw)[2] - 1)
+  dcombs <- combn(colnames(qcatch_log), dim(qcatch_log)[2] - 1)
 
-  if (is.null(qcatch_log)) {
+  if (is.null(qcatch_raw)) {
     den <- setNames(
       apply(dcombs, 2, function(x) prod(e[x])),
       apply(dcombs, 2, paste, collapse = "")
