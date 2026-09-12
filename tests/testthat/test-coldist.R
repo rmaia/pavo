@@ -696,7 +696,7 @@ test_that("rnlmatrix reproduces the receptor-noise distance", {
   n <- c(1, 2, 2, 4)
   A <- rnlmatrix(n, weber = 0.1)
 
-  expect_equal(qr(A)$rank, length(n) - 1L)
+  expect_identical(qr(A)$rank, length(n) - 1L)
   expect_lt(max(abs(A %*% rep(1, length(n)))), 1e-12)   # intensity in null space
 
   logq <- matrix(rnorm(10 * 4, 0, 0.5), ncol = 4)
@@ -930,11 +930,11 @@ test_that("bootcoldist returns the signed corrected square", {
 
   sq <- attr(corr, "dS.sq")
   expect_null(attr(plain, "dS.sq"))
-  expect_equal(names(sq), rownames(corr))
+  expect_named(sq, rownames(corr))
 
   # The reported distance is the floored square root of it, and the attribute is
   # the displacement subtracted from the uncorrected square, signed.
-  expect_equal(unname(sqrt(pmax(sq, 0))), unname(corr[, "dS.mean"]))
+  expect_identical(unname(sqrt(pmax(sq, 0))), unname(corr[, "dS.mean"]))
   expect_true(all(sq <= plain[, "dS.mean"]^2 + 1e-12))
 })
 
@@ -1080,8 +1080,11 @@ test_that("quantum noise treats catches below one as dim rather than invalid", {
 
 test_that("quantum noise rejects non-positive quantum catches", {
   # 2 / (Qa + Qb) is undefined there, so it has to fail rather than return NaN
+  wl <- 300:700
   fake <- as.rspec(data.frame(
-    wl = 300:700, patch1 = rep(-1, 401), patch2 = rep(-2, 401)
+    wl = wl,
+    patch1 = -1 + 0.01 * cos(wl / 10),
+    patch2 = -2 + 0.01 * cos(wl / 7)
   ))
   vm <- suppressWarnings(vismodel(fake, visual = "bluetit", relative = FALSE))
   expect_true(all(as.matrix(vm[, c("u", "s", "m", "l")]) < 0))
