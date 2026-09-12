@@ -42,11 +42,11 @@ Hugo Gruson <hugo.gruson+R@normalesup.org>
 papilio <- getimg(system.file("testdata/images/butterflies/papilio.png", package = "pavo"))
 # \donttest{
 # Convert from class rimg to cimg
-if (requireNamespace("imager", quiety = TRUE)) {
+if (requireNamespace("imager", quietly = TRUE)) {
   papilio_cimg <- rimg2cimg(papilio)
   class(papilio_cimg)
 }
-#> Loading required namespace: imager
+#> Error in rimg2cimg(papilio): could not find function "rimg2cimg"
 # }
 
 # Convert from class rimg to magick-image
