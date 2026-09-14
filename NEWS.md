@@ -1,6 +1,6 @@
 # pavo 2.10.0
 
-## NEW FEATURES AND SIGNIFICANT CHANGES
+## MAJOR CHANGES
 
 - `sensmodel()` gains a `template` argument, selecting the visual pigment
   template used to generate sensitivity curves. It names both the author and the
@@ -22,21 +22,6 @@
   5 nm. The alpha band on its own is unaffected, both Govardovskii beta bands
   scale with `peaksens` and do not have this problem, and Stavenga (2010) notes
   the fixed beta peak to be a known shortcoming.
-- `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
-  their coordinates, rather than a geometric mean of coordinates shifted by an
-  arbitrary constant of 100. Distances in a colour space are measured in the
-  coordinates themselves, so a group's centroid is their arithmetic mean. Quantum
-  catches and luminance channels stay geometric, since those distances are linear
-  in the logged values. Colspace distances change slightly. CIELAB, CIELCh and
-  segment, whose coordinates can be negative, previously returned NaN and now work.
-- `bootcoldist()` now summarises `qcatch = "fi"` models by an arithmetic mean of
-  the log catches rather than a geometric one, so reported distances for such
-  models change. `fi` values are already `log(Qi)`, and their geometric mean is
-  not a centroid: `"Qi"` and `"fi"` models of the same data disagreed by around 6%
-  on the bundled `sicalis` data, and the distance depended on the factor the
-  illuminant was scaled by, though scaling shifts every log catch equally and
-  cannot change a chromatic distance. Calls that returned NaN because an unscaled
-  illuminant made log catches negative now work.
 - `bootcoldist()` gains a `ci.type` argument, allowing bias-corrected and
   accelerated (BCa) confidence limits as an alternative to the percentile limits
   it has always returned. Colour distances are bounded below by zero and typically
@@ -81,20 +66,13 @@
   is unavailable under quantum noise, in the CIELAB, CIELCh and coc spaces, for
   achromatic contrast in a colourspace model, and with `ci.type = "bca"`. The
   default is `FALSE`, so results are unchanged unless it is asked for.
-- the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
-- `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
-  only allow rotations in the 2D plane. Until now, 3D rotations were allowed and
-  the result was projected back in 2D but this meant that the output was no
-  longer representing JNDs distances. Because `rotate = TRUE` is the default in
-  `jnd2xyz()`, we recommend you re-run any `jnd2xyz()` computation on
-  trichromats. From our tests, results stay qualitatively similar but specific
-  values may change.
 - `procspec()` gains a new `"clip"` option, controlled by the new `clip_range`
   argument to remove entire regions of the spectra and replace them by linear
   interpolation. Code contributed for by @rscherrer, addressing 
   [issue #271](https://github.com/rmaia/pavo/issues/271).
+- the `rimg2cimg()` function has been removed in favour of a custom `as.cimg()` method.
 
-## MINOR FEATURES AND BUG FIXES
+## MINOR CHANGES
 
 - `bootcoldist()` with `correct = TRUE` now returns the signed corrected square as
   the `"dS.sq"` attribute of the result. Flooring at zero is a presentation choice,
@@ -103,31 +81,11 @@
   into a further calculation.
 - `bootcoldist()` now validates `achromatic`, erroring where it is not a single
   `TRUE` or `FALSE`.
-- `bootcoldist()` now errors where any bootstrapped distance is `NA`, rather than
-  silently taking confidence limits from the wrong order statistics. The usual
-  cause is `achromatic = TRUE` on a model built without an achromatic channel.
-- `bootcoldist()` now takes `qcatch` from a `vismodel` or `colspace` object's
-  attribute, as `coldist()` always has, rather than letting an argument override
-  it. Results change only where the two disagreed, in which case the old
-  behaviour was wrong.
-- `sensmodel()` now generates the same sensitivity curve for a given `peaksens`
-  whatever `range` is requested. The alpha-band expression of Govardovskii et al.
-  (2000) contains a constant of 300 nm, which was coded as `range[1]`. Since the
-  two coincide at the default `range = c(300, 700)`, curves were correct for that
-  range and for any range sharing its lower bound. Users who called
-  `sensmodel()` with a lower bound other than 300 nm should consider regenerating their
-  sensitivities and rerun any downstream `vismodel()` or `coldist()` results.
-  Everyone else is unaffected and results are unchanged.
 - `bootcoldist()` now says how many bootstrap replicates failed and why, where
   it previously discarded the error and reported only that "Bootstrap sampling
   encountered errors". A run in which every replicate failed used to produce an
   unrelated error about a comparison of length zero, and is now reported like any
   other failure.
-- `bootcoldist(raw = TRUE)` now returns bootstrap distances in replicate order.
-  Each contrast was previously sorted independently before being returned, so
-  values sharing a row came from different resamplings, and neither different
-  contrasts nor dS and dL could be compared with one another. The values
-  themselves are unchanged, only their order.
 - `bootcoldist()` now fails with an informative error when `boot.n` is too small
   for the requested `alpha`. Previously the lower quantile index rounded down to
   zero, and the interval failed to assemble with an unrelated message about
@@ -139,6 +97,65 @@
    - some messages in `tcspace()` have been converted to warnings for consistency with the other internal colspace functions
    - some error messages are been reorder, which means that errors produced for inputs invalid for multiple reasons may appear in a different order than in previous versions.
 - pavo now uses R 4.1 (released in 2021) as the minimum required R version.
+
+## BUG FIXES
+
+- `coldist()` with `noise = "quantum"` built the photon-noise term from
+  log-transformed quantum catches whenever `qcatch = "Qi"`, rather than from the
+  catches themselves. The term is `2 / (Qa + Qb)` and was being computed as
+  `2 / (log Qa + log Qb)`, which inflates the noise, deflates the resulting
+  distances, and leaves the quantum model short of the neural one however bright
+  the illuminant. Results were correct for `qcatch = "fi"` input throughout. If
+  you have run `coldist()` or `bootcoldist()` with `noise = "quantum"` and
+  `qcatch = "Qi"` on any version from 2.4.0 onward, those distances need
+  recalculating. Reported by Changku Kang,
+  [issue #281](https://github.com/rmaia/pavo/issues/281).
+- Following the above, quantum catches below one are no longer an error in
+  `coldist()`. They describe a dim, photon-limited stimulus, and give small
+  distances rather than negative log catches. Non-positive catches remain an
+  error, since the noise term is undefined for them.
+- `sensmodel()` now generates the same sensitivity curve for a given `peaksens`
+  whatever `range` is requested. The alpha-band expression of Govardovskii et al.
+  (2000) contains a constant of 300 nm, which was coded as `range[1]`. Since the
+  two coincide at the default `range = c(300, 700)`, curves were correct for that
+  range and for any range sharing its lower bound. Users who called
+  `sensmodel()` with a lower bound other than 300 nm should consider regenerating their
+  sensitivities and rerun any downstream `vismodel()` or `coldist()` results.
+  Everyone else is unaffected and results are unchanged.
+- `jndrot()` and by extension `jnd2xyz()` have been adjusted for trichromats to
+  only allow rotations in the 2D plane. Until now, 3D rotations were allowed and
+  the result was projected back in 2D but this meant that the output was no
+  longer representing JNDs distances. Because `rotate = TRUE` is the default in
+  `jnd2xyz()`, we recommend you re-run any `jnd2xyz()` computation on
+  trichromats. From our tests, results stay qualitatively similar but specific
+  values may change.
+- `bootcoldist()` now summarises `colspace()` objects by the arithmetic mean of
+  their coordinates, rather than a geometric mean of coordinates shifted by an
+  arbitrary constant of 100. Distances in a colour space are measured in the
+  coordinates themselves, so a group's centroid is their arithmetic mean. Quantum
+  catches and luminance channels stay geometric, since those distances are linear
+  in the logged values. Colspace distances change slightly. CIELAB, CIELCh and
+  segment, whose coordinates can be negative, previously returned NaN and now work.
+- `bootcoldist()` now summarises `qcatch = "fi"` models by an arithmetic mean of
+  the log catches rather than a geometric one, so reported distances for such
+  models change. `fi` values are already `log(Qi)`, and their geometric mean is
+  not a centroid: `"Qi"` and `"fi"` models of the same data disagreed by around 6%
+  on the bundled `sicalis` data, and the distance depended on the factor the
+  illuminant was scaled by, though scaling shifts every log catch equally and
+  cannot change a chromatic distance. Calls that returned NaN because an unscaled
+  illuminant made log catches negative now work.
+- `bootcoldist()` now takes `qcatch` from a `vismodel` or `colspace` object's
+  attribute, as `coldist()` always has, rather than letting an argument override
+  it. Results change only where the two disagreed, in which case the old
+  behaviour was wrong.
+- `bootcoldist()` now errors where any bootstrapped distance is `NA`, rather than
+  silently taking confidence limits from the wrong order statistics. The usual
+  cause is `achromatic = TRUE` on a model built without an achromatic channel.
+- `bootcoldist(raw = TRUE)` now returns bootstrap distances in replicate order.
+  Each contrast was previously sorted independently before being returned, so
+  values sharing a row came from different resamplings, and neither different
+  contrasts nor dS and dL could be compared with one another. The values
+  themselves are unchanged, only their order.
 - the values of `avg.uv` and `avg.v` visual systems used in `sensdata()` and
   `vismodel()` have been updated to match exactly the ones provided in the 
   original source (Endler & Mielke 2005). This may result in minute changes 

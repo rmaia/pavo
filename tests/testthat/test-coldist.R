@@ -33,7 +33,6 @@ test_that("Messages & warnings", {
   expect_message(coldist(vismodel(flowers)), "Quantum catch are relative")
   expect_message(coldist(vismodel(flowers), achromatic = TRUE), "achromatic contrast not calculated")
 
-  expect_error(coldist(vismodel(flowers, relative = FALSE), noise = "quantum"), "negative quantum-catch")
 })
 
 test_that("Equivalent", {
@@ -697,7 +696,7 @@ test_that("rnlmatrix reproduces the receptor-noise distance", {
   n <- c(1, 2, 2, 4)
   A <- rnlmatrix(n, weber = 0.1)
 
-  expect_equal(qr(A)$rank, length(n) - 1L)
+  expect_identical(qr(A)$rank, length(n) - 1L)
   expect_lt(max(abs(A %*% rep(1, length(n)))), 1e-12)   # intensity in null space
 
   logq <- matrix(rnorm(10 * 4, 0, 0.5), ncol = 4)
@@ -931,10 +930,169 @@ test_that("bootcoldist returns the signed corrected square", {
 
   sq <- attr(corr, "dS.sq")
   expect_null(attr(plain, "dS.sq"))
-  expect_equal(names(sq), rownames(corr))
+  expect_named(sq, rownames(corr))
 
   # The reported distance is the floored square root of it, and the attribute is
   # the displacement subtracted from the uncorrected square, signed.
-  expect_equal(unname(sqrt(pmax(sq, 0))), unname(corr[, "dS.mean"]))
+  expect_identical(unname(sqrt(pmax(sq, 0))), unname(corr[, "dS.mean"]))
   expect_true(all(sq <= plain[, "dS.mean"]^2 + 1e-12))
+})
+
+test_that("quantum noise is built from raw quantum catches, not their logarithms", {
+  # Vorobyev & Osorio (1998): the shot-noise term added to the neural noise of
+  # receptor i is 2 / (Qi_a + Qi_b), with the catches on their original scale.
+  # coldist() log-transforms Qi on the way in to get the receptor signals, so
+  # the noise term has to be built before that happens. See #281.
+  wl <- 300:700
+  spectra <- as.rspec(data.frame(
+    wl = wl,
+    stimulus_A = 0.05 + 0.35 / (1 + exp(-(wl - 500) / 25)),
+    stimulus_B = 0.04 + 0.25 / (1 + exp(-(wl - 530) / 25))
+  ))
+
+  vm <- vismodel(spectra,
+    visual = "bluetit", achromatic = "bt.dc", illum = "forestshade",
+    qcatch = "Qi", relative = FALSE, vonkries = FALSE, scale = 10000
+  )
+  Q <- as.matrix(vm[, c("u", "s", "m", "l", "lum")])
+
+  # Every catch is above one, so log(Qi) stays positive and a noise term built
+  # on the wrong scale shows up as a wrong number rather than an error.
+  expect_true(all(Q > 1))
+
+  n <- c(1, 1.92, 2.68, 2.70)
+  reln <- n / sum(n)
+  e_neural <- 0.1 * sqrt(reln[4]) / sqrt(reln)
+  e <- sqrt(e_neural^2 + 2 / (Q[1, 1:4] + Q[2, 1:4]))
+  df <- log(Q[1, 1:4]) - log(Q[2, 1:4])
+
+  # Tetrachromatic receptor-noise distance, written out as published
+  num <- (e[1] * e[2])^2 * (df[4] - df[3])^2 +
+    (e[1] * e[3])^2 * (df[4] - df[2])^2 +
+    (e[1] * e[4])^2 * (df[3] - df[2])^2 +
+    (e[2] * e[3])^2 * (df[4] - df[1])^2 +
+    (e[2] * e[4])^2 * (df[3] - df[1])^2 +
+    (e[3] * e[4])^2 * (df[2] - df[1])^2
+  den <- (e[1] * e[2] * e[3])^2 + (e[1] * e[2] * e[4])^2 +
+    (e[1] * e[3] * e[4])^2 + (e[2] * e[3] * e[4])^2
+  dS_expected <- unname(sqrt(num / den))
+
+  dL_expected <- unname(
+    abs(log(Q[1, "lum"]) - log(Q[2, "lum"])) /
+      sqrt(0.1^2 + 2 / (Q[1, "lum"] + Q[2, "lum"]))
+  )
+
+  cd <- suppressMessages(coldist(vm,
+    noise = "quantum", achromatic = TRUE,
+    n = n, weber = 0.1, weber.ref = "longest", weber.achro = 0.1
+  ))
+
+  expect_equal(cd$dS, dS_expected, tolerance = 1e-6)
+  expect_equal(cd$dL, dL_expected, tolerance = 1e-6)
+})
+
+test_that("quantum noise does not depend on whether catches arrive as Qi or fi", {
+  # fi is log(Qi), so the two describe the same points and coldist() must return
+  # the same distances. They can only diverge if one path builds the shot-noise
+  # term from catches on the wrong scale. See #281.
+  data(sicalis)
+
+  args <- list(
+    noise = "quantum", achromatic = TRUE,
+    n = c(1, 2, 2, 4), weber = 0.1, weber.achro = 0.1
+  )
+  vmargs <- list(sicalis, achromatic = "bt.dc", relative = FALSE, scale = 10000)
+
+  vq <- do.call(vismodel, c(vmargs, list(qcatch = "Qi")))
+  vf <- do.call(vismodel, c(vmargs, list(qcatch = "fi")))
+
+  # Catches above one throughout, so neither path errors on a negative log
+  expect_true(all(as.matrix(vf) > 0))
+
+  cq <- suppressMessages(do.call(coldist, c(list(vq), args)))
+  cf <- suppressMessages(do.call(coldist, c(list(vf), args)))
+
+  expect_equal(cq$dS, cf$dS, tolerance = 1e-8)
+  expect_equal(cq$dL, cf$dL, tolerance = 1e-8)
+})
+
+test_that("quantum noise approaches neural noise as quantum catches grow", {
+  # Shot noise falls as 1 / catch, so a brighter illuminant has to drive the
+  # quantum model onto the neural one. A term built from log catches leaves a
+  # gap that closes only logarithmically and never disappears. See #281.
+  wl <- 300:700
+  spectra <- as.rspec(data.frame(
+    wl = wl,
+    stimulus_A = 0.05 + 0.35 / (1 + exp(-(wl - 500) / 25)),
+    stimulus_B = 0.04 + 0.25 / (1 + exp(-(wl - 530) / 25))
+  ))
+
+  vm <- function(s) {
+    vismodel(spectra,
+      visual = "bluetit", achromatic = "bt.dc", illum = "forestshade",
+      qcatch = "Qi", relative = FALSE, vonkries = FALSE, scale = s
+    )
+  }
+  args <- list(
+    achromatic = TRUE, n = c(1, 1.92, 2.68, 2.70),
+    weber = 0.1, weber.ref = "longest", weber.achro = 0.1
+  )
+
+  # Chromatic and achromatic neural distances are both invariant to the scale of
+  # the illuminant, since scaling shifts every log catch by the same constant.
+  neural <- suppressMessages(
+    do.call(coldist, c(list(vm(1e4)), args, list(noise = "neural")))
+  )
+  dim_q <- suppressMessages(
+    do.call(coldist, c(list(vm(1e4)), args, list(noise = "quantum")))
+  )
+  bright_q <- suppressMessages(
+    do.call(coldist, c(list(vm(1e10)), args, list(noise = "quantum")))
+  )
+
+  # Photon noise adds to receptor noise, so it can only cost discriminability
+  expect_lt(dim_q$dS, neural$dS)
+  expect_lt(dim_q$dL, neural$dL)
+
+  # and brighter light has to recover it
+  expect_gt(bright_q$dS, dim_q$dS)
+  expect_equal(bright_q$dS, neural$dS, tolerance = 1e-5)
+  expect_equal(bright_q$dL, neural$dL, tolerance = 1e-5)
+})
+
+test_that("quantum noise treats catches below one as dim rather than invalid", {
+  # Raw catches under one are a photon-limited stimulus, not a broken one: shot
+  # noise dominates and distances collapse toward zero. coldist() used to stop
+  # here, because the noise term was built from log catches and those go
+  # negative below one. See #281.
+  data(flowers)
+
+  vm <- vismodel(flowers, relative = FALSE)
+  expect_true(any(as.matrix(vm[, c("u", "s", "m", "l")]) < 1))
+
+  quantum <- suppressMessages(coldist(vm, noise = "quantum", achromatic = FALSE))
+  neural <- suppressMessages(coldist(vm, noise = "neural", achromatic = FALSE))
+
+  expect_false(anyNA(quantum$dS))
+  expect_true(all(quantum$dS >= 0))
+  expect_true(all(quantum$dS <= neural$dS + 1e-12))
+})
+
+test_that("quantum noise rejects non-positive quantum catches", {
+  # 2 / (Qa + Qb) is undefined there, so it has to fail rather than return NaN
+  wl <- 300:700
+  fake <- as.rspec(data.frame(
+    wl = wl,
+    patch1 = -1 + 0.01 * cos(wl / 10),
+    patch2 = -2 + 0.01 * cos(wl / 7)
+  ))
+  vm <- suppressWarnings(vismodel(fake, visual = "bluetit", relative = FALSE))
+  expect_true(all(as.matrix(vm[, c("u", "s", "m", "l")]) < 0))
+
+  expect_error(
+    suppressWarnings(suppressMessages(
+      coldist(vm, noise = "quantum", achromatic = FALSE)
+    )),
+    "non-positive quantum-catch"
+  )
 })
