@@ -1096,3 +1096,55 @@ test_that("quantum noise rejects non-positive quantum catches", {
     "non-positive quantum-catch"
   )
 })
+
+test_that("quantum noise gives finite reference distances", {
+  # coldist() attaches a set of reference stimuli as the "resref" attribute, which
+  # jnd2xyz() uses to place its axes. Under quantum noise the achromatic reference
+  # distances came back NA, because the noise term indexed the reference matrix
+  # with a bare rowname rather than a row, and a matrix has no element of that
+  # name.
+  data(flowers)
+
+  vm <- vismodel(flowers,
+    visual = "bluetit", achromatic = "bt.dc",
+    relative = FALSE, scale = 10000
+  )
+
+  quantum <- suppressMessages(coldist(vm, noise = "quantum", achromatic = TRUE))
+  neural <- suppressMessages(coldist(vm, noise = "neural", achromatic = TRUE))
+
+  qref <- attr(quantum, "resref")
+  nref <- attr(neural, "resref")
+
+  expect_false(anyNA(qref$dS))
+  expect_false(anyNA(qref$dL))
+
+  # Photon noise only ever adds to the neural term, so every reference distance
+  # shrinks relative to the neural model
+  expect_true(all(qref$dS <= nref$dS + 1e-7))
+  expect_true(all(qref$dL <= nref$dL + 1e-7))
+})
+
+test_that("reference achromatic noise uses the reference stimulus' own catches", {
+  # The achromatic reference is a notionally black stimulus, with a quantum catch
+  # of 1e-10 in every channel, so its distances follow the same expression as any
+  # other achromatic distance.
+  data(flowers)
+
+  vm <- vismodel(flowers,
+    visual = "bluetit", achromatic = "bt.dc",
+    relative = FALSE, scale = 10000
+  )
+
+  quantum <- suppressMessages(coldist(vm, noise = "quantum", achromatic = TRUE))
+  qref <- attr(quantum, "resref")
+
+  weber_achro <- 0.1
+  qlum <- vm[["lum"]][1]
+  expected <- abs(log(qlum) - log(1e-10)) /
+    sqrt(weber_achro^2 + 2 / (qlum + 1e-10))
+
+  pair <- qref$patch1 == rownames(vm)[1] & qref$patch2 == "jnd2xyzrrf.achro"
+  expect_identical(sum(pair), 1L)
+  expect_equal(qref$dL[pair], expected, tolerance = 1e-6)
+})
