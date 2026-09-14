@@ -352,7 +352,7 @@ coldist <- function(modeldata,
         quantum = apply(resref[, 1:2], 1, function(x) {
           ttdistcalcachro(
             visref[x[1], ], visref[x[2], ],
-            exp(visref)[x[1]], exp(visref)[x[2], ], weber.achro
+            exp(visref)[x[1], ], exp(visref)[x[2], ], weber.achro
           )
         })
       )
