@@ -242,8 +242,8 @@ coldist <- function(modeldata,
     # Quantum catch models need Qi in original scale (not log transformed)
     # to calculate the noise, so build qndat before dat is log transformed below.
     qndat <- switch(qcatch,
-      Qi = dat,
-      fi = exp(dat)
+      fi = exp(dat),
+      Qi = dat
     )
 
     # Ensure catches are log transformed
