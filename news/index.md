@@ -167,6 +167,15 @@
   They describe a dim, photon-limited stimulus, and give small distances
   rather than negative log catches. Non-positive catches remain an
   error, since the noise term is undefined for them.
+- [`coldist()`](https://pavo.colrverse.com/reference/coldist.md) with
+  `noise = "quantum"` and `achromatic = TRUE` returned `NA` for the
+  achromatic distances to the reference stimuli that anchor
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md). Those
+  were then read as zeros, putting the achromatic reference on top of
+  the data. Luminance coordinates from
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md) change
+  for quantum-noise models; under the default `center = TRUE` only the
+  stored reference coordinates move.
 - [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md) now
   generates the same sensitivity curve for a given `peaksens` whatever
   `range` is requested. The alpha-band expression of Govardovskii et al.
