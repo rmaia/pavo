@@ -2,7 +2,7 @@
 
 ## pavo 2.10.0
 
-### NEW FEATURES AND SIGNIFICANT CHANGES
+### MAJOR CHANGES
 
 - [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
   gains a `template` argument, selecting the visual pigment template
@@ -29,29 +29,6 @@
   unaffected, both Govardovskii beta bands scale with `peaksens` and do
   not have this problem, and Stavenga (2010) notes the fixed beta peak
   to be a known shortcoming.
-
-- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
-  now summarises
-  [`colspace()`](https://pavo.colrverse.com/reference/colspace.md)
-  objects by the arithmetic mean of their coordinates, rather than a
-  geometric mean of coordinates shifted by an arbitrary constant of 100.
-  Distances in a colour space are measured in the coordinates
-  themselves, so a group’s centroid is their arithmetic mean. Quantum
-  catches and luminance channels stay geometric, since those distances
-  are linear in the logged values. Colspace distances change slightly.
-  CIELAB, CIELCh and segment, whose coordinates can be negative,
-  previously returned NaN and now work.
-
-- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
-  now summarises `qcatch = "fi"` models by an arithmetic mean of the log
-  catches rather than a geometric one, so reported distances for such
-  models change. `fi` values are already `log(Qi)`, and their geometric
-  mean is not a centroid: `"Qi"` and `"fi"` models of the same data
-  disagreed by around 6% on the bundled `sicalis` data, and the distance
-  depended on the factor the illuminant was scaled by, though scaling
-  shifts every log catch equally and cannot change a chromatic distance.
-  Calls that returned NaN because an unscaled illuminant made log
-  catches negative now work.
 
 - [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
   gains a `ci.type` argument, allowing bias-corrected and accelerated
@@ -108,22 +85,6 @@
   colourspace model, and with `ci.type = "bca"`. The default is `FALSE`,
   so results are unchanged unless it is asked for.
 
-- the `rimg2cimg()` function has been removed in favour of a custom
-  `as.cimg()` method.
-
-- [`jndrot()`](https://pavo.colrverse.com/reference/jndrot.md) and by
-  extension
-  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md) have
-  been adjusted for trichromats to only allow rotations in the 2D plane.
-  Until now, 3D rotations were allowed and the result was projected back
-  in 2D but this meant that the output was no longer representing JNDs
-  distances. Because `rotate = TRUE` is the default in
-  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md), we
-  recommend you re-run any
-  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md)
-  computation on trichromats. From our tests, results stay qualitatively
-  similar but specific values may change.
-
 - [`procspec()`](https://pavo.colrverse.com/reference/procspec.md) gains
   a new `"clip"` option, controlled by the new `clip_range` argument to
   remove entire regions of the spectra and replace them by linear
@@ -132,7 +93,10 @@
   [issue](https://github.com/rmaia/pavo/issues/271)
   [\#271](https://github.com/rmaia/pavo/issues/271).
 
-### MINOR FEATURES AND BUG FIXES
+- the `rimg2cimg()` function has been removed in favour of a custom
+  `as.cimg()` method.
+
+### MINOR CHANGES
 
 - [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
   with `correct = TRUE` now returns the signed corrected square as the
@@ -144,41 +108,11 @@
   now validates `achromatic`, erroring where it is not a single `TRUE`
   or `FALSE`.
 - [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
-  now errors where any bootstrapped distance is `NA`, rather than
-  silently taking confidence limits from the wrong order statistics. The
-  usual cause is `achromatic = TRUE` on a model built without an
-  achromatic channel.
-- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
-  now takes `qcatch` from a `vismodel` or `colspace` object’s attribute,
-  as [`coldist()`](https://pavo.colrverse.com/reference/coldist.md)
-  always has, rather than letting an argument override it. Results
-  change only where the two disagreed, in which case the old behaviour
-  was wrong.
-- [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md) now
-  generates the same sensitivity curve for a given `peaksens` whatever
-  `range` is requested. The alpha-band expression of Govardovskii et al.
-  2000. contains a constant of 300 nm, which was coded as `range[1]`.
-        Since the two coincide at the default `range = c(300, 700)`,
-        curves were correct for that range and for any range sharing its
-        lower bound. Users who called
-        [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
-        with a lower bound other than 300 nm should consider
-        regenerating their sensitivities and rerun any downstream
-        [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md)
-        or
-        [`coldist()`](https://pavo.colrverse.com/reference/coldist.md)
-        results. Everyone else is unaffected and results are unchanged.
-- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
   now says how many bootstrap replicates failed and why, where it
   previously discarded the error and reported only that “Bootstrap
   sampling encountered errors”. A run in which every replicate failed
   used to produce an unrelated error about a comparison of length zero,
   and is now reported like any other failure.
-- `bootcoldist(raw = TRUE)` now returns bootstrap distances in replicate
-  order. Each contrast was previously sorted independently before being
-  returned, so values sharing a row came from different resamplings, and
-  neither different contrasts nor dS and dL could be compared with one
-  another. The values themselves are unchanged, only their order.
 - [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
   now fails with an informative error when `boot.n` is too small for the
   requested `alpha`. Previously the lower quantile index rounded down to
@@ -211,6 +145,91 @@
     different order than in previous versions.
 - pavo now uses R 4.1 (released in 2021) as the minimum required R
   version.
+
+### BUG FIXES
+
+- [`coldist()`](https://pavo.colrverse.com/reference/coldist.md) with
+  `noise = "quantum"` built the photon-noise term from log-transformed
+  quantum catches whenever `qcatch = "Qi"`, rather than from the catches
+  themselves. The term is `2 / (Qa + Qb)` and was being computed as
+  `2 / (log Qa + log Qb)`, which inflates the noise, deflates the
+  resulting distances, and leaves the quantum model short of the neural
+  one however bright the illuminant. Results were correct for
+  `qcatch = "fi"` input throughout. If you have run
+  [`coldist()`](https://pavo.colrverse.com/reference/coldist.md) or
+  [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  with `noise = "quantum"` and `qcatch = "Qi"` on any version from 2.4.0
+  onward, those distances need recalculating. Reported by Changku Kang,
+  [issue](https://github.com/rmaia/pavo/issues/281)
+  [\#281](https://github.com/rmaia/pavo/issues/281).
+- Following the above, quantum catches below one are no longer an error
+  in [`coldist()`](https://pavo.colrverse.com/reference/coldist.md).
+  They describe a dim, photon-limited stimulus, and give small distances
+  rather than negative log catches. Non-positive catches remain an
+  error, since the noise term is undefined for them.
+- [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md) now
+  generates the same sensitivity curve for a given `peaksens` whatever
+  `range` is requested. The alpha-band expression of Govardovskii et al.
+  2000. contains a constant of 300 nm, which was coded as `range[1]`.
+        Since the two coincide at the default `range = c(300, 700)`,
+        curves were correct for that range and for any range sharing its
+        lower bound. Users who called
+        [`sensmodel()`](https://pavo.colrverse.com/reference/sensmodel.md)
+        with a lower bound other than 300 nm should consider
+        regenerating their sensitivities and rerun any downstream
+        [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md)
+        or
+        [`coldist()`](https://pavo.colrverse.com/reference/coldist.md)
+        results. Everyone else is unaffected and results are unchanged.
+- [`jndrot()`](https://pavo.colrverse.com/reference/jndrot.md) and by
+  extension
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md) have
+  been adjusted for trichromats to only allow rotations in the 2D plane.
+  Until now, 3D rotations were allowed and the result was projected back
+  in 2D but this meant that the output was no longer representing JNDs
+  distances. Because `rotate = TRUE` is the default in
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md), we
+  recommend you re-run any
+  [`jnd2xyz()`](https://pavo.colrverse.com/reference/jnd2xyz.md)
+  computation on trichromats. From our tests, results stay qualitatively
+  similar but specific values may change.
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  now summarises
+  [`colspace()`](https://pavo.colrverse.com/reference/colspace.md)
+  objects by the arithmetic mean of their coordinates, rather than a
+  geometric mean of coordinates shifted by an arbitrary constant of 100.
+  Distances in a colour space are measured in the coordinates
+  themselves, so a group’s centroid is their arithmetic mean. Quantum
+  catches and luminance channels stay geometric, since those distances
+  are linear in the logged values. Colspace distances change slightly.
+  CIELAB, CIELCh and segment, whose coordinates can be negative,
+  previously returned NaN and now work.
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  now summarises `qcatch = "fi"` models by an arithmetic mean of the log
+  catches rather than a geometric one, so reported distances for such
+  models change. `fi` values are already `log(Qi)`, and their geometric
+  mean is not a centroid: `"Qi"` and `"fi"` models of the same data
+  disagreed by around 6% on the bundled `sicalis` data, and the distance
+  depended on the factor the illuminant was scaled by, though scaling
+  shifts every log catch equally and cannot change a chromatic distance.
+  Calls that returned NaN because an unscaled illuminant made log
+  catches negative now work.
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  now takes `qcatch` from a `vismodel` or `colspace` object’s attribute,
+  as [`coldist()`](https://pavo.colrverse.com/reference/coldist.md)
+  always has, rather than letting an argument override it. Results
+  change only where the two disagreed, in which case the old behaviour
+  was wrong.
+- [`bootcoldist()`](https://pavo.colrverse.com/reference/bootcoldist.md)
+  now errors where any bootstrapped distance is `NA`, rather than
+  silently taking confidence limits from the wrong order statistics. The
+  usual cause is `achromatic = TRUE` on a model built without an
+  achromatic channel.
+- `bootcoldist(raw = TRUE)` now returns bootstrap distances in replicate
+  order. Each contrast was previously sorted independently before being
+  returned, so values sharing a row came from different resamplings, and
+  neither different contrasts nor dS and dL could be compared with one
+  another. The values themselves are unchanged, only their order.
 - the values of `avg.uv` and `avg.v` visual systems used in
   [`sensdata()`](https://pavo.colrverse.com/reference/sensdata.md) and
   [`vismodel()`](https://pavo.colrverse.com/reference/vismodel.md) have
