@@ -155,7 +155,7 @@ a data frame of summary variables:
   diversities, `Rt = St_a_a / St_a_b`.
 
 - `'Rab'`: Ratio of animal-animal and background-background transition
-  diversities, `Rt = St_a_a / St_b_b`.
+  diversities, `Rab = St_a_a / St_b_b`.
 
 - `'m_dS', 's_dS', 'cv_dS'`: weighted mean, sd, and coefficient of
   variation of the chromatic boundary strength.

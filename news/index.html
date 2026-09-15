@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">pavo</a>
 
-    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">2.10.0</small>
+    <small class="nav-text text-danger me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Unreleased version">2.11.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -32,11 +32,27 @@
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Changelog</h1>
-      <small>Source: <a href="https://github.com/rmaia/pavo/blob/v2.10.0/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
+      <small>Source: <a href="https://github.com/rmaia/pavo/blob/master/NEWS.md" class="external-link"><code>NEWS.md</code></a></small>
     </div>
 
     <div class="section level2">
-<h2 class="pkg-version" data-toc-text="2.10.0" id="pavo-2100">pavo 2.10.0<a class="anchor" aria-label="anchor" href="#pavo-2100"></a></h2>
+<h2 class="pkg-version" data-toc-text="2.11.0" id="pavo-2110">pavo 2.11.0<a class="anchor" aria-label="anchor" href="#pavo-2110"></a></h2>
+<div class="section level3">
+<h3 id="bug-fixes-2-11-0">BUG FIXES<a class="anchor" aria-label="anchor" href="#bug-fixes-2-11-0"></a></h3>
+<ul><li>
+<code><a href="../reference/procspec.html">procspec()</a></code> took the minimum and maximum used by <code>opt = "minimum"</code> and <code>opt = "maximum"</code> once, up front, before <code>fixneg</code> and before either scaling step ran. Each was then applied with the extremes of the data as it arrived rather than as it stood, so <code>opt = c("minimum", "maximum")</code> reported scaling to a maximum of 1 while returning <code>(R - min) / max</code>, which reaches 1 only for a spectrum whose minimum was already zero. <code>fixneg</code> combined with either scaling was off the same way. The extremes are now taken where they are used.</li>
+<li>
+<code><a href="../reference/adjacent.html">adjacent()</a></code> returned <code>Rab</code> as exactly 1 for every image. The background-only mask was built with the same two lines as the animal-only mask, so the two transition sets were identical. It now masks the complement: everything inside the focal outline, or every colour class that is not a <code>bkgID</code>.</li>
+<li>
+<code><a href="../reference/adjacent.html">adjacent()</a></code> computed <code>B</code> from two sampling grids built by different rules, a constant pixel step for the scene and a fixed number of points per axis for the animal. They agree only on square images, and <code>B</code> was inflated by roughly the aspect ratio on everything else. All three masks now share one grid.</li>
+<li>
+<code><a href="../reference/adjacent.html">adjacent()</a></code> computed <code>B</code> and <code>Rt</code> against the whole scene’s transitions rather than the object-background ones they are documented as ratios of, <code>B = O_a_a / O_a_b</code> and <code>Rt = St_a_a / St_a_b</code>. <code>B</code> was bounded in [0, 1] as a result, which the documented ratio is not. Object-background transitions are now taken as what the scene has left once the within-object and within-background transitions are removed.</li>
+<li>
+<code><a href="../reference/adjacent.html">adjacent()</a></code> returned <code>Inf</code> for <code>B</code>, <code>Rt</code> and <code>Rab</code> together whenever either the focal object or the background lacked class-change transitions. Each is now guarded by the transitions it is built from, so a single-class background keeps <code>B</code> and <code>Rt</code> and reports <code>Rab</code> as <code>NA</code>.</li>
+</ul></div>
+</div>
+    <div class="section level2">
+<h2 class="pkg-version" data-toc-text="2.10.0" id="pavo-2100">pavo 2.10.0<a class="anchor" aria-label="anchor" href="#pavo-2100"></a></h2><p class="text-muted">CRAN release: 2026-09-14</p>
 <div class="section level3">
 <h3 id="major-changes-2-10-0">MAJOR CHANGES<a class="anchor" aria-label="anchor" href="#major-changes-2-10-0"></a></h3>
 <ul><li><p><code><a href="../reference/sensmodel.html">sensmodel()</a></code> gains a <code>template</code> argument, selecting the visual pigment template used to generate sensitivity curves. It names both the author and the chromophore, since a template’s shape depends on both, and defaults to <code>"govardovskii_a1"</code>, which is what every previous version of the function used. <code>"govardovskii_a2"</code> adds the vitamin A2 template from the same paper, and <code>"ssh_a1"</code> and <code>"ssh_a2"</code> the two from Stavenga, Smits and Hoenders (1993). The A2 templates cover porphyropsin pigments, found in freshwater fish, amphibians, and species that switch chromophore seasonally, which pavo previously could not model at all: an A2 band is close to 20% broader than the A1 band at the same peak sensitivity, so it is not recovered by adjusting <code>peaksens</code>. <code>"govardovskii_a2"</code> is the one to reach for, since pairing it with the default compares chromophores without also changing template family. The template used is recorded as a <code>"template"</code> attribute on the result. Note that <code>beta = FALSE</code> is recommended with either SSH template: their beta band has a fixed peak wavelength rather than one that scales with <code>peaksens</code>, so for short-wavelength pigments it pulls the maximum of the summed curve several nm away from the value asked for, and <code><a href="../reference/sensmodel.html">sensmodel()</a></code> warns where that shift exceeds 5 nm. The alpha band on its own is unaffected, both Govardovskii beta bands scale with <code>peaksens</code> and do not have this problem, and Stavenga (2010) notes the fixed beta peak to be a known shortcoming.</p></li>

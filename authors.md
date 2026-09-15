@@ -19,7 +19,7 @@
 ## Citation
 
 Source:
-[`inst/CITATION`](https://github.com/rmaia/pavo/blob/v2.10.0/inst/CITATION)
+[`inst/CITATION`](https://github.com/rmaia/pavo/blob/master/inst/CITATION)
 
 Maia R, Eliason C, Bitton P, Doucet S, Shawkey M (2013). “pavo: an R
 Package for the analysis, visualization and organization of spectral
