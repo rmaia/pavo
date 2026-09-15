@@ -383,11 +383,13 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
     )
   }
 
-  # Grid subsample
-  subclass <- classimg_i[
-    seq(1, nrow(classimg_i), ncol(classimg_i) / xpts_i),
-    seq(1, ncol(classimg_i), ncol(classimg_i) / xpts_i)
-  ]
+  # Grid subsample. Indices are computed once and reused for the animal and
+  # background masks below, so every count comes from the same sample of points.
+  gridstep <- ncol(classimg_i) / xpts_i
+  gridrows <- seq(1, nrow(classimg_i), gridstep)
+  gridcols <- seq(1, ncol(classimg_i), gridstep)
+
+  subclass <- classimg_i[gridrows, gridcols]
 
   # Summary info
   pt_scale <- xscale_i / xpts_i # distance between grid points in user-specified units
@@ -511,43 +513,40 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
         anim <- classimg_i
         anim[anim %in% bkgID_i] <- 999
       }
-      anim <- anim[
-        seq(1, nrow(anim), length.out = xpts_i),
-        seq(1, ncol(anim), length.out = xpts_i)
-      ]
+      anim <- anim[gridrows, gridcols]
       animtrans <- transitioncalc(anim, colournames)
 
-      # Bkg only
+      # Bkg only: the complement of the animal mask
       if (bkgoutline) {
-        bkgonly <- polymask(classimg_i, attr(classimg_i, "outline"), "outside")
+        bkgonly <- polymask(classimg_i, attr(classimg_i, "outline"), "inside")
       } else if (!is.null(bkgID_i)) {
         bkgonly <- classimg_i
-        bkgonly[bkgonly %in% bkgID_i] <- 999
+        bkgonly[!(bkgonly %in% bkgID_i)] <- 999
       }
-      bkgonly <- bkgonly[
-        seq(1, nrow(bkgonly), length.out = xpts_i),
-        seq(1, ncol(bkgonly), length.out = xpts_i)
-      ]
+      bkgonly <- bkgonly[gridrows, gridcols]
       bkgtrans <- transitioncalc(bkgonly, colournames)
 
-      # Summary bkg metrics. Only meaningful if class-chage transitions exist
-      # Check if class-change transitions actually exist
-      if (nrow(subset(animtrans[["all"]], c1 != c2)) > 0 &&
-        nrow(subset(bkgtrans[["all"]], c1 != c2)) > 0) {
-        # Animal/background transition ratio
-        B <- sum(subset(animtrans[["all"]], c1 != c2)["N"]) /
-          sum(subset(transitions[["all"]], c1 != c2)["N"])
+      # Summary bkg metrics, each guarded by the transitions it is built from:
+      # B and Rt survive a single-class background, Rab does not.
+      anim_off <- subset(animtrans[["all"]], c1 != c2)
+      bkg_off <- subset(bkgtrans[["all"]], c1 != c2)
 
-        # Animal/background transition diversity ratios Rt & Rab
-        St_aa <- 1 / sum((subset(animtrans[["all"]], c1 != c2)["N"] /
-          sum(subset(animtrans[["all"]], c1 != c2)["N"]))^2)
-        St_bb <- 1 / sum((subset(bkgtrans[["all"]], c1 != c2)["N"] /
-          sum(subset(bkgtrans[["all"]], c1 != c2)["N"]))^2)
-        Rt <- St_aa / St
-        Rab <- St_aa / St_bb
+      if (nrow(anim_off) > 0) {
+        B <- sum(anim_off["N"]) / sum(subset(transitions[["all"]], c1 != c2)["N"])
+        St_aa <- 1 / sum((anim_off["N"] / sum(anim_off["N"]))^2)
       } else {
-        B <- Rt <- Rab <- Inf
+        B <- St_aa <- NA
       }
+
+      if (nrow(bkg_off) > 0) {
+        St_bb <- 1 / sum((bkg_off["N"] / sum(bkg_off["N"]))^2)
+      } else {
+        St_bb <- NA
+      }
+
+      # Transition diversity ratios
+      Rt <- St_aa / St
+      Rab <- St_aa / St_bb
     } else {
       B <- Rt <- Rab <- NA
     }

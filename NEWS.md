@@ -1,5 +1,20 @@
 # pavo 2.11.0
 
+## BUG FIXES
+
+- `adjacent()` returned `Rab` as exactly 1 for every image. The background-only
+  mask was built with the same two lines as the animal-only mask, so the two
+  transition sets were identical. It now masks the complement: everything inside
+  the focal outline, or every colour class that is not a `bkgID`.
+- `adjacent()` computed `B` from two sampling grids built by different rules, a
+  constant pixel step for the scene and a fixed number of points per axis for
+  the animal. They agree only on square images, and `B` was inflated by roughly
+  the aspect ratio on everything else. All three masks now share one grid.
+- `adjacent()` returned `Inf` for `B`, `Rt` and `Rab` together whenever either
+  the focal object or the background lacked class-change transitions. Each is
+  now guarded by the transitions it is built from, so a single-class background
+  keeps `B` and `Rt` and reports `Rab` as `NA`.
+
 # pavo 2.10.0
 
 ## MAJOR CHANGES

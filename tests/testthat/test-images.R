@@ -289,6 +289,93 @@ test_that("adjacency", {
   expect_identical(papilio_adj, pap2_adj)
 })
 
+test_that("adjacent() background statistics, bkgID path", {
+  # Non-square 12 x 8 image. Columns 1-4 are the object, in vertical stripes of
+  # classes 1, 2, 1, 3; columns 5-8 the background, in stripes of 4, 5, 6, 4.
+  # Columns are constant down their length, so every class-change transition is
+  # a row transition and the counts are exact:
+  #
+  #   scene, per row:      (1,2) (1,2) (1,3) (3,4) (4,5) (5,6) (4,6)
+  #     84 off-diagonal,   St    = 1 / ((2/7)^2 + 5 * (1/7)^2) = 49/9
+  #   object, per row:     (1,2) (1,2) (1,3)
+  #     36 off-diagonal,   St_aa = 1 / ((2/3)^2 + (1/3)^2)     = 9/5
+  #   background, per row: (4,5) (5,6) (4,6)
+  #     36 off-diagonal,   St_bb = 1 / (3 * (1/3)^2)           = 3
+  #
+  # so B = 36/84 = 3/7, Rt = St_aa/St = 16.2/49 and Rab = St_aa/St_bb = 0.6.
+  # xpts = ncol makes the grid the whole image, keeping those counts exact; the
+  # non-square shape still separates a constant-step grid from a length.out one.
+  stripes <- as.rimg(
+    matrix(rep(c(1, 2, 1, 3, 4, 5, 6, 4), each = 12), nrow = 12, ncol = 8),
+    name = "stripes"
+  )
+  adj <- adjacent(stripes, xpts = 8, xscale = 8, bkgID = c(4, 5, 6))
+
+  expect_identical(adj$k, 6L)
+  expect_identical(adj$N, 172L)
+  expect_identical(adj$n_off, 84L)
+  expect_equal(adj$St, 49 / 9)
+
+  # Rab needs the background mask to be the complement of the object mask
+  expect_identical(adj$Rab, 0.6)
+
+  # B's two counts must come from one grid, which only shows on a non-square image
+  expect_identical(adj$B, 3 / 7)
+
+  # Rt does not involve the background mask, and should not move
+  expect_equal(adj$Rt, 16.2 / 49)
+})
+
+test_that("adjacent() background statistics, outline path", {
+  # Same split, but the object is delimited by an outline rather than by
+  # background class ID, exercising the other half of the masking code. The
+  # polygon covers columns 1-4 at every row, so it is invariant to the row-order
+  # flip inside polymask().
+  stripes <- as.rimg(
+    matrix(rep(c(1, 2, 1, 3, 4, 5, 6, 4), each = 12), nrow = 12, ncol = 8),
+    name = "stripes"
+  )
+  outline <- data.frame(
+    x = c(0.5, 4.5, 4.5, 0.5, 0.5),
+    y = c(0.5, 0.5, 12.5, 12.5, 0.5)
+  )
+
+  # polygon goes in as a list: the bare data.frame form is checked with
+  # length(), which counts columns. suppressMessages() covers the resulting
+  # "cannot find columns named x and y" notice.
+  poly_adj <- suppressMessages(
+    adjacent(stripes, xpts = 8, xscale = 8, polygon = list(outline))
+  )
+  bkg_adj <- adjacent(stripes, xpts = 8, xscale = 8, bkgID = c(4, 5, 6))
+
+  # Both routes select the same object, so a mismatch means polymask() and the
+  # bkgID branch disagree about which side is which.
+  expect_identical(poly_adj$Rab, bkg_adj$Rab)
+  expect_identical(poly_adj$B, bkg_adj$B)
+  expect_identical(poly_adj$Rab, 0.6)
+})
+
+test_that("adjacent() background statistics are NA where undefined", {
+  # As above, but the background is a single colour class, so it has no
+  # class-change transitions and St_bb, hence Rab, is undefined. B and Rt do not
+  # depend on the background mask:
+  #   object, per row: (1,2) (1,2) (1,3)        -> 36 off-diagonal
+  #   scene,  per row: (1,2) (1,2) (1,3) (3,4)  -> 48 off-diagonal
+  # so B = 36/48 = 0.75.
+  onecol <- as.rimg(
+    matrix(rep(c(1, 2, 1, 3, 4, 4, 4, 4), each = 12), nrow = 12, ncol = 8),
+    name = "onecol"
+  )
+  adj <- adjacent(onecol, xpts = 8, xscale = 8, bkgID = 4)
+
+  expect_identical(adj$k, 4L)
+  expect_identical(adj$n_off, 48L)
+  expect_identical(adj$Rab, NA_real_)
+  expect_identical(adj$B, 0.75)
+  expect_equal(adj$Rt, 0.675)
+})
+
+
 # test_that("summary", {
 #   suppressWarnings(RNGversion("3.5.0")) # back compatibility for now
 #   set.seed(2231)
