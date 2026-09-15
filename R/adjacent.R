@@ -82,7 +82,7 @@
 #' - `'Rt'`: Ratio of animal-animal and animal-background transition
 #' diversities, `Rt = St_a_a / St_a_b`.
 #' - `'Rab'`: Ratio of animal-animal and background-background transition
-#' diversities, `Rt = St_a_a / St_b_b`.
+#' diversities, `Rab = St_a_a / St_b_b`.
 #' - `'m_dS', 's_dS', 'cv_dS'`: weighted mean, sd, and coefficient of variation
 #' of the chromatic boundary strength.
 #' - `'m_dL', 's_dL', 'cv_dL'`: weighted mean, sd, and coefficient of variation
@@ -526,26 +526,31 @@ adjacent_main <- function(classimg_i, xpts_i = NULL, xscale_i = NULL, bkgID_i = 
       bkgonly <- bkgonly[gridrows, gridcols]
       bkgtrans <- transitioncalc(bkgonly, colournames)
 
-      # Summary bkg metrics, each guarded by the transitions it is built from:
-      # B and Rt survive a single-class background, Rab does not.
+      # Summary bkg metrics, each guarded by the transitions it is built from.
+      scene_off <- subset(transitions[["all"]], c1 != c2)
       anim_off <- subset(animtrans[["all"]], c1 != c2)
       bkg_off <- subset(bkgtrans[["all"]], c1 != c2)
 
-      if (nrow(anim_off) > 0) {
-        B <- sum(anim_off["N"]) / sum(subset(transitions[["all"]], c1 != c2)["N"])
-        St_aa <- 1 / sum((anim_off["N"] / sum(anim_off["N"]))^2)
-      } else {
-        B <- St_aa <- NA
+      # Object-background transitions are what the scene has left once the
+      # within-object and within-background ones are removed. The three sets are
+      # disjoint and exhaustive, and all are counted on the same grid.
+      ab_off <- scene_off
+      for (side in list(anim_off, bkg_off)) {
+        if (nrow(side) > 0) {
+          i <- match(paste(side$c1, side$c2), paste(ab_off$c1, ab_off$c2))
+          ab_off$N[i] <- ab_off$N[i] - side$N
+        }
       }
+      ab_off <- ab_off[ab_off$N > 0, ]
 
-      if (nrow(bkg_off) > 0) {
-        St_bb <- 1 / sum((bkg_off["N"] / sum(bkg_off["N"]))^2)
-      } else {
-        St_bb <- NA
-      }
+      simpson <- function(x) if (nrow(x) > 0) 1 / sum((x["N"] / sum(x["N"]))^2) else NA
+      St_aa <- simpson(anim_off)
+      St_ab <- simpson(ab_off)
+      St_bb <- simpson(bkg_off)
 
-      # Transition diversity ratios
-      Rt <- St_aa / St
+      # Object/background transition ratio, and the diversity ratios
+      B <- if (nrow(ab_off) > 0) sum(anim_off["N"]) / sum(ab_off["N"]) else NA
+      Rt <- St_aa / St_ab
       Rab <- St_aa / St_bb
     } else {
       B <- Rt <- Rab <- NA

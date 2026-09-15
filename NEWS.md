@@ -10,6 +10,12 @@
   constant pixel step for the scene and a fixed number of points per axis for
   the animal. They agree only on square images, and `B` was inflated by roughly
   the aspect ratio on everything else. All three masks now share one grid.
+- `adjacent()` computed `B` and `Rt` against the whole scene's transitions
+  rather than the object-background ones they are documented as ratios of,
+  `B = O_a_a / O_a_b` and `Rt = St_a_a / St_a_b`. `B` was bounded in [0, 1] as a
+  result, which the documented ratio is not. Object-background transitions are
+  now taken as what the scene has left once the within-object and
+  within-background transitions are removed.
 - `adjacent()` returned `Inf` for `B`, `Rt` and `Rab` together whenever either
   the focal object or the background lacked class-change transitions. Each is
   now guarded by the transitions it is built from, so a single-class background

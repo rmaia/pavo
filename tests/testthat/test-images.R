@@ -293,16 +293,14 @@ test_that("adjacent() background statistics, bkgID path", {
   # Non-square 12 x 8 image. Columns 1-4 are the object, in vertical stripes of
   # classes 1, 2, 1, 3; columns 5-8 the background, in stripes of 4, 5, 6, 4.
   # Columns are constant down their length, so every class-change transition is
-  # a row transition and the counts are exact:
+  # a row transition and the counts are exact. Per row, and in total:
   #
-  #   scene, per row:      (1,2) (1,2) (1,3) (3,4) (4,5) (5,6) (4,6)
-  #     84 off-diagonal,   St    = 1 / ((2/7)^2 + 5 * (1/7)^2) = 49/9
-  #   object, per row:     (1,2) (1,2) (1,3)
-  #     36 off-diagonal,   St_aa = 1 / ((2/3)^2 + (1/3)^2)     = 9/5
-  #   background, per row: (4,5) (5,6) (4,6)
-  #     36 off-diagonal,   St_bb = 1 / (3 * (1/3)^2)           = 3
+  #   object     (1,2) (1,2) (1,3)   36  St_aa = 1 / ((2/3)^2 + (1/3)^2)     = 9/5
+  #   boundary   (3,4)               12  St_ab = 1
+  #   background (4,5) (5,6) (4,6)   36  St_bb = 1 / (3 * (1/3)^2)           = 3
+  #   scene      all seven           84  St    = 1 / ((2/7)^2 + 5 * (1/7)^2) = 49/9
   #
-  # so B = 36/84 = 3/7, Rt = St_aa/St = 16.2/49 and Rab = St_aa/St_bb = 0.6.
+  # so B = O_aa/O_ab = 3, Rt = St_aa/St_ab = 1.8 and Rab = St_aa/St_bb = 0.6.
   # xpts = ncol makes the grid the whole image, keeping those counts exact; the
   # non-square shape still separates a constant-step grid from a length.out one.
   stripes <- as.rimg(
@@ -319,11 +317,11 @@ test_that("adjacent() background statistics, bkgID path", {
   # Rab needs the background mask to be the complement of the object mask
   expect_identical(adj$Rab, 0.6)
 
-  # B's two counts must come from one grid, which only shows on a non-square image
-  expect_identical(adj$B, 3 / 7)
-
-  # Rt does not involve the background mask, and should not move
-  expect_equal(adj$Rt, 16.2 / 49)
+  # B and Rt are documented against object-background transitions, not against
+  # the whole scene. B's two counts must also come from one grid, which only
+  # shows on a non-square image.
+  expect_identical(adj$B, 3)
+  expect_equal(adj$Rt, 1.8)
 })
 
 test_that("adjacent() background statistics, outline path", {
@@ -355,13 +353,36 @@ test_that("adjacent() background statistics, outline path", {
   expect_identical(poly_adj$Rab, 0.6)
 })
 
+test_that("adjacent() object/background transition ratio", {
+  # As the bkgID fixture, but the background's first column switches from 4 to 5
+  # halfway down, so the boundary carries two transition types rather than one:
+  #
+  #   object     36           St_aa = 9/5
+  #   boundary   (3,4) x 6, (3,5) x 6, St_ab = 2
+  #   scene      79 off-diagonal
+  #
+  # so B = 36/12 = 3 and Rt = St_aa/St_ab = 0.9. St_ab > 1 separates Rt from
+  # St_aa here; the other two fixtures have a single boundary type.
+  split_bkg <- matrix(rep(c(1, 2, 1, 3, 4, 5, 6, 4), each = 12), nrow = 12, ncol = 8)
+  split_bkg[7:12, 5] <- 5
+  adj <- adjacent(
+    as.rimg(split_bkg, name = "split_bkg"),
+    xpts = 8, xscale = 8, bkgID = c(4, 5, 6)
+  )
+
+  expect_identical(adj$k, 6L)
+  expect_identical(adj$n_off, 79L)
+  expect_identical(adj$B, 3)
+  expect_equal(adj$Rt, 0.9)
+})
+
 test_that("adjacent() background statistics are NA where undefined", {
   # As above, but the background is a single colour class, so it has no
-  # class-change transitions and St_bb, hence Rab, is undefined. B and Rt do not
-  # depend on the background mask:
-  #   object, per row: (1,2) (1,2) (1,3)        -> 36 off-diagonal
-  #   scene,  per row: (1,2) (1,2) (1,3) (3,4)  -> 48 off-diagonal
-  # so B = 36/48 = 0.75.
+  # class-change transitions and St_bb, hence Rab, is undefined. B and Rt are
+  # built from the object and boundary transitions, not the background's:
+  #   object   (1,2) (1,2) (1,3)  -> 36
+  #   boundary (3,4)              -> 12
+  # so B = 3 and Rt = St_aa/St_ab = 1.8, both still defined.
   onecol <- as.rimg(
     matrix(rep(c(1, 2, 1, 3, 4, 4, 4, 4), each = 12), nrow = 12, ncol = 8),
     name = "onecol"
@@ -371,8 +392,8 @@ test_that("adjacent() background statistics are NA where undefined", {
   expect_identical(adj$k, 4L)
   expect_identical(adj$n_off, 48L)
   expect_identical(adj$Rab, NA_real_)
-  expect_identical(adj$B, 0.75)
-  expect_equal(adj$Rt, 0.675)
+  expect_identical(adj$B, 3)
+  expect_equal(adj$Rt, 1.8)
 })
 
 

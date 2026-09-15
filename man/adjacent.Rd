@@ -103,7 +103,7 @@ and background,
 \item \code{'Rt'}: Ratio of animal-animal and animal-background transition
 diversities, \code{Rt = St_a_a / St_a_b}.
 \item \code{'Rab'}: Ratio of animal-animal and background-background transition
-diversities, \code{Rt = St_a_a / St_b_b}.
+diversities, \code{Rab = St_a_a / St_b_b}.
 \item \verb{'m_dS', 's_dS', 'cv_dS'}: weighted mean, sd, and coefficient of variation
 of the chromatic boundary strength.
 \item \verb{'m_dL', 's_dL', 'cv_dL'}: weighted mean, sd, and coefficient of variation
