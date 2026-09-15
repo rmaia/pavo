@@ -1,3 +1,5 @@
+# pavo 2.11.0
+
 # pavo 2.10.0
 
 ## MAJOR CHANGES
