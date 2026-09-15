@@ -161,11 +161,10 @@ procspec <- function(rspecdata, opt = c(
     applied <- c(applied, paste("smoothing spectra with a span of", span))
   }
 
-  mins <- apply(rspecdata, 2, min)
-  maxs <- apply(rspecdata, 2, max)
-
+  # Each step below rescales from the data as it stands, not as it arrived: the
+  # preceding steps move the extremes being scaled by.
   if (fixneg == "addmin") {
-    rspecdata <- t(t(rspecdata) + abs(pmin(0, mins)))
+    rspecdata <- t(t(rspecdata) + abs(pmin(0, apply(rspecdata, 2, min))))
     applied <- c(applied, "Negative value correction: added min to all reflectance")
   }
 
@@ -175,12 +174,12 @@ procspec <- function(rspecdata, opt = c(
   }
 
   if (any(opt == "minimum")) {
-    rspecdata <- t(t(rspecdata) - mins)
+    rspecdata <- t(t(rspecdata) - apply(rspecdata, 2, min))
     applied <- c(applied, "Scaling spectra to a minimum value of zero")
   }
 
   if (any(opt == "maximum")) {
-    rspecdata <- t(t(rspecdata) / maxs)
+    rspecdata <- t(t(rspecdata) / apply(rspecdata, 2, max))
     applied <- c(applied, "Scaling spectra to a maximum value of 1")
   }
 

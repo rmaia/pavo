@@ -2,6 +2,13 @@
 
 ## BUG FIXES
 
+- `procspec()` took the minimum and maximum used by `opt = "minimum"` and
+  `opt = "maximum"` once, up front, before `fixneg` and before either scaling
+  step ran. Each was then applied with the extremes of the data as it arrived
+  rather than as it stood, so `opt = c("minimum", "maximum")` reported scaling to
+  a maximum of 1 while returning `(R - min) / max`, which reaches 1 only for a
+  spectrum whose minimum was already zero. `fixneg` combined with either scaling
+  was off the same way. The extremes are now taken where they are used.
 - `adjacent()` returned `Rab` as exactly 1 for every image. The background-only
   mask was built with the same two lines as the animal-only mask, so the two
   transition sets were identical. It now masks the complement: everything inside
