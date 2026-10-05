@@ -113,10 +113,17 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
       )
     }
 
+    # Select and reorder columns to match x, y, z.
+    dat1 <- as.matrix(colsp1[, intersect(c("x", "y", "z"), colnames(colsp1))])
+    dat2 <- as.matrix(colsp2[, intersect(c("x", "y", "z"), colnames(colsp2))])
 
-    dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
-
-    dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
+    if (!identical(colnames(dat1), colnames(dat2))) {
+      stop(
+        "colsp1 and colsp2 must have the same coordinate columns ",
+        "(x, y and possibly z)",
+        call. = FALSE
+      )
+    }
 
     over <- intersectn(dat1, dat2)
 
