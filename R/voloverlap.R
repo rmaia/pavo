@@ -113,10 +113,9 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
       )
     }
 
-
-    dat1 <- as.matrix(colsp1[, colnames(colsp1) %in% c("x", "y", "z")])
-
-    dat2 <- as.matrix(colsp2[, colnames(colsp1) %in% c("x", "y", "z")])
+    # Select and reorder columns to match x, y, z.
+    dat1 <- as.matrix(colsp1[, intersect(c("x", "y", "z"), colnames(colsp1))])
+    dat2 <- as.matrix(colsp2[, intersect(c("x", "y", "z"), colnames(colsp2))])
 
     over <- intersectn(dat1, dat2)
 
