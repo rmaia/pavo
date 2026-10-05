@@ -9,6 +9,14 @@ test_that("Overlap", {
   expect_equal(sum(voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex")[1:2]), 1.146523e-05, tolerance = 1e-6)
 })
 
+test_that("out of order voloverlap", {
+  # Out of order columns should not matter (PR #283)
+  expect_identical(
+    voloverlap(tcs.sicalis.T, tcs.sicalis.B, type = "convex"),
+    voloverlap(tcs.sicalis.T[, c("z", "y", "x")], tcs.sicalis.B, type = "convex")
+  )
+})
+
 test_that("tcs", {
   tcs_sicalis <- colspace(vismodel(sicalis))
   vol_sicalis <- voloverlap(tcs_sicalis, tcs_sicalis, type = "convex")
@@ -79,7 +87,7 @@ test_that("Symmetric", {
   # nolint start
   expect_equal(vol_hq$overlapvol, vol_qh$overlapvol)
   expect_equal(vol_hq$vsmallest, vol_qh$vsmallest)
-  expect_equal(vol_hq$vboth, vol_hq$vboth)
+  expect_equal(vol_hq$vboth, vol_qh$vboth)
   # nolint end
 })
 
