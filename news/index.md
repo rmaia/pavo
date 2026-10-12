@@ -37,6 +37,9 @@
   focal object or the background lacked class-change transitions. Each
   is now guarded by the transitions it is built from, so a single-class
   background keeps `B` and `Rt` and reports `Rab` as `NA`.
+- [`voloverlap()`](https://pavo.colrverse.com/reference/voloverlap.md)
+  now returns the correct result when `x`, `y` (and possibly `z`)
+  columns in `colsp1` and `colsp2` are not in the same order.
 
 ## pavo 2.10.0
 

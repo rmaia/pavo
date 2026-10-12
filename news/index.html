@@ -49,6 +49,8 @@
 <code><a href="../reference/adjacent.html">adjacent()</a></code> computed <code>B</code> and <code>Rt</code> against the whole scene’s transitions rather than the object-background ones they are documented as ratios of, <code>B = O_a_a / O_a_b</code> and <code>Rt = St_a_a / St_a_b</code>. <code>B</code> was bounded in [0, 1] as a result, which the documented ratio is not. Object-background transitions are now taken as what the scene has left once the within-object and within-background transitions are removed.</li>
 <li>
 <code><a href="../reference/adjacent.html">adjacent()</a></code> returned <code>Inf</code> for <code>B</code>, <code>Rt</code> and <code>Rab</code> together whenever either the focal object or the background lacked class-change transitions. Each is now guarded by the transitions it is built from, so a single-class background keeps <code>B</code> and <code>Rt</code> and reports <code>Rab</code> as <code>NA</code>.</li>
+<li>
+<code><a href="../reference/voloverlap.html">voloverlap()</a></code> now returns the correct result when <code>x</code>, <code>y</code> (and possibly <code>z</code>) columns in <code>colsp1</code> and <code>colsp2</code> are not in the same order.</li>
 </ul></div>
 </div>
     <div class="section level2">
