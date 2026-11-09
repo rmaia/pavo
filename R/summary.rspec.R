@@ -177,7 +177,7 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
 
   # The control-flow here is for cases when users specify only of the deprecated
   # wlmin or wlmax arguments. Can be removed once deprecated in next release.
-  if (!all(missing("wlmin"), missing("wlmin"))) {
+  if (!missing("wlmin") || !missing("wlmax")) {
     warning(
       "The 'wlmin' and 'wlmax' arguments are deprecated as of v2.9.0,",
       "and will be removed in future releases. Use the lim() argument instead.",
@@ -189,7 +189,7 @@ summary.rspec <- function(object, subset = FALSE, lim = NULL, wlmin = NULL, wlma
     if (missing("wlmin") && !missing("wlmax")) {
       lim <- c(min(wl), wlmax)
     }
-    if (all(missing("wlmin"), missing("wlmin"))) {
+    if (!missing("wlmin") && !missing("wlmax")) {
       lim <- c(wlmin, wlmax)
     }
   }
