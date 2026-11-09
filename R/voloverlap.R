@@ -152,6 +152,10 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
       }
 
       Voverlap <- over$ch$p
+      if (!is.null(Voverlap)) {
+        colnames(Voverlap) <- c("x", "y", "z")
+        attr(Voverlap, "clrsp") <- "tcs"
+      }
 
       if (interactive) {
         # check if rgl is installed and loaded
@@ -159,10 +163,6 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
           stop(dQuote("rgl"), " package needed for interactive plots. Please install it, or use interactive=FALSE.",
             call. = FALSE
           )
-        }
-
-        if (!isNamespaceLoaded("rgl")) {
-          requireNamespace("rgl")
         }
 
         if (new) {
@@ -173,8 +173,6 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
         tcsvol(colsp2, col = col[2], fill = fill)
 
         if (!is.null(Voverlap)) {
-          colnames(Voverlap) <- c("x", "y", "z")
-          attr(Voverlap, "clrsp") <- "tcs"
           tcsvol(Voverlap, col = col[3], fill = TRUE)
         }
       } else {
@@ -188,8 +186,6 @@ voloverlap <- function(colsp1, colsp2, type = c("convex", "alpha"), avalue = "au
         vol(colsp2, col = col[2], lwd = lwd, fill = fill, new = FALSE)
 
         if (!is.null(Voverlap)) {
-          colnames(Voverlap) <- c("x", "y", "z")
-          attr(Voverlap, "clrsp") <- "tcs"
           vol(Voverlap, col = col[3], lwd = lwd, fill = TRUE, new = FALSE)
         }
       }
