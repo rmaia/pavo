@@ -259,9 +259,8 @@ vismodel <- function(rspecdata,
     sens_wl <- isolate_wl(visual, keep = "wl")
     fullS <- visual
   } else {
-    visual <- match.arg(visual)
-    S <- sens[, grep(visual, names(sens))]
-    names(S) <- gsub(paste0(visual, "."), "", names(S))
+    S <- sens[, grep(visual2, names(sens))]
+    names(S) <- gsub(paste0(visual2, "."), "", names(S))
     sens_wl <- isolate_wl(sens, keep = "wl")
   }
 
