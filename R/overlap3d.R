@@ -122,10 +122,6 @@ overlap3d <- function(colsp1, colsp2, avalue = "auto", plot = FALSE,
       )
     }
 
-    if (!isNamespaceLoaded("rgl")) {
-      requireNamespace("rgl")
-    }
-
     if (new) {
       rgl::open3d(FOV = 1, mouseMode = c("zAxis", "xAxis", "zoom"))
     }
